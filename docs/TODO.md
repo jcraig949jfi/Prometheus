@@ -8,19 +8,22 @@
 
 ## Ignis (Reasoning Circuit Discovery)
 
-### Precipitation Hunt (IN PROGRESS — batch running)
-- [ ] Analyze Δ_proj results for 1.5B (cosine + subspace methods)
-- [ ] Analyze expanded RPH eval (53 pairs) for 1.5B
-- [ ] Analyze reasoning subspace PCA at layers 14, 18, 21
-- [ ] Analyze Δ_proj across all 4 scales (0.5B, 1.5B, 3B, Qwen3-4B)
-- [ ] Analyze multi-layer Ignis run (L14/L18/L21 at 1.5B)
-- [ ] If 1.5B Δ_proj positive → upgrade to PRECIPITATION_CANDIDATE, rewrite paper conclusion
+### Precipitation Hunt (Steps 1-4 COMPLETE, Step 5 RUNNING)
+- [x] Compute Δ_proj at 1.5B <!-- 2026-03-22 -->
+- [x] Expand RPH eval to 53 pairs (was 9) <!-- 2026-03-22 -->
+- [x] Build reasoning subspaces at layers 14, 18, 21 <!-- 2026-03-22 -->
+- [x] Compute Δ_proj across all 4 scales <!-- 2026-03-22 -->
+- [ ] Analyze multi-layer Ignis run results (L14/L18/L21 at 1.5B) — **RUNNING NOW**
 - [ ] If mid-layer shows different bypass/native ratio → design follow-up experiment
 
+**Key finding:** 0.5B/1.5B/3B produce ZERO self-corrections — Δ_proj unmeasurable.
+Only Qwen3-4B self-corrects (3/8 traps), subspace Δ_proj = +0.058 (weak positive).
+Expanded RPH eval weakened 1.5B signal (Δ_cf 0.178→0.110) — small-N artifact confirmed.
+
 ### Alignment-Aware Fitness (from reviewer feedback)
-- [ ] Add alignment term to fitness: F = task_score × alignment_bonus
-- [ ] Replace Ghost Trap cosine with subspace projection test
-- [ ] Run A/B comparison: standard fitness vs alignment-aware fitness at 1.5B
+- [x] Add alignment term to fitness: F = task_score × alignment_bonus <!-- 2026-03-22 -->
+- [x] Replace Ghost Trap cosine with subspace projection test <!-- 2026-03-22 -->
+- [ ] Analyze A/B: standard fitness vs alignment-aware fitness at 1.5B (Step 5 data)
 - [ ] Decision table: if aligned vectors found → RPH supported; if not → strong falsification
 
 ### Scale Gradient Completion
