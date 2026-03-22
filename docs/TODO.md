@@ -1,156 +1,149 @@
 # Prometheus — Master TODO List
 
-*Living document. Check off items as completed. Updated each session.*
+*Living document. Cleared and updated each session.*
 *For strategic priority ordering, see [PRIORITIES.md](PRIORITIES.md).*
+*For consolidated experimental results, see [RESULTS.md](RESULTS.md).*
 
 ---
 
 ## Ignis (Reasoning Circuit Discovery)
 
-### Active Run
-- [ ] Monitor Qwen3-4B overnight run — check results
-- [ ] Archive Qwen3-4B run when complete
-- [ ] Run RPH eval across all archived scales: 0.5B, 1.5B, 3B + Qwen3-4B
-- [ ] Review scale gradient — cross-architecture comparison (Qwen 2.5 vs Qwen 3)
+### Precipitation Hunt (IN PROGRESS — batch running)
+- [ ] Analyze Δ_proj results for 1.5B (cosine + subspace methods)
+- [ ] Analyze expanded RPH eval (53 pairs) for 1.5B
+- [ ] Analyze reasoning subspace PCA at layers 14, 18, 21
+- [ ] Analyze Δ_proj across all 4 scales (0.5B, 1.5B, 3B, Qwen3-4B)
+- [ ] Analyze multi-layer Ignis run (L14/L18/L21 at 1.5B)
+- [ ] If 1.5B Δ_proj positive → upgrade to PRECIPITATION_CANDIDATE, rewrite paper conclusion
+- [ ] If mid-layer shows different bypass/native ratio → design follow-up experiment
+
+### Alignment-Aware Fitness (from reviewer feedback)
+- [ ] Add alignment term to fitness: F = task_score × alignment_bonus
+- [ ] Replace Ghost Trap cosine with subspace projection test
+- [ ] Run A/B comparison: standard fitness vs alignment-aware fitness at 1.5B
+- [ ] Decision table: if aligned vectors found → RPH supported; if not → strong falsification
 
 ### Scale Gradient Completion
 - [ ] 7B Qwen2.5 cloud run (Lambda/RunPod A100, ~$25-40)
 - [ ] Update scale gradient table with 7B results
-- [ ] Determine if 14B run is warranted based on 7B outcome
+- [ ] Determine if 14B run is warranted based on 7B cos_r trend
 
-### SAE Decomposition (from paper 2603.16335v1)
+### SAE Decomposition (Layer 3)
 - [ ] Install SAELens (`pip install sae-lens`)
 - [ ] Train SAE on Qwen 2.5-3B residual stream
 - [ ] Decode archived best_genome.pt vectors through SAE
-- [ ] Get human-readable feature decomposition of CMA-ES discoveries
-- [ ] Compare to supervised probe directions from the Yap paper
-- [ ] Write up findings for RPH paper
-
-### Pipeline Improvements
-- [ ] Investigate fitness >1.0 scoring artifact (1.5B best=1.0630)
-- [ ] Evaluate EvoTorch for GPU-accelerated CMA-ES + MAP-Elites
-- [ ] Add `rph_proxies` config section to IgnisConfig class (currently commented out in yaml)
-- [ ] Wire RPH proxy scoring into live pipeline (not just post-hoc eval_rph_survivors)
+- [ ] Get human-readable feature decomposition — "what is the bypass doing?"
+- [ ] Compare to supervised probe directions from paper 2603.16335v1
 
 ### RPH Paper
-- [ ] Integrate 1.5B results (NULL confirmed, cos_r=-0.007, 374 genomes)
-- [ ] Integrate Qwen3-4B results (cross-architecture, PC1=54.1%)
+- [ ] Integrate Δ_proj results when available
+- [ ] Reframe paper around bypass finding (per Claude/GPT reviewer advice)
+- [ ] Separate Qwen 2.5 scale gradient from Qwen3 cross-architecture ablation (per Gemini)
 - [ ] Add 7B results when available
-- [ ] Reference SAE decomposition paper as complementary methodology
 - [ ] Submit draft for review
 
-### Documentation
-- [x] Rename seti→ignis across all source files
-- [x] Update all imports, classes, paths
-- [x] Verify imports from new location
-- [x] Analysis tools guide (Night Watchman, Review Watchman, RPH Evaluator)
-- [ ] Update analysis_tools_guide.md with ignis naming
+### Future Ideas
+- [ ] EvoTorch MAP-Elites: map the *space* of vectors, not just find the best one
+- [ ] Cross-prompt generalization test: train on traps A, evaluate on traps B
+- [ ] Rollout stability test: do bypass vectors degrade faster than precipitation vectors over long generation?
 
 ---
 
 ## Arcanum (Waste Stream Novelty Mining)
 
-- [ ] Verify Arcanum runs from F:\Prometheus\arcanum\ location
-- [ ] Review current screening pipeline status
-- [ ] Evaluate if Arcanum needs analysis tooling equivalent to Ignis Night Watchman
-- [ ] Plan next screening run alongside Ignis GPU work
+- [ ] Smoke-test Arcanum from F:\Prometheus\arcanum\ (alert.py patched, ready to run)
+- [ ] Review current 1.5B screening results
+- [ ] Plan 3B screening run with Token Autopsy + Naming Scaffold
+- [ ] Design cross-pollination: feed Arcanum specimens to Ignis as steering seed candidates
+
+### Future Ideas
+- [ ] Auto-catalog pipeline: Arcanum discovery → Grammata registry entry
+- [ ] Cross-model specimen tracking: do the same Arcanum appear in Qwen 2.5 and Qwen 3?
 
 ---
 
 ## Eos / Dawn (Horizon Scanner)
 
-### Scanners — Active
-- [x] arxiv scanner — working (20 papers/cycle)
-- [x] OpenAlex scanner — working (15 papers/cycle)
-- [x] GitHub repo scanner — working (15 repos/cycle)
-- [x] Tavily web intelligence — working (5 results/cycle, 1000/month budget)
-- [x] Priority scoring and ATTENTION REQUIRED section
-- [x] Rate limiter with exponential backoff
-
 ### Scanners — To Wire
-- [x] Semantic Scholar live API — WORKING with TLDRs (API key obtained)
-- [x] Nemotron 120B deep analysis via NVIDIA NIM API — WORKING
-- [ ] Groq as fallback LLM (verified: 14.4K RPD free, wired as fallback)
-- [ ] Cerebras for deep analysis (verified: Qwen 3-235B FREE, 14.4K RPD)
+- [ ] Groq as fallback LLM (verified: 14.4K RPD free)
+- [ ] Cerebras for deep analysis (verified: Qwen 3-235B FREE)
 - [ ] Serper for targeted web searches (2500 lifetime budget — conserve)
-- [ ] OpenRouter as fallback model router (rate limits TBD — verify first)
+- [ ] OpenRouter as fallback model router (rate limits TBD)
 
 ### Scanners — Planned
 - [ ] Semantic Scholar bulk dataset download (CS papers subset)
 - [ ] `scan_local_s2()` — query local S2 database, zero API overhead
-- [ ] Nightly S2 diffs sync (incremental updates)
 - [ ] SPECTER v2 embedding search (semantic similarity without LLM)
 
-### API Keys Status
-- [x] GitHub PAT — loaded, working
-- [x] Tavily — loaded, working (1000/month budget)
-- [x] Groq — loaded, verified limits (14.4K RPD), wired as LLM fallback
-- [x] OpenRouter — loaded, limits TBD
-- [x] Serper — loaded, verified limits (2500 lifetime)
-- [x] Cerebras — loaded, verified limits (Qwen 3-235B free!)
-- [x] Semantic Scholar — loaded, WORKING with TLDRs
-- [x] NVIDIA NIM (Nemotron 120B) — loaded, WORKING as primary LLM brain
-- [ ] Google Gemini — loaded, DO NOT USE until billing resolved
-
-### Metis (Cunning Intelligence) — BUILT
-- [x] Scaffold Metis agent
-- [x] LLM cascade: Nemotron 120B → Cerebras Qwen3-235B → Groq Llama 8B
-- [x] Executive brief generation from Eos digest
-- [x] Cross-reference with project context (PRIORITIES, TODO, RPH)
-- [ ] Schedule Metis to run after each Eos cycle automatically
-- [ ] Add Ignis run status to project context feed
+### Metis Integration
+- [x] Schedule Metis to auto-run after Eos via Pronoia <!-- 2026-03-22 -->
+- [ ] Add Ignis run status to Metis project context feed
+- [ ] Add precipitation hunt results to Metis context when available
 
 ### Infrastructure
-- [x] Daemon mode tested (long-running --interval 3600)
+- [x] Paper dedup across cycles (PaperIndex in eos_daemon.py) <!-- 2026-03-22 -->
+- [x] Persistent paper/repo index (data/paper_index.json) <!-- 2026-03-22 -->
 - [ ] Add log file output alongside console
-- [ ] Paper dedup across cycles (don't re-report seen papers)
-- [ ] Persistent paper/repo index (track what's been reported)
 - [ ] Alert mechanism — flag critical findings for immediate attention
 - [ ] NVIDIA NIM rate limits — determine and document
+
+### Future Ideas
+- [ ] Eos self-improvement: let Metis suggest new search terms based on findings
+- [ ] Citation graph walking: when a paper scores high, auto-fetch its references
+
+---
+
+## Pronoia (Agent Orchestrator — NEW)
+
+- [x] Built pronoia.py with scan/eos/metis/status/review commands <!-- 2026-03-22 -->
+- [x] --every flag for continuous cycling <!-- 2026-03-22 -->
+- [x] --publish flag: auto-commit+push reports to GitHub after each cycle <!-- 2026-03-22 -->
+- [ ] Add `ignis` command: launch Ignis + Night Watchman pair
+- [ ] Add `rph-eval` command: run RPH eval on latest archives
+- [ ] Add `all` command: Eos → Metis → review_watchman in one pass
+- [ ] Log all agent outputs to `pronoia/logs/YYYY-MM-DD.log`
+- [ ] Process health monitoring: detect if a child process died
+
+### Future Ideas
+- [ ] Pronoia as always-on daemon: manage all agents, auto-restart on failure
+- [ ] Web dashboard: simple Flask page showing agent status, last outputs, next scheduled run
 
 ---
 
 ## Prometheus (Infrastructure & Organization)
 
-### Repo Migration
-- [x] Create F:\Prometheus directory skeleton
-- [x] Copy Ignis source with full rename
-- [x] Copy Arcanum source
-- [x] Copy docs (RPH papers, NORTH_STAR, the_fire)
-- [x] Copy Aethon concepts (slim)
-- [x] Create Grammata with Vesta concepts
-- [x] Archive superseded projects
-- [x] Verify all imports
-- [x] Write top-level README with directory structure
-- [x] Write NORTH_STAR.md
-- [x] Write the_fire.md (constitution)
-- [x] Write PRIORITIES.md
-- [ ] git init F:\Prometheus
-- [ ] Create GitHub repo (Prometheus)
-- [ ] Push initial commit
+### Git & GitHub
+- [x] Create GitHub repo (Prometheus) <!-- 2026-03-22 -->
+- [x] Push initial commit <!-- 2026-03-22 -->
 - [ ] Archive old repos (bitfrost-mech, ArcanumInfinity) as read-only
-- [ ] Update Claude memory project paths to F:\Prometheus
 
 ### Path Portability
-- [x] Zero hardcoded drive letters in Python source
-- [x] .gitignore for secrets, results, model weights
 - [ ] Verify F:\Prometheus\ignis runs end-to-end (with results/ directory)
 - [ ] Test WSL2 mount compatibility (/mnt/f/Prometheus)
-- [ ] Resolve Claude Cowork F: drive access issue
 
 ### Google Billing
-- [ ] Check https://console.cloud.google.com/billing — is billing linked?
-- [ ] Check which GCP project the API key belongs to
-- [ ] Either unlink billing or create new key in billing-free project
-- [ ] Confirm free tier limits before enabling in Eos
+- [ ] Check billing status, either unlink or create billing-free API key
+- [ ] Confirm free tier limits before enabling Gemini in Eos
+
+### Autonomy & Automation
+- [ ] Design science synthesis pipeline: raw results → RESULTS.md → paper sections
+- [ ] Design autonomous experiment loop: Pronoia queues → Ignis runs → Watchman analyzes → Metis synthesizes
+- [ ] Evaluate Claude Code Agent SDK for running Athena as a persistent research agent
+
+### Future Ideas
+- [ ] Helios (GPU scheduler): auto-queue experiments, keep GPUs saturated 24/7
+- [ ] Hermes (inter-agent messaging): structured message passing between Eos, Metis, Ignis, Pronoia
 
 ---
 
 ## Aethon (RLHF Gravity Navigation — Backburnered)
 
-- [ ] Review concept docs for relevance to current Ignis findings
-- [ ] If Ignis discovers native circuit directions, test if promptable
+- [ ] Review concept docs for relevance to current Ignis bypass findings
 - [ ] Design experiment: can Aethon-style prompts activate Ignis-discovered vectors?
+
+### Future Ideas
+- [ ] If alignment-aware search finds native vectors, test if promptable without steering
+- [ ] Aethon as the "deployment bridge": mechanistic findings → practical prompt techniques
 
 ---
 
@@ -158,24 +151,7 @@
 
 - [ ] Design registry schema (what fields describe a "reasoning construct"?)
 - [ ] First entry: document the bypass/native classification from Ignis
-- [ ] Connect to Symbola concept (symbolic representation)
-- [ ] Evaluate if SAE feature names become the natural vocabulary
 
----
-
-## Agents (Future)
-
-### Helios (GPU Scheduler)
-- [ ] Design: auto-queue experiments, monitor VRAM, handle OOM
-- [ ] Keep both GPUs saturated 24/7
-- [ ] Integration with Ignis archive_run.py and stop_ignis.py
-
-### Hermes (Inter-Agent Communication)
-- [ ] Design encrypted agent-to-agent messaging
-- [ ] Define message schema for scanner→scheduler→human pipeline
-- [ ] Evaluate CrewAI vs custom solution
-
-### NemoClaw/OpenClaw
-- [ ] Install NemoClaw in WSL2
-- [ ] Test GPU passthrough from WSL2
-- [ ] Evaluate for always-on agent deployment
+### Future Ideas
+- [ ] SAE feature names as the natural vocabulary for Grammata entries
+- [ ] Visual atlas: 2D projection of discovered vector space with labeled regions
