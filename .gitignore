@@ -1,0 +1,35 @@
+# Secrets
+.env
+*.env
+key.txt
+credentials*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Results and data (large, local only)
+**/results/
+**/reports/
+**/*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Model weights
+*.pt
+*.safetensors
+*.bin
+*.gguf
+
+# Archive (large, historical — keep local only)
+archive/
+
+# Claude config
+.claude/

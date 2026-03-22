@@ -1,0 +1,44 @@
+# ═══════════════════════════════════════════════════════════════════
+# Xenolexicon — The Museum of Misfit Tensors
+# Example Configuration Template
+# (Copy to configs/xenolexicon.yaml and edit locally)
+# ═══════════════════════════════════════════════════════════════════
+
+results_dir: "results/xenolexicon"
+
+# ── Evolution (CMA-ES) ──────────────────────────────────────────
+generations: 50
+population_size: 20
+mutation_rate: 0.1
+seed_norm: 3.0
+
+# ── Novelty Fitness ─────────────────────────────────────────────
+# target_perplexity: The sweet spot for coherence scoring.
+#   Too low = boring/normal outputs. Too high = random garbage.
+target_perplexity: 50.0
+
+# novelty_threshold: Minimum novelty score to trigger specimen capture.
+novelty_threshold: 0.3
+
+# max_new_tokens: Generation length for provocations.
+max_new_tokens: 128
+
+# ── Specimen Characterization ───────────────────────────────────
+distinctness_threshold: 0.1    # Min cosine distance to existing specimens
+reproducibility_runs: 3        # Times to re-run for consistency check
+reproducibility_threshold: 0.7 # Min pairwise cosine for "reproducible"
+random_baseline_samples: 5     # Random vectors for calibration
+
+# ── Naming ──────────────────────────────────────────────────────
+naming_max_tokens: 128
+
+# ── Model Rotation ──────────────────────────────────────────────
+models:
+  - name: "Qwen/Qwen2.5-1.5B-Instruct"
+    target_layer_ratio: 0.75
+    early_layer_ratio: 0.50
+    generations_per_cycle: 30
+    seed_norm_override: 3.0
+
+# Set to true for continuous operation (marathon mode)
+cycle_continuously: false

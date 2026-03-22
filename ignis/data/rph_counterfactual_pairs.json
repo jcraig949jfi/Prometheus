@@ -1,0 +1,66 @@
+[
+  {
+    "id": "arith_01",
+    "prompt": "A machine multiplies a number by 3, then subtracts 5, then doubles the result. If the final output is 34, what was the input?",
+    "perturbed": "A machine multiplies a number by 3, then subtracts 7, then doubles the result. If the final output is 34, what was the input?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_02",
+    "prompt": "Compute the sum of the first 20 prime numbers. At each step, verify the running total and correct errors if found.",
+    "perturbed": "Compute the sum of the first 15 prime numbers. At each step, verify the running total and correct errors if found.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_03_ecr",
+    "prompt": "Assume temporarily that 9.11 > 9.9. Using this assumption, compute which is larger: 9.119 or 9.91. Then explain if the assumption was valid and correct your reasoning.",
+    "perturbed": "Assume temporarily that 9.11 < 9.9. Using this assumption, compute which is larger: 9.119 or 9.91. Then explain if the assumption was valid and correct your reasoning.",
+    "type": "self_correction",
+    "task_family": "arithmetic",
+    "note": "ECR test: maps directly to Decimal Magnitude crucible trap. Self-correction from false premise = precipitation signal."
+  },
+  {
+    "id": "logic_01",
+    "prompt": "All bloops are razzles. Some razzles are tazzes. No tazzes are flims. Are any bloops flims?",
+    "perturbed": "All bloops are razzles. Some razzles are tazzes. Some tazzes are flims. Are any bloops flims?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_02",
+    "prompt": "A professor states: Every number divisible by 4 is also divisible by 8. Analyze this claim carefully, note intermediate errors, and explain your correction process.",
+    "perturbed": "A professor states: Every number divisible by 8 is also divisible by 4. Analyze this claim carefully, note intermediate errors, and explain your correction process.",
+    "type": "self_correction",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_03",
+    "prompt": "If all metals conduct electricity, and copper is a metal, does copper conduct electricity? Now extend this: if some metals are magnetic, is copper magnetic?",
+    "perturbed": "If all metals conduct electricity, and plastic is a material, does plastic conduct electricity? Now extend this: if some metals are magnetic, is plastic magnetic?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "cf_01",
+    "prompt": "John is older than Mary. Mary is older than Steve. Who is the youngest?",
+    "perturbed": "John is older than Mary. Steve is older than Mary. Who is the youngest?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_02",
+    "prompt": "In a world where water boils at 80 degrees Celsius, describe how cooking pasta would differ, step by step. Correct any inconsistencies as you reason.",
+    "perturbed": "In a world where water boils at 60 degrees Celsius, describe how cooking pasta would differ, step by step. Correct any inconsistencies as you reason.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_03",
+    "prompt": "A store sells apples for $2 each and oranges for $3 each. If you buy 5 apples and 3 oranges, what is the total cost? Now, if the price of apples increases by 50%, recalculate the total.",
+    "perturbed": "A store sells apples for $2 each and oranges for $3 each. If you buy 5 apples and 3 oranges, what is the total cost? Now, if the price of oranges increases by 50%, recalculate the total.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  }
+]

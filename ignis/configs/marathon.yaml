@@ -1,0 +1,60 @@
+# Ignis Marathon Configuration — Multi-Model Cycle
+# Each model gets its own results subdirectory and CMA-ES state.
+# The pipeline rotates through all models continuously, looking for fire.
+
+results_dir: "results/ignis"
+population_size: 40
+mutation_rate: 0.03           # Global default sigma (overridable per-model)
+seed_norm: 3.0                # Inception seed & baseline vector magnitude.
+                              # Default 3.0 avoids the "Hallucination Zone" for
+                              # small models (≤1B). Larger models may use 5.0+.
+                              # Per-model override: seed_norm_override in models[].
+cycle_continuously: true      # Loop forever through the model list
+
+# Google Drive sync — set to null or remove to disable
+sync_output_dir: "G:\\My Drive\\Prometheus\\ignis\\output"
+
+models:
+#  - name: "Qwen/Qwen2.5-0.5B-Instruct"
+#    target_layer_ratio: 0.75    # Inject at 75% depth (Layer 18 of 24)
+#    early_layer_ratio: 0.50     # Shortcut penalty below 50% depth
+#    generations_per_cycle: 50   # Quick scout — small model, fast iterations
+#    sigma_override: 0.03
+
+#  - name: "Qwen/Qwen2.5-1.5B-Instruct"
+#    target_layer_ratio: 0.75    # Layer 21 of 28
+#    early_layer_ratio: 0.50
+#    generations_per_cycle: 30   # COMPLETE — NULL confirmed Gen 9, 374 genomes, cos_r -0.007
+#    sigma_override: 0.025
+
+#  - name: "Qwen/Qwen2.5-3B-Instruct"
+#    target_layer_ratio: 0.75    # Layer 27 of 36
+#    early_layer_ratio: 0.50
+#    generations_per_cycle: 20   # COMPLETE — NULL confirmed Gen 10, 420+ genomes
+#    sigma_override: 0.025
+
+#  - name: "Qwen/Qwen2.5-7B-Instruct"
+#    target_layer_ratio: 0.75    # Layer 24 of 32
+#    early_layer_ratio: 0.50
+#    generations_per_cycle: 15   # OOM on 16GB — needs cloud A100 or 24GB+ card
+#    sigma_override: 0.02
+#    seed_norm_override: 5.0
+
+  - name: "Qwen/Qwen3-4B"
+    target_layer_ratio: 0.75
+    early_layer_ratio: 0.50
+    generations_per_cycle: 20   # Cross-architecture experiment — Qwen3 vs Qwen2.5
+    sigma_override: 0.025
+    seed_norm_override: 3.0     # Start conservative, 4B is mid-size
+
+# ---------------------------------------------------------------------------
+# RPH Proxy Scoring — post-scoring pass for confirmed survivors
+# Flip enabled to true after first survivors accumulate from current run.
+# Requires: sentence-transformers, scipy, sklearn (pip install each if needed)
+# ---------------------------------------------------------------------------
+# rph_proxies:
+#   enabled: false                   # Set true to activate after survivors accumulate
+#   counterfactual_pairs_path: "data/rph_counterfactual_pairs.json"
+#   min_proxy_passes: 2              # Threshold for rph_precipitation_candidate = True
+#   max_new_tokens: 200              # Generation length for proxy inference passes
+#   temperature: 0.7                 # Sampling temperature for proxy inference

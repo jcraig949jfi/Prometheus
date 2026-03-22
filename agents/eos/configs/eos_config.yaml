@@ -1,0 +1,72 @@
+# Eos Configuration — The Dawn Scanner
+# API keys should be in environment variables or .env, not here.
+
+# Scan intervals (seconds)
+scan_interval: 3600          # Main heartbeat: 1 hour
+api_discovery_interval: 86400  # Meta-search for new free tiers: daily
+digest_interval: 86400        # Write daily digest
+
+# Search domains — what Eos watches for
+search_topics:
+  arxiv_categories:
+    - "cs.AI"          # Artificial Intelligence
+    - "cs.LG"          # Machine Learning
+    - "cs.CL"          # Computation and Language
+    - "cs.NE"          # Neural and Evolutionary Computing
+
+  arxiv_keywords:
+    - "mechanistic interpretability"
+    - "steering vectors"
+    - "activation engineering"
+    - "reasoning circuits"
+    - "chain of thought internals"
+    - "sparse autoencoder"
+    - "CMA-ES neural"
+    - "evolutionary latent"
+    - "tensor decomposition neural"
+    - "autonomous agent framework"
+    - "meta cognition LLM"
+
+  github_topics:
+    - "mechanistic-interpretability"
+    - "transformer-lens"
+    - "steering-vectors"
+    - "activation-patching"
+    - "evolutionary-algorithm"
+    - "cma-es"
+    - "sparse-autoencoder"
+    - "ai-agent"
+    - "autonomous-agent"
+
+  github_keywords:
+    - "mechanistic interpretability"
+    - "steering vectors LLM"
+    - "transformer-lens"
+    - "sparse autoencoder LLM"
+    - "CMA-ES neural"
+    - "autonomous AI agent"
+    - "activation patching"
+
+# Rate limit budgets — 75% of actual limits (never bang on the door)
+# Hitting limits causes progressive time bans. Stay well under.
+rate_limits:
+  github_api: 45             # Actual: 60/hr authenticated. 75% = 45
+  arxiv_api: 15              # Actual: 1 req/3 sec = 1200/hr. We use ~15/hr max
+  semantic_scholar: 55       # Actual: 1 req/sec with key = 3600/hr. 75% of our usage cap
+  semantic_scholar_nokey: 12 # Actual: 100/5min = 1200/hr. 75% of modest usage
+  openalex: 7                # Actual: 10 req/sec = 36000/hr. We use ~7/hr (polite)
+  tavily: 1                  # Actual: ~1 req/sec. Budget: 1000/month = ~1.4/hr. Use 1/hr
+  groq: 22                   # Actual: ~30 RPM. 75% = 22
+  google_custom_search: 3    # Actual: 100/day = ~4/hr. 75% = 3
+
+# Report settings
+reports:
+  output_dir: "reports"
+  format: "markdown"
+  max_items_per_section: 10
+  relevance_threshold: 0.5   # Only report items above this score
+
+# API registry location
+api_registry_path: "data/api_registry.json"
+paper_index_path: "data/paper_index.json"
+repo_index_path: "data/repo_index.json"
