@@ -92,8 +92,16 @@
 - [x] NVIDIA NIM (Nemotron 120B) — loaded, WORKING as primary LLM brain
 - [ ] Google Gemini — loaded, DO NOT USE until billing resolved
 
+### Metis (Cunning Intelligence) — BUILT
+- [x] Scaffold Metis agent
+- [x] LLM cascade: Nemotron 120B → Cerebras Qwen3-235B → Groq Llama 8B
+- [x] Executive brief generation from Eos digest
+- [x] Cross-reference with project context (PRIORITIES, TODO, RPH)
+- [ ] Schedule Metis to run after each Eos cycle automatically
+- [ ] Add Ignis run status to project context feed
+
 ### Infrastructure
-- [ ] Daemon mode tested (long-running --interval 3600) — LAUNCHING NOW
+- [x] Daemon mode tested (long-running --interval 3600)
 - [ ] Add log file output alongside console
 - [ ] Paper dedup across cycles (don't re-report seen papers)
 - [ ] Persistent paper/repo index (track what's been reported)
