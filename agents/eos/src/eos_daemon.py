@@ -127,6 +127,102 @@ class RateLimiter:
 
 
 # ---------------------------------------------------------------------------
+# Paper / Repo Dedup Index
+# ---------------------------------------------------------------------------
+
+class PaperIndex:
+    """Persistent index for cross-cycle deduplication of papers and repos.
+
+    Fingerprints items by normalized title + first author + year.
+    Tracks first_seen, last_seen, seen_count, and all source URLs.
+    """
+
+    def __init__(self, path: Path):
+        self.path = path
+        self.index: dict[str, dict] = {}
+        self._load()
+
+    def _load(self) -> None:
+        if self.path.exists():
+            try:
+                data = json.loads(self.path.read_text(encoding="utf-8"))
+                self.index = data.get("papers", {})
+                log.info(f"Paper index loaded: {len(self.index)} known items")
+            except (json.JSONDecodeError, OSError) as e:
+                log.warning(f"Paper index corrupt, starting fresh: {e}")
+                self.index = {}
+        else:
+            log.info("No paper index found — starting fresh")
+
+    def save(self) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        data = {
+            "_meta": {
+                "description": "Cross-cycle dedup index for Eos scanner",
+                "last_updated": datetime.now(timezone.utc).isoformat(),
+                "total_items": len(self.index),
+            },
+            "papers": self.index,
+        }
+        self.path.write_text(
+            json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+
+    @staticmethod
+    def _fingerprint(item: dict) -> str:
+        """Stable fingerprint: normalized title prefix + first author + year."""
+        import re
+        title = (item.get("title") or item.get("name") or "").lower().strip()
+        title = re.sub(r"[^a-z0-9 ]", "", title)[:80]
+
+        authors = item.get("authors") or []
+        first_author = (authors[0] if authors else "").lower().split()[-1] if authors else ""
+
+        date_str = item.get("date") or item.get("updated") or ""
+        year = date_str[:4] if len(date_str) >= 4 else ""
+
+        return f"{title}|{first_author}|{year}"
+
+    def is_known(self, item: dict) -> bool:
+        return self._fingerprint(item) in self.index
+
+    def add(self, item: dict) -> None:
+        """Add or update an item in the index."""
+        fp = self._fingerprint(item)
+        now = datetime.now(timezone.utc).isoformat()
+        url = item.get("url") or ""
+
+        if fp in self.index:
+            entry = self.index[fp]
+            entry["last_seen"] = now
+            entry["seen_count"] = entry.get("seen_count", 1) + 1
+            if url and url not in entry.get("source_urls", []):
+                entry.setdefault("source_urls", []).append(url)
+        else:
+            self.index[fp] = {
+                "title": item.get("title") or item.get("name") or "",
+                "first_seen": now,
+                "last_seen": now,
+                "seen_count": 1,
+                "source_urls": [url] if url else [],
+            }
+
+    def filter_new(self, items: list[dict]) -> tuple[list[dict], int]:
+        """Return (new_items, n_duplicates). Adds new items to index."""
+        new = []
+        dupes = 0
+        for item in items:
+            if self.is_known(item):
+                dupes += 1
+                # Still update last_seen
+                self.add(item)
+            else:
+                self.add(item)
+                new.append(item)
+        return new, dupes
+
+
+# ---------------------------------------------------------------------------
 # Scanners
 # ---------------------------------------------------------------------------
 
@@ -802,7 +898,8 @@ def _days_ago(n: int) -> str:
 # Main Loop
 # ---------------------------------------------------------------------------
 
-def run_cycle(config: dict, registry: dict, limiter: RateLimiter) -> None:
+def run_cycle(config: dict, registry: dict, limiter: RateLimiter,
+              paper_index: PaperIndex) -> None:
     """Execute one complete scan cycle."""
     log.info("=" * 60)
     log.info("Eos wake cycle starting")
@@ -814,20 +911,28 @@ def run_cycle(config: dict, registry: dict, limiter: RateLimiter) -> None:
     news = scan_tavily(config, limiter)
     health = scan_api_health(registry, limiter)
 
-    # Merge papers, deduplicate by title similarity
+    # Merge papers, deduplicate within this cycle by title
     all_papers = papers_arxiv + papers_openalex + papers_s2
     seen_titles = set()
-    papers = []
+    cycle_unique = []
     for p in all_papers:
         key = p.get("title", "").lower()[:60]
         if key not in seen_titles:
             seen_titles.add(key)
-            papers.append(p)
+            cycle_unique.append(p)
+
+    # Cross-cycle dedup via persistent index
+    papers, paper_dupes = paper_index.filter_new(cycle_unique)
+    repos_new, repo_dupes = paper_index.filter_new(repos)
+    paper_index.save()
+
+    if paper_dupes or repo_dupes:
+        log.info(f"Dedup: {paper_dupes} known papers filtered, {repo_dupes} known repos filtered")
 
     # LLM analysis of top items
     # Score all items to find the best candidates for deep analysis
     all_scored = [(p, *_score_relevance(p)) for p in papers]
-    all_scored += [(r, *_score_relevance(r)) for r in repos]
+    all_scored += [(r, *_score_relevance(r)) for r in repos_new]
     all_scored.sort(key=lambda x: -x[1])
     top_items = [item for item, score, reason in all_scored if score >= 25]
     analyses = llm_analyze(top_items, limiter, max_items=3)
@@ -836,9 +941,14 @@ def run_cycle(config: dict, registry: dict, limiter: RateLimiter) -> None:
     save_registry(registry)
 
     # Write digest
-    write_digest(papers, repos, health, limiter, news=news, analyses=analyses)
+    write_digest(papers, repos_new, health, limiter, news=news, analyses=analyses)
 
-    log.info(f"Cycle complete: {len(papers)} papers ({len(papers_arxiv)} arxiv + {len(papers_openalex)} openalex, {len(papers) - len(all_papers) + len(papers)} after dedup), {len(repos)} repos, {len(health)} health checks")
+    within_dedup = len(all_papers) - len(cycle_unique)
+    log.info(
+        f"Cycle complete: {len(papers)} new papers "
+        f"({len(all_papers)} raw, -{within_dedup} within-cycle dupes, -{paper_dupes} cross-cycle dupes), "
+        f"{len(repos_new)} new repos (-{repo_dupes} known), {len(health)} health checks"
+    )
 
 
 def main():
@@ -851,15 +961,17 @@ def main():
     config = load_config()
     registry = load_registry()
     limiter = RateLimiter()
+    paper_index = PaperIndex(DATA_DIR / "paper_index.json")
 
     sep = "=" * 62
     dash = "-" * 62
     reports_str = str(REPORTS_DIR.relative_to(EOS_ROOT))
     registry_str = str(DATA_DIR / "api_registry.json")
+    index_str = f"{len(paper_index.index)} known items"
     interval_str = f"{args.interval}s {'(single pass)' if args.once else ''}"
-    print(f"{sep}\n  EOS -- THE DAWN SCANNER\n  She who sees the new day first.\n  Watching the primordial soup.\n{dash}\n  Reports:  {reports_str}\n  Registry: {registry_str}\n  Interval: {interval_str}\n{sep}\n")
+    print(f"{sep}\n  EOS -- THE DAWN SCANNER\n  She who sees the new day first.\n  Watching the primordial soup.\n{dash}\n  Reports:  {reports_str}\n  Registry: {registry_str}\n  Index:    {index_str}\n  Interval: {interval_str}\n{sep}\n")
 
-    run_cycle(config, registry, limiter)
+    run_cycle(config, registry, limiter, paper_index)
 
     if args.once:
         return
@@ -871,7 +983,7 @@ def main():
         except KeyboardInterrupt:
             log.info("Eos shutting down (Ctrl+C)")
             break
-        run_cycle(config, registry, limiter)
+        run_cycle(config, registry, limiter, paper_index)
 
 
 if __name__ == "__main__":

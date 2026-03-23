@@ -75,6 +75,22 @@ def load_project_context() -> str:
         text = rph_path.read_text(encoding="utf-8")[:1500]
         context_parts.append(f"=== RPH (our core hypothesis) ===\n{text}")
 
+    # Aletheia knowledge graph taxonomy — what we've cataloged
+    try:
+        aletheia_path = PROMETHEUS_ROOT / "agents" / "aletheia" / "src" / "aletheia.py"
+        if aletheia_path.exists():
+            import importlib.util
+            spec = importlib.util.spec_from_file_location("aletheia", str(aletheia_path))
+            mod = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            agent = mod.AletheiaAgent()
+            summary = agent.generate_taxonomy_summary()
+            agent.close()
+            if summary and len(summary.strip()) > 50:
+                context_parts.append(f"=== KNOWLEDGE GRAPH (from Aletheia) ===\n{summary[:2000]}")
+    except Exception:
+        pass  # Aletheia not available — that's fine
+
     return "\n\n".join(context_parts)
 
 
