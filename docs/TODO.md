@@ -133,6 +133,19 @@ Expanded RPH eval weakened 1.5B signal (Δ_cf 0.178→0.110) — small-N artifac
 - [ ] Design autonomous experiment loop: Pronoia queues → Ignis runs → Watchman analyzes → Metis synthesizes
 - [ ] Evaluate Claude Code Agent SDK for running Athena as a persistent research agent
 
+### Clymene (Knowledge Hoarder — NEW)
+- [x] Build Clymene agent: manifest-driven repo/model archiver <!-- 2026-03-22 -->
+- [x] Hoard 26 repos (tensor, mech-interp, evolutionary, agents, datasets) <!-- 2026-03-22 -->
+- [x] Register 4 active models in vault registry <!-- 2026-03-22 -->
+- [ ] Add Clymene to Pronoia (weekly repo update cycle)
+- [ ] Identify more repos from Aletheia's tools table — auto-feed to manifest
+
+### Titan Council (Cross-Model Collaboration)
+- [ ] Template: hypothesis → critique prompt for all 5 Titans
+- [ ] When Aletheia flags related papers → queue as reproduction candidates
+- [ ] Wire Gemini free API into Eos as backup analyzer (free tier)
+- [ ] Wire DeepSeek API as cheap ($0.28/M) secondary reviewer
+
 ### Future Ideas
 - [ ] Helios (GPU scheduler): auto-queue experiments, keep GPUs saturated 24/7
 - [ ] Hermes (inter-agent messaging): structured message passing between Eos, Metis, Ignis, Pronoia
