@@ -26,6 +26,14 @@ Expanded RPH eval weakened 1.5B signal (Δ_cf 0.178→0.110) — small-N artifac
 - [ ] Analyze A/B: standard fitness vs alignment-aware fitness at 1.5B (Step 5 data)
 - [ ] Decision table: if aligned vectors found → RPH supported; if not → strong falsification
 
+### Full Analysis Suite (7 Verdicts) — READY TO RUN
+- [ ] Kill multi-layer run (PID 4048, 12h+ running, only L14 done)
+- [ ] Run `run_full_analysis.bat` on Qwen3-4B genome FIRST (the interesting one)
+- [ ] Run `run_full_analysis.bat` on 1.5B genome SECOND
+- [ ] Collect 7 verdicts: dose-response, ablation, probing, patching, CoT, DAS, generalization
+- [ ] If all BYPASS → paper reframes around "how we proved bypass + scale threshold"
+- [ ] If any PRECIPITATION → design follow-up, this changes everything
+
 ### Scale Gradient Completion
 - [ ] 7B Qwen2.5 cloud run (Lambda/RunPod A100, ~$25-40)
 - [ ] Update scale gradient table with 7B results
@@ -106,6 +114,11 @@ Expanded RPH eval weakened 1.5B signal (Δ_cf 0.178→0.110) — small-N artifac
 - [ ] Add `all` command: Eos → Metis → review_watchman in one pass
 - [ ] Log all agent outputs to `pronoia/logs/YYYY-MM-DD.log`
 - [ ] Process health monitoring: detect if a child process died
+
+### NotebookLM Audio Blog Pipeline
+- [ ] Auto-generate session summary for NotebookLM after each major session
+- [ ] Template: gather results, findings, decisions, anecdotes → structured markdown
+- [ ] Pronoia `blog` command: collects RESULTS.md + session log + agent outputs → blog draft
 
 ### Future Ideas
 - [ ] Pronoia as always-on daemon: manage all agents, auto-restart on failure
