@@ -27,9 +27,10 @@ from traps import TINY_TRAPS
 # === Configuration ===
 
 SEED_MODEL = "HuggingFaceTB/SmolLM2-360M-Instruct"
+LORA_RANK = int(__import__('os').environ.get('RHEA_LORA_RANK', '4'))
 LORA_CONFIG_360M = LoraConfig(
-    r=4,
-    lora_alpha=8,
+    r=LORA_RANK,
+    lora_alpha=LORA_RANK * 2,
     target_modules=["q_proj", "v_proj", "gate_proj"],
     lora_dropout=0.0,
     bias="none",
