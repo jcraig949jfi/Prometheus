@@ -99,6 +99,7 @@ def evolve(resume_from: str | None = None):
         "tolfun": 1e-8,
         "verb_disp": 1,
         "seed": 42,
+        "CMA_diagonal": True,  # sep-CMA-ES: O(n) memory instead of O(n^2)
     }
 
     if resume_from:
@@ -120,7 +121,7 @@ def evolve(resume_from: str | None = None):
         "genome_dim": genome_dim,
         "sigma_init": SIGMA_INIT,
         "lora_rank": LORA_CONFIG.r,
-        "lora_targets": LORA_CONFIG.target_modules,
+        "lora_targets": list(LORA_CONFIG.target_modules),
         "traps": [t.name for t in TINY_TRAPS],
         "baseline_fitness": baseline.fitness,
         "baseline_ejection_suppression": baseline.ejection_suppression,
