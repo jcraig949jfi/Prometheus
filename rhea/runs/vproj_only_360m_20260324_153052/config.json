@@ -1,0 +1,11 @@
+{
+  "seed_model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "population_size": 20,
+  "genome_dim": 327680,
+  "sigma_init": 0.05,
+  "lora_rank": 8,
+  "lora_targets": [
+    "v_proj"
+  ],
+  "experiment": "v_proj-only targeting based on ablation finding"
+}
