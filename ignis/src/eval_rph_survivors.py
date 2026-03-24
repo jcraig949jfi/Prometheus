@@ -51,6 +51,7 @@ MODEL_REGISTRY = {
     "qwen_qwen2_5-1_5b-instruct": "Qwen/Qwen2.5-1.5B-Instruct",
     "qwen_qwen2_5-3b-instruct":   "Qwen/Qwen2.5-3B-Instruct",
     "qwen_qwen2_5-7b-instruct":   "Qwen/Qwen2.5-7B-Instruct",
+    "qwen_qwen3-4b":              "Qwen/Qwen3-4B",
 }
 
 SCALE_LABEL = {
@@ -58,6 +59,7 @@ SCALE_LABEL = {
     "qwen_qwen2_5-1_5b-instruct": "1.5B",
     "qwen_qwen2_5-3b-instruct":   "3B",
     "qwen_qwen2_5-7b-instruct":   "7B",
+    "qwen_qwen3-4b":              "Qwen3-4B",
 }
 
 

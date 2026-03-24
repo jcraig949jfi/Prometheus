@@ -33,7 +33,7 @@ F:\Prometheus\
 ### Full Rename Completed
 - All Python files: `seti_*` → `ignis_*`, `stop_seti` → `stop_ignis`
 - All classes: `SETIV2Orchestrator` → `IgnisOrchestrator`, `SETIV2Config` → `IgnisConfig`
-- All paths: `results/setiv2` → `results/ignis`, `seti_v2.log` → `ignis.log`
+- All paths: `results/setiv2` → `results/ignis`, `ignis.log` → `ignis.log`
 - All imports verified — clean from F:\Prometheus\ignis\src\
 - Zero hardcoded drive letters in any Python or config file
 

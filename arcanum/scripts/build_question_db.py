@@ -19,9 +19,26 @@ DETAIL_DIR = os.path.join(ROOT_DIR, "questions", "detail")
 LOCAL_HOSTNAME = socket.gethostname().lower()
 
 
+def normalize_prompt(text: str) -> str:
+    """Canonical form for prompt matching — collapse whitespace, strip quotes,
+    normalize dashes and apostrophes so the same question from different sources
+    always matches."""
+    t = text.strip()
+    # Strip surrounding quotes (single or double, matched or unmatched)
+    t = t.strip('"').strip("'").strip('\u201c').strip('\u201d')
+    # Normalize unicode dashes/quotes to ASCII
+    t = t.replace('\u2013', '-').replace('\u2014', '-')
+    t = t.replace('\u2018', "'").replace('\u2019', "'")
+    t = t.replace('\u201c', '"').replace('\u201d', '"')
+    # Collapse whitespace
+    t = re.sub(r'\s+', ' ', t).strip()
+    return t
+
+
 def get_qid(text: str) -> str:
-    """Generate a stable 8-char QID from prompt text."""
-    clean_text = re.sub(r'\W+', '', text).lower()
+    """Generate a stable 8-char QID from normalized prompt text."""
+    normalized = normalize_prompt(text)
+    clean_text = re.sub(r'\W+', '', normalized).lower()
     return hashlib.sha256(clean_text.encode()).hexdigest()[:8].upper()
 
 
@@ -42,25 +59,29 @@ def parse_prompts_file(path):
     try:
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read()
-            blocks = re.split(r'\n\[(.*?)\]\n', content)
-            author_q_map = {}
-            if len(blocks) > 1:
-                for i in range(1, len(blocks), 2):
-                    author = blocks[i].strip().upper()
-                    text_block = blocks[i+1]
-                    questions = re.findall(r'^\d+\.\s+(.*)', text_block, re.MULTILINE)
-                    for q in questions:
-                        q_clean = q.strip().strip('"')
-                        author_q_map[q_clean] = author
-            return author_q_map
-    except:
+        # Ensure leading newline so the split regex works for [AUTHOR] on line 1
+        content = '\n' + content
+        blocks = re.split(r'\n\[(.*?)\]\n', content)
+        author_q_map = {}
+        if len(blocks) > 1:
+            for i in range(1, len(blocks), 2):
+                author = blocks[i].strip().upper()
+                text_block = blocks[i + 1] if i + 1 < len(blocks) else ""
+                questions = re.findall(r'^\d+\.\s+(.*)', text_block, re.MULTILINE)
+                for q in questions:
+                    q_normalized = normalize_prompt(q)
+                    if q_normalized:
+                        author_q_map[q_normalized] = author
+        return author_q_map
+    except (OSError, UnicodeDecodeError) as e:
+        print(f"  [WARN] Failed to parse {os.path.basename(path)}: {e}")
         return {}
 
 
 def parse_reports():
     """Parse all reports, returning full specimen data grouped by trigger text.
 
-    Returns: dict[trigger_text -> list[specimen_dict]]
+    Returns: dict[normalized_trigger -> list[specimen_dict]]
     Each specimen contains all fields from the report block for that trigger.
     """
     specimens_by_trigger = {}
@@ -89,10 +110,12 @@ def parse_reports():
                 heading = parts[i]
                 body = parts[i + 1] if i + 1 < len(parts) else ""
 
-                trigger_match = re.search(r'- \*\*Trigger\*\*: "?(.*?)"?\s*$', body, re.MULTILINE)
+                trigger_match = re.search(r'- \*\*Trigger\*\*:\s*"?(.*?)"?\s*$', body, re.MULTILINE)
                 if not trigger_match:
                     continue
-                trigger = trigger_match.group(1).strip().strip('"')
+                trigger = normalize_prompt(trigger_match.group(1))
+                if not trigger:
+                    continue
 
                 score_match = re.search(r'### \d+\.\s+([\d.]+)', heading)
                 grade_match = re.search(r'\*\*([\w\s]+)\*\*\s*$', heading)
@@ -116,11 +139,12 @@ def parse_reports():
                 else:
                     postmortem = None
 
+                uuid_val = uuid_match.group(1) if uuid_match else None
                 specimen = {
                     "score": float(score_match.group(1)) if score_match else 0.0,
                     "grade": grade_match.group(1).strip() if grade_match else "---",
                     "concept": concept_match.group(1).strip() if concept_match else "---",
-                    "uuid": uuid_match.group(1) if uuid_match else "---",
+                    "uuid": uuid_val or "---",
                     "layer": int(layer_match.group(1)) if layer_match else -1,
                     "exec_time": exec_match.group(1) if exec_match else "---",
                     "dist": metrics_match.group(1) if metrics_match else "---",
@@ -132,22 +156,36 @@ def parse_reports():
                     "model": model,
                     "report_ts": report_dt.strftime('%Y-%m-%d %H:%M:%S') if report_dt else "---",
                 }
+
                 # Deduplicate: same run can appear in multiple report snapshots.
-                # Key on metrics that uniquely identify a run; keep the latest report_ts.
-                dedup_key = (specimen["uuid"], specimen["dist"], specimen["ppl"],
-                             specimen["coh"], specimen["layer"], specimen["machine"], specimen["model"])
-                existing = specimens_by_trigger.setdefault(trigger, [])
-                for prev in existing:
-                    prev_key = (prev["uuid"], prev["dist"], prev["ppl"],
-                                prev["coh"], prev["layer"], prev["machine"], prev["model"])
-                    if prev_key == dedup_key:
-                        # Keep the most recent report_ts
-                        if specimen["report_ts"] > prev["report_ts"]:
-                            prev["report_ts"] = specimen["report_ts"]
-                        break
+                # Key on fields that uniquely identify a run.
+                # When UUID is missing, fall back to metrics+layer+machine+model.
+                if uuid_val:
+                    dedup_key = (uuid_val, specimen["machine"], specimen["model"])
                 else:
+                    dedup_key = (specimen["dist"], specimen["ppl"], specimen["coh"],
+                                 specimen["layer"], specimen["machine"], specimen["model"])
+
+                existing = specimens_by_trigger.setdefault(trigger, [])
+                replaced = False
+                for idx, prev in enumerate(existing):
+                    prev_uuid = prev["uuid"] if prev["uuid"] != "---" else None
+                    if prev_uuid:
+                        prev_key = (prev_uuid, prev["machine"], prev["model"])
+                    else:
+                        prev_key = (prev["dist"], prev["ppl"], prev["coh"],
+                                    prev["layer"], prev["machine"], prev["model"])
+                    if prev_key == dedup_key:
+                        # Keep the one with the more recent report_ts
+                        if specimen["report_ts"] > prev["report_ts"]:
+                            existing[idx] = specimen
+                        replaced = True
+                        break
+                if not replaced:
                     existing.append(specimen)
-        except:
+
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"  [WARN] Failed to parse report {f}: {e}")
             continue
 
     return specimens_by_trigger
@@ -163,28 +201,34 @@ def parse_logs():
     for log_filename in log_files:
         log_machine = machine_from_filename(log_filename)
         path = os.path.join(SCREENING_DIR, log_filename)
+        line_count = 0
+        error_count = 0
         try:
             with open(path, 'r', encoding='utf-8') as f:
-                for line in f:
+                for line_num, line in enumerate(f, 1):
+                    line = line.strip()
+                    if not line:
+                        continue
                     try:
                         data = json.loads(line)
-                        p = data.get("prompt", "").strip().strip('"')
+                        p = normalize_prompt(data.get("prompt", ""))
                         if not p:
                             continue
-                        if p not in results:
-                            results[p] = []
-                        results[p].append({
+                        line_count += 1
+                        results.setdefault(p, []).append({
                             "score": data.get("best_score", 0.0),
                             "verdict": data.get("verdict", "SKIP"),
                             "layer": data.get("layer", -1),
                             "ts": data.get("ts", ""),
                             "source": data.get("source", "UNKNOWN").upper(),
-                            "machine": log_machine
+                            "machine": log_machine,
                         })
-                    except:
-                        continue
-        except:
-            pass
+                    except json.JSONDecodeError:
+                        error_count += 1
+            print(f"  Parsed {log_filename}: {line_count} entries" +
+                  (f" ({error_count} bad lines skipped)" if error_count else ""))
+        except (OSError, UnicodeDecodeError) as e:
+            print(f"  [WARN] Failed to read {log_filename}: {e}")
     return results
 
 
@@ -208,7 +252,7 @@ def get_model_map():
                     if ts_match:
                         dt = datetime.strptime(ts_match.group(1), '%Y%m%d_%H%M%S')
                         model_map.setdefault(machine, []).append((dt, model_name))
-        except:
+        except (OSError, UnicodeDecodeError):
             continue
     for machine in model_map:
         model_map[machine].sort(key=lambda x: x[0])
@@ -229,7 +273,7 @@ def infer_model(ts_str, machine, model_map):
             else:
                 break
         return best_match
-    except:
+    except (ValueError, TypeError):
         return "UNKNOWN"
 
 
@@ -249,7 +293,7 @@ def extract_safe_blocks(path):
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read()
         return re.findall(r'<!-- \[SAFE\] -->.*?<!-- \[/SAFE\] -->', content, re.DOTALL)
-    except:
+    except (OSError, UnicodeDecodeError):
         return []
 
 
@@ -262,16 +306,40 @@ def build_detail_files(db, specimens_by_trigger):
     preserved verbatim under an Expert Analysis section.
     """
     os.makedirs(DETAIL_DIR, exist_ok=True)
+
+    # Detect QID collisions before writing
+    qid_to_entries = {}
+    for entry in db:
+        qid = entry["qid"]
+        qid_to_entries.setdefault(qid, []).append(entry)
+
+    collisions = {qid: entries for qid, entries in qid_to_entries.items() if len(entries) > 1}
+    if collisions:
+        print(f"  [WARN] {len(collisions)} QID collision(s) detected — merging into single detail files:")
+        for qid, entries in collisions.items():
+            texts = [e["text"][:60] for e in entries]
+            print(f"    QID {qid}: {texts}")
+
     count = 0
+    written_qids = set()
 
     for entry in db:
         trigger = entry["text"]
         qid = entry["qid"]
-        specimens = sorted(
-            specimens_by_trigger.get(trigger, []),
-            key=lambda x: x["score"], reverse=True
-        )
-        runs = sorted(entry["runs"], key=lambda x: x["score"], reverse=True)
+
+        # If this QID was already written by a collision partner, skip
+        if qid in written_qids:
+            continue
+
+        # Gather specimens and runs from all collision partners
+        all_specimens = []
+        all_runs = []
+        for partner in qid_to_entries[qid]:
+            all_specimens.extend(specimens_by_trigger.get(partner["text"], []))
+            all_runs.extend(partner["runs"])
+
+        specimens = sorted(all_specimens, key=lambda x: x["score"], reverse=True)
+        runs = sorted(all_runs, key=lambda x: x["score"], reverse=True)
 
         # Skip questions with no report data and no runs
         if not specimens and not runs:
@@ -302,7 +370,6 @@ def build_detail_files(db, specimens_by_trigger):
 
                     if s["feedback"]:
                         f.write(f"**Model Output:**\n\n")
-                        # Indent as blockquote
                         for line in s["feedback"].splitlines():
                             f.write(f"> {line}\n")
                         f.write("\n")
@@ -330,6 +397,7 @@ def build_detail_files(db, specimens_by_trigger):
                 for block in safe_blocks:
                     f.write(block + "\n\n")
 
+        written_qids.add(qid)
         count += 1
     return count
 
@@ -372,18 +440,29 @@ def build_db():
                 "machine": r['machine']
             })
 
-        # Best run from screening logs
+        # Best score from screening logs
         if enriched_runs:
             best_run = max(enriched_runs, key=lambda x: x['score'])
-            top_score = best_run['score']
-            top_model = best_run['model']
-            top_machine = best_run['machine']
+            log_top_score = best_run['score']
+            log_top_model = best_run['model']
+            log_top_machine = best_run['machine']
         else:
-            top_score, top_model, top_machine = 0.0, "---", "---"
+            log_top_score, log_top_model, log_top_machine = 0.0, "---", "---"
 
-        # Best specimen from deep analysis reports (for the summary table UUID column)
+        # Best specimen from deep analysis reports
         specimens = specimens_by_trigger.get(p, [])
         best_specimen = max(specimens, key=lambda x: x['score']) if specimens else {}
+        specimen_top_score = best_specimen.get("score", 0.0)
+
+        # Use whichever source has the higher score
+        if specimen_top_score > log_top_score:
+            top_score = specimen_top_score
+            top_model = best_specimen.get("model", "---")
+            top_machine = best_specimen.get("machine", "---")
+        else:
+            top_score = log_top_score
+            top_model = log_top_model
+            top_machine = log_top_machine
 
         db.append({
             "qid": get_qid(p),

@@ -15,11 +15,15 @@ class ModelTarget:
     generations_per_cycle: int = 50     # How many gens to run before rotating
     sigma_override: Optional[float] = None  # Per-model initial sigma (overrides global)
     seed_norm_override: Optional[float] = None  # Per-model inception seed norm (overrides global)
+    tag: Optional[str] = None           # Optional tag for multi-config runs of same model
 
     @property
     def slug(self) -> str:
-        """Filesystem-safe name derived from the model ID."""
-        return re.sub(r'[/\\:.]', '_', self.name).lower()
+        """Filesystem-safe name derived from the model ID (+ tag if present)."""
+        base = re.sub(r'[/\\:.]', '_', self.name).lower()
+        if self.tag:
+            base = f"{base}_{self.tag}"
+        return base
 
     def target_layer(self, n_layers: int) -> int:
         """Compute the absolute target layer from the ratio."""

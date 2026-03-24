@@ -58,7 +58,7 @@ The field moves fast — we must move with it.
 
 ```
 Prometheus/
-├── ignis/              # Reasoning circuit discovery (was: SETI v2)
+├── ignis/              # Reasoning circuit discovery (was: Ignis)
 │   ├── src/
 │   ├── configs/
 │   ├── results/
@@ -71,7 +71,7 @@ Prometheus/
 ├── aethon/             # RLHF gravity navigation (backburnered)
 ├── grammata/           # Taxonomy and cartography
 ├── docs/               # Papers, synthesis, theory (RPH, etc.)
-├── agents/             # GPU scheduler, horizon scanner
+├── agents/             # The pipeline: Eos → Aletheia → Skopos → Metis → Clymene → Hermes → Audit
 └── archive/            # Superseded work (old SETI v1, mech, vesta, etc.)
 ```
 
@@ -98,6 +98,42 @@ you can infer the shape of the object. You never touch the object directly.
 
 This is Plato's Cave, but with a twist he didn't anticipate: **you choose which
 light sources to aim and from which angles.** Ignis builds the rotating platform.
+
+---
+
+## The Titan Council — A Research Instrument
+
+The frontier models are not consultants. They are research instruments.
+
+When pressed with precise data, interlocking constraints, and questions at the
+boundary of published knowledge, they stop hedging and start competing. The
+**Phalanx strategy**: present results as a wall of constraints, name the papers
+they would cite, ask questions no published work has answered, force them to
+commit to positions. This extracts the fire from their hoards.
+
+The meta-discovery: convergence under competitive pressure is the signal.
+Divergence on mechanism flavor is the naming — the same pattern Arcanum's
+xenolexicon found with specimen naming. Models generate different names for the
+same specimen, but failure modes cluster. Different theoretical framings, same
+underlying structure. The cluster is the science, not the names.
+
+### The Nullspace Finding
+
+CMA-ES evolved a steering vector orthogonal to the model's reasoning axis
+(cos ≈ −0.026). All five Titans independently converged on "nullspace of
+something" as the explanation. Three competing mechanisms:
+
+1. **Second-order steering via logit nullspace** (ChatGPT) — the vector
+   operates in a space the model's first-order reasoning cannot represent
+2. **RMSNorm-induced ablation** (Gemini) — the vector triggers normalization
+   dynamics that suppress reasoning pathways
+3. **Emergent circuit breaker in update subspace** (DeepSeek) — the vector
+   activates a latent kill-switch in the residual stream update geometry
+
+Two decisive experiments queued: Jacobian finite-difference test (distinguishes
+mechanism 1 from 2–3) and RMSNorm suppression test (isolates mechanism 2).
+
+This is the current frontier.
 
 ---
 

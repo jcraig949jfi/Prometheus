@@ -1,0 +1,26 @@
+# Skopos Configuration
+# Research threads and scoring thresholds
+
+scoring:
+  batch_size: 30          # Max entities per LLM call
+  high_threshold: 4       # Score >= this triggers HIGH RELEVANCE
+  relevant_threshold: 3   # Score >= this included in Titan prompts
+  recent_hours: 24        # How far back to look for new entities
+
+titan_prompt:
+  max_words: 3000
+  auto_generate: true     # Generate Titan prompt when high-relevance found
+
+# Research threads — update here when priorities shift
+# (Currently hardcoded in skopos.py for speed; this file is for reference)
+research_threads:
+  - id: anti_cot_geometry
+    name: Anti-CoT Geometric Pathway
+  - id: precipitation_signatures
+    name: Reasoning Precipitation Signatures
+  - id: tensor_decomposition
+    name: Tensor Methods for Activation Geometry
+  - id: sae_features
+    name: SAE Feature Decomposition
+  - id: scale_threshold
+    name: Scale-Dependent Reasoning Emergence

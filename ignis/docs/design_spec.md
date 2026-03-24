@@ -9,7 +9,7 @@
 
 ## 1  Overview
 
-Ignis (formerly SETI v2 — Search for Evolved Thought Intelligence) represents the transition from **Protocol Discovery** (text prompts) to **Circuit Discovery** (latent steering). It operates on the hypothesis that reasoning can be triggered by injecting specific directional signals directly into the model's residual stream.
+Ignis (formerly Ignis — Search for Evolved Thought Intelligence) represents the transition from **Protocol Discovery** (text prompts) to **Circuit Discovery** (latent steering). It operates on the hypothesis that reasoning can be triggered by injecting specific directional signals directly into the model's residual stream.
 
 ### 1.1  Evolutionary Pivot
 

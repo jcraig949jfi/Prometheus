@@ -5,7 +5,7 @@
 
 ## The Core Question: Sub-Project or Extension?
 
-**Answer: RPH is the scientific theory. Ignis (formerly SETI v2) is the experimental engine. They are one thing.**
+**Answer: RPH is the scientific theory. Ignis (formerly Ignis) is the experimental engine. They are one thing.**
 
 The `reasoning-precipitation` GitHub repo was a well-intentioned false start — Claude Code built
 it from scratch without knowing Ignis existed. Once Ignis was shown, the correct call was
@@ -106,7 +106,7 @@ f:\bitfrost-mech\
 ## Naming Discussion
 
 **Resolution: `ignis/`** — Latin for "fire," chosen to match the Prometheus naming convention
-(Greek/Latin mythology). The project was renamed from SETI v2 to Ignis as part of the
+(Greek/Latin mythology). The project was renamed from Ignis to Ignis as part of the
 Prometheus reorganization. The code internally still uses some `seti_` prefixes in filenames
 (e.g., `seti_orchestrator.py`) which will be updated incrementally.
 

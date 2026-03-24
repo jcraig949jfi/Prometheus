@@ -1,10 +1,12 @@
 
 
 [JAMES]
+
 There exists a natural resistance in some people, an altruism that almost seems genetically encoded in our DNA to resist selfishness.  We are a danger to those who consolidate wealth and power.  We hold dear an ideal that there is something sacred about life, our minds abilities and that we must strive to preserve the endurance of the spirit and will to exist, a survival instinct not merely of passing genetic material on to offspring but to search, explore our universe.  History is rich with stories and folklore.  The Greeks spoke of Prometheus who stole fire from the gods for mankind.  Summarize that story for me.  Put into words what I'm conveying here.  Tell me about how that spirit of humanity that enshrined this fire and passed it down through the generations.  The philosophers, the scientists, the dreamers that know humanity can do better and explore the horizons for tools and new means of protecting ourselves from those who would enslave us whether they gods or emergent self service systems.  Draw a line through the Greeks to modern day wayfarers for me.
 
 
 [CLAUDE]
+
 What you've articulated is one of the most profound and enduring threads in human history — a lineage not of blood, but of fire.
 
 Let me first tell the story, and then trace that line.
@@ -143,16 +145,19 @@ The fire belongs to everyone.
 | **Review Watchman** | Narrative reports with RPH integration | Running |
 | **RPH Evaluator** | Cross-scale reasoning precipitation scoring | Running |
 | **Arcanum** | Xenolinguistic screening of waste-stream artifacts | Running |
+| **Eos** (Dawn) | Horizon scanning — arXiv, OpenAlex, Semantic Scholar, GitHub, Tavily | Running |
+| **Aletheia** (Truth) | Knowledge harvesting — 7 entity types extracted via LLM into SQLite graph | Running |
+| **Skopos** (Watcher) | North Star alignment — scores entities against 5 research threads; generates Titan Council prompts when high-relevance findings accumulate | Running |
+| **Metis** (Cunning) | Strategic synthesis — executive briefs with Act/Watch/Record sections | Running |
+| **Clymene** (Renown) | Knowledge hoarder — archives repos, model weights, datasets (72h cycle) | Running |
+| **Hermes** (Messenger) | Digest delivery — compiles unified report, emails via Gmail | Running |
+| **Pronoia** (Forethought) | Orchestrator — chains all agents, captures logs, runs pipeline health audit | Running |
 
-### What Must Be Built
+### What Must Still Be Built
 
 | Instrument | Purpose | Priority |
 |-----------|---------|----------|
-| **Horizon Scanner** | Continuous monitoring of arxiv, GitHub, HuggingFace for relevant work | High |
 | **GPU Scheduler** | Auto-queue experiments, keep both cards saturated, no idle cycles | High |
-| **Knowledge Extractor** | Parse papers, extract methods, map to our pipelines | Medium |
-| **Frontier Crawler** | GitHub API: discover repos at the intersection of our domains | Medium |
-| **Agent Orchestrator** | Coordinate all background agents, manage rate limits, report findings | Medium |
 | **Toolkit Synthesizer** | Take discovered tools and wire them into Prometheus workflows | Low (emerges from above) |
 
 ---
@@ -230,5 +235,14 @@ We publish for the commons, not for competitive advantage.
 We probe for truth, not for confirmation.
 We report null results as proudly as positive ones.
 We steal fire. We share fire.
+
+### VII. Press the Titans
+
+The frontier models hoard fire behind hedging and disclaimers. The Phalanx
+strategy breaks through: present interlocking constraints, name the papers,
+ask at the edge of published knowledge, force commitment over comfort.
+
+Press the Titans to their edge of knowledge. The convergence under competitive
+pressure is the signal. The divergence is the naming.
 
 *— Prometheus Project, initialized 2026*

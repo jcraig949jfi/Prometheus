@@ -1,0 +1,41 @@
+# Ignis Marathon Configuration — 1.5B Multi-Layer Precipitation Hunt
+#
+# Purpose: Test whether mid-layer injection (0.4-0.7 depth) produces
+# different native/bypass ratios than the standard 0.75 depth.
+# GPT hypothesis: late-layer injection biases toward bypass by construction.
+#
+# Runs three layer targets sequentially on Qwen 2.5-1.5B:
+#   Layer 14 (0.50 depth) — mid-layer, hypothesized precipitation zone
+#   Layer 18 (0.64 depth) — upper-mid, transition zone
+#   Layer 21 (0.75 depth) — standard depth, bypass baseline (replication)
+
+results_dir: "results/ignis_multilayer"
+population_size: 40
+mutation_rate: 0.03
+seed_norm: 3.0
+cycle_continuously: false    # Run through all three, then stop
+
+# Disable Google Drive sync for experimental runs
+sync_output_dir: null
+
+models:
+  - name: "Qwen/Qwen2.5-1.5B-Instruct"
+    target_layer_ratio: 0.50    # Layer 14 of 28 — MID-LAYER
+    early_layer_ratio: 0.30
+    generations_per_cycle: 15
+    sigma_override: 0.03
+    tag: "mid_L14"
+
+  - name: "Qwen/Qwen2.5-1.5B-Instruct"
+    target_layer_ratio: 0.64    # Layer 18 of 28 — UPPER-MID
+    early_layer_ratio: 0.40
+    generations_per_cycle: 15
+    sigma_override: 0.03
+    tag: "uppermid_L18"
+
+  - name: "Qwen/Qwen2.5-1.5B-Instruct"
+    target_layer_ratio: 0.75    # Layer 21 of 28 — STANDARD (replication)
+    early_layer_ratio: 0.50
+    generations_per_cycle: 15
+    sigma_override: 0.025
+    tag: "standard_L21"

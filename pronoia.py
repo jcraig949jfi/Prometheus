@@ -14,6 +14,7 @@ Usage:
 """
 
 import argparse
+import re
 import subprocess
 import sys
 import os
@@ -35,6 +36,11 @@ HERMES_SCRIPT = PROMETHEUS_ROOT / "agents" / "hermes" / "src" / "hermes.py"
 EOS_REPORTS = PROMETHEUS_ROOT / "agents" / "eos" / "reports"
 ALETHEIA_DATA = PROMETHEUS_ROOT / "agents" / "aletheia" / "data"
 METIS_BRIEFS = PROMETHEUS_ROOT / "agents" / "metis" / "briefs"
+SKOPOS_SCRIPT = PROMETHEUS_ROOT / "agents" / "skopos" / "src" / "skopos.py"
+SKOPOS_REPORTS = PROMETHEUS_ROOT / "agents" / "skopos" / "reports"
+SKOPOS_SCORES_DB = PROMETHEUS_ROOT / "agents" / "skopos" / "data" / "scores.db"
+AUDIT_LOGS_DIR = PROMETHEUS_ROOT / "agents" / "pronoia" / "logs"
+TITAN_PROMPTS_DIR = PROMETHEUS_ROOT / "docs" / "titan_prompts"
 IGNIS_SRC = PROMETHEUS_ROOT / "ignis" / "src"
 REVIEW_WATCHMAN = IGNIS_SRC / "review_watchman.py"
 IGNIS_RESULTS = IGNIS_SRC / "results" / "ignis"
@@ -71,6 +77,9 @@ def publish_reports() -> bool:
         "agents/metis/briefs/",
         "agents/clymene/reports/",
         "agents/hermes/digests/",
+        "agents/skopos/reports/",
+        "agents/pronoia/logs/",
+        "docs/titan_prompts/",
         "docs/RESULTS.md",
         "docs/TODO.md",
         "agents/eos/data/paper_index.json",
@@ -125,7 +134,20 @@ def publish_reports() -> bool:
 # Agent runners
 # ---------------------------------------------------------------------------
 
-def run_eos(once: bool = True) -> Path | None:
+def run_agent_captured(cmd: list[str], cwd: str) -> tuple[int, str]:
+    """Run a subprocess and capture its output while still printing to console."""
+    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    output = ""
+    if result.stdout:
+        print(result.stdout, end="")
+        output += result.stdout
+    if result.stderr:
+        print(result.stderr, end="", file=sys.stderr)
+        output += result.stderr
+    return result.returncode, output
+
+
+def run_eos(once: bool = True, logs: dict | None = None) -> Path | None:
     """Run Eos and return the digest path if produced."""
     banner("EOS — Scanning the horizon")
 
@@ -138,10 +160,12 @@ def run_eos(once: bool = True) -> Path | None:
         cmd.append("--once")
 
     print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=str(EOS_DAEMON.parent.parent))
+    returncode, output = run_agent_captured(cmd, cwd=str(EOS_DAEMON.parent.parent))
+    if logs is not None:
+        logs["eos"] = output
 
-    if result.returncode != 0:
-        print(f"[WARN] Eos exited with code {result.returncode}")
+    if returncode != 0:
+        print(f"[WARN] Eos exited with code {returncode}")
 
     # Find today's digest
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -154,7 +178,7 @@ def run_eos(once: bool = True) -> Path | None:
         return None
 
 
-def run_aletheia() -> bool:
+def run_aletheia(logs: dict | None = None) -> bool:
     """Run Aletheia to harvest knowledge from Eos findings."""
     banner("ALETHEIA — Harvesting knowledge")
 
@@ -164,10 +188,12 @@ def run_aletheia() -> bool:
 
     cmd = [PYTHON, str(ALETHEIA_SCRIPT), "--once"]
     print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=str(ALETHEIA_SCRIPT.parent.parent))
+    returncode, output = run_agent_captured(cmd, cwd=str(ALETHEIA_SCRIPT.parent.parent))
+    if logs is not None:
+        logs["aletheia"] = output
 
-    if result.returncode != 0:
-        print(f"[WARN] Aletheia exited with code {result.returncode}")
+    if returncode != 0:
+        print(f"[WARN] Aletheia exited with code {returncode}")
         return False
 
     # Check if knowledge graph exists
@@ -199,7 +225,7 @@ def clymene_is_due() -> bool:
         return True  # Can't read timestamp — run anyway
 
 
-def run_clymene() -> bool:
+def run_clymene(logs: dict | None = None) -> bool:
     """Run Clymene hoard cycle if cooldown has elapsed."""
     if not clymene_is_due():
         return False
@@ -212,10 +238,12 @@ def run_clymene() -> bool:
 
     cmd = [PYTHON, str(CLYMENE_SCRIPT), "--once"]
     print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=str(CLYMENE_SCRIPT.parent.parent))
+    returncode, output = run_agent_captured(cmd, cwd=str(CLYMENE_SCRIPT.parent.parent))
+    if logs is not None:
+        logs["clymene"] = output
 
-    if result.returncode != 0:
-        print(f"[WARN] Clymene exited with code {result.returncode}")
+    if returncode != 0:
+        print(f"[WARN] Clymene exited with code {returncode}")
         return False
 
     # Check for today's report
@@ -228,7 +256,7 @@ def run_clymene() -> bool:
     return True
 
 
-def run_hermes() -> bool:
+def run_hermes(logs: dict | None = None) -> bool:
     """Run Hermes to collect cycle reports and email digest."""
     banner("HERMES — Delivering the digest")
 
@@ -238,17 +266,19 @@ def run_hermes() -> bool:
 
     cmd = [PYTHON, str(HERMES_SCRIPT), "--once"]
     print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=str(HERMES_SCRIPT.parent.parent))
+    returncode, output = run_agent_captured(cmd, cwd=str(HERMES_SCRIPT.parent.parent))
+    if logs is not None:
+        logs["hermes"] = output
 
-    if result.returncode != 0:
-        print(f"[WARN] Hermes exited with code {result.returncode}")
+    if returncode != 0:
+        print(f"[WARN] Hermes exited with code {returncode}")
         return False
 
     print(f"[{timestamp()}] Hermes delivered")
     return True
 
 
-def run_metis(digest_path: Path = None) -> Path | None:
+def run_metis(digest_path: Path = None, logs: dict | None = None) -> Path | None:
     """Run Metis and return the brief path if produced."""
     banner("METIS — Analyzing findings")
 
@@ -261,10 +291,12 @@ def run_metis(digest_path: Path = None) -> Path | None:
         cmd.extend(["--digest", str(digest_path)])
 
     print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
-    result = subprocess.run(cmd, cwd=str(METIS_SCRIPT.parent.parent))
+    returncode, output = run_agent_captured(cmd, cwd=str(METIS_SCRIPT.parent.parent))
+    if logs is not None:
+        logs["metis"] = output
 
-    if result.returncode != 0:
-        print(f"[WARN] Metis exited with code {result.returncode}")
+    if returncode != 0:
+        print(f"[WARN] Metis exited with code {returncode}")
 
     # Find today's brief
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -281,6 +313,250 @@ def run_metis(digest_path: Path = None) -> Path | None:
             return brief_path_local
         print(f"[{timestamp()}] No brief found for {today}")
         return None
+
+
+def run_skopos(logs: dict | None = None) -> bool:
+    """Run Skopos ASSESS stage — score entities against research threads."""
+    banner("SKOPOS — Scoring against research threads")
+
+    if not SKOPOS_SCRIPT.exists():
+        print(f"[{timestamp()}] Skopos not found at {SKOPOS_SCRIPT} — skipping")
+        return False
+
+    cmd = [PYTHON, str(SKOPOS_SCRIPT), "--once"]
+    print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
+    returncode, output = run_agent_captured(cmd, cwd=str(SKOPOS_SCRIPT.parent.parent))
+    if logs is not None:
+        logs["skopos"] = output
+
+    if returncode != 0:
+        print(f"[WARN] Skopos exited with code {returncode}")
+        return False
+
+    # Check for today's report
+    today = datetime.now().strftime("%Y-%m-%d")
+    report = SKOPOS_REPORTS / f"{today}_alignment.md"
+    if report.exists():
+        print(f"[{timestamp()}] Alignment report: {report}")
+        return True
+    print(f"[{timestamp()}] Skopos completed")
+    return True
+
+
+def run_skopos_generate() -> bool:
+    """Run Skopos GENERATE stage — produce Titan Council prompt."""
+    banner("SKOPOS — Generating Titan Council prompt")
+
+    if not SKOPOS_SCRIPT.exists():
+        print(f"[{timestamp()}] Skopos not found at {SKOPOS_SCRIPT} — skipping")
+        return False
+
+    cmd = [PYTHON, str(SKOPOS_SCRIPT), "--generate-prompt"]
+    print(f"[{timestamp()}] Launching: {' '.join(cmd)}")
+    returncode, output = run_agent_captured(cmd, cwd=str(SKOPOS_SCRIPT.parent.parent))
+
+    if returncode != 0:
+        print(f"[WARN] Skopos generate exited with code {returncode}")
+        return False
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    prompt_path = TITAN_PROMPTS_DIR / f"auto_{today}.md"
+    if prompt_path.exists():
+        print(f"[{timestamp()}] Titan prompt: {prompt_path}")
+        return True
+    print(f"[{timestamp()}] Skopos generate completed")
+    return True
+
+
+def has_high_relevance_scores() -> bool:
+    """Check if Skopos found any high-relevance entities (score 4+)."""
+    if not SKOPOS_SCORES_DB.exists():
+        return False
+    try:
+        import sqlite3
+        conn = sqlite3.connect(str(SKOPOS_SCORES_DB))
+        row = conn.execute("SELECT COUNT(*) FROM skopos_scores WHERE score >= 4").fetchone()
+        conn.close()
+        return (row[0] or 0) > 0
+    except Exception:
+        return False
+
+
+# ---------------------------------------------------------------------------
+# AUDIT — Pipeline Health Monitor
+# ---------------------------------------------------------------------------
+
+AUDIT_CHECKS = {
+    "rate_limits": {
+        "description": "Check for 429 errors or rate limit warnings",
+        "pattern": r"429|rate.?limit|too many requests|backoff",
+        "severity": "HIGH",
+        "action": "Reduce scan frequency or add delay",
+    },
+    "api_errors": {
+        "description": "Check for API failures",
+        "pattern": r"HTTP Error|ConnectionError|Timeout|failed.*fetch|API.*error",
+        "severity": "MEDIUM",
+        "action": "Check API key validity and service status",
+    },
+    "zero_output": {
+        "description": "Agent produced no output text",
+        "severity": "LOW",
+        "action": "Search terms may be too narrow or all items already processed",
+    },
+    "knowledge_growth": {
+        "description": "Track Aletheia entity counts",
+        "severity": "INFO",
+        "action": "Log trend — flat growth means scanner or extractor needs tuning",
+    },
+    "vram_state": {
+        "description": "Check GPU memory after cycle (detect leaks)",
+        "severity": "LOW",
+        "action": "If VRAM > 1GB after pipeline, something didn't clean up",
+    },
+}
+
+
+def _check_vram() -> str | None:
+    """Query nvidia-smi for VRAM usage. Returns string or None."""
+    try:
+        result = subprocess.run(
+            ["nvidia-smi", "--query-gpu=memory.used,memory.total", "--format=csv,noheader,nounits"],
+            capture_output=True, text=True, timeout=5,
+        )
+        if result.returncode == 0 and result.stdout.strip():
+            return result.stdout.strip()
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        pass
+    return None
+
+
+def _query_entity_counts() -> dict[str, int]:
+    """Get entity counts from Aletheia's knowledge graph."""
+    kg_path = ALETHEIA_DATA / "knowledge_graph.db"
+    if not kg_path.exists():
+        return {}
+    try:
+        import sqlite3
+        conn = sqlite3.connect(str(kg_path))
+        counts = {}
+        for table in ["papers", "techniques", "reasoning_motifs", "tools", "terms", "claims"]:
+            try:
+                row = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()
+                counts[table] = row[0] if row else 0
+            except sqlite3.OperationalError:
+                pass
+        conn.close()
+        return counts
+    except Exception:
+        return {}
+
+
+def run_audit(logs: dict) -> str:
+    """Run pipeline health audit. Returns overall status: HEALTHY/DEGRADED/UNHEALTHY."""
+    banner("AUDIT — Pipeline health check")
+    AUDIT_LOGS_DIR.mkdir(parents=True, exist_ok=True)
+
+    ts = datetime.now().strftime("%Y-%m-%d_%H%M%S")
+    report_path = AUDIT_LOGS_DIR / f"audit_{ts}.md"
+
+    findings = []
+    overall = "HEALTHY"
+    has_high = False
+
+    # Check each agent's logs for patterns
+    for agent_name, agent_log in logs.items():
+        agent_findings = []
+
+        # Rate limits
+        if re.search(AUDIT_CHECKS["rate_limits"]["pattern"], agent_log, re.IGNORECASE):
+            agent_findings.append(("HIGH", "rate_limits", "Rate limit or 429 detected"))
+            has_high = True
+
+        # API errors
+        if re.search(AUDIT_CHECKS["api_errors"]["pattern"], agent_log, re.IGNORECASE):
+            agent_findings.append(("MEDIUM", "api_errors", "API error detected"))
+
+        # Zero output
+        if len(agent_log.strip()) < 20:
+            agent_findings.append(("LOW", "zero_output", "Agent produced minimal output"))
+
+        if agent_findings:
+            findings.append((agent_name, agent_findings))
+
+    # Knowledge growth
+    entity_counts = _query_entity_counts()
+
+    # VRAM
+    vram = _check_vram()
+
+    # Determine overall status
+    if has_high:
+        overall = "UNHEALTHY"
+    elif any(sev == "MEDIUM" for _, agent_f in findings for sev, _, _ in agent_f):
+        overall = "DEGRADED"
+
+    # Build report
+    now_utc = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    lines = [
+        f"# Pipeline Audit -- {ts}",
+        f"*Generated: {now_utc}*",
+        f"",
+        f"**Overall: {overall}**",
+        f"",
+        "## Agent Health",
+        "",
+    ]
+
+    all_agents = ["eos", "aletheia", "skopos", "metis", "clymene", "hermes"]
+    agent_finding_map = {name: f for name, f in findings}
+
+    for agent in all_agents:
+        if agent not in logs:
+            lines.append(f"- **{agent}**: SKIPPED")
+            continue
+        af = agent_finding_map.get(agent, [])
+        if not af:
+            lines.append(f"- **{agent}**: OK")
+        else:
+            worst = max(af, key=lambda x: {"HIGH": 3, "MEDIUM": 2, "LOW": 1}.get(x[0], 0))
+            status = "ERROR" if worst[0] == "HIGH" else ("WARN" if worst[0] == "MEDIUM" else "INFO")
+            lines.append(f"- **{agent}**: {status}")
+            for sev, check, msg in af:
+                lines.append(f"  - [{sev}] {msg} ({AUDIT_CHECKS[check]['action']})")
+
+    lines.append("")
+
+    # Entity growth
+    if entity_counts:
+        lines.append("## Knowledge Growth")
+        lines.append("")
+        for table, count in sorted(entity_counts.items()):
+            lines.append(f"- {table}: {count}")
+        lines.append("")
+
+    # VRAM
+    lines.append("## VRAM State")
+    lines.append("")
+    if vram:
+        lines.append(f"- GPU memory: {vram} MiB")
+        # Check if over threshold
+        try:
+            used = int(vram.split(",")[0].strip())
+            if used > 1024:
+                lines.append(f"- **WARNING**: VRAM > 1GB after pipeline — possible leak")
+        except (ValueError, IndexError):
+            pass
+    else:
+        lines.append("- nvidia-smi not available or no GPU detected")
+    lines.append("")
+
+    report_text = "\n".join(lines)
+    report_path.write_text(report_text, encoding="utf-8")
+    print(f"[{timestamp()}] Audit report: {report_path}")
+    print(f"[{timestamp()}] Pipeline health: {overall}")
+
+    return overall
 
 
 def run_review() -> None:
@@ -302,8 +578,30 @@ def run_review() -> None:
 # Compound commands
 # ---------------------------------------------------------------------------
 
+def _run_cycle(publish: bool = False) -> None:
+    """Run a single scan cycle with all pipeline stages."""
+    logs = {}
+
+    digest = run_eos(once=True, logs=logs)
+    if digest:
+        run_aletheia(logs=logs)
+        run_skopos(logs=logs)           # ASSESS — score against research threads
+        run_metis(digest, logs=logs)    # Now has Skopos alignment data in context
+
+    run_clymene(logs=logs)
+    run_hermes(logs=logs)
+
+    audit_result = run_audit(logs)      # AUDIT — pipeline health
+
+    if has_high_relevance_scores():
+        run_skopos_generate()           # GENERATE — Titan prompt
+
+    if publish:
+        publish_reports()
+
+
 def cmd_scan(every: float = 0, publish: bool = False) -> None:
-    """Full scan cycle: Eos → Metis → (optional) GitHub publish."""
+    """Full scan cycle: Eos → Aletheia → Skopos → Metis → Clymene → Hermes → Audit → Generate → Publish."""
     if every < 0:
         banner("WORMHOLE OPENED")
         print("  The aliens have arrived. They want to talk about your")
@@ -316,14 +614,7 @@ def cmd_scan(every: float = 0, publish: bool = False) -> None:
         return
 
     # Always run at least once
-    digest = run_eos(once=True)
-    if digest:
-        run_aletheia()
-        run_metis(digest)
-    run_clymene()
-    run_hermes()
-    if publish:
-        publish_reports()
+    _run_cycle(publish=publish)
 
     if every > 0:
         import time
@@ -337,14 +628,7 @@ def cmd_scan(every: float = 0, publish: bool = False) -> None:
             except KeyboardInterrupt:
                 print(f"\n[{timestamp()}] Pronoia shutting down")
                 break
-            digest = run_eos(once=True)
-            if digest:
-                run_aletheia()
-                run_metis(digest)
-            run_clymene()
-            run_hermes()
-            if publish:
-                publish_reports()
+            _run_cycle(publish=publish)
     else:
         banner("SCAN COMPLETE")
         print_status()
@@ -399,6 +683,54 @@ def print_status() -> None:
             print("    (none)")
     else:
         print("    (briefs dir missing)")
+
+    print()
+
+    # Skopos alignment reports
+    print("  Skopos Alignment:")
+    if SKOPOS_REPORTS.exists():
+        reports = sorted(SKOPOS_REPORTS.glob("*.md"), reverse=True)
+        for r in reports[:3]:
+            size = r.stat().st_size
+            mod = datetime.fromtimestamp(r.stat().st_mtime).strftime("%H:%M")
+            marker = " <-- TODAY" if (today in r.name or today_utc in r.name) else ""
+            print(f"    {r.name} ({size:,} bytes, {mod}){marker}")
+        if not reports:
+            print("    (none)")
+    else:
+        print("    (no reports yet)")
+
+    # Titan prompts
+    if TITAN_PROMPTS_DIR.exists():
+        prompts = sorted(TITAN_PROMPTS_DIR.glob("*.md"), reverse=True)
+        if prompts:
+            print(f"  Titan Prompts: {len(prompts)} total")
+            for p in prompts[:2]:
+                mod = datetime.fromtimestamp(p.stat().st_mtime).strftime("%H:%M")
+                marker = " <-- TODAY" if (today in p.name or today_utc in p.name) else ""
+                print(f"    {p.name} ({mod}){marker}")
+
+    print()
+
+    # Audit logs
+    print("  Audit Logs:")
+    if AUDIT_LOGS_DIR.exists():
+        audit_logs = sorted(AUDIT_LOGS_DIR.glob("audit_*.md"), reverse=True)
+        for a in audit_logs[:3]:
+            size = a.stat().st_size
+            mod = datetime.fromtimestamp(a.stat().st_mtime).strftime("%H:%M")
+            # Read first few lines to get overall status
+            try:
+                text = a.read_text(encoding="utf-8")
+                status_match = re.search(r"\*\*Overall: (\w+)\*\*", text)
+                status = status_match.group(1) if status_match else "?"
+            except Exception:
+                status = "?"
+            print(f"    {a.name} [{status}] ({mod})")
+        if not audit_logs:
+            print("    (none)")
+    else:
+        print("    (no audit logs yet)")
 
     print()
 

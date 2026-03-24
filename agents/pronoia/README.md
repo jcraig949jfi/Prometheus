@@ -78,7 +78,31 @@ descriptions for human review.
 
 ---
 
-### Step 3: Metis synthesizes the brief
+### Step 3: Skopos scores against research threads
+
+**Agent:** Skopos (North Star Alignment — ASSESS stage)
+**Script:** `agents/skopos/src/skopos.py --once`
+**Duration:** ~1-2 minutes (LLM scoring calls)
+
+Skopos reads Aletheia's knowledge graph and scores every entity against five
+active research threads:
+
+| Thread | What it tracks |
+|--------|---------------|
+| `anti_cot_geometry` | Orthogonality, nullspace, non-CoT reasoning mechanisms |
+| `precipitation_signatures` | Scale-dependent emergence, phase transitions in reasoning |
+| `tensor_decomposition` | Tucker/CP decomposition of activations, weight structure |
+| `sae_features` | Sparse autoencoder feature discovery, monosemantic features |
+| `scale_threshold` | Critical scale boundaries, 1.5B→3B→7B transitions |
+
+Each entity gets a score from 0 (irrelevant) to 5 (directly actionable).
+Scores persist in `agents/skopos/data/scores.db` (SQLite) across cycles.
+
+**Output:** `agents/skopos/reports/YYYY-MM-DD_alignment.md` — alignment report
+
+---
+
+### Step 4: Metis synthesizes the brief
 
 **Agent:** Metis (Cunning Intelligence)
 **Script:** `agents/metis/src/metis.py --digest <path_to_eos_digest>`
@@ -90,6 +114,7 @@ Metis reads:
 - `docs/TODO.md` — active task list
 - `docs/RPH.md` — our core hypothesis (Reasoning Precipitation)
 - Aletheia's taxonomy summary — what the knowledge graph already contains
+- Skopos alignment data — which entities scored highest against research threads
 
 She feeds all of this into a single LLM prompt and asks: *"Given what we're
 working on, what in today's scan actually matters?"*
@@ -104,10 +129,11 @@ working on, what in today's scan actually matters?"*
 
 Metis compresses ~50+ raw findings into 3-5 actionable items. She is
 deliberately opinionated — she knows our priorities and filters ruthlessly.
+Skopos alignment scores give her quantitative backing for what to prioritize.
 
 ---
 
-### Step 4: Clymene hoards knowledge (if due)
+### Step 5: Clymene hoards knowledge (if due)
 
 **Agent:** Clymene (Knowledge Hoarder)
 **Script:** `agents/clymene/src/clymene.py --once`
@@ -130,7 +156,7 @@ and moves on. No API keys needed — just git and disk space.
 
 ---
 
-### Step 5: Hermes delivers the digest
+### Step 6: Hermes delivers the digest
 
 **Agent:** Hermes (The Messenger)
 **Script:** `agents/hermes/src/hermes.py --once`
@@ -157,7 +183,51 @@ password configuration.
 
 ---
 
-### Step 6: Publish to GitHub (optional)
+### Step 7: Audit — Pipeline health check
+
+**Function:** `run_audit()` (built into Pronoia, not a separate agent)
+**Duration:** ~1 second
+**Runs:** Every cycle, automatically
+
+The audit inspects captured logs from every agent that ran during the cycle
+and checks for:
+
+| Check | Severity | What it catches |
+|-------|----------|----------------|
+| **Rate limits** | HIGH | 429 errors, backoff warnings, "too many requests" |
+| **API errors** | MEDIUM | Connection failures, timeouts, HTTP errors |
+| **Zero output** | LOW | Agent produced <20 chars — search terms too narrow or all items processed |
+| **Knowledge growth** | INFO | Aletheia entity counts — flat growth means scanner needs tuning |
+| **VRAM state** | LOW | GPU memory >1GB after pipeline — something didn't clean up |
+
+Overall status: **HEALTHY** (no issues) / **DEGRADED** (medium findings) / **UNHEALTHY** (rate limits hit)
+
+**Output:** `agents/pronoia/logs/audit_YYYY-MM-DD_HHMMSS.md`
+
+---
+
+### Step 8: Skopos generates Titan Council prompt (conditional)
+
+**Agent:** Skopos (North Star Alignment — GENERATE stage)
+**Script:** `agents/skopos/src/skopos.py --generate-prompt`
+**Duration:** ~1-2 minutes
+**Triggered by:** Any entity scoring 4+ in the ASSESS stage
+
+If the ASSESS stage found high-relevance entities, Skopos synthesizes a
+Titan Council prompt — a structured document designed to be fed to frontier
+models (ChatGPT, Gemini, DeepSeek, Grok, Claude) under the Phalanx strategy.
+
+The prompt includes the high-scoring findings, their research thread context,
+and interlocking constraints that force the Titans to commit positions rather
+than hedge.
+
+**Output:** `docs/titan_prompts/auto_YYYY-MM-DD.md`
+
+If no entities scored 4+, this step is skipped silently.
+
+---
+
+### Step 9: Publish to GitHub (optional)
 
 **Triggered by:** `--publish` flag
 **Duration:** ~5 seconds
@@ -169,8 +239,11 @@ If `--publish` is set, Pronoia stages and pushes the following files:
 | `agents/eos/reports/*.md` | Eos daily digests |
 | `agents/aletheia/data/*` | Knowledge graph DB |
 | `agents/metis/briefs/*.md` | Metis executive briefs |
+| `agents/skopos/reports/*.md` | Skopos alignment reports |
 | `agents/clymene/reports/*.md` | Clymene hoard reports |
 | `agents/hermes/digests/*.md` | Hermes compiled digests |
+| `agents/pronoia/logs/*.md` | Pipeline audit logs |
+| `docs/titan_prompts/*.md` | Auto-generated Titan Council prompts |
 | `docs/RESULTS.md` | Consolidated experimental results |
 | `docs/TODO.md` | Current task list |
 | `agents/eos/data/paper_index.json` | Paper dedup index |
@@ -188,10 +261,11 @@ from the workstation.
                     ┌─────────────────────────────────────────┐
                     │              PRONOIA                     │
                     │   (orchestrator — pronoia.py)            │
+                    │   Captures all agent stdout/stderr       │
                     └──────────────┬──────────────────────────┘
                                    │
                     ┌──────────────▼──────────────────────────┐
-                    │           STEP 1: EOS                    │
+                    │         STEP 1: EOS (Dawn)               │
                     │   arXiv + OpenAlex + S2 + GitHub + Tavily│
                     │   → Nemotron 120B deep analysis          │
                     │   → dedup against paper_index.json       │
@@ -200,9 +274,9 @@ from the workstation.
                     └──────────────┬──────────────────────────┘
                                    │
                     ┌──────────────▼──────────────────────────┐
-                    │        STEP 2: ALETHEIA                  │
+                    │       STEP 2: ALETHEIA (Truth)            │
                     │   Reads new papers from Eos index        │
-                    │   → LLM extracts entities                │
+                    │   → LLM extracts 7 entity types          │
                     │   → Merges into SQLite knowledge graph   │
                     │   → Flags conflicts for review           │
                     │                                          │
@@ -210,16 +284,26 @@ from the workstation.
                     └──────────────┬──────────────────────────┘
                                    │
                     ┌──────────────▼──────────────────────────┐
-                    │         STEP 3: METIS                    │
+                    │     STEP 3: SKOPOS ASSESS (Watcher)      │
+                    │   Reads knowledge graph entities          │
+                    │   → Scores against 5 research threads    │
+                    │   → Persists scores in SQLite             │
+                    │                                          │
+                    │   OUTPUT: reports/YYYY-MM-DD_alignment.md │
+                    │   + data/scores.db                        │
+                    └──────────────┬──────────────────────────┘
+                                   │
+                    ┌──────────────▼──────────────────────────┐
+                    │       STEP 4: METIS (Cunning)            │
                     │   Reads Eos digest + Aletheia taxonomy   │
-                    │   + PRIORITIES + TODO + RPH context      │
+                    │   + Skopos alignment + PRIORITIES + RPH  │
                     │   → LLM synthesizes executive brief      │
                     │                                          │
                     │   OUTPUT: briefs/YYYY-MM-DD_brief.md     │
                     └──────────────┬──────────────────────────┘
                                    │
                     ┌──────────────▼──────────────────────────┐
-                    │      STEP 4: CLYMENE (if cooldown met)   │
+                    │   STEP 5: CLYMENE (if cooldown met)      │
                     │   git pull/clone repos + models           │
                     │   Runs every 72h, skips otherwise         │
                     │                                          │
@@ -227,7 +311,7 @@ from the workstation.
                     └──────────────┬──────────────────────────┘
                                    │
                     ┌──────────────▼──────────────────────────┐
-                    │         STEP 5: HERMES                   │
+                    │       STEP 6: HERMES (Messenger)         │
                     │   Collects all agent outputs              │
                     │   → Compiles unified digest               │
                     │   → Emails via Gmail (if configured)      │
@@ -237,7 +321,27 @@ from the workstation.
                     └──────────────┬──────────────────────────┘
                                    │
                     ┌──────────────▼──────────────────────────┐
-                    │     STEP 6: PUBLISH (if --publish)       │
+                    │       STEP 7: AUDIT (Pronoia)            │
+                    │   Scans captured logs for:               │
+                    │   → 429s, API errors, zero output        │
+                    │   → Knowledge growth trends              │
+                    │   → VRAM leaks (nvidia-smi)              │
+                    │                                          │
+                    │   OUTPUT: logs/audit_TIMESTAMP.md         │
+                    │   STATUS: HEALTHY / DEGRADED / UNHEALTHY │
+                    └──────────────┬──────────────────────────┘
+                                   │
+                    ┌──────────────▼──────────────────────────┐
+                    │  STEP 8: SKOPOS GENERATE (if score ≥ 4)  │
+                    │   High-relevance findings detected        │
+                    │   → Synthesizes Titan Council prompt      │
+                    │   → Phalanx-ready for 5 frontier models   │
+                    │                                          │
+                    │   OUTPUT: docs/titan_prompts/auto_DATE.md │
+                    └──────────────┬──────────────────────────┘
+                                   │
+                    ┌──────────────▼──────────────────────────┐
+                    │     STEP 9: PUBLISH (if --publish)       │
                     │   git add → git commit → git push        │
                     │   Read on phone via GitHub app            │
                     └─────────────────────────────────────────┘
@@ -249,7 +353,7 @@ from the workstation.
 
 | Command | What it does |
 |---------|-------------|
-| `scan` | Full pipeline: Eos → Aletheia → Metis → Clymene → Hermes → (optional publish) |
+| `scan` | Full pipeline: Eos → Aletheia → Skopos → Metis → Clymene → Hermes → Audit → (Generate) → (Publish) |
 | `eos` | Eos scan only (Step 1) |
 | `metis` | Metis analysis only (uses latest existing digest) |
 | `status` | Show what files have been produced today |
@@ -312,9 +416,14 @@ python pronoia.py scan --every -1
 | Clymene hoard reports | `agents/clymene/reports/YYYY-MM-DD_hoard.md` |
 | Clymene cooldown timestamp | `agents/clymene/data/last_run.txt` |
 | Clymene manifest | `agents/clymene/configs/manifest.yaml` |
+| Skopos script | `agents/skopos/src/skopos.py` |
+| Skopos alignment reports | `agents/skopos/reports/YYYY-MM-DD_alignment.md` |
+| Skopos scores database | `agents/skopos/data/scores.db` |
 | Hermes script | `agents/hermes/src/hermes.py` |
 | Hermes digests | `agents/hermes/digests/YYYY-MM-DD_digest.md` |
 | Hermes config (credentials) | `agents/hermes/config.json` (gitignored) |
+| Audit logs | `agents/pronoia/logs/audit_TIMESTAMP.md` |
+| Titan Council prompts | `docs/titan_prompts/auto_YYYY-MM-DD.md` |
 | Ignis review watchman | `ignis/src/review_watchman.py` |
 | Ignis results | `ignis/src/results/ignis/` |
 

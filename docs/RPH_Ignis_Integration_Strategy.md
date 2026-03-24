@@ -7,7 +7,7 @@
 ## Situation Summary
 
 The `reasoning-precipitation` repo was built by Claude Code as a greenfield RPH
-implementation before Ignis (then SETI v2) was discovered. Once Ignis was shown, the correct
+implementation before Ignis (then Ignis) was discovered. Once Ignis was shown, the correct
 call was made: don't rebuild, integrate. The `docs/integration.md` in that repo
 already contains a complete component mapping. This document consolidates that
 plan with what was actually built.

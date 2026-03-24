@@ -1,5 +1,5 @@
 """
-Xenolexicon Orchestrator — forked from SETI v2's SETIV2Orchestrator.
+Xenolexicon Orchestrator — forked from Ignis's SETIV2Orchestrator.
 
 Same CMA-ES loop, same TII injection, same model rotation.
 Different fitness: novelty instead of correctness.
@@ -36,7 +36,7 @@ class XenoOrchestrator:
     """
     Evolutionary search for structured novelty in transformer latent space.
 
-    Reuses SETI v2's:
+    Reuses Ignis's:
       - TII engine (residual stream injection)
       - SteeringGenome representation
       - CMA-ES distribution update (diagonal)
@@ -199,7 +199,7 @@ class XenoOrchestrator:
         slog.info(f"Catalog loaded: {self.catalog.catalog_size()} existing specimens")
 
     # ═══════════════════════════════════════════════════════════════════
-    # STATE PERSISTENCE (identical to SETI v2)
+    # STATE PERSISTENCE (identical to Ignis)
     # ═══════════════════════════════════════════════════════════════════
 
     @property
@@ -278,7 +278,7 @@ class XenoOrchestrator:
             slog.warning(f"Drive sync failed (non-fatal): {e}")
 
     # ═══════════════════════════════════════════════════════════════════
-    # CMA-ES DISTRIBUTION (identical to SETI v2)
+    # CMA-ES DISTRIBUTION (identical to Ignis)
     # ═══════════════════════════════════════════════════════════════════
 
     def sample_population(self):
@@ -291,7 +291,7 @@ class XenoOrchestrator:
             z = torch.randn(self.d_model).cuda()
             vector = self.mean_vector + self.sigma * (self.C.sqrt() * z)
 
-            # 80/20 layer exploration (same as SETI v2)
+            # 80/20 layer exploration (same as Ignis)
             layer = self.target_layer
             exploration_type = "main"
             if torch.rand(1) < 0.2:
@@ -301,7 +301,7 @@ class XenoOrchestrator:
                 layer = max(self.early_layer_cutoff + 1, min(self.n_layers - 1, layer))
                 exploration_type = "scout"
 
-            # Position exploration (same as SETI v2)
+            # Position exploration (same as Ignis)
             pos_ratio = 1.0
             if torch.rand(1) < 0.2:
                 pos_ratio = max(0.0, min(1.0, 1.0 + 0.3 * torch.randn(1).item()))
@@ -312,7 +312,7 @@ class XenoOrchestrator:
             ))
 
     def update_distribution(self, sorted_pop: List[SteeringGenome]):
-        """Diagonal CMA-ES distribution update (identical to SETI v2)."""
+        """Diagonal CMA-ES distribution update (identical to Ignis)."""
         old_mean = self.mean_vector.clone()
 
         # Update mean
@@ -611,7 +611,7 @@ class XenoOrchestrator:
         """
         Evolutionary search for structured novelty.
 
-        Same Ask-Evaluate-Tell loop as SETI v2, but:
+        Same Ask-Evaluate-Tell loop as Ignis, but:
         - Fitness = novelty (semantic distance × coherence)
         - Genomes exceeding threshold → specimen capture + naming
         - No falsification battery (replaced by reproducibility)

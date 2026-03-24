@@ -421,3 +421,18 @@ datasets:
     tags: [math, pretraining, reasoning]
     priority: medium
     notes: "High-quality math text — useful for reasoning probes"
+
+  # ---------- Agentic Research ----------
+  - name: IRIS
+    url: https://github.com/Anikethh/IRIS-Interactive-Research-Ideation-System
+    category: agentic-research
+    tags: [MCTS, hypothesis-generation, ideation, HITL, ACL-2025]
+    priority: high
+    notes: "MCTS-based hypothesis generation — three-agent architecture (ideation, review, retrieval). Potential backbone for automated theory generation pipeline in Prometheus."
+
+  - name: DeerFlow
+    url: https://github.com/bytedance/deer-flow
+    category: agentic-research
+    tags: [multi-agent, orchestration, LangGraph, bytedance]
+    priority: low
+    notes: "ByteDance super agent harness — good infrastructure reference but generic, not science-specific"

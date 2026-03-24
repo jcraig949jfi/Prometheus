@@ -29,7 +29,7 @@ def send_alert(subject: str, body: str, config: Optional[XenoConfig] = None):
     logging.warning(f"ALERT: {subject} - {body}")
 
     # 2. Email Notification
-    if config and config.email_alerts and config.email_alerts.email_to and config.email_alerts.smtp_server:
+    if config and hasattr(config, "email_alerts") and config.email_alerts and config.email_alerts.email_to and config.email_alerts.smtp_server:
         try:
             alerts_config = config.email_alerts
             msg = EmailMessage()

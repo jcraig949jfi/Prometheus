@@ -91,6 +91,17 @@ def load_project_context() -> str:
     except Exception:
         pass  # Aletheia not available — that's fine
 
+    # Skopos alignment — which findings matter to our research threads
+    try:
+        skopos_reports = PROMETHEUS_ROOT / "agents" / "skopos" / "reports"
+        if skopos_reports.exists():
+            reports = sorted(skopos_reports.glob("*_alignment.md"), reverse=True)
+            if reports:
+                text = reports[0].read_text(encoding="utf-8")[:1500]
+                context_parts.append(f"=== RESEARCH THREAD ALIGNMENT (from Skopos) ===\n{text}")
+    except Exception:
+        pass  # Skopos not available — that's fine
+
     return "\n\n".join(context_parts)
 
 

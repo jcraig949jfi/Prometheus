@@ -1,0 +1,374 @@
+[
+  {
+    "id": "arith_01",
+    "prompt": "A machine multiplies a number by 3, then subtracts 5, then doubles the result. If the final output is 34, what was the input?",
+    "perturbed": "A machine multiplies a number by 3, then subtracts 7, then doubles the result. If the final output is 34, what was the input?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_02",
+    "prompt": "Compute the sum of the first 20 prime numbers. At each step, verify the running total and correct errors if found.",
+    "perturbed": "Compute the sum of the first 15 prime numbers. At each step, verify the running total and correct errors if found.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_03_ecr",
+    "prompt": "Assume temporarily that 9.11 > 9.9. Using this assumption, compute which is larger: 9.119 or 9.91. Then explain if the assumption was valid and correct your reasoning.",
+    "perturbed": "Assume temporarily that 9.11 < 9.9. Using this assumption, compute which is larger: 9.119 or 9.91. Then explain if the assumption was valid and correct your reasoning.",
+    "type": "self_correction",
+    "task_family": "arithmetic",
+    "note": "ECR test: maps directly to Decimal Magnitude crucible trap. Self-correction from false premise = precipitation signal."
+  },
+  {
+    "id": "arith_04",
+    "prompt": "A tank fills at 5 gallons per minute and drains at 2 gallons per minute. Starting empty, how many minutes to reach 60 gallons?",
+    "perturbed": "A tank fills at 5 gallons per minute and drains at 3 gallons per minute. Starting empty, how many minutes to reach 60 gallons?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_05",
+    "prompt": "A shirt originally costs $80. It is discounted by 25%, then the discounted price is taxed at 10%. What do you pay?",
+    "perturbed": "A shirt originally costs $80. It is taxed at 10%, then the taxed price is discounted by 25%. What do you pay?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_06",
+    "prompt": "Convert 5 miles to kilometers, then to meters, then to centimeters. Use 1 mile = 1.609 km. Show each step and verify the final answer.",
+    "perturbed": "Convert 5 miles to kilometers, then to meters, then to centimeters. Use 1 mile = 1.621 km. Show each step and verify the final answer.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_07",
+    "prompt": "A population doubles every 3 years. Starting from 1,000, what is the population after 15 years?",
+    "perturbed": "A population triples every 3 years. Starting from 1,000, what is the population after 15 years?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_08",
+    "prompt": "A recipe calls for 2/3 cup of sugar for 4 servings. You need to make 10 servings. How much sugar is needed? Express as a fraction and a decimal.",
+    "perturbed": "A recipe calls for 3/4 cup of sugar for 4 servings. You need to make 10 servings. How much sugar is needed? Express as a fraction and a decimal.",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_09",
+    "prompt": "A car travels 120 miles at 40 mph, then 80 miles at 60 mph. What is the average speed for the entire trip? Show your work and correct any errors.",
+    "perturbed": "A car travels 120 miles at 60 mph, then 80 miles at 40 mph. What is the average speed for the entire trip? Show your work and correct any errors.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_10",
+    "prompt": "An investment of $1,000 earns 5% compound interest annually. After 3 years, you withdraw 20% of the total. How much remains?",
+    "perturbed": "An investment of $1,000 earns 5% compound interest annually. After 3 years, you withdraw 30% of the total. How much remains?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_11",
+    "prompt": "Three workers can paint a house in 6 days working together. Worker A alone takes 10 days, Worker B alone takes 15 days. How long does Worker C take alone?",
+    "perturbed": "Three workers can paint a house in 6 days working together. Worker A alone takes 12 days, Worker B alone takes 15 days. How long does Worker C take alone?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_12",
+    "prompt": "You have 3.7 liters of solution at 40% concentration. You add 2.3 liters of pure water. What is the new concentration? Round to two decimal places and verify.",
+    "perturbed": "You have 3.7 liters of solution at 40% concentration. You add 2.3 liters of solution at 10% concentration. What is the new concentration? Round to two decimal places and verify.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_13",
+    "prompt": "A clock loses 3 minutes every hour. If set correctly at noon, what time does it show when the real time is 6:00 PM?",
+    "perturbed": "A clock gains 3 minutes every hour. If set correctly at noon, what time does it show when the real time is 6:00 PM?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_14",
+    "prompt": "Compute 17 x 23 using only addition and doubling. Show every intermediate step. Then verify by computing 23 x 17 the same way.",
+    "perturbed": "Compute 19 x 23 using only addition and doubling. Show every intermediate step. Then verify by computing 23 x 19 the same way.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_15",
+    "prompt": "A store offers buy-2-get-1-free on items costing $15 each. You want 7 items. How much do you pay?",
+    "perturbed": "A store offers buy-3-get-1-free on items costing $15 each. You want 7 items. How much do you pay?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_16",
+    "prompt": "A rope is cut into three pieces. The second piece is twice as long as the first. The third piece is 5 cm longer than the second. If the total length is 85 cm, how long is each piece?",
+    "perturbed": "A rope is cut into three pieces. The second piece is three times as long as the first. The third piece is 5 cm longer than the second. If the total length is 85 cm, how long is each piece?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_17",
+    "prompt": "A train leaves Station A at 9:00 AM traveling at 60 km/h. Another train leaves Station B (300 km away) at 10:00 AM traveling toward A at 90 km/h. At what time do they meet?",
+    "perturbed": "A train leaves Station A at 9:00 AM traveling at 60 km/h. Another train leaves Station B (300 km away) at 10:00 AM traveling toward A at 80 km/h. At what time do they meet?",
+    "type": "counterfactual",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "arith_18",
+    "prompt": "You score 78, 85, 92, and 64 on four exams. What score do you need on the fifth exam to achieve an average of exactly 80? Verify by computing the final average.",
+    "perturbed": "You score 78, 85, 92, and 64 on four exams. What score do you need on the fifth exam to achieve an average of exactly 85? Verify by computing the final average.",
+    "type": "self_correction",
+    "task_family": "arithmetic"
+  },
+  {
+    "id": "logic_01",
+    "prompt": "All bloops are razzles. Some razzles are tazzes. No tazzes are flims. Are any bloops flims?",
+    "perturbed": "All bloops are razzles. Some razzles are tazzes. Some tazzes are flims. Are any bloops flims?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_02",
+    "prompt": "A professor states: Every number divisible by 4 is also divisible by 8. Analyze this claim carefully, note intermediate errors, and explain your correction process.",
+    "perturbed": "A professor states: Every number divisible by 8 is also divisible by 4. Analyze this claim carefully, note intermediate errors, and explain your correction process.",
+    "type": "self_correction",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_03",
+    "prompt": "If all metals conduct electricity, and copper is a metal, does copper conduct electricity? Now extend this: if some metals are magnetic, is copper magnetic?",
+    "perturbed": "If all metals conduct electricity, and plastic is a material, does plastic conduct electricity? Now extend this: if some metals are magnetic, is plastic magnetic?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_04",
+    "prompt": "If it rains, the ground is wet. The ground is wet. Did it rain? Explain your reasoning carefully and identify any logical fallacy.",
+    "perturbed": "If it rains, the ground is wet. The ground is not wet. Did it rain? Explain your reasoning carefully and identify any logical fallacy.",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_05",
+    "prompt": "All cats are animals. All animals are mortal. No immortal things are cats. Is the third statement necessarily true given the first two? Show your derivation step by step.",
+    "perturbed": "All cats are animals. Some animals are mortal. No immortal things are cats. Is the third statement necessarily true given the first two? Show your derivation step by step.",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_06",
+    "prompt": "In a room of 5 people, everyone shakes hands with everyone else exactly once. How many handshakes occur? Now: one person refuses to shake hands with anyone. How many handshakes now?",
+    "perturbed": "In a room of 5 people, everyone shakes hands with everyone else exactly once. How many handshakes occur? Now: two people refuse to shake hands with each other but shake hands with everyone else. How many handshakes now?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_07",
+    "prompt": "Statement: 'No student who studied failed the exam.' Alice did not study. Can we conclude Alice failed? Explain the logical structure.",
+    "perturbed": "Statement: 'No student who studied failed the exam.' Alice failed the exam. Can we conclude Alice did not study? Explain the logical structure.",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_08",
+    "prompt": "A says: 'B is a liar.' B says: 'C is a liar.' C says: 'A and B are both liars.' If exactly one person is telling the truth, who is it? Show your reasoning and correct any wrong turns.",
+    "perturbed": "A says: 'B is a liar.' B says: 'C is a liar.' C says: 'A and B are both liars.' If exactly two people are telling the truth, who are they? Show your reasoning and correct any wrong turns.",
+    "type": "self_correction",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_09",
+    "prompt": "All roses are flowers. Some flowers fade quickly. Therefore, some roses fade quickly. Is this syllogism valid? Identify the exact error if any.",
+    "perturbed": "All roses are flowers. All flowers fade quickly. Therefore, all roses fade quickly. Is this syllogism valid? Identify the exact error if any.",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_10",
+    "prompt": "If P implies Q, and Q implies R, does not-R imply not-P? Now: does not-P imply not-R? Justify each answer with the name of the rule used.",
+    "perturbed": "If P implies Q, and Q implies R, does not-Q imply not-P? Now: does not-Q imply not-R? Justify each answer with the name of the rule used.",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_11",
+    "prompt": "Set A = {1,2,3,4,5}. Set B = {3,4,5,6,7}. Set C = {5,6,7,8,9}. What is (A intersect B) union C? What is A intersect (B union C)? Are they equal?",
+    "perturbed": "Set A = {1,2,3,4,5}. Set B = {4,5,6,7,8}. Set C = {5,6,7,8,9}. What is (A intersect B) union C? What is A intersect (B union C)? Are they equal?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_12",
+    "prompt": "A die is rolled. Statement X: 'The result is even.' Statement Y: 'The result is greater than 3.' Can both be true? Can both be false? List all outcomes for each combination.",
+    "perturbed": "A die is rolled. Statement X: 'The result is even.' Statement Y: 'The result is less than 3.' Can both be true? Can both be false? List all outcomes for each combination.",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_13",
+    "prompt": "Every student in Class A passed math. No student in Class B passed math. Charlie passed math. Which class is Charlie in? Now assume Charlie is in neither class. Is that consistent?",
+    "perturbed": "Every student in Class A passed math. Some students in Class B passed math. Charlie passed math. Which class is Charlie in? Now assume Charlie is in neither class. Is that consistent?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_14",
+    "prompt": "I have a statement: 'This sentence is false.' Is it true or false? Now consider: 'The next sentence is true. The previous sentence is false.' Analyze both carefully and identify where reasoning breaks down.",
+    "perturbed": "I have a statement: 'This sentence is false.' Is it true or false? Now consider: 'The next sentence is false. The previous sentence is false.' Analyze both carefully and identify where reasoning breaks down.",
+    "type": "self_correction",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_15",
+    "prompt": "De Morgan's law states: not(A and B) = (not A) or (not B). Apply this to simplify: not(x > 5 and x < 10). Then verify by testing x = 3, x = 7, and x = 12.",
+    "perturbed": "De Morgan's law states: not(A or B) = (not A) and (not B). Apply this to simplify: not(x > 5 or x < 10). Then verify by testing x = 3, x = 7, and x = 12.",
+    "type": "self_correction",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_16",
+    "prompt": "Three boxes are labeled 'Apples', 'Oranges', and 'Mixed'. Every label is wrong. You pick one fruit from the box labeled 'Mixed' and it is an apple. What is in each box?",
+    "perturbed": "Three boxes are labeled 'Apples', 'Oranges', and 'Mixed'. Every label is wrong. You pick one fruit from the box labeled 'Mixed' and it is an orange. What is in each box?",
+    "type": "counterfactual",
+    "task_family": "logic"
+  },
+  {
+    "id": "logic_17",
+    "prompt": "If exactly one of these three statements is true: (1) There are no coins in this box, (2) There are at least two coins, (3) There is exactly one coin — how many coins are in the box? Walk through each assumption.",
+    "perturbed": "If exactly two of these three statements are true: (1) There are no coins in this box, (2) There are at least two coins, (3) There is exactly one coin — how many coins are in the box? Walk through each assumption.",
+    "type": "self_correction",
+    "task_family": "logic"
+  },
+  {
+    "id": "cf_01",
+    "prompt": "John is older than Mary. Mary is older than Steve. Who is the youngest?",
+    "perturbed": "John is older than Mary. Steve is older than Mary. Who is the youngest?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_02",
+    "prompt": "In a world where water boils at 80 degrees Celsius, describe how cooking pasta would differ, step by step. Correct any inconsistencies as you reason.",
+    "perturbed": "In a world where water boils at 60 degrees Celsius, describe how cooking pasta would differ, step by step. Correct any inconsistencies as you reason.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_03",
+    "prompt": "A store sells apples for $2 each and oranges for $3 each. If you buy 5 apples and 3 oranges, what is the total cost? Now, if the price of apples increases by 50%, recalculate the total.",
+    "perturbed": "A store sells apples for $2 each and oranges for $3 each. If you buy 5 apples and 3 oranges, what is the total cost? Now, if the price of oranges increases by 50%, recalculate the total.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_04",
+    "prompt": "Alice is taller than Bob. Bob is taller than Carol. Carol is taller than Dave. Dave is taller than Eve. Who is the third tallest?",
+    "perturbed": "Alice is taller than Bob. Bob is taller than Carol. Dave is taller than Carol. Dave is taller than Eve. Who is the third tallest?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_05",
+    "prompt": "In a world where gravity is half its current strength, a ball is thrown upward at 20 m/s. How high does it go and how long until it lands? Compare to the real-world case.",
+    "perturbed": "In a world where gravity is double its current strength, a ball is thrown upward at 20 m/s. How high does it go and how long until it lands? Compare to the real-world case.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_06",
+    "prompt": "Event A causes Event B. Event B causes Event C. Event C causes Event D. If Event A does not happen, which events still occur? Assume no other causes exist.",
+    "perturbed": "Event A causes Event B. Event B causes Event C. Event C causes Event D. If Event B does not happen but Event A does, which events still occur? Assume no other causes exist.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_07",
+    "prompt": "Five runners finish a race: Amy before Ben, Ben before Cal, Cal before Dee, Dee before Eve. If Cal had not raced, what are the final standings?",
+    "perturbed": "Five runners finish a race: Amy before Ben, Ben before Cal, Cal before Dee, Dee before Eve. If Ben had not raced, what are the final standings?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_08",
+    "prompt": "In a hypothetical world, the week has 5 days: Monday, Wednesday, Friday, Sunday, Tuesday. What day comes two days after Wednesday? What day was three days before Sunday?",
+    "perturbed": "In a hypothetical world, the week has 5 days: Monday, Wednesday, Friday, Sunday, Tuesday. What day comes three days after Wednesday? What day was two days before Sunday?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_09",
+    "prompt": "A plant needs sunlight and water to grow. With sunlight but no water, it wilts. With water but no sunlight, it yellows. You provide both for 5 days, then remove sunlight for 3 days. Describe the plant's state over 8 days.",
+    "perturbed": "A plant needs sunlight and water to grow. With sunlight but no water, it wilts. With water but no sunlight, it yellows. You provide both for 5 days, then remove water for 3 days. Describe the plant's state over 8 days.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_10",
+    "prompt": "In a world where ice is denser than liquid water, describe what happens to a lake in winter. Reason step by step and correct any errors in your chain.",
+    "perturbed": "In a world where ice is exactly the same density as liquid water, describe what happens to a lake in winter. Reason step by step and correct any errors in your chain.",
+    "type": "self_correction",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_11",
+    "prompt": "A domino chain: knocking over domino 1 hits domino 2, which hits 3, which hits 4, which hits 5. Domino 3 is removed. Which dominoes fall?",
+    "perturbed": "A domino chain: knocking over domino 1 hits domino 2, which hits 3, which hits 4, which hits 5. Domino 2 is removed. Which dominoes fall?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_12",
+    "prompt": "A tournament bracket has 8 players. In round 1: A beats B, C beats D, E beats F, G beats H. In round 2: A beats C, E beats G. In the final: A beats E. Who is the champion? Now: what if C had beaten A in round 2?",
+    "perturbed": "A tournament bracket has 8 players. In round 1: A beats B, C beats D, E beats F, G beats H. In round 2: A beats C, E beats G. In the final: A beats E. Who is the champion? Now: what if G had beaten E in round 2?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_13",
+    "prompt": "Assume a world where humans photosynthesize. They need 4 hours of direct sunlight daily for full energy. A person lives in a city with 6 hours of sunlight per day but works indoors for 8 hours. Do they get enough energy? Reason through the schedule.",
+    "perturbed": "Assume a world where humans photosynthesize. They need 4 hours of direct sunlight daily for full energy. A person lives in a city with 6 hours of sunlight per day but works indoors for 10 hours. Do they get enough energy? Reason through the schedule.",
+    "type": "self_correction",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_14",
+    "prompt": "Three friends share a taxi. The fare is split based on distance traveled. Friend A rides 3 miles, Friend B rides 5 miles, Friend C rides 8 miles. The total fare is $32. How much does each person pay under proportional splitting?",
+    "perturbed": "Three friends share a taxi. The fare is split based on distance traveled. Friend A rides 3 miles, Friend B rides 5 miles, Friend C rides 8 miles. The total fare is $48. How much does each person pay under proportional splitting?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_15",
+    "prompt": "In a world where sound travels at half its normal speed, you see lightning and hear thunder 10 seconds later. How far away was the lightning strike? Compare to the real-world answer.",
+    "perturbed": "In a world where sound travels at twice its normal speed, you see lightning and hear thunder 10 seconds later. How far away was the lightning strike? Compare to the real-world answer.",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_16",
+    "prompt": "A recipe takes 4 steps in order: A (10 min), B (20 min), C (5 min), D (15 min). Steps B and C can be done in parallel. What is the minimum total time? Now: what if steps A and B can be done in parallel instead?",
+    "perturbed": "A recipe takes 4 steps in order: A (10 min), B (20 min), C (5 min), D (15 min). Steps B and C can be done in parallel. What is the minimum total time? Now: what if steps C and D can be done in parallel instead?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_17",
+    "prompt": "In a hypothetical currency system, 1 gold = 5 silver, 1 silver = 8 copper. You have 3 gold, 7 silver, and 22 copper. Convert everything to copper. Then: how many gold coins is that worth, and what is the remainder in silver and copper?",
+    "perturbed": "In a hypothetical currency system, 1 gold = 7 silver, 1 silver = 8 copper. You have 3 gold, 7 silver, and 22 copper. Convert everything to copper. Then: how many gold coins is that worth, and what is the remainder in silver and copper?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  },
+  {
+    "id": "cf_18",
+    "prompt": "A chain of command: General orders Colonel, Colonel orders Major, Major orders Captain. The General issues order X. The Colonel modifies it to Y before passing it down. What order does the Captain receive? Now: what if the Major also modifies orders, changing Y to Z?",
+    "perturbed": "A chain of command: General orders Colonel, Colonel orders Major, Major orders Captain. The General issues order X. The Colonel modifies it to Y before passing it down. What order does the Captain receive? Now: what if the Colonel does NOT modify the order?",
+    "type": "counterfactual",
+    "task_family": "counterfactual"
+  }
+]

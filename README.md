@@ -18,7 +18,7 @@ For the master task list, see [docs/TODO.md](docs/TODO.md).
 
 ```
 Prometheus/
-├── ignis/              # Reasoning circuit discovery (formerly SETI v2)
+├── ignis/              # Reasoning circuit discovery (formerly Ignis)
 │   ├── src/            #   Pipeline source: orchestrator, fitness, TII engine,
 │   │                   #   Night Watchman, review tools, RPH evaluation
 │   ├── configs/        #   Marathon YAML configs (model list, CMA-ES params)
@@ -49,12 +49,17 @@ Prometheus/
 │   ├── RPH_paper_draft.md  # Paper draft with experimental results
 │   └── synthesis/      #   Cross-pillar findings and analysis
 │
-├── agents/             # Automation (planned)
-│                       #   GPU scheduler (keep both cards saturated 24/7)
-│                       #   Horizon scanner (arxiv/paper monitoring)
+├── agents/             # The agent pipeline (Pronoia orchestrates all)
+│   ├── eos/            #   Horizon scanner — arXiv, GitHub, Semantic Scholar, Tavily
+│   ├── aletheia/       #   Knowledge harvester — LLM entity extraction → SQLite graph
+│   ├── skopos/         #   North Star alignment — scores findings against research threads
+│   ├── metis/          #   Strategic synthesis — executive briefs with Act/Watch/Record
+│   ├── clymene/        #   Knowledge hoarder — archives repos & model weights (72h cycle)
+│   ├── hermes/         #   Messenger — compiles digest, emails via Gmail
+│   └── pronoia/        #   Orchestrator — chains all agents, runs audit, manages publish
 │
 └── archive/            # Superseded work (read-only reference)
-    ├── seti-v1/        #   Original SETI pipeline (text-based prompt evolution)
+    ├── seti-v1/        #   Original Ignis pipeline (text-based prompt evolution)
     ├── mech/           #   Early mechanistic experiments (ablation runner, etc.)
     ├── vesta/          #   Knowledge registry concept (absorbed into Grammata)
     ├── fennel/         #   Cross-model benchmarking daemon (API-based)
@@ -117,7 +122,35 @@ python run.py
 
 | Pillar | Status | Current work |
 |--------|--------|-------------|
-| Ignis | **Active** | Qwen3-4B cross-architecture run; 0.5B/1.5B/3B Qwen2.5 complete (all NULL) |
-| Arcanum | **Active** | 3B screening pipeline operational |
+| Ignis | **Active** | Nullspace finding: CMA-ES evolved a steering vector orthogonal to reasoning axis (cos ≈ −0.026). Two decisive experiments queued: Jacobian finite-difference test and RMSNorm suppression test. |
+| Arcanum | **Active** | 3B screening pipeline operational. Xenolexicon pattern confirmed in Titan Council consultation. |
 | Aethon | Backburnered | Concept docs preserved, awaiting Ignis findings |
 | Grammata | Planned | Registry structure emerging from validated findings |
+
+## The Titan Council
+
+Five frontier models (ChatGPT, Gemini, DeepSeek, Grok, Claude) consulted as
+research instruments under competitive pressure. The **Phalanx strategy**:
+present interlocking constraints, name the papers they'd cite, ask at the edge
+of published knowledge, force commitment over hedging.
+
+All five independently converged on "nullspace" as the explanation for the
+steering vector's orthogonality. Three competing mechanisms proposed — the
+convergence is the signal, the divergence is the naming (same pattern as
+Arcanum's xenolexicon specimen naming).
+
+## Agent Pipeline
+
+```
+Eos → Aletheia → Skopos → Metis → Clymene → Hermes → Audit → Skopos generate → Publish
+```
+
+| Agent | Greek | Role |
+|-------|-------|------|
+| **Eos** (Εώς — Dawn) | Goddess of the dawn | Horizon scanning — arXiv, OpenAlex, Semantic Scholar, GitHub, Tavily. Dedup, score, deep-analyze via Nemotron 120B. |
+| **Aletheia** (Ἀλήθεια — Truth) | Spirit of disclosure | Knowledge harvesting — LLM-extract 7 entity types (techniques, motifs, tools, terms, claims, papers, conflicts) into SQLite graph. |
+| **Skopos** (Σκοπός — Watcher) | One who aims | North Star alignment — scores every entity against 5 active research threads (0-5). Generates Titan Council prompts when high-relevance findings accumulate. |
+| **Metis** (Μῆτις — Cunning) | Titaness of wisdom | Strategic synthesis — reads Eos digest + Aletheia taxonomy + Skopos alignment + project priorities → executive brief (Act / Watch / Record). |
+| **Clymene** (Κλυμένη — Renown) | Titaness, mother of Prometheus | Knowledge hoarder — archives repos, model weights, datasets to local vault. Runs every 72h. |
+| **Hermes** (Ἑρμῆς — Messenger) | God of communication | Digest delivery — collects all agent outputs, compiles unified report, emails via Gmail. |
+| **Pronoia** (Προνοία — Forethought) | Titaness of foresight | Orchestrator — chains all agents, captures logs, runs pipeline health audit, triggers conditional stages, auto-publishes to GitHub. |
