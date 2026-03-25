@@ -1,0 +1,24 @@
+{
+  "seed_model": "HuggingFaceTB/SmolLM2-135M-Instruct",
+  "population_size": 20,
+  "genome_dim": 92160,
+  "sigma_init": 0.01,
+  "lora_rank": 4,
+  "lora_targets": [
+    "v_proj"
+  ],
+  "coherence_prompts": [
+    "The capital of France is",
+    "Water freezes at a temperature of",
+    "In the year 2024, the most popular",
+    "The theory of relativity states that",
+    "A binary search algorithm works by",
+    "The mitochondria is the powerhouse of the",
+    "Shakespeare wrote many famous plays including",
+    "The speed of light in a vacuum is approximately",
+    "Photosynthesis is the process by which plants",
+    "The largest ocean on Earth is the"
+  ],
+  "baseline_perplexity": 33.09344627880137,
+  "max_ppl_ratio": 3.0
+}

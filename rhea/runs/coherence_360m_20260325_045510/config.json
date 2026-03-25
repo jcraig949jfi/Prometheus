@@ -1,0 +1,12 @@
+{
+  "seed_model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "population_size": 20,
+  "genome_dim": 327680,
+  "sigma_init": 0.02,
+  "lora_rank": 8,
+  "lora_targets": [
+    "v_proj"
+  ],
+  "fitness_formula": "0.6*ES + 0.4*SR - 0.3*ppl_increase",
+  "baseline_ppl": 21.54819066040826
+}

@@ -1,0 +1,11 @@
+{
+  "seed_model": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+  "population_size": 16,
+  "genome_dim": 2752512,
+  "sigma_init": 0.05,
+  "lora_rank": 8,
+  "lora_targets": [
+    "gate_proj",
+    "v_proj"
+  ]
+}
