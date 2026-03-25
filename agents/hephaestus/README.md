@@ -116,6 +116,26 @@ agents/hephaestus/
 └── README.md
 ```
 
+## RLVF Fitness Function
+
+`src/rlvf_fitness.py` — the interface between the forge pipeline and Rhea:
+
+```
+F(T) = Σ wᵢ · Sᵢ(T) - λ · σ(S)
+```
+
+- 122 tools, weighted by Coeus adversarial robustness
+- λ = 2.0 variance penalty prevents gaming individual evaluators
+- EFME v2 highest weight (0.739), logical consistency checker lowest (0.261)
+- Correct answers get higher fitness than wrong answers
+
+## ReasoningEpisode Schema
+
+`src/reasoning_episode.py` — standardized data format for the RLVF loop.
+Every episode carries a provenance tag (`training`, `evaluation`, `adversarial`).
+The `training_gate()` function raises `ValueError` if adversarial data attempts
+to enter the training pipeline.
+
 ## Environment
 
 Requires `NVIDIA_API_KEY` environment variable.

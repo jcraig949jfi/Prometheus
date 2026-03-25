@@ -12,10 +12,11 @@ Runs **continuously** (`--unlimited` mode), generating batches until stopped.
 
 1. **Concept dictionary** — 89 concepts across 18 fields (mathematics, physics, CS, biology,
    cognitive science, philosophy, neuroscience, economics, and more)
-2. **Coeus-weighted sampling** — Random triples biased toward cross-field combinations AND
-   toward concepts with positive forge effects (Coeus causal intelligence). Concepts like
-   Active Inference and Criticality are oversampled; forge inhibitors like Topology and
-   Epigenetics are undersampled (not eliminated — they may work in new combinations).
+2. **Coeus + Nemesis weighted sampling** — Random triples biased toward cross-field
+   combinations AND toward concepts with positive forge effects. Sampling weights factor
+   in adversarial survival data from Nemesis: concepts flagged as Goodhart indicators
+   (high forge, low adversarial) are demoted. Undervalued concepts (high adversarial,
+   low forge priority) are boosted. Forge inhibitors are undersampled but not eliminated.
 3. **LLM evaluation** — Each triple is sent to NVIDIA's API with an implementation-focused
    prompt asking for specific algorithms, data structures, structural features to parse, and
    ratings. The prompt steers toward implementable reasoning tools, not abstract theory.

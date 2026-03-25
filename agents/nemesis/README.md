@@ -75,17 +75,34 @@ python agents/nemesis/src/nemesis.py --runonce
 python agents/nemesis/src/nemesis.py --n-random 100 --n-targeted 50
 ```
 
+## Feedback Loops
+
+**→ Coeus:** `adversarial/adversarial_results.jsonl` feeds the dual causal graph.
+Coeus computes Goodhart divergence (forge success vs adversarial robustness) and
+warns about concepts that pass tests but don't detect reasoning.
+
+**→ Hephaestus:** `adversarial/targeted_forge_requests.jsonl` maps blind spots to
+concept triple suggestions. Gate 6 requires tools survive ≥50% of the adversarial set.
+
+**→ Nous (via Coeus):** Goodhart indicators demote concepts in sampling weights.
+Undervalued concepts (high adversarial, low forge priority) get boosted.
+
+**→ RLVF:** `rlvf_fitness.py` weights tools by adversarial robustness. Variance
+penalty `λ·σ(S)` prevents gaming individual evaluators.
+
 ## Output
 
-- **grid/grid.json** — serialized MAP-Elites grid state
-- **reports/nemesis_report_*.md** — failure analysis with tool rankings, blind spots, MR effectiveness
-- **adversarial/adversarial_results.jsonl** — machine-readable results for Coeus (provenance-tagged)
+- **grid/grid.json** — serialized MAP-Elites grid + per-tool difficulty model
+- **reports/nemesis_report_*.md** — failure analysis with tool rankings, blind spots, lineage depth, MR effectiveness
+- **adversarial/adversarial_results.jsonl** — for Coeus (provenance-tagged)
+- **adversarial/targeted_forge_requests.jsonl** — for Hephaestus (blind spot → forge priority)
 
 ## Architectural Invariant
 
 All output is tagged `provenance: "adversarial"`. This data NEVER enters model
-training paths. Rhea Batch 3 proved that mixing adversarial signal into training
-cost 25 points on metacognition. The provenance tag is a hard gate, not a convention.
+training paths. The `training_gate()` function in `reasoning_episode.py` raises
+`ValueError` if adversarial episodes attempt to enter training. Rhea Batch 3
+proved that mixing adversarial signal into training cost 25 points on metacognition.
 
 ## Dependencies
 

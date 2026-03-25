@@ -95,6 +95,26 @@ python agents/coeus/src/coeus.py
 - **Cognitive Science** and **Theoretical Neuroscience** fields drive forges
 - **Top synergy**: Ergodic Theory + Theory of Mind (+0.446)
 
+## Dual Causal Graph (Nemesis integration)
+
+When Nemesis adversarial data is available, Coeus builds TWO graphs:
+1. **Forge success** — which concepts predict passing the static battery
+2. **Adversarial robustness** — which concepts predict surviving Nemesis
+
+The **divergence** identifies Goodhart indicators:
+- **High forge + low adversarial** = concept passes tests but doesn't detect reasoning (WARN)
+- **Low forge + high adversarial** = concept is undervalued by static evaluation (BOOST)
+
+First result: Criticality (+1.249 forge, 38% adversarial) flagged as Goodharting.
+Compressed Sensing (0% forge, 70% adversarial) identified as undervalued.
+
+## RLVF Interface
+
+`hephaestus/src/rlvf_fitness.py` uses Coeus adversarial survival rates as tool
+weights in the fitness function `F(T) = Σwᵢ·Sᵢ - λ·σ(S)`. Tools with higher
+adversarial robustness get higher weight. This is the bridge between the forge
+pipeline and Rhea's evolutionary loop.
+
 ## Dependencies
 
 - `numpy`, `scikit-learn`, `scipy` (required)
