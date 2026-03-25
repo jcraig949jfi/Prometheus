@@ -39,6 +39,7 @@ log = logging.getLogger("coeus")
 
 COEUS_ROOT = Path(__file__).resolve().parent.parent
 NOUS_ROOT = COEUS_ROOT.parent / "nous"
+NEMESIS_ROOT = COEUS_ROOT.parent / "nemesis"
 GRAPHS_DIR = COEUS_ROOT / "graphs"
 ENRICHMENTS_DIR = COEUS_ROOT / "enrichments"
 
@@ -97,6 +98,57 @@ def load_forge_entries() -> list[dict]:
         except Exception:
             continue
     return entries
+
+
+def load_adversarial_results() -> list[dict]:
+    """Load Nemesis adversarial results for dual causal graph analysis."""
+    adv_path = NEMESIS_ROOT / "adversarial" / "adversarial_results.jsonl"
+    if not adv_path.exists():
+        return []
+    results = []
+    with open(adv_path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                entry = json.loads(line)
+                # Enforce provenance check
+                if entry.get("provenance") != "adversarial":
+                    continue
+                results.append(entry)
+    return results
+
+
+def compute_adversarial_survival(adversarial_results: list[dict]) -> dict:
+    """Compute per-concept adversarial survival rates from Nemesis data.
+
+    Returns dict: concept_name -> {survival_rate, n_tasks, n_survived}
+    """
+    from collections import defaultdict
+    concept_tasks = defaultdict(lambda: {"total": 0, "survived": 0})
+
+    for task in adversarial_results:
+        tool_results = task.get("tool_results", {})
+        if not tool_results:
+            continue
+        # For each tool, check if it survived this adversarial task
+        for tool_name, result in tool_results.items():
+            # Extract concept names from tool name (underscore_x_separated)
+            parts = tool_name.split("_x_")
+            concepts = [p.replace("_", " ").title() for p in parts]
+            for concept in concepts:
+                concept_tasks[concept]["total"] += 1
+                if result.get("correct", False):
+                    concept_tasks[concept]["survived"] += 1
+
+    survival = {}
+    for concept, stats in concept_tasks.items():
+        if stats["total"] > 0:
+            survival[concept] = {
+                "survival_rate": round(stats["survived"] / stats["total"], 4),
+                "n_tasks": stats["total"],
+                "n_survived": stats["survived"],
+            }
+    return survival
 
 
 def print_summary(graph: CausalGraph):
@@ -220,18 +272,94 @@ def main():
     graph.save(graph_path)
     log.info("Causal graph saved: %s", graph_path)
 
+    # Load adversarial data from Nemesis (if available)
+    adversarial_results = load_adversarial_results()
+    adversarial_survival = {}
+    if adversarial_results:
+        log.info("Loaded %d adversarial results from Nemesis", len(adversarial_results))
+        adversarial_survival = compute_adversarial_survival(adversarial_results)
+        log.info("Computed adversarial survival for %d concepts", len(adversarial_survival))
+
+        # Save adversarial graph alongside forge graph
+        adv_graph_path = GRAPHS_DIR / "adversarial_graph.json"
+        adv_graph_path.write_text(json.dumps({
+            "adversarial_survival": adversarial_survival,
+            "n_adversarial_tasks": len(adversarial_results),
+            "updated_at": datetime.now().isoformat(),
+        }, indent=2, default=str), encoding="utf-8")
+        log.info("Adversarial graph saved: %s", adv_graph_path)
+
+        # Compute Goodhart divergence: concepts that predict forge success
+        # but NOT adversarial robustness
+        goodhart_indicators = {}
+        for concept, influence in graph.concept_influence.items():
+            forge_eff = influence.get("forge_effect", 0)
+            adv_data = adversarial_survival.get(concept, {})
+            adv_rate = adv_data.get("survival_rate", 0.5)
+
+            # High forge effect + low adversarial survival = Goodhart indicator
+            if forge_eff > 0.1 and adv_rate < 0.4:
+                goodhart_indicators[concept] = {
+                    "forge_effect": forge_eff,
+                    "adversarial_survival": adv_rate,
+                    "divergence": round(forge_eff - adv_rate, 4),
+                    "warning": "High forge success but low adversarial robustness — may be Goodharting",
+                }
+            # Low forge effect + high adversarial survival = genuine robustness
+            elif forge_eff < 0.1 and adv_rate > 0.6:
+                goodhart_indicators[concept] = {
+                    "forge_effect": forge_eff,
+                    "adversarial_survival": adv_rate,
+                    "divergence": round(adv_rate - forge_eff, 4),
+                    "note": "Low forge priority but high adversarial robustness — undervalued",
+                }
+
+        if goodhart_indicators:
+            log.info("Goodhart indicators: %d concepts with forge/adversarial divergence",
+                     len(goodhart_indicators))
+    else:
+        log.info("No Nemesis adversarial data found (run Nemesis to enable dual graph)")
+
     # Save concept scores for easy lookup
     scores_path = GRAPHS_DIR / "concept_scores.json"
-    scores_path.write_text(json.dumps({
+    scores_data = {
         "concept_influence": graph.concept_influence,
         "forge_rate_by_concept": graph.forge_rate_by_concept,
         "pair_synergy": graph.pair_synergy,
         "field_effects": graph.field_effects,
         "updated_at": datetime.now().isoformat(),
-    }, indent=2, default=str), encoding="utf-8")
+    }
+    if adversarial_survival:
+        scores_data["adversarial_survival"] = adversarial_survival
+    if goodhart_indicators:
+        scores_data["goodhart_indicators"] = goodhart_indicators
+    scores_path.write_text(json.dumps(scores_data, indent=2, default=str),
+                           encoding="utf-8")
 
     # Print summary
     print_summary(graph)
+
+    # Print adversarial summary if available
+    if adversarial_survival:
+        print("\n  Adversarial Survival (from Nemesis):")
+        ranked = sorted(adversarial_survival.items(),
+                        key=lambda x: -x[1]["survival_rate"])
+        for concept, data in ranked[:10]:
+            print(f"    {concept:40s} survival={data['survival_rate']:.0%} "
+                  f"({data['n_survived']}/{data['n_tasks']})")
+    if goodhart_indicators:
+        warnings = {k: v for k, v in goodhart_indicators.items() if "warning" in v}
+        undervalued = {k: v for k, v in goodhart_indicators.items() if "note" in v}
+        if warnings:
+            print("\n  GOODHART WARNINGS (high forge, low adversarial):")
+            for concept, data in warnings.items():
+                print(f"    {concept:40s} forge={data['forge_effect']:+.3f} "
+                      f"adversarial={data['adversarial_survival']:.0%}")
+        if undervalued:
+            print("\n  UNDERVALUED (low forge priority, high adversarial robustness):")
+            for concept, data in undervalued.items():
+                print(f"    {concept:40s} forge={data['forge_effect']:+.3f} "
+                      f"adversarial={data['adversarial_survival']:.0%}")
 
     # Generate enrichments
     if not args.graph_only:

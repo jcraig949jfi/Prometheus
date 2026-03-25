@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Statistical Mechanics",
+    "Self-Organized Criticality",
+    "Neuromodulation"
+  ],
+  "concept_strengths": {
+    "Statistical Mechanics": {
+      "influence": {
+        "forge_effect": 0.0976,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 1.0,
+      "forge_effect": 0.0976,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Statistical Mechanics: positive forge driver (+0.10); forge rate: 100%",
+      "directive": "**Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Self-Organized Criticality": {
+      "influence": {
+        "forge_effect": -0.7234,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0,
+      "forge_effect": -0.7234,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.0,
+        "rate_without": 0.4394,
+        "drop": -0.4394
+      },
+      "summary": "Self-Organized Criticality: removing it increases forge probability by 44%",
+      "directive": "**Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Neuromodulation": {
+      "influence": {
+        "forge_effect": -0.0749,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4444,
+      "forge_effect": -0.0749,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.4444,
+        "rate_without": 0.4308,
+        "drop": 0.0137
+      },
+      "summary": "Neuromodulation: negative forge driver (-0.07); forge rate: 44%",
+      "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neuromodulation",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Neuromodulation",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Phase Transitions",
+        "Criticality",
+        "Neuromodulation"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Falsificationism + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Phase Transitions + Criticality + Neuromodulation (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

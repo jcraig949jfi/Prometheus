@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Matched Filtering",
+    "Kolmogorov Complexity",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Matched Filtering": {
+      "influence": {
+        "forge_effect": -0.8394,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0,
+      "forge_effect": -0.8394,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.0,
+        "rate_without": 0.4427,
+        "drop": -0.4427
+      },
+      "summary": "Matched Filtering: removing it increases forge probability by 44%",
+      "directive": "**Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Kolmogorov Complexity": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4286,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Kolmogorov Complexity: forge rate: 43%",
+      "directive": "**Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4297,
+        "drop": 0.0703
+      },
+      "summary": "Multi-Armed Bandits: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Kolmogorov Complexity",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Kolmogorov Complexity",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ecosystem Dynamics",
+        "Multi-Armed Bandits",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

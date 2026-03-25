@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Fractal Geometry",
+    "Phase Transitions",
+    "Compressed Sensing"
+  ],
+  "concept_strengths": {
+    "Fractal Geometry": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.15,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.15,
+        "rate_without": 0.4538,
+        "drop": -0.3038
+      },
+      "summary": "Fractal Geometry: removing it increases forge probability by 30%; forge rate: 15%",
+      "directive": "**Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Phase Transitions": {
+      "influence": {
+        "forge_effect": 0.2857,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5385,
+      "forge_effect": 0.2857,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5385,
+        "rate_without": 0.4258,
+        "drop": 0.1127
+      },
+      "summary": "Phase Transitions: removing it drops forge probability by 11% (from 54%); forge rate: 54%",
+      "directive": "**Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Compressed Sensing": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3333,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.3333,
+        "rate_without": 0.4323,
+        "drop": -0.099
+      },
+      "summary": "Compressed Sensing: removing it increases forge probability by 10%; forge rate: 33%",
+      "directive": "**Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Chaos Theory",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Predictive Coding",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Fractal Geometry + Chaos Theory + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Predictive Coding + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

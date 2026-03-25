@@ -1,0 +1,106 @@
+{
+  "concept_names": [
+    "Wavelet Transforms",
+    "Compositionality",
+    "Nash Equilibrium"
+  ],
+  "concept_strengths": {
+    "Wavelet Transforms": {
+      "influence": {
+        "forge_effect": -0.0822,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": -0.0822,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4302,
+        "drop": 0.0698
+      },
+      "summary": "Wavelet Transforms: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": 0.1034,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5333,
+      "forge_effect": 0.1034,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5333,
+        "rate_without": 0.4252,
+        "drop": 0.1081
+      },
+      "summary": "Compositionality: removing it drops forge probability by 11% (from 53%); forge rate: 53%",
+      "directive": "**Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0483,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.375,
+      "forge_effect": 0.0483,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.375,
+        "rate_without": 0.433,
+        "drop": -0.058
+      },
+      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Compositionality + Nash Equilibrium": 0.3
+  },
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Compositionality",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Active Inference",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Epistemology",
+        "Criticality",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Compositionality + Nash Equilibrium: strong positive synergy (+0.300). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Falsificationism + Compositionality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

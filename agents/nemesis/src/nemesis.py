@@ -148,6 +148,43 @@ def _generate_targeted(rng: random.Random, grid: MAPElitesGrid,
 # Main cycle
 # ---------------------------------------------------------------------------
 
+def _generate_boundary(rng: random.Random, grid: MAPElitesGrid,
+                       tools: dict, n: int = 20) -> list[AdversarialTask]:
+    """Generate tasks targeting each tool's decision boundary using difficulty model."""
+    tasks = []
+    seeds = list(SEED_TRAPS)
+    if HAS_TRAP_GEN:
+        seeds.extend(generate_trap_battery(n_per_category=2, seed=rng.randint(0, 99999)))
+
+    # For each weak tool, generate tasks using its boundary MRs
+    weak = grid.difficulty_model.weakest_tools(n=5)
+    for tool_name, _ in weak:
+        boundary_mrs = grid.difficulty_model.boundary_mrs(tool_name, n=3)
+        if not boundary_mrs:
+            continue
+        for _ in range(n // max(len(weak), 1)):
+            seed = rng.choice(seeds)
+            # Build chain from boundary MRs + some random
+            chain = list(boundary_mrs[:2])
+            chain.extend(random_mr_chain(rng, max_length=2))
+            result = compose_mrs(
+                seed["prompt"], seed["candidates"], seed["correct"],
+                chain, rng, base_complexity=1, base_obfuscation=1,
+            )
+            if result is None:
+                continue
+            prompt, candidates, correct, complexity, obfuscation, applied_chain = result
+            task = AdversarialTask(
+                prompt=prompt, candidates=candidates, correct=correct,
+                category="boundary_" + tool_name[:20],
+                mr_chain=applied_chain,
+                complexity=complexity, obfuscation=obfuscation,
+                source_trap=seed.get("prompt", "")[:50],
+            )
+            tasks.append(task)
+    return tasks
+
+
 def run_cycle(grid: MAPElitesGrid, tools: dict, rng: random.Random,
               n_random: int = 50, n_targeted: int = 30) -> dict:
     """Run one Nemesis cycle: generate, validate, evaluate, place, shrink.
@@ -156,10 +193,11 @@ def run_cycle(grid: MAPElitesGrid, tools: dict, rng: random.Random,
     """
     cycle_start = time.time()
 
-    # 1. Generate candidate tasks
-    logger.info("Generating %d random + %d targeted tasks...", n_random, n_targeted)
+    # 1. Generate candidate tasks (three strategies)
+    logger.info("Generating %d random + %d targeted + boundary tasks...", n_random, n_targeted)
     candidates = _generate_from_seeds(rng, n_random)
     candidates.extend(_generate_targeted(rng, grid, n_targeted))
+    candidates.extend(_generate_boundary(rng, grid, tools, n=20))
     logger.info("Generated %d candidate tasks", len(candidates))
 
     # 2. Validate (ground truth cross-check)
@@ -190,12 +228,33 @@ def run_cycle(grid: MAPElitesGrid, tools: dict, rng: random.Random,
     logger.info("Placed %d tasks in grid (now %d/%d filled)",
                 placed, grid.n_filled, GRID_SIZE ** 2)
 
-    # 5. Shrink new failures to minimal cases
+    # 5. Update per-tool difficulty model
+    for task in validated:
+        for tool_name, result in task.tool_results.items():
+            for mr_name in task.mr_chain:
+                grid.difficulty_model.update(
+                    tool_name, mr_name, result.get("correct", False)
+                )
+
+    # 6. Shrink new failures to minimal cases + track lineage
     n_shrunk = 0
+    n_lineage = 0
     for task in validated:
         if task.tools_broken == 0:
             continue
-        # Find the first tool that failed
+
+        # Track lineage: if this task's source_trap was itself an adversarial task
+        # that broke tools, increment lineage depth
+        for existing in grid.tasks:
+            if (existing.prompt and task.source_trap
+                    and existing.prompt[:30] in task.source_trap):
+                task.parent_id = existing.prompt[:50]
+                task.lineage_depth = existing.lineage_depth + 1
+                if task.lineage_depth > 1:
+                    n_lineage += 1
+                break
+
+        # Find the first tool that failed and shrink
         for tool_name, result in task.tool_results.items():
             if not result.get("correct", True):
                 tool = tools.get(tool_name)
@@ -212,14 +271,14 @@ def run_cycle(grid: MAPElitesGrid, tools: dict, rng: random.Random,
                     )
                     if simplifications:
                         n_shrunk += 1
-                        # Store the minimal case on the task
                         task.prompt = min_prompt
                         task.candidates = min_cands
                 except Exception:
                     pass
-                break  # only shrink for the first failing tool
+                break
 
-    logger.info("Shrunk %d tasks to minimal failing cases", n_shrunk)
+    logger.info("Shrunk %d tasks to minimal failing cases, %d with lineage depth > 1",
+                n_shrunk, n_lineage)
 
     cycle_time = time.time() - cycle_start
 

@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Statistical Mechanics",
+    "Neural Plasticity",
+    "Abductive Reasoning"
+  ],
+  "concept_strengths": {
+    "Statistical Mechanics": {
+      "influence": {
+        "forge_effect": 0.0976,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 1.0,
+      "forge_effect": 0.0976,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Statistical Mechanics: positive forge driver (+0.10); forge rate: 100%",
+      "directive": "**Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neural Plasticity": {
+      "influence": {
+        "forge_effect": 0.3056,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": 0.3056,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4286,
+        "drop": 0.0714
+      },
+      "summary": "Neural Plasticity: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Abductive Reasoning": {
+      "influence": {
+        "forge_effect": 0.1176,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4444,
+      "forge_effect": 0.1176,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.4444,
+        "rate_without": 0.4308,
+        "drop": 0.0137
+      },
+      "summary": "Abductive Reasoning: positive forge driver (+0.12); forge rate: 44%",
+      "directive": "**Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Statistical Mechanics",
+        "Active Inference",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Plasticity",
+        "Autopoiesis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n\nSimilar combinations that forged successfully:\n- Statistical Mechanics + Active Inference + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

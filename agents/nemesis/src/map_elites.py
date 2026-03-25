@@ -107,6 +107,59 @@ class AdversarialTask:
         return t
 
 
+class ToolDifficultyModel:
+    """Per-tool adaptive difficulty model.
+
+    Tracks pass/fail rates per MR category per tool. Focuses adversarial
+    pressure at each tool's decision boundary (50% pass rate zone).
+    """
+
+    def __init__(self):
+        self._data: dict[str, dict[str, dict]] = {}
+        # tool_name -> mr_name -> {"passed": int, "failed": int}
+
+    def update(self, tool_name: str, mr_name: str, passed: bool):
+        if tool_name not in self._data:
+            self._data[tool_name] = {}
+        if mr_name not in self._data[tool_name]:
+            self._data[tool_name][mr_name] = {"passed": 0, "failed": 0}
+        key = "passed" if passed else "failed"
+        self._data[tool_name][mr_name][key] += 1
+
+    def boundary_mrs(self, tool_name: str, n: int = 3) -> list[str]:
+        """Return MR categories closest to 50% pass rate for this tool."""
+        if tool_name not in self._data:
+            return []
+        scored = []
+        for mr, stats in self._data[tool_name].items():
+            total = stats["passed"] + stats["failed"]
+            if total < 2:
+                continue
+            rate = stats["passed"] / total
+            distance_from_boundary = abs(rate - 0.5)
+            scored.append((distance_from_boundary, mr))
+        scored.sort()
+        return [mr for _, mr in scored[:n]]
+
+    def weakest_tools(self, n: int = 5) -> list[tuple[str, float]]:
+        """Return tools with lowest overall pass rate across all MRs."""
+        rates = []
+        for tool, mrs in self._data.items():
+            total_p = sum(v["passed"] for v in mrs.values())
+            total_f = sum(v["failed"] for v in mrs.values())
+            total = total_p + total_f
+            if total > 0:
+                rates.append((tool, total_p / total))
+        rates.sort(key=lambda x: x[1])
+        return rates[:n]
+
+    def to_dict(self) -> dict:
+        return self._data
+
+    def load_from_dict(self, data: dict):
+        self._data = data
+
+
 class MAPElitesGrid:
     """10x10 quality-diversity grid for adversarial tasks.
 
@@ -124,6 +177,7 @@ class MAPElitesGrid:
             [None] * GRID_SIZE for _ in range(GRID_SIZE)
         ]
         self._generation = 0
+        self.difficulty_model = ToolDifficultyModel()
 
     @property
     def n_filled(self) -> int:
@@ -235,6 +289,7 @@ class MAPElitesGrid:
             "generation": self._generation,
             "n_filled": self.n_filled,
             "cells": [],
+            "difficulty_model": self.difficulty_model.to_dict(),
         }
         for r in range(GRID_SIZE):
             for c in range(GRID_SIZE):
@@ -256,6 +311,8 @@ class MAPElitesGrid:
             task = AdversarialTask.from_dict(cell_data["task"])
             if 0 <= r < GRID_SIZE and 0 <= c < GRID_SIZE:
                 self._grid[r][c] = task
+        if "difficulty_model" in data:
+            self.difficulty_model.load_from_dict(data["difficulty_model"])
         log.info("Grid loaded: %d/%d cells filled", self.n_filled, GRID_SIZE**2)
 
     def export_adversarial_set(self) -> list[dict]:

@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Phase Transitions",
+    "Spectral Analysis",
+    "Falsificationism"
+  ],
+  "concept_strengths": {
+    "Phase Transitions": {
+      "influence": {
+        "forge_effect": 0.2857,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5385,
+      "forge_effect": 0.2857,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5385,
+        "rate_without": 0.4258,
+        "drop": 0.1127
+      },
+      "summary": "Phase Transitions: removing it drops forge probability by 11% (from 54%); forge rate: 54%",
+      "directive": "**Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": -0.0191,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": -0.0191,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4297,
+        "drop": 0.0703
+      },
+      "summary": "Spectral Analysis: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Falsificationism": {
+      "influence": {
+        "forge_effect": 0.6959,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.6087,
+      "forge_effect": 0.6959,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.6087,
+        "rate_without": 0.4146,
+        "drop": 0.1941
+      },
+      "summary": "Falsificationism: removing it drops forge probability by 19% (from 61%); forge rate: 61%",
+      "directive": "**Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Spectral Analysis",
+        "Falsificationism",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Falsificationism",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Architecture Search",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. \n\nSimilar combinations that forged successfully:\n- Spectral Analysis + Falsificationism + Criticality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Architecture Search + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

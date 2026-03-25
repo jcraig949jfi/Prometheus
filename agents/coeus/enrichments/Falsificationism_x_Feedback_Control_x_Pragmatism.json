@@ -1,0 +1,106 @@
+{
+  "concept_names": [
+    "Falsificationism",
+    "Pragmatism",
+    "Feedback Control"
+  ],
+  "concept_strengths": {
+    "Falsificationism": {
+      "influence": {
+        "forge_effect": 0.6959,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.6087,
+      "forge_effect": 0.6959,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.6087,
+        "rate_without": 0.4146,
+        "drop": 0.1941
+      },
+      "summary": "Falsificationism: removing it drops forge probability by 19% (from 61%); forge rate: 61%",
+      "directive": "**Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. "
+    },
+    "Pragmatism": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.25,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.25,
+        "rate_without": 0.434,
+        "drop": -0.184
+      },
+      "summary": "Pragmatism: removing it increases forge probability by 18%; forge rate: 25%",
+      "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0566,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4,
+      "forge_effect": -0.0566,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.4,
+        "rate_without": 0.4324,
+        "drop": -0.0324
+      },
+      "summary": "Feedback Control: negative forge driver (-0.06); forge rate: 40%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Falsificationism + Feedback Control": 0.2565
+  },
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Pragmatism",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Dialectics",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Falsificationism",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Falsificationism + Feedback Control: strong positive synergy (+0.257). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

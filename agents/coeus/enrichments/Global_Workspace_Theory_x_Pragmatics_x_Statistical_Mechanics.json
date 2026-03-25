@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Statistical Mechanics",
+    "Global Workspace Theory",
+    "Pragmatics"
+  ],
+  "concept_strengths": {
+    "Statistical Mechanics": {
+      "influence": {
+        "forge_effect": 0.0976,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 1.0,
+      "forge_effect": 0.0976,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Statistical Mechanics: positive forge driver (+0.10); forge rate: 100%",
+      "directive": "**Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Global Workspace Theory": {
+      "influence": {
+        "forge_effect": -0.0477,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.375,
+      "forge_effect": -0.0477,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.375,
+        "rate_without": 0.433,
+        "drop": -0.058
+      },
+      "summary": "Global Workspace Theory: removing it increases forge probability by 6%; forge rate: 38%",
+      "directive": "**Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Pragmatics": {
+      "influence": {
+        "forge_effect": 0.5722,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.7143,
+      "forge_effect": 0.5722,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.7143,
+        "rate_without": 0.4073,
+        "drop": 0.307
+      },
+      "summary": "Pragmatics: removing it drops forge probability by 31% (from 71%); forge rate: 71%",
+      "directive": "**Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Causal Inference",
+        "Pragmatics",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Metacognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Optimal Control",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. \n\nSimilar combinations that forged successfully:\n- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

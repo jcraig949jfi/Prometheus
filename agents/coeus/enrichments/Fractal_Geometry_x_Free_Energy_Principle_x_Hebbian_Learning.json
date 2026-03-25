@@ -1,0 +1,106 @@
+{
+  "concept_names": [
+    "Fractal Geometry",
+    "Hebbian Learning",
+    "Free Energy Principle"
+  ],
+  "concept_strengths": {
+    "Fractal Geometry": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.15,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.15,
+        "rate_without": 0.4538,
+        "drop": -0.3038
+      },
+      "summary": "Fractal Geometry: removing it increases forge probability by 30%; forge rate: 15%",
+      "directive": "**Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Hebbian Learning": {
+      "influence": {
+        "forge_effect": -0.2884,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.25,
+      "forge_effect": -0.2884,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.25,
+        "rate_without": 0.4368,
+        "drop": -0.1868
+      },
+      "summary": "Hebbian Learning: removing it increases forge probability by 19%; forge rate: 25%",
+      "directive": "**Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.8628,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.7414,
+      "forge_effect": 0.8628,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.7414,
+        "rate_without": 0.346,
+        "drop": 0.3954
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 40% (from 74%); forge rate: 74%",
+      "directive": "**Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 74%. "
+    }
+  },
+  "pair_synergies": {
+    "Free Energy Principle + Hebbian Learning": 0.8147
+  },
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Hebbian Learning",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Chaos Theory",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Predictive Coding",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 74%. \n\n- Free Energy Principle + Hebbian Learning: strong positive synergy (+0.815). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Chaos Theory + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Predictive Coding + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

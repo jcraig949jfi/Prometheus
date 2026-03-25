@@ -110,6 +110,26 @@ def generate_report(grid: MAPElitesGrid, tools: dict,
     lines.append(grid.summary())
     lines.append("```")
 
+    # Lineage depth analysis
+    max_lineage = max((t.lineage_depth for t in tasks), default=0)
+    deep_lineages = [t for t in tasks if t.lineage_depth >= 2]
+    if deep_lineages:
+        lines.extend(["", "---", "", "## Deep Adversarial Lineages (depth >= 2)", ""])
+        for t in sorted(deep_lineages, key=lambda x: -x.lineage_depth):
+            lines.append(f"- Depth {t.lineage_depth}: [{t.complexity},{t.obfuscation}] "
+                         f"{t.prompt[:60]}")
+            lines.append(f"  MR chain: {' -> '.join(t.mr_chain)}")
+            lines.append("")
+
+    # Per-tool difficulty model
+    weak = grid.difficulty_model.weakest_tools(n=5)
+    if weak:
+        lines.extend(["", "---", "", "## Weakest Tools (lowest adversarial pass rate)", ""])
+        lines.append("| Tool | Pass Rate |")
+        lines.append("|------|-----------|")
+        for name, rate in weak:
+            lines.append(f"| {name[:50]} | {rate:.0%} |")
+
     # Empty cell analysis
     empty = grid.empty_cells()
     if empty:

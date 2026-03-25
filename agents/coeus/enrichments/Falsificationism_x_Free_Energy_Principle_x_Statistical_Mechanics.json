@@ -1,0 +1,101 @@
+{
+  "concept_names": [
+    "Statistical Mechanics",
+    "Falsificationism",
+    "Free Energy Principle"
+  ],
+  "concept_strengths": {
+    "Statistical Mechanics": {
+      "influence": {
+        "forge_effect": 0.0976,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 1.0,
+      "forge_effect": 0.0976,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Statistical Mechanics: positive forge driver (+0.10); forge rate: 100%",
+      "directive": "**Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Falsificationism": {
+      "influence": {
+        "forge_effect": 0.6959,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.6087,
+      "forge_effect": 0.6959,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.6087,
+        "rate_without": 0.4146,
+        "drop": 0.1941
+      },
+      "summary": "Falsificationism: removing it drops forge probability by 19% (from 61%); forge rate: 61%",
+      "directive": "**Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.8628,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.7414,
+      "forge_effect": 0.8628,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.7414,
+        "rate_without": 0.346,
+        "drop": 0.3954
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 40% (from 74%); forge rate: 74%",
+      "directive": "**Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 74%. "
+    }
+  },
+  "pair_synergies": {
+    "Falsificationism + Free Energy Principle": 0.5487
+  },
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Statistical Mechanics",
+        "Falsificationism",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Predictive Coding",
+        "Falsificationism",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Sparse Autoencoders",
+        "Falsificationism",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. \n- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 74%. \n\n- Falsificationism + Free Energy Principle: strong positive synergy (+0.549). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Statistical Mechanics + Falsificationism + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Predictive Coding + Falsificationism + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Sparse Autoencoders + Falsificationism + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

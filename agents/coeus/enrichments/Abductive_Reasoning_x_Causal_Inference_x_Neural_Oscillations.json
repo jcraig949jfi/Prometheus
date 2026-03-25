@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Abductive Reasoning",
+    "Causal Inference",
+    "Neural Oscillations"
+  ],
+  "concept_strengths": {
+    "Abductive Reasoning": {
+      "influence": {
+        "forge_effect": 0.1176,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4444,
+      "forge_effect": 0.1176,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.4444,
+        "rate_without": 0.4308,
+        "drop": 0.0137
+      },
+      "summary": "Abductive Reasoning: positive forge driver (+0.12); forge rate: 44%",
+      "directive": "**Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Causal Inference": {
+      "influence": {
+        "forge_effect": -0.1323,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3333,
+      "forge_effect": -0.1323,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.3333,
+        "rate_without": 0.4323,
+        "drop": -0.099
+      },
+      "summary": "Causal Inference: removing it increases forge probability by 10%; forge rate: 33%",
+      "directive": "**Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Neural Oscillations": {
+      "influence": {
+        "forge_effect": -0.1342,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4,
+      "forge_effect": -0.1342,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.4,
+        "rate_without": 0.4318,
+        "drop": -0.0318
+      },
+      "summary": "Neural Oscillations: negative forge driver (-0.13); forge rate: 40%",
+      "directive": "**Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Neural Oscillations",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Causal Inference",
+        "Pragmatics",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

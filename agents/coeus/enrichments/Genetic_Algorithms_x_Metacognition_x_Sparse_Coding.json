@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Genetic Algorithms",
+    "Metacognition",
+    "Sparse Coding"
+  ],
+  "concept_strengths": {
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": -0.1255,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": -0.1255,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.2857,
+        "rate_without": 0.4351,
+        "drop": -0.1494
+      },
+      "summary": "Genetic Algorithms: removing it increases forge probability by 15%; forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Metacognition": {
+      "influence": {
+        "forge_effect": -0.3588,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.375,
+      "forge_effect": -0.3588,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.375,
+        "rate_without": 0.433,
+        "drop": -0.058
+      },
+      "summary": "Metacognition: removing it increases forge probability by 6%; forge rate: 38%",
+      "directive": "**Metacognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Sparse Coding": {
+      "influence": {
+        "forge_effect": -0.1399,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2,
+      "forge_effect": -0.1399,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.2,
+        "rate_without": 0.4356,
+        "drop": -0.2356
+      },
+      "summary": "Sparse Coding: removing it increases forge probability by 24%; forge rate: 20%",
+      "directive": "**Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Category Theory",
+        "Metacognition",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Metacognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Differentiable Programming",
+        "Metacognition",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Metacognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)\n- Differentiable Programming + Metacognition + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

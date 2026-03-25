@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Bayesian Inference",
+    "Apoptosis",
+    "Dual Process Theory"
+  ],
+  "concept_strengths": {
+    "Bayesian Inference": {
+      "influence": {
+        "forge_effect": 0.2401,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.6667,
+      "forge_effect": 0.2401,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.6667,
+        "rate_without": 0.4259,
+        "drop": 0.2408
+      },
+      "summary": "Bayesian Inference: removing it drops forge probability by 24% (from 67%); forge rate: 67%",
+      "directive": "**Bayesian Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Apoptosis": {
+      "influence": {
+        "forge_effect": -0.7159,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0,
+      "forge_effect": -0.7159,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.0,
+        "rate_without": 0.4377,
+        "drop": -0.4377
+      },
+      "summary": "Apoptosis: removing it increases forge probability by 44%",
+      "directive": "**Apoptosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Dual Process Theory": {
+      "influence": {
+        "forge_effect": -0.5205,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0,
+      "forge_effect": -0.5205,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.0,
+        "rate_without": 0.4377,
+        "drop": -0.4377
+      },
+      "summary": "Dual Process Theory: removing it increases forge probability by 44%",
+      "directive": "**Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Constraint Satisfaction",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Evolution",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Bayesian Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Apoptosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

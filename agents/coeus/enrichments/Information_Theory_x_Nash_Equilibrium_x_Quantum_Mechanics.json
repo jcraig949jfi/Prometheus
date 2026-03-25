@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Information Theory",
+    "Quantum Mechanics",
+    "Nash Equilibrium"
+  ],
+  "concept_strengths": {
+    "Information Theory": {
+      "influence": {
+        "forge_effect": 0.042,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.042,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.2857,
+        "rate_without": 0.4392,
+        "drop": -0.1535
+      },
+      "summary": "Information Theory: removing it increases forge probability by 15%; forge rate: 29%",
+      "directive": "**Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Quantum Mechanics": {
+      "influence": {
+        "forge_effect": -0.5256,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0,
+      "forge_effect": -0.5256,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.0,
+        "rate_without": 0.4377,
+        "drop": -0.4377
+      },
+      "summary": "Quantum Mechanics: removing it increases forge probability by 44%",
+      "directive": "**Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0483,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.375,
+      "forge_effect": 0.0483,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.375,
+        "rate_without": 0.433,
+        "drop": -0.058
+      },
+      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Epistemology",
+        "Criticality",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Compositionality",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Information Theory",
+        "Active Inference",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Falsificationism + Compositionality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Information Theory + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

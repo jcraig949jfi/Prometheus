@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Neural Architecture Search",
+    "Immune Systems",
+    "Optimal Control"
+  ],
+  "concept_strengths": {
+    "Neural Architecture Search": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4297,
+        "drop": 0.0703
+      },
+      "summary": "Neural Architecture Search: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Immune Systems": {
+      "influence": {
+        "forge_effect": -0.1304,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3333,
+      "forge_effect": -0.1304,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.3333,
+        "rate_without": 0.4335,
+        "drop": -0.1001
+      },
+      "summary": "Immune Systems: removing it increases forge probability by 10%; forge rate: 33%",
+      "directive": "**Immune Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Optimal Control": {
+      "influence": {
+        "forge_effect": -0.2837,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1538,
+      "forge_effect": -0.2837,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.1538,
+        "rate_without": 0.4453,
+        "drop": -0.2915
+      },
+      "summary": "Optimal Control: removing it increases forge probability by 29%; forge rate: 15%",
+      "directive": "**Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Criticality",
+        "Optimal Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Architecture Search",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Optimal Control",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Immune Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Architecture Search + Falsificationism (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

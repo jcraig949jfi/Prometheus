@@ -1,0 +1,107 @@
+{
+  "concept_names": [
+    "Abductive Reasoning",
+    "Criticality",
+    "Maximum Entropy"
+  ],
+  "concept_strengths": {
+    "Abductive Reasoning": {
+      "influence": {
+        "forge_effect": 0.1176,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.4444,
+      "forge_effect": 0.1176,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.4444,
+        "rate_without": 0.4308,
+        "drop": 0.0137
+      },
+      "summary": "Abductive Reasoning: positive forge driver (+0.12); forge rate: 44%",
+      "directive": "**Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Criticality": {
+      "influence": {
+        "forge_effect": 1.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.6316,
+      "forge_effect": 1.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.6316,
+        "rate_without": 0.3983,
+        "drop": 0.2333
+      },
+      "summary": "Criticality: removing it drops forge probability by 23% (from 63%); forge rate: 63%",
+      "directive": "**Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.4361,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2381,
+      "forge_effect": -0.4361,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.2381,
+        "rate_without": 0.4476,
+        "drop": -0.2095
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 21%; forge rate: 24%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Abductive Reasoning + Criticality": -0.2807,
+    "Criticality + Maximum Entropy": -0.1504
+  },
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Criticality",
+        "Optimal Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Evolution",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Abductive Reasoning + Criticality: negative interaction (-0.281). Keep these concepts in separate code paths to avoid interference.\n- Criticality + Maximum Entropy: negative interaction (-0.150). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

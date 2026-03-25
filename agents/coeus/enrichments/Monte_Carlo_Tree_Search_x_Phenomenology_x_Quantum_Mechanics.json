@@ -1,0 +1,95 @@
+{
+  "concept_names": [
+    "Quantum Mechanics",
+    "Monte Carlo Tree Search",
+    "Phenomenology"
+  ],
+  "concept_strengths": {
+    "Quantum Mechanics": {
+      "influence": {
+        "forge_effect": -0.5256,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0,
+      "forge_effect": -0.5256,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.0,
+        "rate_without": 0.4377,
+        "drop": -0.4377
+      },
+      "summary": "Quantum Mechanics: removing it increases forge probability by 44%",
+      "directive": "**Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Monte Carlo Tree Search": {
+      "influence": {
+        "forge_effect": -0.1626,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1429,
+      "forge_effect": -0.1626,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.1429,
+        "rate_without": 0.4389,
+        "drop": -0.2961
+      },
+      "summary": "Monte Carlo Tree Search: removing it increases forge probability by 30%; forge rate: 14%",
+      "directive": "**Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Phenomenology": {
+      "influence": {
+        "forge_effect": -0.1293,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2,
+      "forge_effect": -0.1293,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.2,
+        "rate_without": 0.4356,
+        "drop": -0.2356
+      },
+      "summary": "Phenomenology: removing it increases forge probability by 24%; forge rate: 20%",
+      "directive": "**Phenomenology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Phenomenology",
+        "Emergence",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Thermodynamics",
+        "Monte Carlo Tree Search",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Phenomenology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Phenomenology + Emergence + Criticality (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Monte Carlo Tree Search + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

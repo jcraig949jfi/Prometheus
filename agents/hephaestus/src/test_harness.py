@@ -260,7 +260,34 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
 
     passed = (beats_acc or beats_cal) and not loses_acc and not loses_cal
 
-    return {
+    # Gate 6: Nemesis adversarial set (if available)
+    adversarial_acc = None
+    adversarial_n = 0
+    nemesis_grid_path = Path(__file__).resolve().parent.parent.parent / "nemesis" / "grid" / "grid.json"
+    if nemesis_grid_path.exists():
+        try:
+            import json
+            grid_data = json.loads(nemesis_grid_path.read_text(encoding="utf-8"))
+            adv_traps = []
+            for cell in grid_data.get("cells", []):
+                t = cell.get("task", {})
+                if t.get("prompt") and t.get("candidates") and t.get("correct"):
+                    adv_traps.append({
+                        "prompt": t["prompt"],
+                        "candidates": t["candidates"],
+                        "correct": t["correct"],
+                    })
+            if adv_traps:
+                adv_results = _run_battery(tool, adv_traps)
+                adversarial_acc = adv_results["accuracy"]
+                adversarial_n = adv_results["n_traps"]
+                # Gate 6: must survive >= 50% of adversarial set
+                if adversarial_acc < 0.5:
+                    passed = False
+        except Exception:
+            pass  # Nemesis not available, skip Gate 6
+
+    result = {
         "accuracy": tool_acc,
         "calibration": tool_cal,
         "correct_count": tool_results["correct_count"],
@@ -273,3 +300,7 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
         "margin_accuracy": round(tool_acc - ncd_acc, 4),
         "margin_calibration": round(tool_cal - ncd_cal, 4),
     }
+    if adversarial_acc is not None:
+        result["adversarial_accuracy"] = adversarial_acc
+        result["adversarial_n"] = adversarial_n
+    return result

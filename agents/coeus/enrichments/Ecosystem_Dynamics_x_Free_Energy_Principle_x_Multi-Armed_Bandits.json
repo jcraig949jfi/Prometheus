@@ -1,0 +1,104 @@
+{
+  "concept_names": [
+    "Ecosystem Dynamics",
+    "Multi-Armed Bandits",
+    "Free Energy Principle"
+  ],
+  "concept_strengths": {
+    "Ecosystem Dynamics": {
+      "influence": {
+        "forge_effect": 0.0613,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": 0.0613,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4302,
+        "drop": 0.0698
+      },
+      "summary": "Ecosystem Dynamics: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.5,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.5,
+        "rate_without": 0.4297,
+        "drop": 0.0703
+      },
+      "summary": "Multi-Armed Bandits: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.8628,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.7414,
+      "forge_effect": 0.8628,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.4312,
+        "rate_with": 0.7414,
+        "rate_without": 0.346,
+        "drop": 0.3954
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 40% (from 74%); forge rate: 74%",
+      "directive": "**Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 74%. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Biology": -0.0919,
+    "Complex Systems": 0.0216,
+    "Control Theory": -0.1521,
+    "Economics": 0.1516,
+    "Linguistics": 0.1062,
+    "Mathematics": -0.2184,
+    "Neuroscience": -0.0156,
+    "Philosophy": 0.0541,
+    "Physics": 0.0244,
+    "Statistical Physics": -0.0121,
+    "Theoretical Neuroscience": 0.2733
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ecosystem Dynamics",
+        "Multi-Armed Bandits",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Free Energy Principle",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Kolmogorov Complexity",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 74%. \n\nSimilar combinations that forged successfully:\n- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}
