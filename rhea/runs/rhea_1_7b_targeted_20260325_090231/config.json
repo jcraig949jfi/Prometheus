@@ -1,0 +1,28 @@
+{
+  "seed_model": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+  "population_size": 20,
+  "genome_dim": 65536,
+  "sigma_init": 0.05,
+  "lora_rank": 8,
+  "lora_targets": [
+    "v_proj"
+  ],
+  "target_layers": [
+    22,
+    23
+  ],
+  "rationale": "Ignis decomposition found ejection in L22-L23 heads 9,26,8,7,23",
+  "comparison": {
+    "blanket_rank8": {
+      "params": 2752512,
+      "SR": 0.361
+    },
+    "blanket_rank16": {
+      "params": 5505024,
+      "SR": 0.083
+    },
+    "targeted_L22_L23": {
+      "params": 65536
+    }
+  }
+}

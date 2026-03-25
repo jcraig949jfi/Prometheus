@@ -1,0 +1,22 @@
+{
+  "seed_model": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "genome_dim": 327680,
+  "lora_rank": 8,
+  "alpha": 2.0,
+  "baseline_ppl": 21.54819066040826,
+  "sigma_schedule": [
+    [
+      20,
+      0.1
+    ],
+    [
+      30,
+      0.05
+    ],
+    [
+      50,
+      0.02
+    ]
+  ],
+  "nan_guard": true
+}
