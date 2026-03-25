@@ -36,7 +36,7 @@ logging.basicConfig(
 log = logging.getLogger("nous")
 
 PROMPT_TEMPLATE = """\
-You are a computational theorist exploring novel intersections of ideas.
+You are a computational engineer designing reasoning evaluation tools.
 
 Three concepts: {c1_name}, {c2_name}, {c3_name}
 
@@ -45,14 +45,23 @@ Descriptions:
 - {c2_name}: {c2_desc}
 - {c3_name}: {c3_desc}
 
+A reasoning evaluation tool is a Python class that takes a prompt and candidate \
+answers, then scores them using only numpy and the standard library. No neural models, \
+no API calls — pure algorithmic reasoning.
+
 In 200-400 words, answer:
-1. What computational mechanism emerges from combining these three concepts?
-2. What specific advantage would this give a reasoning system trying to test its own hypotheses?
-3. Is this combination novel (not already a known field/technique), or does it map to existing work?
+1. What specific algorithm emerges from combining these three concepts that could \
+score candidate answers to reasoning questions? Describe the data structures, \
+operations, and scoring logic — not metaphors.
+2. What structural features of text would this approach parse? (e.g., negations, \
+comparatives, conditionals, numeric values, causal claims, ordering relations)
+3. Is this combination novel, or does it map to existing work?
 4. Rate the potential (1-10) for each dimension below.
 
-Be concrete. Name specific algorithms or architectures, not just metaphors. \
-If the combination is unproductive, say so — not every intersection is fertile.
+The tools that succeed in our pipeline use structural parsing (regex extraction of \
+logical relationships), constraint propagation (transitivity, modus ponens), and \
+numeric evaluation. Tools that rely on hash similarity or bag-of-words fail. \
+Be concrete about the algorithm, not the theory.
 
 End your response with exactly these four rating lines (fill in the number and a short justification):
 Reasoning: <N>/10 — <why>
@@ -76,16 +85,58 @@ def load_concepts(concept_file: str | None) -> list[dict]:
     return CONCEPTS
 
 
+def _load_coeus_weights(concepts: list[dict]) -> list[float]:
+    """Load Coeus concept scores to bias sampling toward forge-productive concepts.
+
+    Returns a weight per concept index. Higher = more likely to be sampled.
+    Concepts with 0% forge rate get downweighted (not eliminated — they might
+    work in new combinations).
+    """
+    coeus_path = Path(__file__).resolve().parent.parent.parent / "coeus" / "graphs" / "concept_scores.json"
+    if not coeus_path.exists():
+        return [1.0] * len(concepts)
+
+    try:
+        data = json.loads(coeus_path.read_text(encoding="utf-8"))
+        influence = data.get("concept_influence", {})
+
+        weights = []
+        for c in concepts:
+            name = c["name"]
+            info = influence.get(name, {})
+            forge_eff = info.get("forge_effect", 0)
+
+            if forge_eff > 0.3:
+                weights.append(3.0)   # strong forge driver — oversample
+            elif forge_eff > 0.05:
+                weights.append(2.0)   # moderate driver
+            elif forge_eff < -0.2:
+                weights.append(0.3)   # inhibitor — undersample but don't eliminate
+            else:
+                weights.append(1.0)   # neutral
+
+        log.info("Coeus sampling weights loaded: %d boosted, %d suppressed",
+                 sum(1 for w in weights if w > 1.5),
+                 sum(1 for w in weights if w < 0.5))
+        return weights
+
+    except Exception as e:
+        log.warning("Failed to load Coeus weights: %s", e)
+        return [1.0] * len(concepts)
+
+
 def generate_combinations(
     concepts: list[dict],
     n_combos: int,
     cross_field_bias: float = 0.8,
     seed: int | None = None,
+    use_coeus_weights: bool = True,
 ) -> list[tuple[int, int, int]]:
     """
     Generate random concept triple indices, biased toward cross-field combinations.
 
     cross_field_bias: probability of requiring at least 2 different fields per triple.
+    use_coeus_weights: if True, bias sampling toward concepts with positive forge effects.
     """
     if seed is not None:
         random.seed(seed)
@@ -94,14 +145,33 @@ def generate_combinations(
     all_indices = list(range(n))
     combos = set()
 
+    # Load Coeus weights for forge-aware sampling
+    weights = _load_coeus_weights(concepts) if use_coeus_weights else [1.0] * n
+    total_weight = sum(weights)
+    probs = [w / total_weight for w in weights]
+
     # Pre-group by field for cross-field sampling
     field_groups = {}
     for i, c in enumerate(concepts):
         field_groups.setdefault(c["field"], []).append(i)
     fields = list(field_groups.keys())
 
+    # Per-field weighted sampling helper
+    field_weights = {}
+    for field, indices in field_groups.items():
+        fw = [weights[i] for i in indices]
+        fw_total = sum(fw)
+        field_weights[field] = [w / fw_total for w in fw] if fw_total > 0 else None
+
     attempts = 0
     max_attempts = n_combos * 20
+
+    def _weighted_choice(indices, field=None):
+        """Pick one index, weighted by Coeus forge scores."""
+        if field and field in field_weights and field_weights[field] is not None:
+            return random.choices(field_groups[field],
+                                  weights=field_weights[field], k=1)[0]
+        return random.choices(indices, weights=[weights[i] for i in indices], k=1)[0]
 
     while len(combos) < n_combos and attempts < max_attempts:
         attempts += 1
@@ -113,15 +183,15 @@ def generate_combinations(
 
             selected = []
             for f in chosen_fields:
-                selected.append(random.choice(field_groups[f]))
+                selected.append(_weighted_choice(field_groups[f], field=f))
 
-            # Fill remaining slots from any field
+            # Fill remaining slots from any field (weighted)
             while len(selected) < 3:
-                idx = random.choice(all_indices)
+                idx = _weighted_choice(all_indices)
                 if idx not in selected:
                     selected.append(idx)
         else:
-            selected = random.sample(all_indices, 3)
+            selected = random.choices(all_indices, weights=weights, k=3)
 
         triple = tuple(sorted(selected))
         if len(set(triple)) == 3:

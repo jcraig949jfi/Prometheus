@@ -30,6 +30,8 @@ RUNS_DIR = HEPHAESTUS_ROOT / "runs"
 FORGE_DIR = HEPHAESTUS_ROOT / "forge"
 SCRAP_DIR = HEPHAESTUS_ROOT / "scrap"
 LEDGER_PATH = HEPHAESTUS_ROOT / "ledger.jsonl"
+COEUS_ENRICHMENTS_DIR = HEPHAESTUS_ROOT.parent / "coeus" / "enrichments"
+COEUS_SRC = HEPHAESTUS_ROOT.parent / "coeus" / "src"
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -130,7 +132,9 @@ def load_ledger() -> dict[str, dict]:
 
 def append_ledger(key: str, status: str, concept_names: list[str],
                   reason: str = "", accuracy: float = 0.0,
-                  calibration: float = 0.0):
+                  calibration: float = 0.0,
+                  margin_accuracy: float = 0.0,
+                  margin_calibration: float = 0.0):
     """Append a single result to the global ledger."""
     record = {
         "key": key,
@@ -139,6 +143,8 @@ def append_ledger(key: str, status: str, concept_names: list[str],
         "reason": reason,
         "accuracy": accuracy,
         "calibration": calibration,
+        "margin_accuracy": margin_accuracy,
+        "margin_calibration": margin_calibration,
         "timestamp": datetime.now().isoformat(),
     }
     with open(LEDGER_PATH, "a", encoding="utf-8") as f:
@@ -163,6 +169,19 @@ def combo_key(entry: dict) -> str:
     """Unique key for a Nous combination."""
     names = entry.get("concept_names", [])
     return " + ".join(sorted(names))
+
+
+def load_enrichment(entry: dict) -> dict | None:
+    """Load Coeus enrichment for a Nous entry, if available."""
+    key = combo_key(entry)
+    safe_key = key.replace(" ", "_").replace("+", "x")
+    path = COEUS_ENRICHMENTS_DIR / f"{safe_key}.json"
+    if path.exists():
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return None
+    return None
 
 
 def safe_filename(names: list[str]) -> str:
@@ -277,6 +296,9 @@ def write_rankings(forged: list[dict], scrapped: list[dict], run_dir: Path):
 # Main
 # ---------------------------------------------------------------------------
 
+NOUS_ROOT = HEPHAESTUS_ROOT.parent / "nous"
+
+
 def load_nous_results(path: Path) -> list[dict]:
     """Load and parse a Nous responses.jsonl file."""
     results = []
@@ -288,9 +310,80 @@ def load_nous_results(path: Path) -> list[dict]:
     return results
 
 
+def load_all_nous_results() -> tuple[list[dict], list[Path]]:
+    """Load results from ALL Nous run folders.
+
+    Returns (results, source_files) where results is the combined list
+    and source_files is the list of JSONL paths that were loaded.
+    """
+    runs_dir = NOUS_ROOT / "runs"
+    if not runs_dir.exists():
+        return [], []
+
+    results = []
+    sources = []
+    seen_keys = set()
+
+    for run_dir in sorted(runs_dir.iterdir()):
+        jsonl = run_dir / "responses.jsonl"
+        if not jsonl.exists():
+            continue
+        sources.append(jsonl)
+        for entry in load_nous_results(jsonl):
+            # Deduplicate across runs by combo key
+            names = entry.get("concept_names", [])
+            key = " + ".join(sorted(names))
+            if key not in seen_keys:
+                seen_keys.add(key)
+                results.append(entry)
+
+    return results, sources
+
+
 def _composite(entry: dict) -> float:
     """Get composite score, treating None/missing as 0."""
     return entry.get("score", {}).get("composite_score") or 0.0
+
+
+def _load_coeus_scores() -> dict:
+    """Load Coeus concept scores for priority ranking."""
+    scores_path = COEUS_ENRICHMENTS_DIR.parent / "graphs" / "concept_scores.json"
+    if not scores_path.exists():
+        return {}
+    try:
+        return json.loads(scores_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _forge_priority(entry: dict, coeus_scores: dict) -> float:
+    """Compute forge priority score using Nous composite + Coeus causal data.
+
+    priority = composite_score + sum(concept_forge_effects) + sum(pair_synergies)
+
+    This pushes concepts with high causal forge affinity to the front of the
+    queue, instead of just relying on Nous theoretical scores.
+    """
+    composite = _composite(entry)
+    names = entry.get("concept_names", [])
+
+    # Sum causal forge effects for each concept in the triple
+    concept_influence = coeus_scores.get("concept_influence", {})
+    forge_boost = 0.0
+    for name in names:
+        influence = concept_influence.get(name, {})
+        forge_boost += influence.get("forge_effect", 0)
+
+    # Add pair synergies
+    pair_synergy = coeus_scores.get("pair_synergy", {})
+    synergy_boost = 0.0
+    for i, c1 in enumerate(names):
+        for c2 in names[i+1:]:
+            for key_form in [f"{c1} + {c2}", f"{c2} + {c1}"]:
+                if key_form in pair_synergy:
+                    synergy_boost += pair_synergy[key_form]
+
+    return composite + forge_boost + synergy_boost
 
 
 def filter_results(results: list[dict], top_n: int | None = None,
@@ -301,6 +394,9 @@ def filter_results(results: list[dict], top_n: int | None = None,
     If include_unscored is True, entries with composite_score=0 (scorer
     couldn't parse ratings) are kept — useful when Nous responses have
     content but the scorer failed to extract numeric ratings.
+
+    Results are sorted by Coeus forge priority (if available), falling
+    back to composite score.
     """
     # Remove explicitly unproductive
     filtered = [r for r in results
@@ -310,15 +406,19 @@ def filter_results(results: list[dict], top_n: int | None = None,
 
     if min_score is not None:
         if include_unscored:
-            # Keep entries that meet threshold OR have unscored (0.0) composites
             filtered = [r for r in filtered
                         if _composite(r) >= min_score or _composite(r) == 0.0]
         else:
             filtered = [r for r in filtered
                         if _composite(r) >= min_score]
 
-    # Sort by composite score descending (unscored sink to bottom)
-    filtered.sort(key=_composite, reverse=True)
+    # Sort by Coeus forge priority (falls back to composite if no Coeus data)
+    coeus_scores = _load_coeus_scores()
+    if coeus_scores:
+        filtered.sort(key=lambda r: _forge_priority(r, coeus_scores), reverse=True)
+        logger.info("Sorted by Coeus forge priority")
+    else:
+        filtered.sort(key=_composite, reverse=True)
 
     if top_n is not None:
         filtered = filtered[:top_n]
@@ -337,8 +437,13 @@ def forge_one(client: OpenAI, entry: dict, model: str,
     logger.info("Forging: %s (composite=%.1f)",
                 " + ".join(names), score_data.get("composite_score", 0))
 
+    # 0. Load Coeus enrichment if available
+    enrichment = load_enrichment(entry)
+    if enrichment:
+        logger.info("  Coeus enrichment loaded")
+
     # 1. Build prompt and call API
-    prompt = build_code_gen_prompt(names, response_text, ratings)
+    prompt = build_code_gen_prompt(names, response_text, ratings, enrichment=enrichment)
     raw_response = call_api(client, prompt, model)
     if raw_response is None:
         save_scrap(None, entry, "api_call_failed", run_dir)
@@ -365,8 +470,12 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         return {"status": "scrap", "reason": f"test_harness_error: {e}"}
 
     if not test_results["passed"]:
+        ncd_info = ""
+        if "ncd_accuracy" in test_results:
+            ncd_info = (f" ncd_acc={test_results['ncd_accuracy']:.0%}"
+                        f" ncd_cal={test_results['ncd_calibration']:.0%}")
         reason = (f"trap_battery_failed (acc={test_results['accuracy']:.0%} "
-                  f"cal={test_results['calibration']:.0%})")
+                  f"cal={test_results['calibration']:.0%}{ncd_info})")
         save_scrap(code, entry, reason, run_dir)
         return {"status": "scrap", "reason": reason}
 
@@ -376,15 +485,147 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         "status": "forged",
         "accuracy": test_results["accuracy"],
         "calibration": test_results["calibration"],
+        "margin_accuracy": test_results.get("margin_accuracy", 0),
+        "margin_calibration": test_results.get("margin_calibration", 0),
     }
+
+
+def _trigger_coeus():
+    """Re-run Coeus to rebuild the causal graph with latest forge data."""
+    if not COEUS_SRC.exists():
+        logger.warning("Coeus src not found at %s, skipping rebuild", COEUS_SRC)
+        return
+    try:
+        logger.info("Triggering Coeus rebuild...")
+        _saved_path = sys.path[:]
+        sys.path.insert(0, str(COEUS_SRC))
+        try:
+            import importlib
+            coeus_mod = importlib.import_module("coeus")
+            importlib.reload(coeus_mod)
+            coeus_mod.main()
+            logger.info("Coeus rebuild complete — enrichments and priority scores updated")
+        finally:
+            sys.path[:] = _saved_path
+            sys.modules.pop("coeus", None)
+    except Exception as e:
+        logger.warning("Coeus rebuild failed: %s (continuing forge)", e)
+
+
+def _trigger_reports():
+    """Rebuild human-readable reports with latest data."""
+    try:
+        logger.info("Rebuilding human-readable reports...")
+        import importlib
+        reports_mod = importlib.import_module("build_reports")
+        importlib.reload(reports_mod)
+        # Simulate --force by calling main internals directly
+        sys.argv = ["build_reports.py", "--force"]
+        reports_mod.main()
+        logger.info("Reports rebuild complete")
+    except Exception as e:
+        logger.warning("Reports rebuild failed: %s (continuing forge)", e)
+
+
+def _load_nous(args, run_dir: Path) -> tuple[list[dict], str]:
+    """Load Nous results based on CLI args. Returns (results, source_label)."""
+    if args.nous_run:
+        nous_path = Path(args.nous_run)
+        if not nous_path.exists():
+            logger.error("Nous file not found: %s", nous_path)
+            sys.exit(1)
+        results = load_nous_results(nous_path)
+        logger.info("Loaded %d Nous results from %s", len(results), nous_path)
+        return results, str(nous_path)
+
+    if args.resume and not args.nous_run:
+        meta_path = run_dir / "meta.json"
+        if meta_path.exists():
+            meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            src = meta.get("nous_run")
+            if src and src != "all_runs":
+                nous_path = Path(src)
+                if nous_path.exists():
+                    results = load_nous_results(nous_path)
+                    logger.info("Loaded %d Nous results from %s", len(results), nous_path)
+                    return results, str(nous_path)
+
+    results, sources = load_all_nous_results()
+    logger.info("Loaded %d Nous results from %d run folders", len(results), len(sources))
+    return results, "all_runs"
+
+
+def _forge_batch(client: OpenAI, filtered: list[dict], args,
+                 run_dir: Path, processed: set[str],
+                 total_count: int, shutdown_flag: list) -> tuple[list, list, int]:
+    """Process one batch of candidates. Returns (forged, scrapped, new_count)."""
+    forged_results = []
+    scrapped_results = []
+    count = 0
+
+    for entry in filtered:
+        if shutdown_flag[0]:
+            break
+
+        key = combo_key(entry)
+        if key in processed:
+            continue
+
+        result = forge_one(client, entry, args.model, run_dir)
+
+        processed.add(key)
+        count += 1
+        running_total = total_count + count
+
+        names = entry.get("concept_names", [])
+        if result and result["status"] == "forged":
+            forged_results.append({
+                "concept_names": names,
+                "nous_composite_score": entry.get("score", {}).get("composite_score"),
+                "test_accuracy": result.get("accuracy"),
+                "test_calibration": result.get("calibration"),
+            })
+            append_ledger(key, "forged", names,
+                          accuracy=result.get("accuracy", 0),
+                          calibration=result.get("calibration", 0),
+                          margin_accuracy=result.get("margin_accuracy", 0),
+                          margin_calibration=result.get("margin_calibration", 0))
+        elif result:
+            scrapped_results.append({
+                "concept_names": names,
+                "nous_composite_score": entry.get("score", {}).get("composite_score"),
+                "failure_reason": result.get("reason"),
+            })
+            append_ledger(key, "scrap", names, reason=result.get("reason", ""))
+
+        # Checkpoint
+        if count % 5 == 0:
+            save_checkpoint(run_dir, processed)
+
+        # Periodic Coeus rebuild
+        if (args.coeus_interval > 0 and running_total % args.coeus_interval == 0
+                and running_total > 0 and not shutdown_flag[0]):
+            _trigger_coeus()
+
+        # Periodic reports rebuild
+        if (args.reports_interval > 0 and running_total % args.reports_interval == 0
+                and running_total > 0 and not shutdown_flag[0]):
+            _trigger_reports()
+
+        # Rate limit
+        if not shutdown_flag[0]:
+            time.sleep(args.delay)
+
+    save_checkpoint(run_dir, processed)
+    return forged_results, scrapped_results, count
 
 
 def main():
     parser = argparse.ArgumentParser(
         description="Hephaestus — forge Nous concepts into tested reasoning tools"
     )
-    parser.add_argument("--nous-run", type=str,
-                        help="Path to Nous responses.jsonl")
+    parser.add_argument("--nous-run", type=str, default=None,
+                        help="Path to a specific Nous responses.jsonl (omit to scan all Nous runs)")
     parser.add_argument("--top-n", type=int, default=None,
                         help="Take top N results by composite score")
     parser.add_argument("--min-score", type=float, default=None,
@@ -399,11 +640,22 @@ def main():
                         help="Include entries where scorer returned 0 (ratings unparsed)")
     parser.add_argument("--resume", action="store_true",
                         help="Resume the most recent run")
+    parser.add_argument("--runonce", action="store_true",
+                        help="Process current candidates and exit (default: run continuously)")
+    parser.add_argument("--poll-interval", type=float, default=300,
+                        help="Seconds between Nous re-scans in continuous mode (default: 300)")
+    parser.add_argument("--coeus-interval", type=int, default=50,
+                        help="Re-run Coeus every N forges to update causal graph (0=disable)")
+    parser.add_argument("--reports-interval", type=int, default=50,
+                        help="Rebuild human-readable reports every N forges (0=disable)")
     args = parser.parse_args()
 
-    # Default filter: top 20 if neither specified and not --all
-    if args.top_n is None and args.min_score is None and not args.resume and not args.all:
-        args.top_n = 20
+    # Default filter: --all in continuous mode, top 20 in runonce
+    if args.top_n is None and args.min_score is None and not args.resume:
+        if args.runonce and not args.all:
+            args.top_n = 20
+        else:
+            args.all = True
 
     # Resolve run directory
     if args.resume:
@@ -418,120 +670,116 @@ def main():
         run_dir.mkdir(parents=True, exist_ok=True)
         logger.info("New run: %s", run_dir.name)
 
-    # Load Nous results
-    if args.resume and not args.nous_run:
-        # Look for a meta.json pointing to the source
-        meta_path = run_dir / "meta.json"
-        if meta_path.exists():
-            meta = json.loads(meta_path.read_text(encoding="utf-8"))
-            args.nous_run = meta.get("nous_run")
-        if not args.nous_run:
-            logger.error("--resume requires --nous-run or meta.json with source path")
-            sys.exit(1)
-
-    nous_path = Path(args.nous_run)
-    if not nous_path.exists():
-        logger.error("Nous file not found: %s", nous_path)
-        sys.exit(1)
-
-    results = load_nous_results(nous_path)
-    logger.info("Loaded %d Nous results from %s", len(results), nous_path)
-
-    filtered = filter_results(
-        results, top_n=args.top_n, min_score=args.min_score,
-        include_unscored=args.include_unscored or args.all,
-    )
-    logger.info("Filtered to %d candidates", len(filtered))
-
-    # Save run metadata
-    meta = {
-        "nous_run": str(nous_path),
-        "top_n": args.top_n,
-        "min_score": args.min_score,
-        "model": args.model,
-        "n_candidates": len(filtered),
-        "started_at": datetime.now().isoformat(),
-    }
-    (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
-
-    # Load global ledger (all prior runs) + per-run checkpoint
-    ledger = load_ledger()
-    processed = load_checkpoint(run_dir)
-    logger.info("Ledger: %d globally processed, checkpoint: %d this run",
-                len(ledger), len(processed))
-
     # Setup graceful shutdown
-    shutdown_requested = False
+    shutdown_flag = [False]
 
     def handle_signal(sig, frame):
-        nonlocal shutdown_requested
-        shutdown_requested = True
+        shutdown_flag[0] = True
         logger.info("Shutdown requested, finishing current item...")
 
     signal.signal(signal.SIGINT, handle_signal)
 
-    # Forge loop
     client = make_client()
-    forged_results = []
-    scrapped_results = []
-    count = 0
+    total_forged = []
+    total_scrapped = []
+    total_count = 0
+    cycle = 0
 
-    for entry in filtered:
-        if shutdown_requested:
-            break
+    mode = "runonce" if args.runonce else "continuous"
+    logger.info("Mode: %s", mode)
 
-        key = combo_key(entry)
-        if key in processed or key in ledger:
+    while not shutdown_flag[0]:
+        cycle += 1
+
+        # (Re-)load Nous results each cycle to pick up new data
+        results, nous_source = _load_nous(args, run_dir)
+
+        if not results:
+            if args.runonce:
+                logger.error("No Nous results found")
+                sys.exit(1)
+            logger.info("No Nous results found, waiting...")
+            time.sleep(args.poll_interval)
             continue
 
-        result = forge_one(client, entry, args.model, run_dir)
+        # Load ledger fresh each cycle
+        ledger = load_ledger()
+        processed = load_checkpoint(run_dir)
+        already_done = set(ledger.keys()) | processed
+        logger.info("Ledger: %d globally processed, checkpoint: %d this run",
+                    len(ledger), len(processed))
 
-        processed.add(key)
-        count += 1
+        # Strip already-processed
+        unprocessed = [r for r in results if combo_key(r) not in already_done]
+        logger.info("After ledger filter: %d unprocessed Nous results", len(unprocessed))
 
-        names = entry.get("concept_names", [])
-        if result and result["status"] == "forged":
-            forged_results.append({
-                "concept_names": names,
-                "nous_composite_score": entry.get("score", {}).get("composite_score"),
-                "test_accuracy": result.get("accuracy"),
-                "test_calibration": result.get("calibration"),
-            })
-            append_ledger(key, "forged", names,
-                          accuracy=result.get("accuracy", 0),
-                          calibration=result.get("calibration", 0))
-        elif result:
-            scrapped_results.append({
-                "concept_names": names,
-                "nous_composite_score": entry.get("score", {}).get("composite_score"),
-                "failure_reason": result.get("reason"),
-            })
-            append_ledger(key, "scrap", names, reason=result.get("reason", ""))
+        filtered = filter_results(
+            unprocessed, top_n=args.top_n, min_score=args.min_score,
+            include_unscored=args.include_unscored or args.all,
+        )
+        logger.info("Filtered to %d candidates", len(filtered))
 
-        # Checkpoint
-        if count % 5 == 0:
-            save_checkpoint(run_dir, processed)
+        # Save run metadata
+        meta = {
+            "nous_run": nous_source,
+            "top_n": args.top_n,
+            "min_score": args.min_score,
+            "model": args.model,
+            "mode": mode,
+            "cycle": cycle,
+            "n_candidates": len(filtered),
+            "started_at": datetime.now().isoformat(),
+        }
+        (run_dir / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
-        # Rate limit
-        if not shutdown_requested:
-            time.sleep(args.delay)
+        if not filtered:
+            if args.runonce:
+                logger.info("No unprocessed candidates — nothing to forge")
+                break
+            logger.info("No new candidates. Sleeping %ds before re-scanning Nous...",
+                        int(args.poll_interval))
+            # Sleep in short chunks so Ctrl+C is responsive
+            slept = 0.0
+            while slept < args.poll_interval and not shutdown_flag[0]:
+                time.sleep(min(5.0, args.poll_interval - slept))
+                slept += 5.0
+            continue
 
-    # Final checkpoint
-    save_checkpoint(run_dir, processed)
+        # Forge the batch
+        forged, scrapped, batch_count = _forge_batch(
+            client, filtered, args, run_dir, processed,
+            total_count, shutdown_flag,
+        )
+        total_forged.extend(forged)
+        total_scrapped.extend(scrapped)
+        total_count += batch_count
 
-    # Write rankings
-    write_rankings(forged_results, scrapped_results, run_dir)
+        # Write rankings after each batch
+        write_rankings(total_forged, total_scrapped, run_dir)
 
-    # Summary
+        if args.runonce:
+            break
+
+        if not shutdown_flag[0]:
+            logger.info("Batch complete (%d forged, %d scrapped). "
+                        "Sleeping %ds before re-scanning Nous...",
+                        len(forged), len(scrapped), int(args.poll_interval))
+            slept = 0.0
+            while slept < args.poll_interval and not shutdown_flag[0]:
+                time.sleep(min(5.0, args.poll_interval - slept))
+                slept += 5.0
+
+    # Final summary
     logger.info("=" * 60)
     logger.info("FORGE COMPLETE")
-    logger.info("  Forged:   %d", len(forged_results))
-    logger.info("  Scrapped: %d", len(scrapped_results))
-    logger.info("  Total:    %d", len(forged_results) + len(scrapped_results))
-    if forged_results:
+    logger.info("  Forged:   %d", len(total_forged))
+    logger.info("  Scrapped: %d", len(total_scrapped))
+    logger.info("  Total:    %d", len(total_forged) + len(total_scrapped))
+    logger.info("  Cycles:   %d", cycle)
+    if total_forged:
         logger.info("  Top performers:")
-        forged_results.sort(key=lambda x: x.get("test_accuracy", 0), reverse=True)
-        for f in forged_results[:5]:
+        total_forged.sort(key=lambda x: x.get("test_accuracy", 0), reverse=True)
+        for f in total_forged[:5]:
             logger.info("    %s — acc=%.0f%% cal=%.0f%%",
                         " + ".join(f["concept_names"]),
                         f["test_accuracy"] * 100,

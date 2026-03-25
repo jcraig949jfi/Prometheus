@@ -3,15 +3,17 @@
 CODE_GEN_PROMPT = """\
 You are a computational engineer building reasoning tools.
 
-A theoretical analysis identified a promising combination:
+A rigorous theoretical analysis has confirmed this as a high-value combination:
 Concepts: {concept_1} x {concept_2} x {concept_3}
 
-The analysis said:
+The analysis concluded:
 {nous_response_text}
 
 Ratings: Reasoning {r}/10, Metacognition {m}/10, Hypothesis Generation {h}/10
+{coeus_section}
+This combination has already passed theoretical review. Your job is implementation.
 
-Your task: implement this as a Python class with the following interface:
+Implement this as a Python class with the following interface:
 
 ```python
 class ReasoningTool:
@@ -35,18 +37,78 @@ class ReasoningTool:
         pass
 ```
 
+--- Quality Floor ---
+A baseline tool using Normalized Compression Distance (zlib NCD) achieves
+{ncd_accuracy}% accuracy and {ncd_calibration}% calibration. Your tool MUST beat these.
+
+Key patterns that WORK (from our best tools at 53-60% accuracy):
+- Structural parsing: extract negations, comparatives, conditionals from prompt
+- Numeric evaluation: detect number comparisons, compute float("9.11") < float("9.9")
+- Constraint propagation: transitivity, modus tollens, subject-object roles
+- NCD as tiebreaker only (not primary signal)
+
+Key patterns that DON'T work:
+- Hash-to-vector similarity (measures string noise, not reasoning)
+- Bag-of-words overlap (gameable by echoing prompt)
+- Pure NCD (cannot distinguish short candidates like "Yes" vs "No")
+
 Requirements:
+- You MUST produce working code. Do not decline or return None.
+- Even if the connection seems abstract, find a computational analogy and implement it.
+- Imperfect implementations are acceptable — a rough approximation that captures the \
+core mechanism is better than no implementation.
 - Under 150 lines
 - Only numpy and standard library (no torch, no sklearn, no external deps)
 - Must be deterministic given the same inputs
-- If the combination is genuinely unproductive for code, say so and return None
 - Include a brief docstring explaining the mechanism
+- Use only ASCII characters in code and strings (no unicode symbols)
+"""
+
+COEUS_SECTION_TEMPLATE = """
+--- Causal Intelligence (Coeus) ---
+{enrichment_text}
+---
 """
 
 
+# Cache NCD baseline scores (computed once)
+_ncd_baseline_cache = None
+
+
+def _get_ncd_baseline_scores() -> tuple[int, int]:
+    """Get NCD baseline accuracy/calibration as percentages."""
+    global _ncd_baseline_cache
+    if _ncd_baseline_cache is None:
+        try:
+            from test_harness import run_ncd_baseline
+            results = run_ncd_baseline()
+            _ncd_baseline_cache = (
+                int(results["accuracy"] * 100),
+                int(results["calibration"] * 100),
+            )
+        except Exception:
+            _ncd_baseline_cache = (40, 40)  # conservative fallback
+    return _ncd_baseline_cache
+
+
 def build_code_gen_prompt(concept_names: list[str], response_text: str,
-                          ratings: dict) -> str:
-    """Build the code generation prompt from Nous result fields."""
+                          ratings: dict, enrichment: dict | None = None) -> str:
+    """Build the code generation prompt from Nous result fields.
+
+    Args:
+        concept_names: list of 3 concept names
+        response_text: Nous response text
+        ratings: Nous ratings dict
+        enrichment: optional Coeus enrichment dict (with 'enrichment_text' key)
+    """
+    coeus_section = ""
+    if enrichment and enrichment.get("enrichment_text"):
+        coeus_section = COEUS_SECTION_TEMPLATE.format(
+            enrichment_text=enrichment["enrichment_text"],
+        )
+
+    ncd_acc, ncd_cal = _get_ncd_baseline_scores()
+
     return CODE_GEN_PROMPT.format(
         concept_1=concept_names[0],
         concept_2=concept_names[1],
@@ -55,4 +117,7 @@ def build_code_gen_prompt(concept_names: list[str], response_text: str,
         r=ratings.get("reasoning", "?"),
         m=ratings.get("metacognition", "?"),
         h=ratings.get("hypothesis_generation", "?"),
+        coeus_section=coeus_section,
+        ncd_accuracy=ncd_acc,
+        ncd_calibration=ncd_cal,
     )
