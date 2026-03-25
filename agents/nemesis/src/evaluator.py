@@ -16,6 +16,8 @@ def load_tool(path: Path):
     """Load a ReasoningTool from a .py file."""
     mod_name = f"_nemesis_eval_{path.stem}"
     spec = importlib.util.spec_from_file_location(mod_name, str(path))
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Failed to create module spec for {path}")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     tool = mod.ReasoningTool()

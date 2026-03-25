@@ -124,9 +124,13 @@ def load_ledger() -> dict[str, dict]:
     with open(LEDGER_PATH, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 entry = json.loads(line)
                 ledger[entry["key"]] = entry
+            except (json.JSONDecodeError, KeyError) as e:
+                logger.warning("Skipping corrupt ledger line: %s", e)
     return ledger
 
 
@@ -147,8 +151,11 @@ def append_ledger(key: str, status: str, concept_names: list[str],
         "margin_calibration": margin_calibration,
         "timestamp": datetime.now().isoformat(),
     }
-    with open(LEDGER_PATH, "a", encoding="utf-8") as f:
-        f.write(json.dumps(record) + "\n")
+    try:
+        with open(LEDGER_PATH, "a", encoding="utf-8") as f:
+            f.write(json.dumps(record) + "\n")
+    except OSError as e:
+        logger.warning("Failed to write ledger entry for %s: %s", key, e)
 
 
 def find_latest_run() -> Path | None:
@@ -179,7 +186,8 @@ def load_enrichment(entry: dict) -> dict | None:
     if path.exists():
         try:
             return json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
+        except Exception as e:
+            logger.debug("Failed to load enrichment for %s: %s", key, e)
             return None
     return None
 
@@ -305,8 +313,12 @@ def load_nous_results(path: Path) -> list[dict]:
     with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 results.append(json.loads(line))
+            except json.JSONDecodeError as e:
+                logger.warning("Skipping corrupt line in %s: %s", path, e)
     return results
 
 
@@ -352,7 +364,8 @@ def _load_coeus_scores() -> dict:
         return {}
     try:
         return json.loads(scores_path.read_text(encoding="utf-8"))
-    except Exception:
+    except Exception as e:
+        logger.debug("Failed to load Coeus scores: %s", e)
         return {}
 
 

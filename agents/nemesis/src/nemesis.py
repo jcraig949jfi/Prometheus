@@ -273,8 +273,8 @@ def run_cycle(grid: MAPElitesGrid, tools: dict, rng: random.Random,
                         n_shrunk += 1
                         task.prompt = min_prompt
                         task.candidates = min_cands
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.debug("Shrink failed for task: %s", e)
                 break
 
     logger.info("Shrunk %d tasks to minimal failing cases, %d with lineage depth > 1",

@@ -1,5 +1,9 @@
 """Prompt templates for Hephaestus code generation."""
 
+import logging
+
+log = logging.getLogger("hephaestus.prompts")
+
 CODE_GEN_PROMPT = """\
 You are a computational engineer building reasoning tools.
 
@@ -86,7 +90,8 @@ def _get_ncd_baseline_scores() -> tuple[int, int]:
                 int(results["accuracy"] * 100),
                 int(results["calibration"] * 100),
             )
-        except Exception:
+        except Exception as e:
+            log.debug("NCD baseline computation failed, using fallback: %s", e)
             _ncd_baseline_cache = (40, 40)  # conservative fallback
     return _ncd_baseline_cache
 
@@ -101,6 +106,9 @@ def build_code_gen_prompt(concept_names: list[str], response_text: str,
         ratings: Nous ratings dict
         enrichment: optional Coeus enrichment dict (with 'enrichment_text' key)
     """
+    if len(concept_names) < 3:
+        return "ERROR: need 3 concepts"
+
     coeus_section = ""
     if enrichment and enrichment.get("enrichment_text"):
         coeus_section = COEUS_SECTION_TEMPLATE.format(

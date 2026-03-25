@@ -14,10 +14,13 @@ Usage:
 import argparse
 import hashlib
 import json
+import logging
 import shutil
 import sys
 from datetime import datetime
 from pathlib import Path
+
+log = logging.getLogger("hephaestus.reports")
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from hephaestus import (
@@ -51,7 +54,11 @@ def load_nous_best() -> dict[str, dict]:
                 line = line.strip()
                 if not line:
                     continue
-                entry = json.loads(line)
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError as e:
+                    log.warning("Skipping corrupt line in %s: %s", jsonl, e)
+                    continue
                 key = combo_key(entry)
                 existing = best.get(key)
                 if existing is None:
@@ -72,9 +79,13 @@ def load_processed() -> dict[str, dict]:
     with open(PROCESSED_PATH, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 rec = json.loads(line)
                 processed[rec["key"]] = rec
+            except (json.JSONDecodeError, KeyError) as e:
+                log.warning("Skipping corrupt processed entry: %s", e)
     return processed
 
 
@@ -122,7 +133,8 @@ def load_coeus_enrichment(key: str) -> dict | None:
     if path.exists():
         try:
             return json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
+        except Exception as e:
+            log.debug("Failed to load enrichment for %s: %s", key, e)
             return None
     return None
 
@@ -133,7 +145,8 @@ def load_coeus_concept_scores() -> dict:
     if path.exists():
         try:
             return json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
+        except Exception as e:
+            log.debug("Failed to load Coeus concept scores: %s", e)
             return {}
     return {}
 
@@ -277,8 +290,8 @@ def build_markdown(nous: dict, ledger_entry: dict | None,
             lines.append("```")
             lines.append("")
             lines.append("</details>")
-        except Exception:
-            pass
+        except Exception as e:
+            log.debug("Failed to read code file %s: %s", code_path, e)
     else:
         lines.append("*No code was produced for this combination.*")
     lines.append("")

@@ -77,7 +77,7 @@ def load_concepts(concept_file: str | None) -> list[dict]:
         if not path.exists():
             log.error(f"Concept file not found: {concept_file}")
             sys.exit(1)
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             concepts = json.load(f)
         log.info(f"Loaded {len(concepts)} concepts from {concept_file}")
         return concepts
@@ -289,7 +289,7 @@ def load_checkpoint(run_dir: Path) -> set[tuple[int, int, int]]:
     checkpoint_path = run_dir / "checkpoint.json"
     if not checkpoint_path.exists():
         return set()
-    with open(checkpoint_path) as f:
+    with open(checkpoint_path, encoding="utf-8") as f:
         data = json.load(f)
     processed = {tuple(t) for t in data.get("processed", [])}
     log.info(f"Resumed: {len(processed)} combinations already processed")
@@ -299,7 +299,7 @@ def load_checkpoint(run_dir: Path) -> set[tuple[int, int, int]]:
 def save_checkpoint(run_dir: Path, processed: set[tuple[int, int, int]]):
     """Save checkpoint of processed triples."""
     checkpoint_path = run_dir / "checkpoint.json"
-    with open(checkpoint_path, "w") as f:
+    with open(checkpoint_path, "w", encoding="utf-8") as f:
         json.dump({"processed": [list(t) for t in sorted(processed)]}, f)
 
 
@@ -318,8 +318,12 @@ def load_all_responses(run_dir: Path) -> list[dict]:
     with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 results.append(json.loads(line))
+            except json.JSONDecodeError as e:
+                log.warning("Skipping corrupt line in %s: %s", path, e)
     return results
 
 
@@ -453,7 +457,7 @@ def main():
         "cross_field_bias": args.cross_field_bias,
         "unlimited": args.unlimited,
     }
-    with open(run_dir / "meta.json", "w") as f:
+    with open(run_dir / "meta.json", "w", encoding="utf-8") as f:
         json.dump(combo_meta, f, indent=2)
 
     # Process loop — runs once for finite, forever for unlimited
@@ -551,8 +555,8 @@ def main():
             if not args.unlimited:
                 break
 
-    except Exception as e:
-        log.error(f"Unexpected error: {e}")
+    except Exception:
+        log.exception("Unexpected error")
 
     # Final save
     save_checkpoint(run_dir, processed)

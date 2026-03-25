@@ -83,6 +83,7 @@ def check_interface(code: str) -> tuple[bool, str]:
 def check_runtime(code: str) -> tuple[bool, str]:
     """Try to instantiate and call the class with dummy data."""
     # Write to a temp file and import it
+    tmp_path = None
     try:
         with tempfile.NamedTemporaryFile(
             mode="w", suffix=".py", delete=False, dir=tempfile.gettempdir()
@@ -91,6 +92,8 @@ def check_runtime(code: str) -> tuple[bool, str]:
             tmp_path = f.name
 
         spec = importlib.util.spec_from_file_location("_forge_test", tmp_path)
+        if spec is None or spec.loader is None:
+            return False, "module_spec_failed"
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
 
@@ -125,7 +128,8 @@ def check_runtime(code: str) -> tuple[bool, str]:
         return False, f"runtime_error: {type(e).__name__}: {e}"
     finally:
         try:
-            Path(tmp_path).unlink(missing_ok=True)
+            if tmp_path:
+                Path(tmp_path).unlink(missing_ok=True)
         except Exception:
             pass
         # Clean up the module from sys.modules

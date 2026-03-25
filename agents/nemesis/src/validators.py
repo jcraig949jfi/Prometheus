@@ -70,7 +70,7 @@ def validate_task(prompt: str, candidates: list[str], correct: str) -> tuple[boo
                     log.warning("Execution evaluator disagrees: exec=%s, claimed=%s, prompt=%s",
                                 exec_answer, correct, prompt[:80])
                     return False, f"exec_evaluator_disagrees: {exec_answer} != {correct}"
-        except Exception:
-            pass  # execution evaluator failed, don't block on it
+        except Exception as e:
+            log.debug("Execution evaluator failed (non-blocking): %s", e)
 
     return True, "ok"

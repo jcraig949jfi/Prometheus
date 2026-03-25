@@ -59,8 +59,12 @@ def load_all_nous(deduplicate: bool = True) -> list[dict]:
             with open(jsonl, encoding="utf-8") as f:
                 for line in f:
                     line = line.strip()
-                    if line:
+                    if not line:
+                        continue
+                    try:
                         results.append(json.loads(line))
+                    except json.JSONDecodeError as e:
+                        log.warning("Skipping corrupt line in %s: %s", jsonl, e)
         return results
 
     best = {}
@@ -73,7 +77,11 @@ def load_all_nous(deduplicate: bool = True) -> list[dict]:
                 line = line.strip()
                 if not line:
                     continue
-                entry = json.loads(line)
+                try:
+                    entry = json.loads(line)
+                except json.JSONDecodeError as e:
+                    log.warning("Skipping corrupt line in %s: %s", jsonl, e)
+                    continue
                 key = combo_key(entry)
                 existing = best.get(key)
                 if existing is None:
@@ -95,7 +103,8 @@ def load_forge_entries() -> list[dict]:
         try:
             data = json.loads(json_path.read_text(encoding="utf-8"))
             entries.append(data)
-        except Exception:
+        except Exception as e:
+            log.warning("Skipping corrupt forge metadata %s: %s", json_path, e)
             continue
     return entries
 
@@ -109,12 +118,17 @@ def load_adversarial_results() -> list[dict]:
     with open(adv_path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if line:
+            if not line:
+                continue
+            try:
                 entry = json.loads(line)
-                # Enforce provenance check
-                if entry.get("provenance") != "adversarial":
-                    continue
-                results.append(entry)
+            except json.JSONDecodeError as e:
+                log.warning("Skipping corrupt adversarial line: %s", e)
+                continue
+            # Enforce provenance check
+            if entry.get("provenance") != "adversarial":
+                continue
+            results.append(entry)
     return results
 
 
@@ -275,6 +289,7 @@ def main():
     # Load adversarial data from Nemesis (if available)
     adversarial_results = load_adversarial_results()
     adversarial_survival = {}
+    goodhart_indicators = {}
     if adversarial_results:
         log.info("Loaded %d adversarial results from Nemesis", len(adversarial_results))
         adversarial_survival = compute_adversarial_survival(adversarial_results)

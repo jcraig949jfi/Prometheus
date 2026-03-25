@@ -110,7 +110,8 @@ def shrink(prompt: str, candidates: list[str], correct: str,
                     improved = True
                     log.debug("Shrink round %d: applied %s", round_num, desc)
                     break  # restart with the simpler version
-            except Exception:
+            except Exception as e:
+                log.debug("Simplification '%s' caused error: %s", desc, e)
                 continue  # simplification caused an error, skip it
 
         if not improved:

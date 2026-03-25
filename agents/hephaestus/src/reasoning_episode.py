@@ -10,10 +10,13 @@ This is the atomic unit connecting:
 """
 
 import json
+import logging
 import uuid
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
 from pathlib import Path
+
+log = logging.getLogger("hephaestus.episode")
 
 
 @dataclass
@@ -97,7 +100,11 @@ def load_episodes(path: Path, provenance_filter: str | None = None
             line = line.strip()
             if not line:
                 continue
-            ep = ReasoningEpisode.from_json(line)
+            try:
+                ep = ReasoningEpisode.from_json(line)
+            except (json.JSONDecodeError, TypeError) as e:
+                log.warning("Skipping corrupt episode in %s: %s", path, e)
+                continue
             if provenance_filter and ep.provenance != provenance_filter:
                 continue
             episodes.append(ep)

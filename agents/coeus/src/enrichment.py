@@ -183,8 +183,8 @@ def enrich_triplet(concept_names: list[str], graph, forge_entries: list[dict]) -
                 for name in concept_names:
                     if name in gi and "warning" in gi[name]:
                         goodhart_warnings[name] = gi[name]
-            except Exception:
-                pass
+            except Exception as e:
+                log.debug("Failed to load Goodhart indicators: %s", e)
 
     # Build enrichment text — prescriptive directives for the code gen model
     text_parts = []

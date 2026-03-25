@@ -61,7 +61,8 @@ class RLVFFitness:
             try:
                 tool = load_tool_from_file(py)
                 self.tools[py.stem] = tool
-            except Exception:
+            except Exception as e:
+                log.debug("Skipping tool %s: %s", py.stem, e)
                 continue
         log.info("RLVF loaded %d tools", len(self.tools))
 
@@ -98,13 +99,17 @@ class RLVFFitness:
                 else:
                     self.weights[tool_name] = 1.0
 
-        except Exception:
+        except Exception as e:
+            log.warning("Failed to load Coeus weights: %s", e)
             self.weights = {name: 1.0 for name in self.tools}
 
-        log.info("RLVF weights loaded: mean=%.2f, min=%.2f, max=%.2f",
-                 np.mean(list(self.weights.values())) if self.weights else 0,
-                 min(self.weights.values()) if self.weights else 0,
-                 max(self.weights.values()) if self.weights else 0)
+        if self.weights:
+            log.info("RLVF weights loaded: mean=%.2f, min=%.2f, max=%.2f",
+                     np.mean(list(self.weights.values())),
+                     min(self.weights.values()),
+                     max(self.weights.values()))
+        else:
+            log.info("RLVF weights loaded: no weights (no tools)")
 
     def score_trace(self, prompt: str, answer: str,
                     candidates: list[str] | None = None) -> dict:
@@ -137,7 +142,8 @@ class RLVFFitness:
                 tool_scores[name] = float(score)
                 w = self.weights.get(name, 1.0)
                 weighted_scores[name] = float(score * w)
-            except Exception:
+            except Exception as e:
+                log.debug("Tool %s failed on scoring: %s", name, e)
                 continue
 
         if len(tool_scores) < self.min_tools:
@@ -192,9 +198,13 @@ class RLVFFitness:
             f"RLVF Fitness Function",
             f"  Tools: {len(self.tools)}",
             f"  Lambda (variance penalty): {self.lambda_penalty}",
-            f"  Weight range: {min(self.weights.values()):.2f} - {max(self.weights.values()):.2f}"
-            if self.weights else "  No weights loaded",
         ]
+        if self.weights:
+            lines.append(
+                f"  Weight range: {min(self.weights.values()):.2f} - {max(self.weights.values()):.2f}"
+            )
+        else:
+            lines.append("  No weights loaded")
 
         # Show top/bottom weighted tools
         ranked = sorted(self.weights.items(), key=lambda x: -x[1])

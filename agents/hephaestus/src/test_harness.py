@@ -4,12 +4,15 @@ Tools must beat the NCD baseline on accuracy or calibration to pass.
 """
 
 import importlib.util
+import logging
 import sys
 import tempfile
 import zlib
 from pathlib import Path
 
 import numpy as np
+
+log = logging.getLogger("hephaestus.harness")
 
 # ---------------------------------------------------------------------------
 # Trap Battery
@@ -211,6 +214,8 @@ def load_tool_from_code(code: str):
 
     try:
         spec = importlib.util.spec_from_file_location("_harness_test", tmp_path)
+        if spec is None or spec.loader is None:
+            raise ImportError("Failed to create module spec for harness test")
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         return mod.ReasoningTool()
@@ -223,6 +228,8 @@ def load_tool_from_file(path: str | Path):
     """Load a ReasoningTool from a .py file."""
     path = Path(path)
     spec = importlib.util.spec_from_file_location("_harness_file", str(path))
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Failed to create module spec for {path}")
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     tool = mod.ReasoningTool()
@@ -300,7 +307,7 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
                 if adversarial_acc < 0.5:
                     passed = False
         except Exception:
-            pass  # Nemesis not available, skip Gate 6
+            log.debug("Gate 6 (Nemesis adversarial) unavailable, skipping")
 
     result = {
         "accuracy": tool_acc,
