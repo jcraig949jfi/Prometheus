@@ -722,6 +722,25 @@ class IgnisOrchestrator:
                                                       f"(layer={genome.layer_index}, "
                                                       f"explore={genome.exploration_type.upper()})")
 
+                                            # RLVF scoring for survivors
+                                            try:
+                                                rlvf_result = self.crucible.score_rlvf(
+                                                    self.model, genome,
+                                                    self._run_steered_inference,
+                                                    score, meta.get("trap_outputs", {}),
+                                                )
+                                                genome.rlvf_fitness = rlvf_result.get("rlvf_fitness", 0.0)
+                                                genome.rlvf_variance = rlvf_result.get("rlvf_variance", 0.0)
+                                                genome.rlvf_n_tools = rlvf_result.get("rlvf_n_tools", 0)
+                                                # Blend: 80% battery + 20% RLVF
+                                                if genome.rlvf_n_tools >= 3:
+                                                    genome.fitness = 0.8 * score + 0.2 * genome.rlvf_fitness
+                                                    slog.info(f"RLVF blended: battery={score:.4f} "
+                                                              f"rlvf={genome.rlvf_fitness:.4f} "
+                                                              f"combined={genome.fitness:.4f}")
+                                            except Exception as _rlvf_err:
+                                                slog.debug(f"RLVF scoring skipped: {_rlvf_err}")
+
                                             # Diagnostic norm sweep for survivors
                                             self.run_norm_sweep(genome)
                                 else:
@@ -740,6 +759,9 @@ class IgnisOrchestrator:
                                         "fitness": round(genome.fitness, 6),
                                         "marker_fitness": round(meta.get("marker_fitness", 0.0), 6),
                                         "logit_score": round(meta.get("logit_score", 0.0), 6),
+                                        "rlvf_fitness": round(getattr(genome, "rlvf_fitness", 0.0), 6),
+                                        "rlvf_variance": round(getattr(genome, "rlvf_variance", 0.0), 6),
+                                        "rlvf_n_tools": getattr(genome, "rlvf_n_tools", 0),
                                         "trap_scores": {
                                             k: {"score": round(v.get("score", 0.0), 4),
                                                 "tier": v.get("tier", "?")}

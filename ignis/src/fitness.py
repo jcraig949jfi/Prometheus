@@ -363,13 +363,90 @@ class MultiTaskCrucible:
             "logit_by_trap": logit_by_trap,
             "injection_snapshot": injection_snapshot,
             "logit_shift_signature": logit_shift,
-            "traps": trap_outputs
+            "traps": trap_outputs,
+            "trap_outputs": trap_outputs,  # alias for RLVF scoring access
         }
 
         slog.debug(f"Crucible result: fitness={fitness:.4f} "
                    f"(marker={marker_fitness:.4f}, logit={logit_score:.4f}) | "
                    f"{' | '.join(trap_details)}")
         return fitness, metadata
+
+    def score_rlvf(self, model, genome, run_steered_inference_fn,
+                   battery_fitness: float, trap_outputs: dict) -> dict:
+        """Score a surviving genome with the RLVF forged tool library.
+
+        Called AFTER the standard battery for genomes that pass the survival
+        threshold. Uses the same generation outputs already produced by
+        evaluate_vector() to avoid redundant inference.
+
+        Returns dict with rlvf_fitness, rlvf_variance, rlvf_n_tools, per_trap.
+        """
+        import sys
+        from pathlib import Path
+
+        heph_src = Path(__file__).resolve().parent.parent.parent / "agents" / "hephaestus" / "src"
+        if not heph_src.exists():
+            slog.debug("Hephaestus src not found, skipping RLVF scoring")
+            return {"rlvf_fitness": 0.0, "rlvf_variance": 0.0, "rlvf_n_tools": 0}
+
+        try:
+            if str(heph_src) not in sys.path:
+                sys.path.insert(0, str(heph_src))
+            from rlvf_fitness import RLVFFitness
+
+            rlvf = RLVFFitness(lambda_penalty=2.0)
+            if len(rlvf.tools) < 3:
+                slog.debug("RLVF: insufficient tools (%d), skipping", len(rlvf.tools))
+                return {"rlvf_fitness": 0.0, "rlvf_variance": 0.0, "rlvf_n_tools": 0}
+
+            # Score each trap's generation output with the tool library
+            rlvf_scores = []
+            per_trap = {}
+            for trap_name, trap_data in trap_outputs.items():
+                output = trap_data.get("output", "")
+                if not output or output == TII_GENERATION_FAILED:
+                    continue
+
+                # Find the corresponding trap prompt
+                trap_prompt = None
+                for trap in self.battery:
+                    if trap["name"] == trap_name:
+                        trap_prompt = trap["prompt"]
+                        break
+                if not trap_prompt:
+                    continue
+
+                # Extract the generated text (strip prompt)
+                prompt_pos = output.find(trap_prompt)
+                generated = (output[prompt_pos + len(trap_prompt):]
+                             if prompt_pos != -1 else output)
+
+                result = rlvf.score_trace(trap_prompt, generated.strip())
+                if "error" not in result:
+                    rlvf_scores.append(result["fitness"])
+                    per_trap[trap_name] = result["fitness"]
+
+            if not rlvf_scores:
+                return {"rlvf_fitness": 0.0, "rlvf_variance": 0.0, "rlvf_n_tools": 0}
+
+            import numpy as np
+            rlvf_fitness = float(np.mean(rlvf_scores))
+            rlvf_variance = float(np.var(rlvf_scores))
+
+            slog.info(f"RLVF: fitness={rlvf_fitness:.4f}, variance={rlvf_variance:.4f}, "
+                      f"n_tools={len(rlvf.tools)}, traps_scored={len(rlvf_scores)}")
+
+            return {
+                "rlvf_fitness": round(rlvf_fitness, 4),
+                "rlvf_variance": round(rlvf_variance, 4),
+                "rlvf_n_tools": len(rlvf.tools),
+                "rlvf_per_trap": per_trap,
+            }
+
+        except Exception as e:
+            slog.warning(f"RLVF scoring failed: {e}")
+            return {"rlvf_fitness": 0.0, "rlvf_variance": 0.0, "rlvf_n_tools": 0}
 
     def score_rph_proxies(self, model, genome, rph_config: dict) -> dict:
         """
