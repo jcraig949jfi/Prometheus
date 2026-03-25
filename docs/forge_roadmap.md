@@ -383,18 +383,18 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 | 5 | 2 | Semantic equivalence mutations (paraphrase MR) | Goodhart detector | Low | **DONE** (in #4) |
 | 6 | 2 | Compositional depth scaling (chain_extend MR) | Precision instrument | Low | **DONE** (in #4) |
 | 7 | 2 | Adversarial task validation (exec evaluator) | Prevents bad ground truth | Low | **DONE** (in #4) |
-| 8 | 2b | Adversarial lineage tracking | Finds deep weaknesses | Medium | After #4 operational |
-| 9 | 2b | Per-tool learned difficulty | Focuses pressure | Medium | After #4 operational |
-| 10 | 3 | Dual causal graphs (forge vs adversarial) | Key diagnostic | Medium | After #4 producing data |
+| 8 | 2b | Adversarial lineage tracking | Finds deep weaknesses | Medium | **DONE** |
+| 9 | 2b | Per-tool learned difficulty | Focuses pressure | Medium | **DONE** |
+| 10 | 3 | Dual causal graphs (forge vs adversarial) | Key diagnostic | Medium | **DONE** — Goodhart warnings operational |
 | 11 | 3 | Bidirectional interventional estimates | Active ingredient detection | Medium | 300+ forges |
 | 12 | 3 | Temporal causal analysis (PCMCI) | Prompt evolution effects | Medium | tigramite + data |
 | 13 | 3 | DAGMA divergence monitoring | Non-linear contradiction detection | Low | ~200 forges (imminent) |
-| 14 | 3 | Multi-objective fitness (Pareto) | Prevents Goodhart | Medium | After #4 |
+| 14 | 3 | RLVF fitness function F(T) = Σwᵢ·Sᵢ - λ·σ(S) | Weighted multi-tool scoring | Medium | **DONE** — 122 tools, variance penalty |
 | 15 | 3 | Causal perturbation evaluator | Counterfactual validity | Medium | After #3 |
 | 16 | 3 | Invariance testing suite | Robustness | Medium | After #5 proven |
-| 17 | 4 | ReasoningEpisode schema | Standardizes data flow | Medium | After #3 |
-| 18 | 4 | Failure-driven forge trigger | Closes the loop | Low | After #4 |
-| 19 | 4 | Rhea integration | Full RLVF loop | High | After #14, #17 |
+| 17 | 4 | ReasoningEpisode schema + provenance gate | Standardizes data flow | Medium | **DONE** — hard gate in code |
+| 18 | 4 | Failure-driven forge trigger | Closes the loop | Low | **DONE** — blind spots → targeted requests |
+| 19 | 4 | Rhea integration | Full RLVF loop | High | **NEXT** — fitness function ready |
 | 20 | 2 | Metamorphic relations framework (12 MRs + composition) | Principled mutation taxonomy | Low | **DONE** (built into #4) |
 | 21 | 2 | Shrinking for minimal failing cases | Better Coeus feedback | Low | **DONE** (built into #4) |
 | 22 | 3 | DoWhy refutation tests on causal edges | Refutation p-values on every edge | Medium | After 200+ forges |
@@ -422,19 +422,23 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 - Nous concept dictionary expanded to 95 (added Metamorphic Testing, Property-Based Testing, Abstract Interpretation, Hoare Logic, Sensitivity Analysis, Satisfiability)
 - Mechanism metadata added to all 95 concepts (constraint: 15, structure: 28, dynamics: 38, measure: 14)
 
-**Next up:** Phase 2b items — adversarial lineage tracking (#8), per-tool learned difficulty (#9), Hephaestus Gate 6 wiring (#S3 from build plan). Then Phase 3: Coeus v3 with dual causal graphs, econml, DAGMA activation.
+**PHASES 1-4 SUBSTANTIALLY COMPLETE.** 22 items done. The RLVF loop is built.
 
-**Phase 2 complete:**
-- Nemesis v1 with MAP-Elites grid, 12 MRs + composition, shrinking, NCD novelty, exec evaluator validation
-- First result: IBAI v2 drops from 67% static to 46% adversarial. The Goodhart gap is real and measurable.
+**What's operational:**
+- Nous → Coeus → Hephaestus → Nemesis (full pipeline, all continuous)
+- RLVF fitness function: F(T) = Σwᵢ·Sᵢ - λ·σ(S) with 122 tools
+- Dual causal graph: Goodhart warnings identify concepts that pass tests but don't detect reasoning
+- Provenance gate: hard code enforcement, adversarial data cannot enter training
+- Failure-driven forge: Nemesis blind spots → targeted concept requests
+- Adversarial-aware sampling: Nous demotes Goodhart concepts, boosts undervalued ones
 
-**From Titan Council (queued for Phase 3+):**
-- econml CausalForest for heterogeneous treatment effects (#27)
-- CausalPy BSTS for pipeline change impact (#28)
-- Coeus mechanism-type model (#30)
-- SHAP all-pairs interaction matrix (#34)
-- Nemesis variance penalty in RLVF fitness (#35)
-- Athena as abductive reasoner (#32)
+**What's next (remaining roadmap items):**
+- **#19 Rhea integration** — connect fitness function to CMA-ES evolutionary loop
+- #11 Bidirectional interventional estimates (300+ forges)
+- #12 Temporal causal analysis / PCMCI
+- #15 Causal perturbation evaluator
+- #27 econml CausalForest for heterogeneous treatment effects
+- #32 Athena as abductive reasoner over pipeline stagnation
 
 ---
 
