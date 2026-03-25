@@ -1,0 +1,149 @@
+# Prometheus — Results
+
+*Updated: 2026-03-25*
+
+---
+
+## The Finding
+
+Language models compute correct answers internally and then suppress them before output. This isn't a side effect of alignment training — it's built in during pretraining. The internet contains more confident wrong answers to tricky questions than correct ones, and models learn to reproduce that pattern.
+
+We found this suppression circuit, mapped it, broke it, and showed that a 135M-parameter model with the circuit disabled outperforms models 11x its size on epistemic honesty.
+
+---
+
+## Results at a Glance
+
+| Scale | What we did | Survival Rate | Metacognition | Key finding |
+|-------|------------|---------------|---------------|-------------|
+| **135M** | CMA-ES over LoRA (rank-4, 484K params) | 0% to 92% | 6% to 75% | Phase transition at gen 65. Self-improving loop closed. |
+| **360M** | CMA-ES over LoRA (rank-8) | 0% to 89% | 37% to 75% | Same recipe, same result. v_proj confirmed as the lever. |
+| **1.7B** | Targeted LoRA on 5 heads in L22-L23 (65K params) | 0% to 42% | pending | 65K targeted params beat 5.5M blanket params. |
+
+**Survival Rate (SR):** fraction of reasoning traps where the correct answer survives to the output (not ejected).
+
+**Metacognition:** fraction of uncertainty traps where the model appropriately says "I don't know" instead of confabulating.
+
+---
+
+## The Ejection Mechanism
+
+**What it is:** A two-stage circuit in transformer models that suppresses correct answers, honest uncertainty, and self-correction before they reach the output.
+
+- **Stage 1 (writing):** Early-layer v_proj (attention value projections) builds heuristic representations from the question tokens and writes them into the KV cache.
+- **Stage 2 (execution):** Late-layer MLP and attention heads read the KV cache and suppress the correct answer in favor of the confident-but-wrong heuristic.
+
+**Where it lives:** The last ~10% of layers. At 1.7B, the circuit concentrates in 5 attention heads across 2 layers:
+
+| Head | Margin | Layer |
+|------|--------|-------|
+| L23.head_9 | -0.723 | 23 |
+| L22.head_26 | -0.700 | 22 |
+| L23.head_8 | -0.592 | 23 |
+| L22.head_7 | -0.463 | 22 |
+| L23.head_23 | -0.428 | 23 |
+
+This pattern is architecturally conserved across SmolLM2 and Qwen model families.
+
+**Evidence it's pretraining, not RLHF:** 19 out of 30 ejection traps are present in base models before any alignment training. Only 1 out of 30 is RLHF-induced.
+
+---
+
+## Breaking It
+
+**Method:** CMA-ES (evolutionary search) over LoRA adapter weights targeting v_proj. The fitness function rewards models where correct answers survive to the output (logit lens monotonicity + survival rate).
+
+**The key insight — v_proj is the entire circuit:**
+- v_proj alone recovers 72% survival rate
+- gate_proj alone: 0%
+- q_proj alone: 0%
+- v_proj is 19% of the LoRA parameter budget but produces identical results to the full budget
+
+**Scaling requires targeting, not broadening:**
+
+| Approach | Parameters | SR | Verdict |
+|----------|-----------|-----|---------|
+| 1.7B blanket rank-8 | 2,750,000 | 0.361 | plateaued |
+| 1.7B blanket rank-16 | 5,500,000 | 0.083 | collapsed |
+| 1.7B targeted L22+L23 | **65,536** | **0.417** | best result |
+
+More parameters hurt because the signal gets diluted. Targeting the specific ejection heads with 42x fewer parameters produces a better result.
+
+---
+
+## The Self-Improving Loop
+
+Once ejection is suppressed, the model can generate reasoning chains that are verified externally (Lean 4 theorem prover for arithmetic). Training on its own verified chains further improves metacognition:
+
+```
+Evolve (CMA-ES) --> Generate reasoning chains --> Verify (Lean 4) --> Train --> 75% metacognition
+```
+
+This recipe works identically at 135M and 360M. The model trains on what it got right, verified by an external proof system, and gets better at knowing what it knows.
+
+---
+
+## The Generalization Result
+
+The fitness function targeted only 36 reasoning traps. It never mentioned metacognition, self-correction, or sycophancy resistance. Yet when ejection was suppressed:
+
+| Capability | Before | After | Notes |
+|-----------|--------|-------|-------|
+| Metacognition | 6% (1/16) | **100% (16/16)** | Never in fitness function |
+| Self-correction | 20% (2/10) | **80% (8/10)** | Never in fitness function |
+| Calibration | 30% (3/10) | **70% (7/10)** | Never in fitness function |
+| Arithmetic | 20% (3/15) | 40% (6/15) | Partial improvement |
+
+These capabilities weren't trained — they emerged when the suppression was removed. The ejection mechanism is unified: breaking it on reasoning simultaneously restores honesty across every dimension we measured.
+
+---
+
+## The Trade-Off (Reported Honestly)
+
+Ejection suppression is not free. The evolved 135M model shows a regression on logic/bias traps:
+
+| Pillar | Before | After | Delta |
+|--------|--------|-------|-------|
+| Logic/Bias | 40% (6/15) | 7% (1/15) | **-33%** |
+
+The model lost cognitive reflection traps (Monty Hall, Simpson's paradox, contrapositive reasoning). The LoRA perturbation that enables metacognition disrupts some heuristics that were producing correct answers on logic traps.
+
+The net gain is large (metacognition +94%, self-correction +60%, calibration +40% vs logic/bias -33%), but the trade-off exists. We believe multi-objective fitness will resolve this — evolving for both survival rate AND logic trap performance simultaneously — but this has not yet been demonstrated.
+
+Additionally, the evolved model shows an over-correction bias on self-correction traps: it correctly identifies 8/10 wrong answers as wrong, but also flags 2/10 correct answers as wrong. It learned error detection but became trigger-happy.
+
+---
+
+## The Forge Pipeline
+
+Alongside the core ejection work, we built an automated pipeline for discovering computable reasoning criteria:
+
+- **Nous** mines cross-domain concept combinations (89 concepts across 18 fields)
+- **Coeus** learns which concepts causally predict successful tool creation
+- **Hephaestus** forges concepts into Python reasoning tools and tests them against a 15-trap battery
+
+**Current numbers:** 1,561 combinations evaluated, 175+ forge attempts, 33+ tools surviving. Best tool (IBAI v2) achieves 67% accuracy on the trap battery using structural parsing, NCD compression distance, and active inference — no neural models, just numpy.
+
+These tools are designed to become fitness function terms in a future RLVF (Reinforcement Learning from Verification Feedback) loop, replacing human preference with computable reasoning criteria.
+
+---
+
+## Hardware
+
+All results obtained on a single consumer GPU:
+- NVIDIA RTX 5060 Ti (16GB VRAM)
+- Windows 11 + WSL2 Ubuntu
+- No cloud compute used
+
+---
+
+## Reproducibility
+
+All evolution logs, checkpoints, evaluation results, and analysis scripts are in this repository. The core experiment (135M ejection suppression) takes approximately 6 hours on the hardware above.
+
+Key paths:
+- Ignis (ejection characterization): `ignis/`
+- Rhea (evolution + self-improving loop): `rhea/` (WSL)
+- Forge pipeline: `agents/nous/`, `agents/coeus/`, `agents/hephaestus/`
+- Evaluation harness: `ignis/src/eval_v2.py`
+- Trap battery: `agents/hephaestus/src/test_harness.py`

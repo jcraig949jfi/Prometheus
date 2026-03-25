@@ -1,20 +1,38 @@
 # Secrets
 .env
 *.env
-key.txt
+*_key.txt
+*_secret.txt
+*_api_key*
 credentials*.json
 agents/hermes/config.json
 agents/hermes/data/
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
+# Large binaries / model weights
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.gguf
+*.onnx
 
-# Results and data (large, local only)
+# Checkpoints (keep only final adapters)
+rhea/runs/*/checkpoints/
+rhea/runs/*/genomes_*.pkl
+ignis/results/*/checkpoints/
+
+# Results and reports (large, local only)
 **/results/
 **/reports/
-**/*.log
+
+# Logs
+*.log
+rhea/runs/*/evolution_*.csv
+ignis/results/*/logs/
+
+# Local configs
+config.local.yaml
+*.user.json
 
 # OS
 .DS_Store
@@ -24,11 +42,17 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Model weights
-*.pt
-*.safetensors
-*.bin
-*.gguf
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
 
 # Vault (cloned repos and model weights — keep local only)
 vault/
@@ -38,6 +62,16 @@ reproductions/**/original/
 
 # Archive (large, historical — keep local only)
 archive/
+
+# Databases (generated, local)
+*.db
+
+# Internal stream files
+docs/internal/claudecodestream_*
+
+# Sanity check outputs (local)
+sanity_check.py
+sanity_phase2_wsl.sh
 
 # Claude config
 .claude/

@@ -14,6 +14,8 @@ The ejection mechanism doesn't just suppress correct answers — it suppresses *
 
 A 135M model with 0.36% of its weights perturbed scores **75% on metacognition** — 6x higher than a 1.5B model with the mechanism intact. Not because it's smarter. Because it's unblocked.
 
+**[Full results and data tables](RESULTS.md)** | **[Forge pipeline documentation](docs/forge_pipeline.md)**
+
 ## The Architecture
 
 ```
@@ -32,11 +34,14 @@ Prometheus/
 │   NOTE: Rhea runs within WSL2 Ubuntu. See rhea/README.md.
 │
 ├── agents/
-│   ├── nous/           # The Primordial Soup — combinatorial hypothesis mining
-│   │                   #   85 concepts × 18 fields → cross-domain triples → 397B eval
+│   ├── nous/           # The Concept Miner — combinatorial hypothesis mining
+│   │                   #   95 concepts × 18 fields → cross-domain triples → 397B eval
+│   ├── coeus/          # Causal Intelligence — learns what concepts predict forge success
+│   │                   #   Dual causal graphs (forge + adversarial), prescriptive enrichment
 │   ├── hephaestus/     # The Automated Forge — concept → code → test → score
-│   │                   #   Takes top Nous results, generates Python implementations,
-│   │                   #   validates against reasoning battery
+│   │                   #   Takes Nous results + Coeus enrichment, forges reasoning tools
+│   ├── nemesis/        # Adversarial Co-Evolution — stress-tests reasoning tools
+│   │                   #   MAP-Elites grid, metamorphic relations, Goodhart detection
 │   ├── eos/            #   Horizon scanner — arXiv, GitHub, Semantic Scholar
 │   ├── aletheia/       #   Knowledge harvester — entity extraction → SQLite graph
 │   ├── skopos/         #   North Star alignment — scores findings against research threads
@@ -80,11 +85,13 @@ CMA-ES evolves LoRA perturbations on SmolLM2-135M. **Phase transition at generat
 
 **The self-improving loop closed:** Evolve → Generate → Lean 4 verify → Train. Metacognition: 6.2% → 75%. A 135M model outperforms a 1.5B model on epistemic honesty by 6x.
 
-### Phase 4: Scaling and the primordial soup (in progress)
-- 360M: rank-8 breaks through where rank-4 plateaus. v_proj confirmed as the lever.
-- Nous: 100+ cross-domain concept combinations evaluated by 397B model
-- Hephaestus: automated forge turning concepts into tested reasoning tools
-- Next: 1.7B evolution, coherence-preserving fitness, RLVF replacing RLHF
+### Phase 4: Scaling and the forge (current)
+- 360M: rank-8 breaks through (SR=89%), v_proj confirmed, self-corpus loop → 75% metacognition
+- 1.7B: Ignis decomposed the ejection circuit to 5 heads in L22-L23. 65K targeted params beat 5.5M blanket params (SR=0.417 vs 0.083). Self-corpus and loop closure pending.
+- Forge pipeline operational: 1,748 concept combinations evaluated (Nous), 122 reasoning tools forged at 42% forge rate (Hephaestus), 51/100 adversarial grid cells filled (Nemesis). See [forge_pipeline.md](docs/forge_pipeline.md).
+- Coeus dual causal graph: forge success vs adversarial robustness. Goodhart indicators identified (tools that pass static battery but fail under adversarial pressure).
+- RLVF fitness function: F(T) = Σwᵢ·Sᵢ - λ·σ(S), weights by adversarial robustness
+- Next: full RLVF loop closure (Rhea evolves against forged tool fitness)
 
 ## The Core Finding
 
@@ -108,6 +115,8 @@ All names derive from Greek and Latin — the language of Prometheus.
 | **Rhea** | Ῥέα — mother of Zeus | The forge — grow models without the ejection |
 | **Nous** | Νοῦς — "mind/intellect" | The primordial soup — combinatorial hypothesis mining |
 | **Hephaestus** | Ἥφαιστος — god of the forge | The automated forge — concept → code → test |
+| **Coeus** | Κοῖος — Titan of rational inquiry | Causal intelligence — dual causal graphs, Goodhart detection |
+| **Nemesis** | Νέμεσις — goddess of retribution | Adversarial co-evolution — MAP-Elites grid, metamorphic testing |
 | **Arcanum** | Latin: hidden secret | Mine the waste stream for novelty |
 | **Aethon** | Αἴθων — "blazing one" | Navigate around RLHF gravity (backburnered) |
 
@@ -129,7 +138,7 @@ Five frontier models (Claude, ChatGPT, Gemini, DeepSeek, Grok) consulted as rese
 
 ## Hardware
 
-- RTX 5060 Ti 16GB VRAM
+- RTX 5060 Ti 16GB VRAM (all results obtained on this single consumer GPU)
 - Windows 11 (Ignis) + WSL2 Ubuntu (Rhea)
 - NemoClaw: free NVIDIA API access to Qwen3.5-397B (Nous/Hephaestus)
 - Lean 4 v4.28.0 (formal verification)
@@ -152,15 +161,16 @@ python3 evolver.py                      # CMA-ES evolution
 python3 close_the_loop.py               # Self-improving loop
 ```
 
-### Nous — Mine the hypothesis space
+### Forge Pipeline — Mine, forge, and stress-test reasoning tools
 ```bash
-export NVIDIA_API_KEY="nvapi-..."
-python agents/nous/src/nous.py --n-combos 100
-```
+# One command launches Nous + Hephaestus + Nemesis (continuous, all three)
+run_forge_pipeline.bat
 
-### Hephaestus — Forge concepts into code
-```bash
-python agents/hephaestus/src/hephaestus.py --nous-run agents/nous/runs/latest/responses.jsonl --min-score 7.0
+# Or individually:
+python agents/nous/src/nous.py --unlimited          # Mine concepts
+python agents/hephaestus/src/hephaestus.py          # Forge tools (polls Nous)
+python agents/nemesis/src/nemesis.py                 # Adversarial testing (polls forge/)
+python agents/coeus/src/coeus.py                     # Rebuild causal graph (auto-triggered)
 ```
 
 ## The North Star

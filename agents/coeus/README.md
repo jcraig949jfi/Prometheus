@@ -65,6 +65,9 @@ on startup to bias triple sampling toward productive concepts.
 | DAGMA | dagma | Non-linear synergies via MLP | If installed + 200 forges |
 | Interventional | numpy | Counterfactual P(forge \| do(remove X)) | Always (20+ attempts) |
 
+If optional packages are not installed, Coeus gracefully falls back to L1 regression +
+interventional estimates only. The core functionality works with numpy and scikit-learn alone.
+
 ## Usage
 
 ```bash
