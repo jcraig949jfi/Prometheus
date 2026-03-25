@@ -91,12 +91,14 @@ def report_filename(concept_names: list[str]) -> str:
     return "---".join(n.replace(" ", "_") for n in concept_names)
 
 
-def content_hash(nous_entry: dict, ledger_entry: dict | None) -> str:
+def content_hash(nous_entry: dict, ledger_entry: dict | None,
+                  enrichment: dict | None = None) -> str:
     """Deterministic hash of all inputs that affect the report."""
     blob = json.dumps({
         "response_text": nous_entry.get("response_text", ""),
         "score": nous_entry.get("score"),
         "ledger": ledger_entry,
+        "enrichment_text": (enrichment or {}).get("enrichment_text", ""),
     }, sort_keys=True, default=str)
     return hashlib.sha256(blob.encode()).hexdigest()[:16]
 
@@ -325,7 +327,7 @@ def main():
     for key, nous_entry in nous_by_key.items():
         ledger_entry = ledger.get(key)
         enrichment = load_coeus_enrichment(key)
-        chash = content_hash(nous_entry, ledger_entry)
+        chash = content_hash(nous_entry, ledger_entry, enrichment)
 
         # Skip unchanged
         if key in processed and processed[key].get("hash") == chash:

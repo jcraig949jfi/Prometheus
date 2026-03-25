@@ -513,15 +513,18 @@ def _trigger_coeus():
 
 
 def _trigger_reports():
-    """Rebuild human-readable reports with latest data."""
+    """Rebuild human-readable reports (incremental — only changed entries)."""
     try:
-        logger.info("Rebuilding human-readable reports...")
+        logger.info("Rebuilding human-readable reports (incremental)...")
         import importlib
-        reports_mod = importlib.import_module("build_reports")
-        importlib.reload(reports_mod)
-        # Simulate --force by calling main internals directly
-        sys.argv = ["build_reports.py", "--force"]
-        reports_mod.main()
+        saved_argv = sys.argv[:]
+        sys.argv = ["build_reports.py"]  # incremental mode (default)
+        try:
+            reports_mod = importlib.import_module("build_reports")
+            importlib.reload(reports_mod)
+            reports_mod.main()
+        finally:
+            sys.argv = saved_argv
         logger.info("Reports rebuild complete")
     except Exception as e:
         logger.warning("Reports rebuild failed: %s (continuing forge)", e)
