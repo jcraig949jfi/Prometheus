@@ -44,10 +44,10 @@ logging.basicConfig(
 log = logging.getLogger("ignis.loop_closure")
 
 MODELS_TO_TRY = [
-    "HuggingFaceTB/SmolLM2-135M-Instruct",
-    "HuggingFaceTB/SmolLM2-360M-Instruct",
-    "Qwen/Qwen2.5-0.5B-Instruct",
     "Qwen/Qwen2.5-1.5B-Instruct",
+    "Qwen/Qwen2.5-0.5B-Instruct",
+    "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "HuggingFaceTB/SmolLM2-135M-Instruct",
 ]
 
 RNG = random.Random(42)
