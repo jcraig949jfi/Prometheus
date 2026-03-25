@@ -394,7 +394,7 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 | 16 | 3 | Invariance testing suite | Robustness | Medium | After #5 proven |
 | 17 | 4 | ReasoningEpisode schema + provenance gate | Standardizes data flow | Medium | **DONE** — hard gate in code |
 | 18 | 4 | Failure-driven forge trigger | Closes the loop | Low | **DONE** — blind spots → targeted requests |
-| 19 | 4 | Rhea integration | Full RLVF loop | High | **NEXT** — fitness function ready |
+| 19 | 4 | Rhea integration | Full RLVF loop | High | Not started — fitness function ready, wiring TBD |
 | 20 | 2 | Metamorphic relations framework (12 MRs + composition) | Principled mutation taxonomy | Low | **DONE** (built into #4) |
 | 21 | 2 | Shrinking for minimal failing cases | Better Coeus feedback | Low | **DONE** (built into #4) |
 | 22 | 3 | DoWhy refutation tests on causal edges | Refutation p-values on every edge | Medium | After 200+ forges |
