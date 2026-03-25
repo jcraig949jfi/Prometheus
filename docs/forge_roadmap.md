@@ -379,10 +379,10 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 | 1 | 1 | Dynamic trap generation | Prevents overfitting | Low | **DONE** |
 | 2 | 1 | Execution evaluator | Grounds in behavior | Low | **DONE** |
 | 3 | 1 | Reasoning trace interface | Step-level scoring | Medium | Designed |
-| 4 | **2** | **Nemesis agent (7 mutation categories)** | **Adversarial pressure** | **Medium** | **NEXT** |
-| 5 | 2 | Semantic equivalence mutations (Cat 7) | Goodhart detector | Low | Part of #4 |
-| 6 | 2 | Compositional depth scaling | Precision instrument | Low | Part of #4 |
-| 7 | 2 | Adversarial task validation (exec evaluator) | Prevents bad ground truth | Low | Part of #4 |
+| 4 | **2** | **Nemesis agent (12 MRs, MAP-Elites grid)** | **Adversarial pressure** | **Medium** | **DONE** |
+| 5 | 2 | Semantic equivalence mutations (paraphrase MR) | Goodhart detector | Low | **DONE** (in #4) |
+| 6 | 2 | Compositional depth scaling (chain_extend MR) | Precision instrument | Low | **DONE** (in #4) |
+| 7 | 2 | Adversarial task validation (exec evaluator) | Prevents bad ground truth | Low | **DONE** (in #4) |
 | 8 | 2b | Adversarial lineage tracking | Finds deep weaknesses | Medium | After #4 operational |
 | 9 | 2b | Per-tool learned difficulty | Focuses pressure | Medium | After #4 operational |
 | 10 | 3 | Dual causal graphs (forge vs adversarial) | Key diagnostic | Medium | After #4 producing data |
@@ -395,8 +395,8 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 | 17 | 4 | ReasoningEpisode schema | Standardizes data flow | Medium | After #3 |
 | 18 | 4 | Failure-driven forge trigger | Closes the loop | Low | After #4 |
 | 19 | 4 | Rhea integration | Full RLVF loop | High | After #14, #17 |
-| 20 | 2 | GeMTest metamorphic relations framework | Principled mutation taxonomy | Low | Build into Nemesis v1 |
-| 21 | 2 | Hypothesis shrinking for minimal failing cases | Better Coeus feedback | Low | Build into Nemesis v1 |
+| 20 | 2 | Metamorphic relations framework (12 MRs + composition) | Principled mutation taxonomy | Low | **DONE** (built into #4) |
+| 21 | 2 | Shrinking for minimal failing cases | Better Coeus feedback | Low | **DONE** (built into #4) |
 | 22 | 3 | DoWhy refutation tests on causal edges | Refutation p-values on every edge | Medium | After 200+ forges |
 | 23 | 3 | gCastle algorithm diversity | Discovery algorithms DAGMA misses | Low | After DoWhy |
 | 24 | 3 | Soundness/completeness profiling | Abstract interpretation for tools | Medium | After Nemesis data |
@@ -406,9 +406,9 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 | 28 | 3 | Bayesian Structural Time Series (CausalPy) | Measure causal impact of pipeline changes | Medium | After multiple prompt versions |
 | 29 | 2 | Mechanism-type diversity bias in Nous sampling | Ensure triples have constraint+structure+dynamics+measure | Low | **DONE** (metadata added) |
 | 30 | 3 | Coeus mechanism-type causal model | "Successful tools need constraint+measure" patterns | Medium | After mechanism data accumulates |
-| 31 | 2 | NCD-based novelty/coverage for Nemesis adversarial set | Prevent adversarial clustering without neural deps | Low | Build into Nemesis v1 |
+| 31 | 2 | NCD-based novelty/coverage for Nemesis adversarial set | Prevent adversarial clustering without neural deps | Low | **DONE** (built into #4) |
 | 32 | 4 | Athena: abductive reasoning over pipeline stagnation | Prevents local optima, drives high-level exploration | High | After full loop operational |
-| 33 | 2 | MAP-Elites grid for Nemesis adversarial set | QD coverage of failure boundary (complexity × obfuscation) | Medium | Build into Nemesis v1 |
+| 33 | 2 | MAP-Elites grid for Nemesis adversarial set | QD coverage of failure boundary (complexity × obfuscation) | Medium | **DONE** (core of #4) |
 | 34 | 3 | SHAP Interaction Values (XGBoost) for all-pairs concept synergy | 89×89 interaction matrix, finds "dark synergies" | Low | After 200+ forges |
 | 35 | 4 | Nemesis variance penalty in RLVF fitness: F(T) = Σwᵢ·Sᵢ - λ·σ(S) | Tool disagreement as first-class fitness signal | Medium | After Rhea integration |
 | 36 | 3 | MutPy fuzzing of forged tool code | Catch tools passing traps via trivial logic bugs | Low | After Nemesis operational |
@@ -422,13 +422,19 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 - Nous concept dictionary expanded to 95 (added Metamorphic Testing, Property-Based Testing, Abstract Interpretation, Hoare Logic, Sensitivity Analysis, Satisfiability)
 - Mechanism metadata added to all 95 concepts (constraint: 15, structure: 28, dynamics: 38, measure: 14)
 
-**Next up:** Nemesis (#4) with GeMTest (#20), Hypothesis shrinking (#21), NCD novelty (#31), and semantic equivalence (#5) built into v1. Also: mechanism-diversity bias in Nous sampling (#29).
+**Next up:** Phase 2b items — adversarial lineage tracking (#8), per-tool learned difficulty (#9), Hephaestus Gate 6 wiring (#S3 from build plan). Then Phase 3: Coeus v3 with dual causal graphs, econml, DAGMA activation.
 
-**From DeepSeek review (queued):**
-- econml CausalForest for heterogeneous treatment effects (#27) — learns WHEN a concept works, not just IF
-- CausalPy BSTS for measuring pipeline change impact (#28) — counterfactual "what would have happened without the prompt rewrite"
-- Coeus mechanism-type model (#30) — "successful forges need a constraint + a measure"
-- Athena as abductive reasoner over pipeline stagnation (#32) — the "fourth agent" that prevents local optima
+**Phase 2 complete:**
+- Nemesis v1 with MAP-Elites grid, 12 MRs + composition, shrinking, NCD novelty, exec evaluator validation
+- First result: IBAI v2 drops from 67% static to 46% adversarial. The Goodhart gap is real and measurable.
+
+**From Titan Council (queued for Phase 3+):**
+- econml CausalForest for heterogeneous treatment effects (#27)
+- CausalPy BSTS for pipeline change impact (#28)
+- Coeus mechanism-type model (#30)
+- SHAP all-pairs interaction matrix (#34)
+- Nemesis variance penalty in RLVF fitness (#35)
+- Athena as abductive reasoner (#32)
 
 ---
 
