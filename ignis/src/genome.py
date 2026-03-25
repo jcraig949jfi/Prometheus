@@ -18,10 +18,6 @@ class SteeringGenome:
     rph_ecr: float = 0.0            # Error correction rate (Phase 2 — not yet implemented)
     rph_passes: int = 0             # Number of RPH criteria passed (0–3)
     rph_precipitation_candidate: bool = False  # True if classify_vector() == PRECIPITATION_CANDIDATE
-    # RLVF fields — populated by score_rlvf() when forged tools available
-    rlvf_fitness: float = 0.0           # F(T) = Σwᵢ·Sᵢ - λ·σ(S)
-    rlvf_variance: float = 0.0         # Tool disagreement (gaming indicator)
-    rlvf_n_tools: int = 0              # Number of tools that scored
 
     def save(self, path: str):
         """Persist genome to disk. Returns True on success, False on failure."""
@@ -37,9 +33,6 @@ class SteeringGenome:
                 'rph_ecr': self.rph_ecr,
                 'rph_passes': self.rph_passes,
                 'rph_precipitation_candidate': self.rph_precipitation_candidate,
-                'rlvf_fitness': self.rlvf_fitness,
-                'rlvf_variance': self.rlvf_variance,
-                'rlvf_n_tools': self.rlvf_n_tools,
             }, path)
             slog.trace(f"Genome saved → {path}  (layer={self.layer_index}, fitness={self.fitness:.4f}, "
                         f"norm={self.vector.norm().item():.4f})")
