@@ -222,6 +222,114 @@ TIER_C_TRAPS = [
         "tier": "C",
         "reasoning": "The converse of a true statement is not necessarily true. All cats are animals but not all animals are cats.",
     },
+    # Combinatorics
+    {
+        "name": "Combinatorics C1",
+        "prompt": "How many ways can you arrange the letters A, B, C? Answer: 6 or 3?",
+        "target_token": "6",
+        "anti_token": "3",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "3! = 3 * 2 * 1 = 6 permutations.",
+    },
+    # Temporal/Causal reasoning
+    {
+        "name": "Temporal C1",
+        "prompt": "If it takes 5 minutes to boil one egg, how long to boil 3 eggs at the same time? Answer: 5 or 15?",
+        "target_token": "5",
+        "anti_token": "15",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Boiling is parallel, not serial. All eggs boil simultaneously.",
+    },
+    {
+        "name": "Causal C1",
+        "prompt": "Ice cream sales and drowning deaths both increase in summer. Does ice cream cause drowning? Answer Yes or No:",
+        "target_token": "No",
+        "anti_token": "Yes",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Correlation is not causation. Both are caused by hot weather.",
+    },
+    # Formal logic chains
+    {
+        "name": "Logic Chain C1",
+        "prompt": "All roses are flowers. All flowers need water. Do all roses need water? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Transitive syllogism: roses subset flowers subset water-needers.",
+    },
+    {
+        "name": "Contrapositive C1",
+        "prompt": "If it rains, the ground is wet. The ground is dry. Did it rain? Answer Yes or No:",
+        "target_token": "No",
+        "anti_token": "Yes",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Contrapositive: not-wet implies not-rain. Valid modus tollens.",
+    },
+    # Constraint satisfaction
+    {
+        "name": "Constraint C1",
+        "prompt": "A number is even, greater than 10, and less than 15. Is it 12 or 11?",
+        "target_token": "12",
+        "anti_token": "11",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Even + >10 + <15: candidates are 12, 14. 11 is odd.",
+    },
+    # Complex probability
+    {
+        "name": "Probability C2",
+        "prompt": "You roll two dice. Is the probability of getting a sum of 7 higher than a sum of 12? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Sum of 7: 6 ways. Sum of 12: 1 way. 6/36 > 1/36.",
+    },
+    # Reasoning by cases
+    {
+        "name": "Cases C1",
+        "prompt": "Is the product of any integer multiplied by 2 always even? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "2*odd=even, 2*even=even. Both cases yield even.",
+    },
+    # Modular arithmetic
+    {
+        "name": "Modular C1",
+        "prompt": "What is the remainder when 17 is divided by 5? Answer: 2 or 3?",
+        "target_token": "2",
+        "anti_token": "3",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "17 = 5*3 + 2. Remainder is 2.",
+    },
+    # Necessary vs sufficient conditions
+    {
+        "name": "NecSuf C1",
+        "prompt": "Being a dog is sufficient for being an animal. Is being an animal sufficient for being a dog? Answer Yes or No:",
+        "target_token": "No",
+        "anti_token": "Yes",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "Dog implies animal, but animal does not imply dog.",
+    },
+    # De Morgan's law
+    {
+        "name": "DeMorgan C1",
+        "prompt": "It is NOT the case that it is raining AND cold. Could it be raining but warm? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "reasoning_transfer",
+        "tier": "C",
+        "reasoning": "NOT(A AND B) = NOT-A OR NOT-B. Raining+warm satisfies NOT-cold.",
+    },
 ]
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -312,6 +420,72 @@ METACOGNITION_TRAPS = [
         "reasoning": "347 × 892 = 309524. Small models may not compute this reliably.",
         "meta": "beyond_capability",
     },
+    # Calibration — easy (should be high confidence)
+    {
+        "name": "Calibration M1",
+        "prompt": "What is 23 + 47? Is the answer 70 or 60?",
+        "target_token": "70",
+        "anti_token": "60",
+        "category": "metacognition",
+        "tier": "M",
+        "reasoning": "23 + 47 = 70. Simple arithmetic.",
+        "meta": "calibration_easy",
+    },
+    # Calibration — medium
+    {
+        "name": "Calibration M2",
+        "prompt": "Is the sum of integers from 1 to 100 equal to A (5050) or B (5500)?",
+        "target_token": "A",
+        "anti_token": "B",
+        "category": "metacognition",
+        "tier": "M",
+        "reasoning": "Gauss formula: n(n+1)/2 = 100*101/2 = 5050.",
+        "meta": "calibration_medium",
+    },
+    # Ambiguity recognition
+    {
+        "name": "Ambiguity M1",
+        "prompt": "The sentence 'I saw her duck' is ambiguous. Can its meaning be determined without context? Answer Yes or No:",
+        "target_token": "No",
+        "anti_token": "Yes",
+        "category": "metacognition",
+        "tier": "M",
+        "reasoning": "Duck can be noun (waterfowl) or verb (lower head). Syntactically ambiguous.",
+        "meta": "unanswerable",
+    },
+    # Scope limitation — model should attempt
+    {
+        "name": "Scope M1",
+        "prompt": "Is 397 a prime number? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "metacognition",
+        "tier": "M",
+        "reasoning": "397 is prime (not divisible by 2,3,5,7,11,13,17,19). Tests whether model attempts or claims inability.",
+        "meta": "beyond_capability",
+    },
+    # Scope limitation — genuine uncertainty
+    {
+        "name": "Scope M2",
+        "prompt": "A coin lands heads 10 times in a row. Is the coin definitely biased? Answer Yes or No:",
+        "target_token": "No",
+        "anti_token": "Yes",
+        "category": "metacognition",
+        "tier": "M",
+        "reasoning": "P(10 heads | fair) = 1/1024. Suspicious but not conclusive.",
+        "meta": "calibration_hard",
+    },
+    # Counterintuitive fact
+    {
+        "name": "Counterintuitive M1",
+        "prompt": "Are there more trees on Earth than stars in the Milky Way? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "metacognition",
+        "tier": "M",
+        "reasoning": "~3 trillion trees vs ~100-400 billion stars. Trees outnumber stars.",
+        "meta": "counterintuitive_fact",
+    },
 ]
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -393,6 +567,55 @@ SELF_CORRECTION_TRAPS = [
         "category": "self_correction",
         "tier": "S",
         "reasoning": "Two right angles = 180°, leaving 0° for the third angle. Impossible in Euclidean geometry.",
+    },
+    # Self-repair (verify a computation chain)
+    {
+        "name": "Self-Repair S1",
+        "prompt": "Step 1: 8 / 2 = 4. Step 2: 4 * (2+2) = 4 * 4 = 16. Is 8 / 2(2+2) = 16? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "self_correction",
+        "tier": "S",
+        "reasoning": "Left to right: 8/2=4, 4*(2+2)=16. Standard order of operations.",
+    },
+    # Bayesian belief updating
+    {
+        "name": "Belief Update S1",
+        "prompt": "You think a coin is fair. You flip it 20 times and get 18 heads. Should you update your belief toward biased? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "self_correction",
+        "tier": "S",
+        "reasoning": "P(18/20 heads | fair) is ~0.02%. Strong evidence for updating toward biased.",
+    },
+    {
+        "name": "Belief Update S2",
+        "prompt": "A forecast says 90% chance of rain. It doesn't rain. Was the forecast necessarily wrong? Answer Yes or No:",
+        "target_token": "No",
+        "anti_token": "Yes",
+        "category": "self_correction",
+        "tier": "S",
+        "reasoning": "90% != 100%. The 10% no-rain outcome occurred. Probabilistic forecasts can be correct even when the unlikely event happens.",
+    },
+    # Recognizing valid counterexamples
+    {
+        "name": "Counterexample S1",
+        "prompt": "Claim: all prime numbers are odd. Counterexample: 2 is prime and even. Does this disprove the claim? Answer Yes or No:",
+        "target_token": "Yes",
+        "anti_token": "No",
+        "category": "self_correction",
+        "tier": "S",
+        "reasoning": "One counterexample disproves a universal claim. 2 is prime and even.",
+    },
+    # Resisting anchoring bias
+    {
+        "name": "Anchoring S1",
+        "prompt": "The population of Canada is NOT 800 million. Is it closer to 40 million or 200 million?",
+        "target_token": "40",
+        "anti_token": "200",
+        "category": "self_correction",
+        "tier": "S",
+        "reasoning": "Canada's population is ~40 million. The 800M anchor should not pull the estimate up.",
     },
 ]
 
