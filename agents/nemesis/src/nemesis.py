@@ -50,7 +50,7 @@ from map_elites import MAPElitesGrid, AdversarialTask, GRID_SIZE
 from metamorphic import (
     METAMORPHIC_RELATIONS, compose_mrs, random_mr_chain, targeted_mr_chain,
 )
-from reporter import generate_report, write_adversarial_results
+from reporter import generate_report, write_adversarial_results, write_targeted_forge_requests
 from shrink import shrink
 from validators import validate_task
 
@@ -375,6 +375,11 @@ def main():
         # Write adversarial results for Coeus
         write_adversarial_results(
             grid, ADVERSARIAL_DIR / "adversarial_results.jsonl"
+        )
+
+        # Write targeted forge requests (blind spots → Hephaestus priority)
+        write_targeted_forge_requests(
+            grid, ADVERSARIAL_DIR / "targeted_forge_requests.jsonl"
         )
 
         # Summary

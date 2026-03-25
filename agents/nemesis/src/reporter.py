@@ -157,6 +157,55 @@ def generate_report(grid: MAPElitesGrid, tools: dict,
     return report_text
 
 
+def write_targeted_forge_requests(grid: MAPElitesGrid, output_path: Path):
+    """Write targeted forge requests based on blind spots and failure patterns.
+
+    When Nemesis identifies categories that no tool handles, it generates
+    concept triple suggestions for Hephaestus to prioritize.
+    """
+    blind_spots = grid.blind_spots()
+    if not blind_spots:
+        return
+
+    # Map failure patterns to concept suggestions
+    mr_to_concepts = {
+        "paraphrase": ["Compositional Semantics", "Pragmatics", "Metamorphic Testing"],
+        "premise_shuffle": ["Compositionality", "Proof Theory", "Hoare Logic"],
+        "chain_extend": ["Ergodic Theory", "Graph Theory", "Constraint Satisfaction"],
+        "conditional_weaken": ["Counterfactual Reasoning", "Causal Inference", "Falsificationism"],
+        "affirm_consequent": ["Proof Theory", "Abductive Reasoning", "Model Checking"],
+        "passive_voice": ["Compositional Semantics", "Pragmatics", "Theory of Mind"],
+        "negation_inject": ["Satisfiability", "Hoare Logic", "Abstract Interpretation"],
+        "numeric_distractor": ["Sensitivity Analysis", "Information Theory", "Bayesian Inference"],
+    }
+
+    requests = []
+    seen = set()
+    for task in blind_spots:
+        for mr in task.mr_chain:
+            concepts = mr_to_concepts.get(mr, [])
+            if concepts:
+                key = tuple(sorted(concepts))
+                if key not in seen:
+                    seen.add(key)
+                    requests.append({
+                        "provenance": "adversarial",
+                        "source": "nemesis_blind_spot",
+                        "mr_category": mr,
+                        "suggested_concepts": concepts,
+                        "reason": f"No tool handles {mr} mutations (blind spot)",
+                        "priority": "high",
+                        "example_prompt": task.prompt[:100],
+                    })
+
+    if requests:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(output_path, "w", encoding="utf-8") as f:
+            for r in requests:
+                f.write(json.dumps(r) + "\n")
+        log.info("Wrote %d targeted forge requests to %s", len(requests), output_path)
+
+
 def write_adversarial_results(grid: MAPElitesGrid, output_path: Path):
     """Write adversarial results JSONL for Coeus consumption.
 

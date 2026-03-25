@@ -235,6 +235,21 @@ def run_ncd_baseline() -> dict:
     return _run_battery(_ncd_baseline, TRAPS)
 
 
+def run_dynamic_battery(tool, seed: int | None = None) -> dict | None:
+    """Run dynamically generated traps (prevents overfitting to static battery).
+
+    Returns results dict or None if trap generator unavailable.
+    """
+    try:
+        from trap_generator import generate_trap_battery
+        traps = generate_trap_battery(n_per_category=2, seed=seed)
+        if not traps:
+            return None
+        return _run_battery(tool, traps)
+    except ImportError:
+        return None
+
+
 def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
     """Run all traps against a tool. Compare against NCD baseline.
 

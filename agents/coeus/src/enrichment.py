@@ -170,6 +170,22 @@ def enrich_triplet(concept_names: list[str], graph, forge_entries: list[dict]) -
     # Similar forges
     similar = _find_similar_forges(concept_names, forge_entries)
 
+    # Goodhart warnings from adversarial survival data
+    goodhart_warnings = {}
+    if hasattr(graph, "concept_influence"):
+        # Load adversarial survival from concept_scores if available
+        scores_path = Path(__file__).resolve().parent.parent / "graphs" / "concept_scores.json"
+        if scores_path.exists():
+            try:
+                import json as _json
+                scores_data = _json.loads(scores_path.read_text(encoding="utf-8"))
+                gi = scores_data.get("goodhart_indicators", {})
+                for name in concept_names:
+                    if name in gi and "warning" in gi[name]:
+                        goodhart_warnings[name] = gi[name]
+            except Exception:
+                pass
+
     # Build enrichment text — prescriptive directives for the code gen model
     text_parts = []
     text_parts.append(
@@ -181,7 +197,17 @@ def enrich_triplet(concept_names: list[str], graph, forge_entries: list[dict]) -
 
     # Per-concept directives (prescriptive, not descriptive)
     for name in concept_names:
-        text_parts.append(f"- {concept_strengths[name]['directive']}")
+        directive = concept_strengths[name]['directive']
+        # Append Goodhart warning if applicable
+        if name in goodhart_warnings:
+            gw = goodhart_warnings[name]
+            directive += (
+                f" GOODHART WARNING: This concept scores well on static tests but "
+                f"only {gw['adversarial_survival']:.0%} adversarial survival. "
+                f"Ensure your implementation handles paraphrased, shuffled, and "
+                f"extended versions of prompts, not just the literal patterns."
+            )
+        text_parts.append(f"- {directive}")
 
     # Synergies as implementation guidance
     if relevant_synergies:

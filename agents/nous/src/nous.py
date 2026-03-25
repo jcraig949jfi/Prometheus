@@ -99,25 +99,49 @@ def _load_coeus_weights(concepts: list[dict]) -> list[float]:
     try:
         data = json.loads(coeus_path.read_text(encoding="utf-8"))
         influence = data.get("concept_influence", {})
+        adv_survival = data.get("adversarial_survival", {})
+        goodhart = data.get("goodhart_indicators", {})
 
         weights = []
+        n_boosted = 0
+        n_suppressed = 0
+        n_goodhart_adjusted = 0
+
         for c in concepts:
             name = c["name"]
             info = influence.get(name, {})
             forge_eff = info.get("forge_effect", 0)
+            adv_data = adv_survival.get(name, {})
+            adv_rate = adv_data.get("survival_rate")
 
+            # Base weight from forge effect
             if forge_eff > 0.3:
-                weights.append(3.0)   # strong forge driver — oversample
+                w = 3.0
             elif forge_eff > 0.05:
-                weights.append(2.0)   # moderate driver
+                w = 2.0
             elif forge_eff < -0.2:
-                weights.append(0.3)   # inhibitor — undersample but don't eliminate
+                w = 0.3
             else:
-                weights.append(1.0)   # neutral
+                w = 1.0
 
-        log.info("Coeus sampling weights loaded: %d boosted, %d suppressed",
-                 sum(1 for w in weights if w > 1.5),
-                 sum(1 for w in weights if w < 0.5))
+            # Adjust for adversarial survival (if data available)
+            if adv_rate is not None:
+                if name in goodhart and "warning" in goodhart[name]:
+                    # Goodhart indicator: demote despite forge success
+                    w = max(w * 0.5, 0.5)
+                    n_goodhart_adjusted += 1
+                elif adv_rate > 0.6 and forge_eff < 0.1:
+                    # Undervalued: high adversarial but low forge priority — boost
+                    w = max(w, 2.5)
+
+            if w > 1.5:
+                n_boosted += 1
+            elif w < 0.5:
+                n_suppressed += 1
+            weights.append(w)
+
+        log.info("Coeus sampling weights: %d boosted, %d suppressed, %d Goodhart-adjusted",
+                 n_boosted, n_suppressed, n_goodhart_adjusted)
         return weights
 
     except Exception as e:
