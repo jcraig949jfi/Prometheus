@@ -14,15 +14,16 @@ The purpose: build a library of computable reasoning criteria that can replace h
 
 | Metric | Value |
 |--------|-------|
-| Concept dictionary | 89 concepts across 18 fields |
-| Combinations evaluated | 1,561+ (Nous, 5+ runs, continuous) |
-| Forge attempts | 175+ (continuous, Coeus-priority ordered) |
-| Tools forged | 33+ (rising) |
-| Tools scrapped | 115+ |
+| Concept dictionary | 95 concepts across 18 fields (with mechanism_type metadata) |
+| Combinations evaluated | 3,250+ (Nous, 7+ runs, continuous) |
+| Forge attempts | 895+ (continuous, Coeus-priority ordered) |
+| Tools forged | 268 (29% forge rate, declining as queue deepens) |
+| Tools scrapped | 627+ |
 | Trap battery | 15 static + dynamic generator (8 categories, infinite variants) |
 | Quality baseline | NCD (compression distance) — 20% accuracy, 7% calibration |
-| Best tool | IBAI v2 — 67% accuracy, 53% calibration |
-| Execution evaluator | 47% accuracy (solves computation traps structural tools miss) |
+| Best tool | Falsificationism+FEP+TensorDecomp — 60% accuracy, 60% calibration |
+| NCD-dominated tools | 71/268 (27%) — 73% do real work beyond NCD |
+| Nemesis grid | 91/100 cells filled, 829 cycles |
 | Nous prompt | Implementation-focused (steers toward algorithms, not theory) |
 | Coeus methods | L1 regression + NOTEARS + LiNGAM + FCI + DAGMA + interventional |
 | Coeus enrichment | Prescriptive directives (not statistics) |
@@ -224,6 +225,110 @@ Symbolic reasoning via constraint propagation. Extracts structured facts from te
 **Perturbation Calibrator** — Confidence wrapper that runs prompt perturbations (drop words, add "explain why," remove negation) and measures scoring stability. Candidates that score consistently across perturbations are more robust.
 
 These are NOT standalone `ReasoningTool` classes — they wrap a base tool and enhance it.
+
+---
+
+## Novelty and Complexity Scoring
+
+Beyond accuracy and calibration, every forge tool is scored on two additional dimensions that measure HOW it reasons, not just whether it gets the right answer.
+
+### Behavioral Novelty
+NCD between the tool's score vector (its raw numeric outputs on the 15-trap battery) and every other tool's score vector. Tools that produce different scoring patterns from the rest of the library are genuinely novel — they're doing something structurally different, not just reaching the same answers through the same mechanism.
+
+Median novelty across 268 tools: 0.634. Range: 0.294 to 0.732.
+
+### Answer Diversity
+The fraction of traps where the tool disagrees with the majority answer across the entire library. A tool with 0.733 answer diversity picks a different top candidate from the consensus on 73% of traps. This measures whether the tool is an independent thinker or a follower.
+
+Median answer diversity: 0.267. Range: 0.000 to 0.867.
+
+### Trace Complexity
+How many distinct reasoning steps contribute to the final score. Measures gene count, distinct context keys written, score value changes during the pipeline, and whether the tool relies solely on the NCD fallback.
+
+71 of 268 tools (27%) are NCD-dominated (fallback_only_ratio >= 90%). The remaining 73% perform genuine multi-step reasoning beyond compression distance.
+
+### Notable Specimens: High Accuracy + High Novelty + High Complexity
+
+Three tools stand out as genuinely novel reasoning strategies that also score well — they disagree with the herd and are RIGHT more often:
+
+| Tool | Accuracy | Calibration | Diversity | Novelty | Complexity |
+|------|----------|-------------|-----------|---------|------------|
+| **Chaos Theory + Dialectics + Feedback Control** | 67% | 27% | 0.733 | 0.663 | 0.477 |
+| **Ergodic Theory + Falsificationism + Maximum Entropy** | 53% | 60% | 0.733 | 0.601 | 0.477 |
+| **Category Theory + Causal Inference + Mechanism Design** | 53% | 60% | 0.600 | 0.601 | 0.277 |
+
+**Chaos Theory + Dialectics + Feedback Control** is the most remarkable: it disagrees with the majority on 73% of traps and achieves the highest accuracy in the library (tied at 67%). It uses a logistic map as a chaotic proposal sampler, dialectical thesis/antithesis scoring where candidates argue against each other, and PID-style feedback control to regulate the confidence signal. This is not NCD with decoration — it's a fundamentally different reasoning architecture that works.
+
+**Ergodic Theory + Falsificationism + Maximum Entropy** combines long-run averaging (ergodic theory ensures the scoring function converges regardless of initialization), active falsification (penalize candidates that contradict extracted premises), and maximum entropy regularization (prefer the least-committed scoring distribution consistent with the constraints). The 60% calibration score means it knows what it knows.
+
+**Category Theory + Causal Inference + Mechanism Design** maps candidate answers to objects in a category, evaluates morphisms (structural transformations between candidates), and uses mechanism design principles to score incentive-compatibility — does this answer "want" to be correct, or is it gaming the prompt? This is the newest top-tier entrant and represents a genuinely novel evaluation paradigm.
+
+These three tools are priority seeds for Apollo (the open-ended evolution system) because they represent independent reasoning strategies that work — not NCD variants, not structural parsing clones, but fundamentally different approaches to the question "is this answer correct?"
+
+---
+
+## CAITL: Coding Agent in the Loop
+
+CAITL is a manual improvement pass where a strong coding model (Claude Opus 4.6 at max capacity) systematically reviews and improves each forge tool. Unlike the automated forge pipeline (which generates tools in a single shot via a 397B model), CAITL iterates on existing tools with deep mechanistic understanding.
+
+### What CAITL Does (7 Improvement Dimensions)
+
+| Dimension | Description |
+|-----------|-------------|
+| **A) Standardize I/O** | Consistent evaluate/confidence interfaces, input validation, scores in [0,1] |
+| **B) Strengthen concepts** | Ensure all 3 intersecting concepts are ACTUALLY IMPLEMENTED, not just docstring. Add real SVD, eigenvalue computation, DFT, genetic operators, Kalman filters, partition functions. |
+| **C) Metacognitive reflection** | Re-examine top candidate for internal consistency, flag close ties (within 5%), note structural parse failures |
+| **D) Fill missing CS concepts** | Numeric float comparison, negation scope parsing, comparative/ordering extraction, conditional modus ponens/tollens, subject-object parsing |
+| **E) Reduce NCD dependency** | Cap fallback at 15% of final score, tag "fallback:ncd" in reasoning when NCD dominates |
+| **F) Improve confidence()** | Compare against null baseline instead of sigmoid, falsified answers get near-zero confidence |
+| **G) Detailed reasoning strings** | Prefix with "execution:", "structural:", "fallback:ncd", "metacognition:" to trace which mechanism drove the score |
+
+### Results (First 50 Tools)
+
+| Metric | Before CAITL | After CAITL |
+|--------|-------------|------------|
+| Best tool (combined) | 120% (60%/60%) | **153% (73%/80%)** |
+| Tools >= 100% combined | 6 of 268 | **9 of 50** |
+| Tools >= 80% combined | ~25 of 268 | **21 of 50** |
+| Compilation errors | — | **0** |
+| Pass rate | 100% (by definition) | **90%** (45/50) |
+
+### Top 5 After CAITL
+
+| Tool | v1 Acc/Cal | v2 Acc/Cal | Improvement |
+|------|-----------|-----------|-------------|
+| Ergodic Theory + FEP + Reinforcement Learning | 40%/60% | **73%/80%** | +33/+20 |
+| Chaos Theory + FEP + Neural Plasticity | 47%/53% | **60%/73%** | +13/+20 |
+| Criticality + Neuromodulation + Phase Transitions | 53%/53% | **60%/67%** | +7/+14 |
+| Abductive Reasoning + Ergodic Theory + ToM | 47%/53% | **53%/67%** | +6/+14 |
+| Criticality + FEP + Neural Architecture Search | 33%/47% | **53%/60%** | +20/+13 |
+
+### Real Implementations Added
+
+The CAITL pass doesn't just tune parameters — it adds genuine algorithmic implementations that the 397B model described but didn't code:
+
+- **Actual SVD** via `np.linalg.svd` on candidate feature matrices (tensor decomposition tools)
+- **Actual DFT** via `np.fft.rfft` for Fourier transform analysis (compositionality tools)
+- **Actual eigenvalue computation** via `np.linalg.eigvalsh` (spectral analysis tools)
+- **Genetic operators** with fitness selection, crossover, mutation (GA tools)
+- **Kalman predict/update cycles** with process noise from logistic maps (Kalman filtering tools)
+- **Boltzmann partition functions** with `exp(-beta*E)` weighting (thermodynamics tools)
+- **Metropolis-Hastings MCMC** with acceptance ratios (ergodic theory tools)
+- **Haar wavelet decomposition** on feature vectors (wavelet transform tools)
+- **Reservoir computing** with spectral radius tuning (chaos theory tools)
+- **Oja's rule** Hebbian weight updates (neural plasticity tools)
+- **Arc-consistency constraint propagation** (constraint satisfaction tools)
+- **Gricean maxims** (quantity, quality, relevance, manner) for pragmatics tools
+
+### Source Code Locations
+
+| Directory | Content | Count |
+|-----------|---------|-------|
+| `agents/hephaestus/forge/` | Original forge-generated tools (v1) | 268 files |
+| `agents/hephaestus/forge_v2/` | CAITL-improved tools (v2) | 50 files |
+| `agents/hephaestus/src/novelty_scorer.py` | Novelty/complexity scoring script | 1 file |
+
+The v2 tools are a separate population — they do not replace the originals. Both libraries are available as seed substrates for Apollo and as evaluators for the RLVF fitness function.
 
 ---
 

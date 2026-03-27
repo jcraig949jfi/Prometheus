@@ -42,6 +42,13 @@ ALETHEIA_DATA = PROMETHEUS_ROOT / "agents" / "aletheia" / "data"
 METIS_BRIEFS = PROMETHEUS_ROOT / "agents" / "metis" / "briefs"
 CLYMENE_REPORTS = PROMETHEUS_ROOT / "agents" / "clymene" / "reports"
 
+# Forge pipeline paths
+HEPH_LEDGER = PROMETHEUS_ROOT / "agents" / "hephaestus" / "ledger.jsonl"
+HEPH_FORGE_DIR = PROMETHEUS_ROOT / "agents" / "hephaestus" / "forge"
+NEMESIS_GRID = PROMETHEUS_ROOT / "agents" / "nemesis" / "grid" / "grid.json"
+NEMESIS_REPORTS = PROMETHEUS_ROOT / "agents" / "nemesis" / "reports"
+COEUS_GRAPH = PROMETHEUS_ROOT / "agents" / "coeus" / "graphs" / "concept_scores.json"
+
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
@@ -116,11 +123,30 @@ def save_default_config() -> None:
 # ---------------------------------------------------------------------------
 
 def _content_hash(text: str) -> str:
-    """SHA-256 hash of content, ignoring timestamps and whitespace variance."""
-    # Normalize: strip lines, collapse whitespace, remove time-specific tokens
+    """SHA-256 hash of content, ignoring timestamps, dates, and volatile stats.
+
+    The goal is to make the hash change ONLY when the actual findings change,
+    not when scan counts, timestamps, or formatting differ between cycles.
+    """
     import re
-    normalized = re.sub(r"\d{2}:\d{2}(:\d{2})?", "", text)  # strip HH:MM(:SS)
+    normalized = text
+    # Strip timestamps: HH:MM, HH:MM:SS, ISO datetimes
+    normalized = re.sub(r"\d{4}-\d{2}-\d{2}[T ]\d{2}:\d{2}(:\d{2})?(\.\d+)?Z?", "", normalized)
+    normalized = re.sub(r"\d{2}:\d{2}(:\d{2})?", "", normalized)
+    # Strip dates: YYYY-MM-DD
+    normalized = re.sub(r"\d{4}-\d{2}-\d{2}", "", normalized)
+    # Strip Hermes compile line
     normalized = re.sub(r"Compiled by Hermes at .*", "", normalized)
+    # Strip scan/cycle statistics that change every run
+    normalized = re.sub(r"Scanned \d+ (?:papers|repos|items|results)", "", normalized)
+    normalized = re.sub(r"\d+ new,\s*\d+ known", "", normalized)
+    normalized = re.sub(r"Total:?\s*\d+", "", normalized)
+    normalized = re.sub(r"Rate limit.*", "", normalized)
+    # Strip forge pipeline stats that change continuously (counts, rates)
+    normalized = re.sub(r"Forge rate:?\s*[\d.]+%", "", normalized)
+    normalized = re.sub(r"\d+ forged,\s*\d+ scrapped", "", normalized)
+    normalized = re.sub(r"Grid:?\s*\d+/\d+", "", normalized)
+    # Collapse whitespace
     normalized = re.sub(r"\s+", " ", normalized).strip()
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
@@ -163,6 +189,109 @@ def diff_sections(sections: dict, sent_state: dict) -> dict:
 # ---------------------------------------------------------------------------
 # Digest collection
 # ---------------------------------------------------------------------------
+
+def _collect_forge_summary() -> str | None:
+    """Build a short forge pipeline summary from live data.
+
+    Only reports novel findings — new forges since last email, top performers,
+    Nemesis grid status. Returns None if the pipeline hasn't produced anything.
+    """
+    lines = []
+
+    # Hephaestus ledger stats
+    if HEPH_LEDGER.exists():
+        try:
+            with open(HEPH_LEDGER, encoding="utf-8") as f:
+                entries = [json.loads(l) for l in f]
+            forged = [e for e in entries if e.get("status") == "forged"]
+            scrapped = [e for e in entries if e.get("status") == "scrap"]
+            total = len(entries)
+            rate = (len(forged) / total * 100) if total else 0
+
+            lines.append("## Forge Pipeline Status")
+            lines.append("")
+            lines.append(f"- **{len(forged)} tools forged** / {total} attempts ({rate:.1f}% forge rate)")
+            lines.append(f"- {len(scrapped)} scrapped")
+
+            # Top 5 by accuracy
+            top = sorted(forged, key=lambda x: x.get("accuracy", 0), reverse=True)[:5]
+            if top:
+                lines.append("")
+                lines.append("### Top Performers")
+                lines.append("")
+                lines.append("| Tool | Accuracy | Calibration | Margin over NCD |")
+                lines.append("|------|----------|-------------|-----------------|")
+                for t in top:
+                    name = t.get("key", "?")
+                    acc = t.get("accuracy", 0) * 100
+                    cal = t.get("calibration", 0) * 100
+                    m_acc = t.get("margin_accuracy", 0) * 100
+                    m_cal = t.get("margin_calibration", 0) * 100
+                    lines.append(f"| {name} | {acc:.0f}% | {cal:.0f}% | +{m_acc:.0f}% / +{m_cal:.0f}% |")
+
+            # Recent forges (last 24h)
+            from datetime import timedelta
+            now = datetime.now(timezone.utc)
+            cutoff = (now - timedelta(hours=24)).isoformat()
+            recent = [e for e in forged if e.get("timestamp", "") > cutoff]
+            if recent:
+                lines.append("")
+                lines.append(f"### New in last 24h: {len(recent)} tools forged")
+                lines.append("")
+                for r in sorted(recent, key=lambda x: x.get("accuracy", 0), reverse=True)[:5]:
+                    name = r.get("key", "?")
+                    acc = r.get("accuracy", 0) * 100
+                    lines.append(f"- {name} ({acc:.0f}% acc)")
+
+        except Exception as e:
+            log.warning(f"Could not read Hephaestus ledger: {e}")
+
+    # Nemesis grid status
+    if NEMESIS_GRID.exists():
+        try:
+            grid = json.loads(NEMESIS_GRID.read_text(encoding="utf-8"))
+            filled = grid.get("filled_cells", 0)
+            total_cells = grid.get("total_cells", 100)
+            lines.append("")
+            lines.append(f"### Nemesis Adversarial Grid: {filled}/{total_cells} cells")
+        except Exception as e:
+            log.warning(f"Could not read Nemesis grid: {e}")
+
+    # Latest Nemesis report (just the summary section)
+    if NEMESIS_REPORTS.exists():
+        try:
+            reports = sorted(NEMESIS_REPORTS.glob("nemesis_report_*.md"), reverse=True)
+            if reports:
+                report_text = reports[0].read_text(encoding="utf-8")
+                # Extract just the Goodhart gap table if present
+                if "Goodhart" in report_text or "goodhart" in report_text:
+                    lines.append("")
+                    lines.append("*Nemesis: Goodhart signals detected — see full report*")
+        except Exception as e:
+            log.warning(f"Could not read Nemesis reports: {e}")
+
+    # Coeus top drivers
+    if COEUS_GRAPH.exists():
+        try:
+            scores = json.loads(COEUS_GRAPH.read_text(encoding="utf-8"))
+            influences = scores.get("concept_influence", {})
+            top_drivers = sorted(
+                ((k, v.get("forge_effect", 0)) for k, v in influences.items()),
+                key=lambda x: x[1], reverse=True
+            )[:5]
+            if top_drivers:
+                lines.append("")
+                lines.append("### Coeus Top Forge Drivers")
+                lines.append("")
+                for name, effect in top_drivers:
+                    lines.append(f"- {name}: +{effect:.3f}")
+        except Exception as e:
+            log.warning(f"Could not read Coeus scores: {e}")
+
+    if not lines:
+        return None
+    return "\n".join(lines)
+
 
 def find_todays_file(directory: Path, pattern: str) -> Path | None:
     """Find a file matching today's date in the given directory."""
@@ -212,6 +341,14 @@ def collect_digest() -> dict:
         log.info(f"Collected Clymene report: {hoard.name}")
     else:
         log.info("No Clymene report for today (cooldown or not run)")
+
+    # Forge pipeline summary
+    forge_summary = _collect_forge_summary()
+    if forge_summary:
+        sections["forge_pipeline"] = forge_summary
+        log.info("Collected forge pipeline summary")
+    else:
+        log.info("No forge pipeline data available")
 
     # Aletheia knowledge graph stats
     kg_path = ALETHEIA_DATA / "knowledge_graph.db"
@@ -269,6 +406,13 @@ def format_digest(sections: dict, new_only: dict = None) -> str:
         parts.append("---")
         parts.append("")
         parts.append(include["metis_brief"])
+        parts.append("")
+
+    # Forge pipeline (after Metis, before supporting detail)
+    if "forge_pipeline" in include:
+        parts.append("---")
+        parts.append("")
+        parts.append(include["forge_pipeline"])
         parts.append("")
 
     # Aletheia stats (only if changed)

@@ -218,6 +218,14 @@ def print_summary(graph: CausalGraph):
                 if isinstance(weight, (int, float)):
                     print(f"    {dim:35s} weight={weight:+.3f}")
 
+    # DAGMA divergences
+    if graph.dagma_divergences:
+        print(f"\n  *** DAGMA DIVERGENCES (non-linear contradicts linear): ***")
+        for d in graph.dagma_divergences:
+            print(f"    [{d['type']}] {d['message']}")
+    elif "+dagma" in graph.method:
+        print(f"\n  DAGMA: no divergences (linear and non-linear agree)")
+
     print(f"\n{'='*70}")
 
 

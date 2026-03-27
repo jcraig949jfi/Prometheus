@@ -521,6 +521,8 @@ def _trigger_coeus():
         finally:
             sys.path[:] = _saved_path
             sys.modules.pop("coeus", None)
+    except SystemExit as e:
+        logger.warning("Coeus rebuild called sys.exit(%s) — caught, continuing forge", e.code)
     except Exception as e:
         logger.warning("Coeus rebuild failed: %s (continuing forge)", e)
 
@@ -539,8 +541,30 @@ def _trigger_reports():
         finally:
             sys.argv = saved_argv
         logger.info("Reports rebuild complete")
+    except SystemExit as e:
+        logger.warning("Reports rebuild called sys.exit(%s) — caught, continuing forge", e.code)
     except Exception as e:
         logger.warning("Reports rebuild failed: %s (continuing forge)", e)
+
+
+def _trigger_novelty_scoring():
+    """Rescore all forge tools for novelty and complexity."""
+    try:
+        logger.info("Running novelty/complexity scoring on forge library...")
+        import importlib
+        saved_argv = sys.argv[:]
+        sys.argv = ["novelty_scorer.py", "--update-ledger", "--quiet"]
+        try:
+            ns_mod = importlib.import_module("novelty_scorer")
+            importlib.reload(ns_mod)
+            ns_mod.main()
+        finally:
+            sys.argv = saved_argv
+        logger.info("Novelty scoring complete — scores saved and ledger updated")
+    except SystemExit as e:
+        logger.warning("Novelty scorer called sys.exit(%s) — caught, continuing forge", e.code)
+    except Exception as e:
+        logger.warning("Novelty scoring failed: %s (continuing forge)", e)
 
 
 def _load_nous(args, run_dir: Path) -> tuple[list[dict], str]:
@@ -627,6 +651,11 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
         if (args.reports_interval > 0 and running_total % args.reports_interval == 0
                 and running_total > 0 and not shutdown_flag[0]):
             _trigger_reports()
+
+        # Periodic novelty scoring (same interval as reports)
+        if (args.reports_interval > 0 and running_total % args.reports_interval == 0
+                and running_total > 0 and not shutdown_flag[0]):
+            _trigger_novelty_scoring()
 
         # Rate limit
         if not shutdown_flag[0]:

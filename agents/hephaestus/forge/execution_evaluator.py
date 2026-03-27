@@ -75,11 +75,21 @@ class ReasoningTool:
         return 0.0, False
 
     def _check_all_but_n(self, prompt: str, candidate: str) -> tuple[float, bool]:
-        """'All but N die/left' -> answer is N."""
-        m = re.search(r"all\s+but\s+(\d+)", prompt.lower())
-        if m and re.search(r"how\s+many", prompt.lower()):
-            correct_n = m.group(1)
-            if correct_n in candidate:
+        """'All but N die/left' -> answer is N (the survivors, not total-N)."""
+        p = prompt.lower()
+        # Match "all but N" where N can be integer or decimal
+        m = re.search(r"all\s+but\s+([\d.]+)", p)
+        if m and re.search(r"how\s+many", p):
+            correct_val = float(m.group(1))
+            c_nums = self._extract_numbers(candidate)
+            if c_nums:
+                # Check if candidate matches the survivors (N), not total-N
+                if abs(c_nums[0] - correct_val) < 0.001:
+                    return 1.0, True
+                return -0.8, True
+            # String fallback — format the number to match candidate text
+            correct_str = m.group(1)
+            if correct_str in candidate:
                 return 1.0, True
             return -0.8, True
         return 0.0, False
@@ -102,14 +112,20 @@ class ReasoningTool:
         return 0.0, False
 
     def _check_coin_flip(self, prompt: str, candidate: str) -> tuple[float, bool]:
-        """Independent probability: past flips don't affect future."""
+        """Independent probability: past flips don't affect future.
+
+        Matches any prompt about coin flips followed by probability questions,
+        even when distractor text is injected between the setup and question.
+        """
         p = prompt.lower()
-        if re.search(r"coin.*flip.*(?:heads|tails).*(?:next|probability)", p):
+        # Core pattern: coin + flip/toss + heads/tails + some number of times
+        if re.search(r"coin.*(?:flip|toss).*(?:heads|tails).*\d+\s*times", p):
             c = candidate.lower()
+            # Check for gambler's fallacy answers first (they may also contain "50%")
+            if c.startswith("higher") or c.startswith("lower"):
+                return -1.0, True
             if "50%" in c or "50 %" in c or c.startswith("50"):
                 return 1.0, True
-            if "higher" in c or "lower" in c:
-                return -1.0, True
         return 0.0, False
 
     def _check_odd_even(self, prompt: str, candidate: str) -> tuple[float, bool]:

@@ -61,6 +61,7 @@ class CausalGraph:
         self.forge_rate_by_concept = {}  # concept -> forge success rate
         self.confounders = {}          # concept -> FCI confounder status
         self.interventional = {}       # concept -> {drop_probability, counterfactual}
+        self.dagma_divergences = []    # list of {concept, type, linear, nonlinear, message}
         self.n_observations = 0
         self.n_forged = 0
         self.method = "none"
@@ -75,6 +76,7 @@ class CausalGraph:
             "forge_rate_by_concept": self.forge_rate_by_concept,
             "confounders": self.confounders,
             "interventional": self.interventional,
+            "dagma_divergences": self.dagma_divergences,
             "n_observations": self.n_observations,
             "n_forged": self.n_forged,
             "method": self.method,
@@ -621,13 +623,55 @@ def build_causal_graph(nous_entries: list[dict], ledger: dict,
     # Enhanced: DAGMA non-linear (only with enough data)
     dagma_result = _dagma_analysis(X, feature_names, concept_names)
     if dagma_result:
-        # Merge non-linear effects into concept_influence
-        for concept, weight in dagma_result.items():
+        divergences = []
+        for concept, nl_weight in dagma_result.items():
             if concept in graph.concept_influence:
-                graph.concept_influence[concept]["nonlinear_effect"] = weight
+                linear_weight = graph.concept_influence[concept].get("forge_effect", 0)
+                graph.concept_influence[concept]["nonlinear_effect"] = nl_weight
+
+                # Divergence: linear and non-linear disagree on direction or magnitude
+                if linear_weight != 0 and nl_weight != 0:
+                    same_sign = (linear_weight > 0) == (nl_weight > 0)
+                    ratio = abs(nl_weight / linear_weight) if linear_weight != 0 else float('inf')
+                    if not same_sign:
+                        divergences.append({
+                            "concept": concept,
+                            "type": "sign_flip",
+                            "linear": round(linear_weight, 4),
+                            "nonlinear": round(nl_weight, 4),
+                            "message": f"{concept}: linear says {'positive' if linear_weight > 0 else 'negative'}, "
+                                       f"DAGMA says {'positive' if nl_weight > 0 else 'negative'}"
+                        })
+                    elif ratio > 3.0 or ratio < 0.33:
+                        divergences.append({
+                            "concept": concept,
+                            "type": "magnitude_shift",
+                            "linear": round(linear_weight, 4),
+                            "nonlinear": round(nl_weight, 4),
+                            "ratio": round(ratio, 2),
+                            "message": f"{concept}: DAGMA effect is {ratio:.1f}x the linear estimate"
+                        })
             else:
-                graph.concept_influence[concept] = {"nonlinear_effect": weight}
+                graph.concept_influence[concept] = {"nonlinear_effect": nl_weight}
+                if abs(nl_weight) > 0.2:
+                    divergences.append({
+                        "concept": concept,
+                        "type": "hidden_by_linear",
+                        "linear": 0,
+                        "nonlinear": round(nl_weight, 4),
+                        "message": f"{concept}: invisible to linear model, DAGMA finds effect={nl_weight:.3f}"
+                    })
+
+        graph.dagma_divergences = divergences
         graph.method += "+dagma"
+
+        if divergences:
+            log.warning("DAGMA DIVERGENCE: %d concepts where non-linear contradicts linear:",
+                        len(divergences))
+            for d in divergences:
+                log.warning("  %s", d["message"])
+        else:
+            log.info("DAGMA: no divergences from linear model (effects consistent)")
 
     # Interventional estimates (counterfactual probabilities)
     interventional = _compute_interventional(X, feature_names, concept_names)
