@@ -190,6 +190,54 @@ def diff_sections(sections: dict, sent_state: dict) -> dict:
 # Digest collection
 # ---------------------------------------------------------------------------
 
+def _collect_audit_summary() -> str | None:
+    """Run the Auditor agent and collect pipeline health summary."""
+    auditor_script = PROMETHEUS_ROOT / "agents" / "auditor" / "src" / "auditor.py"
+    if not auditor_script.exists():
+        return None
+    try:
+        import subprocess
+        result = subprocess.run(
+            [sys.executable, str(auditor_script), "--json"],
+            capture_output=True, text=True, timeout=30,
+            cwd=str(auditor_script.parent),
+        )
+        if result.returncode != 0:
+            return None
+        report = json.loads(result.stdout)
+
+        lines = [
+            "## Pipeline Health",
+            "",
+            f"**Status: {report.get('overall_status', 'unknown').upper()}**",
+            "",
+        ]
+
+        # Agent status table
+        agents = report.get("agents", {})
+        if agents:
+            lines.append("| Agent | Status | Last Activity |")
+            lines.append("|-------|--------|---------------|")
+            for name, a in agents.items():
+                last = (a.get("last_activity") or "—")[:19]
+                lines.append(f"| {a.get('display', name)} | {a['status']} | {last} |")
+            lines.append("")
+
+        # Alerts
+        alerts = report.get("alerts", [])
+        if alerts:
+            lines.append("### Alerts")
+            lines.append("")
+            for alert in alerts[:5]:
+                lines.append(f"- {alert}")
+            lines.append("")
+
+        return "\n".join(lines)
+    except Exception as e:
+        log.warning(f"Auditor failed: {e}")
+        return None
+
+
 def _collect_forge_summary() -> str | None:
     """Build a short forge pipeline summary from live data.
 
@@ -342,6 +390,14 @@ def collect_digest() -> dict:
     else:
         log.info("No Clymene report for today (cooldown or not run)")
 
+    # Pipeline health audit (Auditor agent)
+    audit_summary = _collect_audit_summary()
+    if audit_summary:
+        sections["pipeline_audit"] = audit_summary
+        log.info("Collected pipeline health audit")
+    else:
+        log.info("No audit data available")
+
     # Forge pipeline summary
     forge_summary = _collect_forge_summary()
     if forge_summary:
@@ -372,6 +428,34 @@ def collect_digest() -> dict:
                 log.info(f"Collected Aletheia stats: {counts}")
         except Exception as e:
             log.warning(f"Could not read Aletheia DB: {e}")
+
+    # Constitutional substrate health (Law 1 enforcement)
+    try:
+        _ingest_path = str(Path(__file__).resolve().parent.parent.parent / "aletheia" / "src")
+        if _ingest_path not in sys.path:
+            sys.path.insert(0, _ingest_path)
+        from ingest import get_substrate_health
+        health = get_substrate_health(hours=24)
+        total_24h = health["entities_24h"] + health["relationships_24h"] + health["gaps_24h"]
+        status = "HEALTHY" if total_24h >= 5 else "STARVATION"
+        lines = [
+            "## Constitutional Substrate Health", "",
+            f"**Status: {status}** (last 24h)",
+            f"- Entities added: {health['entities_24h']}",
+            f"- Relationships added: {health['relationships_24h']}",
+            f"- Gaps identified: {health['gaps_24h']}",
+            f"- **Total growth: {total_24h}** (minimum: 5)", "",
+            f"Substrate totals: {health['total_entities']} entities, "
+            f"{health['total_relationships']} relationships, "
+            f"{health['open_gaps']} open gaps",
+        ]
+        if status == "STARVATION":
+            lines.append("")
+            lines.append("**LAW 1 VIOLATION: The substrate is the product. Run intelligence pipeline before GPU experiments.**")
+        sections["substrate_health"] = "\n".join(lines)
+        log.info(f"Substrate health: {status} ({total_24h} additions in 24h)")
+    except Exception as e:
+        log.warning(f"Could not check substrate health (non-fatal): {e}")
 
     return sections
 
@@ -408,7 +492,14 @@ def format_digest(sections: dict, new_only: dict = None) -> str:
         parts.append(include["metis_brief"])
         parts.append("")
 
-    # Forge pipeline (after Metis, before supporting detail)
+    # Pipeline health audit (first after Metis — James sees health status immediately)
+    if "pipeline_audit" in include:
+        parts.append("---")
+        parts.append("")
+        parts.append(include["pipeline_audit"])
+        parts.append("")
+
+    # Forge pipeline (after audit, before supporting detail)
     if "forge_pipeline" in include:
         parts.append("---")
         parts.append("")

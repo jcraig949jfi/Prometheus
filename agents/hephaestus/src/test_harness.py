@@ -257,17 +257,39 @@ def run_dynamic_battery(tool, seed: int | None = None) -> dict | None:
         return None
 
 
+def _load_expanded_battery(seed=42):
+    """Try to load the 58-category expanded battery. Falls back to static 15."""
+    try:
+        from trap_generator_extended import generate_full_battery
+        battery = generate_full_battery(n_per_category=2, seed=seed)
+        if battery and len(set(t["category"] for t in battery)) > 20:
+            return battery
+    except ImportError:
+        pass
+    return None
+
+
 def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
     """Run all traps against a tool. Compare against NCD baseline.
 
-    A tool passes if it strictly beats NCD on accuracy OR calibration
-    (and doesn't lose on either). Tying both = fail.
+    Uses the 58-category expanded battery if available, otherwise falls
+    back to the static 15-trap battery. A tool passes if it strictly
+    beats NCD on accuracy OR calibration (and doesn't lose on either).
     """
+    # Try expanded battery first (58 categories)
+    expanded = _load_expanded_battery()
+    if expanded:
+        traps = expanded
+        log.debug("Using 58-category expanded battery (%d traps)", len(traps))
+    else:
+        traps = TRAPS
+        log.debug("Using static 15-trap battery")
+
     # Run the tool
-    tool_results = _run_battery(tool, TRAPS)
+    tool_results = _run_battery(tool, traps)
 
     # Run NCD baseline
-    ncd_results = _run_battery(_ncd_baseline, TRAPS)
+    ncd_results = _run_battery(_ncd_baseline, traps)
 
     tool_acc = tool_results["accuracy"]
     tool_cal = tool_results["calibration"]
@@ -309,12 +331,23 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
         except Exception:
             log.debug("Gate 6 (Nemesis adversarial) unavailable, skipping")
 
+    # Tier A/B breakdown (if traps have tier tags)
+    tier_a_results = [tr for tr, trap in zip(tool_results["trap_results"], traps)
+                      if trap.get("tier") == "A"]
+    tier_b_results = [tr for tr, trap in zip(tool_results["trap_results"], traps)
+                      if trap.get("tier") == "B"]
+    tier_a_acc = (sum(1 for t in tier_a_results if t.get("is_correct")) / len(tier_a_results)
+                  if tier_a_results else None)
+    tier_b_acc = (sum(1 for t in tier_b_results if t.get("is_correct")) / len(tier_b_results)
+                  if tier_b_results else None)
+
     result = {
         "accuracy": tool_acc,
         "calibration": tool_cal,
         "correct_count": tool_results["correct_count"],
         "calibrated_count": tool_results["calibrated_count"],
         "n_traps": tool_results["n_traps"],
+        "n_categories": len(set(t.get("category", "") for t in traps)),
         "passed": passed,
         "trap_results": tool_results["trap_results"],
         "ncd_accuracy": ncd_acc,
@@ -322,6 +355,10 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
         "margin_accuracy": round(tool_acc - ncd_acc, 4),
         "margin_calibration": round(tool_cal - ncd_cal, 4),
     }
+    if tier_a_acc is not None:
+        result["tier_a_accuracy"] = round(tier_a_acc, 4)
+    if tier_b_acc is not None:
+        result["tier_b_accuracy"] = round(tier_b_acc, 4)
     if adversarial_acc is not None:
         result["adversarial_accuracy"] = adversarial_acc
         result["adversarial_n"] = adversarial_n
