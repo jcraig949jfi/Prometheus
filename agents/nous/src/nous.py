@@ -149,6 +149,38 @@ def _load_coeus_weights(concepts: list[dict]) -> list[float]:
         return [1.0] * len(concepts)
 
 
+def _load_priority_triples(concepts: list[dict]) -> list[tuple[int, int, int]]:
+    """Load gap-targeted priority triples from agents/nous/data/priority_triples.json.
+
+    These are concept triples targeting specific coverage gaps identified by
+    the coverage map analysis. They get injected at the front of the queue.
+    """
+    priority_path = Path(__file__).resolve().parent.parent / "data" / "priority_triples.json"
+    if not priority_path.exists():
+        return []
+
+    try:
+        data = json.loads(priority_path.read_text(encoding="utf-8"))
+        name_to_idx = {c["name"]: i for i, c in enumerate(concepts)}
+
+        triples = []
+        for entry in data:
+            names = entry.get("concepts", [])
+            indices = [name_to_idx.get(n) for n in names]
+            if all(i is not None for i in indices) and len(indices) == 3:
+                triple = tuple(sorted(indices))
+                triples.append(triple)
+                log.info("Priority triple: %s — %s",
+                         " + ".join(names), entry.get("reason", ""))
+
+        if triples:
+            log.info("Loaded %d priority triples from %s", len(triples), priority_path)
+        return triples
+    except Exception as e:
+        log.warning("Failed to load priority triples: %s", e)
+        return []
+
+
 def generate_combinations(
     concepts: list[dict],
     n_combos: int,
@@ -159,6 +191,7 @@ def generate_combinations(
     """
     Generate random concept triple indices, biased toward cross-field combinations.
 
+    Priority triples from data/priority_triples.json are injected first.
     cross_field_bias: probability of requiring at least 2 different fields per triple.
     use_coeus_weights: if True, bias sampling toward concepts with positive forge effects.
     """
@@ -168,6 +201,12 @@ def generate_combinations(
     n = len(concepts)
     all_indices = list(range(n))
     combos = set()
+
+    # Inject priority triples (gap-targeted) at the front
+    priority = _load_priority_triples(concepts)
+    for triple in priority:
+        if len(set(triple)) == 3:
+            combos.add(triple)
 
     # Load Coeus weights for forge-aware sampling
     weights = _load_coeus_weights(concepts) if use_coeus_weights else [1.0] * n
