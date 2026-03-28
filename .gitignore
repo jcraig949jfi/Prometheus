@@ -65,6 +65,24 @@ archive/
 
 # Databases (generated, local)
 *.db
+*.duckdb
+*.duckdb.wal
+
+# Noesis daemon data (generated, large)
+organisms/cracks_live.jsonl
+organisms/noesis_state.duckdb
+organisms/noesis_tournament_report.json
+organisms/noesis_tournament_summary.md
+organisms/tensor_frontier.json
+organisms/tensor_cache/
+organisms/embedded_library.zarr/
+organisms/mass_embedder_checkpoint.json
+organisms/_bench.kuzu/
+organisms/framing_results/
+organisms/dream_results/
+organisms/tensor_vs_random_results/
+organisms/oeis_data/
+organisms/generated/__pycache__/
 
 # Internal stream files
 docs/internal/claudecodestream_*

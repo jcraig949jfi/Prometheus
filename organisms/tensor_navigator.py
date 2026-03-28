@@ -41,6 +41,7 @@ from organisms.concept_tensor import (
     get_feature_matrix,
     compute_triple_tensor_fast,
     compute_pairwise_interactions,
+    compute_type_compatibility_matrix,
     N_FEATURES,
     FEATURE_NAMES,
 )
@@ -75,10 +76,15 @@ class TensorTrainNavigator:
         self._build_time = 0.0
         self._compression_ratio = 0.0
 
-    def build(self) -> "TensorTrainNavigator":
+    def build(self, use_type_compat: bool = True) -> "TensorTrainNavigator":
         """
         Build the full pipeline: encode -> interact -> compress.
         Uses only hand-seeded mathematical features (no Coeus/Nous data).
+
+        If use_type_compat=True (default), bakes type compatibility awareness
+        into the tensor scores: pairs with organisms but zero compatible
+        operations get zeroed, pairs with many compatible ops get boosted.
+
         Returns self for chaining.
         """
         t0 = time.perf_counter()
@@ -89,11 +95,20 @@ class TensorTrainNavigator:
         self.concept_names = get_concept_names()
         self.n_concepts = len(self.concept_names)
 
-        # Step 2: Compute pairwise interactions
-        self.pairwise = compute_pairwise_interactions(matrix)
+        # Step 1.5: Type compatibility matrix (from actual organisms)
+        type_compat = None
+        type_boost = None
+        if use_type_compat:
+            type_compat, _ = compute_type_compatibility_matrix()
+            n_compat_pairs = int(np.sum((type_compat + type_compat.T) > 0) / 2)
+            self._n_compat_pairs = n_compat_pairs
 
-        # Step 3: Compute full triple tensor
-        self.full_tensor = compute_triple_tensor_fast(matrix)
+        # Step 2: Compute pairwise interactions (type-aware if available)
+        self.pairwise = compute_pairwise_interactions(matrix, type_compat=type_compat)
+        type_boost = self.pairwise.get("type_boost")
+
+        # Step 3: Compute full triple tensor (type-aware if available)
+        self.full_tensor = compute_triple_tensor_fast(matrix, type_boost=type_boost)
 
         # Step 4: Tensor train decomposition
         tt_rank = [1, self.rank, self.rank, 1]

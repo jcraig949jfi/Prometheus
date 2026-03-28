@@ -276,15 +276,49 @@ class AnalysisBase:
         self.output_dir = Path(output_dir) if output_dir else Path(".")
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        # Load model
+        # Load model — supports both HF hub names and local fine-tuned checkpoints
         log.info(f"Loading {model_name}...")
-        self.model = HookedTransformer.from_pretrained(
-            model_name,
-            center_writing_weights=False,
-            center_unembed=False,
-            fold_ln=False,
-            device=device,
-        )
+        local_path = Path(model_name)
+        if local_path.exists() and (local_path / "config.json").exists():
+            # Local fine-tuned model: load HF model first, pass to TransformerLens
+            from transformers import AutoModelForCausalLM, AutoTokenizer
+            log.info(f"  Detected local model at {local_path}")
+            hf_model = AutoModelForCausalLM.from_pretrained(
+                str(local_path), torch_dtype="auto"
+            )
+            # Determine the original architecture name for TransformerLens config
+            hf_config = hf_model.config
+            arch_name = getattr(hf_config, '_name_or_path', '') or model_name
+            # If the saved config still has the original model name, use it
+            if not arch_name or arch_name == str(local_path):
+                # Fallback: try to infer from model type
+                model_type = getattr(hf_config, 'model_type', '')
+                if 'qwen2' in model_type.lower():
+                    # Guess based on hidden_size
+                    d = hf_config.hidden_size
+                    if d <= 896:
+                        arch_name = "Qwen/Qwen2.5-0.5B-Instruct"
+                    elif d <= 1536:
+                        arch_name = "Qwen/Qwen2.5-1.5B-Instruct"
+                    else:
+                        arch_name = "Qwen/Qwen2.5-3B-Instruct"
+                    log.info(f"  Inferred architecture: {arch_name} (d_model={d})")
+            self.model = HookedTransformer.from_pretrained(
+                arch_name,
+                hf_model=hf_model,
+                center_writing_weights=False,
+                center_unembed=False,
+                fold_ln=False,
+                device=device,
+            )
+        else:
+            self.model = HookedTransformer.from_pretrained(
+                model_name,
+                center_writing_weights=False,
+                center_unembed=False,
+                fold_ln=False,
+                device=device,
+            )
         self.model.eval()
         self.model_name = model_name
         self.n_layers = self.model.cfg.n_layers

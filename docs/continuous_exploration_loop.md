@@ -208,37 +208,74 @@ The unique angle for research: nobody else treats reasoning algorithms as evolva
 
 ---
 
-## The State of Play (2026-03-27)
+## Experimental Results (2026-03-28)
 
-**What exists:**
+### The Granularity Discovery: Concept vs Operation Tensors
+
+The first round of experiments revealed that **granularity determines whether the tensor shortcut works at all**.
+
+**Concept-level tensor (95 abstract concepts × 30 features):** Scores conceptual affinity but is blind to operational compatibility. Recommends pairs that crash on type mismatches. Random sampling outperformed tensor guidance: 12% execution rate (random) vs 4% (tensor-guided). The tensor was steering toward conceptually interesting but operationally impossible chains.
+
+**Operation-level tensor (81 concrete functions × typed I/O):** Encodes both "is this pairing interesting?" and "can these operations physically connect?" in a single score. **37% of operation-tensor-guided chains execute successfully versus 25% for random-with-type-filtering.** Mean quality score is 46% higher. The tensor finds chains that are both executable and conceptually novel.
+
+The concept tensor remains useful for strategic navigation ("which domains should we explore?"). The operation tensor handles tactical chain construction ("which specific operations should we connect?"). Two layers of tensor, two levels of search.
+
+### TT Reconstruction Error (Healthy)
+
+At rank 10 with 95 concepts: 8.94% NRMSE, error roughly uniform across concepts. Top-100 triples are well-represented (error not concentrated in high-scoring regions). The Council concern about TT compressing away the frontier does not appear to be happening at this scale. Error hotspot concepts: Measure Theory, Fourier Transforms, Prime Number Theory — concepts with unusual feature profiles. These are the ones to watch as concept count grows.
+
+### Decontamination
+
+The tensor navigator was purged of Coeus/Nous data that had contaminated it:
+- Removed `enrich_with_coeus()` (was blending Nous LLM speculation into feature vectors)
+- Removed enrichments directory scan (was marking Nous hypotheses as "explored" triples)
+- Exploration map now populated only by real composition outcomes
+
+### Known Challenges and Honest Limitations
+
+**The hand-seeded features are educated guesses.** If "boundary_sensitivity" is scored wrong for Immune Systems, every interaction involving that concept carries the error forward. The dream state is supposed to correct this through feature drift, but that correction requires enough composition history to overcome the initial seeding. There's a bootstrapping period where the tensor is confidently wrong.
+
+**The type system is coarse.** "dict → dict" counts as compatible even when the dict schemas are completely different. This inflates execution rates without guaranteeing meaningful output. Richer semantic types (from the organism base class: `probability_distribution`, `adjacency_matrix`, etc.) should replace Python types in the operation tensor.
+
+**Not all successful chains are equally interesting.** The operation tensor currently treats all successful chains as equally valuable. A chain that produces a novel mathematical structure is worth far more than one that produces a trivially transformed scalar. The scoring function needs a quality dimension beyond binary success.
+
+**The circularity problem.** The tensor's value depends on having enough organisms to make random search intractable, but building those organisms requires the cross-domain insight the tensor is supposed to provide. At 18 organisms (81 operations, 628 scoreable chains), the search space is small enough that random sampling covers meaningful ground. The tensor shortcut transitions from "promising on benchmarks" to "essential for exploration" only at 50+ organisms with hundreds of operations. The bridge: the 2,970 library functions from Eos scanning are mechanically wrappable — each becomes an operation with typed I/O, no cross-domain insight required.
+
+**Library functions ≠ reasoning organisms.** The 2,970 scipy/numpy functions have clean type signatures and deterministic behavior. The forge reasoning organisms have probabilistic outputs and context-dependent performance. How these two populations interact in the tensor — whether they compose productively or whether they're effectively two separate species in the same embedding space — is an open question that only becomes visible at higher density.
+
+**The self-correction convergence question.** The dream state corrects feature errors through Hebbian learning from composition outcomes. But there's a window where the tensor navigates confidently toward the wrong frontier. Does self-correction converge fast enough to matter before the system wastes its exploration budget on tensor-guided dead ends that random sampling would have avoided?
+
+---
+
+## The State of Play (2026-03-28, updated)
+
+**What exists and works:**
 - 18 mathematical organisms with 81 operations, all tested
 - Universal embedder producing 240D behavioral fingerprints
 - 2,236 of 2,970 library functions embedded (84% complete)
 - Poros explorer with chain discovery, execution, scoring
 - 5 explorer modes (frontier, bridge, efficiency, novelty, anomaly)
-- Concept tensor with 95 concepts encoded as 30D feature vectors
+- Concept tensor (95 concepts × 30D) with TT compression — strategic navigation
+- **Operation tensor (81 operations × typed features) — tactical chain construction, 37% execution rate, 46% higher quality than random**
 - Zarr + DuckDB storage benchmarked and operational
-- TensorLy installed; THOR cloned to vault
-
-**What's being built now (other Claude Code session):**
-- `concept_tensor.py` — full interaction tensor for 95 concepts
-- `tensor_navigator.py` — TT compression + navigation + top-K extraction
-- Wiring into the existing explorer as a new mode
-- Incorporating Coeus forge success data into feature encoding
+- TT reconstruction error diagnostics (8.94% NRMSE at rank 10, uniform error)
+- Framing experiment run (5 perspectives, agreement/disagreement measured)
+- Dream state experiment run (4 learning rates, collapse/expansion measured)
 
 **What's not yet built:**
 - The continuous loop itself (daemon process that runs forever)
 - The inner/outer hypothesis testing layers (Layer 4)
-- Reasoning/metacognition organisms (Layer 3)
+- Reasoning/metacognition organisms (Layer 3) — the forge survivors should become these
 - The LLM interpretation hook (outside the loop)
 - Checkpoint/resume for crash recovery
-- The feedback mechanism from composition outcomes to feature learning
+- Richer semantic type system for operation tensor
+- Quality scoring beyond binary success/failure
 
 **What's not yet fully formulated:**
 - The precise fitness function for "did this accelerate the search?"
-- How composition outcomes update feature vectors (Approach A vs B vs C)
+- How composition outcomes update feature vectors (dream state showed stability but needs more data)
 - The outer loop's meta-hypothesis scoring
-- When and how the system decides to invent new organisms vs compose existing ones
+- How library functions and reasoning organisms interact in the same tensor space
 
 ---
 

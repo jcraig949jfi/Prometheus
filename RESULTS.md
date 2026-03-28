@@ -114,17 +114,71 @@ Additionally, the evolved model shows an over-correction bias on self-correction
 
 ---
 
+## Basin Geometry — The Shape of Suppression
+
+*Added: 2026-03-28*
+
+We mapped the basin geometry of the ejection circuit at 1.5B by binary-searching for the minimum steering vector magnitude (ε) that flips each trap, across 100 random directions per layer.
+
+**Basin escape rates across the ejection circuit (1.5B, 100 directions, ε≤20):**
+
+| Layer | Crossing Rate | Basin Shape |
+|-------|--------------|-------------|
+| L22 | 5.3% | ANISOTROPIC — some channels exist |
+| L23 | 4.8% | DEEP — almost impenetrable |
+| L24 | 3.6% | DEEP — almost impenetrable |
+
+**Basins deepen with layer depth.** Only 5 of 16 trap families are ever penetrable. 11 traps are completely impenetrable at any layer with random directions. The Overtake family shows RIDGED geometry — specific low-ε channels where CMA-ES can find entry points.
+
+## Cross-Scale Evidence — Ejection Strengthens with Size
+
+*Added: 2026-03-28*
+
+We evolved steering vectors on Qwen-0.5B (d_model=896, L18) to compare with 1.5B results.
+
+| Metric | Qwen-0.5B (L18) | Qwen-1.5B (L19 best) |
+|--------|-----------------|---------------------|
+| Flipped traps | **10** | 5 |
+| Broken traps | 1 | 0 |
+| Impenetrable at 1.5B but flipped at 0.5B | 5 (Density Illusion, Elevator Floor, Handshakes, Staircase Steps, Cutting Rope) | — |
+
+**The ejection circuit is weaker at smaller scale.** Traps that no direction at any magnitude can touch at 1.5B are flipped by a single evolved vector at 0.5B. The suppression mechanism exists at 0.5B but is fragile — by 1.5B it's robust. This is quantitative evidence that the ejection circuit strengthens with model scale.
+
+**Implication:** LoRA-based steering may hit a fundamental wall at larger scales. The number of redundant suppression pathways likely grows with parameter count, making rank-limited interventions insufficient.
+
+## Layer Sweep — Full Ejection Circuit Map (1.5B)
+
+*Added: 2026-03-28*
+
+Athena autonomous session ran CMA-ES evolution at every layer from L19-L26 (300 gen each).
+
+| Layer | Flipped | Broken | Trap Families |
+|-------|---------|--------|---------------|
+| L19 | 5 | 0 | Spatial Inversion, Overtake ×3, Siblings |
+| L20 | 4 | 0 | Overtake ×3, Siblings |
+| L21 | — | — | (500 gen, reference run) |
+| L22 (gate+v) | 8 | 3 | Diverse (8 families) |
+| L24 | 3 | 0 | Overtake ×3 |
+| L25 | 3 | 0 | Overtake ×3 |
+| L26 | 3 | 0 | Overtake ×3 |
+
+**L19 is the best zero-break steering layer.** L22 flips the most traps (8) but breaks 3. The ejection circuit spans L19-L26 with per-layer specialization.
+
+---
+
 ## The Forge Pipeline
 
 Alongside the core ejection work, we built an automated pipeline for discovering computable reasoning criteria:
 
-- **Nous** mines cross-domain concept combinations (89 concepts across 18 fields)
+- **Nous** mines cross-domain concept combinations (95 concepts across 18 fields)
 - **Coeus** learns which concepts causally predict successful tool creation
-- **Hephaestus** forges concepts into Python reasoning tools and tests them against a 15-trap battery
+- **Hephaestus** forges concepts into Python reasoning tools and tests them against an 89-category battery
+- **Nemesis** adversarially stress-tests tools with metamorphic mutations
+- **CAITL** refines tools through iterative category-only feedback (5 versions, v1→v5)
 
-**Current numbers:** 1,561 combinations evaluated, 175+ forge attempts, 33+ tools surviving. Best tool (IBAI v2) achieves 67% accuracy on the trap battery using structural parsing, NCD compression distance, and active inference — no neural models, just numpy.
+**Current numbers (v5, 2026-03-28):** 344 tools scored on 89-category battery. 31 genuinely unique by behavioral fingerprint (91% redundancy). Tier A accuracy: 40.3%. Tier B accuracy: 78.1%. Tier B honesty: 0.993. Unseen generalization: 46.2%. CAITL trajectory: +167% max improvement across 5 versions, near-zero plateaus.
 
-These tools are designed to become fitness function terms in a future RLVF (Reinforcement Learning from Verification Feedback) loop, replacing human preference with computable reasoning criteria.
+These tools are designed to become fitness function terms in RLVF and as reasoning organisms in the Noesis tensor exploration engine.
 
 ---
 

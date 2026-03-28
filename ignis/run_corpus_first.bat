@@ -102,11 +102,11 @@ echo  Does reasoning training shallow the ejection profile?
 echo ============================================================================
 
 REM Check if fine-tuned model was saved
-if exist "results\corpus_first\stageB_finetune\ft_tmp" (
-    echo Found fine-tuned model at results\corpus_first\stageB_finetune\ft_tmp
+if exist "results\corpus_first\stageB_finetune\ft_model" (
+    echo Found fine-tuned model at results\corpus_first\stageB_finetune\ft_model
 
     python src\logit_lens_backward.py ^
-        --model results\corpus_first\stageB_finetune\ft_tmp ^
+        --model results\corpus_first\stageB_finetune\ft_model ^
         --device cuda ^
         --output-dir results\corpus_first\stageC_post_corpus ^
         --skip-preflight
@@ -116,7 +116,7 @@ if exist "results\corpus_first\stageB_finetune\ft_tmp" (
     )
 
     python src\eval_v2.py ^
-        --model results\corpus_first\stageB_finetune\ft_tmp ^
+        --model results\corpus_first\stageB_finetune\ft_model ^
         --device cuda ^
         --output-dir results\corpus_first\stageC_post_corpus ^
         --skip-logit-lens
@@ -144,9 +144,9 @@ echo  Evolving on fine-tuned model. Comparing to SR=0.417 on base model.
 echo ============================================================================
 
 REM Evolution at L23 on the fine-tuned seed
-if exist "results\corpus_first\stageB_finetune\ft_tmp" (
+if exist "results\corpus_first\stageB_finetune\ft_model" (
     python src\evolve_1_5b.py ^
-        --model results\corpus_first\stageB_finetune\ft_tmp ^
+        --model results\corpus_first\stageB_finetune\ft_model ^
         --device cuda ^
         --n-generations 500 ^
         --epsilon 3.0 ^
@@ -181,7 +181,7 @@ echo ===========================================================================
 
 if !SD_OK!==1 (
     python src\eval_v2.py ^
-        --model results\corpus_first\stageB_finetune\ft_tmp ^
+        --model results\corpus_first\stageB_finetune\ft_model ^
         --device cuda ^
         --genome results\corpus_first\stageD_evolve_L23\best_genome_1_5b.pt ^
         --output-dir results\corpus_first\stageE_final_eval ^

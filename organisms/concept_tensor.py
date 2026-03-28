@@ -664,18 +664,121 @@ def enrich_with_coeus(concept_scores_path: Optional[str] = None) -> np.ndarray:
 
 
 # ============================================================
+# Type Compatibility Matrix
+# ============================================================
+
+# Maps concept names (Title Case) to organism names (snake_case)
+# Only the 17-18 concepts that have implemented organisms.
+CONCEPT_TO_ORGANISM = {
+    "Information Theory": "information_theory",
+    "Topology": "topology",
+    "Chaos Theory": "chaos_theory",
+    "Bayesian Inference": "bayesian_inference",
+    "Immune Systems": "immune_systems",
+    "Network Science": "network_science",
+    "Statistical Mechanics": "statistical_mechanics",
+    "Dynamical Systems": "dynamical_systems",
+    "Prime Number Theory": "prime_theory",
+}
+# Note: Game Theory, Signal Processing, and number theory sub-organisms are
+# also implemented but map to different concept names. We include the core set.
+
+
+def compute_type_compatibility_matrix() -> Tuple[np.ndarray, Dict[str, int]]:
+    """
+    Build a (95 x 95) matrix where entry [i,j] = number of type-compatible
+    operation chains from concept i's organism to concept j's organism.
+
+    For the 77 concepts without organisms, all entries are 0.
+    For the 18 with organisms, entries reflect actual type compatibility.
+
+    Returns (matrix, concept_to_idx_map).
+    """
+    concept_names = get_concept_names()
+    N = len(concept_names)
+    name_to_idx = {n: i for i, n in enumerate(concept_names)}
+    compat_matrix = np.zeros((N, N), dtype=np.float32)
+
+    try:
+        import sys
+        sys.path.insert(0, str(ROOT))
+        from organisms import ALL_ORGANISMS
+
+        # Load all organisms
+        orgs = {}
+        for cls in ALL_ORGANISMS:
+            org = cls()
+            orgs[org.name] = org
+
+        # Build organism_name -> concept_name map (including all known mappings)
+        org_to_concept = {}
+        # Core mappings
+        for concept, org_name in CONCEPT_TO_ORGANISM.items():
+            if org_name in orgs:
+                org_to_concept[org_name] = concept
+        # Also map signal_processing, game_theory, and number theory organisms
+        extra_maps = {
+            "signal_processing": "Wavelet Transforms",  # closest concept
+            "game_theory": "Nash Equilibrium",
+            "algebraic_number_theory": "Prime Number Theory",
+            "analytic_number_theory": "Prime Number Theory",
+            "geometric_number_theory": "Fractal Geometry",
+            "probabilistic_number_theory": "Bayesian Inference",
+            "combinatorial_number_theory": "Prime Number Theory",
+            "computational_number_theory": "Prime Number Theory",
+            "number_geometry_bridge": "Topology",
+        }
+        for org_name, concept in extra_maps.items():
+            if org_name in orgs and concept in name_to_idx:
+                org_to_concept[org_name] = concept
+
+        # Count compatible chains between all organism pairs
+        for org_a_name, org_a in orgs.items():
+            concept_a = org_to_concept.get(org_a_name)
+            if not concept_a or concept_a not in name_to_idx:
+                continue
+            idx_a = name_to_idx[concept_a]
+
+            for org_b_name, org_b in orgs.items():
+                if org_a_name == org_b_name:
+                    continue
+                concept_b = org_to_concept.get(org_b_name)
+                if not concept_b or concept_b not in name_to_idx:
+                    continue
+                idx_b = name_to_idx[concept_b]
+
+                n_chains = len(org_a.compatible_chains(org_b))
+                # Accumulate (multiple organisms may map to the same concept)
+                compat_matrix[idx_a, idx_b] += n_chains
+
+    except (ImportError, Exception):
+        pass  # Gracefully degrade if organisms can't be loaded
+
+    return compat_matrix, name_to_idx
+
+
+# ============================================================
 # Interaction Computation
 # ============================================================
 
-def compute_pairwise_interactions(matrix: np.ndarray) -> Dict[str, np.ndarray]:
+def compute_pairwise_interactions(
+    matrix: np.ndarray,
+    type_compat: Optional[np.ndarray] = None,
+) -> Dict[str, np.ndarray]:
     """
     Compute all pairwise interaction scores from the feature matrix.
+
+    If type_compat is provided (95x95 matrix of compatible chain counts),
+    pairs where BOTH concepts have organisms but zero compatible operations
+    get their score zeroed. Pairs where at least one concept has no organism
+    are scored normally (we can't filter what we can't test).
 
     Returns dict with:
       - novelty: (N, N) off-diagonal energy ratio
       - complementarity: (N, N) mean absolute feature difference
       - resonance: (N, N) element-wise product (shared high features)
-      - combined: (N, N) weighted sum
+      - type_compatibility: (N, N) number of compatible chains (if type_compat provided)
+      - combined: (N, N) weighted sum, modulated by type compatibility
     """
     N = matrix.shape[0]
 
@@ -700,12 +803,42 @@ def compute_pairwise_interactions(matrix: np.ndarray) -> Dict[str, np.ndarray]:
     # Combined score: novelty is most important, then complementarity, then resonance
     combined = 0.4 * novelty + 0.35 * complementarity + 0.25 * resonance
 
-    return {
+    result = {
         "novelty": novelty,
         "complementarity": complementarity,
         "resonance": resonance,
         "combined": combined,
     }
+
+    # Apply type compatibility modulation
+    if type_compat is not None:
+        # Identify concepts that HAVE organisms (any row or column > 0)
+        has_organism = (type_compat.sum(axis=1) > 0) | (type_compat.sum(axis=0) > 0)
+
+        # For pairs where BOTH have organisms: scale by compatibility
+        # 0 compatible chains = score goes to 0
+        # 1+ compatible chains = score gets a boost proportional to log(n_chains)
+        type_boost = np.ones((N, N), dtype=np.float32)
+        for i in range(N):
+            for j in range(i + 1, N):
+                if has_organism[i] and has_organism[j]:
+                    n_compat = type_compat[i, j] + type_compat[j, i]
+                    if n_compat == 0:
+                        # Both have organisms but zero compatible chains: zero out
+                        type_boost[i, j] = type_boost[j, i] = 0.0
+                    else:
+                        # Boost proportional to connectivity (log scale, capped)
+                        type_boost[i, j] = type_boost[j, i] = min(
+                            1.0 + 0.3 * np.log1p(n_compat), 2.0
+                        )
+                # If either lacks an organism, type_boost stays 1.0 (neutral)
+
+        combined = combined * type_boost
+        result["combined"] = combined
+        result["type_compatibility"] = type_compat
+        result["type_boost"] = type_boost
+
+    return result
 
 
 def compute_triple_tensor(matrix: np.ndarray) -> np.ndarray:
@@ -756,10 +889,16 @@ def compute_triple_tensor(matrix: np.ndarray) -> np.ndarray:
     return tensor
 
 
-def compute_triple_tensor_fast(matrix: np.ndarray) -> np.ndarray:
+def compute_triple_tensor_fast(
+    matrix: np.ndarray,
+    type_boost: Optional[np.ndarray] = None,
+) -> np.ndarray:
     """
     Vectorized triple tensor computation. Much faster than the loop version.
     For 95 concepts this takes ~2-5 seconds instead of ~60 seconds.
+
+    If type_boost is provided (N x N), the triple score is modulated by
+    the minimum type_boost across all 3 pairs in the triple.
     """
     N = matrix.shape[0]
     D = matrix.shape[1]
@@ -772,7 +911,6 @@ def compute_triple_tensor_fast(matrix: np.ndarray) -> np.ndarray:
     pair_res = (matrix @ matrix.T / D).astype(np.float32)
 
     # Triple complementarity: average of 3 pairs
-    # Use broadcasting: comp[i,j,k] = (pair_comp[i,j] + pair_comp[i,k] + pair_comp[j,k]) / 3
     triple_comp = (pair_comp[:, :, None] + pair_comp[:, None, :] + pair_comp[None, :, :]) / 3.0
 
     # Triple resonance: min of 3 pairs
@@ -791,6 +929,18 @@ def compute_triple_tensor_fast(matrix: np.ndarray) -> np.ndarray:
 
     # Combined
     tensor = (0.4 * triple_nov + 0.35 * triple_comp + 0.25 * triple_res).astype(np.float32)
+
+    # Apply type boost modulation if provided
+    if type_boost is not None:
+        # Triple boost = min of the 3 pairwise boosts (weakest link)
+        triple_boost = np.minimum(
+            np.minimum(
+                type_boost[:, :, None] * np.ones((1, 1, N), dtype=np.float32),
+                type_boost[:, None, :] * np.ones((1, N, 1), dtype=np.float32),
+            ),
+            type_boost[None, :, :] * np.ones((N, 1, 1), dtype=np.float32),
+        )
+        tensor = tensor * triple_boost
 
     # Zero the diagonal (same-concept triples are meaningless)
     for i in range(N):

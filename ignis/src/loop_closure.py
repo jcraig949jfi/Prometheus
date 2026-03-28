@@ -309,10 +309,11 @@ def run_loop_closure(args):
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
+    # Load in bf16 on single device (NOT device_map="auto" which splits across CPU+GPU)
     model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.float16, device_map="auto",
-        low_cpu_mem_usage=True,
-    )
+        args.model, torch_dtype=torch.bfloat16,
+        device_map=None, low_cpu_mem_usage=True,
+    ).to(args.device)
     print(f"VRAM: {torch.cuda.memory_allocated()/1e9:.2f}GB")
 
     # Apply genome if provided
@@ -402,17 +403,30 @@ def run_loop_closure(args):
     dataset = CorpusDataset(corpus, tokenizer)
     training_args = TrainingArguments(
         output_dir=str(output_dir / "ft_tmp"),
-        num_train_epochs=2,
-        per_device_train_batch_size=8,
-        learning_rate=2e-4,
-        logging_steps=25,
+        num_train_epochs=3,
+        per_device_train_batch_size=4,
+        gradient_accumulation_steps=2,  # effective batch = 8
+        learning_rate=5e-6,
+        logging_steps=10,
         save_strategy="no",
-        fp16=True,
+        fp16=False,
+        bf16=True,  # bf16 compute with bf16 master weights (no GradScaler needed)
         report_to="none",
         remove_unused_columns=False,
-        warmup_steps=10,
+        warmup_steps=20,
+        max_grad_norm=1.0,
+        weight_decay=0.01,
+        lr_scheduler_type="cosine",
+        gradient_checkpointing=True,  # trade compute for VRAM
     )
     Trainer(model=model, args=training_args, train_dataset=dataset).train()
+
+    # Save fine-tuned model for downstream stages (eval, evolution)
+    ft_save_path = output_dir / "ft_model"
+    log.info(f"Saving fine-tuned model to {ft_save_path}")
+    model.save_pretrained(str(ft_save_path))
+    tokenizer.save_pretrained(str(ft_save_path))
+    log.info("Fine-tuned model saved")
 
     # Re-register hook for post-eval if genome was provided
     if args.genome:
