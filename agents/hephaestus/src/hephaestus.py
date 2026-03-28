@@ -138,7 +138,8 @@ def append_ledger(key: str, status: str, concept_names: list[str],
                   reason: str = "", accuracy: float = 0.0,
                   calibration: float = 0.0,
                   margin_accuracy: float = 0.0,
-                  margin_calibration: float = 0.0):
+                  margin_calibration: float = 0.0,
+                  frame: str = "A", **kwargs):
     """Append a single result to the global ledger."""
     record = {
         "key": key,
@@ -149,6 +150,7 @@ def append_ledger(key: str, status: str, concept_names: list[str],
         "calibration": calibration,
         "margin_accuracy": margin_accuracy,
         "margin_calibration": margin_calibration,
+        "frame": frame,
         "timestamp": datetime.now().isoformat(),
     }
     try:
@@ -455,24 +457,26 @@ def forge_one(client: OpenAI, entry: dict, model: str,
     if enrichment:
         logger.info("  Coeus enrichment loaded")
 
-    # 1. Build prompt and call API
-    prompt = build_code_gen_prompt(names, response_text, ratings, enrichment=enrichment)
+    # 1. Build prompt and call API (frame selected by prompts.py weighted rotation)
+    from prompts import select_frame
+    frame = select_frame()
+    prompt = build_code_gen_prompt(names, response_text, ratings, enrichment=enrichment, frame=frame)
     raw_response = call_api(client, prompt, model)
     if raw_response is None:
         save_scrap(None, entry, "api_call_failed", run_dir)
-        return {"status": "scrap", "reason": "api_call_failed"}
+        return {"status": "scrap", "reason": "api_call_failed", "frame": frame}
 
     # 2. Extract code
     code, extract_status = extract_code(raw_response)
     if code is None:
         save_scrap(None, entry, extract_status, run_dir)
-        return {"status": "scrap", "reason": extract_status}
+        return {"status": "scrap", "reason": extract_status, "frame": frame}
 
     # 3. Validate
     valid, reason = validate(code)
     if not valid:
         save_scrap(code, entry, f"validation:{reason}", run_dir)
-        return {"status": "scrap", "reason": f"validation:{reason}"}
+        return {"status": "scrap", "reason": f"validation:{reason}", "frame": frame}
 
     # 4. Run trap battery
     try:
@@ -480,7 +484,7 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         test_results = run_trap_battery(tool)
     except Exception as e:
         save_scrap(code, entry, f"test_harness_error: {e}", run_dir)
-        return {"status": "scrap", "reason": f"test_harness_error: {e}"}
+        return {"status": "scrap", "reason": f"test_harness_error: {e}", "frame": frame}
 
     if not test_results["passed"]:
         ncd_info = ""
@@ -490,7 +494,7 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         reason = (f"trap_battery_failed (acc={test_results['accuracy']:.0%} "
                   f"cal={test_results['calibration']:.0%}{ncd_info})")
         save_scrap(code, entry, reason, run_dir)
-        return {"status": "scrap", "reason": reason}
+        return {"status": "scrap", "reason": reason, "frame": frame}
 
     # 5. Save to forge
     save_forge(code, entry, test_results, run_dir)
@@ -500,6 +504,7 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         "calibration": test_results["calibration"],
         "margin_accuracy": test_results.get("margin_accuracy", 0),
         "margin_calibration": test_results.get("margin_calibration", 0),
+        "frame": frame,
     }
 
 
@@ -629,14 +634,16 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
                           accuracy=result.get("accuracy", 0),
                           calibration=result.get("calibration", 0),
                           margin_accuracy=result.get("margin_accuracy", 0),
-                          margin_calibration=result.get("margin_calibration", 0))
+                          margin_calibration=result.get("margin_calibration", 0),
+                          frame=result.get("frame", "A"))
         elif result:
             scrapped_results.append({
                 "concept_names": names,
                 "nous_composite_score": entry.get("score", {}).get("composite_score"),
                 "failure_reason": result.get("reason"),
             })
-            append_ledger(key, "scrap", names, reason=result.get("reason", ""))
+            append_ledger(key, "scrap", names, reason=result.get("reason", ""),
+                          frame=result.get("frame", "A"))
 
         # Checkpoint
         if count % 5 == 0:
