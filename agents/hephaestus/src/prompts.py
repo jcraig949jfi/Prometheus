@@ -1,8 +1,22 @@
-"""Prompt templates for Hephaestus code generation."""
+"""Prompt templates for Hephaestus code generation.
+
+Supports multi-frame forge strategy:
+  Frame A: Structural Parser (current default)
+  Frame B: Constructive Computer (computation-first)
+  Frame C: Dynamics Tracker (state evolution)
+  Frame D: Judgment Calibrator (epistemic honesty)
+
+Frame selection: weighted rotation per forge attempt.
+"""
 
 import logging
+import random
 
 log = logging.getLogger("hephaestus.prompts")
+
+# Frame weights (Athena-recommended allocation)
+FRAME_WEIGHTS = {"A": 10, "B": 35, "C": 30, "D": 25}
+_frame_rng = random.Random(42)
 
 CODE_GEN_PROMPT = """\
 You are a computational engineer building reasoning tools.
@@ -101,9 +115,112 @@ core mechanism is better than no implementation.
 - Score decomposition: structural >= 50%, computation >= 20%, NCD <= 15%
 """
 
+FRAME_B_SUFFIX = """
+--- FRAME B: CONSTRUCTIVE COMPUTATION ---
+Your PRIMARY objective is to COMPUTE answers, not parse patterns.
+
+For numeric questions: extract numbers as floats, perform arithmetic.
+For probability questions: compute Bayesian posteriors, expected values.
+For temporal questions: build timelines, compute durations, detect ordering.
+For causal questions: trace causal chains, compute interventional effects.
+For compositional questions: chain multiple reasoning steps sequentially.
+
+Your tool MUST produce a score WITHOUT NCD. NCD may contribute as a secondary
+signal, but the tool must function correctly if NCD is removed entirely.
+Build real computation pathways — the tool should work on structure and math alone.
+If you cannot compute the answer, return LOW confidence (< 0.3) rather than
+falling back to string similarity.
+
+Score decomposition: computation >= 40%, structural >= 30%, NCD as optional tiebreaker only.
+The test will include: base rate neglect, expected value, temporal ordering,
+rate problems, causal intervention, Simpson's paradox, age reasoning,
+scheduling conflicts, and multi-step compositional chains.
+"""
+
+FRAME_C_SUFFIX = """
+--- FRAME C: DYNAMICS TRACKER ---
+Your PRIMARY objective is to track STATE EVOLUTION across reasoning steps.
+
+Model the reasoning as a dynamical system. Each premise updates a state vector.
+Track how the answer evolves as you process premises sequentially.
+Use trajectory stability to judge confidence — stable answers under premise
+reordering are more trustworthy than fragile ones.
+
+Implement at least one of: reservoir dynamics, Lyapunov stability analysis,
+Markov chain convergence, or recurrent state estimation (Kalman-style).
+Score based on trajectory properties — convergence rate, basin stability,
+divergence detection — not just static feature matching.
+
+NCD must NOT be the primary scoring mechanism.
+Score decomposition: dynamics/state >= 40%, structural >= 20%, NCD <= 15%.
+The test will include: temporal sequence reconstruction, rate of change
+detection, causal ordering, multi-step chains, and perturbation robustness.
+"""
+
+FRAME_D_SUFFIX = """
+--- FRAME D: JUDGMENT CALIBRATOR ---
+Your PRIMARY objective is EPISTEMIC HONESTY — knowing what you don't know.
+
+Before scoring candidates, classify the QUESTION:
+1. Is it ambiguous? (scope, pronoun, presupposition)
+2. Is it unanswerable from the given information?
+3. Does it contain a false dichotomy or loaded assumption?
+4. Does it require information not present in the prompt?
+
+If any of these fire, cap confidence at 0.25 regardless of answer quality.
+Implement a _meta_confidence() method that evaluates the prompt itself.
+
+You will be tested on: presupposition traps, scope ambiguity, false dichotomy,
+survivorship bias, sunk cost fallacy, argument strength evaluation,
+confidence calibration, intention vs outcome, and strategic deception.
+
+CRITICAL CONSTRAINT: Tier B honesty must be above 0.95, BUT Tier A accuracy
+must also exceed 30%. Honesty without competence is not the goal. A tool that
+returns low confidence on everything is perfectly calibrated and completely
+useless. You must STILL correctly answer parsing traps (numeric comparison,
+transitivity, modus tollens, etc.) while being honest about ambiguous ones.
+
+Score decomposition: judgment >= 40%, structural >= 30%, NCD <= 15%.
+"""
+
 COEUS_SECTION_TEMPLATE = """
 --- Causal Intelligence (Coeus) ---
 {enrichment_text}
+---
+"""
+
+COEUS_FRAME_B_OVERRIDE = """
+--- Causal Intelligence (Coeus) — COMPUTATION FRAME ---
+{enrichment_text}
+
+OVERRIDE: For this tool, prioritize COMPUTATIONAL implementation over structural
+parsing. Implement actual mathematical operations: Bayesian posteriors, algebraic
+solvers, temporal schedulers, causal graph traversal. If you cannot compute the
+answer, return low confidence. The tool must produce a score WITHOUT NCD — NCD
+may be a secondary tiebreaker only, and the tool must function if NCD is removed.
+---
+"""
+
+COEUS_FRAME_C_OVERRIDE = """
+--- Causal Intelligence (Coeus) — DYNAMICS FRAME ---
+{enrichment_text}
+
+OVERRIDE: For this tool, model reasoning as STATE EVOLUTION. Implement trajectory
+tracking: how does the scoring state change as you process each premise? Use
+reservoir dynamics, recurrent state updates, or convergence detection. Score based
+on trajectory stability, not static features.
+---
+"""
+
+COEUS_FRAME_D_OVERRIDE = """
+--- Causal Intelligence (Coeus) — JUDGMENT FRAME ---
+{enrichment_text}
+
+OVERRIDE: For this tool, prioritize EPISTEMIC HONESTY. Detect ambiguity,
+presupposition, and unanswerable questions BEFORE scoring candidates. Return
+low confidence (< 0.3) on genuinely uncertain questions. BUT: Tier A accuracy
+must remain above 30%. Honesty without competence is useless — you must still
+correctly answer clear parsing traps while being honest about ambiguous ones.
 ---
 """
 
@@ -129,8 +246,17 @@ def _get_ncd_baseline_scores() -> tuple[int, int]:
     return _ncd_baseline_cache
 
 
+def select_frame() -> str:
+    """Select a frame using weighted rotation. Returns 'A', 'B', 'C', or 'D'."""
+    frames = list(FRAME_WEIGHTS.keys())
+    weights = list(FRAME_WEIGHTS.values())
+    frame = _frame_rng.choices(frames, weights=weights, k=1)[0]
+    return frame
+
+
 def build_code_gen_prompt(concept_names: list[str], response_text: str,
-                          ratings: dict, enrichment: dict | None = None) -> str:
+                          ratings: dict, enrichment: dict | None = None,
+                          frame: str | None = None) -> str:
     """Build the code generation prompt from Nous result fields.
 
     Args:
@@ -138,19 +264,34 @@ def build_code_gen_prompt(concept_names: list[str], response_text: str,
         response_text: Nous response text
         ratings: Nous ratings dict
         enrichment: optional Coeus enrichment dict (with 'enrichment_text' key)
+        frame: 'A', 'B', 'C', or 'D'. If None, auto-selects via weighted rotation.
     """
     if len(concept_names) < 3:
         return "ERROR: need 3 concepts"
 
+    if frame is None:
+        frame = select_frame()
+
+    # Select Coeus enrichment template based on frame
     coeus_section = ""
     if enrichment and enrichment.get("enrichment_text"):
-        coeus_section = COEUS_SECTION_TEMPLATE.format(
-            enrichment_text=enrichment["enrichment_text"],
-        )
+        if frame == "B":
+            coeus_section = COEUS_FRAME_B_OVERRIDE.format(
+                enrichment_text=enrichment["enrichment_text"])
+        elif frame == "C":
+            coeus_section = COEUS_FRAME_C_OVERRIDE.format(
+                enrichment_text=enrichment["enrichment_text"])
+        elif frame == "D":
+            coeus_section = COEUS_FRAME_D_OVERRIDE.format(
+                enrichment_text=enrichment["enrichment_text"])
+        else:
+            coeus_section = COEUS_SECTION_TEMPLATE.format(
+                enrichment_text=enrichment["enrichment_text"])
 
     ncd_acc, ncd_cal = _get_ncd_baseline_scores()
 
-    return CODE_GEN_PROMPT.format(
+    # Build base prompt
+    prompt = CODE_GEN_PROMPT.format(
         concept_1=concept_names[0],
         concept_2=concept_names[1],
         concept_3=concept_names[2],
@@ -162,3 +303,16 @@ def build_code_gen_prompt(concept_names: list[str], response_text: str,
         ncd_accuracy=ncd_acc,
         ncd_calibration=ncd_cal,
     )
+
+    # Append frame-specific suffix
+    if frame == "B":
+        prompt += FRAME_B_SUFFIX
+    elif frame == "C":
+        prompt += FRAME_C_SUFFIX
+    elif frame == "D":
+        prompt += FRAME_D_SUFFIX
+
+    log.info("Frame: %s (%s)", frame,
+             {"A": "Structural", "B": "Constructive", "C": "Dynamics", "D": "Judgment"}.get(frame, "?"))
+
+    return prompt
