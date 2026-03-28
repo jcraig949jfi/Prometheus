@@ -721,4 +721,56 @@ def main():
         if vel:
             print(f"\nRecent velocity:")
             for cn, v, cc in reversed(vel):
-                print(f"  Cycle {cn}: velocity={v:.3f}, cu
+                print(f"  Cycle {cn}: velocity={v:.3f}, cumulative_cracks={cc}")
+        db.close()
+        return
+
+    if args.tensor:
+        # Tensor-guided exploration: compute frontier, then explore top candidates
+        from tensor_navigator import TensorTrainNavigator
+        log.info("TENSOR-GUIDED EXPLORATION MODE")
+        log.info(f"Building tensor navigator (rank={args.tensor_rank})...")
+        nav = TensorTrainNavigator(rank=args.tensor_rank)
+        nav.build()
+        stats = nav.stats()
+        log.info(f"  {stats['n_concepts']} concepts, {stats['total_triples']:,} triples, "
+                 f"{stats['explored_triples']:,} explored ({stats['exploration_pct']:.1f}%)")
+        log.info(f"  Compression: {stats['compression_ratio']:.0f}x, built in {stats['build_time_s']:.3f}s")
+
+        frontier = nav.frontier(k=args.tensor_top)
+        log.info(f"  Frontier: {len(frontier)} unexplored high-value triples")
+
+        # Export frontier for Nous
+        frontier_path = nav.export_for_nous()
+        log.info(f"  Frontier exported to {frontier_path}")
+
+        # Also export full report
+        report_path = str(TENSOR_CACHE_DIR / "frontier_report.json")
+        nav.export_frontier(report_path, k=args.tensor_top)
+        log.info(f"  Full report exported to {report_path}")
+
+        # Print top 20
+        log.info("\nTOP 20 FRONTIER TRIPLES:")
+        for t in frontier[:20]:
+            log.info(f"  {t['rank']:3d}. [{t['score']:.4f}] "
+                     f"{t['concepts'][0]} x {t['concepts'][1]} x {t['concepts'][2]}")
+
+        return
+
+    organisms = load_all_organisms()
+    if not organisms:
+        log.error("No organisms loaded. Check organisms/ directory.")
+        sys.exit(1)
+
+    explore(
+        organisms,
+        n_cycles=args.cycles,
+        target=args.siege,
+        batch_size=args.batch,
+        crack_threshold=args.threshold,
+        use_gpu=args.gpu,
+    )
+
+
+if __name__ == "__main__":
+    main()
