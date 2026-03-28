@@ -3,7 +3,7 @@
 **Fields**: Control Theory, Game Theory, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:19:29.051636
-**Report Generated**: 2026-03-25T09:15:33.869464
+**Report Generated**: 2026-03-27T06:37:34.280679
 
 ---
 
@@ -41,14 +41,14 @@ Implementability: 5/10 — Requires coupling MRAC solvers, regret‑matching alg
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Adaptive Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Nash Equilibrium**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

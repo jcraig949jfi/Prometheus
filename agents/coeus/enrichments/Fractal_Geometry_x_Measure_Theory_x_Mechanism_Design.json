@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Fractal Geometry",
+    "Measure Theory",
+    "Mechanism Design"
+  ],
+  "concept_strengths": {
+    "Fractal Geometry": {
+      "influence": {
+        "forge_effect": 0.0187,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.209,
+      "forge_effect": 0.0187,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.209,
+        "rate_without": 0.225,
+        "drop": -0.0161
+      },
+      "summary": "Fractal Geometry: forge rate: 21%",
+      "directive": "**Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Measure Theory": {
+      "influence": {
+        "forge_effect": -0.0249,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1458,
+      "forge_effect": -0.0249,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1458,
+        "rate_without": 0.2268,
+        "drop": -0.081
+      },
+      "summary": "Measure Theory: removing it increases forge probability by 8%; forge rate: 15%",
+      "directive": "**Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Mechanism Design": {
+      "influence": {
+        "forge_effect": 0.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
+      },
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Fractal Geometry + Mechanism Design": 0.3733,
+    "Measure Theory + Mechanism Design": 0.4614
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Cognitive Load Theory",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Mechanism Design",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Fractal Geometry + Mechanism Design: strong positive synergy (+0.373). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Measure Theory + Mechanism Design: strong positive synergy (+0.461). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Fractal Geometry + Cognitive Load Theory + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Mechanism Design + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

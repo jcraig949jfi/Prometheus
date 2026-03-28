@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Information Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T06:44:23.899464
-**Report Generated**: 2026-03-25T09:15:35.419271
+**Report Generated**: 2026-03-27T01:02:11.801175
 
 ---
 
@@ -51,12 +51,13 @@ Implementability: 5/10 — Requires coupling neural ODEs with discrete number‑
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Morphogenesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Morphogenesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Morphogenesis + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
+- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Causal Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

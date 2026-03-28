@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T06:26:17.367634
-**Report Generated**: 2026-03-25T09:15:35.243268
+**Report Generated**: 2026-03-27T04:25:43.995597
 
 ---
 
@@ -41,10 +41,12 @@ Implementability: 5/10 — requires integrating a fast TDA library with a reserv
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
+- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Gauge Theory + Sparse Autoencoders + Compositional Semantics (accuracy: 0%, calibration: 0%)
 - Proof Theory + Constraint Satisfaction + Compositional Semantics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.

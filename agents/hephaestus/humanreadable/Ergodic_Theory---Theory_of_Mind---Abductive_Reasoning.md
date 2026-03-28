@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:42:26.273911
-**Report Generated**: 2026-03-25T09:15:24.706225
+**Report Generated**: 2026-03-27T06:37:26.826375
 
 ---
 
@@ -39,16 +39,16 @@ During each decision cycle the EATM‑S runs a set of particle filters that appr
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Ergodic Theory + Theory of Mind: strong positive synergy (+0.533). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Abductive Reasoning + Ergodic Theory: strong positive synergy (+0.938). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Theory of Mind + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Abductive Reasoning + Pragmatics (accuracy: 0%, calibration: 0%)
 - Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Ecosystem Dynamics + Theory of Mind (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

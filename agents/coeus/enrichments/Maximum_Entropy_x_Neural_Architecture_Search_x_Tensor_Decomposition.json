@@ -7,75 +7,69 @@
   "concept_strengths": {
     "Tensor Decomposition": {
       "influence": {
-        "forge_effect": -0.3606,
+        "forge_effect": -0.0628,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": -0.3606,
+      "forge_rate": 0.1714,
+      "forge_effect": -0.0628,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.4397,
-        "drop": -0.1897
+        "base_rate": 0.2243,
+        "rate_with": 0.1714,
+        "rate_without": 0.2256,
+        "drop": -0.0541
       },
-      "summary": "Tensor Decomposition: removing it increases forge probability by 19%; forge rate: 25%",
-      "directive": "**Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Tensor Decomposition: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Neural Architecture Search": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.047,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.0,
+      "forge_rate": 0.1667,
+      "forge_effect": -0.047,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4297,
-        "drop": 0.0703
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.2257,
+        "drop": -0.059
       },
-      "summary": "Neural Architecture Search: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Neural Architecture Search: removing it increases forge probability by 6%; forge rate: 17%",
       "directive": "**Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Maximum Entropy": {
       "influence": {
-        "forge_effect": -0.4361,
+        "forge_effect": -0.1336,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2381,
-      "forge_effect": -0.4361,
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2381,
-        "rate_without": 0.4476,
-        "drop": -0.2095
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
       },
-      "summary": "Maximum Entropy: removing it increases forge probability by 21%; forge rate: 24%",
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
       "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Maximum Entropy + Tensor Decomposition": -0.0296
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Chaos Theory",
-        "Falsificationism",
+        "Adaptive Control",
+        "Mechanism Design",
         "Maximum Entropy"
       ],
       "accuracy": 0,
@@ -83,8 +77,8 @@
     },
     {
       "concept_names": [
-        "Chaos Theory",
-        "Feedback Control",
+        "Category Theory",
+        "Kolmogorov Complexity",
         "Maximum Entropy"
       ],
       "accuracy": 0,
@@ -92,13 +86,13 @@
     },
     {
       "concept_names": [
-        "Chaos Theory",
-        "Neural Architecture Search",
-        "Falsificationism"
+        "Category Theory",
+        "Phase Transitions",
+        "Neural Architecture Search"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Architecture Search + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

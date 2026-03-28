@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Philosophy, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:33:07.733632
-**Report Generated**: 2026-03-25T09:15:26.692559
+**Report Generated**: 2026-03-27T06:37:28.291908
 
 ---
 
@@ -45,17 +45,18 @@ Implementability: 8/10 — All components (sparse autoencoder, variational loss,
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Sparse Autoencoders**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 82%. 
-- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Sparse Autoencoders: strong positive synergy (+0.353). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Falsificationism + Free Energy Principle: strong positive synergy (+0.488). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Falsificationism + Sparse Autoencoders: strong positive synergy (+0.367). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Sparse Autoencoders: strong positive synergy (+0.377). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Falsificationism + Free Energy Principle: strong positive synergy (+0.675). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Sparse Autoencoders + Falsificationism + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Predictive Coding + Falsificationism + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Sparse Autoencoders + Global Workspace Theory + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Sparse Autoencoders + Falsificationism + Proof Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

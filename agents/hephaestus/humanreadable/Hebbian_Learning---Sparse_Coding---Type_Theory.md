@@ -3,7 +3,7 @@
 **Fields**: Neuroscience, Neuroscience, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:01:32.883729
-**Report Generated**: 2026-03-25T09:15:33.730669
+**Report Generated**: 2026-03-27T01:02:09.166763
 
 ---
 
@@ -41,14 +41,14 @@ Implementability: 5/10 — Requires integrating a dependent type checker with a 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

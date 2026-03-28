@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Bayesian Inference",
+    "Multi-Armed Bandits",
+    "Sensitivity Analysis"
+  ],
+  "concept_strengths": {
+    "Bayesian Inference": {
+      "influence": {
+        "forge_effect": 0.0166,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1739,
+      "forge_effect": 0.0166,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1739,
+        "rate_without": 0.2259,
+        "drop": -0.052
+      },
+      "summary": "Bayesian Inference: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Bayesian Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Sensitivity Analysis": {
+      "influence": {
+        "forge_effect": 0.038,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1562,
+      "forge_effect": 0.038,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1562,
+        "rate_without": 0.2258,
+        "drop": -0.0695
+      },
+      "summary": "Sensitivity Analysis: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Bayesian Inference + Multi-Armed Bandits": -0.0415,
+    "Bayesian Inference + Sensitivity Analysis": 0.4728
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Free Energy Principle",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Constraint Satisfaction",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Bayesian Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Bayesian Inference + Sensitivity Analysis: strong positive synergy (+0.473). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

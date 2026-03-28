@@ -3,7 +3,7 @@
 **Fields**: Physics, Control Theory, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:49:09.346963
-**Report Generated**: 2026-03-25T09:15:29.639915
+**Report Generated**: 2026-03-27T06:37:30.904944
 
 ---
 
@@ -54,14 +54,17 @@ Implementability: 6/10 — Requires integrating variational Bayes updates with a
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
-- **Adaptive Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Adaptive Control + Thermodynamics: negative interaction (-0.060). Keep these concepts in separate code paths to avoid interference.
+- Adaptive Control + Maximum Entropy: strong positive synergy (+0.214). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Thermodynamics + Free Energy Principle + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -69,7 +72,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:52:04.326789
 
 ---
 

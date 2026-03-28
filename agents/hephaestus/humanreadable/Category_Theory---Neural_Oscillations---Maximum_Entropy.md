@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Neuroscience, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T21:59:13.277132
-**Report Generated**: 2026-03-25T09:15:30.149850
+**Report Generated**: 2026-03-27T06:37:31.398768
 
 ---
 
@@ -40,14 +40,16 @@ Implementability: 5/10 — Requires simulating oscillatory couplings and categor
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Category Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Category Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Category Theory + Maximum Entropy: strong positive synergy (+0.158). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

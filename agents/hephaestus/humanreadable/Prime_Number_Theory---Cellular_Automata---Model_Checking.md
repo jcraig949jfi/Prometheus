@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T13:56:47.930332
-**Report Generated**: 2026-03-25T09:15:25.192737
+**Report Generated**: 2026-03-27T06:37:27.074933
 
 ---
 
@@ -42,12 +42,14 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Model Checking + Prime Number Theory: strong positive synergy (+0.315). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Prime Number Theory + Criticality + Model Checking (accuracy: 0%, calibration: 0%)
 - Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Sparse Autoencoders + Model Checking (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Mechanism Design + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

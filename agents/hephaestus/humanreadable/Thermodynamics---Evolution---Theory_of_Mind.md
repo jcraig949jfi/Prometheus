@@ -3,7 +3,7 @@
 **Fields**: Physics, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T05:08:27.787230
-**Report Generated**: 2026-03-25T09:15:34.852021
+**Report Generated**: 2026-03-27T05:13:32.967057
 
 ---
 
@@ -45,9 +45,9 @@ Implementability: 6/10 — Requires coupling MCMC simulators, genetic programmin
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
-- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
 - Thermodynamics + Evolution + Theory of Mind (accuracy: 0%, calibration: 0%)

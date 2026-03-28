@@ -3,7 +3,7 @@
 **Fields**: Physics, Physics, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T05:39:04.279275
-**Report Generated**: 2026-03-25T09:15:35.058965
+**Report Generated**: 2026-03-27T06:37:35.302219
 
 ---
 
@@ -41,14 +41,16 @@ Implementability: 5/10 — requires custom RG operators, gauge‑equivariant lay
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Evolution + Renormalization: negative interaction (-0.059). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
 - Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
-- Evolution + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Evolution + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Category Theory + Gauge Theory + Type Theory (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

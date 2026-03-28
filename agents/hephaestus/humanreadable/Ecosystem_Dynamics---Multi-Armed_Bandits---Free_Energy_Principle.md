@@ -3,7 +3,7 @@
 **Fields**: Biology, Game Theory, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T01:25:49.721177
-**Report Generated**: 2026-03-25T09:15:32.767793
+**Report Generated**: 2026-03-27T06:37:33.383841
 
 ---
 
@@ -44,12 +44,16 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Ecosystem Dynamics + Multi-Armed Bandits: strong positive synergy (+0.466). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ecosystem Dynamics + Free Energy Principle: strong positive synergy (+0.285). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Multi-Armed Bandits: strong positive synergy (+0.252). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Ecosystem Dynamics + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)
+- Gene Regulatory Networks + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

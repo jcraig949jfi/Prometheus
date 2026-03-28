@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:51:24.296291
-**Report Generated**: 2026-03-25T09:15:34.174257
+**Report Generated**: 2026-03-27T06:37:34.524705
 
 ---
 
@@ -43,10 +43,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Pragmatism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
 Similar combinations that forged successfully:
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
 - Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)
+- Measure Theory + Compressed Sensing + Symbiosis (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

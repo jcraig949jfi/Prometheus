@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T15:03:23.747908
-**Report Generated**: 2026-03-25T09:15:25.833580
+**Report Generated**: 2026-03-27T06:37:27.492923
 
 ---
 
@@ -41,13 +41,16 @@ Implementability: 5/10 — Requires custom solvers for measure‑constrained opt
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Dialectics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Dialectics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Measure Theory + Mechanism Design: strong positive synergy (+0.461). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Dialectics + Mechanism Design: strong positive synergy (+0.192). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Genetic Algorithms + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Measure Theory + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

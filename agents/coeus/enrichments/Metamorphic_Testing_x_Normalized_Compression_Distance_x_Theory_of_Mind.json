@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Theory of Mind",
+    "Normalized Compression Distance",
+    "Metamorphic Testing"
+  ],
+  "concept_strengths": {
+    "Theory of Mind": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1702,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1702,
+        "rate_without": 0.226,
+        "drop": -0.0558
+      },
+      "summary": "Theory of Mind: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Normalized Compression Distance": {
+      "influence": {
+        "forge_effect": 0.0035,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.0035,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Normalized Compression Distance: forge rate: 18%",
+      "directive": "**Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Metamorphic Testing": {
+      "influence": {
+        "forge_effect": 0.072,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.072,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Metamorphic Testing: positive forge driver (+0.07); forge rate: 18%",
+      "directive": "**Metamorphic Testing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Self-Organized Criticality",
+        "Normalized Compression Distance"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Criticality",
+        "Multi-Armed Bandits",
+        "Metamorphic Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Differentiable Programming",
+        "Nash Equilibrium",
+        "Metamorphic Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Metamorphic Testing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Self-Organized Criticality + Normalized Compression Distance (accuracy: 0%, calibration: 0%)\n- Criticality + Multi-Armed Bandits + Metamorphic Testing (accuracy: 0%, calibration: 0%)\n- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

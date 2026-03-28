@@ -3,7 +3,7 @@
 **Fields**: Physics, Biology, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:57:21.838472
-**Report Generated**: 2026-03-25T09:15:34.764604
+**Report Generated**: 2026-03-27T06:37:35.054694
 
 ---
 
@@ -40,13 +40,13 @@ Implementability: 5/10 — requires delicate tuning of Lyapunov exponents, plast
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Chaos Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Autopoiesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Chaos Theory + Neural Plasticity: strong positive synergy (+0.646). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Autopoiesis + Chaos Theory: strong positive synergy (+0.431). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Autopoiesis + Neural Plasticity: strong positive synergy (+0.333). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Neural Plasticity: strong positive synergy (+0.574). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Autopoiesis + Chaos Theory: strong positive synergy (+0.443). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Autopoiesis + Neural Plasticity: strong positive synergy (+0.455). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)

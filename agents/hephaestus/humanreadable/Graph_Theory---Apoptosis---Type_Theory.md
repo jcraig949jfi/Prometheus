@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:55:05.595012
-**Report Generated**: 2026-03-25T09:15:25.743882
+**Report Generated**: 2026-03-27T01:01:56.843180
 
 ---
 
@@ -46,8 +46,8 @@ The following concepts have historical causal signatures regarding their ability
 
 Similar combinations that forged successfully:
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Falsificationism + Type Theory (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

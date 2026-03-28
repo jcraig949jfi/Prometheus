@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Linguistics, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:26:51.387906
-**Report Generated**: 2026-03-25T09:15:35.837330
+**Report Generated**: 2026-03-27T04:25:44.650325
 
 ---
 
@@ -46,10 +46,10 @@ Implementability: 5/10 — Integrating variational message passing with symbolic
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Pragmatics: strong positive synergy (+0.395). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Pragmatics: strong positive synergy (+0.595). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
@@ -62,7 +62,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-25T10:01:21.688025
 
 ---
 

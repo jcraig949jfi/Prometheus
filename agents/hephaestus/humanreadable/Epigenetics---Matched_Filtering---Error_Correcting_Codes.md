@@ -3,7 +3,7 @@
 **Fields**: Biology, Signal Processing, Information Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:30:05.572310
-**Report Generated**: 2026-03-25T09:15:27.300238
+**Report Generated**: 2026-03-27T04:25:36.693434
 
 ---
 
@@ -42,12 +42,14 @@ Implementability: 6/10 — LDPC/turbo decoders and matched filters are well‑st
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Epigenetics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)
+- Epigenetics + Error Correcting Codes + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

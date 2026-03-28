@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:50:39.540467
-**Report Generated**: 2026-03-25T09:15:26.936424
+**Report Generated**: 2026-03-27T05:13:27.338299
 
 ---
 
@@ -42,8 +42,13 @@ Implementability: 5/10 — Realizing a mutable epigenetic grid alongside a CA an
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Epigenetics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+
+Similar combinations that forged successfully:
+- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Compressed Sensing + Epigenetics + Kolmogorov Complexity (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

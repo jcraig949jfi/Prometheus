@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Embodied Cognition",
+    "Epistemology",
+    "Normalized Compression Distance"
+  ],
+  "concept_strengths": {
+    "Embodied Cognition": {
+      "influence": {
+        "forge_effect": -0.0168,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2069,
+      "forge_effect": -0.0168,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2069,
+        "rate_without": 0.2247,
+        "drop": -0.0178
+      },
+      "summary": "Embodied Cognition: forge rate: 21%",
+      "directive": "**Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Epistemology": {
+      "influence": {
+        "forge_effect": 0.0401,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0401,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2229,
+        "drop": 0.0628
+      },
+      "summary": "Epistemology: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
+      "directive": "**Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Normalized Compression Distance": {
+      "influence": {
+        "forge_effect": 0.0035,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.0035,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Normalized Compression Distance: forge rate: 18%",
+      "directive": "**Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Epistemology",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Embodied Cognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Global Workspace Theory",
+        "Epistemology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)\n- Category Theory + Global Workspace Theory + Epistemology (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

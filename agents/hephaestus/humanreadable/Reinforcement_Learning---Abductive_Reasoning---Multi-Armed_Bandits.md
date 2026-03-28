@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Philosophy, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:41:16.545289
-**Report Generated**: 2026-03-25T09:15:32.083551
+**Report Generated**: 2026-03-27T02:16:26.458099
 
 ---
 
@@ -44,10 +44,11 @@ The following concepts have historical causal signatures regarding their ability
 - **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+
 Similar combinations that forged successfully:
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Reinforcement Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Cognitive Load Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +56,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:50:02.069072
 
 ---
 

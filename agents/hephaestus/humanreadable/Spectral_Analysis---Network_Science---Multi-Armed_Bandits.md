@@ -3,7 +3,7 @@
 **Fields**: Signal Processing, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:23:21.614756
-**Report Generated**: 2026-03-25T09:15:27.844420
+**Report Generated**: 2026-03-27T06:37:29.420357
 
 ---
 
@@ -49,13 +49,16 @@ Implementability: 5/10 — Requires building a hypothesis graph, computing Lapla
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Network Science + Spectral Analysis: negative interaction (-0.089). Keep these concepts in separate code paths to avoid interference.
+- Multi-Armed Bandits + Network Science: strong positive synergy (+0.585). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Network Science + Multi-Armed Bandits + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Statistical Mechanics + Network Science + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Spectral Analysis + Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -63,7 +66,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T00:02:03.358483
 
 ---
 

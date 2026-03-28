@@ -3,7 +3,7 @@
 **Fields**: Biology, Game Theory, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:44:12.205304
-**Report Generated**: 2026-03-25T09:15:27.399212
+**Report Generated**: 2026-03-27T06:37:28.927924
 
 ---
 
@@ -47,10 +47,12 @@ The following concepts have historical causal signatures regarding their ability
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Multi-Armed Bandits + Type Theory: strong positive synergy (+0.327). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Epigenetics + Multi-Armed Bandits + Type Theory (accuracy: 0%, calibration: 0%)
+- Multi-Armed Bandits + Free Energy Principle + Type Theory (accuracy: 0%, calibration: 0%)
+- Pragmatics + Multi-Armed Bandits + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

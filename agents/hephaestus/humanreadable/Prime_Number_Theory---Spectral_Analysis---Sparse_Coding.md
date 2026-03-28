@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:35:36.683497
-**Report Generated**: 2026-03-25T09:15:28.774473
+**Report Generated**: 2026-03-27T06:37:30.206922
 
 ---
 
@@ -47,12 +47,14 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Sparse Coding + Spectral Analysis: strong positive synergy (+0.285). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Ergodic Theory + Spectral Analysis + Criticality (accuracy: 0%, calibration: 0%)
-- Sparse Autoencoders + Kalman Filtering + Sparse Coding (accuracy: 0%, calibration: 0%)
-- Spectral Analysis + Falsificationism + Criticality (accuracy: 0%, calibration: 0%)
+- Spectral Analysis + Sparse Coding + Compositionality (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Constraint Satisfaction + Spectral Analysis + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

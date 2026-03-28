@@ -7,73 +7,85 @@
   "concept_strengths": {
     "Thermodynamics": {
       "influence": {
-        "forge_effect": 0.3864,
+        "forge_effect": 0.22,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7143,
-      "forge_effect": 0.3864,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.22,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7143,
-        "rate_without": 0.4157,
-        "drop": 0.2986
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2203,
+        "drop": 0.0655
       },
-      "summary": "Thermodynamics: removing it drops forge probability by 30% (from 71%); forge rate: 71%",
+      "summary": "Thermodynamics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
       "directive": "**Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Epistemology": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0401,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0401,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4291,
-        "drop": 0.0709
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2229,
+        "drop": 0.0628
       },
-      "summary": "Epistemology: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Epistemology: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
       "directive": "**Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Feedback Control": {
       "influence": {
-        "forge_effect": -0.0566,
+        "forge_effect": -0.0252,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4,
-      "forge_effect": -0.0566,
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4,
-        "rate_without": 0.4324,
-        "drop": -0.0324
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
       },
-      "summary": "Feedback Control: negative forge driver (-0.06); forge rate: 40%",
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
       "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {
-    "Feedback Control + Thermodynamics": -0.2857
+    "Epistemology + Thermodynamics": 0.4184,
+    "Feedback Control + Thermodynamics": -0.0464,
+    "Epistemology + Feedback Control": 0.2869
   },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Epistemology",
+        "Feedback Control",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Thermodynamics",
+        "Epistemology",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Active Inference",
@@ -82,25 +94,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Dialectics",
-        "Feedback Control"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Epistemology",
-        "Mechanism Design"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Feedback Control + Thermodynamics: negative interaction (-0.286). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Epistemology + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Epistemology + Thermodynamics: strong positive synergy (+0.418). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Epistemology + Feedback Control: strong positive synergy (+0.287). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Epistemology + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Epistemology + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Logic, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:31:50.134313
-**Report Generated**: 2026-03-25T09:15:33.970602
+**Report Generated**: 2026-03-27T06:37:34.371707
 
 ---
 
@@ -48,12 +48,14 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Topology + Type Theory: strong positive synergy (+0.228). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Type Theory + Model Checking (accuracy: 0%, calibration: 0%)
+- Topology + Active Inference + Type Theory (accuracy: 0%, calibration: 0%)
+- Topology + Immune Systems + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -61,10 +63,187 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: trap_battery_failed (acc=20% cal=7% ncd_acc=20% ncd_cal=7%)
+
+**Forge Timestamp**: 2026-03-27T00:54:48.326825
 
 ---
 
 ## Code
 
-*No code was produced for this combination.*
+**Source**: scrap
+
+[View code](./Topology---Type_Theory---Model_Checking/tool.py)
+
+<details>
+<summary>Show code</summary>
+
+```python
+import zlib
+import re
+from typing import List, Dict, Tuple
+
+class ReasoningTool:
+    """
+    A hybrid reasoning tool implementing a computational analogy of the 
+    Topology x Type Theory x Model Checking engine.
+    
+    Mechanism:
+    1. Structural Parsing (Type Theory): Extracts logical constraints (negations, 
+       comparatives, conditionals) to form a 'type signature' of the prompt.
+    2. Nerve Construction (Topology): Maps candidate answers to a structural 
+       compatibility score based on constraint satisfaction (0-simplices = tokens, 
+       1-simplices = logical relations).
+    3. Model Checking Loop: Validates candidates against extracted constraints.
+       Failures reduce the score (counterexamples).
+    4. Scoring: Primary signal is structural satisfaction (Reasoning). 
+       NCD is used only as a tiebreaker for candidates with equal structural scores.
+    """
+
+    def __init__(self):
+        # Keywords for structural parsing
+        self.negations = ['not', 'no', 'never', 'none', 'neither', 'n\'t']
+        self.comparatives = ['more', 'less', 'greater', 'smaller', 'higher', 'lower', '>', '<']
+        self.conditionals = ['if', 'then', 'unless', 'otherwise', 'when']
+        self.numeric_pattern = re.compile(r"-?\d+\.?\d*")
+
+    def _extract_structure(self, text: str) -> Dict:
+        """Extracts logical features acting as 'types' for the system."""
+        lower_text = text.lower()
+        tokens = lower_text.split()
+        
+        has_negation = any(n in tokens for n in self.negations)
+        has_comparative = any(c in tokens for c in self.comparatives)
+        has_conditional = any(c in tokens for c in self.conditionals)
+        
+        # Extract numbers for numeric evaluation
+        numbers = [float(n) for n in self.numeric_pattern.findall(text)]
+        
+        return {
+            'negation': has_negation,
+            'comparative': has_comparative,
+            'conditional': has_conditional,
+            'numbers': numbers,
+            'length': len(tokens)
+        }
+
+    def _check_constraint_satisfaction(self, prompt_struct: Dict, candidate: str) -> Tuple[float, str]:
+        """
+        Simulates the model checking loop.
+        Returns a score (0.0 to 1.0) and a reasoning string.
+        """
+        score = 1.0
+        reasons = []
+        lower_cand = candidate.lower()
+        cand_struct = self._extract_structure(candidate)
+        
+        # 1. Negation Consistency (Type Check)
+        # If prompt has negation, valid answers often reflect it or are short confirmations
+        if prompt_struct['negation']:
+            if 'no' in lower_cand or 'not' in lower_cand:
+                reasons.append("Consistent negation detected")
+            elif len(lower_cand.split()) > 3:
+                # Heuristic: Long answers ignoring negation might be wrong
+                score -= 0.2
+                reasons.append("Potential negation mismatch")
+                
+        # 2. Comparative Logic
+        if prompt_struct['comparative']:
+            if any(c in lower_cand for c in self.comparatives) or any(x in lower_cand for x in ['>', '<', 'equal']):
+                reasons.append("Comparative logic preserved")
+            else:
+                # Penalty if candidate ignores comparative nature
+                score -= 0.15
+                reasons.append("Comparative context ignored")
+
+        # 3. Numeric Evaluation (The "Homotopy" check - continuity of values)
+        if len(prompt_struct['numbers']) >= 2:
+            cand_nums = cand_struct['numbers']
+            if cand_nums:
+                # Check if candidate numbers respect prompt ordering (simplified)
+                p_nums = sorted(prompt_struct['numbers'])
+                c_nums = sorted(cand_nums)
+                if p_nums == c_nums or (len(cand_nums) > 0 and len(p_nums) > 0):
+                     reasons.append("Numeric consistency verified")
+                else:
+                    score -= 0.1
+                    reasons.append("Numeric deviation detected")
+            else:
+                # Candidate has no numbers when prompt is numeric
+                score -= 0.05 
+                reasons.append("Missing numeric derivation")
+
+        # 4. Conditional Flow
+        if prompt_struct['conditional']:
+            if any(c in lower_cand for c in ['yes', 'no', 'true', 'false', 'if', 'then']):
+                reasons.append("Conditional branch resolved")
+            else:
+                score -= 0.1
+                reasons.append("Conditional resolution unclear")
+
+        reason_str = "; ".join(reasons) if reasons else "Structural match"
+        return max(0.0, score), reason_str
+
+    def _ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance using zlib."""
+        b1 = s1.encode('utf-8')
+        b2 = s2.encode('utf-8')
+        len1 = len(b1)
+        len2 = len(b2)
+        
+        if len1 == 0 or len2 == 0:
+            return 1.0
+            
+        try:
+            comp1 = len(zlib.compress(b1))
+            comp2 = len(zlib.compress(b2))
+            comp12 = len(zlib.compress(b1 + b2))
+            
+            max_len = max(comp1, comp2)
+            if max_len == 0:
+                return 0.0
+            return (comp12 - min(comp1, comp2)) / max_len
+        except:
+            return 1.0
+
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        if not candidates:
+            return []
+            
+        prompt_struct = self._extract_structure(prompt)
+        scored_candidates = []
+        
+        for cand in candidates:
+            # Step 1: Structural/Logical Scoring (Primary Signal)
+            struct_score, reason = self._check_constraint_satisfaction(prompt_struct, cand)
+            
+            # Step 2: NCD as Tiebreaker (Secondary Signal)
+            # We invert NCD because lower distance = higher similarity = better tiebreaker score
+            ncd_val = self._ncd(prompt, cand)
+            ncd_score = (1.0 - ncd_val) * 0.01 # Weight small so it only breaks ties
+            
+            final_score = struct_score + ncd_score
+            
+            scored_candidates.append({
+                "candidate": cand,
+                "score": final_score,
+                "reasoning": reason
+            })
+        
+        # Sort by score descending
+        scored_candidates.sort(key=lambda x: x['score'], reverse=True)
+        return scored_candidates
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """
+        Returns confidence 0-1 based on structural alignment.
+        """
+        prompt_struct = self._extract_structure(prompt)
+        score, _ = self._check_constraint_satisfaction(prompt_struct, answer)
+        
+        # Normalize to 0-1 range strictly
+        return min(1.0, max(0.0, score))
+```
+
+</details>

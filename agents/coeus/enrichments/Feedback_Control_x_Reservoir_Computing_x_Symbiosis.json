@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Reservoir Computing",
+    "Symbiosis",
+    "Feedback Control"
+  ],
+  "concept_strengths": {
+    "Reservoir Computing": {
+      "influence": {
+        "forge_effect": -0.0112,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.25,
+      "forge_effect": -0.0112,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.25,
+        "rate_without": 0.2238,
+        "drop": 0.0262
+      },
+      "summary": "Reservoir Computing: forge rate: 25%",
+      "directive": "**Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Symbiosis": {
+      "influence": {
+        "forge_effect": -0.0854,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1212,
+      "forge_effect": -0.0854,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1212,
+        "rate_without": 0.2266,
+        "drop": -0.1054
+      },
+      "summary": "Symbiosis: removing it increases forge probability by 11%; forge rate: 12%",
+      "directive": "**Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0252,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
+      },
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Dialectics",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

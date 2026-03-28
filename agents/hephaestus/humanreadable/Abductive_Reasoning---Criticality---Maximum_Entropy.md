@@ -3,7 +3,7 @@
 **Fields**: Philosophy, Complex Systems, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T02:33:53.410296
-**Report Generated**: 2026-03-25T09:15:33.545075
+**Report Generated**: 2026-03-27T06:37:33.997682
 
 ---
 
@@ -41,16 +41,17 @@ Implementability: 5/10 — requires careful tuning of temperature dynamics and i
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Abductive Reasoning + Criticality: negative interaction (-0.243). Keep these concepts in separate code paths to avoid interference.
-- Criticality + Maximum Entropy: negative interaction (-0.162). Keep these concepts in separate code paths to avoid interference.
+- Abductive Reasoning + Criticality: negative interaction (-0.080). Keep these concepts in separate code paths to avoid interference.
+- Abductive Reasoning + Maximum Entropy: strong positive synergy (+0.464). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Maximum Entropy: negative interaction (-0.066). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
-- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Abductive Reasoning + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Neuroscience, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:42:48.077980
-**Report Generated**: 2026-03-25T09:15:32.110722
+**Report Generated**: 2026-03-27T06:37:32.908288
 
 ---
 
@@ -44,13 +44,16 @@ Implementability: 5/10 — Requires coupling a spiking oscillatory simulator, a 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Neural Oscillations + Reinforcement Learning: strong positive synergy (+0.306). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Neural Oscillations + Type Theory: strong positive synergy (+0.213). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
+- Neural Oscillations + Free Energy Principle + Type Theory (accuracy: 0%, calibration: 0%)
+- Reinforcement Learning + Neural Oscillations + Pragmatics (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -58,7 +61,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T14:30:58.553046
 
 ---
 

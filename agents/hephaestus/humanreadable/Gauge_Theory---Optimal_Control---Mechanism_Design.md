@@ -3,7 +3,7 @@
 **Fields**: Physics, Control Theory, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T08:31:24.618446
-**Report Generated**: 2026-03-25T09:15:36.505685
+**Report Generated**: 2026-03-27T06:37:36.444221
 
 ---
 
@@ -44,14 +44,16 @@ Implementability: 4/10 — requires solving bundle‑based HJB equations and int
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Mechanism Design + Optimal Control: strong positive synergy (+0.290). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Optimal Control + Mechanism Design + Model Checking (accuracy: 0%, calibration: 0%)
+- Symbiosis + Optimal Control + Mechanism Design (accuracy: 0%, calibration: 0%)
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -59,7 +61,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:51:58.178911
 
 ---
 

@@ -7,93 +7,92 @@
   "concept_strengths": {
     "Dynamical Systems": {
       "influence": {
-        "forge_effect": -0.0889,
+        "forge_effect": -0.0593,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2,
-      "forge_effect": -0.0889,
+      "forge_rate": 0.1282,
+      "forge_effect": -0.0593,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2,
-        "rate_without": 0.4356,
-        "drop": -0.2356
+        "base_rate": 0.2243,
+        "rate_with": 0.1282,
+        "rate_without": 0.2268,
+        "drop": -0.0986
       },
-      "summary": "Dynamical Systems: removing it increases forge probability by 24%; forge rate: 20%",
-      "directive": "**Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Dynamical Systems: removing it increases forge probability by 10%; forge rate: 13%",
+      "directive": "**Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Nash Equilibrium": {
       "influence": {
-        "forge_effect": 0.0483,
+        "forge_effect": 0.0042,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.375,
-      "forge_effect": 0.0483,
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.375,
-        "rate_without": 0.433,
-        "drop": -0.058
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
       },
-      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "summary": "Nash Equilibrium: forge rate: 21%",
       "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Counterfactual Reasoning": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0237,
         "reasoning_effect": 0.0
       },
-      "forge_rate": null,
-      "forge_effect": 0.0,
+      "forge_rate": 0.1818,
+      "forge_effect": 0.0237,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Counterfactual Reasoning: no significant causal signal detected",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Counterfactual Reasoning: forge rate: 18%",
       "directive": "**Counterfactual Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Counterfactual Reasoning + Dynamical Systems": 0.4767
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Epistemology",
-        "Criticality",
-        "Nash Equilibrium"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Ergodic Theory",
         "Dynamical Systems",
-        "Theory of Mind"
+        "Nash Equilibrium",
+        "Counterfactual Reasoning"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Falsificationism",
-        "Compositionality",
-        "Nash Equilibrium"
+        "Differentiable Programming",
+        "Nash Equilibrium",
+        "Metamorphic Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Dynamical Systems",
+        "Abductive Reasoning",
+        "Maximum Entropy"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Counterfactual Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)\n- Falsificationism + Compositionality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Counterfactual Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Counterfactual Reasoning + Dynamical Systems: strong positive synergy (+0.477). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Dynamical Systems + Nash Equilibrium + Counterfactual Reasoning (accuracy: 0%, calibration: 0%)\n- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)\n- Dynamical Systems + Abductive Reasoning + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

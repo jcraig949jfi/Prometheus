@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:48:07.299451
-**Report Generated**: 2026-03-25T09:15:34.682254
+**Report Generated**: 2026-03-27T05:13:32.917057
 
 ---
 
@@ -42,13 +42,14 @@ Implementability: 4/10 — requires custom ODE solvers, measure‑aware autodiff
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
 
 Similar combinations that forged successfully:
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Differentiable Programming + Dialectics (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:53:05.292868
 
 ---
 

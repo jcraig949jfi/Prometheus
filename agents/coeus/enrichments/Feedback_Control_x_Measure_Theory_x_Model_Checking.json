@@ -1,0 +1,95 @@
+{
+  "concept_names": [
+    "Measure Theory",
+    "Feedback Control",
+    "Model Checking"
+  ],
+  "concept_strengths": {
+    "Measure Theory": {
+      "influence": {
+        "forge_effect": -0.0249,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1458,
+      "forge_effect": -0.0249,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1458,
+        "rate_without": 0.2268,
+        "drop": -0.081
+      },
+      "summary": "Measure Theory: removing it increases forge probability by 8%; forge rate: 15%",
+      "directive": "**Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0252,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
+      },
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Model Checking": {
+      "influence": {
+        "forge_effect": -0.0261,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2174,
+      "forge_effect": -0.0261,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Model Checking: forge rate: 22%",
+      "directive": "**Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Feedback Control + Measure Theory": -0.0237,
+    "Measure Theory + Model Checking": 0.135,
+    "Feedback Control + Model Checking": 0.298
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Dialectics",
+        "Feedback Control",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Evolution",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Free Energy Principle",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Measure Theory + Model Checking: strong positive synergy (+0.135). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Feedback Control + Model Checking: strong positive synergy (+0.298). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Dialectics + Feedback Control + Model Checking (accuracy: 0%, calibration: 0%)\n- Measure Theory + Evolution + Model Checking (accuracy: 0%, calibration: 0%)\n- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

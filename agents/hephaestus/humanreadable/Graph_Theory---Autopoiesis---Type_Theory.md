@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:57:21.927369
-**Report Generated**: 2026-03-25T09:15:25.780047
+**Report Generated**: 2026-03-27T06:37:27.451923
 
 ---
 
@@ -44,10 +44,11 @@ The following concepts have historical causal signatures regarding their ability
 - **Autopoiesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+
 Similar combinations that forged successfully:
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Autopoiesis + Criticality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
+- Category Theory + Gauge Theory + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

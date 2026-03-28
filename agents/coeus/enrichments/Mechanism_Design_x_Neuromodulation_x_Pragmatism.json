@@ -7,73 +7,76 @@
   "concept_strengths": {
     "Pragmatism": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.2295,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": 0.0,
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.434,
-        "drop": -0.184
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
       },
-      "summary": "Pragmatism: removing it increases forge probability by 18%; forge rate: 25%",
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
       "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Neuromodulation": {
       "influence": {
-        "forge_effect": -0.0749,
+        "forge_effect": 0.057,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": -0.0749,
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
       },
-      "summary": "Neuromodulation: negative forge driver (-0.07); forge rate: 44%",
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
       "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Mechanism Design": {
       "influence": {
-        "forge_effect": 0.7382,
+        "forge_effect": 0.2489,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7308,
-      "forge_effect": 0.7382,
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7308,
-        "rate_without": 0.3992,
-        "drop": 0.3316
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
       },
-      "summary": "Mechanism Design: removing it drops forge probability by 33% (from 73%); forge rate: 73%",
-      "directive": "**Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. "
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
   "pair_synergies": {
-    "Mechanism Design + Neuromodulation": 0.6752
+    "Neuromodulation + Pragmatism": 0.4818,
+    "Mechanism Design + Pragmatism": 0.3175,
+    "Mechanism Design + Neuromodulation": 0.6696
   },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Pragmatism",
+        "Neuromodulation",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Chaos Theory",
@@ -91,16 +94,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Active Inference",
-        "Mechanism Design",
-        "Type Theory"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. \n\n- Mechanism Design + Neuromodulation: strong positive synergy (+0.675). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Chaos Theory + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Falsificationism + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Neuromodulation + Pragmatism: strong positive synergy (+0.482). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Mechanism Design + Pragmatism: strong positive synergy (+0.318). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Mechanism Design + Neuromodulation: strong positive synergy (+0.670). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Pragmatism + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Falsificationism + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

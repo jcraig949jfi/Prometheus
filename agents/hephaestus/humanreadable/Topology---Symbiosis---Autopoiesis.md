@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T08:59:02.513170
-**Report Generated**: 2026-03-25T09:15:36.692665
+**Report Generated**: 2026-03-27T06:37:36.567219
 
 ---
 
@@ -87,7 +87,7 @@ The following concepts have historical causal signatures regarding their ability
 Similar combinations that forged successfully:
 - Chaos Theory + Autopoiesis + Criticality (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
-- Thermodynamics + Sparse Autoencoders + Autopoiesis (accuracy: 0%, calibration: 0%)
+- Dialectics + Autopoiesis + Kolmogorov Complexity (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

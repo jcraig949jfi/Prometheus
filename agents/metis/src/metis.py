@@ -323,6 +323,32 @@ def write_brief(brief_text: str, digest_path: Path) -> Path:
 
     brief_path.write_text(content, encoding="utf-8")
     log.info(f"Brief written: {brief_path}")
+
+    # Constitutional Law 3: Deposit brief findings into substrate
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "aletheia" / "src"))
+        from ingest import deposit_entity
+
+        # Extract "Act on this" items as high-priority findings
+        act_items = re.findall(r'(?:^|\n)\s*[-*]\s*\*\*(.+?)\*\*', brief_text)
+        if not act_items:
+            act_items = re.findall(r'(?:Act on this|ATTENTION|Priority).*?[-*]\s*(.+?)(?:\n|$)', brief_text, re.I)
+
+        deposited = 0
+        for item in act_items[:10]:  # Cap at 10 to avoid noise
+            deposit_entity(
+                name=f"metis_finding: {item[:150]}",
+                entity_type="metis_finding",
+                source_agent="metis",
+                metadata={"date": date_str, "brief_path": str(brief_path)},
+            )
+            deposited += 1
+
+        if deposited:
+            log.info(f"Substrate: deposited {deposited} findings into Aletheia")
+    except Exception as e:
+        log.warning(f"Substrate deposition failed (non-fatal): {e}")
+
     return brief_path
 
 

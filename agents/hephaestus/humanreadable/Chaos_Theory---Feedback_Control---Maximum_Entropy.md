@@ -3,7 +3,7 @@
 **Fields**: Physics, Control Theory, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:44:29.680381
-**Report Generated**: 2026-03-25T09:15:29.567173
+**Report Generated**: 2026-03-27T06:37:30.837946
 
 ---
 
@@ -46,11 +46,13 @@ Implementability: 6/10 — requires real‑time Lyapunov estimation and PID tuni
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Chaos Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. 
-- **Feedback Control**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Chaos Theory + Maximum Entropy: strong positive synergy (+0.823). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Feedback Control: strong positive synergy (+0.444). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Maximum Entropy: strong positive synergy (+0.369). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Feedback Control + Maximum Entropy: strong positive synergy (+0.222). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)

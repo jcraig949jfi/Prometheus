@@ -3,7 +3,7 @@
 **Fields**: Physics, Signal Processing, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T08:19:25.880992
-**Report Generated**: 2026-03-25T09:15:36.441022
+**Report Generated**: 2026-03-27T06:37:36.389223
 
 ---
 
@@ -46,14 +46,15 @@ Implementability: 5/10 — <why>
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Statistical Mechanics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Nash Equilibrium**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
-- Sparse Autoencoders + Kalman Filtering + Sparse Coding (accuracy: 0%, calibration: 0%)
-- Statistical Mechanics + Active Inference + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Kalman Filtering + Falsificationism + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)
+- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

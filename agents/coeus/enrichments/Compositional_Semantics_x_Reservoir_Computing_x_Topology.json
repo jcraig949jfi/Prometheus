@@ -7,66 +7,81 @@
   "concept_strengths": {
     "Topology": {
       "influence": {
-        "forge_effect": 0.0021,
+        "forge_effect": -0.0563,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.1429,
-      "forge_effect": 0.0021,
+      "forge_rate": 0.1111,
+      "forge_effect": -0.0563,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.1429,
-        "rate_without": 0.4471,
-        "drop": -0.3042
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2284,
+        "drop": -0.1173
       },
-      "summary": "Topology: removing it increases forge probability by 30%; forge rate: 14%",
+      "summary": "Topology: removing it increases forge probability by 12%; forge rate: 11%",
       "directive": "**Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Reservoir Computing": {
       "influence": {
-        "forge_effect": -0.179,
+        "forge_effect": -0.0112,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.179,
+      "forge_rate": 0.25,
+      "forge_effect": -0.0112,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.25,
+        "rate_without": 0.2238,
+        "drop": 0.0262
       },
-      "summary": "Reservoir Computing: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Reservoir Computing: forge rate: 25%",
+      "directive": "**Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Compositional Semantics": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0164,
         "reasoning_effect": 0.0
       },
-      "forge_rate": null,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0164,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Compositional Semantics: no significant causal signal detected",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2241,
+        "drop": 0.0616
+      },
+      "summary": "Compositional Semantics: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
       "directive": "**Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Gauge Theory",
+        "Sparse Autoencoders",
+        "Compositional Semantics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Proof Theory",
@@ -75,25 +90,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Reservoir Computing",
-        "Active Inference",
-        "Abductive Reasoning"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Reservoir Computing",
-        "Pragmatics",
-        "Free Energy Principle"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Proof Theory + Constraint Satisfaction + Compositional Semantics (accuracy: 0%, calibration: 0%)\n- Reservoir Computing + Active Inference + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Reservoir Computing + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n- Gauge Theory + Sparse Autoencoders + Compositional Semantics (accuracy: 0%, calibration: 0%)\n- Proof Theory + Constraint Satisfaction + Compositional Semantics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

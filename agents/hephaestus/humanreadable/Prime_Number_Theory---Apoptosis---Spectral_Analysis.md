@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T06:45:52.407358
-**Report Generated**: 2026-03-25T09:15:35.424271
+**Report Generated**: 2026-03-27T05:13:33.108054
 
 ---
 
@@ -46,8 +46,9 @@ The following concepts have historical causal signatures regarding their ability
 - **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Ergodic Theory + Spectral Analysis + Criticality (accuracy: 0%, calibration: 0%)
-- Spectral Analysis + Falsificationism + Criticality (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Constraint Satisfaction + Spectral Analysis + Type Theory (accuracy: 0%, calibration: 0%)
+- Epigenetics + Spectral Analysis + Emergence (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

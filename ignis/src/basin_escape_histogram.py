@@ -25,6 +25,10 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+# Fix Windows cp1252 console choking on Greek characters (ε, ∈, etc.)
+sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 import numpy as np
 import torch
 

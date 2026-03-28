@@ -3,7 +3,7 @@
 **Fields**: Physics, Complex Systems, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T08:04:28.406724
-**Report Generated**: 2026-03-25T09:15:36.316582
+**Report Generated**: 2026-03-27T06:37:36.296201
 
 ---
 
@@ -40,16 +40,18 @@ Implementability: 5/10 — requires custom order‑parameter definitions, scalin
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 33% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Criticality + Phase Transitions: strong positive synergy (+0.647). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Phase Transitions: strong positive synergy (+0.885). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Model Checking + Phase Transitions: strong positive synergy (+0.220). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Model Checking: strong positive synergy (+0.917). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Phase Transitions + Criticality + Model Checking (accuracy: 0%, calibration: 0%)
 - Phase Transitions + Criticality + Neuromodulation (accuracy: 0%, calibration: 0%)
-- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
+- Phase Transitions + Nash Equilibrium + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

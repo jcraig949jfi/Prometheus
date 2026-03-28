@@ -3,7 +3,7 @@
 **Fields**: Information Science, Neuroscience, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:58:25.694210
-**Report Generated**: 2026-03-25T09:15:28.245232
+**Report Generated**: 2026-03-27T05:13:29.091319
 
 ---
 
@@ -41,14 +41,16 @@ Implementability: 5/10 — Requires precise neuromorphic implementation of LDPC 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Neural Oscillations + Pragmatics: strong positive synergy (+0.114). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)
-- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Reinforcement Learning + Neural Oscillations + Pragmatics (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:47:21.709902
 
 ---
 

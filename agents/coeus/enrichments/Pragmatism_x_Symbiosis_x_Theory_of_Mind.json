@@ -7,66 +7,72 @@
   "concept_strengths": {
     "Symbiosis": {
       "influence": {
-        "forge_effect": -0.1227,
+        "forge_effect": -0.0854,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.1227,
+      "forge_rate": 0.1212,
+      "forge_effect": -0.0854,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Symbiosis: negative forge driver (-0.12)",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1212,
+        "rate_without": 0.2266,
+        "drop": -0.1054
+      },
+      "summary": "Symbiosis: removing it increases forge probability by 11%; forge rate: 12%",
       "directive": "**Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Theory of Mind": {
       "influence": {
-        "forge_effect": 0.2595,
-        "reasoning_effect": 0.0
-      },
-      "forge_rate": 0.4167,
-      "forge_effect": 0.2595,
-      "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4167,
-        "rate_without": 0.4319,
-        "drop": -0.0152
-      },
-      "summary": "Theory of Mind: positive forge driver (+0.26); forge rate: 42%",
-      "directive": "**Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
-    },
-    "Pragmatism": {
-      "influence": {
         "forge_effect": 0.0,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
+      "forge_rate": 0.1702,
       "forge_effect": 0.0,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.434,
-        "drop": -0.184
+        "base_rate": 0.2243,
+        "rate_with": 0.1702,
+        "rate_without": 0.226,
+        "drop": -0.0558
       },
-      "summary": "Pragmatism: removing it increases forge probability by 18%; forge rate: 25%",
+      "summary": "Theory of Mind: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Pragmatism": {
+      "influence": {
+        "forge_effect": -0.2295,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
+      },
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
       "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Pragmatism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Ergodic Theory",
@@ -84,16 +90,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Ergodic Theory",
-        "Theory of Mind",
-        "Abductive Reasoning"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Ecosystem Dynamics + Theory of Mind (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Theory of Mind + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Ecosystem Dynamics + Theory of Mind (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

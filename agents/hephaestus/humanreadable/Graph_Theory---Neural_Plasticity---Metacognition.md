@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:38:47.077266
-**Report Generated**: 2026-03-25T09:15:34.615170
+**Report Generated**: 2026-03-27T05:13:32.895058
 
 ---
 
@@ -50,13 +50,15 @@ Implementability: 6/10 — Requires custom GNN layers with differentiable plasti
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Metacognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Metacognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Metacognition + Neural Plasticity: negative interaction (-0.059). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
 - Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

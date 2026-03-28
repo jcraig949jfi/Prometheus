@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Computer Science, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:38:20.795616
-**Report Generated**: 2026-03-25T09:15:26.791583
+**Report Generated**: 2026-03-27T05:13:27.194301
 
 ---
 
@@ -44,10 +44,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Epigenetics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Thermodynamics + Monte Carlo Tree Search + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Compressed Sensing + Epigenetics + Kolmogorov Complexity (accuracy: 0%, calibration: 0%)
+- Compressed Sensing + Differentiable Programming + Falsificationism (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Renormalization + Epigenetics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

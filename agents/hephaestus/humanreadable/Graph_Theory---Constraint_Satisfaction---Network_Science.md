@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:55:56.981683
-**Report Generated**: 2026-03-25T09:15:30.786923
+**Report Generated**: 2026-03-26T22:21:17.883088
 
 ---
 
@@ -49,12 +49,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Constraint Satisfaction**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
 Similar combinations that forged successfully:
+- Constraint Satisfaction + Wavelet Transforms + Network Science (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)
-- Proof Theory + Constraint Satisfaction + Normalized Compression Distance (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

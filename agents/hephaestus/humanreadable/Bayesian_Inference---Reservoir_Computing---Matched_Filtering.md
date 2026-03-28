@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:02:39.341893
-**Report Generated**: 2026-03-25T09:15:29.210374
+**Report Generated**: 2026-03-27T06:37:30.498952
 
 ---
 
@@ -44,13 +44,16 @@ Implementability: 8/10 — All three building blocks are mature: ESNs are easy t
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Bayesian Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Bayesian Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Bayesian Inference + Reservoir Computing: strong positive synergy (+0.457). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

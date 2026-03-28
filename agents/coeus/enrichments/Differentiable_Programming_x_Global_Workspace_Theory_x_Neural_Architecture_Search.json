@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Neural Architecture Search",
+    "Differentiable Programming",
+    "Global Workspace Theory"
+  ],
+  "concept_strengths": {
+    "Neural Architecture Search": {
+      "influence": {
+        "forge_effect": -0.047,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1667,
+      "forge_effect": -0.047,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.2257,
+        "drop": -0.059
+      },
+      "summary": "Neural Architecture Search: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Differentiable Programming": {
+      "influence": {
+        "forge_effect": 0.0347,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1837,
+      "forge_effect": 0.0347,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1837,
+        "rate_without": 0.2257,
+        "drop": -0.042
+      },
+      "summary": "Differentiable Programming: forge rate: 18%",
+      "directive": "**Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Global Workspace Theory": {
+      "influence": {
+        "forge_effect": -0.0142,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2143,
+      "forge_effect": -0.0142,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2143,
+        "rate_without": 0.2246,
+        "drop": -0.0103
+      },
+      "summary": "Global Workspace Theory: forge rate: 21%",
+      "directive": "**Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Differentiable Programming + Neural Architecture Search": -0.0306,
+    "Global Workspace Theory + Neural Architecture Search": -0.0357
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Global Workspace Theory",
+        "Epistemology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Global Workspace Theory",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Category Theory + Global Workspace Theory + Epistemology (accuracy: 0%, calibration: 0%)\n- Category Theory + Global Workspace Theory + Network Science (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

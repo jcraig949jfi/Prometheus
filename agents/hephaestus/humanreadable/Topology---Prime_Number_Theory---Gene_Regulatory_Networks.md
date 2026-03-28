@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Mathematics, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:18:08.270825
-**Report Generated**: 2026-03-25T09:15:28.449468
+**Report Generated**: 2026-03-27T02:16:21.305657
 
 ---
 
@@ -43,10 +43,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Gene Regulatory Networks**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Gene Regulatory Networks**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Phase Transitions + Gene Regulatory Networks + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Gene Regulatory Networks + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Differentiable Programming + Gene Regulatory Networks + Active Inference (accuracy: 0%, calibration: 0%)
+- Gene Regulatory Networks + Kalman Filtering + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

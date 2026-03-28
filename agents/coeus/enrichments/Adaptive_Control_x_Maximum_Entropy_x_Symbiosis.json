@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Symbiosis",
+    "Adaptive Control",
+    "Maximum Entropy"
+  ],
+  "concept_strengths": {
+    "Symbiosis": {
+      "influence": {
+        "forge_effect": -0.0854,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1212,
+      "forge_effect": -0.0854,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1212,
+        "rate_without": 0.2266,
+        "drop": -0.1054
+      },
+      "summary": "Symbiosis: removing it increases forge probability by 11%; forge rate: 12%",
+      "directive": "**Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Adaptive Control": {
+      "influence": {
+        "forge_effect": -0.0303,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2105,
+      "forge_effect": -0.0303,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2105,
+        "rate_without": 0.2245,
+        "drop": -0.014
+      },
+      "summary": "Adaptive Control: forge rate: 21%",
+      "directive": "**Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.1336,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Maximum Entropy + Symbiosis": -0.0209,
+    "Adaptive Control + Maximum Entropy": 0.2136
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Kolmogorov Complexity",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Adaptive Control",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Adaptive Control + Maximum Entropy: strong positive synergy (+0.214). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

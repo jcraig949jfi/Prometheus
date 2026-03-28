@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Computer Science, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:49:12.906188
-**Report Generated**: 2026-03-25T09:15:32.192671
+**Report Generated**: 2026-03-27T06:37:32.956287
 
 ---
 
@@ -43,13 +43,23 @@ The following concepts have historical causal signatures regarding their ability
 - **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Compressed Sensing + Symbiosis: strong positive synergy (+0.221). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
+Similar combinations that forged successfully:
+- Measure Theory + Compressed Sensing + Symbiosis (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)
+
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
 ---
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:58:49.975164
 
 ---
 

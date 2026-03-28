@@ -7,71 +7,81 @@
   "concept_strengths": {
     "Dual Process Theory": {
       "influence": {
-        "forge_effect": -0.5205,
+        "forge_effect": -0.1791,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.5205,
+      "forge_rate": 0.0625,
+      "forge_effect": -0.1791,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4377,
-        "drop": -0.4377
+        "base_rate": 0.2243,
+        "rate_with": 0.0625,
+        "rate_without": 0.226,
+        "drop": -0.1635
       },
-      "summary": "Dual Process Theory: removing it increases forge probability by 44%",
+      "summary": "Dual Process Theory: removing it increases forge probability by 16%; forge rate: 6%",
       "directive": "**Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Wavelet Transforms": {
       "influence": {
-        "forge_effect": -0.0822,
+        "forge_effect": -0.0685,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.0822,
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
       },
-      "summary": "Wavelet Transforms: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
       "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Feedback Control": {
       "influence": {
-        "forge_effect": -0.0566,
+        "forge_effect": -0.0252,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4,
-      "forge_effect": -0.0566,
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4,
-        "rate_without": 0.4324,
-        "drop": -0.0324
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
       },
-      "summary": "Feedback Control: negative forge driver (-0.06); forge rate: 40%",
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
       "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Wavelet Transforms",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Chaos Theory",
@@ -80,25 +90,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Feedback Control",
-        "Maximum Entropy"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Falsificationism",
-        "Pragmatism",
-        "Feedback Control"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

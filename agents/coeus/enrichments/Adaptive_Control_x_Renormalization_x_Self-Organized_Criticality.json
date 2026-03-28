@@ -1,0 +1,93 @@
+{
+  "concept_names": [
+    "Renormalization",
+    "Self-Organized Criticality",
+    "Adaptive Control"
+  ],
+  "concept_strengths": {
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Self-Organized Criticality": {
+      "influence": {
+        "forge_effect": -0.1349,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.125,
+      "forge_effect": -0.1349,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.125,
+        "rate_without": 0.2259,
+        "drop": -0.1009
+      },
+      "summary": "Self-Organized Criticality: removing it increases forge probability by 10%; forge rate: 12%",
+      "directive": "**Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Adaptive Control": {
+      "influence": {
+        "forge_effect": -0.0303,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2105,
+      "forge_effect": -0.0303,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2105,
+        "rate_without": 0.2245,
+        "drop": -0.014
+      },
+      "summary": "Adaptive Control: forge rate: 21%",
+      "directive": "**Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Renormalization + Self-Organized Criticality": -0.0278
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Apoptosis",
+        "Falsificationism",
+        "Self-Organized Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Chaos Theory",
+        "Self-Organized Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Neuroscience, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:00:58.292501
-**Report Generated**: 2026-03-25T09:15:27.605941
+**Report Generated**: 2026-03-27T06:37:29.061922
 
 ---
 
@@ -40,16 +40,18 @@ Implementability: 5/10 — Requires integrating three complex components (predic
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Active Inference + Compositionality: strong positive synergy (+0.351). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Hebbian Learning: negative interaction (-0.103). Keep these concepts in separate code paths to avoid interference.
+- Active Inference + Compositionality: strong positive synergy (+0.337). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Compositionality + Hebbian Learning: strong positive synergy (+0.277). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Hebbian Learning + Compositionality (accuracy: 0%, calibration: 0%)
 - Neural Architecture Search + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

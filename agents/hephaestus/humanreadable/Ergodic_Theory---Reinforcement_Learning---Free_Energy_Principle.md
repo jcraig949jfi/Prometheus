@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:31:06.850331
-**Report Generated**: 2026-03-25T09:15:30.566672
+**Report Generated**: 2026-03-27T06:37:31.627279
 
 ---
 
@@ -43,12 +43,13 @@ Implementability: 5/10 — Requires integrating variational inference, policy gr
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Ergodic Theory + Free Energy Principle: strong positive synergy (+0.589). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Free Energy Principle + Reinforcement Learning: strong positive synergy (+0.209). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Reinforcement Learning: strong positive synergy (+0.456). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Free Energy Principle: strong positive synergy (+0.400). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Reinforcement Learning: strong positive synergy (+0.949). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Reinforcement Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)

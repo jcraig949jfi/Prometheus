@@ -3,7 +3,7 @@
 **Fields**: Signal Processing, Complex Systems, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T02:18:43.656367
-**Report Generated**: 2026-03-25T09:15:33.382117
+**Report Generated**: 2026-03-27T16:08:05.221894
 
 ---
 
@@ -41,13 +41,15 @@ Implementability: 5/10 — Requires custom graph kernels or GNN‑based filters,
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Compositionality + Network Science: strong positive synergy (+0.936). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Falsificationism + Network Science + Compositionality (accuracy: 0%, calibration: 0%)
+- Wavelet Transforms + Network Science + Compositionality (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Fourier Transforms + Criticality + Compositionality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T10:45:34.288683
 
 ---
 

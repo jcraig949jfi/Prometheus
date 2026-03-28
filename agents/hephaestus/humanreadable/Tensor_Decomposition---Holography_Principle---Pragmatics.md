@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:24:29.211421
-**Report Generated**: 2026-03-25T09:15:30.504259
+**Report Generated**: 2026-03-27T06:37:31.580764
 
 ---
 
@@ -40,14 +40,17 @@ Implementability: 5/10 — Building a trainable TT‑MERA with learnable pragmat
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Holography Principle**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Holography Principle + Tensor Decomposition: strong positive synergy (+0.477). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Holography Principle + Pragmatics: strong positive synergy (+0.105). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)
+- Holography Principle + Immune Systems + Pragmatics (accuracy: 0%, calibration: 0%)
+- Tensor Decomposition + Holography Principle + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:56:00.530810
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:39:07.549507
-**Report Generated**: 2026-03-25T09:15:24.658122
+**Report Generated**: 2026-03-27T02:16:17.227164
 
 ---
 
@@ -42,14 +42,15 @@ Because the visitation distribution is ergodic, time‑averaged estimates of any
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+
 Similar combinations that forged successfully:
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

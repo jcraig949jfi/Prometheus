@@ -7,66 +7,76 @@
   "concept_strengths": {
     "Reservoir Computing": {
       "influence": {
-        "forge_effect": -0.179,
+        "forge_effect": -0.0112,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.179,
+      "forge_rate": 0.25,
+      "forge_effect": -0.0112,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.25,
+        "rate_without": 0.2238,
+        "drop": 0.0262
       },
-      "summary": "Reservoir Computing: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Reservoir Computing: forge rate: 25%",
+      "directive": "**Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Falsificationism": {
       "influence": {
-        "forge_effect": 0.6959,
+        "forge_effect": 0.3222,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.6087,
-      "forge_effect": 0.6959,
+      "forge_rate": 0.3662,
+      "forge_effect": 0.3222,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.6087,
-        "rate_without": 0.4146,
-        "drop": 0.1941
+        "base_rate": 0.2243,
+        "rate_with": 0.3662,
+        "rate_without": 0.2176,
+        "drop": 0.1486
       },
-      "summary": "Falsificationism: removing it drops forge probability by 19% (from 61%); forge rate: 61%",
-      "directive": "**Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. "
+      "summary": "Falsificationism: removing it drops forge probability by 15% (from 37%); forge rate: 37%",
+      "directive": "**Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Kolmogorov Complexity": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0166,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4286,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2462,
+      "forge_effect": 0.0166,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Kolmogorov Complexity: forge rate: 43%",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2462,
+        "rate_without": 0.2234,
+        "drop": 0.0227
+      },
+      "summary": "Kolmogorov Complexity: forge rate: 25%",
       "directive": "**Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Falsificationism + Reservoir Computing": 0.4085,
+    "Kolmogorov Complexity + Reservoir Computing": -0.0615,
+    "Falsificationism + Kolmogorov Complexity": -0.0901
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Reservoir Computing",
+        "Falsificationism",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Active Inference",
@@ -78,22 +88,13 @@
     },
     {
       "concept_names": [
-        "Chaos Theory",
+        "Apoptosis",
         "Falsificationism",
-        "Maximum Entropy"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Kolmogorov Complexity",
-        "Free Energy Principle"
+        "Self-Organized Criticality"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 61%. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Falsificationism + Reservoir Computing: strong positive synergy (+0.408). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Kolmogorov Complexity + Reservoir Computing: negative interaction (-0.061). Keep these concepts in separate code paths to avoid interference.\n- Falsificationism + Kolmogorov Complexity: negative interaction (-0.090). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Reservoir Computing + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

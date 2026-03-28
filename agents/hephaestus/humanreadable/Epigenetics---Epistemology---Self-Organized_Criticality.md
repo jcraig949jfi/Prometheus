@@ -3,7 +3,7 @@
 **Fields**: Biology, Philosophy, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T01:30:29.052117
-**Report Generated**: 2026-03-25T09:15:32.820677
+**Report Generated**: 2026-03-27T02:16:27.021597
 
 ---
 
@@ -42,14 +42,14 @@ Implementability: 5/10 — Realizing spiking critical reservoirs with multi‑ti
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Epigenetics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Epistemology**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
 Similar combinations that forged successfully:
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Epistemology + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

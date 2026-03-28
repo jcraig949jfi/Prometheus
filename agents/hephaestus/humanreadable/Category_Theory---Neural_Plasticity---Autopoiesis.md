@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:03:45.637813
-**Report Generated**: 2026-03-25T09:15:24.114377
+**Report Generated**: 2026-03-27T06:37:26.536272
 
 ---
 
@@ -31,16 +31,16 @@ A *Categorical Plasticity Network* (CPN) treats each neural layer as an **object
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Category Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Category Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Autopoiesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Autopoiesis + Neural Plasticity: strong positive synergy (+0.333). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Autopoiesis + Neural Plasticity: strong positive synergy (+0.455). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
-- Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Autopoiesis + Criticality (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

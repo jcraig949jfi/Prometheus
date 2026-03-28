@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Mathematics, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:48:09.946765
-**Report Generated**: 2026-03-25T09:15:34.139969
+**Report Generated**: 2026-03-27T01:02:09.787753
 
 ---
 
@@ -42,11 +42,13 @@ Implementability: 5/10 — Simulating zeta‑scaled ODEs and apoptosis cascades 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Apoptosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
 Similar combinations that forged successfully:
-- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Abductive Reasoning + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Kalman Filtering + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

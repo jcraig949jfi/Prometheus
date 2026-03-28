@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:18:16.040496
-**Report Generated**: 2026-03-25T09:15:24.351931
+**Report Generated**: 2026-03-27T06:37:26.634381
 
 ---
 
@@ -41,10 +41,12 @@ The following concepts have historical causal signatures regarding their ability
 - **Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Abductive Reasoning + Predictive Coding: strong positive synergy (+0.459). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Theory of Mind + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Statistical Mechanics + Predictive Coding + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

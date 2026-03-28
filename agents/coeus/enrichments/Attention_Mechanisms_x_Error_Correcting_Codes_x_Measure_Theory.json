@@ -7,66 +7,69 @@
   "concept_strengths": {
     "Measure Theory": {
       "influence": {
-        "forge_effect": 0.1749,
+        "forge_effect": -0.0249,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.1749,
+      "forge_rate": 0.1458,
+      "forge_effect": -0.0249,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Measure Theory: positive forge driver (+0.17); forge rate: 50%",
-      "directive": "**Measure Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1458,
+        "rate_without": 0.2268,
+        "drop": -0.081
+      },
+      "summary": "Measure Theory: removing it increases forge probability by 8%; forge rate: 15%",
+      "directive": "**Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Attention Mechanisms": {
       "influence": {
-        "forge_effect": -0.3871,
+        "forge_effect": -0.132,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.125,
-      "forge_effect": -0.3871,
+      "forge_rate": 0.12,
+      "forge_effect": -0.132,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.125,
-        "rate_without": 0.4406,
-        "drop": -0.3156
+        "base_rate": 0.2243,
+        "rate_with": 0.12,
+        "rate_without": 0.226,
+        "drop": -0.106
       },
-      "summary": "Attention Mechanisms: removing it increases forge probability by 32%; forge rate: 12%",
+      "summary": "Attention Mechanisms: removing it increases forge probability by 11%; forge rate: 12%",
       "directive": "**Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Error Correcting Codes": {
       "influence": {
-        "forge_effect": -0.2596,
+        "forge_effect": -0.0526,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2,
-      "forge_effect": -0.2596,
+      "forge_rate": 0.2286,
+      "forge_effect": -0.0526,
       "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2,
-        "rate_without": 0.4356,
-        "drop": -0.2356
-      },
-      "summary": "Error Correcting Codes: removing it increases forge probability by 24%; forge rate: 20%",
-      "directive": "**Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "interventional": null,
+      "summary": "Error Correcting Codes: negative forge driver (-0.05); forge rate: 23%",
+      "directive": "**Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Error Correcting Codes + Measure Theory": 0.3
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Error Correcting Codes",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Attention Mechanisms",
@@ -78,22 +81,13 @@
     },
     {
       "concept_names": [
-        "Criticality",
-        "Error Correcting Codes",
-        "Pragmatics"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Measure Theory",
-        "Mechanism Design",
-        "Type Theory"
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Measure Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)\n- Measure Theory + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Error Correcting Codes + Measure Theory: strong positive synergy (+0.300). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Measure Theory + Error Correcting Codes + Type Theory (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

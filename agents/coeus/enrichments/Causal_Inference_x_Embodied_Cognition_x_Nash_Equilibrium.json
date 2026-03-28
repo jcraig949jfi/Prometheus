@@ -7,93 +7,92 @@
   "concept_strengths": {
     "Embodied Cognition": {
       "influence": {
-        "forge_effect": -0.1841,
+        "forge_effect": -0.0168,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.1841,
+      "forge_rate": 0.2069,
+      "forge_effect": -0.0168,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Embodied Cognition: negative forge driver (-0.18)",
-      "directive": "**Embodied Cognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2069,
+        "rate_without": 0.2247,
+        "drop": -0.0178
+      },
+      "summary": "Embodied Cognition: forge rate: 21%",
+      "directive": "**Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Causal Inference": {
       "influence": {
-        "forge_effect": -0.1323,
+        "forge_effect": -0.0517,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.3333,
-      "forge_effect": -0.1323,
+      "forge_rate": 0.1692,
+      "forge_effect": -0.0517,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.3333,
-        "rate_without": 0.4323,
-        "drop": -0.099
+        "base_rate": 0.2243,
+        "rate_with": 0.1692,
+        "rate_without": 0.2267,
+        "drop": -0.0575
       },
-      "summary": "Causal Inference: removing it increases forge probability by 10%; forge rate: 33%",
-      "directive": "**Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Causal Inference: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Nash Equilibrium": {
       "influence": {
-        "forge_effect": 0.0483,
+        "forge_effect": 0.0042,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.375,
-      "forge_effect": 0.0483,
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.375,
-        "rate_without": 0.433,
-        "drop": -0.058
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
       },
-      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "summary": "Nash Equilibrium: forge rate: 21%",
       "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Causal Inference + Embodied Cognition": 0.6317
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
+        "Embodied Cognition",
+        "Autopoiesis",
+        "Causal Inference"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Embodied Cognition",
+        "Causal Inference"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
         "Causal Inference",
-        "Pragmatics",
-        "Free Energy Principle"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Epistemology",
-        "Criticality",
-        "Nash Equilibrium"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Falsificationism",
-        "Compositionality",
-        "Nash Equilibrium"
+        "Neural Oscillations"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Embodied Cognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Falsificationism + Compositionality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Causal Inference + Embodied Cognition: strong positive synergy (+0.632). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Embodied Cognition + Autopoiesis + Causal Inference (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Embodied Cognition + Causal Inference (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

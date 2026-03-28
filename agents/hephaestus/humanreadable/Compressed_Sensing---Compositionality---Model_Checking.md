@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Linguistics, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:46:39.064026
-**Report Generated**: 2026-03-25T09:15:26.870215
+**Report Generated**: 2026-03-27T06:37:28.417936
 
 ---
 
@@ -41,13 +41,15 @@ Implementability: 5/10 — requires integrating ℓ₁ solvers with process‑al
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Compressed Sensing + Model Checking: negative interaction (-0.051). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
 - Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Mechanism Design + Model Checking (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:53:14.469984
 
 ---
 

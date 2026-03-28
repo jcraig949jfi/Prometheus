@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Information Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:01:14.672090
-**Report Generated**: 2026-03-25T09:15:30.177272
+**Report Generated**: 2026-03-27T02:16:24.950509
 
 ---
 
@@ -51,8 +51,8 @@ The following concepts have historical causal signatures regarding their ability
 
 Similar combinations that forged successfully:
 - Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Fourier Transforms + Criticality + Compositionality (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

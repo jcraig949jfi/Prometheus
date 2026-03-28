@@ -3,7 +3,7 @@
 **Fields**: Control Theory, Linguistics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:15:22.345978
-**Report Generated**: 2026-03-25T09:15:33.840436
+**Report Generated**: 2026-03-27T05:13:32.584063
 
 ---
 
@@ -41,13 +41,15 @@ Implementability: 6/10 — Prototype implementations exist in Coq/Agda for small
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Compositionality + Type Theory: strong positive synergy (+0.129). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Chaos Theory + Compositionality + Type Theory (accuracy: 0%, calibration: 0%)
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:55:57.495024
 
 ---
 

@@ -7,71 +7,74 @@
   "concept_strengths": {
     "Differentiable Programming": {
       "influence": {
-        "forge_effect": 0.2963,
+        "forge_effect": 0.0347,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": 0.2963,
+      "forge_rate": 0.1837,
+      "forge_effect": 0.0347,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.1837,
+        "rate_without": 0.2257,
+        "drop": -0.042
       },
-      "summary": "Differentiable Programming: positive forge driver (+0.30); forge rate: 44%",
-      "directive": "**Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Differentiable Programming: forge rate: 18%",
+      "directive": "**Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Predictive Coding": {
       "influence": {
-        "forge_effect": 0.1225,
+        "forge_effect": 0.0238,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4,
-      "forge_effect": 0.1225,
+      "forge_rate": 0.1957,
+      "forge_effect": 0.0238,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4,
-        "rate_without": 0.4324,
-        "drop": -0.0324
+        "base_rate": 0.2243,
+        "rate_with": 0.1957,
+        "rate_without": 0.2252,
+        "drop": -0.0296
       },
-      "summary": "Predictive Coding: positive forge driver (+0.12); forge rate: 40%",
-      "directive": "**Predictive Coding**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Predictive Coding: forge rate: 20%",
+      "directive": "**Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Neuromodulation": {
       "influence": {
-        "forge_effect": -0.0749,
+        "forge_effect": 0.057,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": -0.0749,
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
       },
-      "summary": "Neuromodulation: negative forge driver (-0.07); forge rate: 44%",
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
       "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Differentiable Programming + Predictive Coding": -0.0359
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Predictive Coding",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Bayesian Inference",
@@ -84,21 +87,12 @@
     {
       "concept_names": [
         "Chaos Theory",
-        "Differentiable Programming",
-        "Dialectics"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Neuromodulation",
-        "Mechanism Design"
+        "Cognitive Load Theory",
+        "Neuromodulation"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Predictive Coding**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Differentiable Programming + Dialectics (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Neuromodulation (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:33:00.796847
-**Report Generated**: 2026-03-25T09:15:31.945977
+**Report Generated**: 2026-03-27T06:37:32.820291
 
 ---
 
@@ -40,14 +40,17 @@ Implementability: 6/10 — Requires integrating three modules (SAE encoder/decod
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Sparse Autoencoders**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 82%. 
+- **Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Sparse Autoencoders + Sparse Coding: strong positive synergy (+0.265). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Kalman Filtering + Sparse Coding: strong positive synergy (+0.300). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Sparse Autoencoders + Kalman Filtering + Sparse Coding (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Sparse Autoencoders + Model Checking (accuracy: 0%, calibration: 0%)
-- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Category Theory + Sparse Autoencoders + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

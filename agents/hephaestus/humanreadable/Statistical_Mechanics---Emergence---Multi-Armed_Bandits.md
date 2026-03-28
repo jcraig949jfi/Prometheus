@@ -3,7 +3,7 @@
 **Fields**: Physics, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T15:51:54.033005
-**Report Generated**: 2026-03-25T09:15:26.350243
+**Report Generated**: 2026-03-27T06:37:27.926916
 
 ---
 
@@ -40,14 +40,17 @@ Implementability: 5/10 — requires coupling MCMC/replica exchange with bandit l
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Statistical Mechanics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Emergence + Statistical Mechanics: strong positive synergy (+0.440). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Multi-Armed Bandits + Statistical Mechanics: strong positive synergy (+0.291). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
-- Phenomenology + Emergence + Criticality (accuracy: 0%, calibration: 0%)
+- Statistical Mechanics + Cognitive Load Theory + Emergence (accuracy: 0%, calibration: 0%)
+- Statistical Mechanics + Ecosystem Dynamics + Emergence (accuracy: 0%, calibration: 0%)
+- Statistical Mechanics + Network Science + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:51:21.667535
 
 ---
 

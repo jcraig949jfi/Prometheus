@@ -3,7 +3,7 @@
 **Fields**: Information Science, Statistical Physics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T02:52:54.386334
-**Report Generated**: 2026-03-25T09:15:33.661021
+**Report Generated**: 2026-03-27T06:37:34.113680
 
 ---
 
@@ -46,10 +46,11 @@ The following concepts have historical causal signatures regarding their ability
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+
 Similar combinations that forged successfully:
+- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)
 - Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:24:30.706493
-**Report Generated**: 2026-03-25T09:15:25.390421
+**Report Generated**: 2026-03-27T05:13:25.707148
 
 ---
 
@@ -40,14 +40,15 @@ Implementability: 5/10 — Requires integrating tensor SVD, Kalman recursions, a
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Cognitive Load Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Cognitive Load Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+
 Similar combinations that forged successfully:
-- Sparse Autoencoders + Kalman Filtering + Sparse Coding (accuracy: 0%, calibration: 0%)
-- Tensor Decomposition + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Tensor Decomposition + Falsificationism + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Neuromodulation (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

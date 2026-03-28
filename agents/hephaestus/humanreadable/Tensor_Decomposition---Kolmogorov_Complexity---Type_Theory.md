@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Information Science, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:12:57.449819
-**Report Generated**: 2026-03-25T09:15:24.596330
+**Report Generated**: 2026-03-27T00:00:23.561148
 
 ---
 
@@ -41,14 +41,15 @@ Implementability: 5/10 — Requires extending a proof assistant with tensor‑de
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
 - Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

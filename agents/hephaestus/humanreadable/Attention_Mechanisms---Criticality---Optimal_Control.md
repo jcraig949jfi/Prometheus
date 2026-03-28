@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Complex Systems, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:28:17.684681
-**Report Generated**: 2026-03-25T09:15:31.875596
+**Report Generated**: 2026-03-27T17:21:23.783573
 
 ---
 
@@ -46,15 +46,15 @@ Implementability: 5/10 — <why>
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Criticality + Optimal Control: strong positive synergy (+0.382). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Optimal Control: strong positive synergy (+0.271). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
-- Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

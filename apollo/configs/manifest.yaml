@@ -1,0 +1,73 @@
+apollo:
+  # Population
+  population_size: 50
+  offspring_per_generation: 50
+  elite_count: 5
+  max_genes_per_organism: 15
+
+  # Genetics
+  crossover_rate: 0.7
+  mutation_rates:
+    point_mutate: 0.40
+    splice: 0.25
+    duplicate: 0.15
+    rewire: 0.15
+    delete: 0.10
+    duplicate_and_wire_back: 0.10
+  drift_sigma: 0.02
+  cycle_cap_range: [1, 5]
+  cycle_cap_default: 3
+
+  # Graduated schedule
+  params_only_until_gen: 10
+  mild_structural_until_gen: 30
+
+  # Selection
+  selection_algorithm: "nsga2"
+  fitness_objectives: 3
+  diversity_warmup_generations: 10
+
+  # NCD counterpressure
+  fallback_decay_floor: 0.25
+  fallback_decay_generations: 2000
+  ncd_independence_weight: 0.5
+
+  # Novelty
+  novelty_k_nearest: 15
+  novelty_archive_threshold: 0.05
+  novelty_archive_max_size: 500
+
+  # Tasks
+  evolution_seed: 42
+  held_out_seed: 137
+  n_seed_traps: 15
+  n_rotating_tasks: 5
+  task_rotation_interval: 50
+  reference_task_count: 15
+  quick_screen_count: 3
+
+  # Sandbox
+  sandbox_timeout_seconds: 0.5
+  parallel_workers: "cpu_count"
+
+  # LLM mutation
+  llm_model: "Qwen/Qwen2.5-Coder-3B-Instruct"
+  llm_max_tokens: 2048
+  llm_temperature: 0.7
+  llm_retry_on_failure: 1
+  llm_load_threshold: 0.4  # viability below this triggers eager LLM load
+
+  # Operational
+  checkpoint_interval: 10
+  checkpoint_keep_last: 5
+  held_out_eval_interval: 10
+  dashboard_interval: 1
+  max_generations: 1000
+
+  # Phase 0
+  phase0_generations_per_tool: 50
+  phase0_sigma_threshold: 0.000001
+
+  # Paths
+  forge_library_path: "F:/Prometheus/agents/hephaestus/forge_v3/"
+  trap_generator_path: "F:/Prometheus/agents/hephaestus/src/trap_generator.py"

@@ -3,7 +3,7 @@
 **Fields**: Physics, Physics, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:45:37.495569
-**Report Generated**: 2026-03-25T09:15:36.117661
+**Report Generated**: 2026-03-27T05:13:33.353962
 
 ---
 
@@ -40,14 +40,15 @@ Implementability: 5/10 — requires custom Lagrange‑multiplier layers and care
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Holography Principle**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+
 Similar combinations that forged successfully:
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Thermodynamics + Free Energy Principle + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Thermodynamics + Holography Principle + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

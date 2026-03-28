@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:47:38.286887
-**Report Generated**: 2026-03-25T09:15:29.007134
+**Report Generated**: 2026-03-27T06:37:30.341439
 
 ---
 
@@ -45,14 +45,18 @@ Implementability: 5/10 — <why>
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Sparse Autoencoders**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 82%. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Sparse Autoencoders + Tensor Decomposition: negative interaction (-0.062). Keep these concepts in separate code paths to avoid interference.
+- Criticality + Tensor Decomposition: strong positive synergy (+0.268). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Sparse Autoencoders: strong positive synergy (+0.361). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Sparse Autoencoders + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
 - Tensor Decomposition + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

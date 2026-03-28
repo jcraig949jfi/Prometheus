@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Linguistics, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:35:32.123316
-**Report Generated**: 2026-03-25T09:15:32.001758
+**Report Generated**: 2026-03-27T06:37:32.843290
 
 ---
 
@@ -49,14 +49,18 @@ Implementability: 6/10 — requires coupling three non‑trivial components (SAE
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Sparse Autoencoders**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 82%. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Pragmatics + Sparse Autoencoders: strong positive synergy (+0.297). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Multi-Armed Bandits + Sparse Autoencoders: strong positive synergy (+0.314). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Multi-Armed Bandits + Pragmatics: strong positive synergy (+0.599). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Sparse Autoencoders + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
-- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Cognitive Load Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Sparse Autoencoders + Pragmatics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

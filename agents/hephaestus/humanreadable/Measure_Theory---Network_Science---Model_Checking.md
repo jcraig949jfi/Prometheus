@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:28:07.355240
-**Report Generated**: 2026-03-25T09:15:29.412630
+**Report Generated**: 2026-03-27T06:37:30.706948
 
 ---
 
@@ -42,13 +42,15 @@ Implementability: 5/10 — Combining measure theory, community‑based lumping, 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Measure Theory + Model Checking: strong positive synergy (+0.135). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Measure Theory + Evolution + Model Checking (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
 - Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:47:30.974425
 
 ---
 

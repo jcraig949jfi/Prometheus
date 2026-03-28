@@ -7,71 +7,80 @@
   "concept_strengths": {
     "Immune Systems": {
       "influence": {
-        "forge_effect": -0.1304,
+        "forge_effect": -0.0226,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.3333,
-      "forge_effect": -0.1304,
+      "forge_rate": 0.2188,
+      "forge_effect": -0.0226,
       "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.3333,
-        "rate_without": 0.4335,
-        "drop": -0.1001
-      },
-      "summary": "Immune Systems: removing it increases forge probability by 10%; forge rate: 33%",
-      "directive": "**Immune Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "interventional": null,
+      "summary": "Immune Systems: forge rate: 22%",
+      "directive": "**Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Pragmatics": {
       "influence": {
-        "forge_effect": 0.5722,
+        "forge_effect": 0.2426,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7143,
-      "forge_effect": 0.5722,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.2426,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7143,
-        "rate_without": 0.4073,
-        "drop": 0.307
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2187,
+        "drop": 0.0671
       },
-      "summary": "Pragmatics: removing it drops forge probability by 31% (from 71%); forge rate: 71%",
-      "directive": "**Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. "
+      "summary": "Pragmatics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Mechanism Design": {
       "influence": {
-        "forge_effect": 0.7382,
+        "forge_effect": 0.2489,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7308,
-      "forge_effect": 0.7382,
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7308,
-        "rate_without": 0.3992,
-        "drop": 0.3316
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
       },
-      "summary": "Mechanism Design: removing it drops forge probability by 33% (from 73%); forge rate: 73%",
-      "directive": "**Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. "
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Immune Systems + Pragmatics": 0.6042,
+    "Immune Systems + Mechanism Design": -0.0579,
+    "Mechanism Design + Pragmatics": 0.1744
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Holography Principle",
+        "Immune Systems",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Immune Systems",
+        "Phenomenology",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Theory of Mind",
@@ -80,25 +89,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Active Inference",
-        "Mechanism Design",
-        "Type Theory"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Active Inference",
-        "Neural Oscillations",
-        "Mechanism Design"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Immune Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. \n- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. \n\nSimilar combinations that forged successfully:\n- Theory of Mind + Pragmatics + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Immune Systems + Pragmatics: strong positive synergy (+0.604). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Immune Systems + Mechanism Design: negative interaction (-0.058). Keep these concepts in separate code paths to avoid interference.\n- Mechanism Design + Pragmatics: strong positive synergy (+0.174). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Holography Principle + Immune Systems + Pragmatics (accuracy: 0%, calibration: 0%)\n- Immune Systems + Phenomenology + Pragmatics (accuracy: 0%, calibration: 0%)\n- Theory of Mind + Pragmatics + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

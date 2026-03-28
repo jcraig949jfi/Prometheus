@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Linguistics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T06:42:01.124666
-**Report Generated**: 2026-03-25T09:15:35.389244
+**Report Generated**: 2026-03-27T06:37:35.615214
 
 ---
 
@@ -42,13 +42,15 @@ Implementability: 4/10 — requires integrating verified FFT libraries, dependen
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Pragmatics + Type Theory: strong positive synergy (+0.397). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
+- Feedback Control + Pragmatics + Type Theory (accuracy: 0%, calibration: 0%)
+- Genetic Algorithms + Pragmatics + Type Theory (accuracy: 0%, calibration: 0%)
+- Pragmatics + Free Energy Principle + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

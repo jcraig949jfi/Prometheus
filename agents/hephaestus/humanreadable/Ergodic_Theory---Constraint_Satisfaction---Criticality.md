@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:29:09.649766
-**Report Generated**: 2026-03-25T09:15:25.451963
+**Report Generated**: 2026-03-27T06:37:27.245927
 
 ---
 
@@ -41,11 +41,13 @@ Implementability: 5/10 — Requires careful temperature tuning, BP/SP implementa
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Constraint Satisfaction**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Criticality + Ergodic Theory: strong positive synergy (+0.663). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Constraint Satisfaction + Ergodic Theory: strong positive synergy (+0.424). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Ergodic Theory: strong positive synergy (+0.388). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Constraint Satisfaction + Criticality: strong positive synergy (+0.234). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)

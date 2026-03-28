@@ -3,7 +3,7 @@
 **Fields**: Complex Systems, Economics, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T02:44:10.028312
-**Report Generated**: 2026-03-25T09:15:33.622544
+**Report Generated**: 2026-03-27T06:37:34.069680
 
 ---
 
@@ -40,17 +40,18 @@ Hypothesis generation: 7/10 — criticality expands the hypothesis space explore
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Criticality + Free Energy Principle: strong positive synergy (+0.288). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Free Energy Principle + Mechanism Design: strong positive synergy (+0.488). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Mechanism Design: strong positive synergy (+0.232). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Free Energy Principle: strong positive synergy (+0.369). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Mechanism Design: strong positive synergy (+0.380). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Bayesian Inference + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Evolution + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

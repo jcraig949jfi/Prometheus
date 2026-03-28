@@ -7,75 +7,92 @@
   "concept_strengths": {
     "Compressed Sensing": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0339,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.3333,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2368,
+      "forge_effect": 0.0339,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.3333,
-        "rate_without": 0.4323,
-        "drop": -0.099
+        "base_rate": 0.2243,
+        "rate_with": 0.2368,
+        "rate_without": 0.224,
+        "drop": 0.0128
       },
-      "summary": "Compressed Sensing: removing it increases forge probability by 10%; forge rate: 33%",
+      "summary": "Compressed Sensing: forge rate: 24%",
       "directive": "**Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Cellular Automata": {
       "influence": {
-        "forge_effect": -0.1732,
+        "forge_effect": -0.0187,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.1732,
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0187,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4361,
-        "drop": -0.4361
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.2252,
+        "drop": -0.0466
       },
-      "summary": "Cellular Automata: removing it increases forge probability by 44%",
-      "directive": "**Cellular Automata**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Cellular Automata: forge rate: 18%",
+      "directive": "**Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Symbiosis": {
       "influence": {
-        "forge_effect": -0.1227,
+        "forge_effect": -0.0854,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.1227,
+      "forge_rate": 0.1212,
+      "forge_effect": -0.0854,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Symbiosis: negative forge driver (-0.12)",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1212,
+        "rate_without": 0.2266,
+        "drop": -0.1054
+      },
+      "summary": "Symbiosis: removing it increases forge probability by 11%; forge rate: 12%",
       "directive": "**Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Compressed Sensing + Symbiosis": 0.2213
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Thermodynamics",
+        "Measure Theory",
         "Compressed Sensing",
-        "Mechanism Design"
+        "Symbiosis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Cellular Automata",
+        "Cognitive Load Theory",
+        "Phenomenology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Cellular Automata",
+        "Mechanism Design",
+        "Free Energy Principle"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Cellular Automata**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Thermodynamics + Compressed Sensing + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Compressed Sensing + Symbiosis: strong positive synergy (+0.221). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Measure Theory + Compressed Sensing + Symbiosis (accuracy: 0%, calibration: 0%)\n- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)\n- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

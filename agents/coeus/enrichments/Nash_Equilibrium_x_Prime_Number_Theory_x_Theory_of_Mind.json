@@ -7,98 +7,90 @@
   "concept_strengths": {
     "Prime Number Theory": {
       "influence": {
-        "forge_effect": -0.4275,
+        "forge_effect": -0.1608,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.4275,
+      "forge_rate": 0.0857,
+      "forge_effect": -0.1608,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4514,
-        "drop": -0.4514
+        "base_rate": 0.2243,
+        "rate_with": 0.0857,
+        "rate_without": 0.2275,
+        "drop": -0.1418
       },
-      "summary": "Prime Number Theory: removing it increases forge probability by 45%",
+      "summary": "Prime Number Theory: removing it increases forge probability by 14%; forge rate: 9%",
       "directive": "**Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Theory of Mind": {
       "influence": {
-        "forge_effect": 0.2595,
+        "forge_effect": 0.0,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4167,
-      "forge_effect": 0.2595,
+      "forge_rate": 0.1702,
+      "forge_effect": 0.0,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4167,
-        "rate_without": 0.4319,
-        "drop": -0.0152
+        "base_rate": 0.2243,
+        "rate_with": 0.1702,
+        "rate_without": 0.226,
+        "drop": -0.0558
       },
-      "summary": "Theory of Mind: positive forge driver (+0.26); forge rate: 42%",
-      "directive": "**Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Theory of Mind: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Nash Equilibrium": {
       "influence": {
-        "forge_effect": 0.0483,
+        "forge_effect": 0.0042,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.375,
-      "forge_effect": 0.0483,
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.375,
-        "rate_without": 0.433,
-        "drop": -0.058
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
       },
-      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "summary": "Nash Equilibrium: forge rate: 21%",
       "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Epistemology",
-        "Criticality",
-        "Nash Equilibrium"
+        "Differentiable Programming",
+        "Nash Equilibrium",
+        "Metamorphic Testing"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Ergodic Theory",
         "Dynamical Systems",
-        "Theory of Mind"
+        "Nash Equilibrium",
+        "Counterfactual Reasoning"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Ergodic Theory",
-        "Ecosystem Dynamics",
-        "Theory of Mind"
+        "Epigenetics",
+        "Error Correcting Codes",
+        "Nash Equilibrium"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Ecosystem Dynamics + Theory of Mind (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)\n- Dynamical Systems + Nash Equilibrium + Counterfactual Reasoning (accuracy: 0%, calibration: 0%)\n- Epigenetics + Error Correcting Codes + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

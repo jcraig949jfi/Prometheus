@@ -3,7 +3,7 @@
 **Fields**: Physics, Biology, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T23:34:35.212738
-**Report Generated**: 2026-03-25T09:15:31.254886
+**Report Generated**: 2026-03-27T06:37:32.256276
 
 ---
 
@@ -40,14 +40,17 @@ Implementability: 5/10 — Requires tuning of Kalman‑filter parameters, evolut
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 33% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Evolution + Phase Transitions: negative interaction (-0.080). Keep these concepts in separate code paths to avoid interference.
+- Kalman Filtering + Phase Transitions: strong positive synergy (+0.196). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Phase Transitions + Kalman Filtering + Epistemology (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
-- Evolution + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Evolution + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:55:20.908213
 
 ---
 

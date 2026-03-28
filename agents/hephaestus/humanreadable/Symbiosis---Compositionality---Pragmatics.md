@@ -3,7 +3,7 @@
 **Fields**: Biology, Linguistics, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:24:14.289507
-**Report Generated**: 2026-03-25T09:15:27.219969
+**Report Generated**: 2026-03-27T06:37:28.754927
 
 ---
 
@@ -41,13 +41,15 @@ Implementability: 5/10 — Requires coupling NMN training, RSA‑based communica
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Compositionality + Pragmatics: negative interaction (-0.053). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
+- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)
+- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)
 - Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: scrap:no_code_found
+
+**Forge Timestamp**: 2026-03-26T03:57:36.389497
 
 ---
 

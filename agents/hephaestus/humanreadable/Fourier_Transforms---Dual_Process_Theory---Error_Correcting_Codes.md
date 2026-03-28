@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Information Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:45:53.497208
-**Report Generated**: 2026-03-25T09:15:34.106834
+**Report Generated**: 2026-03-27T04:25:42.628492
 
 ---
 
@@ -42,11 +42,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)
-- Fourier Transforms + Criticality + Compositionality (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Gene Regulatory Networks + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

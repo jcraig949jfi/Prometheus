@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T21:53:10.658678
-**Report Generated**: 2026-03-25T09:15:30.119136
+**Report Generated**: 2026-03-27T06:37:31.372769
 
 ---
 
@@ -40,14 +40,16 @@ Implementability: 5/10 — requires building custom categorical libraries and in
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Category Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Category Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
 - **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Category Theory + Multi-Armed Bandits: negative interaction (-0.059). Keep these concepts in separate code paths to avoid interference.
+
 Similar combinations that forged successfully:
-- Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
+- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T00:04:33.428358
 
 ---
 

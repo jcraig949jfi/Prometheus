@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:23:40.709124
-**Report Generated**: 2026-03-25T09:15:29.380607
+**Report Generated**: 2026-03-27T05:13:29.906845
 
 ---
 
@@ -44,6 +44,11 @@ The following concepts have historical causal signatures regarding their ability
 - **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+
+Similar combinations that forged successfully:
+- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Measure Theory + Dual Process Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

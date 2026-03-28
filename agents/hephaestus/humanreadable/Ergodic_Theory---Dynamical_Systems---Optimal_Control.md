@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Mathematics, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:27:53.282826
-**Report Generated**: 2026-03-25T09:15:30.535293
+**Report Generated**: 2026-03-27T05:13:30.487181
 
 ---
 
@@ -44,14 +44,15 @@ Implementability: 6/10 — Builds on existing MPC and actor‑critic solvers; re
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
 - Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

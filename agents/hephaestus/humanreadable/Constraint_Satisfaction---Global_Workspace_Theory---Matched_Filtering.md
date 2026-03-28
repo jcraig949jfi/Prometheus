@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Cognitive Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:56:17.337002
-**Report Generated**: 2026-03-25T09:15:26.979452
+**Report Generated**: 2026-03-26T18:45:56.698515
 
 ---
 
@@ -45,9 +45,9 @@ The following concepts have historical causal signatures regarding their ability
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
 Similar combinations that forged successfully:
-- Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)
-- Proof Theory + Constraint Satisfaction + Normalized Compression Distance (accuracy: 0%, calibration: 0%)
-- Global Workspace Theory + Criticality + Compositionality (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Category Theory + Global Workspace Theory + Epistemology (accuracy: 0%, calibration: 0%)
+- Category Theory + Global Workspace Theory + Network Science (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

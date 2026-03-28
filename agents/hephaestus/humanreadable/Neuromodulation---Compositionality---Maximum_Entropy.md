@@ -3,7 +3,7 @@
 **Fields**: Neuroscience, Linguistics, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:08:32.630117
-**Report Generated**: 2026-03-25T09:15:28.345533
+**Report Generated**: 2026-03-27T06:37:29.875888
 
 ---
 
@@ -40,14 +40,17 @@ Implementability: 5/10 — requires integrating differentiable neuromodulatory g
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Neuromodulation**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Compositionality + Neuromodulation: negative interaction (-0.057). Keep these concepts in separate code paths to avoid interference.
+- Maximum Entropy + Neuromodulation: strong positive synergy (+0.281). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Neuromodulation + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Neuromodulation + Nash Equilibrium + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

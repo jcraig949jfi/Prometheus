@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:14:36.645180
-**Report Generated**: 2026-03-25T09:15:26.526665
+**Report Generated**: 2026-03-27T06:37:28.112912
 
 ---
 
@@ -30,14 +30,14 @@ Combining genetic algorithms, emergence, and multi-armed bandits yields a metaâ€
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Information Theory + Genetic Algorithms + Criticality (accuracy: 0%, calibration: 0%)
-- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Cognitive Load Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
+- Constraint Satisfaction + Optimal Control + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

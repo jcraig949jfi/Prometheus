@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Gauge Theory",
+    "Wavelet Transforms",
+    "Mechanism Design"
+  ],
+  "concept_strengths": {
+    "Gauge Theory": {
+      "influence": {
+        "forge_effect": -0.0481,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0481,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.2252,
+        "drop": -0.0466
+      },
+      "summary": "Gauge Theory: forge rate: 18%",
+      "directive": "**Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Wavelet Transforms": {
+      "influence": {
+        "forge_effect": -0.0685,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
+      },
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
+      "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Mechanism Design": {
+      "influence": {
+        "forge_effect": 0.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
+      },
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Gauge Theory + Mechanism Design": -0.0473,
+    "Mechanism Design + Wavelet Transforms": 0.2822
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Statistical Mechanics",
+        "Wavelet Transforms",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Wavelet Transforms",
+        "Abductive Reasoning",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Wavelet Transforms",
+        "Mechanism Design",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Mechanism Design + Wavelet Transforms: strong positive synergy (+0.282). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Statistical Mechanics + Wavelet Transforms + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Wavelet Transforms + Abductive Reasoning + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Wavelet Transforms + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

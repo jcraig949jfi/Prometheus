@@ -3,7 +3,7 @@
 **Fields**: Biology, Linguistics, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T01:14:55.274431
-**Report Generated**: 2026-03-25T09:15:32.608265
+**Report Generated**: 2026-03-27T06:37:33.229844
 
 ---
 
@@ -40,16 +40,17 @@ Implementability: 5/10 — Requires biologically plausible plasticity rules, ten
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Neural Plasticity: strong positive synergy (+0.605). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Neural Plasticity: strong positive synergy (+0.575). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Compositionality + Free Energy Principle: strong positive synergy (+0.137). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Neural Plasticity + Compositionality + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Neural Plasticity + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Neural Plasticity + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Kolmogorov Complexity + Compositionality + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

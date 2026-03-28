@@ -7,69 +7,61 @@
   "concept_strengths": {
     "Tensor Decomposition": {
       "influence": {
-        "forge_effect": -0.3606,
+        "forge_effect": -0.0628,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": -0.3606,
+      "forge_rate": 0.1714,
+      "forge_effect": -0.0628,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.4397,
-        "drop": -0.1897
+        "base_rate": 0.2243,
+        "rate_with": 0.1714,
+        "rate_without": 0.2256,
+        "drop": -0.0541
       },
-      "summary": "Tensor Decomposition: removing it increases forge probability by 19%; forge rate: 25%",
-      "directive": "**Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Tensor Decomposition: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Genetic Algorithms": {
       "influence": {
-        "forge_effect": -0.1255,
+        "forge_effect": 0.0377,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2857,
-      "forge_effect": -0.1255,
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2857,
-        "rate_without": 0.4351,
-        "drop": -0.1494
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
       },
-      "summary": "Genetic Algorithms: removing it increases forge probability by 15%; forge rate: 29%",
-      "directive": "**Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Evolution": {
       "influence": {
-        "forge_effect": -0.2118,
+        "forge_effect": 0.0222,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.2118,
+      "forge_rate": 0.2647,
+      "forge_effect": 0.0222,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4291,
-        "drop": 0.0709
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2235,
+        "drop": 0.0413
       },
-      "summary": "Evolution: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Evolution: forge rate: 26%",
+      "directive": "**Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
@@ -83,9 +75,9 @@
     },
     {
       "concept_names": [
-        "Evolution",
-        "Criticality",
-        "Free Energy Principle"
+        "Ergodic Theory",
+        "Genetic Algorithms",
+        "Analogical Reasoning"
       ],
       "accuracy": 0,
       "calibration": 0
@@ -93,12 +85,12 @@
     {
       "concept_names": [
         "Evolution",
-        "Pragmatics",
+        "Criticality",
         "Free Energy Principle"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)\n- Evolution + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Evolution + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Genetic Algorithms + Analogical Reasoning (accuracy: 0%, calibration: 0%)\n- Evolution + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

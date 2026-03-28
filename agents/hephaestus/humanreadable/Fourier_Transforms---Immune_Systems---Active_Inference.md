@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T06:39:50.396079
-**Report Generated**: 2026-03-25T09:15:35.356029
+**Report Generated**: 2026-03-26T22:21:24.950311
 
 ---
 
@@ -49,7 +49,7 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
 Similar combinations that forged successfully:
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)

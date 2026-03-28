@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Genetic Algorithms",
+    "Neural Oscillations",
+    "Sensitivity Analysis"
+  ],
+  "concept_strengths": {
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": 0.0377,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
+      },
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neural Oscillations": {
+      "influence": {
+        "forge_effect": -0.0781,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1833,
+      "forge_effect": -0.0781,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
+      },
+      "summary": "Neural Oscillations: negative forge driver (-0.08); forge rate: 18%",
+      "directive": "**Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Sensitivity Analysis": {
+      "influence": {
+        "forge_effect": 0.038,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1562,
+      "forge_effect": 0.038,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1562,
+        "rate_without": 0.2258,
+        "drop": -0.0695
+      },
+      "summary": "Sensitivity Analysis: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Neural Oscillations",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Neural Oscillations",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Neural Oscillations + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

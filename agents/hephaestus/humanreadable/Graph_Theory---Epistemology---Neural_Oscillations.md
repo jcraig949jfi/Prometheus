@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:41:56.610985
-**Report Generated**: 2026-03-25T09:15:34.634378
+**Report Generated**: 2026-03-26T12:16:30.466175
 
 ---
 
@@ -44,13 +44,13 @@ Implementability: 5/10 — Requires integrating spiking neural simulators with g
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Epistemology**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
 - Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Epistemology + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

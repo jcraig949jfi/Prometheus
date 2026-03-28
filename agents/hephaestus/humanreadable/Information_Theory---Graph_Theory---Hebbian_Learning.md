@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Mathematics, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:39:33.326020
-**Report Generated**: 2026-03-25T09:15:30.642058
+**Report Generated**: 2026-03-27T06:37:31.688278
 
 ---
 
@@ -47,14 +47,16 @@ Implementability: 5/10 — Estimating mutual information online and updating edg
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Hebbian Learning + Information Theory: strong positive synergy (+0.444). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Information Theory + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Information Theory + Criticality + Pragmatics (accuracy: 0%, calibration: 0%)
+- Information Theory + Emergence + Hebbian Learning (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Category Theory + Information Theory + Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

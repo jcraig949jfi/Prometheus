@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:50:42.801007
-**Report Generated**: 2026-03-25T09:15:29.064038
+**Report Generated**: 2026-03-27T06:37:30.391952
 
 ---
 
@@ -44,14 +44,16 @@ Implementability: 5/10 — Requires constructing a fiber‑bundle representation
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Epistemology**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Epistemology + Ergodic Theory: negative interaction (-0.084). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Epistemology + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
+- Category Theory + Gauge Theory + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

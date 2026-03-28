@@ -7,66 +7,84 @@
   "concept_strengths": {
     "Evolution": {
       "influence": {
-        "forge_effect": -0.2118,
+        "forge_effect": 0.0222,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.2118,
+      "forge_rate": 0.2647,
+      "forge_effect": 0.0222,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4291,
-        "drop": 0.0709
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2235,
+        "drop": 0.0413
       },
-      "summary": "Evolution: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Evolution: forge rate: 26%",
+      "directive": "**Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Kolmogorov Complexity": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0166,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4286,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2462,
+      "forge_effect": 0.0166,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Kolmogorov Complexity: forge rate: 43%",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2462,
+        "rate_without": 0.2234,
+        "drop": 0.0227
+      },
+      "summary": "Kolmogorov Complexity: forge rate: 25%",
       "directive": "**Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Mechanism Design": {
       "influence": {
-        "forge_effect": 0.7382,
+        "forge_effect": 0.2489,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7308,
-      "forge_effect": 0.7382,
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7308,
-        "rate_without": 0.3992,
-        "drop": 0.3316
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
       },
-      "summary": "Mechanism Design: removing it drops forge probability by 33% (from 73%); forge rate: 73%",
-      "directive": "**Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. "
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Evolution + Mechanism Design": 0.1799,
+    "Kolmogorov Complexity + Mechanism Design": 0.2206
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Evolution",
+        "Kolmogorov Complexity",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Kolmogorov Complexity",
+        "Hebbian Learning",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Active Inference",
@@ -75,25 +93,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Active Inference",
-        "Mechanism Design",
-        "Type Theory"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Active Inference",
-        "Neural Oscillations",
-        "Mechanism Design"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. \n\nSimilar combinations that forged successfully:\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Evolution + Mechanism Design: strong positive synergy (+0.180). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Kolmogorov Complexity + Mechanism Design: strong positive synergy (+0.221). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Evolution + Kolmogorov Complexity + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Kolmogorov Complexity + Hebbian Learning + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Cognitive Science, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:53:24.900723
-**Report Generated**: 2026-03-25T09:15:27.573914
+**Report Generated**: 2026-03-27T05:13:28.075300
 
 ---
 
@@ -42,9 +42,9 @@ Implementability: 5/10 — exact solution is intractable; practical use demands 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Adaptive Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)

@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Game Theory, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:44:02.285066
-**Report Generated**: 2026-03-25T09:15:32.139187
+**Report Generated**: 2026-03-27T06:37:32.924289
 
 ---
 
@@ -43,12 +43,15 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Model Checking + Reinforcement Learning: strong positive synergy (+0.217). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Model Checking + Multi-Armed Bandits: strong positive synergy (+0.281). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Neuromodulation + Multi-Armed Bandits + Model Checking (accuracy: 0%, calibration: 0%)
+- Reinforcement Learning + Emergence + Model Checking (accuracy: 0%, calibration: 0%)
 - Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,7 +59,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:58:01.083578
 
 ---
 

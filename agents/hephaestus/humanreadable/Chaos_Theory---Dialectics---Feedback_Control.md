@@ -3,7 +3,7 @@
 **Fields**: Physics, Philosophy, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:41:55.357200
-**Report Generated**: 2026-03-25T09:15:36.091146
+**Report Generated**: 2026-03-27T17:21:23.949569
 
 ---
 
@@ -40,9 +40,13 @@ Implementability: 6/10 — requires simulating chaotic oscillators, PID tuning, 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Chaos Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. 
-- **Dialectics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Feedback Control**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Dialectics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Chaos Theory + Dialectics: strong positive synergy (+0.925). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Feedback Control: strong positive synergy (+0.444). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Dialectics + Feedback Control: strong positive synergy (+0.965). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)

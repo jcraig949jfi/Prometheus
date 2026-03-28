@@ -3,7 +3,7 @@
 **Fields**: Biology, Signal Processing, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:12:21.575477
-**Report Generated**: 2026-03-25T09:15:27.119057
+**Report Generated**: 2026-03-27T02:16:19.919811
 
 ---
 
@@ -45,9 +45,9 @@ The following concepts have historical causal signatures regarding their ability
 - **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Theory of Mind + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Statistical Mechanics + Active Inference + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Abductive Reasoning + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

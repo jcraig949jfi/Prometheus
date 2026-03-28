@@ -7,71 +7,76 @@
   "concept_strengths": {
     "Differentiable Programming": {
       "influence": {
-        "forge_effect": 0.2963,
+        "forge_effect": 0.0347,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": 0.2963,
+      "forge_rate": 0.1837,
+      "forge_effect": 0.0347,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.1837,
+        "rate_without": 0.2257,
+        "drop": -0.042
       },
-      "summary": "Differentiable Programming: positive forge driver (+0.30); forge rate: 44%",
-      "directive": "**Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Differentiable Programming: forge rate: 18%",
+      "directive": "**Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Sparse Coding": {
       "influence": {
-        "forge_effect": -0.1399,
+        "forge_effect": -0.0229,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2,
-      "forge_effect": -0.1399,
+      "forge_rate": 0.1875,
+      "forge_effect": -0.0229,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2,
-        "rate_without": 0.4356,
-        "drop": -0.2356
+        "base_rate": 0.2243,
+        "rate_with": 0.1875,
+        "rate_without": 0.2255,
+        "drop": -0.038
       },
-      "summary": "Sparse Coding: removing it increases forge probability by 24%; forge rate: 20%",
-      "directive": "**Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Sparse Coding: forge rate: 19%",
+      "directive": "**Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Compositionality": {
       "influence": {
-        "forge_effect": 0.1034,
+        "forge_effect": -0.0337,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5333,
-      "forge_effect": 0.1034,
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5333,
-        "rate_without": 0.4252,
-        "drop": 0.1081
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
       },
-      "summary": "Compositionality: removing it drops forge probability by 11% (from 53%); forge rate: 53%",
-      "directive": "**Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Differentiable Programming + Sparse Coding": -0.0344,
+    "Compositionality + Differentiable Programming": -0.0342,
+    "Compositionality + Sparse Coding": 0.2151
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Spectral Analysis",
+        "Sparse Coding",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Bayesian Inference",
@@ -83,22 +88,13 @@
     },
     {
       "concept_names": [
-        "Chaos Theory",
-        "Active Inference",
-        "Compositionality"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Differentiable Programming",
-        "Dialectics"
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Differentiable Programming + Dialectics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Compositionality + Sparse Coding: strong positive synergy (+0.215). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Spectral Analysis + Sparse Coding + Compositionality (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

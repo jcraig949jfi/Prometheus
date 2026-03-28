@@ -3,7 +3,7 @@
 **Fields**: Biology, Complex Systems, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:30:26.452899
-**Report Generated**: 2026-03-25T09:15:27.307981
+**Report Generated**: 2026-03-27T06:37:28.828926
 
 ---
 
@@ -49,11 +49,11 @@ Implementability: 5/10 — Requires fine‑tuning of three interacting homeostat
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Epigenetics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Neuromodulation**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Criticality + Neuromodulation: strong positive synergy (+0.257). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Neuromodulation: strong positive synergy (+0.384). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Phase Transitions + Criticality + Neuromodulation (accuracy: 0%, calibration: 0%)

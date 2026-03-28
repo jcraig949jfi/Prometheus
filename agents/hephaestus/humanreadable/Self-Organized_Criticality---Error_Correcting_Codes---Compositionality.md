@@ -3,7 +3,7 @@
 **Fields**: Complex Systems, Information Science, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T02:35:28.461828
-**Report Generated**: 2026-03-25T09:15:33.565582
+**Report Generated**: 2026-03-27T04:25:42.018277
 
 ---
 
@@ -41,13 +41,13 @@ Implementability: 5/10 — Requires custom spiking SOC modules, LDPC encoders/de
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)
-- Fourier Transforms + Criticality + Compositionality (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

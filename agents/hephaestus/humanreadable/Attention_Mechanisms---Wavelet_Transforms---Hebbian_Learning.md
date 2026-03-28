@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:25:36.521195
-**Report Generated**: 2026-03-25T09:15:26.621899
+**Report Generated**: 2026-03-27T06:37:28.229912
 
 ---
 
@@ -41,13 +41,15 @@ Implementability: 5/10 — requires custom DWT layers, attention heads, and diff
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Wavelet Transforms**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Hebbian Learning + Wavelet Transforms: negative interaction (-0.059). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
+- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Thermodynamics + Active Inference + Wavelet Transforms (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

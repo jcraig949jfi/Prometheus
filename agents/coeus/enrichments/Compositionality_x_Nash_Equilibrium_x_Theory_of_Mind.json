@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Theory of Mind",
+    "Compositionality",
+    "Nash Equilibrium"
+  ],
+  "concept_strengths": {
+    "Theory of Mind": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1702,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1702,
+        "rate_without": 0.226,
+        "drop": -0.0558
+      },
+      "summary": "Theory of Mind: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0042,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
+      },
+      "summary": "Nash Equilibrium: forge rate: 21%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Compositionality",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Active Inference",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Adaptive Control",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Falsificationism + Compositionality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

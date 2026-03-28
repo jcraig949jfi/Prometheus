@@ -7,73 +7,84 @@
   "concept_strengths": {
     "Quantum Mechanics": {
       "influence": {
-        "forge_effect": -0.5256,
+        "forge_effect": -0.0439,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.5256,
+      "forge_rate": 0.3,
+      "forge_effect": -0.0439,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4377,
-        "drop": -0.4377
+        "base_rate": 0.2243,
+        "rate_with": 0.3,
+        "rate_without": 0.2234,
+        "drop": 0.0766
       },
-      "summary": "Quantum Mechanics: removing it increases forge probability by 44%",
-      "directive": "**Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Quantum Mechanics: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Abductive Reasoning": {
       "influence": {
-        "forge_effect": 0.1176,
+        "forge_effect": 0.0424,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": 0.1176,
+      "forge_rate": 0.2097,
+      "forge_effect": 0.0424,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.2097,
+        "rate_without": 0.225,
+        "drop": -0.0153
       },
-      "summary": "Abductive Reasoning: positive forge driver (+0.12); forge rate: 44%",
-      "directive": "**Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Abductive Reasoning: forge rate: 21%",
+      "directive": "**Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Criticality": {
       "influence": {
-        "forge_effect": 1.2489,
+        "forge_effect": 0.3514,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.6316,
-      "forge_effect": 1.2489,
+      "forge_rate": 0.3827,
+      "forge_effect": 0.3514,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.6316,
-        "rate_without": 0.3983,
-        "drop": 0.2333
+        "base_rate": 0.2243,
+        "rate_with": 0.3827,
+        "rate_without": 0.2157,
+        "drop": 0.167
       },
-      "summary": "Criticality: removing it drops forge probability by 23% (from 63%); forge rate: 63%",
-      "directive": "**Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. "
+      "summary": "Criticality: removing it drops forge probability by 17% (from 38%); forge rate: 38%",
+      "directive": "**Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
   "pair_synergies": {
-    "Abductive Reasoning + Criticality": -0.2807
+    "Criticality + Quantum Mechanics": 0.3852,
+    "Abductive Reasoning + Criticality": -0.0802
   },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Quantum Mechanics",
+        "Criticality",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Attention Mechanisms",
@@ -82,25 +93,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Bayesian Inference",
-        "Differentiable Programming",
-        "Abductive Reasoning"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Bayesian Inference",
-        "Evolution",
-        "Criticality"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Abductive Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. \n\n- Abductive Reasoning + Criticality: negative interaction (-0.281). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Criticality + Quantum Mechanics: strong positive synergy (+0.385). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Abductive Reasoning + Criticality: negative interaction (-0.080). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Quantum Mechanics + Criticality + Type Theory (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

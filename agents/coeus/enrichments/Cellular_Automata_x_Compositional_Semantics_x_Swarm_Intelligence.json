@@ -1,0 +1,91 @@
+{
+  "concept_names": [
+    "Cellular Automata",
+    "Swarm Intelligence",
+    "Compositional Semantics"
+  ],
+  "concept_strengths": {
+    "Cellular Automata": {
+      "influence": {
+        "forge_effect": -0.0187,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0187,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.2252,
+        "drop": -0.0466
+      },
+      "summary": "Cellular Automata: forge rate: 18%",
+      "directive": "**Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Swarm Intelligence": {
+      "influence": {
+        "forge_effect": -0.0446,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": -0.0446,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Swarm Intelligence: forge rate: 22%",
+      "directive": "**Swarm Intelligence**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositional Semantics": {
+      "influence": {
+        "forge_effect": 0.0164,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0164,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2241,
+        "drop": 0.0616
+      },
+      "summary": "Compositional Semantics: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
+      "directive": "**Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Cellular Automata",
+        "Cognitive Load Theory",
+        "Phenomenology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Cellular Automata",
+        "Mechanism Design",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fourier Transforms",
+        "Cellular Automata",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Swarm Intelligence**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)\n- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Fourier Transforms + Cellular Automata + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Information Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:05:41.721570
-**Report Generated**: 2026-03-25T09:15:30.313289
+**Report Generated**: 2026-03-27T04:25:39.503002
 
 ---
 
@@ -46,12 +46,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Chaos Theory + Neural Architecture Search + Falsificationism (accuracy: 0%, calibration: 0%)
-- Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)
-- Neural Architecture Search + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
+- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

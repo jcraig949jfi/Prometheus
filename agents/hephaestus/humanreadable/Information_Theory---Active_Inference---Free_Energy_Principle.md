@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:49:13.864675
-**Report Generated**: 2026-03-25T09:15:24.815331
+**Report Generated**: 2026-03-27T05:13:25.216325
 
 ---
 
@@ -34,11 +34,12 @@ A deep hierarchical generative model (e.g., a Variational Recurrent Neural Netwo
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Active Inference + Free Energy Principle: strong positive synergy (+0.301). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Information Theory: strong positive synergy (+0.188). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Free Energy Principle: strong positive synergy (+0.384). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Information Theory + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)

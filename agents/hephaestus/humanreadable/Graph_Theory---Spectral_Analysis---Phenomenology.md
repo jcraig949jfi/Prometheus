@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:26:30.884196
-**Report Generated**: 2026-03-25T09:15:35.832818
+**Report Generated**: 2026-03-27T05:13:33.159052
 
 ---
 
@@ -42,12 +42,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Phenomenology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Phenomenology**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Ergodic Theory + Spectral Analysis + Criticality (accuracy: 0%, calibration: 0%)
-- Phenomenology + Emergence + Criticality (accuracy: 0%, calibration: 0%)
-- Spectral Analysis + Falsificationism + Criticality (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)
+- Constraint Satisfaction + Spectral Analysis + Type Theory (accuracy: 0%, calibration: 0%)
+- Epigenetics + Spectral Analysis + Emergence (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

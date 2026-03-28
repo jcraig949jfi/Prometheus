@@ -3,7 +3,7 @@
 **Fields**: Physics, Cognitive Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T23:27:03.452794
-**Report Generated**: 2026-03-25T09:15:31.140575
+**Report Generated**: 2026-03-27T06:37:32.156278
 
 ---
 
@@ -41,14 +41,17 @@ Implementability: 5/10 — Requires custom wavelet‑filtered variational infere
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Wavelet Transforms**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Active Inference + Thermodynamics: strong positive synergy (+0.570). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Thermodynamics + Wavelet Transforms: strong positive synergy (+0.278). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Thermodynamics + Active Inference + Wavelet Transforms (accuracy: 0%, calibration: 0%)
+- Thermodynamics + Gene Regulatory Networks + Active Inference (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

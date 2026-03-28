@@ -7,71 +7,74 @@
   "concept_strengths": {
     "Fourier Transforms": {
       "influence": {
-        "forge_effect": -0.0197,
+        "forge_effect": -0.0632,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0625,
-      "forge_effect": -0.0197,
+      "forge_rate": 0.1111,
+      "forge_effect": -0.0632,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0625,
-        "rate_without": 0.4545,
-        "drop": -0.392
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.227,
+        "drop": -0.1159
       },
-      "summary": "Fourier Transforms: removing it increases forge probability by 39%; forge rate: 6%",
+      "summary": "Fourier Transforms: removing it increases forge probability by 12%; forge rate: 11%",
       "directive": "**Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Theory of Mind": {
       "influence": {
-        "forge_effect": 0.2595,
+        "forge_effect": 0.0,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4167,
-      "forge_effect": 0.2595,
+      "forge_rate": 0.1702,
+      "forge_effect": 0.0,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4167,
-        "rate_without": 0.4319,
-        "drop": -0.0152
+        "base_rate": 0.2243,
+        "rate_with": 0.1702,
+        "rate_without": 0.226,
+        "drop": -0.0558
       },
-      "summary": "Theory of Mind: positive forge driver (+0.26); forge rate: 42%",
-      "directive": "**Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Theory of Mind: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Mechanism Design": {
       "influence": {
-        "forge_effect": 0.7382,
+        "forge_effect": 0.2489,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7308,
-      "forge_effect": 0.7382,
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7308,
-        "rate_without": 0.3992,
-        "drop": 0.3316
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
       },
-      "summary": "Mechanism Design: removing it drops forge probability by 33% (from 73%); forge rate: 73%",
-      "directive": "**Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. "
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Fourier Transforms + Mechanism Design": -0.0294
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Theory of Mind",
+        "Mechanism Design",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Theory of Mind",
@@ -89,16 +92,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Active Inference",
-        "Neural Oscillations",
-        "Mechanism Design"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 73%. \n\nSimilar combinations that forged successfully:\n- Theory of Mind + Pragmatics + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n\nSimilar combinations that forged successfully:\n- Theory of Mind + Mechanism Design + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n- Theory of Mind + Pragmatics + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T13:45:20.240416
-**Report Generated**: 2026-03-25T09:15:25.119688
+**Report Generated**: 2026-03-27T06:37:27.025934
 
 ---
 
@@ -50,12 +50,14 @@ Implementability: 5/10 — Requires custom eigen‑basis or Chebyshev approximat
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
 
 Similar combinations that forged successfully:
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Fourier Transforms + Criticality + Compositionality (accuracy: 0%, calibration: 0%)
+- Category Theory + Gauge Theory + Type Theory (accuracy: 0%, calibration: 0%)
+- Category Theory + Global Workspace Theory + Network Science (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

@@ -593,6 +593,23 @@ def _run_cycle(publish: bool = False) -> None:
 
     audit_result = run_audit(logs)      # AUDIT — pipeline health
 
+    # Constitutional pulse — check substrate growth (Law 1)
+    try:
+        _ingest_path = str(Path(__file__).resolve().parent / "agents" / "aletheia" / "src")
+        if _ingest_path not in sys.path:
+            sys.path.insert(0, _ingest_path)
+        from ingest import get_substrate_health
+        health = get_substrate_health(hours=24)
+        total = health["entities_24h"] + health["relationships_24h"] + health["gaps_24h"]
+        if total < 5:
+            log.warning(f"CONSTITUTIONAL ALERT: Substrate starvation — {total} additions in 24h (minimum: 5)")
+            log.warning(f"  Entities: {health['entities_24h']}, Relations: {health['relationships_24h']}, Gaps: {health['gaps_24h']}")
+        else:
+            log.info(f"Substrate health: {total} additions in 24h (entities={health['entities_24h']}, "
+                     f"relations={health['relationships_24h']}, gaps={health['gaps_24h']})")
+    except Exception as e:
+        log.warning(f"Could not check substrate health: {e}")
+
     if has_high_relevance_scores():
         run_skopos_generate()           # GENERATE — Titan prompt
 

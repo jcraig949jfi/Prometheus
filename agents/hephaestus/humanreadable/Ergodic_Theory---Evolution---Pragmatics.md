@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:39:56.051887
-**Report Generated**: 2026-03-25T09:15:24.666209
+**Report Generated**: 2026-03-27T06:37:26.806376
 
 ---
 
@@ -36,18 +36,18 @@ U_{\text{prag}} = \log P_{\text{literal}}(h\mid d) + \lambda_{\text{rel}} \log P
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Ergodic Theory + Evolution: negative interaction (-0.260). Keep these concepts in separate code paths to avoid interference.
-- Ergodic Theory + Pragmatics: strong positive synergy (+0.102). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Evolution + Pragmatics: strong positive synergy (+0.118). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Evolution: negative interaction (-0.078). Keep these concepts in separate code paths to avoid interference.
+- Ergodic Theory + Pragmatics: strong positive synergy (+0.216). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Evolution + Pragmatics: strong positive synergy (+0.258). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Ergodic Theory + Abductive Reasoning + Pragmatics (accuracy: 0%, calibration: 0%)
 - Ergodic Theory + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Evolution + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Sparse Autoencoders + Pragmatics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

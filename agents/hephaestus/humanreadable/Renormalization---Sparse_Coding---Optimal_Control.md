@@ -3,7 +3,7 @@
 **Fields**: Physics, Neuroscience, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T15:47:02.139026
-**Report Generated**: 2026-03-25T09:15:26.319220
+**Report Generated**: 2026-03-27T06:37:27.895916
 
 ---
 
@@ -41,14 +41,18 @@ Implementability: 5/10 — Requires solving HJB/Pontryagin equations alongside d
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Sparse Coding**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Renormalization + Sparse Coding: strong positive synergy (+0.458). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Optimal Control + Renormalization: strong positive synergy (+0.297). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Optimal Control + Sparse Coding: strong positive synergy (+0.469). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Renormalization + Sparse Coding + Optimal Control (accuracy: 0%, calibration: 0%)
+- Renormalization + Abductive Reasoning + Sparse Coding (accuracy: 0%, calibration: 0%)
 - Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)
-- Phase Transitions + Renormalization + Active Inference (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,10 +60,220 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Forged (passed trap battery)
+
+| Metric | Score | vs NCD Baseline |
+|--------|-------|-----------------|
+| Accuracy | 20% | +0% |
+| Calibration | 13% | +7% |
+
+**Forge Timestamp**: 2026-03-27T05:17:02.597333
 
 ---
 
 ## Code
 
-*No code was produced for this combination.*
+**Source**: forge
+
+[View code](./Renormalization---Sparse_Coding---Optimal_Control/tool.py)
+
+<details>
+<summary>Show code</summary>
+
+```python
+import re
+import zlib
+import math
+from typing import List, Dict, Tuple
+
+class ReasoningTool:
+    """
+    Renormalization-Guided Optimal Sparse Encoder (ROSE) Approximation.
+    
+    Mechanism:
+    1. Structural Parsing (Optimal Control Proxy): Extracts logical operators 
+       (negations, comparatives, conditionals) and numeric values. This acts as 
+       the 'control policy' determining the cost landscape, avoiding direct 
+       heavy optimal control solvers which are historically inhibitors.
+    2. Multiscale Sparse Coding (Renormalization + Sparse Coding): 
+       - Scale 1 (Fine): Exact token overlap between prompt and candidate.
+       - Scale 2 (Coarse): Semantic block overlap (splitting by logical delimiters).
+       - Scale 3 (Renormalized): Compressed representation similarity (NCD).
+       The 'sparsity' is approximated by penalizing candidates that require 
+       many active tokens to represent the prompt's core constraints.
+    3. Scoring: A weighted sum of structural adherence (highest weight), 
+       multiscale overlap, and compression distance (tiebreaker).
+    """
+
+    def __init__(self):
+        # Logical operators for structural parsing
+        self.negations = ['no', 'not', 'never', 'none', 'neither', 'n\'t']
+        self.comparatives = ['greater', 'less', 'more', 'fewer', 'larger', 'smaller', '>', '<', '>=', '<=']
+        self.conditionals = ['if', 'then', 'else', 'unless', 'provided']
+        self.delimiters = re.compile(r'[,\.;\?\!:]')
+
+    def _tokenize(self, text: str) -> List[str]:
+        """Simple tokenizer: lowercase and split by non-alphanumeric."""
+        return re.findall(r'[a-z0-9]+', text.lower())
+
+    def _extract_structure(self, text: str) -> Dict[str, any]:
+        """Extract logical structure: negations, comparatives, conditionals, numbers."""
+        lower_text = text.lower()
+        tokens = self._tokenize(text)
+        
+        has_negation = any(n in lower_text for n in self.negations)
+        has_comparative = any(c in lower_text for c in self.comparatives)
+        has_conditional = any(c in lower_text for c in self.conditionals)
+        
+        # Extract numbers for numeric evaluation
+        numbers = re.findall(r'-?\d+\.?\d*', text)
+        nums = [float(n) for n in numbers]
+        
+        return {
+            'neg_count': sum(tokens.count(n) for n in self.negations),
+            'comp_count': sum(1 for c in self.comparatives if c in lower_text),
+            'cond_count': sum(1 for c in self.conditionals if c in lower_text),
+            'numbers': nums,
+            'num_count': len(nums)
+        }
+
+    def _structural_match_score(self, prompt_struct: Dict, cand_struct: Dict) -> float:
+        """
+        Evaluate if the candidate respects the logical constraints of the prompt.
+        This is the primary scoring signal (Optimal Control Proxy).
+        """
+        score = 0.0
+        
+        # Negation consistency: If prompt has negation, candidate should ideally reflect it 
+        # or not contradict it. Simple heuristic: match counts roughly.
+        if prompt_struct['neg_count'] > 0:
+            if cand_struct['neg_count'] > 0:
+                score += 0.4
+            else:
+                score -= 0.5 # Penalty for missing negation
+        
+        # Comparative consistency
+        if prompt_struct['comp_count'] > 0:
+            if cand_struct['comp_count'] > 0:
+                score += 0.3
+            # Missing comparative in answer when prompt asks for one is a soft penalty
+            # unless the answer is purely numeric
+        
+        # Conditional consistency
+        if prompt_struct['cond_count'] > 0:
+            if cand_struct['cond_count'] > 0:
+                score += 0.2
+                
+        # Numeric evaluation: If both have numbers, check simple relations if detectable
+        # (e.g., if prompt implies "larger", answer should be larger)
+        # For this general implementation, we reward presence of numbers if prompt has them
+        if prompt_struct['num_count'] > 0:
+            if cand_struct['num_count'] > 0:
+                score += 0.3
+            else:
+                score -= 0.4
+
+        return score
+
+    def _sparse_coding_score(self, prompt: str, candidate: str) -> float:
+        """
+        Multiscale sparse coding approximation.
+        Scale 1: Token overlap (Fine)
+        Scale 2: Block/Phrase overlap (Coarse)
+        """
+        p_tokens = set(self._tokenize(prompt))
+        c_tokens = set(self._tokenize(candidate))
+        
+        if not p_tokens or not c_tokens:
+            return 0.0
+
+        # Scale 1: Jaccard similarity on tokens (Sparse activation)
+        intersection = p_tokens.intersection(c_tokens)
+        union = p_tokens.union(c_tokens)
+        scale1 = len(intersection) / len(union) if union else 0.0
+
+        # Scale 2: Coarse graining by splitting on delimiters
+        p_blocks = set(b.strip().lower() for b in self.delimiters.split(prompt) if b.strip())
+        c_blocks = set(b.strip().lower() for b in self.delimiters.split(candidate) if b.strip())
+        
+        # Filter to significant blocks (length > 3 to avoid noise)
+        p_blocks = {b for b in p_blocks if len(b) > 3}
+        c_blocks = {b for b in c_blocks if len(b) > 3}
+        
+        scale2 = 0.0
+        if p_blocks and c_blocks:
+            # Check how many prompt blocks are covered by candidate blocks (or vice versa)
+            # Since candidate is usually short, check if candidate block exists in prompt
+            matches = sum(1 for b in c_blocks if b in p_blocks)
+            scale2 = matches / max(len(c_blocks), 1)
+        elif not c_blocks and not p_blocks:
+            scale2 = 1.0 # Both empty at this scale
+
+        return 0.6 * scale1 + 0.4 * scale2
+
+    def _ncd_score(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance as a tiebreaker."""
+        s1_bytes = s1.encode('utf-8')
+        s2_bytes = s2.encode('utf-8')
+        
+        len_s1 = len(zlib.compress(s1_bytes))
+        len_s2 = len(zlib.compress(s2_bytes))
+        len_s1_s2 = len(zlib.compress(s1_bytes + s2_bytes))
+        
+        max_len = max(len_s1, len_s2)
+        if max_len == 0:
+            return 0.0
+            
+        ncd = (len_s1_s2 - min(len_s1, len_s2)) / max_len
+        return 1.0 - ncd # Convert distance to similarity
+
+    def _compute_cost(self, prompt: str, candidate: str) -> float:
+        """
+        Compute the total cost (inverted to score).
+        Low representational cost = High Score.
+        """
+        p_struct = self._extract_structure(prompt)
+        c_struct = self._extract_structure(candidate)
+        
+        # 1. Structural Control Signal (Weight: 0.6)
+        struct_score = self._structural_match_score(p_struct, c_struct)
+        # Normalize struct_score roughly to 0-1 range based on max possible (1.2)
+        struct_normalized = (struct_score + 1.0) / 2.0 
+        struct_normalized = max(0.0, min(1.0, struct_normalized))
+
+        # 2. Multiscale Sparse Coding Signal (Weight: 0.3)
+        sparse_score = self._sparse_coding_score(prompt, candidate)
+
+        # 3. NCD Tiebreaker (Weight: 0.1)
+        ncd_score = self._ncd_score(prompt, candidate)
+
+        # Combined Score
+        total_score = (0.6 * struct_normalized) + (0.3 * sparse_score) + (0.1 * ncd_score)
+        return total_score
+
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        results = []
+        for cand in candidates:
+            score = self._compute_cost(prompt, cand)
+            reasoning = f"Structural match and multiscale overlap yielded score {score:.4f}"
+            results.append({
+                "candidate": cand,
+                "score": score,
+                "reasoning": reasoning
+            })
+        
+        # Rank by score descending
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """
+        Returns confidence 0-1 based on the computed cost/score.
+        Uses the same internal mechanism as evaluate but for a single pair.
+        """
+        score = self._compute_cost(prompt, answer)
+        # Ensure bounded [0, 1]
+        return max(0.0, min(1.0, score))
+```
+
+</details>

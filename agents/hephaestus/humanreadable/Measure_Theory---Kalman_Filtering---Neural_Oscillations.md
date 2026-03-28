@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:51:30.409003
-**Report Generated**: 2026-03-25T09:15:34.712281
+**Report Generated**: 2026-03-27T05:13:32.921057
 
 ---
 
@@ -42,11 +42,13 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Sparse Autoencoders + Kalman Filtering + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Neural Oscillations + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -54,7 +56,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:58:22.505926
 
 ---
 

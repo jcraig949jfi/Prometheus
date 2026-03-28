@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:55:49.505098
-**Report Generated**: 2026-03-25T09:15:29.129126
+**Report Generated**: 2026-03-27T06:37:30.432950
 
 ---
 
@@ -42,14 +42,18 @@ Implementability: 5/10 — Realizing EGAMC requires integrating simulators, ergo
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Analogical Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Analogical Reasoning + Ergodic Theory: strong positive synergy (+0.598). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Model Checking: strong positive synergy (+0.336). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Analogical Reasoning + Model Checking: strong positive synergy (+0.616). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Sparse Autoencoders + Model Checking (accuracy: 0%, calibration: 0%)
-- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Mechanism Design + Model Checking (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Genetic Algorithms + Analogical Reasoning (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

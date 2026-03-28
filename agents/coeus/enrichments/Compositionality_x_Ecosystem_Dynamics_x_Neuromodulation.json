@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Ecosystem Dynamics",
+    "Neuromodulation",
+    "Compositionality"
+  ],
+  "concept_strengths": {
+    "Ecosystem Dynamics": {
+      "influence": {
+        "forge_effect": -0.0169,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1429,
+      "forge_effect": -0.0169,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1429,
+        "rate_without": 0.2266,
+        "drop": -0.0837
+      },
+      "summary": "Ecosystem Dynamics: removing it increases forge probability by 8%; forge rate: 14%",
+      "directive": "**Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neuromodulation": {
+      "influence": {
+        "forge_effect": 0.057,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
+      },
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Compositionality + Neuromodulation": -0.0565
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Active Inference",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Adaptive Control",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Cognitive Load Theory",
+        "Neuromodulation"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Compositionality + Neuromodulation: negative interaction (-0.057). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Neuromodulation (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

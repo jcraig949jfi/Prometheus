@@ -3,7 +3,7 @@
 **Fields**: Physics, Biology, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:47:42.654848
-**Report Generated**: 2026-03-25T09:15:29.617873
+**Report Generated**: 2026-03-27T06:37:30.886942
 
 ---
 
@@ -44,16 +44,17 @@ Implementability: 5/10 — requires coupling SGLD, clonal selection dynamics, an
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Thermodynamics: strong positive synergy (+0.367). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Thermodynamics: strong positive synergy (+0.503). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Immune Systems: strong positive synergy (+0.425). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Thermodynamics + Immune Systems + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Ergodic Theory + Thermodynamics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Thermodynamics + Monte Carlo Tree Search + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Thermodynamics + Epistemology + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

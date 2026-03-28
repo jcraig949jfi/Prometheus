@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Neuroscience, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:11:06.795726
-**Report Generated**: 2026-03-25T09:15:27.718875
+**Report Generated**: 2026-03-27T05:13:28.358086
 
 ---
 
@@ -40,14 +40,15 @@ Implementability: 5/10 — requires biologically plausible oscillatory units and
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Cognitive Load Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Neural Oscillations**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Cognitive Load Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+
 Similar combinations that forged successfully:
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

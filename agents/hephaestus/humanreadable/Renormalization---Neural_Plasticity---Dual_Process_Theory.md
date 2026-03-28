@@ -3,7 +3,7 @@
 **Fields**: Physics, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T08:11:38.582484
-**Report Generated**: 2026-03-25T09:15:36.379119
+**Report Generated**: 2026-03-27T06:37:36.340714
 
 ---
 
@@ -40,14 +40,16 @@ Implementability: 5/10 — requires custom wavelet scattering, dual learning rul
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Neural Plasticity + Renormalization: negative interaction (-0.060). Keep these concepts in separate code paths to avoid interference.
+
 Similar combinations that forged successfully:
-- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Neural Plasticity + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Neural Plasticity + Compositionality + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Global Workspace Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T00:04:51.705008
 
 ---
 

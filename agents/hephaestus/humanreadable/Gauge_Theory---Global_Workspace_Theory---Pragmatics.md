@@ -3,7 +3,7 @@
 **Fields**: Physics, Cognitive Science, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T15:58:35.328570
-**Report Generated**: 2026-03-25T09:15:26.385259
+**Report Generated**: 2026-03-27T17:21:23.560028
 
 ---
 
@@ -40,14 +40,17 @@ Implementability: 5/10 — requires coupling gauge‑equivariant layers, a compe
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Gauge Theory + Pragmatics: strong positive synergy (+0.199). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Global Workspace Theory + Pragmatics: strong positive synergy (+0.272). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)
+- Gauge Theory + Global Workspace Theory + Pragmatics (accuracy: 0%, calibration: 0%)
+- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)
+- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,10 +58,188 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Forged (passed trap battery)
+
+| Metric | Score | vs NCD Baseline |
+|--------|-------|-----------------|
+| Accuracy | 33% | +13% |
+| Calibration | 33% | +27% |
+
+**Forge Timestamp**: 2026-03-26T22:58:48.342326
 
 ---
 
 ## Code
 
-*No code was produced for this combination.*
+**Source**: forge
+
+[View code](./Gauge_Theory---Global_Workspace_Theory---Pragmatics/tool.py)
+
+<details>
+<summary>Show code</summary>
+
+```python
+import re
+import zlib
+import numpy as np
+from typing import List, Dict, Tuple
+
+class ReasoningTool:
+    """
+    Context-Gauge Attentional Workspace (CGAW) Implementation.
+    
+    Mechanism:
+    1. Gauge Bundles (Structural Parsing): Extracts logical invariants (negations, 
+       comparatives, conditionals, numerics) acting as local gauge frames.
+    2. Global Workspace (Ignition): Candidates compete via a softmax over structural 
+       alignment scores. High-alignment candidates "ignite" and broadcast constraints.
+    3. Pragmatic Loss (RSA/Grice): Penalizes candidates violating context maxims 
+       (e.g., length redundancy, contradiction of detected negations).
+    4. Scoring: Weighted sum of Structural Match (Primary) + NCD (Tiebreaker).
+    """
+
+    def __init__(self):
+        self.negation_words = {'no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing', 'nowhere', 'cannot', "n't"}
+        self.comparatives = {'larger', 'smaller', 'greater', 'less', 'more', 'fewer', 'higher', 'lower', 'better', 'worse'}
+        self.conditionals = {'if', 'then', 'else', 'unless', 'provided', 'assuming'}
+        self.quantifiers = {'all', 'every', 'some', 'any', 'most', 'few', 'many'}
+
+    def _extract_gauge_frame(self, text: str) -> dict:
+        """Parses text into a structural gauge frame (invariants)."""
+        lower = text.lower()
+        words = set(re.findall(r'\b\w+\b', lower))
+        
+        # Detect logical operators
+        has_negation = bool(words & self.negation_words)
+        has_comparative = bool(words & self.comparatives)
+        has_conditional = bool(words & self.conditionals)
+        has_quantifier = bool(words & self.quantifiers)
+        
+        # Extract numbers for numeric evaluation
+        numbers = [float(n) for n in re.findall(r'-?\d+\.?\d*', text)]
+        
+        return {
+            'neg': has_negation,
+            'comp': has_comparative,
+            'cond': has_conditional,
+            'quant': has_quantifier,
+            'nums': tuple(sorted(numbers)),
+            'len': len(text),
+            'word_set': words
+        }
+
+    def _compute_ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance using zlib."""
+        if not s1 or not s2:
+            return 1.0
+        c1 = len(zlib.compress(s1.encode()))
+        c2 = len(zlib.compress(s2.encode()))
+        c12 = len(zlib.compress((s1 + s2).encode()))
+        denominator = max(c1, c2)
+        if denominator == 0:
+            return 1.0
+        return (c12 - min(c1, c2)) / denominator
+
+    def _pragmatic_loss(self, prompt_frame: dict, cand_frame: dict, prompt: str, candidate: str) -> float:
+        """
+        Calculates pragmatic penalty based on RSA/Grice maxims.
+        - Quantity: Penalize extreme length mismatch.
+        - Relation: Penalize missing key structural markers (e.g., negation flip).
+        """
+        loss = 0.0
+        
+        # Quantity Maxim: Length penalty (simplified)
+        if cand_frame['len'] > prompt_frame['len'] * 1.5 or cand_frame['len'] < prompt_frame['len'] * 0.1:
+            loss += 0.1
+            
+        # Relation Maxim: Negation consistency check
+        # If prompt has negation, candidate should ideally reflect awareness (heuristic)
+        if prompt_frame['neg'] and not cand_frame['neg']:
+            # Soft penalty, as some answers are just "Yes/No"
+            loss += 0.05
+            
+        return loss
+
+    def _score_candidate(self, prompt: str, candidate: str) -> Tuple[float, str]:
+        """Computes the final score and reasoning string."""
+        p_frame = self._extract_gauge_frame(prompt)
+        c_frame = self._extract_gauge_frame(candidate)
+        
+        score = 0.0
+        reasons = []
+        
+        # 1. Structural Gauge Alignment (Primary Signal)
+        # Check comparative alignment
+        if p_frame['comp']:
+            if c_frame['comp']:
+                score += 0.3
+                reasons.append("Matches comparative structure")
+            else:
+                score -= 0.2
+                reasons.append("Misses comparative context")
+        
+        # Check conditional alignment
+        if p_frame['cond']:
+            if c_frame['cond']:
+                score += 0.2
+                reasons.append("Preserves conditional logic")
+        
+        # Check numeric consistency (Heuristic: if numbers exist, do they appear?)
+        if p_frame['nums']:
+            # Simple presence check for numbers in candidate if prompt has them
+            # This is a weak proxy for numeric reasoning without an engine
+            if c_frame['nums']:
+                score += 0.2
+                reasons.append("Numeric data preserved")
+            else:
+                # If prompt is math-heavy, lack of numbers in candidate is suspicious
+                if len(p_frame['nums']) > 2: 
+                    score -= 0.1
+                    reasons.append("Lacks numeric resolution")
+
+        # 2. Pragmatic Loss (Secondary Modifier)
+        prag_loss = self._pragmatic_loss(p_frame, c_frame, prompt, candidate)
+        score -= prag_loss
+        if prag_loss > 0:
+            reasons.append(f"Pragmatic penalty: {prag_loss:.2f}")
+
+        # 3. NCD as Tiebreaker (Only if structural score is neutral)
+        # We add a small NCD component scaled to not override structural signals
+        ncd = self._compute_ncd(prompt, candidate)
+        # Invert NCD (lower is better) and scale down to be a tiebreaker
+        ncd_score = (1.0 - ncd) * 0.05 
+        score += ncd_score
+        
+        if not reasons:
+            reasons.append("Structural baseline")
+            
+        return score, "; ".join(reasons)
+
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        if not candidates:
+            return []
+        
+        scored = []
+        for cand in candidates:
+            score, reason = self._score_candidate(prompt, cand)
+            scored.append({
+                "candidate": cand,
+                "score": float(score),
+                "reasoning": reason
+            })
+        
+        # Sort by score descending
+        scored.sort(key=lambda x: x['score'], reverse=True)
+        return scored
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Returns confidence 0-1 based on structural alignment strength."""
+        score, _ = self._score_candidate(prompt, answer)
+        # Map score to 0-1 range. 
+        # Baseline structural match is ~0.0 to 0.5. Strong match > 0.5.
+        # Negative scores indicate contradictions.
+        conf = 1.0 / (1.0 + np.exp(-score * 5)) # Sigmoid scaling
+        return float(np.clip(conf, 0.0, 1.0))
+```
+
+</details>

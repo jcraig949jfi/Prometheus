@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Complex Systems, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:59:02.527239
-**Report Generated**: 2026-03-25T09:15:26.997504
+**Report Generated**: 2026-03-27T05:13:27.419297
 
 ---
 
@@ -42,13 +42,14 @@ Implementability: 5/10 — Requires integrating a symbolic CSP solver with a dif
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Constraint Satisfaction**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
+- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)
-- Proof Theory + Constraint Satisfaction + Normalized Compression Distance (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:50:36.814984
 
 ---
 

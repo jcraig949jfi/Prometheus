@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Theoretical Neuroscience, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:35:32.032641
-**Report Generated**: 2026-03-25T09:15:25.508727
+**Report Generated**: 2026-03-27T17:21:23.531030
 
 ---
 
@@ -39,18 +39,18 @@ Implementability: 5/10 — requires careful tuning of SGLD step sizes, free‑en
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Ergodic Theory + Free Energy Principle: strong positive synergy (+0.589). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Ergodic Theory + Maximum Entropy: strong positive synergy (+0.537). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Free Energy Principle + Maximum Entropy: strong positive synergy (+0.302). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Free Energy Principle: strong positive synergy (+0.400). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Maximum Entropy: strong positive synergy (+0.378). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Maximum Entropy: strong positive synergy (+0.241). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Free Energy Principle + Maximum Entropy (accuracy: 0%, calibration: 0%)
 - Ergodic Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Maximum Entropy + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

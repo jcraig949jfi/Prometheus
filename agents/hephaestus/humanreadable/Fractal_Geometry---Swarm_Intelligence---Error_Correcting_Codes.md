@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Information Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:24:55.180978
-**Report Generated**: 2026-03-25T09:15:24.446148
+**Report Generated**: 2026-03-27T04:25:34.488619
 
 ---
 
@@ -42,15 +42,15 @@ Because every hypothesis fragment participates in multiple parity checks at diff
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Swarm Intelligence**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Error Correcting Codes**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Swarm Intelligence**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 
 Similar combinations that forged successfully:
-- Criticality + Error Correcting Codes + Pragmatics (accuracy: 0%, calibration: 0%)
-- Fractal Geometry + Chaos Theory + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Fractal Geometry + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Gene Regulatory Networks + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

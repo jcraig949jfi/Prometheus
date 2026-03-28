@@ -7,71 +7,74 @@
   "concept_strengths": {
     "Spectral Analysis": {
       "influence": {
-        "forge_effect": -0.0191,
+        "forge_effect": 0.025,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.0191,
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4297,
-        "drop": 0.0703
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
       },
-      "summary": "Spectral Analysis: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Spectral Analysis: forge rate: 26%",
       "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Network Science": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.1663,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4,
-      "forge_effect": 0.0,
+      "forge_rate": 0.3415,
+      "forge_effect": 0.1663,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4,
-        "rate_without": 0.4318,
-        "drop": -0.0318
+        "base_rate": 0.2243,
+        "rate_with": 0.3415,
+        "rate_without": 0.2212,
+        "drop": 0.1203
       },
-      "summary": "Network Science: forge rate: 40%",
-      "directive": "**Network Science**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+      "summary": "Network Science: removing it drops forge probability by 12% (from 34%); forge rate: 34%",
+      "directive": "**Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Nash Equilibrium": {
       "influence": {
-        "forge_effect": 0.0483,
+        "forge_effect": 0.0042,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.375,
-      "forge_effect": 0.0483,
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.375,
-        "rate_without": 0.433,
-        "drop": -0.058
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
       },
-      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "summary": "Nash Equilibrium: forge rate: 21%",
       "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Network Science + Spectral Analysis": -0.0888
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Spectral Analysis",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Active Inference",
@@ -83,22 +86,13 @@
     },
     {
       "concept_names": [
-        "Epistemology",
-        "Criticality",
-        "Nash Equilibrium"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Ergodic Theory",
-        "Spectral Analysis",
-        "Criticality"
+        "Category Theory",
+        "Global Workspace Theory",
+        "Network Science"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Network Science**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Spectral Analysis + Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Network Science + Spectral Analysis: negative interaction (-0.089). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Measure Theory + Spectral Analysis + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Category Theory + Global Workspace Theory + Network Science (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

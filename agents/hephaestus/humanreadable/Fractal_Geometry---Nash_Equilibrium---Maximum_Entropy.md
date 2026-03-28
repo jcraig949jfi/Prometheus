@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Game Theory, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:17:43.680580
-**Report Generated**: 2026-03-25T09:15:25.342798
+**Report Generated**: 2026-03-27T06:37:27.173928
 
 ---
 
@@ -41,14 +41,14 @@ Implementability: 5/10 — requires solving coupled fixed‑point equations and 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Nash Equilibrium**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
 Similar combinations that forged successfully:
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Neuromodulation + Nash Equilibrium + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

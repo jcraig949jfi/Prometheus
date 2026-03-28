@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:32:59.716118
-**Report Generated**: 2026-03-25T09:15:30.594393
+**Report Generated**: 2026-03-27T17:21:23.742573
 
 ---
 
@@ -42,11 +42,12 @@ Implementability: 5/10 — Requires coupling a dependently‑typed kernel with a
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Ergodic Theory + Falsificationism: strong positive synergy (+0.663). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Falsificationism: strong positive synergy (+0.393). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Type Theory: strong positive synergy (+0.191). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Falsificationism + Type Theory (accuracy: 0%, calibration: 0%)

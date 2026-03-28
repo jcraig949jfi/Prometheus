@@ -7,71 +7,74 @@
   "concept_strengths": {
     "Tensor Decomposition": {
       "influence": {
-        "forge_effect": -0.3606,
+        "forge_effect": -0.0628,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": -0.3606,
+      "forge_rate": 0.1714,
+      "forge_effect": -0.0628,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.4397,
-        "drop": -0.1897
+        "base_rate": 0.2243,
+        "rate_with": 0.1714,
+        "rate_without": 0.2256,
+        "drop": -0.0541
       },
-      "summary": "Tensor Decomposition: removing it increases forge probability by 19%; forge rate: 25%",
-      "directive": "**Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Tensor Decomposition: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Monte Carlo Tree Search": {
       "influence": {
-        "forge_effect": -0.1626,
+        "forge_effect": -0.172,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.1429,
-      "forge_effect": -0.1626,
+      "forge_rate": 0.0667,
+      "forge_effect": -0.172,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.1429,
-        "rate_without": 0.4389,
-        "drop": -0.2961
+        "base_rate": 0.2243,
+        "rate_with": 0.0667,
+        "rate_without": 0.2274,
+        "drop": -0.1608
       },
-      "summary": "Monte Carlo Tree Search: removing it increases forge probability by 30%; forge rate: 14%",
+      "summary": "Monte Carlo Tree Search: removing it increases forge probability by 16%; forge rate: 7%",
       "directive": "**Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Pragmatism": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.2295,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": 0.0,
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.434,
-        "drop": -0.184
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
       },
-      "summary": "Pragmatism: removing it increases forge probability by 18%; forge rate: 25%",
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
       "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Pragmatism + Tensor Decomposition": -0.0103
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Pragmatism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Falsificationism",
@@ -83,22 +86,13 @@
     },
     {
       "concept_names": [
-        "Tensor Decomposition",
-        "Active Inference",
-        "Epistemology"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Tensor Decomposition",
-        "Criticality",
-        "Free Energy Principle"
+        "Monte Carlo Tree Search",
+        "Immune Systems",
+        "Sparse Coding"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n- Tensor Decomposition + Active Inference + Epistemology (accuracy: 0%, calibration: 0%)\n- Tensor Decomposition + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n- Monte Carlo Tree Search + Immune Systems + Sparse Coding (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

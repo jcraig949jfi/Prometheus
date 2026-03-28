@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:25:56.978594
-**Report Generated**: 2026-03-25T09:15:25.406937
+**Report Generated**: 2026-03-27T06:37:27.218927
 
 ---
 
@@ -42,14 +42,18 @@ Implementability: 5/10 — requires joint optimization of tensor ranks, epistemi
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Epistemology**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Epistemology + Tensor Decomposition: strong positive synergy (+0.284). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Tensor Decomposition: strong positive synergy (+0.268). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Epistemology: strong positive synergy (+0.391). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Tensor Decomposition + Active Inference + Epistemology (accuracy: 0%, calibration: 0%)
 - Tensor Decomposition + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -57,7 +61,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-25T10:33:41.847130
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Biology, Game Theory, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:18:51.869221
-**Report Generated**: 2026-03-25T09:15:27.167737
+**Report Generated**: 2026-03-27T06:37:28.705928
 
 ---
 
@@ -55,14 +55,18 @@ Hypothesis generation: 7/10 — types guide meaningful conjectures; bandit-drive
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Gene Regulatory Networks**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Gene Regulatory Networks**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Gene Regulatory Networks + Multi-Armed Bandits: strong positive synergy (+0.272). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Gene Regulatory Networks + Type Theory: strong positive synergy (+0.199). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Multi-Armed Bandits + Type Theory: strong positive synergy (+0.327). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Epigenetics + Multi-Armed Bandits + Type Theory (accuracy: 0%, calibration: 0%)
+- Gene Regulatory Networks + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
+- Gene Regulatory Networks + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -70,7 +74,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:56:55.423250
 
 ---
 

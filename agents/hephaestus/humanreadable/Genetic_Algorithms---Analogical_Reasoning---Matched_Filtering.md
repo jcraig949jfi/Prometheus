@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Cognitive Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:18:28.385734
-**Report Generated**: 2026-03-25T09:15:31.716069
+**Report Generated**: 2026-03-27T16:08:04.393528
 
 ---
 
@@ -43,13 +43,16 @@ Implementability: 6/10 — Requires a graph‑based analogy encoding, a cross‑
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Analogical Reasoning**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Analogical Reasoning + Genetic Algorithms: strong positive synergy (+0.932). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
-- Information Theory + Genetic Algorithms + Criticality (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Genetic Algorithms + Analogical Reasoning (accuracy: 0%, calibration: 0%)
+- Genetic Algorithms + Analogical Reasoning + Causal Inference (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -57,10 +60,215 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: trap_battery_failed (acc=45% cal=45% ncd_acc=52% ncd_cal=49%)
+
+**Forge Timestamp**: 2026-03-27T10:55:23.406873
 
 ---
 
 ## Code
 
-*No code was produced for this combination.*
+**Source**: scrap
+
+[View code](./Genetic_Algorithms---Analogical_Reasoning---Matched_Filtering/tool.py)
+
+<details>
+<summary>Show code</summary>
+
+```python
+import re
+import zlib
+from typing import List, Dict, Tuple
+
+class ReasoningTool:
+    """
+    Structured-Analogy Evolutionary Detector (SAED) Implementation.
+    
+    Mechanism:
+    1. Analogical Encoding (GA Population): Instead of evolving complex graphs in real-time,
+       we treat a set of structural parsing strategies as the 'population' of analogical mappings.
+       Each strategy attempts to map the prompt's structure to the candidates.
+    2. Matched Filtering (Restricted): Per causal constraints, matched filtering is NOT used
+       for primary scoring. It is restricted to the confidence() wrapper to measure the 
+       signal-to-noise ratio of the structural match between prompt constraints and the answer.
+    3. Structural Parsing & Constraint Propagation: The core fitness function relies on:
+       - Negation handling (inversion of scores).
+       - Comparative logic (numeric extraction and ordering).
+       - Conditional logic (presence of keywords).
+    4. NCD Baseline: Used strictly as a tiebreaker when structural signals are weak.
+    """
+
+    def __init__(self):
+        # Structural keywords for analogical mapping
+        self.negations = ['no', 'not', 'never', 'none', 'n\'t', 'without']
+        self.comparatives = ['greater', 'larger', 'more', 'higher', 'less', 'smaller', 'fewer', 'lower']
+        self.conditionals = ['if', 'unless', 'provided', 'when']
+        
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extract numeric values for comparative reasoning."""
+        pattern = r"-?\d+(?:\.\d+)?"
+        return [float(x) for x in re.findall(pattern, text)]
+
+    def _analyze_structure(self, text: str) -> Dict:
+        """Parse structural elements: negations, comparatives, conditionals, numbers."""
+        lower_text = text.lower()
+        words = re.findall(r'\b\w+\b', lower_text)
+        
+        has_negation = any(n in words or n in lower_text for n in self.negations)
+        has_comparative = any(c in words for c in self.comparatives)
+        has_conditional = any(c in words for c in self.conditionals)
+        numbers = self._extract_numbers(text)
+        
+        return {
+            'negation': has_negation,
+            'comparative': has_comparative,
+            'conditional': has_conditional,
+            'numbers': numbers,
+            'word_count': len(words)
+        }
+
+    def _compute_matched_filter_signal(self, prompt_struct: Dict, candidate_text: str) -> float:
+        """
+        Restricted Matched Filter: Computes correlation between prompt structural constraints
+        and candidate content. Used only for confidence or tie-breaking, not primary ranking.
+        """
+        cand_struct = self._analyze_structure(candidate_text)
+        score = 0.0
+        
+        # Correlate numeric presence
+        if prompt_struct['numbers'] and cand_struct['numbers']:
+            score += 0.5
+            
+        # Correlate logical operators (simplified)
+        if prompt_struct['conditional'] and any(k in candidate_text.lower() for k in self.conditionals):
+            score += 0.3
+            
+        return min(1.0, score)
+
+    def _ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance using zlib."""
+        s1_b = s1.encode('utf-8')
+        s2_b = s2.encode('utf-8')
+        len_s1 = len(zlib.compress(s1_b))
+        len_s2 = len(zlib.compress(s2_b))
+        len_combined = len(zlib.compress(s1_b + s2_b))
+        
+        max_len = max(len_s1, len_s2)
+        if max_len == 0:
+            return 0.0
+        return (len_combined - min(len_s1, len_s2)) / max_len
+
+    def _evaluate_candidate(self, prompt: str, candidate: str) -> Tuple[float, str]:
+        """
+        Core reasoning engine.
+        Returns (score, reasoning_string).
+        Higher score = better.
+        """
+        p_struct = self._analyze_structure(prompt)
+        c_struct = self._analyze_structure(candidate)
+        score = 0.0
+        reasons = []
+
+        # 1. Numeric Comparative Reasoning (High Priority)
+        if p_struct['numbers'] and c_struct['numbers']:
+            p_nums = p_struct['numbers']
+            c_nums = c_struct['numbers']
+            
+            # Check if candidate preserves or logically transforms prompt numbers
+            # Simple heuristic: If prompt has numbers, candidate having numbers is good
+            score += 2.0
+            reasons.append(f"Numeric alignment detected (Prompt:{len(p_nums)}, Cand:{len(c_nums)})")
+            
+            # Specific comparative logic check
+            lower_p = prompt.lower()
+            if any(k in lower_p for k in ['greater', 'larger', 'more']):
+                if c_nums[0] >= max(p_nums):
+                    score += 1.0
+                    reasons.append("Comparative logic satisfied (Greater)")
+                else:
+                    score -= 1.0
+                    reasons.append("Comparative logic failed (Expected greater)")
+                    
+            elif any(k in lower_p for k in ['less', 'smaller', 'fewer']):
+                if c_nums[0] <= min(p_nums):
+                    score += 1.0
+                    reasons.append("Comparative logic satisfied (Lesser)")
+                else:
+                    score -= 1.0
+                    reasons.append("Comparative logic failed (Expected less)")
+
+        # 2. Negation Handling (Constraint Propagation)
+        if p_struct['negation']:
+            # If prompt negates, a good answer often acknowledges it or avoids direct contradiction
+            # This is a heuristic proxy for modus tollens
+            if c_struct['negation']:
+                score += 0.5
+                reasons.append("Negation consistency maintained")
+            else:
+                # Penalty if candidate ignores a strong negation in prompt (simplified)
+                pass 
+
+        # 3. Conditional Logic
+        if p_struct['conditional']:
+            if c_struct['conditional']:
+                score += 0.5
+                reasons.append("Conditional structure preserved")
+        
+        # 4. Base relevance via NCD (Tiebreaker only)
+        # Invert NCD so lower distance = higher score contribution (small weight)
+        ncd_val = self._ncd(prompt, candidate)
+        ncd_score = (1.0 - ncd_val) * 0.1 
+        score += ncd_score
+        
+        reason_str = "; ".join(reasons) if reasons else "Structural match via NCD baseline"
+        return score, reason_str
+
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """
+        Evaluates candidates against the prompt using structural analogy and constraint propagation.
+        Returns a ranked list of dicts.
+        """
+        if not candidates:
+            return []
+            
+        results = []
+        for cand in candidates:
+            score, reasoning = self._evaluate_candidate(prompt, cand)
+            results.append({
+                "candidate": cand,
+                "score": score,
+                "reasoning": reasoning
+            })
+        
+        # Sort by score descending
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """
+        Returns confidence 0-1 based on restricted matched-filter signal
+        and structural consistency.
+        """
+        p_struct = self._analyze_structure(prompt)
+        a_struct = self._analyze_structure(answer)
+        
+        # 1. Matched Filter Signal (Structural Correlation)
+        mf_signal = self._compute_matched_filter_signal(p_struct, answer)
+        
+        # 2. Structural Consistency Check
+        consistency = 0.0
+        if p_struct['numbers'] and a_struct['numbers']:
+            consistency += 0.4
+        if p_struct['negation'] == a_struct['negation']:
+            consistency += 0.3
+            
+        # 3. NCD Baseline Check (to ensure we aren't random noise)
+        ncd_val = self._ncd(prompt, answer)
+        ncd_factor = (1.0 - ncd_val) * 0.3
+        
+        total_conf = mf_signal * 0.4 + consistency + ncd_factor
+        return min(1.0, max(0.0, total_conf))
+```
+
+</details>

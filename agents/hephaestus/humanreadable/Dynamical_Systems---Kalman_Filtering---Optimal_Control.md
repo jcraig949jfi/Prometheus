@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:36:11.539799
-**Report Generated**: 2026-03-25T09:15:36.017858
+**Report Generated**: 2026-03-27T05:13:33.256052
 
 ---
 
@@ -41,14 +41,16 @@ Implementability: 6/10 — Nonlinear variants require careful tuning (filter sta
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
+- Dynamical Systems + Kalman Filtering: strong positive synergy (+0.477). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Dynamical Systems + Kalman Filtering + Mechanism Design (accuracy: 0%, calibration: 0%)
 - Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T00:03:29.558860
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:42:53.007209
-**Report Generated**: 2026-03-25T09:15:24.725738
+**Report Generated**: 2026-03-27T17:21:23.518029
 
 ---
 
@@ -37,13 +37,13 @@ The EFME Engine treats a reasoning system’s hypothesis space \( \mathcal{H} 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Ergodic Theory + Falsificationism: strong positive synergy (+0.663). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Ergodic Theory + Maximum Entropy: strong positive synergy (+0.537). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Falsificationism + Maximum Entropy: strong positive synergy (+0.338). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Falsificationism: strong positive synergy (+0.393). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Maximum Entropy: strong positive synergy (+0.378). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Falsificationism + Maximum Entropy: strong positive synergy (+0.437). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)

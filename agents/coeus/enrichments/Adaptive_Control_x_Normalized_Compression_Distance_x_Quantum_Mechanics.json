@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Quantum Mechanics",
+    "Adaptive Control",
+    "Normalized Compression Distance"
+  ],
+  "concept_strengths": {
+    "Quantum Mechanics": {
+      "influence": {
+        "forge_effect": -0.0439,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3,
+      "forge_effect": -0.0439,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3,
+        "rate_without": 0.2234,
+        "drop": 0.0766
+      },
+      "summary": "Quantum Mechanics: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Adaptive Control": {
+      "influence": {
+        "forge_effect": -0.0303,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2105,
+      "forge_effect": -0.0303,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2105,
+        "rate_without": 0.2245,
+        "drop": -0.014
+      },
+      "summary": "Adaptive Control: forge rate: 21%",
+      "directive": "**Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Normalized Compression Distance": {
+      "influence": {
+        "forge_effect": 0.0035,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.0035,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Normalized Compression Distance: forge rate: 18%",
+      "directive": "**Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Topology",
+        "Quantum Mechanics",
+        "Normalized Compression Distance"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Adaptive Control",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Topology + Quantum Mechanics + Normalized Compression Distance (accuracy: 0%, calibration: 0%)\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Ecosystem Dynamics",
+    "Compositionality",
+    "Free Energy Principle"
+  ],
+  "concept_strengths": {
+    "Ecosystem Dynamics": {
+      "influence": {
+        "forge_effect": -0.0169,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1429,
+      "forge_effect": -0.0169,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1429,
+        "rate_without": 0.2266,
+        "drop": -0.0837
+      },
+      "summary": "Ecosystem Dynamics: removing it increases forge probability by 8%; forge rate: 14%",
+      "directive": "**Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.3873,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.341,
+      "forge_effect": 0.3873,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.341,
+        "rate_without": 0.2056,
+        "drop": 0.1354
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 14% (from 34%); forge rate: 34%",
+      "directive": "**Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Ecosystem Dynamics + Free Energy Principle": 0.2846,
+    "Compositionality + Free Energy Principle": 0.1365
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ecosystem Dynamics",
+        "Free Energy Principle",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ecosystem Dynamics",
+        "Multi-Armed Bandits",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Kolmogorov Complexity",
+        "Compositionality",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Ecosystem Dynamics + Free Energy Principle: strong positive synergy (+0.285). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Compositionality + Free Energy Principle: strong positive synergy (+0.137). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Ecosystem Dynamics + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Kolmogorov Complexity + Compositionality + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

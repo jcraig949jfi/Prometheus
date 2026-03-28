@@ -3,7 +3,7 @@
 **Fields**: Physics, Philosophy, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:02:51.302924
-**Report Generated**: 2026-03-25T09:15:26.422772
+**Report Generated**: 2026-03-27T06:37:28.035912
 
 ---
 
@@ -50,11 +50,12 @@ Implementability: 5/10 — Realizing covariant derivative updates on learned gau
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Phenomenology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Phenomenology**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Criticality + Phenomenology: strong positive synergy (+0.204). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Gauge Theory: negative interaction (-0.068). Keep these concepts in separate code paths to avoid interference.
+- Criticality + Phenomenology: strong positive synergy (+0.266). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Phenomenology + Emergence + Criticality (accuracy: 0%, calibration: 0%)

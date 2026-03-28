@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T20:30:10.261544
-**Report Generated**: 2026-03-25T09:15:29.434505
+**Report Generated**: 2026-03-27T06:37:30.727945
 
 ---
 
@@ -44,13 +44,16 @@ Implementability: 5/10 — Requires precise control of many‑body quantum syste
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Quantum Mechanics**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Hebbian Learning + Quantum Mechanics: strong positive synergy (+0.409). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
+- Quantum Mechanics + Hebbian Learning + Pragmatics (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

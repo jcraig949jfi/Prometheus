@@ -7,71 +7,72 @@
   "concept_strengths": {
     "Prime Number Theory": {
       "influence": {
-        "forge_effect": -0.4275,
+        "forge_effect": -0.1608,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.4275,
+      "forge_rate": 0.0857,
+      "forge_effect": -0.1608,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4514,
-        "drop": -0.4514
+        "base_rate": 0.2243,
+        "rate_with": 0.0857,
+        "rate_without": 0.2275,
+        "drop": -0.1418
       },
-      "summary": "Prime Number Theory: removing it increases forge probability by 45%",
+      "summary": "Prime Number Theory: removing it increases forge probability by 14%; forge rate: 9%",
       "directive": "**Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Reservoir Computing": {
       "influence": {
-        "forge_effect": -0.179,
+        "forge_effect": -0.0112,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.179,
+      "forge_rate": 0.25,
+      "forge_effect": -0.0112,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.25,
+        "rate_without": 0.2238,
+        "drop": 0.0262
       },
-      "summary": "Reservoir Computing: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Reservoir Computing: forge rate: 25%",
+      "directive": "**Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Autopoiesis": {
       "influence": {
-        "forge_effect": -0.2093,
+        "forge_effect": -0.1011,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.3333,
-      "forge_effect": -0.2093,
+      "forge_rate": 0.1667,
+      "forge_effect": -0.1011,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.3333,
-        "rate_without": 0.4346,
-        "drop": -0.1013
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.2257,
+        "drop": -0.059
       },
-      "summary": "Autopoiesis: removing it increases forge probability by 10%; forge rate: 33%",
+      "summary": "Autopoiesis: removing it increases forge probability by 6%; forge rate: 17%",
       "directive": "**Autopoiesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Chaos Theory",
@@ -89,16 +90,7 @@
       ],
       "accuracy": 0,
       "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Reservoir Computing",
-        "Active Inference",
-        "Abductive Reasoning"
-      ],
-      "accuracy": 0,
-      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Autopoiesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Autopoiesis + Criticality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)\n- Reservoir Computing + Active Inference + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Autopoiesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Autopoiesis + Criticality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

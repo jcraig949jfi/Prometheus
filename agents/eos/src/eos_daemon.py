@@ -950,6 +950,42 @@ def run_cycle(config: dict, registry: dict, limiter: RateLimiter,
         f"{len(repos_new)} new repos (-{repo_dupes} known), {len(health)} health checks"
     )
 
+    # Constitutional Law 3: Deposit findings into the substrate
+    try:
+        sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent / "aletheia" / "src"))
+        from ingest import deposit_entity, deposit_relationship
+        deposited = 0
+        for p in papers:
+            title = p.get("title", "untitled")
+            eid = deposit_entity(
+                name=title[:200],
+                entity_type="paper",
+                source_agent="eos",
+                metadata={
+                    "url": p.get("url", ""),
+                    "authors": p.get("authors", ""),
+                    "source": p.get("source", ""),
+                    "abstract": p.get("abstract", "")[:500],
+                },
+            )
+            deposited += 1
+        for r in repos_new:
+            name = r.get("title", r.get("name", "unnamed"))
+            deposit_entity(
+                name=name[:200],
+                entity_type="tool",
+                source_agent="eos",
+                metadata={
+                    "url": r.get("url", ""),
+                    "description": r.get("abstract", r.get("description", ""))[:500],
+                    "source": "github",
+                },
+            )
+            deposited += 1
+        log.info(f"Substrate: deposited {deposited} entities into Aletheia")
+    except Exception as e:
+        log.warning(f"Substrate deposition failed (non-fatal): {e}")
+
 
 def main():
     parser = argparse.ArgumentParser(description="Eos — The Dawn Scanner")

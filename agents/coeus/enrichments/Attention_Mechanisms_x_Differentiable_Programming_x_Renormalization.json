@@ -7,71 +7,71 @@
   "concept_strengths": {
     "Renormalization": {
       "influence": {
-        "forge_effect": 0.1643,
+        "forge_effect": 0.0573,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.1643,
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
       "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4297,
-        "drop": 0.0703
-      },
-      "summary": "Renormalization: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Attention Mechanisms": {
       "influence": {
-        "forge_effect": -0.3871,
+        "forge_effect": -0.132,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.125,
-      "forge_effect": -0.3871,
+      "forge_rate": 0.12,
+      "forge_effect": -0.132,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.125,
-        "rate_without": 0.4406,
-        "drop": -0.3156
+        "base_rate": 0.2243,
+        "rate_with": 0.12,
+        "rate_without": 0.226,
+        "drop": -0.106
       },
-      "summary": "Attention Mechanisms: removing it increases forge probability by 32%; forge rate: 12%",
+      "summary": "Attention Mechanisms: removing it increases forge probability by 11%; forge rate: 12%",
       "directive": "**Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Differentiable Programming": {
       "influence": {
-        "forge_effect": 0.2963,
+        "forge_effect": 0.0347,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": 0.2963,
+      "forge_rate": 0.1837,
+      "forge_effect": 0.0347,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.1837,
+        "rate_without": 0.2257,
+        "drop": -0.042
       },
-      "summary": "Differentiable Programming: positive forge driver (+0.30); forge rate: 44%",
-      "directive": "**Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Differentiable Programming: forge rate: 18%",
+      "directive": "**Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Attention Mechanisms + Renormalization": -0.0267,
+    "Differentiable Programming + Renormalization": 0.4592,
+    "Attention Mechanisms + Differentiable Programming": -0.022
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Renormalization",
+        "Differentiable Programming",
+        "Proof Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Attention Mechanisms",
@@ -83,22 +83,13 @@
     },
     {
       "concept_names": [
-        "Bayesian Inference",
-        "Differentiable Programming",
-        "Abductive Reasoning"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Differentiable Programming",
-        "Dialectics"
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Differentiable Programming + Dialectics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Differentiable Programming + Renormalization: strong positive synergy (+0.459). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Renormalization + Differentiable Programming + Proof Theory (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

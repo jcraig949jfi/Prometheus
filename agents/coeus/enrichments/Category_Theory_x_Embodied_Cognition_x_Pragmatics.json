@@ -7,71 +7,80 @@
   "concept_strengths": {
     "Category Theory": {
       "influence": {
-        "forge_effect": 0.1416,
+        "forge_effect": 0.1281,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2,
-      "forge_effect": 0.1416,
+      "forge_rate": 0.2462,
+      "forge_effect": 0.1281,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2,
-        "rate_without": 0.4402,
-        "drop": -0.2402
+        "base_rate": 0.2243,
+        "rate_with": 0.2462,
+        "rate_without": 0.2234,
+        "drop": 0.0227
       },
-      "summary": "Category Theory: removing it increases forge probability by 24%; forge rate: 20%",
+      "summary": "Category Theory: positive forge driver (+0.13); forge rate: 25%",
       "directive": "**Category Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Embodied Cognition": {
       "influence": {
-        "forge_effect": -0.1841,
+        "forge_effect": -0.0168,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.1841,
+      "forge_rate": 0.2069,
+      "forge_effect": -0.0168,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Embodied Cognition: negative forge driver (-0.18)",
-      "directive": "**Embodied Cognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2069,
+        "rate_without": 0.2247,
+        "drop": -0.0178
+      },
+      "summary": "Embodied Cognition: forge rate: 21%",
+      "directive": "**Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Pragmatics": {
       "influence": {
-        "forge_effect": 0.5722,
+        "forge_effect": 0.2426,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7143,
-      "forge_effect": 0.5722,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.2426,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7143,
-        "rate_without": 0.4073,
-        "drop": 0.307
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2187,
+        "drop": 0.0671
       },
-      "summary": "Pragmatics: removing it drops forge probability by 31% (from 71%); forge rate: 71%",
-      "directive": "**Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. "
+      "summary": "Pragmatics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Category Theory + Embodied Cognition": 0.1991,
+    "Category Theory + Pragmatics": 0.4297
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
         "Category Theory",
-        "Metacognition",
-        "Criticality"
+        "Embodied Cognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Pragmatics",
+        "Property-Based Testing"
       ],
       "accuracy": 0,
       "calibration": 0
@@ -79,21 +88,12 @@
     {
       "concept_names": [
         "Category Theory",
-        "Sparse Autoencoders",
-        "Model Checking"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
         "Causal Inference",
-        "Pragmatics",
-        "Free Energy Principle"
+        "Mechanism Design"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Category Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Embodied Cognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. \n\nSimilar combinations that forged successfully:\n- Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Sparse Autoencoders + Model Checking (accuracy: 0%, calibration: 0%)\n- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Category Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Category Theory + Embodied Cognition: strong positive synergy (+0.199). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Category Theory + Pragmatics: strong positive synergy (+0.430). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)\n- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)\n- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

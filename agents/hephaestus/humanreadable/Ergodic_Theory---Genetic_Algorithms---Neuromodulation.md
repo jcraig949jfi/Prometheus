@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:38:09.188047
-**Report Generated**: 2026-03-25T09:15:24.619735
+**Report Generated**: 2026-03-27T06:37:26.780375
 
 ---
 
@@ -42,16 +42,18 @@ Pure neuroevolution (NEAT, CMA‑ES) and dopamine‑modulated reinforcement lear
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Genetic Algorithms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Neuromodulation**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Ergodic Theory + Genetic Algorithms: negative interaction (-0.104). Keep these concepts in separate code paths to avoid interference.
+- Ergodic Theory + Genetic Algorithms: strong positive synergy (+0.165). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Neuromodulation: negative interaction (-0.089). Keep these concepts in separate code paths to avoid interference.
+- Genetic Algorithms + Neuromodulation: negative interaction (-0.088). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
-- Chaos Theory + Neuromodulation + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Genetic Algorithms + Analogical Reasoning (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Neuromodulation (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

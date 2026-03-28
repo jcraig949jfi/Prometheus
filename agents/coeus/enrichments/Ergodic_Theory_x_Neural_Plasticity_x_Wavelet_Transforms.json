@@ -7,98 +7,93 @@
   "concept_strengths": {
     "Ergodic Theory": {
       "influence": {
-        "forge_effect": 0.6053,
+        "forge_effect": 0.2846,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5357,
-      "forge_effect": 0.6053,
+      "forge_rate": 0.2936,
+      "forge_effect": 0.2846,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5357,
-        "rate_without": 0.4191,
-        "drop": 0.1166
+        "base_rate": 0.2243,
+        "rate_with": 0.2936,
+        "rate_without": 0.2192,
+        "drop": 0.0744
       },
-      "summary": "Ergodic Theory: removing it drops forge probability by 12% (from 54%); forge rate: 54%",
-      "directive": "**Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 54%. "
+      "summary": "Ergodic Theory: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Neural Plasticity": {
       "influence": {
-        "forge_effect": 0.3056,
+        "forge_effect": 0.1279,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.3056,
+      "forge_rate": 0.2683,
+      "forge_effect": 0.1279,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4286,
-        "drop": 0.0714
+        "base_rate": 0.2243,
+        "rate_with": 0.2683,
+        "rate_without": 0.2232,
+        "drop": 0.0451
       },
-      "summary": "Neural Plasticity: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Neural Plasticity: positive forge driver (+0.13); forge rate: 27%",
       "directive": "**Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Wavelet Transforms": {
       "influence": {
-        "forge_effect": -0.0822,
+        "forge_effect": -0.0685,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.0822,
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
       },
-      "summary": "Wavelet Transforms: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
       "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Ergodic Theory + Neural Plasticity": -0.0788,
+    "Ergodic Theory + Wavelet Transforms": -0.0567
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Chaos Theory",
+        "Attention Mechanisms",
         "Neural Plasticity",
-        "Autopoiesis"
+        "Feedback Control"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Chaos Theory",
-        "Neural Plasticity",
-        "Free Energy Principle"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
+        "Category Theory",
         "Ergodic Theory",
-        "Analogical Reasoning",
-        "Model Checking"
+        "Metacognition"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Wavelet Transforms",
+        "Error Correcting Codes"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 54%. \n- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Plasticity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Ergodic Theory + Neural Plasticity: negative interaction (-0.079). Keep these concepts in separate code paths to avoid interference.\n- Ergodic Theory + Wavelet Transforms: negative interaction (-0.057). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)\n- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

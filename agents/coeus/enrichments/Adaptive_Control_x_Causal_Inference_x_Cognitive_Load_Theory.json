@@ -7,80 +7,87 @@
   "concept_strengths": {
     "Cognitive Load Theory": {
       "influence": {
-        "forge_effect": -0.2512,
+        "forge_effect": 0.0202,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.2512,
+      "forge_rate": 0.2333,
+      "forge_effect": 0.0202,
       "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4394,
-        "drop": -0.4394
-      },
-      "summary": "Cognitive Load Theory: removing it increases forge probability by 44%",
-      "directive": "**Cognitive Load Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "interventional": null,
+      "summary": "Cognitive Load Theory: forge rate: 23%",
+      "directive": "**Cognitive Load Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Causal Inference": {
       "influence": {
-        "forge_effect": -0.1323,
+        "forge_effect": -0.0517,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.3333,
-      "forge_effect": -0.1323,
+      "forge_rate": 0.1692,
+      "forge_effect": -0.0517,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.3333,
-        "rate_without": 0.4323,
-        "drop": -0.099
+        "base_rate": 0.2243,
+        "rate_with": 0.1692,
+        "rate_without": 0.2267,
+        "drop": -0.0575
       },
-      "summary": "Causal Inference: removing it increases forge probability by 10%; forge rate: 33%",
-      "directive": "**Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Causal Inference: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Adaptive Control": {
       "influence": {
-        "forge_effect": -0.4961,
+        "forge_effect": -0.0303,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.4961,
+      "forge_rate": 0.2105,
+      "forge_effect": -0.0303,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4377,
-        "drop": -0.4377
+        "base_rate": 0.2243,
+        "rate_with": 0.2105,
+        "rate_without": 0.2245,
+        "drop": -0.014
       },
-      "summary": "Adaptive Control: removing it increases forge probability by 44%",
-      "directive": "**Adaptive Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Adaptive Control: forge rate: 21%",
+      "directive": "**Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Causal Inference + Cognitive Load Theory": -0.0395
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
+        "Abductive Reasoning",
         "Causal Inference",
-        "Pragmatics",
-        "Free Energy Principle"
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Causal Inference",
+        "Mechanism Design"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Cognitive Load Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Adaptive Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Cognitive Load Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Adaptive Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

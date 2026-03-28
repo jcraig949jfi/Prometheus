@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:09:17.461512
-**Report Generated**: 2026-03-25T09:15:30.332802
+**Report Generated**: 2026-03-27T06:37:31.456767
 
 ---
 
@@ -45,11 +45,12 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Monte Carlo Tree Search**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Nash Equilibrium**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
-- Thermodynamics + Monte Carlo Tree Search + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Nash Equilibrium + Counterfactual Reasoning (accuracy: 0%, calibration: 0%)
+- Epigenetics + Error Correcting Codes + Nash Equilibrium (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

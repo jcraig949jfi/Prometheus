@@ -3,7 +3,7 @@
 **Fields**: Physics, Biology, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T23:25:15.598646
-**Report Generated**: 2026-03-25T09:15:31.120519
+**Report Generated**: 2026-03-27T06:37:32.131278
 
 ---
 
@@ -47,12 +47,13 @@ Implementability: 5/10 — Requires accurate, online estimates of neuronal entro
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Thermodynamics: strong positive synergy (+0.367). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Free Energy Principle + Neural Plasticity: strong positive synergy (+0.605). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Neural Plasticity + Thermodynamics: strong positive synergy (+0.423). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Thermodynamics: strong positive synergy (+0.503). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Neural Plasticity: strong positive synergy (+0.575). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Thermodynamics + Neural Plasticity + Free Energy Principle (accuracy: 0%, calibration: 0%)

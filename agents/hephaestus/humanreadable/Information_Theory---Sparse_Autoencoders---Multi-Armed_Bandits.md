@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:38:35.387038
-**Report Generated**: 2026-03-25T09:15:25.569756
+**Report Generated**: 2026-03-27T06:37:27.301927
 
 ---
 
@@ -50,14 +50,18 @@ Implementability: 6/10 — Requires integrating three non‑trivial components (
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Sparse Autoencoders**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 82%. 
+- **Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Information Theory + Sparse Autoencoders: strong positive synergy (+0.600). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Information Theory + Multi-Armed Bandits: strong positive synergy (+0.556). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Multi-Armed Bandits + Sparse Autoencoders: strong positive synergy (+0.314). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
-- Sparse Autoencoders + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
-- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Information Theory + Neural Oscillations + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
+- Information Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

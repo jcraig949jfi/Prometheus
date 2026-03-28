@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Economics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:01:56.593663
-**Report Generated**: 2026-03-25T09:15:27.618294
+**Report Generated**: 2026-03-27T17:21:23.631026
 
 ---
 
@@ -46,16 +46,18 @@ Implementability: 5/10 — <why>
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Mechanism Design**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Active Inference + Mechanism Design: strong positive synergy (+0.591). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Mechanism Design: strong positive synergy (+0.910). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Type Theory: strong positive synergy (+0.332). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Mechanism Design + Type Theory: strong positive synergy (+0.562). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
 - Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
+- Causal Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

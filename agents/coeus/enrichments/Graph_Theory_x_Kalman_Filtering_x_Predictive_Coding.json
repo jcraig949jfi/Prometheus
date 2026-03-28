@@ -7,98 +7,90 @@
   "concept_strengths": {
     "Graph Theory": {
       "influence": {
-        "forge_effect": -0.5208,
+        "forge_effect": -0.2316,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.0,
-      "forge_effect": -0.5208,
+      "forge_rate": 0.0455,
+      "forge_effect": -0.2316,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.0,
-        "rate_without": 0.4377,
-        "drop": -0.4377
+        "base_rate": 0.2243,
+        "rate_with": 0.0455,
+        "rate_without": 0.2269,
+        "drop": -0.1814
       },
-      "summary": "Graph Theory: removing it increases forge probability by 44%",
+      "summary": "Graph Theory: removing it increases forge probability by 18%; forge rate: 5%",
       "directive": "**Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Predictive Coding": {
       "influence": {
-        "forge_effect": 0.1225,
+        "forge_effect": 0.0238,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4,
-      "forge_effect": 0.1225,
+      "forge_rate": 0.1957,
+      "forge_effect": 0.0238,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4,
-        "rate_without": 0.4324,
-        "drop": -0.0324
+        "base_rate": 0.2243,
+        "rate_with": 0.1957,
+        "rate_without": 0.2252,
+        "drop": -0.0296
       },
-      "summary": "Predictive Coding: positive forge driver (+0.12); forge rate: 40%",
-      "directive": "**Predictive Coding**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Predictive Coding: forge rate: 20%",
+      "directive": "**Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Kalman Filtering": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.0301,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": 0.0,
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0301,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.434,
-        "drop": -0.184
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.226,
+        "drop": -0.0475
       },
-      "summary": "Kalman Filtering: removing it increases forge probability by 18%; forge rate: 25%",
-      "directive": "**Kalman Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Kalman Filtering: forge rate: 18%",
+      "directive": "**Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {},
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Chaos Theory",
-        "Predictive Coding",
-        "Maximum Entropy"
+        "Graph Theory",
+        "Kalman Filtering",
+        "Mechanism Design"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Fractal Geometry",
-        "Predictive Coding",
-        "Free Energy Principle"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Morphogenesis",
+        "Attention Mechanisms",
         "Predictive Coding",
         "Falsificationism"
       ],
       "accuracy": 0,
       "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Cognitive Load Theory",
+        "Kalman Filtering"
+      ],
+      "accuracy": 0,
+      "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Predictive Coding**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Kalman Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Predictive Coding + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Morphogenesis + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Graph Theory + Kalman Filtering + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

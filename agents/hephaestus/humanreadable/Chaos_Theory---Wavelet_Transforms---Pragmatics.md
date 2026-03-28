@@ -3,7 +3,7 @@
 **Fields**: Physics, Signal Processing, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T23:18:08.322844
-**Report Generated**: 2026-03-25T09:15:31.011826
+**Report Generated**: 2026-03-27T06:37:32.060280
 
 ---
 
@@ -47,16 +47,18 @@ Implementability: 5/10 — Requires real‑time wavelet packet decomposition, Ly
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Chaos Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. 
-- **Wavelet Transforms**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Pragmatics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 76%. 
+- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Chaos Theory + Pragmatics: strong positive synergy (+0.458). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Wavelet Transforms: strong positive synergy (+0.100). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Pragmatics: strong positive synergy (+0.302). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Pragmatics + Wavelet Transforms: strong positive synergy (+0.445). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)
-- Wavelet Transforms + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Wavelet Transforms + Compositionality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

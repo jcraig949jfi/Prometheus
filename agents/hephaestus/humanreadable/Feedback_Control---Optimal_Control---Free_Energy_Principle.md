@@ -3,7 +3,7 @@
 **Fields**: Control Theory, Control Theory, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:12:46.328852
-**Report Generated**: 2026-03-25T09:15:28.378043
+**Report Generated**: 2026-03-27T06:37:29.911889
 
 ---
 
@@ -39,16 +39,17 @@ Implementability: 6/10 — Requires solving nonlinear optimal control with varia
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Feedback Control**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Optimal Control: negative interaction (-0.144). Keep these concepts in separate code paths to avoid interference.
+- Feedback Control + Free Energy Principle: strong positive synergy (+0.278). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Optimal Control: negative interaction (-0.056). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
 - Feedback Control + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Gauge Theory + Feedback Control + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Renormalization + Feedback Control + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -56,10 +57,106 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: validation:syntax_error: invalid syntax (line 83)
+
+**Forge Timestamp**: 2026-03-25T10:14:45.987685
 
 ---
 
 ## Code
 
-*No code was produced for this combination.*
+**Source**: scrap
+
+[View code](./Feedback_Control---Optimal_Control---Free_Energy_Principle/tool.py)
+
+<details>
+<summary>Show code</summary>
+
+```python
+class ReasoningTool:
+    """
+    Active Inference Model Predictive Controller (AI-MPC) for Reasoning.
+    
+    Mechanism:
+    1. Generative Model (Perception): Parses the prompt to extract structural constraints
+       (negations, comparatives, conditionals, numeric values). This forms the 'prior' belief.
+    2. Variational Inference (Feedback): Evaluates candidates against these constraints.
+       Mismatches generate 'prediction errors' (free energy).
+    3. Optimal Control (Action): Selects the candidate minimizing expected free energy.
+       - Structural adherence is the primary cost (extrinsic reward).
+       - Precision weighting adjusts scores based on constraint confidence.
+    4. Epistemic Drive: Candidates that resolve ambiguities or fit complex logical structures
+       receive higher precision bonuses.
+       
+    Note: Per causal analysis, 'Optimal Control' math is restricted to the confidence wrapper
+    and structural scoring logic, while 'Free Energy' drives the core evaluation loop.
+    """
+
+    def __init__(self):
+        # Structural patterns for the generative model
+        self.negation_patterns = [r'\bnot\b', r'\bnever\b', r'\bwithout\b', r'\bexcept\b']
+        self.comparative_patterns = [r'\bmore\s+than\b', r'\bless\s+than\b', r'\bgreater\s+than\b', r'\bsmaller\s+than\b', r'>', r'<']
+        self.conditional_patterns = [r'\bif\b', r'\bthen\b', r'\bunless\b', r'\botherwise\b']
+        self.number_pattern = re.compile(r'-?\d+\.?\d*')
+
+    def _extract_structure(self, text: str) -> dict:
+        """Perceptual loop: Extracts hidden states (constraints) from observations (text)."""
+        text_lower = text.lower()
+        has_negation = any(re.search(p, text_lower) for p in self.negation_patterns)
+        has_comparative = any(re.search(p, text_lower) for p in self.comparative_patterns)
+        has_conditional = any(re.search(p, text_lower) for p in self.conditional_patterns)
+        numbers = [float(n) for n in re.findall(self.number_pattern, text)]
+        
+        return {
+            'negation': has_negation,
+            'comparative': has_comparative,
+            'conditional': has_conditional,
+            'numbers': numbers,
+            'length': len(text.split())
+        }
+
+    def _compute_prediction_error(self, prompt_struct: dict, candidate: str) -> float:
+        """
+        Calculates Free Energy (F) as prediction error.
+        F = Sum of weighted mismatches between prompt constraints and candidate properties.
+        Lower F = Better candidate.
+        """
+        error = 0.0
+        cand_lower = candidate.lower()
+        
+        # 1. Negation Consistency Check
+        # If prompt has negation, valid answers often contain specific negation markers or logical opposites
+        # Here we penalize if the candidate blindly echoes the prompt without logical flip (simplified heuristic)
+        if prompt_struct['negation']:
+            # Heuristic: If prompt says "not", candidate shouldn't just be a substring match of the prompt
+            if cand_lower in prompt_struct.get('raw_prompt', '').lower():
+                error += 2.0 
+        
+        # 2. Numeric Consistency (The strongest signal)
+        if prompt_struct['numbers']:
+            cand_nums = [float(n) for n in re.findall(self.number_pattern, candidate)]
+            if cand_nums:
+                # Check if candidate numbers contradict prompt logic (simplified to presence/absence for robustness)
+                # If prompt has numbers and candidate has none, high error
+                if len(cand_nums) == 0 and len(prompt_struct['numbers']) > 0:
+                     # Only penalize if the prompt actually requires a number (heuristic: prompt has > 1 number or comparative)
+                    if prompt_struct['comparative'] or len(prompt_struct['numbers']) > 1:
+                        error += 5.0
+            else:
+                # Candidate lacks numbers when prompt implies calculation/comparison
+                if prompt_struct['comparative']:
+                    error += 3.0
+
+        # 3. Structural Complexity Match
+        # If prompt is conditional, simple yes/no might be insufficient (epistemic penalty)
+        if prompt_struct['conditional']:
+            if cand_lower.strip() in ['yes', 'no', 'true', 'false']:
+                error += 1.5 # Penalize oversimplification of conditional logic
+        
+        return error
+
+    def
+```
+
+</details>

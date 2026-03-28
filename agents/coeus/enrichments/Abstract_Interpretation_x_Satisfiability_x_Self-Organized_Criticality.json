@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Self-Organized Criticality",
+    "Abstract Interpretation",
+    "Satisfiability"
+  ],
+  "concept_strengths": {
+    "Self-Organized Criticality": {
+      "influence": {
+        "forge_effect": -0.1349,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.125,
+      "forge_effect": -0.1349,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.125,
+        "rate_without": 0.2259,
+        "drop": -0.1009
+      },
+      "summary": "Self-Organized Criticality: removing it increases forge probability by 10%; forge rate: 12%",
+      "directive": "**Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Abstract Interpretation": {
+      "influence": {
+        "forge_effect": -0.0819,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.05,
+      "forge_effect": -0.0819,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.05,
+        "rate_without": 0.2266,
+        "drop": -0.1766
+      },
+      "summary": "Abstract Interpretation: removing it increases forge probability by 18%; forge rate: 5%",
+      "directive": "**Abstract Interpretation**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Satisfiability": {
+      "influence": {
+        "forge_effect": 0.0426,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": 0.0426,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2257,
+        "drop": -0.1145
+      },
+      "summary": "Satisfiability: removing it increases forge probability by 11%; forge rate: 11%",
+      "directive": "**Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Apoptosis",
+        "Falsificationism",
+        "Self-Organized Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Chaos Theory",
+        "Self-Organized Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Self-Organized Criticality",
+        "Normalized Compression Distance"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Abstract Interpretation**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Self-Organized Criticality + Normalized Compression Distance (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

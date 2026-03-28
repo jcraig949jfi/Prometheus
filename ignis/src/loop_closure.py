@@ -310,7 +310,8 @@ def run_loop_closure(args):
         tokenizer.pad_token = tokenizer.eos_token
 
     model = AutoModelForCausalLM.from_pretrained(
-        args.model, torch_dtype=torch.float16, device_map=args.device,
+        args.model, torch_dtype=torch.float16, device_map="auto",
+        low_cpu_mem_usage=True,
     )
     print(f"VRAM: {torch.cuda.memory_allocated()/1e9:.2f}GB")
 

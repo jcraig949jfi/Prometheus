@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T22:54:31.023893
-**Report Generated**: 2026-03-25T09:15:30.774914
+**Report Generated**: 2026-03-27T05:13:30.543179
 
 ---
 
@@ -45,7 +45,9 @@ The following concepts have historical causal signatures regarding their ability
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
 Similar combinations that forged successfully:
-- Sparse Autoencoders + Kalman Filtering + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Graph Theory + Kalman Filtering + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Kalman Filtering + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

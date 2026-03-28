@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Computer Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T14:47:28.499890
-**Report Generated**: 2026-03-25T09:15:25.643371
+**Report Generated**: 2026-03-27T00:00:24.868731
 
 ---
 
@@ -40,11 +40,13 @@ Implementability: 5/10 — demands custom variational or MCMC solvers on fiber b
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Bayesian Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Gauge Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Bayesian Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Gauge Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+
 Similar combinations that forged successfully:
+- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)
 

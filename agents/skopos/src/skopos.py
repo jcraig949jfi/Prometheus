@@ -63,34 +63,34 @@ if _env_file.exists():
 
 RESEARCH_THREADS = [
     {
-        "id": "anti_cot_geometry",
-        "name": "Anti-CoT Geometric Pathway",
-        "description": "Evolved steering vectors oppose chain-of-thought direction (cos \u2248 -0.25). Why does an effective vector point away from reasoning? Is this anti-heuristic suppression?",
-        "keywords": ["steering vector", "chain-of-thought", "activation direction", "heuristic suppression", "anti-correlation", "geometric"],
+        "id": "ejection_mechanism",
+        "name": "Ejection Mechanism Characterization",
+        "description": "Language models compute correct answers internally then suppress them at late layers. Pretraining-induced, not RLHF. Operates via v_proj (attention) at small scale, gate_proj (MLP) at large scale. Redundant distributed suppression at 1.5B across L19-L26 with per-layer specialization.",
+        "keywords": ["ejection", "suppression", "logit lens", "monotonicity", "v_proj", "gate_proj", "MLP", "attention head", "epistemic suppressor", "pretraining"],
     },
     {
-        "id": "precipitation_signatures",
-        "name": "Reasoning Precipitation Signatures",
-        "description": "One held-out trap (Overtake Race) showed signal at injection layer propagating downstream. Looking for more examples and mechanistic explanation of precipitation vs bypass.",
-        "keywords": ["precipitation", "regime shift", "phase transition", "activation patching", "causal mediation", "bypass"],
+        "id": "evolution_steering",
+        "name": "CMA-ES Evolution & LoRA Perturbation",
+        "description": "Evolving steering vectors and LoRA weight perturbations to suppress ejection. SR 92% at 135M/360M, 63% at 1.5B. Phase transitions confirmed. Order of operations: corpus first, evolution second. v_proj dual-use problem.",
+        "keywords": ["CMA-ES", "LoRA", "evolution", "steering vector", "phase transition", "fitness function", "RLVF", "corpus-first", "metacognition emergence"],
     },
     {
-        "id": "tensor_decomposition",
-        "name": "Tensor Methods for Activation Geometry",
-        "description": "Using tensor train decomposition (THOR, TensorLy) to map multi-dimensional structure in activation space that PCA collapses. Looking for tools and techniques.",
-        "keywords": ["tensor decomposition", "tensor train", "Tucker", "CP decomposition", "high-dimensional", "manifold"],
+        "id": "reasoning_evaluation",
+        "name": "Automated Reasoning Evaluation (Forge + Sphinx)",
+        "description": "239 genuine reasoning tools forged by Hephaestus, improved by CAITL to 74% median unseen accuracy. Sphinx taxonomy: 105 reasoning failure categories across 14 domains. Tier A (parsing) vs Tier B (judgment/metacognition). Apollo evolves these tools via open-ended evolution.",
+        "keywords": ["reasoning tool", "forge", "Sphinx", "trap battery", "NCD", "calibration", "metacognition", "Goodhart", "adversarial", "CAITL", "Apollo"],
     },
     {
-        "id": "sae_features",
-        "name": "SAE Feature Decomposition",
-        "description": "Decomposing steering vectors through sparse autoencoders to get human-readable feature descriptions of what CMA-ES discovered.",
-        "keywords": ["sparse autoencoder", "SAE", "feature", "interpretable", "decomposition", "monosemantic"],
+        "id": "knowledge_substrate",
+        "name": "Knowledge Substrate & Ontology",
+        "description": "Building the living knowledge base that reasoning operates ON. Aletheia knowledge graph, Arcanum waste stream mining, Grammata human-AI bridge. Gap-type classification. Evidence grades. The substrate is the product.",
+        "keywords": ["knowledge graph", "substrate", "ontology", "Arcanum", "Xenolexicon", "waste stream", "gap detection", "evidence grade", "taxonomy", "Grammata"],
     },
     {
-        "id": "scale_threshold",
-        "name": "Scale-Dependent Reasoning Emergence",
-        "description": "Models below 4B show zero self-correction. At 4B, 3/8 traps self-correct. Where is the threshold? Is it parameter count, architecture, or training data?",
-        "keywords": ["scale", "emergence", "self-correction", "model size", "threshold", "scaling law"],
+        "id": "scale_universality",
+        "name": "Scale Transfer & Cross-Architecture Universality",
+        "description": "Does the ejection mechanism exist in all architectures (Qwen, Llama, Gemma) and at all scales (135M to 7B+)? Layer sweep at 1.5B shows ejection spans L19-L26. 7B needs cloud GPU. SAE decomposition for mechanistic understanding.",
+        "keywords": ["scale", "universality", "cross-architecture", "Llama", "Gemma", "Qwen", "SAE", "sparse autoencoder", "7B", "13B", "scaling law"],
     },
 ]
 
@@ -390,14 +390,49 @@ Return JSON: {{"scores": [{{"entity_id": "<type>:<id>", "thread_scores": {{{thre
     raw = re.sub(r"^```(?:json)?\s*", "", raw)
     raw = re.sub(r"\s*```$", "", raw)
 
+    # Detect truncation: incomplete JSON
+    stripped = raw.strip()
+    if stripped and stripped[-1] not in ('}', ']'):
+        log.warning(f"LLM response appears truncated ({len(raw)} chars, ends with '{stripped[-20:]}')")
+        # Try to repair: find the last complete score entry
+        last_brace = raw.rfind('}')
+        if last_brace > 0:
+            # Find the scores array and close it properly
+            repaired = raw[:last_brace + 1]
+            # Close any open arrays/objects
+            open_brackets = repaired.count('[') - repaired.count(']')
+            open_braces = repaired.count('{') - repaired.count('}')
+            repaired += ']' * open_brackets + '}' * open_braces
+            log.info(f"Attempting truncation repair ({open_brackets} brackets, {open_braces} braces)")
+            raw = repaired
+
     try:
         result = json.loads(raw)
         scores = result.get("scores", [])
-        log.info(f"Got scores for {len(scores)} entities")
-        return scores
+
+        # Validate: all expected thread_ids present in each score
+        validated = []
+        for item in scores:
+            ts = item.get("thread_scores", {})
+            missing = [tid for tid in thread_ids if tid not in ts]
+            if missing:
+                log.warning(f"Score for {item.get('entity_id', '?')} missing threads: {missing}")
+            # Validate score range
+            for tid, val in ts.items():
+                try:
+                    v = int(val)
+                    if v < 0 or v > 5:
+                        log.warning(f"Score {v} out of range [0-5] for {item.get('entity_id', '?')} thread {tid}")
+                        ts[tid] = max(0, min(5, v))
+                except (ValueError, TypeError):
+                    ts[tid] = 0
+            validated.append(item)
+
+        log.info(f"Got scores for {len(validated)} entities ({len(validated)}/{len(entities)} expected)")
+        return validated
     except json.JSONDecodeError as e:
         log.warning(f"Failed to parse LLM scoring response: {e}")
-        log.debug(f"Raw response: {raw[:500]}")
+        log.info(f"Raw response ({len(raw)} chars): {raw[:1000]}")
         return []
 
 

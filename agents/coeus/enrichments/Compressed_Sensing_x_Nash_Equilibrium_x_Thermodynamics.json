@@ -7,69 +7,63 @@
   "concept_strengths": {
     "Thermodynamics": {
       "influence": {
-        "forge_effect": 0.3864,
+        "forge_effect": 0.22,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7143,
-      "forge_effect": 0.3864,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.22,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7143,
-        "rate_without": 0.4157,
-        "drop": 0.2986
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2203,
+        "drop": 0.0655
       },
-      "summary": "Thermodynamics: removing it drops forge probability by 30% (from 71%); forge rate: 71%",
+      "summary": "Thermodynamics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
       "directive": "**Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Compressed Sensing": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0339,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.3333,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2368,
+      "forge_effect": 0.0339,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.3333,
-        "rate_without": 0.4323,
-        "drop": -0.099
+        "base_rate": 0.2243,
+        "rate_with": 0.2368,
+        "rate_without": 0.224,
+        "drop": 0.0128
       },
-      "summary": "Compressed Sensing: removing it increases forge probability by 10%; forge rate: 33%",
+      "summary": "Compressed Sensing: forge rate: 24%",
       "directive": "**Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Nash Equilibrium": {
       "influence": {
-        "forge_effect": 0.0483,
+        "forge_effect": 0.0042,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.375,
-      "forge_effect": 0.0483,
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.375,
-        "rate_without": 0.433,
-        "drop": -0.058
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
       },
-      "summary": "Nash Equilibrium: removing it increases forge probability by 6%; forge rate: 38%",
+      "summary": "Nash Equilibrium: forge rate: 21%",
       "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Compressed Sensing + Thermodynamics": 0.3323
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
@@ -83,22 +77,22 @@
     },
     {
       "concept_names": [
-        "Epistemology",
-        "Criticality",
-        "Nash Equilibrium"
+        "Thermodynamics",
+        "Phase Transitions",
+        "Compressed Sensing"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Ergodic Theory",
-        "Thermodynamics",
-        "Free Energy Principle"
+        "Compressed Sensing",
+        "Differentiable Programming",
+        "Falsificationism"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Thermodynamics + Compressed Sensing + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Thermodynamics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Compressed Sensing + Thermodynamics: strong positive synergy (+0.332). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Thermodynamics + Compressed Sensing + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Phase Transitions + Compressed Sensing (accuracy: 0%, calibration: 0%)\n- Compressed Sensing + Differentiable Programming + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

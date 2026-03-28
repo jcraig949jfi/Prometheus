@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T06:57:46.557074
-**Report Generated**: 2026-03-25T09:15:35.540777
+**Report Generated**: 2026-03-27T06:37:35.770210
 
 ---
 
@@ -39,14 +39,17 @@ Implementability: 6/10 — Requires coupling a CWT layer, a plastic recurrent co
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Wavelet Transforms**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Ergodic Theory + Neural Plasticity: negative interaction (-0.079). Keep these concepts in separate code paths to avoid interference.
+- Ergodic Theory + Wavelet Transforms: negative interaction (-0.057). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
-- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Neural Plasticity + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

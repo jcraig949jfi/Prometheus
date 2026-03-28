@@ -432,13 +432,30 @@ Batch 3 cost: 25 points metacognition from mixing adversarial into training.
 - Failure-driven forge: Nemesis blind spots → targeted concept requests
 - Adversarial-aware sampling: Nous demotes Goodhart concepts, boosts undervalued ones
 
-**What's next (remaining roadmap items):**
+**What's next (remaining roadmap items, updated 2026-03-27):**
+
+### Phase 5 — Pre-Apollo CPU Work (no GPU needed)
+
+| # | Task | Impact | Effort |
+|---|------|--------|--------|
+| **36** | **Quartet compositor**: compose one tool per mechanism type (Structure→Measure→Constraint→Dynamics) into pipelines, evaluate against 58-cat battery. ~390K quartets, pure Python. | HIGH — tests whether tool composition > individual tools | Medium |
+| **37** | **Behavioral fingerprints**: pairwise disagreement matrix across all tools. Cluster to find truly complementary vs redundantly similar. Pre-computes Apollo's breeding schedule. | HIGH — the 240 D tools probably collapse to 15-20 distinct profiles | Low |
+| **38** | **Generational trajectory**: plot per-concept fitness curves v1→v5. Which concepts improved most? Which plateaued? | Medium — identifies where evolution works vs needs intervention | Low |
+| **39** | **Dedup gate**: pairwise correlation check. If corr > 0.95, keep only the better tool. | Medium — prevents monoculture in live forge | Low |
+| **40** | **Family-level RLVF weighting**: weight by concept family, not individual tool. 75 FEP tools don't get 75 votes. | HIGH — prevents vote flooding | Low |
+| **41** | **Tier-aware honesty metric**: Tier A = conf_correct - conf_wrong. Tier B = closeness to 0.3. | Medium — current metric penalizes correct behavior | Low |
+| **42** | **A/D interface evolution**: don't evolve D→A. Evolve better interfaces where D tools judge A tools' outputs. Built-in selection pressure without ground truth. | HIGH — natural division of labor | Medium |
+
+### Phase 6 — Remaining Infrastructure
+
 - **#19 Rhea integration** — connect fitness function to CMA-ES evolutionary loop
 - #11 Bidirectional interventional estimates (300+ forges)
 - #12 Temporal causal analysis / PCMCI
 - #15 Causal perturbation evaluator
 - #27 econml CausalForest for heterogeneous treatment effects
 - #32 Athena as abductive reasoner over pipeline stagnation
+- Wire structlog into all agents for JSON event streams
+- Update Nous scoring: hypothesis_generation > implementability
 
 ---
 

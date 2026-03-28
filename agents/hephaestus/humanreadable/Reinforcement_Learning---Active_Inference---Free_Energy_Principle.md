@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Cognitive Science, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T00:39:47.862914
-**Report Generated**: 2026-03-25T09:15:32.051296
+**Report Generated**: 2026-03-27T06:37:32.871290
 
 ---
 
@@ -45,11 +45,12 @@ Implementability: 6/10 — Requires training a deep generative model alongside a
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Free Energy Principle + Reinforcement Learning: strong positive synergy (+0.209). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Active Inference + Free Energy Principle: strong positive synergy (+0.301). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Reinforcement Learning: strong positive synergy (+0.282). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Reinforcement Learning: strong positive synergy (+0.949). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Free Energy Principle: strong positive synergy (+0.384). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Reinforcement Learning + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)

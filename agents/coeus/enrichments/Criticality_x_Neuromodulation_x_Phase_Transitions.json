@@ -7,72 +7,65 @@
   "concept_strengths": {
     "Phase Transitions": {
       "influence": {
-        "forge_effect": 0.2857,
+        "forge_effect": 0.1361,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5385,
-      "forge_effect": 0.2857,
+      "forge_rate": 0.3016,
+      "forge_effect": 0.1361,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5385,
-        "rate_without": 0.4258,
-        "drop": 0.1127
+        "base_rate": 0.2243,
+        "rate_with": 0.3016,
+        "rate_without": 0.2211,
+        "drop": 0.0805
       },
-      "summary": "Phase Transitions: removing it drops forge probability by 11% (from 54%); forge rate: 54%",
+      "summary": "Phase Transitions: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
       "directive": "**Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Criticality": {
       "influence": {
-        "forge_effect": 1.2489,
+        "forge_effect": 0.3514,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.6316,
-      "forge_effect": 1.2489,
+      "forge_rate": 0.3827,
+      "forge_effect": 0.3514,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.6316,
-        "rate_without": 0.3983,
-        "drop": 0.2333
+        "base_rate": 0.2243,
+        "rate_with": 0.3827,
+        "rate_without": 0.2157,
+        "drop": 0.167
       },
-      "summary": "Criticality: removing it drops forge probability by 23% (from 63%); forge rate: 63%",
-      "directive": "**Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. "
+      "summary": "Criticality: removing it drops forge probability by 17% (from 38%); forge rate: 38%",
+      "directive": "**Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Neuromodulation": {
       "influence": {
-        "forge_effect": -0.0749,
+        "forge_effect": 0.057,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4444,
-      "forge_effect": -0.0749,
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4444,
-        "rate_without": 0.4308,
-        "drop": 0.0137
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
       },
-      "summary": "Neuromodulation: negative forge driver (-0.07); forge rate: 44%",
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
       "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
   "pair_synergies": {
-    "Criticality + Phase Transitions": 0.6599,
-    "Criticality + Neuromodulation": 0.2193
+    "Criticality + Phase Transitions": 0.8846,
+    "Neuromodulation + Phase Transitions": 0.1584,
+    "Criticality + Neuromodulation": 0.3838
   },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
@@ -103,5 +96,5 @@
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Criticality + Phase Transitions: strong positive synergy (+0.660). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Criticality + Neuromodulation: strong positive synergy (+0.219). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Phase Transitions + Criticality + Neuromodulation (accuracy: 0%, calibration: 0%)\n- Phase Transitions + Criticality + Model Checking (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 33% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Criticality + Phase Transitions: strong positive synergy (+0.885). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Neuromodulation + Phase Transitions: strong positive synergy (+0.158). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Criticality + Neuromodulation: strong positive synergy (+0.384). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Phase Transitions + Criticality + Neuromodulation (accuracy: 0%, calibration: 0%)\n- Phase Transitions + Criticality + Model Checking (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

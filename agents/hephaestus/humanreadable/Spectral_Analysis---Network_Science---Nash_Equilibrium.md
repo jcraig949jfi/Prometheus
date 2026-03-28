@@ -3,7 +3,7 @@
 **Fields**: Signal Processing, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:23:06.245007
-**Report Generated**: 2026-03-25T09:15:27.839420
+**Report Generated**: 2026-03-27T06:37:29.416354
 
 ---
 
@@ -41,13 +41,15 @@ Implementability: 8/10 — All components (Lanczos PSD, Louvain/spectral cluster
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Nash Equilibrium**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Network Science + Spectral Analysis: negative interaction (-0.089). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
+- Measure Theory + Spectral Analysis + Nash Equilibrium (accuracy: 0%, calibration: 0%)
 - Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Spectral Analysis + Criticality (accuracy: 0%, calibration: 0%)
+- Category Theory + Global Workspace Theory + Network Science (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

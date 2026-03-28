@@ -208,7 +208,8 @@ def run_evolution(args):
     d_model = base.d_model
     output_dir = base.output_dir
 
-    assert d_model == 1536, f"Expected d_model=1536 for 1.5B, got {d_model}"
+    # Support multiple model sizes (1.5B=1536, 0.5B=896, etc.)
+    log.info(f"d_model={d_model} (genome dimension)")
 
     print(f"\n  Model:       {args.model}")
     print(f"  d_model:     {d_model}")

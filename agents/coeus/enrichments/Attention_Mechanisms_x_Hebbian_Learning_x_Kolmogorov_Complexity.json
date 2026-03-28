@@ -7,66 +7,74 @@
   "concept_strengths": {
     "Attention Mechanisms": {
       "influence": {
-        "forge_effect": -0.3871,
+        "forge_effect": -0.132,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.125,
-      "forge_effect": -0.3871,
+      "forge_rate": 0.12,
+      "forge_effect": -0.132,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.125,
-        "rate_without": 0.4406,
-        "drop": -0.3156
+        "base_rate": 0.2243,
+        "rate_with": 0.12,
+        "rate_without": 0.226,
+        "drop": -0.106
       },
-      "summary": "Attention Mechanisms: removing it increases forge probability by 32%; forge rate: 12%",
+      "summary": "Attention Mechanisms: removing it increases forge probability by 11%; forge rate: 12%",
       "directive": "**Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     },
     "Kolmogorov Complexity": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0166,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4286,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2462,
+      "forge_effect": 0.0166,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Kolmogorov Complexity: forge rate: 43%",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2462,
+        "rate_without": 0.2234,
+        "drop": 0.0227
+      },
+      "summary": "Kolmogorov Complexity: forge rate: 25%",
       "directive": "**Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Hebbian Learning": {
       "influence": {
-        "forge_effect": -0.2884,
+        "forge_effect": 0.0454,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": -0.2884,
+      "forge_rate": 0.303,
+      "forge_effect": 0.0454,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.4368,
-        "drop": -0.1868
+        "base_rate": 0.2243,
+        "rate_with": 0.303,
+        "rate_without": 0.2227,
+        "drop": 0.0804
       },
-      "summary": "Hebbian Learning: removing it increases forge probability by 19%; forge rate: 25%",
-      "directive": "**Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Hebbian Learning: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Hebbian Learning + Kolmogorov Complexity": 0.2587
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Kolmogorov Complexity",
+        "Hebbian Learning",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Active Inference",
@@ -78,16 +86,7 @@
     },
     {
       "concept_names": [
-        "Attention Mechanisms",
-        "Criticality",
-        "Optimal Control"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
+        "Analogical Reasoning",
         "Hebbian Learning",
         "Free Energy Principle"
       ],
@@ -95,5 +94,5 @@
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Hebbian Learning + Kolmogorov Complexity: strong positive synergy (+0.259). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Kolmogorov Complexity + Hebbian Learning + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

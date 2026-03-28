@@ -1,0 +1,91 @@
+{
+  "concept_names": [
+    "Embodied Cognition",
+    "Error Correcting Codes",
+    "Neuromodulation"
+  ],
+  "concept_strengths": {
+    "Embodied Cognition": {
+      "influence": {
+        "forge_effect": -0.0168,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2069,
+      "forge_effect": -0.0168,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2069,
+        "rate_without": 0.2247,
+        "drop": -0.0178
+      },
+      "summary": "Embodied Cognition: forge rate: 21%",
+      "directive": "**Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Error Correcting Codes": {
+      "influence": {
+        "forge_effect": -0.0526,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2286,
+      "forge_effect": -0.0526,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Error Correcting Codes: negative forge driver (-0.05); forge rate: 23%",
+      "directive": "**Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neuromodulation": {
+      "influence": {
+        "forge_effect": 0.057,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
+      },
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Embodied Cognition",
+        "Hebbian Learning",
+        "Neuromodulation"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Embodied Cognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Wavelet Transforms",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Embodied Cognition + Hebbian Learning + Neuromodulation (accuracy: 0%, calibration: 0%)\n- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)\n- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

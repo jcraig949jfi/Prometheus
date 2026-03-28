@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Neuroscience, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:59:39.572528
-**Report Generated**: 2026-03-25T09:15:27.005423
+**Report Generated**: 2026-03-27T06:37:28.522932
 
 ---
 
@@ -41,13 +41,16 @@ Implementability: 5/10 — Requires integrating a factor‑graph neural simulato
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Constraint Satisfaction**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Hebbian Learning**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Constraint Satisfaction + Model Checking: strong positive synergy (+0.444). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Hebbian Learning + Model Checking: negative interaction (-0.066). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
+- Constraint Satisfaction + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
 - Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

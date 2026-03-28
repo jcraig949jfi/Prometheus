@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:21:06.232356
-**Report Generated**: 2026-03-25T09:15:34.473204
+**Report Generated**: 2026-03-27T06:37:34.811699
 
 ---
 
@@ -48,14 +48,16 @@ Implementability: 4/10 — Requires careful tuning of ergodic windows, apoptosis
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Apoptosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Ergodic Theory + Predictive Coding: strong positive synergy (+0.609). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
-- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Constraint Satisfaction + Criticality (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Predictive Coding + Global Workspace Theory (accuracy: 0%, calibration: 0%)
+- Fourier Transforms + Ergodic Theory + Predictive Coding (accuracy: 0%, calibration: 0%)
+- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

@@ -7,71 +7,65 @@
   "concept_strengths": {
     "Tensor Decomposition": {
       "influence": {
-        "forge_effect": -0.3606,
+        "forge_effect": -0.0628,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": -0.3606,
+      "forge_rate": 0.1714,
+      "forge_effect": -0.0628,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.4397,
-        "drop": -0.1897
+        "base_rate": 0.2243,
+        "rate_with": 0.1714,
+        "rate_without": 0.2256,
+        "drop": -0.0541
       },
-      "summary": "Tensor Decomposition: removing it increases forge probability by 19%; forge rate: 25%",
-      "directive": "**Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Tensor Decomposition: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Epistemology": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0401,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0401,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4291,
-        "drop": 0.0709
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2229,
+        "drop": 0.0628
       },
-      "summary": "Epistemology: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Epistemology: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
       "directive": "**Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Criticality": {
       "influence": {
-        "forge_effect": 1.2489,
+        "forge_effect": 0.3514,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.6316,
-      "forge_effect": 1.2489,
+      "forge_rate": 0.3827,
+      "forge_effect": 0.3514,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.6316,
-        "rate_without": 0.3983,
-        "drop": 0.2333
+        "base_rate": 0.2243,
+        "rate_with": 0.3827,
+        "rate_without": 0.2157,
+        "drop": 0.167
       },
-      "summary": "Criticality: removing it drops forge probability by 23% (from 63%); forge rate: 63%",
-      "directive": "**Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. "
+      "summary": "Criticality: removing it drops forge probability by 17% (from 38%); forge rate: 38%",
+      "directive": "**Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     }
   },
   "pair_synergies": {
-    "Criticality + Tensor Decomposition": 0.3421
+    "Epistemology + Tensor Decomposition": 0.2844,
+    "Criticality + Tensor Decomposition": 0.2677,
+    "Criticality + Epistemology": 0.3907
   },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
@@ -102,5 +96,5 @@
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. \n\n- Criticality + Tensor Decomposition: strong positive synergy (+0.342). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Tensor Decomposition + Active Inference + Epistemology (accuracy: 0%, calibration: 0%)\n- Tensor Decomposition + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Epistemology + Tensor Decomposition: strong positive synergy (+0.284). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Criticality + Tensor Decomposition: strong positive synergy (+0.268). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Criticality + Epistemology: strong positive synergy (+0.391). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Tensor Decomposition + Active Inference + Epistemology (accuracy: 0%, calibration: 0%)\n- Tensor Decomposition + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

@@ -7,93 +7,93 @@
   "concept_strengths": {
     "Statistical Mechanics": {
       "influence": {
-        "forge_effect": 0.0976,
+        "forge_effect": -0.0388,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 1.0,
-      "forge_effect": 0.0976,
+      "forge_rate": 0.1754,
+      "forge_effect": -0.0388,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Statistical Mechanics: positive forge driver (+0.10); forge rate: 100%",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1754,
+        "rate_without": 0.2262,
+        "drop": -0.0508
+      },
+      "summary": "Statistical Mechanics: removing it increases forge probability by 5%; forge rate: 18%",
       "directive": "**Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Program Synthesis": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.0967,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2,
-      "forge_effect": 0.0,
+      "forge_rate": 0.129,
+      "forge_effect": -0.0967,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2,
-        "rate_without": 0.4356,
-        "drop": -0.2356
+        "base_rate": 0.2243,
+        "rate_with": 0.129,
+        "rate_without": 0.2263,
+        "drop": -0.0972
       },
-      "summary": "Program Synthesis: removing it increases forge probability by 24%; forge rate: 20%",
-      "directive": "**Program Synthesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Program Synthesis: removing it increases forge probability by 10%; forge rate: 13%",
+      "directive": "**Program Synthesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Ecosystem Dynamics": {
       "influence": {
-        "forge_effect": 0.0613,
+        "forge_effect": -0.0169,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.0613,
+      "forge_rate": 0.1429,
+      "forge_effect": -0.0169,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.1429,
+        "rate_without": 0.2266,
+        "drop": -0.0837
       },
-      "summary": "Ecosystem Dynamics: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Ecosystem Dynamics: removing it increases forge probability by 8%; forge rate: 14%",
       "directive": "**Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Ecosystem Dynamics + Statistical Mechanics": 0.2249,
+    "Ecosystem Dynamics + Program Synthesis": 0.4816
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
+        "Statistical Mechanics",
         "Ecosystem Dynamics",
-        "Multi-Armed Bandits",
-        "Free Energy Principle"
+        "Emergence"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Ergodic Theory",
-        "Ecosystem Dynamics",
-        "Theory of Mind"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Sparse Autoencoders",
+        "Thermodynamics",
         "Program Synthesis",
-        "Neuromodulation"
+        "Ecosystem Dynamics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ecosystem Dynamics",
+        "Free Energy Principle",
+        "Sensitivity Analysis"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Program Synthesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Ecosystem Dynamics + Theory of Mind (accuracy: 0%, calibration: 0%)\n- Sparse Autoencoders + Program Synthesis + Neuromodulation (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Program Synthesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Ecosystem Dynamics + Statistical Mechanics: strong positive synergy (+0.225). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Ecosystem Dynamics + Program Synthesis: strong positive synergy (+0.482). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Statistical Mechanics + Ecosystem Dynamics + Emergence (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Program Synthesis + Ecosystem Dynamics (accuracy: 0%, calibration: 0%)\n- Ecosystem Dynamics + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

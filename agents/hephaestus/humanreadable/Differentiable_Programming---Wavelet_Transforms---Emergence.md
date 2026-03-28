@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:07:05.724633
-**Report Generated**: 2026-03-25T09:15:27.052016
+**Report Generated**: 2026-03-27T06:37:28.592930
 
 ---
 
@@ -45,14 +45,16 @@ Implementability: 5/10 — <why>
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Differentiable Programming**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Wavelet Transforms**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Differentiable Programming**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+
+- Differentiable Programming + Emergence: negative interaction (-0.063). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Differentiable Programming + Dialectics (accuracy: 0%, calibration: 0%)
-- Differentiable Programming + Metacognition + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -60,7 +62,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T20:25:44.764860
 
 ---
 

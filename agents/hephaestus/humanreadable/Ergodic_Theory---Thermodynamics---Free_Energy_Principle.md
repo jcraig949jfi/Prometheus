@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:16:10.743215
-**Report Generated**: 2026-03-25T09:15:34.437606
+**Report Generated**: 2026-03-27T06:37:34.772700
 
 ---
 
@@ -47,12 +47,13 @@ Implementability: 5/10 — Requires careful tuning of temperature schedules, sta
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Ergodic Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 52%. 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Ergodic Theory + Free Energy Principle: strong positive synergy (+0.589). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Free Energy Principle + Thermodynamics: strong positive synergy (+0.367). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Thermodynamics: strong positive synergy (+0.416). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Ergodic Theory + Free Energy Principle: strong positive synergy (+0.400). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Thermodynamics: strong positive synergy (+0.503). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Thermodynamics + Free Energy Principle (accuracy: 0%, calibration: 0%)

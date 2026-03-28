@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:48:57.847680
-**Report Generated**: 2026-03-25T09:15:36.175968
+**Report Generated**: 2026-03-27T05:13:33.398961
 
 ---
 
@@ -40,14 +40,16 @@ Implementability: 5/10 — Requires hybrid discrete‑continuous updates, stocha
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Thermodynamics**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 80%. 
+- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Feedback Control**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Cellular Automata + Thermodynamics: negative interaction (-0.051). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
-- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Thermodynamics + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)
+- Cellular Automata + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -55,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-25T10:24:22.154459
 
 ---
 

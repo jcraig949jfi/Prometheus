@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T08:36:05.751083
-**Report Generated**: 2026-03-25T09:15:36.541291
+**Report Generated**: 2026-03-27T06:37:36.472220
 
 ---
 
@@ -46,10 +46,12 @@ The following concepts have historical causal signatures regarding their ability
 - **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+- Holography Principle + Immune Systems: strong positive synergy (+0.471). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+
 Similar combinations that forged successfully:
+- Holography Principle + Immune Systems + Pragmatics (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Differentiable Programming + Immune Systems (accuracy: 0%, calibration: 0%)
 - Ergodic Theory + Reinforcement Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Reinforcement Learning + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Thermodynamics + Immune Systems + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -57,7 +59,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:52:56.063998
 
 ---
 

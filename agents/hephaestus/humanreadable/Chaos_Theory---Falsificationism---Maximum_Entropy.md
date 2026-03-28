@@ -3,7 +3,7 @@
 **Fields**: Physics, Philosophy, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T05:04:17.852524
-**Report Generated**: 2026-03-25T09:15:34.830643
+**Report Generated**: 2026-03-27T17:21:23.885571
 
 ---
 
@@ -49,13 +49,13 @@ Implementability: 6/10 — Requires coupling a chaotic ODE solver, adversarial o
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Chaos Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. 
-- **Falsificationism**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
+- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Chaos Theory + Falsificationism: strong positive synergy (+0.542). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Chaos Theory + Maximum Entropy: strong positive synergy (+0.823). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Falsificationism + Maximum Entropy: strong positive synergy (+0.338). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Falsificationism: strong positive synergy (+0.874). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Maximum Entropy: strong positive synergy (+0.369). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Falsificationism + Maximum Entropy: strong positive synergy (+0.437). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)

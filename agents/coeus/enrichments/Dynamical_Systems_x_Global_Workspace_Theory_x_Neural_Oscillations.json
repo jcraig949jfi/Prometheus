@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Dynamical Systems",
+    "Global Workspace Theory",
+    "Neural Oscillations"
+  ],
+  "concept_strengths": {
+    "Dynamical Systems": {
+      "influence": {
+        "forge_effect": -0.0593,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1282,
+      "forge_effect": -0.0593,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1282,
+        "rate_without": 0.2268,
+        "drop": -0.0986
+      },
+      "summary": "Dynamical Systems: removing it increases forge probability by 10%; forge rate: 13%",
+      "directive": "**Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Global Workspace Theory": {
+      "influence": {
+        "forge_effect": -0.0142,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2143,
+      "forge_effect": -0.0142,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2143,
+        "rate_without": 0.2246,
+        "drop": -0.0103
+      },
+      "summary": "Global Workspace Theory: forge rate: 21%",
+      "directive": "**Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neural Oscillations": {
+      "influence": {
+        "forge_effect": -0.0781,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1833,
+      "forge_effect": -0.0781,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
+      },
+      "summary": "Neural Oscillations: negative forge driver (-0.08); forge rate: 18%",
+      "directive": "**Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Neural Oscillations",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Neural Oscillations",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Neural Oscillations + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

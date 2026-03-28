@@ -7,69 +7,64 @@
   "concept_strengths": {
     "Information Theory": {
       "influence": {
-        "forge_effect": 0.042,
+        "forge_effect": 0.0184,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2857,
-      "forge_effect": 0.042,
+      "forge_rate": 0.1833,
+      "forge_effect": 0.0184,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2857,
-        "rate_without": 0.4392,
-        "drop": -0.1535
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
       },
-      "summary": "Information Theory: removing it increases forge probability by 15%; forge rate: 29%",
-      "directive": "**Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Information Theory: forge rate: 18%",
+      "directive": "**Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Program Synthesis": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.0967,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.2,
-      "forge_effect": 0.0,
+      "forge_rate": 0.129,
+      "forge_effect": -0.0967,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.2,
-        "rate_without": 0.4356,
-        "drop": -0.2356
+        "base_rate": 0.2243,
+        "rate_with": 0.129,
+        "rate_without": 0.2263,
+        "drop": -0.0972
       },
-      "summary": "Program Synthesis: removing it increases forge probability by 24%; forge rate: 20%",
-      "directive": "**Program Synthesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "summary": "Program Synthesis: removing it increases forge probability by 10%; forge rate: 13%",
+      "directive": "**Program Synthesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Optimal Control": {
       "influence": {
-        "forge_effect": -0.2837,
+        "forge_effect": -0.1121,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.1538,
-      "forge_effect": -0.2837,
+      "forge_rate": 0.1633,
+      "forge_effect": -0.1121,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.1538,
-        "rate_without": 0.4453,
-        "drop": -0.2915
+        "base_rate": 0.2243,
+        "rate_with": 0.1633,
+        "rate_without": 0.2263,
+        "drop": -0.0631
       },
-      "summary": "Optimal Control: removing it increases forge probability by 29%; forge rate: 15%",
+      "summary": "Optimal Control: removing it increases forge probability by 6%; forge rate: 16%",
       "directive": "**Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Information Theory + Optimal Control": -0.0299,
+    "Optimal Control + Program Synthesis": -0.0211
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
@@ -83,22 +78,22 @@
     },
     {
       "concept_names": [
-        "Chaos Theory",
-        "Optimal Control",
-        "Pragmatics"
+        "Category Theory",
+        "Information Theory",
+        "Criticality"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Information Theory",
-        "Active Inference",
-        "Free Energy Principle"
+        "Chaos Theory",
+        "Optimal Control",
+        "Pragmatics"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Information Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Program Synthesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)\n- Information Theory + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Program Synthesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Category Theory + Information Theory + Criticality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Optimal Control + Pragmatics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

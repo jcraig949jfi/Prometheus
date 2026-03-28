@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T12:19:46.918859
-**Report Generated**: 2026-03-25T09:15:24.370096
+**Report Generated**: 2026-03-27T06:37:26.645381
 
 ---
 
@@ -57,10 +57,11 @@ The following concepts have historical causal signatures regarding their ability
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
+
 Similar combinations that forged successfully:
 - Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Criticality + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Falsificationism + Type Theory (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
+- Category Theory + Gauge Theory + Type Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

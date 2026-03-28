@@ -27,14 +27,12 @@ echo ===========================================================================
 echo  BATCH 4 FOLLOW-UP — Started %date% %time%
 echo ============================================================================
 
-REM --- Find the best genome from the evolve run ---
-set GENOME_PATH=
-for /r "src\results\ignis" %%f in (best_genome_1_5b.pt) do (
-    set GENOME_PATH=%%f
-)
-if defined GENOME_PATH (
+REM --- Genome from the targeted L22+L23 evolve run ---
+set GENOME_PATH=%SCRIPT_DIR%src\results\ignis\evolve_20260323_192956\best_genome_1_5b.pt
+if exist "%GENOME_PATH%" (
     echo Found genome: %GENOME_PATH%
 ) else (
+    set GENOME_PATH=
     echo [WARN] No best_genome_1_5b.pt found. Stages 1 and 5 will run without steering.
 )
 
@@ -92,10 +90,10 @@ python src\evolve_1_5b.py ^
     --stdev-init 0.05 ^
     --output-dir results\batch4_followup\stage2_L21
 if errorlevel 1 (
-    echo [FAIL] Stage 2a (L21) failed
+    echo [FAIL] Stage 2a L21 failed
 ) else (
     set S2A_OK=1
-    echo [OK] Stage 2a (L21) complete
+    echo [OK] Stage 2a L21 complete
 )
 echo  Stage 2a ended: %time%
 
@@ -110,10 +108,10 @@ python src\evolve_1_5b.py ^
     --stdev-init 0.05 ^
     --output-dir results\batch4_followup\stage2_L24
 if errorlevel 1 (
-    echo [FAIL] Stage 2b (L24) failed
+    echo [FAIL] Stage 2b L24 failed
 ) else (
     set S2B_OK=1
-    echo [OK] Stage 2b (L24) complete
+    echo [OK] Stage 2b L24 complete
 )
 echo  Stage 2b ended: %time%
 
@@ -138,10 +136,10 @@ python src\evolve_lora_multilayer.py ^
     --stdev-init 0.005 ^
     --output-dir results\batch4_followup\stage3_lora_L22
 if errorlevel 1 (
-    echo [FAIL] Stage 3a (L22 gate+v) failed
+    echo [FAIL] Stage 3a L22 gate+v failed
 ) else (
     set S3A_OK=1
-    echo [OK] Stage 3a (L22 gate+v) complete
+    echo [OK] Stage 3a L22 gate+v complete
 )
 echo  Stage 3a ended: %time%
 
@@ -156,10 +154,10 @@ python src\evolve_lora_multilayer.py ^
     --stdev-init 0.005 ^
     --output-dir results\batch4_followup\stage3_lora_L23
 if errorlevel 1 (
-    echo [FAIL] Stage 3b (L23 gate+v) failed
+    echo [FAIL] Stage 3b L23 gate+v failed
 ) else (
     set S3B_OK=1
-    echo [OK] Stage 3b (L23 gate+v) complete
+    echo [OK] Stage 3b L23 gate+v complete
 )
 echo  Stage 3b ended: %time%
 

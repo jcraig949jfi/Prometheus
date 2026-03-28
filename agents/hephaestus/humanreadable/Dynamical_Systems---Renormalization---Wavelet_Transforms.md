@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Physics, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:53:44.743311
-**Report Generated**: 2026-03-25T09:15:34.734719
+**Report Generated**: 2026-03-27T06:37:35.026694
 
 ---
 
@@ -41,14 +41,16 @@ Implementability: 6/10 — Built from existing wavelet libraries (PyWavelets, MA
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Dynamical Systems**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Wavelet Transforms**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Dynamical Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Dynamical Systems + Renormalization: strong positive synergy (+0.471). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
-- Phase Transitions + Renormalization + Active Inference (accuracy: 0%, calibration: 0%)
-- Renormalization + Global Workspace Theory + Criticality (accuracy: 0%, calibration: 0%)
+- Dynamical Systems + Renormalization + Epigenetics (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Global Workspace Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

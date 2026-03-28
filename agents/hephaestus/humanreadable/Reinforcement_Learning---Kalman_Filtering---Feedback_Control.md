@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T16:35:17.677469
-**Report Generated**: 2026-03-25T09:15:26.771697
+**Report Generated**: 2026-03-27T03:25:53.983299
 
 ---
 
@@ -48,12 +48,13 @@ The following concepts have historical causal signatures regarding their ability
 
 - **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Feedback Control**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
+- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)
 - Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Reinforcement Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -61,7 +62,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T00:01:38.918735
 
 ---
 

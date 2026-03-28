@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T07:24:34.998763
-**Report Generated**: 2026-03-25T09:15:35.816395
+**Report Generated**: 2026-03-27T01:02:12.526689
 
 ---
 
@@ -41,8 +41,13 @@ Implementability: 5/10 — Requires tight integration of a physical robot (or si
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Graph Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Reservoir Computing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+Similar combinations that forged successfully:
+- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)
+- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)
+- Embodied Cognition + Autopoiesis + Causal Inference (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

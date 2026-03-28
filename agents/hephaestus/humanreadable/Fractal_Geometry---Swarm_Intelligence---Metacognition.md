@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T19:43:12.333784
-**Report Generated**: 2026-03-25T09:15:28.960491
+**Report Generated**: 2026-03-27T05:13:29.567853
 
 ---
 
@@ -40,14 +40,15 @@ Implementability: 5/10 — requires careful tuning of interaction rules across l
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Fractal Geometry**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Swarm Intelligence**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Metacognition**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Swarm Intelligence**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Metacognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
+- Swarm Intelligence + Metacognition + Mechanism Design (accuracy: 0%, calibration: 0%)
+- Category Theory + Ergodic Theory + Metacognition (accuracy: 0%, calibration: 0%)
 - Category Theory + Metacognition + Criticality (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Metacognition + Pragmatics (accuracy: 0%, calibration: 0%)
-- Differentiable Programming + Metacognition + Mechanism Design (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

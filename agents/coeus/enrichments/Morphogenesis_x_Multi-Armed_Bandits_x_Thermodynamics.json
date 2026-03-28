@@ -7,98 +7,88 @@
   "concept_strengths": {
     "Thermodynamics": {
       "influence": {
-        "forge_effect": 0.3864,
+        "forge_effect": 0.22,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.7143,
-      "forge_effect": 0.3864,
+      "forge_rate": 0.2857,
+      "forge_effect": 0.22,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.7143,
-        "rate_without": 0.4157,
-        "drop": 0.2986
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2203,
+        "drop": 0.0655
       },
-      "summary": "Thermodynamics: removing it drops forge probability by 30% (from 71%); forge rate: 71%",
+      "summary": "Thermodynamics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
       "directive": "**Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
     },
     "Morphogenesis": {
       "influence": {
-        "forge_effect": -0.2159,
+        "forge_effect": -0.0664,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": -0.2159,
+      "forge_rate": 0.2222,
+      "forge_effect": -0.0664,
       "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.4368,
-        "drop": -0.1868
-      },
-      "summary": "Morphogenesis: removing it increases forge probability by 19%; forge rate: 25%",
-      "directive": "**Morphogenesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+      "interventional": null,
+      "summary": "Morphogenesis: negative forge driver (-0.07); forge rate: 22%",
+      "directive": "**Morphogenesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Multi-Armed Bandits": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": 0.0517,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.0,
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4297,
-        "drop": 0.0703
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
       },
-      "summary": "Multi-Armed Bandits: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
       "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Multi-Armed Bandits + Thermodynamics": 0.5985,
+    "Morphogenesis + Multi-Armed Bandits": 0.2803
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Ecosystem Dynamics",
-        "Multi-Armed Bandits",
-        "Free Energy Principle"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Ergodic Theory",
         "Thermodynamics",
-        "Free Energy Principle"
+        "Morphogenesis",
+        "Multi-Armed Bandits"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Information Theory",
-        "Sparse Autoencoders",
+        "Thermodynamics",
+        "Neuromodulation",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Cognitive Load Theory",
+        "Pragmatics",
         "Multi-Armed Bandits"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Morphogenesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Ecosystem Dynamics + Multi-Armed Bandits + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Thermodynamics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Morphogenesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Multi-Armed Bandits + Thermodynamics: strong positive synergy (+0.599). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Morphogenesis + Multi-Armed Bandits: strong positive synergy (+0.280). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Thermodynamics + Morphogenesis + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Neuromodulation + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Cognitive Load Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

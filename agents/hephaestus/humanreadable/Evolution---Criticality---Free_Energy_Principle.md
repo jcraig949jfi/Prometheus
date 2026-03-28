@@ -3,7 +3,7 @@
 **Fields**: Biology, Complex Systems, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T01:04:47.403130
-**Report Generated**: 2026-03-25T09:15:32.477273
+**Report Generated**: 2026-03-27T06:37:33.128845
 
 ---
 
@@ -39,13 +39,13 @@ Implementability: 5/10 — Tuning a large network to stay precisely at a critica
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Evolution**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
+- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 
-- Criticality + Evolution: strong positive synergy (+0.676). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Evolution + Free Energy Principle: strong positive synergy (+0.605). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
-- Criticality + Free Energy Principle: strong positive synergy (+0.288). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Evolution: strong positive synergy (+0.899). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Evolution + Free Energy Principle: strong positive synergy (+0.510). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Criticality + Free Energy Principle: strong positive synergy (+0.369). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Evolution + Criticality + Free Energy Principle (accuracy: 0%, calibration: 0%)

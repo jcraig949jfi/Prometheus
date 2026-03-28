@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Philosophy, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:12:02.523749
-**Report Generated**: 2026-03-25T09:15:27.730636
+**Report Generated**: 2026-03-27T06:37:29.331356
 
 ---
 
@@ -46,16 +46,15 @@ Implementability: 5/10 — requires integrating VAE‑based ToM, RL critic, and 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Pragmatism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Maximum Entropy + Theory of Mind: negative interaction (-0.104). Keep these concepts in separate code paths to avoid interference.
 
 Similar combinations that forged successfully:
-- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)
-- Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)
+- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)
+- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -63,10 +62,197 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: trap_battery_failed (acc=27% cal=33% ncd_acc=20% ncd_cal=7%)
+
+**Forge Timestamp**: 2026-03-27T05:45:39.723949
 
 ---
 
 ## Code
 
-*No code was produced for this combination.*
+**Source**: scrap
+
+[View code](./Theory_of_Mind---Pragmatism---Maximum_Entropy/tool.py)
+
+<details>
+<summary>Show code</summary>
+
+```python
+import re
+import json
+import zlib
+import math
+
+class ReasoningTool:
+    """
+    MP-METOM Implementation Strategy:
+    Given the constraints against using Pragmatism/MaxEnt for direct scoring, this tool
+    implements a 'Structural Causal Parser' that mimics the ToM/Pragmatic flow via:
+    1. ToM Core (Structural Parsing): Extracts logical constraints (negations, comparatives,
+       conditionals) to form a 'belief state' about the prompt's requirements.
+    2. Pragmatic Utility (Constraint Satisfaction): Candidates are scored by how well
+       they satisfy these structural constraints (workability).
+    3. MaxEnt Controller (Calibration): Uses NCD as a tie-breaking entropy term only when
+       structural signals are ambiguous, preventing over-commitment to noisy strings.
+    """
+    
+    def __init__(self):
+        self.negation_words = {'no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing'}
+        self.comparatives = {'larger', 'smaller', 'greater', 'less', 'more', 'fewer', 'higher', 'lower'}
+        self.conditionals = {'if', 'unless', 'provided', 'when', 'then'}
+
+    def _normalize(self, text):
+        return text.lower().strip()
+
+    def _extract_structural_beliefs(self, prompt):
+        """ToM Inference Core: Extracts latent logical constraints from the prompt."""
+        p_lower = self._normalize(prompt)
+        beliefs = {
+            'has_negation': False,
+            'has_comparative': False,
+            'has_conditional': False,
+            'needs_number': False,
+            'target_value': None,
+            'logic_op': None
+        }
+        
+        # Detect Negation
+        if any(w in p_lower.split() for w in self.negation_words):
+            beliefs['has_negation'] = True
+            
+        # Detect Comparatives
+        if any(w in p_lower for w in self.comparatives):
+            beliefs['has_comparative'] = True
+            
+        # Detect Conditionals
+        if any(w in p_lower.split() for w in self.conditionals):
+            beliefs['has_conditional'] = True
+            
+        # Detect Numeric Constraints (Simple extraction)
+        numbers = re.findall(r"[-+]?\d*\.\d+|\d+", p_lower)
+        if numbers:
+            beliefs['needs_number'] = True
+            try:
+                beliefs['target_value'] = float(numbers[-1])
+            except: pass
+
+        # Detect Logic Keywords
+        if 'must' in p_lower or 'required' in p_lower: beliefs['logic_op'] = 'must'
+        if 'cannot' in p_lower or 'impossible' in p_lower: beliefs['logic_op'] = 'cannot'
+        
+        return beliefs
+
+    def _pragmatic_utility_score(self, candidate, beliefs, prompt):
+        """Pragmatic Utility Layer: Scores candidate based on 'workability' against beliefs."""
+        c_lower = self._normalize(candidate)
+        score = 0.0
+        checks = 0
+        
+        # Check 1: Negation Consistency
+        has_c_neg = any(w in c_lower.split() for w in self.negation_words)
+        if beliefs['has_negation']:
+            # If prompt has negation, valid answer often acknowledges it or flips logic
+            score += 0.5 if has_c_neg else 0.0
+        else:
+            score += 0.5 if not has_c_neg else 0.0
+        checks += 0.5
+
+        # Check 2: Comparative/Number Logic
+        if beliefs['needs_number']:
+            # Try to extract number from candidate
+            c_nums = re.findall(r"[-+]?\d*\.\d+|\d+", c_lower)
+            if c_nums:
+                try:
+                    c_val = float(c_nums[0])
+                    # Heuristic: If prompt asks for "larger", candidate should be large? 
+                    # Without full semantic parse, we check if candidate contains A number.
+                    score += 1.0 
+                except: pass
+            else:
+                # If prompt needs number but candidate is text-only (e.g. "Yes"), penalize slightly
+                if not any(k in c_lower for k in ['yes', 'no', 'true', 'false']):
+                    score += 0.2
+        checks += 1.0
+
+        # Check 3: Conditional/Logic Op
+        if beliefs['logic_op'] == 'must':
+            if 'must' in c_lower or 'yes' in c_lower or 'true' in c_lower:
+                score += 1.0
+        elif beliefs['logic_op'] == 'cannot':
+            if 'cannot' in c_lower or 'no' in c_lower or 'false' in c_lower:
+                score += 1.0
+        checks += 1.0
+
+        # Base relevance (simple overlap to ensure topic match)
+        p_words = set(self._normalize(prompt).split())
+        c_words = set(c_lower.split())
+        overlap = len(p_words & c_words)
+        score += min(overlap * 0.1, 1.0)
+        checks += 1.0
+
+        return score / checks if checks > 0 else 0.0
+
+    def _max_ent_calibration(self, prompt, candidate, base_score):
+        """Meta-Reasoning Controller: Applies NCD only as a tie-breaker/calibrator."""
+        # NCD Calculation
+        s1 = prompt.encode('utf-8')
+        s2 = candidate.encode('utf-8')
+        len_s1 = len(s1)
+        len_s2 = len(s2)
+        if len_s1 == 0 or len_s2 == 0:
+            ncd = 1.0
+        else:
+            len_combined = len(zlib.compress(s1 + s2))
+            max_len = max(len_s1, len_s2)
+            if max_len == 0: ncd = 1.0
+            else: ncd = (len_combined - min(len_s1, len_s2)) / max_len
+        
+        # MaxEnt adjustment: If base_score is ambiguous (near 0.5), let NCD influence.
+        # If base_score is strong, NCD is ignored (prevents overfitting to string length).
+        if 0.4 <= base_score <= 0.6:
+            # Invert NCD (lower distance = higher score)
+            calibration_bonus = (1.0 - ncd) * 0.1
+            return base_score + calibration_bonus
+        return base_score
+
+    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
+        if not candidates:
+            return []
+        
+        beliefs = self._extract_structural_beliefs(prompt)
+        results = []
+        
+        for cand in candidates:
+            # 1. Pragmatic Utility Score (Primary Signal)
+            util_score = self._pragmatic_utility_score(cand, beliefs, prompt)
+            
+            # 2. MaxEnt Calibration (Secondary Signal)
+            final_score = self._max_ent_calibration(prompt, cand, util_score)
+            
+            # Reasoning trace
+            reason_parts = []
+            if beliefs['has_negation']: reason_parts.append("negation detected")
+            if beliefs['has_comparative']: reason_parts.append("comparative logic")
+            if beliefs['needs_number']: reason_parts.append("numeric constraint")
+            reason_str = f"Structural checks: {', '.join(reason_parts) if reason_parts else 'none'}. Utility match: {util_score:.2f}."
+            
+            results.append({
+                "candidate": cand,
+                "score": round(final_score, 4),
+                "reasoning": reason_str
+            })
+        
+        # Sort by score descending
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results
+
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Returns confidence based on structural alignment."""
+        beliefs = self._extract_structural_beliefs(prompt)
+        score = self._pragmatic_utility_score(answer, beliefs, prompt)
+        # Normalize to 0-1 strictly
+        return min(1.0, max(0.0, score))
+```
+
+</details>

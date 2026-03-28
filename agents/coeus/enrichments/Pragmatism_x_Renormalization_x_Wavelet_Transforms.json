@@ -7,98 +7,88 @@
   "concept_strengths": {
     "Renormalization": {
       "influence": {
-        "forge_effect": 0.1643,
+        "forge_effect": 0.0573,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": 0.1643,
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
       "confounder_status": null,
-      "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4297,
-        "drop": 0.0703
-      },
-      "summary": "Renormalization: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
-      "directive": "**Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Wavelet Transforms": {
       "influence": {
-        "forge_effect": -0.0822,
+        "forge_effect": -0.0685,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5,
-      "forge_effect": -0.0822,
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5,
-        "rate_without": 0.4302,
-        "drop": 0.0698
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
       },
-      "summary": "Wavelet Transforms: removing it drops forge probability by 7% (from 50%); forge rate: 50%",
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
       "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Pragmatism": {
       "influence": {
-        "forge_effect": 0.0,
+        "forge_effect": -0.2295,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.25,
-      "forge_effect": 0.0,
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.25,
-        "rate_without": 0.434,
-        "drop": -0.184
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
       },
-      "summary": "Pragmatism: removing it increases forge probability by 18%; forge rate: 25%",
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
       "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Renormalization + Wavelet Transforms": -0.0429,
+    "Pragmatism + Renormalization": -0.0133
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
     {
       "concept_names": [
-        "Falsificationism",
+        "Analogical Reasoning",
         "Pragmatism",
-        "Feedback Control"
+        "Type Theory"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
-        "Phase Transitions",
+        "Category Theory",
         "Renormalization",
-        "Active Inference"
+        "Constraint Satisfaction"
       ],
       "accuracy": 0,
       "calibration": 0
     },
     {
       "concept_names": [
+        "Category Theory",
         "Renormalization",
-        "Criticality",
-        "Model Checking"
+        "Global Workspace Theory"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n- Phase Transitions + Renormalization + Active Inference (accuracy: 0%, calibration: 0%)\n- Renormalization + Criticality + Model Checking (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)\n- Category Theory + Renormalization + Global Workspace Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

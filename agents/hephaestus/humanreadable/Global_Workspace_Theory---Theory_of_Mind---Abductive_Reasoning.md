@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Cognitive Science, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:02:52.705716
-**Report Generated**: 2026-03-25T09:15:27.629816
+**Report Generated**: 2026-03-27T06:37:29.085921
 
 ---
 
@@ -43,13 +43,14 @@ Implementability: 5/10 — requires a scalable workspace, recursive ToM inferenc
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Theory of Mind**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Theory of Mind**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
 
 Similar combinations that forged successfully:
 - Ergodic Theory + Theory of Mind + Abductive Reasoning (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 - Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)
-- Ergodic Theory + Dynamical Systems + Theory of Mind (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -57,7 +58,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T18:28:47.796261
 
 ---
 

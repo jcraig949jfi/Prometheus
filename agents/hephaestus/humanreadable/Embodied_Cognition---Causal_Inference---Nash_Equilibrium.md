@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Information Science, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T17:49:50.495389
-**Report Generated**: 2026-03-25T09:15:27.462624
+**Report Generated**: 2026-03-27T06:37:29.015922
 
 ---
 
@@ -41,12 +41,15 @@ Implementability: 5/10 — requires integrating neural SCMs, do‑calculus simul
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
-- **Causal Inference**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Nash Equilibrium**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+
+- Causal Inference + Embodied Cognition: strong positive synergy (+0.632). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
-- Causal Inference + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Epistemology + Criticality + Nash Equilibrium (accuracy: 0%, calibration: 0%)
+- Embodied Cognition + Autopoiesis + Causal Inference (accuracy: 0%, calibration: 0%)
+- Ergodic Theory + Embodied Cognition + Causal Inference (accuracy: 0%, calibration: 0%)
+- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
@@ -54,7 +57,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-26T23:56:15.770374
 
 ---
 

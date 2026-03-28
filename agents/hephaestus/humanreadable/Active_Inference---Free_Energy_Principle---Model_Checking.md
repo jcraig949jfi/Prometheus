@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Theoretical Neuroscience, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T18:02:14.077569
-**Report Generated**: 2026-03-25T09:15:27.624810
+**Report Generated**: 2026-03-27T17:21:23.632029
 
 ---
 
@@ -45,16 +45,18 @@ Implementability: 5/10 — Real‑time variational inference combined with exhau
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Active Inference**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 63%. 
-- **Free Energy Principle**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 79%. 
-- **Model Checking**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Active Inference**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Active Inference + Free Energy Principle: strong positive synergy (+0.301). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Free Energy Principle: strong positive synergy (+0.384). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Active Inference + Model Checking: strong positive synergy (+0.426). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Free Energy Principle + Model Checking: strong positive synergy (+0.259). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
 - Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)
-- Information Theory + Active Inference + Free Energy Principle (accuracy: 0%, calibration: 0%)
+- Bayesian Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 

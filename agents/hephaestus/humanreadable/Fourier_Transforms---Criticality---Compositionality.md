@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T03:47:35.334177
-**Report Generated**: 2026-03-25T09:15:34.133461
+**Report Generated**: 2026-03-27T06:37:34.492704
 
 ---
 
@@ -41,10 +41,11 @@ Implementability: 5/10 — realizing trainable critical Fourier layers is nontri
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
 - **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
-- **Criticality**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 65%. 
-- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
+- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
+- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 
-- Compositionality + Criticality: strong positive synergy (+0.343). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Compositionality + Fourier Transforms: strong positive synergy (+0.479). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Compositionality + Criticality: strong positive synergy (+0.329). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Fourier Transforms + Criticality + Compositionality (accuracy: 0%, calibration: 0%)

@@ -3,7 +3,7 @@
 **Fields**: Physics, Cognitive Science, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-25T04:58:55.345255
-**Report Generated**: 2026-03-25T09:15:34.796622
+**Report Generated**: 2026-03-27T06:37:35.065694
 
 ---
 
@@ -40,11 +40,11 @@ Implementability: 5/10 — Requires fine‑tuning of reservoir spectral radius, 
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Chaos Theory**: Strong primary driver of forge success. Make this concept the core architectural pattern of the evaluate() method. Historical forge rate: 71%. 
+- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.
 - **Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
-- Chaos Theory + Maximum Entropy: strong positive synergy (+0.823). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
+- Chaos Theory + Maximum Entropy: strong positive synergy (+0.369). These concepts reinforce each other — integrate them tightly rather than implementing as independent checks.
 
 Similar combinations that forged successfully:
 - Chaos Theory + Predictive Coding + Maximum Entropy (accuracy: 0%, calibration: 0%)

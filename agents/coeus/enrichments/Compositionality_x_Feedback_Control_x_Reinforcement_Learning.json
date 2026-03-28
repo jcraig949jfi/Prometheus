@@ -7,66 +7,75 @@
   "concept_strengths": {
     "Reinforcement Learning": {
       "influence": {
-        "forge_effect": 0.0476,
+        "forge_effect": -0.0981,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 1.0,
-      "forge_effect": 0.0476,
+      "forge_rate": 0.15,
+      "forge_effect": -0.0981,
       "confounder_status": null,
-      "interventional": null,
-      "summary": "Reinforcement Learning: forge rate: 100%",
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.15,
+        "rate_without": 0.2263,
+        "drop": -0.0763
+      },
+      "summary": "Reinforcement Learning: removing it increases forge probability by 8%; forge rate: 15%",
       "directive": "**Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Feedback Control": {
       "influence": {
-        "forge_effect": -0.0566,
+        "forge_effect": -0.0252,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.4,
-      "forge_effect": -0.0566,
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.4,
-        "rate_without": 0.4324,
-        "drop": -0.0324
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
       },
-      "summary": "Feedback Control: negative forge driver (-0.06); forge rate: 40%",
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
       "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     },
     "Compositionality": {
       "influence": {
-        "forge_effect": 0.1034,
+        "forge_effect": -0.0337,
         "reasoning_effect": 0.0
       },
-      "forge_rate": 0.5333,
-      "forge_effect": 0.1034,
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
       "confounder_status": null,
       "interventional": {
-        "base_rate": 0.4312,
-        "rate_with": 0.5333,
-        "rate_without": 0.4252,
-        "drop": 0.1081
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
       },
-      "summary": "Compositionality: removing it drops forge probability by 11% (from 53%); forge rate: 53%",
-      "directive": "**Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
     }
   },
-  "pair_synergies": {},
+  "pair_synergies": {
+    "Feedback Control + Reinforcement Learning": -0.0244,
+    "Compositionality + Feedback Control": -0.0303
+  },
   "field_effects": {
-    "Biology": -0.0919,
-    "Complex Systems": 0.0216,
-    "Control Theory": -0.1521,
-    "Economics": 0.1516,
-    "Linguistics": 0.1062,
-    "Mathematics": -0.2184,
-    "Neuroscience": -0.0156,
-    "Philosophy": 0.0541,
-    "Physics": 0.0244,
-    "Statistical Physics": -0.0121,
-    "Theoretical Neuroscience": 0.2733
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
   },
   "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
     {
       "concept_names": [
         "Chaos Theory",
@@ -79,21 +88,12 @@
     {
       "concept_names": [
         "Chaos Theory",
-        "Dialectics",
-        "Feedback Control"
-      ],
-      "accuracy": 0,
-      "calibration": 0
-    },
-    {
-      "concept_names": [
-        "Chaos Theory",
-        "Feedback Control",
-        "Maximum Entropy"
+        "Adaptive Control",
+        "Compositionality"
       ],
       "accuracy": 0,
       "calibration": 0
     }
   ],
-  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Feedback Control + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
 }

@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-24T23:40:26.989091
-**Report Generated**: 2026-03-25T09:15:31.331937
+**Report Generated**: 2026-03-27T05:13:30.816485
 
 ---
 
@@ -47,14 +47,14 @@ Implementability: 5/10 — Requires integrating wavelet‑based coarse‑grainin
 
 The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:
 
-- **Renormalization**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. 
-- **Program Synthesis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
+- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
+- **Program Synthesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. 
 - **Matched Filtering**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. 
 
 Similar combinations that forged successfully:
-- Phase Transitions + Renormalization + Active Inference (accuracy: 0%, calibration: 0%)
-- Renormalization + Global Workspace Theory + Criticality (accuracy: 0%, calibration: 0%)
-- Sparse Autoencoders + Program Synthesis + Neuromodulation (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)
+- Category Theory + Renormalization + Global Workspace Theory (accuracy: 0%, calibration: 0%)
+- Chaos Theory + Renormalization + Cognitive Load Theory (accuracy: 0%, calibration: 0%)
 
 GLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected.
 
