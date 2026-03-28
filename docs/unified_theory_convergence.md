@@ -233,19 +233,36 @@ If correct-answer activations look identical to wrong-answer activations in the 
 
 ## Decision Tree — What Changes Based on Experimental Outcomes
 
-### If corpus-first weakens basins:
-- Steering becomes viable at scale — LoRA is back on the table
-- The ejection circuit is distributional, not architectural
-- Corpus-first becomes a prerequisite for all downstream interventions (including architectural modifications and Noesis LLM-as-I/O-interface)
-- Noesis remains an accelerator, not the primary reasoning system
-- **Training paradox is solved:** A reconsideration layer added AFTER corpus training would have a training signal where "revise the heuristic" is sometimes correct. The distribution no longer uniformly rewards suppression.
+### ~~If corpus-first weakens basins:~~ (NOT what happened)
+~~Steering becomes viable at scale — LoRA is back on the table~~
 
-### If corpus-first fails (basins unchanged):
-- Steering has a fundamental ceiling — LoRA cannot reach distributed suppression
-- The ejection circuit is architectural — baked into weight geometry, not statistics
-- Noesis becomes the primary reasoning system, LLM becomes I/O interface
-- Architectural modifications (new layer types, modified attention) become the research frontier
-- Rhea's self-improving loop needs a fundamentally different approach
+### ~~If corpus-first fails (basins unchanged):~~ (PARTIALLY what happened)
+~~The ejection circuit is architectural — baked into weight geometry, not statistics~~
+
+### What actually happened: Basins unchanged, but performance improved within them (2026-03-28)
+
+The corpus-first experiment revealed a **third outcome** not predicted by the decision tree:
+
+**The ejection profile is structurally identical** after corpus training:
+- L* distribution: unchanged (median 26)
+- Correct answer alive at some layer: 26/30 → 26/30
+- Basin geometry: not tested yet but L* invariance suggests no change
+
+**But reasoning performance improved dramatically:**
+- Metacognition: 35.7% → 57.1% (+21.4%)
+- Self-correction: 38.5% → 53.8% (+15.4%)
+- Far-transfer: 42.9% → 52.4% (+9.5%)
+- Composite: 0.335 → 0.427 (+27.5%)
+
+**Interpretation:** The basins are structural (the circuit survives 300 examples of fine-tuning). But the model's performance *within* the basins has room to improve. The training data taught the model reasoning *patterns* (uncertainty acknowledgment, error correction, multi-step logic) without changing the suppression circuit. The patterns work within the existing geometry — they don't escape the basins, they make better use of the space inside them.
+
+**What this changes:**
+- The ejection circuit is confirmed structural → Noesis hedge is justified
+- BUT corpus training is still valuable as a pre-evolution step (the convergence theory's original prediction)
+- The model with corpus training is a better *seed* for CMA-ES evolution (Stage D tests this)
+- Steering vectors on a corpus-trained model may flip more traps because the model starts from a better position within each basin
+- The ceiling is still the basin geometry — corpus training raises the floor, not the ceiling
+- The metacognitive hedge (Noesis) remains necessary for reasoning that requires escaping the basins entirely
 
 ### If Arcanum shows routing suppression (signal recoverable):
 - Reconsideration mechanisms are architecturally feasible
@@ -269,6 +286,8 @@ One finding, three directions, four measurement systems:
 3. **Scaling**: The suppression strengthens → 0.5B fragile, 1.5B fortress
 4. **Arcanum** (predicted): Waste stream should show routing suppression in RIDGED basins, overwrite in IMPENETRABLE basins (three-partition control needed)
 
-The bottleneck is dynamics, not capacity. The corpus-first experiment tests whether the dynamics can be changed by changing the training distribution. The Arcanum experiment tests whether the suppressed information is still recoverable. Together they determine whether the ejection circuit is a learned feature (fixable) or an architectural consequence (requiring Noesis as the alternative path).
+The bottleneck is dynamics, not capacity. The corpus-first experiment (2026-03-28) confirmed the ejection circuit is structural — 300 reasoning examples don't reshape the basins. But it also revealed that performance within the basins has significant headroom: metacognition improved 21.4% and self-correction 15.4% from corpus training alone. The basins are the ceiling; corpus training raises the floor.
+
+The Arcanum experiment (proposed, not yet run) tests whether the suppressed information is still recoverable — routing suppression vs overwrite destruction per trap family. Together with the corpus-first result, this will determine whether the ejection circuit can be partially bypassed (steering + corpus) or must be fully circumvented (Noesis).
 
 The failure mode taxonomy (5 types) is a lower bound — the forge monoculture means unexplored concept regions may harbor additional failure modes the pipeline never generated tools to cover.

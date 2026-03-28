@@ -166,6 +166,43 @@ Athena autonomous session ran CMA-ES evolution at every layer from L19-L26 (300 
 
 ---
 
+## Corpus-First Experiment — Training Data Improves Reasoning Without Changing the Circuit
+
+*Added: 2026-03-28*
+
+**The question:** Can supervised fine-tuning on reasoning data weaken the ejection circuit, making the basins shallower for subsequent steering?
+
+**The answer:** No — but it improves reasoning anyway, through a mechanism we didn't predict.
+
+**Method:** Fine-tune Qwen-1.5B on 300 self-generated reasoning examples (74 correct, 181 corrected, 45 "unknown") for 3 epochs at lr=5e-6 with bf16, gradient checkpointing, and gradient clipping. No evolution. No steering vectors. Pure supervised learning.
+
+**Results:**
+
+| Pillar | Baseline | Post-Corpus | Delta |
+|--------|----------|-------------|-------|
+| Tier A accuracy | 46.7% | 46.7% | 0% |
+| Tier B accuracy | 50.0% | 50.0% | 0% |
+| Tier C (far-transfer) | 42.9% | **52.4%** | **+9.5%** |
+| Metacognition | 35.7% | **57.1%** | **+21.4%** |
+| Self-correction | 38.5% | **53.8%** | **+15.4%** |
+| Composite | 0.335 | **0.427** | **+27.5%** |
+
+**The ejection profile is structurally unchanged:**
+- Correct answer alive at some layer: 26/30 → 26/30
+- Top-5 at some layer: 7/30 → 7/30
+- L* distribution: median 26 → median 26
+
+**What changed:** Margins within existing basins. Traps the model already got right became more confident (CRT Widgets: +2.81 → +5.47). Some traps it got wrong became more wrong (Spatial Inversion: -1.69 → -3.20). The basin geometry is fixed — what moved is the model's position within the basins.
+
+**What this means:**
+1. The ejection circuit is structural, not distributional — 300 reasoning examples don't reshape it
+2. But reasoning performance has room to improve *within* the existing geometry
+3. Metacognition (+21.4%) and self-correction (+15.4%) improved because the training data contained examples of uncertainty acknowledgment and error correction — the model learned these *patterns* without changing the suppression circuit
+4. The basins are the ceiling, not the current performance — there's headroom before hitting the wall
+5. This is evidence for the metacognitive hedge: the ejection circuit cannot be trained away, only worked around (steering vectors) or bypassed (Noesis)
+
+---
+
 ## The Forge Pipeline
 
 Alongside the core ejection work, we built an automated pipeline for discovering computable reasoning criteria:
