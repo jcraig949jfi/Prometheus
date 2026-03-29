@@ -1358,5 +1358,181 @@
     "tradition": "Machine learning",
     "domain": "computer_science",
     "notes": "Adversarial robustness training inverts the optimization direction: instead of minimizing loss on natural inputs, the inner loop MAXIMIZES loss by searching for worst-case perturbations (adversarial examples). The outer loop then minimizes loss on these adversarial inputs. This min-max game is a structural inversion of standard training — the gradient direction is deliberately reversed in the inner loop. The result is a model that is robust to the exact gaming strategies that Goodhart's Law predicts: optimizing a metric creates exploitable shortcuts, so INVERT finds and patches them. The damage is reduced clean accuracy (typically 5-15% drop) and significantly higher computational cost (3-10x training time). | DAMAGE_OP: INVERT | STRATEGY: Reverse the optimization direction to find metric-gaming attacks, then train against them."
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__PYTHAGOREAN",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "Wolf interval concentrates the comma | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__EQUAL_TEMPERAMENT",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "Distributes comma uniformly across all 12 intervals | DAMAGE_OP: QUANTIZE"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__MEANTONE",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "Hides comma in rarely used keys | DAMAGE_OP: PARTITION"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__GAMELAN_PELOG",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "7-tone scale, non-octave, different damage allocation | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__GAMELAN_SLENDRO",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "5-tone near-equal, different closure compromise | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__ARABIC_MAQAM",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "Quarter-tone system, different comma resolution | DAMAGE_OP: EXTEND"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__ADAPTIVE_JUST_INTONATION",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "Real-time modulation of tuning intervals. Dynamically retune to context. Predicted independently by tensor AND Gemini expert. | DAMAGE_OP: HIERARCHIZE"
+  },
+  {
+    "instance_id": "PYTHAGOREAN_COMMA__NEGATIVE_HARMONY",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": null,
+    "tradition": "Various",
+    "domain": "music",
+    "notes": "Ernst Levy's Negative Harmony inverts melodic intervals around an axis (typically the axis between the tonic and its fifth). Every interval is reflected: major becomes minor, dominant becomes subdominant, tension mirrors to release. The harmonic direction is literally reversed — ascending fifths become descending fourths. This is a pure structural inversion of the circle of fifths, producing functionally equivalent but perceptually 'darker' harmonic movement. The damage is the loss of conventional harmonic directionality: cadences resolve 'backwards.' | DAMAGE_OP: INVERT | STRATEGY: Reflect all intervals around a tonal axis, reversing harmonic gravity while preserving intervallic structure."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY__TENSOR_PRED_INVERT_Inverse_Galois_Problem_(Shafar",
+    "comp_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Inverse Galois Problem (Shafarevich): The Inverse Galois Problem: given a finite group G, does there exist a polynomial over Q whose Galois group is G? KNOWN OPEN PROBLEM in mathematics. Shafarevich conjecture (1954) claims yes for all solvable groups. Proven for symmetric groups, alternating groups, many simple groups. Still open in ge | DAMAGE_OP: INVERT | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_GOODHARTS_LAW__TENSOR_PRED_EXTEND_Multi-Dimensional_Metric_Exten",
+    "comp_id": "IMPOSSIBILITY_GOODHARTS_LAW",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Multi-Dimensional Metric Extension: Add more dimensions to the metric to resist gaming. Multi-objective optimization, balanced scorecards. Already exists as HOLISTIC_DASHBOARD_DISTRIBUTION spoke but tagged DISTRIBUTE not EXTEND. The structural move is EXTEND (add metric dimensions) then DISTRIBUTE (spread pressure). | DAMAGE_OP: EXTEND | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_GOODHARTS_LAW__TENSOR_PRED_CONCENTRATE_North_Star_Metric_Concentratio",
+    "comp_id": "IMPOSSIBILITY_GOODHARTS_LAW",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "North Star Metric Concentration: Concentrate measurement on ONE critical metric and accept gaming everywhere else. North Star metrics in startups. OKRs with a single key result. Already common practice but not formalized as a Goodhart resolution. | DAMAGE_OP: CONCENTRATE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__TENSOR_PRED_QUANTIZE_Polyhedral___Discrete_Grid_Pro",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Polyhedral / Discrete Grid Projection (Dymaxion, HEALPix): Discrete map projections: tile the sphere with polyhedra instead of continuous mapping. Buckminster Fuller's Dymaxion projection (icosahedron), HEALPix (equal-area pixelization for CMB), S2 geometry (Google's discrete global grid). Already widely used in geospatial computing. | DAMAGE_OP: QUANTIZE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "FOUNDATIONAL_IMPOSSIBILITY__TENSOR_PRED_INVERT_Reverse_Mathematics_(Friedman_",
+    "comp_id": "FOUNDATIONAL_IMPOSSIBILITY",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Reverse Mathematics (Friedman/Simpson): Reverse Gödel: instead of 'this system can't prove its consistency', ask 'what CAN a consistent system prove?' This is reverse mathematics (Harvey Friedman, Stephen Simpson) — determine the minimal axioms needed for each theorem. Also related to proof mining (Kohlenbach) — extract computational cont | DAMAGE_OP: INVERT | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__TENSOR_PRED_EXTEND_Higher-Dimensional_Projection",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Higher-Dimensional Projection: Add dimensions: project sphere into 3D polyhedron instead of 2D plane. Dymaxion, globe gores, 3D printed maps. Also: embed in higher-dimensional space where the projection can be area+angle preserving (impossible in 2D, possible in 3D with sufficient distortion budget). | DAMAGE_OP: EXTEND | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY__TENSOR_PRED_CONCENTRATE_Selective_Accuracy_Concentrati",
+    "comp_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Selective Accuracy Concentration: Concentrate accuracy in one dimension, sacrifice in others. Touchscreen keyboards that auto-correct only the most common errors. Sniper rifles that sacrifice rate of fire for precision. Already exists in HCI as 'accuracy-weighted interaction zones'. | DAMAGE_OP: CONCENTRATE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY__TENSOR_PRED_TRUNCATE_Choice_Space_Truncation_(Hick'",
+    "comp_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Choice Space Truncation (Hick's Law): Truncate the choice space: reduce options to eliminate decision overhead. Apple's design philosophy (fewer buttons), fast food menus, command-line vs GUI. Hick's Law: reaction time increases logarithmically with choices. TRUNCATE = reduce choices. | DAMAGE_OP: TRUNCATE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__TENSOR_PRED_HIERARCHIZE_Multi-Resolution_Atlas___LOD_H",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Multi-Resolution Atlas / LOD Hierarchy: Multi-resolution projection: coarse global view + detailed local insets. This is literally how atlases work — world map on one page, city maps on the next. Also LOD (level of detail) in GIS systems. Google Maps zoom hierarchy. | DAMAGE_OP: HIERARCHIZE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BORSUK_ULAM__TENSOR_PRED_PARTITION_Voronoi_Sphere_Partition",
+    "comp_id": "IMPOSSIBILITY_BORSUK_ULAM",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Voronoi Sphere Partition: Split the sphere into regions where the mapping is injective. Voronoi decomposition on S^n. Each cell avoids the antipodal collision locally. This is literally how mesh-based rendering works for sphere-to-plane mapping in computer graphics. | DAMAGE_OP: PARTITION | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2__TENSOR_PRED_PARTITION_Polycrystalline_Grain_Partitio",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Polycrystalline Grain Partition: Domain-specific crystallography: different crystal structures in different regions. Grain boundaries in polycrystalline materials. Each grain has its own lattice orientation. This is standard materials science. | DAMAGE_OP: PARTITION | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MUNDELL_FLEMING__TENSOR_PRED_PARTITION_Economic_Zone_Partition_(SEZ)",
+    "comp_id": "IMPOSSIBILITY_MUNDELL_FLEMING",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Economic Zone Partition (SEZ): Currency zones with different regimes. Already exists: Euro (fixed rate zone) alongside floating rate neighbors. Also: special economic zones (SEZs) with different capital control rules. China's approach — mainland controls + Hong Kong freedom. | DAMAGE_OP: PARTITION | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS__TENSOR_PRED_CONCENTRATE_Total_Sovereignty_Concentratio",
+    "comp_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Total Sovereignty Concentration: Concentrate the sacrifice on one property maximally. Currency board (sacrifice ALL monetary independence, like Hong Kong's dollar peg). Already exists as DOLLARIZATION spoke. | DAMAGE_OP: CONCENTRATE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2__TENSOR_PRED_DISTRIBUTE_Uniform_Quasicrystal_Distribut",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
+    "system_id": null,
+    "tradition": "Tensor Discovery",
+    "domain": "cross-domain",
+    "notes": "Uniform Quasicrystal Distribution: Distribute the rotational impossibility evenly — quasicrystals with near-uniform local environments. Already exists as aperiodic quasicrystals spoke. May need DISTRIBUTE tag added. | DAMAGE_OP: DISTRIBUTE | SOURCE: tensor_prediction_verified"
   }
 ]

@@ -167,6 +167,63 @@ Alignment measured via chi-squared statistic across 100 height bands x 36 angula
 
 ---
 
+## Overnight Task Results -- TASK 5b: CONNECT ISOLATED HUBS
+**Completed:** 2026-03-29
+**Status:** SUCCESS (7/8 hubs connected)
+
+### Background
+
+Hub connectivity analysis (Task 5) identified 8 hubs with zero cross-domain edges. These hubs predated the edge infrastructure -- they had spokes (composition_instances) but no connections to other hubs.
+
+### Method
+
+**Phase 1 (automated):** For each isolated hub spoke, matched against all non-isolated hub spokes using:
+- Shared damage operators from DAMAGE_OP tags in notes (+0.5)
+- Shared primitives in the hub's primitive_sequence (+0.3 per shared primitive, excluding COMPOSE and BREAK_SYMMETRY as too common)
+- Structural keyword overlap in notes text (+0.1 per keyword, capped at +0.5)
+- Threshold: score >= 0.5
+
+**Phase 2 (manual high-confidence edges):** Based on known structural kinships:
+- ALGEBRAIC_COMPLETION (COMPLETE+REDUCE) linked to all IMPOSSIBILITY hubs using COMPLETE or TRUNCATE+REDUCE
+- BINARY_DECOMP_RECOMP (COMPOSE+REDUCE) linked to FORCED_SYMMETRY_BREAK, FOUNDATIONAL_IMPOSSIBILITY, IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION (shared COMPOSE primitive, compositional structure)
+- PHYS_SYMMETRY_CONSTRUCTION (SYMMETRIZE+COMPOSE) linked to CRYSTALLOGRAPHIC hubs (both involve symmetry construction in physical/geometric domains)
+- CROSS_DOMAIN_DUALITY (DUALIZE+MAP) linked to all spokes tagged DUALIZE or containing "dual" in notes
+- METRIC_REDEFINITION (BREAK_SYMMETRY+COMPLETE) linked to p-adic and tropical entries
+- RECURSIVE_SPATIAL_EXTENSION (EXTEND+COMPOSE) linked to CRYSTALLOGRAPHIC and FOUNDATIONAL hubs (recursive spatial/algebraic structure) + cross-linked to PHYS_SYMMETRY_CONSTRUCTION
+
+### Results
+
+| Hub | Spokes | New Edges | Status |
+|-----|--------|-----------|--------|
+| ALGEBRAIC_COMPLETION | 3 | 363 | CONNECTED |
+| BINARY_DECOMP_RECOMP | 6 | 150 | CONNECTED |
+| CROSS_DOMAIN_DUALITY | 5 | 34 | CONNECTED |
+| CRYSTALLOGRAPHIC_IMPOSSIBILITY | 4 | 424 | CONNECTED |
+| IMPOSSIBILITY_PYTHAGOREAN_COMMA | 0 | 0 | NO SPOKES |
+| METRIC_REDEFINITION | 2 | 40 | CONNECTED |
+| PHYS_SYMMETRY_CONSTRUCTION | 5 | 90 | CONNECTED |
+| RECURSIVE_SPATIAL_EXTENSION | 4 | 76 | CONNECTED |
+
+**Total new hub bridge edges:** 1,137
+**Total edges in DB after task:** 2,423
+
+### Database Changes
+- 1,137 new rows in `cross_domain_edges` table
+- All new rows: edge_type='computed_hub_bridge', provenance='aletheia_overnight_isolated'
+- Duplicates from DB lock retries cleaned up (3,381 duplicate rows removed)
+- No existing edges modified or deleted
+
+### Anomalies
+1. **IMPOSSIBILITY_PYTHAGOREAN_COMMA has zero spokes** -- This hub exists in abstract_compositions (with primitive sequence COMPOSE+COMPLETE(fails)+BREAK_SYMMETRY and a rich description about tuning systems), but no composition_instances were ever created for it. The actual comma resolutions live under FORCED_SYMMETRY_BREAK. This hub needs spoke population before it can participate in the edge graph.
+2. **ALGEBRAIC_COMPLETION and CRYSTALLOGRAPHIC_IMPOSSIBILITY have high edge counts** (363 and 424) -- Their primitive sequences contain COMPLETE, which matches the COMPLETE(fails) in nearly every IMPOSSIBILITY hub. This is structurally correct: algebraic completion and crystallographic impossibility are both fundamentally about the completability/incompletability of structures.
+3. **CROSS_DOMAIN_DUALITY has the fewest edges (34)** despite 5 spokes -- DUALIZE is a relatively rare primitive (21 entries in ethnomathematics), so fewer targets qualify. The hub is genuinely more specialized.
+4. **DB locking caused multiple script executions** -- Background tasks queued up and ran sequentially once the lock was released, producing 7x duplicate entries. All duplicates were cleaned up post-hoc.
+
+### Script
+`noesis/v2/connect_isolated_hubs.py`
+
+---
+
 ## Overnight Task Results — POPULATE INVERT DAMAGE OPERATOR
 **Completed:** 2026-03-29
 **Status:** SUCCESS
