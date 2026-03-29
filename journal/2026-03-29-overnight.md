@@ -121,3 +121,46 @@ Alignment measured via chi-squared statistic across 100 height bands x 36 angula
 - Script: `noesis/v2/prime_cone.py`
 - Results: `noesis/v2/prime_cone_results.json`
 - Coordinates: `noesis/v2/prime_cone_coords.npz`
+
+---
+
+## Overnight Task Results — TASK 2: CROSS-DOMAIN EDGE DENSIFICATION
+**Started:** 2026-03-29 19:12:12
+**Completed:** 2026-03-29 19:12:26
+**Status:** SUCCESS
+
+### Results
+
+**Approach:** Extracted all 135 composition_instances with DAMAGE_OP tags across 27 hubs. Grouped by damage operator, then computed pairwise similarity scores for all cross-hub pairs. Scoring: +0.5 base (shared damage op), +0.3 cross-domain bonus, +0.2 per shared keyword (from a curated list of 25 structural terms). Threshold: score > 0.6. Canonical ordering prevents (A,B)/(B,A) duplicates.
+
+**10 damage operators found:** CONCENTRATE (17), DISTRIBUTE (22), EXPAND (4), EXTEND (9), HIERARCHIZE (19), PARTITION (17), QUANTIZE (2), RANDOMIZE (16), REDUCE (2), TRUNCATE (27)
+
+**New edges inserted:** 188
+**Previous total:** 1016 (36 original + 980 from prior computed_similarity runs)
+**New total:** 1204
+
+**Score distribution:** Min=0.80, Max=1.20, Avg=0.82
+
+**New edges by damage operator:**
+- HIERARCHIZE: 170 (dominant — 19 instances across 19 different hubs means nearly all pairs qualify)
+- RANDOMIZE: 11
+- EXPAND: 6
+- REDUCE: 1
+
+**Top hub pairs by new connections:**
+- IMPOSSIBILITY_CAP <-> IMPOSSIBILITY_GOODHARTS_LAW: 2 new edges
+- IMPOSSIBILITY_GOODHARTS_LAW <-> SHANNON_CAPACITY: 2 new edges
+- IMPOSSIBILITY_CAP <-> SHANNON_CAPACITY: 2 new edges
+- NYQUIST_LIMIT <-> SHANNON_CAPACITY: 2 new edges
+- IMPOSSIBILITY_BORSUK_ULAM <-> IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2: 2 new edges
+
+### Database Changes
+- 188 new rows in `cross_domain_edges` table (edge_id 1017-1204)
+- All new rows: edge_type='computed_similarity', provenance='aletheia_overnight'
+- No existing edges modified or deleted
+
+### Anomalies
+1. **HIERARCHIZE dominates new edges (170/188 = 90%)** — This operator appears across 19 different hubs, all in different domains, so nearly every pair qualifies (cross-domain bonus pushes all above threshold). The graph is becoming dense in HIERARCHIZE connections. Future work should weight down operators with very high hub counts to avoid the graph becoming trivially connected through a single operator.
+2. **TRUNCATE (27 instances, largest operator) produced zero new edges** — All cross-hub TRUNCATE pairs were already captured in prior runs. The 980 existing computed_similarity edges had already saturated the TRUNCATE, DISTRIBUTE, CONCENTRATE, and PARTITION operator subgraphs.
+3. **QUANTIZE and REDUCE have very few instances (2 each)** — With only 1 cross-hub pair possible per operator, edge density is inherently limited. These operators need more composition_instance population before they contribute meaningfully to the graph.
+4. **DB was locked during execution** — Another process held the main DB. Script fell back to reading from the .bak copy for instance data, then successfully connected to the main DB for the write phase. All 188 edges were committed to the primary database.
