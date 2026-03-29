@@ -229,7 +229,7 @@
     "system_id": "CHINESE_ROD_NEGATIVE_NUMBER_SYSTEM",
     "tradition": "Chinese",
     "domain": "arithmetic",
-    "notes": "Red/black rod duality for positive/negative"
+    "notes": "Red/black rod duality for positive/negative | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "CROSS_DOMAIN_DUALITY__PEIRCE_GRAPHS",
@@ -429,7 +429,7 @@
     "system_id": null,
     "tradition": "Arabian Peninsula",
     "domain": "Astronomy & Timekeeping",
-    "notes": "This calendar strictly observes the synodic lunar month (alternating 29 and 30 days) and explicitly forbids any intercalation (leap months) to correct for the solar year. The mechanism sacrifices seasonal fixedness entirely, causing the 354-day calendar to regress backward through the solar seasons by about 11 days per year. The damage manifests as a decoupled system where religious festivals migrate completely through all agricultural seasons over a 33-year cycle. | CROSS-DOMAIN: dynamic_just_intonation, floating_exchange_rates | DAMAGE: Complete truncation of the primary variable (sun), allowing continuous temporal drift. | DAMAGE_OP: TRUNCATE"
+    "notes": "This calendar strictly observes the synodic lunar month (alternating 29 and 30 days) and explicitly forbids any intercalation (leap months) to correct for the solar year. The mechanism sacrifices seasonal fixedness entirely, causing the 354-day calendar to regress backward through the solar seasons by about 11 days per year. The damage manifests as a decoupled system where religious festivals migrate completely through all agricultural seasons over a 33-year cycle. | CROSS-DOMAIN: dynamic_just_intonation, floating_exchange_rates | DAMAGE: Complete truncation of the primary variable (sun), allowing continuous temporal drift. | DAMAGE_OP: TRUNCATE | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_CALENDAR__HEBREW_LUNISOLAR_METONIC",
@@ -461,7 +461,7 @@
     "system_id": null,
     "tradition": "United Kingdom / United States",
     "domain": "Social Choice & Political Science",
-    "notes": "Plurality voting completely discards the full rank-order preferences of voters, forcing them to express only their absolute top choice. The mechanism resolves the paradox by brutally reducing the input data, thereby sacrificing IIA, meaning a third-party candidate can enter and flip the result between the two main candidates (the spoiler effect). The damage manifests as a persistent systemic drift toward a two-party duopoly (Duverger's Law) as voters adapt strategically. | CROSS-DOMAIN: gregorian_solar_dominance, carnot_power_maximization | DAMAGE: Vulnerability to spoiler effects and strategic voting. | DAMAGE_OP: TRUNCATE"
+    "notes": "Plurality voting completely discards the full rank-order preferences of voters, forcing them to express only their absolute top choice. The mechanism resolves the paradox by brutally reducing the input data, thereby sacrificing IIA, meaning a third-party candidate can enter and flip the result between the two main candidates (the spoiler effect). The damage manifests as a persistent systemic drift toward a two-party duopoly (Duverger's Law) as voters adapt strategically. | CROSS-DOMAIN: gregorian_solar_dominance, carnot_power_maximization | DAMAGE: Vulnerability to spoiler effects and strategic voting. | DAMAGE_OP: TRUNCATE | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_ARROW__BORDA_COUNT",
@@ -493,7 +493,7 @@
     "system_id": null,
     "tradition": "Ancient Athens",
     "domain": "Social Choice & Political Science",
-    "notes": "Sortition circumvents the mathematical impossibility of aggregating preferences by simply drawing leaders randomly from the population by lot. The mechanism entirely avoids `COMPOSE(individual_ranks)`, relying instead on the statistical Law of Large Numbers to ensure the representative body mirrors the population's will. The structural damage is the total loss of deterministic Pareto efficiency—the system can technically select a government that every single citizen hates, trading logical certainty for absolute immunity to strategic voting. | CROSS-DOMAIN: monte_carlo_integration, aboriginal_phenological | DAMAGE: Stochastic bypassing of the aggregation phase. | DAMAGE_OP: RANDOMIZE"
+    "notes": "Sortition circumvents the mathematical impossibility of aggregating preferences by simply drawing leaders randomly from the population by lot. The mechanism entirely avoids `COMPOSE(individual_ranks)`, relying instead on the statistical Law of Large Numbers to ensure the representative body mirrors the population's will. The structural damage is the total loss of deterministic Pareto efficiency—the system can technically select a government that every single citizen hates, trading logical certainty for absolute immunity to strategic voting. | CROSS-DOMAIN: monte_carlo_integration, aboriginal_phenological | DAMAGE: Stochastic bypassing of the aggregation phase. | DAMAGE_OP: RANDOMIZE | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__MERCATOR_PROJECTION",
@@ -509,7 +509,7 @@
     "system_id": null,
     "tradition": "Scotland/Germany",
     "domain": "Cartography & Differential Geometry",
-    "notes": "To achieve perfect equivalence (equal area), this cylindrical projection compresses the vertical scale at high latitudes at the exact reciprocal of the horizontal stretching. The mechanism guarantees that a square inch anywhere on the map represents the exact same physical area on Earth, promoting political equality in geographic representation. The damage manifests as severe shape distortion; equatorial landmasses appear impossibly elongated vertically, while polar regions appear crushed horizontally. | CROSS-DOMAIN: meantone_temperament, approval_voting | DAMAGE: Vertical compression to counter horizontal expansion, preserving area. | DAMAGE_OP: DISTRIBUTE"
+    "notes": "To achieve perfect equivalence (equal area), this cylindrical projection compresses the vertical scale at high latitudes at the exact reciprocal of the horizontal stretching. The mechanism guarantees that a square inch anywhere on the map represents the exact same physical area on Earth, promoting political equality in geographic representation. The damage manifests as severe shape distortion; equatorial landmasses appear impossibly elongated vertically, while polar regions appear crushed horizontally. | CROSS-DOMAIN: meantone_temperament, approval_voting | DAMAGE: Vertical compression to counter horizontal expansion, preserving area. | DAMAGE_OP: DISTRIBUTE | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__ROBINSON_PROJECTION",
@@ -581,7 +581,7 @@
     "system_id": null,
     "tradition": "Classical Control Engineering",
     "domain": "Control Theory",
-    "notes": "This approach fundamentally accepts that the total area of error cannot be reduced, so it selectively reshapes the curve. By employing a lead compensator, the engineer forces the sensitivity function to be extremely small at frequencies where reference tracking is critical. The conserved 'damage' is concentrated into high-frequency amplification, essentially weaponizing the physical limits of the mechanical system to ignore the resulting high-frequency noise. It perfectly mirrors how geometric distortion is pushed to the poles in navigation maps. | DAMAGE_OP: CONCENTRATE | STRATEGY: Squeeze error out of the low-frequency operating range and pile it into the high-frequency spectrum where the physical plant's inertia naturally attenuates it."
+    "notes": "This approach fundamentally accepts that the total area of error cannot be reduced, so it selectively reshapes the curve. By employing a lead compensator, the engineer forces the sensitivity function to be extremely small at frequencies where reference tracking is critical. The conserved 'damage' is concentrated into high-frequency amplification, essentially weaponizing the physical limits of the mechanical system to ignore the resulting high-frequency noise. It perfectly mirrors how geometric distortion is pushed to the poles in navigation maps. | DAMAGE_OP: CONCENTRATE | STRATEGY: Squeeze error out of the low-frequency operating range and pile it into the high-frequency spectrum where the physical plant's inertia naturally attenuates it. | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED__H_INFINITY_MINIMAX",
@@ -621,7 +621,7 @@
     "system_id": null,
     "tradition": "Quantum Cryptography",
     "domain": "Quantum Information",
-    "notes": "Since a perfect $1 \to 2$ cloning is forbidden, physicists designed unitary machines that produce two imperfect copies. The structural damage (loss of quantum information) is distributed mathematically evenly between the two output qubits, yielding an optimal fidelity of $5/6$ for universal states. This prevents any single copy from retaining the pure state while maximizing the shared accuracy. It mirrors tuning systems that shave off a microscopic fraction of purity from every note to allow transposition. | DAMAGE_OP: DISTRIBUTE | STRATEGY: Create two degraded copies of the state that have equal fidelity, spreading the cloning error symmetrically."
+    "notes": "Since a perfect $1 \to 2$ cloning is forbidden, physicists designed unitary machines that produce two imperfect copies. The structural damage (loss of quantum information) is distributed mathematically evenly between the two output qubits, yielding an optimal fidelity of $5/6$ for universal states. This prevents any single copy from retaining the pure state while maximizing the shared accuracy. It mirrors tuning systems that shave off a microscopic fraction of purity from every note to allow transposition. | DAMAGE_OP: DISTRIBUTE | STRATEGY: Create two degraded copies of the state that have equal fidelity, spreading the cloning error symmetrically. | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_NO_CLONING_THEOREM__ORTHOGONAL_BASIS_CLONING",
@@ -645,7 +645,7 @@
     "system_id": null,
     "tradition": "Quantum Measurement Theory",
     "domain": "Quantum Information",
-    "notes": "For certain sets of linearly independent (but not orthogonal) states, it is possible to build a machine that occasionally produces a perfect clone. The mechanism relies on a broader unitary evolution followed by a projective measurement. If the measurement yields a specific result, the clone is exact; if it yields anything else, the state is ruined. The structural damage is converted into a coin flip, trading guaranteed mediocre copies for rare perfect ones. | DAMAGE_OP: RANDOMIZE | STRATEGY: Attempt an exact copy but embed it in a measurement protocol that only succeeds with a certain probability, failing openly otherwise."
+    "notes": "For certain sets of linearly independent (but not orthogonal) states, it is possible to build a machine that occasionally produces a perfect clone. The mechanism relies on a broader unitary evolution followed by a projective measurement. If the measurement yields a specific result, the clone is exact; if it yields anything else, the state is ruined. The structural damage is converted into a coin flip, trading guaranteed mediocre copies for rare perfect ones. | DAMAGE_OP: RANDOMIZE | STRATEGY: Attempt an exact copy but embed it in a measurement protocol that only succeeds with a certain probability, failing openly otherwise. | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_NO_CLONING_THEOREM__ENTANGLEMENT_DISTRIBUTION",
@@ -685,7 +685,7 @@
     "system_id": null,
     "tradition": "Materials Science",
     "domain": "Geometry",
-    "notes": "In certain physical materials cooled rapidly, the atoms strongly prefer icosahedral (5-fold) local packing due to energy minimums. Because this cannot propagate, the material forces the growth anyway. The geometric debt rapidly accumulates until the strain becomes unbearable, snapping the lattice into topological defects, grain boundaries, and dislocations. The impossibility is resolved by concentrating the damage into chaotic, high-energy fault lines, keeping the interstitial regions pure. This mirrors the Pythagorean comma being concentrated into a single 'wolf fifth'. | DAMAGE_OP: CONCENTRATE | STRATEGY: Force the material to attempt 5-fold packing locally, concentrating the resulting geometric impossibility into massive structural dislocations and cracks."
+    "notes": "In certain physical materials cooled rapidly, the atoms strongly prefer icosahedral (5-fold) local packing due to energy minimums. Because this cannot propagate, the material forces the growth anyway. The geometric debt rapidly accumulates until the strain becomes unbearable, snapping the lattice into topological defects, grain boundaries, and dislocations. The impossibility is resolved by concentrating the damage into chaotic, high-energy fault lines, keeping the interstitial regions pure. This mirrors the Pythagorean comma being concentrated into a single 'wolf fifth'. | DAMAGE_OP: CONCENTRATE | STRATEGY: Force the material to attempt 5-fold packing locally, concentrating the resulting geometric impossibility into massive structural dislocations and cracks. | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__AMORPHOUS_GLASS",
@@ -709,7 +709,7 @@
     "system_id": null,
     "tradition": "Neuroscience / HCI",
     "domain": "Cognitive Science & Psychophysics",
-    "notes": "Expert tennis players and gamers bypass the strict reaction-time floor by cheating the clock. The mechanism uses Bayesian priors to pre-compute the most likely necessary trajectory and initiates the motor command early. The system conceptually extends the timeline backward. The damage manifests as catastrophic failure if the environment violates the prediction (e.g., a change-up pitch in baseball). This directly mirrors static analysis trying to solve the halting problem by pre-calculating boundaries before runtime. | DAMAGE_OP: EXTEND | STRATEGY: Begin the movement or decision process before the stimulus actually arrives, relying on environmental statistics to guess the target."
+    "notes": "Expert tennis players and gamers bypass the strict reaction-time floor by cheating the clock. The mechanism uses Bayesian priors to pre-compute the most likely necessary trajectory and initiates the motor command early. The system conceptually extends the timeline backward. The damage manifests as catastrophic failure if the environment violates the prediction (e.g., a change-up pitch in baseball). This directly mirrors static analysis trying to solve the halting problem by pre-calculating boundaries before runtime. | DAMAGE_OP: EXTEND | STRATEGY: Begin the movement or decision process before the stimulus actually arrives, relying on environmental statistics to guess the target. | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY__ACCEPTABLE_ERROR_THRESHOLDS",
@@ -1005,7 +1005,7 @@
     "system_id": null,
     "tradition": "Non-Euclidean Geometry",
     "domain": "geometry",
-    "notes": "Negative curvature allows pentagon tiling. Sacrifices flat Euclidean space. Escher Circle Limit. | DAMAGE_OP: HIERARCHIZE"
+    "notes": "Negative curvature allows pentagon tiling. Sacrifices flat Euclidean space. Escher Circle Limit. | DAMAGE_OP: HIERARCHIZE | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2__STOCHASTIC_VORONOI",
@@ -1293,7 +1293,7 @@
     "system_id": null,
     "tradition": "Foundations of Math (Brouwer)",
     "domain": "mathematical_logic",
-    "notes": "Constructive math demands that to prove an object exists, you must provide a method to build it. It sacrifices the Law of Excluded Middle and the ability to prove things via double negation. The incom | Sacrifices: Law of Excluded Middle | primitives: [\"REDUCE\", \"LIMIT\", \"MAP\"] | DAMAGE_OP: TRUNCATE"
+    "notes": "Constructive math demands that to prove an object exists, you must provide a method to build it. It sacrifices the Law of Excluded Middle and the ability to prove things via double negation. The incom | Sacrifices: Law of Excluded Middle | primitives: [\"REDUCE\", \"LIMIT\", \"MAP\"] | DAMAGE_OP: TRUNCATE | ALSO_DAMAGE_OP: INVERT"
   },
   {
     "instance_id": "NYQUIST_LIMIT__COMPRESSED_SENSING_NYQUIST",
@@ -1334,5 +1334,29 @@
     "tradition": "Finite-Time Thermodynamics",
     "domain": "thermodynamics",
     "notes": "The Carnot limit requires infinite time (zero power) to achieve maximum efficiency. Endoreversible engines model realistic heat transfer rates, proving that efficiency at maximum power is 1 - sqrt(Tc/ | Sacrifices: Maximum theoretical efficiency | primitives: [\"BREAK_SYMMETRY\", \"LIMIT\", \"REDUCE\"] | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "FORCED_SYMMETRY_BREAK__NEGATIVE_HARMONY",
+    "comp_id": "FORCED_SYMMETRY_BREAK",
+    "system_id": null,
+    "tradition": "Western music theory",
+    "domain": "music",
+    "notes": "Ernst Levy's Negative Harmony inverts melodic intervals around an axis (typically the axis between the tonic and its fifth). Every interval is reflected: major becomes minor, dominant becomes subdominant, tension mirrors to release. The harmonic direction is literally reversed — ascending fifths become descending fourths. This is a pure structural inversion of the circle of fifths, producing functionally equivalent but perceptually 'darker' harmonic movement. The damage is the loss of conventional harmonic directionality: cadences resolve 'backwards.' | DAMAGE_OP: INVERT | STRATEGY: Reflect all intervals around a tonal axis, reversing harmonic gravity while preserving intervallic structure."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BELLS_THEOREM__RETROCAUSALITY",
+    "comp_id": "IMPOSSIBILITY_BELLS_THEOREM",
+    "system_id": null,
+    "tradition": "Foundations of physics",
+    "domain": "quantum_mechanics",
+    "notes": "Price & Wharton's retrocausal proposal resolves Bell's theorem by inverting the causal arrow: measurement settings at time t2 are allowed to influence the hidden-variable state at preparation time t1. This literally reverses the direction of causation — future boundary conditions constrain past states. The Bell inequality is no longer violated because the 'hidden variables' are not constrained to flow forward in time; they are time-symmetric. The damage is radical: the arrow of time becomes a convention rather than a physical law, and free choice of measurement settings is reinterpreted as constrained by future-to-past influence. | DAMAGE_OP: INVERT | STRATEGY: Reverse the causal arrow so correlations propagate backward from measurement to preparation, dissolving the need for nonlocality."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_GOODHARTS_LAW__ADVERSARIAL_ROBUSTNESS",
+    "comp_id": "IMPOSSIBILITY_GOODHARTS_LAW",
+    "system_id": null,
+    "tradition": "Machine learning",
+    "domain": "computer_science",
+    "notes": "Adversarial robustness training inverts the optimization direction: instead of minimizing loss on natural inputs, the inner loop MAXIMIZES loss by searching for worst-case perturbations (adversarial examples). The outer loop then minimizes loss on these adversarial inputs. This min-max game is a structural inversion of standard training — the gradient direction is deliberately reversed in the inner loop. The result is a model that is robust to the exact gaming strategies that Goodhart's Law predicts: optimizing a metric creates exploitable shortcuts, so INVERT finds and patches them. The damage is reduced clean accuracy (typically 5-15% drop) and significantly higher computational cost (3-10x training time). | DAMAGE_OP: INVERT | STRATEGY: Reverse the optimization direction to find metric-gaming attacks, then train against them."
   }
 ]

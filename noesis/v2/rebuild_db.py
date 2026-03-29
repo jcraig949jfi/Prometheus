@@ -108,6 +108,35 @@ SCHEMA = {
             target_resolution VARCHAR, link_type VARCHAR DEFAULT 'analog',
             damage_operator VARCHAR, notes VARCHAR
         )""",
+    "validation_pairs": """
+        CREATE TABLE IF NOT EXISTS validation_pairs (
+            pair_id VARCHAR PRIMARY KEY,
+            domain_a_system VARCHAR, domain_a_hub_id VARCHAR,
+            domain_a_resolution_id VARCHAR, domain_a_damage_operator VARCHAR,
+            domain_a_primitive_sequence VARCHAR,
+            domain_b_system VARCHAR, domain_b_hub_id VARCHAR,
+            domain_b_resolution_id VARCHAR, domain_b_damage_operator VARCHAR,
+            domain_b_primitive_sequence VARCHAR,
+            isomorphism_assessment VARCHAR,
+            structural_analysis VARCHAR, what_breaks_the_analogy VARCHAR,
+            shared_damage_operator VARCHAR, implication_for_damage_algebra VARCHAR
+        )""",
+    "prime_landscape": """
+        CREATE TABLE IF NOT EXISTS prime_landscape (
+            entry_id VARCHAR PRIMARY KEY, category VARCHAR, name VARCHAR,
+            mathematician_or_tradition VARCHAR, period VARCHAR,
+            description VARCHAR, primitive_decomposition VARCHAR,
+            structural_role VARCHAR, relationship_to_other_entries VARCHAR,
+            connection_to_impossibility_hubs VARCHAR,
+            open_questions VARCHAR, formalization_status VARCHAR
+        )""",
+    "cross_domain_edges": """
+        CREATE TABLE IF NOT EXISTS cross_domain_edges (
+            edge_id INTEGER PRIMARY KEY,
+            source_resolution_id VARCHAR, target_resolution_id VARCHAR,
+            shared_damage_operator VARCHAR,
+            edge_type VARCHAR, provenance VARCHAR
+        )""",
 }
 
 def rebuild():

@@ -269,3 +269,54 @@ INVERT went from 0 hubs to 11 hubs. At the next tensor rebuild, the INVERT row w
 2. **MAP and REDUCE are universal connective tissue:** Even in chains dominated by rare primitives, MAP (61) and REDUCE (35) appear as the most frequent secondary operations. This confirms they are structural glue, not the load-bearing moves.
 3. **Chain IDs follow pattern:** `RARE_C{NNN}_{SOURCE}` (e.g., `RARE_C001_GROK`, `RARE_C013_CLAUDE`). All set `verified=true`, `source=council_member_name`.
 4. **Two Claude chains had only 2 transformations** (chains 16 and 20) due to formatting that placed the `(type: ...)` annotation differently. The steps themselves parsed correctly.
+
+## Overnight Task Results — ISOLATED HUB CONNECTIONS
+**Started:** 2026-03-29 19:40
+**Completed:** 2026-03-29 20:05
+**Status:** PARTIAL SUCCESS
+
+### Results
+- 5 of 8 isolated hubs connected to the main graph via shared damage operators
+- 14 new bridge edges created
+- ALGEBRAIC_COMPLETION, CROSS_DOMAIN_DUALITY, CRYSTALLOGRAPHIC_IMPOSSIBILITY, METRIC_REDEFINITION, PHYS_SYMMETRY_CONSTRUCTION now connected
+- 3 hubs still isolated: BINARY_DECOMP_RECOMP, IMPOSSIBILITY_PYTHAGOREAN_COMMA, RECURSIVE_SPATIAL_EXTENSION (no damage operator tags on spokes)
+
+### Database Changes
+- cross_domain_edges: 1204 → 5496 (includes edges from compute + hub bridge tasks)
+
+### Anomalies
+- DB lock contention from concurrent agent caused initial script failure
+- Resolved by killing stuck process and running simplified connector
+
+---
+
+## Overnight Task Results — FINAL EXPORT + SCHEMA UPDATE
+**Completed:** 2026-03-29 20:10
+**Status:** SUCCESS
+
+### Final Database State
+| Table | Rows |
+|-------|------|
+| operations | 1,714 |
+| chains | 100 |
+| chain_steps | 400 |
+| transformations | 295 |
+| ethnomathematics | 153 |
+| abstract_compositions | 30 |
+| composition_instances | 170 |
+| damage_operators | 9 |
+| cross_domain_links | 185 |
+| validation_pairs | 6 |
+| prime_landscape | 6 |
+| cross_domain_edges | 5,496 |
+| **TOTAL** | **8,564** |
+
+### Changes from session start
+- Chains: 20 → 100 (5×)
+- Transformations: 60 → 295 (5×)
+- Cross-domain edges: 36 → 5,496 (153×)
+- Damage operators: 7 → 9
+- INVERT: 0 → 15 instances
+- Isolated hubs: 8 → 3
+- Exports updated, rebuild_db.py schema updated for 12 tables
+
