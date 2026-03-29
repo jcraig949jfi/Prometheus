@@ -173,7 +173,7 @@
     "system_id": null,
     "tradition": "European",
     "domain": "music",
-    "notes": "Distributes comma uniformly across all 12 intervals | DAMAGE_OP: DISTRIBUTE"
+    "notes": "Distributes comma uniformly across all 12 intervals | DAMAGE_OP: QUANTIZE"
   },
   {
     "instance_id": "FORCED_SYMMETRY_BREAK__MEANTONE",
@@ -397,7 +397,7 @@
     "system_id": null,
     "tradition": "Modern",
     "domain": "logic",
-    "notes": "Sacrifices excluded middle"
+    "notes": "Sacrifices excluded middle | DAMAGE_OP: QUANTIZE"
   },
   {
     "instance_id": "FOUNDATIONAL_IMPOSSIBILITY__PARACONSISTENT",
@@ -1214,5 +1214,125 @@
     "tradition": "Modern",
     "domain": "Distributed Systems",
     "notes": "Probabilistic quorum systems. Accept stochastic consistency guarantees. TENSOR PREDICTION. | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__SPATIAL_MULTIPLEXING_MIMO",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": null,
+    "tradition": "Wireless Communications (Telatar, Foschini, 1990s)",
+    "domain": "information_theory",
+    "notes": "MIMO spatial multiplexing avoids the Shannon limit of a single antenna link by physically partitioning the transmission medium into multiple parallel spatial channels. It sacrifices hardware simplicit | Sacrifices: Hardware simplicity and spatial compactness | primitives: [\"BREAK_SYMMETRY\", \"MAP\", \"COMPOSE\"] | DAMAGE_OP: PARTITION"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__SUCCESSIVE_INTERFERENCE_CANCELLATION",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": null,
+    "tradition": "Multi-user Information Theory",
+    "domain": "information_theory",
+    "notes": "SIC tackles the multiple-access channel capacity limit by treating weaker signals as noise while decoding the strongest signal, then reconstructing and subtracting that strong signal to decode the nex | Sacrifices: Latency and processing power | primitives: [\"SYMMETRIZE\", \"REDUCE\", \"COMPOSE\"] | DAMAGE_OP: HIERARCHIZE"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__TURBO_LDPC_BELIEF_PROPAGATION",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": null,
+    "tradition": "Coding Theory (Gallager 1960, Berrou 1993)",
+    "domain": "information_theory",
+    "notes": "Instead of relying on rigid algebraic structures to find the exact closest codeword, LDPC and Turbo codes use sparse bipartite graphs to pass probabilistic 'beliefs' about bit values iteratively. It s | Sacrifices: Deterministic decoding guarantees | primitives: [\"STOCHASTICIZE\", \"MAP\", \"LIMIT\"] | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__COMPRESSED_SENSING_SOURCE",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": null,
+    "tradition": "Signal Processing (Donoho, Candes, Tao)",
+    "domain": "information_theory",
+    "notes": "Compressed sensing assumes the signal is sparse in some domain, allowing it to be sampled and compressed simultaneously at a rate far below standard limits. It sacrifices universal applicability; if t | Sacrifices: Universal signal applicability | primitives: [\"MAP\", \"REDUCE\", \"EXTEND\"] | DAMAGE_OP: REDUCE"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__DIRTY_PAPER_CODING",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": null,
+    "tradition": "Information Theory (Costa)",
+    "domain": "information_theory",
+    "notes": "Costa proved that if interference is known non-causally at the transmitter, the channel capacity is the same as if there were no interference. The transmitter precodes the data to 'align' with the int | Sacrifices: Transmitter simplicity (requires non-causal interference knowledge) | primitives: [\"EXTEND\", \"COMPOSE\", \"SYMMETRIZE\"] | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "HEISENBERG_UNCERTAINTY__SQUEEZED_STATES",
+    "comp_id": "HEISENBERG_UNCERTAINTY",
+    "system_id": null,
+    "tradition": "Quantum Optics",
+    "domain": "quantum_physics",
+    "notes": "While standard coherent states distribute uncertainty equally between phase and amplitude, squeezed states actively break this symmetry. They reduce noise in one observable below the symmetric limit,  | Sacrifices: Precision in the conjugate variable | primitives: [\"BREAK_SYMMETRY\", \"LIMIT\", \"EXTEND\"] | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "HEISENBERG_UNCERTAINTY__WEAK_MEASUREMENT",
+    "comp_id": "HEISENBERG_UNCERTAINTY",
+    "system_id": null,
+    "tradition": "Quantum Foundations (Aharonov, Albert, Vaidman)",
+    "domain": "quantum_physics",
+    "notes": "Weak measurement acquires very little information per interaction, thereby inducing very little back-action (state disturbance). It sacrifices the ability to know the exact state of a single particle. | Sacrifices: Single-shot certainty/information gain | primitives: [\"LIMIT\", \"REDUCE\", \"STOCHASTICIZE\"] | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "HEISENBERG_UNCERTAINTY__DECOHERENCE_FREE_SUBSPACES",
+    "comp_id": "HEISENBERG_UNCERTAINTY",
+    "system_id": null,
+    "tradition": "Quantum Information",
+    "domain": "quantum_physics",
+    "notes": "When noise acts symmetrically on a system of qubits, there exist specific entangled states (subspaces) that remain completely unperturbed. DFS sacrifices raw qubit capacity, requiring multiple physica | Sacrifices: Total Hilbert space utilization | primitives: [\"SYMMETRIZE\", \"MAP\", \"REDUCE\"] | DAMAGE_OP: PARTITION"
+  },
+  {
+    "instance_id": "GODEL_INCOMPLETENESS__PARACONSISTENT_LOGIC",
+    "comp_id": "GODEL_INCOMPLETENESS",
+    "system_id": null,
+    "tradition": "Non-classical Logic (da Costa, Priest)",
+    "domain": "mathematical_logic",
+    "notes": "Instead of accepting incomplete truths, paraconsistent logics tolerate contradictions (dialetheism) by disabling the rule that a contradiction proves everything. It sacrifices the classical absolute s | Sacrifices: Principle of Explosion (Ex Falso Quodlibet) | primitives: [\"BREAK_SYMMETRY\", \"LIMIT\", \"COMPOSE\"] | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "GODEL_INCOMPLETENESS__CONSTRUCTIVE_MATHEMATICS",
+    "comp_id": "GODEL_INCOMPLETENESS",
+    "system_id": null,
+    "tradition": "Foundations of Math (Brouwer)",
+    "domain": "mathematical_logic",
+    "notes": "Constructive math demands that to prove an object exists, you must provide a method to build it. It sacrifices the Law of Excluded Middle and the ability to prove things via double negation. The incom | Sacrifices: Law of Excluded Middle | primitives: [\"REDUCE\", \"LIMIT\", \"MAP\"] | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "NYQUIST_LIMIT__COMPRESSED_SENSING_NYQUIST",
+    "comp_id": "NYQUIST_LIMIT",
+    "system_id": null,
+    "tradition": "Signal Processing",
+    "domain": "signal_processing",
+    "notes": "By relying on the assumption that the signal is sparse in some basis, compressed sensing bypasses Nyquist entirely. It sacrifices simple, linear reconstruction (like sinc interpolation) for computatio | Sacrifices: Linear reconstruction methods | primitives: [\"MAP\", \"REDUCE\", \"LIMIT\"] | DAMAGE_OP: REDUCE"
+  },
+  {
+    "instance_id": "NYQUIST_LIMIT__SIGMA_DELTA_NOISE_SHAPING",
+    "comp_id": "NYQUIST_LIMIT",
+    "system_id": null,
+    "tradition": "Analog-to-Digital Conversion",
+    "domain": "signal_processing",
+    "notes": "Sigma-Delta ADCs heavily oversample a signal using only a 1-bit quantizer, but use feedback to shape the quantization error, pushing it into frequencies far above the band of interest. It sacrifices o | Sacrifices: High-frequency signal fidelity | primitives: [\"EXTEND\", \"COMPOSE\", \"DUALIZE\"] | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "NYQUIST_LIMIT__NON_UNIFORM_JITTER_SAMPLING",
+    "comp_id": "NYQUIST_LIMIT",
+    "system_id": null,
+    "tradition": "Digital Signal Processing",
+    "domain": "signal_processing",
+    "notes": "Instead of sampling at strict periodic intervals, this technique jitters the sample times. This breaks the symmetry of aliasing, preventing high frequencies from folding back as coherent low frequenci | Sacrifices: Deterministic, noise-free reconstruction | primitives: [\"STOCHASTICIZE\", \"MAP\", \"EXTEND\"] | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "CARNOT_LIMIT__COMBINED_CYCLE_CASCADE",
+    "comp_id": "CARNOT_LIMIT",
+    "system_id": null,
+    "tradition": "Power Engineering",
+    "domain": "thermodynamics",
+    "notes": "A combined cycle plant (like gas-turbine plus steam-turbine) doesn't break Carnot; it creates a meta-engine. The exhaust of the high-temperature engine becomes the input for a lower-temperature engine | Sacrifices: System footprint and capital cost | primitives: [\"EXTEND\", \"COMPOSE\", \"MAP\"] | DAMAGE_OP: HIERARCHIZE"
+  },
+  {
+    "instance_id": "CARNOT_LIMIT__ENDOREVERSIBLE_POWER_OPTIMIZATION",
+    "comp_id": "CARNOT_LIMIT",
+    "system_id": null,
+    "tradition": "Finite-Time Thermodynamics",
+    "domain": "thermodynamics",
+    "notes": "The Carnot limit requires infinite time (zero power) to achieve maximum efficiency. Endoreversible engines model realistic heat transfer rates, proving that efficiency at maximum power is 1 - sqrt(Tc/ | Sacrifices: Maximum theoretical efficiency | primitives: [\"BREAK_SYMMETRY\", \"LIMIT\", \"REDUCE\"] | DAMAGE_OP: CONCENTRATE"
   }
 ]
