@@ -1,0 +1,642 @@
+[
+  {
+    "step_id": "C001_S1",
+    "chain_id": "C001",
+    "step_order": 1,
+    "label": "Hamilton equations",
+    "content": "dq/dt=∂H/∂p; dp/dt=-∂H/∂q",
+    "structure_type": null
+  },
+  {
+    "step_id": "C001_S2",
+    "chain_id": "C001",
+    "step_order": 2,
+    "label": "Canonical commutation",
+    "content": "[x,p]=iħ",
+    "structure_type": null
+  },
+  {
+    "step_id": "C001_S3",
+    "chain_id": "C001",
+    "step_order": 3,
+    "label": "Schrödinger equation",
+    "content": "iħ∂ψ/∂t=Hψ",
+    "structure_type": null
+  },
+  {
+    "step_id": "C001_S4",
+    "chain_id": "C001",
+    "step_order": 4,
+    "label": "Time-independent Schrödinger",
+    "content": "Hψ=Eψ",
+    "structure_type": null
+  },
+  {
+    "step_id": "C002_S1",
+    "chain_id": "C002",
+    "step_order": 1,
+    "label": "Newton second law",
+    "content": "F=ma",
+    "structure_type": null
+  },
+  {
+    "step_id": "C002_S2",
+    "chain_id": "C002",
+    "step_order": 2,
+    "label": "Euler-Lagrange",
+    "content": "d/dt(∂L/∂q̇)=∂L/∂q",
+    "structure_type": null
+  },
+  {
+    "step_id": "C002_S3",
+    "chain_id": "C002",
+    "step_order": 3,
+    "label": "Legendre transform",
+    "content": "H=pq̇-L",
+    "structure_type": null
+  },
+  {
+    "step_id": "C002_S4",
+    "chain_id": "C002",
+    "step_order": 4,
+    "label": "Hamilton equations",
+    "content": "q̇=∂H/∂p, ṗ=-∂H/∂q",
+    "structure_type": null
+  },
+  {
+    "step_id": "C003_S1",
+    "chain_id": "C003",
+    "step_order": 1,
+    "label": "Boltzmann entropy",
+    "content": "S=k_B ln Ω",
+    "structure_type": null
+  },
+  {
+    "step_id": "C003_S2",
+    "chain_id": "C003",
+    "step_order": 2,
+    "label": "Gibbs entropy",
+    "content": "S=-k_B Σ p_i ln p_i",
+    "structure_type": null
+  },
+  {
+    "step_id": "C003_S3",
+    "chain_id": "C003",
+    "step_order": 3,
+    "label": "Shannon entropy",
+    "content": "H=-Σ p_i log₂ p_i",
+    "structure_type": null
+  },
+  {
+    "step_id": "C003_S4",
+    "chain_id": "C003",
+    "step_order": 4,
+    "label": "Landauer principle",
+    "content": "kT ln 2 per bit erased",
+    "structure_type": null
+  },
+  {
+    "step_id": "C004_S1",
+    "chain_id": "C004",
+    "step_order": 1,
+    "label": "Wave equation",
+    "content": "∂²u/∂t²=c²∇²u",
+    "structure_type": null
+  },
+  {
+    "step_id": "C004_S2",
+    "chain_id": "C004",
+    "step_order": 2,
+    "label": "Plane wave ansatz",
+    "content": "u=Ae^{i(kx-ωt)}",
+    "structure_type": null
+  },
+  {
+    "step_id": "C004_S3",
+    "chain_id": "C004",
+    "step_order": 3,
+    "label": "de Broglie relations",
+    "content": "E=ħω, p=ħk",
+    "structure_type": null
+  },
+  {
+    "step_id": "C004_S4",
+    "chain_id": "C004",
+    "step_order": 4,
+    "label": "Free Schrödinger",
+    "content": "iħ∂ψ/∂t=-ħ²/2m ∇²ψ",
+    "structure_type": null
+  },
+  {
+    "step_id": "C005_S1",
+    "chain_id": "C005",
+    "step_order": 1,
+    "label": "Heat equation",
+    "content": "∂u/∂t=D∇²u",
+    "structure_type": null
+  },
+  {
+    "step_id": "C005_S2",
+    "chain_id": "C005",
+    "step_order": 2,
+    "label": "Fokker-Planck",
+    "content": "∂p/∂t=-∂(μp)/∂x+D∂²p/∂x²",
+    "structure_type": null
+  },
+  {
+    "step_id": "C005_S3",
+    "chain_id": "C005",
+    "step_order": 3,
+    "label": "Heat kernel",
+    "content": "G(x,t)=exp(-x²/4Dt)/√(4πDt)",
+    "structure_type": null
+  },
+  {
+    "step_id": "C005_S4",
+    "chain_id": "C005",
+    "step_order": 4,
+    "label": "Einstein diffusion",
+    "content": "⟨x²⟩=2Dt",
+    "structure_type": null
+  },
+  {
+    "step_id": "C006_S1",
+    "chain_id": "C006",
+    "step_order": 1,
+    "label": "Maxwell curl equations",
+    "content": "∇×E=-∂B/∂t, ∇×B=μ₀ε₀∂E/∂t",
+    "structure_type": null
+  },
+  {
+    "step_id": "C006_S2",
+    "chain_id": "C006",
+    "step_order": 2,
+    "label": "EM wave equation",
+    "content": "∇²E=μ₀ε₀∂²E/∂t²",
+    "structure_type": null
+  },
+  {
+    "step_id": "C006_S3",
+    "chain_id": "C006",
+    "step_order": 3,
+    "label": "Speed of light",
+    "content": "c=1/√(μ₀ε₀)",
+    "structure_type": null
+  },
+  {
+    "step_id": "C006_S4",
+    "chain_id": "C006",
+    "step_order": 4,
+    "label": "EM plane wave",
+    "content": "E=E₀e^{i(kx-ωt)}",
+    "structure_type": null
+  },
+  {
+    "step_id": "C007_S1",
+    "chain_id": "C007",
+    "step_order": 1,
+    "label": "Particle action",
+    "content": "S=∫L dt",
+    "structure_type": null
+  },
+  {
+    "step_id": "C007_S2",
+    "chain_id": "C007",
+    "step_order": 2,
+    "label": "Field action",
+    "content": "S=∫L(φ,∂μφ)d⁴x",
+    "structure_type": null
+  },
+  {
+    "step_id": "C007_S3",
+    "chain_id": "C007",
+    "step_order": 3,
+    "label": "Field Euler-Lagrange",
+    "content": "∂L/∂φ-∂μ(∂L/∂(∂μφ))=0",
+    "structure_type": null
+  },
+  {
+    "step_id": "C007_S4",
+    "chain_id": "C007",
+    "step_order": 4,
+    "label": "Klein-Gordon equation",
+    "content": "(□+m²)φ=0",
+    "structure_type": null
+  },
+  {
+    "step_id": "C008_S1",
+    "chain_id": "C008",
+    "step_order": 1,
+    "label": "Fourier series",
+    "content": "f(x)=Σcₙe^{inx}",
+    "structure_type": null
+  },
+  {
+    "step_id": "C008_S2",
+    "chain_id": "C008",
+    "step_order": 2,
+    "label": "Fourier coefficients",
+    "content": "cₙ=(1/2π)∫f(x)e^{-inx}dx",
+    "structure_type": null
+  },
+  {
+    "step_id": "C008_S3",
+    "chain_id": "C008",
+    "step_order": 3,
+    "label": "Fourier transform",
+    "content": "f̂(ω)=∫f(t)e^{-iωt}dt",
+    "structure_type": null
+  },
+  {
+    "step_id": "C008_S4",
+    "chain_id": "C008",
+    "step_order": 4,
+    "label": "Parseval theorem",
+    "content": "∫|f|²=∫|f̂|²",
+    "structure_type": null
+  },
+  {
+    "step_id": "C009_S1",
+    "chain_id": "C009",
+    "step_order": 1,
+    "label": "Kolmogorov axioms",
+    "content": "P(A)∈[0,1], P(Ω)=1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C009_S2",
+    "chain_id": "C009",
+    "step_order": 2,
+    "label": "Measure space",
+    "content": "(Ω,F,μ) sigma-algebra",
+    "structure_type": null
+  },
+  {
+    "step_id": "C009_S3",
+    "chain_id": "C009",
+    "step_order": 3,
+    "label": "Lebesgue integral",
+    "content": "∫f dμ",
+    "structure_type": null
+  },
+  {
+    "step_id": "C009_S4",
+    "chain_id": "C009",
+    "step_order": 4,
+    "label": "Expectation as integral",
+    "content": "E[X]=∫X dP",
+    "structure_type": null
+  },
+  {
+    "step_id": "C010_S1",
+    "chain_id": "C010",
+    "step_order": 1,
+    "label": "Propositional logic",
+    "content": "A→B, A⊢B",
+    "structure_type": null
+  },
+  {
+    "step_id": "C010_S2",
+    "chain_id": "C010",
+    "step_order": 2,
+    "label": "Lambda calculus",
+    "content": "Γ⊢M:A (typing judgment)",
+    "structure_type": null
+  },
+  {
+    "step_id": "C010_S3",
+    "chain_id": "C010",
+    "step_order": 3,
+    "label": "Curry-Howard",
+    "content": "proof:proposition ↔ term:type",
+    "structure_type": null
+  },
+  {
+    "step_id": "C010_S4",
+    "chain_id": "C010",
+    "step_order": 4,
+    "label": "Cut elimination",
+    "content": "normalization = computation",
+    "structure_type": null
+  },
+  {
+    "step_id": "C011_S1",
+    "chain_id": "C011",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C011_S2",
+    "chain_id": "C011",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C011_S3",
+    "chain_id": "C011",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C011_S4",
+    "chain_id": "C011",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C012_S1",
+    "chain_id": "C012",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C012_S2",
+    "chain_id": "C012",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C012_S3",
+    "chain_id": "C012",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C012_S4",
+    "chain_id": "C012",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C013_S1",
+    "chain_id": "C013",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C013_S2",
+    "chain_id": "C013",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C013_S3",
+    "chain_id": "C013",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C013_S4",
+    "chain_id": "C013",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C014_S1",
+    "chain_id": "C014",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C014_S2",
+    "chain_id": "C014",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C014_S3",
+    "chain_id": "C014",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C014_S4",
+    "chain_id": "C014",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C015_S1",
+    "chain_id": "C015",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C015_S2",
+    "chain_id": "C015",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C015_S3",
+    "chain_id": "C015",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C015_S4",
+    "chain_id": "C015",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C016_S1",
+    "chain_id": "C016",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C016_S2",
+    "chain_id": "C016",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C016_S3",
+    "chain_id": "C016",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C016_S4",
+    "chain_id": "C016",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C017_S1",
+    "chain_id": "C017",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C017_S2",
+    "chain_id": "C017",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C017_S3",
+    "chain_id": "C017",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C017_S4",
+    "chain_id": "C017",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C018_S1",
+    "chain_id": "C018",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C018_S2",
+    "chain_id": "C018",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C018_S3",
+    "chain_id": "C018",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C018_S4",
+    "chain_id": "C018",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C019_S1",
+    "chain_id": "C019",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C019_S2",
+    "chain_id": "C019",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C019_S3",
+    "chain_id": "C019",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C019_S4",
+    "chain_id": "C019",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  },
+  {
+    "step_id": "C020_S1",
+    "chain_id": "C020",
+    "step_order": 1,
+    "label": "Step 1",
+    "content": "step_1",
+    "structure_type": null
+  },
+  {
+    "step_id": "C020_S2",
+    "chain_id": "C020",
+    "step_order": 2,
+    "label": "Step 2",
+    "content": "step_2",
+    "structure_type": null
+  },
+  {
+    "step_id": "C020_S3",
+    "chain_id": "C020",
+    "step_order": 3,
+    "label": "Step 3",
+    "content": "step_3",
+    "structure_type": null
+  },
+  {
+    "step_id": "C020_S4",
+    "chain_id": "C020",
+    "step_order": 4,
+    "label": "Step 4",
+    "content": "step_4",
+    "structure_type": null
+  }
+]

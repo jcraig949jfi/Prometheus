@@ -1,0 +1,212 @@
+[
+  {
+    "comp_id": "PHYS_SYMMETRY_CONSTRUCTION",
+    "primitive_sequence": "SYMMETRIZE + COMPOSE",
+    "description": "Construct complex symmetric pattern by composing small symmetric units",
+    "structural_pattern": "Physical material constraints force COMPOSE+SYMMETRIZE regardless of cultural context",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "BINARY_DECOMP_RECOMP",
+    "primitive_sequence": "COMPOSE + REDUCE",
+    "description": "Decompose into binary components, compose selectively, reduce to result",
+    "structural_pattern": "Universal binary decomposition-recomposition motif for computing products via doubling and selection",
+    "chain_count": 6
+  },
+  {
+    "comp_id": "ALGEBRAIC_COMPLETION",
+    "primitive_sequence": "COMPLETE + REDUCE",
+    "description": "Complete a structure by restoring missing elements, then reduce/simplify",
+    "structural_pattern": "Al-jabr pattern: fill gaps then balance. Appears wherever equations need solving.",
+    "chain_count": 3
+  },
+  {
+    "comp_id": "RECURSIVE_SPATIAL_EXTENSION",
+    "primitive_sequence": "EXTEND + COMPOSE",
+    "description": "Recursive application of a spatial pattern at multiple scales",
+    "structural_pattern": "Self-similar structures from recursive composition of a generating rule",
+    "chain_count": 4
+  },
+  {
+    "comp_id": "METRIC_REDEFINITION",
+    "primitive_sequence": "BREAK_SYMMETRY + COMPLETE",
+    "description": "Redefine the metric/distance, then complete under the new metric",
+    "structural_pattern": "Changing what nearness means creates entirely new mathematical universes",
+    "chain_count": 2
+  },
+  {
+    "comp_id": "FORCED_SYMMETRY_BREAK",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Compose toward closure, closure fails due to structural impossibility, forced to allocate damage",
+    "structural_pattern": "Meta-theorem detector: every impossibility result generates a family. Pythagorean comma, calendar incommensurability, crystallographic restriction, Arrow, Godel. Damage-allocation taxonomy is itself structural.",
+    "chain_count": 14
+  },
+  {
+    "comp_id": "CROSS_DOMAIN_DUALITY",
+    "primitive_sequence": "DUALIZE + MAP",
+    "description": "Map between two distinct domains via a structural duality, then operate within the target domain",
+    "structural_pattern": "Paired structures with bidirectional mapping. Input from domain A, output in domain B, meaningful inverse exists. Signature: presence of two distinct domains with A<->B correspondence.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY",
+    "primitive_sequence": "SYMMETRIZE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "N-fold rotation incompatible with translation periodicity for N=5,7,8+",
+    "structural_pattern": "Crystallographic restriction. Penrose = equal temperament of geometry.",
+    "chain_count": 4
+  },
+  {
+    "comp_id": "SOCIAL_CHOICE_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No voting system satisfies all fairness axioms (Arrow 1951)",
+    "structural_pattern": "Which axiom each system sacrifices IS social choice theory.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "FOUNDATIONAL_IMPOSSIBILITY",
+    "primitive_sequence": "EXTEND + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No formal system is consistent + complete + decidable (Godel 1931)",
+    "structural_pattern": "Each foundational program = damage allocation strategy.",
+    "chain_count": 4
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "12 perfect fifths (3/2)^12 != 7 octaves 2^7. Fundamental theorem of arithmetic: no power of 2 equals power of 3.",
+    "structural_pattern": "Every tuning system allocates the Pythagorean comma differently. The taxonomy of damage strategies IS music theory.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CALENDAR",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Solar year (365.2422 days) is not an integer multiple of lunar month (29.5306 days). Ratio is irrational.",
+    "structural_pattern": "Every calendar allocates the remainder differently. Aboriginal seasonal calendar dissolves the impossibility by making time elastic.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_ARROW",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No rank-order electoral system satisfies Non-Dictatorship + Unrestricted Domain + Pareto + IIA simultaneously.",
+    "structural_pattern": "Condorcet cycles create non-transitive group preference from transitive individual preferences.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "primitive_sequence": "MAP + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Theorema Egregium: no isometric embedding of a sphere onto a plane. Must sacrifice area, angle, or distance.",
+    "structural_pattern": "Every map projection allocates geometric distortion differently. Same structure as tuning systems.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CAP",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "A distributed system cannot simultaneously guarantee Consistency, Availability, and Partition tolerance.",
+    "structural_pattern": "Every distributed database sacrifices one of C, A, or P. The taxonomy of which property is sacrificed IS distributed systems theory.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED",
+    "primitive_sequence": "COMPOSE(plant, controller) → COMPLETE(ideal_rejection) FAILS → BREAK_SYMMETRY(frequency_weighting)",
+    "description": "In a linear feedback system, the integral of the logarithm of the sensitivity function over all frequencies cannot be negative; decreasing sensitivity to disturbances at one frequency necessitates increasing it at another.",
+    "structural_pattern": "Cauchy's integral theorem dictates that the integral of the log sensitivity around the right half of the complex plane is conserved. The area under the sensitivity curve is a zero-sum structural invariant.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+    "primitive_sequence": "COMPOSE(state, blank_ancilla) → COMPLETE(tensor_copy) FAILS → BREAK_SYMMETRY(fidelity_loss)",
+    "description": "It is impossible to create an identical copy of an arbitrary, unknown quantum state.",
+    "structural_pattern": "Quantum mechanics requires all operations to be unitary (linear). The cloning transformation $|\\psi\\rangle \\to |\\psi\\rangle \\otimes |\\psi\\rangle$ is inherently non-linear.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "primitive_sequence": "COMPOSE(5_fold_rotation) → COMPLETE(infinite_plane) FAILS → BREAK_SYMMETRY(translational_order)",
+    "description": "In a 2D or 3D discrete periodic lattice, the only permissible rotational symmetries are 2-fold, 3-fold, 4-fold, and 6-fold. 5-fold and >6-fold symmetries are strictly impossible.",
+    "structural_pattern": "If a lattice has 5-fold symmetry, applying rotations would generate lattice points strictly closer to the origin than the fundamentally assumed minimum distance of the discrete lattice, collapsing the structure.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY",
+    "primitive_sequence": "COMPOSE(perception, motor_action) → LIMIT(time) FAILS → BREAK_SYMMETRY(error_variance)",
+    "description": "In human motor and decision tasks, response speed and movement accuracy cannot be simultaneously maximized; reducing the time taken to hit a target or make a choice fundamentally increases the error rate.",
+    "structural_pattern": "The human nervous system acts as a noisy Shannon communication channel. Transmitting motor-control information requires time proportional to the required precision (target width). Pushing information faster than channel capacity guarantees signal corruption (error).",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS",
+    "primitive_sequence": "COMPOSE(rates, capital, policy) → COMPLETE(equilibrium) FAILS → BREAK_SYMMETRY(abandon_one_vertex)",
+    "description": "A national economy cannot simultaneously maintain a fixed foreign exchange rate, free capital movement, and an independent monetary policy.",
+    "structural_pattern": "If a central bank sets an interest rate different from the global rate while capital is free to move, arbitrageurs will flood money in or out, forcing the central bank to print or burn reserves to maintain the fixed exchange rate, rapidly exhausting those reserves and breaking the peg.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No general algebraic solution using radicals for polynomials of degree 5+. S_n not solvable for n>=5 (A_5 is simple non-abelian).",
+    "structural_pattern": "Abel-Ruffini/Galois. Damage strategies: PARTITION domain (Galois classification), EXTEND operations (Bring radicals), TRUNCATE to approximation (Newton-Raphson), HIERARCHIZE to transcendentals (elliptic functions), RANDOMIZE search (Monte Carlo).",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_GIBBS_PHENOMENON",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Fourier series cannot converge to discontinuous function without permanent ~9% overshoot at jumps. L2 converges but L-infinity does not.",
+    "structural_pattern": "Gibbs 1899. Damage strategies: CONCENTRATE ringing at discontinuity, DISTRIBUTE via Cesaro averaging, TRUNCATE via Lanczos windowing, HIERARCHIZE via wavelets, PARTITION via Chebyshev nodes.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NO_FREE_LUNCH",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No single ML algorithm outperforms random guessing across ALL possible problems. Reducing bias increases variance.",
+    "structural_pattern": "Wolpert-Macready 1997. Every ML algorithm is a damage allocation strategy for where to concentrate predictive power.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No bilateral trading mechanism can be simultaneously efficient, budget-balanced, and individually rational under private overlapping valuations.",
+    "structural_pattern": "Information asymmetry makes truth-telling require information rents that break budget balance.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MUNDELL_FLEMING",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Cannot simultaneously maintain fixed exchange rate, free capital flow, and independent monetary policy.",
+    "structural_pattern": "Arbitrage under free capital + fixed rates negates monetary policy. Every nation picks which pillar to sacrifice.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Discrete periodic lattice cannot have 5,7,8+ fold rotational symmetry. Rotating by 2pi/5 forces lattice points closer than minimum distance.",
+    "structural_pattern": "Resolutions: aperiodic quasicrystals (EXPAND via higher-dim projection), approximant crystals (TRUNCATE), amorphous boundaries (CONCENTRATE), hyperbolic tiling (HIERARCHIZE), stochastic Voronoi (RANDOMIZE). Islamic girih predates Penrose by centuries.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Integral of log sensitivity over all frequencies = constant. Cannot suppress disturbances at all frequencies. Cauchy integral theorem enforces conservation.",
+    "structural_pattern": "THE validation case for damage algebra. Damage conservation is a THEOREM here, not a metaphor. 5 of 7 damage operators instantiated in one engineering domain.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BELLS_THEOREM",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "No local hidden variable theory reproduces all quantum predictions. Bell inequality violated experimentally. Universe cannot be both local and classically real.",
+    "structural_pattern": "Each interpretation of QM is a damage allocation: which of locality, realism, or single reality do you sacrifice?",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BORSUK_ULAM",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "Any continuous map from S^n to R^n must map some antipodal pair to same value. Sphere wraps back on itself, forcing collision.",
+    "structural_pattern": "Governs weather stagnation points, magnetic poles, hairy ball theorem. Every resolution trades a different topological property.",
+    "chain_count": 5
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_GOODHARTS_LAW",
+    "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
+    "description": "A metric cannot simultaneously be accurate measurement AND optimization target. Agents exploit proxy, destroying correlation with true goal.",
+    "structural_pattern": "Universal limiting theorem of bureaucracies, algorithms, and AI alignment. Every evaluation system is a damage allocation for where gaming concentrates.",
+    "chain_count": 5
+  }
+]

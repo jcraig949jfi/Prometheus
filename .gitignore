@@ -91,6 +91,41 @@ docs/internal/claudecodestream_*
 sanity_check.py
 sanity_phase2_wsl.sh
 
+# Mothballed projects
+agents/apollo/
+
+# Agent runs (ephemeral checkpoint/response data)
+agents/nous/runs/
+agents/hephaestus/runs/
+agents/nemesis/runs/
+agents/auditor/runs/
+agents/clymene/runs/
+agents/skopos/runs/
+
+# Agent scrap (failed forge attempts)
+agents/hephaestus/scrap/
+
+# Agent-generated data (large, regenerable)
+agents/hephaestus/humanreadable/.processed.jsonl
+agents/nemesis/adversarial/adversarial_results.jsonl
+agents/nemesis/grid/grid.json
+
+# Backup files
+*.bak
+
+# Council/Titan conversations (internal, not public)
+docs/council/
+
+# Role definitions (machine-local)
+roles/
+
+# Noesis v2 — council response files (raw ore, data extracted to export/)
+noesis/v2/*_response.md
+noesis/v2/noesis_v2.duckdb.bak
+noesis/docs/Impossibility*
+noesis/docs/Targetted*
+noesis/docs/prompt_for_novel_math_response.md
+
 # Claude config
 .claude/
 *.pkl
