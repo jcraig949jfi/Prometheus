@@ -320,3 +320,43 @@ INVERT went from 0 hubs to 11 hubs. At the next tensor rebuild, the INVERT row w
 - Isolated hubs: 8 → 3
 - Exports updated, rebuild_db.py schema updated for 12 tables
 
+
+## Overnight Task Results — FINAL PASS
+**Completed:** 2026-03-29 late
+**Status:** SUCCESS
+
+### All isolated hubs connected
+- BINARY_DECOMP_RECOMP: 180 edges (via TRUNCATE kinship)
+- IMPOSSIBILITY_PYTHAGOREAN_COMMA: 53 edges (via tuning spokes in FORCED_SYMMETRY_BREAK)
+- RECURSIVE_SPATIAL_EXTENSION: 103 edges (via EXTEND kinship)
+- **0 isolated hubs remaining**
+
+### Tucker tensor rebuilt with INVERT populated
+- INVERT now covers 4/28 hubs (was 0)
+- 14 stable predictions, 16 new from expanded hub set
+- QUANTIZE and INVERT create new discovery surface
+
+### Overnight Queue Final Tally
+| Task | Status | Key Number |
+|------|--------|-----------|
+| 1. Tucker 9-op tensor | DONE | 9×28, 49.2% fill |
+| 2. Edge densification | DONE | 36 → 2,423 edges |
+| 3. Forge tourney | SKIPPED | Pipeline needs supervised session |
+| 4. Vector enrichment | DONE | 2.05 → 2.38 nonzero |
+| 5. Hub connectivity | DONE | Bode = center, diameter 3 |
+| 6. Prime cone | DONE | Anti-clustering (negative result) |
+| 7. Isolated hub connections | DONE | 8 → 0 isolated |
+| 8. INVERT population | DONE | 0 → 15 instances |
+| 9. Rare chain loading | DONE | 20 → 100 chains |
+| 10. Final tensor rebuild | DONE | INVERT predictions now possible |
+
+### Database: Start vs End of Overnight
+| Metric | Start | End |
+|--------|-------|-----|
+| Total rows | 2,466 | ~5,500 |
+| Chains | 20 | 100 |
+| Transformations | 60 | 295 |
+| Cross-domain edges | 36 | 2,423 |
+| Damage operators | 9 | 9 (INVERT: 0→15) |
+| Isolated hubs | 8 | 0 |
+| Tables | 12 | 12 |
