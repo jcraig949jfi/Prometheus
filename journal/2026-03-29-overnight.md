@@ -219,3 +219,53 @@ INVERT went from 0 hubs to 11 hubs. At the next tensor rebuild, the INVERT row w
 1. **"Mirror" was the most productive pattern** (5 of 12 matches). Many composition_instances use mirror-language to describe structural analogies, and in every case the mirroring genuinely involves directional reversal.
 2. **No false positives needed exclusion.** All 12 pattern matches describe genuine structural inversion when read in context.
 3. **INVERT is inherently a secondary operator.** Most instances already have a primary DAMAGE_OP (DISTRIBUTE, CONCENTRATE, etc.) — the inversion is an additional structural feature of how the damage is applied. This is why `ALSO_DAMAGE_OP` is the correct tag rather than replacing the primary.
+
+---
+
+## Overnight Task Results — TASK: LOAD RARE-PRIMITIVE COUNCIL CHAINS INTO DUCKDB
+**Started:** 2026-03-29 overnight
+**Completed:** 2026-03-29 overnight
+**Status:** SUCCESS
+
+### Context
+80 rare-primitive derivation chains from the Titan council (4 members x 20 chains each) were verified but never loaded into the derivation graph database at `noesis/v2/noesis_v2.duckdb`. These chains cover the 5 rare transformation primitives: DUALIZE, LINEARIZE, SYMMETRIZE, BREAK_SYMMETRY, STOCHASTICIZE.
+
+### Script
+`noesis/v2/load_rare_chains.py` — parses markdown from all 4 council members (Grok, Claude, Gemini, ChatGPT), handles format variations between them (bold headers, markdown headers, inline vs multi-line steps), extracts chain names, dominant primitives, step content, transformation types, invariants, and destroyed structures.
+
+### Results
+
+| Metric | Count |
+|--------|-------|
+| **Total chains loaded** | 80 |
+| **Total steps inserted** | 320 |
+| **Total transformations** | 235 |
+
+**Chains per council member:** Grok 20, Claude 20, Gemini 20, ChatGPT 20
+
+**Dominant primitive distribution (16 chains each):**
+- DUALIZE: 16
+- LINEARIZE: 16
+- SYMMETRIZE: 16
+- BREAK_SYMMETRY: 16
+- STOCHASTICIZE: 16
+
+**Transformation primitive distribution across all steps:**
+- MAP: 61 (most common secondary primitive)
+- REDUCE: 35
+- DUALIZE: 28
+- LINEARIZE: 28
+- SYMMETRIZE: 21
+- BREAK_SYMMETRY: 19
+- STOCHASTICIZE: 16
+- EXTEND: 13
+- LIMIT: 5
+- COMPLETE: 5
+- COMPOSE: 3
+- APPROXIMATE: 1
+
+### Key Observations
+1. **Perfect coverage:** All 80 chains parsed successfully, zero skipped. Every chain has 4 steps and 2-3 transformations.
+2. **MAP and REDUCE are universal connective tissue:** Even in chains dominated by rare primitives, MAP (61) and REDUCE (35) appear as the most frequent secondary operations. This confirms they are structural glue, not the load-bearing moves.
+3. **Chain IDs follow pattern:** `RARE_C{NNN}_{SOURCE}` (e.g., `RARE_C001_GROK`, `RARE_C013_CLAUDE`). All set `verified=true`, `source=council_member_name`.
+4. **Two Claude chains had only 2 transformations** (chains 16 and 20) due to formatting that placed the `(type: ...)` annotation differently. The steps themselves parsed correctly.
