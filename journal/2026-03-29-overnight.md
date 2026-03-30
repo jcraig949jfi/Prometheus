@@ -505,3 +505,27 @@ A 7,326-line markdown file (`noesis/docs/Impossibility Theorem Hub Expansion for
 2. **109 duplicates correctly skipped** -- the three council sources (Grok, Gemini, ChatGPT) independently generated many of the same resolutions (equal temperament, Pythagorean tuning, dictatorship, etc.). The deduplication logic caught all of these via instance_id keyword overlap.
 3. **Gemini section used bare JSON** (no code fences) -- required separate regex extraction outside the main code-fence parser.
 4. **Hub creation required primitive_sequence** -- the `abstract_compositions` table has a NOT NULL constraint on `primitive_sequence`. Script infers this from the hub's `structural_pattern` field or from the first resolution's primitive sequence.
+
+---
+
+## Why Spokes Matter — The Connective Tissue Argument
+
+Every spoke is a typed connection point in the damage operator × hub matrix. Here's what the numbers mean:
+
+**Current state:** 1,804 spokes across 239 hubs. 49 hubs have zero spokes — completely invisible to the tensor. No spokes = no damage operator tags = empty rows = the tensor can't predict anything about them.
+
+**When the 49 dark hubs get filled (~5-7 spokes each = ~300 new spokes):**
+
+1. **Fill rate: 70.9% → 85-90%** on populated hubs. The tensor moves from "reasonable coverage" to "near-complete."
+
+2. **49 dark hubs light up.** The tensor can finally see them and predict their empty cells. Right now it's blind to Byzantine Generals, Fermat, Clausius inequality, Kakutani fixed point, light speed limit, natural proofs barrier — some of the most fundamental impossibility theorems in mathematics and physics.
+
+3. **Cross-domain edges multiply.** Every FILLED spoke with a shared damage operator creates potential connections to spokes in other hubs. 300 new spokes × average 3 shared-operator matches = ~900 new potential cross-domain edges. The graph goes from navigable to dense.
+
+4. **Tensor predictions get sharper.** At 90% fill, the completion algorithm has much more structure to work with. Predictions that survive at 90% are the highest-confidence discoveries — they've been stable across multiple rebuilds with increasing data.
+
+5. **The flywheel accelerates.** Every typed connection is a potential composition that becomes a reasoning problem for the Forge ensemble. More spokes = more compositions = more training signal = better model = better steering vectors = more precise basin geometry.
+
+**The bottom line:** Hubs without spokes are isolated nodes floating in space. Hubs with spokes are part of a navigable graph where the tensor can traverse from quantum mechanics to economics through shared damage allocation strategies. The spokes ARE the graph. Without them, we have a list. With them, we have a discovery engine.
+
+That's why spoke densification gates everything downstream. The 10 batch prompts in `noesis/batch_prompts_round2/` are the immediate path to lighting up those 49 dark hubs.
