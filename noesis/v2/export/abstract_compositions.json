@@ -49,13 +49,6 @@
     "chain_count": 5
   },
   {
-    "comp_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY",
-    "primitive_sequence": "SYMMETRIZE + COMPLETE(fails) + BREAK_SYMMETRY",
-    "description": "N-fold rotation incompatible with translation periodicity for N=5,7,8+",
-    "structural_pattern": "Crystallographic restriction. Penrose = equal temperament of geometry.",
-    "chain_count": 4
-  },
-  {
     "comp_id": "SOCIAL_CHOICE_IMPOSSIBILITY",
     "primitive_sequence": "COMPOSE + COMPLETE(fails) + BREAK_SYMMETRY",
     "description": "No voting system satisfies all fairness axioms (Arrow 1951)",
@@ -117,13 +110,6 @@
     "description": "It is impossible to create an identical copy of an arbitrary, unknown quantum state.",
     "structural_pattern": "Quantum mechanics requires all operations to be unitary (linear). The cloning transformation $|\\psi\\rangle \\to |\\psi\\rangle \\otimes |\\psi\\rangle$ is inherently non-linear.",
     "chain_count": 8
-  },
-  {
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
-    "primitive_sequence": "COMPOSE(5_fold_rotation) → COMPLETE(infinite_plane) FAILS → BREAK_SYMMETRY(translational_order)",
-    "description": "In a 2D or 3D discrete periodic lattice, the only permissible rotational symmetries are 2-fold, 3-fold, 4-fold, and 6-fold. 5-fold and >6-fold symmetries are strictly impossible.",
-    "structural_pattern": "If a lattice has 5-fold symmetry, applying rotations would generate lattice points strictly closer to the origin than the fundamentally assumed minimum distance of the discrete lattice, collapsing the structure.",
-    "chain_count": 7
   },
   {
     "comp_id": "IMPOSSIBILITY_FITTS_HICK_SPEED_ACCURACY",
@@ -278,5 +264,1412 @@
     "description": "No non-dictatorial voting rule with three or more outcomes is strategy-proof for all preference profiles",
     "structural_pattern": "COMPOSE(preferences) → COMPLETE(strategy-proof aggregation) FAILS → BREAK_SYMMETRY(damage allocation in voting rule)",
     "chain_count": 7
+  },
+  {
+    "comp_id": "BROUWER_FIXED_POINT",
+    "primitive_sequence": "COMPOSE(continuous_self_map, no_fixed_point, compact_convex_domain) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Any continuous self-map of a compact convex set must have a fixed point; it is impossible to continuously retract a disk onto its boundary | SOURCE: L.E.J. Brouwer, 1911. Uber Abbildung von Mannigfaltigkeiten. Mathematische Annalen 71(1):97-115",
+    "structural_pattern": "MAP(continuous) -> COMPLETE(retraction) FAILS -> BREAK_SYMMETRY(boundary) | WHY: The identity map on the boundary has nontrivial degree; extending it to a retraction would collapse homology, contradicting functoriality of H_n",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KAKUTANI_FIXED_POINT",
+    "primitive_sequence": "COMPOSE(set_valued_map, convex_values, no_fixed_point, compact_convex_domain) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Any upper semicontinuous set-valued map from a compact convex set to itself with convex values must have a fixed point; no escape is possible under these conditions | SOURCE: Shizuo Kakutani, 1941. A generalization of Brouwer's fixed point theorem. Duke Mathematical Journal 8(3):457-459",
+    "structural_pattern": "EXTEND(point-to-set) -> MAP(usc) -> COMPLETE(fixed_point) FORCED | WHY: Approximate selections via Michael selection theorem reduce to Brouwer; convexity of values prevents escape through averaging",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "COVERING_SPACE_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(continuous_lift, arbitrary_base_map, compatible_with_projection) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "A continuous map lifts to a covering space if and only if its induced fundamental group homomorphism lands in the covering subgroup; otherwise lifting is impossible | SOURCE: Lifting criterion theorem, formalized by Seifert and Threlfall 1934; modern treatment in Hatcher Ch.1",
+    "structural_pattern": "MAP(continuous) -> EXTEND(lift) FAILS -> BREAK_SYMMETRY(fundamental_group) | WHY: The long exact sequence of homotopy groups for the fibration forces pi_1 compatibility; loops in the base that are not in the covering subgroup cannot be unwound",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KNOT_INVARIANT_INCOMPLETENESS",
+    "primitive_sequence": "COMPOSE(computable, complete_discrimination, single_invariant) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "No single computable knot invariant can distinguish all non-equivalent knots; every known invariant has blind spots where distinct knots receive identical values | SOURCE: Multiple results: Jones polynomial fails to distinguish mutant knots (Morton 1986); unknot detection via Jones polynomial is open (Kronheimer-Mrowka 2011 partial); HOMFLY-PT has coincidences",
+    "structural_pattern": "MAP(knot_to_invariant) -> COMPLETE(discrimination) FAILS -> COMPOSE(multiple_invariants) | WHY: Each invariant captures only partial topological information; mutation operations preserve many polynomial invariants while changing the knot type",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WHITNEY_EMBEDDING_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(smooth_embedding, minimal_ambient_dimension, arbitrary_manifold) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "An n-dimensional manifold cannot always be embedded in R^(2n-1); dimension 2n is necessary in general. Characteristic class obstructions prevent lower-dimensional embeddings | SOURCE: Hassler Whitney, 1936. Differentiable manifolds. Annals of Mathematics 37(3):645-680; Whitney 1944 self-intersection formula",
+    "structural_pattern": "MAP(embed) -> REDUCE(ambient_dim) FAILS -> BREAK_SYMMETRY(self_intersection) | WHY: Stiefel-Whitney classes provide mod-2 obstructions; the normal bundle must admit sections, and characteristic class non-vanishing blocks dimension reduction",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "POINCARE_DUALITY_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(poincare_duality, manifold_structure, arbitrary_dimension) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Not every space satisfying Poincare duality is a manifold; surgery theory obstructions (Wall groups) prevent realization of Poincare duality spaces as manifolds | SOURCE: C.T.C. Wall, 1970. Surgery on Compact Manifolds. London Mathematical Society Monographs",
+    "structural_pattern": "DUALIZE(homology<->cohomology) -> COMPLETE(manifold_structure) FAILS -> BREAK_SYMMETRY(surgery_obstruction) | WHY: The surgery exact sequence contains L-group obstructions; the signature and Arf invariant provide secondary obstructions that cannot be eliminated by homotopy equivalence alone",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "EULER_CHARACTERISTIC_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(nowhere_vanishing, continuous_vector_field, compact_manifold) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "A compact manifold admits a nowhere-vanishing vector field if and only if its Euler characteristic is zero; nonzero chi forces singularities | SOURCE: Poincare 1885, Hopf 1926. Vektorfelder in n-dimensionalen Mannigfaltigkeiten. Mathematische Annalen 96:225-249",
+    "structural_pattern": "MAP(tangent_field) -> COMPLETE(global_nonvanishing) FAILS -> BREAK_SYMMETRY(index_sum) | WHY: Poincare-Hopf theorem forces the sum of indices of zeroes to equal chi(M); when chi != 0, at least one singularity must exist. Generalizes hairy ball to all dimensions and topologies",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "RIGIDITY_MOSTOW",
+    "primitive_sequence": "COMPOSE(continuous_deformation, fixed_topology, hyperbolic_metric) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Finite-volume hyperbolic manifolds of dimension >= 3 have no continuous deformations; the geometry is completely determined by the fundamental group. Moduli space is a single point | SOURCE: G. Daniel Mostow, 1968. Quasi-conformal mappings in n-space and the rigidity of hyperbolic space forms. Publications Mathematiques de l'IHES 34:53-104",
+    "structural_pattern": "MAP(deform_metric) -> EXTEND(moduli_space) FAILS -> SYMMETRIZE(unique_geometry) | WHY: In dim >= 3, quasi-conformal maps between hyperbolic manifolds must be conformal (isometric). The boundary extension argument via ergodic theory on the sphere at infinity forces rigidity",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GAUSS_BONNET_CURVATURE_TOPOLOGY",
+    "primitive_sequence": "COMPOSE(arbitrary_total_curvature, fixed_topology, smooth_metric) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "The integral of Gaussian curvature over a closed surface is locked to 2*pi*chi; it is impossible to change total curvature without changing topology | SOURCE: Gauss 1827 Disquisitiones Generales; Bonnet 1848; Chern 1944 (higher dimensions). Allendoerfer-Weil 1943 for general case",
+    "structural_pattern": "REDUCE(integrate_curvature) -> MAP(to_topology) FORCED -> BREAK_SYMMETRY(metric_freedom_lost) | WHY: Gauss-Bonnet is a topological invariant computed from geometry; the integral is insensitive to local metric deformations, locking global curvature to discrete topological data",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NASH_ISOMETRIC_EMBEDDING",
+    "primitive_sequence": "COMPOSE(isometric_embedding, low_codimension, high_regularity) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "C^1 isometric embeddings are flexible (Nash-Kuiper: can embed flat torus in R^3) but C^2 embeddings are rigid (must respect curvature). Smoothness and geometry cannot be simultaneously free | SOURCE: Nash 1954 C^1 isometric embeddings; Nash 1956 smooth case. Kuiper 1955. Borisov 2004 fractional regularity threshold",
+    "structural_pattern": "MAP(embed_isometrically) -> COMPLETE(smooth+isometric) FAILS at C^1/C^2 boundary -> BREAK_SYMMETRY(regularity) | WHY: Below C^2 the convex integration method allows wild solutions (h-principle); at C^2 and above, curvature constraints from Gauss equations become rigid PDE obstructions",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "TOPOLOGICAL_MANIFOLD_DIMENSION4",
+    "primitive_sequence": "COMPOSE(unique_smooth_structure, topological_equivalence_implies_diffeomorphism, algorithmic_classification) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "R^4 is the unique Euclidean space admitting uncountably many exotic smooth structures; classification of smooth 4-manifolds is algorithmically undecidable. Smooth = topological fails uniquely in dimension 4 | SOURCE: Donaldson 1983 (gauge theory obstructions); Freedman 1982 (topological classification); Taubes 1987 (exotic R^4 existence)",
+    "structural_pattern": "MAP(topological->smooth) -> COMPLETE(unique_smoothing) FAILS -> BREAK_SYMMETRY(gauge_theory_invariants) | WHY: Donaldson's theorem shows the intersection form constrains smooth structures via Yang-Mills instantons; Freedman's theorem shows topological freedom, creating an irreducible gap",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "DEHN_SURGERY_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(arbitrary_3_manifold, independent_surgery_coefficients, unique_presentation) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Every closed orientable 3-manifold arises from surgery on a link in S^3, but the surgery coefficients are constrained by linking matrix signature; not all coefficient choices yield distinct manifolds | SOURCE: Lickorish 1962 A representation of orientable combinatorial 3-manifolds; Wallace 1960; Kirby 1978 calculus of framed links",
+    "structural_pattern": "COMPOSE(surgeries) -> COMPLETE(classification) FAILS -> BREAK_SYMMETRY(Kirby_moves) | WHY: Kirby moves generate equivalences between surgery presentations; the resulting quotient is the set of 3-manifolds, but the equivalence relation is computationally intractable",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BGS_ORACLE_SEPARATION",
+    "primitive_sequence": "COMPOSE(relativizing_proof, P_vs_NP_resolution, oracle_independent) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "There exist oracles A and B such that P^A = NP^A and P^B != NP^B; therefore no relativizing proof technique can resolve P vs NP | SOURCE: Baker, Gill, Solovay 1975. Relativizations of the P=?NP question. SIAM Journal on Computing 4(4):431-442",
+    "structural_pattern": "MAP(proof_technique) -> COMPLETE(P_vs_NP) FAILS if RELATIVIZING -> BREAK_SYMMETRY(oracle_dependent) | WHY: Relativizing arguments treat the oracle as a black box; since both outcomes are realizable by appropriate oracles, any proof resolving P vs NP must exploit internal structure of computation",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NATURAL_PROOFS_BARRIER",
+    "primitive_sequence": "COMPOSE(constructive_property, largeness, useful_against_P_poly) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "If one-way functions exist, then no 'natural' proof strategy (constructive, large, useful) can prove super-polynomial circuit lower bounds against P/poly | SOURCE: Razborov, Rudich 1997. Natural proofs. Journal of Computer and System Sciences 55(1):24-35",
+    "structural_pattern": "COMPOSE(constructive+large) -> COMPLETE(circuit_lower_bound) FAILS -> BREAK_SYMMETRY(pseudorandomness) | WHY: A natural proof provides a polynomial-time computable property that distinguishes hard functions from random; but pseudorandom generators (from OWFs) make hard functions look random, defeating any such distinguisher",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ALGEBRIZATION_BARRIER",
+    "primitive_sequence": "COMPOSE(algebrizing_proof, complexity_class_separation, algebraic_oracle_independent) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "There exist algebraic oracles relative to which both P=NP and P!=NP hold; therefore no algebrizing proof technique can resolve P vs NP or most major complexity separations | SOURCE: Aaronson, Wigderson 2009. Algebrization: A new barrier in complexity theory. ACM Transactions on Computation Theory 1(1):1-54",
+    "structural_pattern": "EXTEND(relativization->algebrization) -> COMPLETE(separation) FAILS -> BREAK_SYMMETRY(algebraic_oracle) | WHY: Algebrizing techniques extend oracle queries to low-degree polynomial extensions; the arithmetization trick used in IP=PSPACE algebrizes, but both outcomes remain consistent with algebraic oracles",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "PCP_THEOREM_HARDNESS",
+    "primitive_sequence": "COMPOSE(polynomial_time_approximation, constant_factor_guarantee, general_NP_hard_problem) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "NP = PCP(log n, 1): every NP proof can be verified by reading only a constant number of random bits. Consequence: for many NP-hard optimization problems, even approximating within a constant factor is NP-hard | SOURCE: Arora, Lund, Motwani, Sudan, Szegedy 1998. Proof verification and the hardness of approximation problems. Journal of the ACM 45(3):501-555. Dinur 2007 combinatorial proof",
+    "structural_pattern": "MAP(approximate) -> REDUCE(error_ratio) FAILS below threshold -> BREAK_SYMMETRY(proof_structure) | WHY: The PCP characterization of NP means that gap amplification makes distinguishing satisfiable from far-from-satisfiable as hard as exact satisfiability; approximation inherits worst-case hardness",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "COMMUNICATION_COMPLEXITY_LOWER_BOUND",
+    "primitive_sequence": "COMPOSE(sublinear_communication, exact_computation, arbitrary_protocol) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Computing certain functions (disjointness, inner product) requires linear communication between two parties regardless of protocol; no clever encoding can compress the necessary information exchange below Omega(n) bits | SOURCE: Yao 1979. Some complexity questions related to distributive computing. STOC 1979. Kalyanasundaram-Schnitger 1992 (disjointness). Razborov 1992 (distributional complexity of disjointness)",
+    "structural_pattern": "REDUCE(communication_bits) -> COMPLETE(exact_function) FAILS -> BREAK_SYMMETRY(information_partition) | WHY: Information-theoretic arguments show that computing set disjointness requires each party to reveal Omega(n) bits of information about their input; compression below this threshold loses essential correlations",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CIRCUIT_COMPLEXITY_LOWER_BOUND",
+    "primitive_sequence": "COMPOSE(constant_depth, polynomial_size, arbitrary_basis_gates) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "The MOD_q function cannot be computed by constant-depth circuits with AND/OR/MOD_p gates for distinct primes p,q; certain explicit functions require super-polynomial size bounded-depth circuits | SOURCE: Razborov 1987 (AC^0 lower bounds for clique); Smolensky 1987 (algebraic methods); Hastad 1986 (exponential lower bounds for constant-depth circuits, switching lemma)",
+    "structural_pattern": "COMPOSE(shallow_circuit) -> COMPLETE(MOD_function) FAILS -> BREAK_SYMMETRY(algebraic_degree) | WHY: Low-degree polynomials over F_p cannot approximate MOD_q for p != q; the algebraic structure of the gate basis is incompatible with the target function's algebraic structure over a different characteristic",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "SPACE_TIME_TRADEOFF",
+    "primitive_sequence": "COMPOSE(minimal_time, minimal_space, exact_computation) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "For problems like sorting and element distinctness, any algorithm must satisfy T * S >= Omega(n^2) where T is time and S is space; reducing one forces increase in the other | SOURCE: Borodin-Cook 1982 A time-space tradeoff for sorting on a general sequential model of computation. SIAM J. Computing 11(2):287-297. Beame 1991",
+    "structural_pattern": "REDUCE(time) -> REDUCE(space) simultaneously FAILS -> BREAK_SYMMETRY(recomputation_vs_storage) | WHY: Information bottleneck: with limited space, intermediate results must be recomputed; the product lower bound arises from counting argument on branching program width vs length",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "UNIQUE_GAMES_CONJECTURE",
+    "primitive_sequence": "COMPOSE(polynomial_time, approximation_beyond_SDP, general_CSP) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "If the Unique Games Conjecture holds, optimal inapproximability thresholds for Max-Cut, Vertex Cover, and many CSPs are exactly characterized by SDP relaxation gaps; beating the SDP bound is NP-hard | SOURCE: Khot 2002. On the power of unique 2-prover 1-round games. STOC 2002. Khot-Kindler-Mossel-O'Donnell 2007 (optimal Max-Cut hardness)",
+    "structural_pattern": "MAP(approximate) -> COMPLETE(beyond_SDP_ratio) FAILS -> BREAK_SYMMETRY(integrality_gap) | WHY: Unique Games hardness reductions show that the SDP relaxation captures all polynomial-time extractable information; the integrality gap between SDP and integer program is computationally irreducible",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IP_EQUALS_PSPACE",
+    "primitive_sequence": "COMPOSE(interactive_proof, beyond_PSPACE_language, polynomial_time_verifier) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Any language decidable in polynomial space has an interactive proof with a polynomial-time verifier; conversely, interactive proofs cannot go beyond PSPACE. Interaction + randomness exactly capture space | SOURCE: Shamir 1992. IP = PSPACE. Journal of the ACM 39(4):869-877. Lund-Fortnow-Karloff-Nisan 1992",
+    "structural_pattern": "EXTEND(deterministic->interactive) -> COMPLETE(verification_power) SATURATES at PSPACE -> BREAK_SYMMETRY(arithmetization) | WHY: Arithmetization converts Boolean formulas to polynomial evaluations over large fields; the verifier can check polynomial identity via Schwartz-Zippel, but the polynomial degree bounds the complexity to PSPACE",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "MINIMUM_CIRCUIT_SIZE_PROBLEM",
+    "primitive_sequence": "COMPOSE(NP_hardness_proof, standard_reductions, no_new_lower_bounds_required) -> COMPLETE FAILS -> BREAK_SYMMETRY",
+    "description": "Proving MCSP is NP-hard under standard (Karp) reductions would imply breakthrough circuit lower bounds (E not in P/poly); the meta-problem of circuit minimization resists classification by known techniques | SOURCE: Kabanets-Cai 2000. Circuit minimization problem. STOC 2000. Allender-Das 2014. Murray-Williams 2017",
+    "structural_pattern": "MAP(reduce_to_MCSP) -> COMPLETE(NP_hardness) FAILS without circuit lower bounds -> BREAK_SYMMETRY(self_reference) | WHY: Proving MCSP NP-hard via Karp reductions would provide an efficient way to distinguish hard truth tables from easy ones, which is itself a circuit lower bound; the problem is self-referentially trapped",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BANACH_TARSKI_PARADOX",
+    "primitive_sequence": "COMPOSE(rigid_motions) → COMPLETE(measure_on_all_subsets) FAILS → BREAK_SYMMETRY(restrict_to_Lebesgue_measurable_sets)",
+    "description": "No finitely additive, isometry-invariant measure can be defined on all subsets of R^3 that assigns positive measure to the unit ball. Equivalently: a solid ball can be decomposed into finitely many pieces and reassembled into two copies of the original ball using rigid motions alone.",
+    "structural_pattern": "COMPOSE(rigid_motions) → COMPLETE(measure_on_all_subsets) FAILS → BREAK_SYMMETRY(restrict_to_Lebesgue_measurable_sets) | The free group F_2 embeds in SO(3) via rotations. The Hausdorff paradox on S^2 decomposes the sphere using non-measurable sets constructed via Axiom of Choice. These pieces are not Lebesgue measurable, so the additive measure property COMPOSE(σ-additivity) cannot extend to COMPLETE(all subsets).",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_WEIERSTRASS_APPROXIMATION_DISCONTINUITY",
+    "primitive_sequence": "COMPOSE(polynomial_sequence) → COMPLETE(all_bounded_functions) FAILS → BREAK_SYMMETRY(weaken_norm_to_Lp)",
+    "description": "No sequence of polynomials can converge uniformly to a discontinuous function on a compact interval. Polynomial approximation in the sup-norm is impossible outside C[a,b].",
+    "structural_pattern": "COMPOSE(polynomial_sequence) → COMPLETE(all_bounded_functions) FAILS → BREAK_SYMMETRY(weaken_norm_to_Lp) | Polynomials are continuous, and uniform limits of continuous functions are continuous (a topological closure property). The uniform closure of the polynomial algebra on [a,b] equals C[a,b] exactly. Discontinuous functions lie outside this closure.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_DU_BOIS_REYMOND_FOURIER_DIVERGENCE",
+    "primitive_sequence": "COMPOSE(Fourier_partial_sums) → COMPLETE(pointwise_recovery) FAILS → BREAK_SYMMETRY(restrict_to_Lp_convergence_or_Cesaro_summation)",
+    "description": "There exists a continuous function on [0,2π] whose Fourier series diverges at a point. Pointwise convergence of Fourier series is not guaranteed even for continuous functions.",
+    "structural_pattern": "COMPOSE(Fourier_partial_sums) → COMPLETE(pointwise_recovery) FAILS → BREAK_SYMMETRY(restrict_to_Lp_convergence_or_Cesaro_summation) | The Dirichlet kernel D_n has unbounded L^1 norm (grows as log n). By the Banach-Steinhaus (uniform boundedness) theorem, the set of continuous functions where S_n(f,x) diverges is residual (comeager) in C[0,2π]. The partial sum operator sequence is not uniformly bounded in the sup-norm.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_UNIVERSAL_APPROXIMATION_RATE_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(finite_basis_expansion) → COMPLETE(uniform_rate_for_all_f) FAILS → BREAK_SYMMETRY(restrict_function_class_by_smoothness_or_spectral_decay)",
+    "description": "No approximation scheme can achieve a universal rate of convergence for all continuous functions simultaneously. For any sequence of approximation operators L_n with dim(L_n)=n, there exist continuous functions that converge arbitrarily slowly.",
+    "structural_pattern": "COMPOSE(finite_basis_expansion) → COMPLETE(uniform_rate_for_all_f) FAILS → BREAK_SYMMETRY(restrict_function_class_by_smoothness_or_spectral_decay) | By the Bernstein lethargy theorem, for any decreasing sequence ε_n→0, there exists f in the target space such that the best approximation error E_n(f) decreases no faster than ε_n. The unit ball in C[a,b] is not compact, so no uniform rate covers all elements.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_KOLMOGOROV_SUPERPOSITION_COMPUTATIONAL_BARRIER",
+    "primitive_sequence": "COMPOSE(univariate_superposition) → COMPLETE(smooth_multivariate_representation) FAILS → BREAK_SYMMETRY(sacrifice_exactness_for_smoothness)",
+    "description": "Kolmogorov's Superposition Theorem (1957) represents any continuous multivariate function as compositions and sums of univariate functions, BUT the inner functions are highly non-smooth (typically nowhere-differentiable), making the representation computationally intractable for smooth approximation.",
+    "structural_pattern": "COMPOSE(univariate_superposition) → COMPLETE(smooth_multivariate_representation) FAILS → BREAK_SYMMETRY(sacrifice_exactness_for_smoothness) | The inner functions φ_q are universal (independent of f) but must encode the topology of R^n into R, requiring space-filling-curve-like behavior. This forces them to be at best Hölder continuous with exponent depending on dimension but never Lipschitz. Smoothness and universality are mutually exclusive.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CURSE_OF_DIMENSIONALITY",
+    "primitive_sequence": "COMPOSE(grid_sampling) → COMPLETE(accurate_high_dimensional_approximation) FAILS → BREAK_SYMMETRY(exploit_low_dimensional_structure_or_sparsity)",
+    "description": "For functions in the Sobolev space W^s_p([0,1]^d), the optimal approximation rate using n parameters is O(n^{-s/d}). As dimension d grows, exponentially many parameters are needed to maintain a fixed accuracy. No method escapes this for the full Sobolev class.",
+    "structural_pattern": "COMPOSE(grid_sampling) → COMPLETE(accurate_high_dimensional_approximation) FAILS → BREAK_SYMMETRY(exploit_low_dimensional_structure_or_sparsity) | The ε-covering number of the unit ball in W^s_p([0,1]^d) grows as exp(c·(1/ε)^{d/s}). Any linear or nonlinear n-term approximation scheme must respect this metric entropy lower bound (Kolmogorov n-widths). The volume of the unit cube grows exponentially with d while the number of sample points grows polynomially.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CRAMER_RAO_BOUND",
+    "primitive_sequence": "COMPOSE(unbiased_estimator) → COMPLETE(zero_variance_estimation) FAILS → BREAK_SYMMETRY(allow_bias_to_reduce_MSE)",
+    "description": "For any unbiased estimator θ̂ of a parameter θ, the variance satisfies Var(θ̂) ≥ 1/I(θ), where I(θ) is the Fisher information. No unbiased estimator can have variance below this bound.",
+    "structural_pattern": "COMPOSE(unbiased_estimator) → COMPLETE(zero_variance_estimation) FAILS → BREAK_SYMMETRY(allow_bias_to_reduce_MSE) | The Cauchy-Schwarz inequality applied to the score function and the estimator yields the bound. The Fisher information I(θ) = E[(∂log f/∂θ)²] is the curvature of the KL divergence at θ, setting a fundamental precision floor. Equality holds iff the estimator is an affine function of the score.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MUNTZ_SZASZ_LACUNARY_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(lacunary_monomial_span) → COMPLETE(dense_in_C[0,1]) FAILS → BREAK_SYMMETRY(add_missing_exponents_until_divergence_condition_met)",
+    "description": "The span of monomials {x^{λ_n}} is dense in C[0,1] if and only if Σ 1/λ_n = ∞. If the exponents are too sparse (series converges), the monomial system cannot approximate all continuous functions.",
+    "structural_pattern": "COMPOSE(lacunary_monomial_span) → COMPLETE(dense_in_C[0,1]) FAILS → BREAK_SYMMETRY(add_missing_exponents_until_divergence_condition_met) | When Σ 1/λ_n < ∞, the closed span of {x^{λ_n}} in C[0,1] is a proper subspace. The dual characterization shows there exist nonzero measures orthogonal to all x^{λ_n}. The missing monomials create gaps in the frequency coverage that cannot be compensated by the remaining terms.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_FABER_THEOREM_INTERPOLATION",
+    "primitive_sequence": "COMPOSE(polynomial_interpolation_on_fixed_nodes) → COMPLETE(convergence_for_all_f_in_C[a,b]) FAILS → BREAK_SYMMETRY(restrict_smoothness_class_or_use_best_approximation)",
+    "description": "For any triangular array of interpolation nodes in [a,b], there exists a continuous function for which the interpolating polynomial sequence diverges. No single choice of nodes guarantees convergence for ALL continuous functions.",
+    "structural_pattern": "COMPOSE(polynomial_interpolation_on_fixed_nodes) → COMPLETE(convergence_for_all_f_in_C[a,b]) FAILS → BREAK_SYMMETRY(restrict_smoothness_class_or_use_best_approximation) | The Banach-Steinhaus theorem applies: the interpolation operators L_n: C[a,b]→C[a,b] are bounded linear. The Lebesgue constant Λ_n = ||L_n|| grows without bound for ANY node array (Λ_n ≥ (2/π)log(n+1) - C). By uniform boundedness, pointwise divergence occurs on a residual set.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BERNSTEIN_LETHARGY",
+    "primitive_sequence": "COMPOSE(nested_subspace_approximation) → COMPLETE(guaranteed_fast_rate) FAILS → BREAK_SYMMETRY(restrict_to_smoothness_subclass)",
+    "description": "For any sequence of nested finite-dimensional subspaces V_1 ⊂ V_2 ⊂ ... in a Banach space X, and any rate ε_n → 0, there exists an element f ∈ X whose best approximation error E_n(f) = inf_{g ∈ V_n} ||f-g|| decreases no faster than ε_n.",
+    "structural_pattern": "COMPOSE(nested_subspace_approximation) → COMPLETE(guaranteed_fast_rate) FAILS → BREAK_SYMMETRY(restrict_to_smoothness_subclass) | The quotient space X/V_n has infinite dimension for each n. The best approximation map is a projection onto V_n, and the sequence of distances d(f, V_n) can be arranged to match any prescribed rate by constructing f as a series with carefully chosen coefficients in directions nearly orthogonal to each V_n.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_GROSSMAN_STIGLITZ_PARADOX",
+    "primitive_sequence": "COMPOSE(rational_information_acquisition) → COMPLETE(informationally_efficient_prices) FAILS → BREAK_SYMMETRY(allow_noise_traders_or_information_rents)",
+    "description": "If markets are perfectly informationally efficient (prices fully reflect all information), then no agent has incentive to acquire costly information. But if no one acquires information, prices cannot reflect it. Perfect informational efficiency and costly information acquisition are mutually incompatible.",
+    "structural_pattern": "COMPOSE(rational_information_acquisition) → COMPLETE(informationally_efficient_prices) FAILS → BREAK_SYMMETRY(allow_noise_traders_or_information_rents) | In equilibrium, informed traders' profits must cover information costs. If prices reveal all information, informed and uninformed traders earn equal returns, so information acquisition has negative expected utility. The fixed-point equation for equilibrium price informativeness has no solution at full revelation when costs are positive.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_DIAMOND_DYBVIG_BANK_RUNS",
+    "primitive_sequence": "COMPOSE(maturity_transformation) → COMPLETE(run_free_equilibrium) FAILS → BREAK_SYMMETRY(introduce_deposit_insurance_or_suspension_of_convertibility)",
+    "description": "A banking system cannot simultaneously provide liquidity transformation (short-term deposits funding long-term loans), maintain sequential service (first-come-first-served withdrawal), and be immune to self-fulfilling bank runs, without deposit insurance or a lender of last resort.",
+    "structural_pattern": "COMPOSE(maturity_transformation) → COMPLETE(run_free_equilibrium) FAILS → BREAK_SYMMETRY(introduce_deposit_insurance_or_suspension_of_convertibility) | The demand-deposit contract creates two Nash equilibria: one where agents withdraw only for genuine liquidity needs (efficient), and one where all agents rush to withdraw (bank run). The sequential service constraint means early withdrawers are paid in full while late withdrawers get nothing if assets are illiquid. This strategic complementarity in withdrawal decisions makes the run equilibrium self-fulfilling.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_COASE_IMPOSSIBILITY_CONDITIONS",
+    "primitive_sequence": "COMPOSE(bilateral_bargaining) → COMPLETE(efficient_externality_resolution) FAILS → BREAK_SYMMETRY(Pigouvian_tax_or_regulatory_assignment)",
+    "description": "Efficient bargaining over externalities (Coase's result) fails when any of: (1) transaction costs are positive, (2) property rights are unclear, (3) parties are asymmetrically informed, or (4) there are many affected parties (public goods/commons). These conditions are generic, making the Coase result the exception.",
+    "structural_pattern": "COMPOSE(bilateral_bargaining) → COMPLETE(efficient_externality_resolution) FAILS → BREAK_SYMMETRY(Pigouvian_tax_or_regulatory_assignment) | Under asymmetric information, the Myerson-Satterthwaite theorem shows no mechanism is simultaneously individually rational, incentive compatible, budget balanced, and ex-post efficient. Transaction costs create a wedge between willingness-to-pay and willingness-to-accept. With many parties, free-riding prevents efficient Coasean bargaining.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_LUCAS_CRITIQUE_POLICY_INVARIANCE",
+    "primitive_sequence": "COMPOSE(reduced_form_estimation) → COMPLETE(policy_invariant_predictions) FAILS → BREAK_SYMMETRY(estimate_deep_structural_parameters)",
+    "description": "Econometric models estimated under one policy regime cannot be used to predict outcomes under a different policy regime, because agents' decision rules (and hence the model parameters) change endogenously with policy. Policy-invariant reduced-form models are impossible when agents are forward-looking.",
+    "structural_pattern": "COMPOSE(reduced_form_estimation) → COMPLETE(policy_invariant_predictions) FAILS → BREAK_SYMMETRY(estimate_deep_structural_parameters) | Reduced-form parameters are functions of both structural (preference/technology) parameters AND policy rule parameters. When policy changes, rational agents re-optimize, shifting the mapping from state variables to outcomes. The reduced form is not invariant under the policy intervention it is used to evaluate, violating the autonomy requirement of Haavelmo (1944).",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_LONG_RUN_PHILLIPS_CURVE",
+    "primitive_sequence": "COMPOSE(monetary_expansion) → COMPLETE(permanent_unemployment_reduction) FAILS → BREAK_SYMMETRY(accept_natural_rate_or_structural_reform)",
+    "description": "There is no permanent trade-off between inflation and unemployment. In the long run, monetary policy can only choose the inflation rate, not the unemployment rate. Attempts to hold unemployment below the natural rate permanently lead to accelerating inflation.",
+    "structural_pattern": "COMPOSE(monetary_expansion) → COMPLETE(permanent_unemployment_reduction) FAILS → BREAK_SYMMETRY(accept_natural_rate_or_structural_reform) | Adaptive (Friedman) or rational (Lucas/Sargent) expectations adjust to actual inflation. When expected inflation equals actual inflation, the Phillips curve is vertical at the natural rate u*. Any attempt to maintain u < u* requires continuously accelerating inflation to stay ahead of expectations, which is unsustainable.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CONDORCET_JURY_LIMITATIONS",
+    "primitive_sequence": "COMPOSE(majority_vote_aggregation) → COMPLETE(optimal_collective_decision) FAILS → BREAK_SYMMETRY(mechanism_design_for_truthful_revelation)",
+    "description": "The Condorcet Jury Theorem (majority voting aggregates information optimally) fails when: (1) voters are correlated (common information sources), (2) voters vote strategically rather than sincerely, or (3) voter competence is below 0.5. Under strategic voting, sincere revelation is not a Nash equilibrium in general.",
+    "structural_pattern": "COMPOSE(majority_vote_aggregation) → COMPLETE(optimal_collective_decision) FAILS → BREAK_SYMMETRY(mechanism_design_for_truthful_revelation) | Under strategic voting, a pivotal voter conditions on being pivotal, which changes the information inference. With correlated signals, the effective number of independent information sources grows sub-linearly. When competence p < 0.5, majority voting amplifies errors (anti-jury theorem). These three failures make the original theorem's conditions non-generic.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_SECOND_WELFARE_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(lump_sum_transfers + competitive_markets) → COMPLETE(any_efficient_allocation_achieved) FAILS → BREAK_SYMMETRY(distortionary_taxation_with_efficiency_cost)",
+    "description": "The Second Welfare Theorem (any Pareto efficient allocation can be decentralized as a competitive equilibrium with appropriate lump-sum transfers) fails when: (1) preferences are non-convex, (2) lump-sum transfers are informationally infeasible, (3) increasing returns to scale exist. Redistribution without efficiency loss is generically impossible.",
+    "structural_pattern": "COMPOSE(lump_sum_transfers + competitive_markets) → COMPLETE(any_efficient_allocation_achieved) FAILS → BREAK_SYMMETRY(distortionary_taxation_with_efficiency_cost) | Lump-sum transfers require knowledge of agents' types (abilities, preferences), which are private information. By the revelation principle, any incentive-compatible mechanism must impose distortions. Non-convex preferences break the supporting hyperplane theorem, so price-based decentralization of efficient allocations becomes impossible. Increasing returns create natural monopoly, violating the price-taking assumption.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_STOLPER_SAMUELSON_DISTRIBUTIONAL",
+    "primitive_sequence": "COMPOSE(trade_liberalization) → COMPLETE(pareto_improvement_for_all_factors) FAILS → BREAK_SYMMETRY(compensatory_transfers_or_factor_mobility)",
+    "description": "Free trade cannot benefit all factors of production simultaneously. In a Heckscher-Ohlin framework, trade liberalization necessarily raises the real return to the abundant factor and lowers the real return to the scarce factor. Pareto-improving trade is impossible without compensation.",
+    "structural_pattern": "COMPOSE(trade_liberalization) → COMPLETE(pareto_improvement_for_all_factors) FAILS → BREAK_SYMMETRY(compensatory_transfers_or_factor_mobility) | With two goods, two factors, and constant returns to scale, goods prices uniquely determine factor prices (by the zero-profit conditions and non-reversibility of factor intensities). A change in relative goods prices (from trade) must raise one factor price and lower the other via the magnification effect: factor price changes are amplified relative to goods price changes.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BALASSA_SAMUELSON_PRICE_CONVERGENCE",
+    "primitive_sequence": "COMPOSE(trade_equalization + internal_wage_equalization) → COMPLETE(absolute_PPP) FAILS → BREAK_SYMMETRY(accept_systematic_price_level_differences)",
+    "description": "Purchasing Power Parity (equal price levels across countries) is impossible when countries differ in relative productivity between tradable and non-tradable sectors. Higher-productivity countries systematically have higher price levels for non-tradables.",
+    "structural_pattern": "COMPOSE(trade_equalization + internal_wage_equalization) → COMPLETE(absolute_PPP) FAILS → BREAK_SYMMETRY(accept_systematic_price_level_differences) | Trade equalizes tradable goods prices. Internal labor mobility equalizes wages across sectors within a country. If country A has higher tradable-sector productivity, its wages are higher. Its non-tradable prices (set by wages, not trade) are also higher. The composition of the price index differs from the composition of traded goods, so aggregate price levels diverge systematically with productivity.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_WELFARE_IMPOSSIBILITY_INTERPERSONAL",
+    "primitive_sequence": "COMPOSE(ordinal_preferences) → COMPLETE(interpersonal_welfare_comparison) FAILS → BREAK_SYMMETRY(impose_cardinal_comparability_assumption_or_use_capabilities)",
+    "description": "Ordinal utility theory provides no basis for interpersonal comparisons of utility. Without cardinal, comparable utility functions, social welfare functions requiring utility aggregation (utilitarian, Rawlsian, etc.) cannot be constructed from individual choice data alone.",
+    "structural_pattern": "COMPOSE(ordinal_preferences) → COMPLETE(interpersonal_welfare_comparison) FAILS → BREAK_SYMMETRY(impose_cardinal_comparability_assumption_or_use_capabilities) | Ordinal utility is invariant under arbitrary monotone transformations. If u_A and u_B are utility functions for agents A and B, any monotone transforms f(u_A) and g(u_B) are equally valid. The statement 'A gains more than B loses' has no meaning under ordinal transformations, because the gain/loss magnitudes are artifacts of the representation.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS",
+    "primitive_sequence": "COMPOSE(general_games) -> COMPLETE(equilibrium) FAILS -> BREAK_SYMMETRY(approximate_or_restrict_class)",
+    "description": "No polynomial-time algorithm can compute a Nash equilibrium in general normal-form games unless PPAD = P || CLOSURE FAILURE: Brouwer fixed-point theorem guarantees existence but the corresponding computational problem (finding the fixed point) is PPAD-complete. The proof reduces END-OF-LINE to Nash, showing that the combinatorial structure of best-response dynamics encodes arbitrary PPAD instances.",
+    "structural_pattern": "Brouwer fixed-point theorem guarantees existence but the corresponding computational problem (finding the fixed point) is PPAD-complete. The proof reduces END-OF-LINE to Nash, showing that the combinatorial structure of best-response dynamics encodes arbitrary PPAD instances.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE",
+    "primitive_sequence": "COMPOSE(DSIC + efficiency) -> COMPLETE(budget_balance + IR) FAILS -> BREAK_SYMMETRY(relax_one_constraint)",
+    "description": "No mechanism can simultaneously achieve efficiency (welfare maximization), incentive compatibility, individual rationality, and budget balance in general quasi-linear settings || CLOSURE FAILURE: The VCG transfer payments that align individual incentives with social welfare necessarily produce a budget surplus (or deficit). The Clarke pivot payments extracted from agents cannot generically sum to zero while maintaining truthfulness, because the externality each agent imposes is not a conserved quantity.",
+    "structural_pattern": "The VCG transfer payments that align individual incentives with social welfare necessarily produce a budget surplus (or deficit). The Clarke pivot payments extracted from agents cannot generically sum to zero while maintaining truthfulness, because the externality each agent imposes is not a conserved quantity.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED",
+    "primitive_sequence": "COMPOSE(bipartite_stability) -> EXTEND(third_side) FAILS -> BREAK_SYMMETRY(restrict_preferences_or_accept_instability)",
+    "description": "No stable matching need exist for three-sided (or higher) matching markets; the Gale-Shapley deferred acceptance algorithm cannot be generalized beyond two-sided markets || CLOSURE FAILURE: In two-sided markets, the lattice structure of stable matchings (guaranteed by the rural hospitals theorem and Birkhoff's representation) breaks down with three or more sides. Preference cycles of the form (a prefers b2, b2 prefers c3, c3 prefers a' != a) create unavoidable blocking triples with no fixed-point guarantee.",
+    "structural_pattern": "In two-sided markets, the lattice structure of stable matchings (guaranteed by the rural hospitals theorem and Birkhoff's representation) breaks down with three or more sides. Preference cycles of the form (a prefers b2, b2 prefers c3, c3 prefers a' != a) create unavoidable blocking triples with no fixed-point guarantee.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION",
+    "primitive_sequence": "COMPOSE(fairness + efficiency) -> COMPLETE(truthfulness) FAILS -> STOCHASTICIZE(randomized_mechanism) OR BREAK_SYMMETRY(weaken_fairness)",
+    "description": "No deterministic mechanism for dividing indivisible goods can simultaneously guarantee envy-freeness, Pareto efficiency, and strategy-proofness || CLOSURE FAILURE: Envy-freeness requires symmetric treatment of agents, efficiency requires responsiveness to cardinal preferences, and truthfulness requires monotonicity in allocations. The monotonicity constraints from strategy-proofness force allocations that either violate envy-freeness (by treating identical preferences differently) or efficiency (by ignoring preference intensity).",
+    "structural_pattern": "Envy-freeness requires symmetric treatment of agents, efficiency requires responsiveness to cardinal preferences, and truthfulness requires monotonicity in allocations. The monotonicity constraints from strategy-proofness force allocations that either violate envy-freeness (by treating identical preferences differently) or efficiency (by ignoring preference intensity).",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN",
+    "primitive_sequence": "SYMMETRIZE(auction_formats) -> COMPLETE(revenue_equivalence) FAILS -> BREAK_SYMMETRY(risk_aversion_or_correlation)",
+    "description": "Revenue equivalence across auction formats fails when bidders are risk-averse, asymmetric, have interdependent valuations, or face budget constraints; no single auction format simultaneously maximizes revenue, efficiency, and simplicity || CLOSURE FAILURE: Revenue equivalence holds only under independent private values with risk-neutral symmetric bidders. Risk aversion breaks the isomorphism between first-price and second-price auctions (expected payment changes non-linearly). Affiliated values break independence, making the linkage principle operative — English auctions generate strictly more revenue than sealed-bid auctions.",
+    "structural_pattern": "Revenue equivalence holds only under independent private values with risk-neutral symmetric bidders. Risk aversion breaks the isomorphism between first-price and second-price auctions (expected payment changes non-linearly). Affiliated values break independence, making the linkage principle operative — English auctions generate strictly more revenue than sealed-bid auctions.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY",
+    "primitive_sequence": "COMPOSE(individual_optimization) -> COMPLETE(social_optimum) FAILS -> BREAK_SYMMETRY(marginal_cost_tolls)",
+    "description": "Selfish routing in congestion games produces outcomes whose social cost can be a factor of Theta(log n / log log n) worse than optimal for general latency functions; no toll mechanism can simultaneously achieve system optimality, budget balance, and voluntary participation || CLOSURE FAILURE: Individual best-response dynamics minimize personal cost, not social cost. The externality each agent imposes on others (marginal congestion contribution) is not internalized. Wardrop equilibrium and Nash flow diverge from the social optimum because the variational inequality characterizing equilibrium uses individual cost gradients, not marginal social cost.",
+    "structural_pattern": "Individual best-response dynamics minimize personal cost, not social cost. The externality each agent imposes on others (marginal congestion contribution) is not internalized. Wardrop equilibrium and Nash flow diverge from the social optimum because the variational inequality characterizing equilibrium uses individual cost gradients, not marginal social cost.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN",
+    "primitive_sequence": "COMPOSE(preference_profiles) -> MAP(social_choice_rule) -> COMPLETE(Nash_implementation) FAILS -> BREAK_SYMMETRY(restrict_to_monotonic_rules)",
+    "description": "A social choice rule is Nash-implementable only if it satisfies Maskin monotonicity; many natural social choice rules (including most cardinal welfare criteria) fail this condition || CLOSURE FAILURE: If an alternative a is chosen at preference profile theta but not at theta', and agent i's lower contour set at a weakly expands from theta to theta', then no Nash equilibrium mechanism can distinguish the two profiles — agent i has no profitable deviation to signal the difference. This monotonicity requirement excludes welfare-maximizing rules that respond to cardinal preference intensities.",
+    "structural_pattern": "If an alternative a is chosen at preference profile theta but not at theta', and agent i's lower contour set at a weakly expands from theta to theta', then no Nash equilibrium mechanism can distinguish the two profiles — agent i has no profitable deviation to signal the difference. This monotonicity requirement excludes welfare-maximizing rules that respond to cardinal preference intensities.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS",
+    "primitive_sequence": "COMPOSE(revelation_principle) -> COMPLETE(computational_efficiency) FAILS -> BREAK_SYMMETRY(approximate_or_restrict_domain)",
+    "description": "While the revelation principle guarantees that any implementable outcome can be achieved by a direct truthful mechanism, the resulting direct mechanism may require exponential communication or computation; no computationally efficient truthful mechanism matches the welfare of the best non-truthful algorithm for combinatorial auctions || CLOSURE FAILURE: Direct revelation requires each agent to communicate their full type (exponential in item count for combinatorial valuations). Furthermore, maximal-in-range mechanisms (the only known class achieving truthfulness with bounded communication) must optimize over an exponentially large range, making polynomial-time truthful mechanisms provably worse than non-truthful polynomial approximation algorithms.",
+    "structural_pattern": "Direct revelation requires each agent to communicate their full type (exponential in item count for combinatorial valuations). Furthermore, maximal-in-range mechanisms (the only known class achieving truthfulness with bounded communication) must optimize over an exponentially large range, making polynomial-time truthful mechanisms provably worse than non-truthful polynomial approximation algorithms.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON",
+    "primitive_sequence": "COMPOSE(bilateral_private_info) -> COMPLETE(efficient_trade) FAILS -> BREAK_SYMMETRY(subsidy_or_accept_inefficiency)",
+    "description": "No incentive-compatible, individually rational, budget-balanced mechanism achieves full efficiency (ex-post trade whenever gains from trade exist) in bilateral trade with two-sided private information || CLOSURE FAILURE: With two-sided private information, the buyer has incentive to understate value and the seller to overstate cost. The information rent required to elicit truthful reports from both sides exceeds the gains from trade at the margin. By the envelope theorem, the expected subsidy needed equals the integral of virtual surplus below zero, which is strictly positive for overlapping type distributions.",
+    "structural_pattern": "With two-sided private information, the buyer has incentive to understate value and the seller to overstate cost. The information rent required to elicit truthful reports from both sides exceeds the gains from trade at the margin. By the envelope theorem, the expected subsidy needed equals the integral of virtual surplus below zero, which is strictly positive for overlapping type distributions.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE",
+    "primitive_sequence": "COMPOSE(divisibility_assumption) -> EXTEND(indivisible_goods) FAILS -> BREAK_SYMMETRY(gross_substitutes_condition)",
+    "description": "Competitive equilibrium (Walrasian equilibrium with integer allocations) may fail to exist when goods are indivisible and agents have general preferences; when it exists, it may not be Pareto efficient or envy-free simultaneously || CLOSURE FAILURE: Convexity of preferences and production sets is essential for existence via Kakutani's fixed-point theorem. With indivisible goods, the aggregate excess demand correspondence is not convex-valued: small price changes can cause discontinuous jumps in demand. The gross substitutes condition (Kelso-Crawford) restores existence by ensuring the demand correspondence has a lattice structure.",
+    "structural_pattern": "Convexity of preferences and production sets is essential for existence via Kakutani's fixed-point theorem. With indivisible goods, the aggregate excess demand correspondence is not convex-valued: small price changes can cause discontinuous jumps in demand. The gross substitutes condition (Kelso-Crawford) restores existence by ensuring the demand correspondence has a lattice structure.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY",
+    "primitive_sequence": "LIMIT(infinite_repetition) -> COMPLETE(cooperation) FAILS -> REDUCE(finite_horizon) -> BREAK_SYMMETRY(reputation_or_trembles)",
+    "description": "The folk theorem shows that virtually any individually rational payoff is sustainable as a Nash equilibrium in infinitely repeated games, but this breaks down with finite horizons, imperfect monitoring, or lack of common knowledge of rationality; backward induction forces defection in finitely repeated prisoner's dilemma || CLOSURE FAILURE: In finite games, backward induction from the last period unravels all cooperation: in the final round, defection dominates; knowing this, defection dominates in the penultimate round, etc. The infinite-horizon folk theorem relies on the threat of perpetual punishment having non-zero present value, which requires either infinite horizon, or sufficient uncertainty about the end date (Kreps et al., 1982).",
+    "structural_pattern": "In finite games, backward induction from the last period unravels all cooperation: in the final round, defection dominates; knowing this, defection dominates in the penultimate round, etc. The infinite-horizon folk theorem relies on the threat of perpetual punishment having non-zero present value, which requires either infinite horizon, or sufficient uncertainty about the end date (Kreps et al., 1982).",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY",
+    "primitive_sequence": "COMPOSE(unrestricted_preferences) -> MAP(strategy_proof_SCF) -> COMPLETE(non_dictatorship) FAILS -> BREAK_SYMMETRY(restrict_domain_or_add_money)",
+    "description": "Without monetary transfers, any strategy-proof and onto social choice function over three or more alternatives with unrestricted preferences must be dictatorial; no non-dictatorial truthful mechanism exists without payments || CLOSURE FAILURE: Strategy-proofness imposes severe monotonicity constraints on the social choice function. With three or more alternatives and unrestricted ordinal preferences, the only functions satisfying these monotonicity constraints are projections onto a single agent's preference (dictatorship). Monetary transfers break the impossibility by allowing compensation, expanding the space of incentive-compatible mechanisms.",
+    "structural_pattern": "Strategy-proofness imposes severe monotonicity constraints on the social choice function. With three or more alternatives and unrestricted ordinal preferences, the only functions satisfying these monotonicity constraints are projections onto a single agent's preference (dictatorship). Monetary transfers break the impossibility by allowing compensation, expanding the space of incentive-compatible mechanisms.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM",
+    "primitive_sequence": "COMPOSE(mixed_state) -> EXTEND(bipartite_copy) FAILS -> BREAK_SYMMETRY(commuting_states_only)",
+    "description": "No quantum operation can take a single copy of an arbitrary mixed quantum state and produce a bipartite state whose marginals are both equal to the original state; broadcasting (the mixed-state generalization of cloning) is impossible for non-commuting states || CLOSURE FAILURE: Broadcasting requires a completely positive trace-preserving (CPTP) map Lambda such that Tr_B[Lambda(rho)] = Tr_A[Lambda(rho)] = rho for all rho in some set S. This is possible if and only if all states in S commute (i.e., are simultaneously diagonalizable). For non-commuting states, linearity of quantum mechanics plus the structure of CPTP maps makes this overconstrained: the Stinespring dilation forces entanglement with the environment that corrupts at least one marginal.",
+    "structural_pattern": "Broadcasting requires a completely positive trace-preserving (CPTP) map Lambda such that Tr_B[Lambda(rho)] = Tr_A[Lambda(rho)] = rho for all rho in some set S. This is possible if and only if all states in S commute (i.e., are simultaneously diagonalizable). For non-commuting states, linearity of quantum mechanics plus the structure of CPTP maps makes this overconstrained: the Stinespring dilation forces entanglement with the environment that corrupts at least one marginal.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NO_DELETING_THEOREM",
+    "primitive_sequence": "DUALIZE(no_cloning) -> COMPLETE(deletion) FAILS -> BREAK_SYMMETRY(irreversible_decoherence)",
+    "description": "Given two copies of an arbitrary unknown quantum state, no quantum operation can delete one copy against the other, producing the original state tensor a fixed blank state; quantum information cannot be destroyed in a copy-specific manner || CLOSURE FAILURE: Unitarity of quantum mechanics requires that the map |psi>|psi>|A> -> |psi>|0>|A_psi> be unitary. By linearity, applying this to a superposition (alpha|0>+beta|1>)^2 and expanding, the cross terms cannot cancel: the inner product structure is incompatible with state-independent deletion. This is the time-reverse dual of no-cloning, reflecting unitarity = reversibility.",
+    "structural_pattern": "Unitarity of quantum mechanics requires that the map |psi>|psi>|A> -> |psi>|0>|A_psi> be unitary. By linearity, applying this to a superposition (alpha|0>+beta|1>)^2 and expanding, the cross terms cannot cancel: the inner product structure is incompatible with state-independent deletion. This is the time-reverse dual of no-cloning, reflecting unitarity = reversibility.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT",
+    "primitive_sequence": "COMPOSE(unitary_evolution) -> COMPLETE(arbitrary_speed) FAILS -> REDUCE(energy_bounded_rate)",
+    "description": "A quantum system with average energy E above the ground state cannot transition to an orthogonal state faster than time t_min = pi*hbar/(2E); computation speed is fundamentally bounded by energy || CLOSURE FAILURE: The overlap |<psi(0)|psi(t)>| between initial and evolved states is bounded below by cos^2(Et/hbar) for short times, from the Mandelstam-Tamm inequality extended by Margolus-Levitin. Orthogonality requires this overlap to vanish, setting a minimum time. This is a geometric constraint on the Fubini-Study metric: the geodesic speed on the projective Hilbert space is bounded by the energy variance.",
+    "structural_pattern": "The overlap |<psi(0)|psi(t)>| between initial and evolved states is bounded below by cos^2(Et/hbar) for short times, from the Mandelstam-Tamm inequality extended by Margolus-Levitin. Orthogonality requires this overlap to vanish, setting a minimum time. This is a geometric constraint on the Fubini-Study metric: the geodesic speed on the projective Hilbert space is bounded by the energy variance.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_HOLEVO_BOUND",
+    "primitive_sequence": "COMPOSE(quantum_encoding) -> MAP(measurement) -> COMPLETE(classical_capacity) FAILS -> REDUCE(von_Neumann_entropy_bound)",
+    "description": "The accessible classical information from a quantum ensemble {p_i, rho_i} is bounded above by the Holevo quantity chi = S(sum_i p_i rho_i) - sum_i p_i S(rho_i); a qubit can transmit at most 1 classical bit regardless of measurement strategy || CLOSURE FAILURE: Quantum measurement collapses superpositions, irreversibly losing information about the encoding basis. The mutual information I(X:Y) between the classical input X and measurement outcome Y is bounded by the Holevo chi quantity, which itself is bounded by log(d) for d-dimensional systems. This follows from strong subadditivity of von Neumann entropy and the data processing inequality for quantum channels.",
+    "structural_pattern": "Quantum measurement collapses superpositions, irreversibly losing information about the encoding basis. The mutual information I(X:Y) between the classical input X and measurement outcome Y is bounded by the Holevo chi quantity, which itself is bounded by log(d) for d-dimensional systems. This follows from strong subadditivity of von Neumann entropy and the data processing inequality for quantum channels.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_TSIRELSON_BOUND",
+    "primitive_sequence": "COMPOSE(quantum_correlations) -> COMPLETE(maximal_nonlocality) FAILS -> SYMMETRIZE(Hilbert_space_structure_constrains)",
+    "description": "Quantum correlations in a Bell experiment (CHSH inequality) cannot exceed 2*sqrt(2), even though the algebraic maximum is 4 and no-signaling allows up to 4; quantum mechanics is nonlocal but not maximally nonlocal || CLOSURE FAILURE: The CHSH operator B = A1(B1+B2) + A2(B1-B2) satisfies B^2 <= 4I + [A1,A2][B1,B2]. For projective measurements (A^2=B^2=I), this gives ||B|| <= 2*sqrt(2). The bound is tight (achieved by maximally entangled states with appropriate measurement angles). The gap between 2*sqrt(2) and 4 reflects the tensor product structure of quantum Hilbert space imposing constraints beyond mere no-signaling.",
+    "structural_pattern": "The CHSH operator B = A1(B1+B2) + A2(B1-B2) satisfies B^2 <= 4I + [A1,A2][B1,B2]. For projective measurements (A^2=B^2=I), this gives ||B|| <= 2*sqrt(2). The bound is tight (achieved by maximally entangled states with appropriate measurement angles). The gap between 2*sqrt(2) and 4 reflects the tensor product structure of quantum Hilbert space imposing constraints beyond mere no-signaling.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD",
+    "primitive_sequence": "COMPOSE(noisy_gates) -> COMPLETE(reliable_computation) FAILS -> BREAK_SYMMETRY(concatenated_codes_below_threshold)",
+    "description": "Reliable quantum computation is impossible if the physical error rate per gate exceeds a threshold value p_th (estimated ~1%); below threshold, arbitrarily long computation is possible with polylogarithmic overhead, but the threshold itself cannot be exceeded || CLOSURE FAILURE: Above threshold, error correction introduces more errors than it removes: each round of syndrome extraction uses faulty gates that propagate errors faster than correction removes them. The threshold is set by the balance point where the effective error rate after one level of concatenation equals the physical rate. This is a fixed-point condition on the error-rate recursion: p_eff(p) = c*p^2 has fixed point at p_th = 1/c.",
+    "structural_pattern": "Above threshold, error correction introduces more errors than it removes: each round of syndrome extraction uses faulty gates that propagate errors faster than correction removes them. The threshold is set by the balance point where the effective error rate after one level of concatenation equals the physical rate. This is a fixed-point condition on the error-rate recursion: p_eff(p) = c*p^2 has fixed point at p_th = 1/c.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY",
+    "primitive_sequence": "COMPOSE(bipartite_entanglement) -> EXTEND(third_party) FAILS -> REDUCE(monogamy_constraint)",
+    "description": "If qubit A is maximally entangled with qubit B, it cannot be entangled with any third qubit C at all; entanglement is a limited resource that cannot be freely shared — quantified by CKW inequality: E(A:B) + E(A:C) <= E(A:BC) || CLOSURE FAILURE: Maximal entanglement between A and B means the reduced state rho_A is maximally mixed, leaving no purity to correlate with C. Formally, the squared concurrence satisfies C^2(A:B) + C^2(A:C) <= C^2(A:BC). This is ultimately a consequence of the no-cloning theorem: if entanglement could be freely shared, one could use teleportation to clone arbitrary states.",
+    "structural_pattern": "Maximal entanglement between A and B means the reduced state rho_A is maximally mixed, leaving no purity to correlate with C. Formally, the squared concurrence satisfies C^2(A:B) + C^2(A:C) <= C^2(A:BC). This is ultimately a consequence of the no-cloning theorem: if entanglement could be freely shared, one could use teleportation to clone arbitrary states.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
+    "primitive_sequence": "COMPOSE(entanglement + local_operations) -> COMPLETE(superluminal_signal) FAILS -> SYMMETRIZE(partial_trace_invariance)",
+    "description": "No manipulation of one half of an entangled pair can transmit information to the holder of the other half; quantum correlations cannot be used for superluminal signaling || CLOSURE FAILURE: The reduced density matrix of Bob's system is rho_B = Tr_A[rho_AB], which is independent of Alice's choice of measurement basis. This follows from linearity of the partial trace and the fact that all of Alice's measurement operators {M_a} satisfy sum_a M_a^dagger M_a = I_A (completeness). The marginal statistics at B are invariant under any local operation at A, making signaling impossible despite nonlocal correlations.",
+    "structural_pattern": "The reduced density matrix of Bob's system is rho_B = Tr_A[rho_AB], which is independent of Alice's choice of measurement basis. This follows from linearity of the partial trace and the fact that all of Alice's measurement operators {M_a} satisfy sum_a M_a^dagger M_a = I_A (completeness). The marginal statistics at B are invariant under any local operation at A, making signaling impossible despite nonlocal correlations.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY",
+    "primitive_sequence": "COMPOSE(channel_1 x channel_2) -> REDUCE(individual_capacities) -> COMPLETE(joint_capacity = sum) FAILS -> BREAK_SYMMETRY(entangled_inputs)",
+    "description": "The quantum capacity and classical capacity of quantum channels are not additive: two channels with zero individual quantum capacity can have positive joint capacity when used together (superactivation); no single-letter formula exists for general quantum channel capacity || CLOSURE FAILURE: Entangled inputs across channel uses create correlations that cannot be decomposed into independent single-channel contributions. Hastings showed a random counterexample to the minimum output entropy conjecture, proving that Holevo capacity is non-additive. Smith & Yard showed two zero-capacity channels can be superactivated because one provides private classical capacity that 'unlocks' the other's quantum capacity via entanglement distillation.",
+    "structural_pattern": "Entangled inputs across channel uses create correlations that cannot be decomposed into independent single-channel contributions. Hastings showed a random counterexample to the minimum output entropy conjecture, proving that Holevo capacity is non-additive. Smith & Yard showed two zero-capacity channels can be superactivated because one provides private classical capacity that 'unlocks' the other's quantum capacity via entanglement distillation.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NO_HIDING_THEOREM",
+    "primitive_sequence": "COMPOSE(system + environment) -> MAP(unitary_evolution) -> COMPLETE(information_hiding) FAILS -> DUALIZE(information_moves_to_complement)",
+    "description": "Quantum information cannot be hidden in quantum correlations between a system and its environment; if information is missing from the system, it must reside entirely in the environment (not in correlations between them) || CLOSURE FAILURE: For a unitary bleaching process U|psi>|A> = |0>|A_psi>, the unitarity condition forces |A_psi> to encode all information about |psi>. The Hilbert-Schmidt inner product structure ensures that the information is not split between system-environment correlations and subsystems: by the Schmidt decomposition, if the system is in a fixed pure state (information erased), all information is in the environment. This is a conservation law for quantum information.",
+    "structural_pattern": "For a unitary bleaching process U|psi>|A> = |0>|A_psi>, the unitarity condition forces |A_psi> to encode all information about |psi>. The Hilbert-Schmidt inner product structure ensures that the information is not split between system-environment correlations and subsystems: by the Schmidt decomposition, if the system is in a fixed pure state (information erased), all information is in the environment. This is a conservation law for quantum information.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
+    "primitive_sequence": "COMPOSE(transversal_gates) -> COMPLETE(universality) FAILS -> BREAK_SYMMETRY(magic_state_distillation)",
+    "description": "No quantum error-correcting code can implement a universal set of transversal logical gates; transversality and universality are incompatible for any stabilizer or general QECC || CLOSURE FAILURE: Transversal gates act independently on each physical qubit, making them naturally fault-tolerant. However, they form a finite group (being tensor products of single-qubit unitaries that permute the code space). Any continuous gate (e.g., T gate or arbitrary rotation) cannot be transversal because the discreteness of the transversal gate group prevents density in SU(2^k). Universality requires a dense subgroup of SU(2^k), which is incompatible with the tensor product structure of transversal gate",
+    "structural_pattern": "Transversal gates act independently on each physical qubit, making them naturally fault-tolerant. However, they form a finite group (being tensor products of single-qubit unitaries that permute the code space). Any continuous gate (e.g., T gate or arbitrary rotation) cannot be transversal because the discreteness of the transversal gate group prevents density in SU(2^k). Universality requires a dense subgroup of SU(2^k), which is incompatible with the tensor product structure of transversal gate",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT",
+    "primitive_sequence": "COMPOSE(lossy_channel) -> COMPLETE(key_distribution) FAILS -> EXTEND(quantum_repeaters)",
+    "description": "The secret key rate of quantum key distribution over a lossy bosonic channel with transmittance eta cannot exceed -log2(1-eta) bits per channel use; for long distances (eta -> 0), the rate scales linearly with eta, imposing fundamental distance limits without quantum repeaters || CLOSURE FAILURE: The relative entropy of entanglement provides an upper bound on distillable key via the squashed entanglement. For a pure-loss channel with transmittance eta, the maximum entanglement that can be distributed is -log2(1-eta) ebits per use. This is achieved by the reverse coherent information and cannot be exceeded by any adaptive protocol, because teleportation simulation reduces any adaptive protocol to a non-adaptive one over the channel's Choi state.",
+    "structural_pattern": "The relative entropy of entanglement provides an upper bound on distillable key via the squashed entanglement. For a pure-loss channel with transmittance eta, the maximum entanglement that can be distributed is -log2(1-eta) ebits per use. This is achieved by the reverse coherent information and cannot be exceeded by any adaptive protocol, because teleportation simulation reduces any adaptive protocol to a non-adaptive one over the channel's Choi state.",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_PRICE_EQUATION_CONSTRAINT",
+    "primitive_sequence": "maximize mean fitness + maintain heritable variance + faithful transmission",
+    "description": "The Price equation (1970) decomposes evolutionary change into selection and transmission components: Delta(z_bar) = Cov(w,z)/w_bar + E(w*delta_z)/w_bar. A population cannot simultaneously maximize mean fitness, maintain genetic variance, and ensure faithful transmission. Selection that increases mean trait value necessarily depletes the covariance term (Fisher's fundamental theorem), while maintaining variance requires mutation/recombination that corrupts the transmission term.",
+    "structural_pattern": "COMPOSE(selection + transmission) -> COMPLETE(simultaneous optimization) FAILS -> BREAK_SYMMETRY(sacrifice one component)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_FISHER_FUNDAMENTAL_THEOREM",
+    "primitive_sequence": "positive additive genetic variance + increasing total mean fitness + stable environment tracking",
+    "description": "Fisher's fundamental theorem (1930): the rate of increase in mean fitness equals the additive genetic variance in fitness divided by mean fitness. This is an exact theorem, but it only accounts for the partial change due to natural selection. The total change in mean fitness can decrease because environmental deterioration and frequency-dependent effects can overwhelm the selection component. A population cannot simultaneously have positive additive variance (evolvability) and stable mean fitnes",
+    "structural_pattern": "COMPOSE(additive selection + environmental change) -> COMPLETE(net fitness increase) FAILS -> BREAK_SYMMETRY(sacrifice adaptability or stability)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NK_FITNESS_LANDSCAPE",
+    "primitive_sequence": "smooth navigable landscape + high epistatic complexity + polynomial-time optimization",
+    "description": "In Kauffman's NK model, a genome of N loci with K epistatic interactions per locus cannot simultaneously have: smooth fitness landscapes (enabling gradient-following evolution), high epistatic complexity (K close to N), and polynomial-time reachability of global optima. When K=0 the landscape is smooth with one peak (Mt. Fuji) but has no epistatic richness. When K=N-1 the landscape is maximally rugged (uncorrelated random field) and finding the global optimum is NP-hard.",
+    "structural_pattern": "COMPOSE(epistasis + landscape navigation) -> COMPLETE(efficient global optimization) FAILS -> BREAK_SYMMETRY(reduce K or accept local optima)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_COMPETITIVE_EXCLUSION",
+    "primitive_sequence": "more species than resources + stable coexistence + competitive equilibrium",
+    "description": "In a Lotka-Volterra system with n species competing for fewer than n limiting resources at equilibrium, coexistence is impossible. If n species compete for k < n resources, at most k species survive at stable equilibrium. Formally: for the system dN_i/dt = N_i(r_i - sum_j(a_ij * N_j)), stable coexistence of n species requires n independent limiting factors.",
+    "structural_pattern": "COMPOSE(n species + k<n resources) -> COMPLETE(stable coexistence) FAILS -> BREAK_SYMMETRY(niche differentiation or nonequilibrium dynamics)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_COMPUTATIONAL_IRREDUCIBILITY_CA",
+    "primitive_sequence": "predict future state efficiently + computational universality + general shortcut existence",
+    "description": "For computationally universal cellular automata (e.g., Rule 110, Game of Life), there exists no general shortcut to predict the state at time t without simulating all t steps. Formally: predicting the t-step evolution of a universal CA is P-complete (Neary & Woods 2006 for Rule 110), meaning any polynomial speedup would collapse P. Moreover, specific decision problems about CA long-term behavior (halting, periodicity) are undecidable by reduction from the halting problem.",
+    "structural_pattern": "COMPOSE(local rules + universality) -> COMPLETE(efficient prediction) FAILS -> BREAK_SYMMETRY(restrict rule class or accept simulation cost)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_RATE_DISTORTION_NEURAL_CODING",
+    "primitive_sequence": "high temporal precision + wide stimulus dynamic range + high coding reliability + minimal neural resources",
+    "description": "Shannon's rate-distortion theorem applied to neural coding: a neural channel with capacity C bits/sec cannot represent a source with entropy rate H at distortion level D if the rate-distortion function R(D) > C. Specifically, for a neuron with firing rate f_max and refractory period tau, channel capacity C <= f_max * log2(1/f_max*tau) bits/sec. No coding scheme (rate coding, temporal coding, population coding with N neurons) can exceed N*C bits/sec total, forcing a tradeoff between temporal prec",
+    "structural_pattern": "COMPOSE(channel capacity + source entropy) -> COMPLETE(lossless representation) FAILS -> BREAK_SYMMETRY(sacrifice precision, range, or add neurons)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_VALIANT_EVOLVABILITY",
+    "primitive_sequence": "evolve arbitrary functions + polynomial generations + realistic mutation operators",
+    "description": "In Valiant's (2009) formal model of evolvability, evolution is modeled as a restricted form of statistical query learning. A concept class is evolvable iff it is learnable by statistical queries with tolerance. Boolean functions requiring superpolynomial statistical queries (e.g., parities, cryptographic functions) are provably not evolvable in polynomial generations. Evolution cannot discover arbitrary Boolean functions; it is strictly weaker than PAC learning.",
+    "structural_pattern": "COMPOSE(mutation + selection + polynomial time) -> COMPLETE(arbitrary function learning) FAILS -> BREAK_SYMMETRY(restrict target class or allow exponential time)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MODULARITY_EVOLVABILITY_TRADEOFF",
+    "primitive_sequence": "optimal performance on fixed task + modular architecture + evolvability to new tasks",
+    "description": "Kashtan & Alon (2005) showed modular network architectures evolve only under modularly varying goals. Under a fixed goal, evolution produces non-modular but higher-performing solutions. Formally: for a fixed Boolean function f, the minimum circuit size C(f) <= C_modular(f), with strict inequality for most functions. A population cannot simultaneously achieve globally optimal performance and maintain modular architecture unless the fitness landscape itself has modular structure.",
+    "structural_pattern": "COMPOSE(optimization + modularity + adaptability) -> COMPLETE(all three) FAILS -> BREAK_SYMMETRY(sacrifice optimality or modularity)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_POPULATION_GENETICS_DRIFT_SELECTION",
+    "primitive_sequence": "efficient selection on all beneficial mutations + finite population size + accurate allele frequency prediction",
+    "description": "For a diploid population of effective size N_e, a mutation with selective coefficient |s| << 1/(2*N_e) is effectively invisible to selection and governed entirely by drift. Formally, the fixation probability u(s) = (1 - e^(-4*N_e*s*p)) / (1 - e^(-4*N_e*s)) (Kimura 1962). When |4*N_e*s| < 1, selection cannot distinguish beneficial from neutral alleles. A finite population cannot simultaneously maintain selection efficiency on weak-effect alleles and avoid drift-dominated dynamics.",
+    "structural_pattern": "COMPOSE(selection + finite population) -> COMPLETE(deterministic allele fate) FAILS -> BREAK_SYMMETRY(increase N_e or accept drift dominance)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_KLEIBER_METABOLIC_SCALING",
+    "primitive_sequence": "linear metabolic scaling (B ~ M) + space-filling vascular network + minimized transport costs",
+    "description": "West, Brown & Enquist (1997) derived from first principles that metabolic rate B scales as B ~ M^(3/4) for organisms with fractal-like distribution networks that minimize transport costs while serving all cells. An organism cannot simultaneously: have a space-filling distribution network, minimize total hydrodynamic resistance, and have metabolic rate scale linearly with mass. The 3/4 exponent is a mathematical consequence of network geometry optimization in 3D.",
+    "structural_pattern": "COMPOSE(space-filling + cost-minimization + 3D embedding) -> COMPLETE(linear scaling) FAILS -> BREAK_SYMMETRY(accept sublinear scaling or non-fractal network)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_INFORMATION_BOTTLENECK",
+    "primitive_sequence": "maximal compression (low I(T;X)) + maximal relevance (high I(T;Y)) + deterministic mapping",
+    "description": "The Information Bottleneck method (Tishby et al. 1999) shows that any compressed representation T of input X that preserves information about target Y is bounded by the Markov chain X -> T -> Y. The data processing inequality gives I(T;Y) <= I(X;Y) and I(T;Y) <= I(T;X). For a given compression level I(T;X) = R, the maximum achievable relevance I(T;Y) is bounded by the IB curve, which is the Pareto frontier. No representation can be above this curve. This is a proven variational bound.",
+    "structural_pattern": "COMPOSE(compression + relevance preservation) -> COMPLETE(both maximal) FAILS -> BREAK_SYMMETRY(trade compression for relevance along IB curve)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_BODE_GAIN_PHASE",
+    "primitive_sequence": "arbitrary gain shaping + independent phase specification + minimum-phase (stable, causal)",
+    "description": "For any stable, minimum-phase, causal LTI system, the phase at any frequency omega_0 is uniquely determined by the gain curve via the Hilbert transform: angle(G(j*omega_0)) = (1/pi) * PV integral of (d(ln|G|)/d(ln omega)) * ln|coth(|u|/2)| du, where u = ln(omega/omega_0). A designer cannot independently specify gain and phase responses. Changing gain slope at any frequency forces phase changes everywhere.",
+    "structural_pattern": "COMPOSE(gain + phase + minimum-phase) -> COMPLETE(independent specification) FAILS -> BREAK_SYMMETRY(allow non-minimum-phase zeros or sacrifice gain/phase freedom)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_KALMAN_OPTIMALITY_BOUND",
+    "primitive_sequence": "zero estimation error + finite observations + noisy measurements + linear dynamics",
+    "description": "The Kalman filter achieves the minimum mean-square estimation error for linear Gaussian systems. For any other estimator E applied to y = Cx + v (Gaussian noise), MSE(E) >= MSE(Kalman) = tr(P), where P satisfies the Riccati equation P = APA' - APC'(CPC'+R)^(-1)CPA' + Q. No estimator can beat the Kalman filter for linear Gaussian systems, and the steady-state error P_ss > 0 unless the system is fully observable and noise-free. This establishes a floor on estimation accuracy.",
+    "structural_pattern": "COMPOSE(noisy observations + linear dynamics) -> COMPLETE(perfect state estimation) FAILS -> BREAK_SYMMETRY(accept Riccati-bounded error or add sensors)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_SMALL_GAIN_THEOREM",
+    "primitive_sequence": "high loop gain (performance) + large perturbation tolerance (robustness) + nominal stability",
+    "description": "The Small Gain Theorem: a feedback interconnection of two stable systems G and Delta is stable for ALL perturbations ||Delta||_inf <= 1/gamma iff ||G||_inf < gamma. A system with high loop gain (||G||_inf >= gamma) for performance CANNOT be robustly stable against all perturbations of size 1/gamma. The H-infinity norm of the nominal system directly limits the size of tolerable perturbations.",
+    "structural_pattern": "COMPOSE(performance gain + robustness margin) -> COMPLETE(both maximal) FAILS -> BREAK_SYMMETRY(sacrifice performance or robustness)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CHANNEL_CODING_CONVERSE",
+    "primitive_sequence": "rate above capacity R > C + low error probability + finite block length",
+    "description": "For a discrete memoryless channel with capacity C, any code with rate R > C has error probability P_e -> 1 exponentially fast as block length n -> infinity. Specifically, P_e >= 1 - 2^(-n*E_sp(R,C)) where E_sp is the sphere-packing exponent. The strong converse (Wolfowitz 1957, Arimoto 1973) proves this is not merely that reliable communication fails, but that communication becomes catastrophically unreliable: the error probability approaches 1, not just stays bounded away from 0.",
+    "structural_pattern": "COMPOSE(rate above capacity + reliable decoding) -> COMPLETE(low error communication) FAILS -> BREAK_SYMMETRY(reduce rate or accept exponential error growth)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_WATERBED_GENERALIZED",
+    "primitive_sequence": "low sensitivity at all frequencies + unstable plant stabilization + non-minimum-phase plant",
+    "description": "For a feedback system with plant P(s) having p unstable poles {p_i} and z unstable zeros {z_j}, the weighted sensitivity integral satisfies: integral_0^inf ln|S(j*omega)| * W(omega) d_omega = pi * sum_i Re(p_i) + corrections from unstable zeros. When unstable zeros are present, the waterbed is amplified: sensitivity reduction in one band causes GREATER-than-equal increase elsewhere. The penalty grows with the proximity of unstable poles and zeros.",
+    "structural_pattern": "COMPOSE(sensitivity reduction + unstable poles/zeros) -> COMPLETE(global sensitivity reduction) FAILS -> BREAK_SYMMETRY(accept amplified waterbed or redesign plant)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_MIMO_FUNDAMENTAL_LIMITS",
+    "primitive_sequence": "independent sensitivity shaping per I/O channel + MIMO stability + non-minimum-phase plant handling",
+    "description": "In MIMO (multi-input multi-output) systems, the sensitivity function S(s) = (I + G(s)K(s))^(-1) satisfies: for any plant G with RHP zero z (output direction u_z, input direction v_z), the sensitivity in direction u_z at frequency omega = Im(z) cannot be made less than |u_z' * S(j*omega) * u_z| >= product over RHP poles p_i of |z - p_i|/|z + conj(p_i)|. The plant's directional structure imposes irreducible constraints: you cannot independently shape sensitivity in different I/O directions.",
+    "structural_pattern": "COMPOSE(multivariable control + directional performance) -> COMPLETE(independent per-channel optimization) FAILS -> BREAK_SYMMETRY(accept directional coupling or decouple plant)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_PONTRYAGIN_MAXIMUM_PRINCIPLE",
+    "primitive_sequence": "smooth optimal control + bounded control inputs + optimal performance",
+    "description": "Pontryagin's Maximum Principle (1956): for a control system dx/dt = f(x,u) minimizing J = integral L(x,u)dt + phi(x(T)), the optimal control must satisfy the Hamiltonian condition H(x*,u*,lambda) >= H(x*,u,lambda) for all admissible u, where lambda satisfies the costate equation d_lambda/dt = -dH/dx. When the control constraint set U is bounded, the optimal trajectory generically has BANG-BANG structure (switching between extremes). No smooth optimal control exists for most constrained problems.",
+    "structural_pattern": "COMPOSE(bounded control + optimality + smoothness) -> COMPLETE(smooth optimal trajectory) FAILS -> BREAK_SYMMETRY(accept bang-bang switching or relax bounds)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_TRACKING_DISTURBANCE_LIMIT",
+    "primitive_sequence": "perfect tracking (T=1) + noise rejection (T=0 at high freq) + time-delay plant",
+    "description": "For a SISO feedback system, the complementary sensitivity T(s) = 1 - S(s) satisfies its own integral constraint: for plants with time delay tau, integral_0^inf (1/omega^2) * ln|T(j*omega)| d_omega <= pi*tau/2. Tracking (requiring T close to 1) and noise rejection (requiring T close to 0) at high frequencies cannot both be achieved. The time delay tau sets an absolute limit: no controller can make the closed-loop bandwidth exceed approximately 1/tau while maintaining stability margins.",
+    "structural_pattern": "COMPOSE(tracking + noise rejection + time delay) -> COMPLETE(both perfect) FAILS -> BREAK_SYMMETRY(limit bandwidth or accept noise amplification)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_ZAMES_SENSITIVITY",
+    "primitive_sequence": "minimal weighted sensitivity + stabilization of unstable plant + arbitrary performance weighting",
+    "description": "Zames (1981) formulated the H-infinity optimal control problem: minimize ||W*S||_inf over all stabilizing controllers, where W is a performance weighting and S is the sensitivity function. The minimum achievable value gamma_opt > 0 is determined by the plant's unstable poles and zeros via Nevanlinna-Pick interpolation. For a plant with RHP pole p and RHP zero z, gamma_opt >= |p + conj(z)|/|p - z|. No controller can reduce weighted sensitivity below this plant-intrinsic bound.",
+    "structural_pattern": "COMPOSE(sensitivity minimization + stability + unstable plant) -> COMPLETE(arbitrarily low sensitivity) FAILS -> BREAK_SYMMETRY(accept gamma_opt floor or redesign plant)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_LOTKA_VOLTERRA_STRUCTURAL_STABILITY",
+    "primitive_sequence": "many species (large n) + strong interactions (large sigma) + dense connections (large C) + local stability",
+    "description": "May (1972) proved that for a random community matrix A (n species, connectance C, interaction strength sigma), the system is almost surely unstable when sigma*sqrt(n*C) > 1. A large, richly connected ecosystem cannot simultaneously be: species-rich (large n), strongly interacting (large sigma), densely connected (large C), and locally stable. The probability of stability drops to zero exponentially as n*C*sigma^2 increases past 1.",
+    "structural_pattern": "COMPOSE(diversity + interaction strength + connectivity) -> COMPLETE(stable equilibrium) FAILS -> BREAK_SYMMETRY(reduce one factor or accept instability)",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GOEDEL_INCOMPLETENESS_1",
+    "primitive_sequence": "COMPOSE(axioms + inference rules) → COMPLETE(all arithmetic truths) FAILS → self-referential sentence G encodes 'I am unprovable', forcing incompleteness",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GOEDEL_INCOMPLETENESS_2",
+    "primitive_sequence": "COMPOSE(axioms + proof system) → COMPLETE(self-consistency proof) FAILS → consistency statement implies unprovable sentence, creating circularity",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "TARSKI_UNDEFINABILITY",
+    "primitive_sequence": "COMPOSE(language + self-reference) → COMPLETE(truth predicate for own sentences) FAILS → Liar-type paradox forces inconsistency or incompleteness of the predicate",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CHURCH_UNDECIDABILITY",
+    "primitive_sequence": "COMPOSE(first-order sentences + decision procedure) → COMPLETE(validity oracle) FAILS → reduction from halting problem proves no such algorithm exists",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "RICE_THEOREM",
+    "primitive_sequence": "COMPOSE(programs + semantic property test) → COMPLETE(classification of all programs) FAILS → reduction from halting problem for any non-trivial property",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "INDEPENDENCE_OF_CH",
+    "primitive_sequence": "COMPOSE(ZFC axioms) → COMPLETE(determination of cardinal arithmetic) FAILS → forcing (Cohen) and inner models (Gödel) show both CH and ¬CH are consistent with ZFC",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_ANGLE_TRISECTION",
+    "primitive_sequence": "COMPOSE(compass + straightedge operations) → COMPLETE(trisection of arbitrary angle) FAILS → constructible numbers form a tower of degree-2 extensions; trisection requires degree-3 extension",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_DOUBLING_CUBE",
+    "primitive_sequence": "COMPOSE(compass + straightedge) → COMPLETE(cube root of 2) FAILS → constructible field extensions have degree 2^n; degree 3 is not a power of 2",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_SQUARING_CIRCLE",
+    "primitive_sequence": "COMPOSE(compass + straightedge) → COMPLETE(√π as constructible length) FAILS → π transcendental (Lindemann 1882) implies √π is transcendental, not in any algebraic extension of Q",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_REGULAR_POLYGON",
+    "primitive_sequence": "COMPOSE(compass + straightedge) → COMPLETE(regular n-gon for arbitrary n) FAILS → constructibility requires φ(n) to be a power of 2, constraining n to Gauss-Wantzel form",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "HAIRY_BALL",
+    "primitive_sequence": "COMPOSE(continuous tangent vectors on S²) → COMPLETE(everywhere non-zero field) FAILS → Euler characteristic χ(S²)=2 ≠ 0 forces a zero by Poincaré-Hopf theorem",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NO_RETRACTION_THEOREM",
+    "primitive_sequence": "COMPOSE(continuous map D^n → S^(n-1) + boundary condition) → COMPLETE(retraction) FAILS → induced homology map would factor identity through trivial group",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "TOPOLOGICAL_INVARIANCE_OF_DIMENSION",
+    "primitive_sequence": "COMPOSE(continuous bijection R^m → R^n for m≠n) → COMPLETE(homeomorphism) FAILS → homology groups H_k distinguish dimensions; removing a point yields different homotopy types",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "JORDAN_SCHOENFLIES_FAILURE",
+    "primitive_sequence": "COMPOSE(embedded 2-sphere in R³) → COMPLETE(topologically standard embedding) FAILS → Alexander horned sphere creates non-simply-connected exterior despite topological embedding",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BANACH_TARSKI",
+    "primitive_sequence": "COMPOSE(finitely additive measure + isometry invariance + all subsets of R³) → COMPLETE(consistent volume) FAILS → free group in SO(3) enables paradoxical decomposition via Axiom of Choice",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "VITALI_NONMEASURABLE",
+    "primitive_sequence": "COMPOSE(countable additivity + translation invariance + all subsets of R) → COMPLETE(total Lebesgue measure) FAILS → Vitali set constructed via AC from R/Q coset representatives leads to contradiction",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CANTOR_DIAGONALIZATION",
+    "primitive_sequence": "COMPOSE(enumeration of reals as a list) → COMPLETE(surjection N → R) FAILS → diagonal argument constructs a real not in any proposed enumeration",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_TRANSCENDENCE_E_PI",
+    "primitive_sequence": "COMPOSE(polynomial with rational coefficients) → COMPLETE(root equal to e or π) FAILS → Lindemann-Weierstrass theorem: e^α transcendental for algebraic α≠0; e^(iπ)=-1 forces π transcendental",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "FERMAT_LAST_THEOREM",
+    "primitive_sequence": "COMPOSE(positive integers x,y,z with n≥3) → COMPLETE(x^n + y^n = z^n) FAILS → modularity theorem shows the Frey curve cannot be modular and semistable simultaneously",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_RATIONAL_SQRT2",
+    "primitive_sequence": "COMPOSE(integers p,q) → COMPLETE(p/q = √2) FAILS → infinite descent: if p²=2q² then both p,q must be even, contradicting lowest terms",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "FOUR_SQUARES_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(three integer squares) → COMPLETE(sum = 4^a(8b+7)) FAILS → quadratic residue mod 8 obstruction: three squares mod 8 can only reach {0,1,2,3,4,5,6}, never 7",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "LIOUVILLE_APPROXIMATION",
+    "primitive_sequence": "COMPOSE(rational approximations p_k/q_k converging too fast) → COMPLETE(limit is algebraic) FAILS → algebraic numbers resist super-polynomial rational approximation",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "HASSE_MINKOWSKI_FAILURE",
+    "primitive_sequence": "COMPOSE(solutions over all local fields Q_p, R) → COMPLETE(global rational solution) FAILS → Brauer-Manin obstruction blocks the local-to-global passage",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "MATIYASEVICH_HILBERT10",
+    "primitive_sequence": "COMPOSE(Diophantine equation + decision algorithm) → COMPLETE(solvability oracle) FAILS → every recursively enumerable set is Diophantine, reducing halting problem to Diophantine solvability",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ARROW_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(fairness axioms for social choice) → COMPLETE(consistent aggregation of preferences) FAILS → ultrafilter argument shows decisive sets must be singletons (dictator)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "RAMSEY_INEVITABILITY",
+    "primitive_sequence": "COMPOSE(2-coloring of large complete graph) → COMPLETE(avoidance of all monochromatic cliques) FAILS → pigeonhole principle forces monochromatic substructure at sufficient scale",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_FIVE_COLOR",
+    "primitive_sequence": "COMPOSE(3 colors + arbitrary planar graph) → COMPLETE(proper coloring) FAILS → small planar graphs with triangles force chromatic number 4",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BAIRE_CATEGORY",
+    "primitive_sequence": "COMPOSE(countably many nowhere dense sets) → COMPLETE(cover entire complete metric space) FAILS → intersection of countably many dense open sets is still dense in a complete metric space",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WEIERSTRASS_NOWHERE_DIFFERENTIABLE",
+    "primitive_sequence": "COMPOSE(continuous function on [0,1]) → COMPLETE(differentiability at even one point) FAILS → Weierstrass function and Baire category argument show differentiable functions are meager in C[0,1]",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_UNIFORM_CONVERGENCE_FOURIER",
+    "primitive_sequence": "COMPOSE(Fourier partial sums of continuous function) → COMPLETE(pointwise convergence everywhere) FAILS → du Bois-Reymond: unbounded Dirichlet kernel creates divergence at a point; Carleson: L² conver",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_CONTINUOUS_BIJECTION_RN",
+    "primitive_sequence": "COMPOSE(continuous map R → R²) → COMPLETE(bijection) FAILS → removing a point from R disconnects it; continuous image must preserve this topological property, preventing bijection with R²",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "MUNTZ_SZASZ",
+    "primitive_sequence": "COMPOSE(lacunary set of power functions x^{λ_n}) → COMPLETE(dense subspace of C[0,1]) FAILS → when Σ1/λ_n < ∞, the closed span misses functions in C[0,1]",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_WELLORDER_WITHOUT_CHOICE",
+    "primitive_sequence": "COMPOSE(ZF axioms without Choice) → COMPLETE(well-ordering of R) FAILS → Cohen's forcing shows models of ZF exist where R has no well-ordering",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "LOWENHEIM_SKOLEM",
+    "primitive_sequence": "COMPOSE(first-order axioms) → COMPLETE(unique infinite model up to isomorphism) FAILS → compactness and Löwenheim-Skolem produce models of every infinite cardinality",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_PENTAGONAL_TILING",
+    "primitive_sequence": "COMPOSE(copies of a convex pentagon) → COMPLETE(edge-to-edge tiling of the plane) FAILS → angle and edge constraints restrict to finitely many combinatorial types",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "PENROSE_APERIODICITY",
+    "primitive_sequence": "COMPOSE(tiles forced to tile the plane) → COMPLETE(periodic tiling) FAILS → local matching rules propagate hierarchical structure that is incompatible with any lattice periodicity",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KEPLER_CONJECTURE",
+    "primitive_sequence": "COMPOSE(arrangement of equal spheres in R³) → COMPLETE(density > π/(3√2)) FAILS → Hales' proof by exhaustive case analysis and linear programming bounds",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NIELSEN_SCHREIER",
+    "primitive_sequence": "COMPOSE(generators + relations of a finitely presented group) → COMPLETE(decidable word problem) FAILS → Novikov-Boone theorem: there exist finitely presented groups whose word problem is undecidable",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GALOIS_UNSOLVABILITY",
+    "primitive_sequence": "COMPOSE(field operations + n-th roots) → COMPLETE(root formula for degree ≥5) FAILS → Galois group S_n contains A_n which is simple and non-abelian for n≥5, blocking the solvable tower",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BURNSIDE_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(finitely many generators + relation g^n=1 for all g) → COMPLETE(finite group) FAILS → Novikov-Adian construction shows infinite groups satisfying the identity x^n=1",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CLASSIFICATION_IMPOSSIBILITY_WILD",
+    "primitive_sequence": "COMPOSE(indecomposable modules over wild algebra) → COMPLETE(parametric classification) FAILS → wild algebras embed all finite-dimensional algebra representation problems, making classification undeci",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WEDDERBURN_LITTLE",
+    "primitive_sequence": "COMPOSE(finite set + division ring axioms + non-commutativity) → COMPLETE(finite skew field) FAILS → class equation and cyclotomic polynomial argument forces center = whole ring",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NO_DIVISION_ALGEBRA_BEYOND_8",
+    "primitive_sequence": "COMPOSE(n-dimensional real vector space + bilinear multiplication without zero divisors) → COMPLETE(division algebra for n∉{1,2,4,8}) FAILS → topological K-theory (Bott periodicity) and Adams' theorem",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_COMMUTATIVE_CROSS_PRODUCT",
+    "primitive_sequence": "COMPOSE(bilinear antisymmetric product on R^n preserving norm) → COMPLETE(cross product for n∉{0,1,3,7}) FAILS → parallelizability of S^n and Hopf invariant one theorem restrict dimensions",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ENTSCHEIDUNGSPROBLEM",
+    "primitive_sequence": "COMPOSE(first-order logic + decision algorithm) → COMPLETE(validity oracle) FAILS → Church and Turing independently showed reduction from halting problem",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GOODSTEIN_INDEPENDENCE",
+    "primitive_sequence": "COMPOSE(Peano Arithmetic axioms) → COMPLETE(proof of Goodstein's theorem) FAILS → requires ordinal induction up to ε₀, which exceeds PA's proof-theoretic ordinal",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "PARIS_HARRINGTON",
+    "primitive_sequence": "COMPOSE(PA axioms + finite combinatorial statement) → COMPLETE(proof of Paris-Harrington) FAILS → the function grows faster than any provably total function of PA, exceeding PA's proof-theoretic stren",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_EXOTIC_R4",
+    "primitive_sequence": "COMPOSE(smooth structure on R⁴) → COMPLETE(unique smooth type) FAILS → Donaldson/Freedman: intersection form constraints in dimension 4 create gap between topological and smooth categories",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WHITNEY_EMBEDDING_BOUND",
+    "primitive_sequence": "COMPOSE(smooth n-manifold + lower-dimensional Euclidean space) → COMPLETE(smooth embedding in R^(2n-1) for all manifolds) FAILS → characteristic class obstructions (e.g., non-orientability of RP²) pre",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "DEHN_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(finite polyhedral dissection of tetrahedron) → COMPLETE(reassembly into cube) FAILS → Dehn invariant (edge lengths tensor dihedral angles in R⊗(R/Q)) differs between tetrahedron and cube",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "EULER_POLYHEDRON_OBSTRUCTION",
+    "primitive_sequence": "COMPOSE(vertices, edges, faces of convex polyhedron) → COMPLETE(V-E+F ≠ 2) FAILS → Euler characteristic χ=2 for S² is a homotopy invariant that constrains all CW-decompositions",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_NAIVE_SET_THEORY",
+    "primitive_sequence": "COMPOSE(unrestricted comprehension axiom) → COMPLETE(consistent set theory) FAILS → R = {x : x∉x} yields R∈R ↔ R∉R, a contradiction",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "IMPOSSIBILITY_UNIFORM_APPROX_DISCONTINUOUS",
+    "primitive_sequence": "COMPOSE(sequence of continuous functions + uniform convergence) → COMPLETE(discontinuous limit) FAILS → ε/3 argument: uniform convergence preserves continuity",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "HEAWOOD_CONJECTURE",
+    "primitive_sequence": "COMPOSE(map on surface of genus g + fewer than Heawood number of colors) → COMPLETE(proper coloring) FAILS → Euler characteristic constrains maximum complete graph embeddable on the surface",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "SZEMEREDI_REGULARITY_LIMIT",
+    "primitive_sequence": "COMPOSE(ε-regular partition of dense graph) → COMPLETE(bounded number of parts) FAILS → Gowers' lower bound: there exist graphs requiring tower(1/ε) parts for ε-regularity",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KELVIN_PLANCK",
+    "primitive_sequence": "COMPOSE(heat_source, cyclic_engine) → COMPLETE(total_conversion_to_work) FAILS → entropy must increase, waste heat is unavoidable",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CLAUSIUS_INEQUALITY",
+    "primitive_sequence": "COMPOSE(cold_body, hot_body, thermal_contact) → COMPLETE(spontaneous_reverse_flow) FAILS → entropy of isolated system cannot decrease",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "THIRD_LAW_UNATTAINABILITY",
+    "primitive_sequence": "COMPOSE(cooling_stages, finite_resources) → COMPLETE(T_equals_zero) FAILS → each successive step yields diminishing entropy reduction",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "LANDAUER_LIMIT",
+    "primitive_sequence": "COMPOSE(bit_erasure, thermal_environment) → COMPLETE(dissipation_free_erasure) FAILS → entropy of environment must increase to compensate information loss",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KOCHEN_SPECKER",
+    "primitive_sequence": "COMPOSE(observables, noncontextual_value_assignment) → COMPLETE(consistent_global_assignment) FAILS → coloring of orthogonality graph is impossible",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NO_COMMUNICATION",
+    "primitive_sequence": "COMPOSE(entangled_pair, local_measurements) → COMPLETE(superluminal_signaling) FAILS → reduced density matrix is invariant under distant operations",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NO_BROADCASTING",
+    "primitive_sequence": "COMPOSE(mixed_state, broadcasting_channel) → COMPLETE(identical_marginals_for_all_parties) FAILS → non-commutativity of density operators prevents it",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NO_DELETION",
+    "primitive_sequence": "COMPOSE(two_copies, deletion_unitary) → COMPLETE(one_copy_plus_blank) FAILS → unitarity preserves inner products, deletion would violate this",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NO_HIDING",
+    "primitive_sequence": "COMPOSE(quantum_system, environment, decoherence) → COMPLETE(information_destruction) FAILS → unitarity ensures information is relocated, not destroyed",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WEINBERG_MASSLESS_CONSTRAINT",
+    "primitive_sequence": "COMPOSE(massless_high_spin_particle, Lorentz_covariant_current) → COMPLETE(conserved_observable) FAILS → representation theory of Poincaré group forbids it",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "LIGHT_SPEED_LIMIT",
+    "primitive_sequence": "COMPOSE(massive_particle, energy_input) → COMPLETE(v_equals_c) FAILS → relativistic mass-energy diverges: E = γmc², γ→∞",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "PENROSE_SINGULARITY",
+    "primitive_sequence": "COMPOSE(trapped_surface, positive_energy_condition, global_hyperbolicity) → COMPLETE(geodesic_completeness) FAILS → focusing theorem forces geodesic convergence in finite affine parameter",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CHRONOLOGY_PROTECTION",
+    "primitive_sequence": "COMPOSE(spacetime_geometry, closed_timelike_curves) → COMPLETE(stable_time_machine) FAILS → quantum vacuum fluctuations diverge at chronology horizon",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "COSMIC_CENSORSHIP",
+    "primitive_sequence": "COMPOSE(gravitational_collapse, generic_initial_data) → COMPLETE(visible_singularity) FAILS → event horizon formation censors the singularity from external observers",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BEKENSTEIN_BOUND",
+    "primitive_sequence": "COMPOSE(energy_E, region_radius_R) → COMPLETE(entropy_exceeding_bound) FAILS → exceeding the bound would form a black hole, collapsing the region",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ERGODIC_BREAKING",
+    "primitive_sequence": "COMPOSE(symmetric_Hamiltonian, thermodynamic_limit, low_temperature) → COMPLETE(ergodic_exploration) FAILS → free energy barriers between sectors grow with system size",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KAM_THEOREM",
+    "primitive_sequence": "COMPOSE(integrable_system, small_perturbation) → COMPLETE(all_tori_preserved) FAILS → resonant tori are destroyed, creating chaotic regions between surviving ones",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "MERMIN_WAGNER",
+    "primitive_sequence": "COMPOSE(continuous_symmetry, short_range_interactions, d_leq_2) → COMPLETE(spontaneous_symmetry_breaking) FAILS → infrared divergence of Goldstone mode fluctuations destroys order",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ABBE_DIFFRACTION_LIMIT",
+    "primitive_sequence": "COMPOSE(propagating_light, far_field_lens) → COMPLETE(sub_wavelength_resolution) FAILS → evanescent waves carrying fine detail decay exponentially and are lost in far field",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WHEELER_FEYNMAN_ABSORBER",
+    "primitive_sequence": "COMPOSE(charged_particle, acceleration) → COMPLETE(radiation_free_motion) FAILS → Maxwell's equations require accelerating charges to radiate",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ANTENNA_GAIN_BANDWIDTH",
+    "primitive_sequence": "COMPOSE(small_size, wide_bandwidth, high_efficiency) → COMPLETE(all_three) FAILS → stored reactive energy dominates radiated power for small antennas",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "COMPLEXITY_HIERARCHY",
+    "primitive_sequence": "COMPOSE(limited_time_f(n), all_problems) → COMPLETE(solve_everything_solvable_in_more_time) FAILS → diagonalization constructs problems requiring genuinely more time",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CIRCUIT_LOWER_BOUNDS",
+    "primitive_sequence": "COMPOSE(polynomial_size_circuits, all_Boolean_functions) → COMPLETE(coverage) FAILS → counting argument shows exponentially more functions than circuits, but constructive proofs remain elusive",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "FLP_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(asynchronous_network, deterministic_protocol, one_crash_fault) → COMPLETE(guaranteed_consensus) FAILS → bivalent initial configuration leads to infinite indecision chain",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BYZANTINE_GENERALS_BOUND",
+    "primitive_sequence": "COMPOSE(n_processes, f_Byzantine_faults, consensus_protocol) → COMPLETE(agreement_when_f_geq_n_div_3) FAILS → faulty processes can equivocate, creating irreconcilable views among honest processes",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "SYBIL_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(open_membership, pseudonymity, voting_mechanism) → COMPLETE(sybil_resistant_consensus) FAILS → adversary multiplies identities to dominate any vote",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ONE_TIME_PAD_NECESSITY",
+    "primitive_sequence": "COMPOSE(short_key, perfect_secrecy) → COMPLETE(secure_encryption) FAILS → information-theoretic argument: fewer keys than messages means some plaintexts map to same ciphertext",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "KEY_DISTRIBUTION_CLASSICAL",
+    "primitive_sequence": "COMPOSE(public_channel, no_pre_shared_secret, eavesdropper) → COMPLETE(information_theoretic_key_agreement) FAILS → eavesdropper has same information as both parties",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "SHANNON_CHANNEL_CAPACITY",
+    "primitive_sequence": "COMPOSE(noisy_channel, coding_scheme, rate_above_C) → COMPLETE(reliable_communication) FAILS → any code exceeding capacity has error probability bounded away from zero",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "RATE_DISTORTION_BOUND",
+    "primitive_sequence": "COMPOSE(source, rate_below_R(D), distortion_target_D) → COMPLETE(compression_within_distortion) FAILS → information-theoretic bound on achievable rate-distortion pairs",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "SOURCE_CODING_BOUND",
+    "primitive_sequence": "COMPOSE(source_with_entropy_H, lossless_code, rate_below_H) → COMPLETE(decodable_compression) FAILS → pigeonhole: shorter codes cannot represent all sequences uniquely",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "SONNENSCHEIN_MANTEL_DEBREU",
+    "primitive_sequence": "COMPOSE(individual rationality, aggregation) → COMPLETE(determinate equilibrium) FAILS → BREAK_SYMMETRY(structure lost in aggregation)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "INTERPERSONAL_UTILITY",
+    "primitive_sequence": "COMPOSE(ordinal preferences, individual utility scales) → COMPLETE(cardinal social welfare function) FAILS → BREAK_SYMMETRY(gauge freedom in utility representation)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "EFFICIENT_MARKET_LIMITS",
+    "primitive_sequence": "COMPOSE(costly information, rational agents, market prices) → COMPLETE(perfect price efficiency) FAILS → BREAK_SYMMETRY(equilibrium requires noise traders or inefficiency rents)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "REVENUE_EQUIVALENCE",
+    "primitive_sequence": "COMPOSE(IPV, symmetry, risk-neutrality) → COMPLETE(revenue-equivalent auction class) FAILS → BREAK_SYMMETRY(correlation, asymmetry, or risk destroy equivalence)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "CONDORCET_PARADOX",
+    "primitive_sequence": "COMPOSE(transitive individual preferences, majority rule) → COMPLETE(transitive social ordering) FAILS → BREAK_SYMMETRY(cycles emerge from aggregation)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GERRYMANDERING_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(proportionality, compactness, contiguity, community preservation) → COMPLETE(fair redistricting) FAILS → BREAK_SYMMETRY(geographic constraints force tradeoffs)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "DUAL_TASK_BOTTLENECK",
+    "primitive_sequence": "COMPOSE(task_1 central processing, task_2 central processing, simultaneity) → COMPLETE(parallel execution) FAILS → BREAK_SYMMETRY(serial bottleneck enforces queuing)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "MILLERS_LAW",
+    "primitive_sequence": "COMPOSE(information items, simultaneous maintenance) → COMPLETE(unbounded working memory) FAILS → BREAK_SYMMETRY(capacity ceiling forces chunking or forgetting)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "QUINE_INDETERMINACY",
+    "primitive_sequence": "COMPOSE(behavioral evidence, referential semantics) → COMPLETE(unique translation mapping) FAILS → BREAK_SYMMETRY(underdetermination allows multiple incompatible schemes)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "HUMES_GUILLOTINE",
+    "primitive_sequence": "COMPOSE(descriptive premises, deductive logic) → COMPLETE(normative conclusion) FAILS → BREAK_SYMMETRY(type mismatch between descriptive and normative domains)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "PROBLEM_OF_INDUCTION",
+    "primitive_sequence": "COMPOSE(finite observations, logical inference) → COMPLETE(universal law) FAILS → BREAK_SYMMETRY(infinite gap between finite evidence and universal claim)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "FISHERS_THEOREM_LIMITS",
+    "primitive_sequence": "COMPOSE(additive genetic variance, mean fitness) → COMPLETE(monotonic fitness increase) FAILS → BREAK_SYMMETRY(epistasis, environment change, drift destroy additivity)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "MULLERS_RATCHET",
+    "primitive_sequence": "COMPOSE(asexual reproduction, finite population, deleterious mutations) → COMPLETE(purging of mutation load) FAILS → BREAK_SYMMETRY(irreversible loss of least-loaded class)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "PARADOX_OF_ENRICHMENT",
+    "primitive_sequence": "COMPOSE(increased resources, predator-prey dynamics) → COMPLETE(enhanced stability) FAILS → BREAK_SYMMETRY(Hopf bifurcation to oscillations and potential extinction)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BINDING_PROBLEM",
+    "primitive_sequence": "COMPOSE(distributed feature representations, unity of perception) → COMPLETE(automatic binding) FAILS → BREAK_SYMMETRY(attention bottleneck or synchrony required; illusory conjunctions under load)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NEURAL_CODING_LIMITS",
+    "primitive_sequence": "COMPOSE(information rate, temporal precision, noise robustness) → COMPLETE(universal neural code) FAILS → BREAK_SYMMETRY(tradeoff surface forces code-switching between regimes)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NYQUIST_SHANNON",
+    "primitive_sequence": "COMPOSE(continuous signal, discrete samples, sub-Nyquist rate) → COMPLETE(perfect reconstruction) FAILS → BREAK_SYMMETRY(aliasing folds high frequencies onto low, destroying information)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GABOR_LIMIT",
+    "primitive_sequence": "COMPOSE(time localization, frequency localization) → COMPLETE(simultaneous precision) FAILS → BREAK_SYMMETRY(conjugate variable uncertainty forces tradeoff)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "ASHBY_LIMITS",
+    "primitive_sequence": "COMPOSE(strength, toughness, density, conductivity) → COMPLETE(universal optimal material) FAILS → BREAK_SYMMETRY(bonding physics forces tradeoff surfaces)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "VCG_BUDGET_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(efficiency, incentive-compatibility, individual rationality, budget balance) → COMPLETE(perfect mechanism) FAILS → BREAK_SYMMETRY(money must leak or efficiency is sacrificed)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BLACK_SCHOLES_ASSUMPTIONS",
+    "primitive_sequence": "COMPOSE(continuous hedging, constant volatility, no jumps, no friction) → COMPLETE(risk-free replication) FAILS → BREAK_SYMMETRY(real markets have jumps, fat tails, and friction)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "UNIVERSAL_GRAMMAR_LIMITS",
+    "primitive_sequence": "COMPOSE(finite input, no negative evidence, language diversity) → COMPLETE(single universal grammar) FAILS → BREAK_SYMMETRY(parametric variation explodes, or categories are too abstract to constrain)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "NEUTRAL_THEORY_LIMITS",
+    "primitive_sequence": "COMPOSE(finite population data, molecular variation patterns) → COMPLETE(distinguishing neutrality from weak selection) FAILS → BREAK_SYMMETRY(statistical power insufficient to separate drift from wea",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "GRASP_IMPOSSIBILITY",
+    "primitive_sequence": "COMPOSE(finite contacts, smooth object, frictionless) → COMPLETE(force closure) FAILS → BREAK_SYMMETRY(wrench space cannot be spanned without friction or sufficient contacts)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "BROCAS_BINDING",
+    "primitive_sequence": "COMPOSE(private meaning, formal compositionality, embodied grounding) → COMPLETE(unified semantics) FAILS → BREAK_SYMMETRY(each approach sacrifices one leg of the triad)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "LEWONTIN_HERITABILITY",
+    "primitive_sequence": "COMPOSE(within-group heritability, between-group comparison) → COMPLETE(genetic explanation of group differences) FAILS → BREAK_SYMMETRY(genotype-environment interaction destroys cross-context inferen",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "COMMONS_DILEMMA",
+    "primitive_sequence": "COMPOSE(open access, individual rationality, sustainability) → COMPLETE(optimal commons management) FAILS → BREAK_SYMMETRY(free-riding depletes shared resource)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
+  },
+  {
+    "comp_id": "WOLPERT_NO_FREE_LUNCH",
+    "primitive_sequence": "COMPOSE(single algorithm, all possible fitness landscapes) → COMPLETE(universal optimizer) FAILS → BREAK_SYMMETRY(performance gains on some problems exactly offset by losses on others)",
+    "description": "",
+    "structural_pattern": "",
+    "chain_count": 0
   }
 ]

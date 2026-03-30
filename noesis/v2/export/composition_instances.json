@@ -313,7 +313,7 @@
   },
   {
     "instance_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY__PERIODIC_CRYSTAL",
-    "comp_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Modern",
     "domain": "crystallography",
@@ -321,7 +321,7 @@
   },
   {
     "instance_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY__PENROSE_TILING",
-    "comp_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Modern",
     "domain": "geometry",
@@ -329,7 +329,7 @@
   },
   {
     "instance_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY__QUASICRYSTAL",
-    "comp_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Modern",
     "domain": "physics",
@@ -337,7 +337,7 @@
   },
   {
     "instance_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY__ISLAMIC_GIRIH_QUASI",
-    "comp_id": "CRYSTALLOGRAPHIC_IMPOSSIBILITY",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Islamic",
     "domain": "geometry",
@@ -657,7 +657,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__PENROSE_APERIODIC_TILING",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Mathematical Physics",
     "domain": "Geometry",
@@ -665,7 +665,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__GIRIH_LOCAL_PATCHES",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Islamic Architecture",
     "domain": "Geometry",
@@ -673,7 +673,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__HIGHER_DIMENSIONAL_PROJECTION",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Higher-Dimensional Geometry",
     "domain": "Geometry",
@@ -681,7 +681,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__DEFECT_FRUSTRATED_CRYSTALS",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Materials Science",
     "domain": "Geometry",
@@ -689,7 +689,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__AMORPHOUS_GLASS",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": null,
     "tradition": "Physical Chemistry",
     "domain": "Geometry",
@@ -1729,7 +1729,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__INCOMMENSURATE_MODULATED",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": "INCOMMENSURATE_MODULATED",
     "tradition": "Solid state physics",
     "domain": "crystallography / materials science",
@@ -1737,7 +1737,7 @@
   },
   {
     "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__DISCRETE_APPROX",
-    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION_V2",
     "system_id": "DISCRETE_APPROX",
     "tradition": "Nanotechnology",
     "domain": "crystallography / materials science",
@@ -2118,5 +2118,645 @@
     "tradition": "",
     "domain": "economics",
     "notes": "Regions coordinate internally. External inconsistencies remain. The system partitions constraints. | Sacrifices: Global generality | DAMAGE_OP: PARTITION"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS__METADATA",
+    "comp_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Game Theory / Computational Complexity",
+    "notes": "FORMAL SOURCE: Daskalakis, Goldberg, Papadimitriou (2009); Chen & Deng (2006). 'The Complexity of Computing a Nash Equilibrium.' SIAM Journal on Computing. | DESIRED PROPERTIES: polynomial_time_computation, exact_nash_equilibrium, general_game_representation | CONNECTIONS: NO_FREE_LUNCH, ARROW_SOCIAL_CHOICE | REFS: Daskalakis, Goldberg, Papadimitriou. 'The Complexity of Computing a Nash Equilibrium.' SIAM J. Comput. 39(1), 2009.; Chen, Deng. 'Settling the Complexity of Two-Player Nash Equilibrium.' FOCS 2006.; Papadimitriou. 'On the Complexity of the Parity Argument and Other Inefficient Proofs of Existence.' JCSS 1994."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS__LINK__NO_FREE_LUNCH",
+    "comp_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Game Theory / Computational Complexity",
+    "notes": "Connected to IMPOSSIBILITY_NO_FREE_LUNCH via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS__LINK__ARROW_SOCIAL_CHOICE",
+    "comp_id": "IMPOSSIBILITY_NASH_PPAD_HARDNESS",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Game Theory / Computational Complexity",
+    "notes": "Connected to IMPOSSIBILITY_ARROW_SOCIAL_CHOICE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE__METADATA",
+    "comp_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Mechanism Design",
+    "notes": "FORMAL SOURCE: Green & Laffont (1979). 'Incentives in Public Decision Making.' Also Krishna & Perry (1998). | DESIRED PROPERTIES: allocative_efficiency, dominant_strategy_incentive_compatibility, individual_rationality, budget_balance | CONNECTIONS: MYERSON_SATTERTHWAITE, GIBBARD_SATTERTHWAITE | REFS: Green, Laffont. 'Incentives in Public Decision Making.' North-Holland, 1979.; Krishna, Perry. 'Efficient Mechanism Design.' 1998.; Vickrey. 'Counterspeculation, Auctions, and Competitive Sealed Tenders.' J. Finance 1961."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE__LINK__MYERSON_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_MYERSON_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE__LINK__GIBBARD_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_GIBBARD_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED__METADATA",
+    "comp_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Matching Theory",
+    "notes": "FORMAL SOURCE: Alkan (1988); Subramanian (1994). 'A Sufficient Condition for the Existence of a Stable Matching in Three-Sided Matching.' | DESIRED PROPERTIES: stability, three_or_more_sided, complete_matching, preference_based | CONNECTIONS: ARROW_SOCIAL_CHOICE, SEN_LIBERAL_PARADOX | REFS: Alkan. 'Nonexistence of Stable Threesome Matchings.' Mathematical Social Sciences 16, 1988.; Subramanian. 'A New Approach to Stable Matching Problems.' SIAM J. Comput. 1994.; Gale, Shapley. 'College Admissions and the Stability of Marriage.' Amer. Math. Monthly 1962."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED__LINK__ARROW_SOCIAL_CHOICE",
+    "comp_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Matching Theory",
+    "notes": "Connected to IMPOSSIBILITY_ARROW_SOCIAL_CHOICE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED__LINK__SEN_LIBERAL_PARADOX",
+    "comp_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Matching Theory",
+    "notes": "Connected to IMPOSSIBILITY_SEN_LIBERAL_PARADOX via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION__METADATA",
+    "comp_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Fair Division / Mechanism Design",
+    "notes": "FORMAL SOURCE: Svensson (1999); Zhou (1990). 'Strategy-proofness, Envy-freeness, and Pareto Efficiency.' | DESIRED PROPERTIES: envy_freeness, pareto_efficiency, strategy_proofness, determinism | CONNECTIONS: ARROW_SOCIAL_CHOICE, GIBBARD_SATTERTHWAITE, MYERSON_SATTERTHWAITE | REFS: Zhou. 'Conjecture on a Generalized Version of Arrow.' Social Choice and Welfare, 1990.; Svensson. 'Strategy-proof Allocation of Indivisible Goods.' Social Choice and Welfare, 1999.; Bogomolnaia, Moulin. 'A New Solution to the Random Assignment Problem.' J. Econ. Theory, 2001."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION__LINK__ARROW_SOCIAL_CHOICE",
+    "comp_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Fair Division / Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_ARROW_SOCIAL_CHOICE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION__LINK__GIBBARD_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Fair Division / Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_GIBBARD_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION__LINK__MYERSON_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Fair Division / Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_MYERSON_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN__METADATA",
+    "comp_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Auction Theory",
+    "notes": "FORMAL SOURCE: Myerson (1981); Milgrom & Weber (1982). 'A Theory of Auctions and Competitive Bidding.' | DESIRED PROPERTIES: revenue_maximization, allocative_efficiency, format_independence, general_value_distributions | CONNECTIONS: MYERSON_SATTERTHWAITE, NO_FREE_LUNCH | REFS: Myerson. 'Optimal Auction Design.' Mathematics of Operations Research, 1981.; Milgrom, Weber. 'A Theory of Auctions and Competitive Bidding.' Econometrica, 1982.; Riley, Samuelson. 'Optimal Auctions.' American Economic Review, 1981."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN__LINK__MYERSON_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Auction Theory",
+    "notes": "Connected to IMPOSSIBILITY_MYERSON_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN__LINK__NO_FREE_LUNCH",
+    "comp_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Auction Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_FREE_LUNCH via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY__METADATA",
+    "comp_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Algorithmic Game Theory",
+    "notes": "FORMAL SOURCE: Roughgarden & Tardos (2002). 'How Bad Is Selfish Routing?' JACM. Roughgarden (2003). | DESIRED PROPERTIES: system_optimal_routing, voluntary_participation, decentralized_decisions, budget_balanced_tolls | CONNECTIONS: NO_FREE_LUNCH, GOODHART_LAW | REFS: Roughgarden, Tardos. 'How Bad Is Selfish Routing?' J. ACM 49(2), 2002.; Roughgarden. 'The Price of Anarchy Is Independent of the Network Topology.' STOC 2002.; Christodoulou, Koutsoupias. 'The Price of Anarchy of Finite Congestion Games.' STOC 2005."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY__LINK__NO_FREE_LUNCH",
+    "comp_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Algorithmic Game Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_FREE_LUNCH via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY__LINK__GOODHART_LAW",
+    "comp_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Algorithmic Game Theory",
+    "notes": "Connected to IMPOSSIBILITY_GOODHART_LAW via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN__METADATA",
+    "comp_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Mechanism Design / Implementation Theory",
+    "notes": "FORMAL SOURCE: Maskin (1999, circulated 1977). 'Nash Equilibrium and Welfare Optimality.' Review of Economic Studies. | DESIRED PROPERTIES: nash_implementability, arbitrary_social_choice_rules, complete_information, no_dictator | CONNECTIONS: GIBBARD_SATTERTHWAITE, ARROW_SOCIAL_CHOICE | REFS: Maskin. 'Nash Equilibrium and Welfare Optimality.' Review of Economic Studies, 1999.; Moore, Repullo. 'Nash Implementation: A Full Characterization.' Econometrica, 1990.; Jackson. 'A Crash Course in Implementation Theory.' Social Choice and Welfare, 2001."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN__LINK__GIBBARD_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Implementation Theory",
+    "notes": "Connected to IMPOSSIBILITY_GIBBARD_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN__LINK__ARROW_SOCIAL_CHOICE",
+    "comp_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Implementation Theory",
+    "notes": "Connected to IMPOSSIBILITY_ARROW_SOCIAL_CHOICE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS__METADATA",
+    "comp_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Mechanism Design / Computational Economics",
+    "notes": "FORMAL SOURCE: Nisan & Ronen (2001); Dobzinski & Nisan (2007). 'Communication Complexity of Approximate Mechanisms.' | DESIRED PROPERTIES: truthfulness, computational_efficiency, communication_efficiency, welfare_maximization | CONNECTIONS: GIBBARD_SATTERTHWAITE, MYERSON_SATTERTHWAITE, NO_FREE_LUNCH | REFS: Nisan, Ronen. 'Algorithmic Mechanism Design.' Games and Economic Behavior, 2001.; Dobzinski, Nisan. 'Limitations of VCG-Based Mechanisms.' Combinatorica 31(4), 2011.; Segal. 'The Communication Requirements of Social Choice Rules and Supporting Budget Sets.' J. Econ. Theory, 2007."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS__LINK__GIBBARD_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Computational Economics",
+    "notes": "Connected to IMPOSSIBILITY_GIBBARD_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS__LINK__MYERSON_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Computational Economics",
+    "notes": "Connected to IMPOSSIBILITY_MYERSON_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS__LINK__NO_FREE_LUNCH",
+    "comp_id": "IMPOSSIBILITY_REVELATION_PRINCIPLE_LIMITS",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Computational Economics",
+    "notes": "Connected to IMPOSSIBILITY_NO_FREE_LUNCH via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON__METADATA",
+    "comp_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Mechanism Design / Bargaining Theory",
+    "notes": "FORMAL SOURCE: Myerson & Satterthwaite (1983). 'Efficient Mechanisms for Bilateral Trading.' Also Chatterjee & Samuelson (1983). | DESIRED PROPERTIES: ex_post_efficiency, Bayesian_incentive_compatibility, interim_individual_rationality, budget_balance | CONNECTIONS: MYERSON_SATTERTHWAITE, GIBBARD_SATTERTHWAITE | REFS: Myerson, Satterthwaite. 'Efficient Mechanisms for Bilateral Trading.' J. Econ. Theory, 1983.; Chatterjee, Samuelson. 'Bargaining Under Incomplete Information.' Operations Research, 1983.; Hagerty, Rogerson. 'Robust Trading Mechanisms.' J. Econ. Theory, 1987."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON__LINK__MYERSON_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Bargaining Theory",
+    "notes": "Connected to IMPOSSIBILITY_MYERSON_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON__LINK__GIBBARD_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design / Bargaining Theory",
+    "notes": "Connected to IMPOSSIBILITY_GIBBARD_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE__METADATA",
+    "comp_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "General Equilibrium Theory",
+    "notes": "FORMAL SOURCE: Kelso & Crawford (1982); Gul & Stacchetti (1999). 'Walrasian Equilibrium with Gross Substitutes.' | DESIRED PROPERTIES: existence_of_equilibrium, indivisible_goods, general_preferences, first_welfare_theorem | CONNECTIONS: ARROW_SOCIAL_CHOICE, MYERSON_SATTERTHWAITE | REFS: Kelso, Crawford. 'Job Matching, Coalition Formation, and Gross Substitutes.' Econometrica, 1982.; Gul, Stacchetti. 'Walrasian Equilibrium with Gross Substitutes.' J. Econ. Theory, 1999.; Bikhchandani, Mamer. 'Competitive Equilibrium in an Exchange Economy with Indivisibilities.' J. Econ. Theory, 1997."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE__LINK__ARROW_SOCIAL_CHOICE",
+    "comp_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "General Equilibrium Theory",
+    "notes": "Connected to IMPOSSIBILITY_ARROW_SOCIAL_CHOICE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE__LINK__MYERSON_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "General Equilibrium Theory",
+    "notes": "Connected to IMPOSSIBILITY_MYERSON_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY__METADATA",
+    "comp_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Game Theory",
+    "notes": "FORMAL SOURCE: Friedman (1971); Fudenberg & Maskin (1986). 'The Folk Theorem in Repeated Games with Discounting or with Incomplete Information.' | DESIRED PROPERTIES: cooperation_sustainability, finite_horizon, imperfect_monitoring, bounded_rationality | CONNECTIONS: NO_FREE_LUNCH, GOODHART_LAW | REFS: Fudenberg, Maskin. 'The Folk Theorem in Repeated Games with Discounting or with Incomplete Information.' Econometrica, 1986.; Friedman. 'A Non-cooperative Equilibrium for Supergames.' Review of Economic Studies, 1971.; Kreps, Milgrom, Roberts, Wilson. 'Rational Cooperation in the Finitely Repeated Prisoners' Dilemma.' J. Econ. Theory, 1982."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY__LINK__NO_FREE_LUNCH",
+    "comp_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Game Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_FREE_LUNCH via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY__LINK__GOODHART_LAW",
+    "comp_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Game Theory",
+    "notes": "Connected to IMPOSSIBILITY_GOODHART_LAW via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY__METADATA",
+    "comp_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Mechanism Design",
+    "notes": "FORMAL SOURCE: Gibbard (1973); Satterthwaite (1975). Extensions by Barberà, Peleg, and others. | DESIRED PROPERTIES: strategy_proofness, non_dictatorship, surjectivity, unrestricted_domain | CONNECTIONS: GIBBARD_SATTERTHWAITE, ARROW_SOCIAL_CHOICE, SEN_LIBERAL_PARADOX | REFS: Gibbard. 'Manipulation of Voting Schemes: A General Result.' Econometrica, 1973.; Satterthwaite. 'Strategy-Proofness and Arrow's Conditions.' J. Econ. Theory, 1975.; Barberà. 'Strategy-proof Social Choice.' Handbook of Social Choice and Welfare, 2011."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY__LINK__GIBBARD_SATTERTHWAITE",
+    "comp_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_GIBBARD_SATTERTHWAITE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY__LINK__ARROW_SOCIAL_CHOICE",
+    "comp_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_ARROW_SOCIAL_CHOICE via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY__LINK__SEN_LIBERAL_PARADOX",
+    "comp_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Mechanism Design",
+    "notes": "Connected to IMPOSSIBILITY_SEN_LIBERAL_PARADOX via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM__METADATA",
+    "comp_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information Theory",
+    "notes": "FORMAL SOURCE: Barnum, Caves, Fuchs, Jozsa, Schumacher (1996). 'Noncommuting Mixed States Cannot Be Broadcast.' | DESIRED PROPERTIES: arbitrary_mixed_state_input, both_marginals_equal_original, completely_positive_map, trace_preserving | CONNECTIONS: NO_CLONING_THEOREM, HEISENBERG_UNCERTAINTY | REFS: Barnum, Caves, Fuchs, Jozsa, Schumacher. 'Noncommuting Mixed States Cannot Be Broadcast.' Phys. Rev. Lett. 76, 1996.; Piani, Horodecki, Horodecki. 'No-Local-Broadcasting Theorem for Multipartite Quantum Correlations.' Phys. Rev. Lett. 100, 2008.; Luo. 'On Broadcasting of Quantum States.' Lett. Math. Phys. 92, 2010."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_NO_BROADCASTING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_DELETING_THEOREM__METADATA",
+    "comp_id": "IMPOSSIBILITY_NO_DELETING_THEOREM",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information Theory",
+    "notes": "FORMAL SOURCE: Pati & Braunstein (2000). 'Impossibility of Deleting an Unknown Quantum State.' Nature 404. | DESIRED PROPERTIES: arbitrary_unknown_state, linear_unitary_evolution, one_copy_erased_to_blank, other_copy_preserved | CONNECTIONS: NO_CLONING_THEOREM, HEISENBERG_UNCERTAINTY | REFS: Pati, Braunstein. 'Impossibility of Deleting an Unknown Quantum State.' Nature 404, 2000.; Braunstein, Pati. 'Quantum Information Cannot Be Completely Hidden in Correlations.' Phys. Rev. Lett. 98, 2007."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_DELETING_THEOREM__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_NO_DELETING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_DELETING_THEOREM__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_NO_DELETING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT__METADATA",
+    "comp_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information / Quantum Computation",
+    "notes": "FORMAL SOURCE: Margolus & Levitin (1998). 'The Maximum Speed of Dynamical Evolution.' Physica D. | DESIRED PROPERTIES: arbitrary_fast_state_evolution, finite_energy, orthogonal_state_transition, unitary_dynamics | CONNECTIONS: HEISENBERG_UNCERTAINTY, NO_FREE_LUNCH | REFS: Margolus, Levitin. 'The Maximum Speed of Dynamical Evolution.' Physica D 120, 1998.; Mandelstam, Tamm. 'The Uncertainty Relation Between Energy and Time in Nonrelativistic Quantum Mechanics.' Izv. Akad. Nauk SSSR, 1945.; Deffner, Lutz. 'Quantum Speed Limit for Non-Markovian Dynamics.' Phys. Rev. Lett. 111, 2013."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information / Quantum Computation",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT__LINK__NO_FREE_LUNCH",
+    "comp_id": "IMPOSSIBILITY_MARGOLUS_LEVITIN_SPEED_LIMIT",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information / Quantum Computation",
+    "notes": "Connected to IMPOSSIBILITY_NO_FREE_LUNCH via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_HOLEVO_BOUND__METADATA",
+    "comp_id": "IMPOSSIBILITY_HOLEVO_BOUND",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information Theory",
+    "notes": "FORMAL SOURCE: Holevo (1973). 'Bounds for the Quantity of Information Transmitted by a Quantum Communication Channel.' Problems of Information Transmission. | DESIRED PROPERTIES: arbitrary_measurement_strategy, exceed_one_bit_per_qubit, quantum_ensemble_encoding, classical_decoding | CONNECTIONS: NO_CLONING_THEOREM, HEISENBERG_UNCERTAINTY | REFS: Holevo. 'Bounds for the Quantity of Information Transmitted by a Quantum Communication Channel.' Probl. Peredachi Inf. 9(3), 1973.; Hausladen et al. 'Classical Information Capacity of a Quantum Channel.' Phys. Rev. A 54, 1996.; Schumacher, Westmoreland. 'Sending Classical Information via Noisy Quantum Channels.' Phys. Rev. A 56, 1997."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_HOLEVO_BOUND__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_HOLEVO_BOUND",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_HOLEVO_BOUND__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_HOLEVO_BOUND",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_TSIRELSON_BOUND__METADATA",
+    "comp_id": "IMPOSSIBILITY_TSIRELSON_BOUND",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Foundations / Nonlocality",
+    "notes": "FORMAL SOURCE: Tsirelson (Cirel'son) (1980). 'Quantum Generalizations of Bell's Inequality.' Letters in Mathematical Physics. | DESIRED PROPERTIES: maximal_Bell_violation, quantum_realization, finite_dimensional_Hilbert_space, projective_measurements | CONNECTIONS: BELLS_THEOREM, HEISENBERG_UNCERTAINTY, NO_CLONING_THEOREM | REFS: Cirel'son (Tsirelson). 'Quantum Generalizations of Bell's Inequality.' Lett. Math. Phys. 4, 1980.; Popescu, Rohrlich. 'Quantum Nonlocality as an Axiom.' Found. Phys. 24, 1994.; Navascues, Pironio, Acin. 'Bounding the Set of Quantum Correlations.' Phys. Rev. Lett. 98, 2007."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_TSIRELSON_BOUND__LINK__BELLS_THEOREM",
+    "comp_id": "IMPOSSIBILITY_TSIRELSON_BOUND",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Foundations / Nonlocality",
+    "notes": "Connected to IMPOSSIBILITY_BELLS_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_TSIRELSON_BOUND__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_TSIRELSON_BOUND",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Foundations / Nonlocality",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_TSIRELSON_BOUND__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_TSIRELSON_BOUND",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Foundations / Nonlocality",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD__METADATA",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Computation / Fault Tolerance",
+    "notes": "FORMAL SOURCE: Aharonov & Ben-Or (1997); Knill, Laflamme, Zurek (1998). 'Resilient Quantum Computation: Error Models and Thresholds.' | DESIRED PROPERTIES: arbitrary_error_rate_tolerance, polynomial_overhead, fault_tolerant_gates, scalable_computation | CONNECTIONS: NO_CLONING_THEOREM, CAP_THEOREM | REFS: Aharonov, Ben-Or. 'Fault-Tolerant Quantum Computation with Constant Error Rate.' SIAM J. Comput. 38(4), 2008 (circulated 1997).; Knill, Laflamme, Zurek. 'Resilient Quantum Computation: Error Models and Thresholds.' Proc. R. Soc. A, 1998.; Aliferis, Gottesman, Preskill. 'Quantum Accuracy Threshold for Concatenated Distance-3 Codes.' Quant. Inf. Comput. 6, 2006."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Computation / Fault Tolerance",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD__LINK__CAP_THEOREM",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Computation / Fault Tolerance",
+    "notes": "Connected to IMPOSSIBILITY_CAP_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY__METADATA",
+    "comp_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information Theory",
+    "notes": "FORMAL SOURCE: Coffman, Kundu, Wootters (2000). 'Distributed Entanglement.' Phys. Rev. A. | DESIRED PROPERTIES: maximal_entanglement_with_multiple_parties, arbitrary_sharing, quantum_correlations, no_constraint_on_distribution | CONNECTIONS: NO_CLONING_THEOREM, BELLS_THEOREM, HEISENBERG_UNCERTAINTY | REFS: Coffman, Kundu, Wootters. 'Distributed Entanglement.' Phys. Rev. A 61, 2000.; Osborne, Verstraete. 'General Monogamy Inequality for Bipartite Qubit Entanglement.' Phys. Rev. Lett. 96, 2006.; Koashi, Winter. 'Monogamy of Quantum Entanglement and Other Correlations.' Phys. Rev. A 69, 2004."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY__LINK__BELLS_THEOREM",
+    "comp_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_BELLS_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM__METADATA",
+    "comp_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Foundations / Relativity",
+    "notes": "FORMAL SOURCE: Ghirardi, Rimini, Weber (1980); Peres & Terno (2004). 'Quantum Information and Relativity Theory.' | DESIRED PROPERTIES: superluminal_communication, entanglement_as_channel, local_measurement_choice_affects_remote_statistics, violation_of_relativistic_causality | CONNECTIONS: BELLS_THEOREM, NO_CLONING_THEOREM, HEISENBERG_UNCERTAINTY | REFS: Ghirardi, Rimini, Weber. 'A General Argument Against Superluminal Transmission Through the Quantum Mechanical Measurement Process.' Lettere al Nuovo Cimento, 1980.; Peres, Terno. 'Quantum Information and Relativity Theory.' Rev. Mod. Phys. 76, 2004.; Eberhard. 'Bell's Theorem and the Different Concepts of Locality.' Il Nuovo Cimento B, 1978."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM__LINK__BELLS_THEOREM",
+    "comp_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Foundations / Relativity",
+    "notes": "Connected to IMPOSSIBILITY_BELLS_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Foundations / Relativity",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Foundations / Relativity",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY__METADATA",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information Theory",
+    "notes": "FORMAL SOURCE: Hastings (2009). 'Superadditivity of Communication Capacity Using Entangled Inputs.' Also Smith & Yard (2008) for superactivation. | DESIRED PROPERTIES: single_letter_capacity_formula, additivity_of_capacity, independent_channel_use, computable_capacity | CONNECTIONS: NO_CLONING_THEOREM, HOLEVO_BOUND | REFS: Hastings. 'Superadditivity of Communication Capacity Using Entangled Inputs.' Nature Physics 5, 2009.; Smith, Yard. 'Quantum Communication with Zero-Capacity Channels.' Science 321, 2008.; Shor. 'Equivalence of Additivity Questions in Quantum Information Theory.' Commun. Math. Phys. 246, 2004."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY__LINK__HOLEVO_BOUND",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_HOLEVO_BOUND via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_HIDING_THEOREM__METADATA",
+    "comp_id": "IMPOSSIBILITY_NO_HIDING_THEOREM",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Information Theory",
+    "notes": "FORMAL SOURCE: Braunstein & Pati (2007). 'Quantum Information Cannot Be Completely Hidden in Correlations.' Phys. Rev. Lett. | DESIRED PROPERTIES: information_hidden_in_correlations, missing_from_both_subsystems, unitarity_preserved, quantum_information_conservation | CONNECTIONS: NO_CLONING_THEOREM, NO_DELETING_THEOREM, HEISENBERG_UNCERTAINTY | REFS: Braunstein, Pati. 'Quantum Information Cannot Be Completely Hidden in Correlations: Implications for the Black-Hole Information Paradox.' Phys. Rev. Lett. 98, 2007.; Samal, Pati, Kumar. 'Experimental Test of the Quantum No-Hiding Theorem.' Phys. Rev. Lett. 106, 2011."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_HIDING_THEOREM__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_NO_HIDING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_HIDING_THEOREM__LINK__NO_DELETING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_NO_HIDING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_NO_DELETING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_HIDING_THEOREM__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_NO_HIDING_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Information Theory",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM__METADATA",
+    "comp_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Error Correction",
+    "notes": "FORMAL SOURCE: Eastin & Knill (2009). 'Restrictions on Transversal Encoded Quantum Gate Sets.' Phys. Rev. Lett. | DESIRED PROPERTIES: transversal_gate_implementation, universal_gate_set, fault_tolerance, arbitrary_QECC | CONNECTIONS: NO_CLONING_THEOREM, QUANTUM_ERROR_CORRECTION_THRESHOLD | REFS: Eastin, Knill. 'Restrictions on Transversal Encoded Quantum Gate Sets.' Phys. Rev. Lett. 102, 2009.; Bravyi, Kitaev. 'Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas.' Phys. Rev. A 71, 2005.; Jochym-O'Connor, Laflamme. 'Using Concatenated Quantum Codes for Universal Fault-Tolerant Quantum Gates.' Phys. Rev. Lett. 112, 2014."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Error Correction",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM__LINK__QUANTUM_ERROR_CORRECTION_THRESHOLD",
+    "comp_id": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Error Correction",
+    "notes": "Connected to IMPOSSIBILITY_QUANTUM_ERROR_CORRECTION_THRESHOLD via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT__METADATA",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT",
+    "system_id": null,
+    "tradition": "formal_proof",
+    "domain": "Quantum Cryptography / Quantum Communication",
+    "notes": "FORMAL SOURCE: Pirandola, Laurenza, Ottaviani, Banchi (2017). 'Fundamental Limits of Repeaterless Quantum Communications.' Nature Communications. | DESIRED PROPERTIES: unlimited_key_rate, arbitrary_distance, no_quantum_repeaters, lossy_channel | CONNECTIONS: NO_CLONING_THEOREM, HOLEVO_BOUND, HEISENBERG_UNCERTAINTY | REFS: Pirandola, Laurenza, Ottaviani, Banchi. 'Fundamental Limits of Repeaterless Quantum Communications.' Nature Commun. 8, 2017.; Takeoka, Guha, Wilde. 'Fundamental Rate-Loss Tradeoff for Optical Quantum Key Distribution.' Nature Commun. 5, 2014.; Wilde, Tomamichel, Berta. 'Converse Bounds for Private Communication Over Quantum Channels.' IEEE Trans. Inf. Theory, 2017."
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT__LINK__NO_CLONING_THEOREM",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Cryptography / Quantum Communication",
+    "notes": "Connected to IMPOSSIBILITY_NO_CLONING_THEOREM via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT__LINK__HOLEVO_BOUND",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Cryptography / Quantum Communication",
+    "notes": "Connected to IMPOSSIBILITY_HOLEVO_BOUND via shared structural pattern"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT__LINK__HEISENBERG_UNCERTAINTY",
+    "comp_id": "IMPOSSIBILITY_QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT",
+    "system_id": null,
+    "tradition": "cross_hub_link",
+    "domain": "Quantum Cryptography / Quantum Communication",
+    "notes": "Connected to IMPOSSIBILITY_HEISENBERG_UNCERTAINTY via shared structural pattern"
   }
 ]
