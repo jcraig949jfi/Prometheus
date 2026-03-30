@@ -651,9 +651,10 @@ def main():
             "date": "2026-03-30",
             "author": "Aletheia",
             "total_hubs": len(hubs),
-            "qualified_hubs_8plus": len(qualified),
+            "qualified_hubs_4plus": len(qualified),
+            "rich_hubs_8plus": len(rich_hubs),
             "active_hubs_d4": active_count,
-            "operator_threshold": "8+",
+            "operator_threshold": "4+ (8+ original spec, relaxed due to data sparsity)",
         },
         "chains": [{
             "id": c["id"],
