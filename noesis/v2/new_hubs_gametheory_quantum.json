@@ -1,0 +1,412 @@
+{
+  "batch_3_game_theory_mechanism_design": [
+    {
+      "hub_id": "NASH_PPAD_HARDNESS",
+      "hub_name": "PPAD-Completeness of Nash Equilibrium",
+      "domain": "Game Theory / Computational Complexity",
+      "impossibility_statement": "No polynomial-time algorithm can compute a Nash equilibrium in general normal-form games unless PPAD = P",
+      "formal_source": "Daskalakis, Goldberg, Papadimitriou (2009); Chen & Deng (2006). 'The Complexity of Computing a Nash Equilibrium.' SIAM Journal on Computing.",
+      "desired_properties": ["polynomial_time_computation", "exact_nash_equilibrium", "general_game_representation"],
+      "structural_pattern": "COMPOSE(general_games) -> COMPLETE(equilibrium) FAILS -> BREAK_SYMMETRY(approximate_or_restrict_class)",
+      "why_closure_fails": "Brouwer fixed-point theorem guarantees existence but the corresponding computational problem (finding the fixed point) is PPAD-complete. The proof reduces END-OF-LINE to Nash, showing that the combinatorial structure of best-response dynamics encodes arbitrary PPAD instances.",
+      "known_resolution_count": 6,
+      "connection_to_existing_hubs": ["NO_FREE_LUNCH", "ARROW_SOCIAL_CHOICE"],
+      "key_references": [
+        "Daskalakis, Goldberg, Papadimitriou. 'The Complexity of Computing a Nash Equilibrium.' SIAM J. Comput. 39(1), 2009.",
+        "Chen, Deng. 'Settling the Complexity of Two-Player Nash Equilibrium.' FOCS 2006.",
+        "Papadimitriou. 'On the Complexity of the Parity Argument and Other Inefficient Proofs of Existence.' JCSS 1994."
+      ]
+    },
+    {
+      "hub_id": "VCG_BUDGET_BALANCE",
+      "hub_name": "VCG Budget Balance Impossibility",
+      "domain": "Mechanism Design",
+      "impossibility_statement": "No mechanism can simultaneously achieve efficiency (welfare maximization), incentive compatibility, individual rationality, and budget balance in general quasi-linear settings",
+      "formal_source": "Green & Laffont (1979). 'Incentives in Public Decision Making.' Also Krishna & Perry (1998).",
+      "desired_properties": ["allocative_efficiency", "dominant_strategy_incentive_compatibility", "individual_rationality", "budget_balance"],
+      "structural_pattern": "COMPOSE(DSIC + efficiency) -> COMPLETE(budget_balance + IR) FAILS -> BREAK_SYMMETRY(relax_one_constraint)",
+      "why_closure_fails": "The VCG transfer payments that align individual incentives with social welfare necessarily produce a budget surplus (or deficit). The Clarke pivot payments extracted from agents cannot generically sum to zero while maintaining truthfulness, because the externality each agent imposes is not a conserved quantity.",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["MYERSON_SATTERTHWAITE", "GIBBARD_SATTERTHWAITE"],
+      "key_references": [
+        "Green, Laffont. 'Incentives in Public Decision Making.' North-Holland, 1979.",
+        "Krishna, Perry. 'Efficient Mechanism Design.' 1998.",
+        "Vickrey. 'Counterspeculation, Auctions, and Competitive Sealed Tenders.' J. Finance 1961."
+      ]
+    },
+    {
+      "hub_id": "STABLE_MATCHING_THREE_SIDED",
+      "hub_name": "Three-Sided Stable Matching Impossibility",
+      "domain": "Matching Theory",
+      "impossibility_statement": "No stable matching need exist for three-sided (or higher) matching markets; the Gale-Shapley deferred acceptance algorithm cannot be generalized beyond two-sided markets",
+      "formal_source": "Alkan (1988); Subramanian (1994). 'A Sufficient Condition for the Existence of a Stable Matching in Three-Sided Matching.'",
+      "desired_properties": ["stability", "three_or_more_sided", "complete_matching", "preference_based"],
+      "structural_pattern": "COMPOSE(bipartite_stability) -> EXTEND(third_side) FAILS -> BREAK_SYMMETRY(restrict_preferences_or_accept_instability)",
+      "why_closure_fails": "In two-sided markets, the lattice structure of stable matchings (guaranteed by the rural hospitals theorem and Birkhoff's representation) breaks down with three or more sides. Preference cycles of the form (a prefers b2, b2 prefers c3, c3 prefers a' != a) create unavoidable blocking triples with no fixed-point guarantee.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["ARROW_SOCIAL_CHOICE", "SEN_LIBERAL_PARADOX"],
+      "key_references": [
+        "Alkan. 'Nonexistence of Stable Threesome Matchings.' Mathematical Social Sciences 16, 1988.",
+        "Subramanian. 'A New Approach to Stable Matching Problems.' SIAM J. Comput. 1994.",
+        "Gale, Shapley. 'College Admissions and the Stability of Marriage.' Amer. Math. Monthly 1962."
+      ]
+    },
+    {
+      "hub_id": "ENVY_FREE_DIVISION",
+      "hub_name": "Envy-Free Efficient Truthful Division Impossibility",
+      "domain": "Fair Division / Mechanism Design",
+      "impossibility_statement": "No deterministic mechanism for dividing indivisible goods can simultaneously guarantee envy-freeness, Pareto efficiency, and strategy-proofness",
+      "formal_source": "Svensson (1999); Zhou (1990). 'Strategy-proofness, Envy-freeness, and Pareto Efficiency.'",
+      "desired_properties": ["envy_freeness", "pareto_efficiency", "strategy_proofness", "determinism"],
+      "structural_pattern": "COMPOSE(fairness + efficiency) -> COMPLETE(truthfulness) FAILS -> STOCHASTICIZE(randomized_mechanism) OR BREAK_SYMMETRY(weaken_fairness)",
+      "why_closure_fails": "Envy-freeness requires symmetric treatment of agents, efficiency requires responsiveness to cardinal preferences, and truthfulness requires monotonicity in allocations. The monotonicity constraints from strategy-proofness force allocations that either violate envy-freeness (by treating identical preferences differently) or efficiency (by ignoring preference intensity).",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["ARROW_SOCIAL_CHOICE", "GIBBARD_SATTERTHWAITE", "MYERSON_SATTERTHWAITE"],
+      "key_references": [
+        "Zhou. 'Conjecture on a Generalized Version of Arrow.' Social Choice and Welfare, 1990.",
+        "Svensson. 'Strategy-proof Allocation of Indivisible Goods.' Social Choice and Welfare, 1999.",
+        "Bogomolnaia, Moulin. 'A New Solution to the Random Assignment Problem.' J. Econ. Theory, 2001."
+      ]
+    },
+    {
+      "hub_id": "REVENUE_EQUIVALENCE_BREAKDOWN",
+      "hub_name": "Revenue Equivalence Theorem Boundary",
+      "domain": "Auction Theory",
+      "impossibility_statement": "Revenue equivalence across auction formats fails when bidders are risk-averse, asymmetric, have interdependent valuations, or face budget constraints; no single auction format simultaneously maximizes revenue, efficiency, and simplicity",
+      "formal_source": "Myerson (1981); Milgrom & Weber (1982). 'A Theory of Auctions and Competitive Bidding.'",
+      "desired_properties": ["revenue_maximization", "allocative_efficiency", "format_independence", "general_value_distributions"],
+      "structural_pattern": "SYMMETRIZE(auction_formats) -> COMPLETE(revenue_equivalence) FAILS -> BREAK_SYMMETRY(risk_aversion_or_correlation)",
+      "why_closure_fails": "Revenue equivalence holds only under independent private values with risk-neutral symmetric bidders. Risk aversion breaks the isomorphism between first-price and second-price auctions (expected payment changes non-linearly). Affiliated values break independence, making the linkage principle operative — English auctions generate strictly more revenue than sealed-bid auctions.",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["MYERSON_SATTERTHWAITE", "NO_FREE_LUNCH"],
+      "key_references": [
+        "Myerson. 'Optimal Auction Design.' Mathematics of Operations Research, 1981.",
+        "Milgrom, Weber. 'A Theory of Auctions and Competitive Bidding.' Econometrica, 1982.",
+        "Riley, Samuelson. 'Optimal Auctions.' American Economic Review, 1981."
+      ]
+    },
+    {
+      "hub_id": "CONGESTION_PRICE_OF_ANARCHY",
+      "hub_name": "Price of Anarchy in Congestion Games",
+      "domain": "Algorithmic Game Theory",
+      "impossibility_statement": "Selfish routing in congestion games produces outcomes whose social cost can be a factor of Theta(log n / log log n) worse than optimal for general latency functions; no toll mechanism can simultaneously achieve system optimality, budget balance, and voluntary participation",
+      "formal_source": "Roughgarden & Tardos (2002). 'How Bad Is Selfish Routing?' JACM. Roughgarden (2003).",
+      "desired_properties": ["system_optimal_routing", "voluntary_participation", "decentralized_decisions", "budget_balanced_tolls"],
+      "structural_pattern": "COMPOSE(individual_optimization) -> COMPLETE(social_optimum) FAILS -> BREAK_SYMMETRY(marginal_cost_tolls)",
+      "why_closure_fails": "Individual best-response dynamics minimize personal cost, not social cost. The externality each agent imposes on others (marginal congestion contribution) is not internalized. Wardrop equilibrium and Nash flow diverge from the social optimum because the variational inequality characterizing equilibrium uses individual cost gradients, not marginal social cost.",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["NO_FREE_LUNCH", "GOODHART_LAW"],
+      "key_references": [
+        "Roughgarden, Tardos. 'How Bad Is Selfish Routing?' J. ACM 49(2), 2002.",
+        "Roughgarden. 'The Price of Anarchy Is Independent of the Network Topology.' STOC 2002.",
+        "Christodoulou, Koutsoupias. 'The Price of Anarchy of Finite Congestion Games.' STOC 2005."
+      ]
+    },
+    {
+      "hub_id": "IMPLEMENTATION_MASKIN",
+      "hub_name": "Maskin Monotonicity and Nash Implementation",
+      "domain": "Mechanism Design / Implementation Theory",
+      "impossibility_statement": "A social choice rule is Nash-implementable only if it satisfies Maskin monotonicity; many natural social choice rules (including most cardinal welfare criteria) fail this condition",
+      "formal_source": "Maskin (1999, circulated 1977). 'Nash Equilibrium and Welfare Optimality.' Review of Economic Studies.",
+      "desired_properties": ["nash_implementability", "arbitrary_social_choice_rules", "complete_information", "no_dictator"],
+      "structural_pattern": "COMPOSE(preference_profiles) -> MAP(social_choice_rule) -> COMPLETE(Nash_implementation) FAILS -> BREAK_SYMMETRY(restrict_to_monotonic_rules)",
+      "why_closure_fails": "If an alternative a is chosen at preference profile theta but not at theta', and agent i's lower contour set at a weakly expands from theta to theta', then no Nash equilibrium mechanism can distinguish the two profiles — agent i has no profitable deviation to signal the difference. This monotonicity requirement excludes welfare-maximizing rules that respond to cardinal preference intensities.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["GIBBARD_SATTERTHWAITE", "ARROW_SOCIAL_CHOICE"],
+      "key_references": [
+        "Maskin. 'Nash Equilibrium and Welfare Optimality.' Review of Economic Studies, 1999.",
+        "Moore, Repullo. 'Nash Implementation: A Full Characterization.' Econometrica, 1990.",
+        "Jackson. 'A Crash Course in Implementation Theory.' Social Choice and Welfare, 2001."
+      ]
+    },
+    {
+      "hub_id": "REVELATION_PRINCIPLE_LIMITS",
+      "hub_name": "Revelation Principle Computational Limits",
+      "domain": "Mechanism Design / Computational Economics",
+      "impossibility_statement": "While the revelation principle guarantees that any implementable outcome can be achieved by a direct truthful mechanism, the resulting direct mechanism may require exponential communication or computation; no computationally efficient truthful mechanism matches the welfare of the best non-truthful algorithm for combinatorial auctions",
+      "formal_source": "Nisan & Ronen (2001); Dobzinski & Nisan (2007). 'Communication Complexity of Approximate Mechanisms.'",
+      "desired_properties": ["truthfulness", "computational_efficiency", "communication_efficiency", "welfare_maximization"],
+      "structural_pattern": "COMPOSE(revelation_principle) -> COMPLETE(computational_efficiency) FAILS -> BREAK_SYMMETRY(approximate_or_restrict_domain)",
+      "why_closure_fails": "Direct revelation requires each agent to communicate their full type (exponential in item count for combinatorial valuations). Furthermore, maximal-in-range mechanisms (the only known class achieving truthfulness with bounded communication) must optimize over an exponentially large range, making polynomial-time truthful mechanisms provably worse than non-truthful polynomial approximation algorithms.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["GIBBARD_SATTERTHWAITE", "MYERSON_SATTERTHWAITE", "NO_FREE_LUNCH"],
+      "key_references": [
+        "Nisan, Ronen. 'Algorithmic Mechanism Design.' Games and Economic Behavior, 2001.",
+        "Dobzinski, Nisan. 'Limitations of VCG-Based Mechanisms.' Combinatorica 31(4), 2011.",
+        "Segal. 'The Communication Requirements of Social Choice Rules and Supporting Budget Sets.' J. Econ. Theory, 2007."
+      ]
+    },
+    {
+      "hub_id": "BILATERAL_TRADE_CHATTERJEE_SAMUELSON",
+      "hub_name": "Bilateral Trade Efficiency Gap",
+      "domain": "Mechanism Design / Bargaining Theory",
+      "impossibility_statement": "No incentive-compatible, individually rational, budget-balanced mechanism achieves full efficiency (ex-post trade whenever gains from trade exist) in bilateral trade with two-sided private information",
+      "formal_source": "Myerson & Satterthwaite (1983). 'Efficient Mechanisms for Bilateral Trading.' Also Chatterjee & Samuelson (1983).",
+      "desired_properties": ["ex_post_efficiency", "Bayesian_incentive_compatibility", "interim_individual_rationality", "budget_balance"],
+      "structural_pattern": "COMPOSE(bilateral_private_info) -> COMPLETE(efficient_trade) FAILS -> BREAK_SYMMETRY(subsidy_or_accept_inefficiency)",
+      "why_closure_fails": "With two-sided private information, the buyer has incentive to understate value and the seller to overstate cost. The information rent required to elicit truthful reports from both sides exceeds the gains from trade at the margin. By the envelope theorem, the expected subsidy needed equals the integral of virtual surplus below zero, which is strictly positive for overlapping type distributions.",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["MYERSON_SATTERTHWAITE", "GIBBARD_SATTERTHWAITE"],
+      "key_references": [
+        "Myerson, Satterthwaite. 'Efficient Mechanisms for Bilateral Trading.' J. Econ. Theory, 1983.",
+        "Chatterjee, Samuelson. 'Bargaining Under Incomplete Information.' Operations Research, 1983.",
+        "Hagerty, Rogerson. 'Robust Trading Mechanisms.' J. Econ. Theory, 1987."
+      ]
+    },
+    {
+      "hub_id": "COMPETITIVE_EQUILIBRIUM_INDIVISIBLE",
+      "hub_name": "Competitive Equilibrium with Indivisible Goods",
+      "domain": "General Equilibrium Theory",
+      "impossibility_statement": "Competitive equilibrium (Walrasian equilibrium with integer allocations) may fail to exist when goods are indivisible and agents have general preferences; when it exists, it may not be Pareto efficient or envy-free simultaneously",
+      "formal_source": "Kelso & Crawford (1982); Gul & Stacchetti (1999). 'Walrasian Equilibrium with Gross Substitutes.'",
+      "desired_properties": ["existence_of_equilibrium", "indivisible_goods", "general_preferences", "first_welfare_theorem"],
+      "structural_pattern": "COMPOSE(divisibility_assumption) -> EXTEND(indivisible_goods) FAILS -> BREAK_SYMMETRY(gross_substitutes_condition)",
+      "why_closure_fails": "Convexity of preferences and production sets is essential for existence via Kakutani's fixed-point theorem. With indivisible goods, the aggregate excess demand correspondence is not convex-valued: small price changes can cause discontinuous jumps in demand. The gross substitutes condition (Kelso-Crawford) restores existence by ensuring the demand correspondence has a lattice structure.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["ARROW_SOCIAL_CHOICE", "MYERSON_SATTERTHWAITE"],
+      "key_references": [
+        "Kelso, Crawford. 'Job Matching, Coalition Formation, and Gross Substitutes.' Econometrica, 1982.",
+        "Gul, Stacchetti. 'Walrasian Equilibrium with Gross Substitutes.' J. Econ. Theory, 1999.",
+        "Bikhchandani, Mamer. 'Competitive Equilibrium in an Exchange Economy with Indivisibilities.' J. Econ. Theory, 1997."
+      ]
+    },
+    {
+      "hub_id": "FOLK_THEOREM_BOUNDARY",
+      "hub_name": "Folk Theorem Boundaries in Repeated Games",
+      "domain": "Game Theory",
+      "impossibility_statement": "The folk theorem shows that virtually any individually rational payoff is sustainable as a Nash equilibrium in infinitely repeated games, but this breaks down with finite horizons, imperfect monitoring, or lack of common knowledge of rationality; backward induction forces defection in finitely repeated prisoner's dilemma",
+      "formal_source": "Friedman (1971); Fudenberg & Maskin (1986). 'The Folk Theorem in Repeated Games with Discounting or with Incomplete Information.'",
+      "desired_properties": ["cooperation_sustainability", "finite_horizon", "imperfect_monitoring", "bounded_rationality"],
+      "structural_pattern": "LIMIT(infinite_repetition) -> COMPLETE(cooperation) FAILS -> REDUCE(finite_horizon) -> BREAK_SYMMETRY(reputation_or_trembles)",
+      "why_closure_fails": "In finite games, backward induction from the last period unravels all cooperation: in the final round, defection dominates; knowing this, defection dominates in the penultimate round, etc. The infinite-horizon folk theorem relies on the threat of perpetual punishment having non-zero present value, which requires either infinite horizon, or sufficient uncertainty about the end date (Kreps et al., 1982).",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["NO_FREE_LUNCH", "GOODHART_LAW"],
+      "key_references": [
+        "Fudenberg, Maskin. 'The Folk Theorem in Repeated Games with Discounting or with Incomplete Information.' Econometrica, 1986.",
+        "Friedman. 'A Non-cooperative Equilibrium for Supergames.' Review of Economic Studies, 1971.",
+        "Kreps, Milgrom, Roberts, Wilson. 'Rational Cooperation in the Finitely Repeated Prisoners' Dilemma.' J. Econ. Theory, 1982."
+      ]
+    },
+    {
+      "hub_id": "DICTATORSHIP_WITHOUT_MONEY",
+      "hub_name": "Mechanism Design Without Money (Gibbard-Satterthwaite Extension)",
+      "domain": "Mechanism Design",
+      "impossibility_statement": "Without monetary transfers, any strategy-proof and onto social choice function over three or more alternatives with unrestricted preferences must be dictatorial; no non-dictatorial truthful mechanism exists without payments",
+      "formal_source": "Gibbard (1973); Satterthwaite (1975). Extensions by Barberà, Peleg, and others.",
+      "desired_properties": ["strategy_proofness", "non_dictatorship", "surjectivity", "unrestricted_domain"],
+      "structural_pattern": "COMPOSE(unrestricted_preferences) -> MAP(strategy_proof_SCF) -> COMPLETE(non_dictatorship) FAILS -> BREAK_SYMMETRY(restrict_domain_or_add_money)",
+      "why_closure_fails": "Strategy-proofness imposes severe monotonicity constraints on the social choice function. With three or more alternatives and unrestricted ordinal preferences, the only functions satisfying these monotonicity constraints are projections onto a single agent's preference (dictatorship). Monetary transfers break the impossibility by allowing compensation, expanding the space of incentive-compatible mechanisms.",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["GIBBARD_SATTERTHWAITE", "ARROW_SOCIAL_CHOICE", "SEN_LIBERAL_PARADOX"],
+      "key_references": [
+        "Gibbard. 'Manipulation of Voting Schemes: A General Result.' Econometrica, 1973.",
+        "Satterthwaite. 'Strategy-Proofness and Arrow's Conditions.' J. Econ. Theory, 1975.",
+        "Barberà. 'Strategy-proof Social Choice.' Handbook of Social Choice and Welfare, 2011."
+      ]
+    }
+  ],
+  "batch_4_quantum_information": [
+    {
+      "hub_id": "NO_BROADCASTING_THEOREM",
+      "hub_name": "No-Broadcasting Theorem",
+      "domain": "Quantum Information Theory",
+      "impossibility_statement": "No quantum operation can take a single copy of an arbitrary mixed quantum state and produce a bipartite state whose marginals are both equal to the original state; broadcasting (the mixed-state generalization of cloning) is impossible for non-commuting states",
+      "formal_source": "Barnum, Caves, Fuchs, Jozsa, Schumacher (1996). 'Noncommuting Mixed States Cannot Be Broadcast.'",
+      "desired_properties": ["arbitrary_mixed_state_input", "both_marginals_equal_original", "completely_positive_map", "trace_preserving"],
+      "structural_pattern": "COMPOSE(mixed_state) -> EXTEND(bipartite_copy) FAILS -> BREAK_SYMMETRY(commuting_states_only)",
+      "why_closure_fails": "Broadcasting requires a completely positive trace-preserving (CPTP) map Lambda such that Tr_B[Lambda(rho)] = Tr_A[Lambda(rho)] = rho for all rho in some set S. This is possible if and only if all states in S commute (i.e., are simultaneously diagonalizable). For non-commuting states, linearity of quantum mechanics plus the structure of CPTP maps makes this overconstrained: the Stinespring dilation forces entanglement with the environment that corrupts at least one marginal.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Barnum, Caves, Fuchs, Jozsa, Schumacher. 'Noncommuting Mixed States Cannot Be Broadcast.' Phys. Rev. Lett. 76, 1996.",
+        "Piani, Horodecki, Horodecki. 'No-Local-Broadcasting Theorem for Multipartite Quantum Correlations.' Phys. Rev. Lett. 100, 2008.",
+        "Luo. 'On Broadcasting of Quantum States.' Lett. Math. Phys. 92, 2010."
+      ]
+    },
+    {
+      "hub_id": "NO_DELETING_THEOREM",
+      "hub_name": "No-Deleting Theorem",
+      "domain": "Quantum Information Theory",
+      "impossibility_statement": "Given two copies of an arbitrary unknown quantum state, no quantum operation can delete one copy against the other, producing the original state tensor a fixed blank state; quantum information cannot be destroyed in a copy-specific manner",
+      "formal_source": "Pati & Braunstein (2000). 'Impossibility of Deleting an Unknown Quantum State.' Nature 404.",
+      "desired_properties": ["arbitrary_unknown_state", "linear_unitary_evolution", "one_copy_erased_to_blank", "other_copy_preserved"],
+      "structural_pattern": "DUALIZE(no_cloning) -> COMPLETE(deletion) FAILS -> BREAK_SYMMETRY(irreversible_decoherence)",
+      "why_closure_fails": "Unitarity of quantum mechanics requires that the map |psi>|psi>|A> -> |psi>|0>|A_psi> be unitary. By linearity, applying this to a superposition (alpha|0>+beta|1>)^2 and expanding, the cross terms cannot cancel: the inner product structure is incompatible with state-independent deletion. This is the time-reverse dual of no-cloning, reflecting unitarity = reversibility.",
+      "known_resolution_count": 3,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Pati, Braunstein. 'Impossibility of Deleting an Unknown Quantum State.' Nature 404, 2000.",
+        "Braunstein, Pati. 'Quantum Information Cannot Be Completely Hidden in Correlations.' Phys. Rev. Lett. 98, 2007."
+      ]
+    },
+    {
+      "hub_id": "MARGOLUS_LEVITIN_SPEED_LIMIT",
+      "hub_name": "Margolus-Levitin Quantum Speed Limit",
+      "domain": "Quantum Information / Quantum Computation",
+      "impossibility_statement": "A quantum system with average energy E above the ground state cannot transition to an orthogonal state faster than time t_min = pi*hbar/(2E); computation speed is fundamentally bounded by energy",
+      "formal_source": "Margolus & Levitin (1998). 'The Maximum Speed of Dynamical Evolution.' Physica D.",
+      "desired_properties": ["arbitrary_fast_state_evolution", "finite_energy", "orthogonal_state_transition", "unitary_dynamics"],
+      "structural_pattern": "COMPOSE(unitary_evolution) -> COMPLETE(arbitrary_speed) FAILS -> REDUCE(energy_bounded_rate)",
+      "why_closure_fails": "The overlap |<psi(0)|psi(t)>| between initial and evolved states is bounded below by cos^2(Et/hbar) for short times, from the Mandelstam-Tamm inequality extended by Margolus-Levitin. Orthogonality requires this overlap to vanish, setting a minimum time. This is a geometric constraint on the Fubini-Study metric: the geodesic speed on the projective Hilbert space is bounded by the energy variance.",
+      "known_resolution_count": 3,
+      "connection_to_existing_hubs": ["HEISENBERG_UNCERTAINTY", "NO_FREE_LUNCH"],
+      "key_references": [
+        "Margolus, Levitin. 'The Maximum Speed of Dynamical Evolution.' Physica D 120, 1998.",
+        "Mandelstam, Tamm. 'The Uncertainty Relation Between Energy and Time in Nonrelativistic Quantum Mechanics.' Izv. Akad. Nauk SSSR, 1945.",
+        "Deffner, Lutz. 'Quantum Speed Limit for Non-Markovian Dynamics.' Phys. Rev. Lett. 111, 2013."
+      ]
+    },
+    {
+      "hub_id": "HOLEVO_BOUND",
+      "hub_name": "Holevo Bound on Classical Capacity",
+      "domain": "Quantum Information Theory",
+      "impossibility_statement": "The accessible classical information from a quantum ensemble {p_i, rho_i} is bounded above by the Holevo quantity chi = S(sum_i p_i rho_i) - sum_i p_i S(rho_i); a qubit can transmit at most 1 classical bit regardless of measurement strategy",
+      "formal_source": "Holevo (1973). 'Bounds for the Quantity of Information Transmitted by a Quantum Communication Channel.' Problems of Information Transmission.",
+      "desired_properties": ["arbitrary_measurement_strategy", "exceed_one_bit_per_qubit", "quantum_ensemble_encoding", "classical_decoding"],
+      "structural_pattern": "COMPOSE(quantum_encoding) -> MAP(measurement) -> COMPLETE(classical_capacity) FAILS -> REDUCE(von_Neumann_entropy_bound)",
+      "why_closure_fails": "Quantum measurement collapses superpositions, irreversibly losing information about the encoding basis. The mutual information I(X:Y) between the classical input X and measurement outcome Y is bounded by the Holevo chi quantity, which itself is bounded by log(d) for d-dimensional systems. This follows from strong subadditivity of von Neumann entropy and the data processing inequality for quantum channels.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Holevo. 'Bounds for the Quantity of Information Transmitted by a Quantum Communication Channel.' Probl. Peredachi Inf. 9(3), 1973.",
+        "Hausladen et al. 'Classical Information Capacity of a Quantum Channel.' Phys. Rev. A 54, 1996.",
+        "Schumacher, Westmoreland. 'Sending Classical Information via Noisy Quantum Channels.' Phys. Rev. A 56, 1997."
+      ]
+    },
+    {
+      "hub_id": "TSIRELSON_BOUND",
+      "hub_name": "Tsirelson's Bound on Quantum Correlations",
+      "domain": "Quantum Foundations / Nonlocality",
+      "impossibility_statement": "Quantum correlations in a Bell experiment (CHSH inequality) cannot exceed 2*sqrt(2), even though the algebraic maximum is 4 and no-signaling allows up to 4; quantum mechanics is nonlocal but not maximally nonlocal",
+      "formal_source": "Tsirelson (Cirel'son) (1980). 'Quantum Generalizations of Bell's Inequality.' Letters in Mathematical Physics.",
+      "desired_properties": ["maximal_Bell_violation", "quantum_realization", "finite_dimensional_Hilbert_space", "projective_measurements"],
+      "structural_pattern": "COMPOSE(quantum_correlations) -> COMPLETE(maximal_nonlocality) FAILS -> SYMMETRIZE(Hilbert_space_structure_constrains)",
+      "why_closure_fails": "The CHSH operator B = A1(B1+B2) + A2(B1-B2) satisfies B^2 <= 4I + [A1,A2][B1,B2]. For projective measurements (A^2=B^2=I), this gives ||B|| <= 2*sqrt(2). The bound is tight (achieved by maximally entangled states with appropriate measurement angles). The gap between 2*sqrt(2) and 4 reflects the tensor product structure of quantum Hilbert space imposing constraints beyond mere no-signaling.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["BELLS_THEOREM", "HEISENBERG_UNCERTAINTY", "NO_CLONING_THEOREM"],
+      "key_references": [
+        "Cirel'son (Tsirelson). 'Quantum Generalizations of Bell's Inequality.' Lett. Math. Phys. 4, 1980.",
+        "Popescu, Rohrlich. 'Quantum Nonlocality as an Axiom.' Found. Phys. 24, 1994.",
+        "Navascues, Pironio, Acin. 'Bounding the Set of Quantum Correlations.' Phys. Rev. Lett. 98, 2007."
+      ]
+    },
+    {
+      "hub_id": "QUANTUM_ERROR_CORRECTION_THRESHOLD",
+      "hub_name": "Quantum Error Correction Threshold Theorem",
+      "domain": "Quantum Computation / Fault Tolerance",
+      "impossibility_statement": "Reliable quantum computation is impossible if the physical error rate per gate exceeds a threshold value p_th (estimated ~1%); below threshold, arbitrarily long computation is possible with polylogarithmic overhead, but the threshold itself cannot be exceeded",
+      "formal_source": "Aharonov & Ben-Or (1997); Knill, Laflamme, Zurek (1998). 'Resilient Quantum Computation: Error Models and Thresholds.'",
+      "desired_properties": ["arbitrary_error_rate_tolerance", "polynomial_overhead", "fault_tolerant_gates", "scalable_computation"],
+      "structural_pattern": "COMPOSE(noisy_gates) -> COMPLETE(reliable_computation) FAILS -> BREAK_SYMMETRY(concatenated_codes_below_threshold)",
+      "why_closure_fails": "Above threshold, error correction introduces more errors than it removes: each round of syndrome extraction uses faulty gates that propagate errors faster than correction removes them. The threshold is set by the balance point where the effective error rate after one level of concatenation equals the physical rate. This is a fixed-point condition on the error-rate recursion: p_eff(p) = c*p^2 has fixed point at p_th = 1/c.",
+      "known_resolution_count": 5,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "CAP_THEOREM"],
+      "key_references": [
+        "Aharonov, Ben-Or. 'Fault-Tolerant Quantum Computation with Constant Error Rate.' SIAM J. Comput. 38(4), 2008 (circulated 1997).",
+        "Knill, Laflamme, Zurek. 'Resilient Quantum Computation: Error Models and Thresholds.' Proc. R. Soc. A, 1998.",
+        "Aliferis, Gottesman, Preskill. 'Quantum Accuracy Threshold for Concatenated Distance-3 Codes.' Quant. Inf. Comput. 6, 2006."
+      ]
+    },
+    {
+      "hub_id": "ENTANGLEMENT_MONOGAMY",
+      "hub_name": "Monogamy of Entanglement",
+      "domain": "Quantum Information Theory",
+      "impossibility_statement": "If qubit A is maximally entangled with qubit B, it cannot be entangled with any third qubit C at all; entanglement is a limited resource that cannot be freely shared — quantified by CKW inequality: E(A:B) + E(A:C) <= E(A:BC)",
+      "formal_source": "Coffman, Kundu, Wootters (2000). 'Distributed Entanglement.' Phys. Rev. A.",
+      "desired_properties": ["maximal_entanglement_with_multiple_parties", "arbitrary_sharing", "quantum_correlations", "no_constraint_on_distribution"],
+      "structural_pattern": "COMPOSE(bipartite_entanglement) -> EXTEND(third_party) FAILS -> REDUCE(monogamy_constraint)",
+      "why_closure_fails": "Maximal entanglement between A and B means the reduced state rho_A is maximally mixed, leaving no purity to correlate with C. Formally, the squared concurrence satisfies C^2(A:B) + C^2(A:C) <= C^2(A:BC). This is ultimately a consequence of the no-cloning theorem: if entanglement could be freely shared, one could use teleportation to clone arbitrary states.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "BELLS_THEOREM", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Coffman, Kundu, Wootters. 'Distributed Entanglement.' Phys. Rev. A 61, 2000.",
+        "Osborne, Verstraete. 'General Monogamy Inequality for Bipartite Qubit Entanglement.' Phys. Rev. Lett. 96, 2006.",
+        "Koashi, Winter. 'Monogamy of Quantum Entanglement and Other Correlations.' Phys. Rev. A 69, 2004."
+      ]
+    },
+    {
+      "hub_id": "NO_COMMUNICATION_THEOREM",
+      "hub_name": "No-Communication (No-Signaling) Theorem",
+      "domain": "Quantum Foundations / Relativity",
+      "impossibility_statement": "No manipulation of one half of an entangled pair can transmit information to the holder of the other half; quantum correlations cannot be used for superluminal signaling",
+      "formal_source": "Ghirardi, Rimini, Weber (1980); Peres & Terno (2004). 'Quantum Information and Relativity Theory.'",
+      "desired_properties": ["superluminal_communication", "entanglement_as_channel", "local_measurement_choice_affects_remote_statistics", "violation_of_relativistic_causality"],
+      "structural_pattern": "COMPOSE(entanglement + local_operations) -> COMPLETE(superluminal_signal) FAILS -> SYMMETRIZE(partial_trace_invariance)",
+      "why_closure_fails": "The reduced density matrix of Bob's system is rho_B = Tr_A[rho_AB], which is independent of Alice's choice of measurement basis. This follows from linearity of the partial trace and the fact that all of Alice's measurement operators {M_a} satisfy sum_a M_a^dagger M_a = I_A (completeness). The marginal statistics at B are invariant under any local operation at A, making signaling impossible despite nonlocal correlations.",
+      "known_resolution_count": 3,
+      "connection_to_existing_hubs": ["BELLS_THEOREM", "NO_CLONING_THEOREM", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Ghirardi, Rimini, Weber. 'A General Argument Against Superluminal Transmission Through the Quantum Mechanical Measurement Process.' Lettere al Nuovo Cimento, 1980.",
+        "Peres, Terno. 'Quantum Information and Relativity Theory.' Rev. Mod. Phys. 76, 2004.",
+        "Eberhard. 'Bell's Theorem and the Different Concepts of Locality.' Il Nuovo Cimento B, 1978."
+      ]
+    },
+    {
+      "hub_id": "QUANTUM_CAPACITY_NO_ADDITIVITY",
+      "hub_name": "Non-Additivity of Quantum Channel Capacity",
+      "domain": "Quantum Information Theory",
+      "impossibility_statement": "The quantum capacity and classical capacity of quantum channels are not additive: two channels with zero individual quantum capacity can have positive joint capacity when used together (superactivation); no single-letter formula exists for general quantum channel capacity",
+      "formal_source": "Hastings (2009). 'Superadditivity of Communication Capacity Using Entangled Inputs.' Also Smith & Yard (2008) for superactivation.",
+      "desired_properties": ["single_letter_capacity_formula", "additivity_of_capacity", "independent_channel_use", "computable_capacity"],
+      "structural_pattern": "COMPOSE(channel_1 x channel_2) -> REDUCE(individual_capacities) -> COMPLETE(joint_capacity = sum) FAILS -> BREAK_SYMMETRY(entangled_inputs)",
+      "why_closure_fails": "Entangled inputs across channel uses create correlations that cannot be decomposed into independent single-channel contributions. Hastings showed a random counterexample to the minimum output entropy conjecture, proving that Holevo capacity is non-additive. Smith & Yard showed two zero-capacity channels can be superactivated because one provides private classical capacity that 'unlocks' the other's quantum capacity via entanglement distillation.",
+      "known_resolution_count": 3,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "HOLEVO_BOUND"],
+      "key_references": [
+        "Hastings. 'Superadditivity of Communication Capacity Using Entangled Inputs.' Nature Physics 5, 2009.",
+        "Smith, Yard. 'Quantum Communication with Zero-Capacity Channels.' Science 321, 2008.",
+        "Shor. 'Equivalence of Additivity Questions in Quantum Information Theory.' Commun. Math. Phys. 246, 2004."
+      ]
+    },
+    {
+      "hub_id": "NO_HIDING_THEOREM",
+      "hub_name": "No-Hiding Theorem",
+      "domain": "Quantum Information Theory",
+      "impossibility_statement": "Quantum information cannot be hidden in quantum correlations between a system and its environment; if information is missing from the system, it must reside entirely in the environment (not in correlations between them)",
+      "formal_source": "Braunstein & Pati (2007). 'Quantum Information Cannot Be Completely Hidden in Correlations.' Phys. Rev. Lett.",
+      "desired_properties": ["information_hidden_in_correlations", "missing_from_both_subsystems", "unitarity_preserved", "quantum_information_conservation"],
+      "structural_pattern": "COMPOSE(system + environment) -> MAP(unitary_evolution) -> COMPLETE(information_hiding) FAILS -> DUALIZE(information_moves_to_complement)",
+      "why_closure_fails": "For a unitary bleaching process U|psi>|A> = |0>|A_psi>, the unitarity condition forces |A_psi> to encode all information about |psi>. The Hilbert-Schmidt inner product structure ensures that the information is not split between system-environment correlations and subsystems: by the Schmidt decomposition, if the system is in a fixed pure state (information erased), all information is in the environment. This is a conservation law for quantum information.",
+      "known_resolution_count": 3,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "NO_DELETING_THEOREM", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Braunstein, Pati. 'Quantum Information Cannot Be Completely Hidden in Correlations: Implications for the Black-Hole Information Paradox.' Phys. Rev. Lett. 98, 2007.",
+        "Samal, Pati, Kumar. 'Experimental Test of the Quantum No-Hiding Theorem.' Phys. Rev. Lett. 106, 2011."
+      ]
+    },
+    {
+      "hub_id": "EASTIN_KNILL_THEOREM",
+      "hub_name": "Eastin-Knill Theorem on Transversal Gates",
+      "domain": "Quantum Error Correction",
+      "impossibility_statement": "No quantum error-correcting code can implement a universal set of transversal logical gates; transversality and universality are incompatible for any stabilizer or general QECC",
+      "formal_source": "Eastin & Knill (2009). 'Restrictions on Transversal Encoded Quantum Gate Sets.' Phys. Rev. Lett.",
+      "desired_properties": ["transversal_gate_implementation", "universal_gate_set", "fault_tolerance", "arbitrary_QECC"],
+      "structural_pattern": "COMPOSE(transversal_gates) -> COMPLETE(universality) FAILS -> BREAK_SYMMETRY(magic_state_distillation)",
+      "why_closure_fails": "Transversal gates act independently on each physical qubit, making them naturally fault-tolerant. However, they form a finite group (being tensor products of single-qubit unitaries that permute the code space). Any continuous gate (e.g., T gate or arbitrary rotation) cannot be transversal because the discreteness of the transversal gate group prevents density in SU(2^k). Universality requires a dense subgroup of SU(2^k), which is incompatible with the tensor product structure of transversal gates.",
+      "known_resolution_count": 4,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "QUANTUM_ERROR_CORRECTION_THRESHOLD"],
+      "key_references": [
+        "Eastin, Knill. 'Restrictions on Transversal Encoded Quantum Gate Sets.' Phys. Rev. Lett. 102, 2009.",
+        "Bravyi, Kitaev. 'Universal Quantum Computation with Ideal Clifford Gates and Noisy Ancillas.' Phys. Rev. A 71, 2005.",
+        "Jochym-O'Connor, Laflamme. 'Using Concatenated Quantum Codes for Universal Fault-Tolerant Quantum Gates.' Phys. Rev. Lett. 112, 2014."
+      ]
+    },
+    {
+      "hub_id": "QUANTUM_KEY_DISTRIBUTION_RATE_LIMIT",
+      "hub_name": "PLOB Bound on Quantum Key Distribution Rate",
+      "domain": "Quantum Cryptography / Quantum Communication",
+      "impossibility_statement": "The secret key rate of quantum key distribution over a lossy bosonic channel with transmittance eta cannot exceed -log2(1-eta) bits per channel use; for long distances (eta -> 0), the rate scales linearly with eta, imposing fundamental distance limits without quantum repeaters",
+      "formal_source": "Pirandola, Laurenza, Ottaviani, Banchi (2017). 'Fundamental Limits of Repeaterless Quantum Communications.' Nature Communications.",
+      "desired_properties": ["unlimited_key_rate", "arbitrary_distance", "no_quantum_repeaters", "lossy_channel"],
+      "structural_pattern": "COMPOSE(lossy_channel) -> COMPLETE(key_distribution) FAILS -> EXTEND(quantum_repeaters)",
+      "why_closure_fails": "The relative entropy of entanglement provides an upper bound on distillable key via the squashed entanglement. For a pure-loss channel with transmittance eta, the maximum entanglement that can be distributed is -log2(1-eta) ebits per use. This is achieved by the reverse coherent information and cannot be exceeded by any adaptive protocol, because teleportation simulation reduces any adaptive protocol to a non-adaptive one over the channel's Choi state.",
+      "known_resolution_count": 3,
+      "connection_to_existing_hubs": ["NO_CLONING_THEOREM", "HOLEVO_BOUND", "HEISENBERG_UNCERTAINTY"],
+      "key_references": [
+        "Pirandola, Laurenza, Ottaviani, Banchi. 'Fundamental Limits of Repeaterless Quantum Communications.' Nature Commun. 8, 2017.",
+        "Takeoka, Guha, Wilde. 'Fundamental Rate-Loss Tradeoff for Optical Quantum Key Distribution.' Nature Commun. 5, 2014.",
+        "Wilde, Tomamichel, Berta. 'Converse Bounds for Private Communication Over Quantum Channels.' IEEE Trans. Inf. Theory, 2017."
+      ]
+    }
+  ]
+}
