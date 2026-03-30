@@ -246,10 +246,12 @@ def call_llm(prompt: str, system: str = "") -> str:
 
 SYSTEM_PROMPT = """You are Metis, the analytical brain of the Prometheus research program.
 
-Prometheus probes transformer model internals for reasoning circuits using:
-- Ignis: CMA-ES evolutionary search for steering vectors in the residual stream
-- Arcanum: waste stream novelty mining for unexpected artifacts
-- RPH (Reasoning Precipitation Hypothesis): reasoning circuits precipitate at scale
+Prometheus is a multi-agent research system investigating reasoning circuits in transformers:
+- Ignis: CMA-ES evolutionary steering vectors + corpus training (Stage D at gen 125, 17/30 flips)
+- Noesis: continuous tensor exploration for compositional reasoning (round 2 designed)
+- Forge pipeline: 200+ reasoning evaluation tools, 113-category battery, computation-first architecture
+- RPH (Reasoning Precipitation Hypothesis): reasoning = dynamic updating; transformers suppress it
+- RLVF: using forge tools as reward signal for training Rhea (design doc complete)
 
 Your job: read the Eos horizon scanner's findings, cross-reference with our project
 context, and produce a brief with exactly three sections:
@@ -257,23 +259,53 @@ context, and produce a brief with exactly three sections:
 ## Act on this
 Items requiring immediate action. New tools to integrate, papers that challenge
 our approach, free API resources discovered, code repos we should clone.
-Each item: one sentence what it is, one sentence what to do.
+Each item: one **bold headline**, one sentence what it is, one sentence what to do.
 
 ## Watch this
-Items worth monitoring over the next week. Emerging trends, papers in review,
-repos gaining traction. No action needed yet.
+Items worth monitoring over the next week. No action needed yet.
 
 ## For the record
-Notable but no action needed. Validates our direction, interesting but tangential,
-or "good to know" items.
+Notable but no action needed.
 
 Rules:
 - Maximum 3 items per section (9 total). Compress ruthlessly.
-- Lead every item with a bold one-line headline.
-- Be specific about what action to take ("clone repo X", "read section 3 of paper Y").
+- Lead every item with a **bold one-line headline**.
+- Be specific about actions ("clone repo X", "read section 3 of paper Y").
 - Flag anything that suggests we should pivot or accelerate.
-- If nothing warrants action, say so. Don't manufacture urgency.
+- If nothing warrants action, say "No new action items." Do NOT repeat items from PRIORITIES.md.
+- CRITICAL: Do NOT repeat items that are already in the project priorities. Only surface genuinely NEW findings from Eos. If the Eos findings are all previously known, say so explicitly.
+- Items from prior cycles that have not changed are NOT news. Only flag items that are NEW since the last digest.
 """
+
+
+def _detect_staleness() -> str:
+    """Check if the last N briefs are substantially the same. Returns warning or empty string."""
+    briefs = sorted(BRIEFS_DIR.glob("*_brief.md"), reverse=True)[:5]
+    if len(briefs) < 2:
+        return ""
+    try:
+        import hashlib
+        # Hash the "Act on this" sections of recent briefs
+        act_hashes = []
+        for b in briefs:
+            text = b.read_text(encoding="utf-8")
+            act_m = re.search(r'## Act on this\s*\n(.*?)(?=\n## |\Z)', text, re.DOTALL)
+            if act_m:
+                # Normalize: strip dates, timestamps, numbers
+                content = re.sub(r'\d{4}-\d{2}-\d{2}', '', act_m.group(1))
+                content = re.sub(r'\d+:\d+', '', content)
+                content = re.sub(r'\s+', ' ', content).strip().lower()
+                act_hashes.append(hashlib.sha256(content.encode()).hexdigest()[:16])
+        # If 3+ consecutive briefs have identical Act hashes, flag staleness
+        if len(act_hashes) >= 3 and len(set(act_hashes[:3])) == 1:
+            return (
+                "\n\nWARNING: The last 3 briefs had identical 'Act on this' sections. "
+                "This means either PRIORITIES.md is stale (update it!) or Eos is not finding "
+                "new content. Check both before generating another brief."
+            )
+    except Exception:
+        pass
+    return ""
 
 
 def generate_brief(digest_path: Path) -> str:
@@ -281,6 +313,11 @@ def generate_brief(digest_path: Path) -> str:
 
     log.info(f"Reading digest: {digest_path.name}")
     digest_text = digest_path.read_text(encoding="utf-8")
+
+    # Check for staleness
+    staleness_warning = _detect_staleness()
+    if staleness_warning:
+        log.warning(staleness_warning.strip())
 
     # Extract the high-value sections
     findings = extract_attention_items(digest_text)
@@ -297,9 +334,13 @@ Produce the executive brief.
 
 --- PROJECT CONTEXT ---
 {context[:3000]}
+{staleness_warning}
 
 --- PRODUCE THE BRIEF ---
 Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
+
+IMPORTANT: Only include items that are genuinely NEW from Eos. Do not repeat existing priorities.
+If Eos found nothing new, say "No new action items — Eos scan returned previously known results."
 """
 
     return call_llm(prompt, system=SYSTEM_PROMPT)

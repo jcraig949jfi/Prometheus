@@ -1,193 +1,265 @@
 import re
 import zlib
-import numpy as np
 from typing import List, Dict, Tuple
 
 class ReasoningTool:
     """
-    SMAGTR-inspired Reasoning Tool (Simplified for constraints).
+    Structure-Mapping Abductive Game-Theoretic Reasoner (SMAGTR)
     
     Mechanism:
-    1. Analogical/Abductive Scoring (Structural Priors): 
-       Parses prompt for logical structures (negations, comparatives, conditionals, numbers).
-       Scores candidates based on structural alignment (e.g., if prompt has negation, 
-       candidates with negation get higher prior; if numeric, checks math validity).
-    2. Nash Equilibrium (Stability Check):
-       Treats structural features as 'agents'. A candidate's score is penalized if it 
-       satisfies one agent (e.g., length match) but contradicts another (e.g., logical negation).
-       This mimics the 'cost for deviating from consensus' in the theoretical model.
-    3. NCD Tiebreaker:
-       Used only when structural scores are identical, acting as a similarity baseline.
-       
-    This approach prioritizes logical structure over string similarity, beating pure NCD.
+    1. Epistemic Honesty (Meta-Confidence): Before scoring, analyzes the prompt for 
+       Tier B traps (presuppositions, scope ambiguity, false dichotomies). If detected,
+       caps confidence to ensure honesty over false competence.
+    2. Structural Parsing (The "Analogy"): Maps the logical structure of the prompt 
+       (negations, comparatives, conditionals) to the candidates. This acts as the 
+       structural mapping engine.
+    3. Abductive Scoring: Candidates are scored on explanatory virtue (structural match).
+    4. Game-Theoretic Equilibrium (The "Nash"): Candidates compete. The score is adjusted
+       by a "consensus cost" (deviation from the mean structural signature). This simulates
+       agents minimizing regret by aligning with robust structural patterns rather than 
+       idiosyncratic noise.
+    5. NCD Tiebreaker: Used only when structural signals are weak.
     """
 
     def __init__(self):
-        self.negation_words = {'no', 'not', 'never', 'none', 'cannot', "n't"}
-        self.comparative_ops = {'>', '<', 'greater', 'less', 'more', 'fewer', 'larger', 'smaller'}
-        self.cond_words = {'if', 'then', 'else', 'unless', 'provided'}
+        # Keywords for structural parsing
+        self._negations = ['no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing']
+        self._comparatives = ['greater', 'less', 'more', 'fewer', 'larger', 'smaller', 'better', 'worse']
+        self._conditionals = ['if', 'then', 'unless', 'otherwise']
+        self._presupposition_triggers = ['stopped', 'quit', 'failed', 'regret', 'assume', 'believe']
+        self._scope_triggers = ['every', 'each', 'all']
+        self._dichotomy_triggers = ['either', 'or', 'choose between']
 
-    def _extract_features(self, text: str) -> dict:
-        """Extract logical and structural features from text."""
-        lower = text.lower()
-        words = set(re.findall(r'\b\w+\b', lower))
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Evaluates the prompt for Tier B traps (Ambiguity, Presupposition, Unanswerability).
+        Returns a cap value: low if traps detected, 1.0 if clean.
+        """
+        p_lower = prompt.lower()
+        words = p_lower.split()
         
-        has_negation = bool(words & self.negation_words)
-        has_comparative = bool(words & self.comparative_ops) or bool(re.search(r'[<>]', text))
-        has_conditional = bool(words & self.cond_words)
+        # 1. Presupposition Check ("Have you stopped...", "Why did X fail...")
+        # Look for triggers combined with question markers or specific phrasing
+        if any(t in p_lower for t in ['have you', 'did you', 'why did', 'when did']):
+            if any(trig in p_lower for trig in self._presupposition_triggers):
+                return 0.2
         
-        # Extract numbers
-        nums = re.findall(r'-?\d+\.?\d*', text)
-        numbers = [float(n) for n in nums] if nums else []
+        # 2. Scope Ambiguity ("Every X did a Y" - implies potential ambiguity in 'same Y')
+        # Heuristic: "Every" + plural noun + verb + "a/an" + noun + "?"
+        if any(w in words for w in self._scope_triggers):
+            if '?' in prompt and re.search(r'every\s+\w+\s+\w+\s+a\s+\w', p_lower):
+                return 0.25
+
+        # 3. False Dichotomy ("Either A or B" without context)
+        if 'either' in p_lower and 'or' in p_lower:
+            # Simple heuristic: if it asks to choose but options aren't exhaustive or clear
+            if 'choose' in p_lower or 'which' in p_lower:
+                return 0.25
+
+        # 4. Subjectivity / Unanswerability
+        subjective_terms = ['best', 'worst', 'favorite', 'opinion', 'think about']
+        if any(term in p_lower for term in subjective_terms) and 'objective' not in p_lower:
+            # Only flag if no clear metric is provided in the prompt
+            if 'metric' not in p_lower and 'count' not in p_lower and 'calculate' not in p_lower:
+                return 0.2
+
+        return 1.0
+
+    def _extract_structure(self, text: str) -> Dict[str, any]:
+        """Extracts logical features: negations, comparatives, conditionals, numbers."""
+        t_lower = text.lower()
+        words = t_lower.split()
+        
+        has_negation = any(w in self._negations for w in words)
+        has_comparative = any(c in t_lower for c in self._comparatives)
+        has_conditional = any(c in t_lower for c in self._conditionals)
+        
+        # Extract numbers for constructive computation
+        numbers = re.findall(r"-?\d+\.?\d*", text)
+        nums = [float(n) for n in numbers]
         
         return {
-            'negation': has_negation,
-            'comparative': has_comparative,
-            'conditional': has_conditional,
-            'numbers': numbers,
-            'length': len(text),
-            'word_count': len(words)
+            'neg': has_negation,
+            'comp': has_comparative,
+            'cond': has_conditional,
+            'nums': nums,
+            'len': len(text)
         }
-
-    def _check_logical_consistency(self, prompt_feats: dict, cand_feats: dict, candidate: str) -> float:
-        """
-        Simulates the 'Nash Equilibrium' stability check.
-        Returns a penalty score (0.0 = stable/consistent, negative = unstable/contradictory).
-        """
-        penalty = 0.0
-        
-        # Agent 1: Negation Consistency
-        # If prompt implies negation, candidate should likely reflect it or be explicitly contradictory
-        if prompt_feats['negation']:
-            if not cand_feats['negation']:
-                # Heuristic: If prompt says "not X", and candidate is just "X", penalize.
-                # Simple check: does candidate repeat prompt words without negation?
-                penalty -= 0.2
-        
-        # Agent 2: Numeric Consistency
-        if prompt_feats['numbers'] and cand_feats['numbers']:
-            p_nums = prompt_feats['numbers']
-            c_nums = cand_feats['numbers']
-            
-            # Check comparative logic if present
-            if prompt_feats['comparative']:
-                if 'larger' in candidate.lower() or 'greater' in candidate.lower() or '>' in candidate:
-                    if c_nums[0] <= max(p_nums): penalty -= 0.3
-                elif 'smaller' in candidate.lower() or 'less' in candidate.lower() or '<' in candidate:
-                    if c_nums[0] >= min(p_nums): penalty -= 0.3
-            else:
-                # If numbers exist but no comparative, exact match or close is often expected in simple QA
-                if abs(c_nums[0] - p_nums[0]) > 1e-6:
-                     penalty -= 0.1
-
-        # Agent 3: Conditional/Length stability (Anti-gaming)
-        # If prompt is a complex conditional, very short answers might be unstable
-        if prompt_feats['conditional'] and cand_feats['word_count'] < 3:
-            penalty -= 0.1
-            
-        return penalty
 
     def _compute_ncd(self, s1: str, s2: str) -> float:
         """Normalized Compression Distance using zlib."""
-        if not s1 or not s2: return 1.0
+        if not s1 or not s2:
+            return 1.0
         c1 = len(zlib.compress(s1.encode()))
         c2 = len(zlib.compress(s2.encode()))
         c12 = len(zlib.compress((s1 + s2).encode()))
-        denom = max(c1, c2)
-        if denom == 0: return 1.0
-        return (c12 - min(c1, c2)) / denom
+        
+        max_len = max(c1, c2)
+        if max_len == 0:
+            return 0.0
+        return (c12 - min(c1, c2)) / max_len
+
+    def _structural_match_score(self, prompt_struct: Dict, cand_text: str) -> float:
+        """
+        Scores a candidate based on structural alignment with the prompt.
+        This is the core "Analogical Mapping" step.
+        """
+        cand_struct = self._extract_structure(cand_text)
+        score = 0.0
+        matches = 0
+        total_features = 4  # neg, comp, cond, numeric_logic
+
+        # 1. Negation Alignment
+        if prompt_struct['neg'] == cand_struct['neg']:
+            score += 0.25
+        matches += 1
+
+        # 2. Comparative Alignment
+        if prompt_struct['comp'] == cand_struct['comp']:
+            score += 0.25
+        matches += 1
+
+        # 3. Conditional Alignment
+        if prompt_struct['cond'] == cand_struct['cond']:
+            score += 0.25
+        matches += 1
+
+        # 4. Constructive Computation (Numeric)
+        # If prompt has numbers, candidate should ideally reflect a calculation or specific number
+        if len(prompt_struct['nums']) > 0:
+            # Check if candidate contains any number from prompt or a result derived from them
+            cand_nums = cand_struct['nums']
+            if cand_nums:
+                # Simple heuristic: Does the candidate contain a number close to a simple operation?
+                # Or just presence of numbers boosts score if prompt has them
+                score += 0.25
+            # If prompt has numbers but candidate has none, penalize heavily for reasoning tasks
+            elif len(prompt_struct['nums']) > 0 and "no" not in cand_text.lower() and "none" not in cand_text.lower():
+                 # Only penalize if it looks like a math/logic problem context
+                 if any(x in prompt_struct['nums'] for x in [1,2,3,4,5]) or len(prompt_struct['nums']) >= 2:
+                     score -= 0.2 # Penalty
+        else:
+            score += 0.25 # Neutral match
+            
+        return max(0.0, min(1.0, score))
+
+    def _game_theoretic_adjustment(self, base_scores: List[float], candidates: List[str]) -> List[float]:
+        """
+        Simulates Nash Equilibrium convergence.
+        Agents (candidates) with high abductive score but low structural consensus 
+        (outliers) get penalized. Agents aligning with the 'consensus' of valid 
+        structural patterns get a boost.
+        """
+        if not base_scores:
+            return []
+        
+        adjusted = []
+        mean_score = sum(base_scores) / len(base_scores)
+        
+        # Variance as a measure of population stability
+        variance = sum((s - mean_score)**2 for s in base_scores) / len(base_scores)
+        stability_factor = 1.0 / (1.0 + variance) if variance > 0 else 1.0
+
+        for i, score in enumerate(base_scores):
+            # Consensus cost: Deviation from the mean structural "truth"
+            # In a real SME, this would be relational alignment. 
+            # Here, we simulate it by favoring scores closer to the cluster of high scorers.
+            
+            deviation = abs(score - mean_score)
+            
+            # If the candidate is an outlier (high deviation) and the population is diverse,
+            # apply a penalty unless the score is exceptionally high (strong abductive signal)
+            if deviation > 0.3 and score < 0.8:
+                score *= 0.8 # Penalize isolated hypotheses
+            
+            # Apply stability factor (global equilibrium pressure)
+            final_score = score * (0.7 + 0.3 * stability_factor)
+            adjusted.append(final_score)
+            
+        return adjusted
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         if not candidates:
             return []
-            
-        prompt_feats = self._extract_features(prompt)
-        results = []
+
+        prompt_struct = self._extract_structure(prompt)
+        base_scores = []
         
-        # Phase 1: Abductive Scoring (Structural Alignment)
-        scores = []
+        # Step 1: Abductive Scoring via Structural Mapping
         for cand in candidates:
-            cand_feats = self._extract_features(cand)
+            s_score = self._structural_match_score(prompt_struct, cand)
             
-            # Base score from structural alignment
-            score = 0.5
-            
-            # Bonus for matching negation status (Analogical mapping of logical form)
-            if prompt_feats['negation'] == cand_feats['negation']:
-                score += 0.2
-            
-            # Bonus for numeric presence if prompt has numbers
-            if prompt_feats['numbers']:
-                if cand_feats['numbers']:
-                    score += 0.2
-                else:
-                    score -= 0.1
-            
-            # Apply Nash-style stability penalty
-            stability_penalty = self._check_logical_consistency(prompt_feats, cand_feats, cand)
-            score += stability_penalty
-            
-            scores.append(score)
-        
-        # Normalize scores to avoid negative dominance if all are bad
-        min_s = min(scores)
-        max_s = max(scores)
-        range_s = max_s - min_s if max_s != min_s else 1.0
-        
-        ranked_candidates = []
-        for i, cand in enumerate(candidates):
-            # Normalize structural score
-            norm_score = (scores[i] - min_s) / range_s
-            
-            # NCD as tiebreaker/secondary signal
-            # We invert NCD (1 - ncd) so higher is better, then weight it lightly
+            # Step 2: NCD as tiebreaker (max 15% weight)
+            # Only used if structural score is ambiguous or low
             ncd_val = self._compute_ncd(prompt, cand)
-            ncd_score = (1.0 - ncd_val) * 0.1 
+            # Invert NCD (lower is better) and scale
+            ncd_score = (1.0 - ncd_val) * 0.15 
             
-            final_score = norm_score * 0.9 + ncd_score * 0.1
-            
-            # Reasoning summary
-            reasoning = f"Structural alignment: {scores[i]:.2f}; Stability: {scores[i] - norm_score:.2f}; NCD backup: {1-ncd_val:.2f}"
-            
-            ranked_candidates.append({
+            # Weighted sum: Structural >= 50%, Computation logic handled in struct, NCD <= 15%
+            # We boost structural to dominate
+            final_base = (s_score * 0.85) + ncd_score
+            base_scores.append(final_base)
+
+        # Step 3: Game-Theoretic Equilibrium Adjustment
+        adjusted_scores = self._game_theoretic_adjustment(base_scores, candidates)
+
+        # Construct result
+        results = []
+        for i, cand in enumerate(candidates):
+            results.append({
                 "candidate": cand,
-                "score": float(final_score),
-                "reasoning": reasoning
+                "score": adjusted_scores[i],
+                "reasoning": f"Structural match: {base_scores[i]:.2f}, Game-adjusted: {adjusted_scores[i]:.2f}"
             })
-            
+        
         # Sort by score descending
-        ranked_candidates.sort(key=lambda x: x['score'], reverse=True)
-        return ranked_candidates
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Returns confidence based on structural consistency and NCD.
-        0.0 = definitely wrong, 1.0 = definitely correct.
+        Returns confidence 0-1.
+        Caps at 0.25 if meta-analysis detects ambiguity/traps.
+        Caps at 0.9 unless computation is definitive.
         """
-        feats_p = self._extract_features(prompt)
-        feats_a = self._extract_features(answer)
+        # 1. Meta-Confidence Check (Epistemic Honesty)
+        meta_cap = self._meta_confidence(prompt)
         
-        # Base confidence
-        conf = 0.5
+        if meta_cap < 0.3:
+            return meta_cap
+
+        # 2. Structural/Computational Verification
+        # If we passed meta-check, we evaluate the specific answer's structural fit
+        prompt_struct = self._extract_structure(prompt)
+        answer_struct = self._extract_structure(answer)
         
-        # Structural checks
-        if feats_p['negation'] != feats_a['negation']:
-            # Mismatch in negation often implies error in simple logic tasks
-            conf -= 0.3
+        # Basic consistency check
+        consistency = 0.5
+        
+        # Negation consistency
+        if prompt_struct['neg'] == answer_struct['neg']:
+            consistency += 0.2
+        else:
+            consistency -= 0.2
             
-        if feats_p['numbers'] and feats_a['numbers']:
-            # If both have numbers, check basic magnitude logic if possible
-            # Here we just reward the presence match as a proxy for relevance
-            conf += 0.2
-        elif feats_p['numbers'] and not feats_a['numbers']:
-            conf -= 0.2
+        # Numeric consistency (if prompt has numbers, answer should ideally have numbers or explicit negation)
+        if len(prompt_struct['nums']) > 0:
+            if len(answer_struct['nums']) > 0:
+                consistency += 0.2
+            elif any(x in answer.lower() for x in ['no', 'none', 'zero', 'impossible']):
+                consistency += 0.1
+            else:
+                consistency -= 0.3 # Suspicious lack of numbers in math context
+        
+        # Normalize consistency to 0-1 range roughly
+        raw_conf = max(0.0, min(1.0, consistency))
+        
+        # Apply Meta Cap
+        final_conf = min(raw_conf, meta_cap)
+        
+        # Never return > 0.9 without definitive computation (heuristic limit)
+        # Since we don't have a full solver here, we cap high confidence unless it's a simple match
+        if final_conf > 0.9:
+            final_conf = 0.9
             
-        # NCD check: if answer is completely unrelated string, NCD will be high (distance)
-        # Low NCD (high similarity) boosts confidence if structural checks pass
-        ncd = self._compute_ncd(prompt, answer)
-        if ncd < 0.5:
-            conf += 0.2
-        elif ncd > 0.9:
-            conf -= 0.1
-            
-        return max(0.0, min(1.0, conf))
+        return final_conf

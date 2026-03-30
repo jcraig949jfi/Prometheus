@@ -29,11 +29,14 @@ Coeus enrichments exist for most triples in `agents/coeus/enrichments/`.
 
 1. **Read the coverage map** at `docs/coverage_map.md` — it shows which categories are covered and which are gaps.
 
-2. **Read the multi-strategy forge design** at `docs/multi_strategy_forge.md` — it defines 4 frames:
-   - Frame A (10%): Structural Parser (current default)
-   - Frame B (35%): Constructive Computer (computation-first)
-   - Frame C (30%): Dynamics Tracker (state evolution)
-   - Frame D (25%): Judgment Calibrator (epistemic honesty)
+2. **Read the multi-strategy forge design** at `docs/multi_strategy_forge.md` — it defines 7 frames:
+   - Frame A (legacy): Structural Parser
+   - Frame B (legacy): Constructive Computer
+   - Frame C (legacy): Dynamics Tracker
+   - Frame D (legacy): Judgment Calibrator
+   - **Frame E (default): Computational** — parse → formal representation → compute → match
+   - **Frame F: Adversarial Robustness** — structure-first, surface-invariant
+   - **Frame G: Metacognitive** — calibrated uncertainty, knows what it doesn't know
 
 3. **Pick gap categories** from the coverage map and forge tools targeting them.
 
@@ -106,27 +109,31 @@ NCD baseline is 42% accuracy / 46% calibration. Tools must beat both to be usefu
 
 ---
 
-## Current State (as of 2026-03-28)
+## Current State (as of 2026-03-29)
 
-### Coverage: 85/89 categories (96%)
+### Coverage: 89/89 Tier 1 + 19 Tier 2 = 108 categories
 
-**The Squad (5 tools that cover 75 categories):**
+All Tier 1 gaps are closed. The Tier 2 battery (19 computation-first categories) is live and should be used for validation of all new tools.
+
+**Best tool:** `frame_e_v3_definitive` at **0.679 weighted score** (computation-first architecture). This overtook the previous best regex elite (0.654 weighted).
+
+**197 passing tools total** across forge/, forge_v2/, forge_v5/, forge_v7/.
+
+**The Squad (5 tools that cover 75 Tier 1 categories):**
 1. Active Inference + FEP + Model Checking (40 cats)
 2. Analogical Reasoning + Hebbian + FEP (7 cats)
 3. Analogical Reasoning + Dialectics + Mechanism Design (1 cat)
 4. Active Inference + Kolmogorov + FEP (1 cat)
 5. Info Theory + Abductive Reasoning + Sensitivity Analysis (19 cats — the forge survivor)
 
-**v7 tools (16 Opus-forged tools covering 10 more categories):**
-- 3 causal tools at 74% accuracy (best in library)
+**v7 tools (16 Opus-forged tools covering remaining Tier 1 categories):**
+- 3 causal tools at 74% accuracy (best in library for single-category)
 - Direction composition, fencepost, liar detection at 100%
 - ToM information asymmetry, strategic deception cracked
 
-**4 remaining gaps:**
-- causal_intervention (do-calculus: "force Y=0, what happens to Z?")
-- compositional_depth_scaling (3-8 step heterogeneous chains)
-- temporal_age_reasoning (relational age algebra)
-- temporal_causal_ordering (extract chronological sequence from narrative)
+**Tier 2 battery** — 19 categories requiring genuine computation (register machines, belief tracking, constraint satisfaction, recursive evaluation, counterfactual dependency, Bayesian updates, etc.). Regex tools score ~20% on these; computation-first tools score ~55%.
+
+**For emergency forging, use Frame E prompt** (not Frame A/B). Frame E produces computation-first tools that parse prompts into formal intermediate representations and execute algorithms. This is the architecture that wins on weighted scoring.
 
 ### File Locations
 
@@ -137,7 +144,7 @@ NCD baseline is 42% accuracy / 46% calibration. Tools must beat both to be usefu
 | `agents/hephaestus/src/test_harness.py` | Validation + trap battery |
 | `agents/hephaestus/src/trap_generator.py` | 28 base generators |
 | `agents/hephaestus/src/trap_generator_extended.py` | 61 extended generators (89 total categories) |
-| `agents/hephaestus/src/prompts.py` | Multi-frame prompt templates (A/B/C/D) |
+| `agents/hephaestus/src/prompts.py` | Multi-frame prompt templates (A-G; E/F/G are default) |
 | `agents/hephaestus/ledger.jsonl` | Global forge ledger |
 | `agents/nous/runs/` | 5,740+ saved Nous responses |
 | `agents/coeus/enrichments/` | 4,000+ Coeus enrichments |

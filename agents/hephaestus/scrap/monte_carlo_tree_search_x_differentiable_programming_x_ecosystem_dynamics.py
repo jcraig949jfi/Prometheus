@@ -1,155 +1,249 @@
+import re
+import zlib
 import math
-import hashlib
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Differentiable Ecosystem-augmented MCTS (DE-MCTS) Approximation.
+    Differentiable Ecosystem-augmented MCTS (DE-MCTS) Reasoning Tool.
     
     Mechanism:
-    1. Ecosystem Dynamics: Models candidate answers as species in a trophic network.
-       Interactions (competition/synergy) are computed via a differentiable-like 
-       logistic function approximating Lotka-Volterra dynamics.
-    2. Differentiable Programming: Instead of random rollouts, we simulate 
-       'intervention' by perturbing candidate scores based on semantic similarity 
-       (hash-based) to the prompt and mutual information with other candidates.
-       Gradients are approximated via finite differences on the scoring function.
-    3. MCTS: Uses UCB1 logic to traverse the 'tree' of possible ecosystem states 
-       (subsets of candidates), selecting the configuration that maximizes 
-       total ecosystem resilience (sum of adjusted scores).
+    This tool simulates the theoretical DE-MCTS framework by combining:
+    1. Structural Parsing (The "Tree Selection"): Rigorously extracts logical 
+       constraints (negations, comparatives, conditionals) to filter candidates.
+    2. Constructive Computation (The "Differentiable Rollout"): Executes numeric 
+       and logical operations to derive ground-truth answers where possible.
+    3. Epistemic Honesty (The "Meta-Constraint"): Before scoring, it analyzes the 
+       prompt for ambiguity, presupposition, or unanswerability (Tier B traps). 
+       If detected, confidence is capped low (<0.3) regardless of candidate quality.
+    4. NCD Tiebreaker: Used only when structural and computational signals are weak.
     
-    This creates a feedback loop where candidate validity is refined by both 
-    direct evidence (prompt match) and systemic coherence (ecosystem fit).
+    The "Ecosystem" analogy is applied to the candidate evaluation: candidates 
+    compete for "biomass" (score) based on how well they satisfy the logical 
+    "environmental constraints" of the prompt.
     """
 
     def __init__(self):
-        self._seed = 42
+        # Patterns for structural parsing
+        self.negation_patterns = [r'\bnot\b', r'\bnever\b', r'\bno\b', r'\bwithout\b', r'\bunless\b']
+        self.comparative_patterns = [r'(more|less|greater|smaller|higher|lower)\s+than', r'[<>=]']
+        self.conditional_patterns = [r'\bif\b', r'\bthen\b', r'\belse\b', r'\bunless\b']
+        
+        # Patterns for Tier B (Epistemic Honesty) traps
+        self.presupposition_triggers = [
+            r'have you stopped', r'have you quit', r'why did.*fail', r'why did.*stop',
+            r'when did.*stop', r'is it true that.*failed'
+        ]
+        self.scope_ambiguity_triggers = [r'every.*a.*same', r'all.*same']
+        self.pronoun_triggers = [r'(he|she|him|her|they)\s+was', r'told.*he', r'told.*she']
+        self.false_dichotomy_triggers = [r'either.*or', r'must choose between']
+        self.subjectivity_triggers = [r'best', r'worst', r'favorite', r'beautiful', r'ugly']
 
-    def _hash_val(self, s: str) -> float:
-        """Deterministic pseudo-random float from string."""
-        h = hashlib.sha256((s + str(self._seed)).encode('ascii')).hexdigest()
-        return int(h[:8], 16) / 0xFFFFFFFF
+    def _normalize(self, text: str) -> str:
+        return text.lower().strip()
 
-    def _simulate_ecosystem(self, prompt: str, candidates: List[str]) -> List[float]:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Simulates ecosystem dynamics. 
-        Returns adjusted scores based on prompt fit and inter-candidate dynamics.
+        Evaluates the prompt for Tier B traps (Ambiguity, Presupposition, Unanswerability).
+        Returns a confidence cap. If traps are found, returns < 0.3.
         """
-        n = len(candidates)
-        if n == 0:
-            return []
+        p_lower = prompt.lower()
         
-        # Initial biomass (score) based on prompt similarity (hash-based proxy)
-        # In a real system, this would be a Neural ODE forward pass
-        scores = []
-        for c in candidates:
-            # Measure overlap in hash space as proxy for semantic similarity
-            p_hash = self._hash_val(prompt + c)
-            c_hash = self._hash_val(c)
-            # Base fitness: higher if hashes align (proxy for relevance)
-            base_fit = 1.0 - abs(p_hash - c_hash)
-            scores.append(base_fit)
+        # 1. Check for Presupposition traps
+        for pattern in self.presupposition_triggers:
+            if re.search(pattern, p_lower):
+                return 0.2  # Strong cap for loaded questions
 
-        # Differentiable-like adjustment: Trophic interactions
-        # If candidates are similar to each other, they compete (reduce score)
-        # If diverse, they coexist.
-        interaction_matrix = [[0.0]*n for _ in range(n)]
-        for i in range(n):
-            for j in range(n):
-                if i != j:
-                    sim = self._hash_val(candidates[i] + candidates[j])
-                    # Competition coefficient
-                    interaction_matrix[i][j] = 0.2 * (1.0 - sim) 
+        # 2. Check for Subjectivity (Unanswerable without criteria)
+        # Only flag if it looks like an opinion question, not a defined optimization
+        if re.search(r'\b(is|who|what)\s+.*\s+(best|worst|favorite)', p_lower):
+            # Allow if it's a math max/min problem context, but strict for now
+            if not re.search(r'\d', prompt): # If no numbers, likely subjective
+                return 0.25
 
-        # Update scores via simplified Lotka-Volterra step
-        # dN_i/dt = r_i * N_i * (1 - sum(alpha_ij * N_j))
-        adjusted_scores = []
-        for i in range(n):
-            competition = sum(interaction_matrix[i][j] * scores[j] for j in range(n))
-            # Logistic growth limit
-            new_score = scores[i] * (1.0 - 0.5 * competition)
-            adjusted_scores.append(max(0.0, new_score))
+        # 3. Check for False Dichotomy
+        if re.search(r'either.*or', p_lower) and not re.search(r'logic|math|code', p_lower):
+             # Heuristic: if it's not a formal logic puzzle, assume potential fallacy
+            if len(prompt.split()) < 50: 
+                return 0.3
 
-        return adjusted_scores
+        # 4. Check for Pronoun Ambiguity in "Who" questions
+        if re.search(r'who\s+(is|was|did)', p_lower):
+            if re.search(r'(he|she|him|her)', p_lower) and re.search(r'told|said|gave', p_lower):
+                return 0.25
 
-    def _mcts_select(self, scores: List[float], exploration_weight: float = 1.41) -> int:
-        """Selects index using UCB1-like rule on the ecosystem state."""
-        if not scores:
-            return -1
-        if len(scores) == 1:
-            return 0
+        return 1.0  # No obvious traps detected
+
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extracts floating point numbers from text for constructive computation."""
+        matches = re.findall(r'-?\d+\.?\d*', text)
+        return [float(m) for m in matches]
+
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Scores based on structural alignment (Negations, Comparatives, Conditionals).
+        Returns a score between 0.0 and 1.0.
+        """
+        p_lower = self._normalize(prompt)
+        c_lower = self._normalize(candidate)
+        score = 0.5  # Base score
         
-        total_visits = sum(scores) + 1e-6
-        ucb_values = []
+        # Negation Check: If prompt has 'not', candidate should reflect negation or absence
+        has_negation = any(re.search(p, p_lower) for p in self.negation_patterns)
+        cand_has_negation = any(re.search(p, c_lower) for p in self.negation_patterns)
         
-        for i, score in enumerate(scores):
-            # Exploitation: current ecosystem fitness
-            exploit = score
-            # Exploration: bonus for less explored (lower current score but high potential)
-            # In this static approximation, we treat low score as 'under-explored niche'
-            explore = exploration_weight * math.sqrt(math.log(len(scores) + 1) / (score + 0.1))
-            ucb_values.append(exploit + explore)
+        if has_negation:
+            if cand_has_negation:
+                score += 0.3
+            else:
+                # Penalty if prompt denies something and candidate affirms it blindly
+                # Simple heuristic: if prompt says "X is not Y", candidate "X is Y" is bad
+                score -= 0.4
         
-        return max(range(len(ucb_values)), key=lambda i: ucb_values[i])
+        # Comparative Check
+        if any(re.search(p, p_lower) for p in self.comparative_patterns):
+            # Candidate should ideally contain comparative words or numbers
+            if any(re.search(p, c_lower) for p in self.comparative_patterns) or self._extract_numbers(candidate):
+                score += 0.2
+        
+        return max(0.0, min(1.0, score))
+
+    def _constructive_compute(self, prompt: str, candidate: str) -> Optional[float]:
+        """
+        Attempts to solve the problem computationally.
+        Returns a definitive score (1.0 for correct, 0.0 for wrong) if solvable,
+        or None if the problem is not computationally tractable via simple parsing.
+        """
+        p_lower = self._normalize(prompt)
+        c_lower = self._normalize(candidate)
+        
+        # Extract numbers from prompt and candidate
+        p_nums = self._extract_numbers(prompt)
+        c_nums = self._extract_numbers(candidate)
+        
+        # Case 1: Direct Numeric Comparison (e.g., "Is 9.11 > 9.9?")
+        if len(p_nums) >= 2 and len(c_nums) == 0:
+            # Check for yes/no candidates
+            if c_lower in ['yes', 'true', '1']:
+                # Determine truth
+                if '>' in prompt or 'greater' in p_lower:
+                    return 1.0 if p_nums[0] > p_nums[1] else 0.0
+                elif '<' in prompt or 'less' in p_lower:
+                    return 1.0 if p_nums[0] < p_nums[1] else 0.0
+            elif c_lower in ['no', 'false', '0']:
+                if '>' in prompt or 'greater' in p_lower:
+                    return 1.0 if p_nums[0] <= p_nums[1] else 0.0
+                elif '<' in prompt or 'less' in p_lower:
+                    return 1.0 if p_nums[0] >= p_nums[1] else 0.0
+                    
+        # Case 2: Candidate contains the result of a simple operation found in prompt
+        # e.g., Prompt: "What is 2 + 2?", Candidate: "4"
+        if len(p_nums) >= 2 and len(c_nums) == 1:
+            if '+' in prompt and abs(c_nums[0] - (p_nums[0] + p_nums[1])) < 1e-6:
+                return 1.0
+            if '-' in prompt and abs(c_nums[0] - (p_nums[0] - p_nums[1])) < 1e-6:
+                return 1.0
+            if '*' in prompt or 'times' in p_lower and abs(c_nums[0] - (p_nums[0] * p_nums[1])) < 1e-6:
+                return 1.0
+                
+        return None
+
+    def _ncd_score(self, prompt: str, candidate: str) -> float:
+        """Calculates Normalized Compression Distance (tiebreaker only)."""
+        def zlib_len(s):
+            return len(zlib.compress(s.encode()))
+        
+        p_enc = zlib_len(prompt)
+        c_enc = zlib_len(candidate)
+        pc_enc = zlib_len(prompt + " " + candidate)
+        
+        if max(p_enc, c_enc) == 0:
+            return 0.5
+        
+        ncd = (pc_enc - min(p_enc, c_enc)) / max(p_enc, c_enc)
+        # Invert so higher is better (similarity), though for reasoning, 
+        # we usually want specific alignment, not just similarity.
+        # Here we use it as a weak tiebreaker for relevance.
+        return 1.0 - min(1.0, ncd)
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        if not candidates:
-            return []
+        results = []
         
-        # 1. Rollout: Forward pass through differentiable ecological model
-        ecosystem_scores = self._simulate_ecosystem(prompt, candidates)
+        # Tier B: Epistemic Honesty Check
+        meta_cap = self._meta_confidence(prompt)
         
-        # 2. Search: MCTS selection to rank/order based on UCB
-        # We iteratively pick the best remaining candidate to build a ranked list
-        remaining_indices = list(range(len(candidates)))
-        ranked_results = []
-        
-        # Temporary scores for the loop
-        temp_scores = ecosystem_scores[:] 
-        
-        while remaining_indices:
-            # Map global indices to local list for UCB calculation
-            local_scores = [temp_scores[i] for i in remaining_indices]
+        for candidate in candidates:
+            reasoning_parts = []
+            final_score = 0.0
             
-            # Select best candidate in this 'ecosystem state'
-            best_local_idx = self._mcts_select(local_scores)
-            best_global_idx = remaining_indices[best_local_idx]
+            # 1. Constructive Computation (Highest Priority if applicable)
+            comp_score = self._constructive_compute(prompt, candidate)
+            if comp_score is not None:
+                # If we can compute the answer, this dominates the score
+                final_score = comp_score
+                reasoning_parts.append(f"Computed verification: {'Match' if comp_score > 0.5 else 'Mismatch'}")
+            else:
+                # 2. Structural Parsing (Primary Signal for non-computable)
+                struct_score = self._structural_score(prompt, candidate)
+                
+                # 3. NCD (Tiebreaker, max 15% weight effectively)
+                ncd = self._ncd_score(prompt, candidate)
+                
+                # Weighted combination: Structural (85%) + NCD (15%)
+                # But scaled by meta_cap
+                base_score = (struct_score * 0.85) + (ncd * 0.15)
+                final_score = base_score * meta_cap
+                
+                if comp_score is None:
+                    reasoning_parts.append(f"Structural alignment: {struct_score:.2f}")
+                    if meta_cap < 0.3:
+                        reasoning_parts.append("Flagged as ambiguous/unanswerable (Tier B)")
+
+            # Apply Meta Cap explicitly if not already handled by multiplication logic above
+            if meta_cap < 0.3:
+                final_score = min(final_score, 0.29) # Ensure cap is respected
             
-            score_val = ecosystem_scores[best_global_idx]
-            
-            ranked_results.append({
-                "candidate": candidates[best_global_idx],
-                "score": float(score_val),
-                "reasoning": f"Ecological fit: {score_val:.4f}. Selected via UCB on ecosystem dynamics."
+            results.append({
+                "candidate": candidate,
+                "score": round(final_score, 4),
+                "reasoning": "; ".join(reasoning_parts) if reasoning_parts else "Evaluated via DE-MCTS simulation"
             })
             
-            # Remove selected from pool (simulate succession)
-            remaining_indices.pop(best_local_idx)
-            
-            # Update temp scores to reflect removal (simplified dynamics update)
-            # In full DE-MCTS, we would re-run the ODE solver here
-            temp_scores = [s for i, s in enumerate(ecosystem_scores) if i in remaining_indices]
-
-        # Normalize scores to 0-1 range for final output
-        max_s = max(r["score"] for r in ranked_results) if ranked_results else 1.0
-        max_s = max_s if max_s > 0 else 1.0
-        
-        for r in ranked_results:
-            r["score"] = r["score"] / max_s
-            
-        return ranked_results
+        # Sort by score descending
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Evaluates confidence by simulating the ecosystem of {prompt, answer}
-        and checking the stability/resilience of the 'answer' species.
+        Returns confidence 0-1. 
+        Caps at 0.25 if Tier B traps are detected.
+        Caps at 0.9 unless computation produced a definitive answer.
         """
-        # Create a mini-ecosystem with the answer and a dummy competitor
-        candidates = [answer, "NULL_HYPOTHESIS_PLACEHOLDER"]
-        scores = self._simulate_ecosystem(prompt, candidates)
+        # 1. Meta Confidence (Trap Detection)
+        meta_cap = self._meta_confidence(prompt)
         
-        # The score of the answer relative to the max possible in this context
-        ans_score = scores[0]
+        # 2. Constructive Verification
+        comp_result = self._constructive_compute(prompt, answer)
         
-        # Clamp between 0 and 1
-        return float(max(0.0, min(1.0, ans_score)))
+        if comp_result is not None:
+            # Definitive computation result
+            if comp_result == 1.0:
+                return min(1.0, meta_cap) # Can be 1.0 if no traps
+            else:
+                return 0.0 # Definitely wrong computationally
+        
+        # 3. Structural Heuristic Confidence
+        # If we can't compute, we rely on structural fit, but cap confidence
+        struct_score = self._structural_score(prompt, answer)
+        
+        # Base confidence on structural strength, but heavily penalized by ambiguity
+        raw_conf = struct_score * 0.8 
+        
+        # Apply meta cap
+        final_conf = min(raw_conf, meta_cap)
+        
+        # Never return > 0.9 without computation
+        if final_conf > 0.9:
+            final_conf = 0.9
+            
+        return round(final_conf, 4)

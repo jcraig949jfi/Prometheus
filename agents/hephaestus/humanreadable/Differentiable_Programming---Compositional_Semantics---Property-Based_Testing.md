@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Philosophy, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:05:16.237747
-**Report Generated**: 2026-03-27T18:24:05.292830
+**Report Generated**: 2026-03-27T23:28:38.534718
 
 ---
 
@@ -71,7 +71,10 @@ Implementability: 6/10 — requires manual autodiff and grammar engineering; sti
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T21:51:12.997894
 
 ---
 

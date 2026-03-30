@@ -2,51 +2,25 @@
 
 **Fields**: Biology, Game Theory, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T19:18:01.721007
-**Report Generated**: 2026-03-27T06:37:47.731941
+**Nous Timestamp**: 2026-03-27T18:41:55.046094
+**Report Generated**: 2026-03-27T23:28:38.222720
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Mutual‑Benefit Constraint‑Satisfaction Game (MBCSG)**  
+The algorithm builds a propositional constraint network from the prompt and treats each candidate answer as a possible truth‑assignment. First, a regex‑based parser extracts atomic propositions (e.g., “X > 5”, “Y causes Z”) and maps them to integer variable IDs. Negations become ¬v, comparatives become arithmetic constraints that are linearized into extra Boolean variables (e.g., X>5 → v_gt5). Conditionals “if A then B” are encoded as the clause (¬A ∨ B). Causal verbs and ordering relations are similarly turned into implication clauses. The result is a conjunctive‑normal‑form (CNF) formula stored as a list of clause arrays; each clause is a NumPy 1‑D array of signed integers where positive = variable, negative = negated variable.
 
-1. **Parsing & Data structures**  
-   - From the prompt and each candidate answer we extract a set of *ground literals* using regex‑based patterns for:  
-     *Negations* (`not`, `no`, `-`), *comparatives* (`greater than`, `less than`, `>`/`<`), *conditionals* (`if … then`, `implies`), *numeric values* (integers, floats, units), *causal claims* (`because`, `leads to`), and *ordering relations* (`before`, `after`, `precedes`).  
-   - Each literal becomes a node in a bipartite graph **G = (P ∪ A, E)** where **P** are prompt literals and **A** are answer literals.  
-   - An edge *(p, a)* exists if the two literals are *compatible* (same predicate, compatible polarity, and numeric constraints satisfy any comparative). Edge weight **w(p,a)** = 1 – normalized conflict score (e.g., 0 for direct contradiction, 1 for exact match).  
-   - We also build a clause set **C** from the prompt: each conditional yields a Horn clause `body → head`; each comparative yields a linear inequality; each causal claim yields a temporal precedence constraint.
+Scoring proceeds in two stages. (1) **Satisfiability check** – a lightweight DPLL solver runs unit propagation and pure‑literal elimination using NumPy vectorized operations to compute, for each candidate, the number of satisfied clauses (soft SAT score). Candidates that violate any hard clause receive a score of 0. (2) **Symbiotic game formulation** – each candidate is a pure strategy in a normal‑form game where the payoff to strategy i is its SAT score minus a penalty proportional to the number of conflicting literals it shares with other strategies (the “mutual benefit” term from symbiosis). This yields a payoff matrix P (NumPy 2‑D array). We then compute a mixed‑strategy Nash equilibrium via fictitious play: start with a uniform distribution, iteratively let each player best‑respond to the current mixed opponent (argmax over rows/columns of P), update the distribution with a diminishing step size, and stop when the change in distribution falls below 1e‑4. The equilibrium probability assigned to each candidate is its final score; thus the algorithm rewards answers that are both logically sound and mutually non‑conflicting, stabilizing at a Nash equilibrium.
 
-2. **Constraint propagation (Satisfiability core)**  
-   - Using a pure‑Python unit‑propagation loop (no external SAT solver) we iteratively apply:  
-     *Modus ponens* on Horn clauses,  
-     *Transitivity* on ordering constraints,  
-     *Interval arithmetic* on numeric inequalities.  
-   - This produces a set **S** of *implied literals* that must hold in any satisfying assignment. Literals not in **S** are undetermined.
+The approach parses negations, comparatives, conditionals, causal/lead‑to verbs, ordering relations (“before”, “after”), and explicit numeric values. It does not rely on deep semantics but on surface logical structure.
 
-3. **Nash‑equilibrium selection of answer literals**  
-   - Each answer **aᵢ** proposes a subset **Aᵢ ⊆ A** of its literals.  
-   - Define the *payoff* for answer **i** as  
-     `Uᵢ = Σ_{a∈Aᵢ∩S} w(p,a)  +  λ· Σ_{a∈Aᵢ} Σ_{b∈Aⱼ, j≠i} w(a,b)`  
-     where the first term rewards satisfaction of prompt‑derived constraints, the second term (λ≈0.3) captures *mutual benefit* (symbiosis) between literals of different answers – i.e., how well the answer’s literals support each other's compatibility.  
-   - Agents (answers) iteratively update their chosen subset by a *best‑response* step: add any literal that increases **Uᵢ**, remove any that decreases it, until no unilateral change improves payoff. This process converges to a pure‑strategy Nash equilibrium because the payoff function is finite and each update strictly increases a global potential function (the sum of all **Uᵢ**).  
-   - The final score for answer **i** is its equilibrium payoff **Uᵢ** normalized by the maximum possible payoff across all answers.
+This exact fusion of SAT solving, symbiotic payoff design, and equilibrium selection is not typical in current QA scoring pipelines, which usually employ either pure similarity metrics or standalone logical validators. Hence it is novel in combining game‑theoretic stability with constraint satisfaction for answer ranking.
 
-**Structural features parsed** – negations, comparatives, conditionals, numeric values, causal claims, ordering relations (temporal or magnitude).  
-
-**Novelty** – The approach fuses three well‑studied ideas: (1) SAT‑style unit propagation from automated reasoning, (2) Nash equilibrium concepts from non‑cooperative game theory (cf. “argumentation games” and “debate‑theoretic” scoring), and (3) a mutual‑benefit weighting inspired by symbiosis/holobiont models. While each piece appears separately in literature (e.g., SAT‑based answer validation, game‑theoretic argumentation, mutualistic scoring in cooperative QA), their exact combination into a potential‑game with literal‑level payoff has not, to my knowledge, been published.  
-
-**Ratings**  
-Reasoning: 8/10 — captures logical consistency and competitive selection via equilibrium, though deeper reasoning (e.g., higher‑order quantifiers) remains limited.  
-Metacognition: 6/10 — the algorithm can detect when no answer reaches a high payoff (signal of uncertainty) but does not explicitly reason about its own confidence.  
-Hypothesis generation: 5/10 — generates implied literals via propagation, but does not propose novel hypotheses beyond those entailed.  
-Implementability: 9/10 — relies only on regex, unit propagation, and simple best‑response loops; all feasible in pure Python/NumPy.  
-
-Reasoning: 8/10 — captures logical consistency and competitive selection via equilibrium, though deeper reasoning (e.g., higher‑order quantifiers) remains limited.  
-Metacognition: 6/10 — the algorithm can detect when no answer reaches a high payoff (signal of uncertainty) but does not explicitly reason about its own confidence.  
-Hypothesis generation: 5/10 — generates implied literals via propagation, but does not propose novel hypotheses beyond those entailed.  
-Implementability: 9/10 — relies only on regex, unit propagation, and simple best‑response loops; all feasible in pure Python/NumPy.
+Reasoning: 8/10 — captures logical consistency and strategic stability among candidates.  
+Metacognition: 6/10 — equilibrium indicates stability but lacks explicit self‑monitoring or error‑estimation loops.  
+Hypothesis generation: 7/10 — generates assignments as hypotheses via SAT search; limited to Boolean abstraction.  
+Implementability: 9/10 — uses only regex, NumPy, and plain Python loops; a DPLL solver and fictitious play are concise to code.
 
 ### Scores
 
@@ -54,9 +28,9 @@ Implementability: 9/10 — relies only on regex, unit propagation, and simple be
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

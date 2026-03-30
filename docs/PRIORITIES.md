@@ -1,96 +1,76 @@
 # Prometheus — Active Priorities
 
-*Living document. Updated as work completes and new priorities emerge.*
+*Living document. Updated 2026-03-29. Feeds Metis briefs — keep current or briefs go stale.*
 
 ---
 
 ## IMMEDIATE (do next)
 
-### 1. Qwen3-4B overnight run — monitor and archive
-- Run is live on GPU. Check results when complete.
-- Archive, then run RPH eval across 0.5B/1.5B/3B + Qwen3-4B
-- Review scale gradient with cross-architecture comparison
+### 1. Stage D gen 150-200 — watch for ceiling
+- Running on M1 GPU. Check terminal for `[eval]` lines.
+- Gen 125: fitness 9.255, 17/30, 3 flips, zero breaks, margins still widening.
+- If gen 150 shows no 4th flip: ceiling confirmed at 17/30. Next: layer sweep or multi-vector.
+- If hung: switch to 20-gen burst workaround.
 
-### 2. Eos — wire remaining APIs
-- Serper, Cerebras, OpenRouter need scanners
-- Google — hold until free tier confirmed
-- Semantic Scholar — James to request API key
-- Rate limits documented for every source before use
+### 2. Noesis round 2 — launch when CPU frees
+- Design complete (journal 2026-03-29): entropy compression, no bb_bonus, diminishing depth bonus.
+- M2: integrated package (all fixes). M4: no-BB control. M5: depth forcing (min length 3).
+- Waiting on M1 Noesis to finish or be killed to free CPU.
 
-### 3. 7B Qwen2.5 on cloud
-- 16GB GPU can't fit 7B with TransformerLens overhead
-- Plan a cloud run (Lambda/RunPod A100, ~$25-40 for 24hrs)
-- Required to complete the Qwen 2.5 scale gradient
+### 3. RLVF first cycle — capture baseline
+- Design doc complete and Athena-reviewed (`docs/rlvf_integration.md`).
+- Before Gen 0: capture BOTH behavioral AND geometric baselines in `agents/hephaestus/baselines/rhea_pre_rlvf.json`.
+- Use mixed-difficulty curriculum (all 113 categories from start, weights shift over time).
+- Ensemble evaluator at 0.734 weighted is the RLVF candidate.
 
 ---
 
 ## HIGH PRIORITY (this week)
 
-### 4. SAE decomposition of Ignis-discovered vectors
-**Source:** Eos scan — paper 2603.16335v1 (SAE steering in Qwen 3.5-35B)
-- Train SAE on Qwen 2.5-3B residual stream using SAELens
-- Decode archived best_genome.pt vectors through SAE
-- Get human-readable feature decomposition of what CMA-ES discovered
-- Compare to supervised probe directions from the paper
-- **This transforms "we found something" into "here is what it is"**
+### 4. Tier 3 battery design — HITL
+- Tier 2 is solved (24 categories, ensemble at 0.734). Battery is the bottleneck again.
+- Need narrative-complexity challenges: MUSR-style multi-paragraph evidence chains, BoardgameQA-style rule conflicts, FOLIO-style NL-to-FOL.
+- Parametric generators can't produce these — needs human-designed templates.
+- Titans proposed ~80 categories; ~20 unique computational primitives with massive overlap on top 4.
 
-### 5. Prometheus repo — git init and GitHub push
-- F:\Prometheus structure complete, imports verified
-- All renames done (seti→ignis, bitfrost→prometheus)
-- Ready for git init when James gives the go-ahead
-- Old repos (bitfrost-mech, ArcanumInfinity) become read-only archives
+### 5. Ignis layer sweep
+- Stage D confirms ceiling at 17/30 with single vector at L23/ε=3.0.
+- Next experiment: L19, L21, L22 with corpus-trained model.
+- Or: multi-vector injection (evolve at two layers simultaneously).
+- The 13 impenetrable traps are the target.
 
-### 6. RPH paper update
-- Integrate 1.5B results (NULL confirmed, cos_r=-0.007)
-- Add Qwen3-4B cross-architecture comparison when available
-- Reference SAE decomposition paper as complementary methodology
-
----
-
-### 7. Semantic Scholar bulk dataset — local knowledge base
-**Source:** S2 Datasets API (api.semanticscholar.org/datasets/v1/)
-- Download CS papers subset as local JSON/SQLite database
-- Zero rate limits on local queries — unlimited search
-- Use diffs endpoint for nightly incremental updates (like git pull for literature)
-- SPECTER v2 embeddings included — enables semantic similarity search locally
-- Reserve live API only for TLDRs and citation graph lookups
-- Add `scan_local_s2()` scanner to Eos — self-sufficient paper discovery
-- **This eliminates API dependency for paper scanning entirely**
+### 6. SAE decomposition of Ignis vectors
+- Train SAE on Qwen 2.5-3B residual stream using SAELens.
+- Decode archived best_genome.pt through SAE → human-readable features.
+- Transforms "we found something" into "here is what it is."
 
 ---
 
 ## MEDIUM PRIORITY (this month)
 
-### 8. EvoTorch integration evaluation
-- GPU-accelerated CMA-ES + MAP-Elites for quality-diversity search
-- Could map the SPACE of circuits, not just find the best one
-- Evaluate whether it replaces pycma or supplements it
+### 7. Semantic Scholar bulk dataset
+- S2 Datasets API for local CS paper mirror. Zero rate limits.
+- Eliminates API dependency for Eos paper scanning.
 
-### 9. GPU Scheduler agent (Helios?)
-- Auto-queue experiments when runs complete
-- Keep both GPUs saturated 24/7
-- Monitor VRAM, handle OOM gracefully
+### 8. Scale gradient completion
+- 7B Qwen2.5 cloud run (Lambda/RunPod A100, ~$25-40).
+- Required to complete the Qwen 2.5 scale gradient.
 
-### 10. Qwen2.5-Coder-3B local setup
-- Download model, test basic code analysis
-- Evaluate for use in Eos (local summarization without API costs)
-- Needs second GPU or idle-window scheduling
+### 9. RPH paper update
+- Reframe around bypass finding + scale threshold.
+- Add Stage D corpus-first results.
+- Add SAE decomposition when available.
 
 ---
 
-## BACKBURNER (when bandwidth allows)
+## COMPLETED (archive)
 
-### 11. Aethon revival
-- Use Ignis circuit findings to inform prompt engineering
-- Test whether discovered steering directions can be activated via prompting
-- Bridges mechanistic findings to deployment
-
-### 12. Grammata — taxonomy bootstrap
-- Start naming validated discoveries
-- Design the registry schema
-- Connect to Symbola (symbolic representation) concept
-
-### 13. NemoClaw/OpenClaw exploration
-- Deploy always-on agents in WSL2 sandbox
-- Evaluate for Eos-as-a-service deployment
-- Low priority until agent constellation matures
+- [x] Qwen3-4B overnight run — archived, RPH eval complete (2026-03-24)
+- [x] Prometheus repo — git init, GitHub push (2026-03-25)
+- [x] Eos basic wiring — arxiv, GitHub, OpenAlex, web search working (2026-03-24)
+- [x] Forge pipeline 89/89 Tier 1 coverage (2026-03-29)
+- [x] Tier 2 battery — 24 categories, computation-first tools (2026-03-29)
+- [x] Frame E/F/G forge prompts, difficulty-weighted scoring (2026-03-29)
+- [x] Ensemble evaluator at 0.734 weighted (2026-03-29)
+- [x] RLVF design doc — Athena-reviewed (2026-03-29)
+- [x] Apollo mothballed — forge + Noesis replaced it (2026-03-29)

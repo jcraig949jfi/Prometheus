@@ -1,216 +1,210 @@
 import re
 import math
 import zlib
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Neuromodulated Compositional Abductive Synthesis Engine (NCASE) - Lightweight Implementation
+    Neuromodulated Compositional Abductive Synthesis Engine (NCASE)
     
     Mechanism:
-    1. Compositional Primitives: Parses prompts into structural tokens (negations, comparatives, 
-       conditionals, numeric values) representing a symbolic library.
-    2. Abductive Inference: Scores candidates based on structural alignment with the prompt's 
-       logical constraints (e.g., if prompt has "not", candidate must reflect negation).
-    3. Neuromodulation: A meta-controller calculates a modulation factor 'm' based on 
-       prediction error (structural mismatch). 
-       - High error -> High 'm' -> Widens search (penalizes less, allows partial matches).
-       - Low error -> Low 'm' -> Sharpens focus (strict structural adherence).
-    4. Scoring: Final score = (Structural Match * (1 + m)) - NCD_Penalty.
+    1. Compositionality: Parses prompts into a library of primitive operations 
+       (numeric comparison, logical negation, transitivity) to construct candidate 
+       explanations rather than matching strings.
+    2. Abductive Reasoning: Scores candidates based on how well they explain the 
+       structural constraints of the prompt (Bayesian likelihood approximation).
+    3. Neuromodulation: A meta-controller computes a 'modulation factor' (m) based 
+       on prompt ambiguity (presuppositions, scope issues). 
+       - High ambiguity -> High m -> Low confidence (broadens posterior, rejects specific claims).
+       - Low ambiguity -> Low m -> High confidence allowed (sharpens focus on best hypothesis).
     
-    This approach prioritizes logical structure over string similarity, beating NCD baselines.
+    Epistemic Honesty: Prioritizes detecting unanswerable or ambiguous questions 
+    (Tier B) before attempting to solve them (Tier A).
     """
 
     def __init__(self):
-        # Compositional Library: Regex patterns for logical primitives
+        # Primitive library for compositional parsing
         self.primitives = {
-            'negation': [r'\bnot\b', r'\bnever\b', r'\bno\b', r'\bwithout\b', r"n't"],
-            'comparative': [r'\bmore\b', r'\bless\b', r'\bgreater\b', r'\bsmaller\b', r'\bhigher\b', r'\blower\b', r'>', r'<'],
-            'conditional': [r'\bif\b', r'\bthen\b', r'\bunless\b', r'\botherwise\b'],
-            'causal': [r'\bbecause\b', r'\btherefore\b', r'\bthus\b', r'\bcause\b'],
-            'numeric': r'\d+\.?\d*'
+            'numeric_cmp': r'(\d+\.?\d*)\s*(<|>|<=|>=|=)\s*(\d+\.?\d*)',
+            'negation': r'\b(not|no|never|none)\b',
+            'comparative': r'\b(more|less|better|worse|greater|smaller)\b',
+            'presupposition_stop': r'\b(stopped|quit|ceased)\b',
+            'presupposition_why': r'^why\s+did\s+',
+            'false_dichotomy': r'\b(either|or)\b',
+            'scope_every': r'\bevery\b',
+            'pronoun_ambiguity': r'\b(he|she|they|him|her)\b.*\bwho\b'
         }
-        self.temp_baseline = 0.5  # Base temperature for neuromodulation
-
-    def _extract_structure(self, text: str) -> Dict[str, any]:
-        """Decompose text into compositional primitive presence and numeric values."""
-        text_lower = text.lower()
-        structure = {
-            'has_negation': False,
-            'has_comparative': False,
-            'has_conditional': False,
-            'has_causal': False,
-            'numbers': [],
-            'length': len(text)
-        }
-        
-        # Check logical primitives
-        if any(re.search(p, text_lower) for p in self.primitives['negation']):
-            structure['has_negation'] = True
-        if any(re.search(p, text_lower) for p in self.primitives['comparative']):
-            structure['has_comparative'] = True
-        if any(re.search(p, text_lower) for p in self.primitives['conditional']):
-            structure['has_conditional'] = True
-        if any(re.search(p, text_lower) for p in self.primitives['causal']):
-            structure['has_causal'] = True
-            
-        # Extract numbers for numeric evaluation
-        nums = re.findall(self.primitives['numeric'], text)
-        structure['numbers'] = [float(n) for n in nums]
-        
-        return structure
+        self.state = {}
 
     def _compute_ncd(self, s1: str, s2: str) -> float:
-        """Compute Normalized Compression Distance as a tiebreaker."""
+        """Normalized Compression Distance as a tiebreaker."""
         if not s1 or not s2:
             return 1.0
-        len1 = len(s1)
-        len2 = len(s2)
+        s1_bytes = s1.encode('utf-8')
+        s2_bytes = s2.encode('utf-8')
+        len1 = len(s1_bytes)
+        len2 = len(s2_bytes)
         if len1 == 0 or len2 == 0:
             return 1.0
         
+        # Approximate joint compression
         try:
-            comp1 = len(zlib.compress(s1.encode()))
-            comp2 = len(zlib.compress(s2.encode()))
-            comp_joint = len(zlib.compress((s1 + s2).encode()))
-            
-            max_len = max(comp1, comp2)
-            if max_len == 0:
-                return 0.0
-            return (comp_joint - max_len) / max_len
+            joint = len(zlib.compress(s1_bytes + s2_bytes))
+            min_len = min(len(zlib.compress(s1_bytes)), len(zlib.compress(s2_bytes)))
+            max_len = max(len1, len2)
+            if max_len == 0: return 1.0
+            ncd = (joint - min_len) / max_len
+            return max(0.0, min(1.0, ncd))
         except:
-            return 1.0
+            return 0.5
 
-    def _neuromodulate(self, error_rate: float) -> float:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Meta-controller: Adjusts exploration/exploitation based on prediction error.
-        High error -> High modulation (widen search, reduce penalty for mismatches).
-        Low error -> Low modulation (sharpen focus).
+        Tier B Judgment: Detects ambiguity, presupposition, and unanswerability.
+        Returns a cap on confidence (0.0 to 1.0).
         """
-        # Dopaminergic analogy: Phasic signal scales the temperature
-        # m(t) scales the weight of structural constraints
-        m = self.temp_baseline + (error_rate * 0.8) 
-        return max(0.1, min(2.0, m))  # Clamp between 0.1 and 2.0
-
-    def _score_candidate(self, prompt: str, candidate: str) -> Tuple[float, str]:
-        """Evaluate candidate against prompt using abductive structural matching."""
-        p_struct = self._extract_structure(prompt)
-        c_struct = self._extract_structure(candidate)
+        p_lower = prompt.lower()
         
+        # 1. Presupposition Traps
+        if re.search(self.primitives['presupposition_stop'], p_lower):
+            return 0.2  # "Have you stopped..."
+        if re.search(self.primitives['presupposition_why'], p_lower):
+            # Check if the premise exists in context (simplified check)
+            if "fail" in p_lower or "stop" in p_lower or "wrong" in p_lower:
+                return 0.2 
+
+        # 2. Scope & Pronoun Ambiguity
+        # Simple heuristic: "Every" + "same" question often implies scope trap
+        if re.search(self.primitives['scope_every'], p_lower) and "same" in p_lower:
+            return 0.3
+        
+        if re.search(self.primitives['pronoun_ambiguity'], p_lower):
+            return 0.25
+
+        # 3. False Dichotomy
+        if re.search(self.primitives['false_dichotomy'], p_lower) and "only" in p_lower:
+            return 0.3
+
+        # 4. Subjectivity without criteria
+        if any(k in p_lower for k in ["best", "worst", "favorite"]) and "data" not in p_lower:
+            return 0.3
+
+        return 1.0  # No obvious traps detected
+
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Tier A Reasoning: Structural parsing and constructive computation.
+        Returns a score 0.0 to 1.0 based on logical consistency.
+        """
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
+        score = 0.0
         matches = 0
-        total_primitives = 0
-        reasons = []
-
-        # 1. Negation Check (Crucial for logic)
-        if p_struct['has_negation']:
-            total_primitives += 1
-            if c_struct['has_negation']:
-                matches += 1
-                reasons.append("Matches negation constraint")
-            else:
-                reasons.append("Missing negation constraint")
         
-        # 2. Comparative Check
-        if p_struct['has_comparative']:
-            total_primitives += 1
-            if c_struct['has_comparative']:
-                matches += 1
-                reasons.append("Matches comparative logic")
-            else:
-                reasons.append("Missing comparative logic")
+        # 1. Numeric Evaluation (Constructive)
+        num_match = re.search(self.primitives['numeric_cmp'], prompt)
+        if num_match:
+            v1, op, v2 = num_match.groups()
+            n1, n2 = float(v1), float(v2)
+            true_val = False
+            if op == '<': true_val = n1 < n2
+            elif op == '>': true_val = n1 > n2
+            elif op == '<=': true_val = n1 <= n2
+            elif op == '>=': true_val = n1 >= n2
+            elif op == '=': true_val = n1 == n2
+            
+            # Check if candidate aligns with truth
+            cand_true = any(k in c_lower for k in ['true', 'yes', 'correct'])
+            cand_false = any(k in c_lower for k in ['false', 'no', 'incorrect'])
+            
+            if true_val and cand_true: score += 1.0
+            elif not true_val and cand_false: score += 1.0
+            elif true_val and cand_false: score -= 1.0
+            elif not true_val and cand_true: score -= 1.0
+            matches += 1
 
-        # 3. Conditional Check
-        if p_struct['has_conditional']:
-            total_primitives += 1
-            if c_struct['has_conditional']:
-                matches += 1
-                reasons.append("Matches conditional structure")
-            else:
-                reasons.append("Missing conditional structure")
+        # 2. Negation Consistency
+        if re.search(self.primitives['negation'], p_lower):
+            # If prompt has negation, candidate should reflect nuance or denial
+            if any(k in c_lower for k in ['not', 'no', 'false', 'deny']):
+                score += 0.5
+            matches += 1
 
-        # 4. Numeric Evaluation (Simple presence/consistency check)
-        if p_struct['numbers']:
-            total_primitives += 1
-            # If prompt has numbers, candidate having numbers is a weak positive signal
-            # unless it's a direct contradiction (hard to detect without full NLP), 
-            # so we reward structural similarity in numeric density.
-            if c_struct['numbers']:
-                matches += 0.5 # Partial credit for numeric awareness
-                reasons.append("Numeric content detected")
-            else:
-                reasons.append("Numeric content missing")
+        # 3. Transitivity / Logic Keywords
+        if "therefore" in p_lower or "thus" in p_lower:
+            if "therefore" in c_lower or "thus" in c_lower:
+                score += 0.3 # Structural echo
+            matches += 1
 
-        # Calculate Base Structural Score
-        if total_primitives == 0:
-            # Fallback if no logical primitives found: use length similarity as proxy
-            len_ratio = 1.0 - abs(p_struct['length'] - c_struct['length']) / max(p_struct['length'], 1)
-            base_score = max(0.0, len_ratio)
-            reason_str = "No logical primitives; using length similarity."
-        else:
-            base_score = matches / total_primitives
-            reason_str = "; ".join(reasons) if reasons else "Structural match"
+        return score / max(1, matches) if matches > 0 else 0.0
 
-        # Neuromodulation Step
-        # Error rate is inverse of match ratio
-        error_rate = 1.0 - (matches / total_primitives) if total_primitives > 0 else 0.0
-        mod_factor = self._neuromodulate(error_rate)
+    def _abductive_synthesis(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """
+        Generates scores for candidates using compositional primitives and 
+        neuromodulated confidence capping.
+        """
+        results = []
         
-        # Apply modulation: High error allows higher scores than pure logic would permit (exploration)
-        # But we still penalize heavily. This effectively scales the "temperature" of the decision.
-        final_struct_score = base_score * (1.0 / mod_factor) if error_rate > 0.5 else base_score * mod_factor
+        # Neuromodulation: Determine global confidence cap based on prompt ambiguity
+        meta_cap = self._meta_confidence(prompt)
         
-        # Ensure score stays in reasonable bounds before NCD tiebreaker
-        final_struct_score = max(0.0, min(1.0, final_struct_score))
+        for cand in candidates:
+            # 1. Structural/Compositional Score (Primary Signal >= 50%)
+            struct_score = self._structural_score(prompt, cand)
+            
+            # 2. Semantic Coherence (Secondary Signal ~35%)
+            # Simple keyword overlap weighted by rarity (idf-like approximation)
+            p_words = set(re.findall(r'\w+', prompt.lower()))
+            c_words = set(re.findall(r'\w+', cand.lower()))
+            common = p_words.intersection(c_words)
+            # Penalize very short answers that don't add info, unless they are logical constants
+            if len(c_words) < 2 and cand.lower() not in ['yes', 'no', 'true', 'false']:
+                coherence = 0.1
+            else:
+                coherence = len(common) / (len(p_words) + len(c_words)) if (len(p_words)+len(c_words)) > 0 else 0
+            
+            # 3. NCD Tiebreaker (Max 15%)
+            ncd_val = self._compute_ncd(prompt, cand)
+            ncd_score = (1.0 - ncd_val) * 0.15
+            
+            # Combine scores: Structural (0.6) + Coherence (0.25) + NCD (0.15)
+            raw_score = (struct_score * 0.60) + (coherence * 0.25) + ncd_score
+            
+            # Apply Neuromodulatory Cap (Epistemic Honesty)
+            # If meta_cap is low (ambiguous), score cannot exceed cap
+            final_score = min(raw_score, meta_cap)
+            
+            # Ensure non-negative
+            final_score = max(0.0, final_score)
+            
+            results.append({
+                "candidate": cand,
+                "score": final_score,
+                "reasoning": f"Structural:{struct_score:.2f}, Coherence:{coherence:.2f}, MetaCap:{meta_cap:.2f}"
+            })
 
-        return final_struct_score, reason_str
+        # Rank by score descending
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         if not candidates:
             return []
-        
-        scored_candidates = []
-        
-        # First pass: Calculate structural scores to determine global modulation context if needed
-        # For this implementation, we score individually but use the logic internally
-        
-        for cand in candidates:
-            score, reason = self._score_candidate(prompt, cand)
-            
-            # NCD as Tiebreaker / Refinement
-            # Only apply NCD penalty if structural scores are very close or zero
-            ncd_val = self._compute_ncd(prompt, cand)
-            
-            # Heuristic: If structural score is 0, NCD might rescue a "keyword" match
-            # If structural score is high, NCD ensures it's not random noise
-            if score < 0.1:
-                # Low structural match: boost slightly if NCD is low (similar string)
-                # But prioritize structural. 
-                adjustment = (1.0 - ncd_val) * 0.2
-                score += adjustment
-                reason += f"; NCD boost applied ({ncd_val:.2f})"
-            
-            scored_candidates.append({
-                "candidate": cand,
-                "score": score,
-                "reasoning": reason
-            })
-        
-        # Sort by score descending
-        scored_candidates.sort(key=lambda x: x['score'], reverse=True)
-        return scored_candidates
+        return self._abductive_synthesis(prompt, candidates)
 
     def confidence(self, prompt: str, answer: str) -> float:
-        """Return confidence 0-1 based on structural alignment."""
-        score, _ = self._score_candidate(prompt, answer)
+        """
+        Returns confidence 0-1. 
+        Capped by _meta_confidence to ensure epistemic honesty on ambiguous inputs.
+        """
+        meta_cap = self._meta_confidence(prompt)
         
-        # Additional strict checks for confidence
-        p_struct = self._extract_structure(prompt)
-        a_struct = self._extract_structure(answer)
+        # Calculate base confidence from structural alignment
+        struct_score = self._structural_score(prompt, answer)
         
-        # Penalty for direct logical contradiction
-        if p_struct['has_negation'] and not a_struct['has_negation']:
-            # If prompt requires negation and answer lacks it, confidence drops
-            # Unless the answer is explicitly "No" or similar, which might be captured by primitives
-            pass # Handled partially by score, but we can sharpen here
+        # Base confidence on structural match, but strictly capped by meta-analysis
+        base_conf = min(struct_score + 0.2, 1.0) # Small baseline for valid structure
         
-        return max(0.0, min(1.0, score))
+        final_conf = min(base_conf, meta_cap)
+        
+        return max(0.0, min(1.0, final_conf))

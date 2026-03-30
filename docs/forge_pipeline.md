@@ -10,24 +10,79 @@ The forge pipeline is a three-agent system that **automatically discovers, imple
 
 The purpose: build a library of computable reasoning criteria that can replace human preference in training loops (RLVF — Reinforcement Learning from Verification Feedback). Instead of "what would a human rate highly," these tools answer "does this response satisfy falsifiability? Does it reduce uncertainty? Is it structurally consistent with the prompt?"
 
-### Current Numbers
+### Current Numbers (updated 2026-03-29)
 
 | Metric | Value |
 |--------|-------|
-| Concept dictionary | 95 concepts across 18 fields (with mechanism_type metadata) |
-| Combinations evaluated | 3,250+ (Nous, 7+ runs, continuous) |
-| Forge attempts | 895+ (continuous, Coeus-priority ordered) |
-| Tools forged | 268 (29% forge rate, declining as queue deepens) |
-| Tools scrapped | 627+ |
-| Trap battery | 15 static + dynamic generator (8 categories, infinite variants) |
-| Quality baseline | NCD (compression distance) — 20% accuracy, 7% calibration |
-| Best tool | Falsificationism+FEP+TensorDecomp — 60% accuracy, 60% calibration |
-| NCD-dominated tools | 71/268 (27%) — 73% do real work beyond NCD |
-| Nemesis grid | 91/100 cells filled, 829 cycles |
+| Concept dictionary | 95 concepts across 18 fields |
+| Combinations evaluated | 7,400+ (Nous, 14+ runs, continuous) |
+| Forge attempts | 1,967 (ledger entries) |
+| Total .py files | 1,467 across forge/ through forge_v7/ |
+| Passing tools (>42% NCD baseline) | 197 |
+| Battery | Tier 1: 89 categories, Tier 2: 19 categories (108 total) |
+| Quality baseline | NCD: 42% accuracy, 46% calibration |
+| Best tool | causal_inference × bayesian × info_theory — 74% accuracy, 70 categories |
+| Coverage (union) | **89/89 Tier 1 (100%)** |
+| Elite tools (>70% acc) | 6 (all Opus-forged v7) |
+| Deep reasoning engine | 59.7% overall, **74.8% on hard categories** (computation-first) |
+| Nemesis grid | 92/100 cells filled |
+| Forge frames | A (Structural), B (Constructive), C (Dynamics), D (Judgment), E (Computational), F (Adversarial), G (Metacognitive) |
+| Difficulty-weighted scoring | Implemented: 0.3×easy + 0.3×medium + 0.4×hard |
 | Nous prompt | Implementation-focused (steers toward algorithms, not theory) |
 | Coeus methods | L1 regression + NOTEARS + LiNGAM + FCI + DAGMA + interventional |
 | Coeus enrichment | Prescriptive directives (not statistics) |
 | Nous sampling | Coeus-weighted (oversamples forge drivers) |
+
+### Architecture Evolution
+
+The forge has gone through three architectural eras:
+
+1. **v1-v5 (Regex Era):** 344 tools, 19 unique behavioral profiles (94.5% redundancy). NCD-backbone monoculture. Best: 52% accuracy.
+2. **v7 (Opus Era):** 46 tools forged by Claude Code when NVIDIA API failed. Multi-frame prompts broke the monoculture. Best: 74% accuracy. 89/89 coverage achieved.
+3. **Tier 2 (Computation Era):** Frame E/F/G prompts forge tools that parse → compute → match instead of regex-matching. Deep reasoning engine proved 3.5x improvement on hard categories. Difficulty-weighted scoring creates selection pressure for computation-first tools.
+
+---
+
+## Architecture Transition: Regex → Computation-First (2026-03-29)
+
+The forge pipeline has crossed an architectural threshold. **Computation-first tools now outperform the best regex-based tools on difficulty-weighted scoring.**
+
+### The Crossover
+
+| Metric | Elite Regex (best v7) | Frame E v3 (computation-first) |
+|--------|----------------------|-------------------------------|
+| **Weighted score** | 0.654 | **0.679** |
+| Easy accuracy | ~85% | ~72% |
+| Medium accuracy | ~60% | ~58% |
+| Hard accuracy | **21%** | **54%** |
+| Tier 2 accuracy | **20%** | **55%** |
+
+The weighted scoring formula (0.3 x easy + 0.3 x medium + 0.4 x hard) was designed to create selection pressure for tools that solve genuinely difficult problems. Under this metric, computation-first tools win decisively because hard categories carry 40% of the weight, and computation-first tools achieve 2.6x the hard-category accuracy of regex elites.
+
+### Why Computation-First Wins
+
+Regex-based tools hit a ceiling on hard categories because they dispatch on surface patterns. When a prompt says "Start with register A=5, add 3, swap A and B," no amount of regex sophistication can execute the state machine. Computation-first tools parse prompts into formal intermediate representations (constraint sets, state machines, DAGs, variable bindings) and then execute algorithms over those representations (BFS, constraint propagation, arithmetic evaluation, Bayesian updates).
+
+The key finding: **parsing is the bottleneck, not reasoning.** Once a prompt is correctly parsed into a formal structure, the computation is often trivial. This means improving parsing quality (better extraction patterns, more surface form coverage) directly improves accuracy on hard categories, whereas regex tools have no path to improvement on problems that require actual computation.
+
+### Production Architecture: Ensemble
+
+For production use, the optimal strategy is an ensemble:
+
+- **Computation-first tools (Frame E/F/G)** handle hard and Tier 2 categories where regex tools score near 0%
+- **Regex-based tools** retain strong coverage on easy and medium categories where pattern matching is sufficient
+- **Weighted scoring** ensures the ensemble is evaluated on its ability to handle the full difficulty spectrum
+
+The ensemble approach avoids sacrificing easy-category coverage (where regex tools excel) while gaining hard-category capability (where computation-first tools dominate).
+
+### New Default Forge Frames
+
+**Frame E (Computational), Frame F (Adversarial Robustness), and Frame G (Metacognitive) are now the default forge frames.** New tool generation should use these frames unless specifically targeting easy/medium category gaps where regex patterns are adequate.
+
+Legacy frames (A-D) remain available and their tools remain in the library. They are useful for:
+- Easy/medium tier coverage where pattern matching suffices
+- Ensemble diversity (different architectures catch different failure modes)
+- Baseline comparison against computation-first tools
 
 ---
 

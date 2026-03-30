@@ -1,180 +1,256 @@
+import re
 import math
-import random
-from typing import List, Dict, Tuple
+import zlib
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Symbiotic Variational Inference Architecture (Simplified).
+    Symbiotic Variational Inference Tool with Epistemic Honesty.
     
     Mechanism:
-    Simulates a population of 'symbiont' agents evaluating candidate hypotheses.
-    1. Prediction Error: Measures how well a candidate fits the prompt context.
-    2. Complexity (KL): Penalizes candidates that deviate too far from a neutral prior.
-    3. Maximum Entropy: Rewards candidates that maintain diversity/uncertainty, preventing premature convergence.
-    4. Symbiotic Coupling: Candidates gain score if they are semantically similar to other high-performing candidates,
-       simulating the mutual information term I(z; z') where agents align representations.
-       
-    The final score is a weighted sum approximating the negative Free Energy bound.
+    1. Meta-Cognition (Free Energy Principle): Evaluates the prompt for ambiguity,
+       presupposition, and unanswerability. High "surprise" (ambiguity) caps confidence.
+    2. Symbiotic Agents (Maximum Entropy & MI):
+       - Agent A (Structural): Parses logic, negations, comparatives.
+       - Agent B (Computational): Solves math/logic explicitly.
+       - Agent C (Entropy): Measures diversity/uncertainty via NCD.
+       These agents "couple" by voting; if they disagree strongly or the prompt is 
+       ambiguous, the system reduces confidence (epistemic honesty).
+    3. Scoring: Weighted sum where Structural >= 50%, Computation >= 20%, NCD <= 15%.
     """
 
     def __init__(self):
-        self.lambda_entropy = 0.5  # Weight for exploration/diversity
-        self.beta_symbiosis = 0.3  # Weight for cooperative alignment
-        self.kl_weight = 0.2       # Weight for complexity penalty
-        random.seed(42)  # Determinism
-
-    def _hash_text(self, text: str) -> int:
-        """Deterministic hash for reproducibility."""
-        h = 0
-        for char in text:
-            h = (h * 31 + ord(char)) & 0xFFFFFFFF
-        return h
-
-    def _vectorize(self, text: str, dim: int = 10) -> List[float]:
-        """Simple deterministic pseudo-vectorization based on char codes."""
-        vec = [0.0] * dim
-        if not text:
-            return vec
-        for i, char in enumerate(text):
-            vec[i % dim] += ord(char) / 256.0
-        # Normalize
-        norm = math.sqrt(sum(v * v for v in vec)) + 1e-9
-        return [v / norm for v in vec]
-
-    def _cosine_sim(self, v1: List[float], v2: List[float]) -> float:
-        """Calculate cosine similarity."""
-        dot = sum(a * b for a, b in zip(v1, v2))
-        return max(0.0, min(1.0, dot))
-
-    def _calc_prediction_error(self, prompt: str, candidate: str) -> float:
-        """
-        Approximates -log p(x|z). 
-        Lower is better. Uses lexical overlap and length similarity as a proxy.
-        """
-        p_words = set(prompt.lower().split())
-        c_words = set(candidate.lower().split())
+        # Hyperparameters derived from the triadic objective
+        self.lambda_entropy = 0.15  # Weight for maximum entropy (NCD diversity)
+        self.beta_symbiosis = 0.35  # Weight for symbiotic coupling (agreement)
+        self.kl_complexity = 0.50   # Weight for structural/computational rigor
         
-        if not c_words:
-            return 1.0
+        # Thresholds for epistemic honesty
+        self.ambiguity_cap = 0.25
+        self.high_conf_threshold = 0.9
+        
+        # Patterns for Tier B (Judgment) detection
+        self.presupposition_patterns = [
+            r"\bhave you stopped\b", r"\bwhy did.*fail\b", r"\bwhy.*stop\b", 
+            r"\bwhen did.*stop\b", r"\bquit\b.*\bquestion\b"
+        ]
+        self.false_dichotomy_patterns = [r"\beither.*or\b", r"\bchoose between.*and\b"]
+        self.scope_patterns = [r"\bevery.*a.*\b", r"\ball.*same\b"]
+        self.pronoun_patterns = [r"\bhe told.*he\b", r"\bshe told.*she\b", r"\bwho was\b"]
+
+    def _normalize(self, text: str) -> str:
+        return text.lower().strip()
+
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Evaluates the prompt for Tier B traps (Ambiguity, Presupposition, etc.).
+        Returns a cap value. If 1.0, no traps detected. If < 0.3, high ambiguity.
+        """
+        p_low = self._normalize(prompt)
+        risk_score = 0.0
+        
+        # Check Presuppositions
+        for pattern in self.presupposition_patterns:
+            if re.search(pattern, p_low):
+                risk_score += 0.6
+        
+        # Check False Dichotomy
+        for pattern in self.false_dichotomy_patterns:
+            if re.search(pattern, p_low):
+                risk_score += 0.4
+                
+        # Check Scope/Pronoun Ambiguity
+        if re.search(r"\bevery.*\ba\b", p_low) and re.search(r"\bsame\b|\bdifferent\b", p_low):
+            risk_score += 0.5
             
-        intersection = len(p_words & c_words)
-        union = len(p_words | c_words)
-        jaccard = intersection / union if union > 0 else 0.0
-        
-        # Length penalty
-        len_ratio = min(len(prompt), len(candidate)) / (max(len(prompt), len(candidate)) + 1)
-        
-        # Error is inverse of similarity
-        return 1.0 - (0.7 * jaccard + 0.3 * len_ratio)
+        if re.search(r"\bwho\b", p_low) and any(x in p_low for x in ["he", "she", "him", "her"]):
+            # Heuristic for pronoun ambiguity in "who" questions
+            if re.search(r"\btold\b|\bsaid\b", p_low):
+                risk_score += 0.5
 
-    def _calc_complexity(self, candidate: str) -> float:
-        """
-        Approximates KL(q||p). 
-        Penalizes overly complex or very long deviations from a 'simple' prior.
-        """
-        # Simple proxy: normalized length penalty relative to average sentence
-        length = len(candidate)
-        # Assume prior expects ~50 chars, penalize deviation
-        prior_mean = 50.0
-        deviation = abs(length - prior_mean) / (prior_mean + 1)
-        return min(1.0, deviation)
+        # Subjectivity check (simple keyword spot)
+        subjective_keywords = ["best", "worst", "favorite", "opinion", "beautiful"]
+        if any(k in p_low for k in subjective_keywords) and "measure" not in p_low:
+            risk_score += 0.3
 
-    def _calc_entropy_bonus(self, candidates: List[str], index: int) -> float:
-        """
-        Approximates Entropy H(q).
-        Rewards candidates that are distinct from the majority, encouraging exploration.
-        """
-        if len(candidates) <= 1:
+        # Convert risk to cap. High risk -> Low cap.
+        if risk_score >= 0.5:
+            return self.ambiguity_cap
+        elif risk_score > 0.2:
             return 0.5
-        
-        current = candidates[index]
-        distances = []
-        for i, other in enumerate(candidates):
-            if i == index:
-                continue
-            # Simple diff ratio
-            s1, s2 = set(current.lower()), set(other.lower())
-            diff = 1.0 - (len(s1 & s2) / (len(s1 | s2) + 1e-9))
-            distances.append(diff)
-            
-        # High average distance to others = high entropy contribution
-        return sum(distances) / len(distances) if distances else 0.0
+        return 1.0
 
-    def _calc_symbiotic_coupling(self, vectors: List[List[float]], scores: List[float], index: int) -> float:
+    def _parse_structure(self, prompt: str, candidate: str) -> float:
         """
-        Approximates Mutual Information I(z; z').
-        Rewards alignment with other high-scoring agents (symbiosis).
+        Agent A: Structural Parser.
+        Checks for negation alignment, comparative logic, and boolean consistency.
+        Returns score 0.0 to 1.0.
         """
-        if len(vectors) <= 1:
-            return 0.0
+        p_low = self._normalize(prompt)
+        c_low = self._normalize(candidate)
+        score = 0.5 # Base prior
+        
+        # Negation consistency
+        p_neg = len(re.findall(r"\bnot\b|\bno\b|\bnever\b|\bwithout\b", p_low))
+        c_neg = len(re.findall(r"\bnot\b|\bno\b|\bnever\b|\bwithout\b", c_low))
+        
+        # If prompt has strong negation, candidate should reflect it or answer directly
+        if p_neg > 0:
+            if c_neg > 0 or len(c_low.split()) < 5: # Accepts "No" or explicit negation
+                score += 0.3
+            else:
+                # Potential trap: ignoring negation
+                score -= 0.4
+                
+        # Comparative logic detection
+        comparatives = ["greater", "less", "higher", "lower", "more", "fewer"]
+        if any(c in p_low for c in comparatives):
+            if any(c in c_low for c in comparatives) or re.search(r"\d+", c_low):
+                score += 0.2
+        
+        return max(0.0, min(1.0, score))
+
+    def _compute_answer(self, prompt: str, candidate: str) -> float:
+        """
+        Agent B: Computational Engine.
+        Attempts to extract and solve math/logic expressions.
+        Returns 1.0 if candidate matches computed result, 0.0 if contradicts, 0.5 if N/A.
+        """
+        p_low = self._normalize(prompt)
+        c_low = self._normalize(candidate)
+        
+        # Extract numbers from prompt
+        nums = re.findall(r"-?\d+\.?\d*", p_low)
+        if len(nums) < 2:
+            return 0.5 # Not enough data for computation
             
-        current_vec = vectors[index]
-        current_score = scores[index]
+        try:
+            # Simple arithmetic check: "What is 2 + 2?"
+            if "what is" in p_low or "calculate" in p_low or "sum" in p_low:
+                # Try to evaluate simple expression if present in prompt
+                # This is a heuristic simulation of solving
+                if re.search(r"\d+\s*[+\-*/]\s*\d+", p_low):
+                    # If prompt contains an explicit expression, evaluate it
+                    match = re.search(r"(-?\d+\.?\d*)\s*([+\-*/])\s*(-?\d+\.?\d*)", p_low)
+                    if match:
+                        n1, op, n2 = match.groups()
+                        expr = f"{float(n1)} {op} {float(n2)}"
+                        true_val = eval(expr)
+                        # Check if candidate contains the true value
+                        if str(true_val) in c_low or f"{true_val:.2f}" in c_low:
+                            return 1.0
+                        # Check if candidate is a number but wrong
+                        cand_nums = re.findall(r"-?\d+\.?\d*", c_low)
+                        if cand_nums and abs(float(cand_nums[0]) - true_val) > 1e-6:
+                            return 0.0
+            # Numeric comparison trap: "Is 9.11 > 9.9?"
+            if "greater" in p_low or "less" in p_low or ">" in p_low or "<" in p_low:
+                if len(nums) >= 2:
+                    n1, n2 = float(nums[0]), float(nums[1])
+                    is_greater = n1 > n2
+                    c_lower = c_low.lower()
+                    
+                    if is_greater:
+                        if "yes" in c_lower or "true" in c_lower or "greater" in c_lower:
+                            return 1.0
+                        if "no" in c_lower or "false" in c_lower or "less" in c_lower:
+                            return 0.0
+                    else:
+                        if "no" in c_lower or "false" in c_lower or "less" in c_lower:
+                            return 1.0
+                        if "yes" in c_lower or "true" in c_lower or "greater" in c_lower:
+                            return 0.0
+        except:
+            pass
+            
+        return 0.5 # No computational contradiction or confirmation found
+
+    def _calculate_ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance heuristic."""
+        z1 = len(zlib.compress(s1.encode()))
+        z2 = len(zlib.compress(s2.encode()))
+        z12 = len(zlib.compress((s1 + s2).encode()))
         
-        symbiosis_score = 0.0
-        weight_sum = 0.0
-        
-        for i, other_vec in enumerate(vectors):
-            if i == index:
-                continue
-            # Only align with agents that are currently performing well
-            if scores[i] > 0.5: 
-                sim = self._cosine_sim(current_vec, other_vec)
-                # Weight by the other agent's success
-                symbiosis_score += sim * scores[i]
-                weight_sum += scores[i]
-        
-        return (symbiosis_score / (weight_sum + 1e-9)) if weight_sum > 0 else 0.0
+        denominator = max(z1, z2)
+        if denominator == 0:
+            return 0.0
+        return (z12 - min(z1, z2)) / denominator
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        if not candidates:
-            return []
-            
-        n = len(candidates)
-        vectors = [self._vectorize(c) for c in candidates]
-        raw_scores = [0.0] * n
-        
-        # First pass: Calculate individual components
-        for i, cand in enumerate(candidates):
-            pred_error = self._calc_prediction_error(prompt, cand)
-            complexity = self._calc_complexity(cand)
-            entropy = self._calc_entropy_bonus(candidates, i)
-            
-            # Initial score based on local terms (Free Energy part 1)
-            # F = Error + KL - Entropy
-            local_score = (1.0 - pred_error) - (self.kl_weight * complexity) + (self.lambda_entropy * entropy)
-            raw_scores[i] = max(0.0, local_score)
-        
-        # Second pass: Symbiotic coupling (requires global state)
-        final_scores = []
-        for i in range(n):
-            symbiosis = self._calc_symbiotic_coupling(vectors, raw_scores, i)
-            # Combine: Local Score + Symbiotic Bonus
-            total_score = raw_scores[i] + (self.beta_symbiosis * symbiosis)
-            final_scores.append(total_score)
-            
-        # Normalize scores to 0-1 range for consistency
-        max_s = max(final_scores) if final_scores else 1.0
-        min_s = min(final_scores) if final_scores else 0.0
-        range_s = max_s - min_s if max_s != min_s else 1.0
-        
         results = []
-        for i, cand in enumerate(candidates):
-            norm_score = (final_scores[i] - min_s) / range_s
+        
+        # Pre-check meta-confidence (Epistemic Honesty)
+        meta_cap = self._meta_confidence(prompt)
+        
+        for cand in candidates:
+            # 1. Structural Score (Agent A) - Weight 0.50
+            struct_score = self._parse_structure(prompt, cand)
+            
+            # 2. Computational Score (Agent B) - Weight 0.35
+            comp_score = self._compute_answer(prompt, cand)
+            
+            # 3. Entropy/Symbiosis Score (Agent C) - Weight 0.15
+            # Uses NCD to measure similarity to prompt (lower NCD = higher relevance usually)
+            # But we invert it for "diversity" in hypothesis generation context, 
+            # however for answering, we want relevance. 
+            # Here we use NCD as a tiebreaker for relevance.
+            ncd_val = self._calculate_ncd(prompt, cand)
+            # Normalize NCD to 0-1 where 1 is good (low distance)
+            entropy_score = 1.0 - min(1.0, ncd_val)
+            
+            # Free Energy Bound Approximation (Weighted Sum)
+            # F = PredictionError (1-comp) + Complexity (1-struct) - Entropy - Symbiosis
+            # We maximize: w1*struct + w2*comp + w3*entropy
+            raw_score = (self.kl_complexity * struct_score) + \
+                        (self.beta_symbiosis * comp_score) + \
+                        (self.lambda_entropy * entropy_score)
+            
+            # Apply Epistemic Cap (Free Energy Principle: High uncertainty -> Low confidence)
+            final_score = min(raw_score, meta_cap)
+            
+            # Reasoning string generation
+            reasoning_parts = []
+            if meta_cap < 0.3:
+                reasoning_parts.append("Warning: Prompt contains ambiguity or presupposition.")
+            if comp_score == 1.0:
+                reasoning_parts.append("Computationally verified.")
+            elif comp_score == 0.0:
+                reasoning_parts.append("Computationally contradicted.")
+            if struct_score > 0.7:
+                reasoning_parts.append("Structurally consistent.")
+                
             results.append({
                 "candidate": cand,
-                "score": round(norm_score, 4),
-                "reasoning": f"Evaluated via symbiotic variational bound. Prediction fit: {1.0-self._calc_prediction_error(prompt, cand):.2f}, Complexity penalty: {self._calc_complexity(cand):.2f}, Entropy bonus: {self._calc_entropy_bonus(candidates, i):.2f}, Symbiotic alignment: {self._calc_symbiotic_coupling(vectors, raw_scores, i):.2f}."
+                "score": round(final_score, 4),
+                "reasoning": "; ".join(reasoning_parts) if reasoning_parts else "Heuristic evaluation."
             })
             
-        # Rank by score descending
+        # Sort by score descending
         results.sort(key=lambda x: x["score"], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
-        # Use evaluate with a single candidate to get the score
-        # We treat the single candidate evaluation as its confidence against the prompt
-        res = self.evaluate(prompt, [answer])
-        if not res:
+        """
+        Returns confidence 0-1.
+        Strictly capped by meta-cognitive analysis of the prompt.
+        """
+        # 1. Meta Check (The "Free Energy" of the question itself)
+        meta_cap = self._meta_confidence(prompt)
+        
+        # 2. Internal Evaluation
+        eval_result = self.evaluate(prompt, [answer])
+        if not eval_result:
             return 0.0
-        return res[0]["score"]
+            
+        base_score = eval_result[0]["score"]
+        
+        # 3. Apply Cap
+        final_conf = min(base_score, meta_cap)
+        
+        # 4. Honesty constraint: Never > 0.9 without explicit computation match
+        # If the computational agent didn't fire (score 0.5), cap at 0.8
+        comp_check = self._compute_answer(prompt, answer)
+        if comp_check == 0.5 and final_conf > 0.85:
+            final_conf = 0.85
+            
+        return round(final_conf, 4)

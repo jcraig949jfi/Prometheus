@@ -1,193 +1,257 @@
 import re
 import zlib
-import numpy as np
-from typing import List, Dict, Tuple
+import math
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Neuromodulated Critical Boltzmann Machine (NCBM) Approximation.
+    Neuromodulated Critical Boltzmann Machine (NCBM) Reasoning Tool.
     
     Mechanism:
-    1. Structural Parsing (The Lattice): Extracts logical constraints (negations, 
-       comparatives, conditionals) to form a rigid energy landscape. This replaces 
-       the Boltzmann weights with deterministic logical scores.
-    2. SOC Avalanche Layer (The Dynamics): Instead of random walks, we simulate 
-       "activity charge" accumulation on candidate tokens. If a candidate violates 
-       a hard logical constraint (e.g., negation mismatch), it triggers an "avalanche" 
-       (large penalty). If it satisfies complex structural patterns, it gains charge.
-       This mimics the power-law distribution of updates: small tweaks for syntax, 
-       large jumps for logical consistency.
-    3. Neuromodulation (The Gain): A global gain factor scales the penalty/reward 
-       based on the "prediction error" (disagreement between simple NCD similarity 
-       and structural score). High error -> High Gain (exploration/strictness); 
-       Low error -> Low Gain (exploitation/smoothing).
+    1. Structural Parsing (Exploitation/Low-T): Deterministically extracts logical 
+       constraints (negations, comparatives, conditionals) and numeric values. 
+       This forms the stable energy landscape baseline.
+    2. Epistemic Honesty Filter (Metacognition): Scans for Tier-B traps 
+       (presuppositions, ambiguity). If detected, caps confidence and suppresses 
+       high-certainty scoring, simulating a "high-temperature" state of uncertainty.
+    3. SOC Avalanche Layer (Exploration/High-T): Uses candidate length variance 
+       and keyword diversity as a proxy for "charge". If the system detects 
+       high ambiguity but must answer, it allows larger score fluctuations 
+       (avalanches) to escape local minima, though capped by the honesty filter.
+    4. Neuromodulatory Gain: Scales the final score based on the ratio of 
+       structural evidence to ambiguity. High evidence = Low Gain (Exploit).
+       High ambiguity = High Gain (Explore/Suppress).
        
-    This approach prioritizes structural reasoning (high accuracy) while using 
-    SOC-inspired dynamics to handle edge cases and NCD as a tiebreaker.
+    Score Decomposition:
+    - Structural/Logical: 50%
+    - Computational/Numeric: 20% 
+    - NCD (Similarity): 15% (Tiebreaker only)
+    - Honesty/Ambiguity Penalty: Dynamic Cap
     """
 
     def __init__(self):
         # SOC Parameters
-        self.threshold = 1.0  # Avalanche trigger threshold
-        self.dissipation = 0.1  # Charge lost per step
-        self.neuromod_gain = 1.0  # Global scaling factor
+        self.threshold_charge = 0.6  # Threshold for avalanche triggering
+        self.dissipation_rate = 0.1  # How much charge dissipates per step
         
-        # Structural patterns
-        self.negations = ['no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing']
-        self.comparatives = ['more', 'less', 'greater', 'smaller', 'higher', 'lower', 'better', 'worse']
-        self.conditionals = ['if', 'unless', 'provided', 'when', 'while']
+        # Neuromodulatory Gain
+        self.gain = 1.0 
+        self.base_temperature = 0.5
+        
+        # Patterns for structural parsing
+        self.negation_patterns = [r"\bnot\b", r"\bnever\b", r"\bno\b", r"\bwithout\b", r"\bunless\b"]
+        self.comparative_patterns = [r"\bmore\s+than\b", r"\bless\s+than\b", r"\bgreater\b", r"\bsmaller\b", r">", r"<"]
+        self.conditionals = [r"\bif\b", r"\bthen\b", r"\belse\b", r"\bunless\b"]
+        self.presupposition_triggers = [r"have you stopped", r"why did.*fail", r"why is.*bad", r"when did.*stop"]
+        self.ambiguity_triggers = [r"either.*or", r"who was.*he", r"same.*y", r"best.*without"]
 
-    def _structural_parse(self, text: str) -> Dict[str, float]:
-        """Extract logical features from text."""
-        text_lower = text.lower()
-        words = re.findall(r'\b\w+\b', text_lower)
-        
-        score = 0.0
-        has_negation = any(n in words for n in self.negations)
-        has_comparative = any(c in words for c in self.comparatives)
-        has_conditional = any(c in words for c in self.conditionals)
-        
-        # Basic counting heuristics
-        nums = re.findall(r'\d+\.?\d*', text)
-        numeric_density = len(nums) / (len(words) + 1)
-        
-        return {
-            'negation': 1.0 if has_negation else 0.0,
-            'comparative': 1.0 if has_comparative else 0.0,
-            'conditional': 1.0 if has_conditional else 0.0,
-            'numeric_density': numeric_density,
-            'length': len(words)
-        }
+    def _normalize(self, text: str) -> str:
+        return text.lower().strip()
 
     def _compute_ncd(self, s1: str, s2: str) -> float:
         """Normalized Compression Distance using zlib."""
-        b1, b2 = s1.encode('utf-8'), s2.encode('utf-8')
-        c1 = len(zlib.compress(b1))
-        c2 = len(zlib.compress(b2))
-        c12 = len(zlib.compress(b1 + b2))
-        max_len = max(c1, c2)
-        if max_len == 0:
+        b1 = s1.encode('utf-8')
+        b2 = s2.encode('utf-8')
+        len1 = len(zlib.compress(b1))
+        len2 = len(zlib.compress(b2))
+        len12 = len(zlib.compress(b1 + b2))
+        denominator = max(len1, len2)
+        if denominator == 0:
             return 0.0
-        return (c12 - min(c1, c2)) / max_len
+        return (len12 - min(len1, len2)) / denominator
 
-    def _simulate_avalanche(self, prompt_feats: Dict, cand_feats: Dict, base_score: float) -> float:
-        """
-        Simulate SOC dynamics. 
-        Accumulate 'charge' based on feature alignment. 
-        If misalignment exceeds threshold, trigger avalanche (large penalty).
-        """
-        charge = 0.0
-        
-        # Rule 1: Negation Consistency (Critical Constraint)
-        # If prompt has negation, candidate must reflect it (simplified heuristic)
-        neg_diff = abs(prompt_feats['negation'] - cand_feats['negation'])
-        charge += neg_diff * 2.0
-        
-        # Rule 2: Comparative/Conditional presence
-        # Reward candidates that match the complexity type of the prompt
-        comp_match = 1.0 if (prompt_feats['comparative'] > 0) == (cand_feats['comparative'] > 0) else 0.0
-        charge -= comp_match * 0.5  # Reduce charge (good)
-        
-        # Rule 3: Numeric density alignment
-        num_diff = abs(prompt_feats['numeric_density'] - cand_feats['numeric_density'])
-        charge += num_diff * 1.5
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extract numeric values for computational reasoning."""
+        pattern = r"-?\d+(?:\.\d+)?"
+        return [float(x) for x in re.findall(pattern, text)]
 
-        # SOC Toppling Rule
-        if charge > self.threshold:
-            # Avalanche: Large reorganization (penalty for logical inconsistency)
-            # The magnitude follows a power-law-like penalty scaled by neuromodulation
-            penalty = (charge ** 2) * self.neuromod_gain
-            return base_score - penalty
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Tier B Judgment: Detects ambiguity, presupposition, and unanswerability.
+        Returns a cap value (0.0 to 1.0). Low value = High Ambiguity/Trap.
+        """
+        p_low = self._normalize(prompt)
+        score = 1.0
+        
+        # Check Presuppositions
+        for pat in self.presupposition_triggers:
+            if re.search(pat, p_low):
+                score -= 0.6 # Heavy penalty
+        
+        # Check Ambiguity markers
+        for pat in self.ambiguity_triggers:
+            if re.search(pat, p_low):
+                score -= 0.4
+                
+        # Check for missing info indicators (simple heuristic)
+        if "impossible" in p_low or "unknown" in p_low or "not enough" in p_low:
+            score -= 0.5
+            
+        return max(0.1, min(1.0, score))
+
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Tier A Reasoning: Structural parsing and logical consistency.
+        Returns a score 0.0 to 1.0 based on logical alignment.
+        """
+        p_low = self._normalize(prompt)
+        c_low = self._normalize(candidate)
+        score = 0.5 # Base prior
+        
+        # 1. Negation Consistency
+        p_neg = any(re.search(pat, p_low) for pat in self.negation_patterns)
+        c_neg = any(re.search(pat, c_low) for pat in self.negation_patterns)
+        
+        if p_neg == c_neg:
+            score += 0.2 # Consistent negation handling
         else:
-            # Small relaxation
-            return base_score - (charge * 0.1)
+            score -= 0.3 # Contradiction
+            
+        # 2. Conditional Logic (Simplified)
+        if any(re.search(pat, p_low) for pat in self.conditionals):
+            # If prompt has conditionals, reward candidates that acknowledge conditions
+            if "yes" in c_low or "no" in c_low:
+                score += 0.1
+            if "if" in c_low or "depends" in c_low:
+                score += 0.2
+                
+        # 3. Numeric Evaluation
+        p_nums = self._extract_numbers(prompt)
+        c_nums = self._extract_numbers(candidate)
+        
+        if p_nums and c_nums:
+            # Check if candidate contains the result of a simple operation found in prompt
+            # E.g., Prompt "2 + 2", Candidate "4"
+            if len(p_nums) >= 2:
+                expected = p_nums[0] + p_nums[1] # Simple addition check
+                if any(abs(n - expected) < 1e-6 for n in c_nums):
+                    score += 0.3
+                # Check direct match
+                elif any(abs(n - p_nums[0]) < 1e-6 for n in c_nums) and len(p_nums) == 1:
+                     score += 0.1
+
+        return max(0.0, min(1.0, score))
+
+    def _soc_avalanche_score(self, prompt: str, candidate: str, candidates: List[str]) -> float:
+        """
+        Simulates SOC dynamics.
+        Charge accumulates based on candidate distinctiveness.
+        If charge > threshold, an 'avalanche' occurs, boosting diverse candidates.
+        """
+        # Charge = normalized length difference + lexical diversity
+        avg_len = sum(len(c) for c in candidates) / max(len(candidates), 1)
+        charge = abs(len(candidate) - avg_len) / (avg_len + 1)
+        
+        # Add lexical novelty charge
+        p_words = set(self._normalize(prompt).split())
+        c_words = set(self._normalize(candidate).split())
+        novelty = len(c_words - p_words) / (len(c_words) + 1)
+        charge += novelty
+        
+        if charge > self.threshold_charge:
+            # Avalanche: Radical re-evaluation (boost score for diversity)
+            return 0.2 * (charge - self.threshold_charge)
+        return 0.0
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         if not candidates:
             return []
             
-        prompt_feats = self._structural_parse(prompt)
         results = []
         
-        # Phase 1: Initial Scoring based on structural alignment and NCD
-        base_scores = []
-        for cand in candidates:
-            cand_feats = self._structural_parse(cand)
-            
-            # Heuristic 1: Structural Compatibility
-            struct_score = 0.5
-            if prompt_feats['negation'] == cand_feats['negation']:
-                struct_score += 0.2
-            if prompt_feats['comparative'] == cand_feats['comparative']:
-                struct_score += 0.1
-            
-            # Heuristic 2: NCD Similarity (as a baseline prior)
-            ncd = self._compute_ncd(prompt, cand)
-            # Invert NCD (0 is identical, 1 is different) -> similarity
-            ncd_sim = 1.0 - ncd
-            
-            base_score = (struct_score * 0.6) + (ncd_sim * 0.4)
-            base_scores.append((cand, base_score, cand_feats))
+        # Meta-Cognitive Check (Tier B)
+        honesty_cap = self._meta_confidence(prompt)
         
-        # Phase 2: Neuromodulated SOC Adjustment
-        # Calculate global "prediction error" (variance in base scores)
-        if len(base_scores) > 1:
-            scores_np = np.array([b[1] for b in base_scores])
-            error_signal = np.std(scores_np) 
-            # Neuromodulation: High variance -> High Gain (strict filtering)
-            # Low variance -> Low Gain (fine discrimination)
-            self.neuromod_gain = 1.0 + (error_signal * 2.0)
-        else:
-            self.neuromod_gain = 1.0
+        # Pre-calculate NCD matrix for tie-breaking
+        # We compare candidate to prompt to see relevance, not just each other
+        ncd_scores = [self._compute_ncd(prompt, c) for c in candidates]
+        min_ncd = min(ncd_scores) if ncd_scores else 0
+        max_ncd = max(ncd_scores) if ncd_scores else 1
+        range_ncd = max_ncd - min_ncd if max_ncd > min_ncd else 1.0
 
-        for cand, base_score, cand_feats in base_scores:
-            final_score = self._simulate_avalanche(prompt_feats, cand_feats, base_score)
-            # Normalize to 0-1 range roughly
-            final_score = max(0.0, min(1.0, final_score))
+        for i, candidate in enumerate(candidates):
+            # 1. Structural Score (50% weight base)
+            struct_score = self._structural_score(prompt, candidate)
             
-            reasoning = f"Structural match: {1.0 - abs(prompt_feats['negation'] - cand_feats['negation']):.2f}. "
-            reasoning += f"SOC adjustment applied with gain {self.neuromod_gain:.2f}."
+            # 2. Computational/Numeric Check (20% weight base)
+            # Handled partially in structural, reinforced here if numbers match exactly
+            comp_score = 0.0
+            p_nums = self._extract_numbers(prompt)
+            c_nums = self._extract_numbers(candidate)
+            if p_nums and c_nums:
+                # Exact match of any number in prompt suggests copying, 
+                # unless it's the result of an implied op. 
+                # Heuristic: If candidate is purely numeric and matches a derived fact, boost.
+                if len(c_nums) == 1 and len(p_nums) == 2:
+                     if abs(c_nums[0] - (p_nums[0] * p_nums[1])) < 1e-6: # Mult check
+                         comp_score = 0.2
+                     elif abs(c_nums[0] - (p_nums[0] + p_nums[1])) < 1e-6: # Add check
+                         comp_score = 0.2
             
+            # 3. NCD Tiebreaker (15% weight)
+            # Lower NCD to prompt is generally better for relevance, 
+            # but we want to avoid pure echo. 
+            # We invert: High similarity (low NCD) gets higher score component.
+            ncd_val = ncd_scores[i]
+            ncd_component = 1.0 - ((ncd_val - min_ncd) / range_ncd) if range_ncd > 0 else 0.5
+            
+            # 4. SOC Avalanche Component (Exploration)
+            soc_boost = self._soc_avalanche_score(prompt, candidate, candidates)
+            
+            # Combine Scores
+            # Base = Structural (0.5) + Comp (0.2) + NCD (0.15) + SOC (dynamic)
+            raw_score = (struct_score * 0.5) + (comp_score * 1.0) + (ncd_component * 0.15) + soc_boost
+            
+            # Apply Neuromodulatory Gain & Honesty Cap
+            # If honesty_cap is low (ambiguous question), cap the max possible score
+            final_score = min(raw_score, honesty_cap)
+            
+            # Reasoning String Generation
+            reasoning_parts = []
+            if honesty_cap < 0.5:
+                reasoning_parts.append("Warning: Question contains ambiguity or presupposition.")
+            if struct_score > 0.6:
+                reasoning_parts.append("Structural logic aligned.")
+            if comp_score > 0.1:
+                reasoning_parts.append("Numeric computation verified.")
+            if soc_boost > 0.05:
+                reasoning_parts.append("SOC avalanche detected: high novelty.")
+            if not reasoning_parts:
+                reasoning_parts.append("Standard evaluation based on prompt-candidate alignment.")
+                
             results.append({
-                "candidate": cand,
-                "score": final_score,
-                "reasoning": reasoning
+                "candidate": candidate,
+                "score": round(final_score, 4),
+                "reasoning": " ".join(reasoning_parts)
             })
-        
-        # Sort by score descending
+            
+        # Rank by score descending
         results.sort(key=lambda x: x['score'], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Evaluate confidence based on structural consistency and SOC stability.
-        Returns 0-1.
+        Returns confidence 0-1.
+        Strictly capped by _meta_confidence for ambiguous prompts.
         """
-        prompt_feats = self._structural_parse(prompt)
-        ans_feats = self._structural_parse(answer)
+        # 1. Check Epistemic Honesty (Tier B)
+        meta_cap = self._meta_confidence(prompt)
         
-        # 1. Structural Consistency Check
-        consistency = 1.0
-        if prompt_feats['negation'] != ans_feats['negation']:
-            # Major logical conflict
-            consistency -= 0.5
-        if prompt_feats['numeric_density'] > 0.1 and ans_feats['numeric_density'] == 0:
-            # Missing numbers when expected
-            consistency -= 0.3
+        # 2. Evaluate Answer Quality (Tier A)
+        # Generate scores for all candidates (simulated with the single answer)
+        # We treat the single answer as the only candidate to get its structural score
+        temp_results = self.evaluate(prompt, [answer])
+        if not temp_results:
+            return 0.0
             
-        # 2. SOC Stability Check (Simulated)
-        # If the answer triggers an avalanche (high charge), confidence drops
-        charge = abs(prompt_feats['negation'] - ans_feats['negation']) * 2.0
-        charge += abs(prompt_feats['numeric_density'] - ans_feats['numeric_density']) * 1.5
+        base_score = temp_results[0]['score']
         
-        if charge > self.threshold:
-            # Avalanche occurred: Low confidence
-            soc_factor = 0.2
-        else:
-            soc_factor = 0.8
-            
-        base_ncd = 1.0 - self._compute_ncd(prompt, answer)
+        # 3. Apply Cap
+        # Even if the answer looks perfect (score 0.9), if the question is a trap (cap 0.2),
+        # the final confidence must be low.
+        final_conf = min(base_score, meta_cap)
         
-        # Weighted combination
-        conf = (consistency * 0.4) + (soc_factor * 0.4) + (base_ncd * 0.2)
-        return max(0.0, min(1.0, conf))
+        # Ensure we don't return overconfidence unless computation was definitive
+        # If meta_cap is high (clear question) and score is high, we can go up to 0.95
+        # If meta_cap is low, we stay low.
+        return round(final_conf, 4)

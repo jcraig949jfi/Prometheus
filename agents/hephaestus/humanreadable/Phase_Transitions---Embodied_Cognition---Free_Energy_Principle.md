@@ -2,58 +2,41 @@
 
 **Fields**: Physics, Cognitive Science, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T16:45:43.275691
-**Report Generated**: 2026-03-27T17:21:25.288542
+**Nous Timestamp**: 2026-03-27T21:57:40.858022
+**Report Generated**: 2026-03-27T23:28:38.432718
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing → propositional factor graph**  
-   - Tokenise each candidate answer with regex to extract atomic propositions: predicates (verb‑head), arguments (noun phrases), and polarity (negation flag).  
-   - Build a list `clauses = [(pred, args, polarity, weight)]`.  
-   - For each noun argument, retrieve an *affordance vector* `a ∈ ℝⁿ` from a pre‑compiled lookup table (e.g., “glass” → [fragile, transparent, container‑capability]). These vectors embody the sensorimotor grounding (Embodied Cognition).  
-   - Initialise a belief variable `x_i ∈ [0,1]` for each clause representing the estimated truth probability. Store beliefs in a NumPy array `X`.
+We construct a variational free‑energy‑based constraint‑propagation scorer.  
+1. **Parsing stage** – Using only `re` we extract propositional atoms and binary relations from the prompt and each candidate answer:  
+   *Negation* (`not`, `no`), *comparative* (`greater than`, `less than`), *conditional* (`if … then …`), *causal* (`because`, `leads to`), *ordering* (`before`, `after`), and *numeric* literals. Each atom becomes a node; each relation becomes a directed edge labeled with a constraint type (e.g., `A > B`, `A → B`, `¬A`).  
+2. **Factor graph** – Nodes are binary variables (true/false). For each edge we define a potential ϕ that assigns low energy when the constraint is satisfied and high energy otherwise (e.g., ϕ = 0 if satisfied, 1 if violated). All potentials are stored in a NumPy matrix `E` of shape `(n_nodes, n_nodes, 2, 2)`.  
+3. **Free‑energy computation** – We approximate the variational free energy F = ⟨E⟩_q − H[q] where `q` is a mean‑field distribution over node states (vector `μ` of marginal probabilities). The expectation ⟨E⟩_q is a quadratic form `μᵀ·E·μ`. Entropy H[q] = −∑[μ log μ + (1−μ) log(1−μ)]. Both are computed with NumPy.  
+4. **Embodied grounding** – Sensorimotor affordances extracted from the text (e.g., “push”, “grasp”, “left/right”) are mapped to a fixed set of embodiment features (force direction, spatial axis). These features bias the priors on relevant nodes via an additive term `b·μ` in the energy, enforcing that answers respecting bodily constraints receive lower energy.  
+5. **Phase‑transition detection** – We introduce a temperature‑like parameter `τ` that scales the energy term: `F(τ) = τ·⟨E⟩_q − H[q]`. Starting from high τ (disordered regime) we anneal τ downward while iterating mean‑field updates (`μ ← sigmoid(−∂F/∂μ)`). The order parameter `φ = |⟨satisfied constraints⟩ − 0.5|` is monitored. A sharp increase in φ (detected via a finite‑difference derivative exceeding a threshold) signals a critical τ*; the corresponding free energy at τ* is taken as the answer’s score. Lower scores indicate better conformity to structural, embodied, and thermodynamic constraints.  
 
-2. **Constraint propagation (Free Energy Principle)**  
-   - Define a *prediction error* for each clause:  
-     `e_i = (x_i - σ(w_i·a_i))²` where `w_i` are learned weights linking affordance to expected truth, `σ` is logistic.  
-   - Add logical constraints:  
-     *Modus ponens*: if clause `c₁` is “If P then Q” and belief in `P` > τ, enforce `x_Q ≥ x_P`.  
-     *Transitivity* for ordering relations (e.g., “A > B > C”): enforce `x_A ≥ x_B ≥ x_C`.  
-   - Update beliefs by minimizing variational free energy `F = Σ e_i + λ·H(X)` where `H` is the entropy of `X` (encouraging uncertainty). Perform a few iterations of gradient descent on `X` using NumPy (no external libraries).
+**Parsed structural features** – Negations, comparatives, conditionals, numeric values, causal claims, ordering relations, and embodied action/spatial predicates.  
 
-3. **Phase‑transition detection**  
-   - Compute the *order parameter* `m = |mean(X) - 0.5|`. As constraint strength λ varies, `m` exhibits a sharp increase at a critical λ_c (detected by scanning λ and locating the point where `dm/dλ` exceeds a threshold).  
-   - The final score for an answer is `S = -F(λ_c)`. Lower free energy (more negative) indicates a better‑fitting answer; the phase transition provides a sharp discriminative threshold.
+**Novelty** – While each constituent (free‑energy variational bounds, constraint propagation, order‑parameter phase transitions) appears separately in energy‑based NLP, dynamical systems theory, and grounded cognition literature, their joint use as a scoring mechanism for candidate answers—specifically annealing a temperature to detect a phase transition in constraint satisfaction—has not, to our knowledge, been instantiated in a pure‑numpy, rule‑based evaluator.  
 
-**Structural features parsed**  
-- Negations (via polarity flag)  
-- Comparatives and superlatives (extracted as ordering predicates)  
-- Conditionals (“if … then …”)  
-- Numeric values (converted to scalar arguments)  
-- Causal verbs (“cause”, “lead to”)  
-- Part‑of‑whole and containment relations (affordance‑based)
-
-**Novelty**  
-The scheme fuses three well‑studied ideas: (i) variational free energy minimization from the Free Energy Principle, (ii) sensorimotor affordance grounding from Embodied Cognition, and (iii) order‑parameter‑based phase transition detection from statistical physics. While each component appears separately in probabilistic soft logic, Markov Logic Networks, and embodied semantics literature, their joint use as a scoring mechanism with an explicit phase‑transition criterion is not documented in existing public tools, making the combination novel.
-
-**Rating**  
-Reasoning: 7/10 — captures logical structure and constraint propagation but relies on hand‑crafted affordance tables.  
-Metacognition: 5/10 — provides an uncertainty measure (entropy) yet lacks explicit self‑monitoring of inference steps.  
-Hypothesis generation: 6/10 — can produce alternative belief states via λ scanning, but does not actively generate new hypotheses.  
-Implementability: 8/10 — uses only NumPy and stdlib; all operations are matrix‑vector updates and gradient steps.
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and global consistency via energy minimization.  
+Metacognition: 6/10 — monitors its own order parameter but lacks explicit self‑reflection on uncertainty beyond the variational bound.  
+Hypothesis generation: 5/10 — can propose alternative marginal states during annealing but does not actively generate new hypotheses outside the constraint set.  
+Implementability: 9/10 — relies only on regex, NumPy linear algebra, and simple iterative updates; no external libraries or APIs needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

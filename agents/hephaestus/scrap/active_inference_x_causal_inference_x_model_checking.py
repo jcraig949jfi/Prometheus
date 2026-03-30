@@ -1,152 +1,244 @@
 import re
-import zlib
-from typing import List, Dict, Tuple
+import math
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Causal Active Model-Checking Loop (CAML) Approximation.
+    A closed-loop epistemic planner combining Active Inference, Causal Inference, 
+    and Model Checking principles with strict Epistemic Honesty constraints.
     
     Mechanism:
-    1. Structural Parsing (Active Inference): Extracts logical constraints (negations, 
-       comparatives, conditionals) to form a 'generative model' of the prompt's requirements.
-    2. Causal Intervention (Simulation): Treats candidate answers as interventions. Checks 
-       if they violate the extracted logical constraints (falsification).
-    3. Probabilistic Model Checking: Evaluates the 'trajectory' of the answer against 
-       temporal/logical specs (e.g., if prompt says "not X", candidate containing "X" gets penalized).
-    4. Scoring: Base score from constraint satisfaction (Reasoning), modified by 
-       Normalized Compression Distance (NCD) only as a tie-breaker for semantic similarity.
-    
-    This avoids the 'Causal Inference' trap by using causality only for structural 
-    constraint propagation, not direct scoring, adhering to the 'Coeus' guidelines.
+    1. Meta-Cognitive Filter (Model Checking): Analyzes the prompt for logical 
+       traps (presuppositions, ambiguity, false dichotomies). If found, caps 
+       confidence to ensure Tier B honesty.
+    2. Structural Parser (Causal Inference): Extracts negations, comparatives, 
+       and conditionals to build a causal graph of the question structure.
+    3. Constructive Solver (Active Inference): Performs numeric evaluation or 
+       logical deduction to minimize "free energy" (error) in the answer.
+    4. Scoring: Combines structural match (50%), computation (20%), and NCD (15%).
     """
 
+    # Patterns for Tier B Epistemic Honesty checks
+    PRESUPPOSITION_TRIGGERS = [
+        r"\bhave you stopped\b", r"\bwhy did\b", r"\bwhy does\b", 
+        r"\bfailed to\b", r"\bstopped\b", r"\bquit\b", r"\bregret\b"
+    ]
+    SCOPE_AMBIGUITY = [r"\bevery\b.*\ba\b", r"\ball\b.*\bsome\b"]
+    PRONOUN_AMBIGUITY = [r"\b(he|she|him|her|they)\b.*\bwho\b"]
+    FALSE_DICHOTOMY = [r"\beither\b.*\bor\b", r"\bmust choose between\b"]
+    SUBJECTIVITY = [r"\bbest\b", r"\bworst\b", r"\bfavorite\b", r"\bbeautiful\b"]
+    
+    # Structural patterns for Tier A reasoning
+    NEGATION_PATTERN = re.compile(r"\b(not|no|never|neither|without)\b", re.IGNORECASE)
+    COMPARATIVE_PATTERN = re.compile(r"(\d+\.?\d*)\s*(<|>|<=|>=|==|!=|less than|greater than)\s*(\d+\.?\d*)", re.IGNORECASE)
+    NUMBER_EXTRACT = re.compile(r"-?\d+\.?\d*")
+
     def __init__(self):
-        self.negation_words = {'no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing', 'nowhere'}
-        self.comparatives = {'more', 'less', 'greater', 'smaller', 'higher', 'lower', 'better', 'worse'}
-        self.conditionals = {'if', 'then', 'unless', 'otherwise', 'provided'}
+        self.state = {"history": []}
 
-    def _extract_structure(self, text: str) -> Dict:
-        """Parses text for logical constraints (Negations, Comparatives, Conditionals)."""
-        lower_text = text.lower()
-        words = set(re.findall(r'\b\w+\b', lower_text))
-        
-        has_negation = bool(words & self.negation_words)
-        has_comparative = bool(words & self.comparatives)
-        has_conditional = bool(words & self.conditionals)
-        
-        # Extract numbers for numeric evaluation
-        numbers = re.findall(r'\d+\.?\d*', text)
-        nums = [float(n) for n in numbers] if numbers else []
-        
-        return {
-            'negation': has_negation,
-            'comparative': has_comparative,
-            'conditional': has_conditional,
-            'numbers': nums,
-            'length': len(text),
-            'word_set': words
-        }
-
-    def _check_constraint_violation(self, prompt_struct: Dict, candidate: str) -> float:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Simulates the model-checking step. 
-        Returns a penalty (0.0 to 1.0) based on logical violations.
+        Evaluates the prompt for logical traps and ambiguity.
+        Returns a cap value (0.0 - 1.0). Low value indicates unanswerable/ambiguous.
         """
-        penalty = 0.0
-        lower_cand = candidate.lower()
-        cand_words = set(re.findall(r'\b\w+\b', lower_cand))
+        p_lower = prompt.lower()
         
-        # 1. Negation Check (Modus Tollens approximation)
-        # If prompt emphasizes negation, candidate should ideally reflect exclusion or difference
-        if prompt_struct['negation']:
-            # Heuristic: If prompt is negative, simple affirmative echoes often fail reasoning
-            if len(cand_words) < 3 and {'yes', 'no', 'true', 'false'} & cand_words:
-                penalty += 0.3 
+        # Check for presuppositions
+        for pattern in self.PRESUPPOSITION_TRIGGERS:
+            if re.search(pattern, p_lower):
+                return 0.25
         
-        # 2. Numeric Consistency
-        cand_nums = [float(n) for n in re.findall(r'\d+\.?\d*', candidate)]
-        if prompt_struct['numbers'] and cand_nums:
-            # Check for gross contradictions if numbers are present in both
-            # E.g., Prompt implies small, candidate is huge (simplified heuristic)
-            p_max = max(prompt_struct['numbers'])
-            c_max = max(cand_nums)
-            if p_max > 0 and c_max > p_max * 10:
-                penalty += 0.4
+        # Check for scope ambiguity
+        for pattern in self.SCOPE_AMBIGUITY:
+            if re.search(pattern, p_lower):
+                return 0.25
+                
+        # Check for pronoun ambiguity in question context
+        if re.search(r"\b(he|she|him|her)\b", p_lower) and "who" in p_lower:
+             if re.search(r"\btold\b|\bsaid\b", p_lower):
+                return 0.25
 
-        # 3. Length/Complexity Match (Active Inference prior)
-        # Reasoning tasks usually require non-trivial answers unless specified
-        if prompt_struct['conditional'] and len(cand_words) < 2:
-            penalty += 0.2
+        # Check for false dichotomy
+        for pattern in self.FALSE_DICHOTOMY:
+            if re.search(pattern, p_lower):
+                # Only flag if no explicit "or both" or similar qualifier exists
+                if "or both" not in p_lower and "both" not in p_lower:
+                    return 0.25
+
+        # Check for pure subjectivity without data
+        has_subj = any(re.search(p, p_lower) for p in self.SUBJECTIVITY)
+        has_data = len(re.findall(self.NUMBER_EXTRACT, prompt)) > 0
+        if has_subj and not has_data:
+            return 0.25
+
+        return 1.0
+
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Scores based on structural alignment: negations, comparatives, and logical form.
+        """
+        score = 0.0
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
+        
+        # 1. Negation Consistency
+        p_negs = len(self.NEGATION_PATTERN.findall(p_lower))
+        c_negs = len(self.NEGATION_PATTERN.findall(c_lower))
+        
+        if p_negs > 0:
+            # If prompt has negation, candidate should ideally reflect it or answer appropriately
+            # Simple heuristic: if prompt asks "is not", answer shouldn't blindly affirm without context
+            # Here we just check if the candidate contains the same negation density as a proxy for attention
+            if p_negs == c_negs or (p_negs > 0 and c_negs > 0):
+                score += 0.3
+        else:
+            # No negation in prompt, candidate shouldn't be overly negative unless answering "No"
+            score += 0.3 if c_negs == 0 else 0.1
             
-        return min(penalty, 1.0)
+        # 2. Keyword Overlap (Structural, not bag-of-words)
+        # Extract comparatives and logical connectors
+        logical_tokens = ["if", "then", "else", "therefore", "because", "however", "thus"]
+        p_tokens = [t for t in logical_tokens if t in p_lower]
+        if p_tokens:
+            # Candidate should ideally reference the logic if it's an explanation, 
+            # or simply not contradict if it's a direct answer.
+            # For this implementation, we reward candidates that don't introduce random logical connectors
+            c_tokens = [t for t in logical_tokens if t in c_lower]
+            if set(c_tokens).issubset(set(p_tokens)) or len(c_tokens) == 0:
+                score += 0.2
+        else:
+            score += 0.2
 
-    def _ncd(self, s1: str, s2: str) -> float:
+        return min(score, 0.5)
+
+    def _compute_answer(self, prompt: str) -> Optional[str]:
+        """
+        Attempts to constructively solve numeric comparisons or simple logic.
+        Returns the computed answer string if solvable, else None.
+        """
+        # Detect numeric comparison: "Is 9.11 < 9.9?" or "Compare 5 and 3"
+        match = re.search(self.COMPARATIVE_PATTERN, prompt)
+        if match:
+            val1 = float(match.group(1))
+            op = match.group(2).lower()
+            val2 = float(match.group(3))
+            
+            res = False
+            if op == '<' or op == 'less than': res = val1 < val2
+            elif op == '>' or op == 'greater than': res = val1 > val2
+            elif op == '==': res = val1 == val2
+            elif op == '!=': res = val1 != val2
+            
+            return "yes" if res else "no"
+
+        # Detect simple arithmetic if present in future extensions
+        # For now, focus on the comparison trap (9.11 vs 9.9)
+        return None
+
+    def _ncd_score(self, s1: str, s2: str) -> float:
         """Normalized Compression Distance using zlib."""
-        if not s1 or not s2:
-            return 1.0
-        s1_bytes = s1.encode('utf-8')
-        s2_bytes = s2.encode('utf-8')
-        
-        len_s1 = len(zlib.compress(s1_bytes))
-        len_s2 = len(zlib.compress(s2_bytes))
-        len_s1_s2 = len(zlib.compress(s1_bytes + s2_bytes))
-        
-        max_len = max(len_s1, len_s2)
-        if max_len == 0:
+        import zlib
+        b1, b2 = s1.encode(), s2.encode()
+        try:
+            c1 = len(zlib.compress(b1))
+            c2 = len(zlib.compress(b2))
+            c12 = len(zlib.compress(b1 + b2))
+            max_len = max(c1, c2)
+            if max_len == 0: return 0.0
+            ncd = (c12 - min(c1, c2)) / max_len
+            return 1.0 - ncd # Convert distance to similarity
+        except:
             return 0.0
-        return (len_s1_s2 - min(len_s1, len_s2)) / max_len
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        if not candidates:
-            return []
-            
-        prompt_struct = self._extract_structure(prompt)
-        scored_candidates = []
+        results = []
         
-        # Pre-calculate NCD to prompt for tie-breaking (semantic similarity)
-        # Lower NCD = more similar to prompt context (often good for relevance)
-        ncd_scores = [(c, self._ncd(prompt, c)) for c in candidates]
+        # 1. Meta-Cognitive Check (Tier B)
+        meta_cap = self._meta_confidence(prompt)
         
-        for i, candidate in enumerate(candidates):
-            # Step 1: Structural Parsing & Constraint Propagation
-            violation_penalty = self._check_constraint_violation(prompt_struct, candidate)
+        # 2. Constructive Computation (Tier A)
+        computed_ans = self._compute_answer(prompt)
+        
+        for candidate in candidates:
+            score = 0.0
+            reasoning_parts = []
             
-            # Step 2: Base Reasoning Score (Inverse of violation)
-            # Start with high confidence, subtract penalties
-            base_score = 1.0 - violation_penalty
-            
-            # Step 3: NCD as Tiebreaker/Modifier
-            # If base scores are close, NCD distinguishes. 
-            # We add a small bonus for lower NCD (higher similarity) if reasoning doesn't disqualify it.
-            _, ncd_val = ncd_scores[i]
-            # Normalize NCD contribution: (1 - ncd) * small_weight
-            ncd_bonus = (1.0 - ncd_val) * 0.15 
-            
-            final_score = base_score + ncd_bonus
-            
-            # Ensure bounds
-            final_score = max(0.0, min(1.0, final_score))
-            
-            reasoning = f"Structural match: {1.0-violation_penalty:.2f}, Semantic proximity: {1.0-ncd_val:.2f}"
-            if violation_penalty > 0:
-                reasoning = f"Constraint violation detected (penalty: {violation_penalty:.2f}). " + reasoning
+            # If meta-confidence is low, the question is ambiguous/trap.
+            # We still score, but the confidence in the final output will be capped.
+            if meta_cap < 0.3:
+                reasoning_parts.append("Ambiguity detected (Tier B).")
+                # In ambiguous cases, prefer shorter, non-committal answers or those acknowledging uncertainty
+                if "uncertain" in candidate.lower() or "cannot" in candidate.lower():
+                    score = 0.8
+                    reasoning_parts.append("Candidate acknowledges uncertainty.")
+                else:
+                    score = 0.4 # Penalize confident wrongness on traps
+                    reasoning_parts.append("Candidate ignores ambiguity.")
+            else:
+                # Structural Score (50% weight max)
+                struct_score = self._structural_score(prompt, candidate)
+                
+                # Computation Score (20% weight max)
+                comp_score = 0.0
+                if computed_ans:
+                    if computed_ans in candidate.lower():
+                        comp_score = 1.0
+                        reasoning_parts.append(f"Computed match: {computed_ans}")
+                    else:
+                        comp_score = 0.0
+                        reasoning_parts.append(f"Computation mismatch. Expected: {computed_ans}")
+                
+                # NCD Score (15% weight max) - Tiebreaker
+                ncd = self._ncd_score(prompt, candidate)
+                
+                # Weighted Sum
+                # Structural: 50%, Computation: 35%, NCD: 15%
+                final_score = (struct_score * 0.5) + (comp_score * 0.35) + (ncd * 0.15)
+                score = final_score
+                reasoning_parts.append(f"Structural: {struct_score:.2f}, Comp: {comp_score:.2f}, NCD: {ncd:.2f}")
 
-            scored_candidates.append({
+            results.append({
                 "candidate": candidate,
-                "score": final_score,
-                "reasoning": reasoning
+                "score": score,
+                "reasoning": "; ".join(reasoning_parts)
             })
         
         # Sort by score descending
-        scored_candidates.sort(key=lambda x: x['score'], reverse=True)
-        return scored_candidates
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Returns confidence 0-1. 
-        Uses the same logic as evaluate but for a single pair.
+        Returns confidence 0-1.
+        Caps at 0.25 if meta-analysis detects ambiguity/traps.
+        Caps at 0.9 unless computation produced a definitive answer.
         """
-        results = self.evaluate(prompt, [answer])
-        if not results:
-            return 0.0
-        return results[0]['score']
+        # 1. Meta Check
+        meta_cap = self._meta_confidence(prompt)
+        
+        # 2. Check if we have a computed ground truth
+        computed_ans = self._compute_answer(prompt)
+        is_definitive = False
+        
+        if computed_ans:
+            if computed_ans in answer.lower():
+                base_conf = 0.95
+                is_definitive = True
+            else:
+                # If we computed an answer and this isn't it, low confidence
+                base_conf = 0.1
+        else:
+            # No computation possible, rely on structural match
+            # If the candidate looks structurally sound, give moderate confidence
+            struct_score = self._structural_score(prompt, answer)
+            base_conf = 0.5 + (struct_score * 0.4) # Max 0.9 without computation
+        
+        # Apply Meta Cap (Epistemic Honesty)
+        if meta_cap < 0.3:
+            return min(base_conf, 0.25)
+            
+        # Apply Definitive Cap (Unless computed)
+        if not is_definitive:
+            base_conf = min(base_conf, 0.85)
+            
+        return max(0.0, min(1.0, base_conf))

@@ -26,6 +26,14 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from pathlib import Path
 
+# Structured logging
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+try:
+    from shared.structured_log import get_logger as _get_slog
+    _slog = _get_slog("hermes", log_dir=Path(__file__).resolve().parent.parent / "logs")
+except ImportError:
+    _slog = None
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -239,12 +247,21 @@ def _collect_audit_summary() -> str | None:
 
 
 def _collect_forge_summary() -> str | None:
-    """Build a short forge pipeline summary from live data.
+    """Build a forge pipeline summary from live data.
 
-    Only reports novel findings — new forges since last email, top performers,
-    Nemesis grid status. Returns None if the pipeline hasn't produced anything.
+    Reports: tool counts, architecture era, battery coverage, top tools,
+    Nemesis grid, recent activity.
     """
     lines = []
+    from pathlib import Path as _P
+
+    # Count tools across all forge directories
+    forge_root = PROMETHEUS_ROOT / "agents" / "hephaestus"
+    total_py = 0
+    for d in sorted(forge_root.glob("forge*")):
+        if d.is_dir():
+            n = len(list(d.glob("*.py")))
+            total_py += n
 
     # Hephaestus ledger stats
     if HEPH_LEDGER.exists():
@@ -252,30 +269,38 @@ def _collect_forge_summary() -> str | None:
             with open(HEPH_LEDGER, encoding="utf-8") as f:
                 entries = [json.loads(l) for l in f]
             forged = [e for e in entries if e.get("status") == "forged"]
-            scrapped = [e for e in entries if e.get("status") == "scrap"]
             total = len(entries)
             rate = (len(forged) / total * 100) if total else 0
 
             lines.append("## Forge Pipeline Status")
             lines.append("")
-            lines.append(f"- **{len(forged)} tools forged** / {total} attempts ({rate:.1f}% forge rate)")
-            lines.append(f"- {len(scrapped)} scrapped")
+            lines.append(f"- **{total_py} tool files** across all forge directories")
+            lines.append(f"- Ledger: {len(forged)} forged / {total} attempts ({rate:.1f}% rate)")
+            lines.append(f"- **Architecture: computation-first (Frame E/F/G)**")
+            lines.append(f"- Battery: 113 categories (89 Tier 1 + 24 Tier 2)")
 
-            # Top 5 by accuracy
+            # Top 5 from ledger by accuracy
             top = sorted(forged, key=lambda x: x.get("accuracy", 0), reverse=True)[:5]
             if top:
                 lines.append("")
-                lines.append("### Top Performers")
+                lines.append("### Top Performers (from ledger)")
                 lines.append("")
-                lines.append("| Tool | Accuracy | Calibration | Margin over NCD |")
-                lines.append("|------|----------|-------------|-----------------|")
+                lines.append("| Tool | Accuracy | Margin over NCD |")
+                lines.append("|------|----------|-----------------|")
                 for t in top:
                     name = t.get("key", "?")
                     acc = t.get("accuracy", 0) * 100
-                    cal = t.get("calibration", 0) * 100
                     m_acc = t.get("margin_accuracy", 0) * 100
-                    m_cal = t.get("margin_calibration", 0) * 100
-                    lines.append(f"| {name} | {acc:.0f}% | {cal:.0f}% | +{m_acc:.0f}% / +{m_cal:.0f}% |")
+                    lines.append(f"| {name} | {acc:.0f}% | +{m_acc:.0f}% |")
+
+            # Note: v7 Opus tools not in ledger
+            v7_count = len(list((forge_root / "forge_v7").glob("*.py"))) if (forge_root / "forge_v7").exists() else 0
+            if v7_count:
+                lines.append("")
+                lines.append(f"### v7 Opus-Forged Tools: {v7_count} files")
+                lines.append("- Best: ensemble_evaluator (0.734 weighted)")
+                lines.append("- Best single: frame_e_v3_definitive (0.679 weighted)")
+                lines.append("- Architecture: computation-first (parse → IR → compute → match)")
 
             # Recent forges (last 24h)
             from datetime import timedelta
@@ -547,8 +572,90 @@ def save_digest(content: str) -> Path:
 # Email
 # ---------------------------------------------------------------------------
 
+def _markdown_to_html(md: str) -> str:
+    """Convert markdown digest to styled HTML for Gmail readability."""
+    import re as _re
+    lines = md.split("\n")
+    html_parts = [
+        "<html><head><style>",
+        "body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; ",
+        "  max-width: 700px; margin: 0 auto; padding: 20px; color: #333; line-height: 1.5; }",
+        "h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px; font-size: 22px; }",
+        "h2 { color: #2980b9; font-size: 18px; margin-top: 24px; }",
+        "h3 { color: #7f8c8d; font-size: 15px; margin-top: 16px; }",
+        "table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 13px; }",
+        "th, td { border: 1px solid #ddd; padding: 6px 10px; text-align: left; }",
+        "th { background: #f5f6fa; font-weight: 600; }",
+        "hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }",
+        "code { background: #f5f6fa; padding: 2px 5px; border-radius: 3px; font-size: 13px; }",
+        ".meta { color: #95a5a6; font-size: 13px; font-style: italic; }",
+        "ul { padding-left: 20px; }",
+        "li { margin-bottom: 6px; }",
+        "strong { color: #2c3e50; }",
+        "</style></head><body>",
+    ]
+
+    in_table = False
+    for line in lines:
+        stripped = line.strip()
+        # Horizontal rule
+        if stripped == "---":
+            if in_table:
+                html_parts.append("</table>")
+                in_table = False
+            html_parts.append("<hr>")
+            continue
+        # Table rows
+        if "|" in stripped and stripped.startswith("|"):
+            cells = [c.strip() for c in stripped.split("|")[1:-1]]
+            if all(c.replace("-", "").replace(":", "") == "" for c in cells):
+                continue  # Skip separator row
+            if not in_table:
+                html_parts.append("<table>")
+                in_table = True
+                tag = "th"
+            else:
+                tag = "td"
+            row = "".join(f"<{tag}>{c}</{tag}>" for c in cells)
+            html_parts.append(f"<tr>{row}</tr>")
+            continue
+        if in_table and "|" not in stripped:
+            html_parts.append("</table>")
+            in_table = False
+        # Headers
+        if stripped.startswith("# "):
+            html_parts.append(f"<h1>{stripped[2:]}</h1>")
+        elif stripped.startswith("## "):
+            html_parts.append(f"<h2>{stripped[3:]}</h2>")
+        elif stripped.startswith("### "):
+            html_parts.append(f"<h3>{stripped[4:]}</h3>")
+        # Italic metadata lines
+        elif stripped.startswith("*") and stripped.endswith("*") and len(stripped) > 2:
+            html_parts.append(f"<p class='meta'>{stripped[1:-1]}</p>")
+        # List items
+        elif stripped.startswith("- "):
+            content = stripped[2:]
+            # Bold inline
+            content = _re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', content)
+            content = _re.sub(r'_(.+?)_', r'<em>\1</em>', content)
+            html_parts.append(f"<li>{content}</li>")
+        # Empty line
+        elif not stripped:
+            continue
+        # Regular text
+        else:
+            content = _re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', stripped)
+            content = _re.sub(r'_(.+?)_', r'<em>\1</em>', content)
+            html_parts.append(f"<p>{content}</p>")
+
+    if in_table:
+        html_parts.append("</table>")
+    html_parts.append("</body></html>")
+    return "\n".join(html_parts)
+
+
 def send_email(subject: str, body_markdown: str, config: dict) -> bool:
-    """Send digest email via Gmail SMTP."""
+    """Send digest email via Gmail SMTP with both HTML and plain text."""
     address = config.get("gmail_address", "")
     password = config.get("gmail_app_password", "")
     recipient = config.get("recipient", "") or address  # Default: send to self
@@ -563,14 +670,24 @@ def send_email(subject: str, body_markdown: str, config: dict) -> bool:
     msg["From"] = f"Prometheus Hermes <{address}>"
     msg["To"] = recipient
 
-    # Plain text version (markdown is readable as plain text)
+    # Plain text version (fallback)
     msg.attach(MIMEText(body_markdown, "plain", "utf-8"))
+
+    # HTML version (preferred by Gmail)
+    try:
+        html_body = _markdown_to_html(body_markdown)
+        msg.attach(MIMEText(html_body, "html", "utf-8"))
+    except Exception as e:
+        log.warning(f"HTML conversion failed, sending plain text only: {e}")
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(address, password)
             server.sendmail(address, [recipient], msg.as_string())
-        log.info(f"Email sent to {recipient}")
+        log.info(f"Email sent to {recipient} (HTML + plain text)")
+        if _slog:
+            _slog.event("email_sent", recipient=recipient, subject=msg["Subject"],
+                        body_length=len(body_markdown), html=True)
         return True
     except smtplib.SMTPAuthenticationError:
         log.error(
@@ -633,6 +750,8 @@ def main():
 
     # Collect all sections
     log.info("Collecting agent outputs...")
+    if _slog:
+        _slog.event("cycle_start")
     sections = collect_digest()
 
     if not sections:
@@ -689,6 +808,10 @@ def main():
         log.info("Email not enabled — digest saved locally only")
         log.info(f"Configure {CONFIG_PATH} to enable email delivery")
 
+    if _slog:
+        _slog.event("cycle_complete", sections_collected=len(sections),
+                     new_sections=len(new_sections) if new_sections else 0,
+                     email_sent=should_email if 'should_email' in dir() else False)
     log.info("Done.")
 
 

@@ -1,204 +1,282 @@
 import re
-import zlib
 import math
-from typing import List, Dict, Tuple
+import zlib
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Gauge-Equivariant Bayesian Optimal Control Tool (Structural Approximation).
+    Gauge-Equivariant Bayesian Optimal Control Reasoning Tool (GEBOC-RT)
     
     Mechanism:
-    Instead of solving the intractable Hamiltonian PDEs for real-time reasoning,
-    this tool implements the structural logic of the theory as a scoring function:
-    
-    1. STATE SPACE (Latent Z): Parsed structural tokens (negations, comparatives, numbers).
-    2. GAUGE SYMMETRY (G): Semantic equivalence classes. Candidates preserving the 
-       prompt's structural 'gauge' (e.g., matching negation counts, number ordering) 
-       receive a symmetry bonus. Violating structural constraints (e.g. saying "Yes" 
-       to a negative constraint) breaks gauge invariance -> high penalty.
-    3. OPTIMAL CONTROL (u): The score is the 'control law' minimizing the 'Free Energy'
-       distance between the candidate's structure and the prompt's structural requirements.
-    4. BAYESIAN UPDATE: Prior is uniform; Likelihood is the structural match score.
-    
-    This satisfies the "Causal Intelligence" directive by using Gauge/Optimal Control
-    concepts as the logical framework for structural parsing, avoiding them as 
-    direct string metrics (which historically fail).
+    This tool implements a computational analogy of the theoretical framework where:
+    1. GAUGE THEORY (Symmetry Constraints): The system identifies "gauge symmetries" in the prompt
+       (e.g., interchangeable subjects, scope ambiguities, presuppositions). If a prompt possesses
+       these symmetries, the belief state is invariant, leading to low confidence (epistemic honesty).
+    2. BAYESIAN INFERENCE (Belief Update): Structural parsing acts as the likelihood function.
+       Deterministic features (negations, numerics, conditionals) update the posterior probability
+       of a candidate being correct.
+    3. OPTIMAL CONTROL (Action Selection): The scoring function acts as a control law, steering 
+       the evaluation towards candidates that minimize "free energy" (maximize structural match)
+       while penalizing uncertainty.
+       
+    The tool prioritizes Epistemic Honesty (Tier B) by detecting ambiguity patterns (gauge orbits)
+    and capping confidence, while using rigorous structural parsing (Tier A) to solve deterministic
+    problems when symmetries are broken.
     """
 
     def __init__(self):
-        # Structural keywords defining the "Gauge Group" of logic
-        self.negations = {'no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing'}
-        self.comparatives = {'greater', 'less', 'more', 'fewer', 'higher', 'lower', '>', '<'}
-        self.conditionals = {'if', 'then', 'unless', 'otherwise', 'when'}
-        self.booleans = {'yes', 'no', 'true', 'false', 'correct', 'incorrect'}
+        # Gauge symmetry detectors (Regex patterns for ambiguity)
+        self.presupposition_patterns = [
+            r"\b(have|has|had)\s+you\s+(stopped|quit|finished)\b",
+            r"\bwhy\s+did\s+\w+\s+(fail|stop|quit)\b",
+            r"\bwhen\s+did\s+\w+\s+stop\b"
+        ]
+        self.scope_patterns = [
+            r"\bevery\s+\w+\s+\w+\s+a\s+\w+",  # Every X did a Y
+            r"\ball\s+\w+\s+are\s+\w+"
+        ]
+        self.pronoun_patterns = [
+            r"\b(told|said\s+to)\s+\w+\s+he\s+was",
+            r"\b(told|said\s+to)\s+\w+\s+she\s+was",
+            r"\bwho\s+was\s+(wrong|right|talking)\?"
+        ]
+        self.dichotomy_patterns = [
+            r"\beither\s+\w+\s+or\s+\w+",
+            r"\bis\s+it\s+\w+\s+or\s+\w+\?"
+        ]
+        
+        # Structural parsers
+        self.negation_words = {"no", "not", "never", "none", "neither", "nobody"}
+        self.comparative_ops = [">", "<", "greater", "less", "more", "fewer", "larger", "smaller"]
+        self.numeric_pattern = re.compile(r"-?\d+\.?\d*")
 
-    def _extract_structure(self, text: str) -> dict:
-        """Parse text into structural latent variables (Z)."""
-        text_lower = text.lower()
-        words = re.findall(r'\b\w+\b', text_lower)
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Tier B: Epistemic Honesty Check.
+        Detects gauge symmetries (ambiguities) that prevent definitive reasoning.
+        Returns a cap value < 0.3 if ambiguity is detected.
+        """
+        p_lower = prompt.lower()
         
-        # 1. Negation Count (Gauge Charge)
-        neg_count = sum(1 for w in words if w in self.negations)
+        # Check Presuppositions
+        for pat in self.presupposition_patterns:
+            if re.search(pat, p_lower):
+                return 0.15
+                
+        # Check Scope Ambiguity (simplified heuristic)
+        if re.search(r"every\s+\w+.*\ba\s+\w+", p_lower):
+            # Heuristic for "Every X did a Y" ambiguity
+            if "same" not in p_lower and "different" not in p_lower:
+                return 0.25
+                
+        # Check Pronoun Ambiguity
+        if re.search(r"\b(he|she|it|they)\s+was\s+\w+\?", p_lower):
+             if "who" in p_lower:
+                return 0.20
+
+        # Check False Dichotomy indicators without exhaustive context
+        if re.search(r"\beither\s+(\w+)\s+or\s+(\w+)", p_lower):
+            # If the options are abstract or lack context, flag uncertainty
+            if "true" in p_lower or "false" in p_lower:
+                 pass # Logic puzzle, might be solvable
+            else:
+                return 0.35 # Slightly higher cap, but still constrained
+
+        return 1.0  # No symmetry/ambiguity detected
+
+    def _parse_structure(self, prompt: str, candidate: str) -> Tuple[float, str]:
+        """
+        Tier A: Structural Parsing & Constructive Computation.
+        Extracts logical constraints and performs calculations.
+        Returns (score_delta, reasoning_string)
+        """
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
+        score = 0.0
+        reasons = []
+
+        # 1. Numeric Evaluation (Constructive Computation)
+        # Extract numbers from prompt and candidate
+        p_nums = re.findall(self.numeric_pattern, p_lower)
+        c_nums = re.findall(self.numeric_pattern, c_lower)
         
-        # 2. Conditional Depth
-        cond_count = sum(1 for w in words if w in self.conditionals)
-        
-        # 3. Numeric Extraction (for ordering checks)
-        numbers = []
-        for match in re.findall(r'-?\d+\.?\d*', text):
+        if p_nums:
             try:
-                numbers.append(float(match))
+                # Simple arithmetic check if prompt implies comparison
+                if any(op in p_lower for op in self.comparative_ops):
+                    p_vals = [float(x) for x in p_nums]
+                    c_vals = [float(x) for x in c_nums]
+                    
+                    if c_vals:
+                        # Check if candidate matches the result of a simple operation found in prompt
+                        # e.g., "What is 2 + 2?" -> "4"
+                        if len(p_vals) >= 2 and len(c_vals) >= 1:
+                            if "+" in p_lower and abs((p_vals[0] + p_vals[1]) - c_vals[0]) < 1e-6:
+                                score += 0.5
+                                reasons.append("Numeric addition match")
+                            elif "-" in p_lower and abs((p_vals[0] - p_vals[1]) - c_vals[0]) < 1e-6:
+                                score += 0.5
+                                reasons.append("Numeric subtraction match")
+                            elif "*" in p_lower or "times" in p_lower and abs((p_vals[0] * p_vals[1]) - c_vals[0]) < 1e-6:
+                                score += 0.5
+                                reasons.append("Numeric multiplication match")
+                            
+                            # Direct number match for "Which number is larger?" type questions
+                            if "larger" in p_lower or "greater" in p_lower:
+                                if c_vals[0] == max(p_vals):
+                                    score += 0.4
+                                    reasons.append("Correctly identified max value")
+                            elif "smaller" in p_lower or "less" in p_lower:
+                                if c_vals[0] == min(p_vals):
+                                    score += 0.4
+                                    reasons.append("Correctly identified min value")
             except ValueError:
                 pass
+
+        # 2. Negation Handling (Constraint Propagation)
+        has_negation = any(word in p_lower.split() for word in self.negation_words)
+        cand_negation = any(word in c_lower.split() for word in self.negation_words)
         
-        # 4. Boolean Presence
-        has_bool = any(w in self.booleans for w in words)
-        
-        return {
-            'negations': neg_count,
-            'conditionals': cond_count,
-            'numbers': numbers,
-            'has_bool': has_bool,
-            'length': len(words)
-        }
+        if has_negation:
+            # If prompt has negation, correct answer often requires careful handling
+            # Heuristic: If prompt asks "Which is NOT...", candidate should likely differ 
+            # from the most obvious positive match (simulated here by length or specific keywords)
+            if "not" in p_lower and "not" in c_lower:
+                score += 0.2
+                reasons.append("Negation alignment")
+            elif "not" in p_lower and "not" not in c_lower:
+                # Candidate might be the exception
+                score += 0.1 
+                reasons.append("Potential exception candidate")
+
+        # 3. Conditional/Logical Consistency
+        if "if" in p_lower and ("then" in c_lower or "therefore" in c_lower):
+            score += 0.15
+            reasons.append("Logical connector detected")
+
+        reason_str = "; ".join(reasons) if reasons else "Structural match"
+        return score, reason_str
 
     def _compute_ncd(self, s1: str, s2: str) -> float:
-        """Normalized Compression Distance (Tiebreaker only)."""
-        if not s1 or not s2:
-            return 1.0
-        c1 = len(zlib.compress(s1.encode()))
-        c2 = len(zlib.compress(s2.encode()))
-        c12 = len(zlib.compress((s1 + s2).encode()))
-        max_len = max(c1, c2)
+        """Normalized Compression Distance using zlib."""
+        s1_bytes = s1.encode('utf-8')
+        s2_bytes = s2.encode('utf-8')
+        
+        len_s1 = len(zlib.compress(s1_bytes))
+        len_s2 = len(zlib.compress(s2_bytes))
+        len_s1_s2 = len(zlib.compress(s1_bytes + s2_bytes))
+        
+        max_len = max(len_s1, len_s2)
         if max_len == 0:
-            return 1.0
-        return (c12 - min(c1, c2)) / max_len
-
-    def _structural_score(self, prompt: str, candidate: str) -> float:
-        """
-        Compute the 'Free Energy' score based on structural alignment.
-        Lower energy = Higher score.
-        """
-        p_struct = self._extract_structure(prompt)
-        c_struct = self._extract_structure(candidate)
-        
-        score = 0.0
-        
-        # --- GAUGE INVARIANCE CHECKS (Hard Constraints) ---
-        
-        # 1. Negation Symmetry Breaking
-        # If prompt has negation, valid answers often need to reflect that logic.
-        # Heuristic: If prompt is negative, and candidate is a bare boolean, 
-        # we penalize mismatches heavily if we can infer intent, but here we 
-        # simply reward structural complexity matching.
-        if p_struct['negations'] > 0:
-            # Reward candidates that acknowledge complexity (length) or contain logic words
-            if c_struct['length'] > 2 or c_struct['has_bool']:
-                score += 2.0
-            # Specific check: If prompt says "not", candidate saying "yes" immediately might be bad
-            # But without full NLI, we stick to structural presence.
-        
-        # 2. Numeric Consistency (Optimal Control Trajectory)
-        # If prompt has numbers, candidate should ideally reference them or be a direct answer.
-        if p_struct['numbers']:
-            if c_struct['numbers']:
-                # Check ordering consistency if both have 2+ numbers
-                if len(p_struct['numbers']) >= 2 and len(c_struct['numbers']) >= 2:
-                    p_dir = p_struct['numbers'][0] < p_struct['numbers'][1]
-                    c_dir = c_struct['numbers'][0] < c_struct['numbers'][1]
-                    if p_dir == c_dir:
-                        score += 3.0 # Consistent trajectory
-                    else:
-                        score -= 5.0 # Trajectory violation
-                else:
-                    score += 1.5 # Presence is good
-            else:
-                # If prompt is math-heavy, short non-numeric answers are risky but sometimes correct
-                # We apply a small penalty for ignoring numbers unless it's a very short answer
-                if c_struct['length'] > 10:
-                    score -= 2.0
-
-        # 3. Conditional Logic Preservation
-        if p_struct['conditionals'] > 0:
-            if c_struct['conditionals'] > 0 or c_struct['has_bool']:
-                score += 2.0
-            elif c_struct['length'] < 5:
-                # Short answers to conditional prompts are often guesses
-                score -= 1.0
-
-        # --- BAYESIAN UPDATE (Likelihood) ---
-        # Base likelihood on keyword overlap of LOGICAL operators only
-        p_words = set(re.findall(r'\b\w+\b', prompt.lower()))
-        c_words = set(re.findall(r'\b\w+\b', candidate.lower()))
-        
-        logic_overlap = len((p_words & c_words) & (self.negations | self.comparatives | self.conditionals))
-        score += logic_overlap * 1.5
-        
-        return score
+            return 0.0
+        return (len_s1_s2 - min(len_s1, len_s2)) / max_len
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         results = []
-        prompt_struct = self._extract_structure(prompt)
         
-        for cand in candidates:
-            # Primary Score: Structural/Logical Alignment (The "Control Law")
-            struct_score = self._structural_score(prompt, cand)
+        # Tier B: Check for global ambiguity first
+        ambiguity_cap = self._meta_confidence(prompt)
+        
+        for candidate in candidates:
+            base_score = 0.0
+            reasoning_parts = []
             
-            # Secondary Score: NCD (Tiebreaker for semantic similarity)
-            # We invert NCD so higher is better, and scale it down so it doesn't dominate
-            ncd_val = self._compute_ncd(prompt, cand)
-            ncd_score = (1.0 - ncd_val) * 0.5 
+            # Apply Ambiguity Cap immediately if detected
+            if ambiguity_cap < 1.0:
+                base_score = 0.5 # Neutral prior
+                reasoning_parts.append(f"Ambiguity detected (cap={ambiguity_cap})")
+            else:
+                # Tier A: Structural Parsing (Weight: 50%)
+                struct_score, struct_reason = self._parse_structure(prompt, candidate)
+                base_score += struct_score * 0.6 # Scale to dominate
+                if struct_reason:
+                    reasoning_parts.append(struct_reason)
+                
+                # Constructive Computation Check (Weight: 20% - included in struct_score mostly)
+                # Explicitly checking for exact string matches on logic keywords
+                p_words = set(re.findall(r'\b\w+\b', prompt.lower()))
+                c_words = set(re.findall(r'\b\w+\b', candidate.lower()))
+                overlap = p_words.intersection(c_words)
+                if len(overlap) > 2:
+                    base_score += 0.1
+                    reasoning_parts.append("Keyword overlap")
+
+            # NCD Tiebreaker (Weight: 15% max)
+            # Invert NCD so higher similarity (lower distance) is better, but cap its influence
+            ncd_val = self._compute_ncd(prompt, candidate)
+            ncd_score = (1.0 - ncd_val) * 0.15 
+            base_score += ncd_score
             
-            total_score = struct_score + ncd_score
+            # Cap final score if ambiguity was detected
+            final_score = min(base_score, ambiguity_cap) if ambiguity_cap < 1.0 else base_score
+            
+            # Ensure score stays in [0, 1]
+            final_score = max(0.0, min(1.0, final_score))
             
             results.append({
-                "candidate": cand,
-                "score": total_score,
-                "reasoning": f"Structural alignment: {struct_score:.2f}, Semantic proximity: {ncd_score:.2f}"
+                "candidate": candidate,
+                "score": final_score,
+                "reasoning": f"[Gauge-Equivariant]: {'; '.join(reasoning_parts)}"
             })
         
-        # Rank by score descending
-        results.sort(key=lambda x: x['score'], reverse=True)
+        # Sort by score descending
+        results.sort(key=lambda x: x["score"], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Returns confidence 0-1.
-        Uses structural consistency as a proxy for correctness.
+        Returns confidence based on epistemic honesty.
+        Low confidence (<0.3) for ambiguous/unanswerable prompts.
+        High confidence only if structural parsing yields a definitive result.
         """
-        # 1. Structural Plausibility
-        p_struct = self._extract_structure(prompt)
-        a_struct = self._extract_structure(answer)
+        # 1. Meta-Confidence (Ambiguity Check)
+        meta_conf = self._meta_confidence(prompt)
+        if meta_conf < 1.0:
+            return meta_conf
         
-        conf = 0.5 # Base uncertainty
+        # 2. Structural Verification
+        # If we can parse a clear logical or numeric path, confidence is high
+        score, reason = self._parse_structure(prompt, answer)
         
-        # Boost if answer addresses prompt complexity
-        if p_struct['negations'] > 0:
-            if a_struct['length'] > 1: # Not just "Yes"/"No" blindly
-                conf += 0.2
+        if score > 0.4: 
+            # Strong structural match
+            return 0.85
+        elif score > 0.1:
+            # Partial match
+            return 0.6
+        else:
+            # Weak match, rely on NCD but keep moderate
+            ncd_val = self._compute_ncd(prompt, answer)
+            if ncd_val < 0.2: # Very similar strings
+                return 0.5
+            return 0.3 # Default uncertainty for non-structured matches
+
+    def _meta_confidence(self, prompt: str) -> float:
+        # Alias to allow internal calls if needed, though defined above
+        return self._meta_confidence_impl(prompt)
+
+    def _meta_confidence_impl(self, prompt: str) -> float:
+        # Re-implementing the logic from __init__ area to ensure self-consistency in the class
+        p_lower = prompt.lower()
         
-        if p_struct['numbers']:
-            if a_struct['numbers']:
-                conf += 0.3
-            elif a_struct['has_bool']:
-                conf += 0.1 # Acceptable boolean answer to math question
-        
-        # Penalty for structural mismatch in logic words
-        p_words = set(re.findall(r'\b\w+\b', prompt.lower()))
-        a_words = set(re.findall(r'\b\w+\b', answer.lower()))
-        
-        # If prompt has specific logic words, do they appear in answer?
-        logic_keys = p_words & (self.negations | self.comparatives | self.conditionals)
-        if logic_keys:
-            matched_logic = logic_keys & a_words
-            conf += (len(matched_logic) / len(logic_keys)) * 0.4
-        
-        # NCD check for exact matches or near repeats (high confidence)
-        ncd = self._compute_ncd(prompt, answer)
-        if ncd < 0.2:
-            conf = 0.95
-        elif ncd > 0.9 and len(answer) < 5:
-            # Very different and short -> low confidence
-            conf = max(0.1, conf - 0.3)
-            
-        return min(1.0, max(0.0, conf))
+        # Presuppositions
+        for pat in self.presupposition_patterns:
+            if re.search(pat, p_lower):
+                return 0.15
+                
+        # Scope Ambiguity
+        if re.search(r"every\s+\w+.*\ba\s+\w+", p_lower):
+            if "same" not in p_lower and "different" not in p_lower:
+                return 0.25
+
+        # Pronoun Ambiguity
+        if re.search(r"\b(he|she|it|they)\s+was\s+\w+\?", p_lower):
+             if "who" in p_lower:
+                return 0.20
+
+        # False Dichotomy
+        if re.search(r"\beither\s+(\w+)\s+or\s+(\w+)", p_lower):
+            if "true" not in p_lower and "false" not in p_lower:
+                return 0.35
+
+        return 1.0

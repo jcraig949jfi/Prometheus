@@ -1,104 +1,214 @@
-import hashlib
-import json
+import re
+import zlib
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Counterexample-Guided Causal Program Synthesizer (CG-CPS) Approximation.
+    Counterexample-Guided Causal Program Synthesizer (CG-CPS) with Epistemic Honesty.
     
     Mechanism:
-    1. Synthesis: Treats candidate strings as structural causal programs.
-    2. Falsification: Generates deterministic 'interventions' (hash-based perturbations)
-       to simulate do(X=x) operations.
-    3. Counterexample Generation: Checks if the candidate's logical structure holds
-       under intervention against a simulated ground truth derived from the prompt.
-    4. Revision (Scoring): Candidates that survive falsification (no counterexamples found)
-       receive higher scores. The 'confidence' metric reflects the robustness of the
-       candidate against these synthetic interventional tests.
+    1. Synthesis Phase: Parses the prompt to construct a structural hypothesis (logic tree).
+    2. Falsification Phase: Checks the hypothesis against "Meta-Constraints" (ambiguity, presupposition).
+       If a meta-constraint is violated (e.g., ambiguous pronoun), the hypothesis is falsified immediately.
+    3. Counterexample Generation: If falsified, generates a low-confidence score (counterexample to certainty).
+    4. Revision: If not falsified, proceeds to structural parsing and numeric evaluation.
+    
+    This implements Popperian falsification by prioritizing the rejection of uncertain/ambiguous 
+    hypotheses before attempting to validate correct ones.
     """
 
     def __init__(self):
-        self._seed = 42  # Deterministic seed for reproducibility
+        # Patterns for Tier B (Epistemic Honesty) detection
+        self.presupposition_triggers = [
+            r"\bhave you stopped\b", r"\bwhy did.*fail\b", r"\bwhy.*stop\b", 
+            r"\bquit\b", r"\bassum.*that\b", r"\bgiven that\b"
+        ]
+        self.false_dichotomy_triggers = [r"\beither.*or\b", r"\bmust.*or\b"]
+        self.pronoun_ambiguity_triggers = [r"\btold.*\bhe\b", r"\btold.*\bshe\b", r"\bsaid.*\bhe\b"]
+        self.subjectivity_triggers = [r"\bbest\b", r"\bworst\b", r"\bfavorite\b", r"\bopinion\b"]
+        
+        # Patterns for Tier A (Structural/Logic)
+        self.negation_pattern = r"\b(not|no|never|neither)\b"
+        self.comparative_pattern = r"\b(more|less|greater|smaller|higher|lower)\b"
+        self.conditional_pattern = r"\b(if|then|unless|only if)\b"
 
-    def _generate_intervention(self, prompt: str, candidate: str, idx: int) -> str:
-        """Simulates an intervention do(X=x) by hashing context to create a test case."""
-        salt = f"{prompt}:{candidate}:{idx}"
-        return hashlib.sha256(salt.encode('ascii')).hexdigest()[:8]
-
-    def _check_falsification(self, prompt: str, candidate: str, intervention: str) -> bool:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Returns True if the candidate is FALSIFIED (fails the test).
-        Returns False if the candidate survives (not falsified).
-        
-        Logic: We simulate a consistency check. If the candidate contains
-        logical contradictions relative to the intervention hash (simulating
-        a mismatch in P(Y|do(X))), it fails.
+        Tier B: Evaluates the prompt for ambiguity, presupposition, or unanswerability.
+        Returns a cap value. If issues found, returns < 0.3.
         """
-        # Simulate a constraint violation check
-        # In a real system, this would run an SMT solver or probabilistic inference.
-        # Here, we use a deterministic heuristic based on string properties and hash parity.
-        h_val = int(intervention, 16)
+        p_lower = prompt.lower()
         
-        # Heuristic 1: Length consistency (Proxy for structural validity)
-        if len(candidate) < 3:
-            return True  # Too simple to be causal, falsified.
-            
-        # Heuristic 2: Hash-based counterexample generation
-        # If the hash indicates an odd parity and candidate lacks specific 'causal' markers,
-        # we assume a counterexample was found.
-        if (h_val % 2 == 1) and ("cause" not in candidate.lower() and "effect" not in candidate.lower()):
-            # Simulate a detected mismatch in interventional distribution
-            return True
-            
-        return False
+        # 1. Presupposition Check
+        for pattern in self.presupposition_triggers:
+            if re.search(pattern, p_lower):
+                return 0.15  # Strong presupposition detected
+        
+        # 2. False Dichotomy Check
+        for pattern in self.false_dichotomy_triggers:
+            if re.search(pattern, p_lower):
+                # Only flag if it looks like a forced choice without data
+                if "option" in p_lower or "choice" in p_lower:
+                    return 0.25
 
-    def evaluate(self, prompt: str, candidates: list[str]) -> list[dict]:
-        if not candidates:
-            return []
-            
-        results = []
-        n_interventions = 5  # Number of synthetic tests per candidate
+        # 3. Pronoun Ambiguity (Simple heuristic)
+        if re.search(r"\bwho\b", p_lower) and any(re.search(p, p_lower) for p in self.pronoun_ambiguity_triggers):
+            return 0.20
+
+        # 4. Subjectivity without criteria
+        if any(re.search(p, p_lower) for p in self.subjectivity_triggers):
+            if "data" not in p_lower and "table" not in p_lower and "list" not in p_lower:
+                return 0.10
+
+        return 1.0  # No meta-issues detected
+
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extracts floating point numbers from text for numeric evaluation."""
+        matches = re.findall(r"-?\d+\.?\d*", text)
+        return [float(m) for m in matches]
+
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Tier A: Structural parsing and constructive computation.
+        Returns a score based on logic consistency and numeric correctness.
+        """
+        score = 0.0
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
         
-        for cand in candidates:
-            falsified_count = 0
-            reasoning_steps = []
-            
-            # Falsification Phase: Run multiple interventional tests
-            for i in range(n_interventions):
-                intervention = self._generate_intervention(prompt, cand, i)
-                is_falsified = self._check_falsification(prompt, cand, intervention)
-                
-                if is_falsified:
-                    falsified_count += 1
-                    reasoning_steps.append(f"Test {i}: Counterexample found via intervention {intervention[:4]}")
+        # 1. Numeric Evaluation (Constructive Computation)
+        # Detect simple comparisons in prompt like "Is 9.11 < 9.9?"
+        nums = self._extract_numbers(prompt)
+        if len(nums) >= 2:
+            # Heuristic: If prompt has numbers and candidate has "yes"/"no" or true/false
+            if re.search(r"\b(yes|true|correct)\b", c_lower):
+                # Verify logic if comparative words exist
+                if re.search(r"greater|larger|more", p_lower):
+                    if nums[0] > nums[1]: score += 0.5
+                    else: score -= 0.5
+                elif re.search(r"less|smaller", p_lower):
+                    if nums[0] < nums[1]: score += 0.5
+                    else: score -= 0.5
                 else:
-                    reasoning_steps.append(f"Test {i}: Survived intervention {intervention[:4]}")
+                    # Default numeric presence bonus if logic isn't explicit
+                    score += 0.2
+            elif re.search(r"\b(no|false|incorrect)\b", c_lower):
+                if re.search(r"greater|larger|more", p_lower):
+                    if nums[0] <= nums[1]: score += 0.5
+                elif re.search(r"less|smaller", p_lower):
+                    if nums[0] >= nums[1]: score += 0.5
+
+        # 2. Negation Handling
+        has_negation = bool(re.search(self.negation_pattern, p_lower))
+        candidate_negates = bool(re.search(self.negation_pattern, c_lower))
+        
+        if has_negation:
+            # If prompt has negation, correct answer often requires careful handling.
+            # Simple heuristic: If prompt asks "Is it not X?" and candidate says "No", 
+            # it implies agreement with the negative premise.
+            if candidate_negates:
+                score += 0.3
+        else:
+            if not candidate_negates:
+                score += 0.2
+
+        # 3. Conditional Logic Check
+        if re.search(self.conditional_pattern, p_lower):
+            if re.search(r"\b(therefore|thus|hence|so)\b", c_lower):
+                score += 0.2
+        
+        # 4. String Overlap (NCD Tiebreaker component - limited weight)
+        # Only used if structural signals are weak
+        ncd_score = self._ncd_similarity(prompt, candidate)
+        score += (ncd_score * 0.15) 
+
+        return score
+
+    def _ncd_similarity(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance heuristic."""
+        try:
+            s1_bytes = s1.encode('utf-8')
+            s2_bytes = s2.encode('utf-8')
+            concat = s1_bytes + b" " + s2_bytes
             
-            # Scoring: Higher score = fewer falsifications (more robust)
-            # Base score 1.0, penalize 0.2 per falsification
-            score = max(0.0, 1.0 - (falsified_count * 0.2))
+            len_s1 = len(zlib.compress(s1_bytes))
+            len_s2 = len(zlib.compress(s2_bytes))
+            len_concat = len(zlib.compress(concat))
             
-            # Add bonus for explicit causal language (Hypothesis Generation boost)
-            if "therefore" in cand.lower() or "implies" in cand.lower():
-                score = min(1.0, score + 0.05)
-                reasoning_steps.append("Bonus: Explicit causal connective detected.")
-                
+            max_len = max(len_s1, len_s2)
+            if max_len == 0: return 0.0
+            ncd = (len_concat - max_len) / max_len
+            return 1.0 - ncd  # Convert distance to similarity
+        except:
+            return 0.0
+
+    def _generate_reasoning(self, prompt: str, candidate: str, meta_cap: float) -> str:
+        """Generates a brief reasoning string based on the synthesis phase."""
+        if meta_cap < 0.3:
+            return "Falsified: Prompt contains ambiguity, presupposition, or unanswerable constraints."
+        
+        reasons = []
+        if re.search(self.negation_pattern, prompt.lower()):
+            reasons.append("Negation detected")
+        if self._extract_numbers(prompt):
+            reasons.append("Numeric evaluation performed")
+        if re.search(self.conditional_pattern, prompt.lower()):
+            reasons.append("Conditional logic analyzed")
+            
+        if not reasons:
+            reasons.append("Structural pattern matched")
+            
+        return f"Synthesis valid: {', '.join(reasons)}."
+
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """
+        Main loop: Synthesis -> Falsification -> Scoring.
+        """
+        results = []
+        
+        # Step 1: Meta-Analysis (Falsification of the question itself)
+        meta_cap = self._meta_confidence(prompt)
+        
+        for candidate in candidates:
+            base_score = 0.0
+            
+            if meta_cap < 0.3:
+                # If the question is flawed, high confidence in any answer is wrong.
+                # We penalize candidates that look overly confident or specific if the prompt is trash,
+                # but primarily we cap the final confidence.
+                base_score = 0.1 # Low base score for flawed prompts
+            else:
+                # Step 2: Structural Synthesis & Scoring
+                base_score = self._structural_score(prompt, candidate)
+                # Normalize score to 0-1 range roughly
+                base_score = max(0.0, min(1.0, base_score))
+
             results.append({
-                "candidate": cand,
-                "score": round(score, 4),
-                "reasoning": "; ".join(reasoning_steps)
+                "candidate": candidate,
+                "score": base_score,
+                "reasoning": self._generate_reasoning(prompt, candidate, meta_cap)
             })
-            
-        # Rank by score descending
+        
+        # Sort by score descending
         results.sort(key=lambda x: x["score"], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Returns confidence 0-1 based on the survival rate of the answer
-        against synthetic interventional counterexamples.
+        Returns confidence capped by epistemic honesty checks.
         """
-        # Reuse evaluation logic for a single candidate
-        res = self.evaluate(prompt, [answer])
-        if not res:
-            return 0.0
-        return res[0]["score"]
+        # 1. Meta-Check (The Falsification Step)
+        meta_cap = self._meta_confidence(prompt)
+        
+        # 2. Structural Verification
+        struct_score = self._structural_score(prompt, answer)
+        
+        # 3. Combine
+        # If meta_cap is low, confidence is capped regardless of structural match
+        raw_conf = min(meta_cap, struct_score)
+        
+        # Ensure we don't return > 0.9 unless it's a very strong structural match
+        if struct_score < 0.4:
+            raw_conf = min(raw_conf, 0.4)
+            
+        return float(max(0.0, min(1.0, raw_conf)))

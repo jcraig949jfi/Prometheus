@@ -22,6 +22,14 @@ from prompts import build_code_gen_prompt
 from test_harness import run_trap_battery, load_tool_from_code
 from validator import validate
 
+# Structured logging
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+try:
+    from shared.structured_log import get_logger as _get_slog
+    _slog = _get_slog("hephaestus", log_dir=Path(__file__).resolve().parent.parent / "logs")
+except ImportError:
+    _slog = None
+
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
@@ -230,6 +238,12 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path):
                 " + ".join(entry["concept_names"]),
                 test_results["accuracy"] * 100,
                 test_results["calibration"] * 100)
+    if _slog:
+        _slog.event("forge_success",
+                     key=" + ".join(entry["concept_names"]),
+                     accuracy=test_results["accuracy"],
+                     calibration=test_results["calibration"],
+                     n_categories=test_results.get("n_categories", 0))
 
 
 def save_scrap(code: str | None, entry: dict, reason: str, run_dir: Path):

@@ -777,6 +777,43 @@ def write_digest(papers: list, repos: list, health: list, limiter: RateLimiter, 
             attention.append(("news", item, score, reason))
     attention.sort(key=lambda x: -x[2])
 
+    # --- Semantic dedup of attention items ---
+    # Cluster items with similar titles (same story from different sources)
+    def _title_key(item):
+        """Extract key phrases for clustering. Strips common words, lowercases."""
+        title = (item.get("title") or item.get("name", "")).lower()
+        # Remove common prefixes/suffixes
+        for strip in ["- github", "- gist", "| ", "..."]:
+            title = title.replace(strip, "")
+        # Extract significant words (>3 chars, not stopwords)
+        stops = {"the", "and", "for", "with", "from", "that", "this", "are", "was", "new", "how"}
+        words = set(w for w in re.findall(r'\w+', title) if len(w) > 3 and w not in stops)
+        return frozenset(words)
+
+    if attention:
+        clustered = []
+        used = set()
+        for i, (kind, item, score, reason) in enumerate(attention):
+            if i in used:
+                continue
+            key_i = _title_key(item)
+            cluster = [(kind, item, score, reason)]
+            for j in range(i + 1, len(attention)):
+                if j in used:
+                    continue
+                key_j = _title_key(attention[j][3 - 3:][1] if len(attention[j]) > 1 else {})
+                key_j = _title_key(attention[j][1])
+                # Cluster if >50% word overlap
+                if key_i and key_j and len(key_i & key_j) / max(1, min(len(key_i), len(key_j))) > 0.5:
+                    cluster.append(attention[j])
+                    used.add(j)
+            # Keep highest-scoring item from cluster, note the count
+            clustered.append((cluster[0], len(cluster)))
+            used.add(i)
+        attention_deduped = clustered
+    else:
+        attention_deduped = []
+
     lines = [
         f"# Eos Daily Digest -- {date_str}",
         f"*Scan completed: {ts}*",
@@ -784,12 +821,13 @@ def write_digest(papers: list, repos: list, health: list, limiter: RateLimiter, 
     ]
 
     # ATTENTION REQUIRED — the section James reads first
-    if attention:
-        lines.append(f"## !! ATTENTION REQUIRED ({len(attention)} items)")
+    if attention_deduped:
+        lines.append(f"## !! ATTENTION REQUIRED ({len(attention_deduped)} items)")
         lines.append("*Items scored by relevance to Prometheus. Higher = more directly useful.*\n")
-        for kind, item, score, reason in attention[:10]:
+        for (kind, item, score, reason), n_sources in attention_deduped[:10]:
             title = item.get("title") or item.get("name", "Untitled")
             url = item.get("url", "")
+            sources_note = f" ({n_sources} sources)" if n_sources > 1 else ""
             if kind == "paper":
                 tldr = item.get("summary", "")[:150]
                 lines.append(f"- [{score}] **[PAPER]** {title}")
@@ -803,7 +841,7 @@ def write_digest(papers: list, repos: list, health: list, limiter: RateLimiter, 
                 lines.append(f"  {url}")
                 lines.append(f"  *Why: {reason}*")
             else:
-                lines.append(f"- [{score}] **[NEWS]** {title}")
+                lines.append(f"- [{score}] **[NEWS]** {title}{sources_note}")
                 lines.append(f"  {url}")
                 lines.append(f"  *Why: {reason}*")
             lines.append("")

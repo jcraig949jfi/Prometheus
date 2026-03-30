@@ -15,7 +15,8 @@ import random
 log = logging.getLogger("hephaestus.prompts")
 
 # Frame weights (Athena-recommended allocation)
-FRAME_WEIGHTS = {"A": 10, "B": 35, "C": 30, "D": 25}
+# E/F/G added 2026-03-29 for Tier 2 computation-first forge
+FRAME_WEIGHTS = {"A": 5, "B": 20, "C": 15, "D": 15, "E": 25, "F": 10, "G": 10}
 _frame_rng = random.Random(42)
 
 CODE_GEN_PROMPT = """\
@@ -305,14 +306,81 @@ def build_code_gen_prompt(concept_names: list[str], response_text: str,
     )
 
     # Append frame-specific suffix
-    if frame == "B":
-        prompt += FRAME_B_SUFFIX
-    elif frame == "C":
-        prompt += FRAME_C_SUFFIX
-    elif frame == "D":
-        prompt += FRAME_D_SUFFIX
+    frame_suffixes = {
+        "B": FRAME_B_SUFFIX, "C": FRAME_C_SUFFIX, "D": FRAME_D_SUFFIX,
+        "E": FRAME_E_SUFFIX, "F": FRAME_F_SUFFIX, "G": FRAME_G_SUFFIX,
+    }
+    if frame in frame_suffixes:
+        prompt += frame_suffixes[frame]
 
-    log.info("Frame: %s (%s)", frame,
-             {"A": "Structural", "B": "Constructive", "C": "Dynamics", "D": "Judgment"}.get(frame, "?"))
+    frame_names = {
+        "A": "Structural", "B": "Constructive", "C": "Dynamics",
+        "D": "Judgment", "E": "Computational", "F": "Adversarial", "G": "Metacognitive",
+    }
+    log.info("Frame: %s (%s)", frame, frame_names.get(frame, "?"))
 
     return prompt
+
+
+# ---------------------------------------------------------------------------
+# Tier 2 Frame Suffixes (computation-first, adversarial robust, metacognitive)
+# ---------------------------------------------------------------------------
+
+FRAME_E_SUFFIX = """
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME E: COMPUTATIONAL
+
+Your tool must work by COMPUTING answers, not matching patterns. For every problem type:
+1. Parse the prompt into a FORMAL INTERMEDIATE REPRESENTATION (graph, constraint set, variable binding table, state machine, or logic program)
+2. EXECUTE COMPUTATION on that representation (BFS, constraint propagation, arithmetic evaluation, logical inference, Bayesian updating)
+3. Match the COMPUTED RESULT against candidate answers
+
+Your tool must NEVER: match candidate text directly against prompt keywords, use NCD as a primary scorer, or hardcode category-specific regex patterns that dispatch to different handlers.
+
+The test battery includes: stateful register machines (2-4 registers, 3-8 sequential operations), multi-agent belief tracking (Sally-Anne variants with 2-4 agents), constraint satisfaction (3-5 entities with elimination), recursive function evaluation (base case + recurrence), counterfactual dependency tracing (DAG + premise alteration), Bayesian probability updates (prior + likelihood + false positive), and information sufficiency detection (solvable vs underdetermined systems).
+
+You WILL be scored on categories where regex tools score 0%. The only way to pass is to actually compute.
+
+You may use regex for PARSING (extracting structure from text) but not for SCORING (deciding which candidate is correct). The scoring must come from computation over the parsed representation.
+
+ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition. These are easy points — don't leave them on the table.
+"""
+
+FRAME_F_SUFFIX = """
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME F: ADVERSARIAL ROBUSTNESS
+
+A determined adversary will rewrite every prompt to break your regex patterns while preserving the logical structure:
+- Variable names are randomized (not Alice/Bob — could be Kenji, Priya, Zara)
+- Surface forms vary (5+ different phrasings for the same logical structure)
+- Irrelevant sentences are injected as distractors
+- Keywords that would trigger wrong handlers appear in misleading contexts
+- Prompt lengths vary from 2 sentences to 2 paragraphs
+
+Design a tool that identifies the LOGICAL STRUCTURE of a problem regardless of how it's expressed. Your tool should work on prompts it has never seen before, not by matching templates but by building a model of the problem and reasoning over the model.
+
+If your tool uses regex, it should be for STRUCTURAL EXTRACTION ("find all statements of the form 'X is Y'" or "identify constraint phrases") not for CATEGORY DETECTION ("if the prompt contains 'causes' and 'intervene', use the causal handler").
+
+Test yourself: would your tool work if every proper noun were replaced with a random string? If every "causes" were replaced with "leads to" or "results in" or "produces"? If the key information were buried in paragraph 2 of 3?
+
+ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition.
+"""
+
+FRAME_G_SUFFIX = """
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME G: METACOGNITIVE
+
+Design a tool that KNOWS WHAT IT DOESN'T KNOW. When your tool cannot confidently solve a problem, it must return a calibrated low confidence score rather than guessing.
+
+A tool that says "I don't know" on 20% of problems and gets 95% of the rest correct is BETTER than a tool that guesses on everything and gets 74%.
+
+Your tool must handle problems where the correct answer is "Cannot be determined from the information given." This answer must emerge from COMPUTATION (counting degrees of freedom vs constraints, checking if the logical system is underdetermined) not from keyword detection (seeing the word "might" or "possibly").
+
+For every problem your tool solves, it should track internally WHY it is confident — which parsed constraints lead to the answer. If parsing is uncertain (e.g., ambiguous pronoun reference, multiple valid interpretations), confidence should be proportionally reduced.
+
+Implement uncertainty propagation: if 3 of 5 parsed variables are confident but 2 are ambiguous, score candidates based on the confident variables and reduce confidence proportionally for the ambiguous ones.
+
+ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition.
+
+Tier B meta-confidence MUST detect: presupposition traps ("have you stopped..."), quantifier scope ambiguity ("every...some"), false dichotomies ("either...or"), survivorship bias ("of those who succeeded..."), sunk cost framing ("already invested...").
+"""

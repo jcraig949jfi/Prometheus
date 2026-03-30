@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Control Theory, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T15:59:46.425916
-**Report Generated**: 2026-03-27T16:08:16.632666
+**Report Generated**: 2026-03-27T23:28:38.415718
 
 ---
 
@@ -64,7 +64,10 @@ Implementability: 8/10 — relies only on `numpy` for linear algebra and `re` fo
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T23:12:30.592226
 
 ---
 

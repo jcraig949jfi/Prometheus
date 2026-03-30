@@ -1,203 +1,244 @@
 import re
 import zlib
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
     FractalSOC Type-Theoretic Proof Search (FSTT) Engine.
     
     Mechanism:
-    1. Type Theory (Structural Parsing): Extracts logical constraints (negations, 
-       comparatives, conditionals) to form a rigid 'type' signature of the prompt.
-       Candidates are scored by how well they satisfy these structural constraints.
-    2. Fractal Geometry (Self-Similarity): Treats the prompt's logical structure as 
-       a pattern. Candidates are evaluated on their ability to mirror this pattern 
-       (e.g., if prompt has "A > B", candidate should reflect consistent ordering).
-    3. Self-Organized Criticality (SOC): Used ONLY in confidence(). We simulate a 
-       sandpile accumulation of evidence. If structural matches exceed a critical 
-       threshold, an 'avalanche' of confidence occurs (score jumps to 0.9+). If 
-       below threshold, confidence remains low/linear, preventing false positives 
-       from noisy matches.
-       
-    This approach prioritizes structural logic (beating NCD baseline) while using 
-    SOC as a metacognitive filter for high-certainty answers.
+    1. Epistemic Honesty (Meta-Confidence): Before scoring, analyzes the prompt for 
+       logical traps (presuppositions, ambiguity, false dichotomies). If detected, 
+       confidence is capped low (<0.3) regardless of candidate quality.
+    2. Structural Parsing (Type Theory Analogy): Extracts logical constraints 
+       (negations, comparatives, conditionals) as "types" that candidates must inhabit.
+    3. Fractal/SOC Dynamics: 
+       - Candidates are scored on structural match (coarse grain).
+       - If structural score is high, an "avalanche" triggers numeric/computational 
+         verification (fine grain).
+       - Scores cascade: Structural (50%) + Computation (35%) + NCD (15%).
     """
 
     def __init__(self):
-        # Structural keywords for parsing
-        self.negations = ['not', 'no', 'never', 'none', 'cannot', 'impossible']
-        self.comparatives = ['greater', 'less', 'more', 'fewer', 'larger', 'smaller', '>', '<']
-        self.conditionals = ['if', 'then', 'unless', 'only if', 'when']
-        self.numeric_pattern = re.compile(r"-?\d+\.?\d*")
+        # Thresholds for SOC avalanche
+        self.critical_threshold = 0.6
+        self.ncd_weight = 0.15
+        self.struct_weight = 0.50
+        self.comp_weight = 0.35
 
-    def _extract_structure(self, text: str) -> dict:
-        """Parse text for logical structure (Type Theory layer)."""
-        lower_text = text.lower()
-        has_neg = any(n in lower_text for n in self.negations)
-        has_comp = any(c in lower_text for c in self.comparatives)
-        has_cond = any(c in lower_text for c in self.conditionals)
-        nums = [float(x) for x in self.numeric_pattern.findall(text)]
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Tier B: Detects ambiguity, presupposition, and unanswerability.
+        Returns a cap value. If < 0.3, the question is considered 'unsafe'.
+        """
+        p = prompt.lower()
         
+        # 1. Presupposition Traps ("Have you stopped...", "Why did X fail...")
+        presupposition_patterns = [
+            r"\bhave you stopped\b", r"\bwhy did.*fail\b", r"\bwhy was.*wrong\b",
+            r"\bwhen did.*stop\b", r"\bhow often.*fail\b", r"\bcontinue to\b"
+        ]
+        for pat in presupposition_patterns:
+            if re.search(pat, p):
+                return 0.25
+
+        # 2. False Dichotomy ("Either A or B", "Is it X or Y?" without context)
+        # Simple heuristic: "either...or" or "is it x or y" without exhaustive lists
+        if re.search(r"\beither\b.*\bor\b", p):
+            # Check if it looks like a forced choice without options provided in a list
+            if "which of the following" not in p:
+                return 0.25
+        
+        # 3. Subjectivity without criteria ("Best", "Worst" without metrics)
+        subjective_traps = [r"\bwho is the best\b", r"\bwhat is the worst\b", r"\bwhich is favorite\b"]
+        for pat in subjective_traps:
+            if re.search(pat, p):
+                if "based on" not in p and "according to" not in p:
+                    return 0.25
+
+        # 4. Pronoun Ambiguity (He said to him... who?)
+        if re.search(r"\b(he|she|him|her)\b.*\b(he|she|him|her)\b", p):
+            if re.search(r"\bwho\b", p):
+                return 0.25
+
+        return 1.0  # No meta-traps detected
+
+    def _extract_structure(self, prompt: str) -> dict:
+        """
+        Extracts logical 'types' from the prompt: negations, comparatives, numbers.
+        """
+        p = prompt.lower()
         return {
-            'neg_count': int(has_neg),
-            'comp_count': int(has_comp),
-            'cond_count': int(has_cond),
-            'nums': nums,
-            'len': len(text.split())
+            "has_negation": bool(re.search(r"\b(not|no|never|neither|nor)\b", p)),
+            "has_comparative": bool(re.search(r"\b(more|less|greater|smaller|higher|lower|before|after)\b", p)),
+            "has_conditional": bool(re.search(r"\b(if|then|unless|only if)\b", p)),
+            "numbers": re.findall(r"-?\d+(?:\.\d+)?", p),
+            "entities": re.findall(r"\b[A-Z][a-z]+\b", p) # Simple proper noun capture
         }
 
-    def _check_fractal_consistency(self, prompt_struct: dict, cand_struct: dict, prompt: str, candidate: str) -> float:
-        """
-        Check if candidate mirrors the logical shape of the prompt (Fractal layer).
-        Returns a similarity score 0.0 - 1.0 based on structural alignment.
-        """
-        score = 0.0
-        matches = 0
-        total_checks = 0
-
-        # Check Negation Consistency
-        # If prompt has negation, valid answers often need to acknowledge it or flip logic
-        total_checks += 1
-        if prompt_struct['neg_count'] > 0:
-            # Heuristic: If prompt is negative, and candidate is short (Yes/No), 
-            # we can't verify much, but if candidate is long, it should contain negation words too.
-            if cand_struct['len'] > 5: 
-                if cand_struct['neg_count'] > 0:
-                    matches += 1
-            else:
-                # Short answers are ambiguous structurally, give partial credit if prompt had complexity
-                matches += 0.5 
-        else:
-            if cand_struct['neg_count'] == 0:
-                matches += 1
-            else:
-                # Unexpected negation in candidate when prompt was positive
-                matches -= 0.5
-        score += max(0, matches)
-
-        # Check Numeric Consistency (The strongest signal)
-        if prompt_struct['nums'] and cand_struct['nums']:
-            total_checks += 1
-            # Simple transitivity check: If prompt says "9.11 < 9.9", candidate numbers should align
-            # Here we just check if the candidate preserves the magnitude order if it repeats numbers
-            p_nums = sorted(prompt_struct['nums'])
-            c_nums = sorted(cand_struct['nums'])
-            
-            # If candidate repeats specific numbers from prompt, do they maintain relative order?
-            common = set(p_nums) & set(c_nums)
-            if len(common) >= 2:
-                # Extract sequence from both strings based on common numbers
-                p_seq = [x for x in prompt_struct['nums'] if x in common]
-                c_seq = [x for x in cand_struct['nums'] if x in common]
-                # This is a simplification; real proof would check logical derivation
-                matches += 1.0
-            else:
-                matches += 0.5 # Presence of numbers is good
-        elif not prompt_struct['nums'] and not cand_struct['nums']:
-            matches += 1 # Consistent absence
-            
-        # Check Conditional/Logical Flow
-        if prompt_struct['cond_count'] > 0:
-            total_checks += 1
-            # Candidate should ideally have some logical connector or be a direct conclusion
-            if cand_struct['cond_count'] > 0 or cand_struct['len'] < 20:
-                matches += 1
-            else:
-                matches += 0.3
-
-        if total_checks == 0:
-            return 0.5
-        
-        # Normalize
-        raw_score = matches / total_checks
-        return max(0.0, min(1.0, raw_score))
-
-    def _ncd(self, s1: str, s2: str) -> float:
-        """Normalized Compression Distance as tiebreaker."""
+    def _compute_ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance using zlib."""
         if not s1 or not s2:
             return 1.0
-        s1_b = s1.encode('utf-8')
-        s2_b = s2.encode('utf-8')
         try:
-            c1 = len(zlib.compress(s1_b))
-            c2 = len(zlib.compress(s2_b))
-            c12 = len(zlib.compress(s1_b + s2_b))
-            return (c12 - min(c1, c2)) / max(c1, c2)
+            c1 = len(zlib.compress(s1.encode()))
+            c2 = len(zlib.compress(s2.encode()))
+            c12 = len(zlib.compress((s1 + s2).encode()))
+            max_len = max(c1, c2)
+            if max_len == 0:
+                return 1.0
+            return (c12 - min(c1, c2)) / max_len
         except:
             return 1.0
 
+    def _evaluate_computation(self, prompt: str, candidate: str) -> float:
+        """
+        Attempts to verify numeric or logical consistency.
+        Returns 1.0 if consistent, 0.0 if contradictory, 0.5 if neutral.
+        """
+        p_nums = self._extract_structure(prompt)["numbers"]
+        
+        # If prompt has numbers, check if candidate contradicts obvious math
+        # This is a simplified constructive check
+        if len(p_nums) >= 2:
+            try:
+                # Check for simple comparison in candidate vs prompt logic
+                # E.g., Prompt: "9.11 < 9.9?", Candidate: "True"
+                if "true" in candidate.lower() or "false" in candidate.lower():
+                    # Extract floats from prompt to verify
+                    vals = [float(x) for x in p_nums]
+                    if len(vals) >= 2:
+                        # Heuristic: if prompt asks comparison, assume standard order
+                        if "less" in prompt.lower() or "<" in prompt:
+                            expected = vals[0] < vals[1]
+                        elif "greater" in prompt.lower() or ">" in prompt:
+                            expected = vals[0] > vals[1]
+                        else:
+                            return 0.5 # Unknown operation
+                        
+                        if ("true" in candidate.lower()) == expected:
+                            return 1.0
+                        else:
+                            return 0.0
+            except:
+                pass
+        return 0.5
+
+    def _score_candidate(self, prompt: str, candidate: str, struct_features: dict) -> Tuple[float, str]:
+        """
+        Core scoring engine combining structural match, computation, and NCD.
+        """
+        score = 0.0
+        reasons = []
+
+        # 1. Structural Score (Type Inhabitation Check)
+        # Does the candidate respect the logical constraints (negation, etc)?
+        struct_score = 0.0
+        c_lower = candidate.lower()
+        
+        if struct_features["has_negation"]:
+            # If prompt has negation, correct answer often contains "no", "not", or implies difference
+            if any(x in c_lower for x in ["no", "not", "false", "different"]):
+                struct_score += 0.4
+            else:
+                struct_score += 0.1 # Penalty for ignoring negation
+        else:
+            struct_score += 0.3 # Baseline
+
+        if struct_features["has_comparative"]:
+            if any(x in c_lower for x in ["more", "less", "greater", "smaller", "yes", "true", "false"]):
+                struct_score += 0.4
+            else:
+                struct_score += 0.1
+        
+        if struct_features["has_conditional"]:
+            if any(x in c_lower for x in ["if", "then", "only", "yes", "no"]):
+                struct_score += 0.3
+            else:
+                struct_score += 0.1
+
+        # Normalize struct score to 0-1 range roughly
+        struct_score = min(1.0, struct_score)
+        
+        # 2. Computational Score (SOC Avalanche Trigger)
+        # Only compute deeply if structural score exceeds threshold (Self-Organized Criticality)
+        comp_score = 0.5 # Neutral default
+        if struct_score > self.critical_threshold:
+            comp_score = self._evaluate_computation(prompt, candidate)
+            if comp_score != 0.5:
+                reasons.append(f"Computation verified: {comp_score}")
+
+        # 3. NCD Score (Similarity as tiebreaker)
+        # High NCD means dissimilar. We want some similarity but not echo.
+        ncd_val = self._compute_ncd(prompt, candidate)
+        # Invert and scale: Low NCD (similar) -> High score, but penalize exact echo
+        if len(candidate) < 5: 
+            ncd_score = 0.5 # Too short to judge by NCD
+        elif ncd_val < 0.2:
+            ncd_score = 0.8 # Very similar
+        elif ncd_val > 0.9:
+            ncd_score = 0.2 # Very different
+        else:
+            ncd_score = 1.0 - ncd_val # Moderate similarity
+
+        # Weighted Sum
+        final_score = (struct_score * self.struct_weight) + \
+                      (comp_score * self.comp_weight) + \
+                      (ncd_score * self.ncd_weight)
+        
+        reasons.append(f"Struct:{struct_score:.2f}, Comp:{comp_score:.2f}, NCD:{ncd_score:.2f}")
+        
+        return final_score, "; ".join(reasons)
+
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        prompt_struct = self._extract_structure(prompt)
+        """
+        Evaluates candidates against the prompt using FSTT logic.
+        """
+        # 1. Meta-Confidence Check (Epistemic Honesty)
+        meta_cap = self._meta_confidence(prompt)
+        
+        # 2. Extract Structural Features (Type Signatures)
+        struct_features = self._extract_structure(prompt)
+        
         results = []
-
         for cand in candidates:
-            cand_struct = self._extract_structure(cand)
+            score, reason_str = self._score_candidate(prompt, cand, struct_features)
             
-            # 1. Structural Score (Type Theory / Fractal Consistency)
-            struct_score = self._check_fractal_consistency(prompt_struct, cand_struct, prompt, cand)
+            # Apply Meta-Confidence Cap
+            if meta_cap < 0.3:
+                score = min(score, meta_cap)
+                reason_str += f" | capped by meta-check ({meta_cap})"
             
-            # 2. Numeric Evaluation Bonus
-            numeric_bonus = 0.0
-            if prompt_struct['nums'] and cand_struct['nums']:
-                # If prompt has comparison words and candidate has numbers, boost if consistent
-                if any(c in prompt.lower() for c in self.comparatives):
-                    numeric_bonus = 0.2
-            
-            # Base score
-            score = struct_score + numeric_bonus
-            
-            # Cap at 0.9 to leave room for NCD tie-breaking differentiation if needed, 
-            # though structural usually dominates.
-            score = min(0.95, score)
-
             results.append({
                 "candidate": cand,
                 "score": score,
-                "reasoning": f"Structural match: {struct_score:.2f}, Numeric bonus: {numeric_bonus:.2f}"
+                "reasoning": reason_str
             })
-
-        # Sort by score descending
-        results.sort(key=lambda x: x['score'], reverse=True)
         
-        # Apply NCD as a fine-grained tiebreaker for top candidates if scores are very close
-        if len(results) > 1 and abs(results[0]['score'] - results[1]['score']) < 0.05:
-            # Re-evaluate top 2 with NCD penalty for dissimilarity to prompt context
-            # Actually, for reasoning, we want the one that fits the logic, not necessarily 
-            # the one that looks like the prompt (echo). 
-            # However, if structural scores are identical, NCD can break ties on "noise".
-            pass 
-
+        # Sort by score descending
+        results.sort(key=lambda x: x["score"], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Uses SOC dynamics: Accumulates 'grains' of evidence (structural matches).
-        If evidence exceeds critical threshold, an 'avalanche' occurs (high confidence).
-        Otherwise, returns a low linear score.
+        Returns confidence 0-1. 
+        Capped by meta-analysis of the prompt's ambiguity.
         """
-        p_struct = self._extract_structure(prompt)
-        a_struct = self._extract_structure(answer)
+        meta_cap = self._meta_confidence(prompt)
         
-        grains = 0.0
+        # Quick structural check
+        struct_features = self._extract_structure(prompt)
+        score, _ = self._score_candidate(prompt, answer, struct_features)
         
-        # Grain 1: Numeric consistency
-        if p_struct['nums'] and a_struct['nums']:
-            grains += 0.4
+        # If meta says ambiguous, cap it
+        if meta_cap < 0.3:
+            return min(score, meta_cap)
         
-        # Grain 2: Logical operator consistency
-        if (p_struct['neg_count'] > 0 and a_struct['neg_count'] > 0) or \
-           (p_struct['cond_count'] > 0 and a_struct['cond_count'] > 0):
-            grains += 0.4
-            
-        # Grain 3: Length heuristic (answer isn't trivial)
-        if a_struct['len'] > 3:
-            grains += 0.3
-
-        # SOC Threshold (Criticality)
-        # If grains > 0.7, we trigger an avalanche (high confidence)
-        if grains > 0.7:
-            return 0.95
-        elif grains > 0.4:
-            return 0.6
+        # If computation was definitive (1.0 or 0.0), allow high confidence
+        # Otherwise, dampen slightly to avoid overconfidence on heuristic matches
+        if score > 0.85:
+            return min(0.95, score) # Cap at 0.95 unless computed
+        elif score < 0.2:
+            return max(0.05, score)
         else:
-            return 0.2
+            return score * 0.9 # Dampen uncertain middle ground

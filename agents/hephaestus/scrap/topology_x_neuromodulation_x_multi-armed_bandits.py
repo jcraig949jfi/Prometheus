@@ -1,165 +1,277 @@
 import re
 import zlib
-import math
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Topologically-Aware Neuromodulated Bandit Controller (T-UCTH)
+    Topologically-Aware Neuromodulated Bandit Controller (T-UCTH) for Hypothesis Testing.
     
     Mechanism:
-    1. Structural Parsing (Topology): Candidates and prompts are mapped to vertices.
-       Structural features (negations, comparatives, numbers) form edges. 
-       'Holes' (topological gaps) are simulated by detecting missing logical transitions 
-       or contradictions between prompt constraints and candidate assertions.
+    1. Topology (Simplicial Complex Approximation): Maps candidates to vertices. 
+       Detects "holes" (gaps in reasoning space) by analyzing structural diversity 
+       and missing logical transitions between candidates.
     2. Neuromodulation:
-       - Dopamine (Exploitation): Rewards candidates matching prompt structure/keywords.
-       - Serotonin (Exploration): Boosts score if a candidate fills a 'logical hole' 
-         (e.g., resolves a negation or provides a missing numeric comparison).
-       - Acetylcholine (Learning Rate): Adjusts confidence based on structural density.
-    3. Bandit Output: Final score = Base Likelihood + Serotonin Bonus * Topological Gap.
-    
-    This approach prioritizes structural consistency over simple string similarity (NCD),
-    beating the baseline by handling negations and numeric logic explicitly.
+       - Dopamine: Drives exploitation based on structural match to prompt constraints.
+       - Serotonin: Scales exploration bonus when topological "holes" (ambiguity/lack of coverage) are detected.
+       - Acetylcholine: Adjusts learning rate (confidence capping) when inconsistencies arise.
+    3. Multi-Armed Bandit: Ranks candidates using a UCB-like index combining structural score 
+       and topological exploration bonus.
+       
+    Epistemic Honesty (Tier B): Prioritizes detecting presuppositions, ambiguities, and unanswerable 
+    queries by capping confidence and boosting exploration (serotonin) when structural parsers fail.
     """
 
     def __init__(self):
-        self.epsilon = 1e-6
-
-    def _structural_signature(self, text: str) -> dict:
-        """Extract structural features: negations, comparatives, numbers, conditionals."""
-        text_lower = text.lower()
-        features = {
-            'negations': len(re.findall(r'\b(not|no|never|without|neither)\b', text_lower)),
-            'comparatives': len(re.findall(r'\b(more|less|greater|smaller|better|worse|than)\b', text_lower)),
-            'conditionals': len(re.findall(r'\b(if|then|unless|otherwise|provided)\b', text_lower)),
-            'numbers': re.findall(r'\d+\.?\d*', text_lower),
-            'length': len(text.split())
-        }
-        # Convert numbers to float for comparison logic
-        features['numeric_vals'] = []
-        for n in features['numbers']:
-            try:
-                features['numeric_vals'].append(float(n))
-            except ValueError:
-                pass
-        return features
+        self.serotonin_gain = 1.0  # Exploration scaling
+        self.dopamine_baseline = 0.5  # Exploitation baseline
+        self.acetylcholine_lr = 0.1  # Learning rate for confidence updates
+        
+        # Patterns for Tier B (Judgment) detection
+        self.presupposition_patterns = [
+            r"\b(stopped|quit|ceased|failed|stopped)\s+(doing|the|your)?\s*\w+",
+            r"\bwhy\s+did\s+\w+\s+(fail|stop|leave)",
+            r"\bwhen\s+did\s+\w+\s+(stop|fail)",
+        ]
+        self.scope_patterns = [
+            r"\bevery\s+\w+.*\ba\s+\w+",  # Every X did a Y
+            r"\ball\s+\w+.*\bthe\s+\w+",
+        ]
+        self.pronoun_patterns = [
+            r"\b(he|she|him|her|it|they)\s+was\s+(wrong|right|late)",
+            r"\btold\s+\w+\s+(he|she|him|her)",
+        ]
+        self.false_dichotomy_patterns = [
+            r"\beither\s+\w+\s+or\s+\w+",
+            r"\bis\s+it\s+\w+\s+or\s+\w+",
+        ]
 
     def _compute_ncd(self, s1: str, s2: str) -> float:
         """Normalized Compression Distance using zlib."""
         if not s1 or not s2:
             return 1.0
-        c1 = len(zlib.compress(s1.encode()))
-        c2 = len(zlib.compress(s2.encode()))
-        c12 = len(zlib.compress((s1 + s2).encode()))
-        max_len = max(c1, c2)
-        if max_len == 0:
+        s1_bytes = s1.encode('utf-8')
+        s2_bytes = s2.encode('utf-8')
+        len_s1 = len(zlib.compress(s1_bytes))
+        len_s2 = len(zlib.compress(s2_bytes))
+        len_combined = len(zlib.compress(s1_bytes + s2_bytes))
+        
+        denominator = max(len_s1, len_s2)
+        if denominator == 0:
             return 0.0
-        return (c12 - min(c1, c2)) / max_len
+        return (len_combined - min(len_s1, len_s2)) / denominator
 
-    def _detect_logical_hole(self, prompt_feat: dict, cand_feat: dict, prompt: str, candidate: str) -> float:
-        """
-        Detect topological 'holes' (logical gaps) between prompt and candidate.
-        Returns a 'persistence' value: high if there's a mismatch needing exploration.
-        """
-        hole_score = 0.0
+    def _structural_parse(self, prompt: str) -> Dict[str, any]:
+        """Extracts logical structures: negations, comparatives, numbers."""
+        features = {
+            "negation": bool(re.search(r"\b(not|no|never|neither|without)\b", prompt.lower())),
+            "comparative": bool(re.search(r"\b(more|less|greater|smaller|better|worse|higher|lower)\b", prompt.lower())),
+            "conditional": bool(re.search(r"\b(if|then|unless|provided)\b", prompt.lower())),
+            "numbers": re.findall(r"\d+\.?\d*", prompt),
+            "question_type": "unknown"
+        }
         
-        # Check negation consistency (Modus Tollens check)
-        # If prompt has strong negation context and candidate ignores it -> Hole
-        if prompt_feat['negations'] > 0 and cand_feat['negations'] == 0:
-            # Heuristic: if prompt says "not X" and candidate doesn't acknowledge negation words
-            if any(word in prompt.lower() for word in ['not', 'never', 'no']):
-                if not any(word in candidate.lower() for word in ['not', 'never', 'no', 'false', 'incorrect']):
-                    hole_score += 0.5
+        if "?" in prompt:
+            if re.search(r"\b(how many|calculate|sum|total)\b", prompt.lower()):
+                features["question_type"] = "numeric_calc"
+            elif re.search(r"\b(which|who|what)\s+is\s+(bigger|smaller|more|less)", prompt.lower()):
+                features["question_type"] = "numeric_compare"
+            elif re.search(r"\b(true|false|correct)\b", prompt.lower()):
+                features["question_type"] = "verification"
+                
+        return features
 
-        # Check numeric consistency
-        if prompt_feat['numeric_vals'] and cand_feat['numeric_vals']:
-            p_nums = prompt_feat['numeric_vals']
-            c_nums = cand_feat['numeric_vals']
-            # Simple transitivity check: if prompt implies order, does candidate respect it?
-            # If prompt has 2 numbers and candidate has 1, might be a gap
-            if len(p_nums) >= 2 and len(c_nums) == 0:
-                hole_score += 0.3
-        
-        # Conditional gap
-        if prompt_feat['conditionals'] > 0 and cand_feat['conditionals'] == 0:
-            # Prompt asks "If X then Y?", candidate just says "Y" without condition
-            hole_score += 0.2
-            
-        return hole_score
-
-    def _neuromodulated_score(self, prompt: str, candidate: str) -> Tuple[float, str]:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Compute score using T-UCTH logic.
-        Returns (score, reasoning_string)
+        Tier B: Evaluates prompt for ambiguity, presupposition, and unanswerability.
+        Returns a cap value (0.0 - 1.0). Low value = high ambiguity/trap.
         """
-        p_feat = self._structural_signature(prompt)
-        c_feat = self._structural_signature(candidate)
+        p_lower = prompt.lower()
+        risk_score = 0.0
         
-        # 1. Base Likelihood (Dopamine-like): Structural overlap & NCD
-        # Low NCD means similar structure/content. We invert it for likelihood.
-        ncd_val = self._compute_ncd(prompt, candidate)
-        base_likelihood = 1.0 - ncd_val
-        
-        # Boost if structural counts match (e.g. both have numbers, both have negations)
-        struct_match = 0.0
-        if (p_feat['negations'] > 0) == (c_feat['negations'] > 0):
-            struct_match += 0.1
-        if (p_feat['numbers'] and c_feat['numbers']) or (not p_feat['numbers'] and not c_feat['numbers']):
-            struct_match += 0.1
-        if (p_feat['conditionals'] > 0) == (c_feat['conditionals'] > 0):
-            struct_match += 0.1
-            
-        base_likelihood += struct_match
+        # Check Presuppositions
+        for pattern in self.presupposition_patterns:
+            if re.search(pattern, p_lower):
+                risk_score += 0.6
+                
+        # Check Scope Ambiguity
+        for pattern in self.scope_patterns:
+            if re.search(pattern, p_lower):
+                risk_score += 0.3
+                
+        # Check Pronoun Ambiguity
+        if re.search(r"\bwho\s+is\s+(he|she|it)\b", p_lower) or re.search(r"\b(refer|refers)\s+to\s+who", p_lower):
+             risk_score += 0.5
+             
+        # Check False Dichotomy
+        for pattern in self.false_dichotomy_patterns:
+            if re.search(pattern, p_lower):
+                # Only penalize if no clear exhaustive context is implied (simplified heuristic)
+                if "only" not in p_lower and "exclusive" not in p_lower:
+                    risk_score += 0.4
 
-        # 2. Topological Hole Detection (Serotonin-like)
-        # Identify if the candidate fails to address structural constraints (a 'hole')
-        persistence = self._detect_logical_hole(p_feat, c_feat, prompt, candidate)
+        # Check for subjective/unanswerable without context
+        subjective_words = ["best", "worst", "favorite", "beautiful", "moral"]
+        if any(word in p_lower for word in subjective_words) and "context" not in p_lower:
+            risk_score += 0.5
+
+        # Convert risk to confidence cap
+        # High risk -> Low cap
+        cap = 1.0 - min(risk_score, 0.9)
+        return cap
+
+    def _evaluate_structure(self, prompt: str, candidate: str) -> float:
+        """
+        Tier A: Structural parsing and constructive computation.
+        Returns a score 0.0 - 1.0 based on logical fit.
+        """
+        features = self._structural_parse(prompt)
+        score = 0.0
+        c_lower = candidate.lower()
         
-        # 3. Gain Modulation (Acetylcholine-like)
-        # If a hole exists, we penalize the score heavily unless the candidate 
-        # explicitly addresses the gap (simplified here as penalty for now to rank better candidates higher)
-        # In a full bandit, this would trigger exploration. Here, we use it to down-rank 
-        # candidates that ignore structural constraints (logical holes).
-        
-        exploration_bonus = 0.0
-        if persistence > 0.1:
-            # If there is a hole, and the candidate is short/generic, it's likely wrong.
-            # If the candidate is long and detailed, it might be filling the hole.
-            if c_feat['length'] < 5:
-                base_likelihood -= (persistence * 0.5) # Penalty for ignoring context
-                reasoning = f"Logical gap detected (persistence={persistence:.2f}). Candidate ignores structural constraints."
+        # 1. Numeric Evaluation (Constructive)
+        if features["numbers"] and features["question_type"] in ["numeric_calc", "numeric_compare"]:
+            try:
+                # Extract numbers from candidate
+                c_nums = re.findall(r"\d+\.?\d*", candidate)
+                if c_nums:
+                    c_val = float(c_nums[0])
+                    p_nums = [float(x) for x in features["numbers"]]
+                    
+                    if "bigger" in prompt.lower() or "larger" in prompt.lower() or "more" in prompt.lower():
+                        if c_val == max(p_nums): score += 0.8
+                    elif "smaller" in prompt.lower() or "less" in prompt.lower():
+                        if c_val == min(p_nums): score += 0.8
+                    elif "sum" in prompt.lower() or "total" in prompt.lower():
+                        if abs(c_val - sum(p_nums)) < 0.01: score += 0.8
+            except:
+                pass
+
+        # 2. Negation Handling
+        if features["negation"]:
+            neg_words = ["not", "no", "never"]
+            if any(w in c_lower for w in neg_words):
+                score += 0.4
             else:
-                # Potential fill
-                exploration_bonus = persistence * 0.2
-                reasoning = f"Addressing topological gap (persistence={persistence:.2f}) with detailed response."
-        else:
-            reasoning = "Structural consistency maintained. No significant topological holes."
+                # Penalty for ignoring negation in prompt
+                score -= 0.2
 
-        final_score = base_likelihood + exploration_bonus
+        # 3. Conditional/Logic Check
+        if features["conditional"]:
+            if any(w in c_lower for w in ["if", "then", "unless", "depends"]):
+                score += 0.3
         
-        # Clamp 0-1
-        final_score = max(0.0, min(1.0, final_score))
+        # 4. Direct Answer Matching for Verification
+        if features["question_type"] == "verification":
+            if "true" in c_lower or "yes" in c_lower:
+                score += 0.2 # Base prior
+            if "false" in c_lower or "no" in c_lower:
+                score += 0.2
+
+        return max(0.0, min(1.0, score))
+
+    def _topological_bonus(self, prompt: str, candidates: List[str]) -> Dict[int, float]:
+        """
+        Simulates topological hole detection.
+        If candidates are structurally similar (low diversity), a 'hole' exists in the hypothesis space.
+        Returns a bonus for candidates that are diverse (fill the hole).
+        """
+        if len(candidates) < 2:
+            return {i: 0.0 for i in range(len(candidates))}
+            
+        # Simple proxy for persistence: variance in NCD from prompt
+        # High variance = good coverage. Low variance = hole (clustered hypotheses).
+        distances = []
+        for i, c in enumerate(candidates):
+            d = self._compute_ncd(prompt, c)
+            distances.append((i, d))
+            
+        if not distances:
+            return {}
+            
+        avg_dist = sum(d[1] for d in distances) / len(distances)
         
-        return final_score, reasoning
+        # If all candidates are very similar to prompt (or each other), we have a "hole" in exploration
+        # We boost candidates that are slightly further (exploration)
+        bonuses = {}
+        for i, d in distances:
+            # Serotonin-like signal: Boost deviation from mean if cluster is tight
+            # If the cluster is already diverse, bonus is low.
+            diversity_penalty = 0.1 if abs(d - avg_dist) < 0.05 else 0.0
+            bonuses[i] = self.serotonin_gain * diversity_penalty
+            
+        return bonuses
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         if not candidates:
             return []
+            
+        # 1. Meta-Cognitive Check (Tier B)
+        meta_cap = self._meta_confidence(prompt)
         
-        scored_candidates = []
-        for cand in candidates:
-            score, reason = self._neuromodulated_score(prompt, cand)
-            scored_candidates.append({
-                "candidate": cand,
-                "score": score,
-                "reasoning": reason
+        # 2. Topological Analysis (Hole Detection)
+        topo_bonuses = self._topological_bonus(prompt, candidates)
+        
+        results = []
+        for i, candidate in enumerate(candidates):
+            # Structural Score (Dopamine - Exploitation)
+            struct_score = self._evaluate_structure(prompt, candidate)
+            
+            # NCD Tiebreaker (Max 15% influence)
+            ncd_val = self._compute_ncd(prompt, candidate)
+            # Invert NCD so lower distance = higher score, normalize roughly
+            ncd_score = (1.0 - ncd_val) * 0.15
+            
+            # Topological Bonus (Serotonin - Exploration)
+            bonus = topo_bonuses.get(i, 0.0)
+            
+            # Combined Score
+            # Weighting: Structural (50%), Computation (20%), NCD (15%), Topo (15%)
+            raw_score = (struct_score * 0.5) + (0.2 if struct_score > 0.5 else 0.0) + ncd_score + bonus
+            
+            # Apply Meta-Cognitive Cap if prompt is ambiguous
+            # If meta_cap is low, we suppress high confidence in ANY candidate
+            if meta_cap < 0.3:
+                raw_score = min(raw_score, 0.25) # Cap score for ambiguous prompts
+            
+            results.append({
+                "candidate": candidate,
+                "score": round(raw_score, 4),
+                "reasoning": f"Structural:{struct_score:.2f}, Topo:{bonus:.2f}, MetaCap:{meta_cap:.2f}"
             })
-        
-        # Sort by score descending
-        scored_candidates.sort(key=lambda x: x["score"], reverse=True)
-        return scored_candidates
+            
+        # Rank by score
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
 
     def confidence(self, prompt: str, answer: str) -> float:
-        score, _ = self._neuromodulated_score(prompt, answer)
-        return float(score)
+        """
+        Returns confidence 0-1.
+        Strictly capped by _meta_confidence for ambiguous/trap questions.
+        """
+        # 1. Check Meta-Confidence (The "Honesty" Filter)
+        meta_cap = self._meta_confidence(prompt)
+        
+        # 2. Structural Verification
+        struct_score = self._evaluate_structure(prompt, answer)
+        ncd_val = self._compute_ncd(prompt, answer)
+        
+        # Base confidence from structure and similarity
+        base_conf = (struct_score * 0.6) + ((1.0 - ncd_val) * 0.2)
+        
+        # Boost if computation was definitive (e.g. exact number match in numeric questions)
+        features = self._structural_parse(prompt)
+        if features["question_type"] == "numeric_calc":
+            c_nums = re.findall(r"\d+\.?\d*", answer)
+            p_nums = [float(x) for x in features["numbers"]]
+            if c_nums and p_nums:
+                try:
+                    if abs(float(c_nums[0]) - sum(p_nums)) < 0.001:
+                        base_conf = 0.95 # High confidence on correct math
+                except: pass
+
+        # Apply Cap
+        final_conf = min(base_conf, meta_cap)
+        
+        # Never return > 0.9 unless definitive computation (handled above), 
+        # but ensure we don't exceed meta_cap
+        return round(final_conf, 4)

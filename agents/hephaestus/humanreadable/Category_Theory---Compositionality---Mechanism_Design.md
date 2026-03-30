@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Linguistics, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T15:03:41.448882
-**Report Generated**: 2026-03-27T16:08:16.944259
+**Report Generated**: 2026-03-27T23:28:38.501718
 
 ---
 
@@ -57,7 +57,10 @@ Implementability: 9/10 — relies solely on regex parsing, numpy interval arithm
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T23:00:21.162562
 
 ---
 

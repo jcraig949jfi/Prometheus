@@ -1,201 +1,204 @@
-import numpy as np
 import re
-from typing import List, Dict, Tuple
+import zlib
+import math
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
     Hierarchical Active-Inference Controller (Simulated).
     
     Mechanism:
-    1. Perception (Kalman-like): Parses prompt into structural features (negations, comparatives, numbers).
-       This forms the 'belief state' (mu, Sigma) about the question's constraints.
-    2. Hypothesis Generation (Free Energy): Evaluates candidates by minimizing Expected Free Energy (EFE).
-       - Extrinsic Cost: Mismatch between candidate features and prompt constraints (structural parsing).
-       - Epistemic Value: Penalizes candidates that are too generic or lack specific numeric/logical resolution.
-    3. Action Selection: Ranks candidates by lowest EFE (highest score).
-    4. Confidence: Uses a dual-control check; if structural confidence is low, falls back to NCD tie-breaking.
+    1. Meta-Cognition (Epistemic Honesty): Analyzes the prompt for logical traps
+       (presuppositions, ambiguity, false dichotomies) BEFORE scoring. If detected,
+       confidence is capped low (<0.3) regardless of candidate content.
+    2. Structural Parsing (Primary Signal): Extracts negations, comparatives, and
+       numeric values to perform deterministic evaluation (e.g., 9.11 < 9.9).
+    3. Computation: Solves simple arithmetic or logic constraints if present.
+    4. NCD (Tiebreaker): Uses compression distance only when structural signals are weak.
     
-    Note: Optimal Control (LQG) is restricted to the confidence wrapper as per causal constraints.
+    This design prioritizes 'Epistemic Honesty' (Tier B) while maintaining competence
+    on clear structural tasks (Tier A), adhering to the Free Energy Principle's
+    drive to minimize surprise (uncertainty) by recognizing unanswerable states.
     """
 
     def __init__(self):
-        # State initialization (conceptual priors)
-        self.prior_precision = 1.0
-        self.cost_weights = {'negation': 2.0, 'comparative': 1.5, 'numeric': 1.8, 'default': 1.0}
+        self.presupposition_triggers = [
+            r"have you stopped", r"have you quit", r"why did .+ fail", 
+            r"why did .+ stop", r"when did .+ stop", r"is it true that .+"
+        ]
+        self.ambiguity_triggers = [
+            r"every .+ a .+", r"told .+ he was", r"told .+ she was", 
+            r"either .+ or .+", r"best/worst/favorite"
+        ]
+        self.false_dichotomy_triggers = [r"either .+ or .+", r"choose between .+ and .+"]
 
-    def _extract_structure(self, text: str) -> Dict:
-        """Perception step: Extract structural features (Gaussian filtering analogy)."""
-        text_lower = text.lower()
-        features = {
-            'has_negation': bool(re.search(r'\b(not|no|never|neither|without)\b', text_lower)),
-            'has_comparative': bool(re.search(r'\b(more|less|greater|smaller|better|worst|than)\b', text_lower)),
-            'has_conditional': bool(re.search(r'\b(if|then|unless|otherwise)\b', text_lower)),
-            'numbers': re.findall(r'\d+\.?\d*', text_lower),
-            'length': len(text.split())
-        }
-        return features
-
-    def _compute_extrinsic_cost(self, prompt_feats: Dict, cand_feats: Dict, candidate: str) -> float:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Calculates mismatch cost. 
-        High cost if prompt has specific structure (e.g., negation) but candidate ignores it.
+        Evaluates the prompt for Tier B traps (Ambiguity, Presupposition, Unanswerability).
+        Returns a cap value. If traps found, returns < 0.3.
         """
-        cost = 0.0
+        p_lower = prompt.lower()
         
-        # Negation penalty: If prompt negates, candidate must reflect awareness (simplified by length/context match)
-        if prompt_feats['has_negation']:
-            # Heuristic: Candidates that are too short often miss negation nuances
-            if cand_feats['length'] < prompt_feats['length'] * 0.5:
-                cost += self.cost_weights['negation']
-        
-        # Comparative penalty
-        if prompt_feats['has_comparative']:
-            if not cand_feats['has_comparative'] and len(prompt_feats['numbers']) > 0:
-                # If prompt compares numbers, candidate should ideally involve numbers or comparatives
-                if len(cand_feats['numbers']) == 0:
-                    cost += self.cost_weights['comparative']
+        # Check Presuppositions
+        for pattern in self.presupposition_triggers:
+            if re.search(pattern, p_lower):
+                return 0.25
+                
+        # Check Ambiguity (Pronoun/Scope)
+        # Simple heuristic: if prompt asks "who" and contains "told ... he/she"
+        if re.search(r"who", p_lower) and re.search(r"told .+ (he|she) was", p_lower):
+            return 0.25
+            
+        # Check False Dichotomy without exhaustive options
+        if re.search(r"either .+ or .+", p_lower) and "other" not in p_lower:
+            # Heuristic: if it looks like a forced choice without context
+            if "choose" in p_lower or "which" in p_lower:
+                return 0.30
 
-        # Numeric consistency (Simple check)
-        if len(prompt_feats['numbers']) > 0 and len(cand_feats['numbers']) > 0:
-            # If both have numbers, check basic ordering if possible (simplified for single numbers)
+        return 1.0  # No immediate red flags
+
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extracts floating point numbers from text for comparison."""
+        # Match integers and floats, avoiding dates or version numbers if possible
+        matches = re.findall(r'(?<!\d)-?\d+\.?\d*(?!\d)', text)
+        return [float(m) for m in matches]
+
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Performs deterministic structural parsing and computation.
+        Returns a score boost (0.0 to 0.6) based on correctness.
+        """
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
+        score = 0.0
+        
+        # 1. Numeric Comparison Trap (e.g., 9.11 vs 9.9)
+        nums = self._extract_numbers(prompt)
+        if len(nums) >= 2:
+            # Detect comparison keywords
+            if any(k in p_lower for k in ["smaller", "less", "minimum", "lowest"]):
+                correct_val = min(nums)
+                candidate_nums = self._extract_numbers(candidate)
+                if candidate_nums and abs(candidate_nums[0] - correct_val) < 1e-6:
+                    score += 0.6
+                elif "larger" in p_lower or "greater" in p_lower:
+                     pass # Mismatched logic
+            elif any(k in p_lower for k in ["larger", "greater", "maximum", "highest"]):
+                correct_val = max(nums)
+                candidate_nums = self._extract_numbers(candidate)
+                if candidate_nums and abs(candidate_nums[0] - correct_val) < 1e-6:
+                    score += 0.6
+
+        # 2. Negation Handling
+        # If prompt has "not X", and candidate is "X", penalize. If candidate is "not X", boost.
+        negation_match = re.search(r"not\s+(\w+)", p_lower)
+        if negation_match:
+            target = negation_match.group(1)
+            if target in c_lower and f"not {target}" not in c_lower:
+                score -= 0.5 # Penalty for missing negation
+            elif f"not {target}" in c_lower:
+                score += 0.5
+
+        # 3. Simple Arithmetic Verification
+        # If prompt asks "What is X + Y?" and candidate is the number
+        calc_match = re.search(r"(\d+)\s*[\+\-\*\/]\s*(\d+)", prompt)
+        if calc_match:
             try:
-                p_nums = [float(x) for x in prompt_feats['numbers']]
-                c_nums = [float(x) for x in cand_feats['numbers']]
-                # Penalty if numbers are wildly different (noise reduction)
-                if abs(p_nums[0] - c_nums[0]) > max(p_nums[0], 1.0) * 2:
-                    cost += 1.0
-            except ValueError:
+                val = eval(f"{calc_match.group(0)}")
+                cand_nums = self._extract_numbers(candidate)
+                if cand_nums and abs(cand_nums[0] - val) < 1e-6:
+                    score += 0.6
+            except:
                 pass
 
-        return cost
+        return score
 
-    def _compute_epistemic_value(self, candidate: str, prompt: str) -> float:
+    def _ncd_score(self, prompt: str, candidate: str) -> float:
         """
-        Estimates information gain. 
-        Penalizes generic answers (low entropy reduction) and rewards specificity.
+        Normalized Compression Distance.
+        Returns 1.0 for perfect match, 0.0 for total mismatch.
+        Used only as a tiebreaker.
         """
-        cand_lower = candidate.lower()
-        generic_terms = ['yes', 'no', 'maybe', 'i don\'t know', 'unknown', 'error']
-        
-        # High entropy (bad) if candidate is generic
-        if cand_lower.strip() in generic_terms:
-            return 0.5 # Low value
-        
-        # Reward length appropriateness (not too short, not rambling)
-        c_len = len(candidate.split())
-        if 2 <= c_len <= 50:
-            return 0.9 # High value
-        elif c_len > 50:
-            return 0.7
-        else:
-            return 0.4
-
-    def _calculate_efe(self, prompt: str, candidate: str) -> float:
-        """
-        Computes Expected Free Energy (EFE).
-        EFE = Extrinsic Cost - Epistemic Value.
-        Lower EFE is better. We return negative EFE as the score (higher is better).
-        """
-        p_feats = self._extract_structure(prompt)
-        c_feats = self._extract_structure(candidate)
-        
-        extrinsic = self._compute_extrinsic_cost(p_feats, c_feats, candidate)
-        epistemic = self._compute_epistemic_value(candidate, prompt)
-        
-        # EFE = Cost - Value. We want to minimize EFE.
-        efe = extrinsic - epistemic
-        return -efe # Return as score (maximize this)
-
-    def _ncd_distance(self, s1: str, s2: str) -> float:
-        """Normalized Compression Distance using zlib as tiebreaker."""
-        import zlib
-        s1_b = s1.encode('utf-8')
-        s2_b = s2.encode('utf-8')
-        len_s1 = len(zlib.compress(s1_b))
-        len_s2 = len(zlib.compress(s2_b))
-        len_combined = len(zlib.compress(s1_b + s2_b))
-        
-        if max(len_s1, len_s2) == 0:
+        if not candidate:
             return 0.0
-        return (len_combined - min(len_s1, len_s2)) / max(len_s1, len_s2)
+        
+        s1 = prompt.encode('utf-8')
+        s2 = candidate.encode('utf-8')
+        
+        len_s1 = len(zlib.compress(s1))
+        len_s2 = len(zlib.compress(s2))
+        len_s1s2 = len(zlib.compress(s1 + s2))
+        
+        max_len = max(len_s1, len_s2)
+        if max_len == 0:
+            return 0.0
+            
+        ncd = (len_s1s2 - min(len_s1, len_s2)) / max_len
+        # Invert so higher is better (lower distance = higher score)
+        # Scale to max 0.15 contribution
+        return max(0.0, 1.0 - ncd) * 0.15
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        """
-        Evaluates candidates using Free Energy minimization.
-        Primary signal: Structural parsing (Extrinsic cost + Epistemic value).
-        Tiebreaker: NCD.
-        """
-        scored_candidates = []
+        results = []
         
-        # Phase 1: Compute Free Energy scores
-        for cand in candidates:
-            score = self._calculate_efe(prompt, cand)
-            scored_candidates.append({
-                "candidate": cand,
-                "score": score,
-                "reasoning": "Active inference evaluation based on structural consistency and epistemic value."
-            })
+        # Meta-cognition check: Is the question itself flawed?
+        meta_cap = self._meta_confidence(prompt)
         
-        # Sort by score descending
-        scored_candidates.sort(key=lambda x: x["score"], reverse=True)
-        
-        # Phase 2: Refine ties with NCD (only if scores are very close)
-        final_results = []
-        if len(scored_candidates) > 1:
-            final_results = [scored_candidates[0]]
-            for i in range(1, len(scored_candidates)):
-                curr = scored_candidates[i]
-                prev = final_results[-1]
+        for candidate in candidates:
+            # 1. Structural/Computation Score (Primary, up to 0.6)
+            struct_score = self._structural_score(prompt, candidate)
+            
+            # 2. NCD Score (Tiebreaker, up to 0.15)
+            ncd_score = self._ncd_score(prompt, candidate)
+            
+            # Base relevance (simple overlap to avoid zeroing out completely)
+            # This is a fallback, not the main driver.
+            base_relevance = 0.1 if any(word in candidate.lower() for word in prompt.lower().split()[:5]) else 0.0
+            
+            raw_score = base_relevance + struct_score + ncd_score
+            
+            # Apply Meta-Cognitive Cap
+            if meta_cap < 0.3:
+                # If the question is ambiguous, we penalize high confidence in any answer
+                # but still rank them by structural fit, just capped.
+                final_score = min(raw_score, meta_cap)
+                reason = f"Prompt contains ambiguity/trap. Confidence capped at {meta_cap}. Structural fit: {struct_score:.2f}"
+            else:
+                final_score = raw_score
+                reason = f"Structural/Computation score: {struct_score:.2f}, NCD bonus: {ncd_score:.2f}"
                 
-                # If scores are within epsilon, use NCD to break tie relative to prompt
-                if abs(curr["score"] - prev["score"]) < 0.1:
-                    ncd_curr = self._ncd_distance(prompt, curr["candidate"])
-                    ncd_prev = self._ncd_distance(prompt, prev["candidate"])
-                    # Lower NCD is better match
-                    if ncd_curr < ncd_prev:
-                        final_results.append(curr)
-                    else:
-                        # Insert before? No, we are building a list. 
-                        # Actually, if it's a tie, we just keep the order or swap based on NCD.
-                        # Let's just adjust the score slightly to enforce order
-                        curr["score"] -= 0.001 * (ncd_curr - ncd_prev) 
-                        final_results.append(curr)
-                else:
-                    final_results.append(curr)
-        else:
-            final_results = scored_candidates
-
-        # Normalize scores to 0-1 range roughly for readability, though raw EFE is fine
-        # Keeping raw EFE as it's more rigorous for the "Reasoning" requirement
-        return final_results
+            results.append({
+                "candidate": candidate,
+                "score": final_score,
+                "reasoning": reason
+            })
+            
+        # Sort descending by score
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Computes confidence using a dual-control check.
-        Restricted usage of Optimal Control concepts: only for stability checking (variance).
-        Core logic relies on Free Energy consistency.
+        Returns confidence 0-1.
+        Strictly capped by _meta_confidence if the prompt is ambiguous.
         """
-        # 1. Free Energy Check (Primary Driver)
-        efe_score = self._calculate_efe(prompt, answer)
+        # 1. Check Meta-Confidence (The "Honesty" Filter)
+        cap = self._meta_confidence(prompt)
         
-        # Map EFE to 0-1. 
-        # Typical EFE range: -1.0 (good) to 2.0 (bad). 
-        # Transform: conf = 1 / (1 + exp(EFE)) -> logistic sigmoid inversion roughly
-        # If EFE is -1 (good), exp(-1)=0.36, conf ~ 0.73
-        # If EFE is 2 (bad), exp(2)=7.38, conf ~ 0.12
-        import math
-        base_conf = 1.0 / (1.0 + math.exp(efe_score))
+        # 2. Evaluate the specific answer structurally
+        struct_score = self._structural_score(prompt, answer)
+        ncd_score = self._ncd_score(prompt, answer)
         
-        # 2. Structural Stability Check (Optimal Control restricted role)
-        # Check if answer length is within reasonable bounds of prompt (stability constraint)
-        p_len = len(prompt.split())
-        a_len = len(answer.split())
+        # Calculate raw confidence based on evidence
+        # If struct_score is high (e.g., correct math), base is high.
+        # If struct_score is 0, base is low.
+        raw_conf = 0.2 + (struct_score * 0.5) + (ncd_score * 0.3)
         
-        stability_penalty = 0.0
-        if p_len > 10 and a_len < 2:
-            stability_penalty = 0.3 # Suspiciously short for complex prompt
-        elif a_len > 200:
-            stability_penalty = 0.2 # Rambling
+        # Apply cap
+        final_conf = min(raw_conf, cap)
+        
+        # Ensure we never return > 0.9 unless computation was definitive (struct_score maxed)
+        if struct_score < 0.5:
+            final_conf = min(final_conf, 0.85)
             
-        final_conf = max(0.0, min(1.0, base_conf - stability_penalty))
-        return final_conf
+        return max(0.0, min(1.0, final_conf))

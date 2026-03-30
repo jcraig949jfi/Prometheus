@@ -1,237 +1,290 @@
 import re
 import zlib
 import math
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Implements a hybrid reasoning engine based on Autopoiesis x Neural Oscillations x Nash Equilibrium.
+    Autopoietic Oscillatory Nash Tool (AONT).
     
     Mechanism:
-    1. Structural Parsing (The 'Autopoietic Core'): Extracts logical constraints (negations, 
-       comparatives, conditionals) to define the 'viable band' of valid answers. This maintains 
-       organizational closure by rejecting candidates that violate explicit logical rules.
-    2. Oscillatory Scoring (The 'Neural Oscillations'): Applies a phase-based modifier to scores.
-       Candidates matching the 'rhythm' of the prompt (keyword overlap + structural alignment) 
-       receive a resonance boost; others are dampened.
-    3. Nash Equilibrium Solver (The 'Game'): Treats candidates as agents in a replicator dynamic.
-       Scores are normalized and adjusted by competitive inhibition (penalizing candidates that 
-       overlap too much with higher-scoring rivals without adding unique structural value).
-       The final ranking represents the stable equilibrium where only the most robust hypothesis survives.
+    1. Autopoietic Core (Homeostasis): Monitors prompt structure for ambiguity, 
+       presupposition, and unanswerability. If the 'organizational closure' of the 
+       question is violated (i.e., it's a trick or ambiguous), the system self-regulates 
+       by capping confidence to maintain internal viability (Epistemic Honesty).
        
-    Note: Per causal analysis, 'Autopoiesis' is restricted to the confidence wrapper and 
-    structural parsing logic, not direct scoring.
+    2. Oscillatory Layers (Binding): Simulates cross-frequency coupling to bind 
+       structural features (negations, comparatives, numbers) across the prompt.
+       - Gamma: Local feature detection (keywords, numbers).
+       - Theta: Global sequence logic (conditionals, transitivity).
+       
+    3. Nash Equilibrium Solver (Competition): Candidates compete as sub-populations.
+       Scores are derived from structural adherence and computational correctness.
+       Inhibitory dynamics suppress candidates that fail logical constraints.
+       The final score represents a stable mixed-strategy equilibrium where only
+       logically consistent hypotheses survive.
     """
 
     def __init__(self):
-        # Homeostatic parameters
-        self.homeostatic_target = 0.5
-        self.inhibition_strength = 0.3
+        # Homeostatic set-points
+        self.target_confidence = 0.5
+        self.ambiguity_threshold = 0.3
+        self.high_conf_cap = 0.95
         
-        # Structural patterns
-        self.negation_words = {'no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing'}
-        self.comparative_ops = ['>', '<', '>=', '<=', 'greater', 'less', 'more', 'fewer']
-        self.conditionals = ['if', 'then', 'else', 'unless', 'provided']
+        # Structural patterns (Gamma band features)
+        self.negation_pattern = re.compile(r'\b(not|no|never|neither|nobody|nothing|cannot|won\'t|don\'t|doesn\'t|didn\'t)\b', re.IGNORECASE)
+        self.comparative_pattern = re.compile(r'\b(more|less|greater|smaller|higher|lower|better|worst|best)\b', re.IGNORECASE)
+        self.cond_pattern = re.compile(r'\b(if|then|unless|otherwise)\b', re.IGNORECASE)
+        
+        # Presupposition triggers (Autopoietic violation detectors)
+        self.presupposition_triggers = [
+            r"have you stopped", r"did you stop", r"why did", r"why does", 
+            r"when did", r"how often did", r"is it true that", r"have you quit"
+        ]
+        
+        # Ambiguity triggers
+        self.pronoun_ambiguity = re.compile(r'\b(he|she|him|her|they|them)\b', re.IGNORECASE)
+        self.scope_words = re.compile(r'\b(every|all|each|some)\b', re.IGNORECASE)
 
-    def _structural_parse(self, text: str) -> Dict:
-        """Extracts logical features: negations, comparatives, conditionals, numbers."""
-        lower_text = text.lower()
-        words = set(re.findall(r'\b\w+\b', lower_text))
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Autopoietic Core: Evaluates the structural integrity of the prompt.
+        Returns a cap value. If the prompt is ambiguous or loaded, returns low cap.
+        """
+        p_lower = prompt.lower()
         
-        has_negation = bool(words & self.negation_words)
-        has_comparative = any(op in lower_text for op in self.comparative_ops)
-        has_conditional = any(cond in lower_text for cond in self.conditionals)
+        # 1. Presupposition Check
+        for trigger in self.presupposition_triggers:
+            if re.search(trigger, p_lower):
+                return 0.25  # Violation of organizational closure
         
-        # Extract numbers for numeric evaluation
-        numbers = re.findall(r'-?\d+\.?\d*', text)
-        nums = [float(n) for n in numbers]
-        
-        return {
-            'negation': has_negation,
-            'comparative': has_comparative,
-            'conditional': has_conditional,
-            'numbers': nums,
-            'word_set': words
-        }
+        # 2. False Dichotomy Check (Either A or B without context)
+        if re.search(r'\beither\b.*\bor\b', p_lower) and not re.search(r'\bquestion|problem|choice\b', p_lower):
+            # Heuristic: if it looks like a forced choice without data
+            if len(prompt.split()) < 15: 
+                return 0.3
 
-    def _compute_ncd(self, s1: str, s2: str) -> float:
-        """Normalized Compression Distance using zlib."""
+        # 3. Unanswerable/Subjective Check
+        subjective_terms = ['best', 'worst', 'favorite', 'opinion', 'think about']
+        if any(term in p_lower for term in subjective_terms):
+            if 'calculate' not in p_lower and 'math' not in p_lower:
+                return 0.25
+
+        # 4. Pronoun Ambiguity in specific contexts
+        if self.pronoun_ambiguity.search(p_lower) and re.search(r'\bwho\b', p_lower):
+            # Potential ambiguity trap
+            if re.search(r'told|said|asked', p_lower):
+                return 0.3
+
+        return 1.0  # Structurally sound
+
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Gamma band: Extract numeric features."""
+        # Match floats and ints, handling negative signs
+        matches = re.findall(r'-?\d+\.?\d*', text)
+        return [float(m) for m in matches]
+
+    def _compute_structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Oscillatory Binding: Binds structural constraints to the candidate.
+        Returns a score based on logical adherence (0.0 to 1.0).
+        """
+        score = 0.5  # Base neutral
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
+        
+        # 1. Negation Consistency
+        has_negation = bool(self.negation_pattern.search(p_lower))
+        cand_negation = bool(self.negation_pattern.search(c_lower))
+        
+        # If prompt asks "Which is NOT...", candidate must be negative or imply exclusion
+        if "not" in p_lower.split()[-5:] or "none" in p_lower:
+            if not cand_negation and c_lower not in ['none', 'no', 'false', '0']:
+                score -= 0.4
+        elif has_negation and "not" in p_lower:
+            # Complex negation handling simplified for brevity
+            pass
+
+        # 2. Comparative Logic (Numeric)
+        nums = self._extract_numbers(prompt)
+        if len(nums) >= 2:
+            # Detect comparison type
+            if "larger" in p_lower or "greater" in p_lower or "max" in p_lower:
+                target = max(nums)
+                cand_nums = self._extract_numbers(candidate)
+                if cand_nums and abs(cand_nums[0] - target) < 1e-6:
+                    score += 0.5
+                elif cand_nums:
+                    score -= 0.5
+            elif "smaller" in p_lower or "less" in p_lower or "min" in p_lower:
+                target = min(nums)
+                cand_nums = self._extract_numbers(candidate)
+                if cand_nums and abs(cand_nums[0] - target) < 1e-6:
+                    score += 0.5
+                elif cand_nums:
+                    score -= 0.5
+            
+            # Simple arithmetic check (e.g., "What is 2 + 2?")
+            if "what is" in p_lower or "calculate" in p_lower or "=" in prompt:
+                # Very basic eval for simple expressions if candidate is a number
+                try:
+                    # Attempt to extract expression from prompt if simple
+                    if "+" in prompt or "-" in prompt or "*" in prompt or "/" in prompt:
+                        # Naive extraction for demo purposes
+                        expr = re.sub(r'[^\d\+\-\*\/\.\s]', '', prompt)
+                        if expr.strip():
+                            expected = eval(expr)
+                            cand_nums = self._extract_numbers(candidate)
+                            if cand_nums and abs(cand_nums[0] - expected) < 1e-5:
+                                score = 1.0
+                            elif cand_nums:
+                                score = 0.0
+                except:
+                    pass
+
+        # 3. Conditional/Transitivity (Simplified)
+        if self.cond_pattern.search(p_lower):
+            # If prompt has logic, prefer candidates with logical connectors or specific formats
+            if re.search(r'\b(true|false|yes|no|impossible)\b', c_lower):
+                score += 0.2
+
+        return max(0.0, min(1.0, score))
+
+    def _ncd_score(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance as tiebreaker."""
         if not s1 or not s2:
             return 1.0
-        c1 = len(zlib.compress(s1.encode()))
-        c2 = len(zlib.compress(s2.encode()))
-        c12 = len(zlib.compress((s1 + s2).encode()))
-        max_len = max(c1, c2)
-        if max_len == 0:
-            return 0.0
-        return (c12 - min(c1, c2)) / max_len
-
-    def _oscillatory_score(self, prompt_features: Dict, candidate: str) -> float:
-        """
-        Computes a base score based on structural resonance.
-        Simulates gamma-band binding by checking feature alignment.
-        """
-        cand_features = self._structural_parse(candidate)
-        score = 0.0
+        s1_bytes = s1.encode('utf-8')
+        s2_bytes = s2.encode('utf-8')
         
-        # Resonance: Matching structural properties boosts score
-        if prompt_features['negation'] == cand_features['negation']:
-            score += 0.4
-        if prompt_features['comparative'] == cand_features['comparative']:
-            score += 0.3
-        if prompt_features['conditional'] == cand_features['conditional']:
-            score += 0.2
+        len_s1 = len(s1_bytes)
+        len_s2 = len(s2_bytes)
+        
+        try:
+            len_combined = len(zlib.compress(s1_bytes + s2_bytes))
+        except:
+            return 1.0
             
-        # Numeric consistency check (simplified)
-        p_nums = prompt_features['numbers']
-        c_nums = cand_features['numbers']
-        if p_nums and c_nums:
-            # If both have numbers, check if candidate numbers appear in prompt or are derived logically
-            # Simple heuristic: presence of same numbers is a strong bind
-            common_nums = set(p_nums) & set(c_nums)
-            if common_nums:
-                score += 0.5
-            elif len(c_nums) > 0:
-                # Penalty for introducing random numbers not in prompt if prompt had numbers
-                score -= 0.2
-        
-        # Keyword overlap (Theta rhythm sequencing)
-        common_words = prompt_features['word_set'] & cand_features['word_set']
-        # Remove stop words from consideration implicitly by length check or specific logic
-        # Here we just use raw count scaled
-        score += min(0.4, len(common_words) * 0.05)
-        
-        return score
+        if len_combined == 0:
+            return 0.0
+            
+        ncd = (len_combined - min(len_s1, len_s2)) / max(len_s1, len_s2, 1)
+        return max(0.0, min(1.0, ncd))
 
-    def _nash_equilibrium_solver(self, candidates: List[str], base_scores: List[float]) -> List[float]:
+    def _nash_dynamics(self, raw_scores: List[float]) -> List[float]:
         """
-        Adjusts scores via competitive inhibition to reach a mixed-strategy Nash Equilibrium.
-        High scoring candidates inhibit similar lower-scoring candidates.
+        Nash Equilibrium Solver: 
+        Converts raw scores into a stable distribution where no candidate 
+        can improve its position by deviating (simulated via softmax-like normalization
+        with inhibition for low scorers).
         """
-        if not candidates:
+        if not raw_scores:
             return []
         
-        n = len(candidates)
-        if n == 1:
-            return [base_scores[0]]
-            
-        # Normalize base scores to probabilities (replicator dynamics start)
-        exp_scores = [math.exp(s - max(base_scores)) for s in base_scores] # Stability shift
-        sum_exp = sum(exp_scores)
-        if sum_exp == 0:
-            return [1.0/n] * n
-            
-        probs = [e / sum_exp for e in exp_scores]
+        # Convert to positive domain (shift by min if negative)
+        min_s = min(raw_scores)
+        shifted = [s - min_s + 1e-6 for s in raw_scores]
         
-        # Compute similarity matrix (NCD-based) for inhibition
-        sim_matrix = [[0.0]*n for _ in range(n)]
-        for i in range(n):
-            for j in range(n):
-                if i != j:
-                    # Inverse NCD as similarity
-                    ncd = self._compute_ncd(candidates[i], candidates[j])
-                    sim_matrix[i][j] = 1.0 - ncd
-        
-        # Iterative update to find equilibrium (simplified replicator-mutator)
-        # x_i' = x_i * (f_i - phi) where phi is average fitness, modified by inhibition
-        final_scores = probs[:]
-        
-        for _ in range(5): # Fast convergence approximation
-            new_scores = []
-            for i in range(n):
-                inhibition = 0.0
-                for j in range(n):
-                    if i != j:
-                        # Inhibit if j is strong and similar to i
-                        inhibition += final_scores[j] * sim_matrix[i][j]
-                
-                # Fitness function: Base probability minus competitive pressure
-                fitness = final_scores[i] * (1.0 - self.inhibition_strength * inhibition)
-                new_scores.append(max(0.0, fitness))
+        # Replicator-like dynamic: proportionate fitness
+        total = sum(shifted)
+        if total == 0:
+            return [1.0/len(raw_scores)] * len(raw_scores)
             
-            # Renormalize
-            total = sum(new_scores)
-            if total > 0:
-                final_scores = [s/total for s in new_scores]
-            else:
-                break
-                
-        # Map back to original scale roughly for ranking
-        # We combine base score magnitude with the equilibrium probability
-        combined = [base_scores[i] * (final_scores[i] + 0.1) for i in range(n)]
-        return combined
+        # Normalize to 0-1 range, emphasizing the winner (Winner-take-all tendency)
+        probs = [s / total for s in shifted]
+        
+        # Apply inhibition: if max score is dominant, suppress others more aggressively
+        max_p = max(probs)
+        if max_p > 0.5:
+            final_scores = []
+            for p in probs:
+                if p < max_p * 0.5:
+                    final_scores.append(p * 0.5) # Inhibit weak hypotheses
+                else:
+                    final_scores.append(p)
+            # Re-normalize
+            total_new = sum(final_scores)
+            if total_new > 0:
+                return [s/total_new for s in final_scores]
+        
+        return probs
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         if not candidates:
             return []
-            
-        prompt_feats = self._structural_parse(prompt)
-        base_scores = []
+
+        # 1. Autopoietic Check (Meta-Confidence)
+        meta_cap = self._meta_confidence(prompt)
         
-        # Phase 1: Oscillatory Scoring per candidate
+        raw_scores = []
+        structural_scores = []
+        ncd_scores = []
+
+        # 2. Oscillatory Binding & Scoring per candidate
         for cand in candidates:
-            score = self._oscillatory_score(prompt_feats, cand)
+            # Structural/Computational Score (Primary Signal)
+            struct_score = self._compute_structural_score(prompt, cand)
+            structural_scores.append(struct_score)
             
-            # Fallback to NCD if structural signal is weak (Tiebreaker logic)
-            if score < 0.1:
-                ncd = self._compute_ncd(prompt, cand)
-                # Lower NCD is better, invert and scale
-                score = max(0.0, 1.0 - ncd) * 0.5
-                
-            base_scores.append(score)
-            
-        # Phase 2: Nash Equilibrium Competition
-        final_scores = self._nash_equilibrium_solver(candidates, base_scores)
+            # NCD Score (Tiebreaker/Noise)
+            ncd = self._ncd_score(prompt, cand)
+            ncd_scores.append(ncd)
+
+        # 3. Nash Equilibrium Convergence
+        # Combine: 85% Structural, 15% NCD (inverted, as lower NCD is better similarity, 
+        # but here we want logical fit. Actually, for NCD, lower distance = higher similarity.
+        # We want high score for correct logic. Let's use NCD only if structural is flat.)
         
-        # Package results
+        # Check variance in structural scores
+        struct_variance = max(structural_scores) - min(structural_scores) if len(structural_scores) > 1 else 0
+        
+        final_raw = []
+        if struct_variance > 0.1:
+            # Structural signal is strong, ignore NCD
+            final_raw = structural_scores
+        else:
+            # Structural tie, use NCD as tiebreaker (inverted: 1 - ncd)
+            final_raw = [0.85 * s + 0.15 * (1.0 - n) for s, n in zip(structural_scores, ncd_scores)]
+
+        # Apply Nash Dynamics
+        equilibrium_scores = self._nash_dynamics(final_raw)
+        
+        # Apply Autopoietic Cap (Epistemic Honesty)
+        # If the prompt itself is flawed, cap the max confidence regardless of candidate
+        if meta_cap < 0.5:
+            equilibrium_scores = [min(s, meta_cap) for s in equilibrium_scores]
+
+        # Construct Result
         results = []
         for i, cand in enumerate(candidates):
             results.append({
                 "candidate": cand,
-                "score": final_scores[i],
-                "reasoning": f"Structural match: {base_scores[i]:.2f}, Nash adjusted: {final_scores[i]:.2f}"
+                "score": equilibrium_scores[i],
+                "reasoning": f"Structural: {structural_scores[i]:.2f}, Meta-Cap: {meta_cap:.2f}"
             })
-            
-        # Sort descending by score
+        
+        # Sort by score descending
         results.sort(key=lambda x: x['score'], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
         Returns confidence 0-1.
-        Uses Autopoietic homeostasis: Checks if the answer maintains the logical 'closure' 
-        of the prompt (e.g., negation consistency).
+        Caps at meta-confidence if prompt is ambiguous.
         """
-        p_feats = self._structural_parse(prompt)
-        a_feats = self._structural_parse(answer)
+        meta_cap = self._meta_confidence(prompt)
         
-        confidence = 0.5 # Baseline
+        # Evaluate this specific candidate against the prompt
+        struct_score = self._compute_structural_score(prompt, answer)
         
-        # Homeostatic checks (Organizational closure)
-        checks_passed = 0
-        total_checks = 0
+        # Base confidence on structural match, capped by meta-analysis
+        base_conf = struct_score
         
-        # Check 1: Negation consistency
-        if p_feats['negation'] is not None: # Always defined
-            total_checks += 1
-            if p_feats['negation'] == a_feats['negation']:
-                checks_passed += 1
-            elif p_feats['negation'] and not a_feats['negation']:
-                # Strong penalty if prompt negates but answer doesn't acknowledge
-                confidence -= 0.4
+        # If the structural match is perfect but the question is bogus, cap it.
+        final_conf = min(base_conf, meta_cap)
         
-        # Check 2: Conditional logic presence
-        if p_feats['conditional']:
-            total_checks += 1
-            if a_feats['conditional']:
-                checks_passed += 1
-        
-        if total_checks > 0:
-            structural_conf = checks_passed / total_checks
-            confidence = 0.4 + (structural_conf * 0.6) # Range 0.4 to 1.0
+        # Never return > 0.95 unless computation was definitive (simplified here)
+        if final_conf > 0.95:
+            final_conf = 0.95
             
-        # Oscillatory validation modifier
-        osc_score = self._oscillatory_score(p_feats, answer)
-        confidence = (confidence * 0.7) + (osc_score * 0.3)
-        
-        return max(0.0, min(1.0, confidence))
+        return max(0.0, min(1.0, final_conf))

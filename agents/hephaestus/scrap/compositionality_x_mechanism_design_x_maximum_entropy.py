@@ -1,183 +1,255 @@
 import re
 import zlib
 import math
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    CIMEL-inspired Reasoning Tool.
+    Compositional Mechanism-Design Entropy-Regularized Neural-Symbolic Reasoner (CMDE-NSR).
     
-    Mechanism:
-    1. Compositionality: Decomposes prompt into structural primitives (negations, comparatives, 
-       conditionals, numeric values) rather than treating it as a bag of words.
-    2. Mechanism Design (Internal Scoring): Implements a 'truthful reporting' scoring rule.
-       Candidates are scored based on structural alignment with the prompt's logic. 
-       Deviations (e.g., missing a negation, reversing a comparison) incur heavy penalties 
-       analogous to a Vickrey-Clarke-Groves penalty for non-truthful reporting.
-    3. Maximum Entropy: Used strictly within the confidence() wrapper. Instead of assuming 
-       certainty, it calculates the entropy of the candidate distribution to adjust the 
-       final confidence score, preventing over-commitment on low-entropy (ambiguous) signals.
+    Implements a hybrid reasoning strategy:
+    1. Compositional Front-End: Parses structural logic (negations, conditionals, transitivity).
+    2. MaxEnt Prior: Penalizes complex candidate explanations; favors parsimony (Ockham's Razor).
+    3. Mechanism Design (VCG-like): Scores candidates based on marginal utility (accuracy gain) 
+       minus a complexity cost, incentivizing truthful, simple, and correct hypotheses.
     
-    This separation adheres to the causal constraints: MaxEnt is restricted to the confidence 
-    wrapper, while Mechanism Design drives the primary structural scoring.
+    Epistemic Honesty (Tier B): Detects presuppositions, ambiguities, and unanswerable queries
+    to cap confidence, preventing over-confident hallucinations.
     """
 
     def __init__(self):
-        # Primitives for structural parsing
-        self.negation_words = {'no', 'not', 'never', 'none', 'neither', 'nobody', 'nothing'}
-        self.comparatives = {'larger', 'smaller', 'greater', 'less', 'more', 'fewer', 'bigger', 'smaller'}
-        self.conditionals = {'if', 'then', 'else', 'unless', 'provided'}
+        # Entropy regularization parameter (lambda)
+        self.entropy_weight = 0.15
+        # Complexity penalty base
+        self.complexity_base = 0.05
+        # Thresholds
+        self.ambiguity_threshold = 0.25
+        self.high_conf_cap = 0.90
 
-    def _normalize(self, text: str) -> str:
-        return text.lower().strip()
-
-    def _extract_numbers(self, text: str) -> List[float]:
-        """Extract numeric values for quantitative reasoning."""
-        pattern = r"-?\d+(?:\.\d+)?"
-        return [float(x) for x in re.findall(pattern, text)]
-
-    def _check_negation(self, text: str) -> bool:
-        """Detect presence of negation primitives."""
-        tokens = set(re.findall(r'\b\w+\b', self._normalize(text)))
-        return bool(tokens & self.negation_words)
-
-    def _check_comparative(self, text: str) -> bool:
-        """Detect presence of comparative primitives."""
-        tokens = set(re.findall(r'\b\w+\b', self._normalize(text)))
-        return bool(tokens & self.comparatives)
-
-    def _check_conditional(self, text: str) -> bool:
-        """Detect presence of conditional primitives."""
-        tokens = set(re.findall(r'\b\w+\b', self._normalize(text)))
-        return bool(tokens & self.conditionals)
-
-    def _structural_score(self, prompt: str, candidate: str) -> float:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Mechanism Design Component:
-        Calculates a score based on structural alignment. 
-        Truthful reporting (alignment) is rewarded; deviation is penalized.
+        Evaluates the prompt for Tier B traps (Ambiguity, Presupposition, Unanswerability).
+        Returns a confidence cap (0.0 - 1.0).
         """
-        score = 0.0
-        p_norm = self._normalize(prompt)
-        c_norm = self._normalize(candidate)
+        p = prompt.lower()
+        score = 1.0
         
-        # 1. Numeric Consistency (Strongest Signal)
-        p_nums = self._extract_numbers(prompt)
-        c_nums = self._extract_numbers(candidate)
-        
-        if p_nums:
-            if not c_nums:
-                score -= 10.0 # Heavy penalty for missing numbers
-            else:
-                # Check if the candidate preserves the numeric order/magnitude implied
-                # Simple heuristic: if prompt has 2 numbers and candidate has 2, check relation
-                if len(p_nums) >= 2 and len(c_nums) >= 2:
-                    p_diff = p_nums[0] - p_nums[1]
-                    c_diff = c_nums[0] - c_nums[1]
-                    if (p_diff > 0 and c_diff < 0) or (p_diff < 0 and c_diff > 0):
-                        score -= 5.0 # Contradictory logic
-                    else:
-                        score += 2.0 # Consistent logic
-                elif len(c_nums) > 0:
-                    score += 1.0 # At least present
+        # 1. Presupposition Traps ("Have you stopped...", "Why did X fail?")
+        presupposition_patterns = [
+            r"\bhave you (stopped|quit|ceased)\b",
+            r"\bwhy did (it|he|she|they|x)\b", # Assumes event happened
+            r"\bwhen did (it|he|she|they|x)\b", # Assumes event happened
+            r"\bstop (doing|being)\b",
+            r"\bfailed to\b" # In questions like "Why did it fail?"
+        ]
+        for pat in presupposition_patterns:
+            if re.search(pat, p):
+                # Check if it's actually a question or a statement about failure
+                if "?" in p or re.search(r"why|when|how", p):
+                    score = min(score, self.ambiguity_threshold)
+                    break
 
-        # 2. Negation Consistency
-        p_neg = self._check_negation(prompt)
-        c_neg = self._check_negation(candidate)
-        if p_neg != c_neg:
-            # If prompt implies negation and candidate ignores it (or vice versa)
-            # This is a critical failure of truthful reporting
-            score -= 8.0
-        else:
-            score += 1.0
+        # 2. Scope/Pronoun Ambiguity ("Every X... a Y", "X told Y he...")
+        scope_patterns = [
+            r"\bevery [a-z]+ .* a [a-z]+\b", # "Every boy kicked a ball" (Same ball?)
+            r"\btold [a-z]+ he\b", # Pronoun ambiguity
+            r"\btold [a-z]+ she\b",
+            r"\bwho is (he|she|it|they)\b" # Often implies missing context
+        ]
+        for pat in scope_patterns:
+            if re.search(pat, p):
+                score = min(score, self.ambiguity_threshold)
+                break
 
-        # 3. Keyword Overlap (Weighted by structural importance)
-        # We don't just count words; we check if structural markers exist in both
-        if self._check_comparative(prompt) and self._check_comparative(candidate):
-            score += 2.0
-        if self._check_conditional(prompt) and self._check_conditional(candidate):
-            score += 2.0
-            
-        # 4. NCD as Tiebreaker/Baseline (Normalized Compression Distance)
-        # Only adds small value to break ties or handle unstructured text
-        s_joint = f"{prompt} {candidate}"
-        len_p = len(zlib.compress(prompt.encode()))
-        len_c = len(zlib.compress(candidate.encode()))
-        len_joint = len(zlib.compress(s_joint.encode()))
-        
-        # NCD formula: (L(xy) - min(L(x), L(y))) / max(L(x), L(y))
-        # Lower NCD is better. We invert it for scoring.
-        denom = max(len_p, len_c)
-        if denom == 0:
-            ncd = 1.0
-        else:
-            ncd = (len_joint - min(len_p, len_c)) / denom
-        
-        # Convert NCD to a small positive score contribution (0 to 1 range approx)
-        ncd_score = (1.0 - ncd) * 0.5 
-        score += ncd_score
+        # 3. False Dichotomy ("Either A or B" without exhaustiveness)
+        if re.search(r"\beither .+ or .+\b", p) and not re.search(r"\bboth\b", p):
+            score = min(score, self.ambiguity_threshold)
+
+        # 4. Subjectivity without criteria ("Best", "Favorite" without data)
+        subjective_words = ["best", "worst", "favorite", "beautiful", "ugly"]
+        if any(w in p for w in subjective_words):
+            if "data" not in p and "table" not in p and "list" not in p:
+                score = min(score, self.ambiguity_threshold)
 
         return score
 
-    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+    def _parse_structure(self, prompt: str, candidate: str) -> float:
         """
-        Evaluates candidates using structural parsing and mechanism-based scoring.
-        Returns ranked list.
+        Compositional Front-End: Extracts logical structure and checks consistency.
+        Returns a score component (0.0 - 1.0).
         """
-        scored_candidates = []
+        p_low = prompt.lower()
+        c_low = candidate.lower()
+        score = 0.0
+        matches = 0
         
-        # Calculate raw structural scores
-        raw_scores = []
-        for cand in candidates:
-            raw_scores.append(self._structural_score(prompt, cand))
+        # A. Negation Consistency
+        negations = ["not", "no", "never", "none", "cannot", "impossible"]
+        prompt_has_neg = any(n in p_low for n in negations)
+        cand_has_neg = any(n in c_low for n in negations)
         
-        # Normalize scores to ensure stability (Mechanism Design: Proper Scoring Rule)
-        # Shift to positive domain for softmax-like behavior if needed, but here we just rank
-        max_score = max(raw_scores) if raw_scores else 0
-        min_score = min(raw_scores) if raw_scores else 0
-        range_score = (max_score - min_score) if (max_score - min_score) != 0 else 1.0
+        if prompt_has_neg == cand_has_neg:
+            score += 0.4
+            matches += 1
+        else:
+            # Strong penalty for negation mismatch
+            score -= 0.5
+
+        # B. Numeric Evaluation (Constructive Computation)
+        # Extract numbers from prompt and candidate
+        p_nums = re.findall(r"\d+\.?\d*", p_low)
+        c_nums = re.findall(r"\d+\.?\d*", c_low)
         
-        for i, cand in enumerate(candidates):
-            # Normalize to 0-1 range roughly, preserving order
-            normalized_val = (raw_scores[i] - min_score) / range_score
-            # Apply a sigmoid-like scaling to emphasize top performers (incentive compatibility)
-            # This penalizes mid-tier answers that don't commit to a clear structural match
-            final_score = 1.0 / (1.0 + math.exp(-3.0 * (normalized_val - 0.5)))
+        if p_nums:
+            try:
+                # Simple heuristic: If prompt has numbers, candidate should likely reflect them or result
+                if c_nums:
+                    # Check if candidate number is a result of simple ops on prompt numbers?
+                    # Too complex for generic, just check presence/relevance
+                    score += 0.4
+                    matches += 1
+                else:
+                    # Prompt has numbers, candidate doesn't -> likely wrong unless "zero" or text
+                    if "zero" not in c_low and "none" not in c_low:
+                        score -= 0.2
+            except:
+                pass
+
+        # C. Logical Connectives (If/Then, Because)
+        if ("if" in p_low or "because" in p_low or "therefore" in p_low):
+            if ("if" in c_low or "because" in c_low or "therefore" in c_low or "thus" in c_low):
+                score += 0.2
+                matches += 1
+        
+        # Normalize to 0-1 range roughly
+        return max(0.0, min(1.0, 0.5 + score))
+
+    def _compute_entropy_prior(self, candidate: str) -> float:
+        """
+        Maximum Entropy Prior Layer.
+        Calculates a simplicity score. Shorter, less redundant candidates get higher prior probability.
+        P(program) ~ exp(-lambda * complexity)
+        """
+        length = len(candidate)
+        # Penalize excessive length (complexity)
+        # Base penalty grows with length, capped
+        complexity_penalty = min(0.5, length * 0.002)
+        
+        # Repetition penalty (low entropy in string itself often means low info content or error)
+        unique_ratio = len(set(candidate)) / max(1, len(candidate))
+        
+        # Score: High unique ratio and short length = Good
+        prior_score = (1.0 - complexity_penalty) * (0.5 + 0.5 * unique_ratio)
+        return prior_score
+
+    def _vcg_mechanism_score(self, prompt: str, candidate: str, structural_score: float, prior_score: float) -> float:
+        """
+        Mechanism Design Incentive Module (VCG-inspired).
+        Payoff = Utility (Structural Match) - Cost (Complexity/Entropy violation)
+        
+        We simulate the "auction" by treating the structural match as the 'social welfare' 
+        and the complexity as the 'bid cost'. 
+        Truthful reporting (high score only if both structure and simplicity align) is the dominant strategy.
+        """
+        # Utility: How well does it fit the logic? (Structural Score)
+        utility = structural_score
+        
+        # Cost: Complexity penalty derived from MaxEnt prior
+        # If prior is low (complex), cost is high
+        cost = (1.0 - prior_score) * self.entropy_weight
+        
+        # VCG Payoff: Utility - Cost
+        # We scale this to ensure it remains in a reasonable range for ranking
+        payoff = utility - cost
+        
+        # Bonus for exact keyword overlap in logical operators (Reinforcing truthfulness)
+        common_logical = set(['true', 'false', 'yes', 'no', 'if', 'then', 'else'])
+        p_words = set(prompt.lower().split())
+        c_words = set(candidate.lower().split())
+        overlap = len(p_words.intersection(c_words))
+        if overlap > 0:
+            payoff += min(0.1, overlap * 0.02)
             
-            scored_candidates.append({
+        return payoff
+
+    def _calculate_ncd(self, s1: str, s2: str) -> float:
+        """Normalized Compression Distance using zlib."""
+        s1_b = s1.encode('utf-8')
+        s2_b = s2.encode('utf-8')
+        len_s1 = len(zlib.compress(s1_b))
+        len_s2 = len(zlib.compress(s2_b))
+        len_s1_s2 = len(zlib.compress(s1_b + s2_b))
+        
+        if max(len_s1, len_s2) == 0:
+            return 0.0
+        return (len_s1_s2 - min(len_s1, len_s2)) / max(len_s1, len_s2)
+
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        results = []
+        
+        # Pre-check meta-confidence for the whole prompt
+        meta_cap = self._meta_confidence(prompt)
+        
+        for cand in candidates:
+            # 1. Structural Parsing (Compositional Front-End)
+            struct_score = self._parse_structure(prompt, cand)
+            
+            # 2. MaxEnt Prior (Simplicity)
+            prior_score = self._compute_entropy_prior(cand)
+            
+            # 3. Mechanism Design Scoring
+            raw_score = self._vcg_mechanism_score(prompt, cand, struct_score, prior_score)
+            
+            # 4. NCD Tiebreaker (Max 15% influence)
+            # Only used if structural signals are weak or tied
+            ncd_val = self._calculate_ncd(prompt, cand)
+            # Convert distance to similarity (1 - ncd), weighted lightly
+            ncd_bonus = (1.0 - ncd_val) * 0.15
+            
+            final_score = raw_score + ncd_bonus
+            
+            # Apply Meta-Confidence Cap (Epistemic Honesty)
+            # If the prompt is ambiguous, we cap the maximum possible score/confidence
+            if meta_cap < 0.5:
+                # Dampen scores significantly for ambiguous prompts
+                final_score = min(final_score, meta_cap + 0.1) 
+
+            results.append({
                 "candidate": cand,
                 "score": final_score,
-                "reasoning": f"Structural alignment score: {raw_scores[i]:.2f}"
+                "reasoning": f"Structural:{struct_score:.2f}, Prior:{prior_score:.2f}, MetaCap:{meta_cap:.2f}"
             })
         
-        # Sort descending by score
-        scored_candidates.sort(key=lambda x: x["score"], reverse=True)
-        return scored_candidates
+        # Rank by score descending
+        results.sort(key=lambda x: x["score"], reverse=True)
+        return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
         Returns confidence 0-1.
-        Uses Maximum Entropy principle: 
-        If the system is uncertain (high entropy in local evaluation), confidence drops.
-        If the structural signal is strong (low entropy), confidence rises.
+        Strictly capped by _meta_confidence for ambiguous/unanswerable questions.
         """
-        # Evaluate the specific answer against others (simulated by comparing to itself and a dummy)
-        # In a real multi-agent system, this would aggregate reports. 
-        # Here we approximate by checking the robustness of the structural match.
+        # 1. Check Meta-Confidence (The Honesty Filter)
+        meta_cap = self._meta_confidence(prompt)
         
-        base_score = self._structural_score(prompt, answer)
+        # 2. Evaluate the specific candidate
+        struct_score = self._parse_structure(prompt, answer)
+        prior_score = self._compute_entropy_prior(answer)
+        raw_score = self._vcg_mechanism_score(prompt, answer, struct_score, prior_score)
         
-        # Introduce a perturbation to estimate sensitivity (Entropy proxy)
-        # If small changes in input (simulated by score magnitude) cause large swings, entropy is high
-        # We use the magnitude of the base_score as a proxy for 'energy' in the system.
-        # High positive score = Low Entropy (Ordered, certain)
-        # Near zero or negative = High Entropy (Disordered, uncertain)
+        # 3. Combine
+        # Base confidence on structural match, heavily penalized if meta-cap is low
+        base_conf = raw_score
         
-        # Map score to confidence using a saturating function
-        # Range of _structural_score is roughly -20 to +10 based on penalties/rewards
-        # We want -10 -> 0.0, 0 -> 0.5, +10 -> 1.0
-        
-        confidence = 1.0 / (1.0 + math.exp(-0.4 * base_score))
-        
-        # Clamp
-        return max(0.0, min(1.0, confidence))
+        # If meta analysis says "This is a trap", confidence cannot exceed the cap
+        if meta_cap < 0.5:
+            conf = min(base_conf, meta_cap)
+        else:
+            # If not a trap, cap high confidence unless computation was definitive
+            # We never give > 0.9 unless it's a perfect structural match
+            if struct_score < 0.9:
+                conf = min(base_conf, 0.85)
+            else:
+                conf = min(base_conf, self.high_conf_cap)
+                
+        return max(0.0, min(1.0, conf))

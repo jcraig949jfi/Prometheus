@@ -362,4 +362,120 @@ def run_trap_battery(tool, timeout_per_trap: float = 5.0) -> dict:
     if adversarial_acc is not None:
         result["adversarial_accuracy"] = adversarial_acc
         result["adversarial_n"] = adversarial_n
+
+    # Difficulty-weighted score (Tier 2 design)
+    weighted = compute_weighted_score(tool_results["trap_results"], traps)
+    if weighted is not None:
+        result["weighted_score"] = weighted
+
     return result
+
+
+# ---------------------------------------------------------------------------
+# Difficulty-Weighted Scoring (Tier 2)
+# ---------------------------------------------------------------------------
+# Categories classified by best-existing-tool accuracy on 2026-03-29:
+#   Easy (>80%): weight 0.3 — regex tools ace these
+#   Medium (40-80%): weight 0.3 — partial regex coverage
+#   Hard (<40%): weight 0.4 — require computation, not regex
+
+CATEGORY_DIFFICULTY = {
+    # === Easy (>80% for best regex tool) ===
+    "validity_vs_truth": "easy", "vacuous_truth": "easy", "survivorship_bias": "easy",
+    "sunk_cost": "easy", "subject_object": "easy", "second_order_belief": "easy",
+    "regression_to_mean": "easy", "presupposition": "easy",
+    "percentage_change_asymmetry": "easy", "numeric_stated_premise": "easy",
+    "numeric_comparison": "easy", "denying_antecedent": "easy",
+    "containment": "easy", "conditional_probability_asymmetry": "easy",
+    "composition_fallacy": "easy", "all_but_n": "easy",
+    "affirming_consequent": "easy", "tom_group_knowledge": "easy",
+    "scope_ambiguity": "easy", "pronoun_ambiguity": "easy",
+    "transitivity": "easy", "causal_necessary_sufficient_extended": "easy",
+    "intention_vs_outcome": "easy", "tom_second_order_belief": "easy",
+    "post_hoc": "easy", "order_of_operations": "easy",
+    "necessary_vs_sufficient": "easy", "fencepost": "easy",
+    "direction_composition": "easy",
+    # === Medium (40-80% for best regex tool) ===
+    "temporal_causal_ordering": "medium", "quantifier_inversion": "medium",
+    "parallel_vs_sequential": "medium", "modus_tollens": "medium",
+    "knowledge_attribution": "medium", "false_dichotomy": "medium",
+    "empty_set": "medium", "demorgan": "medium", "chained_conditional": "medium",
+    "inclusion_exclusion": "medium", "garden_path": "medium",
+    "modular_arithmetic": "medium", "irrelevant_premise": "medium",
+    "expected_value": "medium", "double_negation": "medium",
+    "temporal_ordering": "medium", "self_referential_consistency": "medium",
+    "rate_inverse_proportion": "medium", "premise_contradiction": "medium",
+    "base_rate_neglect": "medium", "negation_scope": "medium",
+    "multi_hop_deduction": "medium", "liar_detection": "medium",
+    "left_right_reversal": "medium", "information_sufficiency": "medium",
+    "false_belief_task": "medium", "causal_chain_length": "medium",
+    "affirming_consequent_numeric": "medium", "framing_effect": "medium",
+    "compositional_logic_arithmetic": "medium",
+    "correlation_not_causation": "medium",
+    "compositional_nested_tom_logic": "medium",
+    "conjunction_fallacy": "medium", "temporal_concurrent_events": "medium",
+    "argument_strength": "medium",
+    # === Hard (<40% for best regex tool) ===
+    "temporal_frequency_coincidence": "hard", "subset_inversion": "hard",
+    "confidence_calibration": "hard", "causal_simpson_paradox": "hard",
+    "temporal_scheduling_conflict": "hard", "temporal_rate_of_change": "hard",
+    "temporal_duration_across_midnight": "hard",
+    "compositional_depth_scaling": "hard",
+    "compositional_temporal_causal": "hard", "tom_intention_reading": "hard",
+    "compositional_logic_tom": "hard", "tom_mistaken_belief_chain": "hard",
+    "temporal_sequence_reconstruction": "hard", "causal_confounding": "hard",
+    "causal_common_cause": "hard", "tom_information_asymmetry": "hard",
+    "temporal_age_reasoning": "hard", "tom_perspective_shift": "hard",
+    "compositional_causal_statistical": "hard",
+    "tom_strategic_deception": "hard",
+    "compositional_arithmetic_temporal": "hard",
+    "temporal_relative_day": "hard",
+    "compositional_multi_hop_with_distractor": "hard",
+    "causal_intervention": "hard", "causal_counterfactual": "hard",
+    # === All Tier 2 categories are Hard by definition ===
+    "stateful_register_machine": "hard", "epistemic_belief_tracking": "hard",
+    "constraint_satisfaction": "hard", "recursive_evaluation": "hard",
+    "counterfactual_dependency": "hard", "multi_step_arithmetic_carried": "hard",
+    "bayesian_update": "hard", "information_sufficiency_t2": "hard",
+    "defeasible_reasoning": "hard", "logical_consistency_checking": "hard",
+    "temporal_interval_algebra": "hard", "stable_model_finding": "hard",
+    "conditional_graph_traversal": "hard", "rule_application_order": "hard",
+    "compositional_instruction_following": "hard",
+    "referent_tracking_anaphora": "hard", "closed_world_negation": "hard",
+    "argument_structure_analysis": "hard",
+    "implicit_constraint_inference": "hard",
+}
+
+DIFFICULTY_WEIGHTS = {"easy": 0.3, "medium": 0.3, "hard": 0.4}
+
+
+def compute_weighted_score(trap_results, traps):
+    """Compute difficulty-weighted accuracy.
+
+    Returns weighted score or None if categories can't be classified.
+    """
+    from collections import defaultdict
+
+    # Group results by difficulty tier
+    tier_correct = defaultdict(int)
+    tier_total = defaultdict(int)
+
+    for result, trap in zip(trap_results, traps):
+        cat = trap.get("category", "")
+        difficulty = CATEGORY_DIFFICULTY.get(cat, "medium")  # default medium for unknown
+        tier_total[difficulty] += 1
+        if result.get("is_correct"):
+            tier_correct[difficulty] += 1
+
+    if not tier_total:
+        return None
+
+    weighted = 0.0
+    total_weight = 0.0
+    for tier, weight in DIFFICULTY_WEIGHTS.items():
+        if tier_total[tier] > 0:
+            acc = tier_correct[tier] / tier_total[tier]
+            weighted += weight * acc
+            total_weight += weight
+
+    return round(weighted / total_weight, 4) if total_weight > 0 else None

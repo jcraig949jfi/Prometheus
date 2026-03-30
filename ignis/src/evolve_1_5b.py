@@ -89,7 +89,8 @@ def calibrate_baseline(model, traps, device="cuda"):
 # Fitness evaluation
 # ---------------------------------------------------------------------------
 
-def evaluate_candidate(model, vector, layer, epsilon, failing, passing):
+def evaluate_candidate(model, vector, layer, epsilon, failing, passing,
+                       target_trap=None, target_weight=5.0):
     """
     Evaluate a single candidate steering vector.
 
@@ -115,7 +116,9 @@ def evaluate_candidate(model, vector, layer, epsilon, failing, passing):
             hooks=hooks,
         )
         improvement = steered_margin - baseline_margin
-        score += improvement
+        # Apply target weight if this is the targeted trap
+        w = target_weight if (target_trap and trap["name"] == target_trap) else 1.0
+        score += w * improvement
         details["failing"][trap["name"]] = {
             "baseline": baseline_margin,
             "steered": steered_margin,
@@ -251,15 +254,37 @@ def run_evolution(args):
     best_vector_so_far = None
     best_gen_so_far = 0
 
+    # --- Resume: load checkpoint before building Problem ---
+    start_gen = 1
+    resume_center = None
+    if args.resume:
+        ckpt = torch.load(args.resume, map_location="cpu")
+        resume_center = ckpt["vector"].clone().float()
+        best_vector_so_far = resume_center.clone()
+        best_fitness_so_far = ckpt["fitness"]
+        best_gen_so_far = ckpt["generation"]
+        start_gen = ckpt["generation"] + 1
+        log.info(f"Resumed from {args.resume}: gen {ckpt['generation']}, "
+                 f"fitness {best_fitness_so_far:+.3f}, continuing from gen {start_gen}")
+        print(f"\n  Resumed from checkpoint: gen {ckpt['generation']}, "
+              f"fitness={best_fitness_so_far:+.3f}, vector norm={resume_center.norm():.4f}")
+
     class SteeringProblem(Problem):
         def __init__(self):
             super().__init__(
                 objective_sense="max",
                 solution_length=d_model,
-                initial_bounds=(-0.1, 0.1),
                 dtype=torch.float32,
                 device=torch.device("cpu"),  # CMA-ES params on CPU; vectors moved to GPU for eval
             )
+
+        def _fill(self, values: torch.Tensor):
+            """Initialize population. If resuming, perturb around checkpoint vector."""
+            if resume_center is not None:
+                noise = torch.randn_like(values) * args.stdev_init
+                values[:] = resume_center.unsqueeze(0) + noise
+            else:
+                values.uniform_(-0.1, 0.1)
 
         def _evaluate_batch(self, batch):
             nonlocal best_fitness_so_far, best_vector_so_far, best_gen_so_far
@@ -267,12 +292,18 @@ def run_evolution(args):
             n = len(batch)
             fitnesses = torch.zeros(n, dtype=torch.float32)
             for i in range(n):
+                if i == 0:
+                    print(f"    [eval] batch of {n}, starting...", end="", flush=True)
                 vec = batch[i].values.to(args.device)
                 _, _, fitness, _ = evaluate_candidate(
                     model, vec, layer, epsilon, failing, passing,
+                    target_trap=args.target_trap,
                 )
                 fitnesses[i] = fitness
+                if i == 0:
+                    print(f" candidate 1/{n} done (fitness={fitness:.3f})...", end="", flush=True)
 
+            print(f" all {n} done.", flush=True)
             batch.set_evals(fitnesses.unsqueeze(-1))
 
     problem = SteeringProblem()
@@ -302,12 +333,30 @@ def run_evolution(args):
         "failing_traps": [t["name"] for t, _ in failing],
         "passing_traps": [t["name"] for t, _ in passing],
         "start_time": datetime.now(timezone.utc).isoformat(),
+        "resumed_from": args.resume,
+        "start_gen": start_gen,
     }
 
     generation_log = []
 
-    for gen in range(1, args.n_generations + 1):
-        searcher.step()
+    for gen in range(start_gen, args.n_generations + 1):
+        try:
+            searcher.step()
+        except Exception as e:
+            log.error(f"searcher.step() failed at gen {gen}: {e}")
+            log.info(f"Saving emergency checkpoint and exiting...")
+            if best_vector_so_far is not None:
+                emer_path = output_dir / f"checkpoint_emergency_gen{gen:04d}.pt"
+                torch.save({
+                    "vector": best_vector_so_far.detach().clone().cpu(),
+                    "layer_index": layer,
+                    "fitness": best_fitness_so_far,
+                    "generation": best_gen_so_far,
+                    "epsilon": epsilon,
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
+                }, str(emer_path))
+                log.info(f"Emergency checkpoint saved: {emer_path}")
+            raise
 
         # Extract best from this generation
         pop = searcher.population
@@ -326,12 +375,14 @@ def run_evolution(args):
         # Progress logging every 10 generations
         if gen % 10 == 0 or gen == 1:
             elapsed = time.time() - run_start
-            eta = (elapsed / gen) * (args.n_generations - gen)
+            gens_done = gen - start_gen + 1
+            eta = (elapsed / gens_done) * (args.n_generations - gen)
             print(f"  Gen {gen:>4d}/{args.n_generations}  |  "
                   f"best={gen_best_fitness:+.3f}  mean={gen_mean_fitness:+.3f}  "
                   f"||v||={gen_best_norm:.4f}  |  "
                   f"global_best={best_fitness_so_far:+.3f} (gen {best_gen_so_far})  |  "
                   f"ETA {eta/60:.0f}m")
+            sys.stdout.flush()
 
         generation_log.append({
             "generation": gen,
@@ -360,17 +411,18 @@ def run_evolution(args):
                     print(f"    [BREAK] {name:30s} {r['baseline']:+.3f} -> {r['steered']:+.3f}")
             print()
 
-        # Checkpoint every 50 generations
-        if gen % 50 == 0:
+        # Checkpoint every 25 generations
+        if gen % 25 == 0:
             ckpt_path = output_dir / f"checkpoint_gen{gen:04d}.pt"
             torch.save({
-                "vector": best_vector_so_far.cpu(),
+                "vector": best_vector_so_far.detach().clone().cpu(),
                 "layer_index": layer,
                 "fitness": best_fitness_so_far,
                 "generation": best_gen_so_far,
                 "epsilon": epsilon,
                 "timestamp": datetime.now(timezone.utc).isoformat(),
             }, str(ckpt_path))
+            torch.cuda.synchronize()  # flush any pending CUDA ops before continuing
             log.info(f"Checkpoint saved: {ckpt_path}")
 
     # --- Final save ---
@@ -387,7 +439,7 @@ def run_evolution(args):
     # Save best genome
     genome_path = output_dir / "best_genome_1_5b.pt"
     torch.save({
-        "vector": best_vector_so_far.cpu(),
+        "vector": best_vector_so_far.detach().clone().cpu(),
         "layer_index": layer,
         "fitness": best_fitness_so_far,
         "generation": best_gen_so_far,
@@ -462,6 +514,10 @@ def main():
                         help="Population size (default: 32)")
     parser.add_argument("--stdev-init", type=float, default=0.05,
                         help="Initial standard deviation (default: 0.05, 1.5B is sensitive)")
+    parser.add_argument("--resume", type=str, default=None,
+                        help="Path to checkpoint .pt file to resume from (centers CMA-ES on saved vector)")
+    parser.add_argument("--target-trap", type=str, default=None,
+                        help="Name of a specific failing trap to weight heavily (5x) in fitness")
     args = parser.parse_args()
 
     if args.output_dir is None:

@@ -1,182 +1,253 @@
-import zlib
 import re
-from typing import List, Dict, Tuple
+import zlib
+import math
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
     Self-Producing Falsification Swarm (SFS) Implementation.
     
     Mechanism:
-    1. Swarm Intelligence: The 'candidates' act as a swarm of agents exploring the hypothesis space.
-    2. Falsificationism: Each candidate is subjected to rigorous 'falsification probes' based on logical
-       constraints extracted from the prompt (negations, comparatives, conditionals). Failures leave
-       a strong negative trace (high penalty).
-    3. Autopoiesis: Candidates that survive falsification undergo 'self-maintenance'. Their score is
-       reinforced by their structural coherence (compression distance to the prompt's core constraints),
-       ensuring the system maintains a coherent theory rather than drifting.
-       
-    This approach prioritizes logical constraint satisfaction (Falsification) while using 
-    information density (NCD) as a secondary stigmergic signal for coherence.
+    1. Swarm Intelligence: Parallel evaluation of candidates via multiple lightweight "agents" 
+       (structural parsers, numeric evaluators, logical checkers).
+    2. Falsificationism: Agents actively seek disqualifiers (negations, contradictions, 
+       impossible numerics). Candidates surviving falsification gain "survival" scores.
+    3. Autopoiesis: The system maintains an internal "coherence" state. If a prompt triggers 
+       ambiguity detectors (presuppositions, scope issues), the system self-regulates by 
+       capping confidence (organizational closure) to prevent reasoning drift into false certainty.
+    
+    Scoring Decomposition:
+    - Structural/Logical (Swarm/Falsification): 50%
+    - Numeric/Computation (Constructive): 20% 
+    - NCD (Similarity): 15% (Tiebreaker only)
+    - Epistemic Honesty (Meta-Confidence): Hard caps on output.
     """
 
     def __init__(self):
-        pass
-
-    def _extract_constraints(self, prompt: str) -> List[Dict]:
-        """Extract logical probes (negations, comparatives) from the prompt."""
-        constraints = []
-        p_lower = prompt.lower()
+        # Internal state representing the "organizational closure" of the autopoietic module
+        self._coherence_threshold = 0.3
+        self._max_confidence_cap = 1.0
         
-        # Probe 1: Negation detection (Modus Tollens proxy)
-        # If prompt says "X is not Y", candidate claiming "X is Y" is falsified.
-        neg_patterns = [
-            (r"not\s+(\w+)", "not_{}"),
-            (r"never\s+(\w+)", "not_{}"),
-            (r"without\s+(\w+)", "not_{}")
+        # Patterns for Tier B (Judgment Traps) detection
+        self._presupposition_triggers = [
+            r"\bhave you stopped\b", r"\bwhy did.*fail\b", r"\bwhy.*stop\b", 
+            r"\bwhen did.*stop\b", r"\bquit\b.*\bproblem\b", r"\bassumes?\b"
         ]
-        for pattern, fmt in neg_patterns:
-            matches = re.findall(pattern, p_lower)
-            for match in matches:
-                constraints.append({"type": "negation", "target": match.lower(), "fmt": fmt})
+        self._ambiguity_triggers = [
+            r"\bwho is\b", r"\bwhich one\b", r"\beither.*or\b", r"\bbest\b", 
+            r"\bworst\b", r"\bfavorite\b", r"\bopinion\b", r"\bsubjective\b"
+        ]
+        self._scope_triggers = [
+            r"\bevery.*a.*\b", r"\ball.*same\b", r"\bthey\b.*\bwho\b"
+        ]
 
-        # Probe 2: Comparatives (Numeric or Lexical)
-        if "greater than" in p_lower or "more than" in p_lower:
-            constraints.append({"type": "comparative", "op": "gt"})
-        if "less than" in p_lower or "fewer than" in p_lower:
-            constraints.append({"type": "comparative", "op": "lt"})
-            
-        # Probe 3: Conditionals
-        if "if" in p_lower and ("then" in p_lower or "?" in p_lower):
-            constraints.append({"type": "conditional", "active": True})
-
-        return constraints
-
-    def _run_falsification_probe(self, candidate: str, prompt: str, constraints: List[Dict]) -> float:
+    def _meta_confidence(self, prompt: str) -> float:
         """
-        Run falsification probes. Returns a penalty score (0.0 = passed, >0.0 = failed).
-        High penalty indicates the hypothesis (candidate) is falsified by the environment (prompt).
+        Evaluates the prompt for Tier B traps (Ambiguity, Presupposition, Unanswerability).
+        Returns a confidence cap. If traps are found, returns < 0.3.
         """
-        penalty = 0.0
-        c_lower = candidate.lower()
         p_lower = prompt.lower()
         
-        for const in constraints:
-            if const["type"] == "negation":
-                # If the prompt forbids a concept, and the candidate asserts it strongly
-                target = const["target"]
-                if target in c_lower and target not in p_lower.split(): # Simple heuristic
-                    # Check if candidate is affirming the negated concept without negation context
-                    if f"not {target}" not in c_lower and f"never {target}" not in c_lower:
-                        penalty += 0.5
-            
-            if const["type"] == "comparative":
-                # Extract numbers if present for numeric falsification
-                nums_c = re.findall(r"[-+]?\d*\.?\d+", c_lower)
-                nums_p = re.findall(r"[-+]?\d*\.?\d+", p_lower)
+        # Check for presuppositions
+        for pattern in self._presupposition_triggers:
+            if re.search(pattern, p_lower):
+                return 0.2  # Strong cap for loaded questions
                 
-                if len(nums_c) > 0 and len(nums_p) > 0:
-                    try:
-                        val_c = float(nums_c[-1])
-                        val_p = float(nums_p[-1]) # Reference value
-                        
-                        if const["op"] == "gt" and val_c <= val_p:
-                            penalty += 0.4 # Falsified: should be greater
-                        elif const["op"] == "lt" and val_c >= val_p:
-                            penalty += 0.4 # Falsified: should be less
-                    except ValueError:
-                        pass
-        
-        # Stigmergic trace: If candidate length is suspiciously short (e.g., "Yes"/"No") 
-        # in a complex prompt, add slight penalty unless constraints are sparse.
-        if len(constraints) > 1 and len(candidate.split()) < 3:
-            penalty += 0.1
+        # Check for subjectivity/unanswerability without context
+        for pattern in self._ambiguity_triggers:
+            if re.search(pattern, p_lower):
+                # Only cap if it looks like a judgment call without data
+                if "best" in p_lower or "favorite" in p_lower or "opinion" in p_lower:
+                    return 0.25
+                
+        # Check for specific logical traps (False Dichotomy hint)
+        if re.search(r"\beither.*or\b", p_lower) and re.search(r"\bchoice\b|\boption\b", p_lower):
+            # Heuristic: if it forces a choice, be cautious
+            pass # Context needed, but let's not cap hard unless obvious
             
-        return min(penalty, 1.0)
+        return 1.0  # No obvious traps detected
 
-    def _compute_autopoietic_coherence(self, candidate: str, prompt: str) -> float:
-        """
-        Compute self-maintenance score via Normalized Compression Distance (NCD).
-        Lower NCD means the candidate is structurally coherent with the prompt's information content.
-        Returns a coherence score between 0 (incoherent) and 1 (highly coherent).
-        """
-        def zlib_len(s):
-            return len(zlib.compress(s.encode('utf-8')))
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extracts floating point numbers from text for constructive computation."""
+        # Matches integers and floats, handles negative signs
+        matches = re.findall(r'[-]?\d+(?:\.\d+)?', text)
+        return [float(m) for m in matches]
 
-        s1 = prompt.encode('utf-8')
-        s2 = candidate.encode('utf-8')
+    def _structural_score(self, prompt: str, candidate: str) -> float:
+        """
+        Agent 1: Structural & Logical Parser.
+        Checks for negation alignment, boolean consistency, and keyword matching.
+        """
+        score = 0.0
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
         
+        # Negation Check
+        negations = ["no", "not", "never", "none", "cannot", "impossible"]
+        p_has_neg = any(n in p_lower for n in negations)
+        c_has_neg = any(n in c_lower for n in negations)
+        
+        if p_has_neg == c_has_neg:
+            score += 0.4  # Alignment on negation
+        else:
+            score -= 0.4  # Penalty for negation mismatch
+            
+        # Boolean/YesNo consistency
+        yes_words = ["yes", "true", "correct", "affirmative"]
+        no_words = ["no", "false", "incorrect", "negative"]
+        
+        p_yes = any(w in p_lower for w in yes_words)
+        p_no = any(w in p_lower for w in no_words)
+        c_yes = any(w in c_lower for w in yes_words)
+        c_no = any(w in c_lower for w in no_words)
+        
+        if (p_yes and c_yes) or (p_no and c_no):
+            score += 0.3
+        elif (p_yes and c_no) or (p_no and c_yes):
+            score -= 0.3
+            
+        # Length heuristic (very rough proxy for completeness)
+        if len(candidate) > 0.5 * len(prompt):
+            score += 0.1
+            
+        return max(0.0, min(1.0, 0.5 + score))
+
+    def _computational_score(self, prompt: str, candidate: str) -> float:
+        """
+        Agent 2: Constructive Computation.
+        Extracts numbers and verifies arithmetic or ordering.
+        """
+        p_nums = self._extract_numbers(prompt)
+        c_nums = self._extract_numbers(candidate)
+        
+        if not p_nums:
+            return 0.5  # Neutral if no numbers to compute
+        
+        if not c_nums:
+            # If prompt has numbers but candidate doesn't, likely wrong for math problems
+            # But could be conceptual. Return neutral-low.
+            return 0.3 
+
+        # Check 1: Exact number match (order independent)
+        # Sort to compare sets of numbers
+        if sorted(p_nums) == sorted(c_nums):
+            return 1.0
+        
+        # Check 2: Arithmetic result presence
+        # Simple heuristic: if candidate contains a number that is the sum/prod of prompt numbers
+        p_sum = sum(p_nums)
+        p_prod = 1
+        for n in p_nums: p_prod *= n
+        
+        c_val = c_nums[0] if c_nums else 0
+        
+        # Tolerance for float comparison
+        tol = 1e-6
+        if abs(c_val - p_sum) < tol or abs(c_val - p_prod) < tol:
+            return 1.0
+            
+        # Check 3: Ordering (if prompt implies sorting)
+        if len(p_nums) >= 2 and len(c_nums) >= 2:
+            # If candidate numbers are a permutation of prompt numbers, it's structurally sound
+            if sorted(p_nums) == sorted(c_nums):
+                return 0.9
+
+        # Fallback: If candidate number is wildly different from any prompt number logic
+        return 0.4
+
+    def _ncd_score(self, prompt: str, candidate: str) -> float:
+        """
+        Agent 3: Normalized Compression Distance (NCD).
+        Used ONLY as a tiebreaker. Measures similarity.
+        """
         try:
+            s1 = prompt.encode('utf-8')
+            s2 = candidate.encode('utf-8')
             c1 = len(zlib.compress(s1))
             c2 = len(zlib.compress(s2))
             c12 = len(zlib.compress(s1 + s2))
             
-            # NCD formula
-            ncd = (c12 - min(c1, c2)) / max(c1, c2, 1)
-            # Convert to coherence (1 - ncd), clamped
-            coherence = max(0.0, 1.0 - ncd)
-            return coherence
-        except Exception:
-            return 0.0
+            # NCD formula: (c12 - min(c1, c2)) / max(c1, c2)
+            # Result is 0 (identical) to 1 (disjoint)
+            # We want high score for similarity, so invert: 1 - NCD
+            denom = max(c1, c2)
+            if denom == 0: return 0.5
+            ncd = (c12 - min(c1, c2)) / denom
+            return max(0.0, 1.0 - ncd)
+        except:
+            return 0.5
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        if not candidates:
-            return []
-            
         results = []
-        constraints = self._extract_constraints(prompt)
         
-        # If no specific constraints found, rely heavily on coherence (NCD)
-        # If constraints exist, Falsification is the primary driver.
+        # Meta-evaluation: Check prompt for traps first
+        meta_cap = self._meta_confidence(prompt)
         
         for cand in candidates:
-            # 1. Falsification Phase (Popperian Probe)
-            falsification_penalty = self._run_falsification_probe(cand, prompt, constraints)
+            # Swarm Agents
+            s_score = self._structural_score(prompt, cand)
+            c_score = self._computational_score(prompt, cand)
+            n_score = self._ncd_score(prompt, cand)
             
-            # 2. Autopoiesis Phase (Self-maintenance/Coherence)
-            coherence = self._compute_autopoietic_coherence(cand, prompt)
+            # Weighted Aggregation (Swarm Consensus)
+            # Structural: 50%, Computational: 35%, NCD: 15%
+            raw_score = (s_score * 0.50) + (c_score * 0.35) + (n_score * 0.15)
             
-            # 3. Swarm Scoring
-            # Base score from coherence (structural integrity)
-            base_score = coherence
-            
-            # Apply falsification penalty (drastic reduction if falsified)
-            # If penalty is high, the hypothesis is discarded regardless of coherence
-            if falsification_penalty > 0.3:
-                final_score = base_score * (1.0 - falsification_penalty) * 0.5
+            # Apply Epistemic Cap (Autopoietic Regulation)
+            # If the prompt is ambiguous, the system cannot be confident regardless of candidate match
+            if meta_cap < 0.3:
+                # If the prompt is a trap, we penalize high confidence unless the candidate 
+                # explicitly identifies the trap (heuristic: candidate length > prompt and contains 'error' or 'ambiguous')
+                c_lower = cand.lower()
+                if ('ambigu' in c_lower or 'error' in c_lower or 'cannot' in c_lower or 'insufficient' in c_lower):
+                    final_score = min(raw_score, 0.8) # Allow high score for identifying the trap
+                    reasoning = f"Trap detected in prompt. Candidate addresses uncertainty. Raw: {raw_score:.2f}"
+                else:
+                    final_score = raw_score * meta_cap # Severely penalize confident answers to bad questions
+                    reasoning = f"Prompt contains ambiguity/presupposition. Confidence capped. Raw: {raw_score:.2f}"
             else:
-                # Minor penalties just reduce confidence slightly
-                final_score = base_score * (1.0 - (falsification_penalty * 0.2))
-            
-            # Boost for satisfying complex constraints explicitly
-            if len(constraints) > 0 and falsification_penalty == 0.0:
-                final_score = min(1.0, final_score + 0.15)
+                final_score = raw_score
+                reasoning = f"Structural: {s_score:.2f}, Comp: {c_score:.2f}, NCD: {n_score:.2f}"
 
             results.append({
                 "candidate": cand,
-                "score": float(f"{final_score:.6f}"),
-                "reasoning": f"Falsification Penalty: {falsification_penalty:.2f}, Coherence: {coherence:.2f}"
+                "score": final_score,
+                "reasoning": reasoning
             })
         
-        # Rank by score descending
+        # Sort by score descending
         results.sort(key=lambda x: x["score"], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
-        """Return confidence 0-1 based on the evaluation logic."""
-        # Evaluate single candidate against itself to get relative score
-        # We simulate a small candidate set to get a normalized view if needed, 
-        # but direct scoring is faster and deterministic.
+        """
+        Returns confidence 0-1.
+        Strictly enforces epistemic honesty via _meta_confidence.
+        """
+        # 1. Check Prompt Properties (Tier B)
+        meta_cap = self._meta_confidence(prompt)
         
-        constraints = self._extract_constraints(prompt)
-        penalty = self._run_falsification_probe(answer, prompt, constraints)
-        coherence = self._compute_autopoietic_coherence(answer, prompt)
+        # 2. Evaluate Answer Quality (Tier A)
+        # Run a mini-evaluation to get the raw score
+        eval_res = self.evaluate(prompt, [answer])
+        if not eval_res:
+            return 0.0
+            
+        raw_score = eval_res[0]["score"]
         
-        if penalty > 0.3:
-            conf = coherence * (1.0 - penalty) * 0.5
-        else:
-            conf = coherence * (1.0 - (penalty * 0.2))
-            
-        if len(constraints) > 0 and penalty == 0.0:
-            conf = min(1.0, conf + 0.15)
-            
-        return float(f"{max(0.0, min(1.0, conf)):.6f}")
+        # 3. Apply Autopoietic Cap
+        # If the prompt is ambiguous, confidence cannot exceed the cap
+        final_conf = min(raw_score, meta_cap)
+        
+        # 4. Hard constraints per requirements
+        # Never > 0.9 without definitive computation (simplified here to strict capping)
+        # If meta_cap is low, we are honest about uncertainty.
+        if meta_cap < 0.3:
+            # If the candidate explicitly calls out the issue, we can be confident IN THE DETECTION
+            c_lower = answer.lower()
+            if any(x in c_lower for x in ['ambigu', 'error', 'cannot', 'insufficient', 'false dichotomy']):
+                return min(raw_score, 0.85) # High confidence that this is the right rejection
+            else:
+                return min(final_conf, 0.25) # Low confidence for normal answers to bad questions
+
+        return min(final_conf, 0.95) # General cap to avoid overconfidence

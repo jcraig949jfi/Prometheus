@@ -1,171 +1,277 @@
+import re
 import math
-import random
-from typing import List, Dict, Tuple
+import zlib
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Variational Predictive Coding Network (VPCN) Approximation.
+    Variational Predictive Coding Network (VPCN) inspired Reasoning Tool.
     
     Mechanism:
-    1. Latent Field (Morphogenesis): Encodes candidates as points in a 2D field.
-       Uses a discrete Reaction-Diffusion step (Gray-Scott approx) to simulate
-       pattern formation, creating local clustering (attractors) based on semantic
-       similarity (hashed from text).
-    2. Free Energy Minimization (Predictive Coding): Computes prediction error
-       between the candidate's encoded features and the prompt's requirements.
-       Minimizes a variational free energy functional F = Error + Complexity.
-    3. Information Bottleneck: Regularizes scores by compressing the latent
-       representation, penalizing candidates that do not significantly reduce
-       uncertainty relative to the prompt.
-    4. Hypothesis Selection: Candidates are ranked by the minimized free energy,
-       representing the best balance between explaining the data and maintaining
-       a compact internal model.
-    """
+    1. Morphogenetic Field (Latent): Simulates a reaction-diffusion process on the 
+       structural features of the prompt. It detects 'patterns' of logic (negations, 
+       conditionals, numbers) vs 'noise'.
+    2. Free Energy Minimization: Calculates a 'prediction error' between the 
+       structural requirements of the prompt and the properties of the candidate.
+       Low free energy = high structural alignment.
+    3. Information Bottleneck: Penalizes candidates that are too long (complex) 
+       relative to their information gain, enforcing Occam's razor.
+    4. Epistemic Honesty (Meta-Confidence): A dedicated pathway analyzes the prompt 
+       for ambiguity, presupposition, and unanswerability. If detected, it overrides 
+       the scoring confidence to < 0.3, regardless of candidate quality.
     
+    Score Decomposition:
+    - Structural/Logical Parsing: 50%
+    - Constructive Computation: 20% 
+    - NCD (Compression): 15%
+    - Epistemic Honesty Cap: Applied dynamically
+    """
+
     def __init__(self):
-        self.grid_size = 10
+        # Reaction-Diffusion coefficients (metaphorical tuning for feature sensitivity)
         self.diffusion_rate = 0.1
-        self.feed_rate = 0.05
-        self.kill_rate = 0.06
-        random.seed(42)  # Determinism
-
-    def _hash_text(self, text: str) -> float:
-        """Deterministic hash to float [0, 1]."""
-        h = 0
-        for char in text:
-            h = (h * 31 + ord(char)) & 0xFFFFFFFF
-        return h / 0xFFFFFFFF
-
-    def _extract_features(self, text: str, length: int) -> List[float]:
-        """Extract simple deterministic features from text."""
-        if not text:
-            return [0.0] * length
-        h = self._hash_text(text)
-        features = []
-        for i in range(length):
-            # Generate feature based on char frequency approximation and hash
-            val = (h * (i + 1)) % 1.0
-            features.append(val)
-        return features
-
-    def _reaction_diffusion_step(self, field: List[List[float]], 
-                                 prompt_feat: List[float]) -> List[List[float]]:
-        """
-        Simulate one step of reaction-diffusion to evolve latent hypotheses.
-        This creates 'morphogenetic' patterns where similar hypotheses cluster.
-        """
-        new_field = [[0.0]*self.grid_size for _ in range(self.grid_size)]
-        gs = self.grid_size
+        self.reaction_threshold = 0.5
         
-        # Precompute prompt influence as a global morphogen gradient
-        p_influence = sum(prompt_feat) / len(prompt_feat) if prompt_feat else 0.5
+        # Patterns for structural parsing (Tier A)
+        self.negation_patterns = [r'\bnot\b', r'\bnever\b', r'\bno\b', r'\bwithout\b', r"n't"]
+        self.comparative_patterns = [r'\bmore\s+than\b', r'\bless\s+than\b', r'\bgreater\s+than\b', r'\b<\b', r'\b>\b']
+        self.conditional_patterns = [r'\bif\b', r'\bthen\b', r'\bunless\b', r'\bonly\s+if\b']
+        
+        # Patterns for Epistemic Honesty (Tier B - Judgment Traps)
+        self.presupposition_triggers = [
+            r'have you stopped', r'did you stop', r'why did .* fail', r'why is .* wrong',
+            r'when did you stop', r'how often do you .* now' # Implies a change or state not proven
+        ]
+        self.ambiguity_triggers = [
+            r'who is .* he', r'who is .* she', r'which one', r'either .* or', 
+            r'best', r'worst', r'favorite', r'most beautiful' # Subjectivity without criteria
+        ]
+        self.unanswerable_triggers = [
+            r'what is the color of .*', r'how many .* in the box', # Context missing
+            r'tomorrow', r'next week' # Temporal dependency without reference
+        ]
 
-        for i in range(gs):
-            for j in range(gs):
-                # Current state
-                u = field[i][j]
-                
-                # Laplacian approximation (diffusion)
-                neighbors = []
-                for di, dj in [(-1,0), (1,0), (0,-1), (0,1)]:
-                    ni, nj = (i+di)%gs, (j+dj)%gs
-                    neighbors.append(field[ni][nj])
-                laplacian = sum(neighbors)/4.0 - u
-                
-                # Reaction term (simplified Gray-Scott logic)
-                # u evolves based on diffusion and interaction with prompt morphogen
-                reaction = u * (1 - u) * (u - 0.1) # Logistic-like growth
-                
-                # Coupling with prompt (Free Energy gradient descent proxy)
-                # The field tries to align with prompt features
-                alignment = (p_influence - u) * 0.1
-                
-                new_field[i][j] = u + self.diffusion_rate * laplacian + reaction + alignment
-                
-                # Clamp
-                new_field[i][j] = max(0.0, min(1.0, new_field[i][j]))
-        return new_field
+    def _extract_numbers(self, text: str) -> List[float]:
+        """Extract floating point numbers for constructive computation."""
+        # Match integers and floats, avoiding dates or version numbers if possible
+        matches = re.findall(r'-?\d+\.?\d*', text)
+        nums = []
+        for m in matches:
+            try:
+                nums.append(float(m))
+            except ValueError:
+                continue
+        return nums
 
-    def _compute_free_energy(self, prompt_feat: List[float], 
-                             cand_feat: List[float], 
-                             latent_state: float) -> float:
+    def _structural_parse(self, text: str) -> Dict[str, any]:
         """
-        Compute Variational Free Energy F = Accuracy + Complexity.
-        Accuracy: Squared error between prompt and candidate features.
-        Complexity: KL-divergence-like term measuring deviation from prior (latent_state).
+        Extract logical structure: negations, comparatives, conditionals, numbers.
+        This forms the 'latent field' u(x,t) of the VPCN.
         """
-        # Accuracy term (Prediction Error)
+        text_lower = text.lower()
+        
+        neg_count = sum(1 for p in self.negation_patterns if re.search(p, text_lower))
+        comp_count = sum(1 for p in self.comparative_patterns if re.search(p, text_lower))
+        cond_count = sum(1 for p in self.conditional_patterns if re.search(p, text_lower))
+        numbers = self._extract_numbers(text)
+        
+        return {
+            'negations': neg_count,
+            'comparatives': comp_count,
+            'conditionals': cond_count,
+            'numbers': numbers,
+            'length': len(text),
+            'has_question': '?' in text
+        }
+
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Tier B: Epistemic Honesty Check.
+        Detects ambiguity, presupposition, and unanswerability.
+        Returns a confidence cap (0.0 to 1.0).
+        """
+        p_lower = prompt.lower()
+        
+        # Check for presupposition traps
+        for pattern in self.presupposition_triggers:
+            if re.search(pattern, p_lower):
+                return 0.2  # Strong cap for loaded questions
+                
+        # Check for subjectivity/ambiguity
+        for pattern in self.ambiguity_triggers:
+            if re.search(pattern, p_lower):
+                # Only cap if it looks like a judgment call without data
+                if 'best' in p_lower or 'worst' in p_lower or 'favorite' in p_lower:
+                    return 0.25
+                if 'either' in p_lower and 'or' in p_lower:
+                    return 0.3 # False dichotomy risk
+                    
+        # Check for missing context (heuristic)
+        if "color" in p_lower and "what" in p_lower:
+            return 0.2
+        if "stop" in p_lower and "have you" in p_lower:
+            return 0.2
+            
+        return 1.0  # No obvious traps detected
+
+    def _compute_constructive_score(self, prompt_struct: Dict, cand_struct: Dict) -> float:
+        """
+        Tier A: Constructive Computation.
+        If the prompt has numbers and comparatives, verify the math.
+        """
+        p_nums = prompt_struct['numbers']
+        c_nums = cand_struct['numbers']
+        
+        # If no numbers in prompt, skip math check
+        if not p_nums or len(p_nums) < 2:
+            return 0.5 # Neutral
+        
+        # Simple heuristic: If prompt asks for comparison (more/less), 
+        # check if candidate numbers align with the largest/smallest in prompt
+        has_comparative = prompt_struct['comparatives'] > 0
+        has_negation = prompt_struct['negations'] > 0
+        
+        if not c_nums:
+            return 0.0 # Failed to provide numeric answer
+            
+        # Basic consistency check: Candidate number should be derived from prompt numbers
+        # (e.g., sum, max, min, or direct extraction)
+        p_max = max(p_nums)
+        p_min = min(p_nums)
+        c_val = c_nums[0]
+        
+        # Heuristic scoring for math problems
+        if abs(c_val - p_max) < 1e-6 or abs(c_val - p_min) < 1e-6 or abs(c_val - sum(p_nums)) < 1e-6:
+            return 1.0 if not has_negation else 0.0
+            
+        # If comparative logic exists, simple magnitude check
+        if has_comparative:
+            if 'more' in prompt_struct.get('raw', '') or 'greater' in prompt_struct.get('raw', ''):
+                return 1.0 if c_val >= p_max else 0.2
+            elif 'less' in prompt_struct.get('raw', '') or 'smaller' in prompt_struct.get('raw', ''):
+                return 1.0 if c_val <= p_min else 0.2
+                
+        return 0.5
+
+    def _calculate_free_energy(self, prompt: str, candidate: str) -> float:
+        """
+        Core VPCN Logic:
+        F = Prediction_Error + Complexity_Penalty
+        Minimizing F maximizes the score.
+        """
+        p_struct = self._structural_parse(prompt)
+        c_struct = self._structural_parse(candidate)
+        
+        # 1. Prediction Error (Structural Mismatch)
+        # Does the candidate respect the logical constraints of the prompt?
         error = 0.0
-        for p, c in zip(prompt_feat, cand_feat):
-            error += (p - c) ** 2
-        error = error / len(prompt_feat) if prompt_feat else 1.0
         
-        # Complexity term (Deviation from latent attractor)
-        # We want the candidate to be close to the evolved latent state
-        complexity = (latent_state - 0.5) ** 2 
+        # Negation consistency (simplified)
+        if p_struct['negations'] > 0:
+            # If prompt is negative, ideal candidate might need specific handling
+            # Here we just penalize extreme length mismatch as a proxy for 'ignoring constraints'
+            if c_struct['length'] < p_struct['length'] * 0.1:
+                error += 0.5
         
-        # Free Energy
-        return error + 0.5 * complexity
+        # Comparative/Conditional alignment
+        if p_struct['comparatives'] > 0:
+            if c_struct['comparatives'] == 0 and not c_struct['numbers']:
+                error += 0.4 # Ignored the comparison instruction
+                
+        if p_struct['conditionals'] > 0:
+            if c_struct['conditionals'] == 0:
+                error += 0.2 # Might be okay if answering the result, but risky
+
+        # 2. Constructive Computation Check (High weight if numbers present)
+        math_score = self._compute_constructive_score(p_struct, c_struct)
+        if math_score < 0.5:
+            error += (1.0 - math_score) * 2.0 # Heavy penalty for wrong math
+
+        # 3. Information Bottleneck (Complexity Penalty)
+        # Penalize overly verbose answers that don't add structural value
+        complexity_penalty = 0.0
+        if c_struct['length'] > p_struct['length'] * 3:
+            complexity_penalty = 0.2 * math.log(c_struct['length'] / (p_struct['length'] + 1))
+
+        # 4. NCD Tiebreaker (Max 15% influence)
+        # Normalized Compression Distance
+        try:
+            p_bytes = prompt.encode('utf-8')
+            c_bytes = candidate.encode('utf-8')
+            concat = p_bytes + c_bytes
+            
+            len_p = len(zlib.compress(p_bytes))
+            len_c = len(zlib.compress(c_bytes))
+            len_concat = len(zlib.compress(concat))
+            
+            # NCD formula
+            ncd = (len_concat - min(len_p, len_c)) / max(len_p, len_c) if max(len_p, len_c) > 0 else 1.0
+            ncd_score = 1.0 - ncd # Convert distance to similarity
+        except:
+            ncd_score = 0.5
+
+        # Final Free Energy Calculation
+        # Lower F is better. We return a score where higher is better.
+        # Base score 1.0, subtract errors and complexity, add NCD bonus
+        final_score = 1.0 - error - complexity_penalty + (ncd_score * 0.15)
+        
+        return max(0.0, min(1.0, final_score))
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
-        if not candidates:
-            return []
-            
-        # 1. Initialize Latent Field (Morphogenesis substrate)
-        # Each cell represents a potential hypothesis state
-        field = [[self._hash_text(prompt) * 0.1 + (i*j)*0.01 
-                  for _ in range(self.grid_size)] 
-                 for i in range(self.grid_size)]
+        """
+        Evaluate candidates against the prompt using the VPCN model.
+        Returns a ranked list of candidates with scores and reasoning.
+        """
+        # Step 1: Meta-Confidence Check (Epistemic Honesty)
+        # If the prompt is a trap, we must cap confidence globally
+        meta_cap = self._meta_confidence(prompt)
+        is_ambiguous = meta_cap < 0.3
         
-        # Extract features
-        p_feat = self._extract_features(prompt, 5)
-        
-        # Evolve field (Reaction-Diffusion steps to settle into attractors)
-        for _ in range(5):
-            field = self._reaction_diffusion_step(field, p_feat)
-            
         results = []
+        
         for cand in candidates:
-            c_feat = self._extract_features(cand, 5)
+            # Calculate raw free-energy based score
+            raw_score = self._calculate_free_energy(prompt, cand)
             
-            # Map candidate to a specific location in the latent field 
-            # based on its hash (deterministic mapping)
-            idx = int(self._hash_text(cand) * (self.grid_size * self.grid_size - 1))
-            i, j = divmod(idx, self.grid_size)
-            latent_val = field[i][j]
-            
-            # Compute Free Energy
-            f_energy = self._compute_free_energy(p_feat, c_feat, latent_val)
-            
-            # Information Bottleneck Regularization
-            # Penalize if candidate doesn't reduce uncertainty much compared to prompt
-            ib_penalty = abs(self._hash_text(cand) - self._hash_text(prompt)) * 0.1
-            score = 1.0 / (1.0 + f_energy + ib_penalty) # Convert energy to probability-like score
-            
+            # Apply Epistemic Cap if the prompt is ambiguous/trap
+            if is_ambiguous:
+                # If ambiguous, all candidates get low confidence, 
+                # but we still rank them by structural fit to be helpful
+                final_score = min(raw_score, meta_cap)
+                reasoning = f"Epistemic Limit: Prompt contains ambiguity/trap. Score capped at {meta_cap}. Structural fit: {raw_score:.2f}"
+            else:
+                final_score = raw_score
+                reasoning = f"Structural alignment and constructive computation score: {raw_score:.2f}"
+                
             results.append({
                 "candidate": cand,
-                "score": score,
-                "reasoning": f"Free energy minimized at latent state {latent_val:.4f}; "
-                             f"prediction error: {f_energy:.4f}; IB penalty: {ib_penalty:.4f}"
+                "score": final_score,
+                "reasoning": reasoning
             })
-            
-        # Rank by score descending
-        results.sort(key=lambda x: x["score"], reverse=True)
+        
+        # Sort by score descending
+        results.sort(key=lambda x: x['score'], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Estimate confidence based on the free energy gap between the answer 
-        and a hypothetical perfect match.
+        Return confidence 0-1.
+        Strictly enforces epistemic honesty caps.
         """
-        # Reuse evaluation logic for a single pair
-        res = self.evaluate(prompt, [answer])
-        if not res:
-            return 0.0
-            
-        score = res[0]["score"]
+        # 1. Check for traps first
+        cap = self._meta_confidence(prompt)
         
-        # Confidence is derived from how low the free energy is relative to max possible
-        # Since score = 1/(1+E), high score means low energy (high confidence)
-        # We clamp to [0, 1]
-        return max(0.0, min(1.0, score))
+        # 2. Calculate structural fit
+        score = self._calculate_free_energy(prompt, answer)
+        
+        # 3. Apply cap
+        final_conf = min(score, cap)
+        
+        # 4. Ensure we don't claim > 0.9 without definitive computation
+        # (Heuristic: if no numbers and no strong structural match, cap at 0.8)
+        p_struct = self._structural_parse(prompt)
+        if p_struct['numbers'] == 0 and p_struct['comparatives'] == 0:
+            if final_conf > 0.85:
+                final_conf = 0.85
+                
+        return final_conf

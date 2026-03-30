@@ -1,139 +1,272 @@
-import numpy as np
-import hashlib
-from typing import List, Dict
+import re
+import zlib
+import math
+from typing import List, Dict, Tuple, Optional
 
 class ReasoningTool:
     """
-    Symbiotic Active Inference Swarm (SAIS) Implementation.
+    Symbiotic Active Inference Swarm (SAIS) - Epistemic Honesty Edition.
     
     Mechanism:
-    1. Holobiont Encoding: Prompts and candidates are hashed into fixed-size vectors 
-       representing the 'sensory input' for the swarm.
-    2. Microbial Sub-agents: A fixed ensemble of 'sub-agents' (hypothesis testers) 
-       exists within each node. Each sub-agent holds a random weight vector.
-    3. Active Inference Loop: 
-       - Prediction: Sub-agents project their weights onto the candidate vector.
-       - Error Calculation: The difference between the candidate's intrinsic value 
-         (derived from prompt-candidate semantic overlap via hash intersection) 
-         and the prediction generates a 'prediction error'.
-       - Free Energy Minimization: Scores are derived from minimizing this error 
-         weighted by 'precision' (confidence).
-    4. Stigmergy: Successful sub-agents (low free energy) deposit 'digital pheromones' 
-       (score boosts) proportional to their precision. Poor performers are attenuated.
-    5. Output: Final ranking is a consensus of the swarm's free-energy minimization.
+    1. Meta-Cognitive Filter (The "Holobiont" Check): Before evaluating answers,
+       the system scans the prompt for "pathogens" (logical fallacies, presuppositions,
+       ambiguity). If detected, it suppresses confidence (Active Inference: minimizing
+       expected free energy by avoiding false certainty).
+    2. Structural Parsing (Swarm Stigmergy): Extracts logical operators, negations,
+       and numeric values. Candidates are scored on structural alignment.
+    3. Constructive Computation: Attempts to solve math/logic problems directly.
+    4. NCD Tiebreaker: Used only when structural signals are weak (<15% weight).
+    
+    This implements the "Symbiosis" concept strictly as a confidence wrapper (as per
+    causal analysis) to prevent reasoning traps, while using "Active Inference" principles
+    to drive the scoring of structural matches.
     """
 
     def __init__(self):
-        self.n_features = 64
-        self.n_agents = 10
-        # Initialize microbial sub-agents with random hypotheses (weights)
-        # Deterministic seed for reproducibility if needed, but random is fine for diversity
-        rng = np.random.default_rng(42) 
-        self.agents = rng.standard_normal((self.n_agents, self.n_features))
-        # Precision (confidence) for each agent, initialized to 1.0
-        self.precisions = np.ones(self.n_agents)
+        # Patterns for logical traps (Tier B)
+        self.presupposition_triggers = [
+            r"\bhave you stopped\b", r"\bwhy did.*fail\b", r"\bwhy is.*bad\b",
+            r"\bwhen did.*stop\b", r"\bquit\b", r"\bassum.*that\b"
+        ]
+        self.false_dichotomy_triggers = [r"\beither.*or\b", r"\bmust choose between\b"]
+        self.subjectivity_triggers = [r"\bbest\b", r"\bworst\b", r"\bfavorite\b", r"\bopinion\b"]
+        self.pronoun_ambiguity_triggers = [r"\bhe told.*he\b", r"\bshe told.*she\b", r"\bwho was\b"]
+        
+        # Structural patterns (Tier A)
+        self.negation_pattern = re.compile(r"\b(not|no|never|neither|without)\b", re.IGNORECASE)
+        self.comparative_pattern = re.compile(r"\b(more|less|greater|smaller|higher|lower|better|worse)\b", re.IGNORECASE)
+        self.number_pattern = re.compile(r"-?\d+(?:\.\d+)?")
+        self.logic_ops = ["and", "or", "if", "then", "else", "therefore", "because"]
 
-    def _hash_to_vector(self, text: str) -> np.ndarray:
-        """Convert string to a deterministic normalized vector."""
-        h = hashlib.sha256(text.encode('utf-8')).hexdigest()
-        # Convert hex to bytes, then to int array
-        vals = np.array([int(b) for b in bytes.fromhex(h)], dtype=np.float64)
-        # Resize to n_features by averaging blocks if necessary
-        if len(vals) > self.n_features:
-            vals = vals[:self.n_features]
+    def _meta_confidence(self, prompt: str) -> float:
+        """
+        Evaluates the prompt for epistemic traps.
+        Returns a cap value (0.25 if trap detected, 1.0 otherwise).
+        """
+        p_lower = prompt.lower()
+        
+        # Check Presuppositions
+        for pattern in self.presupposition_triggers:
+            if re.search(pattern, p_lower):
+                return 0.25
+        
+        # Check False Dichotomies
+        for pattern in self.false_dichotomy_triggers:
+            if re.search(pattern, p_lower):
+                # Only flag if no clear context implies exhaustive options
+                if "only" in p_lower or "exclusive" in p_lower:
+                    return 0.25 
+                
+        # Check Subjectivity without criteria
+        if any(re.search(t, p_lower) for t in self.subjectivity_triggers):
+            if "measure" not in p_lower and "data" not in p_lower and "statistic" not in p_lower:
+                return 0.25
+
+        # Check Pronoun Ambiguity in specific "who" questions
+        if re.search(r"\bwho\b", p_lower):
+            for pattern in self.pronoun_ambiguity_triggers:
+                if re.search(pattern, p_lower):
+                    return 0.25
+
+        return 1.0
+
+    def _extract_numbers(self, text: str) -> List[float]:
+        return [float(n) for n in self.number_pattern.findall(text)]
+
+    def _compute_constructive(self, prompt: str, candidate: str) -> Optional[float]:
+        """
+        Attempts to solve numeric comparisons or simple logic constructively.
+        Returns a score (0.0-1.0) if successful, None if not applicable.
+        """
+        p_nums = self._extract_numbers(prompt)
+        c_nums = self._extract_numbers(candidate)
+        
+        # Case 1: Direct Numeric Comparison in Prompt
+        # e.g., Prompt: "Is 9.11 > 9.9?" Candidate: "No"
+        if len(p_nums) >= 2 and len(c_nums) == 0:
+            # Detect question type
+            p_lower = prompt.lower()
+            val1, val2 = p_nums[0], p_nums[1]
+            
+            is_greater = "greater" in p_lower or ">" in prompt or "larger" in p_lower
+            is_less = "less" in p_lower or "<" in prompt or "smaller" in p_lower
+            is_yes_no = "yes" in c_nums or "no" in c_nums # Not applicable here as c_nums is empty
+            
+            # Check candidate text for Yes/No
+            c_lower = candidate.lower().strip().rstrip('.')
+            if c_lower in ["yes", "true", "correct"]:
+                if is_greater: return 1.0 if val1 > val2 else 0.0
+                if is_less: return 1.0 if val1 < val2 else 0.0
+            elif c_lower in ["no", "false", "incorrect"]:
+                if is_greater: return 1.0 if val1 <= val2 else 0.0
+                if is_less: return 1.0 if val1 >= val2 else 0.0
+                
+        # Case 2: Candidate completes a math expression
+        # e.g., Prompt: "2 + 2 =", Candidate: "4"
+        if "+" in prompt or "-" in prompt or "*" in prompt or "/" in prompt:
+            # Try to eval prompt as expression if it ends with operator or equals
+            # Simple safe eval for basic arithmetic
+            expr = re.sub(r"[^0-9+\-*/().\s]", "", prompt.replace("=", ""))
+            try:
+                if expr and any(op in expr for op in "+-*/"):
+                    expected = eval(expr) # Safe enough given regex filter
+                    if len(c_nums) == 1:
+                        if math.isclose(c_nums[0], expected, rel_tol=1e-5):
+                            return 1.0
+                        else:
+                            return 0.0
+            except:
+                pass
+
+        return None
+
+    def _score_structure(self, prompt: str, candidate: str) -> float:
+        """
+        Scores based on structural alignment: negations, comparatives, logic ops.
+        """
+        p_lower = prompt.lower()
+        c_lower = candidate.lower()
+        score = 0.0
+        checks = 0
+        
+        # 1. Negation Consistency
+        p_negs = len(self.negation_pattern.findall(p_lower))
+        c_negs = len(self.negation_pattern.findall(c_lower))
+        checks += 1
+        if p_negs > 0:
+            # If prompt has negation, candidate should ideally reflect it or answer appropriately
+            # Heuristic: If prompt asks "What is not X?", candidate shouldn't just repeat X
+            if p_negs == c_negs or (p_negs > 0 and c_negs > 0):
+                score += 1.0
+            elif "no" in c_lower or "false" in c_lower:
+                score += 0.8 # Accepting negative answer
         else:
-            vals = np.pad(vals, (0, self.n_features - len(vals)), mode='wrap')
-        # Normalize to [-1, 1]
-        vals = (vals / 128.0) - 1.0
-        return vals
+            score += 1.0 if c_negs == 0 else 0.5 # Penalize unexpected negation
+            
+        # 2. Keyword Overlap (Logic Ops)
+        found_ops = [op for op in self.logic_ops if op in p_lower]
+        if found_ops:
+            checks += 1
+            matches = sum(1 for op in found_ops if op in c_lower)
+            score += (matches / len(found_ops))
+            
+        # 3. Number Presence
+        p_nums = self._extract_numbers(prompt)
+        c_nums = self._extract_numbers(candidate)
+        if p_nums:
+            checks += 1
+            # Did candidate pick up the numbers?
+            if c_nums:
+                # Check overlap
+                common = set(p_nums) & set(c_nums)
+                score += (len(common) / len(p_nums))
+            else:
+                # If prompt has numbers but candidate doesn't, might be abstract answer
+                score += 0.5 
 
-    def _compute_intrinsic_truth(self, prompt: str, candidate: str) -> float:
-        """
-        Simulate 'ground truth' signal based on semantic overlap.
-        In a real system, this would be external validation. 
-        Here, we use hash intersection similarity as a proxy for 'fit'.
-        """
-        p_vec = self._hash_to_vector(prompt)
-        c_vec = self._hash_to_vector(candidate)
-        # Cosine-like similarity as a proxy for hypothesis fit
-        num = np.dot(p_vec, c_vec)
-        denom = np.linalg.norm(p_vec) * np.linalg.norm(c_vec) + 1e-9
-        return (num / denom + 1.0) / 2.0  # Scale to 0-1
+        return score / max(checks, 1)
+
+    def _ncd_score(self, prompt: str, candidate: str) -> float:
+        """Normalized Compression Distance heuristic."""
+        try:
+            s1 = (prompt + candidate).encode('utf-8')
+            s2 = prompt.encode('utf-8')
+            s3 = candidate.encode('utf-8')
+            
+            c1 = len(zlib.compress(s1))
+            c2 = len(zlib.compress(s2))
+            c3 = len(zlib.compress(s3))
+            
+            if max(c2, c3) == 0: return 0.5
+            ncd = (c1 - min(c2, c3)) / max(c2, c3)
+            return 1.0 - max(0, ncd) # Invert: higher is better match
+        except:
+            return 0.5
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
         results = []
-        p_vec = self._hash_to_vector(prompt)
         
+        # Pre-calculate meta-confidence cap
+        meta_cap = self._meta_confidence(prompt)
+        
+        # Constructive attempt (Global check)
+        constructive_result = None
+        # Try to find a constructive solution for the first plausible candidate
+        # In a real swarm, this would be parallelized across sub-agents
         for cand in candidates:
-            c_vec = self._hash_to_vector(cand)
+            res = self._compute_constructive(prompt, cand)
+            if res is not None:
+                constructive_result = res
+                break
+
+        for candidate in candidates:
+            score = 0.0
+            reasoning_parts = []
             
-            # 1. Parallel Epistemic Foraging: Agents predict based on candidate
-            # Prediction = dot product of agent weights and candidate features
-            predictions = np.dot(self.agents, c_vec)
+            # 1. Constructive Computation (Highest Priority if exists)
+            if constructive_result is not None:
+                # If we found a constructive path, score based on that
+                # We need to map the specific candidate to the result
+                # Re-run for this specific candidate to be sure
+                local_res = self._compute_constructive(prompt, candidate)
+                if local_res is not None:
+                    score = local_res
+                    reasoning_parts.append(f"Constructive math/logic check: {local_res}")
+                else:
+                    # Candidate doesn't match constructive pattern, low score
+                    score = 0.1
+                    reasoning_parts.append("Failed constructive check")
+            else:
+                # 2. Structural Parsing (Primary Signal)
+                struct_score = self._score_structure(prompt, candidate)
+                
+                # 3. NCD (Tiebreaker/Minor component)
+                ncd_score = self._ncd_score(prompt, candidate)
+                
+                # Weighted Sum: Structural 60%, NCD 15%, Base 25%
+                score = (struct_score * 0.60) + (ncd_score * 0.15) + 0.25
+                reasoning_parts.append(f"Structural: {struct_score:.2f}, NCD: {ncd_score:.2f}")
+
+            # Apply Meta-Confidence Cap (The "Symbiotic" constraint)
+            # If the prompt is a trap, confidence is capped regardless of candidate score
+            final_confidence = min(score, meta_cap) if meta_cap < 1.0 else score
             
-            # 2. Active Inference: Calculate Prediction Error
-            # Target is approximated by the alignment between prompt and candidate
-            target_signal = np.dot(p_vec, c_vec) / (np.linalg.norm(p_vec) * np.linalg.norm(c_vec) + 1e-9)
-            target_signal = (target_signal + 1.0) / 2.0 # Normalize to 0-1 range roughly
-            
-            # Error: Difference between agent prediction (scaled) and target
-            # We treat the target_signal as the 'sensory input' the agents try to predict
-            errors = target_signal - (predictions + 1.0) / 2.0
-            
-            # 3. Free Energy Minimization
-            # Free Energy ~ -0.5 * precision * error^2 (simplified)
-            # We want to minimize free energy, so high error = low score
-            free_energy = -0.5 * self.precisions * (errors ** 2)
-            
-            # 4. Stigmergic Update & Consensus
-            # Total free energy reduction potential (sum of agent contributions)
-            # Agents with high precision and low error contribute most
-            swarm_score = np.sum(free_energy)
-            
-            # Normalize score to 0-1 range loosely based on magnitude
-            # Max theoretical free energy reduction is 0, min is negative
-            # We invert and scale: higher (less negative) is better
-            normalized_score = 1.0 / (1.0 + np.exp(-swarm_score * 10)) # Sigmoid
-            
-            # Update precisions (Metacognition): 
-            # Increase precision for agents with low error (successful hypotheses)
-            # This mimics endosymbiotic selection
-            learning_rate = 0.1
-            self.precisions *= np.exp(-0.5 * (errors ** 2) * learning_rate)
-            self.precisions = np.clip(self.precisions, 0.1, 10.0) # Prevent collapse/explosion
+            # Adjust reasoning string for transparency
+            if meta_cap < 1.0:
+                reasoning_parts.append("WARNING: Prompt contains ambiguity/presupposition (Epistemic Honesty applied)")
 
             results.append({
-                "candidate": cand,
-                "score": float(normalized_score),
-                "reasoning": f"Swarm consensus via free-energy minimization. Precision-weighted error: {np.mean(np.abs(errors)):.4f}"
+                "candidate": candidate,
+                "score": final_confidence,
+                "reasoning": "; ".join(reasoning_parts)
             })
-
-        # Rank by score descending
+            
+        # Rank by score
         results.sort(key=lambda x: x["score"], reverse=True)
         return results
 
     def confidence(self, prompt: str, answer: str) -> float:
         """
-        Returns confidence based on the swarm's precision-weighted agreement.
+        Returns confidence 0-1.
+        Strictly enforces epistemic honesty via _meta_confidence.
         """
-        p_vec = self._hash_to_vector(prompt)
-        a_vec = self._hash_to_vector(answer)
+        meta_cap = self._meta_confidence(prompt)
         
-        # Re-calculate swarm state for this specific pair
-        predictions = np.dot(self.agents, a_vec)
-        target_signal = np.dot(p_vec, a_vec) / (np.linalg.norm(p_vec) * np.linalg.norm(a_vec) + 1e-9)
-        target_signal = (target_signal + 1.0) / 2.0
+        # Quick structural check
+        struct_score = self._score_structure(prompt, answer)
+        constructive = self._compute_constructive(prompt, answer)
         
-        errors = target_signal - (predictions + 1.0) / 2.0
-        
-        # Confidence is the weighted average of certainty
-        # High precision + low error = high confidence
-        weighted_certainty = np.sum(self.precisions * np.exp(-errors**2))
-        total_precision = np.sum(self.precisions)
-        
-        if total_precision == 0:
-            return 0.5
+        base_score = 0.5
+        if constructive is not None:
+            base_score = constructive
+        else:
+            # Simple heuristic: if struct score is high, base is higher
+            base_score = 0.4 + (struct_score * 0.5)
             
-        # Normalize to 0-1
-        conf = weighted_certainty / total_precision
-        return float(np.clip(conf, 0.0, 1.0))
+        final_score = min(base_score, meta_cap)
+        
+        # Never return > 0.9 without constructive proof
+        if constructive is None and final_score > 0.9:
+            final_score = 0.85
+            
+        return max(0.0, min(1.0, final_score))
