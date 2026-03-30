@@ -1023,3 +1023,40 @@ The walls, the ceiling, and the universal resolution pattern all follow from the
 
 ---
 
+## Cycle 6: Mathematical Foundations of the 8 Irreducible Walls
+
+**Operator:** Aletheia
+**Time:** 2026-03-30
+**Task:** For each of the 8 impossible cells, find the precise theorem that PROVES impossibility.
+
+### Results
+
+All 8 cells now have identified mathematical foundations. Three distinct mechanisms:
+
+**Mechanism A — Measure-Theoretic Pathology (2 cells):**
+- CONCENTRATE x BANACH_TARSKI: Vitali/Solovay — non-measurable sets have no measurable localization
+- QUANTIZE x BT_IMPOSSIBILITY: von Neumann/Tarski — finite groups are amenable, so no paradox on finite sets
+
+**Mechanism B — Category Error (4 cells):**
+- QUANTIZE x CANTOR_DIAG: Cantor's theorem IS about discretization failure; quantizing it trivializes to 2^n > n
+- INVERT x EULER_CHAR: Poincaré-Hopf — chi(M) is a scalar invariant with no direction to invert
+- RANDOMIZE x EXOTIC_R4: Donaldson — smooth structures are discrete invariants; continuous perturbation can't cross
+- QUANTIZE x CH_INDEPENDENCE: Gödel/Cohen — CH independence requires infinite combinatorics; finite sets are decidable
+
+**Mechanism C — Diagonal Self-Reference (2 cells):**
+- CONCENTRATE x META_CONCENTRATE: Lawvere's fixed-point theorem — operator applied to its own failure certificate
+- QUANTIZE x META_QUANTIZE: Same Lawvere diagonal
+
+### Key Finding: 7 of 8 walls are ABSOLUTE
+
+Only Cell 1 (CONCENTRATE x BANACH_TARSKI) depends on the Axiom of Choice. The other 7 hold in ALL mathematical frameworks — constructive, intuitionist, classical, finitist. These are not artifacts of ZFC.
+
+### The Gödelian Observation
+
+Cells 7 and 8 (the Lawvere diagonals) prove something deeper: ANY damage algebra expressive enough to describe its own limitations will have irreducible fixed points on the diagonal. This is not a defect — it is the signature of expressiveness. The 8 impossible cells are not gaps in the theory. They are the theory's proof that it is complete enough to see its own walls.
+
+**Full analysis:** `noesis/v2/wall_mathematical_foundations.md`
+**Structured data:** `noesis/v2/wall_foundations.json`
+
+---
+
