@@ -95,63 +95,74 @@ con.close()
 # Activation score = geometric mean of weights for required primitives
 # (0 if any required primitive is missing)
 
-ACTIVATION_THRESHOLD = 0.10  # minimum activation to count as "supported"
+ACTIVATION_THRESHOLD = 0.15  # minimum activation to count chain as "supported"
 
 def compute_damage_activation(prim_dict, required_primitives):
     """Compute how strongly a tradition activates a damage operator.
 
-    Uses soft matching: for each required primitive, look for it directly
-    or through semantic relatives. Score = mean of individual matches,
-    NOT requiring all to be present (which is too strict for ethnomathematics
-    since traditions rarely have exotic primitives like TRUNCATE).
+    Uses a hybrid approach:
+    - Direct primitive match: full weight
+    - Semantic relative match: 25% weight (tight enough to discriminate)
+    - ALL required primitives must have some activation (direct or relative)
+    - Score = geometric mean of activations (rewards traditions that have ALL pieces)
     """
     if not required_primitives:
         return 0.0
 
-    # Semantic relatives: if a tradition has one of these, it gets partial
-    # credit for the target primitive.  Based on damage operator decompositions
-    # and structural similarity.
+    # Tightly scoped semantic relatives based on structural decomposition.
+    # Only the closest structural relative, not general similarity.
     SEMANTIC_RELATIVES = {
-        "BREAK_SYMMETRY": ["REDUCE", "DUALIZE", "LIMIT"],
-        "SYMMETRIZE": ["COMPOSE", "EXTEND", "COMPLETE"],
-        "REDUCE": ["BREAK_SYMMETRY", "LIMIT", "LINEARIZE"],
-        "EXTEND": ["COMPOSE", "COMPLETE", "SYMMETRIZE"],
-        "DUALIZE": ["BREAK_SYMMETRY", "MAP", "LINEARIZE"],
-        "STOCHASTICIZE": ["COMPOSE", "EXTEND", "COMPLETE"],
-        "MAP": ["COMPOSE", "LINEARIZE", "REDUCE"],
-        "COMPOSE": ["MAP", "EXTEND", "SYMMETRIZE"],
-        "TRUNCATE": ["REDUCE", "LIMIT", "BREAK_SYMMETRY"],
-        "LINEARIZE": ["MAP", "REDUCE", "DUALIZE"],
-        "LIMIT": ["REDUCE", "TRUNCATE", "BREAK_SYMMETRY"],
-        "COMPLETE": ["EXTEND", "SYMMETRIZE", "COMPOSE"],
+        "BREAK_SYMMETRY": ["REDUCE", "DUALIZE"],
+        "SYMMETRIZE": ["COMPOSE", "COMPLETE"],
+        "REDUCE": ["LIMIT", "BREAK_SYMMETRY"],
+        "EXTEND": ["COMPOSE", "COMPLETE"],
+        "DUALIZE": ["BREAK_SYMMETRY", "LINEARIZE"],
+        "STOCHASTICIZE": ["COMPOSE"],
+        "MAP": ["LINEARIZE", "COMPOSE"],
+        "COMPOSE": ["MAP"],
+        "TRUNCATE": ["REDUCE", "LIMIT"],
+        "LINEARIZE": ["MAP", "REDUCE"],
+        "LIMIT": ["REDUCE"],
+        "COMPLETE": ["EXTEND"],
     }
+
+    RELATIVE_DISCOUNT = 0.25  # relatives contribute at 25%
 
     scores = []
     for p in required_primitives:
         w = prim_dict.get(p, 0.0)
         if w == 0.0:
-            # Check semantic relatives at 40% strength
+            # Check semantic relatives
             relatives = SEMANTIC_RELATIVES.get(p, [])
             for rel in relatives:
                 rw = prim_dict.get(rel, 0.0)
                 if rw > 0:
-                    w = max(w, rw * 0.4)
+                    w = max(w, rw * RELATIVE_DISCOUNT)
         scores.append(w)
 
-    # Use mean (not geometric mean) to allow partial support
-    return np.mean(scores)
+    # Require ALL required primitives to have nonzero activation
+    if any(s == 0.0 for s in scores):
+        return 0.0
+
+    # Geometric mean rewards balanced activation
+    return float(np.prod(scores) ** (1.0 / len(scores)))
 
 
 def compute_chain_support(prim_dict, chain_sequence):
-    """Check if tradition supports a chain (all 3 operators have some activation)."""
+    """Check if tradition supports a chain.
+    All 3 damage operators must be activated, and their geometric mean
+    must exceed the threshold.
+    """
     activations = []
     for op in chain_sequence:
         required = damage_to_primitives.get(op, set())
         act = compute_damage_activation(prim_dict, required)
         activations.append(act)
-    # Chain is supported if average activation exceeds threshold
-    avg_act = np.mean(activations) if activations else 0
-    return avg_act >= ACTIVATION_THRESHOLD, avg_act, activations
+    # Chain supported = all operators activated AND mean exceeds threshold
+    if any(a == 0 for a in activations):
+        return False, 0.0, activations
+    chain_score = float(np.mean(activations))
+    return chain_score >= ACTIVATION_THRESHOLD, chain_score, activations
 
 
 # ── Build chain signature for each tradition ──────────────────────────
