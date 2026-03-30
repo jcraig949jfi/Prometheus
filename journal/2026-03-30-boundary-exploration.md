@@ -498,3 +498,99 @@ These categories ARE the walls of the room. The room is finite, bounded, and now
 
 ---
 
+
+
+## Cycle 15: Archaeological Predictions — Tradition Dimension Deep Probe
+### Timestamp: 2026-03-30T03:42:37.253247
+
+### What I pushed: Structural similarity between ALL (tradition, hub) pairs without existing edges
+
+### Method:
+- Combined similarity = 0.6 * cosine_similarity + 0.4 * jaccard_overlap on primitive vectors
+- Threshold: 0.25
+- Traditions with vectors: 153, Hubs with primitive sequences: 242
+- Pairs checked (no existing edge): 36815
+
+### Results:
+- **Total predictions generated: 1292**
+- Top 30 inserted into discoveries table as `archaeological_prediction`
+- Saved to `noesis/v2/archaeological_predictions.json`
+
+### Top 10 Archaeological Predictions:
+
+**#1** (similarity: 1.0)
+- **Chinese Remainder Algorithm (Procedural Form)** (China, ~300 CE) vs **PHYS_SYMMETRY_CONSTRUCTION**
+- Shared primitives: COMPOSE, SYMMETRIZE
+- Predicted operator: SYMMETRIZE
+- The Chinese Remainder Algorithm (Procedural Form) system from China (~300 CE) likely developed a resolution for 'Construct complex symmetric pattern by composing small symmetric units' because their mathematical practice involved COMPOSE, SYMMETRIZE. The predicted resolution type is SYMMETRIZE based on the tradition's structural signature.
+
+**#2** (similarity: 0.9993)
+- **Jain Combinatorics** (India, ~500 BCE) vs **BINARY_DECOMP_RECOMP**
+- Shared primitives: COMPOSE, REDUCE
+- Predicted operator: COMPOSE
+- The Jain Combinatorics system from India (~500 BCE) likely developed a resolution for 'Decompose into binary components, compose selectively, reduce to result' because their mathematical practice involved COMPOSE, REDUCE. The predicted resolution type is COMPOSE based on the tradition's structural signature.
+
+**#3** (similarity: 0.9821)
+- **Computus Calendar Calculation** (Europe, 800 CE) vs **BINARY_DECOMP_RECOMP**
+- Shared primitives: COMPOSE, REDUCE
+- Predicted operator: COMPOSE
+- The Computus Calendar Calculation system from Europe (800 CE) likely developed a resolution for 'Decompose into binary components, compose selectively, reduce to result' because their mathematical practice involved COMPOSE, REDUCE. The predicted resolution type is COMPOSE based on the tradition's structural signature.
+
+**#4** (similarity: 0.9366)
+- **Sexagesimal Positional System** (Mesopotamia, ~2000 BCE — 100 BCE) vs **CROSS_DOMAIN_DUALITY**
+- Shared primitives: DUALIZE, MAP
+- Predicted operator: TRUNCATE
+- The Sexagesimal Positional System system from Mesopotamia (~2000 BCE — 100 BCE) likely developed a resolution for 'Map between two distinct domains via a structural duality, then operate within the target domain' because their mathematical practice involved DUALIZE, MAP. The predicted resolution type is TRUNCATE based on the tradition's structural signature.
+
+**#5** (similarity: 0.8654)
+- **Pingala Prosody Combinatorics** (India, ~200 BCE) vs **RECURSIVE_SPATIAL_EXTENSION**
+- Shared primitives: COMPOSE, EXTEND
+- Predicted operator: EXTEND
+- The Pingala Prosody Combinatorics system from India (~200 BCE) likely developed a resolution for 'Recursive application of a spatial pattern at multiple scales' because their mathematical practice involved COMPOSE, EXTEND. The predicted resolution type is EXTEND based on the tradition's structural signature.
+
+**#6** (similarity: 0.8644)
+- **Ibn Munim Combinatorics** (Morocco, ~1200 CE) vs **BINARY_DECOMP_RECOMP**
+- Shared primitives: COMPOSE, REDUCE
+- Predicted operator: REDUCE
+- The Ibn Munim Combinatorics system from Morocco (~1200 CE) likely developed a resolution for 'Decompose into binary components, compose selectively, reduce to result' because their mathematical practice involved COMPOSE, REDUCE. The predicted resolution type is REDUCE based on the tradition's structural signature.
+
+**#7** (similarity: 0.8222)
+- **Rod Numeral Signed Arithmetic** (China, ~200 BCE) vs **CROSS_DOMAIN_DUALITY**
+- Shared primitives: DUALIZE, MAP
+- Predicted operator: TRUNCATE
+- The Rod Numeral Signed Arithmetic system from China (~200 BCE) likely developed a resolution for 'Map between two distinct domains via a structural duality, then operate within the target domain' because their mathematical practice involved DUALIZE, MAP. The predicted resolution type is TRUNCATE based on the tradition's structural signature.
+
+**#8** (similarity: 0.8089)
+- **Sexagesimal Reciprocal Tables** (Mesopotamia, ~1800 BCE) vs **CROSS_DOMAIN_DUALITY**
+- Shared primitives: DUALIZE, MAP
+- Predicted operator: TRUNCATE
+- The Sexagesimal Reciprocal Tables system from Mesopotamia (~1800 BCE) likely developed a resolution for 'Map between two distinct domains via a structural duality, then operate within the target domain' because their mathematical practice involved DUALIZE, MAP. The predicted resolution type is TRUNCATE based on the tradition's structural signature.
+
+**#9** (similarity: 0.7863)
+- **Sona Sand Drawings** (Angola, Pre-colonial) vs **PHYS_SYMMETRY_CONSTRUCTION**
+- Shared primitives: COMPOSE, SYMMETRIZE
+- Predicted operator: COMPOSE
+- The Sona Sand Drawings system from Angola (Pre-colonial) likely developed a resolution for 'Construct complex symmetric pattern by composing small symmetric units' because their mathematical practice involved COMPOSE, SYMMETRIZE. The predicted resolution type is COMPOSE based on the tradition's structural signature.
+
+**#10** (similarity: 0.7783)
+- **Reciprocal Table Computation** (Mesopotamia, ~1800 BCE) vs **CROSS_DOMAIN_DUALITY**
+- Shared primitives: DUALIZE, MAP
+- Predicted operator: TRUNCATE
+- The Reciprocal Table Computation system from Mesopotamia (~1800 BCE) likely developed a resolution for 'Map between two distinct domains via a structural duality, then operate within the target domain' because their mathematical practice involved DUALIZE, MAP. The predicted resolution type is TRUNCATE based on the tradition's structural signature.
+
+### Damage operator distribution across predictions:
+- COMPOSE: 758
+- PARTITION: 234
+- TRUNCATE: 200
+- EXTEND: 49
+- REDUCE: 41
+- SYMMETRIZE: 10
+
+### Significance:
+These are TESTABLE claims about mathematical history. Each prediction says:
+"Given the structural signature of this tradition's mathematics, they SHOULD have
+encountered this impossibility in their practice." Verification requires domain-specific
+ethnomathematics scholarship — checking whether the predicted confrontation exists
+in the historical record but hasn't been catalogued in our database.
+
+---
