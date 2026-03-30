@@ -6,20 +6,23 @@ For each ordered pair of damage operators (A, B), determine how they
 interact when composed: SYNERGISTIC, INDEPENDENT, ANTAGONISTIC, or REDUNDANT.
 
 Uses three evidence sources:
-  1. Chains (100): each chain's transformations tag primitive_types.
-     Damage operators map to primitives. Co-occurrence in chains = co-application.
-  2. Operations (1714): primary/secondary primitives show operator pairing at the field level.
-  3. Ethnomathematics (153): enriched primitive vectors show which traditions use which operators.
+  1. Chains (100): transformations link steps with primitive_types.
+     Key insight: if A and B appear on DIFFERENT steps of the same chain,
+     they are sequentially composed (synergistic). If on the SAME step, redundant.
+  2. Operations (1714): primary/secondary primitives show operator pairing.
+  3. Ethnomathematics (153): enriched primitive vectors show tradition-level co-use.
 
-For each pair (A, B):
-  - Count co-occurrence across chains
-  - Measure keyword overlap in transformation descriptions (same vs different sub-problems)
-  - Classify interaction type
+Classification logic:
+  - SYNERGISTIC: A and B frequently co-occur AND act on different steps (sequential composition)
+  - REDUNDANT: A and B act on the same steps (same sub-problem)
+  - ANTAGONISTIC: A and B share primitives but rarely co-occur (mutual exclusion)
+  - INDEPENDENT: A and B neither co-occur nor share structure
 """
 
 import json
 import sys
 import io
+import re
 import itertools
 from collections import defaultdict, Counter
 from pathlib import Path
@@ -31,8 +34,7 @@ import duckdb
 DB_PATH = str(Path(__file__).parent / "noesis_v2.duckdb")
 OUT_PATH = str(Path(__file__).parent / "operator_interaction_results.json")
 
-# ── Map from damage operator to the primitive types that indicate its presence ──
-# Derived from the damage_operators table canonical_form / primitive_form columns.
+# ── Damage operator -> primitive type mapping ──
 OPERATOR_PRIMITIVES = {
     "DISTRIBUTE":   {"SYMMETRIZE"},
     "CONCENTRATE":  {"BREAK_SYMMETRY"},
@@ -41,14 +43,21 @@ OPERATOR_PRIMITIVES = {
     "RANDOMIZE":    {"STOCHASTICIZE"},
     "HIERARCHIZE":  {"DUALIZE", "EXTEND"},
     "PARTITION":    {"BREAK_SYMMETRY", "COMPOSE"},
-    "QUANTIZE":     {"MAP", "REDUCE"},           # MAP + TRUNCATE, but TRUNCATE = REDUCE
+    "QUANTIZE":     {"MAP", "REDUCE"},
     "INVERT":       {"DUALIZE", "MAP"},
 }
 
 OPERATORS = sorted(OPERATOR_PRIMITIVES.keys())
 
+# Semantic groupings for structural analysis
+OPERATOR_FAMILIES = {
+    "symmetry": {"DISTRIBUTE", "CONCENTRATE", "PARTITION"},
+    "scale":    {"EXTEND", "TRUNCATE", "HIERARCHIZE"},
+    "transform":{"QUANTIZE", "INVERT", "RANDOMIZE"},
+}
 
-def detect_operators_in_primitives(prim_set):
+
+def detect_operators(prim_set):
     """Given a set of primitive types, return which damage operators are active."""
     active = set()
     for op, required in OPERATOR_PRIMITIVES.items():
@@ -57,81 +66,102 @@ def detect_operators_in_primitives(prim_set):
     return active
 
 
-def keyword_set(text):
-    """Extract lowercase keyword tokens from a description string."""
-    if not text:
-        return set()
-    import re
-    return set(re.findall(r'[a-z]{3,}', text.lower()))
-
-
 def main():
     con = duckdb.connect(DB_PATH, read_only=True)
 
-    # ── Source 1: Chains ──
-    # For each chain, collect primitive_types from its transformations + descriptions
-    chain_data = con.execute("""
-        SELECT c.chain_id, c.name,
-               LIST(DISTINCT t.primitive_type) AS primitives,
-               LIST(DISTINCT t.ontology_type) AS ontologies,
-               LIST(t.operation_desc) AS descs,
-               LIST(t.structure_preserved) AS preserved,
-               LIST(t.structure_destroyed) AS destroyed
-        FROM chains c
-        JOIN transformations t ON c.chain_id = t.chain_id
-        GROUP BY c.chain_id, c.name
+    # ══════════════════════════════════════════════════════════
+    # SOURCE 1: Per-transformation step analysis in chains
+    # ══════════════════════════════════════════════════════════
+
+    # Get every transformation with its from_step and to_step
+    trans_rows = con.execute("""
+        SELECT t.chain_id, t.from_step, t.to_step,
+               t.primitive_type, t.ontology_type,
+               t.operation_desc, t.structure_preserved, t.structure_destroyed
+        FROM transformations t
     """).fetchall()
 
-    # Build per-chain operator presence and keyword context
-    chain_operators = {}  # chain_id -> set of operators
-    chain_op_keywords = {}  # chain_id -> {operator: keyword_set}
-    chain_names = {}
+    # For each chain: which operators appear at which step transitions?
+    chain_op_steps = defaultdict(lambda: defaultdict(set))  # chain -> op -> set of (from,to)
+    chain_op_descs = defaultdict(lambda: defaultdict(list))  # chain -> op -> descriptions
+    chain_all_ops = defaultdict(set)
 
-    for row in chain_data:
-        cid, name, primitives, ontologies, descs, preserved, destroyed = row
-        chain_names[cid] = name
-        all_prims = set(primitives or []) | set(ontologies or [])
-        ops = detect_operators_in_primitives(all_prims)
-        chain_operators[cid] = ops
+    for cid, fstep, tstep, ptype, otype, desc, pres, dest in trans_rows:
+        prims = {ptype, otype} - {None}
+        ops = detect_operators(prims)
+        step_key = (fstep, tstep)
+        for op in ops:
+            chain_op_steps[cid][op].add(step_key)
+            chain_op_descs[cid][op].append(desc or "")
+            chain_all_ops[cid].add(op)
 
-        # Build keyword context per operator in this chain
-        # Use the descriptions from transformations whose primitives match
-        op_kw = defaultdict(set)
-        # Get per-transformation detail
-        trans = con.execute("""
-            SELECT primitive_type, ontology_type, operation_desc,
-                   structure_preserved, structure_destroyed
-            FROM transformations WHERE chain_id = ?
-        """, [cid]).fetchall()
+    # For each pair (A, B), compute step separation metrics across co-occurring chains
+    pair_step_data = defaultdict(lambda: {
+        "same_step": 0, "diff_step": 0, "a_before_b": 0, "b_before_a": 0,
+        "co_chains": 0, "a_only": 0, "b_only": 0,
+        "co_chain_ids": [],
+    })
 
-        for t_prim, t_onto, t_desc, t_pres, t_dest in trans:
-            t_prims = {t_prim, t_onto} - {None}
-            for op in ops:
-                if OPERATOR_PRIMITIVES[op] & t_prims:
-                    kw = keyword_set(t_desc) | keyword_set(t_pres) | keyword_set(t_dest)
-                    op_kw[op] |= kw
-        chain_op_keywords[cid] = dict(op_kw)
+    for cid, op_map in chain_op_steps.items():
+        active_ops = set(op_map.keys())
+        for opA in OPERATORS:
+            for opB in OPERATORS:
+                if opA == opB:
+                    continue
+                key = (opA, opB)
+                if opA in active_ops and opB in active_ops:
+                    pair_step_data[key]["co_chains"] += 1
+                    pair_step_data[key]["co_chain_ids"].append(cid)
 
-    # ── Source 2: Operations table ──
-    # primary_primitive and secondary_primitive give pairs
+                    steps_a = op_map[opA]
+                    steps_b = op_map[opB]
+
+                    # Check step overlap
+                    shared_steps = steps_a & steps_b
+                    unique_a = steps_a - steps_b
+                    unique_b = steps_b - steps_a
+
+                    if shared_steps:
+                        pair_step_data[key]["same_step"] += len(shared_steps)
+                    if unique_a and unique_b:
+                        pair_step_data[key]["diff_step"] += 1
+
+                    # Check ordering: does A's step come before B's?
+                    # Use step IDs as proxy for order
+                    a_steps_flat = {s for pair in steps_a for s in pair}
+                    b_steps_flat = {s for pair in steps_b for s in pair}
+                    if min(a_steps_flat, default="Z") < min(b_steps_flat, default=""):
+                        pair_step_data[key]["a_before_b"] += 1
+                    elif min(b_steps_flat, default="Z") < min(a_steps_flat, default=""):
+                        pair_step_data[key]["b_before_a"] += 1
+
+                elif opA in active_ops:
+                    pair_step_data[key]["a_only"] += 1
+                elif opB in active_ops:
+                    pair_step_data[key]["b_only"] += 1
+
+    # ══════════════════════════════════════════════════════════
+    # SOURCE 2: Operations table
+    # ══════════════════════════════════════════════════════════
+
     op_rows = con.execute("""
-        SELECT op_id, field, op_name, description, primary_primitive, secondary_primitive
+        SELECT primary_primitive, secondary_primitive, description
         FROM operations
         WHERE secondary_primitive IS NOT NULL AND secondary_primitive != ''
     """).fetchall()
 
-    # Map operations primitives to damage operators
-    ops_cooccur = defaultdict(int)  # (opA, opB) -> count
-    ops_kw_overlap = defaultdict(list)  # (opA, opB) -> list of jaccard scores
-
-    for _, field, op_name, desc, prim1, prim2 in op_rows:
+    ops_cooccur = defaultdict(int)
+    for prim1, prim2, desc in op_rows:
         prims = {prim1, prim2} - {None, ''}
-        active = detect_operators_in_primitives(prims)
+        active = detect_operators(prims)
         if len(active) >= 2:
             for a, b in itertools.permutations(active, 2):
                 ops_cooccur[(a, b)] += 1
 
-    # ── Source 3: Ethnomathematics ──
+    # ══════════════════════════════════════════════════════════
+    # SOURCE 3: Ethnomathematics
+    # ══════════════════════════════════════════════════════════
+
     ethno_rows = con.execute("""
         SELECT system_id, enriched_primitive_vector, candidate_primitives_noesis
         FROM ethnomathematics
@@ -148,86 +178,92 @@ def main():
                     prims |= {s.strip().strip('"').strip("'") for s in items}
                 except:
                     prims |= {s.strip() for s in src.split(',')}
-        active = detect_operators_in_primitives(prims)
+        active = detect_operators(prims)
         if len(active) >= 2:
             for a, b in itertools.permutations(active, 2):
                 ethno_cooccur[(a, b)] += 1
 
-    # ── Build the 9x9 matrix ──
+    # ══════════════════════════════════════════════════════════
+    # BUILD THE 9x9 INTERACTION MATRIX
+    # ══════════════════════════════════════════════════════════
+
     matrix = {}
     pair_details = {}
+    chain_names = dict(con.execute("SELECT chain_id, name FROM chains").fetchall())
 
     for opA in OPERATORS:
         for opB in OPERATORS:
             if opA == opB:
                 continue
 
-            pair = (opA, opB)
-
-            # Count chains with both
-            co_chains = [cid for cid, ops in chain_operators.items()
-                         if opA in ops and opB in ops]
-            n_co = len(co_chains)
-
-            # Count chains with A only, B only
-            a_only = sum(1 for ops in chain_operators.values() if opA in ops and opB not in ops)
-            b_only = sum(1 for ops in chain_operators.values() if opB in ops and opA not in ops)
-
-            # Keyword overlap analysis across co-occurring chains
-            overlaps = []
-            for cid in co_chains:
-                kw_a = chain_op_keywords.get(cid, {}).get(opA, set())
-                kw_b = chain_op_keywords.get(cid, {}).get(opB, set())
-                if kw_a or kw_b:
-                    union = kw_a | kw_b
-                    inter = kw_a & kw_b
-                    jaccard = len(inter) / len(union) if union else 0
-                    overlaps.append(jaccard)
-
-            avg_overlap = sum(overlaps) / len(overlaps) if overlaps else 0
-
-            # Combined co-occurrence score
-            chain_score = n_co
-            ops_score = ops_cooccur.get(pair, 0)
-            ethno_score = ethno_cooccur.get(pair, 0)
-            total_cooccur = chain_score + ops_score + ethno_score
-
-            # ── Classification logic ──
-            # High co-occurrence + low keyword overlap = addressing different sub-problems = SYNERGISTIC
-            # High co-occurrence + high keyword overlap = same sub-problem = REDUNDANT
-            # Low co-occurrence + shared primitives = ANTAGONISTIC (rarely combined)
-            # Low co-occurrence + no primitive overlap = INDEPENDENT
-
+            key = (opA, opB)
+            sd = pair_step_data[key]
             shared_primitives = OPERATOR_PRIMITIVES[opA] & OPERATOR_PRIMITIVES[opB]
 
-            if total_cooccur >= 5:
-                if avg_overlap > 0.4:
+            # Aggregate evidence
+            chain_co = sd["co_chains"]
+            ops_co = ops_cooccur.get(key, 0)
+            ethno_co = ethno_cooccur.get(key, 0)
+            total_co = chain_co + ops_co + ethno_co
+
+            same_step = sd["same_step"]
+            diff_step = sd["diff_step"]
+            a_before_b = sd["a_before_b"]
+
+            # Step separation ratio: fraction of co-occurrences where they're on different steps
+            if same_step + diff_step > 0:
+                separation_ratio = diff_step / (same_step + diff_step)
+            else:
+                separation_ratio = 0.5  # no data, neutral
+
+            # Ordering asymmetry: does A reliably precede B?
+            total_ordered = a_before_b + sd["b_before_a"]
+            if total_ordered > 0:
+                order_ratio = a_before_b / total_ordered  # >0.5 means A tends to precede B
+            else:
+                order_ratio = 0.5
+
+            # ── Classification ──
+            # Synergistic: high co-occurrence + different steps + A precedes B
+            # Redundant: high co-occurrence + same steps (or shared primitives + high same-step)
+            # Antagonistic: shared primitives + low co-occurrence (mutual exclusion)
+            # Independent: low co-occurrence + no shared primitives
+
+            if total_co >= 3:
+                if same_step > diff_step and shared_primitives:
                     classification = "REDUNDANT"
-                    strength = avg_overlap
-                elif avg_overlap > 0.15:
+                    strength = total_co * (1 - separation_ratio)
+                elif separation_ratio >= 0.3 or not shared_primitives:
                     classification = "SYNERGISTIC"
-                    strength = total_cooccur * (1 - avg_overlap)
+                    # Strength weighted by: co-occurrence, separation, ordering
+                    strength = total_co * separation_ratio * (0.5 + 0.5 * order_ratio)
                 else:
-                    classification = "SYNERGISTIC"
-                    strength = total_cooccur
-            elif total_cooccur >= 2:
-                if shared_primitives:
-                    if avg_overlap > 0.3:
-                        classification = "REDUNDANT"
-                        strength = avg_overlap
-                    else:
-                        classification = "SYNERGISTIC"
-                        strength = total_cooccur
-                else:
-                    classification = "INDEPENDENT"
+                    classification = "REDUNDANT"
+                    strength = total_co * (1 - separation_ratio)
+            elif total_co >= 1:
+                if shared_primitives and separation_ratio < 0.3:
+                    classification = "ANTAGONISTIC"
+                    strength = len(shared_primitives) / (total_co + 1)
+                elif shared_primitives:
+                    classification = "REDUNDANT"
                     strength = 0.5
+                else:
+                    classification = "SYNERGISTIC" if diff_step > 0 else "INDEPENDENT"
+                    strength = total_co * 0.5
             else:
                 if shared_primitives:
                     classification = "ANTAGONISTIC"
-                    strength = 1.0 / (total_cooccur + 1)
+                    strength = len(shared_primitives)
                 else:
-                    classification = "INDEPENDENT"
-                    strength = 0.0
+                    # Check if they're in the same family (structurally related but never co-occur)
+                    same_family = any(opA in fam and opB in fam
+                                     for fam in OPERATOR_FAMILIES.values())
+                    if same_family:
+                        classification = "ANTAGONISTIC"
+                        strength = 0.5
+                    else:
+                        classification = "INDEPENDENT"
+                        strength = 0.0
 
             matrix[f"{opA}->{opB}"] = classification
             pair_details[f"{opA}->{opB}"] = {
@@ -235,63 +271,75 @@ def main():
                 "to": opB,
                 "classification": classification,
                 "strength": round(strength, 3),
-                "chain_cooccurrences": chain_score,
-                "ops_cooccurrences": ops_score,
-                "ethno_cooccurrences": ethno_score,
-                "total_cooccurrences": total_cooccur,
-                "avg_keyword_overlap": round(avg_overlap, 3),
+                "chain_cooccurrences": chain_co,
+                "ops_cooccurrences": ops_co,
+                "ethno_cooccurrences": ethno_co,
+                "total_cooccurrences": total_co,
+                "same_step_count": same_step,
+                "diff_step_count": diff_step,
+                "separation_ratio": round(separation_ratio, 3),
+                "a_before_b": a_before_b,
+                "b_before_a": sd["b_before_a"],
+                "order_ratio": round(order_ratio, 3),
                 "shared_primitives": sorted(shared_primitives),
-                "a_only_chains": a_only,
-                "b_only_chains": b_only,
-                "co_chain_names": [chain_names[c] for c in co_chains[:5]],
+                "a_only_chains": sd["a_only"],
+                "b_only_chains": sd["b_only"],
+                "co_chain_names": [chain_names.get(c, c) for c in sd["co_chain_ids"][:5]],
             }
 
-    # ── Analysis ──
-    # Most synergistic pair
-    syn_pairs = [(k, v) for k, v in pair_details.items()
-                 if v["classification"] == "SYNERGISTIC"]
-    syn_pairs.sort(key=lambda x: x[1]["strength"], reverse=True)
+    # ══════════════════════════════════════════════════════════
+    # ANALYSIS
+    # ══════════════════════════════════════════════════════════
 
-    # Most antagonistic pair
-    ant_pairs = [(k, v) for k, v in pair_details.items()
-                 if v["classification"] == "ANTAGONISTIC"]
-    ant_pairs.sort(key=lambda x: x[1]["strength"], reverse=True)
-
-    # Redundant pairs
-    red_pairs = [(k, v) for k, v in pair_details.items()
-                 if v["classification"] == "REDUNDANT"]
-    red_pairs.sort(key=lambda x: x[1]["strength"], reverse=True)
-
-    # Classification distribution
     class_dist = Counter(v["classification"] for v in pair_details.values())
 
+    syn_pairs = sorted(
+        [(k, v) for k, v in pair_details.items() if v["classification"] == "SYNERGISTIC"],
+        key=lambda x: x[1]["strength"], reverse=True
+    )
+    ant_pairs = sorted(
+        [(k, v) for k, v in pair_details.items() if v["classification"] == "ANTAGONISTIC"],
+        key=lambda x: x[1]["strength"], reverse=True
+    )
+    red_pairs = sorted(
+        [(k, v) for k, v in pair_details.items() if v["classification"] == "REDUNDANT"],
+        key=lambda x: x[1]["strength"], reverse=True
+    )
+
     # ── Cycle detection ──
-    # Build directed graph of synergistic edges, find 3-cycles
     syn_graph = defaultdict(set)
     for k, v in pair_details.items():
         if v["classification"] == "SYNERGISTIC":
             syn_graph[v["from"]].add(v["to"])
 
-    cycles_3 = []
+    # Find all unique 3-cycles (normalized)
+    cycles_3 = set()
     for a in OPERATORS:
         for b in syn_graph.get(a, set()):
             for c in syn_graph.get(b, set()):
                 if a in syn_graph.get(c, set()):
-                    cycle = (a, b, c)
-                    # Normalize to avoid duplicates
-                    norm = tuple(sorted([cycle, (b, c, a), (c, a, b)])[0])
-                    if norm not in [tuple(sorted([(x[0],x[1],x[2]),(x[1],x[2],x[0]),(x[2],x[0],x[1])])[0])
-                                    for x in cycles_3]:
-                        cycles_3.append(cycle)
+                    cycle = tuple(sorted([(a,b,c), (b,c,a), (c,a,b)])[0])
+                    cycles_3.add(cycle)
+    cycles_3 = sorted(cycles_3)
 
-    # Also find 2-cycles (mutual synergy)
-    mutual_syn = []
-    for a in OPERATORS:
-        for b in syn_graph.get(a, set()):
-            if a in syn_graph.get(b, set()) and a < b:
-                mutual_syn.append((a, b))
+    # Find 2-cycles (mutual synergy)
+    mutual_syn = sorted([
+        (a, b) for a in OPERATORS for b in syn_graph.get(a, set())
+        if a in syn_graph.get(b, set()) and a < b
+    ])
 
-    # ── Build compact 9x9 matrix for display ──
+    # ── Operator degree analysis ──
+    synergy_out = {op: sum(1 for b in OPERATORS if b != op and
+                           pair_details.get(f"{op}->{b}", {}).get("classification") == "SYNERGISTIC")
+                   for op in OPERATORS}
+    synergy_in = {op: sum(1 for a in OPERATORS if a != op and
+                          pair_details.get(f"{a}->{op}", {}).get("classification") == "SYNERGISTIC")
+                  for op in OPERATORS}
+    antag_out = {op: sum(1 for b in OPERATORS if b != op and
+                         pair_details.get(f"{op}->{b}", {}).get("classification") == "ANTAGONISTIC")
+                 for op in OPERATORS}
+
+    # ── Compact matrix ──
     compact_matrix = {}
     for opA in OPERATORS:
         row = {}
@@ -302,29 +350,38 @@ def main():
                 row[opB] = matrix[f"{opA}->{opB}"]
         compact_matrix[opA] = row
 
-    # ── Synergy degree: which operator enables the most others? ──
-    synergy_out = {op: sum(1 for b in OPERATORS if b != op and
-                           pair_details.get(f"{op}->{b}", {}).get("classification") == "SYNERGISTIC")
-                   for op in OPERATORS}
-    synergy_in = {op: sum(1 for a in OPERATORS if a != op and
-                          pair_details.get(f"{a}->{op}", {}).get("classification") == "SYNERGISTIC")
-                  for op in OPERATORS}
+    # ── Ordering analysis: which operators are "early" vs "late" in chains? ──
+    op_ordering_score = {}
+    for op in OPERATORS:
+        before_count = sum(pair_details.get(f"{op}->{b}", {}).get("a_before_b", 0)
+                          for b in OPERATORS if b != op)
+        after_count = sum(pair_details.get(f"{op}->{b}", {}).get("b_before_a", 0)
+                         for b in OPERATORS if b != op)
+        total = before_count + after_count
+        op_ordering_score[op] = round(before_count / total, 3) if total > 0 else 0.5
 
-    # ── Assemble results ──
+    # ══════════════════════════════════════════════════════════
+    # ASSEMBLE RESULTS
+    # ══════════════════════════════════════════════════════════
+
     results = {
         "metadata": {
             "description": "Operator Interaction Matrix: algebraic structure of 9 damage operators",
+            "method": "Step-level analysis of 100 reasoning chains + 1714 operations + 153 ethno systems",
             "operators": OPERATORS,
-            "total_chains": len(chain_operators),
-            "total_operations": len(op_rows),
+            "total_chains_with_transforms": len(chain_op_steps),
+            "total_operations_with_pairs": len(op_rows),
             "total_ethno_systems": len(ethno_rows),
             "classification_distribution": dict(class_dist),
         },
         "compact_matrix": compact_matrix,
         "findings": {
             "most_synergistic": [
-                {"pair": k, "strength": v["strength"], "cooccurrences": v["total_cooccurrences"],
-                 "keyword_overlap": v["avg_keyword_overlap"]}
+                {"pair": k, "strength": v["strength"],
+                 "cooccurrences": v["total_cooccurrences"],
+                 "separation_ratio": v["separation_ratio"],
+                 "order_ratio": v["order_ratio"],
+                 "example_chains": v["co_chain_names"]}
                 for k, v in syn_pairs[:10]
             ],
             "most_antagonistic": [
@@ -335,12 +392,12 @@ def main():
             ],
             "redundant_pairs": [
                 {"pair": k, "strength": v["strength"],
-                 "keyword_overlap": v["avg_keyword_overlap"]}
+                 "same_step_count": v["same_step_count"],
+                 "shared_primitives": v["shared_primitives"]}
                 for k, v in red_pairs[:10]
             ],
-            "synergistic_cycles_3": [
-                {"cycle": f"{a} -> {b} -> {c} -> {a}",
-                 "operators": [a, b, c]}
+            "synergistic_3_cycles": [
+                {"cycle": f"{a} -> {b} -> {c} -> {a}", "operators": [a, b, c]}
                 for a, b, c in cycles_3
             ],
             "mutual_synergy_pairs": [
@@ -348,78 +405,115 @@ def main():
             ],
             "synergy_out_degree": dict(sorted(synergy_out.items(), key=lambda x: -x[1])),
             "synergy_in_degree": dict(sorted(synergy_in.items(), key=lambda x: -x[1])),
+            "antagonism_out_degree": dict(sorted(antag_out.items(), key=lambda x: -x[1])),
+            "operator_ordering": dict(sorted(op_ordering_score.items(),
+                                             key=lambda x: -x[1])),
         },
         "pair_details": pair_details,
     }
 
-    # ── Interpretive summary ──
+    # ══════════════════════════════════════════════════════════
+    # SUMMARY
+    # ══════════════════════════════════════════════════════════
+
     top_syn = syn_pairs[0] if syn_pairs else None
     top_ant = ant_pairs[0] if ant_pairs else None
-    top_hub = max(synergy_out.items(), key=lambda x: x[1])
+    top_enabler = max(synergy_out.items(), key=lambda x: x[1])
+    top_enabled = max(synergy_in.items(), key=lambda x: x[1])
 
-    summary_lines = [
+    lines = [
         "OPERATOR INTERACTION MATRIX — ALGEBRAIC STRUCTURE OF DAMAGE OPERATORS",
         "=" * 70,
-        f"Analyzed {len(chain_operators)} chains, {len(op_rows)} operations, {len(ethno_rows)} ethno systems",
-        f"Classification distribution: {dict(class_dist)}",
         "",
-        "KEY FINDINGS:",
+        f"Evidence: {len(chain_op_steps)} chains, {len(op_rows)} operations, {len(ethno_rows)} ethno systems",
+        f"Classification: {dict(class_dist)}",
+        "",
     ]
-    if top_syn:
-        summary_lines.append(
-            f"  Most synergistic pair: {top_syn[0]} "
-            f"(strength={top_syn[1]['strength']}, "
-            f"co-occurrences={top_syn[1]['total_cooccurrences']}, "
-            f"keyword overlap={top_syn[1]['avg_keyword_overlap']})"
-        )
-    if top_ant:
-        summary_lines.append(
-            f"  Most antagonistic pair: {top_ant[0]} "
-            f"(shared primitives={top_ant[1]['shared_primitives']})"
-        )
-    summary_lines.append(
-        f"  Highest synergy out-degree: {top_hub[0]} (enables {top_hub[1]} other operators)"
-    )
-    summary_lines.append(f"  Synergistic 3-cycles found: {len(cycles_3)}")
-    summary_lines.append(f"  Mutual synergy pairs: {len(mutual_syn)}")
 
-    if cycles_3:
-        summary_lines.append("")
-        summary_lines.append("SYNERGISTIC CYCLES (A enables B enables C enables A):")
-        for a, b, c in cycles_3[:10]:
-            summary_lines.append(f"  {a} -> {b} -> {c} -> {a}")
-
-    summary_lines.append("")
-    summary_lines.append("9x9 INTERACTION MATRIX (row=FROM, col=TO):")
-    header = f"{'':>15} " + " ".join(f"{op[:6]:>6}" for op in OPERATORS)
-    summary_lines.append(header)
-    abbrev = {"SYNERGISTIC": "SYN", "ANTAGONISTIC": "ANT",
-              "INDEPENDENT": "IND", "REDUNDANT": "RED", "SELF": "---"}
+    # Matrix display
+    lines.append("9x9 INTERACTION MATRIX (row=FROM, col=TO):")
+    abbrev = {"SYNERGISTIC": " SYN", "ANTAGONISTIC": " ANT",
+              "INDEPENDENT": " IND", "REDUNDANT": " RED", "SELF": " ---"}
+    header = f"{'':>14}" + "".join(f"{op[:5]:>5}" for op in OPERATORS)
+    lines.append(header)
     for opA in OPERATORS:
-        row_str = f"{opA:>15} "
+        row_str = f"{opA:>14}"
         for opB in OPERATORS:
             if opA == opB:
-                row_str += f"{'---':>6} "
+                row_str += "  ---"
             else:
                 cls = matrix[f"{opA}->{opB}"]
-                row_str += f"{abbrev[cls]:>6} "
-        summary_lines.append(row_str)
+                row_str += abbrev[cls]
+        lines.append(row_str)
 
-    summary_lines.append("")
-    summary_lines.append("INTERPRETATION:")
-    summary_lines.append("  The damage operators form a partially ordered algebra.")
-    summary_lines.append("  Synergistic pairs = composition is productive (A creates conditions for B).")
-    summary_lines.append("  Antagonistic pairs = composition is destructive (A undoes what B needs).")
-    summary_lines.append("  Cycles = feedback loops in the damage algebra — self-reinforcing patterns.")
+    lines.append("")
+    lines.append("KEY FINDINGS:")
+    if top_syn:
+        lines.append(f"  Most synergistic: {top_syn[0]}")
+        lines.append(f"    strength={top_syn[1]['strength']}, "
+                     f"co-occur={top_syn[1]['total_cooccurrences']}, "
+                     f"step-separation={top_syn[1]['separation_ratio']}, "
+                     f"A-before-B={top_syn[1]['order_ratio']}")
+    if top_ant:
+        lines.append(f"  Most antagonistic: {top_ant[0]}")
+        lines.append(f"    shared primitives={top_ant[1]['shared_primitives']}, "
+                     f"co-occur={top_ant[1]['total_cooccurrences']}")
 
-    results["summary"] = "\n".join(summary_lines)
+    lines.append(f"  Top enabler (highest synergy-out): {top_enabler[0]} "
+                 f"(enables {top_enabler[1]} others)")
+    lines.append(f"  Most enabled (highest synergy-in): {top_enabled[0]} "
+                 f"(enabled by {top_enabled[1]} others)")
+
+    lines.append("")
+    lines.append("OPERATOR ORDERING (early->late in reasoning chains):")
+    for op, score in sorted(op_ordering_score.items(), key=lambda x: -x[1]):
+        bar = "#" * int(score * 20)
+        lines.append(f"  {op:>14}: {score:.3f} {bar}")
+
+    lines.append("")
+    lines.append(f"SYNERGISTIC 3-CYCLES: {len(cycles_3)}")
+    for a, b, c in cycles_3:
+        lines.append(f"  {a} -> {b} -> {c} -> {a}")
+
+    lines.append(f"MUTUAL SYNERGY PAIRS: {len(mutual_syn)}")
+    for a, b in mutual_syn:
+        lines.append(f"  {a} <-> {b}")
+
+    lines.append("")
+    lines.append("STRUCTURAL INTERPRETATION:")
+    lines.append("  The 9 damage operators form a partially ordered algebra with")
+    lines.append(f"  {class_dist.get('SYNERGISTIC', 0)} synergistic, "
+                 f"{class_dist.get('ANTAGONISTIC', 0)} antagonistic, "
+                 f"{class_dist.get('REDUNDANT', 0)} redundant, "
+                 f"{class_dist.get('INDEPENDENT', 0)} independent pairs.")
+
+    # Identify structural patterns
+    if cycles_3:
+        lines.append(f"  {len(cycles_3)} feedback cycles found — self-reinforcing damage patterns.")
+    if mutual_syn:
+        lines.append(f"  {len(mutual_syn)} mutual synergy pairs — bidirectional enabling.")
+
+    # Family analysis
+    lines.append("")
+    lines.append("FAMILY ANALYSIS:")
+    for fname, fops in OPERATOR_FAMILIES.items():
+        intra = []
+        for a in sorted(fops):
+            for b in sorted(fops):
+                if a != b:
+                    cls = matrix.get(f"{a}->{b}", "N/A")
+                    intra.append(cls)
+        dist = Counter(intra)
+        lines.append(f"  {fname}: {dict(dist)}")
+
+    results["summary"] = "\n".join(lines)
 
     # ── Save ──
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(results["summary"])
-    print(f"\nResults saved to {OUT_PATH}")
+    print(f"\nSaved to {OUT_PATH}")
 
     con.close()
     return results
