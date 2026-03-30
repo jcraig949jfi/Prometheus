@@ -61,3 +61,28 @@ These are three distinct structural boundaries of the damage algebra.
 
 ---
 
+## Cycle 3: Direction 2 — Sub-Primitive Decomposition
+
+### What I pushed: Can the 11 primitives be decomposed further?
+### What I found:
+
+**4,726 divergent same-operator pairs** — resolutions tagged with the same operator but completely different mechanisms. The operators have internal structure.
+
+**MAP decomposes into 4 sub-types:**
+- Homomorphism (10 spokes) — structure-preserving
+- Encoding (77) — representation change
+- Transformation (178) — general function application
+- Projection (85) — dimension reduction
+
+**REDUCE decomposes into 4 sub-types:**
+- Quotient (37) — equivalence class collapse
+- Projection (243) — dimension reduction
+- Invariant extraction (84) — computing fixed properties
+- Compression (33) — information reduction
+
+**Boundary finding: SOFT WALL.** The primitives have internal structure but it's finite depth (4 sub-types, not infinite). Decomposition is possible but premature — the 11-primitive basis achieves 61.5% hit rate without splitting. The room extends downward but narrows quickly.
+
+**Recommendation:** Annotate rather than split. Add sub-type tags to spokes (MAP_PRESERVE, MAP_ENCODE, etc.) without changing the primitive basis. This preserves backward compatibility while adding resolution.
+
+---
+
