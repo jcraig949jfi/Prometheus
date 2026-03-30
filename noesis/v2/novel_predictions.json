@@ -1,0 +1,152 @@
+{
+  "assessments": [
+    {
+      "hub_a": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+      "hub_b": "IMPOSSIBILITY_NO_FREE_LUNCH",
+      "domain_a": "social_choice",
+      "domain_b": "optimization",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": null,
+      "reference": "Needs domain expert review"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+      "hub_b": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+      "domain_a": "social_choice",
+      "domain_b": "other",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": false,
+      "reference": ""
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+      "hub_b": "IMPOSSIBILITY_RATIONAL_SQRT2",
+      "domain_a": "social_choice",
+      "domain_b": "other",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": null,
+      "reference": "Needs domain expert review"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_NO_FREE_LUNCH",
+      "hub_b": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+      "domain_a": "optimization",
+      "domain_b": "other",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": null,
+      "reference": "Needs domain expert review"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_NO_FREE_LUNCH",
+      "hub_b": "IMPOSSIBILITY_RATIONAL_SQRT2",
+      "domain_a": "optimization",
+      "domain_b": "other",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": null,
+      "reference": "Needs domain expert review"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_NO_FREE_LUNCH",
+      "hub_b": "SOCIAL_CHOICE_IMPOSSIBILITY",
+      "domain_a": "optimization",
+      "domain_b": "social_choice",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": true,
+      "reference": "Computational social choice (Conitzer, Procaccia)"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+      "hub_b": "SOCIAL_CHOICE_IMPOSSIBILITY",
+      "domain_a": "other",
+      "domain_b": "social_choice",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": null,
+      "reference": "Needs domain expert review"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_RATIONAL_SQRT2",
+      "hub_b": "SOCIAL_CHOICE_IMPOSSIBILITY",
+      "domain_a": "other",
+      "domain_b": "social_choice",
+      "shared_chains": [
+        "Stochastic meta-truncation"
+      ],
+      "known": null,
+      "reference": "Needs domain expert review"
+    },
+    {
+      "hub_a": "HEISENBERG_UNCERTAINTY",
+      "hub_b": "IMPOSSIBILITY_BODE_INTEGRAL_V2",
+      "domain_a": "physics",
+      "domain_b": "signal_control",
+      "shared_chains": [
+        "Adaptive localization"
+      ],
+      "known": true,
+      "reference": "Seron et al., fundamental limitations; Freudenberg-Looze"
+    },
+    {
+      "hub_a": "HEISENBERG_UNCERTAINTY",
+      "hub_b": "IMPOSSIBILITY_GIBBS_PHENOMENON",
+      "domain_a": "physics",
+      "domain_b": "analysis",
+      "shared_chains": [
+        "Adaptive localization"
+      ],
+      "known": true,
+      "reference": "Signal processing: uncertainty principle as dual of Gibbs phenomenon"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_BODE_INTEGRAL_V2",
+      "hub_b": "IMPOSSIBILITY_GIBBS_PHENOMENON",
+      "domain_a": "signal_control",
+      "domain_b": "analysis",
+      "shared_chains": [
+        "Adaptive localization"
+      ],
+      "known": true,
+      "reference": "Hilbert transform connects sensitivity integrals to Fourier convergence"
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED",
+      "hub_b": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+      "domain_a": "signal_control",
+      "domain_b": "geometry",
+      "shared_chains": [
+        "Redistribute then reverse"
+      ],
+      "known": false,
+      "reference": ""
+    },
+    {
+      "hub_a": "IMPOSSIBILITY_GOODHARTS_LAW",
+      "hub_b": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+      "domain_a": "optimization",
+      "domain_b": "quantum",
+      "shared_chains": [
+        "Monte Carlo inversion",
+        "Stochastic meta-truncation"
+      ],
+      "known": false,
+      "reference": ""
+    }
+  ],
+  "known": 4,
+  "novel": 3,
+  "uncertain": 6,
+  "headline": "Goodhart Law <-> No-Cloning Theorem structural isomorphism at depth 3"
+}
