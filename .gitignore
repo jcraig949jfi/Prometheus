@@ -119,13 +119,17 @@ docs/council/
 # Role definitions (machine-local)
 roles/
 
-# Noesis — keep v2 core, ignore large generated data
-noesis/v2/noesis_v2.duckdb
-noesis/v2/noesis_v2.duckdb.wal
-noesis/v2/noesis_v2.duckdb.bak
-noesis/v2/*.npy
-noesis/batch_prompts/*.json
-noesis/batch_prompts_round2/*.json
+# Noesis — UNPUBLISHED RESEARCH (gitignore until ready to publish)
+noesis/
+
+# Docs — UNPUBLISHED (gitignore until ready to publish)
+docs/
+
+# Papers — UNPUBLISHED (gitignore until ready to publish)
+papers/
+
+# Journal — PRIVATE (local only)
+journal/
 
 # Claude config
 .claude/
