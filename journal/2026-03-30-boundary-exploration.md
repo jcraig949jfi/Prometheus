@@ -1320,3 +1320,76 @@ Every impossibility theorem generates entropy (in the information-theoretic sens
 
 ---
 
+
+## AIECS: What Makes It New + Testable Hypotheses + Applications
+
+### WHAT MAKES THIS NEW
+
+This is NOT just:
+- A power plant (static design)
+- A controller (classical feedback)
+- An RL system (just another agent)
+
+It IS: **A system that actively redistributes entropy in real time**
+
+### KEY INNOVATION: Design Paradigm Shift
+
+Traditional systems:
+```
+Design → Fixed → Operate
+```
+
+AIECS:
+```
+Operate → Learn → Reconfigure → Improve
+```
+
+The system doesn't optimize a fixed design. It discovers the design FROM operation.
+Structure is not input — it's output. The entropy routing topology EMERGES from
+optimization under physical constraints.
+
+### TESTABLE HYPOTHESES
+
+**H1:** AI-controlled cascade > static cascade efficiency
+- Test: compare RL policy vs textbook optimal static design under identical conditions
+- Prediction: RL wins under variable demand, ties under constant demand
+- Falsifiable: if static always ties, trajectory optimization adds nothing
+
+**H2:** System learns non-obvious routing patterns
+- Test: inspect learned policy for strategies not in engineering textbooks
+- Prediction: RL discovers temporal entropy buffering (store entropy now, dump later)
+- Falsifiable: if all discovered strategies are already named in the literature
+
+**H3:** Performance improves under variable demand
+- Test: compare RL vs static under constant vs sinusoidal vs random demand
+- Prediction: advantage grows with demand variability
+- Falsifiable: if advantage is constant regardless of demand pattern
+
+**H4 (from damage algebra):** Removing TRUNCATE (domain restriction) causes the largest performance drop
+- Test: ablation study removing each operator-capability independently
+- Prediction: TRUNCATE ablation > all other single-operator ablations
+- Falsifiable: if another operator's ablation causes a larger drop
+
+### HIGH-IMPACT APPLICATIONS
+
+**Energy:**
+- Smart grids: real-time entropy routing across generation, storage, demand
+- Data center cooling: adaptive cooling cascades that route waste heat intelligently
+- Industrial heat recovery: cascade systems that learn which waste streams to capture when
+
+**Compute:**
+- Thermal-aware scheduling: route computational entropy (heat from chips) dynamically
+- Energy-aware AI systems: AI that manages its own entropy footprint during training
+
+**Beyond energy (damage algebra generalization):**
+- Network traffic: entropy routing = congestion management (DISTRIBUTE/CONCENTRATE/PARTITION)
+- Financial risk: entropy routing = portfolio risk allocation (same 9 operators)
+- Supply chain: entropy routing = disruption damage allocation
+
+**The meta-application:**
+Any system that faces an impossibility theorem and must allocate the damage
+in real time is an instance of AIECS. Thermodynamics is the first paper.
+The framework is the research program.
+
+---
+
