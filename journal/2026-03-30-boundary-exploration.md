@@ -118,3 +118,20 @@ The composition axis is open — no structural resistance encountered. But the d
 
 ---
 
+
+---
+
+## Room Map Written
+
+See `noesis/v2/room_map.md` for the full deliverable.
+
+### Summary of boundaries found:
+1. **Wall 1: Non-localizability** (CONCENTRATE, 8 cells, FIRM)
+2. **Wall 2: Invariance** (INVERT, 43 cells, FIRM)
+3. **Wall 3: Discreteness** (QUANTIZE, 39 cells, FIRM)
+4. **Frontier 1: Composition depth** (open, 94.3% unlock at depth 2)
+5. **Frontier 2: Tradition dimension** (open, 153 systems unmapped)
+6. **Soft boundary: Sub-primitives** (MAP/REDUCE decompose 1 level, then bottom out)
+
+### The room is large but not infinite. It has firm walls but no ceiling yet.
+
