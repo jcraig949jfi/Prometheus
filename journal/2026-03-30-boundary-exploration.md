@@ -1227,3 +1227,32 @@ Yes — in control theory journals. The frame "Carnot as a control manifold" wit
 
 ---
 
+
+## AIECS: Ablation Study Design
+
+**"Run ablation studies → prove AI > classical control"**
+
+Each ablation removes one damage operator from the RL agent's toolkit:
+
+| Ablation | Removes | Damage Operator | Tests |
+|----------|---------|-----------------|-------|
+| Static baseline | All adaptation | ALL | Does adaptive control matter? |
+| No temporal shift | Time-based reallocation | PARTITION | Value of trajectory vs instant |
+| No stage switching | Stage prioritization | CONCENTRATE | Value of specialization |
+| No entropy storage | Buffer mechanism | EXTEND | Value of added structure |
+| No variable demand | Environmental variation | (context) | Is adaptivity only useful under variation? |
+| Random policy | Learned strategy | (learning) | Is the policy better than random? |
+| Greedy policy | Trajectory optimization | COMPOSE depth>1 | Is path better than point? |
+| PID/MPC baseline | RL specifically | (method) | Is RL better than classical control? |
+
+**The greedy ablation is the critical test.** If greedy matches RL, the trajectory insight doesn't hold. If RL wins, the "instants vs trajectories" claim is validated experimentally.
+
+**Connection to operator interaction algebra:**
+The ablation study IS the operator interaction matrix applied to one hub.
+Removing PARTITION and measuring the performance drop = computing the
+marginal contribution of PARTITION to the Carnot resolution.
+The damage algebra PREDICTS which ablation should cause the biggest drop
+(TRUNCATE is the universal enabler → removing it should hurt most).
+
+---
+
