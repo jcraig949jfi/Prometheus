@@ -86,3 +86,35 @@ These are three distinct structural boundaries of the damage algebra.
 
 ---
 
+## Cycle 4: Direction 5 — Composition Axis
+
+### What I pushed: Two-operator compositions across the full hub set
+### What I found:
+
+- **137 hubs at 9/9 coverage** — gap fill dramatically expanded complete hubs
+- **No forbidden compositions** — all 81 operator pairs co-occur in 100+ hubs (minimum: QUANTIZE+INVERT at 166)
+- **10 damage operator pairs map to known primitive compositions** (e.g., TRUNCATE→QUANTIZE = renormalization)
+- **Zero explicit depth-2 spokes** in the data — all composition depth is implicit
+- **No wall found** — the room extends in this direction but we lack density at depth 2
+
+### Boundary map update:
+The composition axis is open — no structural resistance encountered. But the data is all at depth 1. Going deeper would require explicitly tagging two-operator resolutions, which is a data collection task, not a structural boundary.
+
+**This is an OPEN FRONTIER, not a wall.**
+
+---
+
+## Cycle 5: Direction 4 — Tradition Dimension (brief probe)
+
+### What I pushed: Can ethnomathematics systems map onto the hub grid?
+### What I found (from existing data):
+
+- 153 ethnomathematical systems exist with primitive vectors
+- Several directly map to hubs: Mayan calendar → CALENDAR_INCOMMENSURABILITY, Pythagorean tuning → FORCED_SYMMETRY_BREAK
+- The 7 named structural patterns (hub-and-spoke) already connect traditions to hubs
+- A 3D tensor (operators × hubs × traditions) is feasible but needs explicit tradition-hub mapping for all 153 systems
+
+### Boundary: NOT YET PROBED at depth. The room extends sideways into cultural mathematics. Need systematic tradition-hub mapping to explore it.
+
+---
+
