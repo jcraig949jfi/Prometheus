@@ -119,11 +119,13 @@ docs/council/
 # Role definitions (machine-local)
 roles/
 
-# Noesis (entire directory — generated data, large)
-noesis/
-
-# Journal (local only)
-journal/
+# Noesis — keep v2 core, ignore large generated data
+noesis/v2/noesis_v2.duckdb
+noesis/v2/noesis_v2.duckdb.wal
+noesis/v2/noesis_v2.duckdb.bak
+noesis/v2/*.npy
+noesis/batch_prompts/*.json
+noesis/batch_prompts_round2/*.json
 
 # Claude config
 .claude/
