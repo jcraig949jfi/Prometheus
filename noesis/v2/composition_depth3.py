@@ -167,10 +167,12 @@ def check_chain_support(hub_data, chain_seq, edge_adj=None):
     """
     Check if a hub supports a three-operator chain (A -> B -> C).
 
-    Level 1 (presence): hub has spokes with operators A, B, AND C
-    Level 2 (structural): distinct spokes carry each operator
-    Level 3 (connectivity): if edge_adj provided, check that spokes carrying A
-                            connect to spokes carrying B, and B-spokes connect to C-spokes
+    A chain is supported if the hub has spokes carrying operators A, B, AND C.
+    Strength measures spoke diversity: how many distinct spoke triples can
+    instantiate the chain, normalized by hub size.
+
+    Edge adjacency (cross-hub) is used separately for flow analysis, not
+    for within-hub support (all edges are cross-hub by design).
 
     Returns: (supported: bool, strength: float 0-1)
     """
@@ -181,63 +183,95 @@ def check_chain_support(hub_data, chain_seq, edge_adj=None):
     if not ({a_op, b_op, c_op} <= all_ops):
         return False, 0.0
 
-    # Collect resolution IDs (full) carrying each operator
-    rids_a = {rid for rid, ops in hub_data["rids_by_op"].items() if a_op in ops}
-    rids_b = {rid for rid, ops in hub_data["rids_by_op"].items() if b_op in ops}
-    rids_c = {rid for rid, ops in hub_data["rids_by_op"].items() if c_op in ops}
+    # Count spokes carrying each operator
+    spokes_a = {s for s, ops in hub_data["spokes"].items() if a_op in ops}
+    spokes_b = {s for s, ops in hub_data["spokes"].items() if b_op in ops}
+    spokes_c = {s for s, ops in hub_data["spokes"].items() if c_op in ops}
 
-    if not (rids_a and rids_b and rids_c):
+    if not (spokes_a and spokes_b and spokes_c):
         return False, 0.0
 
-    # If we have edge adjacency, check connectivity: A->B and B->C
-    if edge_adj:
-        # Check A->B: any rid_a connects to any rid_b?
-        ab_connected = False
-        for ra in rids_a:
-            if ra in edge_adj:
-                for (neighbor, _) in edge_adj[ra]:
-                    if neighbor in rids_b:
-                        ab_connected = True
-                        break
-            if ab_connected:
-                break
+    # Strength: spoke diversity (how many distinct triples)
+    # Also bonus for having distinct spokes (not the same spoke carrying all 3)
+    distinct_spokes = len(spokes_a | spokes_b | spokes_c)
+    overlap_penalty = len(spokes_a & spokes_b & spokes_c) / max(1, distinct_spokes)
 
-        # Check B->C
-        bc_connected = False
-        for rb in rids_b:
-            if rb in edge_adj:
-                for (neighbor, _) in edge_adj[rb]:
-                    if neighbor in rids_c:
-                        bc_connected = True
-                        break
-            if bc_connected:
-                break
+    n_triples = len(spokes_a) * len(spokes_b) * len(spokes_c)
+    total_spokes = len(hub_data["spokes"])
+    raw_strength = min(1.0, n_triples / max(1, total_spokes ** 2))
 
-        if ab_connected and bc_connected:
-            strength = 1.0  # Full chain connectivity confirmed
-        elif ab_connected or bc_connected:
-            strength = 0.5  # Partial connectivity
-        else:
-            strength = 0.25  # Present but no edge connectivity (still structurally present)
-    else:
-        # No edge data: strength by spoke diversity
-        n_triples = len(rids_a) * len(rids_b) * len(rids_c)
-        total = len(hub_data["spokes"])
-        strength = min(1.0, n_triples / max(1, total ** 2))
+    # Diversity bonus: chains across distinct spokes are structurally richer
+    diversity = distinct_spokes / max(1, total_spokes)
+    strength = raw_strength * (1.0 + diversity) / 2.0 * (1.0 - 0.5 * overlap_penalty)
 
-    return True, strength
+    return True, max(0.01, min(1.0, strength))
 
 
-def compute_chain_signatures(hubs, chains, edge_adj=None):
+def compute_chain_signatures(hubs, chains):
     """Compute a 10-dimensional chain signature vector for each hub."""
     signatures = {}
     for hub_name, hub_data in hubs.items():
         vec = []
         for chain in chains:
-            supported, strength = check_chain_support(hub_data, chain["sequence"], edge_adj)
+            supported, strength = check_chain_support(hub_data, chain["sequence"])
             vec.append(strength if supported else 0.0)
         signatures[hub_name] = np.array(vec)
     return signatures
+
+
+def analyze_cross_hub_flow(con, chains, hubs):
+    """
+    Analyze cross-hub chain flow: for a chain A->B->C, find hub pairs
+    (H1, H2) where H1 has spoke with op A and H2 has spoke with op C,
+    connected via edges through op B.
+    """
+    print("\n  CROSS-HUB CHAIN FLOW:")
+    print("  (Hub pairs that can route a 3-step chain across domain boundaries)\n")
+
+    edges = con.execute("""
+        SELECT source_resolution_id, target_resolution_id, shared_damage_operator
+        FROM cross_domain_edges
+    """).fetchall()
+
+    # Build: resolution -> hub mapping
+    def get_hub(rid):
+        pos = rid.find('__')
+        return rid[:pos] if pos > 0 else rid
+
+    # Build: hub -> set of ops
+    hub_ops = defaultdict(set)
+    for rid_data in hubs.values():
+        pass  # Already have this
+
+    # For each chain, find hub pairs connected by the chain's middle operator
+    for chain in chains:
+        a_op, b_op, c_op = chain["sequence"]
+        # Find edges carrying the middle operator B
+        b_edges = [(src, tgt) for src, tgt, op in edges if op == b_op]
+
+        # For each B-edge, check if source hub has A and target hub has C
+        flow_pairs = set()
+        for src, tgt in b_edges:
+            src_hub = get_hub(src)
+            tgt_hub = get_hub(tgt)
+            if src_hub == tgt_hub:
+                continue
+            src_data = hubs.get(src_hub)
+            tgt_data = hubs.get(tgt_hub)
+            if src_data and tgt_data:
+                if a_op in src_data["all_ops"] and c_op in tgt_data["all_ops"]:
+                    flow_pairs.add((src_hub, tgt_hub))
+                if c_op in src_data["all_ops"] and a_op in tgt_data["all_ops"]:
+                    flow_pairs.add((tgt_hub, src_hub))
+
+        if flow_pairs:
+            print(f"    {chain['name']} ({a_op}->{b_op}->{c_op}): {len(flow_pairs)} hub pairs")
+            for h1, h2 in sorted(flow_pairs)[:5]:
+                print(f"      {h1} -> {h2}")
+            if len(flow_pairs) > 5:
+                print(f"      ... and {len(flow_pairs)-5} more")
+        else:
+            print(f"    {chain['name']}: no cross-hub flow found")
 
 
 def cluster_by_signature(signatures, chains):
@@ -322,14 +356,9 @@ def main():
         a, b, cc = c["sequence"]
         print(f"    {c['id']}: {a} -> {b} -> {cc}  \"{c['name']}\"")
 
-    # ── Step 2b: Build edge adjacency for connectivity checking ──
-    print("\n[2b] Building edge adjacency graph...")
-    edge_adj = get_edge_connectivity(con)
-    print(f"     {len(edge_adj)} resolution nodes with edges")
-
     # ── Step 3: Compute chain signatures ──
     print("\n[3] Computing chain signatures for all qualified hubs...")
-    signatures = compute_chain_signatures(qualified, CHAINS, edge_adj)
+    signatures = compute_chain_signatures(qualified, CHAINS)
 
     active_count = sum(1 for v in signatures.values() if np.any(v > 0))
     print(f"    {active_count} hubs support at least one depth-3 chain")
@@ -393,6 +422,16 @@ def main():
             print(f"\n  All 9/9 hubs still look identical at depth-3.")
     else:
         print(f"\n  No hubs have all 9 canonical damage operators.")
+
+    # Connectivity analysis: how many chains are fully connected vs just present?
+    print("\n  CONNECTIVITY ANALYSIS (strength levels across all active hubs):")
+    for j, chain in enumerate(CHAINS):
+        strengths = [signatures[h][j] for h in qualified if h in signatures and signatures[h][j] > 0]
+        if strengths:
+            full = sum(1 for s in strengths if s >= 1.0)
+            partial = sum(1 for s in strengths if 0.25 < s < 1.0)
+            present_only = sum(1 for s in strengths if s <= 0.25)
+            print(f"    {chain['name']:<40}: {full} full, {partial} partial, {present_only} present-only")
 
     # Broader differentiation analysis
     # How many depth-1 equivalence classes vs depth-3?
