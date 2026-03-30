@@ -1,0 +1,316 @@
+{
+  "timestamp": "2026-03-30T05:25:48.486157",
+  "matrix_shape": [
+    9,
+    246
+  ],
+  "fill_rate": 0.9963866472244263,
+  "n_zeros": 8,
+  "hub_geometry": {
+    "unique_signatures": 5,
+    "hamming_min": 0.1111111111111111,
+    "hamming_max": 0.2222222222222222,
+    "hamming_mean": 0.0071751193702413235,
+    "pca_variance_ratios": [
+      0.4975205659866333,
+      0.2507196366786957,
+      0.12641318142414093,
+      0.12534664571285248,
+      1.0386169106721971e-17,
+      6.4739207923401456e-18,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "pca_cumulative": [
+      0.4975205659866333,
+      0.7482402324676514,
+      0.8746533989906311,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "pca_95pct_components": 4,
+    "pca_99pct_components": 4,
+    "correlation_dimension": 0.0,
+    "n_clusters": 5,
+    "largest_cluster": 238,
+    "all_filled_hubs": 238,
+    "lid_mean": 0.0,
+    "lid_std": 0.0,
+    "lid_min": 0.0,
+    "lid_max": 0.0
+  },
+  "operator_geometry": {
+    "cosine_similarity": {
+      "DISTRIBUTE__CONCENTRATE": 0.9959266185760498,
+      "DISTRIBUTE__TRUNCATE": 1.0,
+      "DISTRIBUTE__EXTEND": 1.0,
+      "DISTRIBUTE__RANDOMIZE": 0.997965395450592,
+      "DISTRIBUTE__HIERARCHIZE": 1.0,
+      "DISTRIBUTE__PARTITION": 1.0,
+      "DISTRIBUTE__QUANTIZE": 0.991836667060852,
+      "DISTRIBUTE__INVERT": 0.997965395450592,
+      "CONCENTRATE__TRUNCATE": 0.9959266185760498,
+      "CONCENTRATE__EXTEND": 0.9959266185760498,
+      "CONCENTRATE__RANDOMIZE": 0.9938670992851257,
+      "CONCENTRATE__HIERARCHIZE": 0.9959266185760498,
+      "CONCENTRATE__PARTITION": 0.9959266185760498,
+      "CONCENTRATE__QUANTIZE": 0.987662672996521,
+      "CONCENTRATE__INVERT": 0.9938670992851257,
+      "TRUNCATE__EXTEND": 1.0,
+      "TRUNCATE__RANDOMIZE": 0.997965395450592,
+      "TRUNCATE__HIERARCHIZE": 1.0,
+      "TRUNCATE__PARTITION": 1.0,
+      "TRUNCATE__QUANTIZE": 0.991836667060852,
+      "TRUNCATE__INVERT": 0.997965395450592,
+      "EXTEND__RANDOMIZE": 0.997965395450592,
+      "EXTEND__HIERARCHIZE": 1.0,
+      "EXTEND__PARTITION": 1.0,
+      "EXTEND__QUANTIZE": 0.991836667060852,
+      "EXTEND__INVERT": 0.997965395450592,
+      "RANDOMIZE__HIERARCHIZE": 0.997965395450592,
+      "RANDOMIZE__PARTITION": 0.997965395450592,
+      "RANDOMIZE__QUANTIZE": 0.9897518754005432,
+      "RANDOMIZE__INVERT": 0.995918333530426,
+      "HIERARCHIZE__PARTITION": 1.0,
+      "HIERARCHIZE__QUANTIZE": 0.991836667060852,
+      "HIERARCHIZE__INVERT": 0.997965395450592,
+      "PARTITION__QUANTIZE": 0.991836667060852,
+      "PARTITION__INVERT": 0.997965395450592,
+      "QUANTIZE__INVERT": 0.9897518754005432
+    },
+    "most_similar_pairs": [
+      [
+        "TRUNCATE",
+        "PARTITION",
+        1.0
+      ],
+      [
+        "TRUNCATE",
+        "HIERARCHIZE",
+        1.0
+      ],
+      [
+        "TRUNCATE",
+        "EXTEND",
+        1.0
+      ],
+      [
+        "HIERARCHIZE",
+        "PARTITION",
+        1.0
+      ],
+      [
+        "EXTEND",
+        "PARTITION",
+        1.0
+      ]
+    ],
+    "most_dissimilar_pairs": [
+      [
+        "RANDOMIZE",
+        "QUANTIZE",
+        0.9897518754005432
+      ],
+      [
+        "QUANTIZE",
+        "INVERT",
+        0.9897518754005432
+      ],
+      [
+        "CONCENTRATE",
+        "QUANTIZE",
+        0.987662672996521
+      ]
+    ],
+    "operator_correlation_dimension": 1.305217013291166,
+    "operator_pca_95pct": 4,
+    "operator_pca_variance": [
+      0.511277437210083,
+      0.25227272510528564,
+      0.1406249701976776,
+      0.09582485258579254,
+      5.123293604544213e-16,
+      6.13353166893539e-17,
+      8.749774864906027e-19,
+      2.9400257560947785e-20,
+      1.5117580556106862e-34
+    ],
+    "operator_fill_rates": {
+      "DISTRIBUTE": 1.0,
+      "CONCENTRATE": 0.9918699264526367,
+      "TRUNCATE": 1.0,
+      "EXTEND": 1.0,
+      "RANDOMIZE": 0.9959349632263184,
+      "HIERARCHIZE": 1.0,
+      "PARTITION": 1.0,
+      "QUANTIZE": 0.9837398529052734,
+      "INVERT": 0.9959349632263184
+    }
+  },
+  "impossible_cells": {
+    "operator_distribution": {
+      "CONCENTRATE": 2,
+      "RANDOMIZE": 1,
+      "QUANTIZE": 4,
+      "INVERT": 1
+    },
+    "hub_distribution": {
+      "BANACH_TARSKI": 1,
+      "META_CONCENTRATE_NONLOCAL": 1,
+      "IMPOSSIBILITY_EXOTIC_R4": 1,
+      "CANTOR_DIAGONALIZATION": 1,
+      "IMPOSSIBILITY_BANACH_TARSKI_PARADOX": 1,
+      "INDEPENDENCE_OF_CH": 1,
+      "META_QUANTIZE_DISCRETE": 1,
+      "EULER_CHARACTERISTIC_OBSTRUCTION": 1
+    },
+    "submatrix_shape": [
+      4,
+      8
+    ],
+    "submatrix_rank": 4,
+    "zero_cell_singular_values": [
+      192.82110287967117,
+      7.576099541799317
+    ],
+    "zero_cell_effective_dim": 2,
+    "dominant_impossible_operator": "QUANTIZE",
+    "quantize_fraction": 0.5
+  },
+  "spectral": {
+    "singular_values": [
+      46.89282566181228,
+      1.8987892569407159,
+      1.3359090709369077,
+      0.9999999999999996,
+      0.8202729806591399,
+      1.14890042128089e-14,
+      2.801000660077845e-17,
+      1.043171846335586e-19,
+      2.0445773348662726e-34
+    ],
+    "energy_fractions": [
+      0.9967983220984207,
+      0.0016343611252372932,
+      0.0008089995674576193,
+      0.0004533091568449669,
+      0.00030500805203963205,
+      5.983554750767923e-32,
+      3.5564844504789244e-37,
+      4.932944247448746e-42,
+      1.894966671916982e-71
+    ],
+    "cumulative_energy": [
+      0.9967983220984207,
+      0.9984326832236579,
+      0.9992416827911155,
+      0.9996949919479604,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sv_95pct": 1,
+    "sv_99pct": 1,
+    "sv_999pct": 3,
+    "numerical_rank": 5,
+    "effective_rank": 1.0257277551830204,
+    "leading_vectors": {
+      "SV1": {
+        "DISTRIBUTE": -0.33440853831633477,
+        "CONCENTRATE": -0.33198192488583766,
+        "TRUNCATE": -0.3344085383163351,
+        "EXTEND": -0.3344085383163351,
+        "RANDOMIZE": -0.33319578362175883,
+        "HIERARCHIZE": -0.3344085383163351,
+        "PARTITION": -0.3344085383163351,
+        "QUANTIZE": -0.32955088925402587,
+        "INVERT": -0.33319578362175883
+      },
+      "SV2": {
+        "DISTRIBUTE": 0.09028300244647235,
+        "CONCENTRATE": 0.21659750491229135,
+        "TRUNCATE": 0.09028300244647239,
+        "EXTEND": 0.09028300244647235,
+        "RANDOMIZE": 0.1291993556738454,
+        "HIERARCHIZE": 0.09028300244647235,
+        "PARTITION": 0.09028300244647235,
+        "QUANTIZE": -0.9375209177394109,
+        "INVERT": 0.12919935567384547
+      },
+      "SV3": {
+        "DISTRIBUTE": -0.10249283993180242,
+        "CONCENTRATE": 0.9069262865762587,
+        "TRUNCATE": -0.10249283993180254,
+        "EXTEND": -0.10249283993180244,
+        "RANDOMIZE": -0.24100968859087968,
+        "HIERARCHIZE": -0.10249283993180246,
+        "PARTITION": -0.10249283993180246,
+        "QUANTIZE": 0.09375211752926707,
+        "INVERT": -0.24100968859087918
+      }
+    },
+    "rank1_mse": 0.003190109056406692,
+    "correction_rank": 4,
+    "correction_singular_values": [
+      2.0,
+      1.4142135381698608,
+      1.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "manifold": {
+    "occupied_vertices": 5,
+    "vertex_ids": [
+      255,
+      383,
+      495,
+      509,
+      511
+    ],
+    "hamming_adjacent_pairs": 4,
+    "connected_components": 1,
+    "component_sizes": [
+      5
+    ],
+    "lid_by_signature": {
+      "(1, 1, 1, 1, 1, 1, 1, 1, 1)": {
+        "count": 238,
+        "mean_lid": 0.0
+      },
+      "(1, 0, 1, 1, 1, 1, 1, 1, 1)": {
+        "count": 2,
+        "mean_lid": 0.0
+      },
+      "(1, 1, 1, 1, 1, 1, 1, 0, 1)": {
+        "count": 4,
+        "mean_lid": 0.0
+      },
+      "(1, 1, 1, 1, 1, 1, 1, 1, 0)": {
+        "count": 1,
+        "mean_lid": 0.0
+      },
+      "(1, 1, 1, 1, 0, 1, 1, 1, 1)": {
+        "count": 1,
+        "mean_lid": 0.0
+      }
+    },
+    "distance_from_all_ones": {
+      "0": 238,
+      "1": 8
+    },
+    "at_all_ones_vertex": 238,
+    "within_hamming_1": 246
+  }
+}
