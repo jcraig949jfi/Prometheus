@@ -1393,3 +1393,62 @@ The framework is the research program.
 
 ---
 
+
+## AIECS Structural Diagram: The Primitive Sequence
+
+The AIECS system IS a derivation chain. Its architecture maps to the 11 primitives:
+
+```
+COMPOSE → EXTEND → BREAK_SYMMETRY → STOCHASTICIZE → LIMIT
+   |          |           |               |              |
+ stages    add control  dynamic         exploration   convergence
+            layer       routing                       to policy
+```
+
+### Step by step:
+
+**COMPOSE (stages):** Build the multi-stage cascade. Compose individual thermodynamic stages into a system. Each stage is a transformation; the cascade is their composition.
+
+**EXTEND (add control layer):** Add the RL controller as a new structural layer on top of the physical system. The system extends from "fixed cascade" to "cascade + adaptive controller." This is the structural move that makes the system learnable.
+
+**BREAK_SYMMETRY (dynamic routing):** Break the symmetry of treating all stages equally. The controller learns to PRIORITIZE — some stages get more flow, some get less, depending on conditions. Static symmetry → dynamic asymmetry. This is where the damage allocation happens.
+
+**STOCHASTICIZE (exploration):** Add noise to the policy. The RL agent explores via stochastic actions (PPO's Dirichlet action distribution). Without this, the agent would converge to the nearest local optimum. Noise enables discovery of non-obvious strategies.
+
+**LIMIT (convergence):** The training process converges. The stochastic exploration settles into a deterministic (or near-deterministic) optimal policy. The limit of the learning trajectory IS the damage allocation strategy.
+
+### This is a depth-5 chain in our derivation graph.
+
+The AIECS architecture IS a composition of 5 primitives in order. The order matters:
+- You can't EXTEND before you COMPOSE (nothing to add a layer to)
+- You can't BREAK_SYMMETRY before you EXTEND (no controller to break symmetry with)
+- You can't STOCHASTICIZE before you BREAK_SYMMETRY (nothing to explore)
+- You can't LIMIT before you STOCHASTICIZE (nothing to converge from)
+
+The chain follows the natural ordering from our operator algebra:
+COMPOSE (early) → EXTEND → BREAK_SYMMETRY → STOCHASTICIZE → LIMIT (late)
+
+### Connection to damage algebra:
+
+The 5 primitives map to damage operators:
+- COMPOSE = building the system (prerequisite, not a damage operator)
+- EXTEND = EXPAND (add structure)
+- BREAK_SYMMETRY = CONCENTRATE (prioritize one stage) or PARTITION (split into regimes)
+- STOCHASTICIZE = RANDOMIZE (exploration)
+- LIMIT = the resolution (convergent policy IS the damage allocation)
+
+The output of the chain — the converged policy — is itself a damage allocation strategy that can be classified by the 9 operators. The chain PRODUCES a damage operator; it is not itself a single operator.
+
+### The meta-insight:
+
+The AIECS architecture is a MACHINE FOR DISCOVERING DAMAGE OPERATORS.
+Input: impossibility theorem (Carnot) + physical system (cascade)
+Process: COMPOSE → EXTEND → BREAK_SYMMETRY → STOCHASTICIZE → LIMIT
+Output: a specific damage allocation strategy (e.g., temporal PARTITION + stage CONCENTRATE)
+
+The machine's output is classifiable by the damage algebra.
+The machine's structure is classifiable by the primitive basis.
+Both levels of description are consistent.
+
+---
+
