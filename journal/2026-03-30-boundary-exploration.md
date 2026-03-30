@@ -1060,3 +1060,35 @@ Cells 7 and 8 (the Lawvere diagonals) prove something deeper: ANY damage algebra
 
 ---
 
+
+## Note: Thermodynamic Paper Positioning (from ChatGPT collaboration)
+
+### What the paper IS:
+- "Emergent strategies via RL in thermodynamically grounded cascade systems"
+- A specific instantiation of the damage algebra on the Carnot hub
+- RL discovers damage allocation strategies (DISTRIBUTE, HIERARCHIZE, PARTITION) from optimization pressure alone
+- Entropy routing as a first-class managed quantity = damage allocation in our framework
+- The RL agent's discovered strategies should map 1:1 to our 9 damage operators
+
+### What the paper is NOT:
+- NOT "RL controls energy systems" (that's well-trodden: Glavic 2017, François-Lavet 2016)
+- NOT "multi-stage thermodynamics" (that's textbook: endoreversible thermo, Carnot cascades)
+- NOT a replacement for classical thermodynamic design
+
+### The actual claim:
+"We reframe thermodynamic efficiency limits as damage allocation problems and show that RL agents independently discover the same resolution strategies predicted by structural analysis of impossibility theorems."
+
+### Adjacent literature (for search/citation):
+- Finite-time thermodynamics: Andresen, Salamon, Berry (1977)
+- Endoreversible thermodynamics: Hoffmann, Burzler, Schubert (1997)
+- Curzon-Ahlborn efficiency: (1975)
+- Entropy production minimization: Prigogine
+- RL for power grids: Glavic et al. (2017)
+- MPC for energy: Oldewurtel et al. (2012)
+- Combined-cycle optimization: Casella & Colonna (2012)
+
+### Connection to Noesis:
+The Carnot hub has 9/9 operators filled with named resolutions. The RL paper validates these by showing an agent discovers them independently from optimization, without knowing the framework. If RL finds a strategy our tensor predicted but engineers haven't tried → that's a genuine contribution to thermodynamic engineering.
+
+---
+
