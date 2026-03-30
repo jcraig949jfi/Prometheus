@@ -594,3 +594,34 @@ ethnomathematics scholarship — checking whether the predicted confrontation ex
 in the historical record but hasn't been catalogued in our database.
 
 ---
+
+## Cycle 16: Depth-3 Composition Differentiation
+
+### What I found:
+- **Depth-3 DOES differentiate hubs** — 26 depth-1 classes → 10 depth-3 clusters
+- Most discriminating chain: Stochastic Meta-Truncation (RANDOMIZE → HIERARCHIZE → TRUNCATE), entropy 0.998
+- Second: Adaptive Localization (PARTITION → TRUNCATE → CONCENTRATE), entropy 0.982
+- FORCED_SYMMETRY_BREAK is structurally unique — supports 5/10 chains, the richest hub
+- Bell's Theorem has a unique depth-3 signature (adaptive + Monte Carlo but not stochastic meta-truncation)
+- The "social choice" cluster (Myerson, NFL, Quintic, Social Choice) shares a SINGLE supported chain
+
+### Structural classes at depth 3:
+1. **Stochastic-only** (5 hubs): Social choice / algebra impossibilities that only resolve via noise-then-hierarchy
+2. **Localization-only** (3 hubs): Physical impossibilities (Heisenberg, Bode, Gibbs)
+3. **Monte Carlo + Stochastic** (3 hubs): Calendar, Goodhart, No-Cloning
+4. **Redistribution** (2 hubs): Bode waterbed, crystallographic
+5. **Maximally rich** (1 hub): Forced Symmetry Break — supports 5 chains, unique in the database
+
+### Boundary: The room extends to depth 3 with real structural differentiation. Depth 4 would likely show further splitting but with diminishing returns (smaller clusters, less data).
+
+---
+
+## Archaeological Predictions (Cycle 15)
+
+### Top finding: Babylonian reciprocal tables = Fourier duality
+Babylonian multiplication via reciprocal lookup (1800 BCE) is structurally identical to Fourier analysis (DUALIZE → MAP). 4000 years apart, same primitive pattern. The tensor found this by matching primitive vectors between the ethnomathematics table and the impossibility hubs.
+
+### 1,292 total predictions. 30 added to discoveries table.
+
+---
+

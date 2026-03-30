@@ -37,9 +37,8 @@ CHAINS = [
     {
         "id": "C3_01",
         "name": "Variational quantization",
-        "sequence": ("EXTEND", "REDUCE", "MAP"),
-        "semantics": "Extend to all paths, reduce to extremum, map to quantum representation",
-        "note": "REDUCE/MAP are primitive_types not damage_ops; we map REDUCE->CONCENTRATE, MAP->DISTRIBUTE"
+        "sequence": ("EXTEND", "CONCENTRATE", "DISTRIBUTE"),
+        "semantics": "Extend to all paths, concentrate to extremum, distribute to representation",
     },
     {
         "id": "C3_02",
@@ -62,9 +61,8 @@ CHAINS = [
     {
         "id": "C3_05",
         "name": "Gauge -> SSB",
-        "sequence": ("EXTEND", "SYMMETRIZE", "BREAK_SYMMETRY"),
-        "semantics": "Enlarge structure, impose symmetry constraint, then break it",
-        "note": "SYMMETRIZE/BREAK_SYMMETRY are primitive_types; mapped to nearest damage ops"
+        "sequence": ("EXTEND", "PARTITION", "INVERT"),
+        "semantics": "Enlarge structure, partition into sectors, invert (break symmetry)",
     },
     {
         "id": "C3_06",
@@ -87,9 +85,8 @@ CHAINS = [
     {
         "id": "C3_09",
         "name": "Inverse variational",
-        "sequence": ("EXTEND", "INVERT", "REDUCE"),
-        "semantics": "Extend structure, reverse direction, reduce to extremum",
-        "note": "REDUCE mapped to CONCENTRATE (localize to extremum)"
+        "sequence": ("EXTEND", "INVERT", "CONCENTRATE"),
+        "semantics": "Extend structure, reverse direction, concentrate to extremum",
     },
     {
         "id": "C3_10",
@@ -140,12 +137,12 @@ def get_hub_data(con):
         ORDER BY hub, spoke
     """).fetchall()
 
-    hubs = defaultdict(lambda: {"spokes": defaultdict(set), "all_ops": set()})
+    hubs = defaultdict(lambda: {"spokes": defaultdict(set), "all_ops": set(), "rids_by_op": defaultdict(set)})
     for hub, spoke, rid, op in rows:
-        # Normalize compound ops
         normalized = op.strip()
         hubs[hub]["spokes"][spoke].add(normalized)
         hubs[hub]["all_ops"].add(normalized)
+        hubs[hub]["rids_by_op"][rid].add(normalized)
 
     return dict(hubs)
 
@@ -166,13 +163,14 @@ def get_edge_connectivity(con):
     return dict(adj)
 
 
-def check_chain_support(hub_data, chain_seq):
+def check_chain_support(hub_data, chain_seq, edge_adj=None):
     """
     Check if a hub supports a three-operator chain (A -> B -> C).
 
     Level 1 (presence): hub has spokes with operators A, B, AND C
-    Level 2 (structural): there exist spokes s_a, s_b, s_c carrying A, B, C respectively
-                          such that s_a != s_b != s_c (distinct resolution strategies)
+    Level 2 (structural): distinct spokes carry each operator
+    Level 3 (connectivity): if edge_adj provided, check that spokes carrying A
+                            connect to spokes carrying B, and B-spokes connect to C-spokes
 
     Returns: (supported: bool, strength: float 0-1)
     """
@@ -183,30 +181,60 @@ def check_chain_support(hub_data, chain_seq):
     if not ({a_op, b_op, c_op} <= all_ops):
         return False, 0.0
 
-    # Count spokes carrying each operator
-    spokes_a = {s for s, ops in hub_data["spokes"].items() if a_op in ops}
-    spokes_b = {s for s, ops in hub_data["spokes"].items() if b_op in ops}
-    spokes_c = {s for s, ops in hub_data["spokes"].items() if c_op in ops}
+    # Collect resolution IDs (full) carrying each operator
+    rids_a = {rid for rid, ops in hub_data["rids_by_op"].items() if a_op in ops}
+    rids_b = {rid for rid, ops in hub_data["rids_by_op"].items() if b_op in ops}
+    rids_c = {rid for rid, ops in hub_data["rids_by_op"].items() if c_op in ops}
 
-    if not (spokes_a and spokes_b and spokes_c):
+    if not (rids_a and rids_b and rids_c):
         return False, 0.0
 
-    # Strength: how many distinct spoke triples can form this chain?
-    # Normalize by total spoke count
-    n_triples = len(spokes_a) * len(spokes_b) * len(spokes_c)
-    total_spokes = len(hub_data["spokes"])
-    strength = min(1.0, n_triples / max(1, total_spokes ** 2))
+    # If we have edge adjacency, check connectivity: A->B and B->C
+    if edge_adj:
+        # Check A->B: any rid_a connects to any rid_b?
+        ab_connected = False
+        for ra in rids_a:
+            if ra in edge_adj:
+                for (neighbor, _) in edge_adj[ra]:
+                    if neighbor in rids_b:
+                        ab_connected = True
+                        break
+            if ab_connected:
+                break
+
+        # Check B->C
+        bc_connected = False
+        for rb in rids_b:
+            if rb in edge_adj:
+                for (neighbor, _) in edge_adj[rb]:
+                    if neighbor in rids_c:
+                        bc_connected = True
+                        break
+            if bc_connected:
+                break
+
+        if ab_connected and bc_connected:
+            strength = 1.0  # Full chain connectivity confirmed
+        elif ab_connected or bc_connected:
+            strength = 0.5  # Partial connectivity
+        else:
+            strength = 0.25  # Present but no edge connectivity (still structurally present)
+    else:
+        # No edge data: strength by spoke diversity
+        n_triples = len(rids_a) * len(rids_b) * len(rids_c)
+        total = len(hub_data["spokes"])
+        strength = min(1.0, n_triples / max(1, total ** 2))
 
     return True, strength
 
 
-def compute_chain_signatures(hubs, chains):
+def compute_chain_signatures(hubs, chains, edge_adj=None):
     """Compute a 10-dimensional chain signature vector for each hub."""
     signatures = {}
     for hub_name, hub_data in hubs.items():
         vec = []
         for chain in chains:
-            supported, strength = check_chain_support(hub_data, chain["sequence"])
+            supported, strength = check_chain_support(hub_data, chain["sequence"], edge_adj)
             vec.append(strength if supported else 0.0)
         signatures[hub_name] = np.array(vec)
     return signatures
@@ -294,9 +322,14 @@ def main():
         a, b, cc = c["sequence"]
         print(f"    {c['id']}: {a} -> {b} -> {cc}  \"{c['name']}\"")
 
+    # ── Step 2b: Build edge adjacency for connectivity checking ──
+    print("\n[2b] Building edge adjacency graph...")
+    edge_adj = get_edge_connectivity(con)
+    print(f"     {len(edge_adj)} resolution nodes with edges")
+
     # ── Step 3: Compute chain signatures ──
     print("\n[3] Computing chain signatures for all qualified hubs...")
-    signatures = compute_chain_signatures(qualified, CHAINS)
+    signatures = compute_chain_signatures(qualified, CHAINS, edge_adj)
 
     active_count = sum(1 for v in signatures.values() if np.any(v > 0))
     print(f"    {active_count} hubs support at least one depth-3 chain")
