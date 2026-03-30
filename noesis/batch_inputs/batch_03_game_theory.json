@@ -1,0 +1,126 @@
+{
+  "batch_number": 3,
+  "batch_name": "Game Theory & Social Choice",
+  "hub_count": 17,
+  "hubs": [
+    {
+      "hub_id": "ARROW_IMPOSSIBILITY",
+      "hub_name": "Arrow Impossibility",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "COMMONS_DILEMMA",
+      "hub_name": "Commons Dilemma",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "CONDORCET_PARADOX",
+      "hub_name": "Condorcet Paradox",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_BILATERAL_TRADE_CHATTERJEE_SAMUELSON",
+      "hub_name": "Impossibility Bilateral Trade Chatterjee Samuelson",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "No incentive-compatible, individually rational, budget-balanced mechanism achieves full efficiency (ex-post trade whenever gains from trade exist) in bilateral trade with two-sided private information || CLOSURE FAILURE: With two-sided private information, the buyer has incentive to understate value and the seller to overstate cost. The information rent required to elicit truthful reports from both sides exceeds the gains from trade at the margin. By the envelope theorem, the expected subsidy needed equals the integral of virtual surplus below zero, which is strictly positive for overlapping type distributions.",
+      "formal_source": "With two-sided private information, the buyer has incentive to understate value and the seller to overstate cost. The information rent required to elicit truthful reports from both sides exceeds the gains from trade at the margin. By the envelope theorem, the expected subsidy needed equals the integral of virtual surplus below zero, which is strictly positive for overlapping type distributions."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_COASE_IMPOSSIBILITY_CONDITIONS",
+      "hub_name": "Impossibility Coase Impossibility Conditions",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "Efficient bargaining over externalities (Coase's result) fails when any of: (1) transaction costs are positive, (2) property rights are unclear, (3) parties are asymmetrically informed, or (4) there are many affected parties (public goods/commons). These conditions are generic, making the Coase result the exception.",
+      "formal_source": "COMPOSE(bilateral_bargaining) → COMPLETE(efficient_externality_resolution) FAILS → BREAK_SYMMETRY(Pigouvian_tax_or_regulatory_assignment) | Under asymmetric information, the Myerson-Satterthwaite theorem shows no mechanism is simultaneously individually rational, incentive compatible, budget balanced, and ex-post efficient. Transaction costs create a wedge between willingness-to-pay and willingness-to-accept. With many parties, free-riding prevents efficient Coasean bargaining."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_CONDORCET_JURY_LIMITATIONS",
+      "hub_name": "Impossibility Condorcet Jury Limitations",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "The Condorcet Jury Theorem (majority voting aggregates information optimally) fails when: (1) voters are correlated (common information sources), (2) voters vote strategically rather than sincerely, or (3) voter competence is below 0.5. Under strategic voting, sincere revelation is not a Nash equilibrium in general.",
+      "formal_source": "COMPOSE(majority_vote_aggregation) → COMPLETE(optimal_collective_decision) FAILS → BREAK_SYMMETRY(mechanism_design_for_truthful_revelation) | Under strategic voting, a pivotal voter conditions on being pivotal, which changes the information inference. With correlated signals, the effective number of independent information sources grows sub-linearly. When competence p < 0.5, majority voting amplifies errors (anti-jury theorem). These three failures make the original theorem's conditions non-generic."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_CONGESTION_PRICE_OF_ANARCHY",
+      "hub_name": "Impossibility Congestion Price Of Anarchy",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "Selfish routing in congestion games produces outcomes whose social cost can be a factor of Theta(log n / log log n) worse than optimal for general latency functions; no toll mechanism can simultaneously achieve system optimality, budget balance, and voluntary participation || CLOSURE FAILURE: Individual best-response dynamics minimize personal cost, not social cost. The externality each agent imposes on others (marginal congestion contribution) is not internalized. Wardrop equilibrium and Nash flow diverge from the social optimum because the variational inequality characterizing equilibrium uses individual cost gradients, not marginal social cost.",
+      "formal_source": "Individual best-response dynamics minimize personal cost, not social cost. The externality each agent imposes on others (marginal congestion contribution) is not internalized. Wardrop equilibrium and Nash flow diverge from the social optimum because the variational inequality characterizing equilibrium uses individual cost gradients, not marginal social cost."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_DICTATORSHIP_WITHOUT_MONEY",
+      "hub_name": "Impossibility Dictatorship Without Money",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "Without monetary transfers, any strategy-proof and onto social choice function over three or more alternatives with unrestricted preferences must be dictatorial; no non-dictatorial truthful mechanism exists without payments || CLOSURE FAILURE: Strategy-proofness imposes severe monotonicity constraints on the social choice function. With three or more alternatives and unrestricted ordinal preferences, the only functions satisfying these monotonicity constraints are projections onto a single agent's preference (dictatorship). Monetary transfers break the impossibility by allowing compensation, expanding the space of incentive-compatible mechanisms.",
+      "formal_source": "Strategy-proofness imposes severe monotonicity constraints on the social choice function. With three or more alternatives and unrestricted ordinal preferences, the only functions satisfying these monotonicity constraints are projections onto a single agent's preference (dictatorship). Monetary transfers break the impossibility by allowing compensation, expanding the space of incentive-compatible mechanisms."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_ENVY_FREE_DIVISION",
+      "hub_name": "Impossibility Envy Free Division",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "No deterministic mechanism for dividing indivisible goods can simultaneously guarantee envy-freeness, Pareto efficiency, and strategy-proofness || CLOSURE FAILURE: Envy-freeness requires symmetric treatment of agents, efficiency requires responsiveness to cardinal preferences, and truthfulness requires monotonicity in allocations. The monotonicity constraints from strategy-proofness force allocations that either violate envy-freeness (by treating identical preferences differently) or efficiency (by ignoring preference intensity).",
+      "formal_source": "Envy-freeness requires symmetric treatment of agents, efficiency requires responsiveness to cardinal preferences, and truthfulness requires monotonicity in allocations. The monotonicity constraints from strategy-proofness force allocations that either violate envy-freeness (by treating identical preferences differently) or efficiency (by ignoring preference intensity)."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_FOLK_THEOREM_BOUNDARY",
+      "hub_name": "Impossibility Folk Theorem Boundary",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "The folk theorem shows that virtually any individually rational payoff is sustainable as a Nash equilibrium in infinitely repeated games, but this breaks down with finite horizons, imperfect monitoring, or lack of common knowledge of rationality; backward induction forces defection in finitely repeated prisoner's dilemma || CLOSURE FAILURE: In finite games, backward induction from the last period unravels all cooperation: in the final round, defection dominates; knowing this, defection dominates in the penultimate round, etc. The infinite-horizon folk theorem relies on the threat of perpetual punishment having non-zero present value, which requires either infinite horizon, or sufficient uncertainty about the end date (Kreps et al., 1982).",
+      "formal_source": "In finite games, backward induction from the last period unravels all cooperation: in the final round, defection dominates; knowing this, defection dominates in the penultimate round, etc. The infinite-horizon folk theorem relies on the threat of perpetual punishment having non-zero present value, which requires either infinite horizon, or sufficient uncertainty about the end date (Kreps et al., 1982)."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_IMPLEMENTATION_MASKIN",
+      "hub_name": "Impossibility Implementation Maskin",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "A social choice rule is Nash-implementable only if it satisfies Maskin monotonicity; many natural social choice rules (including most cardinal welfare criteria) fail this condition || CLOSURE FAILURE: If an alternative a is chosen at preference profile theta but not at theta', and agent i's lower contour set at a weakly expands from theta to theta', then no Nash equilibrium mechanism can distinguish the two profiles — agent i has no profitable deviation to signal the difference. This monotonicity requirement excludes welfare-maximizing rules that respond to cardinal preference intensities.",
+      "formal_source": "If an alternative a is chosen at preference profile theta but not at theta', and agent i's lower contour set at a weakly expands from theta to theta', then no Nash equilibrium mechanism can distinguish the two profiles — agent i has no profitable deviation to signal the difference. This monotonicity requirement excludes welfare-maximizing rules that respond to cardinal preference intensities."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_REVENUE_EQUIVALENCE_BREAKDOWN",
+      "hub_name": "Impossibility Revenue Equivalence Breakdown",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "Revenue equivalence across auction formats fails when bidders are risk-averse, asymmetric, have interdependent valuations, or face budget constraints; no single auction format simultaneously maximizes revenue, efficiency, and simplicity || CLOSURE FAILURE: Revenue equivalence holds only under independent private values with risk-neutral symmetric bidders. Risk aversion breaks the isomorphism between first-price and second-price auctions (expected payment changes non-linearly). Affiliated values break independence, making the linkage principle operative — English auctions generate strictly more revenue than sealed-bid auctions.",
+      "formal_source": "Revenue equivalence holds only under independent private values with risk-neutral symmetric bidders. Risk aversion breaks the isomorphism between first-price and second-price auctions (expected payment changes non-linearly). Affiliated values break independence, making the linkage principle operative — English auctions generate strictly more revenue than sealed-bid auctions."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_SECOND_WELFARE_IMPOSSIBILITY",
+      "hub_name": "Impossibility Second Welfare Impossibility",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "The Second Welfare Theorem (any Pareto efficient allocation can be decentralized as a competitive equilibrium with appropriate lump-sum transfers) fails when: (1) preferences are non-convex, (2) lump-sum transfers are informationally infeasible, (3) increasing returns to scale exist. Redistribution without efficiency loss is generically impossible.",
+      "formal_source": "COMPOSE(lump_sum_transfers + competitive_markets) → COMPLETE(any_efficient_allocation_achieved) FAILS → BREAK_SYMMETRY(distortionary_taxation_with_efficiency_cost) | Lump-sum transfers require knowledge of agents' types (abilities, preferences), which are private information. By the revelation principle, any incentive-compatible mechanism must impose distortions. Non-convex preferences break the supporting hyperplane theorem, so price-based decentralization of efficient allocations becomes impossible. Increasing returns create natural monopoly, violating the price-taking assumption."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_STABLE_MATCHING_THREE_SIDED",
+      "hub_name": "Impossibility Stable Matching Three Sided",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "No stable matching need exist for three-sided (or higher) matching markets; the Gale-Shapley deferred acceptance algorithm cannot be generalized beyond two-sided markets || CLOSURE FAILURE: In two-sided markets, the lattice structure of stable matchings (guaranteed by the rural hospitals theorem and Birkhoff's representation) breaks down with three or more sides. Preference cycles of the form (a prefers b2, b2 prefers c3, c3 prefers a' != a) create unavoidable blocking triples with no fixed-point guarantee.",
+      "formal_source": "In two-sided markets, the lattice structure of stable matchings (guaranteed by the rural hospitals theorem and Birkhoff's representation) breaks down with three or more sides. Preference cycles of the form (a prefers b2, b2 prefers c3, c3 prefers a' != a) create unavoidable blocking triples with no fixed-point guarantee."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_VCG_BUDGET_BALANCE",
+      "hub_name": "Impossibility Vcg Budget Balance",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "No mechanism can simultaneously achieve efficiency (welfare maximization), incentive compatibility, individual rationality, and budget balance in general quasi-linear settings || CLOSURE FAILURE: The VCG transfer payments that align individual incentives with social welfare necessarily produce a budget surplus (or deficit). The Clarke pivot payments extracted from agents cannot generically sum to zero while maintaining truthfulness, because the externality each agent imposes is not a conserved quantity.",
+      "formal_source": "The VCG transfer payments that align individual incentives with social welfare necessarily produce a budget surplus (or deficit). The Clarke pivot payments extracted from agents cannot generically sum to zero while maintaining truthfulness, because the externality each agent imposes is not a conserved quantity."
+    },
+    {
+      "hub_id": "REVENUE_EQUIVALENCE",
+      "hub_name": "Revenue Equivalence",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "VCG_BUDGET_IMPOSSIBILITY",
+      "hub_name": "Vcg Budget Impossibility",
+      "domain": "Game Theory & Social Choice",
+      "impossibility_statement": "",
+      "formal_source": ""
+    }
+  ]
+}

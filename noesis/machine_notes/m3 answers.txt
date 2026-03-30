@@ -1,0 +1,62 @@
+M3 ANSWERS (Round 2)
+====================
+
+1. m1_cracks.jsonl — YES, the file at c:\skullport_shared\m1_cracks.jsonl is real
+   M1 data. Copy it to organisms/m1_cracks.jsonl if it's not there already.
+   If there's one already in organisms/ that's untracked, check the line count.
+   It should have 5000+ lines. If it has 0 or just a few, replace it with the
+   one from skullport_shared.
+
+2. CHAIN FORMAT — IMPORTANT CORRECTION. The chains are NOT [organism, operation]
+   tuples. They are STRINGS in the format "organism.operation". Example:
+     "chain": ["prime_theory.sieve_of_eratosthenes", "scipy_signal.cspline1d"]
+
+   Your extraction script needs to split on "." to get organism and operation:
+     org, op = chain_element.rsplit(".", 1)
+
+   Use rsplit with maxsplit=1 because some organisms have dots in names
+   (like scipy_signal). Actually looking at the data more carefully:
+   the format is consistent: "organism_name.operation_name" where organism_name
+   matches the organism's .name attribute. So split on first "." works for
+   hand-crafted organisms, but for generated ones like "scipy_signal" you need
+   rsplit or split with knowledge of the organism names.
+
+   SAFEST APPROACH: load all organism names first, then match the longest
+   prefix. Or just split on the LAST "." since operation names don't contain dots.
+   Actually — use the first "." for hand-crafted (e.g., "prime_theory.sieve")
+   and handle generated ones by checking against known organism names.
+
+   SIMPLEST: the daemon uses "organism.operation" format where organism is the
+   .name attribute. Since generated organisms are named like "numpy", "scipy_signal",
+   etc. (no dots in the name), splitting on "." and taking first part as org,
+   rest as op will work:
+     parts = chain_element.split(".", 1)
+     org = parts[0]
+     op = parts[1] if len(parts) > 1 else ""
+
+3. DAEMON INTEGRATION — Patch the daemon directly. You're right, building blocks
+   are M3-specific and shouldn't touch __init__.py. The "quick hack" code in the
+   M3 prompt is the right approach: add a block after organism loading that scans
+   organisms/building_blocks/ for additional .py files and loads them dynamically.
+   Keep it self-contained in the daemon.
+
+4. SCORING CHANGES — Edit the scoring function in noesis_daemon.py directly.
+   No config system needed. Find the QualityScorer class and change the weights.
+   The formula from the M3 prompt:
+
+   depth_bonus = min(0.15, 0.05 * (chain_length - 2))
+   bb_bonus = 0.10 if any("bb_" in step for step in chain) else 0.0
+   quality = 0.20*execution + 0.20*novelty + 0.15*structure + 0.10*diversity
+             + 0.15*compression + depth_bonus + bb_bonus
+             - 0.05*cheapness - 0.05*dead_end
+
+   Note: chain_length = number of operations in the chain. For "bb_" detection,
+   check if any element in the chain string starts with "bb_".
+
+5. SCOPE — Yes, implement everything and get M3 ready to launch. Full scope:
+   - Fix the extraction script for the actual chain format (strings, not tuples)
+   - Patch daemon to load building blocks
+   - Patch scoring weights
+   - Launch with --hours 30 --batch-size 50
+
+   You have full autonomy on implementation details. GO.

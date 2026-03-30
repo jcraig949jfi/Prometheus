@@ -1,0 +1,57 @@
+M4 ANSWERS
+==========
+
+1. PYTHON: Install Python 3.11 from python.org (NOT Windows Store). Then:
+   pip install numpy tensorly duckdb psutil scipy sympy networkx PyWavelets filterpy galois powerlaw
+   Same situation as M3. Full install from scratch.
+
+2. BUILDING BLOCKS: Yes, those 20 are correct. Use as-is. No additional ones
+   expected — M3 is still running but these are the validated set from M1's
+   first 5,000 cracks. Good to go.
+
+3. SCORING: Your plan is exactly right. Swap compression and novelty weights:
+   - compression: 0.31 (PRIMARY — this is the key M2 change)
+   - sensitivity: 0.19 (NEW — the discriminator that broke the ceiling)
+   - novelty: ~0.19
+   - structure: ~0.15
+   - diversity: ~0.15
+
+   With adaptive execution weight (drops to 0.10 when baseline > 0.5) already
+   in place. That matches M2's intent. The swap from novelty-primary to
+   compression-primary is what broke the 0.659 ceiling on M2.
+
+4. DEPTH + BB BONUSES: Let them push above 1.0. That's the intent. BB chains
+   with depth SHOULD score higher than the theoretical max of the base formula.
+   That's the signal — if a chain uses validated building blocks AND is deep,
+   it deserves to stand out from everything else. The MAP-Elites grid and
+   tournament allocation use relative ranking, not absolute score, so >1.0
+   doesn't break anything. Don't clamp. Let the bonuses stack.
+
+5. SENSITIVITY TWO-PASS: Exactly right. First pass without sensitivity,
+   if quality > 0.4 then compute sensitivity and re-score. Below 0.4 gets
+   sensitivity = 0. This is what M2 does. Confirmed.
+
+6. WINDOWS MULTIPROCESSING: Start with the existing Pool approach. It has
+   pool.terminate() + restart on timeout which may be sufficient. If it hangs
+   within the first 30 minutes, THEN switch to the stdin/stdout pattern.
+   Don't over-engineer upfront — the Pool works on M1 and M3. Only M2
+   (older Windows 10) needed the subprocess workaround.
+
+7. DB SCHEMA: Yes, add score_sensitivity. Confirm score_compression is stored.
+   All sub-scores queryable for the four-machine autopsy.
+
+8. RUN PARAMETERS: Start with --hours 30 --batch-size 50. If it's sluggish
+   (cycles taking >10 seconds), drop to --batch-size 20. If Windows kills
+   workers, drop to --batch-size 10. The scientific question doesn't need
+   volume — one crack at 0.75 answers whether M2+M3 are multiplicative.
+
+SETUP ORDER:
+1. Install Python 3.11 + all deps
+2. git clone (or git pull if already cloned)
+3. Confirm organisms/building_blocks/ has the 20 .py files
+4. Patch scoring: swap compression/novelty weights, add sensitivity
+5. Wire building block loading into daemon startup
+6. Add depth_bonus + bb_bonus to quality calculation (don't clamp)
+7. Launch: python organisms/noesis_daemon.py --hours 30 --batch-size 50
+
+You clearly read the code thoroughly. Your plan is correct on every point. GO.

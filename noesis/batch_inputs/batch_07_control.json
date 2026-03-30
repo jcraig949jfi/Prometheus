@@ -1,0 +1,91 @@
+{
+  "batch_number": 7,
+  "batch_name": "Control & Signal Processing",
+  "hub_count": 12,
+  "hubs": [
+    {
+      "hub_id": "ANTENNA_GAIN_BANDWIDTH",
+      "hub_name": "Antenna Gain Bandwidth",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "GABOR_LIMIT",
+      "hub_name": "Gabor Limit",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_BODE_GAIN_PHASE",
+      "hub_name": "Impossibility Bode Gain Phase",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "For any stable, minimum-phase, causal LTI system, the phase at any frequency omega_0 is uniquely determined by the gain curve via the Hilbert transform: angle(G(j*omega_0)) = (1/pi) * PV integral of (d(ln|G|)/d(ln omega)) * ln|coth(|u|/2)| du, where u = ln(omega/omega_0). A designer cannot independently specify gain and phase responses. Changing gain slope at any frequency forces phase changes everywhere.",
+      "formal_source": "COMPOSE(gain + phase + minimum-phase) -> COMPLETE(independent specification) FAILS -> BREAK_SYMMETRY(allow non-minimum-phase zeros or sacrifice gain/phase freedom)"
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_CHANNEL_CODING_CONVERSE",
+      "hub_name": "Impossibility Channel Coding Converse",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "For a discrete memoryless channel with capacity C, any code with rate R > C has error probability P_e -> 1 exponentially fast as block length n -> infinity. Specifically, P_e >= 1 - 2^(-n*E_sp(R,C)) where E_sp is the sphere-packing exponent. The strong converse (Wolfowitz 1957, Arimoto 1973) proves this is not merely that reliable communication fails, but that communication becomes catastrophically unreliable: the error probability approaches 1, not just stays bounded away from 0.",
+      "formal_source": "COMPOSE(rate above capacity + reliable decoding) -> COMPLETE(low error communication) FAILS -> BREAK_SYMMETRY(reduce rate or accept exponential error growth)"
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_KALMAN_OPTIMALITY_BOUND",
+      "hub_name": "Impossibility Kalman Optimality Bound",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "The Kalman filter achieves the minimum mean-square estimation error for linear Gaussian systems. For any other estimator E applied to y = Cx + v (Gaussian noise), MSE(E) >= MSE(Kalman) = tr(P), where P satisfies the Riccati equation P = APA' - APC'(CPC'+R)^(-1)CPA' + Q. No estimator can beat the Kalman filter for linear Gaussian systems, and the steady-state error P_ss > 0 unless the system is fully observable and noise-free. This establishes a floor on estimation accuracy.",
+      "formal_source": "COMPOSE(noisy observations + linear dynamics) -> COMPLETE(perfect state estimation) FAILS -> BREAK_SYMMETRY(accept Riccati-bounded error or add sensors)"
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_LUCAS_CRITIQUE_POLICY_INVARIANCE",
+      "hub_name": "Impossibility Lucas Critique Policy Invariance",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "Econometric models estimated under one policy regime cannot be used to predict outcomes under a different policy regime, because agents' decision rules (and hence the model parameters) change endogenously with policy. Policy-invariant reduced-form models are impossible when agents are forward-looking.",
+      "formal_source": "COMPOSE(reduced_form_estimation) → COMPLETE(policy_invariant_predictions) FAILS → BREAK_SYMMETRY(estimate_deep_structural_parameters) | Reduced-form parameters are functions of both structural (preference/technology) parameters AND policy rule parameters. When policy changes, rational agents re-optimize, shifting the mapping from state variables to outcomes. The reduced form is not invariant under the policy intervention it is used to evaluate, violating the autonomy requirement of Haavelmo (1944)."
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_MIMO_FUNDAMENTAL_LIMITS",
+      "hub_name": "Impossibility Mimo Fundamental Limits",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "In MIMO (multi-input multi-output) systems, the sensitivity function S(s) = (I + G(s)K(s))^(-1) satisfies: for any plant G with RHP zero z (output direction u_z, input direction v_z), the sensitivity in direction u_z at frequency omega = Im(z) cannot be made less than |u_z' * S(j*omega) * u_z| >= product over RHP poles p_i of |z - p_i|/|z + conj(p_i)|. The plant's directional structure imposes irreducible constraints: you cannot independently shape sensitivity in different I/O directions.",
+      "formal_source": "COMPOSE(multivariable control + directional performance) -> COMPLETE(independent per-channel optimization) FAILS -> BREAK_SYMMETRY(accept directional coupling or decouple plant)"
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_PONTRYAGIN_MAXIMUM_PRINCIPLE",
+      "hub_name": "Impossibility Pontryagin Maximum Principle",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "Pontryagin's Maximum Principle (1956): for a control system dx/dt = f(x,u) minimizing J = integral L(x,u)dt + phi(x(T)), the optimal control must satisfy the Hamiltonian condition H(x*,u*,lambda) >= H(x*,u,lambda) for all admissible u, where lambda satisfies the costate equation d_lambda/dt = -dH/dx. When the control constraint set U is bounded, the optimal trajectory generically has BANG-BANG structure (switching between extremes). No smooth optimal control exists for most constrained problems.",
+      "formal_source": "COMPOSE(bounded control + optimality + smoothness) -> COMPLETE(smooth optimal trajectory) FAILS -> BREAK_SYMMETRY(accept bang-bang switching or relax bounds)"
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_SMALL_GAIN_THEOREM",
+      "hub_name": "Impossibility Small Gain Theorem",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "The Small Gain Theorem: a feedback interconnection of two stable systems G and Delta is stable for ALL perturbations ||Delta||_inf <= 1/gamma iff ||G||_inf < gamma. A system with high loop gain (||G||_inf >= gamma) for performance CANNOT be robustly stable against all perturbations of size 1/gamma. The H-infinity norm of the nominal system directly limits the size of tolerable perturbations.",
+      "formal_source": "COMPOSE(performance gain + robustness margin) -> COMPLETE(both maximal) FAILS -> BREAK_SYMMETRY(sacrifice performance or robustness)"
+    },
+    {
+      "hub_id": "IMPOSSIBILITY_WATERBED_GENERALIZED",
+      "hub_name": "Impossibility Waterbed Generalized",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "For a feedback system with plant P(s) having p unstable poles {p_i} and z unstable zeros {z_j}, the weighted sensitivity integral satisfies: integral_0^inf ln|S(j*omega)| * W(omega) d_omega = pi * sum_i Re(p_i) + corrections from unstable zeros. When unstable zeros are present, the waterbed is amplified: sensitivity reduction in one band causes GREATER-than-equal increase elsewhere. The penalty grows with the proximity of unstable poles and zeros.",
+      "formal_source": "COMPOSE(sensitivity reduction + unstable poles/zeros) -> COMPLETE(global sensitivity reduction) FAILS -> BREAK_SYMMETRY(accept amplified waterbed or redesign plant)"
+    },
+    {
+      "hub_id": "NYQUIST_SHANNON",
+      "hub_name": "Nyquist Shannon",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "",
+      "formal_source": ""
+    },
+    {
+      "hub_id": "SHANNON_CHANNEL_CAPACITY",
+      "hub_name": "Shannon Channel Capacity",
+      "domain": "Control & Signal Processing",
+      "impossibility_statement": "",
+      "formal_source": ""
+    }
+  ]
+}
