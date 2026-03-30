@@ -1,0 +1,577 @@
+{
+  "total_empty_cells": 141,
+  "unlocked": 133,
+  "resistant": 8,
+  "unlock_rate": 0.9432624113475178,
+  "compositions": [
+    {
+      "hub": "ABBE_DIFFRACTION_LIMIT",
+      "target_op": "HIERARCHIZE",
+      "composition": [
+        "QUANTIZE",
+        "HIERARCHIZE"
+      ],
+      "direction": "prefix",
+      "description": "Discretize at each level of a hierarchy. Multigrid methods.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "ALGEBRAIC_COMPLETION",
+      "target_op": "RANDOMIZE",
+      "composition": [
+        "TRUNCATE",
+        "RANDOMIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to bounded domain, then apply Monte Carlo. Standard practice.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "ALGEBRIZATION_BARRIER",
+      "target_op": "TRUNCATE",
+      "composition": [
+        "INVERT",
+        "TRUNCATE"
+      ],
+      "direction": "prefix",
+      "description": "Reverse the problem, then truncate the easy part. Dual simplex method.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "ALGEBRIZATION_BARRIER",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BAIRE_CATEGORY",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BAIRE_CATEGORY",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BANACH_TARSKI",
+      "target_op": "HIERARCHIZE",
+      "composition": [
+        "QUANTIZE",
+        "HIERARCHIZE"
+      ],
+      "direction": "prefix",
+      "description": "Discretize at each level of a hierarchy. Multigrid methods.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BEKENSTEIN_BOUND",
+      "target_op": "TRUNCATE",
+      "composition": [
+        "INVERT",
+        "TRUNCATE"
+      ],
+      "direction": "prefix",
+      "description": "Reverse the problem, then truncate the easy part. Dual simplex method.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BEKENSTEIN_BOUND",
+      "target_op": "PARTITION",
+      "composition": [
+        "PARTITION",
+        "RANDOMIZE"
+      ],
+      "direction": "suffix",
+      "description": "Split into subdomains, randomize within each. Stratified sampling.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BEKENSTEIN_BOUND",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BGS_ORACLE_SEPARATION",
+      "target_op": "PARTITION",
+      "composition": [
+        "PARTITION",
+        "RANDOMIZE"
+      ],
+      "direction": "suffix",
+      "description": "Split into subdomains, randomize within each. Stratified sampling.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BGS_ORACLE_SEPARATION",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BGS_ORACLE_SEPARATION",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BROCAS_BINDING",
+      "target_op": "RANDOMIZE",
+      "composition": [
+        "TRUNCATE",
+        "RANDOMIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to bounded domain, then apply Monte Carlo. Standard practice.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BROUWER_FIXED_POINT",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BURNSIDE_IMPOSSIBILITY",
+      "target_op": "PARTITION",
+      "composition": [
+        "PARTITION",
+        "RANDOMIZE"
+      ],
+      "direction": "suffix",
+      "description": "Split into subdomains, randomize within each. Stratified sampling.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "BURNSIDE_IMPOSSIBILITY",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CANTOR_DIAGONALIZATION",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CARNOT_LIMIT",
+      "target_op": "TRUNCATE",
+      "composition": [
+        "INVERT",
+        "TRUNCATE"
+      ],
+      "direction": "prefix",
+      "description": "Reverse the problem, then truncate the easy part. Dual simplex method.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CHRONOLOGY_PROTECTION",
+      "target_op": "HIERARCHIZE",
+      "composition": [
+        "QUANTIZE",
+        "HIERARCHIZE"
+      ],
+      "direction": "prefix",
+      "description": "Discretize at each level of a hierarchy. Multigrid methods.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CHRONOLOGY_PROTECTION",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CHRONOLOGY_PROTECTION",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CLASSIFICATION_IMPOSSIBILITY_WILD",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CLASSIFICATION_IMPOSSIBILITY_WILD",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "CLAUSIUS_INEQUALITY",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "COMMUNICATION_COMPLEXITY_LOWER_BOUND",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "COSMIC_CENSORSHIP",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "DEHN_IMPOSSIBILITY",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "EULER_CHARACTERISTIC_OBSTRUCTION",
+      "target_op": "RANDOMIZE",
+      "composition": [
+        "TRUNCATE",
+        "RANDOMIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to bounded domain, then apply Monte Carlo. Standard practice.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "EULER_CHARACTERISTIC_OBSTRUCTION",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "FERMAT_LAST_THEOREM",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "FLP_IMPOSSIBILITY",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "GIBBARD_SATTERTHWAITE",
+      "target_op": "HIERARCHIZE",
+      "composition": [
+        "QUANTIZE",
+        "HIERARCHIZE"
+      ],
+      "direction": "prefix",
+      "description": "Discretize at each level of a hierarchy. Multigrid methods.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "GIBBARD_SATTERTHWAITE",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "GIBBARD_SATTERTHWAITE",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "GOEDEL_INCOMPLETENESS_2",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "GOODSTEIN_INDEPENDENCE",
+      "target_op": "RANDOMIZE",
+      "composition": [
+        "TRUNCATE",
+        "RANDOMIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to bounded domain, then apply Monte Carlo. Standard practice.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "HAIRY_BALL",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "HAIRY_BALL_THEOREM",
+      "target_op": "HIERARCHIZE",
+      "composition": [
+        "QUANTIZE",
+        "HIERARCHIZE"
+      ],
+      "direction": "prefix",
+      "description": "Discretize at each level of a hierarchy. Multigrid methods.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "HASSE_MINKOWSKI_FAILURE",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "HUMES_GUILLOTINE",
+      "target_op": "RANDOMIZE",
+      "composition": [
+        "TRUNCATE",
+        "RANDOMIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to bounded domain, then apply Monte Carlo. Standard practice.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "HUMES_GUILLOTINE",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_BALASSA_SAMUELSON_PRICE_CONVERGENCE",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_BANACH_TARSKI_PARADOX",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_BELLS_THEOREM",
+      "target_op": "HIERARCHIZE",
+      "composition": [
+        "QUANTIZE",
+        "HIERARCHIZE"
+      ],
+      "direction": "prefix",
+      "description": "Discretize at each level of a hierarchy. Multigrid methods.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_BERNSTEIN_LETHARGY",
+      "target_op": "INVERT",
+      "composition": [
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to the reversible subspace, then invert. Common in linear algebra (pseudoinverse).",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED",
+      "target_op": "TRUNCATE",
+      "composition": [
+        "INVERT",
+        "TRUNCATE"
+      ],
+      "direction": "prefix",
+      "description": "Reverse the problem, then truncate the easy part. Dual simplex method.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_BORSUK_ULAM",
+      "target_op": "RANDOMIZE",
+      "composition": [
+        "TRUNCATE",
+        "RANDOMIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to bounded domain, then apply Monte Carlo. Standard practice.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE",
+      "target_op": "QUANTIZE",
+      "composition": [
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "direction": "prefix",
+      "description": "Restrict to a bounded domain, then discretize. Standard numerical analysis.",
+      "known_or_novel": "KNOWN_PATTERN"
+    },
+    {
+      "hub": "IMPOSSIBILITY_CRAMER_RAO_BOUND",
+      "target_op": "PARTITION",
+      "composition": [
+        "PARTITION",
+        "RANDOMIZE"
+      ],
+      "direction": "suffix",
+      "description": "Split into subdomains, randomize within each. Stratified sampling.",
+      "known_or_novel": "KNOWN_PATTERN"
+    }
+  ],
+  "best_unlockers": {
+    "TRUNCATE": 99,
+    "QUANTIZE": 18,
+    "INVERT": 8,
+    "RANDOMIZE": 8
+  },
+  "most_resistant_ops": {
+    "CONCENTRATE": 8
+  },
+  "most_rigid_hubs": {
+    "BANACH_TARSKI": 1,
+    "GIBBARD_SATTERTHWAITE": 1,
+    "IMPOSSIBILITY_CALENDAR": 1,
+    "IMPOSSIBILITY_EASTIN_KNILL_THEOREM": 1,
+    "IMPOSSIBILITY_NO_CLONING_THEOREM": 1,
+    "REVENUE_EQUIVALENCE": 1,
+    "SOCIAL_CHOICE_IMPOSSIBILITY": 1,
+    "VITALI_NONMEASURABLE": 1
+  }
+}
