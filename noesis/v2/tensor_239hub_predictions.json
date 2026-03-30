@@ -1,6 +1,6 @@
 {
   "method": "tensor_rebuild_full_239hubs",
-  "timestamp": "2026-03-30T00:24:09.552700",
+  "timestamp": "2026-03-30T00:32:43.566198",
   "damage_ops": [
     "DISTRIBUTE",
     "CONCENTRATE",
@@ -260,9 +260,9 @@
     9,
     242
   ],
-  "filled_cells": 2035,
-  "empty_cells": 143,
-  "fill_rate": 0.9343,
+  "filled_cells": 2042,
+  "empty_cells": 136,
+  "fill_rate": 0.9376,
   "svd_rank": 5,
   "tucker_rank": [
     3,
@@ -278,12 +278,12 @@
     "DISTRIBUTE": 250,
     "TRUNCATE": 252,
     "EXTEND": 452,
-    "INVERT": 210,
+    "INVERT": 217,
     "RANDOMIZE": 230,
     "HIERARCHIZE": 240
   },
-  "predictions_above_03_svd": 143,
-  "predictions_above_03_tucker": 15,
+  "predictions_above_03_svd": 136,
+  "predictions_above_03_tucker": 16,
   "svd_predictions": [
     {
       "damage_op": "DISTRIBUTE",
@@ -590,301 +590,301 @@
     {
       "damage_op": "PARTITION",
       "hub": "IMPOSSIBILITY_CRAMER_RAO_BOUND",
-      "score": 0.3949,
+      "score": 0.3946,
       "method": "Tucker"
     },
     {
       "damage_op": "HIERARCHIZE",
       "hub": "IMPOSSIBILITY_HOLEVO_BOUND",
-      "score": 0.3869,
+      "score": 0.3866,
       "method": "Tucker"
     },
     {
       "damage_op": "RANDOMIZE",
       "hub": "EULER_CHARACTERISTIC_OBSTRUCTION",
-      "score": 0.382,
+      "score": 0.3817,
       "method": "Tucker"
     },
     {
       "damage_op": "RANDOMIZE",
       "hub": "QUINE_INDETERMINACY",
-      "score": 0.382,
+      "score": 0.3817,
       "method": "Tucker"
     },
     {
       "damage_op": "PARTITION",
       "hub": "BGS_ORACLE_SEPARATION",
-      "score": 0.382,
+      "score": 0.3817,
       "method": "Tucker"
     },
     {
       "damage_op": "DISTRIBUTE",
       "hub": "META_CONCENTRATE_NONLOCAL",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "META_CONCENTRATE_NONLOCAL",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "META_INVERT_INVARIANCE",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "META_QUANTIZE_DISCRETE",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "ALGEBRIZATION_BARRIER",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "META_QUANTIZE_DISCRETE",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "PARTITION",
       "hub": "META_QUANTIZE_DISCRETE",
-      "score": 0.3784,
+      "score": 0.3781,
       "method": "Tucker"
     },
     {
       "damage_op": "INVERT",
       "hub": "IMPOSSIBILITY_ENTANGLEMENT_MONOGAMY",
-      "score": 0.3407,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "INVERT",
-      "hub": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
-      "score": 0.3136,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "INVERT",
-      "hub": "NO_COMMUNICATION",
-      "score": 0.3058,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "RANDOMIZE",
-      "hub": "NO_RETRACTION_THEOREM",
-      "score": 0.2967,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "INVERT",
-      "hub": "PCP_THEOREM_HARDNESS",
-      "score": 0.2891,
+      "score": 0.3396,
       "method": "Tucker"
     },
     {
       "damage_op": "INVERT",
       "hub": "WHITNEY_EMBEDDING_OBSTRUCTION",
-      "score": 0.2891,
+      "score": 0.3136,
       "method": "Tucker"
     },
     {
       "damage_op": "INVERT",
-      "hub": "IMPOSSIBILITY_NASH_PPAD_HARDNESS",
-      "score": 0.2853,
+      "hub": "IMPOSSIBILITY_NO_COMMUNICATION_THEOREM",
+      "score": 0.3128,
       "method": "Tucker"
     },
     {
-      "damage_op": "CONCENTRATE",
-      "hub": "GIBBARD_SATTERTHWAITE",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "CONCENTRATE",
-      "hub": "IMPOSSIBILITY_CALENDAR",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "CONCENTRATE",
-      "hub": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "CONCENTRATE",
-      "hub": "IMPOSSIBILITY_NO_CLONING_THEOREM",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "CONCENTRATE",
-      "hub": "REVENUE_EQUIVALENCE",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "CONCENTRATE",
-      "hub": "SOCIAL_CHOICE_IMPOSSIBILITY",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "TRUNCATE",
-      "hub": "CARNOT_LIMIT",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "TRUNCATE",
-      "hub": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "TRUNCATE",
-      "hub": "IMPOSSIBILITY_MODULARITY_EVOLVABILITY_TRADEOFF",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "TRUNCATE",
-      "hub": "SEN_LIBERAL_PARADOX",
-      "score": 0.2843,
+      "damage_op": "INVERT",
+      "hub": "NO_COMMUNICATION",
+      "score": 0.3044,
       "method": "Tucker"
     },
     {
       "damage_op": "RANDOMIZE",
-      "hub": "BROCAS_BINDING",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "RANDOMIZE",
-      "hub": "HUMES_GUILLOTINE",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "RANDOMIZE",
-      "hub": "IMPOSSIBILITY_BORSUK_ULAM",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "RANDOMIZE",
-      "hub": "IMPOSSIBILITY_DU_BOIS_REYMOND_FOURIER_DIVERGENCE",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "RANDOMIZE",
-      "hub": "IMPOSSIBILITY_MUNTZ_SZASZ_LACUNARY_IMPOSSIBILITY",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "RANDOMIZE",
-      "hub": "RUNGE_PHENOMENON",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "HIERARCHIZE",
-      "hub": "GIBBARD_SATTERTHWAITE",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "HIERARCHIZE",
-      "hub": "HAIRY_BALL_THEOREM",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "HIERARCHIZE",
-      "hub": "IMPOSSIBILITY_BELLS_THEOREM",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "HIERARCHIZE",
-      "hub": "NYQUIST_LIMIT",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "HIERARCHIZE",
-      "hub": "RUNGE_PHENOMENON",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "PARTITION",
-      "hub": "NYQUIST_LIMIT",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "PARTITION",
-      "hub": "RUNGE_PHENOMENON",
-      "score": 0.2843,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "QUANTIZE",
-      "hub": "KAKUTANI_FIXED_POINT",
-      "score": 0.2673,
+      "hub": "NO_RETRACTION_THEOREM",
+      "score": 0.2964,
       "method": "Tucker"
     },
     {
       "damage_op": "INVERT",
       "hub": "RIGIDITY_MOSTOW",
-      "score": 0.2669,
+      "score": 0.2927,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "CONCENTRATE",
+      "hub": "GIBBARD_SATTERTHWAITE",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "CONCENTRATE",
+      "hub": "IMPOSSIBILITY_CALENDAR",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "CONCENTRATE",
+      "hub": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "CONCENTRATE",
+      "hub": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "CONCENTRATE",
+      "hub": "REVENUE_EQUIVALENCE",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "CONCENTRATE",
+      "hub": "SOCIAL_CHOICE_IMPOSSIBILITY",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "TRUNCATE",
+      "hub": "CARNOT_LIMIT",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "TRUNCATE",
+      "hub": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "TRUNCATE",
+      "hub": "IMPOSSIBILITY_MODULARITY_EVOLVABILITY_TRADEOFF",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "TRUNCATE",
+      "hub": "SEN_LIBERAL_PARADOX",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "BROCAS_BINDING",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "HUMES_GUILLOTINE",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "IMPOSSIBILITY_BORSUK_ULAM",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "IMPOSSIBILITY_DU_BOIS_REYMOND_FOURIER_DIVERGENCE",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "IMPOSSIBILITY_MUNTZ_SZASZ_LACUNARY_IMPOSSIBILITY",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "RUNGE_PHENOMENON",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "HIERARCHIZE",
+      "hub": "GIBBARD_SATTERTHWAITE",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "HIERARCHIZE",
+      "hub": "HAIRY_BALL_THEOREM",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "HIERARCHIZE",
+      "hub": "IMPOSSIBILITY_BELLS_THEOREM",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "HIERARCHIZE",
+      "hub": "NYQUIST_LIMIT",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "HIERARCHIZE",
+      "hub": "RUNGE_PHENOMENON",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "PARTITION",
+      "hub": "NYQUIST_LIMIT",
+      "score": 0.2842,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "PARTITION",
+      "hub": "RUNGE_PHENOMENON",
+      "score": 0.2842,
       "method": "Tucker"
     },
     {
       "damage_op": "INVERT",
-      "hub": "BROUWER_FIXED_POINT",
-      "score": 0.2666,
+      "hub": "IMPOSSIBILITY_NASH_PPAD_HARDNESS",
+      "score": 0.2763,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "QUANTIZE",
+      "hub": "KAKUTANI_FIXED_POINT",
+      "score": 0.2685,
       "method": "Tucker"
     },
     {
       "damage_op": "QUANTIZE",
       "hub": "COMMUNICATION_COMPLEXITY_LOWER_BOUND",
-      "score": 0.2572,
+      "score": 0.2664,
       "method": "Tucker"
     },
     {
       "damage_op": "QUANTIZE",
       "hub": "IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY",
-      "score": 0.2572,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "INVERT",
-      "hub": "META_INVERT_INVARIANCE",
-      "score": 0.2556,
-      "method": "Tucker"
-    },
-    {
-      "damage_op": "INVERT",
-      "hub": "META_CONCENTRATE_NONLOCAL",
-      "score": 0.2551,
+      "score": 0.2664,
       "method": "Tucker"
     },
     {
       "damage_op": "QUANTIZE",
       "hub": "IMPOSSIBILITY_LUCAS_CRITIQUE_POLICY_INVARIANCE",
-      "score": 0.2445,
+      "score": 0.26,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "INVERT",
+      "hub": "META_INVERT_INVARIANCE",
+      "score": 0.2284,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "QUANTIZE",
+      "hub": "IMPOSSIBILITY_BANACH_TARSKI_PARADOX",
+      "score": 0.227,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "QUANTIZE",
+      "hub": "ALGEBRIZATION_BARRIER",
+      "score": 0.2256,
+      "method": "Tucker"
+    },
+    {
+      "damage_op": "INVERT",
+      "hub": "META_CONCENTRATE_NONLOCAL",
+      "score": 0.2252,
       "method": "Tucker"
     }
   ],
@@ -893,130 +893,137 @@
       "damage_op": "RANDOMIZE",
       "hub": "EULER_CHARACTERISTIC_OBSTRUCTION",
       "svd_score": 1.0,
-      "tucker_score": 0.382,
-      "mean_score": 0.691
+      "tucker_score": 0.3817,
+      "mean_score": 0.6908
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "META_CONCENTRATE_NONLOCAL",
       "svd_score": 1.0,
-      "tucker_score": 0.3784,
-      "mean_score": 0.6892
+      "tucker_score": 0.3781,
+      "mean_score": 0.689
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "META_INVERT_INVARIANCE",
       "svd_score": 1.0,
-      "tucker_score": 0.3784,
-      "mean_score": 0.6892
+      "tucker_score": 0.3781,
+      "mean_score": 0.689
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "META_QUANTIZE_DISCRETE",
       "svd_score": 1.0,
-      "tucker_score": 0.3784,
-      "mean_score": 0.6892
+      "tucker_score": 0.3781,
+      "mean_score": 0.689
     },
     {
       "damage_op": "DISTRIBUTE",
       "hub": "META_CONCENTRATE_NONLOCAL",
       "svd_score": 1.0,
-      "tucker_score": 0.3784,
-      "mean_score": 0.6892
+      "tucker_score": 0.3781,
+      "mean_score": 0.689
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "ALGEBRIZATION_BARRIER",
       "svd_score": 1.0,
-      "tucker_score": 0.3784,
-      "mean_score": 0.6892
+      "tucker_score": 0.3781,
+      "mean_score": 0.689
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "META_QUANTIZE_DISCRETE",
       "svd_score": 1.0,
-      "tucker_score": 0.3784,
-      "mean_score": 0.6892
+      "tucker_score": 0.3781,
+      "mean_score": 0.689
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "GIBBARD_SATTERTHWAITE",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "IMPOSSIBILITY_CALENDAR",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "IMPOSSIBILITY_EASTIN_KNILL_THEOREM",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "IMPOSSIBILITY_NO_CLONING_THEOREM",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "REVENUE_EQUIVALENCE",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "CONCENTRATE",
       "hub": "SOCIAL_CHOICE_IMPOSSIBILITY",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "RANDOMIZE",
       "hub": "BROCAS_BINDING",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
+      "mean_score": 0.6421
+    },
+    {
+      "damage_op": "RANDOMIZE",
+      "hub": "HUMES_GUILLOTINE",
+      "svd_score": 1.0,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "CARNOT_LIMIT",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "IMPOSSIBILITY_BODE_SENSITIVITY_WATERBED",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "IMPOSSIBILITY_MODULARITY_EVOLVABILITY_TRADEOFF",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     },
     {
       "damage_op": "TRUNCATE",
       "hub": "SEN_LIBERAL_PARADOX",
       "svd_score": 1.0,
-      "tucker_score": 0.2843,
+      "tucker_score": 0.2842,
       "mean_score": 0.6421
     }
   ],
-  "consensus_count": 18,
+  "consensus_count": 19,
   "stability": {
     "stable": [],
     "new": [
@@ -1069,6 +1076,10 @@
         "hub": "EULER_CHARACTERISTIC_OBSTRUCTION"
       },
       {
+        "damage_op": "RANDOMIZE",
+        "hub": "HUMES_GUILLOTINE"
+      },
+      {
         "damage_op": "TRUNCATE",
         "hub": "ALGEBRIZATION_BARRIER"
       },
@@ -1108,7 +1119,7 @@
       }
     ],
     "stable_count": 0,
-    "new_count": 18,
+    "new_count": 19,
     "dropped_count": 3
   }
 }

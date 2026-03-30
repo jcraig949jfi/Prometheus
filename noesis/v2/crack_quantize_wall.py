@@ -491,6 +491,183 @@ quantize_resolutions = {
         'Lowenheim-Skolem concerns infinite models. Finite model theory is a different subject. QUANTIZE collapses the theorem. STRUCTURALLY_IMPOSSIBLE as a meaningful resolution.',
         True
     ),
+
+    # ===== ROUND 2: remaining no-match hubs =====
+    'ALGEBRIZATION_BARRIER': (
+        'Discrete Arithmetic Circuits',
+        'Restrict proofs to arithmetic circuits over finite fields GF(p). On a discrete finite field, algebraization barrier manifests as circuit depth bounds.',
+        False
+    ),
+    'BAIRE_CATEGORY': (
+        'Finite Intersection Property',
+        'On finite discrete spaces, every set is both open and closed. Baire category becomes trivial: no set is meager in a discrete topology.',
+        False
+    ),
+    'BGS_ORACLE_SEPARATION': (
+        'Finite Oracle Table',
+        'Replace oracle with a finite lookup table of N entries. Relativized separation becomes a finite combinatorial question.',
+        False
+    ),
+    'CHRONOLOGY_PROTECTION': (
+        'Discrete Causal Graph',
+        'Causal set theory: replace smooth spacetime with a discrete partial order. Closed timelike curves become cycles in a finite directed graph.',
+        False
+    ),
+    'CLASSIFICATION_IMPOSSIBILITY_WILD': (
+        'Finite Representation Type',
+        'Restrict to modules over finite-dimensional algebras with finite representation type. Complete discrete classification becomes possible.',
+        False
+    ),
+    'COMMUNICATION_COMPLEXITY_LOWER_BOUND': (
+        'Finite Protocol Tree',
+        'Quantize communication to discrete rounds of b-bit messages. Protocol tree is a finite discrete object.',
+        False
+    ),
+    'COSMIC_CENSORSHIP': (
+        'Causal Dynamical Triangulation',
+        'Spacetime as discrete simplicial complex. Singularities become identifiable boundary simplices. Censorship becomes combinatorial.',
+        False
+    ),
+    'GIBBARD_SATTERTHWAITE': (
+        'Binary Ballot Restriction',
+        'Restrict to binary ballots with 2 candidates. GS reduces to majority rule which IS strategy-proof.',
+        False
+    ),
+    'GOEDEL_INCOMPLETENESS_2': (
+        'Bounded Proof Length Consistency',
+        'In bounded arithmetic, consistency for proofs of length at most N is decidable. Quantize the proof search space.',
+        False
+    ),
+    'HUMES_GUILLOTINE': (
+        'Discrete Deontic Logic',
+        'Deontic logic on finite state spaces: discrete permission/obligation assignments. Is-ought gaps become enumerable.',
+        False
+    ),
+    'IMPOSSIBILITY_BALASSA_SAMUELSON_PRICE_CONVERGENCE': (
+        'Discrete Sector Model',
+        'Quantize economy into N discrete sectors with discrete productivity levels. Price convergence becomes finite equation system.',
+        False
+    ),
+    'IMPOSSIBILITY_BANACH_TARSKI_PARADOX': (
+        'Finite Piece Decomposition on Lattice',
+        'On a discrete lattice, volume is additive and finitely decomposable. The paradox requires continuous non-measurable sets. STRUCTURALLY_IMPOSSIBLE: quantization dissolves rather than resolves.',
+        True
+    ),
+    'IMPOSSIBILITY_COMPETITIVE_EQUILIBRIUM_INDIVISIBLE': (
+        'Discrete Ascending Auction',
+        'Walrasian tatonnement on integer prices. Kelso-Crawford gross substitutes condition on discrete lattice restores equilibrium.',
+        False
+    ),
+    'IMPOSSIBILITY_EASTIN_KNILL_THEOREM': (
+        'Solovay-Kitaev Gate Set Approximation',
+        'Approximate universal gates from finite discrete gate set (Clifford + T). Solovay-Kitaev: any unitary to epsilon using O(log^c(1/eps)) discrete gates.',
+        False
+    ),
+    'IMPOSSIBILITY_GROSSMAN_STIGLITZ_PARADOX': (
+        'Discrete Information Purchase',
+        'Quantize information acquisition to discrete costly signals. At each discrete price, efficiency is well-defined.',
+        False
+    ),
+    'IMPOSSIBILITY_KOLMOGOROV_SUPERPOSITION_COMPUTATIONAL_BARRIER': (
+        'Discrete Lookup Table',
+        'On a discrete grid, any multivariate function IS a finite lookup table. Representational barrier vanishes.',
+        False
+    ),
+    'IMPOSSIBILITY_LUCAS_CRITIQUE_POLICY_INVARIANCE': (
+        'Discrete Regime Switching Model',
+        'Markov switching: quantize policy regimes to discrete states. Lucas critique becomes finite state transition problem.',
+        False
+    ),
+    'IMPOSSIBILITY_MODULARITY_EVOLVABILITY_TRADEOFF': (
+        'Discrete Module Partition',
+        'Quantize phenotype into N discrete modules. Modularity-evolvability tradeoff becomes discrete graph partitioning.',
+        False
+    ),
+    'IMPOSSIBILITY_NO_BROADCASTING_THEOREM': (
+        'Finite Approximate Broadcasting',
+        'Approximate broadcasting to N copies with bounded fidelity on finite-dimensional systems.',
+        False
+    ),
+    'IMPOSSIBILITY_NO_FREE_LUNCH': (
+        'Finite Hypothesis Class PAC',
+        'With |H|=N, PAC learning gives sample complexity O(log N / eps). NFL becomes counting on finite hypotheses.',
+        False
+    ),
+    'IMPOSSIBILITY_NO_HIDING_THEOREM': (
+        'Finite Hilbert Space Purification',
+        'On finite-dimensional systems, information hides in discrete correlations with environment. Enumerable structure.',
+        False
+    ),
+    'IMPOSSIBILITY_QUANTUM_CAPACITY_NO_ADDITIVITY': (
+        'Finite Block Code Optimization',
+        'Block codes of length N on d-dim systems. Quantum capacity becomes finite optimization over discrete codebook.',
+        False
+    ),
+    'KAKUTANI_FIXED_POINT': (
+        'Tarski Lattice Fixed Point',
+        'Monotone maps on finite lattices have fixed points (Tarski). Kakutani on discrete grid becomes finite lattice computation.',
+        False
+    ),
+    'LEWONTIN_HERITABILITY': (
+        'Discrete ANOVA Decomposition',
+        'Quantize phenotype/genotype to discrete categories. Heritability = between/total variance ratio in finite table.',
+        False
+    ),
+    'META_CONCENTRATE_NONLOCAL': (
+        'Discrete Bell Test',
+        'Bell test with finite measurement settings. Nonlocality = linear program on discrete correlation polytope.',
+        False
+    ),
+    'META_INVERT_INVARIANCE': (
+        'Finite Symmetry Group Check',
+        'Quantize symmetry group to finite subgroup. Invariance under discrete group is finitely checkable.',
+        False
+    ),
+    'NO_HIDING': (
+        'Finite Hilbert Space Redistribution',
+        'Finite-dimensional no-hiding has constructive proofs. Information redistributes to discrete entanglement.',
+        False
+    ),
+    'ONE_TIME_PAD_NECESSITY': (
+        'Block Cipher Quantization',
+        'AES: quantize plaintext into fixed-size blocks with finite key. Trade perfect secrecy for computational security.',
+        False
+    ),
+    'PARIS_HARRINGTON': (
+        'Bounded Ramsey Computation',
+        'For each specific k,l the Ramsey number R(k,l) is computable. Quantize to finite bounds.',
+        False
+    ),
+    'PROBLEM_OF_INDUCTION': (
+        'Finite Bayesian Model Selection',
+        'Finite hypothesis class + discrete evidence = well-defined Bayesian posterior. Induction becomes model selection.',
+        False
+    ),
+    'RIGIDITY_MOSTOW': (
+        'Discrete Hyperbolic Group',
+        'Word-hyperbolic groups have no deformations (Sela). Rigidity is a discrete/combinatorial statement.',
+        False
+    ),
+    'SOCIAL_CHOICE_IMPOSSIBILITY': (
+        'Finite Ballot Enumeration',
+        'N voters, K candidates, discrete ballots: Arrow impossibility is already a finite combinatorial theorem.',
+        False
+    ),
+    'SZEMEREDI_REGULARITY_LIMIT': (
+        'Graph Regularity on Finite Graphs',
+        'Szemeredi regularity IS about finite graphs. Partition into discrete epsilon-regular pairs. Already quantized.',
+        False
+    ),
+    'WEDDERBURN_LITTLE': (
+        'Finite Field Classification',
+        'Every finite division ring is a field. GF(p^n) classification IS the quantized/discrete setting.',
+        False
+    ),
+    'WEINBERG_MASSLESS_CONSTRAINT': (
+        'Lattice Gauge Theory',
+        'Discrete spacetime lattice: massless particles have discrete momenta on Brillouin zone. Nielsen-Ninomiya fermion doubling.',
+        False
+    ),
 }
 
 # Step 3: Insert spokes where real techniques exist
