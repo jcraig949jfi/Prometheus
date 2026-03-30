@@ -408,3 +408,42 @@ Every ethnomathematical system in the database now has at least one explicit con
 ### The tradition dimension is now CONNECTED to the hub grid. 211 explicit edges. Frontier CLOSED.
 
 ---
+
+## Updated Room Map — After Deep Exploration
+
+### Walls Status (revised):
+
+| Wall | Original | After Depth-3 | After Wall Cracking | Truly Impenetrable |
+|------|----------|---------------|--------------------|--------------------|
+| CONCENTRATE (non-local) | 8 cells FIRM | 0 (all cracked at depth 3) | 0 | **NONE** |
+| INVERT (invariance) | 43 cells FIRM | 43 (partial crack via LINEARIZE) | 36 (7 cracked) | ~30 (structural) |
+| QUANTIZE (discrete) | 39 cells FIRM | 39 | 4 (34 cracked) | **3** (Cantor, CH, Banach-Tarski) |
+
+### The 3 Truly Impenetrable Cells:
+1. QUANTIZE × Cantor Diagonalization — quantization dissolves the theorem (it REQUIRES infinity)
+2. QUANTIZE × Independence of CH — forcing requires infinite sets by construction
+3. QUANTIZE × Banach-Tarski — non-measurability requires the axiom of choice on uncountable sets
+
+These are HARD walls. They resist because the impossibility itself requires the continuous/infinite structure that QUANTIZE would destroy. Quantizing them doesn't resolve the impossibility — it makes the impossibility stop existing. That's not a resolution, it's dissolution.
+
+### Ceiling (confirmed):
+Meta-recursion terminates at level 3-4. Gödel is the fixed point.
+
+### Tradition Dimension (newly explored):
+211 cross-domain edges connecting ethnomathematics to impossibility hubs.
+The room extends sideways into cultural mathematics. Archaeological predictions are now possible.
+
+### Composition Depth (expanded):
+2,044 depth-2 compositions tagged. No differentiation at depth 2 (all complete hubs are uniform).
+Depth 3 is where structural differentiation should emerge.
+
+### Final Numbers:
+- 242 hubs, 4,601 spokes, 2,634 cross-domain edges
+- 93.8% fill rate
+- 3 truly impenetrable cells (all QUANTIZE on infinity-dependent theorems)
+- 1 ceiling (meta-recursion at level 3-4)
+- 211 tradition-hub mappings
+- 2,044 depth-2 compositions
+
+---
+
