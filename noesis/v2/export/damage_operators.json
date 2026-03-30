@@ -1,0 +1,74 @@
+[
+  {
+    "operator_id": "D_DISTRIBUTE",
+    "name": "DISTRIBUTE",
+    "meaning": "Spread error evenly",
+    "primitive_form": "SYMMETRIZE",
+    "canonical_form": "SYMMETRIZE + COMPOSE",
+    "examples": "Equal temperament, Gaussian uncertainty, Robinson projection"
+  },
+  {
+    "operator_id": "D_CONCENTRATE",
+    "name": "CONCENTRATE",
+    "meaning": "Localize error",
+    "primitive_form": "BREAK_SYMMETRY",
+    "canonical_form": "BREAK_SYMMETRY + MAP",
+    "examples": "Wolf interval, Mercator polar distortion, Dictatorship"
+  },
+  {
+    "operator_id": "D_TRUNCATE",
+    "name": "TRUNCATE",
+    "meaning": "Remove problematic region",
+    "primitive_form": "REDUCE",
+    "canonical_form": "BREAK_SYMMETRY + REDUCE",
+    "examples": "Type theory, Bandlimiting, Single-peaked preferences"
+  },
+  {
+    "operator_id": "D_EXTEND",
+    "name": "EXTEND",
+    "meaning": "Add structure/resources",
+    "primitive_form": "EXTEND",
+    "canonical_form": "EXTEND + COMPOSE",
+    "examples": "Error correction, Oversampling, Increased energy (Carnot)"
+  },
+  {
+    "operator_id": "D_RANDOMIZE",
+    "name": "RANDOMIZE",
+    "meaning": "Convert error to probability",
+    "primitive_form": "STOCHASTICIZE",
+    "canonical_form": "STOCHASTICIZE + COMPOSE",
+    "examples": "Quantum ensembles, Bayesian inference, Eventual consistency"
+  },
+  {
+    "operator_id": "D_HIERARCHIZE",
+    "name": "HIERARCHIZE",
+    "meaning": "Move failure up a level",
+    "primitive_form": "DUALIZE + EXTEND",
+    "canonical_form": "DUALIZE + EXTEND",
+    "examples": "Meta-systems (Godel), Multi-scale physics, Legal appeals"
+  },
+  {
+    "operator_id": "D_PARTITION",
+    "name": "PARTITION",
+    "meaning": "Split domain",
+    "primitive_form": "BREAK_SYMMETRY + COMPOSE",
+    "canonical_form": "BREAK_SYMMETRY + COMPOSE",
+    "examples": "Local projections, Sharded databases, Piecewise models"
+  },
+  {
+    "operator_id": "D_QUANTIZE",
+    "name": "QUANTIZE",
+    "meaning": "Force continuous space onto discrete grid",
+    "primitive_form": "MAP + TRUNCATE",
+    "canonical_form": "MAP + TRUNCATE",
+    "examples": "Equal temperament grid, Type theory levels, Constructive math provability"
+  },
+  {
+    "operator_id": "D_INVERT",
+    "name": "INVERT",
+    "meaning": "Reverse the structural direction/vector",
+    "primitive_form": "DUALIZE + MAP",
+    "canonical_form": "DUALIZE + MAP",
+    "examples": "Negative harmony, SIC signal subtraction, p-adic reversal"
+  }
+]
