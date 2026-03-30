@@ -1,0 +1,1533 @@
+{
+  "metadata": {
+    "description": "Operator Interaction Matrix: algebraic structure of 9 damage operators",
+    "operators": [
+      "CONCENTRATE",
+      "DISTRIBUTE",
+      "EXTEND",
+      "HIERARCHIZE",
+      "INVERT",
+      "PARTITION",
+      "QUANTIZE",
+      "RANDOMIZE",
+      "TRUNCATE"
+    ],
+    "total_chains": 99,
+    "total_operations": 194,
+    "total_ethno_systems": 153,
+    "classification_distribution": {
+      "INDEPENDENT": 50,
+      "ANTAGONISTIC": 8,
+      "REDUNDANT": 14
+    }
+  },
+  "compact_matrix": {
+    "CONCENTRATE": {
+      "CONCENTRATE": "SELF",
+      "DISTRIBUTE": "INDEPENDENT",
+      "EXTEND": "INDEPENDENT",
+      "HIERARCHIZE": "INDEPENDENT",
+      "INVERT": "INDEPENDENT",
+      "PARTITION": "ANTAGONISTIC",
+      "QUANTIZE": "INDEPENDENT",
+      "RANDOMIZE": "INDEPENDENT",
+      "TRUNCATE": "REDUNDANT"
+    },
+    "DISTRIBUTE": {
+      "CONCENTRATE": "INDEPENDENT",
+      "DISTRIBUTE": "SELF",
+      "EXTEND": "REDUNDANT",
+      "HIERARCHIZE": "INDEPENDENT",
+      "INVERT": "INDEPENDENT",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "INDEPENDENT",
+      "RANDOMIZE": "INDEPENDENT",
+      "TRUNCATE": "REDUNDANT"
+    },
+    "EXTEND": {
+      "CONCENTRATE": "INDEPENDENT",
+      "DISTRIBUTE": "REDUNDANT",
+      "EXTEND": "SELF",
+      "HIERARCHIZE": "ANTAGONISTIC",
+      "INVERT": "INDEPENDENT",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "INDEPENDENT",
+      "RANDOMIZE": "INDEPENDENT",
+      "TRUNCATE": "REDUNDANT"
+    },
+    "HIERARCHIZE": {
+      "CONCENTRATE": "INDEPENDENT",
+      "DISTRIBUTE": "INDEPENDENT",
+      "EXTEND": "ANTAGONISTIC",
+      "HIERARCHIZE": "SELF",
+      "INVERT": "ANTAGONISTIC",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "INDEPENDENT",
+      "RANDOMIZE": "INDEPENDENT",
+      "TRUNCATE": "INDEPENDENT"
+    },
+    "INVERT": {
+      "CONCENTRATE": "INDEPENDENT",
+      "DISTRIBUTE": "INDEPENDENT",
+      "EXTEND": "INDEPENDENT",
+      "HIERARCHIZE": "ANTAGONISTIC",
+      "INVERT": "SELF",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "ANTAGONISTIC",
+      "RANDOMIZE": "INDEPENDENT",
+      "TRUNCATE": "INDEPENDENT"
+    },
+    "PARTITION": {
+      "CONCENTRATE": "ANTAGONISTIC",
+      "DISTRIBUTE": "INDEPENDENT",
+      "EXTEND": "INDEPENDENT",
+      "HIERARCHIZE": "INDEPENDENT",
+      "INVERT": "INDEPENDENT",
+      "PARTITION": "SELF",
+      "QUANTIZE": "INDEPENDENT",
+      "RANDOMIZE": "INDEPENDENT",
+      "TRUNCATE": "INDEPENDENT"
+    },
+    "QUANTIZE": {
+      "CONCENTRATE": "INDEPENDENT",
+      "DISTRIBUTE": "INDEPENDENT",
+      "EXTEND": "INDEPENDENT",
+      "HIERARCHIZE": "INDEPENDENT",
+      "INVERT": "ANTAGONISTIC",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "SELF",
+      "RANDOMIZE": "REDUNDANT",
+      "TRUNCATE": "REDUNDANT"
+    },
+    "RANDOMIZE": {
+      "CONCENTRATE": "INDEPENDENT",
+      "DISTRIBUTE": "INDEPENDENT",
+      "EXTEND": "INDEPENDENT",
+      "HIERARCHIZE": "INDEPENDENT",
+      "INVERT": "INDEPENDENT",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "REDUNDANT",
+      "RANDOMIZE": "SELF",
+      "TRUNCATE": "REDUNDANT"
+    },
+    "TRUNCATE": {
+      "CONCENTRATE": "REDUNDANT",
+      "DISTRIBUTE": "REDUNDANT",
+      "EXTEND": "REDUNDANT",
+      "HIERARCHIZE": "INDEPENDENT",
+      "INVERT": "INDEPENDENT",
+      "PARTITION": "INDEPENDENT",
+      "QUANTIZE": "REDUNDANT",
+      "RANDOMIZE": "REDUNDANT",
+      "TRUNCATE": "SELF"
+    }
+  },
+  "findings": {
+    "most_synergistic": [],
+    "most_antagonistic": [
+      {
+        "pair": "CONCENTRATE->PARTITION",
+        "strength": 1.0,
+        "shared_primitives": [
+          "BREAK_SYMMETRY"
+        ],
+        "cooccurrences": 0
+      },
+      {
+        "pair": "PARTITION->CONCENTRATE",
+        "strength": 1.0,
+        "shared_primitives": [
+          "BREAK_SYMMETRY"
+        ],
+        "cooccurrences": 0
+      },
+      {
+        "pair": "EXTEND->HIERARCHIZE",
+        "strength": 0.5,
+        "shared_primitives": [
+          "EXTEND"
+        ],
+        "cooccurrences": 1
+      },
+      {
+        "pair": "HIERARCHIZE->EXTEND",
+        "strength": 0.5,
+        "shared_primitives": [
+          "EXTEND"
+        ],
+        "cooccurrences": 1
+      },
+      {
+        "pair": "HIERARCHIZE->INVERT",
+        "strength": 0.5,
+        "shared_primitives": [
+          "DUALIZE"
+        ],
+        "cooccurrences": 1
+      },
+      {
+        "pair": "INVERT->HIERARCHIZE",
+        "strength": 0.5,
+        "shared_primitives": [
+          "DUALIZE"
+        ],
+        "cooccurrences": 1
+      },
+      {
+        "pair": "INVERT->QUANTIZE",
+        "strength": 0.5,
+        "shared_primitives": [
+          "MAP"
+        ],
+        "cooccurrences": 1
+      },
+      {
+        "pair": "QUANTIZE->INVERT",
+        "strength": 0.5,
+        "shared_primitives": [
+          "MAP"
+        ],
+        "cooccurrences": 1
+      }
+    ],
+    "redundant_pairs": [
+      {
+        "pair": "QUANTIZE->TRUNCATE",
+        "strength": 0.832,
+        "keyword_overlap": 0.832
+      },
+      {
+        "pair": "TRUNCATE->QUANTIZE",
+        "strength": 0.832,
+        "keyword_overlap": 0.832
+      },
+      {
+        "pair": "CONCENTRATE->TRUNCATE",
+        "strength": 0.72,
+        "keyword_overlap": 0.72
+      },
+      {
+        "pair": "TRUNCATE->CONCENTRATE",
+        "strength": 0.72,
+        "keyword_overlap": 0.72
+      },
+      {
+        "pair": "QUANTIZE->RANDOMIZE",
+        "strength": 0.707,
+        "keyword_overlap": 0.707
+      },
+      {
+        "pair": "RANDOMIZE->QUANTIZE",
+        "strength": 0.707,
+        "keyword_overlap": 0.707
+      },
+      {
+        "pair": "DISTRIBUTE->TRUNCATE",
+        "strength": 0.689,
+        "keyword_overlap": 0.689
+      },
+      {
+        "pair": "TRUNCATE->DISTRIBUTE",
+        "strength": 0.689,
+        "keyword_overlap": 0.689
+      },
+      {
+        "pair": "RANDOMIZE->TRUNCATE",
+        "strength": 0.662,
+        "keyword_overlap": 0.662
+      },
+      {
+        "pair": "TRUNCATE->RANDOMIZE",
+        "strength": 0.662,
+        "keyword_overlap": 0.662
+      }
+    ],
+    "synergistic_cycles_3": [],
+    "mutual_synergy_pairs": [],
+    "synergy_out_degree": {
+      "CONCENTRATE": 0,
+      "DISTRIBUTE": 0,
+      "EXTEND": 0,
+      "HIERARCHIZE": 0,
+      "INVERT": 0,
+      "PARTITION": 0,
+      "QUANTIZE": 0,
+      "RANDOMIZE": 0,
+      "TRUNCATE": 0
+    },
+    "synergy_in_degree": {
+      "CONCENTRATE": 0,
+      "DISTRIBUTE": 0,
+      "EXTEND": 0,
+      "HIERARCHIZE": 0,
+      "INVERT": 0,
+      "PARTITION": 0,
+      "QUANTIZE": 0,
+      "RANDOMIZE": 0,
+      "TRUNCATE": 0
+    }
+  },
+  "pair_details": {
+    "CONCENTRATE->DISTRIBUTE": {
+      "from": "CONCENTRATE",
+      "to": "DISTRIBUTE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 2,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 2,
+      "avg_keyword_overlap": 0.626,
+      "shared_primitives": [],
+      "a_only_chains": 15,
+      "b_only_chains": 17,
+      "co_chain_names": [
+        "Higgs Mechanism (U(1) Model)",
+        "Landau Theory of Phase Transition"
+      ]
+    },
+    "CONCENTRATE->EXTEND": {
+      "from": "CONCENTRATE",
+      "to": "EXTEND",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 2,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 2,
+      "avg_keyword_overlap": 0.646,
+      "shared_primitives": [],
+      "a_only_chains": 15,
+      "b_only_chains": 17,
+      "co_chain_names": [
+        "Higgs Mechanism",
+        "Crystal Formation"
+      ]
+    },
+    "CONCENTRATE->HIERARCHIZE": {
+      "from": "CONCENTRATE",
+      "to": "HIERARCHIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 1,
+      "co_chain_names": []
+    },
+    "CONCENTRATE->INVERT": {
+      "from": "CONCENTRATE",
+      "to": "INVERT",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.7,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Electromagnetic Duality (Vacuum Maxwell)"
+      ]
+    },
+    "CONCENTRATE->PARTITION": {
+      "from": "CONCENTRATE",
+      "to": "PARTITION",
+      "classification": "ANTAGONISTIC",
+      "strength": 1.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [
+        "BREAK_SYMMETRY"
+      ],
+      "a_only_chains": 17,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "CONCENTRATE->QUANTIZE": {
+      "from": "CONCENTRATE",
+      "to": "QUANTIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.864,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 20,
+      "co_chain_names": [
+        "Landau Phase Transition"
+      ]
+    },
+    "CONCENTRATE->RANDOMIZE": {
+      "from": "CONCENTRATE",
+      "to": "RANDOMIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.571,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Magnetization"
+      ]
+    },
+    "CONCENTRATE->TRUNCATE": {
+      "from": "CONCENTRATE",
+      "to": "TRUNCATE",
+      "classification": "REDUNDANT",
+      "strength": 0.72,
+      "chain_cooccurrences": 7,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 7,
+      "avg_keyword_overlap": 0.72,
+      "shared_primitives": [],
+      "a_only_chains": 10,
+      "b_only_chains": 33,
+      "co_chain_names": [
+        "Spontaneous Magnetization (Ferromagnetism)",
+        "Spontaneous Magnetization — Ising Model",
+        "Spontaneous Magnetization (Ising Mean Field)",
+        "Landau Phase Transition",
+        "Pitchfork Bifurcation — Z₂ Symmetry Breaking"
+      ]
+    },
+    "DISTRIBUTE->CONCENTRATE": {
+      "from": "DISTRIBUTE",
+      "to": "CONCENTRATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 2,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 2,
+      "avg_keyword_overlap": 0.626,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 15,
+      "co_chain_names": [
+        "Higgs Mechanism (U(1) Model)",
+        "Landau Theory of Phase Transition"
+      ]
+    },
+    "DISTRIBUTE->EXTEND": {
+      "from": "DISTRIBUTE",
+      "to": "EXTEND",
+      "classification": "REDUNDANT",
+      "strength": 0.641,
+      "chain_cooccurrences": 5,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 5,
+      "avg_keyword_overlap": 0.641,
+      "shared_primitives": [],
+      "a_only_chains": 14,
+      "b_only_chains": 14,
+      "co_chain_names": [
+        "Burnside Lemma / Polya Enumeration",
+        "Reynolds Averaged Navier-Stokes (RANS)",
+        "Wave Function Symmetrization — Bosons and Fermions",
+        "Wavefunction Symmetrization for Identical Particles",
+        "Gauge Symmetrization"
+      ]
+    },
+    "DISTRIBUTE->HIERARCHIZE": {
+      "from": "DISTRIBUTE",
+      "to": "HIERARCHIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 1,
+      "co_chain_names": []
+    },
+    "DISTRIBUTE->INVERT": {
+      "from": "DISTRIBUTE",
+      "to": "INVERT",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "DISTRIBUTE->PARTITION": {
+      "from": "DISTRIBUTE",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "DISTRIBUTE->QUANTIZE": {
+      "from": "DISTRIBUTE",
+      "to": "QUANTIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 4,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 4,
+      "avg_keyword_overlap": 0.881,
+      "shared_primitives": [],
+      "a_only_chains": 15,
+      "b_only_chains": 17,
+      "co_chain_names": [
+        "Group Averaging (Reynolds Operator)",
+        "Symmetrization of Identical Particles",
+        "Burnside Counting — Objects to Orbits",
+        "Weyl Character Formula (Isotypic Projection)"
+      ]
+    },
+    "DISTRIBUTE->RANDOMIZE": {
+      "from": "DISTRIBUTE",
+      "to": "RANDOMIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.5,
+      "shared_primitives": [],
+      "a_only_chains": 18,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Markov Chain Monte Carlo Sampling"
+      ]
+    },
+    "DISTRIBUTE->TRUNCATE": {
+      "from": "DISTRIBUTE",
+      "to": "TRUNCATE",
+      "classification": "REDUNDANT",
+      "strength": 0.689,
+      "chain_cooccurrences": 9,
+      "ops_cooccurrences": 21,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 30,
+      "avg_keyword_overlap": 0.689,
+      "shared_primitives": [],
+      "a_only_chains": 10,
+      "b_only_chains": 31,
+      "co_chain_names": [
+        "Reynolds Averaging of Turbulent Flow",
+        "Reynolds Averaging in Turbulent Flow",
+        "Group Averaging (Reynolds Operator)",
+        "Wave Function Symmetrization — Bosons and Fermions",
+        "Symmetrization of Identical Particles"
+      ]
+    },
+    "EXTEND->CONCENTRATE": {
+      "from": "EXTEND",
+      "to": "CONCENTRATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 2,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 2,
+      "avg_keyword_overlap": 0.646,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 15,
+      "co_chain_names": [
+        "Higgs Mechanism",
+        "Crystal Formation"
+      ]
+    },
+    "EXTEND->DISTRIBUTE": {
+      "from": "EXTEND",
+      "to": "DISTRIBUTE",
+      "classification": "REDUNDANT",
+      "strength": 0.641,
+      "chain_cooccurrences": 5,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 5,
+      "avg_keyword_overlap": 0.641,
+      "shared_primitives": [],
+      "a_only_chains": 14,
+      "b_only_chains": 14,
+      "co_chain_names": [
+        "Burnside Lemma / Polya Enumeration",
+        "Reynolds Averaged Navier-Stokes (RANS)",
+        "Wave Function Symmetrization — Bosons and Fermions",
+        "Wavefunction Symmetrization for Identical Particles",
+        "Gauge Symmetrization"
+      ]
+    },
+    "EXTEND->HIERARCHIZE": {
+      "from": "EXTEND",
+      "to": "HIERARCHIZE",
+      "classification": "ANTAGONISTIC",
+      "strength": 0.5,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.714,
+      "shared_primitives": [
+        "EXTEND"
+      ],
+      "a_only_chains": 18,
+      "b_only_chains": 0,
+      "co_chain_names": [
+        "Newton_to_Hamiltonian"
+      ]
+    },
+    "EXTEND->INVERT": {
+      "from": "EXTEND",
+      "to": "INVERT",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.333,
+      "shared_primitives": [],
+      "a_only_chains": 18,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Newton_to_Hamiltonian"
+      ]
+    },
+    "EXTEND->PARTITION": {
+      "from": "EXTEND",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "EXTEND->QUANTIZE": {
+      "from": "EXTEND",
+      "to": "QUANTIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 3,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 3,
+      "avg_keyword_overlap": 0.378,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Thermodynamics_to_Information",
+        "Heat_to_Brownian",
+        "Least_Action_to_Field_Theory"
+      ]
+    },
+    "EXTEND->RANDOMIZE": {
+      "from": "EXTEND",
+      "to": "RANDOMIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 4,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 4,
+      "avg_keyword_overlap": 0.742,
+      "shared_primitives": [],
+      "a_only_chains": 15,
+      "b_only_chains": 13,
+      "co_chain_names": [
+        "Langevin Dynamics",
+        "Heat_to_Brownian",
+        "ODE → SDE",
+        "Path-Integral Formulation of Quantum Mechanics"
+      ]
+    },
+    "EXTEND->TRUNCATE": {
+      "from": "EXTEND",
+      "to": "TRUNCATE",
+      "classification": "REDUNDANT",
+      "strength": 0.625,
+      "chain_cooccurrences": 10,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 10,
+      "avg_keyword_overlap": 0.625,
+      "shared_primitives": [],
+      "a_only_chains": 9,
+      "b_only_chains": 30,
+      "co_chain_names": [
+        "Thermodynamics_to_Information",
+        "Perturbation Theory via Taylor Series Expansion",
+        "Born Approximation in Scattering",
+        "Langevin Dynamics",
+        "Heat_to_Brownian"
+      ]
+    },
+    "HIERARCHIZE->CONCENTRATE": {
+      "from": "HIERARCHIZE",
+      "to": "CONCENTRATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 1,
+      "b_only_chains": 17,
+      "co_chain_names": []
+    },
+    "HIERARCHIZE->DISTRIBUTE": {
+      "from": "HIERARCHIZE",
+      "to": "DISTRIBUTE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 1,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "HIERARCHIZE->EXTEND": {
+      "from": "HIERARCHIZE",
+      "to": "EXTEND",
+      "classification": "ANTAGONISTIC",
+      "strength": 0.5,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.714,
+      "shared_primitives": [
+        "EXTEND"
+      ],
+      "a_only_chains": 0,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Newton_to_Hamiltonian"
+      ]
+    },
+    "HIERARCHIZE->INVERT": {
+      "from": "HIERARCHIZE",
+      "to": "INVERT",
+      "classification": "ANTAGONISTIC",
+      "strength": 0.5,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.556,
+      "shared_primitives": [
+        "DUALIZE"
+      ],
+      "a_only_chains": 0,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Newton_to_Hamiltonian"
+      ]
+    },
+    "HIERARCHIZE->PARTITION": {
+      "from": "HIERARCHIZE",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 1,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "HIERARCHIZE->QUANTIZE": {
+      "from": "HIERARCHIZE",
+      "to": "QUANTIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 1,
+      "b_only_chains": 21,
+      "co_chain_names": []
+    },
+    "HIERARCHIZE->RANDOMIZE": {
+      "from": "HIERARCHIZE",
+      "to": "RANDOMIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 1,
+      "b_only_chains": 17,
+      "co_chain_names": []
+    },
+    "HIERARCHIZE->TRUNCATE": {
+      "from": "HIERARCHIZE",
+      "to": "TRUNCATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 1,
+      "b_only_chains": 40,
+      "co_chain_names": []
+    },
+    "INVERT->CONCENTRATE": {
+      "from": "INVERT",
+      "to": "CONCENTRATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.7,
+      "shared_primitives": [],
+      "a_only_chains": 18,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Electromagnetic Duality (Vacuum Maxwell)"
+      ]
+    },
+    "INVERT->DISTRIBUTE": {
+      "from": "INVERT",
+      "to": "DISTRIBUTE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "INVERT->EXTEND": {
+      "from": "INVERT",
+      "to": "EXTEND",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.333,
+      "shared_primitives": [],
+      "a_only_chains": 18,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Newton_to_Hamiltonian"
+      ]
+    },
+    "INVERT->HIERARCHIZE": {
+      "from": "INVERT",
+      "to": "HIERARCHIZE",
+      "classification": "ANTAGONISTIC",
+      "strength": 0.5,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.556,
+      "shared_primitives": [
+        "DUALIZE"
+      ],
+      "a_only_chains": 18,
+      "b_only_chains": 0,
+      "co_chain_names": [
+        "Newton_to_Hamiltonian"
+      ]
+    },
+    "INVERT->PARTITION": {
+      "from": "INVERT",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "INVERT->QUANTIZE": {
+      "from": "INVERT",
+      "to": "QUANTIZE",
+      "classification": "ANTAGONISTIC",
+      "strength": 0.5,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.826,
+      "shared_primitives": [
+        "MAP"
+      ],
+      "a_only_chains": 18,
+      "b_only_chains": 20,
+      "co_chain_names": [
+        "Electromagnetic Duality Transformation"
+      ]
+    },
+    "INVERT->RANDOMIZE": {
+      "from": "INVERT",
+      "to": "RANDOMIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 19,
+      "b_only_chains": 17,
+      "co_chain_names": []
+    },
+    "INVERT->TRUNCATE": {
+      "from": "INVERT",
+      "to": "TRUNCATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.783,
+      "shared_primitives": [],
+      "a_only_chains": 18,
+      "b_only_chains": 39,
+      "co_chain_names": [
+        "Electromagnetic Duality Transformation"
+      ]
+    },
+    "PARTITION->CONCENTRATE": {
+      "from": "PARTITION",
+      "to": "CONCENTRATE",
+      "classification": "ANTAGONISTIC",
+      "strength": 1.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [
+        "BREAK_SYMMETRY"
+      ],
+      "a_only_chains": 0,
+      "b_only_chains": 17,
+      "co_chain_names": []
+    },
+    "PARTITION->DISTRIBUTE": {
+      "from": "PARTITION",
+      "to": "DISTRIBUTE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "PARTITION->EXTEND": {
+      "from": "PARTITION",
+      "to": "EXTEND",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "PARTITION->HIERARCHIZE": {
+      "from": "PARTITION",
+      "to": "HIERARCHIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 1,
+      "co_chain_names": []
+    },
+    "PARTITION->INVERT": {
+      "from": "PARTITION",
+      "to": "INVERT",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "PARTITION->QUANTIZE": {
+      "from": "PARTITION",
+      "to": "QUANTIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 21,
+      "co_chain_names": []
+    },
+    "PARTITION->RANDOMIZE": {
+      "from": "PARTITION",
+      "to": "RANDOMIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 17,
+      "co_chain_names": []
+    },
+    "PARTITION->TRUNCATE": {
+      "from": "PARTITION",
+      "to": "TRUNCATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 0,
+      "b_only_chains": 40,
+      "co_chain_names": []
+    },
+    "QUANTIZE->CONCENTRATE": {
+      "from": "QUANTIZE",
+      "to": "CONCENTRATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.864,
+      "shared_primitives": [],
+      "a_only_chains": 20,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Landau Phase Transition"
+      ]
+    },
+    "QUANTIZE->DISTRIBUTE": {
+      "from": "QUANTIZE",
+      "to": "DISTRIBUTE",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 4,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 4,
+      "avg_keyword_overlap": 0.881,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 15,
+      "co_chain_names": [
+        "Group Averaging (Reynolds Operator)",
+        "Symmetrization of Identical Particles",
+        "Burnside Counting — Objects to Orbits",
+        "Weyl Character Formula (Isotypic Projection)"
+      ]
+    },
+    "QUANTIZE->EXTEND": {
+      "from": "QUANTIZE",
+      "to": "EXTEND",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 3,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 3,
+      "avg_keyword_overlap": 0.378,
+      "shared_primitives": [],
+      "a_only_chains": 18,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Thermodynamics_to_Information",
+        "Heat_to_Brownian",
+        "Least_Action_to_Field_Theory"
+      ]
+    },
+    "QUANTIZE->HIERARCHIZE": {
+      "from": "QUANTIZE",
+      "to": "HIERARCHIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 21,
+      "b_only_chains": 1,
+      "co_chain_names": []
+    },
+    "QUANTIZE->INVERT": {
+      "from": "QUANTIZE",
+      "to": "INVERT",
+      "classification": "ANTAGONISTIC",
+      "strength": 0.5,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.826,
+      "shared_primitives": [
+        "MAP"
+      ],
+      "a_only_chains": 20,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Electromagnetic Duality Transformation"
+      ]
+    },
+    "QUANTIZE->PARTITION": {
+      "from": "QUANTIZE",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 21,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "QUANTIZE->RANDOMIZE": {
+      "from": "QUANTIZE",
+      "to": "RANDOMIZE",
+      "classification": "REDUNDANT",
+      "strength": 0.707,
+      "chain_cooccurrences": 5,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 5,
+      "avg_keyword_overlap": 0.707,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 12,
+      "co_chain_names": [
+        "Heat_to_Brownian",
+        "Langevin Equation — Deterministic to Stochastic Dynamics",
+        "Langevin Equation from Deterministic Dynamics",
+        "Geometric Brownian Motion (Black-Scholes Foundation)",
+        "Markov Chain Monte Carlo"
+      ]
+    },
+    "QUANTIZE->TRUNCATE": {
+      "from": "QUANTIZE",
+      "to": "TRUNCATE",
+      "classification": "REDUNDANT",
+      "strength": 0.832,
+      "chain_cooccurrences": 21,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 21,
+      "avg_keyword_overlap": 0.832,
+      "shared_primitives": [
+        "REDUCE"
+      ],
+      "a_only_chains": 0,
+      "b_only_chains": 19,
+      "co_chain_names": [
+        "Thermodynamics_to_Information",
+        "WKB Semiclassical Approximation",
+        "Maxwell_to_Wave",
+        "Jacobian Stability Analysis",
+        "Heat_to_Brownian"
+      ]
+    },
+    "RANDOMIZE->CONCENTRATE": {
+      "from": "RANDOMIZE",
+      "to": "CONCENTRATE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.571,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Magnetization"
+      ]
+    },
+    "RANDOMIZE->DISTRIBUTE": {
+      "from": "RANDOMIZE",
+      "to": "DISTRIBUTE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.5,
+      "shared_primitives": [],
+      "a_only_chains": 16,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Markov Chain Monte Carlo Sampling"
+      ]
+    },
+    "RANDOMIZE->EXTEND": {
+      "from": "RANDOMIZE",
+      "to": "EXTEND",
+      "classification": "INDEPENDENT",
+      "strength": 0.5,
+      "chain_cooccurrences": 4,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 4,
+      "avg_keyword_overlap": 0.742,
+      "shared_primitives": [],
+      "a_only_chains": 13,
+      "b_only_chains": 15,
+      "co_chain_names": [
+        "Langevin Dynamics",
+        "Heat_to_Brownian",
+        "ODE → SDE",
+        "Path-Integral Formulation of Quantum Mechanics"
+      ]
+    },
+    "RANDOMIZE->HIERARCHIZE": {
+      "from": "RANDOMIZE",
+      "to": "HIERARCHIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 1,
+      "co_chain_names": []
+    },
+    "RANDOMIZE->INVERT": {
+      "from": "RANDOMIZE",
+      "to": "INVERT",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 19,
+      "co_chain_names": []
+    },
+    "RANDOMIZE->PARTITION": {
+      "from": "RANDOMIZE",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 17,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "RANDOMIZE->QUANTIZE": {
+      "from": "RANDOMIZE",
+      "to": "QUANTIZE",
+      "classification": "REDUNDANT",
+      "strength": 0.707,
+      "chain_cooccurrences": 5,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 5,
+      "avg_keyword_overlap": 0.707,
+      "shared_primitives": [],
+      "a_only_chains": 12,
+      "b_only_chains": 16,
+      "co_chain_names": [
+        "Heat_to_Brownian",
+        "Langevin Equation — Deterministic to Stochastic Dynamics",
+        "Langevin Equation from Deterministic Dynamics",
+        "Geometric Brownian Motion (Black-Scholes Foundation)",
+        "Markov Chain Monte Carlo"
+      ]
+    },
+    "RANDOMIZE->TRUNCATE": {
+      "from": "RANDOMIZE",
+      "to": "TRUNCATE",
+      "classification": "REDUNDANT",
+      "strength": 0.662,
+      "chain_cooccurrences": 9,
+      "ops_cooccurrences": 47,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 56,
+      "avg_keyword_overlap": 0.662,
+      "shared_primitives": [],
+      "a_only_chains": 8,
+      "b_only_chains": 31,
+      "co_chain_names": [
+        "Langevin Dynamics",
+        "Heat_to_Brownian",
+        "Langevin Equation — Deterministic to Stochastic Dynamics",
+        "Path Integral Formulation",
+        "ODE → SDE"
+      ]
+    },
+    "TRUNCATE->CONCENTRATE": {
+      "from": "TRUNCATE",
+      "to": "CONCENTRATE",
+      "classification": "REDUNDANT",
+      "strength": 0.72,
+      "chain_cooccurrences": 7,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 7,
+      "avg_keyword_overlap": 0.72,
+      "shared_primitives": [],
+      "a_only_chains": 33,
+      "b_only_chains": 10,
+      "co_chain_names": [
+        "Spontaneous Magnetization (Ferromagnetism)",
+        "Spontaneous Magnetization — Ising Model",
+        "Spontaneous Magnetization (Ising Mean Field)",
+        "Landau Phase Transition",
+        "Pitchfork Bifurcation — Z₂ Symmetry Breaking"
+      ]
+    },
+    "TRUNCATE->DISTRIBUTE": {
+      "from": "TRUNCATE",
+      "to": "DISTRIBUTE",
+      "classification": "REDUNDANT",
+      "strength": 0.689,
+      "chain_cooccurrences": 9,
+      "ops_cooccurrences": 21,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 30,
+      "avg_keyword_overlap": 0.689,
+      "shared_primitives": [],
+      "a_only_chains": 31,
+      "b_only_chains": 10,
+      "co_chain_names": [
+        "Reynolds Averaging of Turbulent Flow",
+        "Reynolds Averaging in Turbulent Flow",
+        "Group Averaging (Reynolds Operator)",
+        "Wave Function Symmetrization — Bosons and Fermions",
+        "Symmetrization of Identical Particles"
+      ]
+    },
+    "TRUNCATE->EXTEND": {
+      "from": "TRUNCATE",
+      "to": "EXTEND",
+      "classification": "REDUNDANT",
+      "strength": 0.625,
+      "chain_cooccurrences": 10,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 10,
+      "avg_keyword_overlap": 0.625,
+      "shared_primitives": [],
+      "a_only_chains": 30,
+      "b_only_chains": 9,
+      "co_chain_names": [
+        "Thermodynamics_to_Information",
+        "Perturbation Theory via Taylor Series Expansion",
+        "Born Approximation in Scattering",
+        "Langevin Dynamics",
+        "Heat_to_Brownian"
+      ]
+    },
+    "TRUNCATE->HIERARCHIZE": {
+      "from": "TRUNCATE",
+      "to": "HIERARCHIZE",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 40,
+      "b_only_chains": 1,
+      "co_chain_names": []
+    },
+    "TRUNCATE->INVERT": {
+      "from": "TRUNCATE",
+      "to": "INVERT",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 1,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 1,
+      "avg_keyword_overlap": 0.783,
+      "shared_primitives": [],
+      "a_only_chains": 39,
+      "b_only_chains": 18,
+      "co_chain_names": [
+        "Electromagnetic Duality Transformation"
+      ]
+    },
+    "TRUNCATE->PARTITION": {
+      "from": "TRUNCATE",
+      "to": "PARTITION",
+      "classification": "INDEPENDENT",
+      "strength": 0.0,
+      "chain_cooccurrences": 0,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 0,
+      "avg_keyword_overlap": 0,
+      "shared_primitives": [],
+      "a_only_chains": 40,
+      "b_only_chains": 0,
+      "co_chain_names": []
+    },
+    "TRUNCATE->QUANTIZE": {
+      "from": "TRUNCATE",
+      "to": "QUANTIZE",
+      "classification": "REDUNDANT",
+      "strength": 0.832,
+      "chain_cooccurrences": 21,
+      "ops_cooccurrences": 0,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 21,
+      "avg_keyword_overlap": 0.832,
+      "shared_primitives": [
+        "REDUCE"
+      ],
+      "a_only_chains": 19,
+      "b_only_chains": 0,
+      "co_chain_names": [
+        "Thermodynamics_to_Information",
+        "WKB Semiclassical Approximation",
+        "Maxwell_to_Wave",
+        "Jacobian Stability Analysis",
+        "Heat_to_Brownian"
+      ]
+    },
+    "TRUNCATE->RANDOMIZE": {
+      "from": "TRUNCATE",
+      "to": "RANDOMIZE",
+      "classification": "REDUNDANT",
+      "strength": 0.662,
+      "chain_cooccurrences": 9,
+      "ops_cooccurrences": 47,
+      "ethno_cooccurrences": 0,
+      "total_cooccurrences": 56,
+      "avg_keyword_overlap": 0.662,
+      "shared_primitives": [],
+      "a_only_chains": 31,
+      "b_only_chains": 8,
+      "co_chain_names": [
+        "Langevin Dynamics",
+        "Heat_to_Brownian",
+        "Langevin Equation — Deterministic to Stochastic Dynamics",
+        "Path Integral Formulation",
+        "ODE → SDE"
+      ]
+    }
+  },
+  "summary": "OPERATOR INTERACTION MATRIX — ALGEBRAIC STRUCTURE OF DAMAGE OPERATORS\n======================================================================\nAnalyzed 99 chains, 194 operations, 153 ethno systems\nClassification distribution: {'INDEPENDENT': 50, 'ANTAGONISTIC': 8, 'REDUNDANT': 14}\n\nKEY FINDINGS:\n  Most antagonistic pair: CONCENTRATE->PARTITION (shared primitives=['BREAK_SYMMETRY'])\n  Highest synergy out-degree: CONCENTRATE (enables 0 other operators)\n  Synergistic 3-cycles found: 0\n  Mutual synergy pairs: 0\n\n9x9 INTERACTION MATRIX (row=FROM, col=TO):\n                CONCEN DISTRI EXTEND HIERAR INVERT PARTIT QUANTI RANDOM TRUNCA\n    CONCENTRATE    ---    IND    IND    IND    IND    ANT    IND    IND    RED \n     DISTRIBUTE    IND    ---    RED    IND    IND    IND    IND    IND    RED \n         EXTEND    IND    RED    ---    ANT    IND    IND    IND    IND    RED \n    HIERARCHIZE    IND    IND    ANT    ---    ANT    IND    IND    IND    IND \n         INVERT    IND    IND    IND    ANT    ---    IND    ANT    IND    IND \n      PARTITION    ANT    IND    IND    IND    IND    ---    IND    IND    IND \n       QUANTIZE    IND    IND    IND    IND    ANT    IND    ---    RED    RED \n      RANDOMIZE    IND    IND    IND    IND    IND    IND    RED    ---    RED \n       TRUNCATE    RED    RED    RED    IND    IND    IND    RED    RED    --- \n\nINTERPRETATION:\n  The damage operators form a partially ordered algebra.\n  Synergistic pairs = composition is productive (A creates conditions for B).\n  Antagonistic pairs = composition is destructive (A undoes what B needs).\n  Cycles = feedback loops in the damage algebra — self-reinforcing patterns."
+}

@@ -1,0 +1,441 @@
+{
+  "metadata": {
+    "analysis": "composition_depth4",
+    "date": "2026-03-30",
+    "author": "Aletheia",
+    "total_hubs": 255,
+    "qualified_hubs_8plus": 1,
+    "active_hubs_d4": 1,
+    "operator_threshold": "8+"
+  },
+  "chains": [
+    {
+      "id": "C4_01",
+      "name": "Variational inverse quantization",
+      "sequence": [
+        "EXTEND",
+        "REDUCE",
+        "MAP",
+        "INVERT"
+      ],
+      "damage_sequence": [
+        "EXTEND",
+        "CONCENTRATE",
+        "DISTRIBUTE",
+        "INVERT"
+      ],
+      "semantics": "Extend to all paths, reduce to extremum, map to representation, invert direction",
+      "extends": "C3_01 (Variational quantization) + INVERT"
+    },
+    {
+      "id": "C4_02",
+      "name": "Digital layered processing",
+      "sequence": [
+        "TRUNCATE",
+        "QUANTIZE",
+        "DISTRIBUTE",
+        "HIERARCHIZE"
+      ],
+      "damage_sequence": [
+        "TRUNCATE",
+        "QUANTIZE",
+        "DISTRIBUTE",
+        "HIERARCHIZE"
+      ],
+      "semantics": "Bandlimit, discretize, spread error, elevate to meta-level",
+      "extends": "C3_02 (Digital signal processing) + HIERARCHIZE"
+    },
+    {
+      "id": "C4_03",
+      "name": "Adaptive inverse localization",
+      "sequence": [
+        "PARTITION",
+        "TRUNCATE",
+        "CONCENTRATE",
+        "INVERT"
+      ],
+      "damage_sequence": [
+        "PARTITION",
+        "TRUNCATE",
+        "CONCENTRATE",
+        "INVERT"
+      ],
+      "semantics": "Split domain, restrict, concentrate, then reverse direction",
+      "extends": "C3_03 (Adaptive localization) + INVERT"
+    },
+    {
+      "id": "C4_04",
+      "name": "Monte Carlo inverse redistribution",
+      "sequence": [
+        "RANDOMIZE",
+        "TRUNCATE",
+        "INVERT",
+        "DISTRIBUTE"
+      ],
+      "damage_sequence": [
+        "RANDOMIZE",
+        "TRUNCATE",
+        "INVERT",
+        "DISTRIBUTE"
+      ],
+      "semantics": "Sample stochastically, restrict, invert, then distribute results",
+      "extends": "C3_04 (Monte Carlo inversion) + DISTRIBUTE"
+    },
+    {
+      "id": "C4_05",
+      "name": "Gauge SSB concentration",
+      "sequence": [
+        "EXTEND",
+        "SYMMETRIZE",
+        "BREAK_SYMMETRY",
+        "CONCENTRATE"
+      ],
+      "damage_sequence": [
+        "EXTEND",
+        "EXTEND",
+        "PARTITION",
+        "CONCENTRATE"
+      ],
+      "semantics": "Extend structure, symmetrize, break symmetry, concentrate to order parameter",
+      "extends": "C3_05 (Gauge -> SSB) + CONCENTRATE"
+    },
+    {
+      "id": "C4_06",
+      "name": "Multi-resolution grid averaging",
+      "sequence": [
+        "HIERARCHIZE",
+        "PARTITION",
+        "QUANTIZE",
+        "DISTRIBUTE"
+      ],
+      "damage_sequence": [
+        "HIERARCHIZE",
+        "PARTITION",
+        "QUANTIZE",
+        "DISTRIBUTE"
+      ],
+      "semantics": "Meta-level, split domain, discretize, spread evenly",
+      "extends": "C3_06 (Multi-resolution discretization) + DISTRIBUTE"
+    },
+    {
+      "id": "C4_07",
+      "name": "Stochastic meta-localization",
+      "sequence": [
+        "RANDOMIZE",
+        "HIERARCHIZE",
+        "TRUNCATE",
+        "CONCENTRATE"
+      ],
+      "damage_sequence": [
+        "RANDOMIZE",
+        "HIERARCHIZE",
+        "TRUNCATE",
+        "CONCENTRATE"
+      ],
+      "semantics": "Inject noise, elevate to meta-level, truncate, then concentrate",
+      "extends": "C3_08 (Stochastic meta-truncation) + CONCENTRATE"
+    },
+    {
+      "id": "C4_08",
+      "name": "Redistribute-reverse-expand",
+      "sequence": [
+        "DISTRIBUTE",
+        "CONCENTRATE",
+        "INVERT",
+        "EXTEND"
+      ],
+      "damage_sequence": [
+        "DISTRIBUTE",
+        "CONCENTRATE",
+        "INVERT",
+        "EXTEND"
+      ],
+      "semantics": "Spread error, localize, invert, then extend to new domain",
+      "extends": "C3_07 (Redistribute then reverse) + EXTEND"
+    },
+    {
+      "id": "C4_09",
+      "name": "Stochastic extension discretization",
+      "sequence": [
+        "RANDOMIZE",
+        "EXTEND",
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "damage_sequence": [
+        "RANDOMIZE",
+        "EXTEND",
+        "TRUNCATE",
+        "QUANTIZE"
+      ],
+      "semantics": "Inject noise, extend, restrict domain, force onto grid",
+      "extends": "New: stochastic + C3_01 variant"
+    },
+    {
+      "id": "C4_10",
+      "name": "Partitioned stochastic meta-truncation",
+      "sequence": [
+        "PARTITION",
+        "RANDOMIZE",
+        "HIERARCHIZE",
+        "TRUNCATE"
+      ],
+      "damage_sequence": [
+        "PARTITION",
+        "RANDOMIZE",
+        "HIERARCHIZE",
+        "TRUNCATE"
+      ],
+      "semantics": "Split domain, inject noise per partition, meta-level, truncate",
+      "extends": "PARTITION + C3_08 (Stochastic meta-truncation)"
+    },
+    {
+      "id": "C4_11",
+      "name": "Extended partitioned inversion",
+      "sequence": [
+        "EXTEND",
+        "PARTITION",
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "damage_sequence": [
+        "EXTEND",
+        "PARTITION",
+        "TRUNCATE",
+        "INVERT"
+      ],
+      "semantics": "Extend structure, partition, restrict, invert direction",
+      "extends": "C3_05 variant: EXTEND + PARTITION + TRUNCATE + INVERT"
+    },
+    {
+      "id": "C4_12",
+      "name": "Discrete distributed meta-inversion",
+      "sequence": [
+        "QUANTIZE",
+        "DISTRIBUTE",
+        "HIERARCHIZE",
+        "INVERT"
+      ],
+      "damage_sequence": [
+        "QUANTIZE",
+        "DISTRIBUTE",
+        "HIERARCHIZE",
+        "INVERT"
+      ],
+      "semantics": "Discretize, distribute, elevate to meta-level, invert",
+      "extends": "C3_10 (Discrete averaging hierarchy) + INVERT"
+    },
+    {
+      "id": "C4_13",
+      "name": "Random localization truncation",
+      "sequence": [
+        "RANDOMIZE",
+        "PARTITION",
+        "CONCENTRATE",
+        "TRUNCATE"
+      ],
+      "damage_sequence": [
+        "RANDOMIZE",
+        "PARTITION",
+        "CONCENTRATE",
+        "TRUNCATE"
+      ],
+      "semantics": "Inject noise, partition, concentrate, then truncate",
+      "extends": "New: stochastic partition-concentrate-truncate"
+    },
+    {
+      "id": "C4_14",
+      "name": "Meta-variational discretization",
+      "sequence": [
+        "HIERARCHIZE",
+        "EXTEND",
+        "REDUCE",
+        "QUANTIZE"
+      ],
+      "damage_sequence": [
+        "HIERARCHIZE",
+        "EXTEND",
+        "CONCENTRATE",
+        "QUANTIZE"
+      ],
+      "semantics": "Elevate to meta-level, extend, reduce to extremum, discretize",
+      "extends": "HIERARCHIZE + variational path + QUANTIZE"
+    },
+    {
+      "id": "C4_15",
+      "name": "Inverse stochastic meta-truncation",
+      "sequence": [
+        "INVERT",
+        "RANDOMIZE",
+        "HIERARCHIZE",
+        "TRUNCATE"
+      ],
+      "damage_sequence": [
+        "INVERT",
+        "RANDOMIZE",
+        "HIERARCHIZE",
+        "TRUNCATE"
+      ],
+      "semantics": "Invert first, then inject noise, meta-level, truncate",
+      "extends": "INVERT + C3_08 (Stochastic meta-truncation)"
+    }
+  ],
+  "d4_clusters": {
+    "d4_cluster_0": {
+      "signature": [
+        1,
+        1,
+        1,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        1,
+        1,
+        0,
+        1,
+        0
+      ],
+      "chains_supported": [
+        "Variational inverse quantization",
+        "Digital layered processing",
+        "Adaptive inverse localization",
+        "Gauge SSB concentration",
+        "Multi-resolution grid averaging",
+        "Redistribute-reverse-expand",
+        "Extended partitioned inversion",
+        "Discrete distributed meta-inversion",
+        "Meta-variational discretization"
+      ],
+      "n_chains": 9,
+      "members": [
+        "FORCED_SYMMETRY_BREAK"
+      ],
+      "size": 1
+    }
+  },
+  "d4_chain_discrimination": {
+    "Variational inverse quantization": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Digital layered processing": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Adaptive inverse localization": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Monte Carlo inverse redistribution": {
+      "supports": 0,
+      "total": 1,
+      "fraction": 0.0,
+      "discrimination_entropy": 0.0
+    },
+    "Gauge SSB concentration": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Multi-resolution grid averaging": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Stochastic meta-localization": {
+      "supports": 0,
+      "total": 1,
+      "fraction": 0.0,
+      "discrimination_entropy": 0.0
+    },
+    "Redistribute-reverse-expand": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Stochastic extension discretization": {
+      "supports": 0,
+      "total": 1,
+      "fraction": 0.0,
+      "discrimination_entropy": 0.0
+    },
+    "Partitioned stochastic meta-truncation": {
+      "supports": 0,
+      "total": 1,
+      "fraction": 0.0,
+      "discrimination_entropy": 0.0
+    },
+    "Extended partitioned inversion": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Discrete distributed meta-inversion": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Random localization truncation": {
+      "supports": 0,
+      "total": 1,
+      "fraction": 0.0,
+      "discrimination_entropy": 0.0
+    },
+    "Meta-variational discretization": {
+      "supports": 1,
+      "total": 1,
+      "fraction": 1.0,
+      "discrimination_entropy": 0.0
+    },
+    "Inverse stochastic meta-truncation": {
+      "supports": 0,
+      "total": 1,
+      "fraction": 0.0,
+      "discrimination_entropy": 0.0
+    }
+  },
+  "comparison_to_d3": {
+    "d3_clusters": 13,
+    "d4_clusters": 1,
+    "d3_clusters_split": 0,
+    "split_details": []
+  },
+  "bridges": {
+    "total": 0,
+    "new_at_depth4": 0,
+    "carried_from_depth3": 0,
+    "new_bridge_details": [],
+    "all_bridges": []
+  },
+  "qualified_hubs": {
+    "FORCED_SYMMETRY_BREAK": {
+      "n_canonical_ops": 8,
+      "ops": [
+        "CONCENTRATE",
+        "DISTRIBUTE",
+        "EXTEND",
+        "HIERARCHIZE",
+        "INVERT",
+        "PARTITION",
+        "QUANTIZE",
+        "TRUNCATE"
+      ],
+      "n_spokes": 17
+    }
+  }
+}
