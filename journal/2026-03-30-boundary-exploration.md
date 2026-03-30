@@ -271,3 +271,34 @@ See `noesis/v2/room_map.md` for the full deliverable.
 ### Elapsed: 0.0 hours
 ### Walls found: 3 firm + 1 ceiling (meta-recursion terminates at ~level 3-4)
 ### Frontiers: composition depth and tradition dimension remain open
+
+## Cycles 6-11: Deep Probes + Meta-Recursion + Wall Cracking
+
+### CONCENTRATE Wall: CRACKED at depth 3
+All 8 resistant cells cracked via PARTITION → TRUNCATE → CONCENTRATE. Wall was FIRM but not HARD.
+
+### INVERT Wall: 7 more cells cracked
+Found real inverse techniques: Inverse Fixed Point Problem (Brouwer), Reverse Oracle Construction (BGS),
+Gap Amplification Reversal (PCP), Inverse Burnside, Inverse Approximation, Reversed Thermodynamics.
+1 confirmed STRUCTURALLY_IMPOSSIBLE (Euler characteristic).
+
+### Meta-Recursion: THE ROOM HAS A CEILING
+- Meta-impossibilities ARE themselves hubs with 3-4 resolutions each
+- 3 meta-hubs added: META_INVERT_INVARIANCE, META_QUANTIZE_DISCRETE, META_CONCENTRATE_NONLOCAL
+- 16 meta-hub spokes added
+- Recursion terminates at level 3-4 (Gödel is the fixed point)
+- The damage algebra is FINITE in the vertical dimension
+
+### Truly Impenetrable Cells: 27 (all on unfilled meta-hubs — not real walls, just unfilled data)
+Once meta-hubs are populated, these crack. No truly impenetrable cells in the base-level data.
+
+### Current State
+- 242 hubs, 2,519 spokes
+- 93.4% fill rate
+- 137 complete hubs (9/9)
+- 3 firm walls partially cracked
+- 1 ceiling found (meta-recursion terminates)
+- 2 open frontiers (composition depth, tradition dimension)
+
+---
+
