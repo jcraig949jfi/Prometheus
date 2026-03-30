@@ -1159,3 +1159,48 @@ Carnot's theorem doesn't say "give up." It says "here are the rules of the game.
 
 ---
 
+
+## Paper Seed: "Efficiency Limits Constrain Instantaneous Behavior, Not Adaptive Trajectories"
+
+### The core claim:
+Carnot's bound η ≤ 1 - T_c/T_h constrains each INSTANT, not the TRAJECTORY. An adaptive controller that sequences instants optimally can extract more total work than any static configuration — without ever violating the instantaneous bound.
+
+### Why this is distinct from the RL paper:
+- The RL paper says: "RL discovers damage allocation strategies"
+- THIS paper says: "The damage allocation SPACE is larger than previously recognized because trajectories are not points"
+
+### The mathematical structure:
+- Carnot defines a MANIFOLD in (T_h, T_c, η) space: η = 1 - T_c/T_h
+- A static engine is a POINT on this manifold
+- An adaptive controller is a CURVE on this manifold
+- The total work = integral along the curve
+- Optimizing the curve = optimal control on a Riemannian manifold with thermodynamic metric
+
+### Connection to existing work:
+- Finite-time thermodynamics (Andresen 1977): recognized that finite-time processes differ from quasi-static
+- Curzon-Ahlborn (1975): found the efficiency at maximum POWER (not maximum η)
+- Salamon-Berry (1983): optimal control of thermodynamic processes
+- But NONE of these frame it as "instantaneous vs trajectory" in the damage algebra
+
+### Connection to Noesis:
+This is a general principle: impossibility theorems constrain STATES, not TRAJECTORIES through the constraint space. The damage algebra operates on trajectories. That's why composition depth > 1 works — depth-2 and depth-3 compositions are trajectory segments, not instantaneous operations.
+
+### The generalization:
+For ANY impossibility theorem:
+- The impossibility constrains instantaneous behavior (you can't be in two states at once)
+- Adaptive trajectories through the constraint space are NOT constrained by the same bound
+- The damage allocation problem is an OPTIMAL CONTROL problem on the impossibility manifold
+- The 9 operators are the control actuators
+- RL discovers optimal trajectories that static analysis misses
+
+### Is this publishable?
+Yes — in control theory journals. The frame "Carnot as a control manifold" with optimal trajectories is a clean, testable, novel contribution. The connection to damage algebra is the theoretical backbone, but the paper can stand alone with just the thermodynamic control framing.
+
+### Limitations:
+- Real thermal systems have lag, hysteresis, material limits
+- The Carnot manifold is idealized (reversible processes)
+- Trajectory optimization requires real-time sensing and actuation
+- The gap between instantaneous bound and trajectory bound needs quantification
+
+---
+
