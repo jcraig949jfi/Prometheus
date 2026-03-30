@@ -1284,3 +1284,39 @@ from pure mathematics — without running a single simulation.
 
 ---
 
+
+## The Paradigm Shift
+
+**"Entropy is not just lost — it can be actively managed, routed, and shaped."**
+
+Classical thermodynamics: entropy is waste. It increases. You minimize it or accept it.
+
+The AIECS reframe: entropy is a RESOURCE to be ALLOCATED. Like bandwidth in a network, like risk in a portfolio, like error in a map projection. You don't minimize entropy — you ROUTE it to where it does the least damage.
+
+This maps exactly to the damage algebra:
+- DISTRIBUTE entropy evenly across stages (equal temperament of heat)
+- CONCENTRATE entropy in one sacrificial stage (wolf interval of thermodynamics)
+- TRUNCATE by restricting to a temperature range where entropy is manageable
+- EXTEND by adding storage that buffers entropy temporally
+- RANDOMIZE by converting deterministic entropy to stochastic fluctuations
+- HIERARCHIZE by cascading waste heat to secondary engines
+- PARTITION by splitting the system into zones with different entropy budgets
+- QUANTIZE by discretizing continuous heat flow into finite steps
+- INVERT by running the cycle backward (heat pump)
+
+**Every damage operator is an entropy routing strategy.**
+
+The RL agent doesn't learn to minimize entropy. It learns to ROUTE entropy — deciding at each moment which stage absorbs it, when to buffer it, where to dump it. The agent is an entropy router. The cascade is a network. The packets are disorder.
+
+This reframe applies beyond thermodynamics:
+- In information theory: noise is not just lost signal — it can be managed (error correction = entropy routing)
+- In economics: deadweight loss is not just waste — it can be allocated (mechanism design = entropy routing)
+- In quantum mechanics: decoherence is not just collapse — it can be managed (quantum error correction = entropy routing)
+- In voting theory: fairness violations are not just failures — they can be allocated (electoral design = entropy routing)
+
+**The damage algebra IS entropy routing generalized beyond thermodynamics.**
+
+Every impossibility theorem generates entropy (in the information-theoretic sense: irreducible uncertainty about which axiom to sacrifice). The 9 damage operators are 9 ways to route that entropy. The resolution algebra is the routing table.
+
+---
+
