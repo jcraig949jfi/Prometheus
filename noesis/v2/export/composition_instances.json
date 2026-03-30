@@ -1534,5 +1534,589 @@
     "tradition": "Tensor Discovery",
     "domain": "cross-domain",
     "notes": "Uniform Quasicrystal Distribution: Distribute the rotational impossibility evenly — quasicrystals with near-uniform local environments. Already exists as aperiodic quasicrystals spoke. May need DISTRIBUTE tag added. | DAMAGE_OP: DISTRIBUTE | SOURCE: tensor_prediction_verified"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA__ADAPTIVE_JUST_INTONATION",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": "adaptive_just_intonation",
+    "tradition": "A Cappella Choirs / Modern Digital Synthesizers",
+    "domain": "Music Theory & Acoustics",
+    "notes": "In dynamic just intonation, performers or algorithms continuously adjust the pitch of individual notes in real-time to maintain perfectly pure ratios for every vertical chord. Because of the comma, a sequence of perfectly tuned chords returning to the original tonic will be slightly higher or lower in absolute pitch than where it started. The mechanism handles the impossibility by sacrificing a static frame of reference, allowing the entire system to drift through pitch space over time. | Cross-domain: floating_exchange_rates, eventual_consistency_databases | Refs: Ben Johnston (2006). Maximum Clarity and Other Writings on Music. | Origin: A Cappella Choirs / Modern Digital Synthesizers | Period: Antiquity - Present | Sacrifices: Fixed pitch references (pitch drift) | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA__MEANTONE_TUNING_CONCENTRATION",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": "MEANTONE_TUNING_CONCENTRATION",
+    "tradition": "Renaissance European (Pietro Aaron), also Chinese and Indian well-temperaments",
+    "domain": "music theory",
+    "notes": "By slightly flattening each fifth (by 1/4 of the syntonic comma), the system achieves pure major thirds while distributing comma damage into multiple wolf intervals. The mechanism LINEARIZEs the interval chain via tempering, then BREAK_SYMMETRY concentrates residual error into fewer but still distinct wolves, enabling richer harmony in common keys at the cost of distant modulations. Structural features preserved include excellent triadic consonance; sacrificed is the Pythagorean purity of fifths | Cross-domain: Concentration in economic trilemma via capital controls (damage localized to trade flows) | Refs: Aaron, Toscanello in musica (1523); historical Chinese lü pipes | Origin: Renaissance European (Pietro Aaron), also Chinese and Indian well-temperaments | Period: 16th–18th c. | Sacrifices: Pure fifths | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA__EQUAL_TEMPERAMENT_UNIFORM",
+    "comp_id": "IMPOSSIBILITY_PYTHAGOREAN_COMMA",
+    "system_id": "EQUAL_TEMPERAMENT_UNIFORM",
+    "tradition": "European (Vincenzo Galilei, 1580s), independently Japanese well-tempered tunings and modern global standard",
+    "domain": "music theory",
+    "notes": "The comma is divided equally among 12 semitones (≈2 cents each), creating a fully cyclic scale where every fifth is equally tempered. The mechanism SYMMETRIZEs the damage via equal logarithmic spacing, allowing COMPLETE closure and full transposition. Damage is spread thinly, manifesting as slight impurity in all intervals rather than catastrophic wolves. Preserved: complete key invariance and modulation freedom; sacrificed: any perfect consonance beyond octaves. | Cross-domain: Uniform distribution in equal temperament analogs to uniform error in Runge phenomenon approximations or Shannon capacity uniform coding | Refs: Galilei, Dialogo della musica antica et della moderna (1581); modern ISO 16:1975 | Origin: European (Vincenzo Galilei, 1580s), independently Japanese well-tempered tunings and modern global standard | Period: 16th c.–present | Sacrifices: Pure intervals of any kind | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ARROW__CONCORDET_METHODS_CYCLE_HANDLING",
+    "comp_id": "IMPOSSIBILITY_ARROW",
+    "system_id": "CONCORDET_METHODS_CYCLE_HANDLING",
+    "tradition": "European social choice theory, some modern elections",
+    "domain": "social choice theory",
+    "notes": "All pairwise comparisons are computed; cycles are broken by strength of margins. The mechanism MAPs rankings to tournament graph, then BREAK_SYMMETRY resolves cycles non-transitively. Damage is localized to cyclic triples. Preserved: Pareto and non-dictatorship; sacrificed: full transitivity. | Cross-domain: Cycle resolution in crystal symmetries via aperiodic quasicrystals | Refs: Condorcet (1785); Schulze (1998) | Origin: European social choice theory, some modern elections | Period: 18th c.–present | Sacrifices: Transitivity (in cycles) | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ARROW__PROBABILISTIC_AGGREGATION",
+    "comp_id": "IMPOSSIBILITY_ARROW",
+    "system_id": "PROBABILISTIC_AGGREGATION",
+    "tradition": "Modern computational social choice, some lotteries in ancient Athens",
+    "domain": "social choice theory",
+    "notes": "Outcomes chosen probabilistically based on preferences. Mechanism STOCHASTICIZEs aggregation, distributing damage across lotteries. Damage manifests as probabilistic rather than certain violations. Preserved: fairness in expectation; sacrificed: determinism. | Cross-domain: Stochasticize in evolutionary tradeoffs or Shannon capacity probabilistic coding | Refs: Gibbard (1977) | Origin: Modern computational social choice, some lotteries in ancient Athens | Period: 20th c.–present | Sacrifices: Deterministic outcome | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "GODEL_INCOMPLETENESS__HIERARCHICAL_AXIOMATIC_EXTENSIONS",
+    "comp_id": "GODEL_INCOMPLETENESS",
+    "system_id": "HIERARCHICAL_AXIOMATIC_EXTENSIONS",
+    "tradition": "Set theory, 20th c. foundations",
+    "domain": "mathematical logic",
+    "notes": "Each system is extended by new axioms (e.g., inaccessible cardinals) to prove consistency of the previous. Mechanism EXTENDs the language, COMPOSEs new axioms, BREAK_SYMMETRY by pushing incompleteness upward. Damage is concentrated at each level's Gödel sentence. Preserved: consistency within level; sacrificed: ultimate completeness. | Cross-domain: Hierarchical extension in control theory via nested feedback loops | Refs: Gödel (1931); modern set theory texts | Origin: Set theory, 20th c. foundations | Period: 1930s–present | Sacrifices: Self-containment (no single system) | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "GODEL_INCOMPLETENESS__FINITIST_RESTRICTION",
+    "comp_id": "GODEL_INCOMPLETENESS",
+    "system_id": "FINITIST_RESTRICTION",
+    "tradition": "Hilbert's program variants, Weyl predicativism",
+    "domain": "mathematical logic",
+    "notes": "Restrict to finitary methods avoiding infinite sets. Mechanism LIMITs to primitive recursive, REDUCEs power. Damage avoided by weaker system. Preserved: provable consistency; sacrificed: full number theory. | Cross-domain: Avoidance in halting problem via restricted languages | Refs: Hilbert (1926); Weyl (1918) | Origin: Hilbert's program variants, Weyl predicativism | Period: 1920s–present | Sacrifices: Full arithmetic expressiveness | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "GODEL_INCOMPLETENESS__STOCHASTIC_PROOF_SYSTEMS",
+    "comp_id": "GODEL_INCOMPLETENESS",
+    "system_id": "STOCHASTIC_PROOF_SYSTEMS",
+    "tradition": "Interactive proofs, modern complexity theory",
+    "domain": "mathematical logic",
+    "notes": "Proofs verified with high probability. Mechanism STOCHASTICIZEs verification, MAPs to PCP theorems. Damage spread probabilistically. Preserved: practical decidability; sacrificed: absolute certainty. | Cross-domain: Stochastic in evolutionary biology fitness landscapes | Refs: Babai et al. (1991) | Origin: Interactive proofs, modern complexity theory | Period: 1980s–present | Sacrifices: Deterministic proof | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_CLONING_THEOREM__NO_BROADCAST_FOR_MIXED",
+    "comp_id": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+    "system_id": "NO_BROADCAST_FOR_MIXED",
+    "tradition": "Quantum foundations",
+    "domain": "quantum information",
+    "notes": "Generalized to mixed states; only orthogonal states broadcastable. Mechanism REDUCEs to pure case, LIMITs to special states. Damage avoided by restriction. | Cross-domain: Avoidance in halting problem oracles | Refs: Barnum et al. (1996) | Origin: Quantum foundations | Period: 1980s–present | Sacrifices: Broadcasting | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__EQUAL_AREA_MOLLWEIDE",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": "EQUAL_AREA_MOLLWEIDE",
+    "tradition": "Modern cartography, political mapping",
+    "domain": "geometry / cartography",
+    "notes": "Areas preserved globally. Mechanism REDUCEs to area integral. Damage in shape distortion everywhere. Preserved: comparative sizes; sacrificed: local angles. | Cross-domain: Uniform area in economic equity tradeoffs | Refs: Mollweide (1805) | Origin: Modern cartography, political mapping | Period: 19th c.–present | Sacrifices: Angles and shapes | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__STEREOGRAPHIC_CONFORMAL",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": "STEREOGRAPHIC_CONFORMAL",
+    "tradition": "Ancient (Hipparchus), polar mapping",
+    "domain": "geometry / cartography",
+    "notes": "Conformal from single point. Mechanism MAPs via inversion. Damage radial. Preserved: circles to circles; sacrificed: global distances. | Cross-domain: Point projection in quantum teleportation | Refs: Hipparchus (~150 BCE) | Origin: Ancient (Hipparchus), polar mapping | Period: 2nd c. BCE–present | Sacrifices: Distances | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__CONIC_HYBRID_COMPROMISE",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": "CONIC_HYBRID_COMPROMISE",
+    "tradition": "National mapping agencies",
+    "domain": "geometry / cartography",
+    "notes": "Partial preservation of multiple properties. Mechanism EXTENDs conic developable. Damage balanced. Preserved: regional accuracy. | Cross-domain: Hybrid in meantone temperament | Refs: Albers (1805) | Origin: National mapping agencies | Period: 18th c.–present | Sacrifices: Perfect any single property | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY__NUMERICAL_APPROXIMATION",
+    "comp_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+    "system_id": "NUMERICAL_APPROXIMATION",
+    "tradition": "Numerical analysis, global",
+    "domain": "algebra",
+    "notes": "Iterative convergence to root. Mechanism MAPs to iteration function. Damage as truncation error. Preserved: arbitrary precision; sacrificed: symbolic exactness. | Cross-domain: Approximation in signal Nyquist | Refs: Newton (1669) | Origin: Numerical analysis, global | Period: 17th c.–present | Sacrifices: Exact closed form | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY__HYPERGEOMETRIC_SERIES",
+    "comp_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+    "system_id": "HYPERGEOMETRIC_SERIES",
+    "tradition": "Special functions",
+    "domain": "algebra",
+    "notes": "Expressed as series. Damage in infinite sum. | Cross-domain: Series in Gibbs phenomenon | Refs: Bring (1786) for quartics extended | Origin: Special functions | Period: 19th c.–present | Sacrifices: Elementary radicals | DAMAGE_OP: EXTEND"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY__COMPUTER_ALGEBRA_SYSTEMS",
+    "comp_id": "IMPOSSIBILITY_QUINTIC_INSOLVABILITY",
+    "system_id": "COMPUTER_ALGEBRA_SYSTEMS",
+    "tradition": "Modern CAS (Mathematica, etc.)",
+    "domain": "algebra",
+    "notes": "Represents roots as Root objects. Mechanism COMPOSEs algebraic numbers. Damage in non-explicit form. | Cross-domain: Symbolic in probabilistic proofs | Refs: Modern CAS documentation | Origin: Modern CAS (Mathematica, etc.) | Period: 1980s–present | Sacrifices: Human-readable closed form | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__RESTRICTED_LANGUAGES",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "RESTRICTED_LANGUAGES",
+    "tradition": "Theoretical CS",
+    "domain": "computability theory",
+    "notes": "Use non-Turing-complete subsets where halting is decidable. Mechanism LIMITs power. Damage avoided entirely. | Cross-domain: Restriction in Gödel finitism | Refs: Turing (1936) | Origin: Theoretical CS | Period: 1930s–present | Sacrifices: Turing-completeness | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__APPROXIMATE_DECIDERS",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "APPROXIMATE_DECIDERS",
+    "tradition": "Modern complexity",
+    "domain": "computability theory",
+    "notes": "Decides with high probability or bounded time. Damage spread probabilistically. | Cross-domain: Probabilistic in no-cloning | Refs: Sipser (1982) | Origin: Modern complexity | Period: 1950s–present | Sacrifices: Exact decidability | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__RUNTIME_MONITORS",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "RUNTIME_MONITORS",
+    "tradition": "Software engineering",
+    "domain": "computability theory",
+    "notes": "Run with watchdog timer. Mechanism EXTENDs with monitor. Damage localized to non-halting cases. | Cross-domain: Timeout in control theory | Refs: Practical CS practice | Origin: Software engineering | Period: 1960s–present | Sacrifices: Theoretical completeness | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__ORACLE_MACHINES",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "ORACLE_MACHINES",
+    "tradition": "Computability theory",
+    "domain": "computability theory",
+    "notes": "Assume halting oracle for higher degrees. Damage pushed to oracle level. | Cross-domain: Oracle in Gödel hierarchies | Refs: Turing (1939) | Origin: Computability theory | Period: 1930s–present | Sacrifices: Standard Turing model | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__STATIC_ANALYSIS_HEURISTICS",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "STATIC_ANALYSIS_HEURISTICS",
+    "tradition": "Compiler theory",
+    "domain": "computability theory",
+    "notes": "Conservative analysis flags potential loops. Damage in false positives/negatives. | Cross-domain: Heuristics in voting systems | Refs: Dataflow analysis literature | Origin: Compiler theory | Period: 1970s–present | Sacrifices: Soundness for all programs | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "HAIRY_BALL_THEOREM__DISCONTINUOUS_FIELDS",
+    "comp_id": "HAIRY_BALL_THEOREM",
+    "system_id": "DISCONTINUOUS_FIELDS",
+    "tradition": "Topology/applications",
+    "domain": "topology",
+    "notes": "Allow discontinuities at points. Damage localized to singularities. | Cross-domain: Singularities in map projections | Refs: Hairy ball proof variants | Origin: Topology/applications | Period: 1910s–present | Sacrifices: Continuity | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "HAIRY_BALL_THEOREM__HIGHER_DIMENSIONAL_APPROX",
+    "comp_id": "HAIRY_BALL_THEOREM",
+    "system_id": "HIGHER_DIMENSIONAL_APPROX",
+    "tradition": "Differential geometry",
+    "domain": "topology",
+    "notes": "Move to odd-dimensional spheres where non-vanishing exists. | Cross-domain: Dimensional in Gödel | Refs: Poincaré-Hopf | Origin: Differential geometry | Period: Modern | Sacrifices: Exact sphere | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "HAIRY_BALL_THEOREM__PHYSICAL_APPROXIMATIONS",
+    "comp_id": "HAIRY_BALL_THEOREM",
+    "system_id": "PHYSICAL_APPROXIMATIONS",
+    "tradition": "Applied math/physics",
+    "domain": "topology",
+    "notes": "Discretize sphere; allow approximate non-zero. | Cross-domain: Discretization in signal processing | Refs: Meteorology models | Origin: Applied math/physics | Period: 20th c. | Sacrifices: Mathematical exactness | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "HAIRY_BALL_THEOREM__TORUS_ALTERNATIVE",
+    "comp_id": "HAIRY_BALL_THEOREM",
+    "system_id": "TORUS_ALTERNATIVE",
+    "tradition": "Topology",
+    "domain": "topology",
+    "notes": "Use torus (Euler char 0) for non-vanishing fields. | Cross-domain: Substitution in calendar hybrids | Refs: Standard topology texts | Origin: Topology | Period: Modern | Sacrifices: Spherical topology | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__INCOMMENSURATE_MODULATED",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "system_id": "INCOMMENSURATE_MODULATED",
+    "tradition": "Solid state physics",
+    "domain": "crystallography / materials science",
+    "notes": "Superimposed waves. Damage in modulation. | Cross-domain: Modulation in signal processing | Refs: De Wolff (1970s) | Origin: Solid state physics | Period: 1970s–present | Sacrifices: Simple periodicity | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION__DISCRETE_APPROX",
+    "comp_id": "IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION",
+    "system_id": "DISCRETE_APPROX",
+    "tradition": "Nanotechnology",
+    "domain": "crystallography / materials science",
+    "notes": "Finite clusters approximate symmetry. | Cross-domain: Finite in halting approximations | Refs: Nanocrystal literature | Origin: Nanotechnology | Period: Recent | Sacrifices: Infinite periodicity | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "NYQUIST_LIMIT__ANTI_ALIASING_FILTERS",
+    "comp_id": "NYQUIST_LIMIT",
+    "system_id": "ANTI_ALIASING_FILTERS",
+    "tradition": "Engineering",
+    "domain": "signal processing",
+    "notes": "Filter before sampling. Damage cut off high freq. | Cross-domain: Cutoff in control Bode | Refs: Shannon (1949) | Origin: Engineering | Period: 1930s–present | Sacrifices: High-frequency content | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "NYQUIST_LIMIT__OVERSAMPLING",
+    "comp_id": "NYQUIST_LIMIT",
+    "system_id": "OVERSAMPLING",
+    "tradition": "Digital audio",
+    "domain": "signal processing",
+    "notes": "Sample faster then filter. Damage spread by extra samples. | Cross-domain: Oversampling in calendar leap rules | Refs: Audio engineering | Origin: Digital audio | Period: 1970s–present | Sacrifices: Minimal rate | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "NYQUIST_LIMIT__BANDLIMITED_SIGNALS",
+    "comp_id": "NYQUIST_LIMIT",
+    "system_id": "BANDLIMITED_SIGNALS",
+    "tradition": "Communications",
+    "domain": "signal processing",
+    "notes": "Design signals to be bandlimited. | Cross-domain: Restriction in halting | Refs: Shannon theory | Origin: Communications | Period: Modern | Sacrifices: Unlimited bandwidth | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2__PEAK_SENSITIVITY_TRADEOFF",
+    "comp_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2",
+    "system_id": "PEAK_SENSITIVITY_TRADEOFF",
+    "tradition": "Classical control",
+    "domain": "control theory",
+    "notes": "Tune for low sensitivity at low freq, allow peak at crossover. Damage concentrated at transition. | Cross-domain: Peak in map distortion | Refs: Bode (1945) | Origin: Classical control | Period: 1940s–present | Sacrifices: Flat response | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2__ADAPTIVE_CONTROL",
+    "comp_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2",
+    "system_id": "ADAPTIVE_CONTROL",
+    "tradition": "Aerospace, process control",
+    "domain": "control theory",
+    "notes": "Adjust parameters online. Damage mapped to operating point. | Cross-domain: Dynamic in just intonation pumps | Refs: Åström (1980s) | Origin: Aerospace, process control | Period: 1960s–present | Sacrifices: Fixed controller | DAMAGE_OP: REDEFINE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2__STOCHASTIC_ROBUST",
+    "comp_id": "IMPOSSIBILITY_BODE_INTEGRAL_V2",
+    "system_id": "STOCHASTIC_ROBUST",
+    "tradition": "Modern",
+    "domain": "control theory",
+    "notes": "Probabilistic sensitivity. | Cross-domain: Probabilistic in quantum cloning | Refs: Recent robust control | Origin: Modern | Period: Recent | Sacrifices: Deterministic guarantees | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE__VICKREY_CLARKE_GROVES",
+    "comp_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+    "system_id": "VICKREY_CLARKE_GROVES",
+    "tradition": "Auction theory",
+    "domain": "mechanism design",
+    "notes": "Pivotal payments. Damage as external subsidy. | Cross-domain: Subsidy in economic trilemma | Refs: Myerson (1981) | Origin: Auction theory | Period: 1960s–present | Sacrifices: Budget balance | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE__POSTED_PRICE_MECHANISMS",
+    "comp_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+    "system_id": "POSTED_PRICE_MECHANISMS",
+    "tradition": "Market design",
+    "domain": "mechanism design",
+    "notes": "Fixed prices. Damage in missed trades. | Cross-domain: Fixed in calendar Gregorian | Refs: Market design lit. | Origin: Market design | Period: Modern | Sacrifices: Efficiency | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE__DOMAIN_RESTRICTION",
+    "comp_id": "IMPOSSIBILITY_MYERSON_SATTERTHWAITE",
+    "system_id": "DOMAIN_RESTRICTION",
+    "tradition": "Theory",
+    "domain": "mechanism design",
+    "notes": "Restrict value distributions. | Cross-domain: Domain in Arrow | Refs: Myerson-Satterthwaite extensions | Origin: Theory | Period: 1980s–present | Sacrifices: General types | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__ERROR_CORRECTING_CODES",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": "ERROR_CORRECTING_CODES",
+    "tradition": "Coding theory",
+    "domain": "information theory",
+    "notes": "Add parity bits. Damage as reduced effective rate. | Cross-domain: Redundancy in calendar intercalation | Refs: Shannon (1948); Hamming (1950) | Origin: Coding theory | Period: 1940s–present | Sacrifices: Rate | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__MODULATION_SCHEMES",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": "MODULATION_SCHEMES",
+    "tradition": "Communications engineering",
+    "domain": "information theory",
+    "notes": "Higher constellations closer to capacity. | Cross-domain: Mapping in quintic | Refs: Proakis textbook | Origin: Communications engineering | Period: Modern | Sacrifices: Power efficiency | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_GIBBS_PHENOMENON__SIGMOID_APPROX",
+    "comp_id": "IMPOSSIBILITY_GIBBS_PHENOMENON",
+    "system_id": "SIGMOID_APPROX",
+    "tradition": "Numerical analysis",
+    "domain": "approximation theory",
+    "notes": "Replace jump with smooth transition. | Cross-domain: Smoothing in control | Refs: Gibbs analysis | Origin: Numerical analysis | Period: 20th c. | Sacrifices: Sharp discontinuities | DAMAGE_OP: SMOOTH"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_GIBBS_PHENOMENON__PADÉ_APPROXIMANTS",
+    "comp_id": "IMPOSSIBILITY_GIBBS_PHENOMENON",
+    "system_id": "PADÉ_APPROXIMANTS",
+    "tradition": "Approximation theory",
+    "domain": "approximation theory",
+    "notes": "Use rational to better capture jumps. | Cross-domain: Rational in quintic | Refs: Padé (1892) | Origin: Approximation theory | Period: 19th c. | Sacrifices: Polynomial form | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_GIBBS_PHENOMENON__STOCHASTIC_FILTERING",
+    "comp_id": "IMPOSSIBILITY_GIBBS_PHENOMENON",
+    "system_id": "STOCHASTIC_FILTERING",
+    "tradition": "Recent",
+    "domain": "approximation theory",
+    "notes": "Add controlled noise to mitigate. | Cross-domain: Noise in quantum | Refs: Recent approx theory | Origin: Recent | Period: Recent | Sacrifices: Deterministic | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "RUNGE_PHENOMENON__CHEBYSHEV_NODES",
+    "comp_id": "RUNGE_PHENOMENON",
+    "system_id": "CHEBYSHEV_NODES",
+    "tradition": "Numerical analysis",
+    "domain": "approximation theory",
+    "notes": "Cluster nodes at boundaries. Damage minimized uniformly. | Cross-domain: Clustering in control sensitivity | Refs: Runge (1901); Chebyshev | Origin: Numerical analysis | Period: 20th c. | Sacrifices: Equispaced sampling | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "RUNGE_PHENOMENON__SPLINE_PIECEWISE",
+    "comp_id": "RUNGE_PHENOMENON",
+    "system_id": "SPLINE_PIECEWISE",
+    "tradition": "CAD/engineering",
+    "domain": "approximation theory",
+    "notes": "Low-degree local polynomials. | Cross-domain: Local in wavelets | Refs: Spline theory | Origin: CAD/engineering | Period: Modern | Sacrifices: Global polynomial | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "RUNGE_PHENOMENON__LEAST_SQUARES",
+    "comp_id": "RUNGE_PHENOMENON",
+    "system_id": "LEAST_SQUARES",
+    "tradition": "Statistics",
+    "domain": "approximation theory",
+    "notes": "Minimize L2 error. | Cross-domain: L2 in control | Refs: Gauss least squares | Origin: Statistics | Period: 19th c. | Sacrifices: Interpolation exactness | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "RUNGE_PHENOMENON__RATIONAL_INTERPOLATION",
+    "comp_id": "RUNGE_PHENOMENON",
+    "system_id": "RATIONAL_INTERPOLATION",
+    "tradition": "Approximation",
+    "domain": "approximation theory",
+    "notes": "Allow poles to capture behavior. | Cross-domain: Rational in Padé | Refs: Rational approx lit. | Origin: Approximation | Period: Modern | Sacrifices: Polynomial form | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CAP__CP_SYSTEMS",
+    "comp_id": "IMPOSSIBILITY_CAP",
+    "system_id": "CP_SYSTEMS",
+    "tradition": "Big data",
+    "domain": "distributed systems",
+    "notes": "Sacrifice availability for consistency. | Cross-domain: Consistency in Arrow transitivity | Refs: Brewer (2000) | Origin: Big data | Period: 2000s–present | Sacrifices: Availability during partition | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_CAP__CRDT_CONFLICT_FREE",
+    "comp_id": "IMPOSSIBILITY_CAP",
+    "system_id": "CRDT_CONFLICT_FREE",
+    "tradition": "Modern distributed",
+    "domain": "distributed systems",
+    "notes": "Mergeable replicas. | Cross-domain: Merge in social choice | Refs: Shapiro et al. (2011) | Origin: Modern distributed | Period: 2010s–present | Sacrifices: Strong global consistency | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "HEISENBERG_UNCERTAINTY__APPROXIMATE_SIMULTANEOUS",
+    "comp_id": "HEISENBERG_UNCERTAINTY",
+    "system_id": "APPROXIMATE_SIMULTANEOUS",
+    "tradition": "QM foundations",
+    "domain": "quantum mechanics",
+    "notes": "POVMs for approximate joint. | Cross-domain: Approx in no-cloning | Refs: Joint measurement theory | Origin: QM foundations | Period: Recent | Sacrifices: Exact precision | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "HEISENBERG_UNCERTAINTY__STOCHASTIC_INTERPRETATIONS",
+    "comp_id": "HEISENBERG_UNCERTAINTY",
+    "system_id": "STOCHASTIC_INTERPRETATIONS",
+    "tradition": "Alternative QM",
+    "domain": "quantum mechanics",
+    "notes": "Pilot wave or stochastic collapse. | Cross-domain: Stochastic in CAP | Refs: Bohmian or stochastic collapse | Origin: Alternative QM | Period: Recent | Sacrifices: Deterministic wavefunction | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "SEN_LIBERAL_PARADOX__DOMAIN_RESTRICTION_LIBERAL",
+    "comp_id": "SEN_LIBERAL_PARADOX",
+    "system_id": "DOMAIN_RESTRICTION_LIBERAL",
+    "tradition": "Welfare economics",
+    "domain": "social choice / welfare economics",
+    "notes": "Restrict to non-conflicting preferences. | Cross-domain: Domain in Arrow | Refs: Sen (1970) | Origin: Welfare economics | Period: 1970s–present | Sacrifices: Unrestricted domain | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "SEN_LIBERAL_PARADOX__RIGHTS_LIMITED",
+    "comp_id": "SEN_LIBERAL_PARADOX",
+    "system_id": "RIGHTS_LIMITED",
+    "tradition": "Political philosophy",
+    "domain": "social choice / welfare economics",
+    "notes": "Limit rights scope. | Cross-domain: Limit in trilemma | Refs: Sen extensions | Origin: Political philosophy | Period: Modern | Sacrifices: Individual rights strength | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "SEN_LIBERAL_PARADOX__PARETO_WEAKENED",
+    "comp_id": "SEN_LIBERAL_PARADOX",
+    "system_id": "PARETO_WEAKENED",
+    "tradition": "Theory",
+    "domain": "social choice / welfare economics",
+    "notes": "Allow rights to override in some cases. | Cross-domain: Conditional in control | Refs: Recent social choice | Origin: Theory | Period: Recent | Sacrifices: Full Pareto | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "SEN_LIBERAL_PARADOX__CARDINAL_UTILITIES",
+    "comp_id": "SEN_LIBERAL_PARADOX",
+    "system_id": "CARDINAL_UTILITIES",
+    "tradition": "Welfare econ",
+    "domain": "social choice / welfare economics",
+    "notes": "Use cardinal info to resolve conflicts. | Cross-domain: Cardinal in Arrow rated voting | Refs: Sen capability approach | Origin: Welfare econ | Period: Modern | Sacrifices: Ordinal only | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__SINGLE_PEAKED_GS",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "SINGLE_PEAKED_GS",
+    "tradition": "Political science",
+    "domain": "social choice",
+    "notes": "Restrict to single-peaked; median rule strategy-proof. | Cross-domain: Domain in Arrow | Refs: Black (1948) extension | Origin: Political science | Period: 1970s–present | Sacrifices: General profiles | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__RANDOM_DICTATORSHIP",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "RANDOM_DICTATORSHIP",
+    "tradition": "Theory",
+    "domain": "social choice",
+    "notes": "Pick random voter as dictator. | Cross-domain: Random in social choice | Refs: Gibbard (1977) | Origin: Theory | Period: Modern | Sacrifices: Determinism | DAMAGE_OP: RANDOMIZE"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__SCORING_RULES",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "SCORING_RULES",
+    "tradition": "Modern",
+    "domain": "social choice",
+    "notes": "Use scores to reduce manipulation. | Cross-domain: Cardinal in Arrow | Refs: Recent GS extensions | Origin: Modern | Period: Recent | Sacrifices: Pure ordinal | DAMAGE_OP: DISTRIBUTE"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__APPROVAL_VOTING",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "APPROVAL_VOTING",
+    "tradition": "Reform movements",
+    "domain": "social choice",
+    "notes": "Approve multiple; strategy-resistant in practice. | Cross-domain: Binary in mechanism design | Refs: Brams & Fishburn | Origin: Reform movements | Period: 1970s–present | Sacrifices: Full ranking | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__COMPUTATIONAL_COMPLEXITY_BARRIER",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "COMPUTATIONAL_COMPLEXITY_BARRIER",
+    "tradition": "Computational social choice",
+    "domain": "social choice",
+    "notes": "Manipulation NP-hard. | Cross-domain: Hardness in halting | Refs: Bartholdi et al. (1989) | Origin: Computational social choice | Period: 2000s–present | Sacrifices: Polynomial time | DAMAGE_OP: UNKNOWN"
+  },
+  {
+    "instance_id": "GODEL_INCOMPLETENESS__META_LEVEL_REASONING",
+    "comp_id": "GODEL_INCOMPLETENESS",
+    "system_id": "META_LEVEL_REASONING",
+    "tradition": "Proof theory",
+    "domain": "mathematical logic",
+    "notes": "Statements unprovable within a system are proven in a stronger meta-system. This externalizes the failure of closure into a layered hierarchy. The system remains consistent internally but relies on external validation. | Cross-domain: RELATIVISTIC_FRAME_SWITCHING, MULTI_SCALE_MODELING | Refs: Gentzen consistency proofs | Origin: Proof theory | Period: 20th century | Sacrifices: Internal self-containment | DAMAGE_OP: HIERARCHIZE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ARROW__DICTATORSHIP",
+    "comp_id": "IMPOSSIBILITY_ARROW",
+    "system_id": "DICTATORSHIP",
+    "tradition": "Theoretical baseline",
+    "domain": "social choice theory",
+    "notes": "All decision power is assigned to one agent, eliminating aggregation inconsistencies. This collapses the problem into a trivial consistent system. The damage is concentrated entirely in loss of collective representation. | Cross-domain: SINGLE_CLOCK_SYSTEMS, CENTRALIZED_CONTROL | Refs: Arrow 1951 | Origin: Theoretical baseline | Period: Formal result | Sacrifices: Fairness | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_ARROW__RESTRICT_DOMAIN",
+    "comp_id": "IMPOSSIBILITY_ARROW",
+    "system_id": "RESTRICT_DOMAIN",
+    "tradition": "Economic theory",
+    "domain": "social choice theory",
+    "notes": "Restricting allowable preferences eliminates cycles and restores consistency. This avoids impossibility by narrowing the domain. The cost is excluding realistic preference structures. | Cross-domain: TYPE_RESTRICTION_GODEL, BANDLIMITING_SIGNALS | Refs: Black 1948 | Origin: Economic theory | Period: 20th century | Sacrifices: Generality | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__TIMEOUTS",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "TIMEOUTS",
+    "tradition": "Engineering practice",
+    "domain": "computation",
+    "notes": "Programs are run with time/resource limits and assumed non-halting if exceeded. This converts undecidability into probabilistic error. The damage appears as false negatives. | Cross-domain: NUMERICAL_TRUNCATION, SAMPLING_LIMITS | Refs: Practical verification literature | Origin: Engineering practice | Period: Modern | Sacrifices: Correctness | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "HALTING_PROBLEM__INTERACTIVE_PROOFS",
+    "comp_id": "HALTING_PROBLEM",
+    "system_id": "INTERACTIVE_PROOFS",
+    "tradition": "Mathematics",
+    "domain": "computation",
+    "notes": "Humans provide proofs for specific programs. This shifts undecidability into human reasoning. The system regains correctness locally but loses full automation. | Cross-domain: META_SYSTEM_GODEL, LEGAL_ADJUDICATION | Refs: Proof assistants | Origin: Mathematics | Period: Modern | Sacrifices: Automation | DAMAGE_OP: HIERARCHIZE"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__POWER_INCREASE",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": "POWER_INCREASE",
+    "tradition": "Engineering",
+    "domain": "information theory",
+    "notes": "Increasing signal power improves SNR. This pushes the system closer to capacity. The tradeoff appears in energy cost. | Cross-domain: THERMODYNAMIC_WORK_INPUT | Refs: Shannon | Origin: Engineering | Period: Modern | Sacrifices: Efficiency | DAMAGE_OP: EXTEND"
+  },
+  {
+    "instance_id": "SHANNON_CAPACITY__RATE_REDUCTION",
+    "comp_id": "SHANNON_CAPACITY",
+    "system_id": "RATE_REDUCTION",
+    "tradition": "Practical systems",
+    "domain": "information theory",
+    "notes": "Transmission rate is reduced below capacity. This eliminates errors entirely. The cost is slower communication. | Cross-domain: SLOW_ADIABATIC_PROCESSES | Refs: Coding theory | Origin: Practical systems | Period: Modern | Sacrifices: Speed | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "CARNOT_LIMIT__REAL_ENGINES",
+    "comp_id": "CARNOT_LIMIT",
+    "system_id": "REAL_ENGINES",
+    "tradition": "Engineering",
+    "domain": "thermodynamics",
+    "notes": "Real engines accept inefficiencies for usable power. Losses appear as waste heat. The system balances performance and efficiency. | Cross-domain: BODE_WATERBED | Refs: Thermodynamics | Origin: Engineering | Period: Industrial | Sacrifices: Efficiency | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__INDIGENOUS_ROUTE_MAPS",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": "INDIGENOUS_ROUTE_MAPS",
+    "tradition": "Polynesian, Aboriginal",
+    "domain": "geometry/cartography",
+    "notes": "Maps encode relationships, routes, and navigation cues rather than geometry. Spatial metrics are sacrificed entirely. The system preserves function over form. | Cross-domain: GRAPH_ABSTRACTION, SYMBOLIC_SYSTEMS | Refs: Ethnography | Origin: Polynesian, Aboriginal | Period: Ancient–modern | Sacrifices: Metric accuracy | DAMAGE_OP: CONCENTRATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_MAP_PROJECTION__DIGITAL_TILES",
+    "comp_id": "IMPOSSIBILITY_MAP_PROJECTION",
+    "system_id": "DIGITAL_TILES",
+    "tradition": "Modern GIS",
+    "domain": "geometry/cartography",
+    "notes": "Different zoom levels use different projections. Distortion is controlled locally per scale. The global map becomes a hierarchy. | Cross-domain: MULTI_SCALE_PHYSICS, WAVELET_DECOMPOSITION | Refs: Web mapping | Origin: Modern GIS | Period: 21st century | Sacrifices: Single-scale coherence | DAMAGE_OP: PARTITION"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_CLONING_THEOREM__CLASSICAL_ENCODING",
+    "comp_id": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+    "system_id": "CLASSICAL_ENCODING",
+    "tradition": "",
+    "domain": "quantum physics",
+    "notes": "Quantum states are measured and stored classically. This collapses superposition but allows copying. The damage is total loss of quantum information. | Sacrifices: Quantum coherence | DAMAGE_OP: PROJECT"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_NO_CLONING_THEOREM__RESTRICTED_STATE_CLASSES",
+    "comp_id": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+    "system_id": "RESTRICTED_STATE_CLASSES",
+    "tradition": "",
+    "domain": "quantum physics",
+    "notes": "Orthogonal states can be cloned perfectly. By restricting allowable states, cloning becomes possible. The cost is limiting system expressiveness. | Sacrifices: Generality | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__DOMAIN_RESTRICTION",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "DOMAIN_RESTRICTION",
+    "tradition": "",
+    "domain": "social choice",
+    "notes": "Limiting preference structures removes manipulation opportunities. This restores strategy-proofness. The cost is excluding realistic cases. | Sacrifices: Preference generality | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "GIBBARD_SATTERTHWAITE__PARTIAL_AGGREGATION",
+    "comp_id": "GIBBARD_SATTERTHWAITE",
+    "system_id": "PARTIAL_AGGREGATION",
+    "tradition": "",
+    "domain": "social choice",
+    "notes": "Only partial rankings are produced. This reduces manipulation points. The system avoids full aggregation. | Sacrifices: Completeness | DAMAGE_OP: TRUNCATE"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS__HYBRID_SYSTEM",
+    "comp_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS",
+    "system_id": "HYBRID_SYSTEM",
+    "tradition": "",
+    "domain": "economics",
+    "notes": "Managed floats balance all three imperfectly. No property is fully satisfied. The system distributes error. | Sacrifices: All partially | DAMAGE_OP: SMOOTH"
+  },
+  {
+    "instance_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS__REGIONAL_BLOCKS",
+    "comp_id": "IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS",
+    "system_id": "REGIONAL_BLOCKS",
+    "tradition": "",
+    "domain": "economics",
+    "notes": "Regions coordinate internally. External inconsistencies remain. The system partitions constraints. | Sacrifices: Global generality | DAMAGE_OP: PARTITION"
   }
 ]

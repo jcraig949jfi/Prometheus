@@ -417,3 +417,91 @@ INVERT went from 0 hubs to 11 hubs. At the next tensor rebuild, the INVERT row w
 | Damage operators | 9 | 9 (INVERT: 0→15) |
 | Isolated hubs | 8 | 0 |
 | Tables | 12 | 12 |
+
+---
+
+## Overnight Task Results -- HUB EXPANSION INGESTION (Missing Resolutions)
+**Completed:** 2026-03-29 overnight (late pass)
+**Status:** SUCCESS
+**Script:** `noesis/v2/ingest_missing_resolutions.py`
+
+### Context
+
+A 7,326-line markdown file (`noesis/docs/Impossibility Theorem Hub Expansion for Noesis Database.md`) contained ~39 hub entries with resolutions from three council members (Grok lines 1-1712, Gemini 1712-2147, ChatGPT 2147+). Many hubs overlapped with existing data but contained NEW resolutions not yet in the database.
+
+### Method
+
+1. Parsed all JSON blocks from markdown code fences (fixed invalid JSON: `20+` numeric literals, trailing commas)
+2. Parsed bare JSON from Gemini section (no code fences)
+3. For each hub: mapped file hub_id to canonical DB comp_id via explicit mapping table + keyword fallback
+4. For each resolution: checked for duplicates via instance_id match + keyword overlap in existing spoke notes
+5. New resolutions inserted with full metadata: description, cross-domain analogs, tradition, period, damage operator tag
+
+### Results
+
+| Metric | Value |
+|--------|-------|
+| **Source entries parsed** | 39 hub entries (21 Grok, 5 Gemini, 13 ChatGPT) |
+| **New hubs created** | 5 |
+| **New spokes (resolutions) added** | 72 |
+| **Duplicates correctly skipped** | 109 |
+| **Errors** | 0 |
+| **Final hub count** | 40 (was 35) |
+| **Final spoke count** | 265 (was 193) |
+
+### New Hubs Created (5)
+
+| Hub ID | Spokes | Domain |
+|--------|--------|--------|
+| HALTING_PROBLEM | 7 | computation / decidability |
+| HAIRY_BALL_THEOREM | 4 | topology / vector fields |
+| RUNGE_PHENOMENON | 4 | numerical analysis / interpolation |
+| SEN_LIBERAL_PARADOX | 4 | social choice / rights vs efficiency |
+| GIBBARD_SATTERTHWAITE | 7 | social choice / strategy-proofness |
+
+### Existing Hubs Densified (18)
+
+| Hub | New Spokes | Total After |
+|-----|-----------|-------------|
+| IMPOSSIBILITY_MAP_PROJECTION | +5 | 14 |
+| GODEL_INCOMPLETENESS | +4 | 6 |
+| IMPOSSIBILITY_ARROW | +4 | 9 |
+| SHANNON_CAPACITY | +4 | 9 |
+| IMPOSSIBILITY_BODE_INTEGRAL_V2 | +3 | 8 |
+| IMPOSSIBILITY_GIBBS_PHENOMENON | +3 | 8 |
+| IMPOSSIBILITY_MYERSON_SATTERTHWAITE | +3 | 8 |
+| IMPOSSIBILITY_NO_CLONING_THEOREM | +3 | 8 |
+| IMPOSSIBILITY_QUINTIC_INSOLVABILITY | +3 | 9 |
+| NYQUIST_LIMIT | +3 | 6 |
+| GIBBARD_SATTERTHWAITE | +2 | 7 |
+| HALTING_PROBLEM | +2 | 7 |
+| HEISENBERG_UNCERTAINTY | +2 | 5 |
+| IMPOSSIBILITY_CAP | +2 | 9 |
+| IMPOSSIBILITY_CRYSTALLOGRAPHIC_RESTRICTION | +2 | 7 |
+| IMPOSSIBILITY_IMPOSSIBLE_TRINITY_MACROECONOMICS | +2 | 8 |
+| IMPOSSIBILITY_PYTHAGOREAN_COMMA | +2 | 11 |
+| CARNOT_LIMIT | +1 | 3 |
+
+### Sample New Spokes
+
+- `HALTING_PROBLEM__RESTRICTED_LANGUAGES` -- Restrict to decidable subsets (regular, context-free)
+- `HALTING_PROBLEM__ORACLE_MACHINES` -- Hierarchical escape via Turing degrees
+- `HAIRY_BALL_THEOREM__DISCONTINUOUS_FIELDS` -- Allow singularities at poles
+- `RUNGE_PHENOMENON__CHEBYSHEV_NODES` -- Non-uniform node placement eliminates oscillation
+- `SEN_LIBERAL_PARADOX__RIGHTS_WAIVER` -- Voluntary rights restriction restores Pareto
+- `GIBBARD_SATTERTHWAITE__RANDOMIZED_VOTING` -- Stochasticization defeats strategic manipulation
+- `GODEL_INCOMPLETENESS__META_LEVEL_REASONING` -- Hierarchical escape to stronger meta-systems
+- `IMPOSSIBILITY_MAP_PROJECTION__DYMAXION` -- Polyhedral unfolding moves damage to seams
+
+### Database State After Ingestion
+
+| Table | Rows |
+|-------|------|
+| abstract_compositions (hubs) | 40 |
+| composition_instances (spokes) | 265 |
+
+### Anomalies
+1. **Grok JSON block (95K chars) required fixup** -- contained `20+` as a numeric value, which is invalid JSON. Fixed via regex substitution before parsing.
+2. **109 duplicates correctly skipped** -- the three council sources (Grok, Gemini, ChatGPT) independently generated many of the same resolutions (equal temperament, Pythagorean tuning, dictatorship, etc.). The deduplication logic caught all of these via instance_id keyword overlap.
+3. **Gemini section used bare JSON** (no code fences) -- required separate regex extraction outside the main code-fence parser.
+4. **Hub creation required primitive_sequence** -- the `abstract_compositions` table has a NOT NULL constraint on `primitive_sequence`. Script infers this from the hub's `structural_pattern` field or from the first resolution's primitive sequence.
