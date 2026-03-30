@@ -663,3 +663,22 @@ Babylonian multiplication via reciprocal lookup (1800 BCE) is structurally ident
 | 6. Wall cracking | All 3 walls partially cracked | CONCENTRATE fully cracked at depth 3 | 14 hard cells remain |
 | 7. Total resolution | 99.4% fill | Every cell classified | 0 unknown |
 
+
+## Cycle 18: Depth-3 Cross-Domain Bridges
+
+### 13 bridges found that are invisible at depth 1:
+
+**THE HEADLINE:** Goodhart's Law ↔ No-Cloning Theorem
+- A metric that can't simultaneously measure and optimize = a quantum state that can't be simultaneously observed and copied
+- Both share Monte Carlo inversion AND stochastic meta-truncation chains
+- Optimization ↔ quantum mechanics structural kinship discovered at depth 3
+
+**Other bridges:**
+- Heisenberg ↔ Bode ↔ Gibbs: adaptive localization across physics/control/analysis
+- Bode Waterbed ↔ Crystallographic: redistribute-then-reverse across control/geometry
+- 5-hub social-choice/algebra cluster all resolve via stochastic meta-truncation ONLY
+
+### The depth-3 bridges are REAL cross-domain connections invisible at depth 1.
+
+---
+

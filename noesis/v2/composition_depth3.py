@@ -423,15 +423,17 @@ def main():
     else:
         print(f"\n  No hubs have all 9 canonical damage operators.")
 
-    # Connectivity analysis: how many chains are fully connected vs just present?
-    print("\n  CONNECTIVITY ANALYSIS (strength levels across all active hubs):")
+    # Strength distribution across hubs
+    print("\n  STRENGTH DISTRIBUTION (spoke diversity per chain):")
     for j, chain in enumerate(CHAINS):
         strengths = [signatures[h][j] for h in qualified if h in signatures and signatures[h][j] > 0]
         if strengths:
-            full = sum(1 for s in strengths if s >= 1.0)
-            partial = sum(1 for s in strengths if 0.25 < s < 1.0)
-            present_only = sum(1 for s in strengths if s <= 0.25)
-            print(f"    {chain['name']:<40}: {full} full, {partial} partial, {present_only} present-only")
+            avg = np.mean(strengths)
+            mx = np.max(strengths)
+            print(f"    {chain['name']:<40}: n={len(strengths)}, avg={avg:.3f}, max={mx:.3f}")
+
+    # Cross-hub chain flow analysis
+    analyze_cross_hub_flow(con, CHAINS, hubs)
 
     # Broader differentiation analysis
     # How many depth-1 equivalence classes vs depth-3?
