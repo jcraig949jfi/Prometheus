@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Complex Systems, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T23:06:33.413904
-**Report Generated**: 2026-03-27T23:28:38.628718
+**Report Generated**: 2026-03-31T16:34:28.475452
 
 ---
 
@@ -60,7 +60,10 @@ Implementability: 9/10 — All components rely on regex parsing, numpy arrays, a
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T16:34:00.026449
 
 ---
 

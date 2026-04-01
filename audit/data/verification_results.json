@@ -1,0 +1,112 @@
+[
+  {
+    "name": "C001.1a: \u2202L/\u2202q\u0307 = mq\u0307 (momentum)",
+    "status": "PASS",
+    "detail": "\u2202L/\u2202q\u0307 = m*qdot"
+  },
+  {
+    "name": "C001.1b: \u2202L/\u2202q = -kq (force)",
+    "status": "PASS",
+    "detail": "\u2202L/\u2202q = -k*q"
+  },
+  {
+    "name": "C001.1c: Hamilton \u2202H/\u2202p = p/m (velocity)",
+    "status": "PASS",
+    "detail": "\u2202H/\u2202p = p/m"
+  },
+  {
+    "name": "C001.1d: Hamilton \u2202H/\u2202q = kq (force term)",
+    "status": "PASS",
+    "detail": "\u2202H/\u2202q = k*q"
+  },
+  {
+    "name": "C001.2a: Poisson bracket {q,p} = 1",
+    "status": "PASS",
+    "detail": "Canonical Poisson bracket is 1 by definition"
+  },
+  {
+    "name": "C001.2b: [X,P] representable as commutator",
+    "status": "PASS",
+    "detail": "Commutator object: -[P,X]"
+  },
+  {
+    "name": "C001.3: Schr\u00f6dinger equation expressible in SymPy",
+    "status": "PASS",
+    "detail": "H\u03c8 = -hbar**2*Derivative(psi(x), (x, 2))/(2*m) + V(x)*psi(x), E\u03c8 = E*psi(x)"
+  },
+  {
+    "name": "C001.inv: Quantization preserves Lie algebra structure",
+    "status": "PASS",
+    "detail": "Poisson bracket and commutator both satisfy Jacobi identity + bilinearity"
+  },
+  {
+    "name": "C002.1: \u2202L/\u2202q\u0307 = mq\u0307",
+    "status": "PASS",
+    "detail": "\u2202L/\u2202q\u0307 = m*qdot"
+  },
+  {
+    "name": "C002.2: \u2202L/\u2202q = -V'(q) (Newton's F = -dV/dq)",
+    "status": "PASS",
+    "detail": "\u2202L/\u2202q = -Derivative(V(q), q)"
+  },
+  {
+    "name": "C002.3: Legendre transform gives H = T + V",
+    "status": "PASS",
+    "detail": "H = V(q) + p**2/(2*m)"
+  },
+  {
+    "name": "C003.1: Gibbs \u2192 Boltzmann for equiprobable states",
+    "status": "PASS",
+    "detail": "S_Gibbs(equi) = k_B*log(Omega), S_Boltzmann = k_B*log(Omega)"
+  },
+  {
+    "name": "C003.2: Shannon = Gibbs / (k_B ln 2) \u2014 structural equivalence",
+    "status": "PASS",
+    "detail": "H = S/(k_B ln 2). The logarithmic measure of uncertainty is preserved; physical units stripped."
+  },
+  {
+    "name": "PRIM.1: QUANTIZE = MAP + EXTEND",
+    "status": "PASS",
+    "detail": "MAP: {,}\u2192(1/i\u0127)[,] is Lie algebra homomorphism. EXTEND: phase space \u2192 Hilbert space adds \u221e-dim structure. CAVEAT: ordering ambiguity (Weyl/normal) not captured by this decomposition."
+  },
+  {
+    "name": "PRIM.2: VARIATIONAL = EXTEND + REDUCE + LIMIT",
+    "status": "PASS",
+    "detail": "EXTEND: path\u2192function space. REDUCE: select extremum. LIMIT: \u03b4\u21920 in functional derivative. Clean decomposition."
+  },
+  {
+    "name": "PRIM.3: DISCRETIZE = REDUCE + BREAK_SYMMETRY",
+    "status": "PASS",
+    "detail": "REDUCE: continuous\u2192finite. BREAK_SYMMETRY: continuous translation\u2192discrete. CAVEAT: lattice gauge theory preserves gauge symmetry. Not universal."
+  },
+  {
+    "name": "PRIM.4: Analytic continuation = EXTEND + MAP?",
+    "status": "FAIL",
+    "detail": "Analytic continuation is uniquely determined by the identity theorem. EXTEND captures domain enlargement but MAP doesn't capture the analyticity constraint that makes the extension unique. May need COMPLETE as an 11th primitive, or EXTEND with constraints."
+  },
+  {
+    "name": "PRIM.5: RENORMALIZATION = REDUCE + MAP + LIMIT",
+    "status": "PASS",
+    "detail": "REDUCE: integrate out high-energy modes. MAP: rescale. LIMIT: RG fixed point. Reasonable decomposition. NOTE: the 'reduction' step is specifically a path integral over a shell in momentum space."
+  },
+  {
+    "name": "PRIM.6: DUALIZE is involution",
+    "status": "PASS",
+    "detail": "Fourier: F\u00b2=reflection. Pontryagin: G^^\u2245G. Legendre: involution on convex functions. Not exact identity in all cases (Fourier picks up reflection) but structurally involutive."
+  },
+  {
+    "name": "PRIM.7: REPRESENT = MAP + LINEARIZE?",
+    "status": "FAIL",
+    "detail": "Representation is a MAP (homomorphism G\u2192GL(V)), but LINEARIZE implies approximation of a nonlinear object. Representation preserves exact structure. Better: REPRESENT = MAP to category of linear spaces. LINEARIZE should be reserved for actual approximation (Taylor, Jacobian)."
+  },
+  {
+    "name": "NOETHER.1: dH/dt = 0 on-shell (energy conservation from time-translation)",
+    "status": "PASS",
+    "detail": "dH/dt = 0"
+  },
+  {
+    "name": "NOETHER.2: dJ/dt = 0 for central force (angular momentum conservation)",
+    "status": "PASS",
+    "detail": "dJ/dt = 0"
+  }
+]

@@ -1,0 +1,42 @@
+{
+  "test": 1,
+  "paper": "Adaptive Localization",
+  "claim": "PARTITION->TRUNCATE->CONCENTRATE is universal resolution for conjugate-variable impossibilities, parameterized by symmetry group",
+  "result": "INCONCLUSIVE",
+  "confidence": "MODERATE",
+  "evidence": "All three uncertainty bounds verified numerically to high precision. Quantum-to-Signal mapping via hbar=1/(2*pi) is exact and rigorous (Stone-von Neumann theorem). Sp(2,R) Casimir genuinely determines the quantum minimum uncertainty. HOWEVER: the Bode sensitivity integral is an analytic constraint (argument principle), NOT a symplectic capacity or Casimir invariant. The claim that all three are 'parameterized by symmetry group' is TRUE for quantum+signal (genuinely the same structure) but FALSE for control (different mechanism, structural analogy only). The operational claim (PARTITION->TRUNCATE->CONCENTRATE achieves the bound in each domain) is correct, but the UNIVERSAL claim of symmetry-group parameterization fails for the control theory case.",
+  "quantum_area": 1.5707963267948966,
+  "gabor_area": 0.07957747154594767,
+  "bode_integral": -1.5707963259771358,
+  "symmetry_connection": "2/3 genuine: Quantum and Signal are rigorously unified via Stone-von-Neumann theorem and the identification hbar=1/(2*pi). Control is a structural analogy only \u2014 the Bode integral is conserved by complex-analytic (argument principle) reasons, not symplectic/group-theoretic ones. The 'universal' claim overstates the unity.",
+  "implications_for_other_papers": "The quantum-signal unification is solid and supports claims about conjugate-variable resolution in representation spaces. However, any paper extending this to control-theoretic or other non-symplectic domains should be careful: the mechanism is different even though the operational pattern (PTC) looks similar. The 10-primitive basis should distinguish between 'symplectic PTC' (rigorous) and 'analytic PTC' (analogous but mechanistically distinct). The convergence theory claim about transformers 'hardening symplectic capacity' would need to specify WHICH phase space has symplectic structure \u2014 if it's the token embedding space, this needs proof that it actually carries a symplectic form.",
+  "details": {
+    "quantum": {
+      "symplectic_capacity": 1.5707963267948966,
+      "purity_verified": true,
+      "max_rel_error": 3.487868498008632e-16,
+      "symmetry_group": "Sp(2,R)",
+      "invariant_type": "Gromov symplectic width"
+    },
+    "signal": {
+      "gabor_area": 0.07957747154594767,
+      "gabor_verified": true,
+      "max_rel_error": 3.487868498008632e-16,
+      "symmetry_group": "Heisenberg-Weyl",
+      "invariant_type": "time-frequency area lower bound"
+    },
+    "control": {
+      "bode_integral_stable_p1": -1.5707963259771358,
+      "expected_stable_p1": -1.5707963267948966,
+      "bode_pass": true,
+      "max_rel_error": 1.1928417160676275e-08,
+      "waterbed_area_p1": 3.141592653589793,
+      "symmetry_group": "Frequency scaling (multiplicative)",
+      "invariant_type": "Bode sensitivity integral"
+    },
+    "quantum_signal_mapping_exact": true,
+    "sp2_casimir_verified": "True",
+    "control_casimir_claimed": false,
+    "control_mechanism": "argument principle (complex analysis), NOT symplectic"
+  }
+}

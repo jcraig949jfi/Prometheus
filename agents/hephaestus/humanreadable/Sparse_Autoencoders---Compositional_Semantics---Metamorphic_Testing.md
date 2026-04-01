@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Philosophy, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T17:56:42.257345
-**Report Generated**: 2026-03-27T18:24:04.880840
+**Report Generated**: 2026-03-31T17:10:38.092741
 
 ---
 
@@ -69,7 +69,10 @@ Implementability: 9/10 — relies only on NumPy and `re`; all operations (ISTA, 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:08:23.229538
 
 ---
 

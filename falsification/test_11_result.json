@@ -1,0 +1,10 @@
+{
+  "test": 11,
+  "paper": "AIECS Thermodynamics",
+  "claim": "RL-controlled thermodynamic cascades outperform static and greedy baselines",
+  "result": "INCONCLUSIVE",
+  "confidence": null,
+  "evidence": "This test requires GPU to train a PPO agent on a 3-stage thermodynamic cascade simulation. No GPU available in this session.",
+  "what_is_needed": "Implement 3-stage thermodynamic cascade with paper equations. Run three strategies: (1) static allocation, (2) greedy efficiency maximization, (3) PPO. Compare total power output, efficiency, and entropy loss across constant and stochastic demand scenarios. PPO must outperform both baselines on at least 2 of 3 metrics.",
+  "implications_for_other_papers": "If this test eventually FAILS (greedy matches PPO), Paper 11 is shelved. No impact on other papers — AIECS is standalone."
+}

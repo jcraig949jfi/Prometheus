@@ -3,7 +3,7 @@
 **Fields**: Complex Systems, Logic, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-26T20:38:44.824407
-**Report Generated**: 2026-03-27T06:37:48.538948
+**Report Generated**: 2026-03-31T17:31:45.829524
 
 ---
 
@@ -93,7 +93,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:29:18.179735
 
 ---
 

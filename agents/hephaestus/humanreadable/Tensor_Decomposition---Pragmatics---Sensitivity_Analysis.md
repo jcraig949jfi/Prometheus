@@ -2,56 +2,52 @@
 
 **Fields**: Mathematics, Linguistics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T15:54:36.403433
-**Report Generated**: 2026-03-27T16:08:16.628666
+**Nous Timestamp**: 2026-03-28T03:09:15.560045
+**Report Generated**: 2026-03-31T14:34:54.774498
 
 ---
 
 ## Nous Analysis
 
-**1. Algorithm**  
-We build a third‑order tensor **𝒳 ∈ ℝ^{C×F×P}** where  
-- **C** = number of candidate answers,  
-- **F** = set of parsed structural features (see §2),  
-- **P** = pragmatic‑context dimensions (speech‑act type, implicated‑vs‑literal flag, Grice‑maxim compliance score).  
+**Algorithm**  
+1. **Parsing → Proposition Tensor** – Using regex‑based patterns we extract atomic propositions from the prompt and each candidate answer. Each proposition is encoded as a 4‑way tensor **T** ∈ ℝ^{E×R×M×C} where:  
+   - *E* = entity index (from a built‑in ontology of noun phrases),  
+   - *R* = relation type (e.g., *cause*, *greater‑than*, *equals*, *negated*),  
+   - *M* = modal/context flag (assertion, conditional, question, implicature),  
+   - *C* = polarity/certainty scalar (1 for positive, –1 for negation, 0 for unknown).  
+   The tensor is sparse; each extracted triple sets T[e,r,m,c] = 1 (or –1 for negation).  
 
-Each entry 𝒳_{c,f,p} is a binary indicator (1 if answer *c* exhibits feature *f* in pragmatic mode *p*, else 0).  
-We then compute a CP decomposition 𝒳 ≈ Σ_{r=1}^{R} **a_r ∘ b_r ∘ c_r** with rank *R* chosen by a scree‑like elbow on the reconstruction error (using only `numpy.linalg.svd` on matricizations). The factor vectors are:  
-- **a_r** ∈ ℝ^{C} (answer loading),  
-- **b_r** ∈ ℝ^{F} (feature loading),  
-- **c_r** ∈ ℝ^{P} (pragmatic loading).  
+2. **Tensor Decomposition → Latent Factors** – Apply CP decomposition (rank = k, k ≪ dimensions) via alternating least squares using only NumPy. This yields factor matrices **A** (E×k), **B** (R×k), **C** (M×k), **D** (C×k) such that **T̂** ≈ ∑_{i=1}^k a_i ∘ b_i ∘ c_i ∘ d_i. The low‑rank core captures the underlying relational structure while filtering noise.  
 
-The **base score** for answer *c* is s_c = Σ_r a_{c,r} (∥b_r∥_2 · ∥c_r∥_2).  
+3. **Pragmatic Weighting** – Compute a pragmatic salience vector **p** ∈ ℝ^{R} from Grice‑style heuristics:  
+   - *Relevance* ↑ for relations that appear in the question’s focus (detected via interrogative regex),  
+   - *Quantity* ↓ for overly granular relations (high entity count),  
+   - *Manner* ↑ for explicit connectives (e.g., “because”, “if”).  
+   Multiply the relation factor **B** element‑wise by **p** to obtain **B̂**.  
 
-To incorporate **Sensitivity Analysis**, we perturb each feature dimension *f* by flipping its binary value (simulating negation, scalar change, or conditional reversal) and recompute the reconstruction error ΔE_{c,f}. The sensitivity weight for answer *c* is w_c = 1 / (1 + λ·mean_f ΔE_{c,f}) with λ=0.1. The final score is **S_c = s_c · w_c**. All operations are pure NumPy (tensor reshaping, dot products, norms).
+4. **Scoring** – For each candidate answer, reconstruct its tensor **T̂_ans** using the same factor matrices (with **B̂**) and compute the normalized dot product similarity S = ⟨T̂_prompt, T̂_ans⟩ / (‖T̂_prompt‖‖T̂_ans‖).  
 
-**2. Structural features parsed**  
-- Negations (`not`, `no`, affix `un-`) → feature *neg*.  
-- Comparatives (`more`, `less`, `-er`, `than`) → feature *cmp* with direction.  
-- Conditionals (`if … then …`, `unless`) → feature *cond* with antecedent/consequent slots.  
-- Numeric values and units → feature *num* (value, unit, inequality).  
-- Causal verbs (`cause`, `lead to`, `because`) → feature *caus* with source/target.  
-- Ordering relations (`before`, `after`, `first`, `last`) → feature *ord*.  
-Each feature is encoded as a one‑hot slot in **F**; pragmatic dimensions **P** capture: (i) speech‑act assertive/question/command, (ii) implicature strength (derived from scalar‑item lists), (iii) adherence to Grice’s maxims (computed via simple heuristics on relevance and quantity).
+5. **Sensitivity Analysis** – Perturb the prompt tensor by adding i.i.d. Gaussian noise ε∼N(0,σ²) (σ=0.01) to 10% of non‑zero entries, recompute S for each perturbation, and calculate the variance Var(S). Final score = S – λ·Var(S) (λ=0.2), penalizing answers whose similarity is fragile to small input changes.  
 
-**3. Novelty**  
-Tensor‑based semantic representations have been used for word embeddings and knowledge‑base completion, and sensitivity analysis is standard in uncertainty quantification. Pragmatic feature extraction appears in computational discourse models, but the joint CP‑factorization of answer‑feature‑pragmatic tensors, followed by a perturbation‑based sensitivity re‑weighting, has not been described in the literature. Hence the combination is novel for answer scoring.
+**Structural Features Parsed** – negations (via “not”, “no”), comparatives (“greater than”, “less than”), conditionals (“if … then …”), numeric values (regex for integers/floats), causal claims (“because”, “leads to”), ordering relations (“before”, “after”), and quantifiers (“all”, “some”).  
 
-**4. Ratings**  
-Reasoning: 7/10 — captures logical structure and quantifies robustness to perturbations.  
-Metacognition: 5/10 — limited self‑monitoring; no explicit uncertainty estimation beyond sensitivity.  
-Hypothesis generation: 4/10 — focuses on evaluating given candidates, not generating new ones.  
-Implementability: 8/10 — relies solely on NumPy and standard library; all steps are straightforward tensor ops.
+**Novelty** – Tensor‑based semantic parsing exists, and pragmatic weighting appears in discourse‑aware models, but jointly coupling CP decomposition with Grice‑derived weights and a explicit sensitivity‑penalty step is not documented in the literature; it constitutes a novel hybrid for robustness‑focused reasoning evaluation.  
+
+**Ratings**  
+Reasoning: 8/10 — captures multi‑relational structure and filters noise via low‑rank approximation, giving a principled similarity measure.  
+Metacognition: 6/10 — the sensitivity step provides a rudimentary self‑check of answer stability, but no higher‑order reflection on the reasoning process itself.  
+Hypothesis generation: 5/10 — the method scores existing candidates; it does not propose new answers or alternative explanations.  
+Implementability: 9/10 — relies solely on NumPy for ALS CP decomposition and stdlib regex; no external libraries or APIs required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

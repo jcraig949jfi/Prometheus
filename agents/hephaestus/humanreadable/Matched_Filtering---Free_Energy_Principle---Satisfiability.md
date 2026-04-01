@@ -2,61 +2,52 @@
 
 **Fields**: Signal Processing, Theoretical Neuroscience, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T04:06:02.142772
-**Report Generated**: 2026-03-27T05:13:42.563567
+**Nous Timestamp**: 2026-03-28T01:23:40.250114
+**Report Generated**: 2026-03-31T14:34:54.025120
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing → factor graph** – Use regex to extract atomic propositions from the prompt and each candidate answer. Each proposition becomes a binary variable \(X_i\in\{0,1\}\) (False/True). Edges are added for logical connectives found in the text:  
-   - Negation `¬` → edge weight \(w_{i}^{\text{neg}}=-1\) linking \(X_i\) to its complement.  
-   - Comparative `>`/`<` → arithmetic constraint encoded as a pseudo‑boolean clause (e.g., \(X_i\Rightarrow X_j\)).  
-   - Conditional `if A then B` → implication clause \(¬A\lor B\).  
-   - Causal verb `causes` → same as conditional.  
-   - Ordering `before`/`after` → temporal clause \(X_i\Rightarrow X_j\) or its converse.  
-   - Numeric equality/inequality → clause that is satisfied only when the extracted numbers obey the relation.  
+1. **Parsing stage** – Using only regex and the stdlib, extract from the prompt and each candidate answer a set of ground literals L = {l₁,…,lₙ}. Each literal encodes a polarity (positive/negative) and a type:  
+   - *Negation*: “not P” → l = ¬P  
+   - *Comparative*: “X > Y” → l = (X, >, Y)  
+   - *Conditional*: “if A then B” → l = (A → B)  
+   - *Causal*: “A because B” → l = (B ⇒ A)  
+   - *Ordering*: “before/after” → l = (X, <, Y) or (X, >, Y)  
+   - *Numeric*: constants become literals with equality constraints.  
+   Each literal is assigned an index; a binary assignment vector **a**∈{0,1}ⁿ indicates truth (1) or falsity (0).  
 
-   Each clause \(C_k\) receives a **matched‑filter similarity** \(s_k\in[0,1]\): the clause’s token pattern is one‑hot encoded; the prototype pattern for that clause type (learned from a small set of hand‑crafted templates) is also one‑hot encoded; \(s_k=\frac{u\cdot v}{\|u\|\|v\|}\) (numpy dot product).  
+2. **Clause matrix** – Build a clause matrix **C**∈ℤᵐˣⁿ (m = number of extracted clauses). For each clause (a disjunction of literals) set Cᵢⱼ = +1 if literal j appears positively, –1 if negatively, 0 otherwise. The clause‑satisfaction vector **b**∈{1}ᵐ holds the required sum (≥1 for an OR clause).  
 
-2. **Free‑energy scoring** – Define the energy of an assignment \(\mathbf{x}\) as  
-   \[
-   E(\mathbf{x})=\sum_k s_k\bigl[1-\mathbb{I}(C_k\text{ satisfied by }\mathbf{x})\bigr].
-   \]  
-   Approximate variational free energy with a mean‑field term:  
-   \[
-   F(\mathbf{p})=E(\mathbf{p})+\sum_i\bigl[p_i\log p_i+(1-p_i)\log(1-p_i)\bigr],
-   \]  
-   where \(p_i\) is the marginal probability of \(X_i=1\). Update \(p_i\) by fixed‑point iteration (numpy vectorized) until \(\Delta F<10^{-4}\).  
+3. **Scoring components**  
+   - *Matched‑filter term*: compute the prompt‑derived constraint vector **p** (same construction as **a** but from the prompt alone). Correlation score ρ = (**p**·**a**) / (‖**p**‖‖**a**‖).  
+   - *Free‑energy term*: prediction error **e** = **C** **a** − **b** (clipped at 0 for unsatisfied clauses). Approximate variational free energy F = ½‖**e**‖² − H(**a**), where entropy H ≈ −∑ᵢ[**a**ᵢlog **a**ᵢ +(1−**a**ᵢ)log(1−**a**ᵢ)] (treated as 0 for hard assignments).  
+   - *SAT term*: count satisfied clauses s = ∑ᵢ [ (**C**ᵢ·**a**) ≥ 1 ]; SAT score σ = s / m.  
 
-3. **SAT consistency check** – Run a lightweight DPLL unit‑propagation on the weighted clauses. If a conflict is found, iteratively drop the lowest‑weight clause until the formula becomes SAT; the number of dropped clauses \(c\) gives a penalty \(p_{\text{SAT}}=c/\sum_k s_k\).  
+4. **Final score** for a candidate answer:  
+   Score = w₁·ρ − w₂·F + w₃·σ, with weights w₁,w₂,w₃∈[0,1] tuned on a validation set (e.g., w₁=0.4, w₂=0.3, w₃=0.3). The algorithm uses only NumPy for dot products, norms, and matrix‑vector multiplication; all parsing relies on the stdlib.  
 
-4. **Final score** –  
-   \[
-   \text{Score}= -F(\mathbf{p}^\*) -\lambda\,p_{\text{SAT}},
-   \]  
-   with \(\lambda=0.5\). Higher scores indicate answers that better match the expected signal, incur less prediction error, and produce fewer unsatisfiable constraints.
+**Structural features parsed** – negations, comparatives (> ,< ,=), conditionals (if‑then), causal cues (because, leads to, due to), ordering relations (before/after, earlier/later), numeric constants and equality/inequality, and explicit quantifiers (“all”, “some”, “none”) turned into universal/existential clause patterns.  
 
-**Structural features parsed** – negations, comparatives (`>`,`<`, `≥`, `≤`), conditionals (`if … then …`), causal verbs (`causes`, `leads to`, `results in`), ordering relations (`before`, `after`, `precedes`), numeric values with units and equality/inequality (`=`, `≠`, `<`, `>`), and conjunction/disjunction cue words (`and`, `or`).
-
-**Novelty** – While matched filtering, the free‑energy principle, and SAT solving each appear separately in signal processing, theoretical neuroscience, and automated reasoning, their joint use to score natural‑language answers has not been reported in the literature; the combination is therefore novel.
+**Novelty** – While factor‑graph/Marcov‑Logic approaches and predictive‑coding (free energy) models exist in NLP, the direct combination of a matched‑filter correlation score with a variational free‑energy approximation and a SAT‑based clause‑satisfaction metric for answer scoring has not been reported in the literature; it bridges signal‑detection theory, variational inference, and Boolean satisfiability in a unified, fully algebraic evaluator.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and numeric constraints but relies on shallow pattern matching.  
-Metacognition: 5/10 — no explicit self‑monitoring of uncertainty beyond mean‑field entropy.  
-Hypothesis generation: 6/10 — can propose alternative assignments via marginal probabilities, yet lacks generative proposal mechanisms.  
-Implementability: 8/10 — uses only numpy for vector ops and regex/standard library for parsing; algorithm runs in milliseconds on modest inputs.
+Reasoning: 8/10 — captures logical structure and uncertainty via principled error minimization.  
+Metacognition: 6/10 — provides a single scalar score; no explicit self‑reflection loop.  
+Implementability: 9/10 — relies only on regex, NumPy, and stdlib; straightforward to code.  
+Hypothesis generation: 5/10 — the model evaluates given answers but does not propose new ones.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

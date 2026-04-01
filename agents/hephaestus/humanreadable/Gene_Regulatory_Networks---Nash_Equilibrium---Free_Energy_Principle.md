@@ -3,7 +3,7 @@
 **Fields**: Biology, Game Theory, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:24:46.370631
-**Report Generated**: 2026-03-27T23:28:38.538718
+**Report Generated**: 2026-03-31T17:18:34.392820
 
 ---
 
@@ -63,7 +63,10 @@ Implementability: 9/10 — relies only on NumPy and std‑lib regex; all operati
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:17:32.754393
 
 ---
 

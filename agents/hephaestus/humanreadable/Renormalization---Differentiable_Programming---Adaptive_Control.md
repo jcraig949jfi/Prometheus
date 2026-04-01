@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T22:02:19.093791
-**Report Generated**: 2026-03-27T23:28:38.600718
+**Report Generated**: 2026-03-31T18:11:08.218196
 
 ---
 
@@ -56,7 +56,10 @@ Implementability: 9/10 — relies solely on NumPy for tensor ops and standard li
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:09:02.866502
 
 ---
 

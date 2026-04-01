@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:41:14.995324
-**Report Generated**: 2026-03-27T16:08:16.129675
+**Report Generated**: 2026-03-31T19:09:43.984528
 
 ---
 
@@ -69,7 +69,10 @@ Implementability: 9/10 — <why>
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:09:18.708363
 
 ---
 

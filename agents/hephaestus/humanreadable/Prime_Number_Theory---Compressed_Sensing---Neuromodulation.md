@@ -2,43 +2,62 @@
 
 **Fields**: Mathematics, Computer Science, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T08:15:24.173252
-**Report Generated**: 2026-03-27T16:08:16.849261
+**Nous Timestamp**: 2026-03-29T01:05:27.566494
+**Report Generated**: 2026-03-31T14:34:55.372070
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Feature extraction (prime‑number encoding)** – Parse the candidate answer with a deterministic regex set that yields a list of atomic propositions: each negation, comparative, conditional, numeric literal, causal claim, and ordering relation is mapped to a unique prime \(p_i\) (e.g., negation→2, comparative→3, conditional→5, numeric→7, causal→11, ordering→13). For each occurrence we increment a counter in a sparse vector \(x\in\mathbb{R}^K\) where \(K\) is the number of proposition types. The entry \(x_j = \text{count}_j \times p_j\) gives a weighted, collision‑resilient encoding that preserves sparsity because most proposition types are absent in any short answer.  
+1. **Feature extraction** – Run a deterministic regex‑based parser on the prompt and each candidate answer to pull out a fixed set of logical atoms:  
+   - Negations (`not`, `no`)  
+   - Comparatives (`greater than`, `less than`, `equals`)  
+   - Conditionals (`if … then …`)  
+   - Numeric values (integers, floats)  
+   - Causal claims (`because`, `leads to`)  
+   - Ordering relations (`before`, `after`, `first`, `last`)  
+   Each atom is assigned a unique prime number via a pre‑computed lookup table (e.g., “not”→2, “greater than”→3, “equals”→5, …).  
 
-2. **Compressed sensing measurement** – Generate a fixed measurement matrix \(\Phi\in\mathbb{R}^{M\times K}\) (with \(M<K\), e.g., \(M=0.3K\)) whose rows are drawn from a normal distribution and then orthonormalized; this matrix satisfies the Restricted Isometry Property (RIP) with high probability. Compute the measurement \(y = \Phi x\).  
+2. **Sparse encoding** – For a given text, build a binary indicator vector **x** ∈ {0,1}^P where P is the number of primes used; x[i]=1 if the corresponding prime‑coded atom appears. Because typical sentences contain only a handful of atoms, **x** is extremely sparse.  
 
-3. **Neuromodulatory gain control** – Derive a gain vector \(g\in\mathbb{R}^M\) from answer‑level statistics: \(g_i = 1 + \alpha \cdot \frac{\|y_i\|_1}{\|y\|_1}\) where \(\alpha\) is a small constant (e.g., 0.2). This mimics dopaminergic gain modulation, amplifying measurements that carry more energy. Form the ganged measurement \(\tilde{y}=g\odot y\).  
+3. **Measurement (compressed sensing)** – Generate a fixed random measurement matrix Φ ∈ {0,1}^{M×P} (M≪P, e.g., M=50) using a seeded PRNG so the matrix is reproducible. Compute the measurement vector **y** = Φ **x** (integer addition, no modulus). This step mimics taking far fewer “measurements” than the full feature space.  
 
-4. **Sparse reconstruction (basis pursuit)** – Solve the L1‑minimization problem \(\min\|z\|_1\) s.t. \(\|\Phi z - \tilde{y}\|_2 \le \epsilon\) using an iterative soft‑thresholding algorithm (ISTA) implemented with NumPy. The reconstructed sparse code \(\hat{x}\) estimates the original proposition counts.  
+4. **Recovery (basis pursuit)** – To score a candidate, solve the convex optimization  
+   \[
+   \hat{\mathbf{x}} = \arg\min_{\mathbf{z}\ge0}\|\mathbf{z}\|_1 \quad\text{s.t.}\quad \Phi\mathbf{z} = \mathbf{y}
+   \]  
+   using a simple iterative soft‑thresholding algorithm (ISTA) that only needs NumPy for matrix‑vector ops and the standard library for loops. The solution **ẑ** is a non‑negative sparse estimate of the original feature vector.  
 
-5. **Scoring** – Compute the residual \(r = \|\Phi \hat{x} - \tilde{y}\|_2\). A lower residual indicates that the answer’s logical structure is well‑explained by the sparse model, i.e., it contains the expected relations with few extraneous propositions. The final score is \(S = \exp(-\beta r)\) with \(\beta\) set to map typical residuals to \([0,1]\).  
+5. **Neuromodulatory gain** – Maintain three gain scalars derived from neuromodulation analogues:  
+   - **Baseline gain** (serotonin) = 1.0, applied uniformly.  
+   - **Surprise gain** (dopamine) = 1 + ‖**ẑ**−**x_ref**‖₀ / P, boosting dimensions where the candidate deviates from a reference answer’s sparse code **x_ref**.  
+   - **Stability gain** (acetylcholine) = 1 / (1 + λ‖**ẑ**‖₂), penalizing overly dense recoveries.  
+   The final score is the dot product  
+   \[
+   s = \mathbf{g}^\top (\hat{\mathbf{x}} \odot \mathbf{x}_{\text{ref}})
+   \]  
+   where **g** = [baseline, surprise, stability] broadcast across dimensions and ⊙ denotes element‑wise product. Higher s indicates closer logical‑sparse overlap.
 
-**Parsed structural features** – Negations, comparatives, conditionals, numeric literals, causal claims (e.g., “because”, “leads to”), and ordering relations (e.g., “more than”, “before”). Each contributes a distinct prime‑weighted dimension to \(x\).  
+**Parsed structural features** – The regex parser explicitly captures negations, comparatives, conditionals, numeric constants, causal cue words, and temporal/ordering expressions. These are the atoms fed into the prime‑coded sparse vector.
 
-**Novelty** – While prime‑based hashing and compressive sensing have been used separately for text compression and sketching, coupling them with a neuromodulatory gain step that dynamically reweights measurements according to answer energy is not described in the literature. The approach resembles attention‑guided sparse coding but replaces learned attention with a biologically inspired gain rule, making the combination novel.  
+**Novelty** – Prime‑based Gödel numbering of logical tokens is known in symbolic AI, but coupling it with compressed‑sensing recovery (Φ x → y → L1) to infer sparse logical structure from limited measurements is not standard in NLP scoring. Adding dynamic, neuromodulation‑inspired gain control to weight recovered features adaptively is also unexplored in existing reasoning‑evaluation tools, making the combination novel.
 
 **Ratings**  
-Reasoning: 7/10 — The algorithm captures logical sparsity and reconstructs it via principled L1 recovery, giving a clear, quantitative basis for judging answer coherence.  
-Metacognition: 5/10 — Gain control provides a rudimentary confidence signal, but the method lacks explicit self‑monitoring of reconstruction error beyond the residual.  
-Hypothesis generation: 4/10 — The model is primarily evaluative; it does not propose new propositions or alternative explanations beyond scoring existing structure.  
-Implementability: 8/10 — All steps rely on NumPy (matrix ops, ISTA loops) and Python’s re module; no external libraries or APIs are needed, making it readily portable.
+Reasoning: 7/10 — The algorithm performs logical sparse recovery and gain‑modulated comparison, which captures deeper structure than bag‑of‑words but relies on linear approximations.  
+Metacognition: 6/10 — Gains provide a rudimentary self‑assessment (surprise vs. stability), yet no explicit higher‑order monitoring of uncertainty is implemented.  
+Hypothesis generation: 8/10 — By solving for the sparsest explanation of measurements, the tool implicitly generates alternative logical hypotheses consistent with the prompt.  
+Implementability: 7/10 — All steps use only NumPy (matrix ops, ISTA loop) and Python’s re/standard library; no external dependencies or neural nets are required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 8/10 |
+| Implementability | 7/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

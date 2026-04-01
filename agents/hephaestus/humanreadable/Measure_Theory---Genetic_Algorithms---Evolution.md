@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Biology
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:55:14.041624
-**Report Generated**: 2026-03-27T16:08:16.150675
+**Report Generated**: 2026-03-31T19:52:13.169998
 
 ---
 
@@ -79,7 +79,10 @@ Implementability: 8/10 — uses only `numpy` for vector ops and `re`/`std` lib; 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:51:44.761169
 
 ---
 

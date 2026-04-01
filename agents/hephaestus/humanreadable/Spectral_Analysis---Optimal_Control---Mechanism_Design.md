@@ -3,7 +3,7 @@
 **Fields**: Signal Processing, Control Theory, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T13:31:23.556786
-**Report Generated**: 2026-03-27T16:08:16.479668
+**Report Generated**: 2026-03-31T17:29:07.469854
 
 ---
 
@@ -60,7 +60,10 @@ Implementability: 9/10 — relies only on NumPy and stdlib; all steps are determ
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:26:37.398426
 
 ---
 

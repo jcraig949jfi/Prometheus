@@ -2,41 +2,66 @@
 
 **Fields**: Economics, Philosophy, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T05:41:54.331783
-**Report Generated**: 2026-03-27T06:37:51.808061
+**Nous Timestamp**: 2026-03-29T00:29:23.171229
+**Report Generated**: 2026-03-31T14:34:54.417112
 
 ---
 
 ## Nous Analysis
 
-The algorithm builds a lightweight abstract syntax tree (AST) from each answer using regex‑based extraction of logical primitives (predicates, negations, comparatives, conditionals, causal arrows, and numeric literals). Each node stores its type, child references, and any attached constants. A mechanism‑design layer assigns a weight wᵢ to every constraint encoded in the tree (e.g., “if A then B”, “X > Y”, “¬C”). The overall score is the negative sum of weighted violations, turning incentive compatibility into a penalty for deviating from the desired logical structure.
+**Algorithm**  
+We build a lightweight semantic parser that converts a prompt and each candidate answer into a typed feature vector `x ∈ ℝⁿ`. Each dimension corresponds to a primitive semantic predicate extracted by regex‑based patterns:  
 
-Scoring proceeds in three passes:
+- **Entities** (`E_i`) – noun phrases.  
+- **Relations** (`R_j`) – verbs or prepositions linking entities (e.g., “increases”, “before”).  
+- **Negations** (`N_k`) – presence of “not”, “no”.  
+- **Comparatives** (`C_l`) – “>”, “<”, “≥”, “≤”, “more than”, “less than”.  
+- **Conditionals** (`M_m`) – “if … then …”, captured as implication nodes.  
+- **Numeric values** (`V_p`) – numbers with units.  
+- **Causal cues** (`Q_q`) – “because”, “leads to”, “results in”.  
+- **Ordering/Temporal** (`O_r`) – “after”, “until”, “during”.  
 
-1. **Compositional evaluation** – recursively compute a Boolean truth value for each sub‑expression under a provisional interpretation of atomic predicates (initially true). This yields a base violation count v₀.
-2. **Constraint propagation** – apply transitive closure and modus ponens over the implication graph to derive implied literals; any contradiction (e.g., P and ¬P) increments the violation count.
-3. **Sensitivity analysis** – for every numeric literal n, compute a finite‑difference derivative ∂Score/∂n ≈ (Score(n+ε)−Score(n−ε))/(2ε) with ε=10⁻³. The absolute gradient magnitudes are summed to form a sensitivity penalty s, reflecting how fragile the answer is to small perturbations in quantities.
+Each primitive is encoded as a one‑hot slot; numeric values are stored as floats. The parser yields a structured object `S = { (type, args, value) }`.  
 
-Final score = −(α·v₀ + β·propagation_violations + γ·s), where α,β,γ are tunable weights (default 1). All operations use only Python lists, dictionaries, and NumPy for vectorized gradient computation.
+From `S` we compose a **meaning vector** `φ(S) = W·f(S)` where `f(S)` stacks the primitive indicators and numeric values, and `W ∈ ℝᵏˣⁿ` is a fixed weighting matrix (e.g., identity or hand‑crafted relevance weights). This step embodies **Compositional Semantics**: the meaning of the whole is a linear combination of parts.
 
-**Structural features parsed:** atomic predicates, negations, comparatives (>,<,=,≥,≤), conjunction/disjunction, conditionals (if‑then), causal arrows (→, because), ordering chains, and numeric constants with units.
+To evaluate a candidate answer `a`, we treat the true world state as an unknown parameter `θ`. Using **Mechanism Design**, we apply a proper scoring rule that incentivizes truthful reporting:  
 
-This combination is not a direct replica of existing work; while semantic parsing, constraint solving, and sensitivity analysis appear separately, the tight coupling of mechanism‑design‑style penalty weighting with compositional truth evaluation and numeric gradient‑based fragility is novel in a pure‑numpy, regex‑driven evaluator.
+```
+score(a,θ) = -‖ φ(a) - φ(θ) ‖₂²          (quadratic/Brier score)
+```
 
-Reasoning: 7/10 — captures logical structure and incentives but lacks deep probabilistic reasoning.  
-Metacognition: 5/10 — provides no explicit self‑monitoring or uncertainty calibration beyond sensitivity.  
-Hypothesis generation: 4/10 — focuses on evaluating given answers, not generating new candidates.  
-Implementability: 9/10 — relies only on regex, AST recursion, and NumPy gradients; straightforward to code in <200 lines.
+Since `θ` is unavailable, we approximate its expectation by propagating constraints from the prompt (e.g., if the prompt states “X > 5”, we enforce that any θ must satisfy the corresponding numeric constraint). Constraint propagation uses simple transitive closure over ordering and equality relations.
+
+Finally, we run **Sensitivity Analysis** on the score: compute the gradient ∂score/∂x via the chain rule (numpy dot products). The magnitude `‖∂score/∂x‖₁` measures how much the score changes under small perturbations of input features (negation flips, numeric shifts, conditional antecedent changes). The final evaluation combines expected score and a robustness penalty:
+
+```
+final = E[score] - λ · ‖∂score/∂x‖₁
+```
+
+where λ is a small constant (e.g., 0.1). All operations use only numpy and Python’s stdlib (regex, itertools).
+
+**Structural features parsed**  
+Negations, comparatives, conditionals, numeric values, causal cue phrases, ordering/temporal relations, and basic quantifiers (“all”, “some”) via regex patterns that capture dependency‑like triples.
+
+**Novelty**  
+While proper scoring rules come from mechanism design, and semantic parsing with feature vectors is common, explicitly coupling them with a sensitivity‑based robustness penalty is not standard in existing QA evaluation tools. Most prior work uses either logical form matching or similarity metrics; the joint incentive‑compatible + sensitivity layer is novel.
+
+**Rating**  
+Reasoning: 8/10 — The algorithm captures logical structure and propagates constraints, enabling genuine deductive reasoning beyond surface similarity.  
+Metacognition: 6/10 — It estimates robustness via gradients, offering a rudimentary form of self‑checking, but lacks higher‑order reflection on uncertainty sources.  
+Hypothesis generation: 5/10 — Constraint propagation can suggest consistent worlds, yet the system does not actively propose alternative hypotheses; it only evaluates given candidates.  
+Implementability: 9/10 — All components are regex‑based parsing, numpy linear algebra, and simple loops; no external libraries or training are required, making it straightforward to code and run.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
 | Implementability | 9/10 |
-| **Composite** | **5.33** |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

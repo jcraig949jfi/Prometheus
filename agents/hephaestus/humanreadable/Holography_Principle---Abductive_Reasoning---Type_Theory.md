@@ -3,7 +3,7 @@
 **Fields**: Physics, Philosophy, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T22:41:25.874524
-**Report Generated**: 2026-03-27T23:28:38.616718
+**Report Generated**: 2026-03-31T17:23:50.244930
 
 ---
 
@@ -74,7 +74,10 @@ Implementability: 6/10 — all steps use numpy and stdlib, but SVD and constrain
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:23:48.646326
 
 ---
 

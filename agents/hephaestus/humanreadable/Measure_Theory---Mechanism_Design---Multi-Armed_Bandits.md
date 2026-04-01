@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Economics, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T21:35:32.294158
-**Report Generated**: 2026-03-27T23:28:38.584718
+**Report Generated**: 2026-03-31T17:55:19.823042
 
 ---
 
@@ -68,7 +68,10 @@ Implementability: 9/10 — All steps use only `numpy` for vector math and the st
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:54:48.540118
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Biology, Control Theory, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T11:49:53.421917
-**Report Generated**: 2026-03-27T16:08:16.410672
+**Report Generated**: 2026-03-31T18:11:08.175195
 
 ---
 
@@ -66,7 +66,10 @@ Implementability: 9/10 — only numpy array operations, Euler integration, and g
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:09:57.503404
 
 ---
 

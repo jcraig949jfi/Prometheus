@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Computer Science, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T20:45:19.680974
-**Report Generated**: 2026-03-27T23:28:38.559718
+**Report Generated**: 2026-03-31T17:05:22.294397
 
 ---
 
@@ -73,7 +73,10 @@ Implementability: 9/10 — all steps use only numpy and the standard library; di
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T16:42:53.158514
 
 ---
 

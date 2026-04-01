@@ -2,68 +2,56 @@
 
 **Fields**: Game Theory, Software Engineering, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T21:36:27.548844
-**Report Generated**: 2026-03-27T03:26:13.547759
+**Nous Timestamp**: 2026-03-31T21:42:08.330724
+**Report Generated**: 2026-03-31T23:05:15.664000
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Bandit‑Guided Metamorphic Sensitivity Scorer (BMSS)**  
+**1. Algorithm – Bandit‑Guided Metamorphic Sensitivity Scorer (BGMSS)**  
+The scorer treats each candidate answer as an “arm” whose unknown reward is its logical‑structural fidelity to the prompt.  
+- **Data structures**  
+  - `arms`: list of dicts, one per candidate, containing `text`, `features` (numpy array), `pull_count`, `value_estimate`.  
+  - `MR_bank`: list of metamorphic relations (MRs) extracted once from the prompt (see §2). Each MR is a tuple `(op, args)` where `op` ∈ {`scale`, `swap`, `negate`, `add_const}` and `args` are the indices of tokens to which the operation applies.  
+  - `S_matrix`: `|MR| × |features|` sensitivity matrix, initialized to zeros and updated online.  
+- **Operations per iteration**  
+  1. **Feature extraction** – deterministic regex‑based parser converts each answer into a binary/numeric feature vector `f` indicating presence of: negations, comparatives, conditionals, numeric literals, causal verbs, ordering tokens.  
+  2. **UCB selection** – compute `UCB_i = value_estimate_i + c * sqrt(log(total_pulls)/pull_count_i)`. Choose arm with highest UCB.  
+  3. **Metamorphic test** – for the chosen arm, apply each MR in `MR_bank` to its feature vector (e.g., scaling a numeric token, swapping two ordered tokens, negating a polarity flag) to generate a transformed vector `f'`.  
+  4. **Sensitivity update** – compute `delta = f' - f`. For each MR `j`, update `S_matrix[j] += delta * delta.T` (outer product) and increment a per‑MR error counter `e_j += |delta|_1`.  
+  5. **Reward calculation** – reward `r = 1 - (Σ_j w_j * e_j) / (Σ_j w_j)`, where weights `w_j = 1 / (1 + trace(S_matrix[j]))` down‑weight MRs that have shown high sensitivity (i.e., fragile).  
+  6. **Bandit update** – increment pull count, update `value_estimate_i += (r - value_estimate_i) / pull_count_i`.  
+- **Scoring logic** – after a fixed budget of pulls (e.g., 5 × number of arms), return the final `value_estimate` of each arm as its score; higher means the answer respects more metamorphic invariants and exhibits low sensitivity to perturbations.
 
-1. **Data structures**  
-   - `answers: List[str]` – candidate answers.  
-   - `relations: List[Callable[[str], str]]` – metamorphic relation functions built from the prompt (see §2). Each relation takes a perturbed prompt and returns the expected transformation of a correct answer.  
-   - `scores: np.ndarray[float]` – average metamorphic consistency per answer.  
-   - `pulls: np.ndarray[int]` – number of times each answer has been evaluated.  
-   - `sens: np.ndarray[float]` – average sensitivity (variance of consistency across perturbations).  
-   - `UCB: np.ndarray[float]` – upper‑confidence bound used for arm selection.  
+**2. Structural features parsed**  
+The regex‑based extractor looks for:  
+- Negation cues (`not`, `n’t`, `no`, `never`).  
+- Comparative/superlative adjectives and adverbs (`more`, `less`, `-er`, `-est`).  
+- Conditional markers (`if`, `unless`, `provided that`, `then`).  
+- Numeric values (integers, decimals, fractions) and units.  
+- Causal verbs (`cause`, `lead to`, `result in`, `because`, `due to`).  
+- Ordering tokens (`first`, `second`, `before`, `after`, `greater than`, `less than`).  
+Each detected element sets a corresponding bit or numeric entry in the feature vector.
 
-2. **Operations per evaluation round**  
-   - **Arm selection**: choose answer `i` with maximal `UCB[i] = scores[i] + c * sqrt(log(total_pulls) / (pulls[i]+1))` (c=1.0).  
-   - **Prompt perturbation**: apply each relation `r_j` to the original prompt, producing perturbed prompt `p_j`.  
-   - **Expected answer transformation**: for each `r_j`, compute `exp_j = r_j(p_j)`. If the relation is numeric (e.g., double a quantity), `exp_j` is a deterministic function of the original answer; if logical (e.g., negate a clause), `exp_j` is the negated string.  
-   - **Consistency measurement**: compare candidate answer `a_i` to `exp_j` using a simple metric:  
-        * numeric → relative absolute error `|val(a_i)-val(exp_j)|/|val(exp_j)|`  
-        * logical → 0 if strings match after normalization, else 1.  
-     Consistency for relation `j` is `1 - error` (clipped to [0,1]).  
-   - **Aggregate consistency**: `cons_i = mean_j consistency_{i,j}`.  
-   - **Sensitivity update**: `sens_i = (sens_i * (pulls[i]) + variance_j consistency_{i,j}) / (pulls[i]+1)`.  
-   - **Score update**: `scores_i = (scores_i * pulls[i] + cons_i) / (pulls[i]+1)`.  
-   - **Increment pulls[i]** and recompute `UCB`.  
+**3. Novelty**  
+The combo is not a direct reproduction of prior work. Multi‑armed bandits have been used for answer selection, but not coupled with online sensitivity matrices derived from metamorphic relations. Metamorphic testing is usually applied to software; here it drives perturbation generation for sensitivity analysis. Sensitivity analysis in causal inference is typically offline; we embed it as a bandit‑driven, per‑arm uncertainty estimator. This integration appears novel in the literature on reasoning‑evaluation tools.
 
-   After a fixed budget (e.g., 30 evaluations per answer), the final score for answer `i` is `scores_i - λ * sens_i` (λ=0.5 penalizes fragile answers). The answer with highest adjusted score is selected.
-
-3. **Structural features parsed (via regex & lightweight parsing)**  
-   - Numerics and units (to enable scaling relations).  
-   - Comparatives (`greater than`, `less than`, `more than`, `twice`, `half`).  
-   - Ordering/temporal relations (`before`, `after`, `previous`, `next`).  
-   - Negations (`not`, `no`, `never`).  
-   - Conditionals (`if … then …`, `unless`, `provided that`).  
-   - Causal cue verbs (`cause`, `lead to`, `result in`, `because`).  
-   - Equality/same (`same as`, `identical to`, `equal`).  
-   - Quantifiers (`all`, `some`, `none`).  
-
-   These features feed the relation builders: e.g., a detected comparative “X is twice Y” yields a relation that doubles the numeric value of Y and expects the answer to reflect that doubling.
-
-4. **Novelty**  
-   Metamorphic testing, multi‑armed bandits, and sensitivity analysis are each well‑studied in software testing, reinforcement learning, and uncertainty quantification, respectively. Their conjunction for scoring natural‑language reasoning answers — using bandits to allocate limited evaluation budget to answers while measuring metamorphic consistency and perturbative sensitivity — has not been described in the literature to the best of my knowledge, making the combination novel.
-
-**Ratings**  
-Reasoning: 7/10 — captures logical and numeric consistency via metamorphic relations and balances exploration/exploitation.  
-Metacognition: 6/10 — provides a rough estimate of answer robustness (sensitivity) but does not model higher‑order self‑reflection.  
-Hypothesis generation: 5/10 — generates answer perturbations but does not propose new explanatory hypotheses beyond those encoded in relations.  
-Implementability: 8/10 — relies only on regex, numpy arithmetic, and simple control flow; no external libraries or APIs needed.
+**4. Ratings**  
+Reasoning: 8/10 — The algorithm directly evaluates logical invariants and quantifies fragility, giving a principled score beyond surface similarity.  
+Metacognition: 7/10 — By tracking uncertainty via UCB and sensitivity, the system adapts its exploration, showing rudimentary self‑monitoring.  
+Hypothesis generation: 6/10 — MRs act as generated hypotheses about how answers should change; the bandit selects which to test, but hypothesis space is limited to predefined MRs.  
+Implementability: 9/10 — All components use regex, numpy arrays, and basic arithmetic; no external libraries or APIs are required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

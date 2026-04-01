@@ -74,6 +74,23 @@ def make_client() -> OpenAI:
 
 def call_api(client: OpenAI, prompt: str, model: str,
              max_retries: int = 5, backoff_base: float = 2.0) -> str | None:
+    """Call API with exponential backoff. Returns None only on non-retryable errors."""
+    import random
+    
+    def is_retryable(err_str: str) -> bool:
+        """Determine if an error should trigger retry vs immediate failure."""
+        err_lower = err_str.lower()
+        # Retryable: rate limits, server errors, timeouts, connection issues
+        if any(x in err_str for x in ["429", "500", "502", "503"]):
+            return True
+        if any(x in err_lower for x in ["rate", "timeout", "timed out", "connection", "temporarily unavailable"]):
+            return True
+        # Non-retryable: auth errors, bad requests, model refused
+        if any(x in err_lower for x in ["unauthorized", "authentication", "forbidden", "invalid request", "model", "refused", "content policy"]):
+            return False
+        # Default: retry (better to retry once than lose gold)
+        return True
+    
     for attempt in range(max_retries):
         try:
             resp = client.chat.completions.create(
@@ -85,18 +102,22 @@ def call_api(client: OpenAI, prompt: str, model: str,
             return resp.choices[0].message.content
         except Exception as e:
             err = str(e)
-            if "429" in err or "rate" in err.lower():
-                wait = backoff_base ** (attempt + 1)
-                logger.warning("Rate limited, waiting %.1fs (attempt %d)", wait, attempt + 1)
-                time.sleep(wait)
-            elif any(code in err for code in ("500", "502", "503")):
-                wait = backoff_base ** attempt
-                logger.warning("Server error, waiting %.1fs (attempt %d)", wait, attempt + 1)
-                time.sleep(wait)
-            else:
-                logger.error("API error: %s", err)
+            
+            if not is_retryable(err):
+                logger.error("Non-retryable API error: %s", err)
                 return None
-    logger.error("Exhausted retries")
+            
+            if attempt < max_retries - 1:
+                # Exponential backoff with jitter: base^attempt + random jitter
+                wait = backoff_base ** attempt
+                jitter = random.uniform(0, wait * 0.1)  # 0-10% jitter
+                total_wait = wait + jitter
+                logger.warning("API error (retryable), backoff %.2fs (attempt %d/%d): %s",
+                             total_wait, attempt + 1, max_retries, err)
+                time.sleep(total_wait)
+            else:
+                logger.error("API error after %d retries (last: %s)", max_retries, err)
+    
     return None
 
 
@@ -455,6 +476,40 @@ def filter_results(results: list[dict], top_n: int | None = None,
     return filtered
 
 
+def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
+                         run_dir: Path, max_item_retries: int = 3) -> dict | None:
+    """Attempt to forge an item multiple times with backoff on API failures.
+    
+    This wrapper retries at the item level when API failures occur, giving the
+    API time to recover before discarding the item. Permanent failures (bad code,
+    validation errors) are not retried.
+    """
+    import random
+    
+    for attempt in range(max_item_retries):
+        result = forge_one(client, entry, model, run_dir)
+        
+        # If successful or permanent failure, return immediately
+        if not result or result["status"] == "forged":
+            return result
+        
+        # Only retry on API failures
+        reason = result.get("reason", "")
+        if reason != "api_call_failed":
+            return result  # Permanent failure (validation, code extract, test) - don't retry
+        
+        # API failed - wait and retry
+        if attempt < max_item_retries - 1:
+            wait = 2 ** attempt + random.uniform(0, 1)  # 1-2s, 2-3s, 4-5s
+            logger.warning("Item forge API failed, retrying in %.1fs (attempt %d/%d)",
+                         wait, attempt + 1, max_item_retries)
+            time.sleep(wait)
+        else:
+            logger.warning("Item forge exhausted retries after API failures")
+    
+    return result
+
+
 def forge_one(client: OpenAI, entry: dict, model: str,
               run_dir: Path) -> dict | None:
     """Process a single Nous result through the full forge pipeline."""
@@ -630,7 +685,7 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
         if key in processed:
             continue
 
-        result = forge_one(client, entry, args.model, run_dir)
+        result = forge_one_with_retry(client, entry, args.model, run_dir, max_item_retries=3)
 
         processed.add(key)
         count += 1

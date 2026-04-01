@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T15:13:34.983139
-**Report Generated**: 2026-03-27T16:08:16.949259
+**Report Generated**: 2026-03-31T19:23:00.572010
 
 ---
 
@@ -50,7 +50,10 @@ Implementability: 6/10 — requires only regex, numpy arrays, and integer prime 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:21:31.480199
 
 ---
 

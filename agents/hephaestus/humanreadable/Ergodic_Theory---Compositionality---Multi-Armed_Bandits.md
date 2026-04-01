@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Linguistics, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T15:40:02.310013
-**Report Generated**: 2026-03-27T16:08:16.961260
+**Report Generated**: 2026-03-31T18:47:45.188215
 
 ---
 
@@ -64,7 +64,10 @@ Hypothesis generation: 5/10 — The system can propose alternative parses via ed
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:45:51.202216
 
 ---
 

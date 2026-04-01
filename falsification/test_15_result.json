@@ -1,0 +1,151 @@
+{
+  "test": 15,
+  "paper": "11 Structural Primitives",
+  "claim": "Mathematics decomposes into exactly 11 structural transformation primitives, no more and no fewer",
+  "result": "FAIL",
+  "confidence": "MODERATE",
+  "evidence": "COMPLETE is likely redundant (EXTEND + LIMIT). Additionally, 3 primitives are borderline: ['REDUCE', 'LINEARIZE', 'SYMMETRIZE']. Conservative count: 10 independent primitives, not 11. If borderline cases also fall: as few as 7.",
+  "independence_analysis": {
+    "COMPOSE": "INDEPENDENT",
+    "MAP": "INDEPENDENT",
+    "EXTEND": "INDEPENDENT",
+    "REDUCE": "BORDERLINE",
+    "LIMIT": "INDEPENDENT",
+    "DUALIZE": "INDEPENDENT",
+    "LINEARIZE": "BORDERLINE",
+    "STOCHASTICIZE": "INDEPENDENT",
+    "SYMMETRIZE": "BORDERLINE",
+    "BREAK_SYMMETRY": "INDEPENDENT",
+    "COMPLETE": "LIKELY_REDUNDANT"
+  },
+  "independent_primitives": [
+    "COMPOSE",
+    "MAP",
+    "EXTEND",
+    "LIMIT",
+    "DUALIZE",
+    "STOCHASTICIZE",
+    "BREAK_SYMMETRY"
+  ],
+  "borderline_primitives": [
+    "REDUCE",
+    "LINEARIZE",
+    "SYMMETRIZE"
+  ],
+  "redundant_primitives": [
+    "COMPLETE"
+  ],
+  "conservative_count": 10,
+  "aggressive_count": 7,
+  "decomposition_details": {
+    "COMPOSE": {
+      "status": "INDEPENDENT",
+      "attempted": "MAP + EXTEND",
+      "analysis": "MAP transforms one structure; EXTEND adds dimensions to one structure. Neither produces a product of two independent structures. COMPOSE is the monoidal product — categorically irreducible."
+    },
+    "MAP": {
+      "status": "INDEPENDENT",
+      "attempted": "LINEARIZE + EXTEND",
+      "analysis": "MAP is the general functor (structure-preserving morphism). LINEARIZE is a special case of MAP (linear approximation). You cannot build MAP from LINEARIZE because MAP includes nonlinear maps."
+    },
+    "EXTEND": {
+      "status": "INDEPENDENT",
+      "attempted": "COMPOSE + MAP",
+      "analysis": "EXTEND is the free construction / left adjoint — it creates new structure (e.g., free group on generators). COMPOSE combines existing structures. You cannot compose with something that doesn't exist yet. EXTEND is categorically the left adjoint (free functor), which is not decomposable into tensor product + functor."
+    },
+    "REDUCE": {
+      "status": "BORDERLINE",
+      "attempted": "MAP (surjective/forgetful)",
+      "analysis": "REDUCE (forgetful functor) strips structure. MAP (general functor) preserves structure type. A forgetful functor IS a functor — technically REDUCE is a special case of MAP (a functor that forgets). But categorically, forgetful functors have special properties (right adjoints, create limits) that general functors don't. The distinction is whether you preserve the category or change it."
+    },
+    "LIMIT": {
+      "status": "INDEPENDENT",
+      "attempted": "iterated REDUCE",
+      "analysis": "LIMIT is categorical limit (terminal cone over a diagram). It involves convergence and completeness — topological properties absent from REDUCE. Iterated REDUCE gives a chain of forgetful steps, not convergence to a limit object. The categorical limit is a universal property, not a sequential operation."
+    },
+    "DUALIZE": {
+      "status": "INDEPENDENT",
+      "attempted": "none viable",
+      "analysis": "DUALIZE is the contravariant functor / op-construction. No other primitive reverses the direction of morphisms. Unique."
+    },
+    "LINEARIZE": {
+      "status": "BORDERLINE",
+      "attempted": "MAP(tangent bundle) + REDUCE(to first order)",
+      "analysis": "Linearization IS mapping to the tangent space and truncating to first order. This is compositionally valid in differential categories. However, LINEARIZE requires smooth/differential structure on the source category — it's not just any MAP + REDUCE, it's specifically the derivative functor."
+    },
+    "STOCHASTICIZE": {
+      "status": "INDEPENDENT",
+      "attempted": "EXTEND(probability space) + MAP(measurable function)",
+      "analysis": "While stochasticization can be DESCRIBED as extending to a probability space and mapping measurably, the Giry monad (probability monad) itself is a new mathematical object not derivable from deterministic primitives. You need the concept of measure/probability as a primitive to construct it. EXTEND adds algebraic structure, but probability requires measure theory."
+    },
+    "SYMMETRIZE": {
+      "status": "BORDERLINE",
+      "attempted": "REDUCE(quotient by group action)",
+      "analysis": "SYMMETRIZE = quotient by group action = a specific type of REDUCE. Categorically, taking the quotient X/G is a coequalizer (a colimit, actually — the dual of LIMIT). But SYMMETRIZE carries additional information: it specifies WHICH group acts and HOW. This makes it more structured than bare REDUCE."
+    },
+    "BREAK_SYMMETRY": {
+      "status": "INDEPENDENT",
+      "attempted": "EXTEND(labeling) + MAP(section)",
+      "analysis": "BREAK_SYMMETRY requires choosing a section of a quotient map — a fundamentally non-canonical operation. This is why it's connected to spontaneous symmetry breaking in physics: the choice cannot be derived from the symmetric system. No composition of structure-preserving primitives produces non-canonical choice. Categorically: sections of epimorphisms don't always exist and when they do, they're not functorial."
+    },
+    "COMPLETE": {
+      "status": "LIKELY_REDUNDANT",
+      "attempted": "EXTEND + LIMIT",
+      "analysis": "Cauchy completion = extend with Cauchy sequences + take their limits. Algebraic closure = extend with roots of polynomials + close under limits. Profinite completion = extend with inverse system + take limit. In all standard cases, COMPLETE decomposes into EXTEND (add the missing elements) + LIMIT (ensure closure). Categorically, completion is the left adjoint to the inclusion of complete objects, which factors through free extension and limit."
+    }
+  },
+  "spanning_analysis": {
+    "moulines": {
+      "operations_mapped": 6,
+      "unmapped": [],
+      "verdict": "All Moulines operations map to existing primitives. No 12th needed."
+    },
+    "lawvere": {
+      "operations_mapped": 11,
+      "unmapped": [],
+      "verdict": "All Lawvere categorical operations map. No 12th needed."
+    },
+    "goguen_burstall": {
+      "operations_mapped": 6,
+      "unmapped": [],
+      "verdict": "All institution-theoretic operations map. No 12th needed."
+    },
+    "shiebler_2021": {
+      "operations_mapped": 10,
+      "unmapped": [],
+      "verdict": "All categorical deep learning operations map. No 12th needed."
+    }
+  },
+  "candidate_12th_primitives": {
+    "ADJOIN": {
+      "is_new": false,
+      "decomposition": "EXTEND (left adjoint = free) + REDUCE (right adjoint = forgetful). Adjunction is not a primitive — it's a RELATIONSHIP between EXTEND and REDUCE."
+    },
+    "QUOTIENT": {
+      "is_new": false,
+      "decomposition": "SYMMETRIZE (impose equivalence relation) + REDUCE (collapse classes). Or: REDUCE via coequalizer."
+    },
+    "PULLBACK": {
+      "is_new": false,
+      "decomposition": "COMPOSE (product) + REDUCE (fiber condition) = categorical limit over a cospan. Decomposes into LIMIT + COMPOSE."
+    },
+    "PUSHOUT": {
+      "is_new": false,
+      "decomposition": "COMPOSE (coproduct) + EXTEND (identification) = categorical colimit over a span. Decomposes into EXTEND + COMPOSE."
+    },
+    "FORGET": {
+      "is_new": false,
+      "decomposition": "This IS REDUCE. Not a separate primitive."
+    },
+    "CURRY": {
+      "is_new": false,
+      "decomposition": "MAP (internal hom construction) + COMPOSE (partial application). Standard in cartesian closed categories."
+    },
+    "SAMPLE": {
+      "is_new": false,
+      "decomposition": "STOCHASTICIZE + REDUCE (select one outcome). Or: MAP from probability space to sample space."
+    }
+  },
+  "missing_primitives": [],
+  "implications_for_other_papers": "If COMPLETE is redundant, Paper 15 title must change from '11' to '10'. The primitive basis is still valid — just smaller. Papers 1-14 are unaffected since they use the damage operators (derived from primitives), not the primitives directly. The damage operator count (9) is independent of whether COMPLETE is primitive or derived. If LINEARIZE and SYMMETRIZE also fall, the basis shrinks to 7-8 but the SPANNING property still holds — all mathematical operations still decompose."
+}

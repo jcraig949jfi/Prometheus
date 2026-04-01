@@ -3,7 +3,7 @@
 **Fields**: Signal Processing, Complex Systems, Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T13:24:13.893113
-**Report Generated**: 2026-03-27T16:08:16.476668
+**Report Generated**: 2026-03-31T19:20:22.518018
 
 ---
 
@@ -70,7 +70,10 @@ Implementability: 8/10 — relies solely on NumPy for wavelet math and stdlib fo
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:19:29.997595
 
 ---
 

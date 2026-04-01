@@ -3,7 +3,7 @@
 **Fields**: Physics, Cognitive Science, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T21:53:37.012827
-**Report Generated**: 2026-03-27T23:28:38.595718
+**Report Generated**: 2026-03-31T19:09:44.034528
 
 ---
 
@@ -65,7 +65,10 @@ Implementability: 8/10 — relies solely on NumPy and standard library; straight
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:05:05.133671
 
 ---
 

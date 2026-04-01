@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T22:15:46.405796
-**Report Generated**: 2026-03-27T23:28:38.604718
+**Report Generated**: 2026-03-31T18:00:36.908322
 
 ---
 
@@ -62,7 +62,10 @@ Hypothesis generation: 7/10 — PBT supplies systematic counter‑examples, but 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:59:12.694540
 
 ---
 

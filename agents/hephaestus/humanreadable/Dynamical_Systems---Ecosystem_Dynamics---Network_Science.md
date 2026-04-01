@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Biology, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T06:46:13.297038
-**Report Generated**: 2026-03-27T16:08:16.794262
+**Report Generated**: 2026-03-31T17:10:38.103740
 
 ---
 
@@ -63,7 +63,10 @@ Implementability: 9/10 — uses only NumPy for matrix operations and standard li
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:10:28.112090
 
 ---
 

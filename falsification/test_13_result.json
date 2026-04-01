@@ -1,0 +1,45 @@
+{
+  "test": 13,
+  "paper": "Noesis Ethnomathematics / Cross-Cultural Transmission Detection",
+  "claim": "Structural primitive analysis detects transmission routes independently of linguistic evidence. Known-transmission pairs (Bamana-Arabic) should have higher primitive vector similarity than no-contact pairs.",
+  "result": "FAIL",
+  "confidence": "HIGH",
+  "evidence": "Cosine similarity analysis of enriched_primitive_vectors shows the OPPOSITE of what the claim predicts. Mean Bamana-Islamic similarity: 0.3496. Mean Bamana-NoContact similarity: 0.5071. The no-contact pairs are MORE similar than the known-transmission pairs (difference: -0.1574). Specific findings: (1) BAMANA_DIVINATION vs ABORIGINAL_KINSHIP_ALGEBRA has similarity 0.706, higher than any Bamana-Islamic pair except AL_KINDI_CRYPTANALYSIS. (2) BAMANA_BINARY_DIVINATION vs POLYNESIAN_NAVIGATION has similarity 0.858, the highest pair in the entire analysis -- but these traditions had NO historical contact. (3) The highest Bamana-Islamic pairs are with AL_KINDI_CRYPTANALYSIS (0.716 and 0.741), but these are driven by shared MAP and STOCHASTICIZE primitives, which are generic (many unrelated traditions share MAP). (4) Hub profile analysis from tradition_hub_matrix shows different damage operator distributions: Bamana systems use RANDOMIZE/DISTRIBUTE/QUANTIZE while Islamic systems use TRUNCATE/CONCENTRATE -- these do NOT overlap, further undermining the transmission claim. (5) The high Bamana-Polynesian similarity is driven by shared STOCHASTICIZE primitive (both divination and navigation involve probabilistic reasoning), which is a FUNCTIONAL convergence, not a transmission signal.",
+  "detailed_analysis": {
+    "bamana_islamic_similarities": {
+      "BAMANA_DIVINATION-AL_KINDI_CRYPTO": 0.3473,
+      "BAMANA_DIVINATION-AL_KINDI_CRYPTANALYSIS": 0.7159,
+      "BAMANA_DIVINATION-AL_KINDI_CRYPTOANALYSIS": 0.3527,
+      "BAMANA_DIVINATION-MATH_SYS_109": 0.007,
+      "BAMANA_SAND_DIVINATION-AL_KINDI_CRYPTO": 0.2353,
+      "BAMANA_SAND_DIVINATION-AL_KINDI_CRYPTANALYSIS": 0.7409,
+      "BAMANA_SAND_DIVINATION-AL_KINDI_CRYPTOANALYSIS": 0.4411,
+      "BAMANA_SAND_DIVINATION-MATH_SYS_109": 0.0585,
+      "BAMANA_BINARY_DIVINATION-AL_KINDI_CRYPTO": 0.4222,
+      "BAMANA_BINARY_DIVINATION-AL_KINDI_CRYPTANALYSIS": 0.6172,
+      "BAMANA_BINARY_DIVINATION-AL_KINDI_CRYPTOANALYSIS": 0.2572,
+      "BAMANA_BINARY_DIVINATION-MATH_SYS_109": 0.0,
+      "mean": 0.3496
+    },
+    "bamana_nocontact_similarities": {
+      "BAMANA_DIVINATION-POLYNESIAN_NAVIGATION": 0.7053,
+      "BAMANA_DIVINATION-POLYNESIAN_WAVE_NAVIGATION_MODEL": 0.006,
+      "BAMANA_DIVINATION-ABORIGINAL_SONGLINE_NAV": 0.6624,
+      "BAMANA_DIVINATION-ABORIGINAL_KINSHIP_ALGEBRA": 0.706,
+      "BAMANA_SAND_DIVINATION-POLYNESIAN_NAVIGATION": 0.2941,
+      "BAMANA_SAND_DIVINATION-POLYNESIAN_WAVE_NAVIGATION_MODEL": 0.1759,
+      "BAMANA_SAND_DIVINATION-ABORIGINAL_SONGLINE_NAV": 0.9206,
+      "BAMANA_SAND_DIVINATION-ABORIGINAL_KINSHIP_ALGEBRA": 0.7869,
+      "BAMANA_BINARY_DIVINATION-POLYNESIAN_NAVIGATION": 0.8575,
+      "BAMANA_BINARY_DIVINATION-POLYNESIAN_WAVE_NAVIGATION_MODEL": 0.0,
+      "BAMANA_BINARY_DIVINATION-ABORIGINAL_SONGLINE_NAV": 0.4602,
+      "BAMANA_BINARY_DIVINATION-ABORIGINAL_KINSHIP_ALGEBRA": 0.5099,
+      "mean": 0.5071
+    },
+    "hub_profile_divergence": "Bamana uses RANDOMIZE/DISTRIBUTE/QUANTIZE operators; Islamic uses TRUNCATE/CONCENTRATE. These are structurally dissimilar damage profiles despite known historical transmission.",
+    "confound_identified": "The enriched_primitive_vector captures FUNCTIONAL similarity (what the system DOES) not STRUCTURAL TRANSMISSION (where it came from). Divination and navigation both involve probabilistic reasoning (STOCHASTICIZE), creating spurious similarity between Bamana and Polynesian systems.",
+    "missing_arabic_geomancy": "The database lacks an explicit Arabic geomancy (Ilm al-Raml) system, which is the ACTUAL transmission partner for Bamana sand divination. The Islamic systems available (cryptanalysis, algebra, combinatorics) are the wrong comparison -- they share no functional domain with Bamana divination."
+  },
+  "mitigating_factors": "The test is partially unfair because the database lacks the ideal comparison system (Arabic geomancy / Ilm al-Raml). The available Islamic systems are functionally distant from Bamana divination. A fairer test would compare Bamana sand divination to Arabic geomancy to West African Ifa divination. However, even granting this, the enriched_primitive_vectors demonstrably fail to control for functional convergence, which is a fundamental limitation.",
+  "implications_for_other_papers": "The Noesis primitive framework captures FUNCTIONAL structure well (systems that do similar things get similar vectors) but cannot distinguish transmission from convergence. This is a known hard problem in comparative studies. The framework would need additional features (specific numerical encodings, domain-specific structural details, temporal ordering) to serve as a transmission detector. The primitive vectors remain valid for their primary purpose (structural classification) but should NOT be marketed as transmission detectors."
+}

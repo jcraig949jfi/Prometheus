@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Neuroscience, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T23:21:30.603874
-**Report Generated**: 2026-03-27T23:28:38.636718
+**Report Generated**: 2026-03-31T17:18:34.400818
 
 ---
 
@@ -72,7 +72,10 @@ Implementability: 8/10 — All components (sparse coding via coordinate descent,
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:18:21.307963
 
 ---
 

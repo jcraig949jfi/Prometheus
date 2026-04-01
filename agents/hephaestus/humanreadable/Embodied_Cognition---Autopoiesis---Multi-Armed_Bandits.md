@@ -2,62 +2,66 @@
 
 **Fields**: Cognitive Science, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T17:50:35.879362
-**Report Generated**: 2026-03-26T17:05:15.381762
+**Nous Timestamp**: 2026-03-28T17:17:28.005337
+**Report Generated**: 2026-03-31T14:34:42.695537
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Bandit‑Guided Constraint‑Consistency Scorer (BGCCS)**  
+**Algorithm**  
+We treat each candidate answer as a set of propositional nodes extracted from the prompt and the answer text. Parsing uses deterministic regex patterns to produce a list of triples *(subject, relation, object)* where the relation belongs to a fixed ontology:  
+- **Negation**: `not X` → edge type `NEG` from X to a special FALSE node.  
+- **Comparative**: `X greater than Y` → edge type `GT` from X to Y.  
+- **Conditional**: `if X then Y` → edge type `IMP` from X to Y.  
+- **Causal**: `X causes Y` → edge type `CAUS` from X to Y.  
+- **Ordering/Temporal**: `X before Y` → edge type `BEFORE` from X to Y.  
+- **Equivalence**: `X equals Y` → edge type `EQ` (bidirectional).  
 
-1. **Parsing (embodied cognition)**  
-   - Input: prompt `P` and each candidate answer `A_i`.  
-   - Using only `re` (standard library) we extract a set of atomic propositions `prop(P)` and `prop(A_i)`. Patterns captured:  
-     * Negations (`not`, `no`, `-`) → polarity flag.  
-     * Comparatives (`>`, `<`, `≥`, `≤`, `more than`, `less than`).  
-     * Conditionals (`if … then …`, `unless`).  
-     * Causal verbs (`cause`, `lead to`, `result in`).  
-     * Ordering relations (`before`, `after`, `first`, `last`).  
-     * Numeric values (`\d+(\.\d+)?`).  
-   - Each proposition is stored as a tuple `(subj, pred, obj, polarity, type)` where `type ∈ {cmp, cond, caus, ord, num, plain}`.
+Each distinct entity becomes a node; we store an adjacency list `edges[i] = [(j, type), …]` and a belief vector **b** ∈ [0,1]^N (numpy array). Initial beliefs are set by literal polarity: a negated literal gets 0, a plain literal gets 0.5, a comparative with known direction gets 1 or 0 according to a small lookup table (e.g., “greater than” → source = 1, target = 0).  
 
-2. **Internal model (autopoiesis)**  
-   - Build a directed constraint graph `G_i` for each `(P, A_i)` union. Nodes are entities; edges carry a relation label and a polarity.  
-   - Apply deterministic constraint propagation until fix‑point:  
-     * **Transitivity** for ordering (`a<b ∧ b<c → a<c`).  
-     * **Modus ponens** for conditionals (`if p then q`, `p` true → enforce `q`).  
-     * **Numeric consistency** (e.g., extracted numbers must satisfy extracted comparatives).  
-     * **Negation handling** (edge polarity flips).  
-   - Propagation uses only NumPy arrays for adjacency matrices; each iteration updates a Boolean satisfaction matrix `S` via matrix multiplication (O(V³) worst‑case, but V is small because we keep only extracted entities).
+The system runs a contextual multi‑armed bandit where each node *i* is an arm. At step *t* we compute an UCB score:  
 
-3. **Scoring (multi‑armed bandit)**  
-   - After propagation, compute raw consistency `c_i = (# satisfied edges) – (# violated edges)`.  
-   - Treat each answer as an arm of a Bernoulli bandit with reward `r_i = sigmoid(c_i/κ)` (κ scales to [0,1]).  
-   - Maintain a Beta posterior `Beta(α_i, β_i)` per arm; initialize `α_i=β_i=1`.  
-   - For each evaluation step, sample `θ_i ~ Beta(α_i, β_i)` (Thompson sampling) and select the arm with highest `θ_i` to allocate a propagation iteration (more iterations → tighter `c_i`).  
-   - After the selected arm’s propagation, update `α_i += r_i`, `β_i += (1‑r_i)`.  
-   - Final score for `A_i` is the posterior mean `α_i/(α_i+β_i)`. The algorithm stops after a fixed budget of iterations (e.g., 30) or when change in scores < ε.
+```
+ucb[i] = b[i] + c * sqrt(log(t) / (n[i] + 1))
+```
 
-**Structural features parsed** – negations, comparatives, conditionals, causal claims, ordering relations, numeric values, and plain predicates (subject‑verb‑object). These are the only linguistic constructs the regexes target; everything else is ignored.
+where *n[i]* counts how many times node *i* has been selected and *c* is a exploration constant (e.g., 0.2). We select the arm with maximal ucb, then apply **constraint propagation** for all outgoing edges of that node:  
 
-**Novelty** – The combination is not found in existing surveys. Embodied cognition informs the grounding of linguistic tokens into sensorimotor‑like predicate structures; autopoiesis provides a self‑maintaining constraint‑propagation subsystem; the multi‑armed bandit layer adds an online exploration‑exploitation controller for allocating limited reasoning work. Prior work treats each component separately (e.g., logic‑based QA, bandit‑based hyperparameter search) but never couples them in a single, tightly‑integrated scoring loop.
+- `IMP`: b[j] = max(b[j], b[i])  
+- `NEG`: b[j] = 1 - b[i]  
+- `GT`: if b[i] > 0.5 then b[j] = 0 else b[j] = 1 (propagates ordering)  
+- `CAUS`: b[j] = max(b[j], b[i] * 0.8)  
+- `EQ`: b[j] = (b[j] + b[i]) / 2  
+- `BEFORE`: similar to GT but with temporal direction.  
+
+After updating, we increment *n[i]*. This loop continues for a fixed budget of propagation steps (e.g., 200).  
+
+**Autopoietic closure**: after each iteration we prune any node whose belief remains in (0.45,0.55) and has zero net influence on the set of premise nodes (those directly appearing in the prompt). The remaining subgraph is organizationally closed — only self‑sustaining propositions survive.  
+
+**Scoring**: For each candidate answer we identify its conclusion node *k*. The final score is `b[k]` (higher = more supported). Scores are normalized across candidates to sum to 1.  
+
+**Structural features parsed**  
+Negations, comparatives (`>`, `<`, `=`), conditionals (`if‑then`), causal verbs (`causes`, `leads to`), ordering/temporal (`before`, `after`, `when`), equivalence (`equals`, `is`), conjunction/disjunction (`and`, `or`), and quantifiers (`all`, `some`, `none`).  
+
+**Novelty**  
+Pure logic‑based QA systems use static forward chaining or similarity metrics. Recent work on active inference and logic tensor networks blends uncertainty with neural substrates, but none combine a bandit‑driven focus of attention with autopoietic self‑maintenance and purely symbolic constraint propagation using only numpy/std lib. The coupling is therefore novel, though it draws inspiration from existing threads.  
 
 **Ratings**  
-Reasoning: 8/10 — The algorithm performs genuine logical constraint propagation and uncertainty‑aware arm selection, yielding scores that reflect structural consistency rather than surface similarity.  
-Metacognition: 6/10 — It monitors its own uncertainty via Beta posteriors and decides where to spend computation, but lacks higher‑order reflection on why a particular constraint failed.  
-Hypothesis generation: 5/10 — Hypotheses are limited to the extracted propositions; the system does not invent new relational forms beyond those present in the prompt/answer.  
-Implementability: 9/10 — All steps use only `re` and NumPy; no external libraries, APIs, or neural components are required, making it straightforward to code and run.
+Reasoning: 7/10 — captures deductive and defeasible inferences via constraint propagation but lacks deep abductive reasoning.  
+Metacognition: 8/10 — the UCB bandit explicitly monitors uncertainty and allocates effort, a clear metacognitive loop.  
+Hypothesis generation: 6/10 — new hypotheses arise only from propagated constraints; no generative recombination beyond what the graph permits.  
+Implementability: 9/10 — relies solely on regex, numpy arrays, and basic loops; no external libraries or GPUs needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 8/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Reasoning | 7/10 |
+| Metacognition | 8/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

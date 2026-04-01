@@ -2,51 +2,61 @@
 
 **Fields**: Physics, Complex Systems, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T15:25:40.733322
-**Report Generated**: 2026-03-27T06:37:37.655285
+**Nous Timestamp**: 2026-03-28T19:37:27.517071
+**Report Generated**: 2026-03-31T14:34:41.306386
 
 ---
 
 ## Nous Analysis
 
-The algorithm builds a propositional constraint graph from the text, propagates truth‑interval abstractions, and measures the system’s sensitivity to infinitesimal changes in the seed intervals — a Lyapunov‑exponent‑style metric that peaks at the edge of chaos.  
+**Algorithm**  
+We build a lightweight abstract‑interpretation engine that treats each extracted proposition as a variable with an interval domain [0,1] (truth‑likeness).  
+1. **Parsing** – Regex patterns extract:  
+   * literals (e.g., “the temperature rose”) → variable *v*  
+   * negations (“not X”) → edge *v* → ¬*v* with weight ‑1  
+   * comparatives (“X > Y”) → constraint *vₓ* ≥ *vᵧ* + δ  
+   * conditionals (“if A then B”) → implication *A* → *B* (weight +1)  
+   * causal verbs (“because”, “leads to”) → bidirectional edges with weight +0.5  
+   * numeric values → anchor constraints (e.g., “5 °C” → *v* = 0.5 after scaling).  
+   All constraints are stored in a sparse NumPy adjacency matrix **W** and a bias vector **b**.  
 
-**Data structures**  
-- `nodes`: list of objects `{id, text, interval: np.array([low, high])}` where interval ⊆ [0,1].  
-- `edges`: list of tuples `(src, dst, type, weight)` where `type` ∈ {NOT, AND, OR, IMPLIES, CAUSE, COMPARE, ORDER}.  
-- `adj`: dictionary `src → list of edge indices` for fast traversal.  
-- `J`: numpy Jacobian matrix of shape (2·N, 2·N) storing ∂interval/∂seed for each node’s low and high bound.  
+2. **Abstract interpretation step** – Initialize **x**₀ = 0.5 · 𝟙. Iterate a Gauss‑Seidel‑like update:  
+   **x**ₖ₊₁ = σ(**W**·**x**ₖ + **b**) where σ is a clipping sigmoid (clip to [0,1]).  
+   This computes the least fixed‑point (sound over‑approximation) of the constraint system.  
 
-**Operations**  
-1. **Parsing** – regex patterns extract:  
-   - Negations (`\bnot\b`, `\bno\b`) → NOT edge with weight = 1.  
-   - Comparatives (`greater than|less than|\d+\s*\-\s*\d+`) → COMPARE edge.  
-   - Conditionals (`if .* then`) → IMPLIES edge.  
-   - Causals (`because|leads to|results in`) → CAUSE edge.  
-   - Ordering (`before|after|precedes`) → ORDER edge.  
-   Each extracted proposition becomes a node; its initial interval is set by lexical certainty (e.g., “always” → [1,1], “never” → [0,0], modal “might” → [0,1]).  
-2. **Constraint propagation** – Kleene fixed‑point iteration: for each edge, update the target interval using t‑norms (e.g., AND → min(low₁,low₂), max(high₁,high₂); IMPLIES → [¬src ∨ dst]). Iterate until ‖Δ‖<1e‑6 or max 100 sweeps.  
-3. **Sensitivity (Lyapunov) estimate** – after convergence, perturb each seed interval low/high by ε=1e‑4, re‑run propagation, and compute finite‑difference Jacobian columns. The largest singular value σ of J gives an approximate Lyapunov exponent λ = log(σ).  
-4. **Scoring** – For a candidate answer, compute its own graph (steps 1‑3) and obtain (λ, width) where width = u−l of the answer’s final interval. The score S = −|λ| + α·(1−width) (α=0.5 rewards precision). Higher S indicates the answer lives near criticality (λ≈0) and is tightly bounded.  
+3. **Chaos‑theory signal** – Approximate the largest Lyapunov exponent by perturbing **x**₀ with a small ε · 𝟙, running two trajectories, and measuring  
+   λ ≈ (1/T) ∑ₜ log‖Δ**x**ₜ‖/‖Δ**x**₀‖, where Δ**x**ₜ = **x**ₜ′ − **x**ₜ.  
+   High λ (> 0.1) indicates sensitive dependence → low reasoning stability.  
 
-**Structural features parsed** – negations, comparatives, conditionals, causal claims, ordering relations, explicit numeric values/units, and modal qualifiers that seed intervals.  
+4. **Criticality signal** – Treat the constraint graph as a spin system. Compute:  
+   * correlation length ξ ≈ average size of connected components in **W** (via BFS).  
+   * susceptibility χ ≈ Var(**x**ₖ) over the last 10 iterations.  
+   Near‑critical behavior is signaled when ξ is large but χ is moderate; we define a deviation score d = |ξ − ξ₀|/ξ₀ + |χ − χ₀|/χ₀ with ξ₀,χ₀ set to median values from a calibration set.  
 
-**Novelty** – While abstract interpretation and constraint propagation appear in program analysis and some QA systems, coupling them with a Lyapunov‑exponent‑style sensitivity measure to target the edge of chaos is not present in existing scoring tools; prior work relies on hash similarity, bag‑of‑words, or pure logical entailment without dynamical‑systems analysis.  
+5. **Final score** –  
+   S = α·(1 − norm(λ)) + β·(1 − norm(d)) + γ·(‖**x**∗‖₁ / n)  
+   where **x**∗ is the converged fixed‑point, n the number of variables, and α,β,γ sum to 1 (e.g., 0.4,0.3,0.3).  
+   Higher S indicates a candidate answer that is logically coherent, not overly chaotic, and poised at a productive critical point.
 
-Reasoning: 7/10 — captures sensitivity and precision but assumes linearized dynamics that may mis‑represent discrete linguistic jumps.  
-Metacognition: 5/10 — the tool reports its score but does not adapt or reflect on its own parsing failures.  
-Hypothesis generation: 4/10 — generates no alternative explanations; it only evaluates given candidates.  
-Implementability: 8/10 — relies solely on regex, numpy linear algebra, and fixed‑point loops, all readily available in the standard ecosystem.
+**Structural features parsed** – negations, comparatives, conditionals, causal verbs, ordering relations (before/after), numeric quantities with units, and explicit equality/inequality statements.
+
+**Novelty** – Pure abstract interpretation for NLI exists (e.g., domain‑based theorem provers), and constraint propagation is common in rule‑based QA. Coupling the fixed‑point iteration with Lyapunov‑exponent estimation and criticality metrics (borrowed from dynamical‑systems analysis of neural nets) is not documented in the literature; thus the combination is novel.
+
+**Rating**  
+Reasoning: 8/10 — captures logical consistency, sensitivity, and balance via principled metrics.  
+Metacognition: 6/10 — the method can estimate its own uncertainty (λ, χ) but lacks explicit self‑reflection on failure modes.  
+Hypothesis generation: 5/10 — focuses on verification rather than generating new hypotheses; extensions would be needed.  
+Implementability: 9/10 — relies only on regex, NumPy linear algebra, and simple iteration; no external libraries or APIs required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

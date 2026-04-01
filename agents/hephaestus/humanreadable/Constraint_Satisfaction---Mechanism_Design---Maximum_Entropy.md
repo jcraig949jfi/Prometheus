@@ -2,41 +2,63 @@
 
 **Fields**: Computer Science, Economics, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T10:38:35.186840
-**Report Generated**: 2026-03-27T06:37:44.134380
+**Nous Timestamp**: 2026-03-28T21:24:26.326596
+**Report Generated**: 2026-03-31T14:34:47.377370
 
 ---
 
 ## Nous Analysis
 
-The algorithm builds a factor graph from the prompt and each candidate answer. First, a regex‑based parser extracts atomic propositions (e.g., “X > Y”, “¬Z”, “if A then B”) and turns them into Boolean variables \(v_i\) with domain \(\{0,1\}\). Each extracted relation becomes a constraint factor \(f_C(scope)\) that returns 1 if the assignment satisfies the relation and 0 otherwise (hard constraint). All factors are stored in a NumPy array of shape \((num\_factors, 2^{|scope|})\); for binary scopes this is a 2×2 table.
+**Algorithm**  
+1. **Parsing → CSP variables** – Use regex to extract atomic propositions from the prompt and each candidate answer:  
+   - Predicate‑argument triples (e.g., `Bird(Tweety)`)  
+   - Numeric constraints (`age > 30`)  
+   - Ordering (`before(EventA, EventB)`)  
+   - Conditionals (`if P then Q`) and causal leads‑to (`P → Q`)  
+   Each distinct atom becomes a Boolean variable \(x_i\). Numeric atoms are encoded as linear constraints on auxiliary real variables.  
 
-Constraint satisfaction is enforced by arc‑consistency (AC‑3): iteratively prune variable domains that cannot satisfy any neighboring factor, using simple table look‑ups in NumPy. After pruning, the remaining feasible assignments define the support of a distribution.
+2. **Constraint graph** – Build an undirected graph where edges connect variables that appear together in a constraint (equality, inequality, modus ponens, transitivity). Store the graph as adjacency lists and a constraint‑matrix \(C\) (numpy float32) where \(C_{ij}=1\) if a binary constraint links \(i,j\).  
 
-To avoid bias, we select the maximum‑entropy distribution consistent with the expected feature counts implied by the constraints. This is a log‑linear model: \(P(x)=\frac{1}{Z}\exp\bigl(\sum_k \lambda_k f_k(x)\bigr)\) where each \(f_k\) is a constraint indicator. We learn the Lagrange multipliers \(\lambda\) with Generalized Iterative Scaling (GIS), updating \(\lambda_k \leftarrow \lambda_k + \log\frac{E_{\text{data}}[f_k]}{E_{\text{current}}[f_k]}\) using NumPy vectorized expectations over the current distribution (computed via belief propagation on the tree‑structured graph after AC‑3). The GIS loop runs until the KL‑change falls below \(10^{-4}\).
+3. **Arc consistency (AC‑3)** – Initialize domains \(D_i=\{0,1\}\). Repeatedly enforce:  
+   - For each edge \((i,j)\), remove values \(v\in D_i\) that have no supporting \(w\in D_j\) satisfying the binary constraint (lookup in \(C\)).  
+   - Propagate unary constraints from numeric comparisons and negations directly.  
+   This yields a pruned CSP; if any \(D_i=\emptyset\) the answer is inconsistent (score \(-\infty\)).  
 
-Scoring a candidate answer: the answer provides a full assignment \(x^\*\). Its score is the log‑probability \(\log P(x^\*) = \sum_k \lambda_k f_k(x^\*) - \log Z\), where \(\log Z\) is accumulated during GIS. Higher scores indicate assignments that are both constraint‑consistent and maximally non‑committal.
+4. **Maximum‑entropy distribution** – Define feature functions \(f_k(x)\) that count satisfied instances of each constraint type (e.g., number of satisfied comparatives, number of satisfied conditionals). The maxent distribution over satisfying assignments is the exponential family:  
+   \[
+   P(x)=\frac{1}{Z}\exp\Bigl(\sum_k \lambda_k f_k(x)\Bigr)
+   \]  
+   where \(\lambda\) are Lagrange multipliers. Solve for \(\lambda\) using Generalized Iterative Scaling (GIS): start \(\lambda=0\), compute expected feature counts under current \(P\) by enumerating all satisfying assignments via depth‑first backtracking with the pruned domains (still exponential worst‑case but tractable for small‑scale reasoning items), update \(\lambda_k \leftarrow \lambda_k + \log\frac{\text{empirical}_k}{\text{expected}_k}\). Iterate until convergence (numpy‑based vector ops).  
 
-**Structural features parsed:** negations (¬), comparatives (>, <, ≥, ≤, =), conditionals (if‑then), numeric values and inequalities, causal cues (“because”, “leads to”), ordering/temporal relations (“before”, “after”, “higher than”), and equivalence statements.
+5. **Scoring** – For a candidate answer \(a\), compute its log‑probability under the final maxent model:  
+   \[
+   \text{score}(a)=\log P(a)= -\text{loss}(a)
+   \]  
+   Higher scores indicate answers that are both consistent with constraints and maximally non‑committal (maximum entropy). Because the scoring rule is the log‑loss of a proper exponential family, it is incentive‑compatible (mechanism design): a rational agent maximizes expected score by reporting its true belief.  
 
-**Novelty:** While each component—CSP arc consistency, MaxEnt log‑linear modeling, and proper scoring rules from mechanism design—is well studied, their tight integration for answer scoring (using MaxEnt to define a proper incentive‑compatible scoring function over logically extracted constraints) has not been reported in existing surveys of reasoning evaluators.
+**Structural features parsed**  
+Negations (`not`, `no`), comparatives (`>`, `<`, `≥`, `≤`, `≠`), equality, conditionals (`if … then …`), causal verbs (`because`, `leads to`, `results in`), ordering/temporal relations (`before`, `after`, `during`), numeric values and ranges, quantifiers (`all`, `some`, `none`).  
 
-Reasoning: 7/10 — combines logical constraint propagation with a principled entropy‑based probability model, yielding scores that reflect both consistency and uncertainty.  
-Metacognition: 5/10 — the method does not explicitly monitor its own search or revise parsing strategies; it relies on a fixed inference pipeline.  
-Hypothesis generation: 4/10 — generates no new hypotheses beyond checking consistency of given candidates; it evaluates rather than proposes.  
-Implementability: 8/10 — all steps use only NumPy and the Python standard library; regex parsing, AC‑3, and GIS are straightforward to code.
+**Novelty**  
+Pure CSP solvers and maxent (log‑linear) models exist separately (e.g., Markov Logic Networks combine them with weighted formulas). The presented pipeline isolates constraint propagation as a hard preprocessing step, then derives a proper scoring rule from a maxent distribution over the *remaining* solution space—a configuration not commonly used in automated answer scoring, making the combination novel in this evaluation context.  
+
+**Ratings**  
+Reasoning: 8/10 — The algorithm enforces logical consistency and selects the least‑biased answer, capturing core reasoning steps.  
+Metacognition: 6/10 — It does not explicitly model the answerer’s confidence or self‑monitoring; scores are derived from external constraints only.  
+Hypothesis generation: 7/10 — By exploring the space of satisfying assignments via backtracking, it implicitly generates candidate worlds that could support alternative answers.  
+Implementability: 9/10 — All components (regex parsing, AC‑3, GIS with numpy) rely solely on numpy and the Python standard library, making the tool straightforward to build and run.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
-**Novelty**: unproductive
+**Novelty**: novel
 **High Potential**: No
 
 ---

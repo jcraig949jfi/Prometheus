@@ -3,7 +3,7 @@
 **Fields**: Neuroscience, Game Theory, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:40:47.108405
-**Report Generated**: 2026-03-27T16:08:16.573667
+**Report Generated**: 2026-03-31T14:34:54.742176
 
 ---
 
@@ -84,7 +84,10 @@ Implementability: 9/10 — All components (regex feature extraction, NumPy vecto
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-28T00:49:24.039179
 
 ---
 

@@ -2,44 +2,67 @@
 
 **Fields**: Cognitive Science, Signal Processing, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T17:53:49.255786
-**Report Generated**: 2026-03-27T06:37:38.777297
+**Nous Timestamp**: 2026-03-28T22:38:37.539053
+**Report Generated**: 2026-03-31T14:34:42.742853
 
 ---
 
 ## Nous Analysis
 
-The algorithm treats each candidate answer as a hypothesis about a latent world state *z* (e.g., “the answer is correct”). A Gaussian belief *bₖ = (μₖ, Σₖ)* over *z* is maintained. Textual evidence is turned into a measurement vector *yₖ* by extracting structural features with regular expressions:  
+**Algorithm**  
+We treat each extracted proposition \(p_i\) as a latent truth variable with a Gaussian belief \(\mathcal N(\mu_i,\sigma_i^2)\). All propositions are stacked in a state vector \(\mathbf x\in\mathbb R^n\). Logical constraints extracted from the prompt (e.g., \(A\rightarrow B\) ⇒ \(\mu_A\le\mu_B\), \(A\land B\) ⇒ \(\mu_A+\mu_B\ge1\), numeric comparisons ⇒ linear inequalities) are written as a constraint matrix \(\mathbf C\) and vector \(\mathbf d\) such that feasible beliefs satisfy \(\mathbf C\mathbf x\ge\mathbf d\).  
 
-* **Negations** → binary flag (¬p)  
-* **Comparatives** → ordered pair (x > y, x < y) encoded as +1/‑1  
-* **Conditionals** → implication antecedent‑consequent pair (p→q)  
-* **Causal claims** → directed edge (cause→effect)  
-* **Ordering relations** → transitive chain (a<b<c)  
-* **Numeric values** → raw numbers normalized to [0,1]  
+The Free Energy Principle provides a prior precision \(\mathbf\Lambda_0\) (inverse covariance) that encodes confidence in background knowledge; we set the prior covariance \(\mathbf P_0=\mathbf\Lambda_0^{-1}\) and prior mean \(\boldsymbol\mu_0\) from deterministic facts (e.g., known truths).  
 
-Each feature type maps to a linear observation model *Hₖ* (hand‑crafted weights) and noise covariance *Rₖ*. The Kalman‑filter prediction step propagates the belief forward with a simple random‑walk dynamics *F = I, Q = σ²I*. The update step computes the Kalman gain *Kₖ = Σₖ⁻Hₖᵀ(HₖΣₖ⁻Hₖᵀ+Rₖ)⁻¹*, refines μₖ and Σₖ, and yields the innovation *εₖ = yₖ−Hₖμₖ⁻*.  
+For each candidate answer we build an observation vector \(\mathbf o\) that assigns truth values to the propositions mentioned in the answer (1 for asserted true, 0 for asserted false, 0.5 for unspecified). Observation noise \(\mathbf R\) reflects answer ambiguity.  
 
-Active inference supplies the action selection: choosing the answer that minimizes expected free energy *G = ½ εₖᵀSₖ⁻¹εₖ + ½ log|Sₖ|* where *Sₖ = HₖΣₖ⁻Hₖᵀ+Rₖ* is the predicted covariance. The score for a candidate is the negative free energy (−G); lower prediction error → higher score.  
+A Kalman‑filter‑style update implements active inference: the agent selects the answer that minimizes expected free energy, which for a Gaussian model equals the negative log‑likelihood of the observation.  
 
-Structural features parsed are exactly those listed above, enabling constraint propagation (e.g., transitivity of ordering, modus ponens from conditionals) to refine *yₖ* before filtering.  
+Prediction step: \(\boldsymbol\mu_{-}= \boldsymbol\mu_0,\; \mathbf P_{-}= \mathbf P_0\).  
+Update step:  
+\[
+\mathbf S = \mathbf H\mathbf P_{-}\mathbf H^{\!T}+\mathbf R,\quad
+\mathbf K = \mathbf P_{-}\mathbf H^{\!T}\mathbf S^{-1},
+\]  
+\[
+\boldsymbol\mu_{+}= \boldsymbol\mu_{-}+ \mathbf K(\mathbf o-\mathbf H\boldsymbol\mu_{-}),\quad
+\mathbf P_{+}= (\mathbf I-\mathbf K\mathbf H)\mathbf P_{-},
+\]  
+where \(\mathbf H\) selects the observed propositions (rows of identity).  
 
-The combination mirrors Bayesian argument‑scoring frameworks and predictive‑coding models of cognition, but the explicit tight coupling of a Kalman filter with active‑inference‑driven expected free energy for answer selection is not commonly found in existing NLP tools, making it novel in this concrete form.  
+The score for the answer is the negative variational free energy:  
+\[
+\text{Score}= -\frac12\big[(\mathbf o-\mathbf H\boldsymbol\mu_{-})^{\!T}\mathbf S^{-1}(\mathbf o-\mathbf H\boldsymbol\mu_{-})+\log|\mathbf S|\big].
+\]  
+Higher scores indicate lower expected free energy, i.e., better explanatory fit under the constraint‑propagated belief state.
 
-Reasoning: 7/10 — captures logical structure and uncertainty well, but relies on hand‑crafted observation models that may miss nuanced semantics.  
-Metacognition: 6/10 — the free‑energy term provides a self‑monitoring measure of prediction error, yet no higher‑order belief about the scoring process itself is modeled.  
-Hypothesis generation: 5/10 — generates hypotheses via belief updates, but does not propose new candidate answers beyond the supplied set.  
-Implementability: 8/10 — uses only NumPy for matrix ops and stdlib regex; the algorithm is straightforward to code and debug.
+**Structural features parsed**  
+- Negations (“not”, “no”) → flip truth value.  
+- Comparatives (“greater than”, “less than”, “equals”) → linear inequality constraints.  
+- Conditionals (“if … then …”) → implication constraints (\(\mu_{antecedent}\le\mu_{consequent}\)).  
+- Numeric values → anchor propositions to specific scalars.  
+- Causal claims (“because”, “leads to”) → directional constraints akin to conditionals.  
+- Ordering relations (“first”, “before”, “after”) → temporal inequalities.  
+- Quantifiers (“all”, “some”) → soft bounds on sums of propositional beliefs.
+
+**Novelty**  
+Pure variational free‑energy frameworks have been applied to perception, and Kalman filters to temporal state estimation, but coupling them to propagate logical constraints over propositional beliefs and scoring answers via expected free energy is not present in current NLP or symbolic‑AI literature. Related work includes probabilistic soft logic and differentiable theorem provers, yet none use the Kalman prediction‑update cycle with free‑energy‑derived priors for answer selection.
+
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and uncertainty via principled Gaussian belief updates.  
+Metacognition: 6/10 — limited self‑monitoring; the algorithm does not revise its own parsing rules online.  
+Hypothesis generation: 7/10 — can sample alternative belief states from the posterior to generate candidate explanations.  
+Implementability: 9/10 — relies only on regex parsing, NumPy linear algebra, and basic loops; no external libraries needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

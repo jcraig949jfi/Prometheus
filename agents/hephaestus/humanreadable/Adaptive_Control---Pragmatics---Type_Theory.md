@@ -2,42 +2,63 @@
 
 **Fields**: Control Theory, Linguistics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T03:44:32.872706
-**Report Generated**: 2026-03-27T06:37:42.682643
+**Nous Timestamp**: 2026-03-28T02:11:11.452737
+**Report Generated**: 2026-03-31T17:21:11.626322
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-The tool builds a *typed constraint graph* from each prompt and candidate answer.  
-1. **Parsing (regex‑based)** extracts atomic propositions and annotates them with a type drawn from a small dependent‑type schema: `Bool` for truth‑valued claims, `Real` for numeric measurements, `Interval` for ranges, and `Order` for temporal/spatial relations. Each node stores a numpy array `x` of shape `(d,)` where `d` encodes features: polarity (negation flag), comparative direction, conditional antecedent/consequent indices, causal strength, and quantifier scope.  
-2. **Type‑checking** verifies that every edge respects the schema (e.g., an edge labeled “>” must connect two `Real` nodes). Violations increment a *type‑error* vector `e_type`.  
-3. **Pragmatic weighting** applies a simplified Grice‑maxim model: relevance (`w_rel`), quantity (`w_quant`), and manner (`w_mann`) are stored in a 3‑dim numpy vector `w`. The maxim scores are computed from surface cues (e.g., length excess → quantity penalty, presence of hedge → manner penalty) and multiplied element‑wise with a feature vector `f_prag` extracted from the text.  
-4. **Adaptive control** treats `w` as the gain of a self‑tuning regulator. After each candidate is scored, the total constraint violation `v = ||e_type||² + ||e_sem||²` (where `e_sem` captures breached logical constraints such as transitivity of “>” or modus ponens) is observed. The gain is updated by a gradient step: `w ← w - α * ∂v/∂w`, with `α` a fixed step size and the derivative approximated via finite differences using numpy.  
-5. **Scoring** combines the final weighted violation: `score = w·[v_type, v_sem, v_prag]` (dot product). Lower scores indicate better adherence to typed, pragmatically adjusted, and adaptively constrained meaning.
+We build a lightweight reasoner that treats each candidate answer as a set of typed propositions extracted from the text.  
 
-**Structural features parsed**  
-Negations (`not`, `no`), comparatives (`greater than`, `less than`), conditionals (`if … then …`), causal claims (`because`, `leads to`), ordering relations (`before`, `after`, `above`), numeric values and units, quantifiers (`all`, `some`, `none`), and modal adverbs (`possibly`, `necessarily`).
+1. **Parsing & Type Assignment** – A regex‑based shallow parser yields a list of atomic clauses. Each clause is stored in a NumPy structured array with fields:  
+   - `type` (enum: `BOOL`, `NAT`, `ORDER`, `CAUSAL`)  
+   - `polarity` (`+1` for affirmative, `-1` for negated)  
+   - `scope` (list of variable IDs it binds)  
+   - `value` (numeric constant if present, else `NaN`).  
+   Dependent‑type ideas are mimicked by allowing the `type` field to depend on earlier variables (e.g., an `ORDER` clause may depend on two `NAT` variables).  
+
+2. **Constraint Construction** – From the clause list we derive a constraint matrix **C** (size *m×n*, *m* constraints, *n* variables). Each row encodes one of:  
+   - transitivity of ordering (`x < y ∧ y < z ⇒ x < z`) → coefficients `[1, -1, 0, 1]`  
+   - modus ponens for conditionals (`p → q, p ⇒ q`)  
+   - arithmetic equality/inequality for numeric values.  
+   Violations are computed as `v = max(0, C @ x - b)` where `x` is the current assignment vector and `b` the RHS constants.  
+
+3. **Adaptive Weight Update** – Each constraint row *i* has an associated weight `w_i`. After scoring a candidate, we adjust weights using a simple rule akin to self‑tuning regulators:  
+   ```
+   if v_i > 0: w_i ← w_i + η * v_i   # increase penalty for persistent violation
+   else:       w_i ← max(w_min, w_i - η)  # decay when satisfied
+   ```  
+   `η` is a small step size (e.g., 0.01). This mimics adaptive control: the system online tunes penalty strengths to focus on constraints that repeatedly fail.  
+
+4. **Pragmatic Scoring** – Beyond literal satisfaction, we add a relevance bonus based on Grice’s maxim of quantity: compute the proportion of *information units* (distinct predicates) in the answer that are entailed by the question context (derived via forward chaining on the constraint system). The final score is:  
+   ```
+   score = Σ_i w_i * (1 - v_i)  +  λ * relevance
+   ```  
+   where `λ` balances logical fit vs. pragmatic relevance. Scores are normalized to [0,1].  
+
+**Structural Features Parsed**  
+Negations (flip polarity), comparatives (`>`,`<`, `=`), conditionals (`if … then …`), numeric literals, causal cues (`because`, `leads to`), ordering relations (`before/after`, `more/less`), and quantifiers (`all`, `some`).  
 
 **Novelty**  
-While type‑theoretic semantic parsers and adaptive controllers exist separately, and pragmatics has been modeled via heuristic maxims, the tight loop where a self‑tuning regulator updates pragmatic weights based on real‑time constraint‑violation feedback—using only numpy and stdlib—has not been reported in the literature.
+Pure type‑theoretic scoring exists in proof‑assistant back‑ends; adaptive weighting appears in control‑theoretic tuning of rule‑based systems; pragmatic relevance models are common in computational pragmatics. The triple‑layer combination — typing constraints, online adaptive penalty tuning, and Gricean relevance — is not found in existing open‑source reasoners, making the approach novel.  
 
-**Rating**  
-Reasoning: 7/10 — captures logical structure and adapts to context but relies on hand‑crafted maxims.  
-Metacognition: 6/10 — monitors its own error via violation signals yet lacks explicit self‑reflection on strategy selection.  
-Hypothesis generation: 5/10 — generates implicit hypotheses through constraint propagation but does not propose alternative parses.  
-Implementability: 8/10 — all components are expressible with regex, numpy arrays, and basic control loops, requiring no external libraries or APIs.
+**Potential Ratings**  
+Reasoning: 8/10 — captures logical structure and adapts to persistent errors, giving strong deductive power.  
+Metacognition: 6/10 — weight adjustment offers rudimentary self‑monitoring but lacks higher‑order reflection on strategy choice.  
+Hypothesis generation: 5/10 — the system can propose variable assignments that satisfy constraints, yet it does not actively generate alternative explanatory hypotheses.  
+Implementability: 9/10 — relies only on regex, NumPy arrays, and simple loops; no external libraries or training needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No
@@ -66,7 +87,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:18:54.376525
 
 ---
 

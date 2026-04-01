@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Cognitive Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T17:53:28.287615
-**Report Generated**: 2026-03-27T18:24:05.284830
+**Report Generated**: 2026-03-31T19:20:22.555021
 
 ---
 
@@ -55,7 +55,10 @@ Implementability: 9/10 — All steps use only regex, numpy vector ops, and a tin
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:19:20.887858
 
 ---
 

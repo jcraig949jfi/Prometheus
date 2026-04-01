@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Logic, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T08:13:58.433227
-**Report Generated**: 2026-03-27T16:08:16.849261
+**Report Generated**: 2026-03-31T18:39:47.349370
 
 ---
 
@@ -83,7 +83,10 @@ Implementability: 9/10 — relies only on `numpy` for FFT and the Python standar
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:39:31.065505
 
 ---
 

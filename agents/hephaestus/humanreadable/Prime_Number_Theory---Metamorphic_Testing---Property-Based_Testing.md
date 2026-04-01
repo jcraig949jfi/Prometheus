@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Software Engineering, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T21:02:13.735315
-**Report Generated**: 2026-03-27T23:28:38.571719
+**Report Generated**: 2026-03-31T18:13:45.730628
 
 ---
 
@@ -61,7 +61,10 @@ Implementability: 9/10 — Only numpy (for modular arithmetic, arrays, exp) and 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:13:26.595065
 
 ---
 

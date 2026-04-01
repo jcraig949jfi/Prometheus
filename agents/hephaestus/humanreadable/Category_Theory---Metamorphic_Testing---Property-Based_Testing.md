@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Software Engineering, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:30:07.735255
-**Report Generated**: 2026-03-27T16:08:16.823262
+**Report Generated**: 2026-03-31T17:05:22.265397
 
 ---
 
@@ -63,7 +63,10 @@ Hypothesis generation: 8/10 — Property‑based input variation with shrinking 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:04:57.028738
 
 ---
 

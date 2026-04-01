@@ -101,7 +101,7 @@ RESEARCH_THREADS = [
 def init_scores_db() -> sqlite3.Connection:
     """Initialize the scores database."""
     SCORES_DB.parent.mkdir(parents=True, exist_ok=True)
-    conn = sqlite3.connect(str(SCORES_DB))
+    conn = sqlite3.connect(str(SCORES_DB), timeout=10)
     conn.execute("""
         CREATE TABLE IF NOT EXISTS skopos_scores (
             id          INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -146,7 +146,7 @@ def load_recent_entities(since_hours: int = 24) -> list[dict]:
         log.warning(f"Aletheia DB not found at {ALETHEIA_DB}")
         return []
 
-    conn = sqlite3.connect(str(ALETHEIA_DB))
+    conn = sqlite3.connect(str(ALETHEIA_DB), timeout=10)
     conn.row_factory = sqlite3.Row
     entities = []
 
@@ -206,7 +206,7 @@ def load_all_entities() -> list[dict]:
         log.warning(f"Aletheia DB not found at {ALETHEIA_DB}")
         return []
 
-    conn = sqlite3.connect(str(ALETHEIA_DB))
+    conn = sqlite3.connect(str(ALETHEIA_DB), timeout=10)
     conn.row_factory = sqlite3.Row
     entities = []
 
@@ -593,7 +593,7 @@ def has_high_relevance() -> bool:
     """Check if there are any high-relevance scores (4+) from the current cycle."""
     if not SCORES_DB.exists():
         return False
-    conn = sqlite3.connect(str(SCORES_DB))
+    conn = sqlite3.connect(str(SCORES_DB), timeout=10)
     row = conn.execute("SELECT COUNT(*) FROM skopos_scores WHERE score >= 4").fetchone()
     conn.close()
     return (row[0] or 0) > 0
@@ -609,7 +609,7 @@ def run_generate(thread_filter: str | None = None) -> Path | None:
         log.warning("No scores database found — run --once first")
         return None
 
-    scores_conn = sqlite3.connect(str(SCORES_DB))
+    scores_conn = sqlite3.connect(str(SCORES_DB), timeout=10)
 
     # Get entities scoring 3+ on any thread
     if thread_filter:

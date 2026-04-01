@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:03:46.359884
-**Report Generated**: 2026-03-27T16:08:16.634665
+**Report Generated**: 2026-03-31T18:16:23.309241
 
 ---
 
@@ -50,7 +50,10 @@ Implementability: 9/10 — All steps rely on numpy (dot, histogram, log, sqrt) a
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:14:50.948032
 
 ---
 

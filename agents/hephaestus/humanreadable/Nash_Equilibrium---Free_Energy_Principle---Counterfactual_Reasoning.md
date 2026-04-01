@@ -3,7 +3,7 @@
 **Fields**: Game Theory, Theoretical Neuroscience, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T15:05:33.828657
-**Report Generated**: 2026-03-27T16:08:16.588666
+**Report Generated**: 2026-03-31T20:02:48.265857
 
 ---
 
@@ -78,7 +78,10 @@ Implementability: 8/10 — All components use regex, numpy arrays, and basic gra
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T20:02:38.303966
 
 ---
 

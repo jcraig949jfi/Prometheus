@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:21:24.221714
-**Report Generated**: 2026-03-27T17:21:24.862551
+**Report Generated**: 2026-03-31T18:47:45.165215
 
 ---
 
@@ -78,7 +78,10 @@ Implementability: 9/10 — relies solely on numpy for linear algebra and stdlib 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:47:01.735950
 
 ---
 

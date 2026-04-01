@@ -2,70 +2,39 @@
 
 **Fields**: Neuroscience, Statistical Physics, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T03:10:48.208379
-**Report Generated**: 2026-03-26T19:49:08.963807
+**Nous Timestamp**: 2026-03-28T01:58:35.758132
+**Report Generated**: 2026-03-31T14:34:46.189183
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing stage** – Convert the prompt and each candidate answer into a set of propositional literals \(L = \{l_1,…,l_n\}\) using deterministic regex patterns that extract:  
-   * literals (e.g., “the sky is blue”) → atomic variable \(x_i\)  
-   * negations (“not …”) → \(\lnot x_i\)  
-   * comparatives (“greater than”, “less than”) → arithmetic constraints on extracted numeric tokens  
-   * conditionals (“if … then …”) → implication \(x_j \rightarrow x_k\)  
-   * causal/ordering (“because …”, “before …”) → directed edges in a constraint graph.  
-   Store literals as indices, and constraints as a boolean matrix \(C\in\{0,1\}^{m\times n}\) where each row encodes a clause (e.g., \(x_i \lor \lnot x_j\)).  
+We build a *Maximum‑Entropy Constraint‑Propagating Oscillatory Scorer* (ME‑CPOS).  
+1. **Parsing stage** – Using a small set of regex‑based patterns we extract a typed dependency graph G from the prompt and each candidate answer. Node types include *entity*, *quantity*, *event*; edge types capture *negation*, *comparative* (>,<,=), *conditional* (if‑then), *causal* (because), *ordering* (before/after), and *quantifier* (all, some). The graph is stored as adjacency lists with edge‑label dictionaries.  
+2. **Constraint formulation** – Each extracted relation becomes a linear constraint on binary variables x_i ∈ {0,1} indicating whether the corresponding proposition holds. For example, a comparative “A > B” yields x_A − x_B ≥ 1; a conditional “if P then Q” yields x_P ≤ x_Q. Negations flip the variable. All constraints are collected in a matrix A and vector b (Ax ≤ b).  
+3. **Maximum‑Entropy inference** – We seek the distribution P(x) over assignments that maximizes −∑P log P subject to E_P[Ax] = b̂, where b̂ is the empirical expectation derived from the prompt constraints. This yields an exponential family P(x) ∝ exp(θᵀAx). The parameters θ are solved by iterative scaling (GIS) using only NumPy. The resulting θ give a log‑linear score s = θᵀA x̂ for any assignment x̂ (candidate answer).  
+4. **Property‑based testing & shrinking** – Treat each candidate answer as a program that proposes a truth assignment. We auto‑generate perturbations (flipping random variables) using a simple shrinking strategy: start from the answer’s assignment, repeatedly flip a single variable that reduces the constraint violation measure v(x)=‖max(0,Ax−b)‖₁, keeping the flip if v decreases. The process stops when no single flip improves v; the final x* is a minimal failing input. The score for the answer is s − λ·v(x*), where λ balances satisfaction (high s) against minimality of violations (low v).  
 
-2. **Maximum‑Entropy inference** – Treat each literal’s truth value as a binary random variable. Initialise a uniform distribution (max entropy). For each constraint row \(c_k\), compute its expected satisfaction under current distribution \(p\); if the expectation is below 1 (i.e., the constraint is violated in expectation), update the corresponding weight \(w_k\) via iterative scaling (GIS):  
-   \[
-   w_k \leftarrow w_k + \log\frac{1}{\mathbb{E}_p[c_k]}
-   \]  
-   After convergence, the distribution is  
-   \[
-   p(x) = \frac{1}{Z}\exp\Big(\sum_k w_k c_k(x)\Big)
-   \]  
-   where \(c_k(x)\in\{0,1\}\) is 1 if the assignment satisfies clause \(k\). Use NumPy for matrix‑vector ops and log‑sum‑exp for the partition function \(Z\).  
+**Structural features parsed** – negations, comparatives, conditionals, causal claims, temporal ordering, numeric thresholds, and quantifiers (universal/existential).  
 
-3. **Property‑Based Testing (PBT) shrinkage** – Generate random binary assignments \(x^{(s)}\) with `np.random.randint(0,2,size=n)`. Keep only those that violate any constraint (i.e., \(C x^{(s)} < 1\) row‑wise). For each violating sample, apply a bit‑flipping shrink loop: try flipping each 1→0; if the assignment stays violating, accept the flip; repeat until no further flips preserve violation. The result is a minimal falsifying assignment.  
+**Novelty** – Maximum‑entropy models are standard in NLP; property‑based testing is common in software verification; neural oscillations inspire the iterative, rhythmic constraint‑propagation step (akin to oscillatory message passing). Their joint use for scoring reasoning answers has not been reported in the literature.  
 
-4. **Scoring** – Let \(V\) be the set of minimal violating assignments found (size ≤ \(S\)). Compute the probability mass of violating states:  
-   \[
-   P_{\text{viol}} = \sum_{x\in V} p(x)
-   \]  
-   (approximate by importance sampling if \(V\) is large). The final score for a candidate answer is  
-   \[
-   \text{score}=1-P_{\text{viol}}\in[0,1]
-   \]  
-   Higher scores indicate the answer is more consistent with the extracted constraints under the least‑biased distribution.
-
-**Structural features parsed**  
-- Negations (\(\lnot\))  
-- Comparatives (\(>,\<,=,\neq\)) on extracted numbers  
-- Conditionals (if‑then) → implications  
-- Causal markers (“because”, “due to”) → directed edges  
-- Temporal/ordering markers (“before”, “after”, “then”) → precedence constraints  
-- Existence/universality quantifiers hinted by “all”, “some” → converted to clause sets.
-
-**Novelty**  
-Maximum‑entropy inference is common in language modeling and knowledge‑base completion; property‑based testing is standard in software verification. Combining them to *score* reasoning answers by treating textual constraints as a logical theory, computing the max‑entropy distribution over worlds, and using PBT‑style shrinkage to estimate the probability of violation is not found in existing surveys. The closest work uses weighted MaxSAT for answer ranking, but lacks the explicit entropy‑maximisation and automated shrinking loop.
-
-**Rating**  
-Reasoning: 7/10 — captures logical consistency via constraint‑based probability but ignores deeper semantic nuance.  
-Metacognition: 5/10 — no explicit self‑monitoring of uncertainty beyond entropy estimate.  
-Hypothesis generation: 8/10 — PBT shrinkage actively proposes minimal counter‑examples, a strong hypothesis‑generation mechanism.  
-Implementability: 9/10 — relies only on NumPy regex, matrix ops, and simple loops; feasible in <200 lines.
+**Ratings**  
+Reasoning: 8/10 — The method combines logical constraint satisfaction with a principled entropy‑based uncertainty measure, yielding interpretable scores that respect explicit relations.  
+Metacognition: 6/10 — While the algorithm can detect when its own constraints are violated (via v), it lacks a higher‑order loop to revise the constraint set itself.  
+Hypothesis generation: 7/10 — Property‑based shrinking systematically explores the space of alternative assignments, producing minimal counterexamples that function as generated hypotheses about where the answer fails.  
+Implementability: 9/10 — All components (regex parsing, matrix construction, iterative scaling, simple shrinking) rely solely on NumPy and the Python standard library; no external ML or API calls are needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 8/10 |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.67** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

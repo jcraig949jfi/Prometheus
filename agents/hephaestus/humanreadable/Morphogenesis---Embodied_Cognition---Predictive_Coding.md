@@ -3,7 +3,7 @@
 **Fields**: Biology, Cognitive Science, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:59:18.802388
-**Report Generated**: 2026-03-27T23:28:38.465718
+**Report Generated**: 2026-03-31T17:31:45.915524
 
 ---
 
@@ -74,7 +74,10 @@ Implementability: 9/10 — relies only on numpy for matrix ops and re for parsin
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:30:28.476960
 
 ---
 

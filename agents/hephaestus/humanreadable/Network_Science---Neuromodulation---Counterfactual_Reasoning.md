@@ -3,7 +3,7 @@
 **Fields**: Complex Systems, Neuroscience, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:07:02.870773
-**Report Generated**: 2026-03-27T16:08:16.507668
+**Report Generated**: 2026-03-31T19:23:00.545011
 
 ---
 
@@ -64,7 +64,10 @@ Implementability: 9/10 — relies solely on regex, NumPy linear algebra, and sim
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:21:04.188925
 
 ---
 

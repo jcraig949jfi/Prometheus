@@ -2,60 +2,43 @@
 
 **Fields**: Mathematics, Complex Systems, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T13:57:58.820186
-**Report Generated**: 2026-03-27T06:37:37.140295
+**Nous Timestamp**: 2026-03-28T19:13:00.414592
+**Report Generated**: 2026-03-31T14:34:40.768579
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing** – Use a handful of regex patterns to extract atomic propositions and the logical links between them:  
-   - Negation (`not`, `no`) → attach a ¬ flag to the target proposition.  
-   - Comparatives (`greater than`, `less than`, `more`, `less`) → create a directed edge labelled *cmp* with weight proportional to the comparative magnitude (e.g., 1 for “more”, 0.5 for “somewhat more”).  
-   - Conditionals (`if … then …`, `unless`) → edge labelled *cond*.  
-   - Causal claims (`because`, `leads to`, `results in`) → edge labelled *cause*.  
-   - Ordering (`before`, `after`, `first`, `last`) → edge labelled *ord*.  
-   - Numeric values are captured as attributes on the source or target node.  
-   Each proposition becomes a node; each link becomes a weighted directed edge. Store the graph as a NumPy adjacency matrix **W** (shape *n × n*) where *Wᵢⱼ*∈[0,1] is the cue‑derived confidence.
+1. **Parse** each sentence into a propositional tuple `(subj, rel, obj, mod)` using a small set of regex patterns that capture negations (`not`), comparatives (`>`, `<`, `≥`, `≤`), conditionals (`if … then`), causal cues (`because`, `leads to`), numeric tokens, and ordering quantifiers (`first`, `more than`, `all`, `some`).  
+2. **Build a directed support matrix** `A ∈ ℝ^{n×n}` where `A[i][j]=1` if proposition *j* entails or strongly supports *i* (detected via rule‑based matching of shared entities, modality compatibility, and numeric consistency). Self‑loops are set to zero.  
+3. **Fractal scaling** – compute the box‑counting dimension `D` of the graph defined by `A` by repeatedly applying the box‑covering algorithm on powers of two adjacency thresholds and fitting `log(N(ε))` vs `log(1/ε)` with `numpy.polyfit`. The resulting scaling exponent `α = 1/D` is used to weight edges: `W = A ** α` (element‑wise power).  
+4. **Criticality tuning** – introduce a temperature‑like parameter `τ`. Initialize belief vector `b₀ = 0.5·ones(n)`. Iterate:  
+   - Prediction: `p = sigmoid(W @ b / τ)` (sigmoid from `numpy.exp`).  
+   - Free energy (variational bound): `F = Σ[ b·log(b/p) + (1-b)·log((1-b)/(1-p)) ]`.  
+   - Gradient step: `b ← b - η * ∂F/∂b` where `∂F/∂b = log(b/p) - log((1-b)/(1-p))`.  
+   - Adjust `τ` to maximize susceptibility `χ = Var(b)` (critical point) by simple hill‑climbing on `τ`.  
+5. **Scoring** – after convergence, compute alignment of each candidate answer `c` (parsed into the same propositional space) with the final belief vector: `score(c) = W_c · b` where `W_c` is a binary vector indicating which propositions the answer asserts. Higher scores indicate lower variational free energy and thus better fit.
 
-2. **Multi‑scale representation (Fractal Geometry)** – For a set of thresholds 𝜏 = {0.1,0.2,…,0.9} create binary graphs **Gₜ** = (W ≥ 𝜏). For each **Gₜ** compute a box‑counting covering:  
-   - Choose a box size *r* (graph‑hop radius).  
-   - Starting from each uncovered node, perform a BFS limited to *r* hops to form a box; mark all visited nodes as covered.  
-   - Count *Nₜ(r)* boxes needed. Repeat for *r* = 1…⌈log₂ n⌉.  
-   - Fit log Nₜ(r) vs. log (1/r) with NumPy’s `polyfit` (degree 1); the slope is the estimated fractal dimension *Dₜ*.  
+**Structural features parsed** – negations, comparatives, conditionals, causal claims, numeric values, ordering relations (first/last, more/less), quantifiers (all/some/none), conjunctions/disjunctions, and modality cues (possible, necessary).
 
-3. **Criticality detection** – For each 𝜏 compute the size *Sₜ* of the largest weakly‑connected component. The susceptibility is χₜ = Var(S) over a sliding window of 𝜏 values (NumPy `var`). Identify 𝜏* where χₜ peaks; the distance |𝜏* − 0.5| measures how close the argument sits to the critical point (order‑disorder boundary).  
-
-4. **Free‑Energy Principle scoring** – Assume a prior expectation **P** of uniform edge weight 0.5. Prediction error for each edge is εᵢⱼ = (Wᵢⱼ − 0.5)². Free energy *F* = Σ εᵢⱼ / (2σ²) − ½ log|Σ|, where σ² is the variance of **W** (NumPy) and Σ its covariance; the entropy term reduces to ½ log(σ²) for the scalar case. Lower *F* indicates better prediction‑error minimization.  
-
-5. **Final score** – Normalize each metric to [0,1]:  
-   - *Fractal* = (D̄ − D_min)/(D_max − D_min) where D̄ is the mean *Dₜ* over thresholds.  
-   - *Critical* = 1 − (|𝜏* − 0.5| / 0.5).  
-   - *FreeEnergy* = 1 − (F − F_min)/(F_max − F_min).  
-   Score = w₁·Fractal + w₂·Critical + w₃·FreeEnergy (weights sum to 1, e.g., 0.4,0.3,0.3). Higher scores indicate answers whose internal logical structure is self‑similar across scales, poised near criticality, and minimally surprising under a uniform prior.
-
-**Structural features parsed**  
-Negations, comparatives, conditionals, causal claims, ordering relations, explicit numeric values, quantifiers (“all”, “some”), and conjunction/disjunction cues. These are mapped directly to edge types and node attributes.
-
-**Novelty**  
-Purely syntactic similarity or bag‑of‑words methods ignore higher‑order graph dynamics. While fractal analysis of concept maps, criticality in neural avalanches, and free‑energy formulations of cognition exist separately, integrating all three to score argument structure has not been reported in the literature. The approach is therefore novel in its specific combination, though it builds on established network‑science and predictive‑coding tools.
+**Novelty** – While belief‑propagation and Ising‑model approaches exist, explicitly coupling a fractal‑derived edge‑weighting scheme, critical temperature optimization, and variational free‑energy minimization for answer scoring is not present in current NLP toolkits. It blends ideas from statistical physics (criticality), geometry (fractal dimension), and predictive coding (free energy) in a purely algorithmic, numpy‑based pipeline.
 
 **Rating**  
-Reasoning: 7/10 — The algorithm captures multi‑scale logical coherence and prediction error, but relies on hand‑crafted regex and simple weighting, limiting deep semantic grasp.  
-Metacognition: 5/10 — It provides internal diagnostics (fractal dimension, susceptibility, free energy) that can signal over‑ or under‑confidence, yet lacks explicit self‑monitoring loops.  
-Hypothesis generation: 4/10 — The method scores existing candidates; proposing new hypotheses would require additional generative components not present here.  
-Implementability: 8/10 — All steps use only NumPy and the Python standard library; regex, matrix operations, BFS, and linear fits are straightforward to code.
+Reasoning: 7/10 — captures logical structure and uncertainty but lacks deep semantic modeling.  
+Metacognition: 6/10 — free‑energy gradient provides a self‑monitoring error signal, yet limited to scalar belief updates.  
+Hypothesis generation: 5/10 — updates beliefs to generate candidate‑support levels, but does not invent novel relational patterns.  
+Implementability: 8/10 — relies only on regex, numpy linear algebra, and simple loops; straightforward to code and debug.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
 | Implementability | 8/10 |
-| **Composite** | **5.33** |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -3,7 +3,7 @@
 **Fields**: Physics, Statistical Physics, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:57:43.223224
-**Report Generated**: 2026-03-27T17:21:25.295542
+**Report Generated**: 2026-03-31T20:00:10.326575
 
 ---
 
@@ -69,7 +69,10 @@ Implementability: 9/10 — all steps use only numpy (linear algebra, exp, log) a
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:59:51.089892
 
 ---
 

@@ -2,46 +2,38 @@
 
 **Fields**: Computer Science, Information Science, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T09:20:28.485267
-**Report Generated**: 2026-03-27T16:08:16.246673
+**Nous Timestamp**: 2026-03-31T14:44:33.050780
+**Report Generated**: 2026-03-31T16:21:16.291116
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Structural parsing → bit‑wise codeword**  
-   - Use regex to extract atomic propositions from the prompt and each candidate answer (e.g., “X > Y”, “not Z”, “if A then B”, numeric equality).  
-   - Assign each distinct proposition a fixed index i ∈ [0, M‑1].  
-   - Build a binary vector **b** ∈ {0,1}^M where b_i = 1 if the proposition appears (negations flip the bit).  
-   - Encode **b** with a systematic LDPC code: compute parity‑check matrix **H** (fixed, sparse, numpy‑generated) and produce codeword **c** = [**b** | **p**] where **p** = (**H**·**b**) mod 2. This adds redundancy for noise‑robust representation.
+1. **Parsing → logical form** – Use a lightweight regex‑based extractor to produce a set of ground atoms `P = {p₁,…,pₙ}` where each atom is a tuple `(predicate, arg₁, arg₂, …)`. Negations are stored as a separate flag, comparatives as ordered pairs, conditionals as implication rules `A → B`, and numeric values as scalar fields attached to the atom.  
+2. **Reservoir projection** – Generate a fixed random matrix `W ∈ ℝ^{d×m}` (e.g., `d=500`, `m` = number of distinct predicate‑argument slots) once at initialization with `np.random.randn`. Each atom `pᵢ` is one‑hot encoded into a binary vector `xᵢ ∈ {0,1}^m` and projected to a reservoir state `rᵢ = tanh(W @ xᵢ)`. The set `{rᵢ}` forms the high‑dimensional representation of the premise.  
+3. **Error‑correcting code layer** – Construct a sparse parity‑check matrix `H ∈ {0,1}^{c×d}` that encodes the logical constraints extracted in step 1 (e.g., transitivity of ordering, modus ponens for conditionals, consistency of negations). Each row of `H` corresponds to a constraint; a valid assignment yields syndrome `s = H @ R mod 2 ≈ 0`, where `R` stacks all `rᵢ`.  
+4. **Free‑energy scoring** – Approximate variational free energy as  
+   `F = ‖s‖₂² + λ· KL(q‖p)`,  
+   where `q` is the empirical distribution of reservoir activations (treated as Gaussian with mean `μ = mean(R)` and covariance `Σ = cov(R)`) and `p` is a fixed isotropic prior `𝒩(0,I)`. The KL term has a closed‑form expression using `np.logdet` and `np.trace`. Lower `F` indicates higher consistency with both the logical code and the prior, thus a better answer.  
+5. **Candidate evaluation** – For each answer choice, repeat steps 1‑4 (the reservoir `W` and code `H` stay fixed). Return the answer with minimal `F`.
 
-2. **Reservoir dynamics (Echo State Network)**  
-   - Fixed random reservoir: weight matrix **W_res** ∈ ℝ^{N×N} (sparse, spectral radius < 1) and input matrix **W_in** ∈ ℝ^{N×(M+P)} (P = parity length), both sampled once with numpy.random.  
-   - Initialize state **x₀** = 0. For each time step t = 0…T‑1 (T = length of codeword, e.g., stream bits), update:  
-     **x_{t+1}** = tanh(**W_res**·**x_t** + **W_in**·**c_t**), where **c_t** is the t‑th bit of **c** expanded to a one‑hot vector.  
-   - Collect the reservoir states **X** = [**x₁**, …, **x_T**] ∈ ℝ^{N×T}.
-
-3. **Trainable readout (ridge regression)**  
-   - For a set of training examples (prompt + known correct answer), compute the target free‑energy proxy **y** = 0 for correct answers, **y** = 1 for incorrect ones.  
-   - Solve **W_out** = (**X**·**X**ᵀ + λI)^{-1}·**X**·**y**ᵀ (numpy.linalg.solve) to obtain readout weights.
-
-4. **Free‑energy scoring**  
-   - For a candidate answer, compute reservoir states **X** as above, then readout prediction **ŷ** = **W_out**·**x_T** (final state).  
-   - Approximate variational free energy **F** = ½·(ŷ − y)² + ½·log|Σ| (Σ = λI, constant). Lower **F** indicates higher plausibility.  
-   - Score = −**F** (higher = better).
-
-**Parsed structural features**  
-- Negations (flip bit), comparatives (“>”, “<”, “=”), conditionals (“if … then …”), causal arrows (“→”), numeric values (encoded as threshold propositions), ordering relations (transitive chains), and conjunctions/disjunctions (multiple bits set).
+**Structural features parsed**  
+- Negations (`not`) → flagged atoms.  
+- Comparatives (`greater than`, `less than`) → ordered pairs with direction.  
+- Conditionals (`if … then …`) → implication rules added to `H`.  
+- Numeric values → scalar fields that influence parity checks (e.g., sum constraints).  
+- Causal claims → treated as directed edges in the constraint graph.  
+- Ordering relations → transitivity encoded as parity rows.
 
 **Novelty**  
-Reservoir computing has been applied to temporal data; LDPC codes are used for channel robustness; the free‑energy principle underlies predictive coding in neuroscience. No published work combines a fixed random reservoir, systematic error‑correcting encoding, and a variational‑free‑energy readout for scoring logical answer candidates. Thus the combination is novel in this context.
+While reservoir computing, LDPC/turbo codes, and the free‑energy principle have each been applied to language modeling or reasoning separately, the specific pipeline—fixed random reservoir projection, LDPC‑style syndrome computation derived from extracted logical rules, and a variational free‑energy objective that combines syndrome error with a prior‑matching KL term—has not been described in the literature. Existing work uses either neural readouts or pure symbolic solvers; this hybrid stays fully algorithmic, numpy‑based, and avoids learned parameters.
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure via bitwise propositions and reservoir dynamics, but relies on linear readout for final judgment.  
-Metacognition: 5/10 — the algorithm does not explicitly monitor its own uncertainty beyond the free‑energy proxy.  
-Hypothesis generation: 4/10 — generates a single scalar score; no mechanism for proposing alternative hypotheses.  
-Implementability: 8/10 — uses only numpy and stdlib; all steps (regex, sparse matrix ops, ridge regression) are straightforward to code.
+Reasoning: 7/10 — captures logical structure well but struggles with deep implicit knowledge.  
+Metacognition: 5/10 — free‑energy provides an uncertainty proxy yet is crude and not reflective.  
+Hypothesis generation: 6/10 — sampling alternative reservoir states yields candidate parses, but quality is limited.  
+Implementability: 8/10 — relies only on numpy for random matrices, dot products, and linear algebra; stdlib suffices for parsing.
 
 ### Scores
 
@@ -49,9 +41,9 @@ Implementability: 8/10 — uses only numpy and stdlib; all steps (regex, sparse 
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 8/10 |
-| **Composite** | **5.33** |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

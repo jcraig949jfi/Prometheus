@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Mathematics, Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:52:44.589432
-**Report Generated**: 2026-03-27T16:08:16.828261
+**Report Generated**: 2026-03-31T19:49:35.644733
 
 ---
 
@@ -61,7 +61,10 @@ Implementability: 9/10 — relies solely on numpy for linear algebra and std‑l
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:49:28.700779
 
 ---
 

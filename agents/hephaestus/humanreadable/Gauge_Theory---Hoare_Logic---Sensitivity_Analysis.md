@@ -2,44 +2,38 @@
 
 **Fields**: Physics, Formal Methods, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T00:46:32.229345
-**Report Generated**: 2026-03-27T06:37:50.162921
+**Nous Timestamp**: 2026-03-29T02:24:36.952472
+**Report Generated**: 2026-03-31T14:34:52.715546
 
 ---
 
 ## Nous Analysis
 
-The algorithm builds a **perturb‑aware Hoare‑gauge verifier**.  
+The algorithm treats each candidate answer as a tiny “program” whose statements are the sentences extracted from the text.  
+1. **Parsing → predicate graph** – Using only regex and the stdlib we extract atomic propositions:  
+   * subject‑verb‑object triples,  
+   * negation flags (`not`, `no`),  
+   * comparative operators (`>`, `<`, `=`),  
+   * conditional antecedents/consequents (`if … then …`),  
+   * causal verbs (`causes`, `leads to`),  
+   * numeric constants and ordering phrases (`more than`, `at least`).  
+   Each proposition gets a unique integer ID; a sentence becomes a Hoare triple `{P} C {Q}` where `P` and `Q` are boolean vectors (length = #predicates) indicating which predicates must hold before and after the step. The connection (gauge field) for the step is a square matrix `C_e` that encodes how the local basis of predicates is transformed (e.g., flipping a negation swaps the truth value of a predicate, a comparative adds a constant offset to a numeric predicate). All `C_e` are stored as `numpy.ndarray` objects.
 
-1. **Parsing & data structures**  
-   - Extract atomic propositions *pᵢ* (subject‑predicate‑object triples) using regex patterns for nouns, verbs, comparatives, negations, and numeric constants.  
-   - For each sentence *Sₖ* construct a Hoare triple ⟨Preₖ, Cₖ, Postₖ⟩ where *Preₖ* and *Postₖ* are sets of propositions identified before and after the main verb phrase *Cₖ* (the “command”).  
-   - Store propositions in a matrix **P** ∈ {0,1}^{n×m} (n propositions, m candidate answers).  
-   - Define a **connection** (gauge) matrix **Gₖ** ∈ ℝ^{m×m} for each sentence, initialized as identity. Generators correspond to modal operators:  
-     *necessity* → +α·I, *possibility* → −α·I, *negation* → flip sign on affected rows. α is a small scalar (e.g., 0.1).  
-   - Maintain a **sensitivity Jacobian** **J** ∈ ℝ^{m×m} that accumulates ∂Post/∂Pre via finite differences on perturbation set 𝒫 = {flip negation, swap comparator, perturb numeric value by ±ε}.  
+2. **Constraint propagation** – Starting from an initial precondition vector `P0` (derived from the question), we propagate forward:  
+   `P_{i+1} = logical_and(P_i, C_e @ P_i)` (matrix‑vector product followed by element‑wise AND).  
+   Repeating until a fixed point yields the strongest postcondition `P*`. The answer’s logical consistency score is the fraction of predicates in `P*` that match the expected postcondition extracted from the reference answer.
 
-2. **Operations**  
-   - **Constraint propagation**: iterate over sentences, updating truth vectors **t** ← **Gₖ**·**t** (matrix‑vector product) then enforce Hoare correctness: if any *p*∈Preₖ is false, set corresponding *q*∈Postₖ to false (modus ponens). Iterate to a fixpoint (≤ |S| passes).  
-   - **Sensitivity evaluation**: for each perturbation δ∈𝒫, recompute **t**⁽ᵟ⁾ using the same propagation; compute Δ**t** = **t**⁽ᵟ⁾−**t**. Approximate **J** ≈ (Δ**t**/δ) averaged over 𝒫.  
-   - **Scoring**: let **t̂** be the truth vector for the reference answer. Score a candidate *c* as  
-     \[
-     s_c = \exp\!\big(-\|W\,(t_c - t_{\text{ref}})\|_2\big),\quad 
-     W = \operatorname{diag}\!\big(\frac{1}{1+\|J_{:,i}\|_2}\big)
-     \]  
-     i.e., weight each proposition by the inverse of its sensitivity (more robust propositions contribute more).  
+3. **Sensitivity analysis** – For each atomic feature (negation toggle, numeric perturbation, comparative flip) we create a perturbed version of the input, recompute `P*`, and measure the L2 change Δ. The sensitivity penalty is `exp(-‖Δ‖₂)`. The final score multiplies the consistency score by the average sensitivity penalty across all features.
 
-3. **Structural features parsed**  
-   - Atomic predicates, negations, comparatives (>, <, =), conditionals (“if … then …”), causal connectives (“because”, “leads to”), temporal ordering (“before”, “after”), quantifiers (“all”, “some”), numeric constants, and units.  
+**Structural features parsed**: negations, comparatives, conditionals, causal claims, numeric values, ordering relations, quantifiers (`all`, `some`), temporal markers.
 
-4. **Novelty**  
-   - Hoare‑logic triples are common in program verification; gauge‑theoretic connection matrices and sensitivity‑based weighting have not been combined for textual reasoning. Existing semantic‑parsing pipelines extract logical forms but do not propagate invariants via Lie‑algebra‑like generators nor evaluate robustness via Jacobian‑style perturbations. Hence the combination is novel for NLP scoring.  
+**Novelty**: While Hoare logic–based verifiers and sensitivity‑analysis‑based robustness checks exist separately, coupling them with a gauge‑theoretic connection that tracks how local predicate bases shift across steps is not present in current NLP scoring tools. The approach is thus novel in its unified algebraic treatment of logical invariance and perturbation.
 
-**Rating**  
-Reasoning: 7/10 — captures logical structure and robustness but relies on hand‑crafted generators.  
-Metacognition: 6/10 — limited self‑monitoring; sensitivity provides indirect uncertainty estimate.  
-Hypothesis generation: 5/10 — focuses on verification, not creation of new hypotheses.  
-Implementability: 8/10 — uses only regex, NumPy matrix ops, and fixed‑point loops; feasible in <200 lines.
+**Ratings**  
+Reasoning: 7/10 — captures logical inference and robustness but relies on shallow predicate extraction.  
+Metacognition: 6/10 — limited self‑monitoring; confidence derived only from sensitivity magnitude.  
+Hypothesis generation: 8/10 — the connection matrix naturally generates alternative worlds by altering basis transformations.  
+Implementability: 9/10 — uses only regex, numpy arrays, and fixed‑point loops; no external libraries or neural components.
 
 ### Scores
 
@@ -47,9 +41,9 @@ Implementability: 8/10 — uses only regex, NumPy matrix ops, and fixed‑point 
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Hypothesis Generation | 8/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

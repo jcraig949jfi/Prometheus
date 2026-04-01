@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Biology, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T17:46:47.609899
-**Report Generated**: 2026-03-27T18:24:05.277831
+**Report Generated**: 2026-03-31T17:57:58.265735
 
 ---
 
@@ -78,7 +78,10 @@ Implementability: 9/10 — All components (ISTA sparse coding, regex parsing, Nu
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:57:14.016303
 
 ---
 

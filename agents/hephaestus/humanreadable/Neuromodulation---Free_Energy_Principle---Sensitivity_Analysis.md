@@ -2,65 +2,70 @@
 
 **Fields**: Neuroscience, Theoretical Neuroscience, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T15:04:30.313068
-**Report Generated**: 2026-03-27T06:37:45.405900
+**Nous Timestamp**: 2026-03-28T13:11:26.555803
+**Report Generated**: 2026-03-31T18:47:45.036217
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-1. **Parsing stage** – Using only the Python `re` module, extract a set of propositional atoms from the prompt and each candidate answer. Atoms are typed by the linguistic pattern that produced them:  
-   - *Negation*: `\bnot\b|\bno\b`  
-   - *Comparative*: `\bmore than\b|\bless than\b|\bgreater than\b|\blower than\b`  
-   - *Conditional*: `\bif\b.*\bthen\b`  
-   - *Causal*: `\bcause\b|\blead to\b|\bresults in\b`  
-   - *Numeric*: `\d+(\.\d+)?\s*(%|kg|m|s|Hz|…)`  
-   - *Ordering*: `\bbefore\b|\bafter\b|\bearlier\b|\blater\b`  
+**1. Algorithm**  
+Parse each prompt and each candidate answer into a directed labeled graph *G* = (*V*, *E*) where vertices are atomic propositions (e.g., “X > 5”, “Y caused Z”) and edges encode logical relations extracted by a small set of regex patterns (negation, comparative, conditional, causal, ordering). Each vertex *v* holds a belief *bᵥ* ∈ [0,1] initialized from the prompt’s truth‑assignment (1 if asserted true, 0 if asserted false, 0.5 for undetermined). Each edge *e* = (u→v, type) carries a *gain* *gₑ* ∈ ℝ⁺ that modulates the influence of *u* on *v* (the neuromodulation term).  
 
-   Each atom becomes a node in a directed graph **G** = (V, E). An edge *i → j* stores a relation type *r* and an initial strength *w₀* (set to 1 for explicit statements, 0.5 for hedged ones).
+Free‑energy for a candidate answer *a* is defined as the weighted prediction‑error summed over all edges:  
 
-2. **Constraint propagation** – Compute the transitive closure of causal and ordering edges with a Floyd‑Warshall‑style update using NumPy matrices:  
-   `W = W ⊕ (W @ W)` where `⊕` is element‑wise max for strengths and `@` is matrix multiplication. This yields inferred strengths *ŵ* for all reachable pairs.
+```
+FE(a) = Σₑ gₑ · ( bᵥ – f_type(bᵤ) )²
+```
 
-3. **Free‑energy formulation** – Treat the observed strengths *w₀* as sensory data and the inferred strengths *ŵ* as the brain’s prediction. Precision (inverse variance) is modulated by a neuromodulatory gain vector **g** (one gain per relation type, initialized to 1 and updated by a simple Hebbian rule: `g_r ← g_r + η·(w₀_r - ŵ_r)·ŵ_r`).  
-   The variational free energy is approximated as  
+where *f_type* implements the logical operation of the edge type (e.g., for a conditional “if u then v”, f = bᵤ; for a negation, f = 1‑bᵤ; for a comparative “u > v”, f = sigmoid(k·(bᵤ‑bᵥ))). The gains *gₑ* are set inversely to the variance of the corresponding linguistic cue (high precision for explicit cues, low for ambiguous ones), implementing the precision weighting of the Free Energy Principle.  
 
-   \[
-   F = \frac12 (w₀ - \hat w)^T \, \text{diag}(g) \, (w₀ - \hat w) + \frac12 \log|\text{diag}(g)|
-   \]
+Sensitivity analysis is performed by perturbing each input belief *bᵤ* ∈ {0,1} (the prompt’s asserted truths) by a small ε = 0.01, recomputing FE, and measuring the average absolute change:  
 
-   where the first term is precision‑weighted prediction error and the second is entropy of the precision.
+```
+Sens(a) = (1/|U|) Σᵤ | FE(a; bᵤ+ε) – FE(a; bᵤ) |
+```
 
-4. **Sensitivity analysis** – Perturb each answer‑derived edge strength by a small ε (e.g., 0.01) and recompute *F*. The gradient ∂F/∂w₀ is approximated by finite differences; its L2 norm *S* measures how sensitive the free energy is to that answer’s perturbations.
+The final score combines low free‑energy (good fit) and low sensitivity (robustness):  
 
-5. **Scoring** – Combine low free energy (good prediction) with high robustness (low sensitivity):  
+```
+score(a) = –[ FE(a) + λ·Sens(a) ]
+```
 
-   \[
-   \text{score} = -F + \lambda \frac{1}{1+S}
-   \]
+with λ = 0.5 tuned on a validation set. All operations use NumPy arrays for vectorised belief updates; the graph is stored as two parallel NumPy arrays (edge‑src, edge‑dst, edge‑type, edge‑gain).
 
-   with λ = 0.5. The candidate with the highest score is selected.
+**2. Structural features parsed**  
+- Negations (“not”, “no”) → edge type *NOT*  
+- Comparatives (“greater than”, “less than”, “equal to”) → edge type *CMP* with a sigmoid‑based f  
+- Conditionals (“if … then …”, “only if”) → edge type *COND*  
+- Causal claims (“causes”, “leads to”, “because”) → edge type *CAUS*  
+- Ordering/temporal relations (“before”, “after”, “precedes”) → edge type *ORD*  
+- Numeric values and units → converted to propositional atoms with explicit truth‑value (e.g., “temperature = 23°C” → true if matches prompt)  
+- Quantifiers (“all”, “some”, “none”) → treated as universal/existential constraints that generate additional edges with high gain.
 
-**Structural features parsed** – Negations, comparatives, conditionals, causal verbs, numeric quantities with units, and ordering/temporal relations. These are the atoms that become nodes and edges in the graph.
+**3. Novelty**  
+The core idea resembles predictive‑coding / active‑inference architectures that minimise variational free energy, but the addition of a *explicit sensitivity‑analysis* term to assess robustness of the free‑energy minimum under input perturbations is not standard in existing NLP reasoning scorers. Prior work uses free energy for model comparison (Friston 2010) or Bayesian belief propagation, yet few combine it with a finite‑difference sensitivity metric to produce a single robustness‑aware score. Thus the combination is novel in the context of automated answer‑scoring tools.
 
-**Novelty** – While predictive‑coding / free‑energy accounts have been applied to language modeling, coupling them with explicit neuromodulatory gain control and a sensitivity‑analysis robustness term for answer scoring is not present in current QA or reasoning‑evaluation tools, which typically rely on similarity metrics or end‑to‑end neural classifiers.
+**4. Ratings**  
+Reasoning: 8/10 — The algorithm directly evaluates logical consistency and numeric fidelity via a principled energy‑minimisation framework, capturing deeper relational structure than surface similarity.  
+Metacognition: 6/10 — It provides a self‑diagnostic signal (sensitivity) that reflects confidence, but lacks higher‑order reflection on alternative interpretations or uncertainty sources.  
+Hypothesis generation: 5/10 — While it can rank candidate hypotheses, it does not generate new ones; it only scores supplied answers.  
+Implementability: 9/10 — All components are regex‑based parsing, NumPy array operations, and simple loops; no external libraries or GPUs are required, making it readily portable.  
 
-**Ratings**  
-Reasoning: 7/10 — The algorithm captures logical structure and uncertainty, but relies on linear approximations that may miss higher‑order interactions.  
-Metacognition: 5/10 — No explicit self‑monitoring of the gain‑update process; gains are updated heuristically.  
-Hypothesis generation: 6/10 — Graph propagation yields implicit hypotheses (inferred edges) yet no active search over alternative graph structures.  
-Implementability: 8/10 — Uses only regex, NumPy matrix ops, and basic control flow; straightforward to code and debug.
+Reasoning: 8/10 — The algorithm directly evaluates logical consistency and numeric fidelity via a principled energy‑minimisation framework, capturing deeper relational structure than surface similarity.  
+Metacognition: 6/10 — It provides a self‑diagnostic signal (sensitivity) that reflects confidence, but lacks higher‑order reflection on alternative interpretations or uncertainty sources.  
+Hypothesis generation: 5/10 — While it can rank candidate hypotheses, it does not generate new ones; it only scores supplied answers.  
+Implementability: 9/10 — All components are regex‑based parsing, NumPy array operations, and simple loops; no external libraries or GPUs are required, making it readily portable.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No
@@ -89,7 +94,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:46:30.721881
 
 ---
 

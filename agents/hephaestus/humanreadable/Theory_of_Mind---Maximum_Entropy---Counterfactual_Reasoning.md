@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Statistical Physics, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T13:22:05.279892
-**Report Generated**: 2026-03-27T16:08:16.465669
+**Report Generated**: 2026-03-31T18:03:14.806847
 
 ---
 
@@ -54,7 +54,10 @@ Implementability: 9/10 — relies solely on NumPy linear algebra and iterative s
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:01:11.662953
 
 ---
 

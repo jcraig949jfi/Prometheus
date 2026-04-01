@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Mathematics, Cognitive Science
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T20:43:13.185546
-**Report Generated**: 2026-03-27T23:28:38.557718
+**Report Generated**: 2026-03-31T17:15:56.367562
 
 ---
 
@@ -53,7 +53,10 @@ Implementability: 9/10 — relies solely on NumPy for ALS and regex from the sta
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:14:20.753693
 
 ---
 

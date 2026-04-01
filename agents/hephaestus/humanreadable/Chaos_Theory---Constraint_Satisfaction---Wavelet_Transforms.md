@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Signal Processing
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T06:53:20.193019
-**Report Generated**: 2026-03-27T16:08:16.798263
+**Report Generated**: 2026-03-31T17:10:38.104740
 
 ---
 
@@ -73,7 +73,10 @@ Implementability: 9/10 — All components (regex parsing, NumPy‑based DWT, AC�
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:09:33.004771
 
 ---
 

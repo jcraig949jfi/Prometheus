@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Information Science, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T23:20:48.885513
-**Report Generated**: 2026-03-27T23:28:38.635718
+**Report Generated**: 2026-03-31T17:10:38.129739
 
 ---
 
@@ -59,7 +59,10 @@ Implementability: 9/10 — relies only on numpy for matrix ops and a pure‑Pyth
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:09:48.172605
 
 ---
 

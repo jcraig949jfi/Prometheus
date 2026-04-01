@@ -3,7 +3,7 @@
 **Fields**: Linguistics, Economics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:54:47.706660
-**Report Generated**: 2026-03-27T16:08:16.581669
+**Report Generated**: 2026-03-31T17:10:38.084740
 
 ---
 
@@ -70,7 +70,10 @@ Implementability: 9/10 — all steps use only `re`, basic string ops, and NumPy;
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:10:19.022266
 
 ---
 

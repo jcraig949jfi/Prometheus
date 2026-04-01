@@ -3,7 +3,7 @@
 **Fields**: Physics, Logic, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:29:05.775801
-**Report Generated**: 2026-03-27T17:21:24.867551
+**Report Generated**: 2026-03-31T19:12:22.101301
 
 ---
 
@@ -71,7 +71,10 @@ Implementability: 9/10 — uses only regex, numpy for eigen‑power iteration, a
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:10:01.267469
 
 ---
 

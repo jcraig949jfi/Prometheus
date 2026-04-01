@@ -2,57 +2,67 @@
 
 **Fields**: Cognitive Science, Philosophy, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T17:58:12.650241
-**Report Generated**: 2026-03-27T04:25:48.229203
+**Nous Timestamp**: 2026-03-28T17:24:50.891209
+**Report Generated**: 2026-03-31T14:34:42.874748
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We build a lightweight factor‑graph model of the prompt using only NumPy arrays and Python’s dict/list structures.  
+We define a class `FreeEnergyScorer` that, given a prompt `P` and a list of candidate answers `A = [a₁,…,aₙ]`, returns a score `sᵢ` for each answer.  
 
-1. **Lexical lookup → primitive factors**  
-   - Each token maps to a NumPy‑based potential function stored as a callable that takes a vector of variable states and returns a scalar penalty/reward.  
-   - Examples:  
-     * “greater than” → potential = max(0, x − y) (penalizes violations of x > y).  
-     * Negation “not” → flips the sign of the associated potential.  
-     * Numeric constant “5” → creates a Gaussian factor centered at 5 with small variance.  
+1. **Parsing (Compositional Semantics)** – Both `P` and each `aᵢ` are converted into a tuple of *atomic predicates* and *numeric constraints* using deterministic regex patterns:  
+   - Predicates: `Prop(subject, relation, object)` (e.g., `Prop(X, greater_than, Y)`).  
+   - Negations are marked with a boolean flag `neg`.  
+   - Conditionals become implication pairs `(antecedent, consequent)`.  
+   - Ordering relations (`>`, `<`, `≥`, `≤`) and equality are stored as numeric constraints `c = (var₁, op, var₂, value)`.  
+   The result is a lightweight data structure: `Form = (predicates: List[Tuple], constraints: List[Tuple])`.  
 
-2. **Compositional combination**  
-   - Using a simple CCG‑style binary combine rule, we take the Cartesian product of the scopes of two factors and multiply their potentials element‑wise (NumPy broadcasting). The result is a new factor whose scope is the union of the two input scopes. Repeating this yields a set of factors that jointly represent the entire prompt.  
+2. **Expected Free Energy Computation (Active Inference)** – For each answer we construct a joint factor graph where nodes are predicates/constraints and edges represent logical compatibility (e.g., two predicates share the same subject). The *variational free energy* `F` is approximated as:  
+   ```
+   F = Σ_i  w_i * log p(pred_i | model)  +  Σ_j  v_j * log p(constraint_j | model)
+   ```  
+   where `p` is a uniform prior over satisfying assignments, and `w_i, v_j` are weights set to 1. The term `log p` is 0 if the predicate/constraint set is *satisfiable* (checked via a simple DPLL‑style constraint propagator using transitivity and modus ponens) and `-∞` otherwise. In practice we assign a large penalty `C = 1e6` for each unsatisfied clause. Thus lower `F` indicates higher compatibility between prompt and answer under compositional semantics.  
 
-3. **Belief propagation (approximate inference)**  
-   - Variables are represented by Gaussian belief parameters (mean µ, covariance Σ) stored as 1‑D µ and 2‑D Σ arrays.  
-   - Loopy belief propagation updates each factor→variable message via moment matching (NumPy linear algebra). After a fixed number of iterations we obtain approximate marginal posteriors for all variables.  
+3. **Sensitivity Analysis** – To assess robustness we perturb the parsed form of the answer:  
+   - Flip negation flags.  
+   - Add/subtract a small ε (e.g., 0.01) to numeric constants.  
+   - Swap antecedent/consequent in conditionals.  
+   For each perturbation we recompute `F`. The *expected free energy* under perturbation is the mean `F̄`, and its *variance* `Var(F)` quantifies sensitivity. The final score combines compatibility and robustness:  
+   ```
+   s = - (F̄ + λ * sqrt(Var(F)))
+   ```  
+   with λ = 0.5 tuned on a validation set. All operations use only `numpy` for vectorised mean/variance and the standard library for regex and propagation.  
 
-4. **Expected free energy (EFE) scoring of a candidate answer**  
-   - To score an answer, we temporarily clamp the relevant variable(s) to the answer’s value (hard evidence) and run one extra BP iteration to get the posterior q.  
-   - Free energy F = ⟨energy⟩_q − H[q] where ⟨energy⟩_q is the expected sum of factor potentials (computed with NumPy dot products) and H[q] = ½ log|2πeΣ| is the Gaussian entropy.  
-   - Epistemic value = trace(Σ_q) (expected uncertainty reduction).  
-   - Expected free energy = F + epistemic value. Lower EFE indicates a better‑fitting answer; we rank candidates by ascending EFE.  
-
-**Structural features parsed**  
-Negations (via sign flip), comparatives (> , < , ≥ , ≤), conditionals (if‑then → implication factor), numeric literals (Gaussian anchors), causal claims (“X causes Y” → directed factor linking X to Y), and ordering relations (transitive chains built by repeatedly combining “greater‑than” factors).  
+**Structural Features Parsed**  
+Negations, comparatives (`>`, `<`, `≥`, `≤`), equality, conditionals (if‑then), conjunctive/disjunctive predicates, numeric constants, and ordering chains (e.g., `A > B > C`).  
 
 **Novelty**  
-While active inference, compositional semantics, and sensitivity analysis have each been used separately in AI, their conjunction into a deterministic, NumPy‑based scoring pipeline that derives expected free energy from a compositionally built factor graph is not present in existing QA or reasoning‑evaluation tools (which typically rely on neural similarity or shallow rule matching).  
+The triple binding of compositional semantic parsing, active‑inference‑style free‑energy approximation, and explicit sensitivity‑analysis perturbations is not present in existing open‑source reasoning scorers, which typically use either similarity metrics or pure logical theorem proving. This hybrid therefore constitutes a novel algorithmic combination.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and uncertainty but lacks deep recursive reasoning.  
-Metacognition: 5/10 — provides uncertainty estimates (epistemic term) yet no explicit self‑monitoring loop.  
-Hypothesis generation: 6/10 — sensitivity‑derived gradients suggest alternative beliefs, but generation is limited to local perturbations.  
-Implementability: 8/10 — relies solely on NumPy and stdlib; factor graphs and BP are straightforward to code.
+Reasoning: 8/10 — captures logical consistency and uncertainty via free energy, but relies on hand‑crafted parsers.  
+Metacognition: 6/10 — sensitivity term offers a rudimentary estimate of answer stability, yet lacks higher‑order self‑reflection.  
+Hypothesis generation: 5/10 — the system scores given hypotheses; it does not propose new ones beyond perturbing existing answers.  
+Implementability: 9/10 — all components are implementable with regex, numpy, and a simple DPLL propagator; no external dependencies.  
+
+
+
+Reasoning: 8/10 — captures logical consistency and uncertainty via free energy, but relies on hand‑crafted parsers.
+Metacognition: 6/10 — sensitivity term offers a rudimentary estimate of answer stability, yet lacks higher‑order self‑reflection.
+Hypothesis generation: 5/10 — the system scores given hypotheses; it does not propose new ones beyond perturbing existing answers.
+Implementability: 9/10 — all components are implementable with regex, numpy, and a simple DPLL propagator; no external dependencies.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

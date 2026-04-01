@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T08:28:00.725987
-**Report Generated**: 2026-03-27T16:08:16.856261
+**Report Generated**: 2026-03-31T19:17:41.566789
 
 ---
 
@@ -57,7 +57,10 @@ Implementability: 6/10 — requires implementing CP‑ALS and regex parsing in N
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:17:28.536788
 
 ---
 

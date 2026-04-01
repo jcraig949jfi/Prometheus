@@ -1,0 +1,10 @@
+{
+  "test": 5,
+  "paper": "Reasoning Precipitation Hypothesis",
+  "claim": "Reasoning capability is a metastable regime accessible via targeted linear perturbations (steering vectors) in the residual stream",
+  "result": "INCONCLUSIVE",
+  "confidence": null,
+  "evidence": "This test requires GPU to rerun CMA-ES with multiple random seeds on the L22/L23 steering vector experiments. No GPU available in this session.",
+  "what_is_needed": "Rerun CMA-ES at L22 and L23 with 3 different random seeds each. Check: (1) Do the same 4 traps flip at L22 across seeds? (2) Is the Finish-Before-3rd vs Siblings antagonism reproducible? (3) Does the channel repertoire remain stable? If repertoire is seed-dependent, the channels are search artifacts.",
+  "implications_for_other_papers": "If this test eventually FAILS (channels are seed-dependent), Paper 5 is shelved but other papers are unaffected — the steering vector work is independent of the damage algebra framework."
+}

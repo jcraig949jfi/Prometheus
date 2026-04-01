@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:38:43.356123
-**Report Generated**: 2026-03-27T16:08:16.935260
+**Report Generated**: 2026-03-31T18:16:23.331241
 
 ---
 
@@ -71,7 +71,10 @@ Implementability: 9/10 — Pure regex, NumPy array ops, and basic graph algorith
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:15:36.979056
 
 ---
 

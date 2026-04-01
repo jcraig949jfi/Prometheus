@@ -2,58 +2,61 @@
 
 **Fields**: Control Theory, Statistical Physics, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T14:46:23.868087
-**Report Generated**: 2026-03-27T16:08:16.577666
+**Nous Timestamp**: 2026-03-28T02:06:42.440806
+**Report Generated**: 2026-03-31T14:34:54.743177
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing → clause set** – Using a handful of regex patterns we extract from each candidate answer a list of atomic propositions:  
-   - Comparisons: `X > Y`, `X = Y`, `X < Y` → stored as `(cmp, var1, op, var2)`.  
-   - Negations: `not P` → `(neg, P)`.  
-   - Conditionals: `if A then B` → `(imp, A, B)`.  
-   - Causal/temporal: `A because B` → `(cause, A, B)`; `A before B` → `(order, A, B)`.  
-   - Numeric constants: `value = 3.2` → `(num, var, value)`.  
-   Each proposition is assigned a Boolean variable `v_i`.  
+We build a *constraint‑driven scoring engine* that treats each candidate answer as a dynamical system whose state is a vector of feature scores `s ∈ ℝⁿ`. The three concepts map as follows:
 
-2. **Hoare‑logic encoding** – Every sentence `S_k` becomes a command `C_k` whose precondition `P_k` is the conjunction of all propositions appearing before `S_k` in the text and whose postcondition `Q_k` is the conjunction of propositions appearing after `S_k`. We compute the weakest precondition `wp(C_k, Q_k)` by applying the effect of `C_k` (e.g., for `imp A B` we add `¬A ∨ B`; for `cmp X > Y` we enforce the ordering).  
+1. **Hoare Logic → Static constraints**  
+   - Parse the answer into a set of Hoare‑style triples `{P} stmt {Q}` where `P` and `Q` are conjunctions of atomic predicates extracted from the text (e.g., “X > Y”, “¬Z”, “if A then B”).  
+   - Each triple yields a linear inequality constraint on `s`: if predicate `p_i` appears in `P` we require `s_i ≥ τ⁺`; if it appears in `Q` we require `s_i ≥ τ⁻`; negations flip the direction.  
+   - Collect all constraints in a matrix `A·s ≤ b`.
 
-3. **Constraint collection** – All `wp(C_k, Q_k)` clauses are turned into linear expectation constraints on feature functions `f_i(x)`:  
-   - For a comparison `X > Y` we add feature `f = 1` if the ordering holds in world `x`, else 0, and constrain its expectation to be ≥ 0.5 (reflecting a bias toward truth).  
-   - For an implication we constrain `E[f_imp] ≥ E[f_A]·E[f_B]` (using the product‑rule approximation).  
-   - Numeric equalities become constraints on the mean of the associated variable.  
+2. **Maximum Entropy → Prior distribution**  
+   - Initialise a probability distribution over feasible score vectors as the maximum‑entropy distribution subject to the linear constraints:  
+     `p(s) ∝ exp(−λᵀ(A·s−b))` with λ ≥ 0.  
+   - Solve for λ using dual ascent (projected gradient) – only numpy operations are needed.
 
-4. **Maximum‑entropy distribution** – With the set of linear constraints `{E[f_i] = c_i}` we solve for the MaxEnt distribution `p(x) ∝ exp(∑ λ_i f_i(x))` using iterative scaling (GIS) implemented with NumPy. The λ vector is the set of Lagrange multipliers.  
+3. **Feedback Control → Error‑driven refinement**  
+   - Define a reference vector `s*` derived from the question’s specification (e.g., expected numeric answer, required ordering).  
+   - Compute error `e = s* − E[p(s)]` where the expectation is taken under the current max‑ent distribution.  
+   - Update λ with a PID law: `λ_{k+1} = λ_k + Kp·e + Ki·∑e + Kd·(e−e_{prev})`, projecting λ back onto the non‑negative orthant after each step.  
+   - Iterate until ‖e‖₂ falls below a tolerance or a max‑step limit is reached.  
+   - The final score for the answer is the scalar `score = wᵀ·E[p(s)]` where `w` weights answer‑relevant features (e.g., correctness of numeric value, presence of required causal claim).
 
-5. **Scoring** – The probability that the answer satisfies all Hoare triples is the expectation of the conjunction of all postconditions:  
-   `score = ∑_x p(x) · ∏_k 1_{Q_k(x)}`.  
-   This is computed by sampling worlds from the MaxEnt distribution (or by exact enumeration when the number of Boolean variables ≤ 20).  
+**Parsed structural features**  
+The extractor uses regex‑based pattern matching to identify:  
+- Negations (`not`, `no`, `-`)  
+- Comparatives (`>`, `<`, `≥`, `≤`, `more than`, `less than`)  
+- Conditionals (`if … then …`, `unless`, `provided that`)  
+- Numeric values (integers, decimals, units)  
+- Causal claim markers (`because`, `due to`, `leads to`, `results in`)  
+- Ordering relations (`first`, `then`, `finally`, `before`, `after`)  
+Each match yields a Boolean or numeric predicate that populates the Hoare triples.
 
-6. **Feedback control (PID)** – During development we compare the produced score to a binary correctness label `y ∈ {0,1}` (available only for a small validation set). The error `e = y – score` updates the λ parameters via a discrete PID:  
-   `λ ← λ + K_p·e + K_i·∑e + K_d·(e – e_prev)`.  
-   The adjusted λ shifts the MaxEnt distribution, thereby improving future scores without retraining a neural model.  
+**Novelty**  
+While Hoare‑style verification and maximum‑entropy inference are well studied, coupling them with a feedback‑control loop that treats the constraint‑satisfaction problem as a control system to iteratively adjust the entropy‑maximising distribution is not present in existing literature. Prior work uses either static constraint solving or pure max‑ent ranking, but not a PID‑driven refinement of the dual variables.
 
-**Structural features parsed** – negations, comparatives (`>`, `<`, `=`), conditionals (`if‑then`), causal/temporal because/before/after, numeric constants, and implicit ordering relations derived from chained comparisons.  
-
-**Novelty** – While MaxEnt reasoning, Hoare‑style verification, and PID‑based parameter tuning each appear separately (e.g., probabilistic program logics, adaptive control of learning rates), their tight integration—using a MaxEnt distribution to quantify Hoare‑triple satisfaction and a PID loop to tune the distribution’s λ’s—has not been described in the literature to the best of my knowledge.  
-
-**Rating**  
-Reasoning: 7/10 — captures logical consistency and uncertainty but relies on approximations for implications.  
-Metacognition: 6/10 — PID provides basic self‑correction; no higher‑order reflection on strategy.  
-Hypothesis generation: 5/10 — limited to adjusting λ; does not propose new structural hypotheses.  
-Implementability: 9/10 — only regex, NumPy, and pure‑Python loops; feasible within constraints.
+**Ratings**  
+Reasoning: 8/10 — The algorithm directly evaluates logical and numeric constraints, providing a principled correctness signal.  
+Metacognition: 6/10 — It monitors error between expected and inferred scores but lacks explicit self‑reflection on its own uncertainty beyond the entropy term.  
+Hypothesis generation: 5/10 — Hypotheses are limited to adjusting λ; generation of alternative answer structures is not performed.  
+Implementability: 9/10 — All components (regex parsing, numpy linear algebra, projected gradient, PID update) rely solely on numpy and the Python standard library.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.0** |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

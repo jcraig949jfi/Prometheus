@@ -3,7 +3,7 @@
 **Fields**: Physics, Complex Systems, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:30:38.874372
-**Report Generated**: 2026-03-27T17:21:25.490539
+**Report Generated**: 2026-03-31T17:57:58.261736
 
 ---
 
@@ -53,7 +53,10 @@ Implementability: 9/10 — relies only on NumPy for matrix exponentials, traces,
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:55:42.487935
 
 ---
 

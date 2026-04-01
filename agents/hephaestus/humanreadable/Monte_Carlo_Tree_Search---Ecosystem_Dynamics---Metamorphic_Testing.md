@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Biology, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T23:26:17.109618
-**Report Generated**: 2026-03-27T23:28:38.639717
+**Report Generated**: 2026-03-31T18:03:14.850847
 
 ---
 
@@ -67,7 +67,10 @@ Implementability: 9/10 — relies only on regex‑based proposition extraction, 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:02:22.324918
 
 ---
 

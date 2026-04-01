@@ -2,66 +2,50 @@
 
 **Fields**: Signal Processing, Economics, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T13:46:05.171034
-**Report Generated**: 2026-03-27T16:08:16.495669
+**Nous Timestamp**: 2026-03-28T11:34:36.183839
+**Report Generated**: 2026-03-31T14:34:54.731176
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Constraint‑Aware Matched Filter with Incentive‑Weighted Scoring**  
-1. **Parsing & Data Structures**  
-   - Use regex to extract atomic propositions \(p_i\) from the prompt and each candidate answer.  
-   - Encode each proposition as a one‑hot entry in a binary vector \(\mathbf{x}\in\{0,1\}^K\) ( \(K\) = total distinct propositions).  
-   - Build a directed constraint matrix \(\mathbf{C}\in\mathbb{R}^{K\times K}\) where:  
-     * \(C_{ij}=1\) if a rule “\(p_i \rightarrow p_j\)” (conditional, causal, or transitive ordering) is found,  
-     * \(C_{ij}=-1\) if a negation “\(p_i \rightarrow \lnot p_j\)” is found,  
-     * \(C_{ij}=0\) otherwise.  
-   - Store numeric comparatives as additional linear constraints (e.g., \(value_a > value_b\) → row \(a\) gets +1, column \(b\) gets ‑1).  
+**Algorithm**  
+1. **Parse the question** into a list of *metamorphic rules* \(R=\{r_i\}\). Each rule is a tuple \((\tau_{in},\tau_{out},\phi)\) where \(\tau_{in}\) and \(\tau_{out}\) are deterministic input transformations (e.g., “multiply every numeric token by 2”, “swap the order of two conjuncts”, “negate a predicate”) and \(\phi\) is a logical predicate that must hold between the original and transformed outputs (usually equality or proportional scaling).  
+2. **Feature extraction** – for any text \(t\) produce a normalized feature vector \(\mathbf{v}(t)\in\mathbb{R}^d\) using only numpy and the stdlib:  
+   - numeric tokens → scaled to \([0,1]\) (min‑max over the question)  
+   - presence/absence of each extracted predicate (negation, conditional, ordering) → binary entries  
+   - token‑order indices for each predicate → integer entries (later used for shift‑invariant correlation).  
+   The vector is L2‑normalized.  
+3. **Matched‑filter scoring** – for a candidate answer \(a\) and a rule \(r_i\):  
+   - Compute the transformed input vector \(\mathbf{v}_{in}' = \tau_{in}(\mathbf{v}(q))\) where \(q\) is the question text.  
+   - Obtain the *reference* answer vector \(\mathbf{v}_{ref}\) from a trusted baseline (e.g., the official solution or the median of all candidates).  
+   - Apply the output transformation: \(\mathbf{v}_{pred}= \tau_{out}(\mathbf{v}_{ref})\).  
+   - Compute the cross‑correlation (dot product after zero‑mean shift) \(c_i = \frac{\mathbf{v}(a)\cdot\mathbf{v}_{pred}}{\|\mathbf{v}(a)\|\|\mathbf{v}_{pred}\|}\). This is the matched‑filter output; it peaks when \(a\) follows the metamorphic relation.  
+4. **Mechanism‑design weighting** – assign each rule a weight \(w_i\) that reflects the cost of manipulation (e.g., rules that alter numerics get higher weight because they are harder to game). Using a VCG‑style payment, the final score is  
+   \[
+   S(a)=\sum_{i} w_i \, c_i \;-\; \lambda\sum_{i}\max(0,\,\tau_{out}^{-1}(\mathbf{v}(a))-\mathbf{v}_{ref})^2,
+   \]  
+   where the penalty term discourages answers that violate the inverse transformation (truth‑telling incentive). All operations are pure numpy (dot, norm, power) and stdlib loops.  
 
-2. **Constraint Propagation (Mechanism‑Design Layer)**  
-   - Compute the transitive closure of \(\mathbf{C}\) using Floyd‑Warshall on the boolean semiring (np.maximum.reduce) to obtain implied relations \(\mathbf{C}^\*\).  
-   - Derive a penalty vector \(\mathbf{v}\) by checking violations: for each implied edge \(i\rightarrow j\) with weight \(w\), add \(w\cdot\max(0, x_i - x_j)\) to \(\mathbf{v}\).  
-   - The total “noise” energy is \(N = \|\mathbf{v}\|_2^2\).  
+**Structural features parsed** – numeric values, ordering relations (\(<,>,\le,\ge\)), equality, negations (“not”, “no”), conditionals (“if … then …”), causal cues (“because”, “leads to”), comparatives (“more than”, “less than”), and conjunctive/disjunctive connectives.  
 
-3. **Matched‑Filter Signal Layer**  
-   - Construct a template signal \(\mathbf{s}\) from the prompt by applying metamorphic relations: duplicate the prompt, swap independent clauses, and keep the logical core unchanged; the resulting vector is the average of these metamorphosed versions (np.mean).  
-   - For each candidate answer vector \(\mathbf{x}_c\), compute the cross‑correlation (dot product) normalized by energy:  
-     \[
-     R = \frac{\mathbf{s}\cdot\mathbf{x}_c}{\|\mathbf{s}\|_2\;\|\mathbf{x}_c\|_2+\epsilon}
-     \]  
-   - The final score mimics an SNR:  
-     \[
-     \text{Score}= \frac{R^2}{1+N}
-     \]  
-   - Higher \(R\) (reward for matching the prompt’s logical signal) and lower \(N\) (penalty for violating propagated constraints) increase the score.  
-
-**Structural Features Parsed**  
-- Negations (“not”, “no”)  
-- Comparatives (“greater than”, “less than”, “≤”, “≥”)  
-- Conditionals / causals (“if … then …”, “because”, “leads to”)  
-- Ordering / temporal relations (“before”, “after”, “precedes”)  
-- Numeric values and inequalities  
-- Quantifiers (“all”, “some”, “none”) captured as propositional atoms.  
-
-**Novelty**  
-While matched filtering, mechanism design, and metamorphic testing each appear separately in signal processing, economics, and software testing, their conjunction for answer scoring — using a matched‑filter‑like correlation against a metamorphically derived template while enforcing incentive‑compatible constraint penalties — has not been reported in existing literature.  
+**Novelty** – While matched filtering, mechanism design, and metamorphic testing each appear in signal processing, economics, and software testing respectively, their conjunction as a scoring engine for reasoning answers has not been reported in the literature. Existing tools use either similarity metrics or rule‑based checkers; this hybrid adds incentive‑compatible weighting and optimal detection theory.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical fidelity and constraint satisfaction but relies on shallow propositional encoding.  
-Metacognition: 6/10 — the algorithm can signal when its own assumptions (template) are weak via low \(R\), yet lacks explicit self‑reflection loops.  
-Hypothesis generation: 5/10 — generates implicit hypotheses via constraint propagation, but does not propose alternative answer structures.  
-Implementability: 8/10 — only regex, NumPy vector/matrix ops, and Floyd‑Warshall are needed; no external APIs or learning components.
+Reasoning: 8/10 — captures logical invariants via cross‑correlation, giving a principled signal‑to‑noise measure of answer correctness.  
+Metacognition: 6/10 — the method can detect when an answer inconsistently follows rules, but it does not explicitly model the answerer’s self‑assessment process.  
+Hypothesis generation: 5/10 — the framework tests given hypotheses (rules) but does not propose new ones beyond the predefined metamorphic set.  
+Implementability: 9/10 — relies only on numpy vector operations and stdlib parsing; no external libraries or training required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T09:43:43.101377
-**Report Generated**: 2026-03-27T16:08:16.257673
+**Report Generated**: 2026-03-31T19:17:41.536800
 
 ---
 
@@ -62,7 +62,10 @@ Implementability: 8/10 — all steps use NumPy and the Python stdlib; no externa
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:16:58.137060
 
 ---
 

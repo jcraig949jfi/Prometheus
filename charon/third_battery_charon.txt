@@ -1,0 +1,28 @@
+[charon - after feedback from round2 and bugfix]
+Three things to do before Layer 2:
+
+  1. ChatGPT's Z.5 test (raw-space neighbor validity) — Before embedding, confirm that k-NN neighbors in raw zero space
+  already make arithmetic sense. Take k=10 neighbors, measure enrichment for same-rank/same-root-number/same-CM vs
+  random baseline within same conductor. Pass condition: enrichment >= 2x. This catches whether the geometry is real at
+  the local level, not just in aggregate statistics.
+  2. Variable dimensionality diagnostic (grumpy Claude + ChatGPT both flag this) — The shared-zero-slot fix means
+  different pairs compare on different numbers of dimensions. Before embedding, check the distribution of
+  n_zeros_stored. If most objects have 8-10 zeros, we're fine. If some have 2-3, those distances are noisy and will
+  poison the embedding. Restrict to objects with >= N zeros for a clean embedding.
+  3. Zero completeness vs conductor correlation (nice Claude) — Is zero coverage systematic? If high-conductor objects
+  have fewer zeros, the Z.4 pass might be biased toward easy cases. One query, one answer.
+
+  For Layer 2 itself, the council agrees on:
+  - Run 2.1 first on a subsample. If raw k-NN already works well, embedding may be unnecessary complexity — and that's a
+   valid outcome (you have a search system, just not a landscape).
+  - Raise 2.1 threshold to +8-10% (raw zero space is already good)
+  - 2.3 needs neighbor preservation >= 0.85, not just coordinate shift
+  - 2.5 (new): graph overlay test using the 783K edges — does zero-proximity predict graph distance?
+  - Keep graph embedding (Direction 3) separate as validation, not primary geometry yet
+
+  What to skip: Gemini asking a question instead of answering. DeepSeek restating what we already know.
+
+  My recommendation: run those three diagnostics (Z.5, zero completeness distribution, conductor correlation) — they're
+  each one query. Then straight into 2.1. Want me to go?
+
+

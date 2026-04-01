@@ -2,38 +2,57 @@
 
 **Fields**: Signal Processing, Neuroscience, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T13:45:31.502184
-**Report Generated**: 2026-03-27T16:08:16.495669
+**Nous Timestamp**: 2026-03-28T11:28:25.932712
+**Report Generated**: 2026-03-31T14:34:54.731176
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Feature extraction** – For a given question Q and each candidate answer A, tokenize with `re.findall(r"\w+|[.,;:]")`. From each token produce a binary feature vector f∈{0,1}^6 indicating presence of: negation, comparative, conditional, numeric literal, causal cue (because, therefore), ordering cue (before, after). Stack tokens → feature matrix F_Q, F_A (shape T×6).  
-2. **Matched‑filter bank** – For each feature k compute the cross‑correlation c_k = np.correlate(F_Q[:,k], F_A[:,k], mode='same'). This yields a 1‑D “signal” per feature that peaks where the pattern of that feature in Q aligns with A.  
-3. **Neural‑oscillation coupling** – Treat each c_k as an oscillation. Extract power at multiple scales by applying a dyadic wavelet‑like filter bank: for scales s∈{1,2,4,8} compute p_{k,s}=np.sum(np.abs(c_k)**2 * w_s) where w_s is a rectangular window of length s (implemented via stride tricks). Form a tensor P (6 × |scales|). Cross‑frequency coupling is modeled as the element‑wise product across scales for each feature: γ_k = np.prod(p_{k,:}, axis=1). The combined similarity score is s = np.dot(γ, w_feat) where w_feat are uniform weights (can be learned later).  
-4. **Maximum‑entropy scoring** – Impose constraints that the expected feature‑coupling under the answer distribution equals the observed γ. Solve for Lagrange multipliers λ via iterative scaling (GIS) using only numpy: start λ=0, repeat λ_k ← λ_k + log(γ_k / E_k) where E_k = Σ_A exp(λ·γ_A)γ_{A,k}/Σ_A exp(λ·γ_A). After convergence, the score for A is the log‑probability log p(A) = λ·γ_A – log Z, where Z = Σ_A exp(λ·γ_A). Higher log‑probability → better answer.  
+1. **Pre‑processing & band decomposition** – Tokenize the question and each candidate answer. For every token produce a 3‑dimensional feature vector:  
+   - *Low‑frequency band* (syntactic): dependency depth, POS‑tag one‑hot, presence of negation/comparative/conditional cue (binary).  
+   - *Mid‑frequency band* (lexical‑semantic): TF‑IDF weighted word embeddings (fixed, e.g., GloVe loaded once).  
+   - *High‑frequency band* (surface): character n‑gram counts, punctuation density, numeric token flag.  
+   Stack these into three matrices **L**, **M**, **H** (shape = [n_tokens × d_band]).  
 
-**Parsed structural features** – Negations, comparatives, conditionals, numeric values, causal claims, ordering/temporal relations, and (via the token step) quantifiers and plurals.  
+2. **Oscillatory filtering** – Design sinusoidal kernels whose frequencies correspond to the three bands (e.g., 0.5 Hz, 5 Hz, 20 Hz). Convolve each band matrix with its kernel using `numpy.convolve` (mode='same') to obtain band‑specific activation traces **A_L**, **A_M**, **A_H**. This mimics neural oscillations: low‑freq captures slow syntactic rhythms, high‑freq captures rapid lexical bursts.  
 
-**Novelty** – The triple blend is not found in existing literature: matched‑filter detection is common in signal processing, neural‑oscillation coupling appears in neuroscience‑inspired deep nets, and maximum‑entropy feature constraints appear in log‑linear models, but their joint use for pure‑numpy answer scoring is novel.  
+3. **Matched‑filter scoring** – Build a reference pattern **R** from the question’s own band‑activations (average across tokens). For each candidate, compute the cross‑correlation (matched filter) in each band:  
+   `score_band = np.correlate(A_band, R_band, mode='valid').max()`  
+   Combine bands with a weighted sum: `raw = w_L*score_L + w_M*score_M + w_H*score_H`.  
 
-**Ratings**  
-Reasoning: 7/10 — captures multi‑scale logical alignment but lacks deep semantic reasoning.  
-Metacognition: 3/10 — no mechanism for self‑monitoring or uncertainty estimation beyond the model’s likelihood.  
-Hypothesis generation: 5/10 — can propose alternatives via sampling from the max‑ent distribution, but generation is limited to re‑scoring existing candidates.  
-Implementability: 8/10 — relies only on numpy and stdlib; all operations are vectorized and straightforward to code.
+4. **Maximum‑entropy constraint integration** – Extract hard constraints from the text:  
+   - Negation flips polarity of associated predicate.  
+   - Comparatives impose ordering (`>`, `<`).  
+   - Conditionals create implication edges.  
+   - Numeric values generate equality/inequality constraints.  
+   - Causal claims add directed edges.  
+   Represent each constraint as a feature function f_i(x) that returns 1 if the candidate satisfies it, else 0. Collect empirical expectations Ê[f_i] from the question (or a small set of gold answers).  
+   Solve for MaxEnt weights λ_i that satisfy Σ_x p(x) f_i(x) = Ê[f_i] using iterative scaling (numpy only). The final probability p(x) ∝ exp(Σ_i λ_i f_i(x)).  
+   The answer score is `log p(candidate)`; higher values indicate better alignment with structural constraints.  
+
+**Structural features parsed**  
+Negations (“not”, “no”), comparatives (“more”, “less”, “‑er”), conditionals (“if”, “then”, “unless”), numeric values (regex `\d+(\.\d+)?`), causal markers (“because”, “leads to”, “results in”), ordering relations (“before”, “after”, “greater than”, “precedes”). These are extracted via simple regex and POS‑tag patterns and fed into the constraint set.
+
+**Novelty**  
+The combination is not a direct replica of existing work. Matched filtering is classic in signal processing; neural‑oscillation‑inspired filter banks have been used in EEG‑based language decoding; MaxEnt underlies many log‑linear NLP models. Integrating them—using oscillatory band activations as the signal for a matched filter, then refining with MaxEnt constraints derived from syntactic/semantic patterns—creates a distinct scoring pipeline that has not been widely reported in QA or reasoning‑evaluation literature.
+
+**Rating**  
+Reasoning: 7/10 — captures deep relational structure via constraints and cross‑correlation, but still relies on hand‑crafted bands.  
+Metacognition: 5/10 — the method does not explicitly monitor its own uncertainty beyond the MaxEnt distribution.  
+Hypothesis generation: 6/10 — constraint propagation can suggest alternative completions, yet generation is limited to scoring given candidates.  
+Implementability: 8/10 — all steps use only numpy and the Python standard library; no external libraries or APIs are required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 7/10 |
-| Metacognition | 3/10 |
-| Hypothesis Generation | 5/10 |
+| Metacognition | 5/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 8/10 |
-| **Composite** | **5.0** |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

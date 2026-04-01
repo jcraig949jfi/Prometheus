@@ -2,35 +2,40 @@
 
 **Fields**: Linguistics, Theoretical Neuroscience, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T04:01:29.714798
-**Report Generated**: 2026-03-27T06:37:42.723643
+**Nous Timestamp**: 2026-03-28T02:18:11.668397
+**Report Generated**: 2026-03-31T18:50:23.047803
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing** – Use regex to extract atomic propositions \(p_i\) from the prompt and each candidate answer. Each proposition is a tuple \((\text{polarity},\text{relation},\text{args})\) where polarity ∈ {+,-} captures negation, relation encodes comparatives, conditionals, causal links, ordering, or numeric constraints (e.g., “>”, “=”, “cause”).  
-2. **Factor graph construction** – Create a bipartite graph: variable nodes for each \(p_i\) and factor nodes for three constraint types:  
-   * **Pragmatic factors** – enforce Gricean maxims (quantity, quality, relation, manner) as hard or soft penalties; e.g., a quantity factor adds cost if the answer introduces unnecessary propositions.  
-   * **Maximum‑entropy factors** – for each empirical constraint extracted from the prompt (e.g., “the number of X is 5”), add a log‑linear factor \(\exp(\lambda_k f_k(\mathbf{p}))\) where \(f_k\) is the constraint indicator and \(\lambda_k\) is learned by solving the dual max‑entropy problem (iterative scaling) using only numpy.  
-   * **Free‑energy factors** – encode prediction‑error terms: for each conditional \(A\rightarrow B\) add a quadratic penalty \((B - A)^2\) that measures surprise; this is the energy term \(E(\mathbf{p})\).  
-3. **Inference** – Perform loopy belief propagation (sum‑product) on the graph using numpy arrays to obtain approximate marginals \(q(p_i)\). Compute the variational free energy  
-   \[
-   F = \sum_{\mathbf{p}} q(\mathbf{p})E(\mathbf{p}) + \sum_{\mathbf{p}} q(\mathbf{p})\log q(\mathbf{p}),
-   \]
-   where the entropy term is the second sum. Lower \(F\) indicates a better fit to pragmatic, entropic, and predictive constraints.  
-4. **Scoring** – For each candidate answer, compute \(F\); the score is \(-F\) (higher is better).  
+1. **Feature extraction** – For each sentence in the prompt and each candidate answer, run a deterministic regex pass to produce a binary feature vector *f*∈{0,1}^k. Features encode: presence of negation, comparative (>/<, “more than”, “less than”), conditional antecedent/consequent (“if … then …”, “unless”), causal cue (“because”, “leads to”), numeric token, ordering relation (“before”, “after”, “first”, “second”), universal/existential quantifier, and modal strength. Store the matrix *F*∈ℝ^{n×k} where rows are propositions (prompt + candidates).  
+2. **Maximum‑entropy prior** – Impose linear constraints that the expected feature counts under the distribution match the empirical counts from the prompt: 𝔼_p[f] = \(\bar f\) = (1/m)∑_{i∈prompt} F_i. Solve for the Lagrange multipliers λ via Generalized Iterative Scaling (GIS) using only NumPy: initialize λ=0, iterate λ←λ+η·(\(\bar f\) − 𝔼_{p_λ}[f]) until convergence. The resulting MaxEnt distribution over proposition states is  
+   p_λ(x) = exp(λ·f(x)) / Z(λ), with Z computed by summing over the 2^k possible binary vectors (k ≤ 20 in practice, so exact summation is feasible).  
+3. **Variational free‑energy scoring** – Treat each candidate answer c as a hypothesis distribution q_c that places probability 1 on its feature vector f_c and 0 elsewhere. The free energy of c under the MaxEnt prior is  
+   F(c) = ⟨−log p_λ(x)⟩_{q_c} − H[q_c] = −log p_λ(f_c).  
+   Lower F means the candidate is more predictable given the pragmatic constraints; we define the score S(c) = −F(c) = log p_λ(f_c).  
+4. **Decision** – Rank candidates by S(c); the highest‑scoring answer is selected.
 
-**Structural features parsed** – negations, comparatives (“more than”, “less than”), conditionals (“if…then”), causal verbs (“cause”, “lead to”), numeric values and units, ordering relations (“first”, “before”), and quantifiers (“all”, “some”).  
+**Structural features parsed**  
+- Negations (“not”, “no”, “never”)  
+- Comparatives (“more than”, “less than”, “>”, “<”)  
+- Conditionals (“if … then …”, “unless”, “provided that”)  
+- Causal cues (“because”, “leads to”, “causes”, “results in”)  
+- Numeric tokens and units  
+- Ordering/temporal relations (“before”, “after”, “first”, “second”, “preceding”)  
+- Quantifiers (“all”, “some”, “none”, “every”)  
+- Modal strength (“must”, “might”, “should”, “could”)  
 
-**Novelty** – The blend mirrors existing frameworks: Markov Logic Networks (weighted logical factors), Rational Speech Acts (pragmatic scoring), and the Free Energy Principle as a variational objective. Combining max‑entropy constraint solving with belief propagation on a pragmatically annotated factor graph is not widely reported in public literature, so the specific pipeline is somewhat novel, though each component is well‑studied.  
+**Novelty**  
+The combination isolates a MaxEnt prior from pragmatically extracted constraints and then evaluates hypotheses with a variational free‑energy objective. While MaxEnt models and free‑energy formulations appear separately in cognitive science and NLP, their joint use as a deterministic, numpy‑only scoring pipeline for reasoning evaluation has not been described in the literature to our knowledge.
 
 **Ratings**  
-Reasoning: 7/10 — captures logical and pragmatic constraints but relies on approximate inference that may miss deep reasoning.  
-Metacognition: 5/10 — the system can estimate its own uncertainty via entropy, yet lacks explicit self‑monitoring loops.  
-Hypothesis generation: 4/10 — hypothesis space is limited to propositions extracted by regex; no generative component beyond re‑weighting.  
-Implementability: 8/10 — all steps use only numpy and the standard library; belief propagation and iterative scaling are straightforward to code.
+Reasoning: 7/10 — The method captures logical constraints and uncertainty, but relies on exact enumeration of feature space which limits scalability.  
+Metacognition: 5/10 — No explicit self‑monitoring or uncertainty calibration beyond the free‑energy value is built in.  
+Hypothesis generation: 6/10 — Generates candidate scores via a principled energy function, yet hypothesis space is limited to the provided answers.  
+Implementability: 9/10 — All steps use only regex, NumPy linear algebra, and simple loops; no external libraries or APIs are required.
 
 ### Scores
 
@@ -38,9 +43,9 @@ Implementability: 8/10 — all steps use only numpy and the standard library; be
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Hypothesis Generation | 6/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No
@@ -69,7 +74,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:50:16.290838
 
 ---
 

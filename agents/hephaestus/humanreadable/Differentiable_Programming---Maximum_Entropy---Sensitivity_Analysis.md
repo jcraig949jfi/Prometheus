@@ -2,58 +2,59 @@
 
 **Fields**: Computer Science, Statistical Physics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T18:48:49.923340
-**Report Generated**: 2026-03-27T04:25:55.552879
+**Nous Timestamp**: 2026-03-29T03:11:32.308981
+**Report Generated**: 2026-03-31T14:34:50.096717
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parse** each prompt and candidate answer into a set of binary feature functions \(f_j(\text{answer})\) that indicate satisfaction of a extracted logical constraint (e.g., “X > Y”, “if P then Q”, “¬R”). Features are stored in a dense NumPy matrix \(F\in\mathbb{R}^{A\times J}\) where \(A\) is the number of candidates and \(J\) the number of distinct constraints.  
-2. **Maximum‑entropy model**: assign a non‑negative weight \(w_j\) to each constraint and define the energy of an answer \(a\) as \(E(a)=\sum_j w_j f_j(a)\). The normalized score is the softmax  
-\[
-s(a)=\frac{\exp(-E(a))}{\sum_{a'}\exp(-E(a'))}=\frac{\exp(-F_{a}\cdot w)}{Z(w)},
-\]  
-with partition function \(Z(w)=\sum_{a}\exp(-F_{a}\cdot w)\). This is the least‑biased distribution consistent with the expected feature counts.  
-3. **Differentiable programming**: treat \(w\) as trainable parameters. Using autodiff (implemented manually with NumPy) compute the gradient of the log‑likelihood on a small validation set:  
-\[
-\nabla_w\log\mathcal{L}= -\mathbb{E}_{\text{data}}[F] + \mathbb{E}_{\text{model}}[F],
-\]  
-where the model expectation uses the current softmax scores. Update \(w\) with stochastic gradient descent.  
-4. **Sensitivity analysis**: after convergence, compute the Jacobian of each score w.r.t. the weights:  
-\[
-\frac{\partial s(a)}{\partial w}= s(a)\bigl(F_a - \mathbb{E}_{\text{model}}[F]\bigr).
-\]  
-Large magnitude entries indicate that the answer’s score is fragile to perturbations of the corresponding constraint, providing a robustness signal that can be combined with the raw score (e.g., final score = s(a) − λ‖∂s/∂w‖₂).  
+We build a maximum‑entropy (log‑linear) model over a set of binary/logical features extracted from the prompt + each candidate answer.  
+*Data structures*  
+- `feat_mat`: `np.ndarray` of shape `(n_cands, n_feat)` where each row is a feature vector for one answer. Features are indicator functions for parsed linguistic patterns (see §2).  
+- `w`: `np.ndarray` of shape `(n_feat,)` – the weight vector to be learned.  
+- `emp_exp`: `np.ndarray` of shape `(n_feat,)` – empirical feature expectations derived solely from the prompt (treated as the “true” distribution).  
+
+*Operations* (all using only NumPy and the stdlib)  
+1. **Feature extraction** – deterministic regex‑based parsers fill `feat_mat`.  
+2. **Score computation** – `logits = feat_mat @ w` (unnormalized log‑probabilities).  
+3. **Log‑partition** – `logZ = scipy.special.logsumexp(logits)` (implemented with `np.max` and `np.log(np.sum(np.exp(logits - np.max(logits)))) + np.max(logits)` to stay in stdlib).  
+4. **Log‑likelihood** – `LL = np.dot(emp_exp, w) - logZ`.  
+5. **Differentiable programming** – we derive the gradient analytically: `grad = emp_exp - model_exp`, where `model_exp = (feat_mat.T @ np.exp(logits - logZ)) / np.sum(np.exp(logits - logZ))`. This gradient is obtained via a manual reverse‑mode pass (no external autodiff library).  
+6. **Weight update** – simple gradient ascent: `w += lr * grad`. Iterate until LL change < 1e‑4.  
+7. **Sensitivity analysis** – the Jacobian of the log‑probability w.r.t. input feature perturbations is `J = np.diag(p) - np.outer(p, p)` where `p = np.exp(logits - logZ) / np.sum(np.exp(logits - logZ))`. Multiplying `J` by the feature‑perturbation vector yields the change in score for each answer, giving a robustness measure.  
+
+*Scoring logic* – after convergence, the final score for each candidate is its normalized log‑probability `logp = logits - logZ`. The answer with the highest `logp` is selected; the magnitude of `logp` also reflects confidence, while the sensitivity Jacobian quantifies how fragile that confidence is to small perturbations in the parsed features.  
 
 **Structural features parsed**  
-- Negations (“not”, “no”)  
-- Comparatives (“greater than”, “less than”, “at least”)  
-- Conditionals (“if … then …”, “unless”)  
-- Numeric values and units (extracted with regex)  
-- Causal claims (“because”, “leads to”, “results in”)  
-- Ordering/temporal relations (“before”, “after”, “precedes”)  
-- Existential/universal quantifiers (“all”, “some”, “none”)  
+- Negation tokens (`not`, `never`, `no`).  
+- Comparative/superlative adjectives and adverbs (`more`, `less`, `best`, `worse`).  
+- Conditional constructions (`if … then`, `unless`, `provided that`).  
+- Causal connectives (`because`, `leads to`, `results in`, `due to`).  
+- Numeric expressions with units and operators (`5 km`, `≥ 3`, `twice as`).  
+- Ordering/temporal relations (`before`, `after`, `earlier`, `later`).  
+- Quantifiers (`all`, `some`, `none`, `most`).  
+- Entity mentions and proper nouns (captured via simple regex for capitalized tokens).  
 
 **Novelty**  
-The combination mirrors a conditional random field (CRF) but adds an explicit sensitivity‑analysis step that quantifies how answer scores change under constraint perturbations—a feature not typical in standard QA scoring pipelines. While maxent log‑linear models and differentiable autodiff are well‑studied, their joint use for answer ranking with a robustness penalty is not commonly reported in the literature.  
+The combination mirrors a conditional random field (CRF) with hand‑crafted logical features, but the learning loop uses explicit differentiable programming (manual reverse‑mode gradient) and the final scoring step reports a sensitivity‑based robustness metric. Existing work (e.g., DeepProbLog, Neural Theorem Provers) couples neural networks to logical reasoning; here we replace the neural net with a pure NumPy max‑ent learner, making the approach transparent and easily auditable. While maximum‑entropy modeling and sensitivity analysis are classic, their joint use for answer scoring via differentiable weight updates is not common in public reasoning‑evaluation tools.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and optimizes weights end‑to‑end, but relies on hand‑crafted feature extraction.  
-Metacognition: 6/10 — sensitivity provides a rudimentary self‑check of robustness, yet no higher‑order uncertainty modeling.  
-Hypothesis generation: 5/10 — generates implicit hypotheses via feature weights, but does not propose new relational structures beyond those extracted.  
-Implementability: 8/10 — uses only NumPy and stdlib; autodiff and softmax are straightforward to code.
+Reasoning: 8/10 — The method captures logical structure, learns weights from prompt constraints, and provides a principled probabilistic score.  
+Metacognition: 6/10 — It offers a sensitivity measure but lacks explicit self‑reflection on uncertainty sources beyond local perturbations.  
+Hypothesis generation: 7/10 — Feature extraction yields interpretable patterns that can be inspected and expanded; however, generation of new hypotheses is limited to the predefined feature set.  
+Implementability: 9/10 — All components rely solely on NumPy and the Python standard library; no external ML packages or APIs are required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

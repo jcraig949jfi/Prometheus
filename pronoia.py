@@ -602,13 +602,13 @@ def _run_cycle(publish: bool = False) -> None:
         health = get_substrate_health(hours=24)
         total = health["entities_24h"] + health["relationships_24h"] + health["gaps_24h"]
         if total < 5:
-            log.warning(f"CONSTITUTIONAL ALERT: Substrate starvation — {total} additions in 24h (minimum: 5)")
-            log.warning(f"  Entities: {health['entities_24h']}, Relations: {health['relationships_24h']}, Gaps: {health['gaps_24h']}")
+            print(f"[{timestamp()}] CONSTITUTIONAL ALERT: Substrate starvation — {total} additions in 24h (minimum: 5)")
+            print(f"[{timestamp()}]   Entities: {health['entities_24h']}, Relations: {health['relationships_24h']}, Gaps: {health['gaps_24h']}")
         else:
-            log.info(f"Substrate health: {total} additions in 24h (entities={health['entities_24h']}, "
-                     f"relations={health['relationships_24h']}, gaps={health['gaps_24h']})")
+            print(f"[{timestamp()}] Substrate health: {total} additions in 24h (entities={health['entities_24h']}, "
+                  f"relations={health['relationships_24h']}, gaps={health['gaps_24h']})")
     except Exception as e:
-        log.warning(f"Could not check substrate health: {e}")
+        print(f"[{timestamp()}] Could not check substrate health: {e}")
 
     if has_high_relevance_scores():
         run_skopos_generate()           # GENERATE — Titan prompt

@@ -2,67 +2,39 @@
 
 **Fields**: Game Theory, Statistical Physics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T15:07:13.170283
-**Report Generated**: 2026-03-27T16:08:16.589666
+**Nous Timestamp**: 2026-03-28T13:38:38.304859
+**Report Generated**: 2026-03-31T14:34:54.744181
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Constraint‑Driven MaxEnt‑Nash Scorer**
+**Algorithm**  
+1. **Parsing** – Convert the prompt into a set of Boolean clauses C₁…Cₘ over propositional variables V₁…Vₙ that capture atomic facts, negations, comparatives, conditionals, and causal links (e.g., “If A then B” → ¬A ∨ B). Numeric constraints are turned into threshold literals (e.g., “score > 7” → variable highScore).  
+2. **Candidate encoding** – Each candidate answer is represented as a bit‑vector a∈{0,1}ⁿ indicating which variables it asserts true.  
+3. **Satisfiability check** – Run a lightweight DPLL SAT solver (unit propagation, pure‑literal elimination, backtracking) on the clause set C. If the solver finds a satisfying assignment s, record the set S of all satisfying assignments encountered during search (bounded by a depth limit to keep it tractable).  
+4. **Maximum‑entropy weighting** – Define a feature function f(a)=|{Cᵢ | a satisfies Cᵢ}| (number of satisfied clauses). Seek the distribution p over S that maximizes entropy −∑p log p subject to the expectation constraint ∑p f(a)=𝔼̂, where 𝔼̂ is the average clause‑satisfaction count of the prompt’s intended solution (estimated as the maximal possible satisfaction, i.e., m). Using iterative scaling (GIS) yields p(a)∝exp(λ f(a)) with λ solved by Newton‑Raphson on the dual.  
+5. **Nash‑equilibrium scoring** – Treat each candidate as a pure strategy in a symmetric game where the payoff to playing a against the population distribution p is u(a,p)=∑ₐ' p(a')·[f(a)·f(a')] (a coordination payoff that rewards agreement on satisfied clauses). The unique Nash equilibrium of this potential game is precisely the distribution p computed in step 4. The score for a candidate answer a is therefore its equilibrium probability p(a).  
 
-1. **Parsing & Proposition Extraction**  
-   - From the prompt and each candidate answer, extract atomic propositions using regex patterns for:  
-     *Negations* (`not`, `no`, `-`), *comparatives* (`greater than`, `<`, `>`), *conditionals* (`if … then`, `implies`), *causal cues* (`because`, `leads to`), *ordering* (`before`, `after`, `first`, `last`), and *numeric literals*.  
-   - Each proposition is stored as a tuple `(predicate, args, polarity)` in a NumPy structured array `props` of shape `(N,)` where `N` is the total number of distinct propositions across prompt + candidates.
+**Structural features parsed** – Boolean literals, negations, comparatives (“>”, “<”), conditionals (“if … then …”), causal cues (“because”, “therefore”), ordering relations (“before”, “after”), and numeric thresholds turned into Boolean guards.  
 
-2. **Building a SAT Matrix**  
-   - Construct a binary clause‑variable matrix `C ∈ {0,1}^{M×N}` where each row `m` encodes a logical clause derived from:  
-     *Prompt constraints* (hard clauses that must be satisfied),  
-     *Answer‑specific assertions* (soft clauses weighted by candidate).  
-   - A satisfying assignment `x ∈ {0,1}^N` corresponds to a truth‑value vector for all propositions.
+**Novelty** – The blend of SAT‑based constraint propagation, MaxEnt distribution derivation, and a coordination‑game Nash equilibrium is not present in standard answer‑scoring tools; related work appears in weighted MaxSAT and probabilistic soft logic, but the explicit equilibrium‑as‑scoring step is new.  
 
-3. **Maximum‑Entropy Weight Learning**  
-   - Define feature expectations `f_i = Σ_m C_{m,i} * w_m` where `w_m` are clause weights.  
-   - Initialize `w = zeros(M)`. Iterate (using NumPy dot products) to maximize entropy subject to matching empirical feature counts extracted from the prompt:  
-     ```
-     grad = empirical - C.T @ sigmoid(C @ w)
-     w += η * grad
-     ```  
-   - After convergence, clause probabilities are `p_m = sigmoid(C @ w)`.
-
-4. **Nash‑Equilibrium Payoff Game**  
-   - Treat each candidate answer `a_k` as a pure strategy for the “Answerer”.  
-   - The payoff to the Answerer for choosing `a_k` against a mixed strategy `σ` of the “Validator” is:  
-     ```
-     U_k(σ) = Σ_m p_m * agreement(C_{m,:}, answer_props_k)
-     ```  
-     where `agreement` is 1 if the clause is satisfied by the candidate’s proposition set, else 0.  
-   - The Validator’s payoff is the negative of the Answerer’s (zero‑sum).  
-   - Compute the mixed‑strategy Nash equilibrium via linear programming (simplex) on the payoff matrix `U` using only NumPy (`np.linalg.lstsq` for the dual feasibility check). The equilibrium probability `σ*_k` assigned to each candidate is its final score.
-
-**Structural Features Parsed**  
-Negations, comparatives, conditionals, causal connectives, temporal ordering, and explicit numeric values are the concrete syntactic patterns the regex engine extracts; they become the predicates feeding the SAT matrix.
-
-**Novelty**  
-The triple fusion — using MaxEnt to learn clause weights from prompt constraints, embedding those weights in a SAT‑based consistency check, and then solving a zero‑sum game to obtain Nash‑equilibrium scores — does not appear in existing SAT‑or‑Entropy‑based QA scorers. Prior work treats either logical consistency (SAT) or probabilistic inference (MaxEnt) in isolation, or uses heuristic similarity; the game‑theoretic aggregation step is new.
-
-**Rating**
-
-Reasoning: 7/10 — captures logical consistency and uncertainty but relies on linear approximations for equilibrium.  
-Metacognition: 5/10 — limited self‑reflection; the model does not monitor its own clause‑weight updates beyond gradient ascent.  
-Hypothesis generation: 6/10 — generates candidate truth assignments via SAT, but hypothesis space is bounded to extracted propositions.  
-Implementability: 8/10 — all components (regex, NumPy linear algebra, simplex‑style LP) are feasible with stdlib + NumPy.
+**Rating**  
+Reasoning: 8/10 — captures logical consistency and rewards answers that satisfy many constraints while remaining unbiased.  
+Metacognition: 6/10 — the method evaluates answers but does not explicitly monitor its own confidence or revise parsing strategies.  
+Hypothesis generation: 7/10 — by exploring the SAT search space it generates multiple satisfying assignments as alternative hypotheses.  
+Implementability: 9/10 — relies only on numpy for vector operations and Python’s stdlib for DPLL and iterative scaling; no external libraries needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -3,7 +3,7 @@
 **Fields**: Complex Systems, Control Theory, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:09:46.561805
-**Report Generated**: 2026-03-27T16:08:16.508668
+**Report Generated**: 2026-03-31T19:09:43.994528
 
 ---
 
@@ -69,7 +69,10 @@ Implementability: 9/10 — relies only on numpy for matrix ops and standard libr
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:53:32.530654
 
 ---
 

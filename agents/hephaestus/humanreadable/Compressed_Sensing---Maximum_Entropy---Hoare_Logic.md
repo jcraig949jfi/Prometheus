@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Statistical Physics, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:12:17.337492
-**Report Generated**: 2026-03-27T18:24:04.889840
+**Report Generated**: 2026-03-31T17:31:45.913522
 
 ---
 
@@ -74,7 +74,10 @@ Implementability: 9/10 — relies only on NumPy (ISTA, Newton, basic linear alge
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:31:05.038795
 
 ---
 

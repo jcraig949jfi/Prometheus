@@ -1,0 +1,42 @@
+{
+  "test": 8,
+  "paper": "Arrow \u2194 Map Projection",
+  "claim": "Arrow's impossibility and the Theorema Egregium share a curvature-based impossibility structure",
+  "result": "FAIL",
+  "confidence": "HIGH",
+  "evidence": "Permutohedron does NOT have uniformly positive Ollivier-Ricci curvature. n=3: 0 negative, 6 zero edges. n=4: 12 negative, 24 zero edges. The claimed curvature-based parallel between Arrow and Gauss is not supported.",
+  "curvature_stats": {
+    "mean": -0.11111111,
+    "min": -0.33333333,
+    "max": 0.0,
+    "std": 0.15713484
+  },
+  "n3_curvature": {
+    "mean": 0.0,
+    "min": 0.0,
+    "max": 0.0
+  },
+  "n4_curvature": {
+    "mean": -0.11111111,
+    "min": -0.33333333,
+    "max": 0.0
+  },
+  "n3_detail": {
+    "vertices": 6,
+    "edges": 6,
+    "all_positive": false,
+    "unique_curvatures": [
+      0.0
+    ]
+  },
+  "n4_detail": {
+    "vertices": 24,
+    "edges": 36,
+    "all_positive": false,
+    "unique_curvatures": [
+      -0.33333333,
+      0.0
+    ]
+  },
+  "implications_for_other_papers": "The Arrow-Gauss analogy is at best metaphorical, not structural. Papers claiming a shared curvature-based impossibility mechanism need revision. The impossibility in Arrow may stem from combinatorial/algebraic structure rather than differential-geometric curvature."
+}

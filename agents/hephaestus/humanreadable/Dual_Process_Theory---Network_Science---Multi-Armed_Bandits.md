@@ -3,7 +3,7 @@
 **Fields**: Cognitive Science, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T12:18:06.429472
-**Report Generated**: 2026-03-27T16:08:16.430670
+**Report Generated**: 2026-03-31T19:15:02.843534
 
 ---
 
@@ -67,7 +67,10 @@ Hypothesis generation: 5/10 — the bandit drives exploration of answer candidat
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:14:52.595529
 
 ---
 

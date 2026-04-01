@@ -3,7 +3,7 @@
 **Fields**: Neuroscience, Economics, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:37:39.028737
-**Report Generated**: 2026-03-27T16:08:16.572668
+**Report Generated**: 2026-03-31T16:29:10.591367
 
 ---
 
@@ -58,7 +58,10 @@ Implementability: 9/10 â€” All steps rely on NumPy linear algebra and standardâ€
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T16:28:42.034122
 
 ---
 

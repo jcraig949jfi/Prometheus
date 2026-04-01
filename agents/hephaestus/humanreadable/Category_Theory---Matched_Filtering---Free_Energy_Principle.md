@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Signal Processing, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:24:28.881393
-**Report Generated**: 2026-03-27T16:08:16.820262
+**Report Generated**: 2026-03-31T19:15:02.868534
 
 ---
 
@@ -62,7 +62,10 @@ Implementability: 9/10 — relies solely on numpy for matrix ops and stdlib for 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:14:32.866123
 
 ---
 

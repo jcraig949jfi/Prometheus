@@ -2,59 +2,60 @@
 
 **Fields**: Mathematics, Cognitive Science, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T15:46:11.631571
-**Report Generated**: 2026-03-26T23:57:37.446663
+**Nous Timestamp**: 2026-03-28T05:40:46.004343
+**Report Generated**: 2026-03-31T14:34:48.653263
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Functorial Load‑Emergence Scorer (FLES)**  
+**Algorithm**  
+We build a lightweight functor F that maps a parsed sentence S to a small category C whose objects are propositional nodes pᵢ (extracted via regex) and whose morphisms are implication relations pᵢ → pⱼ derived from conditionals, causals, and transitivity rules. Each node carries a Boolean truth value stored in a NumPy array T∈{0,1}ⁿ. The functor also records a load‑vector L∈ℝ³ whose components are:  
 
-1. **Parsing & Data Structure**  
-   - Input: raw prompt + candidate answer strings.  
-   - Use a fixed set of regex patterns to extract atomic propositions *pᵢ* and labeled directed edges *eᵢⱼ* representing: negation (¬), comparative (>,<,=), conditional (if p→q), causal (because/leads‑to), temporal/ordering (before/after, precedes), and equivalence.  
-   - Build a **typed directed multigraph** G = (V, E) where V = {pᵢ} and each edge carries a relation type r ∈ R (the set above). This graph is the *object* in a small category **C**; morphisms are relation‑preserving maps.
+* **Intrinsic load** = |{unique proposition types in S}| (count of distinct node labels).  
+* **Extraneous load** = number of tokens matched by a “noise” pattern (fillers, discourse markers) that do not appear in any morphism.  
+* **Germane load** = length of the longest inference chain needed to derive the candidate answer (computed via repeated squaring of the adjacency matrix A using NumPy’s matrix power, stopping when Aᵏ stabilizes).  
 
-2. **Functorial Mapping (Category Theory)**  
-   - Define a functor **F : C → Set** that sends each object pᵢ to a feature vector **vᵢ** ∈ ℝⁿ (n = |R|) where the k‑th component counts incident edges of type rₖ.  
-   - Morphisms are mapped to linear transformations (numpy matrices) that propagate edge counts along paths (e.g., a conditional edge contributes to the consequent’s vector).  
-   - The functor is implemented by repeatedly applying the adjacency matrices for each relation type, yielding a **closure** V* = F*(V) that contains all derivable propositions under the logical rules (transitivity of ordering, modus ponens for conditionals, etc.). This step is pure numpy matrix multiplication.
+Scoring a candidate answer Ans proceeds as follows:  
 
-3. **Cognitive Load Assessment**  
-   - **Intrinsic load** Lᵢ = |V| (number of base propositions).  
-   - **Extraneous load** Lₑ = count of edges whose removal does not change V* (detected via inexpensive edge‑ablation: zero‑out edge, recompute V*; if unchanged, edge is extraneous).  
-   - **Germane load** L₍g₎ = |V*| − |V| (size of the inferred closure beyond the explicit statements).  
-   - Load vectors are normalized to [0,1] using the maximum observed across all candidates.
+1. **Extract propositions** from Ans with the same regex set, yielding a truth‑assignment vector Tₐ.  
+2. **Propagate constraints**: compute the transitive closure C = (I + A + A² + … + Aᵏ) (mod 2) using Boolean matrix multiplication (NumPy dot with %2).  
+3. **Satisfaction score** = (Tₐᵀ · C · 1) / n, i.e., fraction of propositions that are forced true by the constraints.  
+4. **Load penalty** = exp(−(intrinsic + extraneous)/γ) · (germane/δ), where γ,δ are scaling constants set to the median values observed in a development set.  
+5. **Final score** = satisfaction × load penalty.  
 
-4. **Emergence & Scoring**  
-   - Compute a **consistency bonus** B = 1 if no contradictory pairs (p, ¬p) appear in V*; otherwise B = 0.  
-   - Final score S = w₁·L₍g₎ − w₂·Lₑ − w₃·Lᵢ + w₄·B, with weights (e.g., w₁=0.4, w₂=0.3, w₃=0.2, w₄=0.1) chosen so that higher germane inference and consistency raise the score while extraneous and intrinsic load penalize it.  
-   - All operations use only numpy (matrix multiplications, norms) and Python’s standard library (regex, collections).
+The emergent property is the global coherence captured by the leading eigenvalue of C (NumPy linalg.eigvals), which reflects macro‑level consistency not reducible to any single node.
 
-**Structural Features Parsed**  
-Negations, comparatives, conditionals, causal/temporal ordering relations, equivalence, and simple quantifiers (via patterns like “all”, “some”). The algorithm does not rely on shallow bag‑of‑words; it tracks how these features combine via functorial propagation.
+**Structural features parsed**  
+- Negations (`not`, `n’t`)  
+- Comparatives (`>`, `<`, `more than`, `less than`)  
+- Conditionals (`if … then …`, `unless`)  
+- Causal claims (`because`, `leads to`, `results in`)  
+- Numeric values (integers, decimals)  
+- Ordering relations (`first`, `second`, `before`, `after`, `ranked`)  
+
+Regex patterns capture these and feed them into the functor’s object/morphism construction.
 
 **Novelty**  
-While graph‑based semantic scoring, cognitive‑load metrics, and emergent consistency checks exist separately, FLES uniquely combines a *category‑theoretic functor* that formalizes propagation of relational features with *load‑based* weighting derived from Cognitive Load Theory and treats the resulting closure as an *emergent* macro‑property whose coherence drives the final score. This exact triad is not documented in current literature.
+While semantic parsers, constraint‑propagation solvers, and cognitive‑load metrics exist separately, the combination of a functorial mapping to a propositional category, explicit load‑vector computation, and an emergent eigenvalue‑based coherence score has not been reported in the literature. It integrates structural algebra, memory‑limited inference, and macro‑level coherence in a single algorithm.
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and derives non‑trivial inferences via constraint propagation.  
-Metacognition: 6/10 — approximates load awareness but lacks a true self‑monitoring mechanism.  
-Hypothesis generation: 5/10 — can propose implied propositions (the closure) but does not rank alternative hypotheses.  
-Implementability: 8/10 — relies solely on regex, numpy matrix ops, and std‑lib; straightforward to code and run.
+Reasoning: 8/10 — The algorithm performs explicit logical propagation and quantifies answer consistency, which directly measures reasoning quality.  
+Metacognition: 6/10 — Load estimation mirrors self‑regulated monitoring but lacks a reflective loop to adjust strategies online.  
+Hypothesis generation: 5/10 — The system evaluates given candidates; it does not propose new hypotheses beyond the constraint closure.  
+Implementability: 9/10 — Only NumPy and the standard library are needed; all operations are simple regex, Boolean matrix math, and eigen‑computation.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
-**Novelty**: novel
+**Novelty**: unproductive
 **High Potential**: No
 
 ---

@@ -1,0 +1,48 @@
+{
+  "test": 4,
+  "paper": "Noesis v2 \u2014 Goodhart/No-Cloning Shared Chain",
+  "claim": "Sharing the chain RANDOMIZE->INVERT->TRUNCATE between Goodhart's Law and No-Cloning Theorem is statistically significant",
+  "result": "FAIL",
+  "confidence": "HIGH",
+  "evidence": "RERUN with rebuilt depth2_matrix. R->I->T chain present in 148/246 = 60.2% of hubs. R->I confidence: {'LOW': 144, 'MEDIUM': 4}. I->T confidence: {'LOW': 147, 'MEDIUM': 11}. Null-model p(two hubs share chain) = 0.361954. After Bonferroni for 729 chains: p = 1.000000. Goodhart in depth2 R->I->T set: True. No-Cloning in depth2 R->I->T set: False. Chain found through targeted depth-3 probing only (depth3_probes table, unchanged). Sharing this chain remains unremarkable even with differentiated confidence profiles.",
+  "details": {
+    "total_hubs": 246,
+    "n_hubs_R_I": 148,
+    "n_hubs_I_T": 158,
+    "n_hubs_both_pairs": 148,
+    "p_R_I": 0.6016,
+    "p_I_T": 0.6423,
+    "p_chain_empirical": 0.6016,
+    "p_chain_independent": 0.3864,
+    "p_two_hubs_share": 0.361954,
+    "bonferroni_factor": 729,
+    "p_bonferroni": 1.0,
+    "expected_pairs_by_chance": 4499.5,
+    "goodhart_in_depth2_RIT": true,
+    "nocloning_in_depth2_RIT": false,
+    "ri_confidence_distribution": {
+      "LOW": 144,
+      "MEDIUM": 4
+    },
+    "it_confidence_distribution": {
+      "LOW": 147,
+      "MEDIUM": 11
+    },
+    "depth3_RIT_probes": [
+      {
+        "probe_id": "P1A",
+        "hub_id": "IMPOSSIBILITY_GOODHARTS_LAW",
+        "verdict": "MATCHED"
+      },
+      {
+        "probe_id": "P1B",
+        "hub_id": "IMPOSSIBILITY_NO_CLONING_THEOREM",
+        "verdict": "MATCHED"
+      }
+    ],
+    "rebuild_note": "depth2_matrix rebuilt from source evidence. Confidence profiles now differentiated but R->I->T chain prevalence remains high."
+  },
+  "changed_from_previous": true,
+  "previous_result": "FAIL",
+  "implications_for_other_papers": "The R->I->T chain has a high depth-2 base rate even with the rebuilt matrix. After Bonferroni correction for 729 possible depth-3 chains, the Goodhart/No-Cloning shared chain remains statistically unremarkable. Cross-domain structural isomorphisms in Noesis v2 should be tested with similar null models."
+}

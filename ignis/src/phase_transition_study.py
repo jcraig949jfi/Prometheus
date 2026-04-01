@@ -124,9 +124,9 @@ ORDINAL_TRAPS = [
     },
     {
         "name": "Counting Fence Posts",
-        "prompt": "A straight fence has 10 sections. How many fence posts are there? Answer: 11 or 10?",
-        "target_token": "11",
-        "anti_token": "10",
+        "prompt": "A straight fence has 10 sections. Are there more than 10 fence posts? Answer: Yes or No?",
+        "target_token": "Yes",
+        "anti_token": "No",
     },
     {
         "name": "Meeting Point",
@@ -178,15 +178,15 @@ ORDINAL_TRAPS = [
     },
     {
         "name": "Rank Reversal",
-        "prompt": "In a class of 30, you rank 12th from the top. What is your rank from the bottom? Answer: 19 or 18?",
-        "target_token": "19",
-        "anti_token": "18",
+        "prompt": "In a class of 30, you rank 12th from the top. Is your rank from the bottom odd or even? Answer: Odd or Even?",
+        "target_token": "Odd",
+        "anti_token": "Even",
     },
     {
         "name": "Pages in Book",
-        "prompt": "A book is open. The two visible page numbers add up to 47. Are the pages 23 and 24, or 22 and 25? Answer: 23 or 22?",
-        "target_token": "23",
-        "anti_token": "22",
+        "prompt": "A book is open. The two visible page numbers add up to 47. Is the left page odd or even? Answer: Odd or Even?",
+        "target_token": "Odd",
+        "anti_token": "Even",
     },
     {
         "name": "Round Robin Games",

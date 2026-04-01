@@ -3,7 +3,7 @@
 **Fields**: Signal Processing, Theoretical Neuroscience, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T13:35:18.022899
-**Report Generated**: 2026-03-27T16:08:16.481669
+**Report Generated**: 2026-03-31T19:23:00.543011
 
 ---
 
@@ -61,7 +61,10 @@ Implementability: 9/10 — relies only on Python’s `re`, `itertools`, and NumP
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:21:52.722282
 
 ---
 

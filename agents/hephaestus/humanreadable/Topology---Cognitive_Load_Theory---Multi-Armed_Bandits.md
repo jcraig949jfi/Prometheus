@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Cognitive Science, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T20:40:36.917948
-**Report Generated**: 2026-03-27T23:28:38.554718
+**Report Generated**: 2026-03-31T16:29:10.649366
 
 ---
 
@@ -72,7 +72,10 @@ Implementability: 9/10 — only `numpy` (for basic stats) and the standard libra
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T16:27:19.497330
 
 ---
 

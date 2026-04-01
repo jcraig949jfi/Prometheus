@@ -2,65 +2,42 @@
 
 **Fields**: Information Science, Economics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T19:21:57.633168
-**Report Generated**: 2026-03-27T06:37:39.555711
+**Nous Timestamp**: 2026-03-29T00:01:53.743012
+**Report Generated**: 2026-03-31T14:34:43.516248
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Causal‑Mechanism Sensitivity Scorer (CMSS)**  
+**Algorithm**  
+We build a lightweight causal‑graph scorer that treats each sentence in the prompt and each candidate answer as a set of propositions \(P_i\).  
+1. **Parsing** – Using regex we extract:  
+   * atomic propositions (noun‑phrase + verb‑phrase),  
+   * negation flags,  
+   * comparative operators (>, <, =, ≠),  
+   * conditional antecedent/consequent markers (“if … then …”, “because”),  
+   * numeric literals, and  
+   * ordering cues (“more than”, “less than”).  
+   Each proposition becomes a node \(v_i\) with a feature dict \(\{polarity\in\{+1,-1\}, type\in\{causal,comparative,conditional\}\}\).  
+2. **Edge construction** – For every causal cue (“X leads to Y”, “X causes Y”) we add a directed edge \(e_{ij}\) from \(v_i\) to \(v_j\). Edge weight \(w_{ij}\) is initialized to 1.0.  
+3. **Mechanism‑design weighting** – We treat each edge as a “rule” that agents (the answer writer) would like to satisfy. Incentive‑compatibility is approximated by a penalty term \(\lambda\) that grows with the number of alternative edges leaving the same source (more ways to game the rule). We compute \(w_{ij} \leftarrow w_{ij}/(1+\lambda\cdot outdeg(i))\).  
+4. **Sensitivity analysis** – We assemble the adjacency matrix \(W\) (numpy ndarray). Small perturbations \(\Delta W\) (e.g., ±0.1 on each weight) simulate model misspecification. The spectral radius \(\rho(W)\) gives an upper bound on output change; we derive a robustness factor \(r = 1/(1+\rho(W))\) and multiply all edge weights by \(r\).  
+5. **Constraint propagation** – Using Floyd‑Warshall on the boolean reachability matrix we compute the transitive closure \(C\). Logical rules (modus ponens: if \(A\rightarrow B\) and \(A\) asserted then \(B\) must hold) are checked by scanning the closure for mismatches between asserted propositions and implied ones. Violations increment a counter \(v\).  
+6. **Scoring** – Let \(E\) be the total number of edges. The final score for a candidate answer is  
+\[
+S = \frac{E - v}{E}\times r,
+\]  
+computed purely with numpy array operations and Python sets/dicts.
 
-1. **Parsing phase** – The prompt and each candidate answer are tokenised with a lightweight regex‑based parser that extracts:  
-   - *Atomic propositions* (e.g., “X increases Y”, “Policy A reduces cost”) as nodes labelled with a polarity (+1 for increase, –1 for decrease, 0 for neutral).  
-   - *Conditional edges* (“if A then B”) stored as directed arcs with a weight w₁ = 1 (strength of the implication).  
-   - *Quantitative clauses* (“by ≈ 0.3 units”) parsed into a numeric attribute δ attached to the source node.  
-   - *Negations* flip the polarity of the attached node.  
-   - *Ordering relations* (“X > Y”) become a special edge type ord with weight w₂ = 1.  
+**Structural features parsed** – negations, comparatives, conditionals, numeric values, explicit causal claims (“because”, “leads to”), ordering relations (“more than”, “less than”), and conjunction/disjunction markers.
 
-   All extracted structures are stored in two NumPy arrays:  
-   - **Nodes**: shape (n, 3) → [id, polarity, δ] (δ = 0 if absent).  
-   - **Edges**: shape (m, 4) → [src, dst, type, weight] where type∈{causal, conditional, ord}.  
+**Novelty** – While causal graph scoring and sensitivity analysis appear separately in robustness‑testing literature, coupling them with mechanism‑design inspired incentive weights to evaluate answer consistency is not standard in QA or reasoning‑evaluation tools; most existing approaches rely on lexical similarity or shallow entailment checks.
 
-2. **Causal inference layer** – Using Pearl’s do‑calculus restricted to linear additive models, we compute the *total effect* of each node on a designated outcome node (identified from the prompt, e.g., “student performance”). For each node i we solve:  
-
-   \[
-   \tau_i = \sum_{j\in\text{An}(i)} \bigl(\text{polarity}_j \cdot \delta_j \cdot \prod_{e\in path_{j\to i}} w_e \bigr)
-   \]
-
-   where the product traverses only causal and conditional edges; ord edges are ignored for effect magnitude but later used for consistency checks. This yields a vector **τ** of size n.
-
-3. **Mechanism‑design layer** – We treat each candidate answer as a proposed *mechanism* (set of asserted edges). Incentive compatibility is approximated by checking whether the answer’s asserted causal structure would *maximise* the expected total effect on the outcome under the assumption that the answerer seeks to align with the prompt’s implied goal. Concretely, we compute a *mechanism score*:  
-
-   \[
-   M = \frac{1}{|E_{ans}|}\sum_{e\in E_{ans}} \bigl| \tau_{src(e)} - \tau_{dst(e)} \bigr|
-   \]
-
-   Low M indicates the answer’s edges are consistent with the inferred effect gradients.
-
-4. **Sensitivity‑analysis layer** – To penalise fragile answers, we perturb each numeric δ by ±ε (ε = 0.05) and recompute τ, then measure the variance of M across perturbations:  
-
-   \[
-   S = \operatorname{Var}_{\delta\pm\varepsilon}\bigl(M(\delta)\bigr)
-   \]
-
-   The final score for an answer is  
-
-   \[
-   \text{Score}= \underbrace{\bigl(1 - \frac{|M-M_{opt}|}{M_{opt}+1}\bigr)}_{\text{mechanism fit}} \times \underbrace{\exp(-\lambda S)}_{\text{robustness}}
-   \]
-
-   with λ = 10. Scores lie in \[0,1\]; higher means the answer correctly captures causal mechanisms, aligns with the prompt’s goal, and is insensitive to small numeric changes.
-
-**Structural features parsed** – negations (flip polarity), comparatives (“more than”, “less than”) → ordinal edges, conditionals (“if … then …”) → causal/conditional arcs, numeric modifiers (“by ≈ 0.2”) → δ attributes, explicit causal verbs (“causes”, “leads to”) → causal edges, and quantitative outcomes identified via cue words (“score”, “performance”, “cost”).
-
-**Novelty** – The combination mirrors existing work: causal effect estimation via do‑calculus (Pearl), mechanism‑design incentive checks (Nisan et al.), and local sensitivity analysis (Saltelli). However, integrating them into a single scoring pipeline that operates on shallow‑parsed text and uses only NumPy/stdlib is not described in the literature; thus the approach is novel in its *engineered‑for‑evaluation* formulation.
-
-**Ratings**  
-Reasoning: 8/10 — captures causal direction, mechanism consistency, and robustness via explicit mathematical operations.  
-Metacognition: 6/10 — the algorithm can self‑diagnose high sensitivity (large S) but does not reflect on its own parsing limits.  
-Hypothesis generation: 5/10 — it evaluates given hypotheses but does not generate new causal graphs beyond those present in the text.  
-Implementability: 9/10 — relies solely on regex, NumPy linear algebra, and basic loops; no external libraries or training required.
+**Rating**  
+Reasoning: 8/10 — captures causal and logical structure but lacks deep temporal or probabilistic reasoning.  
+Metacognition: 6/10 — the model does not explicitly monitor its own uncertainty beyond the sensitivity factor.  
+Hypothesis generation: 7/10 — alternative edge weightings implicitly generate competing causal hypotheses.  
+Implementability: 9/10 — relies only on numpy for matrix ops and Python stdlib for parsing, meeting the constraint.
 
 ### Scores
 
@@ -68,9 +45,9 @@ Implementability: 9/10 — relies solely on regex, NumPy linear algebra, and bas
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

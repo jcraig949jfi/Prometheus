@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T23:02:14.678710
-**Report Generated**: 2026-03-27T23:28:38.627718
+**Report Generated**: 2026-03-31T17:31:45.946522
 
 ---
 
@@ -71,7 +71,10 @@ Implementability: 9/10 — relies only on numpy for vector ops and random module
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:30:10.078778
 
 ---
 

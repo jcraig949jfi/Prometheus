@@ -2,48 +2,55 @@
 
 **Fields**: Physics, Neuroscience, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T22:26:57.408907
-**Report Generated**: 2026-03-27T06:37:40.945712
+**Nous Timestamp**: 2026-03-29T02:08:11.413368
+**Report Generated**: 2026-03-31T20:02:48.046863
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing** – Use regex to extract atomic propositions from the prompt and each candidate answer. Each proposition is stored as a dict with keys: `type` (negation, comparative, conditional, causal, numeric, quantifier), `args` (list of terms or numbers), and `weight` initialized to 1.0.  
-2. **Graph construction** – Build a directed graph where nodes are propositions and edges represent logical relations inferred from cue words (e.g., “if … then …” → conditional edge, “because” → causal edge, “>”/“<” → comparative edge).  
-3. **Coarse‑graining (Renormalization)** – Iteratively cluster nodes whose `type` and argument overlap (Jaccard similarity > θ). Replace each cluster with a super‑node whose `weight` is the mean of its members and whose `type` is the most frequent in the cluster. This reduces the graph to a scale‑dependent description.  
-4. **Neuromodulatory gain** – Compute a global gain factor g = sigmoid(α·S + β), where S is a state score derived from the presence of modulation cues (e.g., “possibly”, “doubt”, “certainly”). Multiply every node’s `weight` by g; increase g for certainty cues, decrease for doubt cues.  
-5. **Sensitivity analysis** – For each proposition, generate a set of perturbed copies: flip negation, increment/decrement numeric values by ±1, swap antecedent/consequent of conditionals, reverse comparatives. Run steps 2‑4 on each perturbed graph to obtain a score s_i. Compute the mean μ and standard deviation σ of the candidate’s base score s₀ and all s_i. Final score = μ − λ·σ (λ = 0.5 penalizes instability).  
-6. **Selection** – Rank candidates by final score; highest wins.
+We build a multi‑scale scoring pipeline that treats a candidate answer as a hierarchical signal.  
 
-**Structural features parsed**  
-- Negations (“not”, “no”)  
-- Comparatives (“more than”, “less than”, “−”, “+”)  
-- Conditionals (“if … then …”, “unless”)  
-- Causal claims (“because”, “therefore”, “leads to”)  
-- Numeric values and units  
-- Ordering relations (“greater than”, “less than or equal to”)  
-- Quantifiers (“all”, “some”, “none”)  
+1. **Data structures**  
+   * `tokens` – list of word tokens (regex `\w+|\S`).  
+   * `spans` – list of (start,end) indices for noun‑phrase, verb‑phrase, and clause chunks obtained via shallow regex patterns (e.g., `\b(if|when|because)\b.*?[\.]`).  
+   * `features[scale]` – dict per scale (`token`, `span`, `sentence`) mapping feature names to binary/int values:  
+     - `neg` (presence of “not”, “no”, “never”)  
+     - `cmp` (comparative tokens: “more”, “less”, “>”, “<”)  
+     - `cond` (conditional markers: “if”, “unless”)  
+     - `caus` (causal markers: “because”, “leads to”, “results in”)  
+     - `ord` (ordering markers: “first”, “then”, “before”, “after”)  
+     - `num` (numeric value extracted with `\d+(\.\d+)?`)  
+     - `modal` (modal verbs: “may”, “might”, “should”, “usually”)  
 
-**Novelty**  
-While hierarchical coarse‑graining appears in multi‑scale language models and sensitivity analysis is used for robustness testing, coupling them with a neuromodulatory gain mechanism that dynamically weights propositions based on contextual certainty cues is not present in existing NLP evaluation tools. The approach resembles Bayesian model averaging with gain‑controlled priors, but the specific algorithmic pipeline is novel.
+2. **Operations**  
+   * **Base constraint score** – For each scale, compute a logical satisfaction score `S_base[scale]` = Σ w_i * f_i where `w_i` are fixed weights for required reasoning patterns (e.g., a correct answer must contain a conditional if the prompt does). This mimics constraint propagation (modus ponens, transitivity) by checking that extracted spans satisfy the prompt’s logical skeleton.  
+   * **Sensitivity analysis** – For each feature `f_j` in a scale, create a perturbed copy where `f_j` is toggled (negation flipped, numeric ±1, comparative reversed). Re‑compute `S_base` → `S_base^j`. Sensitivity `σ_j = |S_base - S_base^j|`.  
+   * **Neuromodulatory gain** – Compute a gain factor `g = σ(α * Σ modal_k)` where σ is the logistic function, α a constant (e.g., 0.5), and the sum counts modal verbs that indicate uncertainty. This gain scales the influence of features: `weight_j = g * (1 + β * f_j)` with β a small constant (0.2).  
+   * **Final score** – `Score = Σ_scale Σ_j weight_j * σ_j`. Higher scores indicate answers whose logical structure is both robust to perturbations (low sensitivity) and appropriately modulated by contextual certainty cues.
 
-**Rating**  
-Reasoning: 7/10 — captures logical structure and propagates uncertainty, but still relies on shallow regex parsing.  
-Metacognition: 6/10 — gain factor provides a simple confidence adjustment; no explicit self‑monitoring of reasoning steps.  
-Hypothesis generation: 5/10 — generates perturbations for sensitivity, not new explanatory hypotheses.  
-Implementability: 8/10 — uses only regex, numpy for array ops, and Python stdlib; no external dependencies.
+3. **Structural features parsed**  
+   Negations, comparatives, conditionals, causal claims, ordering relations, numeric values, quantifiers, and modal verbs. All are extracted via deterministic regex/shallow parsing, enabling the sensitivity and gain steps.
+
+4. **Novelty**  
+   While renormalization‑style multi‑scale analysis, sensitivity analysis, and neuromodulatory gain have appeared separately in physics, neuroscience, and robustness testing, their joint use as a pure‑algorithmic scoring mechanism for textual reasoning answers has not been reported in the NLP literature. Existing tools either rely on surface similarity or isolated logical reasoners; this combination integrates scale‑dependent feature robustness with context‑dependent gain control in a single numpy‑implementable pipeline.
+
+**Ratings**  
+Reasoning: 8/10 — The algorithm directly evaluates logical constraint satisfaction and robustness, capturing core reasoning steps.  
+Metacognition: 6/10 — Gain modulation reflects uncertainty awareness but lacks explicit self‑monitoring of the scoring process itself.  
+Hypothesis generation: 5/10 — Sensitivity analysis probes alternative worlds, yet the system does not propose new hypotheses beyond perturbation testing.  
+Implementability: 9/10 — All components use regex, numpy arrays, and basic arithmetic; no external libraries or neural models are required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No
@@ -71,7 +78,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T20:02:10.646804
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Theoretical Neuroscience, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T17:53:15.839384
-**Report Generated**: 2026-03-27T18:24:05.283831
+**Report Generated**: 2026-03-31T18:47:45.195215
 
 ---
 
@@ -67,7 +67,10 @@ Implementability: 8/10 — relies only on numpy (matrix ops, soft‑thresholding
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:46:37.434214
 
 ---
 

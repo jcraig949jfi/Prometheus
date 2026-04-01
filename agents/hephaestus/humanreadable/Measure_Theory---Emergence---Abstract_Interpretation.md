@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Complex Systems, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:57:47.723730
-**Report Generated**: 2026-03-27T16:08:16.152674
+**Report Generated**: 2026-03-31T17:15:56.312562
 
 ---
 
@@ -70,7 +70,10 @@ Implementability: 9/10 — All components (regex parsing, interval arithmetic, c
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:15:00.777166
 
 ---
 

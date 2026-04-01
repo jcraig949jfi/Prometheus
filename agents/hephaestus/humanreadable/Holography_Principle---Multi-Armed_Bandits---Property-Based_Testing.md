@@ -3,7 +3,7 @@
 **Fields**: Physics, Game Theory, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T22:46:36.086308
-**Report Generated**: 2026-03-27T23:28:38.618718
+**Report Generated**: 2026-03-31T14:34:55.435075
 
 ---
 
@@ -72,7 +72,10 @@ Implementability: 8/10 — Only regex parsing, numpy arithmetic, and plain Pytho
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-28T07:31:03.639183
 
 ---
 

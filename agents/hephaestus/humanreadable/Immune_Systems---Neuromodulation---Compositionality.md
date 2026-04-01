@@ -3,7 +3,7 @@
 **Fields**: Biology, Neuroscience, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:10:58.954800
-**Report Generated**: 2026-03-27T18:24:05.296830
+**Report Generated**: 2026-03-31T17:31:45.938523
 
 ---
 
@@ -63,7 +63,10 @@ Implementability: 9/10 — relies only on regex, stack operations, and NumPy; st
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:29:42.623466
 
 ---
 

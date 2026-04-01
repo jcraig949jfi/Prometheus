@@ -1,0 +1,94 @@
+{
+  "test": 3,
+  "paper": "Noesis v2 \u2014 Convergent Evolution of MSC",
+  "claim": "Five geographically isolated traditions independently discovered Modular Symmetric Composition",
+  "result": "FAIL",
+  "confidence": "HIGH",
+  "evidence": "Only 2/5 claimed traditions formally satisfy the MSC definition (SYMMETRIZE + COMPOSE + third op). Navajo Weaving and Japanese Sangaku have SYMMETRIZE but lack COMPOSE in their enriched_primitive_vector. Aboriginal Kinship has COMPOSE but lacks SYMMETRIZE. The formal encoding does not support the convergence claim. MSC base rate = 9/153 = 0.059.",
+  "details": {
+    "total_traditions": 153,
+    "msc_like_count": 9,
+    "msc_prevalence": 0.0588,
+    "claimed_traditions": [
+      {
+        "system_id": "ABORIGINAL_KINSHIP_ALGEBRA",
+        "in_db": true,
+        "tradition": "Aboriginal Australian",
+        "region": "Australia",
+        "vector": {
+          "MAP": 1.0,
+          "COMPOSE": 0.1,
+          "REDUCE": 0.091
+        },
+        "has_symmetrize": false,
+        "has_compose": true,
+        "has_third_op": true,
+        "msc_like": false
+      },
+      {
+        "system_id": "ISLAMIC_MUQARNAS_GEOMETRY",
+        "in_db": true,
+        "tradition": "Islamic",
+        "region": "Middle East",
+        "vector": {
+          "COMPOSE": 1.0,
+          "SYMMETRIZE": 1.0,
+          "EXTEND": 0.1
+        },
+        "has_symmetrize": true,
+        "has_compose": true,
+        "has_third_op": false,
+        "msc_like": false
+      },
+      {
+        "system_id": "NAVAJO_SYMMETRY_WEAVING",
+        "in_db": true,
+        "tradition": "Navajo",
+        "region": "North America",
+        "vector": {
+          "SYMMETRIZE": 1.0
+        },
+        "has_symmetrize": true,
+        "has_compose": false,
+        "has_third_op": false,
+        "msc_like": false
+      },
+      {
+        "system_id": "ANTIKYTHERA_MECHANISM",
+        "in_db": true,
+        "tradition": "Ancient Greek",
+        "region": "Greece",
+        "vector": {
+          "SYMMETRIZE": 1.0,
+          "COMPOSE": 0.8,
+          "MAP": 0.8
+        },
+        "has_symmetrize": true,
+        "has_compose": true,
+        "has_third_op": true,
+        "msc_like": true
+      },
+      {
+        "system_id": "TSHOKWE_SONA",
+        "in_db": true,
+        "tradition": "Central African \u2014 Tshokwe",
+        "region": "Angola",
+        "vector": {
+          "COMPOSE": 1.0,
+          "MAP": 0.5,
+          "SYMMETRIZE": 0.5
+        },
+        "has_symmetrize": true,
+        "has_compose": true,
+        "has_third_op": true,
+        "msc_like": true
+      }
+    ],
+    "n_claimed_msc_formal": 2,
+    "n_claimed_sym_compose": 3,
+    "p_hypergeometric": 1.9264702098215028e-07,
+    "p_independent": 7.042962777237426e-07,
+    "geographically_isolated": true
+  },
+  "implications_for_other_papers": "The formal MSC convergence claim requires re-examination: the enriched_primitive_vectors for 3 of the 5 traditions do not encode both SYMMETRIZE and COMPOSE. Either the vector encoding is incomplete (domain experts should re-annotate), or the claim should be narrowed to traditions where both operations are explicitly documented. Muqarnas and Tshokwe Sona do satisfy MSC formally and their geographic separation remains striking."
+}

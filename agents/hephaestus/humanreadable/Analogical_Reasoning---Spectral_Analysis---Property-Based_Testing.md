@@ -2,58 +2,39 @@
 
 **Fields**: Cognitive Science, Signal Processing, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T01:24:22.497296
-**Report Generated**: 2026-03-27T02:16:36.597767
+**Nous Timestamp**: 2026-03-28T00:54:40.492532
+**Report Generated**: 2026-03-31T14:34:45.794189
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Relational‑Spectral Property Scorer (RSPS)**  
+**Algorithm:**  
+1. **Parse** each candidate answer and a reference answer into a directed labeled graph \(G=(V,E)\).  
+   - Nodes \(V\) are noun phrases or numeric constants extracted with regex patterns for entities, numbers, and units.  
+   - Edges \(E\) encode relational predicates: negation (“not X”), comparative (“X > Y”, “X is less than Y”), conditional (“if X then Y”), causal (“X causes Y”), and ordering (“X before Y”, “X follows Y”). Each edge stores a predicate type and, when applicable, a numeric weight (e.g., the magnitude in a comparative).  
+2. **Spectral embedding:**  
+   - Build the adjacency matrix \(A\) (binary for predicate presence, weighted for numeric edges).  
+   - Compute the normalized Laplacian \(L = I - D^{-1/2} A D^{-1/2}\) where \(D\) is the degree matrix (using `numpy`).  
+   - Extract the first \(k\) eigenvectors (smallest non‑zero eigenvalues) to obtain a \(|V|\times k\) spectral embedding \(Z\). This captures the global relational structure while being invariant to node ordering.  
+3. **Analogical mapping (structure‑matching):**  
+   - Treat the embeddings of the candidate and reference graphs as point sets.  
+   - Solve a linear sum assignment problem (Hungarian algorithm, `scipy.optimize.linear_sum_assignment` is avoided; we implement a simple O(n³) version using only `numpy` and `itertools`) to find the optimal bijection \(\pi\) between nodes that minimizes the Euclidean distance \(\|Z_c - Z_r[\pi]\|_F\).  
+   - The resulting mismatch score \(S_{struct} = \frac{1}{|V|}\|Z_c - Z_r[\pi]\|_F\) quantifies how well the relational structure transfers.  
+4. **Property‑based testing‑style perturbation:**  
+   - Define a set of generative properties for the reference graph: (a) flip negation edges, (b) add/subtract a small epsilon to numeric weights, (c) swap comparable entities, (d) reverse conditional direction.  
+   - Using a simple shrinking loop (property‑based testing core), generate \(N\) mutant graphs, each time re‑computing \(S_{struct}\) against the candidate.  
+   - The final score is \(S = 1 - \frac{|\{m : S_{struct}(m) < S_{struct}(ref)\}|}{N}\); i.e., the proportion of mutants that are **not** closer to the candidate than the original reference. Lower \(S\) means the candidate preserves the reference’s relational structure under perturbations.  
 
-1. **Parsing & Graph Construction**  
-   - Tokenize the prompt and each candidate answer with a simple regex‑based tokenizer that extracts:  
-     * atomic propositions (noun phrases, verbs)  
-     * comparatives (`>`, `<`, `>=`, `<=`, `equal to`)  
-     * conditionals (`if … then …`, `unless`)  
-     * negations (`not`, `no`, `never`)  
-     * causal markers (`because`, `leads to`, `results in`)  
-     * numeric literals (integers, floats)  
-   - Build a directed labeled graph **G** where nodes are propositions and edges are labeled relations (e.g., `greater_than`, `causes`, `implies`).  
-   - Attach a numeric weight to each edge: for comparatives, weight = normalized difference of the extracted numbers; for conditionals/causals, weight = 1.0; for negations, weight = –1.0 (to flip truth value).
+**Structural features parsed:** negations, comparatives (> , < , ≥ , ≤), conditionals (if‑then), causal verbs (causes, leads to), ordering/temporal relations (before, after, follows), numeric constants with units, and conjunctive/disjunctive connectives that affect edge polarity.
 
-2. **Analogical Mapping (Structure Mapping)**  
-   - For each candidate answer, compute a *structure‑match score* by finding the maximum‑weight subgraph isomorphism between the prompt graph **Gₚ** and the candidate graph **Gₖ** using a VF2‑like backtracking search limited to numpy arrays for adjacency matrices.  
-   - The match score **Sₐ** = Σ (edge_weightₚ * edge_weightₖ) over matched edges, normalized by the sum of prompt edge weights.
+**Novelty:** While graph‑based semantic similarity and spectral graph kernels exist, coupling them with a property‑based mutational shrinking process to evaluate analogical transfer is not present in standard NLP evaluation suites. The closest analogues are SEMBL (graph kernels) and mutation testing, but their combination for reasoning answer scoring is unique.
 
-3. **Spectral Analysis of Relational Signals**  
-   - Treat the adjacency matrix **Aₚ** of the prompt as a time‑series by flattening its upper‑triangular entries into a vector **vₚ**.  
-   - Compute the periodogram **Pₚ** = |FFT(vₚ)|² using numpy.fft.  
-   - Do the same for each candidate to get **Pₖ**.  
-   - Compute spectral similarity **Sₛ** = 1 – (‖Pₚ – Pₖ‖₂ / ‖Pₚ‖₂ + ‖Pₖ‖₂). This captures how the distribution of relational strengths across frequencies (i.e., patterns of dense vs. sparse connections) aligns.
-
-4. **Property‑Based Testing‑Style Shrinking**  
-   - Define a predicate **P(Gₖ)** = (Sₐ > τ₁) ∧ (Sₛ > τ₂) where τ₁, τ₂ are thresholds (e.g., 0.6).  
-   - If **P(Gₖ)** fails, apply a shrinking routine: iteratively remove the lowest‑weight edge from **Gₖ** and recompute **Sₐ**, **Sₛ** until either the predicate passes or no edges remain.  
-   - The final shrunk score **S** = Sₐ * Sₛ (product) reflects both structural and spectral fidelity after minimal simplification.
-
-**Parsed Structural Features**  
-Negations (via edge weight sign), comparatives (numeric‑difference weighted edges), conditionals/causals (directed `implies`/`causes` edges), numeric values (used for comparative weights), ordering relations (chains of `greater_than` edges), and existence claims (presence/absence of nodes).
-
-**Novelty**  
-The combination is not directly described in existing literature. While graph‑based analogical mapping (e.g., SME) and spectral similarity of signals are known, coupling them with a property‑based testing shrink‑and‑validate loop to produce a unified scoring function is novel. No prior work uses periodograms of adjacency matrices as a similarity metric for relational reasoning, nor applies Hypothesis‑style shrinking to logical graphs.
-
-**Rating**  
-Reasoning: 7/10 — captures relational structure and frequency‑domain patterns but relies on heuristic thresholds.  
-Metacognition: 5/10 — the algorithm does not monitor its own confidence or adapt thresholds dynamically.  
-Hypothesis generation: 6/10 — shrinking explores minimal failing graphs, akin to hypothesis reduction, but lacks generative proposal of new candidates.  
-Implementability: 8/10 — uses only numpy and stdlib; graph isomorphism limited to small graphs keeps runtime feasible.  
-
----  
-Reasoning: 7/10 — captures relational structure and frequency‑domain patterns but relies on heuristic thresholds.  
-Metacognition: 5/10 — the algorithm does not monitor its own confidence or adapt thresholds dynamically.  
-Hypothesis generation: 6/10 — shrinking explores minimal failing graphs, akin to hypothesis reduction, but lacks generative proposal of new candidates.  
-Implementability: 8/10 — uses only numpy and stdlib; graph isomorphism limited to small graphs keeps runtime feasible.
+**Rating:**  
+Reasoning: 7/10 — captures relational structure via spectral embeddings and analogical mapping, but ignores deeper lexical semantics.  
+Metacognition: 5/10 — provides a self‑check via mutation sensitivity, yet offers limited explicit reflection on confidence or uncertainty.  
+Hypothesis generation: 8/10 — the property‑based mutant loop actively proposes alternative structures to test the candidate’s robustness.  
+Implementability: 9/10 — relies only on regex, NumPy linear algebra, and a custom Hungarian implementation; all feasible in pure Python/NumPy.
 
 ### Scores
 
@@ -61,9 +42,9 @@ Implementability: 8/10 — uses only numpy and stdlib; graph isomorphism limited
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Hypothesis Generation | 8/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.67** |
 
 **Novelty**: novel
 **High Potential**: No

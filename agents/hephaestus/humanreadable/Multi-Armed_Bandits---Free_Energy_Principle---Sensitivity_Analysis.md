@@ -2,50 +2,57 @@
 
 **Fields**: Game Theory, Theoretical Neuroscience, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T21:34:21.564845
-**Report Generated**: 2026-03-27T06:37:48.889942
+**Nous Timestamp**: 2026-03-28T02:26:43.708538
+**Report Generated**: 2026-03-31T17:08:00.477722
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We treat each candidate answer as an “arm” in a contextual multi‑armed bandit. The context is a vector of structural features extracted from the prompt and the answer (see §2). For each arm we maintain a Gaussian belief over its latent correctness score θᵢ ~ 𝒩(μᵢ,σᵢ²). The Free Energy Principle is applied by minimizing the variational free energy F = KL[q(θ)‖p(θ|data)] + E_q[‑log p(data|θ)], which for Gaussian q reduces to updating μᵢ and σᵢ² via a prediction‑error term δᵢ = rᵢ − μᵢ, where rᵢ is a reward computed from sensitivity analysis of the answer’s logical constraints. The update rules are:  
+We treat each candidate answer as an arm of a multi‑armed bandit. For every arm we maintain a Beta belief \((\alpha_i,\beta_i)\) over its correctness probability.  
 
-σᵢ² ← (1/σ₀² + 1/τ²)⁻¹  
-μᵢ ← σᵢ² (μ₀/σ₀² + δᵢ/τ²)  
+1. **Structural parsing** – Using only regex we extract from the prompt and each candidate a binary feature vector \(x\in\{0,1\}^K\) where each dimension corresponds to a linguistic construct: presence of negation, comparative token (“more”, “less”), conditional (“if … then”), causal cue (“because”, “leads to”), ordering relation (“before”, “after”), numeric value, and quantifier (“all”, “some”).  
 
-with prior μ₀,σ₀² and observation noise τ² (set to 0.1). The bandit selects the arm with highest Upper Confidence Bound: UCBᵢ = μᵢ + β·√(σᵢ²·log t / nᵢ), where nᵢ is the number of times arm i has been evaluated and β = √(2). After a fixed budget of T pulls (e.g., T = 5·|answers|), the final score for each answer is its posterior mean μᵢ.
+2. **Prediction error** – Compute a mismatch score \(e_i = \|x_{\text{prompt}} \oplus x_i\|_1\) (Hamming distance). This is the surprisal term: the number of structural constraints violated by the candidate.  
 
-**Structural features parsed**  
-- Numeric values and units (regex `\d+(\.\d+)?\s*[a-zA-Z%]*)`  
-- Comparatives (`>`, `<`, `≥`, `≤`, `more than`, `less than`)  
-- Ordering relations (`first`, `second`, `last`, `before`, `after`)  
-- Causal cues (`because`, `therefore`, `if … then`, `leads to`)  
-- Negations (`not`, `never`, `no`)  
-- Modal qualifiers (`might`, `could`, `must`)  
-- Entity‑type tags (via simple lookup: person, location, date)  
+3. **Free energy** – Approximate variational free energy for arm \(i\) as  
+\[
+F_i = e_i + \mathrm{KL}\bigl(\mathrm{Beta}(\alpha_i,\beta_i)\,\|\,\mathrm{Beta}(1,1)\bigr),
+\]  
+where the KL term penalizes overly confident beliefs (model complexity).  
 
-Each feature yields a binary or scalar entry in the context vector; missing features are zero‑filled.
+4. **Sensitivity analysis** – Approximate the gradient of \(F_i\) w.r.t. each feature by finite differences: flip the bit of feature \(k\) in \(x_i\), recompute \(e_i\), and set  
+\[
+s_{ik}=|F_i(x_i^{\text{flip }k})-F_i|.
+\]  
+The total sensitivity \(S_i=\sum_k s_{ik}\) measures how unstable the free energy is to small perturbations (e.g., adding/removing a negation).  
 
-**Novelty**  
-Combining a bandit exploration‑exploitation loop with variational free‑energy minimization and sensitivity‑based reward shaping is not present in existing QA scoring tools. While bandits have been used for active learning and free‑energy models appear in cognitive modeling, their joint use to refine answer posteriors via constraint‑sensitivity rewards is novel.
+5. **Bandit selection** – After \(n_i\) pulls, compute an Upper‑Confidence‑Bound style score:  
+\[
+U_i = -F_i + c\sqrt{\frac{\log N}{n_i}} + \lambda S_i,
+\]  
+where \(N=\sum_j n_j\), \(c\) balances exploration, and \(\lambda\) rewards arms whose predictions are robust to perturbations (high sensitivity indicates the arm’s score would change noticeably if the text were altered, signalling a need for more data). Choose the arm with maximal \(U_i\), observe a binary reward (1 if the candidate matches a gold answer key, else 0), and update its Beta parameters via standard Bayesian Bernoulli update.  
+
+**Structural features parsed** – negations, comparatives, conditionals, causal claims, ordering relations, numeric values, quantifiers.  
+
+**Novelty** – Pure MAB methods (UCB, Thompson) ignore structured error measures; variational free energy has been used in active‑inference bandits but rarely with explicit sensitivity to linguistic perturbations. Combining a KL‑complexity term, a deterministic structural surprisal, and a finite‑difference sensitivity bandit is not described in existing surveys, making the approach novel.  
 
 **Ratings**  
-Reasoning: 7/10 — The algorithm captures uncertainty and updates beliefs via principled error minimization, but relies on hand‑crafted feature extraction which limits deep reasoning.  
-Metacognition: 6/10 — The bandit’s confidence bounds provide a rudimentary self‑assessment of answer quality, yet no explicit monitoring of the parsing process occurs.  
-Hypothesis generation: 5/10 — Exploration (UCB) drives consideration of less‑supported answers, but hypothesis space is limited to the predefined candidate set.  
-Implementability: 9/10 — Only numpy for Gaussian updates and Python’s re/standard library for parsing are required; no external dependencies.
+Reasoning: 8/10 — The algorithm directly quantifies how well a candidate satisfies logical constraints extracted from the prompt, capturing core deductive and abductive reasoning.  
+Metacognition: 7/10 — Sensitivity terms provide an explicit estimate of uncertainty about the candidate’s robustness, enabling the system to monitor its own confidence.  
+Hypothesis generation: 6/10 — While the bandit explores alternative answers, it does not generate novel hypotheses; it only scores given candidates.  
+Implementability: 9/10 — All components (regex parsing, NumPy array ops, Beta updates, finite differences) rely solely on NumPy and the Python standard library, making implementation straightforward.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.0** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No
@@ -74,7 +81,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:06:43.251560
 
 ---
 

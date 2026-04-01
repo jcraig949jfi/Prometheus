@@ -1,0 +1,103 @@
+{
+  "exported_at": "2026-03-30T17:50:52.752834+00:00",
+  "source_table": "cross_domain_edges + abstract_compositions + composition_instances + tradition_hub_matrix",
+  "queries_used": {
+    "operator_hub_breakdown": "SELECT shared_damage_operator AS operator,\n       COUNT(*) AS edge_count\nFROM cross_domain_edges\nGROUP BY shared_damage_operator\nORDER BY shared_damage_operator",
+    "hub_count": "SELECT COUNT(*) AS hub_count FROM abstract_compositions",
+    "ci_count": "SELECT COUNT(*) AS ci_count FROM composition_instances",
+    "thm_count": "SELECT COUNT(*) AS thm_count FROM tradition_hub_matrix",
+    "thm_filled": "SELECT COUNT(*) AS filled\nFROM tradition_hub_matrix\nWHERE status IS NOT NULL AND status != ''",
+    "ci_distinct_pairs": "SELECT COUNT(DISTINCT comp_id || '||' || COALESCE(tradition,'')) AS filled_pairs\nFROM composition_instances",
+    "depth2_total": "SELECT COUNT(*) FROM depth2_matrix",
+    "depth2_filled": "SELECT COUNT(*) FROM depth2_matrix WHERE status = 'FILLED'",
+    "depth2_impossible": "SELECT COUNT(*) FROM depth2_matrix WHERE status = 'IMPOSSIBLE'"
+  },
+  "row_count": 17,
+  "rows": [
+    {
+      "operator": "COMPLETE",
+      "edge_count": 353
+    },
+    {
+      "operator": "COMPLETE(fails)",
+      "edge_count": 404
+    },
+    {
+      "operator": "COMPOSE",
+      "edge_count": 171
+    },
+    {
+      "operator": "CONCENTRATE",
+      "edge_count": 121
+    },
+    {
+      "operator": "DISTRIBUTE",
+      "edge_count": 241
+    },
+    {
+      "operator": "DUALIZE",
+      "edge_count": 20
+    },
+    {
+      "operator": "EXPAND",
+      "edge_count": 6
+    },
+    {
+      "operator": "EXTEND",
+      "edge_count": 87
+    },
+    {
+      "operator": "EXTEND+COMPOSE",
+      "edge_count": 36
+    },
+    {
+      "operator": "HIERARCHIZE",
+      "edge_count": 165
+    },
+    {
+      "operator": "INVERT",
+      "edge_count": 12
+    },
+    {
+      "operator": "PARTITION",
+      "edge_count": 116
+    },
+    {
+      "operator": "QUANTIZE",
+      "edge_count": 2
+    },
+    {
+      "operator": "RANDOMIZE",
+      "edge_count": 120
+    },
+    {
+      "operator": "REDUCE",
+      "edge_count": 3
+    },
+    {
+      "operator": "SYMMETRIZE",
+      "edge_count": 28
+    },
+    {
+      "operator": "TRUNCATE",
+      "edge_count": 450
+    }
+  ],
+  "computation": {
+    "hub_count": 236,
+    "operator_count": 9,
+    "total_possible_cells_9xhubs": 2124,
+    "actual_edge_count": 2335,
+    "edge_fill_rate": 1.0993,
+    "composition_instances_count": 4702,
+    "composition_instances_distinct_comp_tradition_pairs": 991,
+    "tradition_hub_matrix_total_rows": 3020,
+    "tradition_hub_matrix_filled_rows": 3020,
+    "tradition_hub_matrix_fill_rate": 1.0,
+    "note": "The 99.4% figure is depth2_matrix: 14680 FILLED / 14774 total = 99.36%. 94 cells are IMPOSSIBLE (structurally forbidden operator pairs).",
+    "depth2_matrix_total": 14774,
+    "depth2_matrix_filled": 14680,
+    "depth2_matrix_impossible": 94,
+    "depth2_fill_rate": 0.9936
+  }
+}

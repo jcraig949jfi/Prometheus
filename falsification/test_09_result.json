@@ -1,0 +1,110 @@
+{
+  "test": 9,
+  "paper": "Resolution Algebra",
+  "claim": "9 damage operators form closed algebra with TRUNCATE as universal sink",
+  "result": "FAIL",
+  "confidence": "HIGH",
+  "evidence": "RERUN after depth2_matrix rebuild. depth3_probes is UNCHANGED.\nPrefix (op1) distribution across 14 crack probes:\n  HIERARCHIZE: 7/14 (50.0%)\n  TRUNCATE: 4/14 (28.6%)\n  PARTITION: 2/14 (14.3%)\n  EXTEND: 1/14 (7.1%)\nTRUNCATE as prefix: 4/14 = 28.6% (need >90% for PASS)\nTRUNCATE anywhere in chain: 9/14 = 64.3%\nHIERARCHIZE dominates as prefix at 50.0%, TRUNCATE is dominant as interior op.\ndepth2_matrix rebuild: operators now show differentiated confidence profiles.\nTRUNCATE as op1 HIGH cells: 321. Max HIGH op1: INVERT with 432.\nRebuild does NOT change this result -- driven by depth3_probes (raw).",
+  "prefix_counts_depth3": {
+    "HIERARCHIZE": 7,
+    "TRUNCATE": 4,
+    "PARTITION": 2,
+    "EXTEND": 1
+  },
+  "truncate_anywhere_in_chain": 9,
+  "depth2_op1_confidence": {
+    "CONCENTRATE": {
+      "HIGH": 11,
+      "LOW": 1258,
+      "MEDIUM": 14
+    },
+    "DISTRIBUTE": {
+      "HIGH": 166,
+      "LOW": 1932,
+      "MEDIUM": 64
+    },
+    "EXTEND": {
+      "HIGH": 307,
+      "LOW": 1828,
+      "MEDIUM": 52
+    },
+    "HIERARCHIZE": {
+      "HIGH": 14,
+      "LOW": 1267,
+      "MEDIUM": 11
+    },
+    "INVERT": {
+      "HIGH": 432,
+      "LOW": 1106,
+      "MEDIUM": 35
+    },
+    "PARTITION": {
+      "HIGH": 24,
+      "LOW": 1779,
+      "MEDIUM": 62
+    },
+    "QUANTIZE": {
+      "HIGH": 293,
+      "LOW": 1277,
+      "MEDIUM": 22
+    },
+    "RANDOMIZE": {
+      "HIGH": 302,
+      "LOW": 1236,
+      "MEDIUM": 34
+    },
+    "TRUNCATE": {
+      "HIGH": 321,
+      "LOW": 1248,
+      "MEDIUM": 60
+    }
+  },
+  "depth2_op1_mean_weight": {
+    "CONCENTRATE": 1.028,
+    "DISTRIBUTE": 1.183,
+    "EXTEND": 1.305,
+    "HIERARCHIZE": 1.03,
+    "INVERT": 1.572,
+    "PARTITION": 1.059,
+    "QUANTIZE": 1.382,
+    "RANDOMIZE": 1.406,
+    "TRUNCATE": 1.431
+  },
+  "depth2_op1_high_counts": {
+    "CONCENTRATE": 11,
+    "DISTRIBUTE": 166,
+    "EXTEND": 307,
+    "HIERARCHIZE": 14,
+    "INVERT": 432,
+    "PARTITION": 24,
+    "QUANTIZE": 293,
+    "RANDOMIZE": 302,
+    "TRUNCATE": 321
+  },
+  "truncate_is_max_high_op1": false,
+  "edge_operator_frequency": {
+    "TRUNCATE": 462,
+    "COMPLETE(fails)": 404,
+    "COMPLETE": 403,
+    "DISTRIBUTE": 276,
+    "COMPOSE": 202,
+    "HIERARCHIZE": 178,
+    "PARTITION": 157,
+    "CONCENTRATE": 145,
+    "RANDOMIZE": 133,
+    "EXTEND": 90,
+    "SYMMETRIZE": 73,
+    "EXTEND+COMPOSE": 56,
+    "DUALIZE": 20,
+    "INVERT": 14,
+    "REDUCE": 9,
+    "EXPAND": 7,
+    "QUANTIZE": 3,
+    "None. (LIMIT/TRUNCATE vs DISTRIBUTE).": 1,
+    "None. (EXTEND vs DISTRIBUTE).": 1
+  },
+  "changed_from_previous": true,
+  "previous_result": "FAIL",
+  "rebuild_note": "depth2_matrix confidence profiles now differentiated. TRUNCATE has distinct confidence pattern from other operators. But the depth3 prefix distribution still shows HIERARCHIZE > TRUNCATE.",
+  "implications_for_other_papers": "TRUNCATE remains the most common damage operator in cross-domain edges, confirming its role as a frequent resolution mechanism. But it is NOT a universal sink/prefix at depth 3. HIERARCHIZE is the dominant prefix, suggesting meta-level reasoning (going up a level) is the primary resolution strategy, with TRUNCATE as the secondary operation applied within."
+}

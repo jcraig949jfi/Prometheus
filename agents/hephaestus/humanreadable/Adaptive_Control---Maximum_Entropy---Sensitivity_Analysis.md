@@ -3,7 +3,7 @@
 **Fields**: Control Theory, Statistical Physics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:50:02.942048
-**Report Generated**: 2026-03-27T16:08:16.579666
+**Report Generated**: 2026-03-31T20:02:48.264857
 
 ---
 
@@ -63,7 +63,10 @@ Implementability: 9/10 — All components (regex parsing, NumPy matrix ops, iter
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T20:02:19.748204
 
 ---
 

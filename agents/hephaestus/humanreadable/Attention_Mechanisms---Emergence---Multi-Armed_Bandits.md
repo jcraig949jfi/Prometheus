@@ -2,50 +2,46 @@
 
 **Fields**: Computer Science, Complex Systems, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T01:13:25.085120
-**Report Generated**: 2026-03-27T05:13:41.594587
+**Nous Timestamp**: 2026-03-28T16:07:08.544662
+**Report Generated**: 2026-03-31T14:34:52.926986
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Proposition extraction** – Using regex patterns we parse the prompt and each candidate answer into a list of *Proposition* objects. Each proposition stores: text, polarity (positive/negative), type (atomic, negated, comparative, conditional, causal, ordering), and a sparse feature vector **v** ∈ ℝᵈ (TF‑IDF of lemmas, one‑hot for POS tags, normalized numeric tokens).  
-2. **Attention weighting** – Let **Q** be the query vector (average of proposition vectors from the prompt). Form matrix **P** ∈ ℝⁿˣᵈ of all proposition vectors. Compute attention scores **a** = softmax(**Q**·**Pᵀ**) (numpy dot product + softmax). Each proposition receives weight wᵢ = aᵢ.  
-3. **Constraint propagation (emergent layer)** – Build a directed graph **G** where edges represent logical relations extracted from the prompt (e.g., “if A then B” → edge A→B, “X > Y” → ordering edge). Using numpy arrays for adjacency, we iteratively apply:  
-   * Modus ponens: if A→B and A is asserted (weight > τ) then infer B.  
-   * Transitivity on ordering edges.  
-   * Negation cancellation: A and ¬A reduce weight of both.  
-   After convergence we obtain a *closure* set **C** of propositions with emergent weights w′ᵢ (sum of propagated contributions).  
-4. **Multi‑armed bandit scoring** – Treat each candidate answer as an arm. For arm i, compute reward rᵢ = Σ_{p∈C∩Ansᵢ} w′ₚ − Σ_{p∈C∩¬Ansᵢ} w′ₚ (numpy sum over weighted propositions that are entailed vs. contradicted). Maintain empirical mean μᵢ and pull count nᵢ. At round t select arm i maximizing UCBᵢ = μᵢ + c·√(log t / nᵢ), update μᵢ and nᵢ with the observed rᵢ. The final score of an answer is its average μᵢ after a fixed number of pulls (e.g., 10).  
+We treat each candidate answer as an arm of a multi‑armed bandit. For every arm we maintain a micro‑feature vector **f** ∈ ℝⁿ whose entries are counts of extracted structural predicates (see §2). A question‑specific attention matrix **A** ∈ ℝⁿˣⁿ computes relevance weights **w** = softmax(**A**·**f**) (dynamic weighting → attention mechanism). The weighted feature sum **s** = **w**ᵀ**f** yields a micro‑score reflecting how well the answer satisfies local linguistic constraints.  
+
+Constraint propagation operates on a directed graph **G** built from the extracted predicates: nodes are entities/values, edges are relations (e.g., *greater‑than*, *causes*). We apply transitive closure and modus‑ponens inference to derive implied facts; inconsistencies (e.g., a node both true and false) incur a penalty **p** ∈ [0,1]. The macro‑score for an arm is **r** = **s**·(1 − **p**) – this is the emergent property: a global coherence measure that cannot be deduced from any single feature alone (emergence).  
+
+The bandit updates each arm’s estimated value **Qₐ** using the observed reward **r** and computes an Upper Confidence Bound **UCBₐ** = **Qₐ** + c·√(ln t / nₐ), where *t* is total pulls and *nₐ* pulls of arm *a*. The arm with highest **UCBₐ** is selected for scoring; after evaluation its **Qₐ** is updated with the new **r**. Over iterations the algorithm explores uncertain candidates while exploiting those with high emergent coherence, yielding a final score equal to the **Q** of the best arm.
 
 **Structural features parsed**  
-- Negations (“not”, “no”, “never”)  
-- Comparatives (“greater than”, “less than”, “as … as”)  
-- Conditionals (“if … then”, “provided that”)  
-- Causal claims (“because”, “leads to”, “results in”)  
+- Negations (not, never)  
+- Comparatives (more than, less than, equal to)  
+- Conditionals (if‑then, unless)  
 - Numeric values and units  
-- Ordering/temporal relations (“before”, “after”, “precedes”)  
-- Conjunctions/disjunctions (“and”, “or”)  
+- Causal claims (because, leads to, results in)  
+- Ordering relations (before/after, greater/less, precedence)
 
 **Novelty**  
-While attention mechanisms, bandit‑based answer selection, and logical constraint propagation each appear individually in QA literature, their tight integration—using attention to weight micro‑propositions, propagating those weights to derive emergent macro‑level consistency, and then selecting answers via a UCB bandit—has not been published as a unified scoring algorithm.  
+Attention‑weighted feature aggregation appears in neural QA; multi‑armed bandits are used for active learning and hyper‑parameter search; emergence‑style macro scoring is discussed in philosophy of complex systems. No published work combines all three to produce a dynamic, constraint‑aware scoring mechanism for symbolic reasoning answers, making the combination novel.
 
-**Rating**  
-Reasoning: 7/10 — captures logical structure and uncertainty but relies on shallow linguistic features.  
-Metacognition: 5/10 — limited self‑monitoring; bandit provides exploration but no explicit reflection on confidence.  
-Hypothesis generation: 6/10 — UCB encourages exploring alternative interpretations, yet hypothesis space is fixed by extracted propositions.  
-Implementability: 8/10 — all components are implementable with numpy and the Python standard library; regex parsing and matrix ops are straightforward.
+**Ratings**  
+Reasoning: 8/10 — captures logical consistency and uncertainty handling via principled bandit‑guided exploration.  
+Metacognition: 7/10 — the algorithm monitors its own confidence (UCB) and adapts feature relevance through attention, reflecting self‑assessment.  
+Hypothesis generation: 6/10 — generates hypotheses implicitly by exploring arms, but does not produce explicit symbolic hypotheses.  
+Implementability: 9/10 — relies only on numpy for vector ops and Python’s stdlib for regex parsing, graph traversal, and basic math; no external libraries needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
 | Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

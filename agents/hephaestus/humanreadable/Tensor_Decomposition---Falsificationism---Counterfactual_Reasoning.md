@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Philosophy, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:28:58.373827
-**Report Generated**: 2026-03-27T16:08:16.123675
+**Report Generated**: 2026-03-31T18:53:00.549600
 
 ---
 
@@ -60,7 +60,10 @@ Implementability: 8/10 — all steps use numpy loops and standard library; no ex
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:50:54.944388
 
 ---
 

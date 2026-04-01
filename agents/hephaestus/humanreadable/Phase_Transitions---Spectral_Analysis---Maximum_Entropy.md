@@ -3,7 +3,7 @@
 **Fields**: Physics, Signal Processing, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:46:15.859858
-**Report Generated**: 2026-03-27T17:21:25.288542
+**Report Generated**: 2026-03-31T18:39:47.331370
 
 ---
 
@@ -62,7 +62,10 @@ Implementability: 9/10 — relies only on regex, numpy FFT, and iterative scalin
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:38:18.126758
 
 ---
 

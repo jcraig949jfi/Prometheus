@@ -2,47 +2,68 @@
 
 **Fields**: Control Theory, Linguistics, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T03:43:31.502624
-**Report Generated**: 2026-03-27T06:37:42.677640
+**Nous Timestamp**: 2026-03-28T02:10:46.690827
+**Report Generated**: 2026-03-31T17:05:22.042400
 
 ---
 
 ## Nous Analysis
 
-The algorithm treats each candidate answer \(a_i\) as a feature vector \(f_i\in\mathbb{R}^k\) built from parsed structural predicates. A constraint matrix \(A\in\mathbb{R}^{m\times k}\) encodes expectations derived from the question and world knowledge (e.g., “if X then Y” adds a row that forces the weight of X to be ≤ weight of Y when Y is present). The vector \(b\in\mathbb{R}^m\) holds the target expectation values (initially set from prior knowledge or a small labeled set).  
+**Algorithm**  
+We treat each candidate answer as a hypothesis \(h_i\) whose truth value is a latent variable \(x_i\in[0,1]\). From the prompt and the candidate we extract a set of logical constraints \(C_k\) (e.g., “If A then B”, “A > B”, “¬A”, “A causes B”) using regular‑expression patterns that capture negations, comparatives, conditionals, causal verbs, ordering relations and numeric thresholds. Each constraint is encoded as a linear inequality \(a_k^\top x \le b_k\) where \(a_k\) is a sparse binary/real‑valued feature vector indicating which propositions appear in \(C_k\) and with what polarity (positive for antecedent, negative for consequent, etc.).  
 
-**Maximum‑Entropy step:**  
-Find weight vector \(w\) that maximizes entropy subject to \(Af = b\). The solution is the exponential‑family form \(p_i = \exp(w^\top f_i)/\sum_j \exp(w^\top f_j)\). With \(A\) full‑rank, \(w = A^\top\lambda\) where \(\lambda\) solves \(AA^\top\lambda = b\); we compute \(\lambda\) via `numpy.linalg.lstsq`.  
+We maintain a maximum‑entropy distribution over \(x\) that satisfies the expected values of the constraints:  
 
-**Adaptive‑Control step:**  
-After scoring a batch, compute prediction error \(e = \hat{y} - y\) (where \(\hat{y}\) is the softmax‑weighted sum of correctness labels). Update the expectation vector with an LMS rule: \(b \leftarrow b + \eta A^\top e\) (learning rate \(\eta\)). This drives the constraints to better match observed outcomes, analogous to a self‑tuning regulator.  
+\[
+p(x) = \frac{1}{Z(\lambda)}\exp\!\bigl(\lambda^\top A x\bigr),\qquad 
+A\in\mathbb{R}^{K\times N},\; \lambda\in\mathbb{R}^{K}
+\]
 
-**Pragmatics step:**  
-While parsing, add pragmatic feature columns to \(f_i\):  
-- Quantity maxim violation (answer length vs. expected detail).  
-- Quality flag (presence of unverifiable claims).  
-- Relation score (cosine similarity between answer topic and question topic via TF‑IDF).  
-- Manner penalty (detect ambiguous pronouns or vague quantifiers).  
-These columns enter \(A\) so the MaxEnt solution preferentially weights answers that obey Gricean maxims.  
+where \(A\) stacks the \(a_k\) rows and \(Z\) is the partition function. The expected feature counts under \(p\) are \(\mu = \mathbb{E}_p[Ax] = A\,\mathbb{E}_p[x]\).  
 
-**Structural features parsed:** negations (“not”, “no”), comparatives (“more than”, “less than”), conditionals (“if … then”), causal cues (“because”, “leads to”), numeric values (regex‑extracted numbers and units), ordering relations (“before”, “after”, “>”, “<”), quantifiers (“all”, “some”, “none”), modality (“might”, “must”).  
+Adaptive control updates the Lagrange multipliers \(\lambda\) online to reduce the mismatch between the expected counts and the observed constraint counts \(b\) (derived from the prompt). Using a simple gradient‑ascent rule (self‑tuning regulator):  
 
-**Novelty:** The combination mirrors classic MaxEnt log‑linear models (Berger et al., 1996) and adaptive filtering (Widrow‑Hoff LMS), but injects explicit pragmatic maxim features and online constraint adaptation—a configuration not commonly seen in pure‑numpy scoring tools.  
+\[
+\lambda \leftarrow \lambda + \eta\,(b - \mu)
+\]
 
-Reasoning: 7/10 — solid grounding in constrained optimization and online control, though reliance on linear constraints limits handling of deep non‑linear reasoning.  
-Metacognition: 6/10 — error‑driven constraint updates provide basic self‑monitoring, but no higher‑order reflection on strategy suitability.  
-Hypothesis generation: 6/10 — feature extraction yields diverse candidate rankings, yet hypothesis space is limited to linear combinations of hand‑crafted predicates.  
-Implementability: 8/10 — all steps use only NumPy and stdlib; matrix solves and LMS updates are straightforward to code.
+with step size \(\eta\) chosen by a diminishing schedule (e.g., \(\eta_t = \eta_0/(1+t)\)). After a few iterations (typically 5‑10) the distribution stabilizes.  
+
+The score for candidate \(h_i\) is the marginal expectation of its truth variable:  
+
+\[
+s_i = \mathbb{E}_p[x_i] = \bigl[\mathbb{E}_p[x]\bigr]_i
+\]
+
+computed via the mean‑field approximation \(\mathbb{E}_p[x] = \sigma(A^\top\lambda)\) where \(\sigma\) is the logistic function applied element‑wise (implemented with `numpy.exp`).  
+
+**Structural features parsed**  
+- Negations (`not`, `no`, `-`)  
+- Comparatives (`greater than`, `less than`, `≥`, `≤`)  
+- Conditionals (`if … then …`, `unless`)  
+- Causal verbs (`because`, `leads to`, `results in`)  
+- Ordering/temporal relations (`before`, `after`, `while`)  
+- Quantifiers (`all`, `some`, `none`)  
+- Numeric thresholds (`> 5`, `≤ 3.2`)  
+
+**Novelty**  
+Pure maximum‑entropy scoring appears in NLP (e.g., log‑linear models), and adaptive parameter tuning is standard in control theory, but coupling them with a pragmatic constraint extractor to produce a self‑tuning, constraint‑driven belief distribution for answer scoring is not present in existing lightweight evaluation tools. It thus represents a novel combination for this niche.  
+
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and uncertainty via principled inference.  
+Metacognition: 6/10 — the algorithm monitors constraint satisfaction but lacks explicit self‑reflection on its own uncertainty.  
+Hypothesis generation: 7/10 — generates graded truth values for multiple hypotheses, enabling ranking.  
+Implementability: 9/10 — relies only on regex, numpy linear algebra, and simple iterative updates; no external dependencies.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.33** |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No
@@ -71,7 +92,10 @@ GLOBAL: The final tool must strictly beat the NCD compression baseline. Use stru
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:04:13.843180
 
 ---
 

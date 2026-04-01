@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Linguistics, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T10:48:35.281778
-**Report Generated**: 2026-03-27T16:08:16.354670
+**Report Generated**: 2026-03-31T16:39:45.660699
 
 ---
 
@@ -63,7 +63,10 @@ Implementability: 9/10 — All components (regex parsing, NumPy‑based finite�
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T16:38:04.120829
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Complex Systems, Linguistics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T13:59:41.995980
-**Report Generated**: 2026-03-27T16:08:16.505668
+**Report Generated**: 2026-03-31T19:54:52.005140
 
 ---
 
@@ -63,7 +63,10 @@ Implementability: 9/10 — relies only on regex, NumPy arrays, and basic recursi
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:53:31.565508
 
 ---
 

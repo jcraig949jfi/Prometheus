@@ -3,7 +3,7 @@
 **Fields**: Biology, Economics, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:13:17.121162
-**Report Generated**: 2026-03-27T18:24:05.297830
+**Report Generated**: 2026-03-31T14:34:55.408899
 
 ---
 
@@ -56,7 +56,10 @@ Hypothesis generation: 7/10 — can explore alternative states via state‑space
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-27T23:34:50.539696
 
 ---
 

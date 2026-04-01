@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:05:35.589199
-**Report Generated**: 2026-03-27T18:24:04.886860
+**Report Generated**: 2026-03-31T17:26:29.923034
 
 ---
 
@@ -88,7 +88,10 @@ Implementability: 9/10 — All steps rely solely on NumPy (FFT, ISTA loops) and 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:24:26.939940
 
 ---
 

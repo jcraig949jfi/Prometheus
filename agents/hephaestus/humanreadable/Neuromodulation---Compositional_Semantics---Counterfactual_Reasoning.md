@@ -3,7 +3,7 @@
 **Fields**: Neuroscience, Philosophy, Philosophy
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T14:43:32.453544
-**Report Generated**: 2026-03-27T16:08:16.575667
+**Report Generated**: 2026-03-31T17:08:00.548721
 
 ---
 
@@ -45,7 +45,10 @@ Implementability: 9/10 — relies only on deterministic parsing, NumPy dot produ
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:07:35.332537
 
 ---
 

@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Philosophy, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:01:36.761675
-**Report Generated**: 2026-03-27T18:24:05.289831
+**Report Generated**: 2026-03-31T17:08:00.582720
 
 ---
 
@@ -65,7 +65,10 @@ Implementability: 9/10 — relies only on regex, basic graph operations, AC‑3 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:06:18.948827
 
 ---
 

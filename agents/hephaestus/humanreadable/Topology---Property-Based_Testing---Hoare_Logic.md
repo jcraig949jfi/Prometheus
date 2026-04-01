@@ -3,7 +3,7 @@
 **Fields**: Mathematics, Software Engineering, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T07:15:03.486810
-**Report Generated**: 2026-03-27T16:08:16.803263
+**Report Generated**: 2026-03-31T19:46:57.621432
 
 ---
 
@@ -65,7 +65,10 @@ Implementability: 6/10 — all components (regex, Floyd‑Warshall, SCC, random 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:23:55.173619
 
 ---
 

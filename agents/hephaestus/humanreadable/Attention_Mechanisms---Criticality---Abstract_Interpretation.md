@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Complex Systems, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T09:41:56.930163
-**Report Generated**: 2026-03-27T16:08:16.256673
+**Report Generated**: 2026-03-31T20:00:10.312575
 
 ---
 
@@ -69,7 +69,10 @@ Implementability: 9/10 — relies only on numpy array ops and stdlib data struct
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:58:31.993683
 
 ---
 

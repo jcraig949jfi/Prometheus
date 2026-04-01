@@ -3,7 +3,7 @@
 **Fields**: Physics, Economics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:50:04.998906
-**Report Generated**: 2026-03-27T17:21:25.501539
+**Report Generated**: 2026-03-31T18:53:00.591600
 
 ---
 
@@ -69,7 +69,10 @@ Implementability: 9/10 — relies only on regex, NumPy matrix ops, and simple lo
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:52:47.506152
 
 ---
 

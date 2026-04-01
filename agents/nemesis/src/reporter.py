@@ -200,10 +200,21 @@ def write_targeted_forge_requests(grid: MAPElitesGrid, output_path: Path):
 
     if requests:
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_path, "w", encoding="utf-8") as f:
-            for r in requests:
-                f.write(json.dumps(r) + "\n")
-        log.info("Wrote %d targeted forge requests to %s", len(requests), output_path)
+        
+        # If file exists and is locked/inaccessible, try removing it
+        if output_path.exists():
+            try:
+                output_path.unlink()
+            except (OSError, PermissionError) as e:
+                log.warning("Could not remove existing file %s: %s", output_path, e)
+        
+        try:
+            with open(output_path, "w", encoding="utf-8") as f:
+                for r in requests:
+                    f.write(json.dumps(r) + "\n")
+            log.info("Wrote %d targeted forge requests to %s", len(requests), output_path)
+        except (OSError, PermissionError) as e:
+            log.error("Failed to write targeted forge requests to %s: %s. Continuing...", output_path, e)
 
 
 def write_adversarial_results(grid: MAPElitesGrid, output_path: Path):
@@ -212,23 +223,34 @@ def write_adversarial_results(grid: MAPElitesGrid, output_path: Path):
     Tagged with provenance='adversarial' to enforce the data separation invariant.
     """
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(output_path, "w", encoding="utf-8") as f:
-        for task in grid.tasks:
-            record = {
-                "provenance": "adversarial",  # HARD TAG — never enters training
-                "prompt": task.prompt,
-                "candidates": task.candidates,
-                "correct": task.correct,
-                "category": task.category,
-                "mr_chain": task.mr_chain,
-                "complexity": task.complexity,
-                "obfuscation": task.obfuscation,
-                "disagreement": task.disagreement,
-                "tools_broken": task.tools_broken,
-                "blind_spot": task.blind_spot,
-                "lineage_depth": task.lineage_depth,
-                "tool_results": task.tool_results,
-                "timestamp": datetime.now().isoformat(),
-            }
-            f.write(json.dumps(record) + "\n")
-    log.info("Adversarial results written: %s (%d tasks)", output_path, grid.n_filled)
+    
+    # If file exists and is locked/inaccessible, try removing it
+    if output_path.exists():
+        try:
+            output_path.unlink()
+        except (OSError, PermissionError) as e:
+            log.warning("Could not remove existing file %s: %s", output_path, e)
+    
+    try:
+        with open(output_path, "w", encoding="utf-8") as f:
+            for task in grid.tasks:
+                record = {
+                    "provenance": "adversarial",  # HARD TAG — never enters training
+                    "prompt": task.prompt,
+                    "candidates": task.candidates,
+                    "correct": task.correct,
+                    "category": task.category,
+                    "mr_chain": task.mr_chain,
+                    "complexity": task.complexity,
+                    "obfuscation": task.obfuscation,
+                    "disagreement": task.disagreement,
+                    "tools_broken": task.tools_broken,
+                    "blind_spot": task.blind_spot,
+                    "lineage_depth": task.lineage_depth,
+                    "tool_results": task.tool_results,
+                    "timestamp": datetime.now().isoformat(),
+                }
+                f.write(json.dumps(record) + "\n")
+        log.info("Adversarial results written: %s (%d tasks)", output_path, grid.n_filled)
+    except (OSError, PermissionError) as e:
+        log.error("Failed to write adversarial results to %s: %s. Continuing...", output_path, e)

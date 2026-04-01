@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Cognitive Science, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T17:36:40.517476
-**Report Generated**: 2026-03-27T18:24:04.869839
+**Report Generated**: 2026-03-31T18:13:45.702628
 
 ---
 
@@ -68,7 +68,10 @@ Implementability: 9/10 — All components (regex parsing, NumPy dot‑product, f
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:12:31.858093
 
 ---
 

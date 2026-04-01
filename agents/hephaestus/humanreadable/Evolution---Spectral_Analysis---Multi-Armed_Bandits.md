@@ -3,7 +3,7 @@
 **Fields**: Biology, Signal Processing, Game Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T18:27:04.839258
-**Report Generated**: 2026-03-27T23:28:38.454718
+**Report Generated**: 2026-03-31T17:15:56.337562
 
 ---
 
@@ -85,7 +85,10 @@ Implementability: 9/10 — All steps use only NumPy (FFT, norms, array ops) and 
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T17:15:19.000887
 
 ---
 

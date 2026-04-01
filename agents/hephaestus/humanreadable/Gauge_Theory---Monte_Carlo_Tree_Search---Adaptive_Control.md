@@ -3,7 +3,7 @@
 **Fields**: Physics, Computer Science, Control Theory
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T16:55:55.429996
-**Report Generated**: 2026-03-27T17:21:25.505541
+**Report Generated**: 2026-03-31T18:47:45.192215
 
 ---
 
@@ -73,7 +73,10 @@ Hypothesis generation: 8/10 — The gauge‑transformation expansion step active
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T18:47:04.778005
 
 ---
 

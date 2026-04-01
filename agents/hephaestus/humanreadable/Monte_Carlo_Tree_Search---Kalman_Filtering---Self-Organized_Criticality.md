@@ -3,7 +3,7 @@
 **Fields**: Computer Science, Signal Processing, Complex Systems
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
 **Nous Timestamp**: 2026-03-27T09:56:11.806467
-**Report Generated**: 2026-03-27T16:08:16.262673
+**Report Generated**: 2026-03-31T19:12:22.088303
 
 ---
 
@@ -68,7 +68,10 @@ Implementability: 9/10 — All components (regex parsing, numpy linear algebra f
 
 ## Hephaestus Forge Status
 
-*Not yet attempted by Hephaestus.*
+**Status**: Scrapped
+**Reason**: api_call_failed
+
+**Forge Timestamp**: 2026-03-31T19:10:52.885741
 
 ---
 
