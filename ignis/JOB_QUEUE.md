@@ -65,6 +65,12 @@
 **Status:** Starting today.
 **Deliverable:** `trap_batteries_v3.py` with 30+ harder traps + baseline eval script.
 
+### Forge Ensemble Routing Strategy
+**Goal:** Category-routed or confidence-weighted voting so specialists don't dilute consensus on non-target categories.
+**Problem:** 4 specialists score 20% (random) on static battery — naive majority vote degrades signal. Same pattern as Ignis multi-layer Pareto: right subset > full set.
+**Approach:** Either explicit category routing (specialist only votes on its categories) or confidence gating (specialists return low confidence on non-targets, auto-downweighted).
+**Deliverable:** Ensemble evaluator that beats naive consensus on per-category accuracy.
+
 ### Cloud Experiment Plan
 **Goal:** Know exactly which cells to fill before spending cloud GPU.
 **Deliverable:** Matrix spreadsheet with filled/empty cells, priority ranking, cost estimate.
