@@ -352,7 +352,20 @@ not been previously demonstrated empirically as a searchable coordinate system."
 - Kill Test 1 SURVIVED: only 10.7% of dim-2 wt-2 are EC-proximate (selective)
 - Kill Test 2 PARTIAL KILL: non-trivial character enriched 3.3x
 - Genus-2 crossing KILLED paramodular interpretation
-- Character anomaly (3.3x enrichment in WRONG direction from Katz-Sarnak) is UNRESOLVED
+### Character Anomaly: RESOLVED (2026-04-02)
+The 3.3x enrichment is NOT a mystery. Three compounding finite-conductor mechanisms
+(Google AI Research Package 2): excised unitary ensembles, dim-2 inner twists enforcing
+pseudo-self-duality, and Deuring-Heilbronn character repulsion. At conductor <= 5000,
+N_eff = 1.3 — Katz-Sarnak asymptotic framework is mathematically silent.
+
+### North Star: What Does the Spectral Tail Encode?
+The search tool is infrastructure. The question is: what mathematical structure makes
+spectrally-similar objects cluster? Four experiments strip known mechanisms:
+1. 100+ zeros — strips truncation artifacts
+2. Dirichlet character zeros — strips Deuring-Heilbronn repulsion
+3. Conductor scaling — strips pre-asymptotic uniformity
+4. Inner twist decomposition — strips algebraic pseudo-self-duality
+Either ARI decomposes into known components (publishable) or a residual survives (the finding).
 
 ### Methodological Flaws Identified by Council Review
 - 100% bridge recovery may be tautological (same L-function = same zeros by definition)
