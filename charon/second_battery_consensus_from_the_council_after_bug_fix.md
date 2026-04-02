@@ -558,3 +558,5 @@ If zero‑based geometry passes that, it validates your representation against g
 You’ve already proven zeros carry real arithmetic signal. Now prove that signal translates into a stable, useful geometry. That’s the final crossing before you can honestly claim a “navigable search space where proximity means something arithmetically motivated.”
 
 Row the boat. The zeros earned this trip.
+
+[grumpy claude]

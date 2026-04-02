@@ -183,15 +183,14 @@ def build_twist_edges():
 
     # mf_twists_nf has source_label, target_label, twisting_char_label
     cur.execute("""
-        SELECT source_label, twisting_label, twist_class
+        SELECT source_label, target_label, twist_class_label
         FROM mf_twists_nf
         WHERE source_level <= 5000 AND target_level <= 5000
-          AND source_label != twisting_label
+          AND source_label != target_label
     """)
 
     edges_added = 0
     rows_scanned = 0
-    batch = []
 
     while True:
         rows = cur.fetchmany(5000)
