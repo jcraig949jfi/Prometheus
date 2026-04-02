@@ -58,10 +58,15 @@ _fh.setFormatter(_fmt)
 logger.addHandler(_fh)
 
 # ---------------------------------------------------------------------------
-# API
+# API — NVIDIA (primary)
 # ---------------------------------------------------------------------------
 DEFAULT_MODEL = "qwen/qwen3.5-397b-a17b"
 API_BASE = "https://integrate.api.nvidia.com/v1"
+
+# ---------------------------------------------------------------------------
+# API — Augment / auggie-sdk (fallback when NVIDIA times out)
+# ---------------------------------------------------------------------------
+AGGIE_DEFAULT_MODEL = "sonnet4.5"
 
 
 def make_client() -> OpenAI:
@@ -70,6 +75,49 @@ def make_client() -> OpenAI:
         logger.error("NVIDIA_API_KEY not set")
         sys.exit(1)
     return OpenAI(base_url=API_BASE, api_key=api_key, timeout=120.0)
+
+
+def make_aggie_client(model: str = AGGIE_DEFAULT_MODEL):
+    """Create an auggie-sdk Auggie instance for use as NVIDIA API fallback.
+
+    On Windows the CLI ships as auggie.cmd — we resolve that explicitly so
+    Python's subprocess can find it without a shell.
+
+    Returns an Auggie instance (caller must call .close() when done).
+    Raises ImportError if auggie_sdk is not installed.
+    """
+    import shutil
+    import platform
+    from auggie_sdk import Auggie  # type: ignore[import]
+
+    cli_path: str | None = None
+    if platform.system() == "Windows":
+        # Prefer the .cmd shim; fall back to bare 'auggie' (may work via PATH)
+        cli_path = shutil.which("auggie.cmd") or shutil.which("auggie")
+
+    logger.info("Creating Augment API client (model=%s, cli=%s)", model, cli_path)
+    return Auggie(model=model, timeout=180, cli_path=cli_path)
+
+
+def call_aggie_api(aggie_client, prompt: str) -> str | None:
+    """Call the Augment API via auggie-sdk. Fallback when NVIDIA call_api() returns None.
+
+    This burns Augment tokens — only invoked when --use-aggie-api is set AND
+    the primary NVIDIA call has already failed after all retries.
+
+    Returns the raw text response, or None on failure.
+    """
+    try:
+        logger.warning("NVIDIA API failed — falling back to Augment API (auggie-sdk)")
+        response = aggie_client.run(prompt, return_type=str, timeout=180)
+        if response:
+            logger.info("Augment API fallback succeeded (%d chars)", len(response))
+            return response
+        logger.warning("Augment API fallback returned empty response")
+        return None
+    except Exception as e:
+        logger.error("Augment API fallback failed: %s", e)
+        return None
 
 
 def call_api(client: OpenAI, prompt: str, model: str,
@@ -477,27 +525,31 @@ def filter_results(results: list[dict], top_n: int | None = None,
 
 
 def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
-                         run_dir: Path, max_item_retries: int = 3) -> dict | None:
+                         run_dir: Path, max_item_retries: int = 3,
+                         aggie_client=None) -> dict | None:
     """Attempt to forge an item multiple times with backoff on API failures.
-    
+
     This wrapper retries at the item level when API failures occur, giving the
     API time to recover before discarding the item. Permanent failures (bad code,
     validation errors) are not retried.
+
+    aggie_client: optional Auggie instance used as fallback inside forge_one()
+                  when the NVIDIA call fails.  Only set when --use-aggie-api is active.
     """
     import random
-    
+
     for attempt in range(max_item_retries):
-        result = forge_one(client, entry, model, run_dir)
-        
+        result = forge_one(client, entry, model, run_dir, aggie_client=aggie_client)
+
         # If successful or permanent failure, return immediately
         if not result or result["status"] == "forged":
             return result
-        
+
         # Only retry on API failures
         reason = result.get("reason", "")
         if reason != "api_call_failed":
             return result  # Permanent failure (validation, code extract, test) - don't retry
-        
+
         # API failed - wait and retry
         if attempt < max_item_retries - 1:
             wait = 2 ** attempt + random.uniform(0, 1)  # 1-2s, 2-3s, 4-5s
@@ -506,13 +558,19 @@ def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
             time.sleep(wait)
         else:
             logger.warning("Item forge exhausted retries after API failures")
-    
+
     return result
 
 
 def forge_one(client: OpenAI, entry: dict, model: str,
-              run_dir: Path) -> dict | None:
-    """Process a single Nous result through the full forge pipeline."""
+              run_dir: Path, aggie_client=None) -> dict | None:
+    """Process a single Nous result through the full forge pipeline.
+
+    aggie_client: optional Auggie instance.  When the primary NVIDIA call_api()
+                  fails (returns None) and aggie_client is provided, the same
+                  prompt is sent to the Augment API as a one-shot fallback.
+                  If the fallback also fails the item is scrapped as normal.
+    """
     names = entry.get("concept_names", [])
     score_data = entry.get("score", {})
     ratings = score_data.get("ratings", {})
@@ -531,6 +589,11 @@ def forge_one(client: OpenAI, entry: dict, model: str,
     frame = select_frame()
     prompt = build_code_gen_prompt(names, response_text, ratings, enrichment=enrichment, frame=frame)
     raw_response = call_api(client, prompt, model)
+
+    # 1b. Augment API fallback — only when NVIDIA failed AND flag is active
+    if raw_response is None and aggie_client is not None:
+        raw_response = call_aggie_api(aggie_client, prompt)
+
     if raw_response is None:
         save_scrap(None, entry, "api_call_failed", run_dir)
         return {"status": "scrap", "reason": "api_call_failed", "frame": frame}
@@ -671,8 +734,12 @@ def _load_nous(args, run_dir: Path) -> tuple[list[dict], str]:
 
 def _forge_batch(client: OpenAI, filtered: list[dict], args,
                  run_dir: Path, processed: set[str],
-                 total_count: int, shutdown_flag: list) -> tuple[list, list, int]:
-    """Process one batch of candidates. Returns (forged, scrapped, new_count)."""
+                 total_count: int, shutdown_flag: list,
+                 aggie_client=None) -> tuple[list, list, int]:
+    """Process one batch of candidates. Returns (forged, scrapped, new_count).
+
+    aggie_client: optional Auggie instance passed down to forge_one() as fallback.
+    """
     forged_results = []
     scrapped_results = []
     count = 0
@@ -685,7 +752,8 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
         if key in processed:
             continue
 
-        result = forge_one_with_retry(client, entry, args.model, run_dir, max_item_retries=3)
+        result = forge_one_with_retry(client, entry, args.model, run_dir,
+                                      max_item_retries=3, aggie_client=aggie_client)
 
         processed.add(key)
         count += 1
@@ -769,6 +837,15 @@ def main():
                         help="Re-run Coeus every N forges to update causal graph (0=disable)")
     parser.add_argument("--reports-interval", type=int, default=50,
                         help="Rebuild human-readable reports every N forges (0=disable)")
+    # ---------------------------------------------------------------------------
+    # Augment API fallback (--use-aggie-api)
+    # ---------------------------------------------------------------------------
+    parser.add_argument("--use-aggie-api", action="store_true",
+                        help="Enable Augment API (auggie-sdk) as fallback when NVIDIA call fails. "
+                             "WARNING: burns Augment tokens — use only during NVIDIA outages.")
+    parser.add_argument("--aggie-model", type=str, default=AGGIE_DEFAULT_MODEL,
+                        choices=["haiku4.5", "sonnet4.5", "sonnet4", "gpt5"],
+                        help=f"Augment model to use for fallback (default: {AGGIE_DEFAULT_MODEL})")
     args = parser.parse_args()
 
     # Default filter: --all in continuous mode, top 20 in runonce
@@ -801,6 +878,17 @@ def main():
     signal.signal(signal.SIGINT, handle_signal)
 
     client = make_client()
+
+    # Augment API fallback client — created once, reused across the run
+    aggie_client = None
+    if args.use_aggie_api:
+        try:
+            aggie_client = make_aggie_client(model=args.aggie_model)
+            logger.info("Augment API fallback ENABLED (model=%s) — "
+                        "will activate only when NVIDIA call fails", args.aggie_model)
+        except Exception as e:
+            logger.error("Failed to create Augment API client: %s — fallback disabled", e)
+
     total_forged = []
     total_scrapped = []
     total_count = 0
@@ -846,6 +934,8 @@ def main():
             "top_n": args.top_n,
             "min_score": args.min_score,
             "model": args.model,
+            "aggie_fallback": args.use_aggie_api,
+            "aggie_model": args.aggie_model if args.use_aggie_api else None,
             "mode": mode,
             "cycle": cycle,
             "n_candidates": len(filtered),
@@ -869,7 +959,7 @@ def main():
         # Forge the batch
         forged, scrapped, batch_count = _forge_batch(
             client, filtered, args, run_dir, processed,
-            total_count, shutdown_flag,
+            total_count, shutdown_flag, aggie_client=aggie_client,
         )
         total_forged.extend(forged)
         total_scrapped.extend(scrapped)
@@ -889,6 +979,14 @@ def main():
             while slept < args.poll_interval and not shutdown_flag[0]:
                 time.sleep(min(5.0, args.poll_interval - slept))
                 slept += 5.0
+
+    # Clean up aggie client
+    if aggie_client is not None:
+        try:
+            aggie_client.close()
+            logger.info("Augment API client closed")
+        except Exception as e:
+            logger.debug("Error closing aggie client: %s", e)
 
     # Final summary
     logger.info("=" * 60)

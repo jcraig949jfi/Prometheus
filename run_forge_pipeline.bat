@@ -11,6 +11,17 @@ REM Uses Windows Terminal tab coloring via escape sequences.
 REM All agents run indefinitely. Ctrl+C in any window to stop.
 REM
 REM Prerequisites: NVIDIA_API_KEY environment variable set
+REM
+REM Optional flags:
+REM   --use-aggie-api           Enable Augment API fallback when NVIDIA times out.
+REM                             WARNING: burns Augment tokens — use during outages only.
+REM   --aggie-model <model>     Model for Augment fallback (default: sonnet4.5).
+REM                             Choices: haiku4.5, sonnet4.5, sonnet4, gpt5
+REM
+REM Usage:
+REM   run_forge_pipeline.bat
+REM   run_forge_pipeline.bat --use-aggie-api
+REM   run_forge_pipeline.bat --use-aggie-api --aggie-model haiku4.5
 REM ============================================================
 
 echo ============================================================
@@ -18,7 +29,34 @@ echo  FORGE PIPELINE — Nous + Hephaestus + Nemesis
 echo ============================================================
 echo.
 
+REM ============================================================
+REM Parse optional flags
+REM ============================================================
+set HEPH_EXTRA_FLAGS=
+set USE_AGGIE_API=0
+
+:parse_args
+if "%~1"=="" goto args_done
+if /i "%~1"=="--use-aggie-api" (
+    set USE_AGGIE_API=1
+    set HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --use-aggie-api
+    shift
+    goto parse_args
+)
+if /i "%~1"=="--aggie-model" (
+    set HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --aggie-model %~2
+    shift
+    shift
+    goto parse_args
+)
+echo WARNING: Unknown argument ignored: %~1
+shift
+goto parse_args
+:args_done
+
+REM ============================================================
 REM Load API key from .env if not already set
+REM ============================================================
 if "%NVIDIA_API_KEY%"=="" (
     if exist "%~dp0agents\eos\.env" (
         for /f "tokens=1,* delims==" %%a in ('findstr /i "NVIDIA_API_KEY" "%~dp0agents\eos\.env"') do (
@@ -37,6 +75,11 @@ if "%NVIDIA_API_KEY%"=="" (
 )
 
 echo NVIDIA_API_KEY: set
+if "%USE_AGGIE_API%"=="1" (
+    echo Augment API fallback: ENABLED%HEPH_EXTRA_FLAGS%
+) else (
+    echo Augment API fallback: disabled  ^(pass --use-aggie-api to enable^)
+)
 echo.
 
 REM Launch Nous (blue tab)
@@ -48,7 +91,7 @@ timeout /t 5 /nobreak >nul
 
 REM Launch Hephaestus (orange tab)
 echo [2/3] Starting Hephaestus (forge, 58-category battery)...
-start "Hephaestus" wt new-tab --title "Hephaestus — The Forge" --tabColor "#e67e22" -- cmd /k "cd /d F:\Prometheus\agents\hephaestus\src && python hephaestus.py --poll-interval 300 --coeus-interval 50 --reports-interval 50"
+start "Hephaestus" wt new-tab --title "Hephaestus — The Forge" --tabColor "#e67e22" -- cmd /k "cd /d F:\Prometheus\agents\hephaestus\src && python hephaestus.py --poll-interval 300 --coeus-interval 50 --reports-interval 50%HEPH_EXTRA_FLAGS%"
 
 REM Brief pause
 timeout /t 3 /nobreak >nul
@@ -64,6 +107,9 @@ echo.
 echo  Nous:       [BLUE]   concept mining (unlimited, Coeus-weighted)
 echo  Hephaestus: [ORANGE] forge + validate (58-cat battery, polls 5min)
 echo              auto-triggers Coeus + reports every 50 forges
+if "%USE_AGGIE_API%"=="1" (
+    echo              Augment API fallback ACTIVE
+)
 echo  Nemesis:    [RED]    adversarial MAP-Elites (2min cycles)
 echo.
 echo  Each tab can be stopped independently with Ctrl+C.
