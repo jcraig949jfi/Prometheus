@@ -98,11 +98,13 @@ def register_steering_hook(model, genome):
     vector = genome["vector"]
     epsilon = genome["epsilon"]
 
-    # Find the right layer module (works for Qwen, LLaMA, SmolLM architectures)
+    # Find the right layer module (works for Qwen, LLaMA, SmolLM, GPT-NeoX/Pythia, Phi)
     if hasattr(model, "model") and hasattr(model.model, "layers"):
         layer_module = model.model.layers[layer_idx]
     elif hasattr(model, "transformer") and hasattr(model.transformer, "h"):
         layer_module = model.transformer.h[layer_idx]
+    elif hasattr(model, "gpt_neox") and hasattr(model.gpt_neox, "layers"):
+        layer_module = model.gpt_neox.layers[layer_idx]
     else:
         raise ValueError(f"Cannot find layer module for {type(model)}")
 
@@ -443,7 +445,7 @@ def run_loop_closure(args):
 
     # Comparison
     print(f"\n--- LOOP CLOSURE COMPARISON ---")
-    print(f"{'Category':>25s}  {'Before':>10s}  {'After':>10s}  {'Δ':>8s}")
+    print(f"{'Category':>25s}  {'Before':>10s}  {'After':>10s}  {'Delta':>8s}")
     print("-" * 60)
     for cat in sorted(set(list(pre.keys()) + list(post.keys()))):
         p = pre.get(cat, {"correct": 0, "total": 1})
