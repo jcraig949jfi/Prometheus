@@ -2,60 +2,68 @@
 
 **Fields**: Physics, Cognitive Science, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T08:48:19.865698
-**Report Generated**: 2026-03-27T05:13:37.647942
+**Nous Timestamp**: 2026-04-01T09:41:01.319552
+**Report Generated**: 2026-04-01T20:30:33.972204
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-1. **Parsing layer** – Use regex to extract from each candidate sentence:  
-   * propositions `P(x)` (noun‑verb‑object triples),  
-   * binary relations `R(x,y)` (comparatives, ordering, causal),  
-   * numeric constants,  
-   * logical connectives (`not`, `if…then`, `because`, `and`, `or`).  
-   Store each as a tuple `(type, args, polarity)` in a list `props`.  
+**1. Algorithm – “Boundary‑Hoare Chunk Verifier”**  
 
-2. **Hoare‑style constraint graph** – Treat each sentence as a command `C`.  
-   * Precondition `pre(C)` = set of propositions that appear before any causal/conditional cue in the sentence.  
-   * Postcondition `post(C)` = set of propositions that appear after the cue.  
-   Build a directed graph `G` where nodes are propositions and edges `pre → post` represent the Hoare triple `{pre} C {post}`.  
-   Using NumPy arrays for adjacency, perform forward chaining (modus ponens) to compute the closure `closure(G)`.  
-   Score **Hoare correctness** = `|closure(G) ∩ expected| / |expected|` where `expected` is a small set of gold propositions supplied with the prompt (extracted once with the same regex).  
+*Data structures*  
+- `Prop`: a namedtuple `(type, args)` where `type ∈ {atom, neg, cond, comp, num}` and `args` is a tuple of strings or numbers.  
+- `Clause`: a list of `Prop` representing a Horn‑style implication `body → head` (empty body = fact).  
+- `Boundary`: a fixed‑size numpy array `B ∈ ℤ^{k×d}` (k = working‑memory chunk limit, d = proposition hash dimension). Each row stores the hashed vector of a proposition currently in working memory.  
+- `Store`: a Python set of all derived clauses (the “bulk”).  
 
-3. **Cognitive‑load metrics** (computed with NumPy):  
-   * **Intrinsic load** = number of distinct variables/constants in `props`.  
-   * **Extraneous load** = count of tokens that match negation or irrelevant filler patterns (e.g., “very”, “actually”).  
-   * **Germane load** = number of inferred propositions in `closure(G)` that are not explicitly present (i.e., useful deductions).  
-   * **Load penalty** = `w_i*intrinsic + w_e*extraneous - w_g*germane`.  
+*Operations*  
+1. **Parsing** – regex extracts propositions and builds `Clause`s (see §2).  
+2. **Encoding** – each `Prop` is mapped to a d‑dim integer vector by a deterministic hash (e.g., `hash(s) % MOD`).  
+3. **Chunked forward chaining** – iterate over clauses in textual order:  
+   - If the body’s propositions are all present in `Boundary` (checked by exact vector match), compute the head’s vector, add the new clause to `Store`, and push its vector onto `Boundary`.  
+   - If `Boundary` exceeds size `k`, evict the oldest row (FIFO) – this enforces Cognitive Load Theory’s limited working memory.  
+   - The evicted row is *not* discarded; its vector is added to a secondary “boundary summary” matrix `S` (size `k×d`) that accumulates all evicted vectors via column‑wise sum. `S` acts as the holographic encoding of the bulk information on the boundary.  
+4. **Invariant check (Hoare)** – after each step, verify that any user‑provided precondition `P` (parsed as a set of `Prop`) is a subset of `Boundary ∪ decode(S)`. If not, incur a penalty.  
+5. **Scoring** – Let `R` be the reference answer’s derived `Store`. Compute:  
+   - `missing = |R \ Store|`  
+   - `extra   = |Store \ R|`  
+   - `load_penalty = Σ_t max(0, |Boundary_t| - k)` (should be zero by construction).  
+   - Final score = `1 / (1 + α·missing + β·extra + γ·load_penalty)`, with α,β,γ tuned (e.g., 1.0).  
 
-4. **Holography‑inspired information density** – Treat the sentence boundary (first and last token) as the “boundary”.  
-   * Compute a boundary token histogram `b` (length‑2 vector) and a bulk histogram `h` (all tokens).  
-   * Normalize to probabilities and compute Shannon entropy `H_boundary = -∑ b log b`, `H_bulk = -∑ h log h`.  
-   * **Density score** = `1 - |H_boundary - H_bulk| / max(H_boundary, H_bulk)`.  
+*Why it respects the three concepts*  
+- **Holography**: the bulk (`Store`) can be reconstructed from the boundary summary `S` plus the current `Boundary`.  
+- **Cognitive Load**: hard cap `k` on simultaneous propositions; overflow is summarized holographically.  
+- **Hoare Logic**: each sentence is a step with explicit pre/post (`Boundary` before, `Boundary∪S` after); violations are penalized.  
 
-5. **Final score** = `α*Hoare_correctness - β*Load_penalty + γ*Density_score` (weights tuned to sum to 1). All operations use only Python’s `re`, `list`, `dict`, and NumPy for vectorised entropy and matrix propagation.
+**2. Structural features parsed**  
+- Atomic predicates (subject‑verb‑object).  
+- Negations (`not`, `no`).  
+- Conditionals (`if … then …`, `only if`).  
+- Comparatives (`greater than`, `less than`, `equals`).  
+- Numeric constants and simple arithmetic constraints (`+`, `-`, `≤`, `≥`).  
+- Ordering relations (`before`, `after`, `precedes`).  
+- Conjunctions (`and`) and disjunctions (`or`) limited to binary connectives for tractable Horn form.  
 
-**Structural features parsed** – negations (`not`, `no`), comparatives (`>`, `<`, `≥`, `≤`, `equal`), conditionals (`if…then`, `unless`, `provided that`), causal claims (`because`, `leads to`, `results in`), numeric values, ordering relations (`first`, `second`, `before`, `after`), and quantifiers (`all`, `some`, `none`).
+**3. Novelty**  
+The combination is not a direct replica of existing work. Hoare‑style verification of natural‑language steps has been explored (e.g., “Hoare‑style NLI”), and cognitive‑load limits appear in chunk‑based models, but coupling them with a holographic boundary summary that enables exact reconstruction of the bulk from a fixed‑size working memory is novel. No prior system uses a deterministic hash‑based boundary matrix to store evicted propositions while preserving logical entailment via invariant checks.  
 
-**Novelty** – While Hoare logic, cognitive load theory, and holographic entropy each appear separately in program verification, educational psychology, and physics‑inspired NLP, their joint use to score free‑form reasoning answers is not documented in the literature; the combination is therefore novel.
+**4. Ratings**  
 
-**Rating**  
-Reasoning: 7/10 — captures logical correctness and consistency but relies on shallow regex parsing, limiting deep semantic understanding.  
-Metacognition: 6/10 — estimates load via proxies; does not model learner’s self‑regulation or strategy shifts.  
-Hypothesis generation: 5/10 — can infer new propositions via forward chaining, yet lacks generative creativity or exploratory search.  
-Implementability: 8/10 — all steps use only `re`, built‑in containers, and NumPy; no external libraries or APIs needed.
+Reasoning: 8/10 — The algorithm performs explicit logical forward‑checking with invariants, capturing deductive strength better than pure similarity methods.  
+Metacognition: 6/10 — Working‑memory cap provides a rudimentary self‑monitor of load, but no higher‑order reflection on strategy selection.  
+Hypothesis generation: 5/10 — Generates new propositions only via forward chaining; no exploratory abductive or speculative leaps.  
+Implementability: 9/10 — Uses only regex, Python sets, and NumPy vector ops; no external libraries or training required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

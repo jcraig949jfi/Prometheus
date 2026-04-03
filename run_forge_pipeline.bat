@@ -15,13 +15,17 @@ REM
 REM Optional flags:
 REM   --use-aggie-api           Enable Augment API fallback when NVIDIA times out.
 REM                             WARNING: burns Augment tokens — use during outages only.
-REM   --aggie-model <model>     Model for Augment fallback (default: sonnet4.5).
+REM   --force-aggie             Skip NVIDIA API entirely; always use Augment API.
+REM                             WARNING: burns Augment tokens continuously; implies --use-aggie-api.
+REM   --aggie-model <model>     Model for Augment (default: sonnet4.5).
 REM                             Choices: haiku4.5, sonnet4.5, sonnet4, gpt5
 REM
 REM Usage:
 REM   run_forge_pipeline.bat
 REM   run_forge_pipeline.bat --use-aggie-api
 REM   run_forge_pipeline.bat --use-aggie-api --aggie-model haiku4.5
+REM   run_forge_pipeline.bat --force-aggie
+REM   run_forge_pipeline.bat --force-aggie --aggie-model sonnet4.5
 REM ============================================================
 
 echo ============================================================
@@ -34,17 +38,25 @@ REM Parse optional flags
 REM ============================================================
 set HEPH_EXTRA_FLAGS=
 set USE_AGGIE_API=0
+set FORCE_AGGIE=0
 
 :parse_args
 if "%~1"=="" goto args_done
 if /i "%~1"=="--use-aggie-api" (
-    set USE_AGGIE_API=1
-    set HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --use-aggie-api
+    set "USE_AGGIE_API=1"
+    set "HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --use-aggie-api"
+    shift
+    goto parse_args
+)
+if /i "%~1"=="--force-aggie" (
+    set "FORCE_AGGIE=1"
+    set "USE_AGGIE_API=1"
+    set "HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --force-aggie"
     shift
     goto parse_args
 )
 if /i "%~1"=="--aggie-model" (
-    set HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --aggie-model %~2
+    set "HEPH_EXTRA_FLAGS=%HEPH_EXTRA_FLAGS% --aggie-model %~2"
     shift
     shift
     goto parse_args
@@ -75,11 +87,10 @@ if "%NVIDIA_API_KEY%"=="" (
 )
 
 echo NVIDIA_API_KEY: set
-if "%USE_AGGIE_API%"=="1" (
-    echo Augment API fallback: ENABLED%HEPH_EXTRA_FLAGS%
-) else (
-    echo Augment API fallback: disabled  ^(pass --use-aggie-api to enable^)
-)
+echo Hephaestus extra flags:%HEPH_EXTRA_FLAGS%
+if "%FORCE_AGGIE%"=="1" echo Augment API mode: PRIMARY -- skip NVIDIA, always use Augment
+if "%FORCE_AGGIE%"=="0" if "%USE_AGGIE_API%"=="1" echo Augment API mode: FALLBACK -- use when NVIDIA fails
+if "%FORCE_AGGIE%"=="0" if "%USE_AGGIE_API%"=="0" echo Augment API mode: disabled -- pass --use-aggie-api or --force-aggie to enable
 echo.
 
 REM Launch Nous (blue tab)
@@ -107,9 +118,8 @@ echo.
 echo  Nous:       [BLUE]   concept mining (unlimited, Coeus-weighted)
 echo  Hephaestus: [ORANGE] forge + validate (58-cat battery, polls 5min)
 echo              auto-triggers Coeus + reports every 50 forges
-if "%USE_AGGIE_API%"=="1" (
-    echo              Augment API fallback ACTIVE
-)
+if "%FORCE_AGGIE%"=="1" echo              !!! AUGMENT API PRIMARY MODE -- skip NVIDIA !!!
+if "%FORCE_AGGIE%"=="0" if "%USE_AGGIE_API%"=="1" echo              Augment API fallback ENABLED
 echo  Nemesis:    [RED]    adversarial MAP-Elites (2min cycles)
 echo.
 echo  Each tab can be stopped independently with Ctrl+C.

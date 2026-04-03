@@ -107,6 +107,8 @@ def main():
                         help="Number of corpus generation attempts")
     parser.add_argument("--n-generations", type=int, default=500,
                         help="CMA-ES generations for Stage D")
+    parser.add_argument("--layer", type=int, default=None,
+                        help="Target layer for CMA-ES (default: auto ~67%% depth)")
     parser.add_argument("--output-dir", type=str, default=str(RESULTS_DIR))
     args = parser.parse_args()
 
@@ -142,10 +144,10 @@ def main():
 
     # ===== STAGE B: Fine-tune on reasoning corpus =====
     stageB_dir = output_dir / "stageB_finetune"
-    ft_model_path = stageB_dir / "ft_tmp"
+    ft_model_path = stageB_dir / "ft_model"
 
     if ft_model_path.exists() and (ft_model_path / "config.json").exists():
-        log.info("Stage B already completed (ft_tmp exists). Skipping.")
+        log.info("Stage B already completed (ft_model exists). Skipping.")
         results["stages"]["B"] = "already_done"
     else:
         ok_ft = run_stage("B - Fine-tune on reasoning corpus", [
@@ -206,13 +208,28 @@ def main():
     # ===== STAGE D: Evolution on fine-tuned seed =====
     stageD_dir = output_dir / "stageD_evolve"
 
+    # Auto-detect layer if not specified (~67% depth is a good default)
+    if args.layer is not None:
+        target_layer = args.layer
+    else:
+        # Try to detect n_layers from model config
+        try:
+            import json as _json
+            cfg = _json.loads((ft_model_path / "config.json").read_text())
+            n_layers = cfg.get("num_hidden_layers", 24)
+            target_layer = int(n_layers * 0.67)
+            log.info(f"Auto-detected {n_layers} layers, targeting layer {target_layer} (~67% depth)")
+        except Exception:
+            target_layer = 23  # fallback to Qwen default
+            log.warning(f"Could not detect layer count, defaulting to layer {target_layer}")
+
     if tl_ok:
         ok_evo = run_stage("D - CMA-ES on corpus-trained seed", [
             sys.executable, str(SRC_DIR / "evolve_1_5b.py"),
             "--model", str(ft_model_path), "--device", args.device,
             "--n-generations", str(args.n_generations),
             "--epsilon", "3.0",
-            "--layer", "23",
+            "--layer", str(target_layer),
             "--popsize", "32", "--stdev-init", "0.05",
             "--output-dir", str(stageD_dir),
         ], stageD_dir, timeout=14400)  # 4 hours max

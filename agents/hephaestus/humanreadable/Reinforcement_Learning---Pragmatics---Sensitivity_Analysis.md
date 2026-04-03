@@ -2,73 +2,64 @@
 
 **Fields**: Computer Science, Linguistics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T01:26:12.044281
-**Report Generated**: 2026-03-27T06:37:50.528578
+**Nous Timestamp**: 2026-04-01T23:58:19.511060
+**Report Generated**: 2026-04-02T04:20:07.261766
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We define a Python class `PragmaticSensitivityScorer` that treats each candidate answer as a stochastic policy πθ(a|x) over a discrete set of textual actions a (the answer strings) conditioned on the prompt x. The policy is log‑linear:  
+We define a lightweight scoring class `ReasonScorer` that works only with NumPy and the Python standard library.
 
-\[
-\log \pi_\theta(a|x)=\theta^\top \phi(x,a)
-\]
+1. **Parsing → Proposition list**  
+   Using a handful of regex patterns we extract atomic propositions from the prompt and each candidate answer:  
+   - `¬P` (negation) → `polarity = -1`  
+   - `P ∧ Q`, `P ∨ Q` (conjunction/disjunction) → stored as separate propositions with a connective flag  
+   - `P → Q` (conditional) → `modality = 'cond'`  
+   - `P because Q` / `P leads to Q` (causal) → `modality = 'causal'`  
+   - Comparatives (`more than`, `less than`, `≥`, `≤`) → `type = 'comparative'` with a numeric value if present  
+   - Numeric literals → `type = 'numeric'` with float value  
+   - Ordering/temporal (`before`, `after`) → `type = 'order'`  
 
-where φ extracts a fixed‑length feature vector from the *joint* representation of prompt and answer. Features are purely structural, obtained via regex‑based parsing:
+   Each proposition is stored as a structured NumPy array:  
+   `dtype = [('id',int),('pred','U20'),('args','U20',(2,)),('polarity',i1),('modality','U10'),('type','U10'),('val',f8)]`.
 
-1. **Negation count** (`¬`) – number of “not”, “no”, “never”.  
-2. **Comparative operators** (`>`, `<`, `≥`, `≤`, “more than”, “less than”).  
-3. **Conditional markers** (“if … then”, “unless”, “provided that”).  
-4. **Numeric literals** – extracted integers/floats and their positions.  
-5. **Causal claim tokens** – patterns like “because”, “due to”, “leads to”, “results in”.  
-6. **Ordering relations** – sequences indicated by “first”, “second”, “finally”, or temporal markers (“before”, “after”).  
-7. **Speech‑act cues** – imperative verbs, question marks, hedges (“maybe”, “perhaps”).  
+2. **Logical consistency (constraint propagation)**  
+   Build an implication matrix `I` where `I[i,j]=1` if proposition *i* entails *j* (modus ponens for conditionals, transitivity for order/comparative).  
+   Perform forward‑chaining using Boolean matrix multiplication (`I @ state`) until a fixed point; the resulting `state` vector shows which propositions are derivable.  
+   Consistency score = proportion of answer propositions that are derivable without contradiction (a contradiction is flagged when both `P` and `¬P` become true).
 
-Each feature is normalized to [0,1] and concatenated into φ.
+3. **Pragmatic appropriateness**  
+   Compute four heuristic features (all normalized to [0,1]):  
+   - **Quantity**: length ratio of answer to prompt (penalize overly short/long).  
+   - **Relevance**: Jaccard overlap of predicate sets between prompt and answer.  
+   - **Manner**: inverse count of ambiguous tokens (e.g., “maybe”, “perhaps”).  
+   - **Quality**: penalty for unsupported assertions (propositions with `type='assert'` that are not derivable).  
+   Pragmatic score = weighted sum of these features.
 
-**Sensitivity analysis**  
-For a given answer a, we compute the sensitivity of the score s=θᵀφ to small perturbations in each structural dimension. Using finite differences, we create perturbed feature vectors φⁱ⁺ = φ + ε·eᵢ and φⁱ⁻ = φ − ε·eᵢ (eᵢ is unit vector in dimension i, ε=0.01). The sensitivity for dimension i is  
+4. **Sensitivity analysis (finite‑difference robustness)**  
+   For each answer proposition we generate a small set of perturbations: flip negation, increment/decrement numeric values by 1, reverse comparative direction, swap antecedent/consequent of conditionals.  
+   Re‑evaluate the consistency score on each perturbed version; compute the variance `σ²` across perturbed scores.  
+   Sensitivity penalty = `σ` (standard deviation). Lower variance → more robust answer.
 
-\[
-\sigma_i = \frac{|(\theta^\top\phi^{+}_i) - (\theta^\top\phi^{-}_i)|}{2\varepsilon}
-\]
-
-The overall robustness penalty is the L2 norm of σ:  
-
-\[
-R(a)=\|\sigma\|_2
-\]
-
-**Reward and update**  
-The immediate reward for answer a is  
-
-\[
-r(a)=\underbrace{\text{PragmaticFit}(a)}_{\text{weighted sum of speech‑act and implicature features}} - \lambda\,R(a)
-\]
-
-where PragmaticFit is a dot‑product between a fixed weight vector wₚ (encoding Gricean maxims: relevance, quantity, quality, manner) and the subset of φ covering speech‑act and implicature cues. λ controls the trade‑off between pragmatic adequacy and robustness.
-
-We update θ with the REINFORCE policy‑gradient estimator:
-
-\[
-\theta \leftarrow \theta + \alpha \, (r(a)-b)\, \nabla_\theta \log \pi_\theta(a|x)
-\]
-
-where b is a running baseline (average reward) and α is the learning rate. The gradient simplifies to α·(r(a)−b)·φ(x,a). Scoring a batch of candidates uses the current πθ to compute softmax probabilities; the final score for each answer is its probability under the policy, which inherently rewards pragmatic alignment and penalizes sensitivity to structural perturbations.
+5. **Final score**  
+   ```
+   score = w_cons * consistency + w_prag * pragmatic - w_sens * sensitivity
+   ```
+   Weights (`w_cons=0.5, w_prag=0.3, w_sens=0.2`) can be tuned via a simple reward‑signal loop: treat the gold answer (if available) as a reward and adjust weights using a basic policy‑gradient update (finite‑difference estimate of ∂score/∂w). No neural nets are used; the update is a vector operation on NumPy arrays.
 
 **Structural features parsed**  
-Negations, comparatives, conditionals, numeric values, causal claim tokens, ordering/temporal markers, and speech‑act/hedge cues.
+Negations, comparatives, conditionals, causal claims, numeric values, ordering/temporal relations, quantifiers (via keywords like “all”, “some”), and conjunction/disjunction.
 
 **Novelty**  
-The combination mirrors recent work on *reward‑guided language modeling* (e.g., RLHF) but replaces the learned language model with a hand‑crafted, structurally grounded feature space and adds an explicit sensitivity‑analysis penalty. No prior work couples pragmatic maxim weighting with finite‑difference robustness checks in a pure‑numpy policy‑gradient scorer, making the approach novel in the evaluated toolchain.
+Pure logical parsers exist (e.g., SPASS, Prolog‑based tools) and similarity‑based scorers are common, but combining a RL‑style weight‑tuning mechanism (gradient‑free policy update), a pragmatic heuristic suite grounded in Grice’s maxims, and a sensitivity‑analysis robustness check within a NumPy‑only pipeline is not documented in the literature. Hence the approach is novel for lightweight reasoning evaluation.
 
-**Ratings**  
-Reasoning: 7/10 — captures logical structure and robustness but lacks deeper semantic inference.  
-Metacognition: 5/10 — baseline reward provides limited self‑monitoring; no explicit uncertainty estimation.  
-Hypothesis generation: 4/10 — generates answers via policy sampling but does not propose new hypotheses beyond re‑ranking.  
-Implementability: 9/10 — relies only on regex, numpy, and standard library; straightforward to code and debug.
+**Rating**  
+Reasoning: 7/10 — captures logical entailment and contradiction well but struggles with deep nested quantifiers.  
+Metacognition: 5/10 — provides internal consistency and sensitivity signals, yet lacks explicit self‑reflection on uncertainty.  
+Hypothesis generation: 6/10 — perturbations generate alternative interpretations, but no systematic search for new hypotheses.  
+Implementability: 8/10 — relies only on regex, NumPy array ops, and standard‑library containers; easy to deploy in constrained environments.
 
 ### Scores
 
@@ -76,9 +67,9 @@ Implementability: 9/10 — relies only on regex, numpy, and standard library; st
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 9/10 |
-| **Composite** | **5.33** |
+| Hypothesis Generation | 6/10 |
+| Implementability | 8/10 |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

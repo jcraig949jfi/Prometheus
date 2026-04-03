@@ -1,6 +1,6 @@
 # In Case of API Emergency, Break Glass
 
-*When the NVIDIA API is down and the forge pipeline is dead, Claude Code IS the forge.*
+*When the NVIDIA API is down and the forge pipeline is dead, use the Augment API fallback.*
 
 ---
 
@@ -8,104 +8,72 @@
 
 The forge pipeline (Nous → Coeus → Hephaestus → Nemesis) normally uses the NVIDIA API (Qwen 397B) to generate reasoning tool code. When that API is down (timeouts, rate limits, outages), the pipeline produces nothing.
 
-**The fix: Claude Code agents generate the code directly.** Same prompts, same validation, same battery — just a different code generator. This was discovered on 2026-03-28 when the NVIDIA API hit 91% timeout rate. Opus-generated tools scored 74% accuracy (highest in the library) vs 0.5% forge rate from the API.
+**The fix: Use Augment API (auggie-sdk) as a code generator.** Same prompts, same validation, same battery — just a different backend. This was discovered on 2026-03-28 when the NVIDIA API hit 91% timeout rate. Opus-forged tools (via Augment API) scored 74% accuracy (highest in the library) vs 0.5% forge rate from the degraded NVIDIA API.
 
 ---
 
-## How It Works
+## Two Modes: Fallback vs Primary
 
-### The Data Is Already There
+### Mode 1: Fallback (`--use-aggie-api`)
+**When to use:** NVIDIA API is degraded (high timeout rate) but still partially responding.
 
-Nous has **5,740+ saved responses** in `agents/nous/runs/*/responses.jsonl`. Each contains:
-- `concept_names`: the 3 concepts
-- `response_text`: the theoretical analysis
-- `score.composite_score`: quality ranking
-
-Coeus enrichments exist for most triples in `agents/coeus/enrichments/`.
-
-**You don't need Nous or Coeus to run.** The data is saved. You just need to generate code.
-
-### What To Do
-
-1. **Read the coverage map** at `docs/coverage_map.md` — it shows which categories are covered and which are gaps.
-
-2. **Read the multi-strategy forge design** at `docs/multi_strategy_forge.md` — it defines 7 frames:
-   - Frame A (legacy): Structural Parser
-   - Frame B (legacy): Constructive Computer
-   - Frame C (legacy): Dynamics Tracker
-   - Frame D (legacy): Judgment Calibrator
-   - **Frame E (default): Computational** — parse → formal representation → compute → match
-   - **Frame F: Adversarial Robustness** — structure-first, surface-invariant
-   - **Frame G: Metacognitive** — calibrated uncertainty, knows what it doesn't know
-
-3. **Pick gap categories** from the coverage map and forge tools targeting them.
-
-4. **Launch parallel agents** — each agent writes 3 tools to `agents/hephaestus/forge_v7/` (or v8, v9, etc.).
-
-### The Prompt Template
-
-For each agent, use this structure:
-
-```
-You are Hephaestus forging reasoning tools. Write 3 Python files to
-f:\Prometheus\agents\hephaestus\forge_v{N}\
-
-FRAME {B/C/D}: {frame description from multi_strategy_forge.md}
-
-For each tool: deterministic Python class (numpy + stdlib only), under 200 lines,
-implements evaluate(prompt, candidates) -> list[dict] and confidence(prompt, answer) -> float.
-
-Your tool must produce a score WITHOUT NCD. NCD may be an optional tiebreaker only.
-
-TOOL 1: {concept1}_x_{concept2}_x_{concept3}.py
-Gap target: {which gap category this targets}
-Build: {specific solvers needed — list the actual algorithms}
-Also implement ALL standard parsers: numeric float comparison, modus tollens,
-transitivity, bat-and-ball algebra, all-but-N, negation scope, SVO parsing,
-base rate neglect (Bayes), temporal ordering, direction composition, fencepost,
-modular arithmetic, coin flip independence, parity, pigeonhole.
-
-{repeat for TOOL 2 and TOOL 3}
-
-Each tool must implement _meta_confidence() for Tier B traps.
-Verify each file compiles with py_compile.
+```bash
+run_forge_pipeline.bat --use-aggie-api --aggie-model sonnet4.5
 ```
 
-### Validation
+- Try NVIDIA first on every forge attempt
+- Only switch to Augment API when NVIDIA times out after all retries
+- Conservative approach: preserves NVIDIA preference, uses Augment as a safety net
+- Token burn: Low (only on NVIDIA failures)
+- Status: "Augment API fallback ENABLED"
 
-After agents complete, run:
+### Mode 2: Primary (`--force-aggie`)
+**When to use:** NVIDIA API is completely down or you want to benchmark/test with Augment tokens.
 
-```python
-cd f:/Prometheus/agents/hephaestus/src
-python -c "
-from test_harness import load_tool_from_file
-from trap_generator_extended import generate_full_battery
-from pathlib import Path
-from collections import defaultdict
-
-battery = generate_full_battery(n_per_category=2, seed=42)
-v7 = sorted(Path('../forge_v7').glob('*.py'))
-
-for py in v7:
-    try:
-        tool = load_tool_from_file(py)
-        correct = total = 0
-        for t in battery:
-            try:
-                r = tool.evaluate(t['prompt'], t['candidates'])
-                if r and r[0]['candidate'] == t['correct']:
-                    correct += 1
-                total += 1
-            except: total += 1
-        acc = correct/total if total else 0
-        status = 'PASS' if acc > 0.42 else 'fail'
-        print(f'{status} {py.stem:50s} acc={acc*100:.0f}%')
-    except Exception as e:
-        print(f'ERR  {py.stem:50s} {e}')
-"
+```bash
+run_forge_pipeline.bat --force-aggie --aggie-model sonnet4.5
 ```
 
-NCD baseline is 42% accuracy / 46% calibration. Tools must beat both to be useful.
+- Skip NVIDIA API entirely
+- Use Augment API for all forge attempts
+- Aggressive approach: full pipeline continuity even if NVIDIA is unavailable
+- Token burn: Continuous (every forge uses Augment)
+- Status: "!!! AUGMENT API PRIMARY MODE (skip NVIDIA) !!!"
+
+### Choosing a Model
+
+Available models via auggie-sdk: `haiku4.5`, `sonnet4.5` (default), `sonnet4`, `gpt5`
+
+- **haiku4.5:** Fast, cheap, lower quality. Good for rapid iteration / backlog clearing.
+- **sonnet4.5:** Balanced. Recommended for production use (best forge quality observed so far).
+- **sonnet4:** Earlier version; not recommended unless you have specific reason.
+- **gpt5:** Premium model. Reserved for critical gaps or benchmark runs.
+
+---
+
+## How It Works: Automatic Fallback (Recommended for Most Cases)
+
+**You don't need to manually launch agents or write code.**
+
+When you run with `--use-aggie-api` or `--force-aggie`, Hephaestus automatically:
+
+1. **Generates code prompts** from Nous concepts (using multi-frame architecture: Frame E/F/G default)
+2. **Calls Augment API** when NVIDIA fails (fallback mode) or for all forges (primary mode)
+3. **Validates** the generated code against the 89-category trap battery
+4. **Logs results** to ledger.jsonl with reason (api_call_failed, validation errors, trap_battery_failed, or forged)
+
+**Data is already saved:** Nous has 5,700+ responses; Coeus has 4,000+ enrichments. You just need to generate code.
+
+### When Automatic Fallback Isn't Enough
+
+If you need to **manually forge tools** for specific gaps (e.g., when NVIDIA is down AND Augment is also rate-limited):
+
+1. **Read the coverage map** at `docs/coverage_map.md` — shows gaps and which categories need coverage.
+2. **Read the multi-strategy forge design** at `docs/multi_strategy_forge.md` — defines 7 frames (E/F/G default).
+3. **Write tools directly** using Frame E/F/G (computational architecture).
+4. **Validate** against the battery using the test harness.
+
+The tooling for this exists; ask if you need to activate manual forge mode.
 
 ---
 
@@ -176,14 +144,27 @@ Tier B (judgment, 16 cats): recognizing ambiguity, presupposition, insufficiency
 
 ## Quick Start
 
-If the API is down and you need to forge tools:
-
+### Scenario A: NVIDIA is Degraded (High Timeout Rate)
+```bash
+run_forge_pipeline.bat --use-aggie-api --aggie-model sonnet4.5
 ```
-1. Read docs/coverage_map.md → identify gaps
-2. Launch 5 parallel agents, each targeting 3 gap triples
-3. Each agent writes to forge_v{N}/
-4. Run validation script above
-5. Commit results
-```
+- Pipeline continues with Augment as safety net
+- Low token burn (Augment only used when NVIDIA fails)
+- Monitor ledger.jsonl: watch for api_call_failed entries to decrease
 
-That's it. You ARE the API now.
+### Scenario B: NVIDIA is Down Completely
+```bash
+run_forge_pipeline.bat --force-aggie --aggie-model sonnet4.5
+```
+- Full pipeline continuity via Augment API
+- Continuous token burn
+- Same forge quality as fallback mode
+- Leave running until NVIDIA recovers
+
+### Scenario C: NVIDIA + Augment Both Down (Emergency Mode)
+1. Read `docs/coverage_map.md` → identify gaps
+2. Manually launch 2-3 agents to write tools to `forge_v9/`
+3. Run validation battery (ask for test harness setup)
+4. Commit results
+
+**In all cases: the ledger tracks everything.** Check `agents/hephaestus/ledger.jsonl` for the reason each attempt succeeded or failed.

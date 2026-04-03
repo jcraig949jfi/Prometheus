@@ -2,43 +2,45 @@
 
 **Fields**: Philosophy, Complex Systems, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T02:31:47.837240
-**Report Generated**: 2026-03-27T16:08:10.201359
+**Nous Timestamp**: 2026-04-01T19:15:14.163736
+**Report Generated**: 2026-04-01T20:30:32.892505
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing** – Use regex to extract atomic propositions \(p_i\) and relational cues (negation, conditional, causal, comparative, ordering, numeric). Each proposition becomes a node with features: polarity \(s_i\in\{0,1\}\) (affirmed/denied), type \(t_i\) (atomic, if‑then, cause‑effect, comparative), and a numeric value \(v_i\) when present. Store in a NumPy array \(X\in\mathbb{R}^{n\times4}\) (columns: s, t‑one‑hot, v, bias).  
-2. **Factor graph** – Build an adjacency matrix \(A\) where \(A_{ij}=1\) if a relation links \(p_i\) to \(p_j\). Edge weights \(W_{ij}\) are set from cue strength (e.g., ‑1 for negation, +0.5 for causal, magnitude for comparatives).  
-3. **Variational free‑energy approximation** – For a candidate answer \(a\) we form a binary selection vector \(z\in\{0,1\}^n\) indicating which propositions the answer asserts. Prediction error: \(E_{\text{pred}}=\|(I-W)z - b\|_2^2\) where \(b\) is the observed premise vector (derived from \(X\)). Complexity term: \(E_{\text{comp}}=\lambda\,\text{Entropy}(z)= -\lambda\sum_i[z_i\log z_i+(1-z_i)\log(1-z_i)]\). Total free energy \(F=E_{\text{pred}}+E_{\text{comp}}\).  
-4. **Criticality scoring** – Compute susceptibility \(\chi = \frac{\partial\langle z\rangle}{\partial\lambda}\) via finite difference (evaluate \(F\) at \(\lambda\) and \(\lambda+\Delta\)). The final score for answer \(a\) is \(S_a = -F_a + \alpha\,\chi_a\), favoring low free energy (good explanation) while operating near the point where small changes in \(\lambda\) produce large changes in \(z\) (edge of chaos). All steps use only NumPy and the Python standard library.
+1. **Parsing** – Use regex to extract atomic propositions *pᵢ* and binary relations *r(pᵢ, pⱼ)* from the prompt and each candidate answer. Relations captured: negation (¬), conditional (→), causal (⇒), comparative (> , <, =), ordering (before/after), and numeric equality/inequality. Store propositions in a list `props` and relations in a sparse adjacency matrix `R` (numpy `int8` where 1 = present, 0 = absent).  
+2. **Factor graph construction** – For each relation create a factor *fₖ* that predicts the truth value of the dependent proposition from its antecedents. A factor’s prediction error is `eₖ = (v_dep - Σ wₖᵢ·v_ant)²`, where `v` are binary truth values (0/1) and `wₖᵢ` are learned weights (initially 1 for all links).  
+3. **Precision (inverse variance) as critical control** – Treat the precision matrix `Π` (diagonal, same size as number of factors) as a free‑energy hyper‑parameter. Initialize `Πᵢᵢ = 1`. After each belief‑propagation sweep compute the susceptibility χ = Var(eₖ) / ⟨eₖ⟩². Adjust `Πᵢᵢ ← Πᵢᵢ * (1 + η·(χ - χ*))` where χ* is the target susceptibility at criticality (set to the median χ of a random baseline) and η a small step (0.01). This drives the system to the point of maximal correlation length without diverging.  
+4. **Belief propagation (loopy)** – Iterate: update marginal beliefs `bᵢ = sigmoid( Σⱼ Rⱼᵢ·wⱼᵢ·bⱼ )` until Δb < 1e‑4 or max 20 iterations.  
+5. **Free‑energy score** – Compute variational free energy `F = Σₖ Πₖₖ·eₖ - H(b)`, where `H(b) = -Σᵢ [bᵢ log bᵢ + (1-bᵢ) log(1-bᵢ)]` is the entropy of beliefs. Lower `F` indicates a better abductive explanation.  
+6. **Answer ranking** – For each candidate, inject its asserted propositions as fixed beliefs (clamp `bᵢ` to 0 or 1) and run steps 4‑5. The score is the resulting `F`; the answer with minimal `F` wins.
 
 **Structural features parsed**  
-Negations (“not”, “no”), comparatives (“more than”, “less than”), conditionals (“if … then”), causal cues (“because”, “leads to”), ordering relations (“before/after”, “greater than”), numeric values, quantifiers (“all”, “some”), and conjunction/disjunction markers.
+Negations, conditionals (if‑then), causal arrows, comparatives (> , <, =), ordering relations (before/after), numeric values, and quantifiers (all/some/none) are extracted via regex patterns and turned into propositions and weighted links.
 
 **Novelty**  
-Energy‑based models and critical brain hypotheses exist separately, and abductive scoring appears in some QA pipelines, but the joint use of variational free‑energy minimization, susceptibility‑based criticality tuning, and explicit symbolic parsing of logical cues has not been combined in a pure‑numpy reasoning evaluator. It maps loosely to predictive‑coding accounts but is algorithmically novel for this task.
+Predictive‑coding and free‑energy formulations exist in neuroscience, and criticality has been applied to neural networks, but coupling them with explicit symbolic abductive hypothesis generation in a pure‑numpy, rule‑based scorer is not present in current evaluation tools. The approach is therefore novel for text‑based reasoning assessment.
 
 **Rating**  
-Reasoning: 7/10 — captures explanation quality via free‑energy minimization but relies on simple gradient search.  
-Metacognition: 6/10 — susceptibility provides a rudimentary confidence monitor yet lacks full self‑reflection.  
-Hypothesis generation: 8/10 — abductive core directly scores competing hypotheses as explanations.  
-Implementability: 9/10 — all components are regex parsing, NumPy linear algebra, and basic loops; no external dependencies.
+Reasoning: 8/10 — captures explanatory depth via free‑energy minimization while respecting logical constraints.  
+Metacognition: 7/10 — the susceptibility‑driven precision update offers a rudimentary self‑monitoring of confidence.  
+Hypothesis generation: 7/10 — abductive scoring arises naturally from comparing free energies of alternative fixed‑belief sets.  
+Implementability: 9/10 — relies only on regex, numpy matrix ops, and simple iterative loops; no external libraries or training needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 8/10 |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **7.0** |
+| **Composite** | **7.33** |
 
 **Novelty**: novel
-**High Potential**: No
+**High Potential**: Yes
 
 ---
 

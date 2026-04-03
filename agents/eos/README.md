@@ -6,15 +6,34 @@ Eos is Prometheus's horizon scanner — a daemon that continuously monitors the
 frontier of AI research, open-source tools, and free API resources. She watches
 the primordial soup and reports what's emerging.
 
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| Pronoia | **Eos** — horizon scanner across 5 data sources | Aletheia |
+
+**Reads from:** `configs/eos_config.yaml`, API keys from `.env`
+**Writes to:** `agents/eos/reports/YYYY-MM-DD.md`, `agents/eos/data/paper_index.json`
+
+---
+
 ## What Eos Does
 
 1. **Meta-searches for free tokens and API access** — discovers and tracks free
    tiers, trial periods, open-source model endpoints, and low-cost API access
    across the ecosystem (GitHub Models, OpenRouter, Groq, HuggingFace, etc.)
 
-2. **Monitors the research frontier** — scans arxiv, Semantic Scholar, and
-   GitHub for new papers, repos, and tools in our domains (mechanistic
-   interpretability, steering vectors, evolutionary algorithms, autonomous agents)
+2. **Monitors the research frontier** — scans five sources for new papers,
+   repos, and tools in our domains (mechanistic interpretability, steering
+   vectors, evolutionary algorithms, autonomous agents):
+
+   | Source | What it searches | Typical yield |
+   |--------|-----------------|---------------|
+   | **arXiv** | New papers in cs.AI, cs.LG, cs.CL | ~20 papers |
+   | **OpenAlex** | Academic papers with citation context | ~15 papers |
+   | **Semantic Scholar** | Papers with TLDRs, citation graphs | ~15 papers |
+   | **GitHub** | Trending repos in mech-interp, transformers, evolutionary ML | ~15 repos |
+   | **Tavily** | Web intelligence — blog posts, announcements, releases | ~5 results |
 
 3. **Tracks the open-source landscape** — watches for new model releases,
    framework updates, toolkit announcements that could accelerate Prometheus
@@ -22,7 +41,15 @@ the primordial soup and reports what's emerging.
 4. **Maintains a living database** — API resources, rate limits, token budgets,
    and cost-per-query for every service, updated continuously
 
-5. **Reports digests** — writes daily/weekly summaries to `reports/` with
+5. **Deduplicates via `paper_index.json`** — every paper/repo gets a unique
+   key. If it's already in the index, it's skipped. The index grows across
+   cycles and persists between runs.
+
+6. **Deep-analyzes top findings via Nemotron 120B** — high-scoring items are
+   sent to NVIDIA NIM's Nemotron 120B for structured analysis. Items scoring
+   above threshold are flagged as ATTENTION REQUIRED.
+
+7. **Reports digests** — writes daily summaries to `reports/` with
    actionable intelligence. Only surfaces what deserves human attention.
 
 ## Architecture

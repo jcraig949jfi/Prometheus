@@ -2,46 +2,42 @@
 
 **Fields**: Mathematics, Information Science, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T21:02:11.613060
-**Report Generated**: 2026-03-27T04:25:49.893720
+**Nous Timestamp**: 2026-04-02T03:46:11.715320
+**Report Generated**: 2026-04-02T04:19:57.292872
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing layer** – Apply a fixed set of regex patterns to the question and each candidate answer to extract propositional atoms:  
-   - `P` for atomic statements (e.g., “Drug X reduces blood pressure”).  
-   - `¬P` for negations.  
-   - `P → Q` for conditionals (cue words “if”, “then”).  
-   - `P ∧ Q` for conjuncts (cue “and”).  
-   - Comparative atoms (`P > Q`, `P < Q`) from comparatives (“more”, “less”).  
-   - Numeric atoms (`value ≈ k`) from numbers and units.  
-   - Causal atoms (`cause(P,Q)`) from verbs like “cause”, “lead to”, “trigger”.  
-   - Ordering atoms (`before(P,Q)`, `after(P,Q)`) from temporal cues.  
-   Each distinct atom gets an integer index; we store a binary feature matrix **F** (n_candidates × n_atoms) where F[i,j]=1 if atom j appears in candidate i.
+The tool builds a *probabilistic causal constraint graph* from the prompt and each candidate answer.  
+1. **Parsing** – Extract propositions (e.g., “X causes Y”, “A > B”, “¬C”, numeric constraints) and represent them as nodes in a directed graph. Each node stores a prior belief \(p_i\) (initialized uniformly) and a likelihood function \(L_i(e)\) derived from extracted evidence (e.g., frequency of a numeric value, presence of a causal keyword).  
+2. **Bayesian update** – For each evidence item \(e\), update the node’s belief via Bayes’ rule:  
+   \[
+   p_i \leftarrow \frac{p_i \, L_i(e)}{\sum_j p_j \, L_j(e)} .
+   \]  
+   This yields a posterior distribution over propositions.  
+3. **Causal do‑calculus propagation** – Apply Pearl’s do‑operator to enforce causal constraints: if a node \(X\) is set to a value (e.g., “treatment = yes”), propagate the effect downstream using the graph’s conditional probability tables (estimated from co‑occurrence counts). The result is a *post‑intervention* belief vector \(\mathbf{p}^{do}\).  
+4. **Maximum‑entropy projection** – Impose the updated beliefs as linear constraints on a distribution \(q\) over answer space: \(\mathbb{E}_q[ f_k ] = \tilde{p}_k\) where \(f_k\) are indicator features for each proposition. Solve the convex optimization  
+   \[
+   \max_q \; -\sum_x q(x)\log q(x) \quad \text{s.t. constraints}
+   \]  
+   using Lagrange multipliers; the solution is an exponential family (log‑linear) model \(q(x)\propto\exp(\sum_k \lambda_k f_k(x))\). The multipliers \(\lambda\) are obtained by iterative scaling (numpy‑based).  
+5. **Scoring** – For a candidate answer \(a\), compute its probability under the max‑ent distribution:  
+   \[
+   \text{score}(a) = \log q(a) .
+   \]  
+   Higher scores indicate answers that best satisfy the Bayesian‑updated causal constraints while remaining maximally non‑committal.
 
-2. **Prior construction (Maximum Entropy)** – From the training set we compute empirical expectations of feature types (e.g., average frequency of negations, causal atoms). Using Generalized Iterative Scaling (GIS) with NumPy we find the probability vector **π** over atom assignments that maximizes entropy subject to matching those expectations. The prior over a full candidate is the product of π_j^{F[i,j]} (log‑space sum for stability).
+**Structural features parsed** – negations (“not”), comparatives (“greater than”), conditionals (“if … then”), numeric values and units, causal verbs (“causes”, “leads to”), ordering relations (“before/after”), quantifiers (“all”, “some”), and equality statements.
 
-3. **Likelihood (Causal Inference)** – Build a directed acyclic graph **G** from causal atoms extracted from the question (edges X→Y). For each candidate, define a compatibility score:  
-   - If the candidate asserts `cause(X,Y)` and edge X→Y exists in G, likelihood = 1.  
-   - If it asserts `cause(X,Y)` but the edge is absent, likelihood = ε (small constant, e.g., 0.1).  
-   - For non‑causal atoms, likelihood = 1 if the atom is logically entailed by the question using simple forward chaining (modus ponens) over extracted conditionals; otherwise likelihood = ε.  
-   The overall likelihood **L[i]** is the product of per‑atom likelihoods (again in log space).
-
-4. **Posterior scoring (Bayesian Update)** – Compute log‑posterior:  
-   `log post[i] = log π·F[i] + log L[i]`  
-   Normalize across candidates to obtain posterior probabilities. The candidate with highest posterior is selected.
-
-**Structural features parsed** – negations, comparatives, conditionals, numeric values, causal claims, temporal ordering relations, conjunctive structure.
-
-**Novelty** – While Maximum Entropy priors, causal DAGs, and Bayesian updating each appear separately (e.g., in Markov Logic Networks, Probabilistic Soft Logic, or causal Bayesian nets), the specific pipeline that derives a MaxEnt prior from linguistic feature expectations, then updates it with a deterministic causal‑graph likelihood using only NumPy and regex, is not described in existing literature to the best of my knowledge. It bridges symbolic constraint propagation with principled probabilistic scoring.
+**Novelty** – While Bayesian networks, causal do‑calculus, and maximum‑entropy parameter estimation each appear separately, their chaining—Bayesian updating of proposition priors, causal intervention propagation, followed by a max‑ent projection to score answers—has not been described in the literature for reasoning‑evaluation tools.
 
 **Ratings**  
-Reasoning: 8/10 — captures logical structure, causal direction, and uncertainty updates in a principled way.  
-Metacognition: 6/10 — the method can detect when posterior mass is diffuse (low confidence) but lacks explicit self‑reflection on parsing failures.  
-Hypothesis generation: 5/10 — generates hypotheses via candidate enumeration but does not propose new atoms beyond those extracted.  
-Implementability: 9/10 — relies only on regex, NumPy matrix ops, and simple iterative scaling; all feasible in a few hundred lines.
+Reasoning: 8/10 — captures logical, causal, and evidential updates but relies on simple co‑occurrence likelihoods.  
+Metacognition: 6/10 — the tool can report confidence via entropy but lacks explicit self‑monitoring of its assumptions.  
+Hypothesis generation: 7/10 — sampling from the max‑ent distribution yields alternative plausible answers.  
+Implementability: 9/10 — all steps use numpy linear algebra and iterative scaling; no external libraries needed.
 
 ### Scores
 
@@ -49,9 +45,9 @@ Implementability: 9/10 — relies only on regex, NumPy matrix ops, and simple it
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

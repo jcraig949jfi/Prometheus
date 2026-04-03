@@ -2,52 +2,48 @@
 
 **Fields**: Complex Systems, Information Science, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T14:22:08.901601
-**Report Generated**: 2026-03-31T16:39:45.326594
+**Nous Timestamp**: 2026-04-02T02:22:50.878018
+**Report Generated**: 2026-04-02T04:20:01.474832
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-We treat each prompt and candidate answer as a set of logical propositions extracted by regex‑based patterns:  
-- **Atomic propositions** (`P(subject, predicate, polarity)`) for simple statements.  
-- **Comparative propositions** (`Comp(subj1, op, subj2, value)`) for “greater than”, “less than”, etc.  
-- **Conditional propositions** (`Cond(antecedent, consequent)`) for “if … then …”.  
-- **Causal propositions** (`Cause(source, effect)`) for “because”, “leads to”.  
-- **Ordering propositions** (`Order(a, rel, b)`) for “before”, “after”.  
-- **Negation flag** attached to any proposition.
+**Algorithm: MDL‑guided Predictive‑Emergence Scorer (MPES)**  
 
-All propositions are stored in a directed graph `G = (V, E)` where nodes are proposition instances and edges represent logical dependencies (e.g., an conditional’s antecedent → consequent, causal source → effect). Numeric constraints are kept as interval lists attached to comparative nodes.
+1. **Parsing & Data structures**  
+   - Use a small set of regex patterns to extract atomic propositions from the prompt *P* and each candidate answer *A*. Each proposition is stored as a tuple `(subj, rel, obj, polarity)` where `rel` ∈ {‘is’, ‘has’, ‘causes’, ‘>’, ‘<’, ‘=’, …} and `polarity` ∈ {+1, –1} for negation.  
+   - Build two directed graphs Gₚ and Gₐ from the proposition sets: nodes = entities, edges = relational predicates (labelled).  
+   - Create a binary feature vector f ∈ {0,1}^K for each graph, where each dimension corresponds to a specific structural motif (e.g., presence of a conditional `if‑then`, a comparative `>`, a causal chain of length 2, a numeric equality). K is fixed (≈30) and covers the features listed in part 2.  
+   - Store the vectors as NumPy arrays for fast dot‑product and norm operations.
 
-**Operations**  
-1. **Extraction** – run a handful of regexes over the prompt to build `G₀`.  
-2. **Constraint propagation** – apply transitive closure on `Order` edges (Floyd‑Warshall) and unit‑resolution on Horn‑style conditionals to derive implied propositions; contradictions are flagged.  
-3. **Prediction error** – for each candidate answer, extract its proposition set `Gₐ`. Compute an error score `E = Σ w_i·v_i` where each violated constraint (missing implied proposition, contradictory polarity, interval out‑of‑range) contributes a weight `w_i` and a binary violation `v_i`.  
-4. **Kolmogorov complexity approximation** – compute an LZ‑78 parsing length `C(answer)` (implemented with a dictionary over bytes; this is a pure‑Python, O(n) estimator).  
-5. **Free‑energy score** – `F = E + λ·C(answer)`. The final ranking uses `S = -F` (lower free energy → higher score). λ balances fit vs. simplicity.
+2. **Operations & Scoring logic**  
+   - **Kolmogorov‑complexity term (MDL):** Approximate the description length of *A* given *P* by the length of a lossless compression of the concatenated feature vectors. Implement a simple LZ77‑style parser on the byte‑stream of `fₐ` using a sliding window over `fₚ`; the number of emitted literals L approximates K(A|P).  
+   - **Free‑energy (prediction‑error) term:** Compute the prediction error as the Hamming distance between `fₚ` and the portion of `fₐ` that is predictable from `fₚ` via a linear predictor `W` learned once from a small corpus of correct‑answer pairs (ridge regression with NumPy). Error E = ‖fₐ – (W·fₚ)‖₂².  
+   - **Emergence bonus:** Identify macro‑level motifs that are not present in any single edge but appear in the graph’s transitive closure (e.g., multi‑step causal chains, ordering cycles). Let M be the count of such emergent motifs in Gₐ that are absent in Gₚ.  
+   - **Final score:** S(A) = – L – λ·E + β·M, where λ,β are scalar hyper‑parameters (set to 1.0 for baseline). Higher S indicates a better answer.
 
-**Structural features parsed**  
-Negations, comparatives (`>`, `<`, `=`), conditionals (`if … then …`), causal cues (`because`, `leads to`, `results in`), ordering/temporal terms (`before`, `after`, `previously`), numeric values and units, and quantifier‑like phrases (`all`, `some`, `none`).
+3. **Structural features parsed**  
+   - Negations (`not`, `no`), comparatives (`greater than`, `less than`), conditionals (`if … then …`), causal verbs (`causes`, `leads to`), numeric values and arithmetic relations, ordering relations (`first`, `last`, `before`, `after`), and existential/universal quantifiers inferred from plurals or “all/none”.
 
-**Novelty**  
-While MDL‑based model selection and constraint‑propagation solvers exist separately, jointly minimizing a free‑energy‑like objective that combines logical prediction error with an explicit Kolmogorov‑complexity penalty for answer strings is not standard in QA scoring rubrics. This tight coupling of emergence (macro‑level answer quality from micro‑level logical constraints), algorithmic information theory, and variational free‑energy minimization is therefore novel.
+4. **Novelty**  
+   - Pure MDL‑based scoring of answers exists (e.g., compression‑based similarity), and predictive‑coding/free‑energy models have been applied to language, but coupling them with an explicit emergence bonus that rewards higher‑order graph motifs not reducible to single edges is not documented in the literature. Hence the combination is novel in its joint use of description length, prediction error, and emergent‑structure reward within a purely algorithmic, numpy‑only framework.
 
 **Ratings**  
-Reasoning: 7/10 — captures logical consistency and simplicity but relies on approximate complexity.  
-Metacognition: 5/10 — no explicit self‑monitoring of uncertainty beyond error weighting.  
-Hypothesis generation: 6/10 — generates implied propositions via propagation, yet lacks exploratory search.  
-Implementability: 8/10 — uses only regex, numpy (for interval ops), and stdlib; LZ‑78 is straightforward to code.
+Reasoning: 8/10 — captures logical structure and prediction error, but relies on hand‑crafted motifs.  
+Metacognition: 6/10 — no explicit self‑monitoring; emergence bonus offers limited reflection.  
+Hypothesis generation: 7/10 — emergent motifs can inspire new chains, yet generation is indirect.  
+Implementability: 9/10 — uses only regex, NumPy, and basic graph operations; feasible in <200 lines.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

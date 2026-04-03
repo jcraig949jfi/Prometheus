@@ -2,50 +2,37 @@
 
 **Fields**: Computer Science, Control Theory, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T09:05:31.393966
-**Report Generated**: 2026-03-27T05:13:37.714941
+**Nous Timestamp**: 2026-04-02T05:39:41.274683
+**Report Generated**: 2026-04-02T08:39:47.866137
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We build a hybrid neuro‑symbolic scorer called **Reservoir‑Feedback SAT‑Scorer (RFSS)**.  
+1. **Parsing → literal matrix** – From the prompt and each candidate answer extract a set of atomic propositions *P* (e.g., “X > Y”, “¬Z”, “if A then B”). Build a binary literal matrix **L** ∈ {0,1}^{m×p} where *m* is the number of extracted propositions and *p* the number of distinct literals (positive form). A negated literal is represented by storing its positive form in **L** and marking the clause with a –1 weight (see step 2).  
+2. **Clause construction** – Convert each extracted relation into a clause *c_j* = Σ_i w_{ji} l_i, where w_{ji} ∈ {+1,‑1,0}. Collect clauses in matrix **W** ∈ {‑1,0,+1}^{c×p}. A clause is satisfied iff the dot‑product **W**·**x** ≥ 1 for assignment **x** ∈ {0,1}^p (1 = literal true).  
+3. **Reservoir projection** – Fix a random reservoir **W_res** ∈ ℝ^{n_r×p} (entries ∼ 𝒩(0,1)) and a random recurrent matrix **W_rec** ∈ ℝ^{n_r×n_r} (spectral radius < 1). For each candidate, compute the reservoir state **r** = tanh(**W_res**·**L**^T + **W_rec**·**r₀**) with **r₀**=0; a single time‑step is sufficient because the reservoir is static.  
+4. **Readout & feedback control** – Train a readout **W_out** ∈ ℝ^{c×n_r} by ridge regression to map **r** to a target satisfaction vector **t** = [1,…,1]^T (all clauses should be true). Prediction **ŷ** = **W_out**·**r**. Compute error **e** = **t** − **ŷ**. Apply a proportional controller: Δ**L** = κ·(**W_out**^T·**e**) projected back to literal space (κ = 0.1). Update **L** ← clip(**L** + Δ**L**,0,1) and repeat steps 3‑4 for T = 3 iterations.  
+5. **Scoring** – After T iterations, compute final error norm ‖**e**‖₂. Score = 1 − ‖**e**‖₂ / √c (clipped to [0,1]). Higher scores indicate the candidate’s literal assignment better satisfies all extracted constraints.
 
-1. **Parsing layer (standard library + regex)** – Convert the prompt and each candidate answer into a directed constraint graph \(G=(V,E)\). Nodes represent propositions extracted from the text (e.g., “X > Y”, “¬P”, “if A then B”). Edges encode logical relations:  
-   * **Negation** → edge with polarity −1,  
-   * **Comparative / ordering** → weighted edge \(w_{ij}=|value_i‑value_j|\),  
-   * **Conditional** → implication edge \(A\rightarrow B\),  
-   * **Causal claim** → bidirectional edge with confidence \(c\).  
-   The graph is stored as adjacency lists of tuples (target, type, weight).
+**Structural features parsed**  
+- Negations (¬) → –1 weights in **W**.  
+- Comparatives (>, <, ≥, ≤) → propositions of form “value₁ rel value₂”.  
+- Conditionals (if‑then) → implication encoded as (¬ antecedent) ∨ consequent.  
+- Causal claims (because →) → treated as conditional.  
+- Ordering relations (before/after, precedes) → temporal propositions.  
+- Numeric values → thresholds turned into atomic propositions (e.g., “price > 100”).  
+- Conjunction/disjunction → multiple literals per clause.
 
-2. **Reservoir layer (numpy only)** – A fixed‑size random recurrent network (echo state) with state vector \(s_t\in\mathbb{R}^N\). At each time step we feed a one‑hot encoding of the current node’s proposition type (negation, comparative, etc.) plus its numeric weight. The update is  
-   \[
-   s_{t+1}= \tanh(W_{in}x_t + W_{res}s_t),
-   \]  
-   where \(W_{in},W_{res}\) are fixed random matrices (spectral radius < 1). The reservoir thus captures sequential dependencies and non‑linear interactions among constraints without training.
+**Novelty**  
+Pure reservoir computing with a fixed random recurrent layer is well‑known (ESN/LSM). Feedback‑control‑driven refinement of the readout output is standard in control theory. Using SAT‑style clause matrices to represent extracted logical structure appears in neuro‑symbolic SAT solvers, but those solvers typically learn symbolic weights or employ search. Here the reservoir remains fixed, the only learned part is a linear readout, and the iterative refinement is a simple proportional controller—no gradient‑based learning or combinatorial search. This specific coupling of a static reservoir, linear readout, and proportional error‑driven literal update has not been described in the literature to the best of my knowledge, making the combination novel.
 
-3. **Readout & Feedback Control** – A trainable weight vector \(w\in\mathbb{R}^N\) maps the final reservoir state \(s_T\) to a raw score \(z = w^\top s_T\). We interpret \(z\) as a penalty for violating constraints. Using a SAT/SMT solver (pure‑Python back‑tracking with clause learning, allowed because it’s standard library), we check satisfiability of the constraint graph after adding a soft‑constraint that each proposition’s truth value incurs cost proportional to \(|z|\). The solver returns:  
-   * **sat** – a model with minimal total penalty,  
-   * **unsat core** – set of conflicting clauses.  
-
-   The error signal \(e = z - z_{target}\) (where \(z_{target}=0\) for a perfectly consistent answer) drives a simple PID‑style update on \(w\):  
-   \[
-   w \leftarrow w - K_P e - K_I\sum e - K_K \Delta e,
-   \]  
-   with gains chosen to keep the update stable (akin to tuning a controller). This feedback loop reduces the penalty until the solver reports sat or the penalty plateaus.
-
-4. **Scoring** – The final score for a candidate is the negative of the minimized penalty (higher = more consistent). Candidates are ranked by this score.
-
-**Structural features parsed** – negations, comparatives/ordering, conditionals (if‑then), causal claims, numeric values, and explicit quantification (e.g., “all”, “some”) via regex patterns that map to proposition types and edge weights.
-
-**Novelty** – The combination mirrors recent neuro‑symbolic proposals (e.g., Neural Theorem Provers, Logic Tensor Networks) but adds a closed‑loop feedback controller that tunes the readout using SAT‑derived error signals. While reservoir computing with SAT solvers has been explored (Reservoir‑SAT), the explicit PID‑style adaptation of the readout based on unsat‑core feedback is not common in published work, making the approach moderately novel.
-
-**Ratings**  
-Reasoning: 7/10 — The method captures logical structure and propagates constraints, but relies on hand‑crafted parsing and a simple controller, limiting deep reasoning.  
-Metacognition: 5/10 — No explicit self‑monitoring of uncertainty beyond error magnitude; the PID loop offers rudimentary adjustment but no higher‑level reflection.  
-Hypothesis generation: 4/10 — Generates hypotheses only as variable assignments from the SAT solver; it does not propose new relational structures beyond those parsed.  
-Implementability: 8/10 — All components (regex parsing, numpy reservoir, backtracking SAT, PID update) use only numpy and the standard library, making it straightforward to code and run.
+**Rating**  
+Reasoning: 7/10 — captures logical structure and iteratively improves satisfaction, but limited to linear readout and small T.  
+Metacognition: 5/10 — no explicit monitoring of internal confidence beyond error norm.  
+Hypothesis generation: 6/10 — generates new literal assignments via controller, yet constrained to local perturbations.  
+Implementability: 8/10 — relies only on numpy for matrix ops and stdlib for parsing; straightforward to code.
 
 ### Scores
 
@@ -53,9 +40,9 @@ Implementability: 8/10 — All components (regex parsing, numpy reservoir, backt
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 8/10 |
-| **Composite** | **5.33** |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

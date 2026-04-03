@@ -2,46 +2,43 @@
 
 **Fields**: Mathematics, Neuroscience, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T18:57:13.157754
-**Report Generated**: 2026-03-31T14:34:54.771498
+**Nous Timestamp**: 2026-04-01T13:22:33.183277
+**Report Generated**: 2026-04-01T20:30:42.181656
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We build a typed directed‑graph \(G=(V,E)\) where each node \(v_i\) encodes a proposition extracted from the prompt or a candidate answer (e.g., “X > Y”, “¬P”, “if A then B”). Node types are drawn from a small finite category \(\mathcal{C}\) (e.g., {Comparison, Negation, Conditional, Causal, Quantifier}). A functor \(F:\mathcal{C}\rightarrow\mathbf{Set}\) maps each type to a concrete feature vector: comparisons → \([\,\text{left},\text{right},\text{op}\,]\), conditionals → \([\,\text{antecedent},\text{consequent}\,]\), etc. Edges represent logical dependencies (e.g., modus ponens, transitivity) and are labeled with a relation \(r\in\{ \rightarrow, \leftrightarrow, \prec\}\).  
+1. **Parsing → Typed directed graph** – Using a handful of regex patterns we extract triples ⟨s, r, o⟩ where *s* and *o* are noun phrases or literals and *r* ∈ {=, ≠, <, >, →, causes, ¬, and, or}. Each distinct relation type gets its own adjacency matrix **Aᵣ** (boolean, size *n*×*n* where *n* is the number of unique entities). Negation is stored as a separate matrix **A¬**.  
+2. **Functorial embedding** – A lookup functor *F* maps each entity to a one‑hot basis vector *eᵢ* ∈ ℝⁿ; thus a triple becomes the outer product *eᵢ eⱼᵀ* placed in **Aᵣ**. The functor is linear, so the whole graph is represented by the set {**Aᵣ**}.  
+3. **Neuromodulatory gain (precision)** – For each relation type we learn a diagonal gain matrix **Gᵣ** = diag(γᵣ) where γᵣ∈ℝ⁺ scales the precision of predictions for that relation. Gains are set inversely to the empirical variance of that relation in a small calibration set (e.g., γ_causes = 1/var(causes)).  
+4. **Constraint propagation** – We compute the transitive closure of each **Aᵣ** using repeated Boolean matrix multiplication (Floyd‑Warshall style) with numpy’s `np.logical_or.reduce` and `np.dot` (treated as Boolean). This yields closed matrices **Āᵣ** that encode implied relations (e.g., if A→B and B→C then A→C).  
+5. **Free‑energy score** – For a candidate answer we build its closed graph {Āᵣᶜ}. The prediction error for relation *r* is **Eᵣ** = Āᵣᶜ − Āᵣ* (where * is the reference answer). Variational free energy (ignoring entropy) is approximated as  
 
-Neuromodulation supplies a gain vector \(g\in\mathbb{R}^{|E|}\) that scales each edge weight according to contextual signals (uncertainty, surprise, reward). Initially \(g=\mathbf{1}\); after each propagation step we update \(g\) using a simple Hebbian rule: \(g_e \leftarrow g_e + \eta \cdot \text{prediction\_error}_e\), clipped to \([0,2]\).  
+   FE = ½ ∑ᵣ tr(**Eᵣᵀ** **Gᵣ** **Eᵣ**)  
 
-The Free Energy Principle is instantiated as variational free energy \(F = \underbrace{D_{\text{KL}}(q\|p)}_{\text{complexity}} + \underbrace{\mathbb{E}_q[-\log p(\text{data}\mid z)]}_{\text{accuracy}}\). Here \(q\) is a Gaussian belief over node embeddings (mean = current feature vector, covariance = diag\((1/g)\)), and \(p\) encodes prior constraints encoded by the graph (hard constraints → infinite penalty if violated). We compute \(F\) for each candidate answer by running belief propagation (sum‑product) on \(G\) with the current gains, yielding a scalar error. The score is \(-\!F\) (lower free energy → higher score). All linear algebra uses NumPy; graph operations use adjacency matrices and standard library containers.
+   Lower FE means the candidate’s structured expectations better minimize surprise. The final score is *S* = −FE (higher is better). All operations use only `numpy` and the Python stdlib.
 
-**Parsed structural features**  
-Negations (“not”, “never”), comparatives (“greater than”, “less than”, “equal to”), conditionals (“if … then …”, “unless”), causal claims (“because”, “leads to”), ordering relations (“before”, “after”), quantifiers (“all”, “some”, “none”), and numeric thresholds.
+**Parsed structural features** – negations (¬), equality/inequality (=, ≠, <, >), comparatives, conditionals (→), causal claims (causes), ordering/temporal relations (before/after), conjunction/disjunction (and/or), numeric literals, and quantified statements (via explicit “all”/“some” patterns).
 
-**Novelty**  
-The trio‑wise blend is not found in existing reasoners. Probabilistic Soft Logic and Markov Logic Networks handle weighted constraints but lack the categorical functor typing and neuromodulatory gain modulation. Neural‑symbolic hybrids use learned weights, whereas our gains are updated purely from prediction error, making the approach algorithmically novel.
+**Novelty** – While probabilistic soft logic and Markov logic networks combine weighted logical constraints, the explicit use of category‑theoretic functors to map syntax to linear algebraic representations, coupled with neuromodulatory gain‑controlled precision minimization derived from the Free Energy Principle, is not present in mainstream NLP scoring tools. Hence the combination is novel.
 
-**Rating**  
-Reasoning: 8/10 — captures deep logical structure and uncertainty via free‑energy minimization.  
-Metacognition: 6/10 — gain updates give a rudimentary self‑monitoring signal but no explicit reflection on reasoning strategies.  
-Hypothesis generation: 5/10 — the system can propose alternative parses through edge re‑weighting, yet lacks generative proposal mechanisms.  
-Implementability: 9/10 — relies only on NumPy and stdlib; graph‑based belief propagation is straightforward to code.  
-
-Reasoning: 8/10 — captures deep logical structure and uncertainty via free‑energy minimization.  
-Metacognition: 6/10 — gain updates give a rudimentary self‑monitoring signal but no explicit reflection on reasoning strategies.  
-Hypothesis generation: 5/10 — the system can propose alternative parses through edge re‑weighting, yet lacks generative proposal mechanisms.  
-Implementability: 9/10 — relies only on NumPy and stdlib; graph‑based belief propagation is straightforward to code.
+**Ratings**  
+Reasoning: 8/10 — captures transitive, causal, and comparative structure via closed‑form graph operations.  
+Metacognition: 7/10 — gain matrices provide a simple form of self‑adjusting precision based on answer variability.  
+Hypothesis generation: 6/10 — can propose alternative graphs by perturbing gains, but lacks generative search beyond local edits.  
+Implementability: 9/10 — relies solely on regex, numpy linear algebra, and stdlib; no external libraries or GPUs needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 8/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

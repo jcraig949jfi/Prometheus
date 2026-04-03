@@ -2,51 +2,64 @@
 
 **Fields**: Game Theory, Theoretical Neuroscience, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T02:25:47.872464
-**Report Generated**: 2026-03-31T17:29:07.526855
+**Nous Timestamp**: 2026-04-02T03:04:41.520769
+**Report Generated**: 2026-04-02T04:20:09.553747
 
 ---
 
 ## Nous Analysis
 
-The algorithm treats each candidate answer as an arm of a multi‑armed bandit whose reward is the negative variational free energy of that answer given the question.  
+**Algorithm**  
+We treat each candidate answer as an arm of a contextual multi‑armed bandit. For every answer we extract a sparse feature vector **x** ∈ {0,1}^k that encodes the presence of structural predicates (negation, comparative, conditional, numeric literal, causal cue, ordering relation). The feature vectors form a design matrix **X** (n_answers × k).  
 
-**Data structures**  
-- `answers`: list of strings.  
-- `feat_mat`: `np.ndarray` of shape `(n_answers, n_features)` where each column is a binary feature extracted by regex (negation, comparative, conditional, numeric token, causal cue, ordering relation, quantifier, temporal marker).  
-- `alpha`: `np.ndarray` of shape `(n_answers,)` Dirichlet parameters (initial = 1 → maximum‑entropy prior over correctness).  
-- `counts`: `np.ndarray` of shape `(n_answers,)` number of times each arm has been sampled.  
-- `total`: scalar count of all samples.  
+We maintain a maximum‑entropy belief distribution over the latent correctness variable **z** ∈ {0,1} for each answer, constrained to match the empirical feature expectations observed in the prompt:  
 
-**Operations per iteration**  
-1. **Thompson sampling** – draw a sample `theta_i ~ Dirichlet(alpha)` for each answer; select the arm `i*` with the highest sample.  
-2. **Prediction error** – compute the expected feature vector under the current belief: `mu = (alpha / alpha.sum())`. Compute squared error `e = ||feat_mat[i*] - mu||^2`.  
-3. **Free‑energy update** – variational free energy for arm `i*` is `F = e - H(Dirichlet(alpha))`, where the entropy `H` is analytically available from `alpha`.  
-4. **Parameter update** – increase `alpha[i*] += 1` and `counts[i*] += 1`; increment `total`.  
-5. **Exploration bonus (UCB‑style)** – compute `bonus = sqrt(2 * log(total) / counts[i*])`.  
-6. **Score** – final score for answer `i*` is `S = -F + bonus`. After a fixed budget of samples (e.g., 5 × n_answers), return the mean score per answer obtained from all visits.  
+  ∑_i p(z_i=1) x_i = **μ̂**,  
 
-**Structural features parsed**  
-Regex patterns capture: negations (`not`, `no`), comparatives (`more`, `less`, `-er`), conditionals (`if`, `then`, `unless`), numeric values (integers, decimals, fractions), causal cues (`because`, `leads to`, `results in`), ordering relations (`before`, `after`, `greater than`), quantifiers (`all`, `some`, `none`), and temporal markers (`before`, `after`, `while`).  
+where **μ̂** is the count‑normalized feature vector extracted from the question itself. The max‑ent solution is an exponential family:  
 
-**Novelty**  
-Bandit‑based active learning and predictive‑coding (free energy) approaches exist separately, and maximum‑entropy priors are standard in logistic regression. Tying them together — using a Dirichlet‑maxent prior to drive Thompson sampling, updating free energy from extracted logical features, and adding an exploration bonus — has not been described in the literature for answer scoring, making the combination novel.  
+  p(z_i=1 | λ) = σ(λᵀx_i),  
+
+with σ the logistic function and λ ∈ ℝ^k the natural parameters.  
+
+The variational free energy for a given λ is  
+
+  F(λ) = ⟨E⟩_p − H[p]  
+   = ∑_i p_i · ‖x_i − μ̂‖²  − [−∑_i p_i log p_i − (1−p_i) log(1−p_i)],  
+
+where the first term is the prediction error (squared mismatch between feature expectations and the prompt’s constraints) and the second term is the entropy of the Bernoulli factorised posterior.  
+
+We minimise F(λ) using a simple gradient step (projected onto ℝ^k) after each new prompt:  
+
+  λ ← λ − α ∇_λ F(λ),  
+
+with α a small step size. The score assigned to answer i is  
+
+  S_i = −F_i = −[p_i · ‖x_i − μ̂‖² − H[p_i]],  
+
+i.e., low free energy (high score) indicates that the answer both satisfies the structural constraints and is inferred with high confidence.  
+
+Because the bandit formulation naturally balances exploration (high uncertainty → high entropy term) and exploitation (low prediction error), we can optionally use Thompson sampling: sample λ̃ from a Gaussian posterior over λ and rank answers by σ(λ̃ᵀx_i).  
+
+**Structural features parsed** – negations (“not”, “no”), comparatives (“more than”, “less than”), conditionals (“if … then …”), numeric values (integers, decimals), causal cues (“because”, “leads to”), ordering relations (“before”, “after”, “greater than”). Each yields a binary feature in **x**.  
+
+**Novelty** – The triplet appears in the literature only piecemeal: entropy‑regularised bandits, predictive‑coding/free‑energy updates in neural models, and max‑ent priors in statistical inference. No published work combines all three to produce a constrained, free‑energy‑minimising posterior that directly scores answer candidates in a pure‑numpy tool. Hence the combination is novel for this specific scoring setting.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure via regex and updates beliefs with a principled uncertainty measure, but lacks deep semantic parsing.  
-Metacognition: 6/10 — the bandit’s explore‑exploit trade‑off provides a rudimentary self‑monitoring mechanism, yet no explicit reflection on its own uncertainty beyond the bonus term.  
-Hypothesis generation: 5/10 — hypotheses are limited to sampling answer correctness from a Dirichlet; generation of new explanatory statements is absent.  
-Implementability: 8/10 — relies only on NumPy for array ops and the standard library for regex; the algorithm is straightforward to code and debug.
+Reasoning: 8/10 — captures uncertainty, constraint satisfaction, and information‑theoretic rigor in a transparent update rule.  
+Metacognition: 7/10 — the entropy term provides an explicit measure of confidence, enabling self‑monitoring of prediction error.  
+Hypothesis generation: 6/10 — feature extraction yields hypotheses about answer viability, but the method does not propose new hypotheses beyond scoring given candidates.  
+Implementability: 9/10 — relies only on regex feature extraction, numpy linear algebra, and simple gradient loops; no external libraries or APIs needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

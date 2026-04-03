@@ -2,35 +2,36 @@
 
 **Fields**: Mathematics, Control Theory, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T16:42:52.938208
-**Report Generated**: 2026-03-27T17:21:24.461558
+**Nous Timestamp**: 2026-04-01T21:47:13.394803
+**Report Generated**: 2026-04-02T04:20:02.558330
 
 ---
 
 ## Nous Analysis
 
-**Algorithm (Bayesian‑Control‑Free‑Energy Scorer)**  
-1. **Parsing & Graph Construction** – Using regex we extract propositions from the prompt and each candidate answer. Each proposition becomes a node; edges are labeled with one of six relations: *negation*, *comparative* (>,<,=), *conditional* (→), *causal* (←→), *temporal* (before/after), *equality*. Nodes are mapped to integer IDs; relations are stored in three NumPy arrays: `src`, `dst`, `rel_type` (int‑coded). The prompt yields a **knowledge base** `KB`. Each candidate yields a **assertion matrix** `A_c` of the same shape, where `A_c[i,j]=1` if the candidate asserts the relation `(i,j)` present in `KB`, `-1` if it asserts the opposite, and `0` if silent.  
-2. **Likelihood** – For a candidate we compute a raw compatibility score  
-   `s_c = Σ_{k} w[rel_type_k] * A_c[k]`  
-   where `w` is a fixed weight vector (e.g., +1 for matches, –1 for contradictions, 0 for silent). Likelihood is obtained via a softmax with temperature τ:  
-   `L_c = exp(s_c/τ) / Σ_{c'} exp(s_{c'}/τ)`.  
-3. **Bayesian Update** – Prior `P_c` is uniform (or length‑based). Posterior: `Post_c ∝ P_c * L_c`, normalized.  
-4. **Feedback Control (PID on τ)** – Define prediction error `e = H_target – H(Post)`, where `H` is Shannon entropy. A simple PID controller updates τ each scoring round:  
-   `τ_{new} = τ + Kp*e + Ki*∑e + Kd*(e‑e_prev)`.  
-   This keeps the posterior neither over‑confident nor too diffuse.  
-5. **Free‑Energy Approximation** – Variational free energy ≈ `-log L_c + KL(Post||Prior)`. After each PID step we compute `F = -np.log(L_c) + np.sum(Post*np.log(Post/Prior))` and perform a tiny gradient descent on τ (`τ -= α * ∂F/∂τ`) to further reduce F.  
-6. **Final Score** – Use the posterior probability (`Post_c`) or `-F` as the candidate’s merit. All operations rely only on NumPy and the Python stdlib.
+**Algorithm**  
+We build a lightweight factor graph where each node is a proposition extracted from the prompt (e.g., “X > Y”, “if A then B”, “¬C”). Propositions are binary random variables with a Beta prior (α,β) representing belief in their truth. Evidence comes from a candidate answer: we map the answer to a set of observed literals (matching extracted propositions, their negations, or numeric constraints) and define a likelihood L = ∏ pᵢ^{oᵢ}(1‑pᵢ)^{1‑oᵢ}, where oᵢ∈{0,1} indicates whether the answer asserts the literal. Using conjugate priors, the posterior Beta parameters update analytically: α←α+oᵢ, β←β+(1‑oᵢ).  
 
-**Structural Features Parsed** – Negations (“not”, “no”), comparatives (“greater than”, “less than”, “more”, “less”), conditionals (“if … then”, “unless”), causal cues (“because”, “leads to”, “results in”), temporal ordering (“before”, “after”, “first”, “last”), numeric values (integers, decimals), and equality statements.
+Prediction error eᵢ = oᵢ − μᵢ (μᵢ=α/(α+β)) is fed to a discrete‑time PID controller that adjusts a global learning rate η: ηₖ₊₁ = ηₖ + Kₚeₖ + Kᵢ∑e + Kᵟ(eₖ‑eₖ₋₁). The updated η scales the step size of the Beta updates, providing a feedback loop that damps over‑confidence when errors persist.  
 
-**Novelty** – Purely rule‑based Bayesian updating combined with a control‑theoretic temperature regulator and a free‑energy minimization loop has not been described in existing lightweight reasoning scorers; active‑inference frameworks exist but require neural nets, whereas this version uses only symbolic parsing and NumPy.
+Variational free energy F ≈ ∑ [KL(Beta(α,β)‖Beta(α₀,β₀)) − oᵢ·log μᵢ − (1‑oᵢ)·log(1‑μᵢ)] is computed after each update; the candidate answer’s score is −F (lower free energy = better explanation). All operations use only numpy arrays for the Beta parameters and standard‑library regex for parsing.
+
+**Parsed structural features**  
+- Negations (¬, “not”)  
+- Comparatives (“greater than”, “less than”, “≥”, “≤”)  
+- Conditionals (“if … then …”, “only if”)  
+- Numeric values and units  
+- Causal claims (“because”, “leads to”)  
+- Ordering relations (“first”, “then”, “before/after”)  
+
+**Novelty**  
+The trio mirrors active inference (Free Energy Principle) and predictive coding, but the concrete use of conjugate‑prize Bayesian updating, a PID‑driven learning‑rate adaptation, and explicit constraint propagation over parsed logical forms is not present in existing scoring tools, which typically rely on similarity metrics or shallow linguistic features.
 
 **Ratings**  
-Reasoning: 8/10 — captures logical consistency and uncertainty quantitatively.  
-Metacognition: 6/10 — PID provides basic self‑monitoring but lacks higher‑order reflection.  
-Hypothesis generation: 5/10 — scores candidates; does not propose new hypotheses autonomously.  
-Implementability: 9/10 — relies solely on regex, NumPy arrays, and simple arithmetic, well within constraints.
+Reasoning: 8/10 — captures belief update and error‑driven refinement, yet limited to propositional logic.  
+Metacognition: 6/10 — PID provides basic self‑regulation of confidence, but no higher‑order introspection.  
+Hypothesis generation: 7/10 — posterior distribution implicitly ranks alternative explanations via free energy.  
+Implementability: 9/10 — relies only on regex, numpy array ops, and simple arithmetic; easy to code in <200 lines.
 
 ### Scores
 
@@ -38,9 +39,9 @@ Implementability: 9/10 — relies solely on regex, NumPy arrays, and simple arit
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

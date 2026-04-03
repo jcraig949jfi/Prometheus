@@ -2,53 +2,63 @@
 
 **Fields**: Game Theory, Philosophy, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T13:40:09.327330
-**Report Generated**: 2026-03-31T20:00:10.389574
+**Nous Timestamp**: 2026-04-02T03:05:54.158725
+**Report Generated**: 2026-04-02T04:20:09.630747
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-We treat each candidate answer as an *arm* in a stochastic multi‑armed bandit (MAB). The reward of pulling an arm is the *compositional‑semantic consistency* of that answer with the prompt, measured after a *sensitivity‑analysis* perturbation step.  
+**Algorithm: Bandit‑Guided Sensitivity‑Weighted Compositional Scoring (BGS‑CS)**  
 
-1. **Parsing & representation** – Using only regex and the Python `re` module we extract a set of atomic propositions \(P = \{p_1,…,p_k\}\) from the prompt and each candidate answer. Propositions are typed:  
-   - numeric comparisons (`>`, `<`, `=`) → real‑valued variables,  
-   - ordering relations (`before`, `after`) → temporal indices,  
-   - negations (`not`) → Boolean flip,  
-   - conditionals (`if … then …`) → implication,  
-   - causal claims (`causes`, `leads to`) → directed edge in a causal graph.  
-   Each proposition is stored as a tuple `(type, polarity, operands)` in a NumPy structured array `props`.  
+1. **Parsing (Compositional Semantics)**  
+   - Input prompt *P* and each candidate answer *Cₖ* are tokenised with a simple regex‑based tokenizer.  
+   - A deterministic shift‑reduce parser builds a binary tree for each text using a fixed grammar that recognises:  
+     * propositions (noun‑verb‑noun),  
+     * negations (`not`, `no`),  
+     * comparatives (`>`, `<`, `>=`, `<=`, `equal`),  
+     * conditionals (`if … then …`),  
+     * causal cues (`because`, `leads to`, `causes`),  
+     * temporal ordering (`before`, `after`),  
+     * numeric literals with optional units.  
+   - Each node stores a tuple `(type, children, value)`. From the tree we extract a **feature vector** *fₖ* ∈ ℝᴰ where dimensions correspond to counts of the above constructs, plus:  
+     * numeric consistency score (difference between asserted and implied values),  
+     * constraint‑violation count (failures of transitivity, modus ponens, or causal monotonicity).  
 
-2. **Compositional semantics** – We recursively combine propositions according to the syntactic tree recovered from the regex groups (e.g., a conjunction node combines child truth values with `np.logical_and`, a numeric comparison node evaluates `np.greater`, etc.). The result is a scalar truth‑value \(v \in [0,1]\) where 1 = fully satisfied, 0 = violated.  
+2. **Sensitivity Analysis**  
+   - On a small held‑out set of labelled (prompt, answer) pairs we compute a **base satisfaction score** *Sₖ* = 1 if all logical constraints hold, else 0.  
+   - For each feature dimension *j* we approximate the partial derivative ∂S/∂fⱼ by central finite differences: perturb *fⱼ* by ±ε, recompute *S*, and average the absolute change over the validation set.  
+   - The resulting sensitivity vector *w* ∈ ℝᴰ is normalised to sum to 1 and used as a linear weighting: *baseScoreₖ* = w·fₖ.  
 
-3. **Sensitivity analysis** – For each numeric operand we add zero‑mean Gaussian noise \(\epsilon \sim \mathcal{N}(0,\sigma^2)\) (σ set to 5 % of the operand’s magnitude) and recompute \(v\). Repeating \(R=30\) times yields a distribution \(\{v^{(r)}\}\). The *robustness score* is the negative variance: \(s = -\operatorname{Var}(v^{(r)})\). Low variance → high robustness.  
+3. **Multi‑Armed Bandit Selection (Thompson Sampling)**  
+   - Treat each candidate *Cₖ* as an arm with a Beta posterior (αₖ, βₖ) initialised to (1,1).  
+   - At scoring time we draw a sample θₖ ~ Beta(αₖ, βₖ).  
+   - The final bandit score is *scoreₖ* = θₖ * baseScoreₖ.  
+   - After evaluating the candidate against the prompt’s logical constraints (using the same constraint‑propagation routine), we update:  
+     * if all constraints satisfied → αₖ ← αₖ + 1, else βₖ ← βₖ + 1.  
+   - The process can be repeated for multiple rounds; the expected θₖ converges to the probability that the candidate is logically sound, modulated by sensitivity‑derived feature importance.  
 
-4. **Bandit update** – The reward for arm \(i\) (candidate answer) is \(r_i = \alpha \, v_i + (1-\alpha) \, s_i\) with \(\alpha=0.6\). We maintain empirical means \(\hat{\mu}_i\) and counts \(n_i\). At each iteration we select the arm with the highest Upper Confidence Bound:  
-   \[
-   a_t = \arg\max_i \left(\hat{\mu}_i + \sqrt{\frac{2\ln t}{n_i}}\right).
-   \]  
-   After pulling, we update \(\hat{\mu}_{a_t}\) and \(n_{a_t}\). After a fixed budget (e.g., 100 pulls) the final score for each answer is its \(\hat{\mu}_i\).  
+**Structural Features Parsed**  
+Negations, comparatives, conditionals, causal claims, temporal ordering, numeric literals/units, quantifiers, and conjunctions. The parser also extracts implicit relations needed for transitivity (e.g., *A > B* and *B > C* ⇒ *A > C*) and modus ponens (if *P → Q* and *P* then *Q*).  
 
-**Structural features parsed** – negations, comparatives, conditionals, numeric values, causal claims, ordering (temporal/ordinal) relations, and logical conjunction/disjunction implied by punctuation or cue words.  
-
-**Novelty** – While MABs have been used for answer selection and compositional semantics for semantic parsing, coupling them with a sensitivity‑analysis robustness term to dynamically allocate evaluation effort is not documented in the literature; the closest work uses reinforcement learning for retrieval, not pure algorithmic bandits with analytic sensitivity.  
+**Novelty**  
+Pure compositional semantic parsers exist, as do bandit‑based answer selectors in reinforcement learning, and sensitivity analysis is common in ML robustness studies. Combining them — using sensitivity‑derived linear weights to inform a Thompson‑sampling bandit over parsed logical features — has not been reported in the literature for discrete reasoning‑answer scoring, making the approach novel in this niche.  
 
 **Ratings**  
-Reasoning: 8/10 — The method combines logical evaluation with uncertainty‑driven exploration, yielding nuanced scores beyond simple similarity.  
-Metacognition: 6/10 — The bandit mechanism provides a basic form of self‑monitoring of answer quality, but lacks higher‑order reflection on its own parsing errors.  
-Hypothesis generation: 5/10 — The system can propose alternative interpretations via perturbed inputs, yet it does not actively generate new explanatory hypotheses beyond the given candidates.  
-Implementability: 9/10 — All components rely solely on regex, NumPy vectorized operations, and standard‑library data structures; no external APIs or neural models are required.
+Reasoning: 7/10 — captures logical structure and constraint propagation but relies on hand‑crafted grammar, limiting coverage of complex language.  
+Metacognition: 8/10 — Thompson sampling provides explicit uncertainty quantification; sensitivity analysis adds insight into feature influence.  
+Hypothesis generation: 6/10 — generates alternative parses only via perturbation in sensitivity step; no systematic search for novel interpretations.  
+Implementability: 9/10 — uses only regex, numpy for vector ops, and stdlib data structures; no external libraries or neural components.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 8/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Reasoning | 7/10 |
+| Metacognition | 8/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

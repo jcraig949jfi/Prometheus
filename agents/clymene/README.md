@@ -3,6 +3,17 @@
 > *Clymene, Titaness of fame and renown, mother of Prometheus.*
 > *She gathers what the world has made free — before the gates close.*
 
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| Metis | **Clymene** — archives repos, models, and datasets before they disappear | Hermes |
+
+**Reads from:** `agents/clymene/configs/manifest.yaml`, `agents/clymene/data/last_run.txt` (72h cooldown check)
+**Writes to:** `vault/`, `agents/clymene/reports/YYYY-MM-DD_hoard.md`, `agents/clymene/data/vault_registry.db`
+
+---
+
 ## Why Clymene Exists
 
 The open-source window is closing. Tools that are free today get paywalled
@@ -12,6 +23,18 @@ that are open-access get locked behind institutional walls.
 Clymene's job is simple: **download and archive everything we might need
 before it becomes unavailable.** She maintains a local vault of repos,
 model weights, and datasets — checksummed, catalogued, and ready.
+
+## 72-Hour Cooldown
+
+Clymene only runs a full hoard cycle every 72 hours (configurable). On each
+invocation via `--once`, she checks `agents/clymene/data/last_run.txt` for the
+timestamp of the last completed run. If fewer than 72 hours have passed, she
+prints how long until the next run and exits silently. When a run completes,
+the timestamp file is updated.
+
+The script lives at `agents/clymene/src/clymene.py`.
+
+---
 
 ## Quick Start
 

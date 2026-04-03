@@ -8,7 +8,18 @@ One command launches a chain of specialized agents that scan the research
 frontier, extract structured knowledge, synthesize executive briefs, and
 optionally publish everything to GitHub so you can read it on your phone.
 
-**Entry point:** `F:\Prometheus\pronoia.py`
+**Entry point:** `pronoia.py` (lives at the project root, not in `agents/pronoia/src/`)
+
+---
+
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| (none — entry point) | **Pronoia** — orchestrates the full intelligence pipeline | Eos |
+
+**Reads from:** CLI arguments, pipeline configuration
+**Writes to:** `agents/pronoia/logs/audit_TIMESTAMP.md`, coordinates all downstream agent outputs
 
 ---
 
@@ -437,6 +448,9 @@ These agents are part of Prometheus but are invoked separately, not through Pron
 |-------|------|-----------|
 | **Ignis** | Reasoning circuit discovery via CMA-ES + TransformerLens | `python ignis/src/main.py --config configs/marathon.yaml` |
 | **Arcanum** | Waste-stream novelty mining (xenolinguistic screening) | `python arcanum/run.py` |
+| **Hephaestus** | Reasoning tool forge — RLVF pipeline | See `agents/hephaestus/` |
+| **Nous** | Combination mining — discovers novel entity pairings | See `agents/nous/` |
+| **Nemesis** | Adversarial falsification — stress-tests claims | See `agents/nemesis/` |
 
 ---
 

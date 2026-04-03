@@ -2,53 +2,52 @@
 
 **Fields**: Statistical Physics, Formal Methods, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T21:43:05.913151
-**Report Generated**: 2026-03-27T06:37:48.967940
+**Nous Timestamp**: 2026-04-02T03:09:24.352794
+**Report Generated**: 2026-04-02T04:20:05.419287
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Entropy‑Weighted Hoare‑Sensitivity Scorer (EWHS)**  
+The algorithm builds a constraint‑based logical model of each candidate answer, then selects the least‑biased distribution that satisfies those constraints while measuring how fragile that satisfaction is to small perturbations.
 
-*Data structures*  
-- **Predicate graph** `G = (V, E)`: each node `v` is a grounded atomic proposition extracted from the answer (e.g., `X > 5`, `cause(Y,Z)`, `¬P`). Edges represent logical relations inferred from syntactic cues (implication, conjunction, negation).  
-- **Constraint matrix** `C ∈ ℝ^{m×k}`: each row encodes a linear constraint derived from a Hoare triple `{P} C {Q}` where `P` and `Q` are conjunctions of predicates; coefficients are 1 for presence, -1 for absence, 0 otherwise.  
-- **Sensitivity vector** `s ∈ ℝ^{k}`: partial derivative of a scalar robustness metric (e.g., variance of outcome) w.r.t. each predicate’s truth value, computed via finite differences on a small perturbation set (±ε).  
+**Data structures**  
+- `Variable`: maps each extracted atomic proposition (e.g., “X > 5”, “Y causes Z”) to an index 0…n‑1.  
+- `Constraint`: tuple (type, coeffs, rhs) where type ∈ {‘eq’, ‘le’, ‘ge’}. coeffs is a length‑n NumPy array; rhs is a scalar.  
+- `A` (m × n) and `b` (m) collect all constraints; `A·x ≤ b` (or =) encodes the logical requirements.
 
-*Operations*  
-1. **Parsing** – regex‑based extraction yields triples `(subject, relation, object)`; map to predicate symbols. Negations flip sign in `C`. Comparatives (`>`, `<`, `=`) become linear inequalities. Conditionals (`if … then …`) generate Hoare‑style rows: antecedent → `P`, consequent → `Q`. Causal clauses (`X causes Y`) add a directed edge and a constraint `X ⇒ Y`.  
-2. **Constraint propagation** – apply unit resolution and transitivity (Floyd‑Warshall on the implication subgraph) to close `C` under modus ponens, producing an augmented matrix `C'`.  
-3. **Maximum‑entropy solution** – solve the convex optimization  
-   \[
-   \max_{p\in[0,1]^k}\; -\sum_i p_i\log p_i + (1-p_i)\log(1-p_i)\quad\text{s.t. } C'p = b,
-   \]  
-   where `b` encodes the truth values required by the question’s specification (derived from the prompt). The solution `p*` is the least‑biased probability distribution over predicates satisfying all Hoare constraints.  
-4. **Sensitivity‑adjusted score** – compute  
-   \[
-   \text{score}= \sum_i s_i \cdot p_i^*,
-   \]  
-   weighting each predicate’s entropy‑derived belief by its sensitivity to perturbations. Higher scores indicate answers that are both logically consistent (high entropy under constraints) and robust to small input changes.
+**Parsing (Q2)**  
+Regex patterns extract: atomic predicates, negations (`not`), comparatives (`>`, `<`, `=`), conditionals (`if … then …`), causal cues (`because`, `leads to`), numeric constants, and ordering tokens (`first`, `after`). Each yields one or more `Variable` entries and a corresponding `Constraint` (e.g., “if A then B” → coeff[A]=1, coeff[B]=‑1, rhs≤0).
 
-*Structural features parsed* – negations, comparatives, equality/inequality, conditionals (if‑then), causal verbs, temporal ordering (`before`, `after`), conjunction/disjunction, and numeric constants appearing in predicates.
+**Hoare‑style propagation**  
+For every extracted implication `P → Q`, add the constraint `x_P ≤ x_Q`. This mimics the weakest‑precondition rule `{P} C {Q}` and propagates truth strengths forward/backward through the sentence chain.
 
-*Novelty* – The combination of MaxEnt inference with Hoare‑style constraint propagation and a sensitivity‑based weighting scheme does not appear in existing NLP scoring tools; prior work treats either logical verification (e.g., theorem provers) or uncertainty calibration separately, but not their joint optimization as a single scoring function.
+**Maximum Entropy step**  
+Treat each constraint as a feature function `f_i(x) = 1` if satisfied else 0. MaxEnt seeks distribution `p(x) ∝ exp(∑ λ_i f_i(x))` that matches the expected feature counts to the observed ones (here, the counts are 1 for each constraint). Solve for λ via Generalized Iterative Scaling using only NumPy matrix‑vector ops. The resulting entropy `H = -∑ p log p` quantifies least‑bias satisfaction.
 
-**Ratings**  
-Reasoning: 8/10 — captures logical consistency and robustness via principled optimization.  
-Metacognition: 6/10 — limited self‑reflection; algorithm does not monitor its own uncertainty beyond entropy.  
-Hypothesis generation: 5/10 — generates predicate beliefs but does not propose new explanatory structures beyond those extracted.  
-Implementability: 9/10 — relies only on regex, numpy linear algebra, and convex optimization (e.g., projected gradient) achievable with stdlib + numpy.
+**Sensitivity Analysis**  
+Perturb each `b_j` by ε (e.g., 1e‑3), re‑solve for λ, compute Δp, and measure the norm ‖Δp‖₂. Aggregate over j to get sensitivity `S`. Low S indicates robustness to input misspecification.
+
+**Score**  
+`Score = H – α·S` (α tuned on a validation set). Higher scores reward answers that are both maximally non‑committal (high entropy) and stably satisfied under small changes.
+
+**Novelty (Q3)**  
+While MaxEnt appears in language modeling, Hoare Logic in program verification, and Sensitivity in robustness testing, their joint use to score explanatory text is not documented in the literature; thus the combination is novel.
+
+Reasoning: 8/10 — captures logical structure and propagates constraints rigorously.  
+Metacognition: 7/10 — sensitivity provides a self‑check of robustness, though limited depth.  
+Hypothesis generation: 6/10 — focuses on evaluation, not generation of new hypotheses.  
+Implementability: 9/10 — relies only on NumPy and stdlib; all steps are matrix‑based and straightforward to code.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 8/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

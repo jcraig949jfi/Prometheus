@@ -2,46 +2,51 @@
 
 **Fields**: Physics, Economics, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T17:39:20.496127
-**Report Generated**: 2026-03-31T16:34:28.317457
+**Nous Timestamp**: 2026-04-01T00:54:42.062917
+**Report Generated**: 2026-04-01T20:30:36.403339
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing → Proposition Graph**  
-   - Extract atomic propositions *pᵢ* from the text using regex patterns for negations (`not`, `no`), comparatives (`>`, `<`, `>=`, `<=`), conditionals (`if … then …`, `unless`), causal cues (`because`, `leads to`, `results in`), ordering (`before`, `after`, `more than`), and numeric tokens.  
-   - Each proposition gets a Boolean variable *xᵢ* (true/false) and a weight *wᵢ* initialized to 1.0.  
-   - Build a directed adjacency matrix *A* where *A[j,i]=1* if a rule “if *pᵢ* then *pⱼ*” is detected (modus ponens edge). Also store reverse edges for contra‑position when a negation is present.  
+1. **Feature extraction (structural parsing)** – Using only the standard library’s `re`, we scan each prompt and candidate answer for:  
+   - Negations (`not`, `n't`, `never`) → polarity flag.  
+   - Comparatives (`more than`, `less than`, `≥`, `≤`) → relational operator.  
+   - Conditionals (`if … then …`, `unless`) → implication edge.  
+   - Causal claims (`because`, `due to`, `leads to`) → directed edge with sign.  
+   - Ordering relations (`first`, `second`, `before`, `after`) → ordinal constraint.  
+   - Numeric values (integers, decimals) → scalar feature.  
+   Each detected element becomes a binary feature `f_i` (present/absent) or a numeric feature `g_j` (value).  
 
-2. **Constraint Propagation**  
-   - Perform forward chaining: compute closure *C = (I + A + A² + … + Aᵏ)* until convergence (k ≤ number of propositions) using Boolean matrix multiplication (numpy dot with `astype(bool)`).  
-   - Derive implied truth values *x̂ = C @ x* (clipped to 0/1).  
-   - Compute a violation vector *v = |x̂ – x|* (1 where a proposition contradicts its implied value).  
+2. **Data structures** –  
+   - `F` ∈ {0,1}^{A×M} : answer‑by‑binary‑feature matrix (A = number of candidates, M = #binary features).  
+   - `G` ∈ ℝ^{A×K} : answer‑by‑numeric‑feature matrix (K = #numeric features).  
+   - Weight vectors `w_b` (binary) and `w_n` (numeric) initialized to zero.  
+   - Constraint matrix `C` built from extracted conditionals, causal edges, and ordering relations; each row encodes a linear inequality `c·x ≤ d` where `x` stacks binary and numeric features.  
 
-3. **Sensitivity‑Weighted Scoring (Mechanism Design)**  
-   - Treat each candidate answer *a* as a proposed truth assignment *xᵃ*.  
-   - Define a proper scoring rule: *S(a) = – Σᵢ wᵢ·vᵢ(a)*, i.e., negative weighted violation (higher is better).  
-   - Update weights via sensitivity analysis: approximate ∂S/∂wᵢ ≈ S(wᵢ+ε) – S(wᵢ–ε) / (2ε) using numpy; then set *wᵢ ← wᵢ·(1 + α·|∂S/∂wᵢ|)* (α small, e.g., 0.01) to amplify propositions whose changes most affect the score. Iterate 2–3 times.  
+3. **Mechanism‑design scoring rule** – We treat the answer set as a set of agents reporting a feature vector. A proper scoring rule (quadratic loss) incentivizes truthful reporting:  
+   `s_a = -‖[F_a G_a]·[w_b; w_n] - y‖₂²` where `y` is a latent “ground‑truth” feature vector estimated by solving a constrained least‑squares problem:  
+   `min_y ‖Y - [F G]·w‖₂²  s.t. C·y ≤ d`.  
+   This is a convex QP solved with numpy’s `lstsq` after projecting onto the feasible set via simple iterative constraint propagation (alternating projections).  
 
-4. **Phase‑Transition Decision Threshold**  
-   - For a set of candidates, compute scores *Sₖ*.  
-   - Sort scores and evaluate acceptance rate *R(τ) = fraction with Sₖ ≥ τ* as τ varies.  
-   - Approximate derivative *dR/dτ* via finite differences; the τ where |dR/dτ| is maximal is the critical point (order parameter).  
-   - Accept the top‑scoring answer if its score exceeds this τ; otherwise reject.  
+4. **Phase‑transition order parameter** – Define a temperature‑like inverse β. Compute the satisfied‑constraint fraction:  
+   `φ(β) = (1/A) Σ_a σ(β·(s_a - τ))` where `σ` is the logistic function and τ a threshold.  
+   As β increases, φ exhibits an abrupt jump (the phase transition). The critical β_c is estimated from the sensitivity of φ:  
+   `β_c ≈ λ_max(J)^{-1}` where `J = ∂φ/∂β` is obtained via automatic differentiation using numpy (finite‑difference on β).  
 
-**Structural Features Parsed**  
-Negations, comparatives, conditionals, causal claims, ordering relations, numeric values, and explicit quantifiers (“all”, “some”). These yield the propositions and implication edges needed for the graph.
+5. **Final score** – Use the derivative at β_c as a sensitivity‑aware metric:  
+   `score_a = ∂φ/∂s_a |_{β=β_c}`.  
+   Higher scores indicate answers that are both consistent with constraints (mechanism design) and lie near the robustness boundary (sensitivity analysis), reflecting a phase‑transition‑like decisiveness.  
 
-**Novelty**  
-While proper scoring rules, argumentation graphs, and sensitivity analysis each appear separately, the joint use of a sensitivity‑driven weight‑adjustment loop to locate a phase‑transition threshold for acceptance is not found in existing surveys of reasoning evaluators.
+**Structural features parsed** – negations, comparatives, conditionals, causal claims, ordering relations, and numeric values.  
 
-**Rating**  
-Reasoning: 8/10 — captures logical consistency and incentivizes truth‑ful answers via a proper scoring rule.  
-Metacognition: 6/10 — the method monitors its own sensitivity but does not explicitly reason about uncertainty in the parsing step.  
-Hypothesis generation: 5/10 — focuses on evaluating given candidates; generating new hypotheses would require additional abduction.  
-Implementability: 9/10 — relies only on regex, numpy matrix ops, and basic loops; all feasible in ≤200 lines.
+**Novelty** – While each component (weighted logic, proper scoring rules, constraint propagation, temperature‑based order parameters) exists separately, their joint use to produce a sensitivity‑driven phase‑transition score for answer ranking has not been reported in the literature.  
+
+Reasoning: 8/10 — captures logical consistency and robustness via a principled, hybrid scoring rule.  
+Metacognition: 6/10 — limited self‑reflection; the method does not explicitly model uncertainty about its own parsing.  
+Hypothesis generation: 7/10 — generates hypotheses about which constraints are critical via sensitivity analysis, but does not propose novel causal mechanisms.  
+Implementability: 9/10 — relies only on regex, numpy linear algebra, and simple iterative projections; all feasible in a few hundred lines.
 
 ### Scores
 
@@ -49,9 +54,9 @@ Implementability: 9/10 — relies only on regex, numpy matrix ops, and basic loo
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

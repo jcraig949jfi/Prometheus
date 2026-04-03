@@ -2,33 +2,46 @@
 
 **Fields**: Mathematics, Linguistics, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T12:21:11.651851
-**Report Generated**: 2026-03-31T20:00:09.879580
+**Nous Timestamp**: 2026-04-02T08:58:43.230101
+**Report Generated**: 2026-04-02T10:00:31.140430
 
 ---
 
 ## Nous Analysis
 
-The algorithm builds a weighted directed labeled graph from each text. Nodes correspond to atomic semantic units extracted by regex patterns: entities (noun phrases), predicates (verbs), modifiers (adjectives, adverbs), negations, comparatives, conditionals, causal markers, and numeric literals. Edges encode compositional relations: subject‑predicate (SP), object‑predicate (OP), modifier‑head (MH), and logical‑dependency (LD) links such as “if‑then” or “because‑therefore”. Edge weights are initialized from a mechanism‑design payoff matrix that rewards configurations satisfying incentive‑compatibility constraints (e.g., a comparative edge receives higher weight when the direction matches the asserted ordering).  
+**Algorithm**  
+1. **Parsing & Node Creation** – Use a handful of regex patterns to extract atomic propositions from the prompt and each candidate answer. Patterns capture:  
+   - Simple S‑V‑O triples (`(\w+)\s+(\w+)\s+(\w+)`)  
+   - Negations (`\bnot\b|\bno\b`) → attach a `¬` flag to the proposition.  
+   - Comparatives (`\b(greater|less|more|fewer)\b.*\bthan\b`) → create a node `X > Y` or `X < Y`.  
+   - Conditionals (`\bif\b(.+?)\bthen\b(.+)`) → create an implication edge `antecedent → consequent`.  
+   - Causal verbs (`causes|leads to|results in`) → same as implication.  
+   - Ordering (`\bbefore\b|\bafter\b|\bprecedes\b`) → temporal edge.  
+   Each proposition becomes a node `i` with an initial truth value `t_i ∈ {0,1}` (1 if asserted positively, 0 if negated, unknown → 0.5). Store nodes in a list and build an **adjacency matrix** `A` (numpy `float64`) where `A[i,j]=w` encodes the strength of a directed relation from `i` to `j` (e.g., `w=1.0` for definite implication, `w=0.7` for probabilistic causal claim).  
 
-Data structures:  
-- `nodes`: list of strings; `node_id` mapping to indices.  
-- `types`: numpy array of shape (n_nodes,) with one‑hot codes for entity, predicate, modifier, etc.  
-- `adj`: numpy array (n_nodes, n_nodes, n_edge_types) storing edge weights; zero for absent edges.  
+2. **Constraint Propagation (Compositionality + Graph Theory)** – Treat truth values as a vector `t`. Iteratively apply a generalized modus ponens:  
+   ```
+   t_new = t ∨ (A @ t)          # boolean OR replaced by numpy maximum for fuzzy values
+   t_new = np.clip(t_new, 0, 1)
+   ```  
+   Repeat until `‖t_new - t‖₁ < 1e‑6` or a max of 20 iterations. The fixed‑point `t*` is the **least model** satisfying all extracted logical constraints, embodying compositional semantics (meaning of whole from parts and combination rules).  
 
-Operations:  
-1. **Extraction** – regex captures triples (head, relation, tail) and populates `adj`.  
-2. **Constraint propagation** – compute transitive closure for SP and OP using repeated boolean matrix multiplication (Floyd‑Warshall style) to derive inferred relations; apply modus ponens on LD edges: if `if‑A‑then‑B` and `A` is asserted, increment weight of `B`.  
-3. **Incentive scoring** – for each candidate answer, construct its own graph `adj_c`. Compute a satisfaction matrix `S = adj * adj_c` (element‑wise product, summed over all edge types). The raw score is `score = np.sum(S)`. Penalties are subtracted for any edge in `adj_c` that contradicts a hard constraint derived from the prompt (e.g., a negation edge where the prompt asserts the positive). Final score = raw score – penalty.  
+3. **Mechanism‑Design Scoring** – Consider each candidate answer as an agent reporting a set of propositions `S_ans`. Define a scoring rule that is **incentive compatible** for truthful reporting:  
+   - Compute the proportion of reported propositions that are true in `t*`: `p = (1/|S_ans|) Σ_{i∈S_ans} t*_i`.  
+   - Compute the proportion of reported propositions that are false: `q = (1/|S_ans|) Σ_{i∈S_ans} (1‑t*_i)`.  
+   - Final score = `p - λ·q`, where λ∈[0,1] is a penalty weight (e.g., λ=0.5). This is a linear proper scoring rule: agents maximize expected score by reporting exactly the propositions they believe true, aligning self‑interest with logical consistency.  
 
-Structural features parsed: negations (“not”, “no”), comparatives (“more than”, “less than”, “>”, “<”), conditionals (“if … then”, “provided that”), causal claims (“because”, “leads to”, “results in”), ordering relations (“first”, “before”, “after”, “greater than”), quantifiers (“all”, “some”, “none”), and explicit numeric values.  
+All steps use only numpy (matrix multiplication, clipping, norms) and Python’s standard library (regex, collections).  
 
-Novelty: While graph‑based semantic parsers and constraint‑propagation reasoners exist, coupling them with a mechanism‑design incentive‑compatibility payoff to evaluate candidate answers is not present in current evaluation pipelines; most tools rely on neural similarity or bag‑of‑words heuristics.  
+**Structural Features Parsed** – Negations, comparatives, conditionals, causal verbs, temporal ordering, numeric quantities with units, and conjunctive/disjunctive connective cues (“and”, “or”).  
 
-Reasoning: 8/10 — The method captures logical structure and propagates constraints effectively, though it struggles with vague or metaphorical language.  
-Metacognition: 6/10 — It can detect internal inconsistencies but lacks a mechanism to reflect on its own parsing confidence or adapt thresholds.  
-Hypothesis generation: 5/10 — Generates parses and inferred relations but does not propose new explanatory hypotheses beyond the given text.  
-Implementability: 9/10 — Relies solely on regex, NumPy array operations, and standard‑library containers; no external APIs or learning components are required.
+**Novelty** – While graph‑based constraint propagation and compositional semantic extraction appear separately in NLP, coupling them with a mechanism‑design scoring rule that guarantees truthful reporting is not found in existing surveys; the integration of incentive compatibility with logical consistency is novel.  
+
+**Ratings**  
+Reasoning: 8/10 — The algorithm captures logical structure and propagates constraints, yielding sound inferences for many prompt types.  
+Metacognition: 6/10 — No explicit self‑monitoring of parsing confidence; errors propagate directly into scores.  
+Hypothesis generation: 7/10 — By generating a truth model, the tool can suggest missing propositions that would improve consistency, supporting hypothesis formation.  
+Implementability: 9/10 — Relies solely on regex, numpy linear algebra, and simple loops; straightforward to code and debug.
 
 ### Scores
 
@@ -36,9 +49,9 @@ Implementability: 9/10 — Relies solely on regex, NumPy array operations, and s
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

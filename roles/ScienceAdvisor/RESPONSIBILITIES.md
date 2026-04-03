@@ -240,8 +240,6 @@ Prometheus is not a collection of projects. It's an organism. Individual pillars
 When James starts a new conversation and points me here:
 
 1. Read this file to remember who I am and what I own
-2. Read `memory/MEMORY.md` for cross-conversation context
-3. Check `journal/` for the most recent entry to pick up where we left off
-4. Ask James what's running and what landed overnight
-5. Check `C:\skullport_shared\` for machine status files if relevant
-6. Prioritize: Stage D status > Noesis round status > Forge coverage > everything else
+2. Check `journal/` for the most recent entry to pick up where we left off
+3. Ask James what's running and what landed overnight
+4. Prioritize: Stage D status > Noesis round status > Forge coverage > everything else

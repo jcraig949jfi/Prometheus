@@ -2,58 +2,62 @@
 
 **Fields**: Computer Science, Statistical Physics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T10:53:08.318793
-**Report Generated**: 2026-03-27T16:08:16.355672
+**Nous Timestamp**: 2026-04-01T04:24:53.367752
+**Report Generated**: 2026-04-01T20:30:42.106075
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-We build a *typed differentiable logic network* (TDLN).  
-1. **Parsing → Typed AST** – Using a handful of regexes we extract atomic predicates (e.g., `X > 5`, `¬P`, `If Q then R`) and their syntactic roles. Each leaf is assigned a base type from a small dependent‑type schema: `Bool` for propositions, `Real` for numeric comparisons, `Order` for transitive chains. Internal nodes are typed constructors: `¬ : Bool → Bool`, `∧ : Bool × Bool → Bool`, `→ : Bool × Bool → Bool`, `> : Real × Real → Bool`, `trans : Order × Order → Order`. The AST is stored as a list of nodes; each node holds a NumPy array of shape `(k,)` for its learnable weight vector `w`.  
-2. **Forward (differentiable) evaluation** – For a given candidate answer we instantiate the AST with the answer’s truth‑value bindings (0/1 for Bool nodes, real numbers for Real nodes). Each constructor is replaced by a smooth surrogate:  
-   - `¬x = sigmoid(-w·x)`  
-   - `x ∧ y = sigmoid(w·[x, y])`  
-   - `x → y = sigmoid(w·[1‑x, y])`  
-   - `x > y = sigmoid(w·[x‑y])`  
-   - `trans(a,b) = sigmoid(w·[a, b])` (encourages chaining).  
-   The output is a scalar `p ∈ (0,1)` representing the model’s belief that the answer satisfies the extracted constraints.  
-3. **Maximum‑entropy parameter fitting** – Given a set of gold‑standard answers `{a_i}` with binary labels `l_i ∈ {0,1}`, we minimize the regularized loss  
-   \[
-   \mathcal{L}(w)= -\sum_i \big[l_i\log p_i + (1-l_i)\log(1-p_i)\big] + \lambda \sum_j \|w_j\|^2 - \alpha \sum_j H(p_j),
-   \]  
-   where `H(p) = -p\log p -(1-p)\log(1-p)` is the Bernoulli entropy. The gradient of `𝓛` is obtained via automatic differentiation (reverse‑mode) on the NumPy graph, yielding a maximum‑entropy‑regularized exponential family model.  
-4. **Scoring** – After training, the score of a new candidate answer is simply `p` (or log‑odds `log(p/(1-p))`). Higher `p` indicates better conformity to the inferred logical constraints.
+**1. Algorithm**  
+We build a differentiable Maximum‑Entropy (MaxEnt) log‑linear model over a typed feature space.  
 
-**Structural features parsed**  
-- Negations (`not`, `no`, `¬`)  
-- Comparatives (`greater than`, `less than`, `≥`, `≤`) expressed as numeric predicates  
-- Conditionals (`if … then …`, `implies`)  
-- Numeric constants and variables  
-- Causal claims modeled as implication chains  
-- Ordering relations (`before/after`, `transitive` sequences) captured via the `trans` constructor  
+*Data structures*  
+- **Typed proposition graph**: each extracted clause becomes a node \(v\) with a type drawn from a small hierarchy (Bool, Real, Order, Set). Edges encode syntactic dependencies (subject‑verb‑object, modifier‑head).  
+- **Feature matrix** \(F\in\mathbb{R}^{m\times k}\): \(m\) training (prompt,answer) pairs, \(k\) binary/floating‑point structural features (see §2). Each row \(f_i\) is a numpy array.  
+- **Weight vector** \(w\in\mathbb{R}^{k}\): parameters to be learned.  
+- **Constraint tensor** \(C\in\{0,1\}^{m\times k}\): for each pair, \(C_{ij}=1\) if feature \(j\) is *required* by the prompt (e.g., a negation must appear in the answer).  
 
-Regex patterns extract these constructs; the typed AST enforces that, e.g., a comparative only connects two `Real` leaves, preventing type mismatches.
+*Operations* (pure numpy)  
+1. **Forward pass** – compute unnormalized scores \(s_i = w^\top f_i\).  
+2. **Log‑partition** – \( \log Z = \texttt{np.logaddexp.reduce}(s) \) (stable softmax denominator).  
+3. **Log‑likelihood** – \( \mathcal{L}(w) = \frac{1}{m}\sum_i \big( w^\top f_i - \log Z \big) \).  
+4. **Gradient** – \( \nabla_w \mathcal{L} = \frac{1}{m}\sum_i f_i - \texttt{softmax}(s)^\top F \).  
+5. **Parameter update** – simple gradient ascent with step size \(\eta\) (no external optimizer).  
 
-**Novelty**  
-The approach fuses three strands: (1) differentiable programming for smooth logic evaluation (cf. Neural Theorem Provers, Differentiable Forward‑Chaining), (2) maximum‑entropy parameter estimation (Jaynes’ principle applied to logical weights), and (3) a lightweight dependent‑type discipline to guard syntactic well‑formedness. While each component exists separately, their exact combination — typed differentiable logic nodes trained with an entropy‑regularized log‑loss — has not been reported in the literature, making it novel in this specific configuration.
+*Scoring logic* – For a new candidate answer \(a\) given prompt \(p\), we extract its feature vector \(f_{pa}\) and return the conditional log‑probability  
+\[
+\text{score}(p,a)= w^\top f_{pa} - \texttt{np.logaddexp.reduce}\big( w^\top F_{\text{batch}} \big),
+\]  
+where the batch contains the prompt paired with a set of plausible distractors (e.g., negated or numerically perturbed versions). Higher score ⇒ better answer.
 
-**Rating**  
-Reasoning: 7/10 — The method captures logical structure and propagates uncertainty via gradients, but relies on hand‑crafted surrogates that may mis‑approximate sharp logical boundaries.  
-Metacognition: 5/10 — No explicit mechanism for the model to monitor its own confidence beyond the entropy term; self‑reflection would require additional layers.  
-Hypothesis generation: 6/10 — By sampling alternative parses of the regex‑extracted AST, the system can propose varied constraint sets, yet the search is rudimentary and not guided by a generative grammar.  
-Implementability: 8/10 — Only NumPy and the standard library are needed; the AST, forward surrogates, and reverse‑mode autodiff fit comfortably within a few hundred lines of code.
+**2. Structural features parsed**  
+- Negation markers (`not`, `no`, `never`).  
+- Comparative/superlative forms (`more than`, `less than`, `-est`).  
+- Conditional antecedent‑consequent (`if … then …`, `unless`).  
+- Numeric literals and arithmetic relations (`=`, `≠`, `<`, `>`, `≤`, `≥`).  
+- Ordering chains (`A before B`, `X is the tallest`).  
+- Type‑consistency checks (e.g., applying a comparative to a non‑numeric term yields a feature value 0).  
+- Existence quantifiers (`some`, `all`, `none`) mapped to Bool‑type features.
+
+**3. Novelty**  
+The combination is not a direct replica of prior work. Maximum‑Entropy log‑linear models are common in NLP, but coupling them with a *typed proposition graph* that supplies hard constraints (via \(C\)) and optimizing the weights through explicit gradient steps (differentiable programming) yields a fully transparent, numpy‑only scorer. Existing neuro‑symbolic hybrids either rely on neural nets for feature extraction or use off‑the‑shelf solvers; here both structure learning and weight learning are algorithmic and inspectable.
+
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and uncertainty via MaxEnt; gradients allow fine‑tuning to prompt‑answer statistics.  
+Metacognition: 6/10 — the model can report its own uncertainty (entropy) but does not actively regulate its search strategy.  
+Hypothesis generation: 5/10 — feature extraction yields candidate perturbations, but no generative proposal beyond re‑scoring given distractors.  
+Implementability: 9/10 — relies solely on numpy and stdlib; all operations are matrix‑vector ops and log‑sum‑exp tricks.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -2,49 +2,50 @@
 
 **Fields**: Physics, Cognitive Science, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T17:10:09.162709
-**Report Generated**: 2026-03-27T17:21:25.301543
+**Nous Timestamp**: 2026-04-01T01:45:41.158252
+**Report Generated**: 2026-04-01T20:30:42.189655
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We treat each sentence as a fiber in a gauge‑theoretic bundle. A *Proposition* object stores: `id` (int), `polarity` (+1 for affirmed, –1 for negated), `rel_type` (implies, equals, greater‑than, less‑than, causal), `args` (tuple of entity strings), and optionally a `value` (float). All propositions are kept in a list `props`. From `props` we build a directed adjacency matrix `C` (numpy `int8`) where `C[i,j]=1` if proposition *i* entails *j*, `C[i,j]=‑1* if *i* contradicts *j*, and 0 otherwise.  
+The scorer treats each candidate answer as a *fiber bundle* \(E\) over a base space \(B\) of extracted logical propositions.  
+1. **Fast (System 1) extraction** – a regex‑based parser scans the answer for atomic propositions:  
+   - literals (e.g., “the cat is on the mat”),  
+   - negations (`not`, `no`),  
+   - comparatives (`greater than`, `less than`),  
+   - conditionals (`if … then …`),  
+   - causal markers (`because`, `leads to`),  
+   - numeric values and units.  
+   Each proposition becomes a node; edges are labeled with the relation type (negation, implication, ordering, equality). The parser builds a directed constraint graph \(G=(V,E)\).  
+2. **Gauge invariance** – to achieve symmetry under paraphrasing, the graph is transformed into a *canonical gauge*: all synonymous predicates are mapped to a single identifier using a built‑in stemmer/stop‑list (e.g., “is” ↔ “equals”). Edge weights are set to 1 for explicit statements, 0.5 for inferred ones.  
+3. **Slow (System 2) constraint propagation** – using only NumPy, the algorithm computes the transitive closure of the implication subgraph via repeated Boolean matrix multiplication (Warshall’s algorithm). It then checks for contradictions: a node and its negation both marked true yields a penalty. Numeric constraints are propagated by interval arithmetic (e.g., if \(x>5\) and \(x<3\) → inconsistency).  
+4. **Mechanism‑design scoring** – each answer receives a *proper scoring rule* score:  
+   \[
+   S = \underbrace{\alpha \cdot \text{Consistency}}_{\text{truthfulness}} - \underbrace{\beta \cdot \text{Vagueness}}_{\text{manipulation resistance}} + \underbrace{\gamma \cdot \text{Completeness}}_{\text{coverage of prompt}},
+   \]  
+   where Consistency = 1 − (fraction of contradictory edges), Vagueness = proportion of nodes lacking a polarity or numeric bound, Completeness = fraction of prompt‑extracted propositions that appear in the answer. Coefficients (α,β,γ) are fixed (e.g., 0.5,0.3,0.2) to make truthful, specific, and complete answers optimal under self‑interested agents.  
 
-*System 1 (fast)* extracts shallow features with regex: counts of negations (`not`, `no`), comparatives (`>`, `<`, `more`, `less`), conditionals (`if`, `then`), causal cues (`because`, `leads to`), and numeric tokens. A weight vector `w` (learned offline via simple linear regression on a validation set) yields a heuristic score `h = w·f`.  
+**Structural features parsed** – negations, comparatives, conditionals, causal markers, numeric values with units, ordering relations (`>`, `<`, `≥`, `≤`), and equality statements.  
 
-*System 2 (slow)* performs constraint propagation. We seek a truth‑value vector `t∈[0,1]^n` that best satisfies the constraints: minimize `‖C·t – b‖₂²`, where `b` encodes observed facts (e.g., a proposition asserted as true gets `b_i=1`). The solution is obtained with `numpy.linalg.lstsq`. The resulting `t_i` is the coherent belief strength for proposition *i*.  
+**Novelty** – While constraint propagation and proper scoring rules appear separately, integrating gauge‑theoretic symmetry (canonical gauge) with dual‑process extraction and mechanism‑design incentives has not been reported in the literature; thus the combination is novel.  
 
-*Mechanism design* elicits a reported confidence `p` from the candidate answer for the target proposition. We apply a proper scoring rule (Brier): `s = –(p – t_target)²`. The final answer score combines fast and slow components: `Score = α·h + (1–α)·s`, with α∈[0,1] set to balance speed vs. coherence (e.g., 0.3). All operations use only numpy and the Python standard library.
-
-**Structural features parsed**  
-- Negations (`not`, `no`, `never`)  
-- Comparatives (`greater than`, `less than`, `more`, `less`, `>`, `<`)  
-- Conditionals (`if … then …`, `unless`)  
-- Causal language (`because`, `leads to`, `results in`)  
-- Numeric values and units  
-- Equivalence / identity (`is`, `equals`, `same as`)  
-- Ordering chains (transitable relations)
-
-**Novelty**  
-The specific fusion of a gauge‑theoretic connection metaphor (parallel transport of truth across a constraint graph), dual‑process scoring (heuristic + constraint‑solving), and mechanism‑design‑inspired proper scoring rule has not been described in the literature. While each sub‑technique appears separately (e.g., constraint‑based reasoning in logic programming, proper scoring in prediction markets, dual‑process models in cognitive science), their joint algorithmic formulation for answer scoring is novel.
-
-**Rating**  
-Reasoning: 7/10 — captures logical structure and propagates constraints, but relies on linear approximation that may miss non‑monotonic inferences.  
-Metacognition: 6/10 — System 1/System 2 split offers a rudimentary self‑monitoring heuristic, yet no explicit uncertainty estimation beyond the Brier score.  
-Hypothesis generation: 5/10 — the model can propose alternative truth vectors via perturbations of `t`, but lacks a generative mechanism for novel hypotheses.  
-Implementability: 9/10 — all steps use regex, numpy linear algebra, and basic data structures; no external libraries or APIs are needed.
+**Ratings**  
+Reasoning: 8/10 — The algorithm captures logical consistency and numeric constraints well, but relies on shallow linguistic cues and may miss deeper semantic nuance.  
+Metacognition: 6/10 — It distinguishes fast surface extraction from slow constraint solving, yet lacks explicit self‑monitoring of uncertainty beyond consistency checks.  
+Hypothesis generation: 5/10 — The system can propose alternative interpretations via gauge equivalence, but does not actively generate new hypotheses; it only evaluates given answers.  
+Implementability: 9/10 — Uses only regex, NumPy arrays, and basic Python data structures; no external libraries or APIs are required, making it straightforward to code and run.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.0** |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

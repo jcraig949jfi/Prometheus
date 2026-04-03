@@ -2,42 +2,68 @@
 
 **Fields**: Control Theory, Economics, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T05:20:24.574803
-**Report Generated**: 2026-03-31T16:42:23.783179
+**Nous Timestamp**: 2026-04-02T02:50:22.657962
+**Report Generated**: 2026-04-02T04:20:08.470763
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-Treat each candidate answer as a discrete‑time trajectory \(x_{0:T}\) where each state \(x_t\) encodes a parsed linguistic feature (e.g., presence of a negation, comparative, numeric value, causal link). Define a control input \(u_t\) that can adjust the weight of each feature at step \(t\). The instantaneous cost combines three terms:  
+**Algorithm: Variational Incentive‑Trajectory Scorer (VITS)**  
 
-1. **Prediction error (Free Energy)** – \(e_t = \| \phi(x_t) - \phi(r_t) \|^2\), where \(\phi\) maps the feature vector to a latent prediction and \(r_t\) is the reference answer’s feature vector at the same position. This is the variational free‑energy term to be minimized.  
-2. **Control effort (Optimal Control)** – \(\frac{1}{2} u_t^\top R u_t\) with \(R\succ0\), penalizing large adjustments, yielding an LQR‑like quadratic cost.  
-3. **Incentive penalty (Mechanism Design)** – \(\lambda \, \mathbf{1}\{ \text{truthfulness constraint violated} \}\), where the constraint enforces that the reported feature vector cannot improve the scorer’s expected payoff if the answer were dishonest (a simplified version of the revelation principle).  
+1. **Data structures**  
+   - `State`: a namedtuple `(t, props)` where `t` is a discrete time step (0…T) and `props` is a dict of extracted propositional atoms (e.g., `{'neg':True, 'causal':[A→B], 'num':5}`).  
+   - `Trajectory`: list of `State` objects representing the evolution of meaning across the sentence.  
+   - `Policy`: a mapping `π(s) → a` where `a` is an action from a finite set `{accept, reject, revise}` applied to a candidate answer.  
+   - `Cost`: scalar accumulated over a trajectory, defined as  
+     `C = Σ_t [‖∇_t F(t)‖² + λ·I(s_t, a_t)]`  
+     where `F(t)` is a variational free‑energy estimate (see below) and `I` is an incentive‑compatibility penalty from mechanism design.  
 
-The total cost is \(J = \sum_{t=0}^{T} \big[ e_t + \frac{1}{2}u_t^\top R u_t + \lambda \, \mathbf{1}\{\text{violation}\}\big]\). Using Pontryagin’s Minimum Principle, the optimal control law is \(u_t^\star = -R^{-1} B^\top p_t\), where the costate \(p_t\) propagates backward via \(p_t = \frac{\partial e_t}{\partial x_t} + A^\top p_{t+1}\). Solving the resulting Riccati recursion yields a closed‑form feedback gain \(K_t\); the optimal trajectory cost (negative score) is computed by a forward pass applying \(u_t^\star = -K_t x_t\).  
+2. **Free‑energy term**  
+   - For each state compute a prediction error `ε_t = |p_model(t) − p_obs(t)|`.  
+   - `p_model(t)` is the probability of the observed structural features under a simple generative model (e.g., a Markov chain over proposition types).  
+   - `p_obs(t)` is the empirical frequency of those features in the candidate answer.  
+   - Variational free energy `F(t) = ε_t + H[q]` where `H[q]` is the entropy of a uniform belief over possible interpretations (constant, can be dropped).  
 
-**Parsed structural features**  
-Negations, comparatives, conditionals, numeric values, causal claims, ordering relations, quantifiers, modal verbs, and temporal connectives are extracted via regex‑based pattern matching into binary or scalar features that populate \(x_t\).  
+3. **Incentive‑compatibility term**  
+   - Define a mechanism where the “agent” is the candidate answer; the designer wants the answer to reveal true reasoning quality.  
+   - For each action `a` we assign a payment `p(a)`:  
+     - `accept`: +1 if the answer passes a set of hard constraints (see §2), else –1.  
+     - `reject`: 0.  
+     - `revise`: –0.5 (penalizes unnecessary modification).  
+   - The incentive term `I(s_t, a_t) = −p(a_t)` ensures truthful reporting minimizes expected cost.  
 
-**Novelty**  
-While predictive coding (free energy) and scoring rules (mechanism design) appear separately in literature, coupling them with optimal‑control trajectory optimization to produce a dynamic, incentive‑compatible scoring function for textual answers has not been described in existing work.  
+4. **Scoring logic**  
+   - Parse the prompt and each candidate into a trajectory using regex‑based extraction of structural features (see §2).  
+   - Initialize belief `q` uniform; iterate forward: compute `ε_t`, update `F(t)`, choose action `a_t = argmin_a [‖∇_t F‖² + λ·I(s_t, a)]` (a simple greedy policy, equivalent to solving the discrete‑time HJB equation).  
+   - Accumulate cost `C`. The final score is `S = −C` (lower cost → higher reward).  
 
-Reasoning: 7/10 — The method blends well‑founded theories but relies on simplifying assumptions (linear dynamics, quadratic cost) that may limit expressive power for complex reasoning.  
-Metacognition: 6/10 — It provides a clear objective (cost) that can be monitored, yet lacks explicit self‑reflection loops beyond the costate backward pass.  
-Hypothesis generation: 5/10 — The framework scores given answers but does not propose new hypotheses; extending it to generative search would be non‑trivial.  
-Implementability: 8/10 — All components (regex parsing, linear algebra with numpy, Riccati recursion) are implementable with only the standard library and numpy, making rapid prototyping feasible.
+5. **Structural features parsed**  
+   - Negations (`not`, `no`, `never`) → `neg` flag.  
+   - Comparatives (`more than`, `less than`, `>`, `<`) → numeric ordering relations stored as directed edges.  
+   - Conditionals (`if … then …`, `unless`) → causal atoms `A → B`.  
+   - Numeric values (integers, decimals) → `num` list with associated units.  
+   - Ordering relations (`first`, `last`, `before`, `after`) → temporal edges.  
+   - Quantifiers (`all`, `some`, `none`) → scope markers for universal/existential checks.  
+
+6. **Novelty**  
+   - The combination mirrors recent work on *active inference* (Free Energy Principle) applied to language, but couples it with *mechanism‑design* truthfulness incentives and solves the resulting decision problem via a discrete‑time *optimal control* (HJB) formulation. No published system explicitly optimizes a variational free‑energy trajectory subject to incentive‑compatibility constraints for answer scoring, making the approach novel in this niche.  
+
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and uncertainty via a principled control‑theoretic objective.  
+Metacognition: 6/10 — the algorithm can monitor its own prediction error but lacks explicit self‑reflection on strategy choice.  
+Hypothesis generation: 5/10 — hypothesis formation is limited to the predefined generative model; no open‑ended abductive search.  
+Implementability: 9/10 — relies only on regex, numpy for vector ops, and stdlib data structures; straightforward to code.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -2,52 +2,40 @@
 
 **Fields**: Biology, Game Theory, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T17:49:21.453835
-**Report Generated**: 2026-03-27T06:37:38.673297
+**Nous Timestamp**: 2026-04-01T18:17:16.403951
+**Report Generated**: 2026-04-01T20:30:29.264417
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Bandit‑Guided Ant‑Colony SAT Scorer (BAC‑SAT)**  
+The algorithm treats each candidate answer as an arm in a multi‑armed bandit problem and uses a swarm of simple agents (ants) to evaluate the arm’s logical consistency via SAT solving.  
 
-1. **Input preprocessing** – From the prompt and each candidate answer we extract a set of atomic propositions \(P = \{p_1,…,p_n\}\) using regex patterns for:  
-   - literals (e.g., “the cat is *black*”) → \(p_i\)  
-   - negations (“not”, “no”) → \(\lnot p_i\)  
-   - comparatives (“greater than”, “less than”) → numeric atoms with inequality constraints  
-   - conditionals (“if … then …”) → implication clauses  
-   - causal/ordering words (“because”, “after”, “before”) → temporal or causal implication clauses  
-   Each extracted clause is stored as a list of literals (positive or negative) in conjunctive normal form (CNF).  
+**Data structures**  
+- `clauses`: list of CNF clauses extracted from the prompt and a candidate answer; each clause is a set of signed integer literals (positive for true, negative for false).  
+- `pheromone[feature]`: float weight for each structural feature (negation, comparative, conditional, causal, ordering, numeric).  
+- `arm_stats[arm]`: tuple `(pulls, mean_reward)` for the bandit.  
+- `assignment`: current boolean vector tried by an ant.  
 
-2. **Data structures**  
-   - `clauses`: list of clause objects, each holding its literals.  
-   - `var_domains`: boolean domain for each variable (True/False).  
-   - `pheromone`: numpy array \(τ_{i,j}\) size \(n \times 2\) (pheromone for assigning variable \(i\) to True/False).  
-   - `bandit_arms`: one arm per variable; each arm stores empirical mean reward \(μ_i\) and count \(N_i\) for UCB computation.  
+**Operations**  
+1. **Parsing** – regex extracts atomic propositions and maps them to integer IDs; negations flip sign, comparatives become `GT(x,y)` literals, conditionals become implications encoded as `(¬A ∨ B)`, causal claims become similar implications, ordering yields transitive clauses, numeric thresholds become bound literals.  
+2. **Clause construction** – combine prompt clauses with candidate‑specific clauses (e.g., answer states “X > 5” → clause `(X>5)`).  
+3. **Ant evaluation** – an ant attempts unit propagation on the clause set. If a contradiction is found, it records the size of the minimal unsatisfiable core (by backtracking and dropping clauses). Reward = `1 – (core_size / total_clauses)` if UNSAT, else `1.0` for SAT.  
+4. **Bandit update** – after each ant, the chosen arm’s `pulls` increments and `mean_reward` is updated via incremental average. The arm’s UCB value is `mean + sqrt(2*ln(total_pulls)/pulls)`. The next ant selects the arm with highest UCB.  
+5. **Pheromone update** – after all ants, each feature’s weight is decayed (`pheromone *= 0.9`) then increased by the sum of rewards of ants that used clauses containing that feature.  
+6. **Scoring** – final answer score = weighted mean of arm rewards, where weights are normalized pheromone values for the features present in that answer.  
 
-3. **Search process (hybrid ACO‑UCB‑DPLL)**  
-   - **Variable selection** – For each unassigned variable compute a heuristic \(h_i = τ_{i,True}/(τ_{i,True}+τ_{i,False})\). Choose the variable with highest UCB score:  
-     \[
-     \text{UCB}_i = h_i + c\sqrt{\frac{\ln t}{N_i}}
-     \]  
-     where \(t\) is the global step counter and \(c\) a exploration constant.  
-   - **Assignment & propagation** – Assign the chosen variable to the value (True/False) with higher pheromone, then run unit‑propagation (pure Python loop) to derive forced assignments; detect conflict.  
-   - **Pheromone update** – If the assignment leads to a satisfying sub‑formula, increase pheromone on the chosen literal by \(Δτ = 1 / (1 + \text{conflict\_count})\); otherwise decrease it slightly. Evaporate all pheromone by factor \(ρ\).  
-   - **Bandit feedback** – Treat the reduction in unsatisfied clause count as reward \(r\); update the arm’s \(μ_i\) incrementally.  
+**Structural features parsed**  
+Negations (`not`, `no`), comparatives (`>`, `<`, `≥`, `≤`), conditionals (`if … then`, `unless`), causal claims (`because`, `leads to`), ordering relations (`before`, `after`, `precedes`), numeric values and thresholds, equality/disequality.  
 
-   The loop repeats until a fixed budget of steps (e.g., \(5n\)) is reached or a full satisfying assignment is found.  
-
-4. **Scoring logic** – Let \(sat\) be the number of clauses satisfied by the best assignment found. The raw score is \(sat / |clauses|\). Additionally, we compute the size of a minimal unsatisfied core (by repeatedly dropping clauses and re‑running the solver) and subtract a penalty proportional to its size, encouraging answers that avoid deep contradictions.  
-
-**Structural features parsed** – literals, negations, comparatives, numeric thresholds, conditionals, causal/temporal ordering, and exclusive‑or patterns (via “either … or …”).  
-
-**Novelty** – While SAT solvers, ant‑colony variable ordering, and bandit‑based exploration exist separately, integrating UCB‑driven variable selection with pheromone‑guided back‑propagation inside a bounded DPLL loop for answer scoring has not been reported in the literature; the combination is therefore novel for this task.  
+**Novelty**  
+Pure SAT‑based answer verification exists, and bandit‑driven exploration appears in reinforcement learning, but coupling a swarm of SAT‑evaluating agents with a UCB bandit to dynamically allocate evaluation effort across candidate answers is not documented in the literature; thus the combination is novel for this scoring task.  
 
 **Ratings**  
-Reasoning: 7/10 — The algorithm captures logical structure and performs principled search, but relies on shallow regex parsing and may miss deeper semantic nuance.  
-Metacognition: 6/10 — It monitors search progress via bandit rewards and pheromone evaporation, offering rudimentary self‑assessment, yet lacks explicit reflection on its own reasoning failures.  
-Hypothesis generation: 5/10 — Hypotheses are implicit in variable assignments; the system does not generate alternative explanatory narratives beyond clause satisfaction.  
-Implementability: 8/10 — All components (regex extraction, numpy arrays, pure Python DPLL, UCB, ACO updates) fit easily within numpy and the standard library, requiring no external dependencies.
+Reasoning: 7/10 — captures logical consistency and conflict‑driven reward but lacks deep semantic understanding.  
+Metacognition: 6/10 — bandit uncertainty estimates give rudimentary self‑assessment, yet no explicit reflection on reasoning strategies.  
+Hypothesis generation: 6/10 — ants generate tentative assignments; the UCB mechanism implicitly proposes promising answer hypotheses, but generation is limited to SAT search.  
+Implementability: 8/10 — relies only on regex, basic SAT unit propagation, and numpy‑compatible arithmetic; all feasible in pure Python stdlib + numpy.
 
 ### Scores
 
@@ -55,11 +43,11 @@ Implementability: 8/10 — All components (regex extraction, numpy arrays, pure 
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 8/10 |
-| **Composite** | **6.0** |
+| **Composite** | **6.33** |
 
-**Novelty**: unproductive
+**Novelty**: novel
 **High Potential**: No
 
 ---

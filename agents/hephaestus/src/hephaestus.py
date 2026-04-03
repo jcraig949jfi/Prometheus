@@ -100,23 +100,25 @@ def make_aggie_client(model: str = AGGIE_DEFAULT_MODEL):
 
 
 def call_aggie_api(aggie_client, prompt: str) -> str | None:
-    """Call the Augment API via auggie-sdk. Fallback when NVIDIA call_api() returns None.
+    """Call the Augment API via auggie-sdk.
 
-    This burns Augment tokens — only invoked when --use-aggie-api is set AND
-    the primary NVIDIA call has already failed after all retries.
-
+    Used as NVIDIA fallback (--use-aggie-api) or primary forge engine (--force-aggie).
     Returns the raw text response, or None on failure.
     """
     try:
-        logger.warning("NVIDIA API failed — falling back to Augment API (auggie-sdk)")
-        response = aggie_client.run(prompt, return_type=str, timeout=180)
-        if response:
-            logger.info("Augment API fallback succeeded (%d chars)", len(response))
-            return response
-        logger.warning("Augment API fallback returned empty response")
+        logger.info("Calling Augment API (auggie-sdk)...")
+        response = aggie_client.run(prompt, timeout=180, max_retries=1)
+        logger.debug("Augment raw response type=%s repr=%r", type(response).__name__, response)
+        text = str(response) if response is not None else None
+        if text:
+            logger.info("Augment API succeeded (%d chars)", len(text))
+            if len(text) < 300:
+                logger.warning("Augment response suspiciously short: %r", text)
+            return text
+        logger.warning("Augment API returned empty response")
         return None
     except Exception as e:
-        logger.error("Augment API fallback failed: %s", e)
+        logger.error("Augment API call failed: %s", e)
         return None
 
 
@@ -167,6 +169,79 @@ def call_api(client: OpenAI, prompt: str, model: str,
                 logger.error("API error after %d retries (last: %s)", max_retries, err)
     
     return None
+
+
+# ---------------------------------------------------------------------------
+# Import injection — fix common LLM code-gen omissions
+# ---------------------------------------------------------------------------
+
+# Map of bare names to the import line that provides them.
+# Only covers stdlib/typing names that are safe to inject.
+_IMPORT_FIXES: dict[str, str] = {
+    "List": "from typing import List",
+    "Dict": "from typing import Dict",
+    "Tuple": "from typing import Tuple",
+    "Set": "from typing import Set",
+    "Optional": "from typing import Optional",
+    "Union": "from typing import Union",
+    "Any": "from typing import Any",
+    "Callable": "from typing import Callable",
+    "Sequence": "from typing import Sequence",
+    "defaultdict": "from collections import defaultdict",
+    "Counter": "from collections import Counter",
+    "deque": "from collections import deque",
+    "dataclass": "from dataclasses import dataclass",
+    "field": "from dataclasses import field",
+    "ABC": "from abc import ABC",
+    "abstractmethod": "from abc import abstractmethod",
+}
+
+
+def _inject_missing_imports(code: str) -> str:
+    """Scan generated code for bare names used without import and prepend them.
+
+    Only injects safe stdlib/typing imports. If the code already imports the
+    name (directly or via wildcard), it is left alone.  Consolidates multiple
+    names from the same module into a single import line.
+
+    Also injects 'import numpy as np' if 'np.' is used without an existing
+    numpy import, and similar for other allowed third-party libraries.
+    """
+    import re
+
+    # --- Aliased third-party imports (np, nx, sp, sympy) ---
+    _ALIAS_FIXES = [
+        (r'\bnp\.', "import numpy as np", "numpy"),
+        (r'\bnx\.', "import networkx as nx", "networkx"),
+        (r'\bscipy\.', "import scipy", "scipy"),
+        (r'\bsympy\.', "import sympy", "sympy"),
+    ]
+    alias_lines = []
+    for pattern, import_line, module in _ALIAS_FIXES:
+        if re.search(pattern, code) and import_line not in code and f"import {module}" not in code:
+            alias_lines.append(import_line)
+
+    # --- Stdlib/typing name imports ---
+    by_module: dict[str, list[str]] = {}  # module -> [names]
+    for name, import_line in _IMPORT_FIXES.items():
+        if import_line in code:
+            continue
+        module = import_line.split("from ")[-1].split(" import")[0]
+        if f"import {module}" in code and f"from {module}" not in code:
+            continue
+        if re.search(rf'\b{name}\b', code):
+            by_module.setdefault(module, []).append(name)
+
+    stdlib_lines = []
+    for module in sorted(by_module):
+        names = sorted(by_module[module])
+        stdlib_lines.append(f"from {module} import {', '.join(names)}")
+
+    all_injections = alias_lines + stdlib_lines
+    if not all_injections:
+        return code
+
+    return "\n".join(all_injections) + "\n\n" + code
 
 
 # ---------------------------------------------------------------------------
@@ -280,7 +355,8 @@ def safe_filename(names: list[str]) -> str:
     return joined.lower()
 
 
-def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path):
+def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path,
+               frame: str = "?"):
     """Save a successfully forged tool."""
     fname = safe_filename(entry["concept_names"])
     forge_path = FORGE_DIR / f"{fname}.py"
@@ -293,6 +369,7 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path):
         "nous_composite_score": entry.get("score", {}).get("composite_score"),
         "test_accuracy": test_results["accuracy"],
         "test_calibration": test_results["calibration"],
+        "frame": frame,
         "forged_at": datetime.now().isoformat(),
     }
     meta_path = FORGE_DIR / f"{fname}.json"
@@ -303,7 +380,8 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path):
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(meta) + "\n")
 
-    logger.info("FORGED: %s (acc=%.0f%% cal=%.0f%%)",
+    logger.info("FORGED [%s]: %s (acc=%.0f%% cal=%.0f%%)",
+                meta.get("frame", "?"),
                 " + ".join(entry["concept_names"]),
                 test_results["accuracy"] * 100,
                 test_results["calibration"] * 100)
@@ -315,7 +393,8 @@ def save_forge(code: str, entry: dict, test_results: dict, run_dir: Path):
                      n_categories=test_results.get("n_categories", 0))
 
 
-def save_scrap(code: str | None, entry: dict, reason: str, run_dir: Path):
+def save_scrap(code: str | None, entry: dict, reason: str, run_dir: Path,
+               frame: str = "?"):
     """Save a failed forge attempt."""
     fname = safe_filename(entry["concept_names"])
     if code:
@@ -327,6 +406,7 @@ def save_scrap(code: str | None, entry: dict, reason: str, run_dir: Path):
         "concept_fields": entry.get("concept_fields", []),
         "nous_composite_score": entry.get("score", {}).get("composite_score"),
         "failure_reason": reason,
+        "frame": frame,
         "scrapped_at": datetime.now().isoformat(),
     }
     meta_path = SCRAP_DIR / f"{fname}.json"
@@ -337,12 +417,53 @@ def save_scrap(code: str | None, entry: dict, reason: str, run_dir: Path):
     with open(log_path, "a", encoding="utf-8") as f:
         f.write(json.dumps(meta) + "\n")
 
-    logger.info("SCRAP: %s — %s", " + ".join(entry["concept_names"]), reason)
+    logger.info("SCRAP [%s]: %s — %s", meta.get("frame", "?"),
+                " + ".join(entry["concept_names"]), reason)
 
 
 # ---------------------------------------------------------------------------
 # Rankings
 # ---------------------------------------------------------------------------
+
+def _log_frame_scoreboard(run_dir: Path):
+    """Log per-frame success rates from this run's forged/scrapped JSONL files."""
+    from collections import Counter
+
+    frame_forged: Counter = Counter()
+    frame_total: Counter = Counter()
+
+    for jsonl_name, is_forge in [("forged.jsonl", True), ("scrapped.jsonl", False)]:
+        path = run_dir / jsonl_name
+        if not path.exists():
+            continue
+        try:
+            for line in path.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                rec = json.loads(line)
+                f = rec.get("frame", "?")
+                frame_total[f] += 1
+                if is_forge:
+                    frame_forged[f] += 1
+        except Exception:
+            continue
+
+    if not frame_total:
+        return
+
+    logger.info("  Frame scoreboard (this run):")
+    frame_names = {
+        "A": "Structural", "B": "Constructive", "C": "Dynamics",
+        "D": "Judgment", "E": "Computational", "F": "Adversarial",
+        "G": "Metacognitive", "H": "Primordial",
+    }
+    for f in sorted(frame_total.keys()):
+        total = frame_total[f]
+        forged = frame_forged[f]
+        rate = (forged / total * 100) if total > 0 else 0
+        name = frame_names.get(f, "?")
+        logger.info("    Frame %s (%s): %d/%d forged (%.0f%%)", f, name, forged, total, rate)
+
 
 def write_rankings(forged: list[dict], scrapped: list[dict], run_dir: Path):
     """Write a rankings.md summary of the run."""
@@ -526,7 +647,7 @@ def filter_results(results: list[dict], top_n: int | None = None,
 
 def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
                          run_dir: Path, max_item_retries: int = 3,
-                         aggie_client=None) -> dict | None:
+                         aggie_client=None, force_aggie: bool = False) -> dict | None:
     """Attempt to forge an item multiple times with backoff on API failures.
 
     This wrapper retries at the item level when API failures occur, giving the
@@ -535,11 +656,12 @@ def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
 
     aggie_client: optional Auggie instance used as fallback inside forge_one()
                   when the NVIDIA call fails.  Only set when --use-aggie-api is active.
+    force_aggie: if True, skip NVIDIA API entirely and use Augment API (aggie_client must be set).
     """
     import random
 
     for attempt in range(max_item_retries):
-        result = forge_one(client, entry, model, run_dir, aggie_client=aggie_client)
+        result = forge_one(client, entry, model, run_dir, aggie_client=aggie_client, force_aggie=force_aggie)
 
         # If successful or permanent failure, return immediately
         if not result or result["status"] == "forged":
@@ -563,13 +685,14 @@ def forge_one_with_retry(client: OpenAI, entry: dict, model: str,
 
 
 def forge_one(client: OpenAI, entry: dict, model: str,
-              run_dir: Path, aggie_client=None) -> dict | None:
+              run_dir: Path, aggie_client=None, force_aggie: bool = False) -> dict | None:
     """Process a single Nous result through the full forge pipeline.
 
     aggie_client: optional Auggie instance.  When the primary NVIDIA call_api()
                   fails (returns None) and aggie_client is provided, the same
                   prompt is sent to the Augment API as a one-shot fallback.
                   If the fallback also fails the item is scrapped as normal.
+    force_aggie: if True, skip NVIDIA API entirely and call Augment API (aggie_client must be set).
     """
     names = entry.get("concept_names", [])
     score_data = entry.get("score", {})
@@ -588,26 +711,35 @@ def forge_one(client: OpenAI, entry: dict, model: str,
     from prompts import select_frame
     frame = select_frame()
     prompt = build_code_gen_prompt(names, response_text, ratings, enrichment=enrichment, frame=frame)
-    raw_response = call_api(client, prompt, model)
 
-    # 1b. Augment API fallback — only when NVIDIA failed AND flag is active
-    if raw_response is None and aggie_client is not None:
+    # 1a. Use Augment API directly if --force-aggie
+    if force_aggie and aggie_client is not None:
+        logger.info("  Using Augment API (force-aggie mode)")
         raw_response = call_aggie_api(aggie_client, prompt)
+    else:
+        # Normal path: try NVIDIA first
+        raw_response = call_api(client, prompt, model)
+        # 1b. Augment API fallback — only when NVIDIA failed AND flag is active
+        if raw_response is None and aggie_client is not None:
+            raw_response = call_aggie_api(aggie_client, prompt)
 
     if raw_response is None:
-        save_scrap(None, entry, "api_call_failed", run_dir)
+        save_scrap(None, entry, "api_call_failed", run_dir, frame=frame)
         return {"status": "scrap", "reason": "api_call_failed", "frame": frame}
 
     # 2. Extract code
     code, extract_status = extract_code(raw_response)
     if code is None:
-        save_scrap(None, entry, extract_status, run_dir)
+        save_scrap(None, entry, extract_status, run_dir, frame=frame)
         return {"status": "scrap", "reason": extract_status, "frame": frame}
+
+    # 2b. Inject missing stdlib imports (LLMs frequently forget these)
+    code = _inject_missing_imports(code)
 
     # 3. Validate
     valid, reason = validate(code)
     if not valid:
-        save_scrap(code, entry, f"validation:{reason}", run_dir)
+        save_scrap(code, entry, f"validation:{reason}", run_dir, frame=frame)
         return {"status": "scrap", "reason": f"validation:{reason}", "frame": frame}
 
     # 4. Run trap battery
@@ -615,7 +747,7 @@ def forge_one(client: OpenAI, entry: dict, model: str,
         tool = load_tool_from_code(code)
         test_results = run_trap_battery(tool)
     except Exception as e:
-        save_scrap(code, entry, f"test_harness_error: {e}", run_dir)
+        save_scrap(code, entry, f"test_harness_error: {e}", run_dir, frame=frame)
         return {"status": "scrap", "reason": f"test_harness_error: {e}", "frame": frame}
 
     if not test_results["passed"]:
@@ -625,11 +757,11 @@ def forge_one(client: OpenAI, entry: dict, model: str,
                         f" ncd_cal={test_results['ncd_calibration']:.0%}")
         reason = (f"trap_battery_failed (acc={test_results['accuracy']:.0%} "
                   f"cal={test_results['calibration']:.0%}{ncd_info})")
-        save_scrap(code, entry, reason, run_dir)
+        save_scrap(code, entry, reason, run_dir, frame=frame)
         return {"status": "scrap", "reason": reason, "frame": frame}
 
     # 5. Save to forge
-    save_forge(code, entry, test_results, run_dir)
+    save_forge(code, entry, test_results, run_dir, frame=frame)
     return {
         "status": "forged",
         "accuracy": test_results["accuracy"],
@@ -735,10 +867,11 @@ def _load_nous(args, run_dir: Path) -> tuple[list[dict], str]:
 def _forge_batch(client: OpenAI, filtered: list[dict], args,
                  run_dir: Path, processed: set[str],
                  total_count: int, shutdown_flag: list,
-                 aggie_client=None) -> tuple[list, list, int]:
+                 aggie_client=None, force_aggie: bool = False) -> tuple[list, list, int]:
     """Process one batch of candidates. Returns (forged, scrapped, new_count).
 
     aggie_client: optional Auggie instance passed down to forge_one() as fallback.
+    force_aggie: if True, skip NVIDIA API entirely and use Augment API (aggie_client must be set).
     """
     forged_results = []
     scrapped_results = []
@@ -753,7 +886,8 @@ def _forge_batch(client: OpenAI, filtered: list[dict], args,
             continue
 
         result = forge_one_with_retry(client, entry, args.model, run_dir,
-                                      max_item_retries=3, aggie_client=aggie_client)
+                                      max_item_retries=3, aggie_client=aggie_client,
+                                      force_aggie=force_aggie)
 
         processed.add(key)
         count += 1
@@ -838,11 +972,14 @@ def main():
     parser.add_argument("--reports-interval", type=int, default=50,
                         help="Rebuild human-readable reports every N forges (0=disable)")
     # ---------------------------------------------------------------------------
-    # Augment API fallback (--use-aggie-api)
+    # Augment API fallback (--use-aggie-api, --force-aggie)
     # ---------------------------------------------------------------------------
     parser.add_argument("--use-aggie-api", action="store_true",
                         help="Enable Augment API (auggie-sdk) as fallback when NVIDIA call fails. "
                              "WARNING: burns Augment tokens — use only during NVIDIA outages.")
+    parser.add_argument("--force-aggie", action="store_true",
+                        help="Skip NVIDIA API entirely; use Augment API (auggie-sdk) for all forges. "
+                             "WARNING: burns Augment tokens continuously. Implies --use-aggie-api.")
     parser.add_argument("--aggie-model", type=str, default=AGGIE_DEFAULT_MODEL,
                         choices=["haiku4.5", "sonnet4.5", "sonnet4", "gpt5"],
                         help=f"Augment model to use for fallback (default: {AGGIE_DEFAULT_MODEL})")
@@ -881,13 +1018,19 @@ def main():
 
     # Augment API fallback client — created once, reused across the run
     aggie_client = None
-    if args.use_aggie_api:
+    force_aggie = args.force_aggie  # Skip NVIDIA entirely if set
+    if args.use_aggie_api or args.force_aggie:
         try:
             aggie_client = make_aggie_client(model=args.aggie_model)
-            logger.info("Augment API fallback ENABLED (model=%s) — "
-                        "will activate only when NVIDIA call fails", args.aggie_model)
+            if args.force_aggie:
+                logger.warning("Augment API PRIMARY MODE ENABLED (model=%s) — "
+                               "skipping NVIDIA API entirely", args.aggie_model)
+            else:
+                logger.info("Augment API fallback ENABLED (model=%s) — "
+                            "will activate only when NVIDIA call fails", args.aggie_model)
         except Exception as e:
             logger.error("Failed to create Augment API client: %s — fallback disabled", e)
+            force_aggie = False
 
     total_forged = []
     total_scrapped = []
@@ -935,7 +1078,8 @@ def main():
             "min_score": args.min_score,
             "model": args.model,
             "aggie_fallback": args.use_aggie_api,
-            "aggie_model": args.aggie_model if args.use_aggie_api else None,
+            "force_aggie": force_aggie,
+            "aggie_model": args.aggie_model if (args.use_aggie_api or force_aggie) else None,
             "mode": mode,
             "cycle": cycle,
             "n_candidates": len(filtered),
@@ -959,7 +1103,7 @@ def main():
         # Forge the batch
         forged, scrapped, batch_count = _forge_batch(
             client, filtered, args, run_dir, processed,
-            total_count, shutdown_flag, aggie_client=aggie_client,
+            total_count, shutdown_flag, aggie_client=aggie_client, force_aggie=force_aggie,
         )
         total_forged.extend(forged)
         total_scrapped.extend(scrapped)
@@ -972,6 +1116,7 @@ def main():
             break
 
         if not shutdown_flag[0]:
+            _log_frame_scoreboard(run_dir)
             logger.info("Batch complete (%d forged, %d scrapped). "
                         "Sleeping %ds before re-scanning Nous...",
                         len(forged), len(scrapped), int(args.poll_interval))
@@ -1003,6 +1148,7 @@ def main():
                         " + ".join(f["concept_names"]),
                         f["test_accuracy"] * 100,
                         f["test_calibration"] * 100)
+    _log_frame_scoreboard(run_dir)
     logger.info("  Results: %s", run_dir)
     logger.info("=" * 60)
 

@@ -2,35 +2,43 @@
 
 **Fields**: Mathematics, Mathematics, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T06:10:54.351191
-**Report Generated**: 2026-03-31T18:16:23.361240
+**Nous Timestamp**: 2026-04-01T06:27:09.291667
+**Report Generated**: 2026-04-01T20:30:42.664149
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parse** the prompt and each candidate answer into a set of atomic propositions \(P=\{p_1,\dots,p_m\}\) using regex‑based extraction of linguistic structures (negations, comparatives, conditionals, numeric thresholds, causal verbs, ordering relations). Each proposition is assigned a binary feature vector \(v_i\in\{0,1\}^k\) where \(k\) encodes polarity, modality, and numeric buckets.  
-2. **Build a compositional transition matrix** \(T\in\mathbb{R}^{m\times m}\) where \(T_{ij}=1\) if the syntactic‑semantic rule base (derived from Frege’s principle) permits inferring \(p_j\) from \(p_i\) (e.g., \(p_i\land p_k\rightarrow p_j\) encoded via pre‑computed conjunctive patterns). Non‑logical steps get a small epsilon to ensure ergodicity.  
-3. **Dynamical simulation**: treat a candidate answer as an initial state distribution \(x^{(0)}\) (uniform over its propositions). Iterate \(x^{(t+1)} = T^\top x^{(t)}\) (power iteration) until \(\|x^{(t+1)}-x^{(t)}\|_1<\epsilon\). By the ergodic theorem for finite Markov chains, the limit \(x^*\) is the unique stationary distribution, i.e., the long‑run time‑average of visiting each proposition under the compositional dynamics.  
-4. **Scoring**: compute the cosine similarity between \(x^*\) and the target answer’s stationary distribution \(x^{\text{gt}}_*\) (obtained the same way from the gold answer). The score \(s = \frac{x^*\cdot x^{\text{gt}}_*}{\|x^*\|\|x^{\text{gt}}_*\|}\in[0,1]\). Higher \(s\) indicates the candidate’s logical trajectory ergodically aligns with the gold’s.
+We treat each candidate answer as a discrete‑time dynamical system whose state vector **xₜ** ∈ {0,1}ⁿ encodes the truth value of *n* atomic propositions extracted from the prompt and the answer (e.g., “A > B”, “¬C”, “price = 12”). Propositions are nodes in a compositional parse tree; internal nodes combine children with deterministic update rules that implement logical inference (modus ponens, transitivity, comparatives).  
 
-**Structural features parsed**  
-- Negations (“not”, “no”) → polarity flag.  
-- Comparatives (“greater than”, “less than”) → numeric bucket and direction.  
-- Conditionals (“if … then …”) → implication edges in \(T\).  
-- Causal verbs (“cause”, “lead to”) → directed edges with weight > epsilon.  
-- Ordering relations (“before”, “after”) → temporal edges.  
-- Quantifiers (“all”, “some”) → scope‑adjusted proposition sets.
+1. **Parsing & data structures** – Using regex‑based extraction we build a list of atomic propositions *pᵢ* and a list of inference rules *rⱼ*. Each rule is stored as a tuple (antecedent‑indices, consequent‑index, operator) where operator ∈ {AND, OR, NOT, IMPLIES, TRANSITIVE, COMPARATIVE}. The rule set induces a Boolean transition function **F**: {0,1}ⁿ → {0,1}ⁿ that can be expressed as a sparse matrix **M** (numpy CSR) plus a bias vector **b** (for NOT/thresholds).  
 
-**Novelty**  
-The coupling of ergodic averaging with a deterministic compositional transition system is not a direct replica of existing models. While Markov Logic Networks and Probabilistic Soft Logic use weighted logical formulas, they rely on inference via optimization or sampling. Here, the ergodic theorem guarantees convergence of a simple power‑iteration dynamical system, yielding a parameter‑free, purely algorithmic similarity measure that explicitly exploits time‑average/space‑average equivalence—a combination not previously documented in the literature.
+2. **Dynamical update** – Initialize **x₀** from facts directly stated in the prompt (1 if true, 0 otherwise). Iterate **xₜ₊₁ = F(xₜ)** for *T* steps (e.g., T = 50) or until ‖xₜ₊₁−xₜ‖₁ = 0. Because **F** is monotone and deterministic, the trajectory eventually settles on a fixed point or a short limit cycle.  
+
+3. **Ergodic scoring** – Define a reward vector **r** ∈ ℝⁿ where rᵢ = 1 if proposition *pᵢ* appears in the answer and should be true, −1 if it appears and should be false, 0 otherwise. The time‑averaged reward is  
+
+\[
+\bar{R} = \frac{1}{T}\sum_{t=0}^{T-1} \mathbf{r}^\top \mathbf{x}_t .
+\]
+
+If the system is mixing (which holds for rule sets containing at least one stochastic‑like tie‑breaker, e.g., random tie‑break on conflicting rules), the Birkhoff ergodic theorem guarantees that \(\bar{R}\) converges to the space average ⟨**r**, μ⟩ where μ is the invariant distribution. We approximate the space average by the empirical frequency of **xₜ** over the trajectory. The final score is  
+
+\[
+s = 1 - \frac{|\bar{R} - \langle\mathbf{r},\mu\rangle|}{\|\mathbf{r}\|_1},
+\]
+
+so answers whose implied truth‑values persistently satisfy the reward pattern receive higher scores.
+
+**Structural features parsed** – negations (¬), comparatives (> , < , =), conditionals (if‑then), causal arrows (→), numeric constants and inequalities, ordering chains (A < B < C), conjunctions/disjunctions, and quantifier‑free predicates.  
+
+**Novelty** – While symbolic reasoners use constraint propagation and compositional semantics, and ergodic theory appears in dynamical‑systems analysis of text (e.g., Markov‑chain Monte‑Carlo for language), the specific coupling of a deterministic logical update rule with an ergodic time‑average reward to evaluate answer consistency is not present in existing literature. Hence the combination is novel.
 
 **Ratings**  
-Reasoning: 8/10 — captures logical consistency via dynamical ergodicity, but relies on hand‑crafted rule base.  
-Metacognition: 6/10 — limited self‑reflection; the method does not monitor its own convergence quality beyond a fixed epsilon.  
-Hypothesis generation: 5/10 — generates implicit hypotheses through state transitions, yet lacks explicit proposal‑scoring loop.  
-Implementability: 9/10 — uses only numpy for matrix‑vector ops and regex for parsing; straightforward to code in <200 lines.
+Reasoning: 8/10 — captures logical inference and long‑term consistency via dynamical fixed points.  
+Metacognition: 6/10 — limited self‑monitoring; the algorithm does not reflect on its own update rule beyond convergence detection.  
+Hypothesis generation: 7/10 — can generate implied propositions as attractor states, but does not propose alternative explanatory frameworks.  
+Implementability: 9/10 — relies only on regex, numpy sparse matrices, and basic loops; straightforward to code in <200 lines.
 
 ### Scores
 
@@ -38,9 +46,9 @@ Implementability: 9/10 — uses only numpy for matrix‑vector ops and regex for
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

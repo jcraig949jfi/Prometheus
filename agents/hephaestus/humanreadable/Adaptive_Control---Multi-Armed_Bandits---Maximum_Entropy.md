@@ -2,66 +2,62 @@
 
 **Fields**: Control Theory, Game Theory, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T02:11:38.719133
-**Report Generated**: 2026-03-31T14:34:55.667585
+**Nous Timestamp**: 2026-04-01T19:59:35.727714
+**Report Generated**: 2026-04-01T20:30:42.639141
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We treat each candidate answer \(a_i\) as an arm in a contextual bandit. From the prompt we extract a binary feature vector \(\mathbf{x}_i\in\{0,1\}^d\) that encodes structural predicates (negation, comparative, conditional, numeric value, causal claim, ordering). The unknown quality of an answer is modeled as a linear function \(q_i = \mathbf{w}^\top\mathbf{x}_i\).  
+We maintain a linear scoring model \(s(a)=\mathbf{w}^\top\mathbf{f}(a)\) where \(\mathbf{f}(a)\in\mathbb{R}^d\) is a feature vector extracted from candidate answer \(a\). The weight vector \(\mathbf{w}\) is treated as the parameter of an adaptive controller that is updated online to minimise prediction error on a small set of validation answers (or on-the‑fly self‑supervision via answer‑consistency checks). Updates follow a recursive least‑squares (RLS) rule – an adaptive‑control scheme – which yields a posterior covariance \(\mathbf{P}_t\).  
 
-*Maximum‑entropy prior*: With only the first‑ and second‑moment constraints \(\mathbb{E}[\mathbf{w}]=\mathbf{0}\) and \(\mathbb{E}[\mathbf{w}\mathbf{w}^\top]=\Sigma_0\) we obtain the least‑biased distribution, a Gaussian \(\mathcal{N}(\mathbf{0},\Sigma_0)\).  
-
-*Adaptive control (recursive least squares)*: After each observed reward \(r_t\) (e.g., 1 if the answer matches a gold standard, 0 otherwise) for the selected arm \(i_t\), we update the posterior over \(\mathbf{w}\) using the Kalman‑filter equations, which are the adaptive‑control solution for minimizing squared prediction error:  
+To balance exploitation of the current weight estimate with exploration of uncertain directions, we cast each weight component as an arm in a contextual multi‑armed bandit. At step \(t\) we compute an Upper‑Confidence‑Bound (UCB) score for each answer:  
 
 \[
-\mathbf{K}_t = \Sigma_{t-1}\mathbf{x}_{i_t}\bigl(\mathbf{x}_{i_t}^\top\Sigma_{t-1}\mathbf{x}_{i_t}+\lambda\bigr)^{-1}\\
-\mathbf{w}_t = \mathbf{w}_{t-1} + \mathbf{K}_t\bigl(r_t-\mathbf{w}_{t-1}^\top\mathbf{x}_{i_t}\bigr)\\
-\Sigma_t = \bigl(I-\mathbf{K}_t\mathbf{x}_{i_t}^\top\bigr)\Sigma_{t-1}
+\text{UCB}_t(a)=\mathbf{w}_t^\top\mathbf{f}(a)+\alpha\sqrt{\mathbf{f}(a)^\top\mathbf{P}_t\mathbf{f}(a)}
 \]
 
-where \(\lambda\) is a small regularizer.  
-
-*Multi‑armed bandit selection*: To balance exploration and exploitation we compute an Upper Confidence Bound (UCB) for each arm:  
+where \(\alpha>0\) controls exploration. The answer with the highest UCB is selected as the predicted best answer, and its observed correctness (or a proxy reward such as logical‑consistency score) triggers the RLS update:  
 
 \[
-\text{UCB}_i = \mathbf{w}_{t-1}^\top\mathbf{x}_i + \beta\sqrt{\mathbf{x}_i^\top\Sigma_{t-1}\mathbf{x}_i}
+\mathbf{K}_t=\frac{\mathbf{P}_{t-1}\mathbf{f}(a)}{\lambda+\mathbf{f}(a)^\top\mathbf{P}_{t-1}\mathbf{f}(a)},\quad
+\mathbf{w}_t=\mathbf{w}_{t-1}+\mathbf{K}_t(r_t-\mathbf{w}_{t-1}^\top\mathbf{f}(a)),\quad
+\mathbf{P}_t=\frac{1}{\lambda}\big(\mathbf{P}_{t-1}-\mathbf{K}_t\mathbf{f}(a)^\top\mathbf{P}_{t-1}\big)
 \]
 
-with \(\beta\) controlling exploration width. The arm with the highest UCB is chosen for the next evaluation; after a fixed budget of evaluations the final score for each answer is the posterior mean \(\mathbf{w}_T^\top\mathbf{x}_i\).  
+with forgetting factor \(\lambda\in(0,1]\).  
 
-All operations use NumPy arrays for \(\mathbf{w},\Sigma,\mathbf{x}\) and standard‑library functions for reward handling and loops.  
+The prior over \(\mathbf{w}\) is obtained via the maximum‑entropy principle subject to constraints that the weights are non‑negative and sum to one (a simplex). This yields a uniform Dirichlet prior, which is incorporated as the initial \(\mathbf{P}_0\) (large variance) and \(\mathbf{w}_0\) (the centroid of the simplex).  
 
 **Structural features parsed**  
-- Negations (“not”, “no”) → binary flag.  
-- Comparatives (“greater than”, “less than”, “more”) → flag + extracted numeric threshold.  
-- Conditionals (“if … then …”, “unless”) → antecedent/consequent flags.  
-- Numeric values (integers, decimals) → normalized scalar feature.  
-- Causal claims (“because”, “leads to”, “results in”) → flag.  
-- Ordering relations (“first”, “last”, “before”, “after”) → flag + relative position encoding.  
+- Negations (presence of “not”, “no”, affix ‑un) → binary flag.  
+- Comparatives (“more than”, “less than”, “‑er”) → ordered pair of entities with a comparative flag.  
+- Conditionals (“if … then …”, “unless”) → implication graph edges.  
+- Numeric values and units → normalized scalars.  
+- Causal verbs (“cause”, “lead to”, “result in”) → directed causal links.  
+- Ordering relations (“first”, “last”, “before”, “after”) → temporal precedence constraints.  
 
-Each predicate contributes one or more dimensions to \(\mathbf{x}_i\).  
+Each feature type contributes one or more dimensions to \(\mathbf{f}(a)\) (e.g., a count of negations, a sum of normalized numbers, a binary flag for each detected causal link).  
 
 **Novelty**  
-The combination maps closely to linear contextual bandits with Gaussian priors (Thompson sampling/UCB) where the posterior is updated via recursive least squares—a well‑studied adaptive‑control technique. What is less common is the explicit use of maximum‑entropy to justify the Gaussian prior and the direct application to scoring reasoning answers via structural predicate features. Hence the approach is a specific instantiation rather than a wholly new theory, but it integrates the three concepts in a concrete scoring pipeline not typically seen in existing QA evaluation tools.  
+The trio of adaptive control (RLS), contextual bandits (UCB), and maximum‑entropy priors has been studied separately in control theory, reinforcement learning, and statistical inference, but their direct integration into a single online scoring pipeline for answer ranking is not documented in the literature. Prior work uses either static feature weighting or pure bandit exploration; none couples RLS‑based weight adaptation with a maximum‑entropy‑derived simplex prior.  
 
 **Ratings**  
-Reasoning: 7/10 — The algorithm captures uncertainty and updates estimates online, giving a principled way to rank answers, but it relies on linear quality assumptions that may miss higher‑order interactions.  
-Metacognition: 6/10 — The UCB term provides explicit exploration‑exploitation awareness, yet the system does not reason about its own feature extraction errors.  
-Hypothesis generation: 5/10 — Feature extraction yields hypotheses about answer quality, but the method does not generate new semantic hypotheses beyond the predefined predicate set.  
-Implementability: 9/10 — All components (regex feature extraction, NumPy linear algebra, recursive updates) are straightforward to code with only the permitted libraries.
+Reasoning: 8/10 — captures logical structure via feature extraction and propagates uncertainty through Bayesian‑style covariance.  
+Metacognition: 7/10 — the bandit term provides explicit exploration‑exploitation awareness of model uncertainty.  
+Hypothesis generation: 6/10 — generates alternative weight hypotheses via posterior covariance, but limited to linear hypotheses.  
+Implementability: 9/10 — relies only on NumPy for matrix ops and std‑lib for parsing; no external dependencies.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.0** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

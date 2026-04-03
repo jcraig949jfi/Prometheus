@@ -2,42 +2,64 @@
 
 **Fields**: Information Science, Software Engineering, Formal Methods
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T20:01:19.603937
-**Report Generated**: 2026-03-27T04:25:49.385729
+**Nous Timestamp**: 2026-04-01T20:42:44.893354
+**Report Generated**: 2026-04-02T04:19:56.783881
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-1. **Parse prompt into a Hoare triple** – Using regex we extract atomic propositions (facts) and relational operators (¬, <, >, =, →, because, before/after). These become the precondition P. The expected answer format supplied in the prompt (e.g., “the value of X is …”) becomes the postcondition Q. The implicit program C is the reasoning steps a candidate answer must perform to turn P into Q.  
-2. **Build an AST of P and Q** – Nodes are literals, comparatives, conditionals, and causal links. Edges represent logical implication; we compute the transitive closure of the implication graph with Floyd‑Warshall on a NumPy boolean matrix to derive all entailed facts.  
-3. **Interpret a candidate answer as a tiny imperative program** – Each sentence is mapped to an assignment or assertion (e.g., “X = 5” → assign; “X > Y” → assert). The program manipulates a symbol table (dict of variable → numeric interval).  
-4. **Property‑based testing** – Using Hypothesis‑style random generation (std‑lib `random`), we sample 200 valuations that satisfy P (checked via the interval table). For each valuation we execute the candidate program; if any assertion fails we record a counter‑example and apply a shrinking loop: halve the interval of the failing variable and re‑test until no further reduction removes the failure. The pass‑rate = (#passing tests)/(total tests).  
-5. **Similarity via Normalized Compression Distance** – Compute compressed lengths with `zlib.compress` for the candidate answer A, a reference correct answer R (derived by solving the Hoare triple symbolically), and the concatenation AR. NCD = (|C(AR)| − min(|C(A)|,|C(R)|)) / max(|C(A)|,|C(R)|).  
-6. **Score** – `score = α·(1 − NCD) + β·pass_rate`, with α = β = 0.5 (tunable). Higher scores indicate answers that are both textually close to a correct solution and logically robust under random precondition sampling.
+**Algorithm: Compression‑Guided Invariant‑Checking (CGIC)**  
 
-**Structural features parsed**  
-Negations (¬, not), comparatives (<, >, ≤, ≥, =), conditionals (if‑then, implies), causal cues (because, leads to, results in), temporal ordering (before, after, then), numeric constants and intervals, existential/universal quantifiers hinted by “some”, “all”.
+1. **Parsing & Representation**  
+   - Input: a prompt *P* and a candidate answer *A*.  
+   - Using only the standard library, extract a set of logical atoms from each text via regex patterns that capture:  
+     * numeric literals and ranges,  
+     * comparatives (`>`, `<`, `≥`, `≤`, `=`),  
+     * negations (`not`, `no`, `never`),  
+     * conditionals (`if … then …`, `unless`),  
+     * causal markers (`because`, `leads to`, `results in`),  
+     * ordering relations (`before`, `after`, `first`, `last`).  
+   - Each atom becomes a tuple `(type, polarity, variables, constants)`.  
+   - Build two directed graphs *Gₚ* and *Gₐ* where nodes are atoms and edges represent inferred implications (e.g., from a conditional antecedent → consequent, or from transitivity of ordering).  
+
+2. **Hoare‑style Invariant Extraction**  
+   - Treat the prompt as a precondition *P₀* and the candidate as a postcondition *Q₀*.  
+   - Compute the strongest inductive invariant *I* that holds on all paths of *Gₚ* using a fix‑point iteration: start with *I = P₀*, repeatedly add any atom that is implied by current *I* via edges in *Gₚ* (modus ponens) until convergence.  
+   - The invariant is stored as a set of atoms; its size |*I*| is a measure of how much of the prompt’s logical structure is preserved.  
+
+3. **Property‑Based Test Generation**  
+   - From the invariant *I*, generate a small property‑based test suite (using only `random` from the stdlib): each test randomly instantiates the numeric variables within observed bounds and checks whether all atoms in *I* evaluate to True.  
+   - If a test fails, record the failing atom and shrink the offending constants via binary search to obtain a minimal counterexample.  
+
+4. **Scoring with Normalized Compression Distance**  
+   - Serialize the invariant *I* and the candidate‑derived graph *Gₐ* as comma‑separated strings of atoms.  
+   - Compute NCD(*I*, *Gₐ*) using `zlib.compress` (available in stdlib) as the compressor:  
+     `NCD = (C(I+Gₐ) - min(C(I),C(Gₐ))) / max(C(I),C(Gₐ))`, where `C(x)` is the length of the compressed byte string.  
+   - The final score is `S = 1 - NCD` (higher = more similar).  
+   - If any property‑based test fails, penalize the score by subtracting `0.2 * (number of failing tests / total tests)`.  
+
+**Structural Features Parsed**  
+Negations, comparatives, conditionals, causal claims, numeric values/ranges, and ordering relations are explicitly extracted to build the implication graphs.  
 
 **Novelty**  
-While NCD, property‑based testing, and Hoare logic each appear separately in plagiarism detection, automated testing, and program verification, their joint use to score natural‑language reasoning answers has not been reported in the literature. The combination leverages compression‑based similarity, exhaustive‑style validation via generated preconditions, and formal specification of correctness, yielding a distinct scoring mechanism.
+The combination is not found in existing literature: NCD is used as a similarity kernel, Hoare‑style invariant computation supplies a logical scaffold, and property‑based testing supplies falsification checks. Prior work uses either compression distances for plagiarism detection, Hoare logic for verification, or property‑based testing for software testing, but none integrate all three to score reasoning answers.  
 
-**Rating**  
-Reasoning: 7/10 — captures logical validity via Hoare triples and testing, but relies on simple imperative mapping of language.  
-Metacognition: 5/10 — no explicit self‑monitoring of confidence or strategy adaptation beyond pass‑rate.  
-Hypothesis generation: 6/10 — generates random preconditions and shrinking counter‑examples, a form of hypothesis search, yet limited to numeric intervals.  
-Implementability: 8/10 — uses only regex, NumPy for matrix closure, random, and zlib; all are in the standard library or NumPy.
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and invariants, enabling meaningful similarity assessment.  
+Metacognition: 6/10 — the method can detect when its own invariant is too weak (via failing tests) but lacks explicit self‑reflection on proof strategies.  
+Hypothesis generation: 7/10 — property‑based testing generates concrete counterexamples that guide hypothesis refinement.  
+Implementability: 9/10 — relies only on regex, basic graph algorithms, `random`, and `zlib`, all in the stdlib plus numpy for optional numeric handling.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 7/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -2,50 +2,51 @@
 
 **Fields**: Mathematics, Game Theory, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T07:20:11.936443
-**Report Generated**: 2026-03-27T06:37:43.253632
+**Nous Timestamp**: 2026-04-02T10:30:02.827538
+**Report Generated**: 2026-04-02T10:55:56.040717
 
 ---
 
 ## Nous Analysis
 
 **Algorithm: Bayesian‑Nash Sensitivity Scorer (BNSS)**  
+The scorer treats each candidate answer as a set of propositional clauses extracted from the text. For each clause c we compute a belief score b(c)∈[0,1] that reflects how well the clause is supported by the prompt evidence. Belief updates follow Bayes’ rule using a conjugate Beta prior (α₀,β₀) for each clause type (e.g., factual, causal, comparative). The likelihood L(c) is derived from a sensitivity‑analysis weight w(c) that measures how much the clause’s truth value would change under small perturbations of numeric inputs or logical connectives (see parsing below).  
 
-*Data structures*  
-- **Proposition graph** `G = (V, E)`: each node `v` holds a parsed atomic claim (e.g., “X > Y”, “¬P”, numeric value). Edges encode logical relations extracted via regex‑based pattern matching (implication, conjunction, negation, ordering).  
-- **Belief matrix** `B ∈ ℝ^{|V|×K}`: for each node `v` and each of `K` candidate answers, a prior probability `B[v,0]` (uniform) and a posterior after evidence integration.  
-- **Payoff tensor** `Π ∈ ℝ^{|V|×K×K}`: expected utility of answer `i` versus answer `j` given the truth value of node `v` (derived from sensitivity derivatives).  
+1. **Parsing & Data Structures**  
+   - Tokenize the prompt and answer with regex to extract: numeric values, comparatives (“greater than”, “less than”), conditionals (“if … then”), causal markers (“because”, “leads to”), negations (“not”), and ordering relations (“before”, “after”).  
+   - Build a directed hypergraph G where nodes are atomic propositions and hyperedges represent logical constraints (e.g., modus ponens: (A ∧ (A→B)) → B). Edge weights are initialized from the sensitivity weight w(e)∈[0,1] (higher weight = more fragile to perturbation).  
 
-*Operations*  
-1. **Structural parsing** – regex extracts:  
-   - Numeric values and units → numeric nodes.  
-   - Comparatives (`>`, `<`, `≥`, `≤`) → ordering edges.  
-   - Negations (`not`, `no`) → negation flags on nodes.  
-   - Conditionals (`if … then …`) → implication edges.  
-   - Causal verbs (`cause`, `lead to`) → directed causal edges.  
-2. **Constraint propagation** – apply transitive closure on ordering edges and modus ponens on implication edges to derive implied truth values; inconsistencies propagate as penalty scores.  
-3. **Bayesian update** – for each node `v`, compute likelihood `L[v|answer]` based on how well the answer’s asserted truth matches the propagated truth (0/1 or continuous for numeric deviation). Posterior: `B[v,:] ∝ B[v,:] * L[v,:]` (numpy broadcasting). Normalize per answer.  
-4. **Sensitivity analysis** – perturb each numeric node by ±ε, recompute posteriors, compute variance `σ²_v` across answers; high variance flags fragile reasoning.  
-5. **Nash equilibrium scoring** – treat each answer as a pure strategy in a zero‑sum game where payoff for answer `i` against `j` is `U_{ij} = Σ_v B[v,i] * (1 - σ²_v)`. Compute best‑response dynamics; the answer that is a (approximate) Nash equilibrium (no unilateral deviation improves expected payoff) receives the highest score. Final score = equilibrium probability * (1 – average sensitivity).  
+2. **Constraint Propagation (Nash‑style equilibrium)**  
+   - Each node i holds a mixed strategy p_i = [b_i, 1‑b_i] representing belief in true/false.  
+   - Iterate best‑response updates: for each node, compute expected utility of setting b_i = 1 versus 0 given current neighbors’ beliefs and edge weights (utility = Σ w(e)·b_neighbor). Update b_i to the choice with higher utility.  
+   - Convergence (Δb < 1e‑4) yields a pure‑strategy Nash equilibrium of belief assignments; the final b_i is the posterior probability that proposition i holds.  
 
-*Structural features parsed*: numerics, comparatives, negations, conditionals, causal claims, ordering/transitive relations, and logical connectives (AND/OR via co‑occurrence).  
+3. **Scoring Logic**  
+   - For an answer, compute the average posterior belief over its extracted clauses: S = (1/|C|) Σ_{c∈C} b(c).  
+   - Apply a sensitivity penalty: S_final = S × (1 – λ·σ_w), where σ_w is the standard deviation of edge weights in the answer’s subgraph and λ∈[0,1] tunes robustness (set λ=0.3).  
+   - Return S_final as the score (higher = better aligned and robust).  
 
-*Novelty*: While Bayesian updating, Nash equilibrium concepts, and sensitivity analysis appear separately in AI‑education tools, their joint use to derive a game‑theoretic equilibrium score from parsed logical‑numeric structure is not documented in the literature; thus the combination is novel.  
+**Structural Features Parsed**  
+Numeric values, comparatives, conditionals, causal claims, negations, and ordering relations are extracted; these feed directly into edge construction and sensitivity weighting.
 
-Reasoning: 7/10 — The algorithm blends principled belief updating with game‑theoretic stability, but relies on simplistic likelihood models that may miss nuanced semantics.  
-Metacognition: 5/10 — It evaluates answer robustness via sensitivity, yet lacks explicit self‑monitoring of parse errors or strategy revision beyond equilibrium computation.  
-Hypothesis generation: 4/10 — The system scores existing candidates; it does not generate new hypotheses or alternative explanations.  
-Implementability: 8/10 — All components (regex parsing, numpy matrix ops, constraint closure, iterative best‑response) are feasible with only numpy and the standard library.
+**Novelty**  
+The combination mirrors existing work on probabilistic soft logic (Bayesian + constraint propagation) and game‑theoretic belief updating, but the explicit use of Nash‑equilibrium best‑response on belief nodes with sensitivity‑derived edge weights is not documented in public reasoning‑scoring tools, making the approach novel in this niche.
+
+**Rating**  
+Reasoning: 7/10 — captures uncertainty and logical consistency but relies on hand‑crafted clause extraction.  
+Metacognition: 6/10 — limited self‑reflection; the algorithm does not monitor its own parsing failures.  
+Hypothesis generation: 5/10 — generates beliefs for existing clauses, not new hypotheses beyond the text.  
+Implementability: 8/10 — uses only regex, numpy for matrix ops, and pure Python loops; straightforward to code.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
 | Implementability | 8/10 |
-| **Composite** | **5.33** |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

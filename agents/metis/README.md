@@ -7,6 +7,17 @@
 Metis is Prometheus's analysis brain. Where Eos scans the horizon and returns
 raw findings, Metis distills them into actionable intelligence.
 
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| Skopos | **Metis** — synthesizes executive briefs from all upstream data | Clymene |
+
+**Reads from:** Eos digest, `docs/PRIORITIES.md`, `docs/TODO.md`, `docs/RPH.md`, Aletheia taxonomy summary, Skopos alignment data
+**Writes to:** `agents/metis/briefs/YYYY-MM-DD_brief.md`
+
+---
+
 ## What Metis Does
 
 1. **Reads Eos's daily digest** — papers, repos, web intelligence
@@ -18,7 +29,7 @@ raw findings, Metis distills them into actionable intelligence.
 
 ## Output
 
-A daily brief at `briefs/YYYY-MM-DD.md` with three sections:
+A daily brief at `agents/metis/briefs/YYYY-MM-DD_brief.md` with three sections:
 
 - **Act on this** — items requiring immediate action (new tool to integrate,
   paper that challenges our approach, free API discovered)
@@ -28,18 +39,25 @@ A daily brief at `briefs/YYYY-MM-DD.md` with three sections:
 ## Architecture
 
 Metis uses Nemotron 120B (or Cerebras Qwen3-235B as fallback) to analyze
-findings. She reads Eos's digest, loads our project context (PRIORITIES.md,
-RPH paper abstract, current run status), and asks the LLM to synthesize.
+findings. She reads multiple context sources and asks the LLM to synthesize.
 
 ```
 Eos digest (raw findings)
     │
-    ▼
-Metis (LLM analysis with project context)
+    ├── docs/PRIORITIES.md (current focus areas)
+    ├── docs/TODO.md (active task list)
+    ├── docs/RPH.md (core hypothesis)
+    ├── Aletheia taxonomy summary (knowledge graph state)
+    ├── Skopos alignment data (entity scores per thread)
     │
     ▼
-Executive brief (1 page, 3 sections)
+Metis (LLM analysis with full project context)
+    │
+    ▼
+Executive brief (1 page, 3 sections: Act / Watch / Record)
 ```
+
+**LLM cascade:** Nemotron 120B → Cerebras Qwen3-235B → Groq Llama 3.3-70B
 
 ## Running
 

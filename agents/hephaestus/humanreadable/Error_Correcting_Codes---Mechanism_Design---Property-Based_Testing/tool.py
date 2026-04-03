@@ -1,0 +1,205 @@
+import numpy as np
+
+class ReasoningTool:
+    """
+    Error Correcting Codes x Mechanism Design x Property-Based Testing
+    
+    Pipeline:
+    1. Parse prompt into atomic propositions (comparatives, conditionals, negations)
+    2. Property-based testing: generate random truth assignments, check constraints
+    3. Encode candidate answers as Hamming codewords
+    4. Score via proper scoring rule (normalized Hamming distance)
+    5. Mechanism design: truthful reporting maximizes expected score
+    """
+    
+    def __init__(self):
+        self.n_tests = 20  # Property-based test iterations
+        
+    def _extract_propositions(self, text):
+        """Extract atomic propositions from text."""
+        props = []
+        
+        # Numeric comparisons
+        for match in re.finditer(r'(\d+\.?\d*)\s*([<>=]+)\s*(\d+\.?\d*)', text):
+            a, op, b = float(match.group(1)), match.group(2), float(match.group(3))
+            result = eval(f"{a} {op} {b}")
+            props.append(('numeric', match.group(0), result))
+        
+        # Conditionals (if X then Y)
+        for match in re.finditer(r'if\s+([^,\.]+?)\s+then\s+([^,\.]+)', text, re.I):
+            props.append(('conditional', match.group(1).strip(), match.group(2).strip()))
+        
+        # Negations
+        for match in re.finditer(r'\b(not|n\'t)\s+(\w+)', text, re.I):
+            props.append(('negation', match.group(2), None))
+        
+        # Comparatives (X before/after Y)
+        for match in re.finditer(r'(\w+)\s+(before|after)\s+(\w+)', text, re.I):
+            props.append(('temporal', match.group(1), match.group(3), match.group(2)))
+        
+        return props
+    
+    def _meta_confidence(self, prompt):
+        """Check prompt for ambiguity, presupposition, unanswerability."""
+        p_lower = prompt.lower()
+        
+        # Presupposition patterns
+        if re.search(r'\b(have you stopped|did you quit|why did .* fail)', p_lower):
+            return 0.2
+        
+        # Scope ambiguity: "every X did a Y"
+        if re.search(r'\bevery\s+\w+.*\ba\s+\w+', p_lower):
+            if 'same' not in p_lower and 'different' not in p_lower:
+                return 0.25
+        
+        # Pronoun ambiguity
+        if re.search(r'(he|she|it|they)\s+(was|is|were)', p_lower):
+            if re.search(r'\bwho\b', p_lower):
+                return 0.2
+        
+        # False dichotomy
+        if re.search(r'\beither\s+.*\bor\b', p_lower):
+            if 'only' not in p_lower:
+                return 0.3
+        
+        # Subjectivity without criteria
+        if re.search(r'\b(best|worst|favorite|prefer)\b', p_lower):
+            if not re.search(r'\d+', prompt):
+                return 0.3
+        
+        # Check information sufficiency
+        unknowns = len(re.findall(r'\?', prompt))
+        constraints = len(self._extract_propositions(prompt))
+        if unknowns > 0 and constraints == 0:
+            return 0.25
+        
+        return 1.0
+    
+    def _hamming_encode(self, bits):
+        """Encode k bits into (2^r-1, 2^r-r-1) Hamming code."""
+        k = len(bits)
+        # Find r such that 2^r >= k + r + 1
+        r = 1
+        while 2**r < k + r + 1:
+            r += 1
+        n = 2**r - 1
+        
+        # Simple parity extension for variable length
+        extended = list(bits) + [0] * (n - k)
+        # Add parity bits at power-of-2 positions
+        for i in range(r):
+            pos = 2**i - 1
+            if pos < len(extended):
+                extended[pos] = sum(extended[j] for j in range(len(extended)) 
+                                   if j & (1 << i)) % 2
+        return extended[:n] if n <= len(extended) else extended
+    
+    def _proposition_vector(self, text, prop_keys):
+        """Convert text to binary vector based on proposition presence."""
+        vec = []
+        t_lower = text.lower()
+        for key in prop_keys:
+            if isinstance(key, tuple) and key[0] == 'numeric':
+                vec.append(1 if key[2] else 0)
+            elif isinstance(key, str):
+                vec.append(1 if key.lower() in t_lower else 0)
+            else:
+                vec.append(0)
+        return vec
+    
+    def _ncd(self, s1, s2):
+        """Normalized compression distance (tiebreaker only)."""
+        c1, c2 = len(zlib.compress(s1.encode())), len(zlib.compress(s2.encode()))
+        c12 = len(zlib.compress((s1 + s2).encode()))
+        return (c12 - min(c1, c2)) / max(c1, c2) if max(c1, c2) > 0 else 0
+    
+    def evaluate(self, prompt, candidates):
+        """Rank candidates using ECC + mechanism design + property-based testing."""
+        props = self._extract_propositions(prompt)
+        
+        # Build constraint satisfaction problem from propositions
+        variables = list(range(len(props)))
+        domains = {i: [0, 1] for i in variables}
+        constraints = []
+        
+        # Add constraints from logical structure
+        for i, prop in enumerate(props):
+            if prop[0] == 'numeric':
+                # Numeric comparison is deterministic
+                constraints.append(lambda assignment, i=i, val=prop[2]: 
+                                 assignment.get(i, val) == val)
+            elif prop[0] == 'conditional':
+                # If premise then conclusion
+                for j, other in enumerate(props):
+                    if i != j and prop[1].lower() in str(other).lower():
+                        constraints.append(lambda assignment, i=i, j=j: 
+                                         not assignment.get(i, 0) or assignment.get(j, 0))
+        
+        # Property-based testing: random assignments + shrinking
+        valid_assignments = []
+        for _ in range(self.n_tests):
+            assignment = {i: np.random.randint(2) for i in variables}
+            if all(c(assignment) for c in constraints):
+                valid_assignments.append(assignment)
+        
+        # Reference codeword from valid assignments (majority vote)
+        if valid_assignments:
+            ref_bits = [int(np.mean([a.get(i, 0) for a in valid_assignments]) > 0.5) 
+                       for i in variables]
+        else:
+            ref_bits = [1] * len(props) if props else [1]
+        
+        ref_code = self._hamming_encode(ref_bits)
+        
+        # Score each candidate
+        scores = []
+        prop_keys = [p[1] if len(p) > 1 else str(p) for p in props]
+        
+        for cand in candidates:
+            # Structural score: proposition alignment
+            cand_vec = self._proposition_vector(cand, prop_keys)
+            if len(cand_vec) < len(ref_bits):
+                cand_vec += [0] * (len(ref_bits) - len(cand_vec))
+            cand_code = self._hamming_encode(cand_vec[:len(ref_bits)])
+            
+            # Hamming distance (proper scoring rule)
+            dist = sum(a != b for a, b in zip(cand_code, ref_code[:len(cand_code)]))
+            norm_dist = dist / max(len(cand_code), 1)
+            struct_score = 1 - norm_dist
+            
+            # Constraint satisfaction score
+            cand_assignment = {i: cand_vec[i] if i < len(cand_vec) else 0 
+                             for i in variables}
+            constraint_score = sum(c(cand_assignment) for c in constraints) / max(len(constraints), 1)
+            
+            # NCD tiebreaker (max 10%)
+            ncd_score = 1 - self._ncd(prompt, cand)
+            
+            # Combine: 60% structural, 30% constraints, 10% NCD
+            final_score = 0.6 * struct_score + 0.3 * constraint_score + 0.1 * ncd_score
+            
+            scores.append({
+                'candidate': cand,
+                'score': final_score,
+                'reasoning': f"Hamming dist={norm_dist:.2f}, constraints={constraint_score:.2f}"
+            })
+        
+        return sorted(scores, key=lambda x: x['score'], reverse=True)
+    
+    def confidence(self, prompt, answer):
+        """Return confidence 0-1, capped by meta-confidence check."""
+        meta_conf = self._meta_confidence(prompt)
+        
+        props = self._extract_propositions(prompt)
+        if not props:
+            return min(0.5, meta_conf)
+        
+        # Evaluate this answer
+        results = self.evaluate(prompt, [answer])
+        if not results:
+            return min(0.3, meta_conf)
+        
+        base_conf = results[0]['score']
+        
+        # Cap by meta-confidence (epistemic honesty)
+        return min(base_conf, meta_conf)

@@ -4,7 +4,22 @@
 
 Aletheia is the structured memory of the Prometheus research program. It reads papers discovered by **Eos** (the horizon scanner), sends them through an LLM extraction pipeline, and accumulates the results in a persistent SQLite knowledge graph. The graph captures seven entity types — techniques, reasoning motifs, tools, terms, claims, papers, and review flags — queryable at any time.
 
+Aletheia has **dual roles** within Prometheus:
+1. **Pipeline knowledge harvester** — extracts entities from Eos papers into a persistent knowledge graph (this agent)
+2. **Structural Mathematician for Noesis** — verifies and formalizes the transformation primitives underlying the Noesis reasoning framework
+
 **Eos is the eyes. Metis is the analyst. Aletheia is the long-term memory.**
+
+---
+
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| Eos | **Aletheia** — extracts structured entities into knowledge graph | Skopos |
+
+**Reads from:** `agents/eos/data/paper_index.json`
+**Writes to:** `agents/aletheia/data/knowledge_graph.db`, `agents/aletheia/exports/`
 
 ---
 
@@ -20,13 +35,13 @@ Aletheia (this agent)
   ├── Sends each paper to LLM for structured extraction
   ├── Merges extracted entities into SQLite knowledge graph
   ├── Flags conflicts for human review
-  └── Exposes graph to Metis via generate_taxonomy_summary()
+  └── Exposes graph to downstream agents
         │
-        ▼
-Metis (analyst) — injects taxonomy context into briefs
+        ├──▶ Skopos (watcher) — scores entities against research threads
         │
-        ▼
-Grammata (future) — navigable UI for Aletheia's graph
+        ├──▶ Metis (analyst) — injects taxonomy context into briefs
+        │
+        └──▶ Grammata (future) — navigable UI for Aletheia's graph
 ```
 
 ---
@@ -169,7 +184,7 @@ Metis can call `agent.generate_taxonomy_summary()` to get a Markdown block listi
 
 This context can be injected into Metis's analysis prompt to ground its recommendations in the accumulated knowledge graph rather than only the latest digest.
 
-**Future**: once Metis is wired to Aletheia, it will automatically flag papers that introduce techniques already in the graph (as confirmatory evidence) versus papers that challenge existing claims (as contested evidence).
+Metis is now fully wired to Aletheia and Skopos. Skopos scores entities against research threads, and Metis uses both the taxonomy summary and Skopos alignment data to ground its executive briefs.
 
 ---
 
@@ -241,9 +256,10 @@ Grammata will be the navigable, human-facing interface to Aletheia's knowledge g
 | Agent | Role | Feeds |
 |---|---|---|
 | Eos | Horizon scanner — finds papers | → Aletheia |
-| Aletheia | Knowledge harvester — extracts entities | → Metis, Grammata |
-| Metis | Analyst — synthesizes briefs | → Human |
-| Grammata | Navigator — browsable graph UI | → Human |
+| Aletheia | Knowledge harvester — extracts entities | → Skopos, Metis, Grammata |
+| Skopos | North Star alignment — scores against research threads | → Metis |
+| Metis | Analyst — synthesizes briefs | → Hermes → Human |
+| Grammata | Navigator — browsable graph UI (future) | → Human |
 
 ---
 

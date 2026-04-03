@@ -2,47 +2,43 @@
 
 **Fields**: Complex Systems, Information Science, Economics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-31T20:06:07.405909
-**Report Generated**: 2026-03-31T23:05:19.781372
+**Nous Timestamp**: 2026-04-01T19:24:36.527606
+**Report Generated**: 2026-04-01T20:30:42.674149
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-We build a *causal‑incentive graph* from each candidate answer and score it against a reference graph derived from the prompt.  
+We build a weighted directed graph \(G=(V,E)\) where each node \(v_i\in V\) corresponds to an atomic proposition extracted from the prompt or a candidate answer (e.g., “Drug X reduces blood pressure”, “Price > 100”). Edges \(e_{ij}\in E\) represent causal assertions “\(v_i\) → \(v_j\)” and are initialized with a confidence weight \(w_{ij}\in[0,1]\) derived from cue‑word strength (e.g., “causes” = 0.9, “may lead to” = 0.6). The adjacency matrix \(A\) (numpy float64) stores these weights; absent edges are 0.  
 
-1. **Parsing → Triples** – Using a small set of regex patterns we extract subject‑verb‑object (SVO) triples, flagging:  
-   - Negations (`not`, `no`) → attach a ¬ flag to the predicate.  
-   - Comparatives (`more than`, `less than`) → create ordered nodes with a weight proportional to the difference.  
-   - Conditionals (`if … then …`) → create a directed edge from antecedent to consequent labeled “cond”.  
-   - Causal cue verbs (`cause`, `lead to`, `result in`) → edge labeled “caus”.  
-   - Numeric values → attach as a node attribute `value`.  
+**Constraint propagation** – we compute the transitive closure \(T = (I + A + A^2 + … + A^{|V|-1})\) using repeated squaring (numpy dot) to infer all implied causal relations. For each candidate answer we also extract numeric atoms (e.g., “value = 23.5”, “X > Y”) and store them in separate vectors \(n\) and comparators \(c\).  
 
-2. **Graph Construction** – Each unique entity becomes a node (integer ID). For each triple we add a directed edge `u → v` with a type‑specific weight:  
-   - caus: w = 1.0  
-   - cond: w = 0.5  
-   - comparative: w = |Δvalue| (normalized).  
-   Negation flips the sign of the edge weight. The adjacency matrix **A** (|V|×|V|) is stored as a numpy float32 array.  
+**Mechanism‑design scoring** – treat the candidate’s asserted propositions as a strategy. A proper scoring rule rewards truth‑consistent assertions and penalizes violations. Let \(S_{sat}\) be the number of asserted propositions that are either directly present in \(G\) or reachable via \(T\) (checked with numpy nonzero). Let \(S_{vio}\) be the number of asserted propositions that contradict \(G\) (i.e., the negation is reachable) or violate numeric constraints (e.g., asserted “X > Y” when the closure implies \(X\le Y\)). The raw score is  
 
-3. **Constraint Propagation** – Compute the transitive closure **T** = (I + A + A² + … + Aᵏ) where k = ⌈log₂|V|⌉ via repeated squaring (numpy dot). This captures implied causal/chains and modus ponens for conditionals.  
+\[
+\text{score}= \alpha\,S_{sat} - \beta\,S_{vio},
+\]
 
-4. **Scoring** – Let **G\*** be the reference graph from the prompt (built identically).  
-   - Structural score: 1 – (Hamming distance between **T** and **T\*** ) / (|V|²).  
-   - Intervention score: For each edge labeled “caus” in **G\***, compute the do‑effect using the back‑adjustment formula on **T** (adjust for confounders identified via d‑separation on **T**). Compare predicted Δvalue with the asserted Δvalue; accumulate a Gaussian likelihood.  
-   - Incentive compatibility score: Treat the answer as a report in a peer‑prediction mechanism. Compute the proper scoring rule S = –‖report – truth‖² where truth is the intervention‑adjusted expectation; higher S means truth‑telling is incentivized.  
+with \(\alpha,\beta\) set to make the rule incentive‑compatible (truth‑telling maximizes expected score). The final score is normalized to \([0,1]\) by dividing by \(\alpha\,|V|\).  
 
-Final score = 0.4·structural + 0.4·intervention + 0.2·incentive (all normalized to [0,1]).  
+**Parsed structural features**  
+- Causal verbs: *cause, leads to, results in, produces*  
+- Conditionals: *if … then …, provided that, assuming*  
+- Comparatives: *greater than, less than, equals, more … than*  
+- Negations: *not, no, never, without*  
+- Numeric values and units (integers, decimals, percentages)  
+- Ordering/temporal: *before, after, precedes, follows*  
+- Existence/universal quantifiers: *all, some, none*  
 
-**Parsed Structural Features** – Negations, comparatives, conditionals, numeric values, causal claims, ordering relations, and conjunctions (via multiple SVO triples).  
-
-**Novelty** – While causal graphs for QA, semantic networks from network science, and peer‑prediction from mechanism design exist separately, integrating them into a single scoring pipeline that jointly propagates constraints, evaluates do‑effects, and enforces truth‑telling incentives is not present in current literature.  
+**Novelty**  
+While causal graph extraction and constraint propagation appear in structured‑prediction and semantic‑parsing work, coupling them with a mechanism‑design scoring rule that guarantees incentive compatibility for answer selection is not standard. Existing tools use hash similarity or loose soft constraints; this approach enforces hard logical consistency via numpy‑based graph operations and a truth‑eliciting scoring function, representing a novel hybrid.  
 
 **Ratings**  
-Reasoning: 8/10 — captures multi‑step logical and causal dependencies via graph closure and do‑calculus.  
-Metacognition: 6/10 — the model can reflect on its own structural errors via incentive term but lacks explicit self‑monitoring.  
-Hypothesis generation: 5/10 — generates implied edges through transitive closure, yet does not propose alternative causal structures beyond the observed text.  
-Implementability: 9/10 — relies only on regex, numpy matrix ops, and standard library; no external dependencies.
+Reasoning: 8/10 — captures causal and logical structure well, but may struggle with deep abductive reasoning.  
+Metacognition: 6/10 — limited self‑reflection; the algorithm does not monitor its own uncertainty beyond edge weights.  
+Hypothesis generation: 7/10 — can propose implied relations via transitive closure, yet lacks generative creativity for unseen mechanisms.  
+Implementability: 9/10 — relies only on regex, numpy matrix ops, and standard library; straightforward to code and test.
 
 ### Scores
 
@@ -50,9 +46,9 @@ Implementability: 9/10 — relies only on regex, numpy matrix ops, and standard 
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

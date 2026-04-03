@@ -92,8 +92,19 @@ def main():
 
     steering_vectors = []
     steering_hooks = []
+    n_layers = base.n_layers
+    d_model = base.d_model
     for name, path in genome_specs:
         vec, layer, eps = load_genome(str(path))
+        # Cross-architecture compatibility checks
+        if vec.shape[-1] != d_model:
+            log.warning(f"  SKIP {name}: d_model mismatch — genome has "
+                        f"{vec.shape[-1]}, model has {d_model}")
+            continue
+        if layer >= n_layers:
+            log.warning(f"  SKIP {name}: layer {layer} exceeds target model's "
+                        f"{n_layers} layers (0-{n_layers - 1})")
+            continue
         v_hat = vec / (vec.norm() + 1e-8)
         v_hat = v_hat.to(args.device)
         steering_vectors.append((name, v_hat, layer, eps * args.epsilon_scale))

@@ -5,6 +5,10 @@ Supports multi-frame forge strategy:
   Frame B: Constructive Computer (computation-first)
   Frame C: Dynamics Tracker (state evolution)
   Frame D: Judgment Calibrator (epistemic honesty)
+  Frame E: Computational (Tier 2, computation-first)
+  Frame F: Adversarial Robustness (Tier 2)
+  Frame G: Metacognitive (Tier 2)
+  Frame H: Primordial Soup (library-augmented computation)
 
 Frame selection: weighted rotation per forge attempt.
 """
@@ -16,7 +20,7 @@ log = logging.getLogger("hephaestus.prompts")
 
 # Frame weights (Athena-recommended allocation)
 # E/F/G added 2026-03-29 for Tier 2 computation-first forge
-FRAME_WEIGHTS = {"A": 5, "B": 20, "C": 15, "D": 15, "E": 25, "F": 10, "G": 10}
+FRAME_WEIGHTS = {"A": 5, "B": 15, "C": 10, "D": 10, "E": 20, "F": 10, "G": 10, "H": 20}
 _frame_rng = random.Random(42)
 
 CODE_GEN_PROMPT = """\
@@ -309,13 +313,15 @@ def build_code_gen_prompt(concept_names: list[str], response_text: str,
     frame_suffixes = {
         "B": FRAME_B_SUFFIX, "C": FRAME_C_SUFFIX, "D": FRAME_D_SUFFIX,
         "E": FRAME_E_SUFFIX, "F": FRAME_F_SUFFIX, "G": FRAME_G_SUFFIX,
+        "H": FRAME_H_SUFFIX,
     }
     if frame in frame_suffixes:
         prompt += frame_suffixes[frame]
 
     frame_names = {
         "A": "Structural", "B": "Constructive", "C": "Dynamics",
-        "D": "Judgment", "E": "Computational", "F": "Adversarial", "G": "Metacognitive",
+        "D": "Judgment", "E": "Computational", "F": "Adversarial",
+        "G": "Metacognitive", "H": "Primordial",
     }
     log.info("Frame: %s (%s)", frame, frame_names.get(frame, "?"))
 
@@ -383,4 +389,61 @@ Implement uncertainty propagation: if 3 of 5 parsed variables are confident but 
 ALSO implement standard parsers for: numeric comparison, bat-and-ball algebra, all-but-N, fencepost, modular arithmetic, coin flip independence, parity, pigeonhole, modus tollens, transitivity, SVO parsing, base rate neglect, temporal ordering, direction composition.
 
 Tier B meta-confidence MUST detect: presupposition traps ("have you stopped..."), quantifier scope ambiguity ("every...some"), false dichotomies ("either...or"), survivorship bias ("of those who succeeded..."), sunk cost framing ("already invested...").
+"""
+
+
+FRAME_H_SUFFIX = """
+
+CRITICAL ARCHITECTURE REQUIREMENT — FRAME H: PRIMORDIAL SOUP
+
+You have access to a library of composable reasoning PRIMITIVES. Your job is NOT to \
+reimplement basic algorithms. Your job is to RECOMBINE these building blocks in ways \
+inspired by your concept triple that no one has tried before.
+
+AVAILABLE PRIMITIVES (import from forge_primitives):
+
+  Logic:        solve_sat(clauses, n_vars), modus_ponens(premises, facts),
+                check_transitivity(relations), negate(statement)
+  Probability:  bayesian_update(prior, likelihood, false_positive),
+                expected_value(outcomes), entropy(probs), coin_flip_independence(n, k)
+  Graph/Causal: dag_traverse(edges, start), topological_sort(edges),
+                counterfactual_intervention(edges, values, node, value)
+  Constraints:  solve_constraints(variables, domains, constraints),
+                pigeonhole_check(items, containers), fencepost_count(n_segments)
+  Arithmetic:   bat_and_ball(total, diff), modular_arithmetic(a, b, mod),
+                all_but_n(total, n), solve_linear_system(A, b)
+  Temporal:     temporal_order(events), direction_composition(directions)
+  Belief:       track_beliefs(agents, observations),
+                sally_anne_test(who_moved, who_saw, orig_loc, new_loc)
+  Meta:         confidence_from_agreement(scores), information_sufficiency(unknowns, constraints),
+                parity_check(numbers)
+
+ALSO AVAILABLE: numpy, sympy (symbolic math/logic), networkx (graphs), scipy (optimization/stats).
+
+IMPORT EXAMPLE:
+    from forge_primitives import bayesian_update, solve_constraints, topological_sort
+    import sympy
+    import networkx as nx
+
+THE NOVELTY IS THE WIRING. Your concept triple tells you HOW to connect these blocks. Examples:
+- "Ergodic Theory + Bayesian Inference + Mechanism Design" -> treat belief updates as an \
+ergodic process over a mechanism design auction graph — iterate bayesian_update over \
+dag_traverse until beliefs converge to a stationary distribution
+- "Chaos Theory + Constraint Satisfaction + Metacognition" -> solve_constraints with \
+sensitivity analysis — perturb inputs slightly, if solutions diverge (chaotic), reduce \
+confidence via confidence_from_agreement across perturbations
+- "Free Energy Principle + Theory of Mind + Temporal Reasoning" -> minimize surprise \
+(entropy) over track_beliefs evolving through temporal_order — the tool predicts the \
+next belief state and scores candidates by prediction error
+
+DO NOT just call one primitive and return its output. CHAIN at least 2-3 primitives together \
+in a pipeline that reflects the intellectual content of your concept triple.
+
+DO NOT ignore the primitives and reimplement from scratch. The whole point is recombination.
+
+Your tool must STILL implement evaluate(prompt, candidates) and confidence(prompt, answer). \
+Use regex for PARSING prompts into structured inputs, then feed those inputs through your \
+primitive pipeline.
+
+Score decomposition: primitive-based computation >= 60%, novel wiring logic >= 20%, NCD <= 10%.
 """

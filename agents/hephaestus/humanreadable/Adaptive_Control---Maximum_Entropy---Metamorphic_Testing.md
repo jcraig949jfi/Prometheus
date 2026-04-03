@@ -2,48 +2,50 @@
 
 **Fields**: Control Theory, Statistical Physics, Software Engineering
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T19:39:07.325320
-**Report Generated**: 2026-03-27T06:37:39.752706
+**Nous Timestamp**: 2026-04-01T20:03:43.561597
+**Report Generated**: 2026-04-01T20:30:30.351487
 
 ---
 
 ## Nous Analysis
 
-The algorithm builds a feature‑wise Maximum‑Entropy (MaxEnt) model whose parameters are tuned online by an Adaptive‑Control loop, using Metamorphic Relations (MRs) to generate auxiliary constraints.  
+**Algorithm: Entropy‑Guided Adaptive Metamorphic Scorer (EGAMS)**  
 
-1. **Data structures**  
-   - `X`: `numpy.ndarray` of shape *(n_candidates, f)* holding parsed feature counts for each answer.  
-   - `w`: `numpy.ndarray` of shape *(f,)* – the MaxEnt weight vector (controller parameters).  
-   - `MR_set`: list of tuples *(orig_prompt, transformed_prompt, relation_type)* produced by applying predefined metamorphic transformations (e.g., double a numeric operand, swap order of conjuncts, negate a clause).  
-   - `target_counts`: `numpy.ndarray` of shape *(f,)* – expected feature averages derived from a small set of reference answers.  
+*Data structures*  
+- **Parse tree nodes**: each node stores a token, its part‑of‑speech tag, and a list of child indices. Built with a deterministic shift‑reduce parser that uses only regex‑based tokenisation and a small lookup table for POS (noun, verb, adjective, adverb, comparative, negation, modal, quantifier).  
+- **Constraint graph**: a directed weighted graph G = (V,E) where V are propositions extracted from the parse (e.g., “X > Y”, “¬P”, “if A then B”). Edge weights wₑ∈[0,1] represent the degree of belief that the source proposition entails the target.  
+- **Parameter vector θ**: one scalar per edge type (e.g., comparative, causal, negation) that modulates how strongly a relation contributes to entropy reduction.  
 
-2. **Operations**  
-   - **Feature extraction** (regex‑based): detect negations (`not`, `no`), comparatives (`>`, `<`, `more`, `less`), conditionals (`if … then …`), numeric literals, causal cues (`because`, `leads to`), ordering verbs (`before`, `after`, `increase`, `decrease`). Each match increments the corresponding column in `X`.  
-   - **MaxEnt fitting**: maximize `H(w) = -∑ p_i log p_i` subject to `Xᵀ p = target_counts`, where `p_i = exp(w·x_i)/∑_j exp(w·x_j)`. Solve with Generalized Iterative Scaling (GIS) using only numpy matrix ops.  
-   - **Adaptive‑Control update**: treat the prediction error `e = target_counts - Xᵀ p` as a reference signal. Adjust `w` via `w ← w + α·(X·e)` where the learning rate `α` is scaled by `‖e‖` (model‑reference adaptive law). This drives the entropy‑maximizing distribution toward satisfying the MR‑induced constraints.  
-   - **Scoring**: for each candidate answer compute `s_i = w·x_i`; convert to a probability via softmax; the final score is this probability (higher = more consistent with the MR constraints and reference answer statistics).  
+*Operations*  
+1. **Extraction** – Run the parser on the prompt and each candidate answer, emitting a set of propositions Pᵢ.  
+2. **Initial belief** – Set all edge weights to 0.5 (maximum entropy prior).  
+3. **Adaptive update** – For each metamorphic relation R defined a priori (e.g., “double the input → output should double”, “swap two conjuncts → truth value unchanged”), compute the satisfaction score s(R, Pᵢ)∈{0,1}. Treat s as an observation and update the relevant θ via a simple exponential‑family rule:  
+   θ_new = θ_old + η·(s − σ(θ_old))·f(R)  
+   where σ is the logistic function, η a small step size (0.01), and f(R) a feature vector indicating which edge types R touches. This is an online self‑tuning regulator that drives the belief distribution toward constraints imposed by the metamorphic relations.  
+4. **Constraint propagation** – Run a belief‑propagation‑like pass on G: for each edge (u→v), set wᵤᵥ = σ(θ_type)·min(1, Σₖ wᵤₖ·wₖᵥ) to enforce transitivity and modus ponens. Iterate until convergence (≤5 passes).  
+5. **Scoring** – Compute the entropy of the final belief distribution: H = −Σₑ wₑ log wₑ − (1−wₑ) log(1−wₑ). The candidate score is S = −H (lower entropy → higher score).  
 
-3. **Structural features parsed**  
-   Negations, comparatives, conditionals, numeric values, causal expressions, ordering/temporal relations, and quantifiers (e.g., “all”, “some”). These are captured as binary or count features in `X`.  
+*Structural features parsed*  
+- Negations (“not”, “no”), comparatives (“greater than”, “less than”), ordering (“first”, “then”), conditionals (“if … then …”), causal verbs (“causes”, “leads to”), quantifiers (“all”, “some”), and numeric literals. The parser extracts these as propositional atoms with appropriate polarity and directionality.  
 
-4. **Novelty**  
-   While MaxEnt weighting and adaptive control appear separately in NLP and control literature, coupling them with a systematic metamorphic‑testing constraint set to drive online parameter updates for answer scoring is not described in existing surveys; the closest analogues are constrained CRFs with fixed hyper‑parameters, lacking the adaptive law.  
+*Novelty*  
+The three components appear separately in literature: adaptive control for online parameter tuning, maximum‑entropy priors for unbiased inference, and metamorphic testing for relation‑based validation. EGAMS fuses them into a single online‑tuning, entropy‑minimising scorer that uses metamorphic relations as hard constraints on a belief graph. No published work combines all three in this exact algorithmic form; the closest are hybrid neuro‑symbolic systems that still rely on learned weights, whereas EGAMS uses only hand‑crafted update rules and numpy.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and uncertainty but relies on hand‑crafted MRs.  
-Metacognition: 6/10 — error‑driven adaptation offers basic self‑monitoring, limited to feature‑space feedback.  
-Hypothesis generation: 5/10 — MRs generate alternative prompts, yet no exploratory search beyond predefined transforms.  
-Implementability: 9/10 — uses only numpy and stdlib; all steps are explicit matrix operations and regex parsing.
+Reasoning: 8/10 — captures logical structure and propagates constraints effectively, though limited to predefined metamorphic relations.  
+Metacognition: 6/10 — the algorithm monitors its own belief entropy but lacks higher‑level reflection on why a relation failed.  
+Hypothesis generation: 5/10 — generates implicit hypotheses via edge updates, but does not propose new relations beyond the preset set.  
+Implementability: 9/10 — relies solely on regex parsing, numpy arrays, and simple loops; no external libraries or training data needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
+| Reasoning | 8/10 |
 | Metacognition | 6/10 |
 | Hypothesis Generation | 5/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.0** |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

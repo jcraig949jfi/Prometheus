@@ -2,42 +2,66 @@
 
 **Fields**: Physics, Neuroscience, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-27T00:55:48.771126
-**Report Generated**: 2026-03-27T06:37:50.234917
+**Nous Timestamp**: 2026-04-01T23:19:13.943349
+**Report Generated**: 2026-04-02T04:20:06.996771
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-1. **Token‑level boundary encoding** – Split the prompt and each candidate answer into tokens (words, numbers, punctuation). Build a *boundary matrix* \(B\in\mathbb{R}^{T\times F}\) where each row is a one‑hot token ID and \(F\) is a small feature set extracted by regex: polarity (negation), comparative/superlative flag, conditional antecedent/consequent marker, numeric value, causal cue (because, therefore), and ordering cue (before, after).  
-2. **Multi‑scale oscillatory binding** – Apply a bank of FIR band‑pass filters (implemented with numpy convolution) to each column of \(B\) to simulate neural oscillations at theta (4‑8 Hz), beta (15‑30 Hz) and gamma (30‑80 Hz) bands. For each scale \(s\) obtain a filtered matrix \(B_s\). The *holographic bulk* for that scale is the outer‑product (tensor‑product) representation \(H_s = B_s @ B_s.T\) (size \(T\times T\)), which stores pairwise relational information in a distributed interference pattern – a direct analogue of the holography principle where boundary tokens encode the bulk relational structure.  
-3. **Pragmatic weighting** – Compute a context vector \(p\) from the prompt: sum of feature columns weighted by Grice maxims (relevance = 1.0, quantity = 0.8, manner = 0.6). Multiply each \(H_s\) element‑wise by \(p\) projected onto the token axis (broadcasted) to obtain pragmatically‑scaled holograms \(\tilde H_s\).  
-4. **Score** – For each candidate, compute the same set \(\{\tilde H_s^{cand}\}\). The similarity score is the sum over scales of the negative Frobenius norm:  
-   \[
-   \text{score}= -\sum_{s}\|\tilde H_s^{prompt}-\tilde H_s^{cand}\|_F .
-   \]  
-   Higher (less negative) scores indicate better alignment of relational structure, oscillatory binding, and pragmatic context.
+**Algorithm: Holo‑Oscillatory Pragmatic Scorer (HOPS)**  
 
-**Structural features parsed** – negations, comparatives/superlatives, conditionals (if‑then), explicit numeric values, causal cues (because, therefore, leads to), ordering relations (before, after, first, last), and speech‑act markers (please, I suggest).
+1. **Parsing & Graph Construction** – Using only the standard library (regex, `re`) we extract propositional atoms and label them with one of six structural types:  
+   *Negation* (`¬P`), *Comparative* (`P > Q` or `P < Q`), *Conditional* (`If P then Q`), *Causal* (`P → Q`), *Numeric* (`P = k` or `P ∈ [a,b]`), *Ordering* (`P before Q`).  
+   Each atom becomes a node in a directed graph `G = (V,E)`. Edges carry the relation type and a weight `w₀ = 1`.  
 
-**Novelty** – The combination mirrors existing work on holographic reduced representations and tensor‑product binding, and on neural binding via cross‑frequency coupling, but it uniquely ties those mechanisms to a pragmatics‑driven weighting scheme and uses only numpy/scipy‑compatible FIR filtering. No direct precedent combines all three in a single scoring pipeline for QA evaluation.
+2. **Boundary Feature Vector (Holography)** – For each node we build a 6‑dimensional one‑hot vector `f(v)` indicating which structural types appear in its incoming/outgoing edges. The *boundary* representation of the whole answer is the sum (or average) of all node vectors:  
+   `B = (1/|V|) Σ_v f(v) ∈ ℝ⁶`.  
+   This mirrors the holographic idea that bulk information (the graph) is encoded on a low‑dimensional boundary.  
+
+3. **Neural‑Oscillation Coupling** – We simulate three frequency bands:  
+   *Gamma* (30‑80 Hz) for fine‑grained binding → edge‑wise phase `φ_γ(e) = 2π * w₀`.  
+   *Beta* (12‑30 Hz) for propositional grouping → amplitude `A_β(v) = Σ_{e∈in(v)} w₀`.  
+   *Theta* (4‑8 Hz) for sequential ordering → phase `φ_θ(v) = 2π * (topological order index of v)/|V|`.  
+   Cross‑frequency coupling is computed as the modulation index:  
+   `C = |⟨A_β * exp(i·φ_γ)⟩_E|` (numpy mean over edges) plus  
+   `S = |⟨exp(i·φ_θ) * exp(-i·φ_γ)⟩_V|` (node mean).  
+   The coupling score is `K = α·C + β·S` with α=β=0.5.  
+
+4. **Pragmatic Adjustment** – We count violations of Grice’s maxims inferred from the graph:  
+   *Quantity*: missing expected node types (e.g., a causal claim without a preceding condition) → penalty `q`.  
+   *Relevance*: edges whose relation type does not appear in the prompt’s boundary vector → penalty `r`.  
+   Pragmatic factor `P = 1 - (q+r)/(|V|+|E|)`.  
+
+5. **Final Score** – The holographic boundary is projected onto a reference ideal boundary `B*` (pre‑computed from a gold answer or a hand‑crafted reasoning template) using a dot product:  
+   `H = B·B*`.  
+   The overall score is `Score = H * K * P`. All operations use only `numpy` (dot, mean, abs, exp) and the standard library.  
+
+**Structural Features Parsed** – negations, comparatives, conditionals, causal claims, numeric values/relations, ordering/temporal sequences, and implicit quantifiers (via missing expected node types).  
+
+**Novelty** – While holographic embeddings, neural oscillation coupling, and pragmatics have each been studied separately, their conjunction in a lightweight, graph‑based scoring routine that explicitly mixes boundary vectors, cross‑frequency modulation, and Grice‑based penalties has not been described in the literature. It draws inspiration from vector symbolic architectures and neural synchrony models but is novel as an evaluation tool.  
 
 **Ratings**  
-Reasoning: 7/10 — captures relational and numeric structure well, but relies on hand‑crafted regex features that may miss deeper semantics.  
-Metacognition: 5/10 — the method does not explicitly monitor its own confidence or error sources beyond the similarity score.  
-Hypothesis generation: 4/10 — generates no new hypotheses; it only scores given candidates.  
-Implementability: 8/10 — all steps use numpy (convolution, dot products, norms) and the standard library (regex), making it straightforward to code and run without external dependencies.
+Reasoning: 7/10 — captures logical consistency via graph constraints and oscillatory binding, but approximates deep reasoning with hand‑crafted bands.  
+Hypothesis generation: 5/10 — the method scores existing candidates; it does not propose new hypotheses, only evaluates them.  
+Implementability: 9/10 — relies solely on regex, numpy linear algebra, and basic graph loops; no external dependencies.  
+Metacognition: 6/10 — includes a pragmatic self‑check (quantity/relevance) but lacks explicit uncertainty estimation or reflective loops.  
+
+---  
+Reasoning: 7/10 — captures logical consistency via graph constraints and oscillatory binding, but approximates deep reasoning with hand‑crafted bands.  
+Metacognition: 6/10 — includes a pragmatic self‑check (quantity/relevance) but lacks explicit uncertainty estimation or reflective loops.  
+Hypothesis generation: 5/10 — the method scores existing candidates; it does not propose new hypotheses, only evaluates them.  
+Implementability: 9/10 — relies solely on regex, numpy linear algebra, and basic graph loops; no external dependencies.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
 | Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

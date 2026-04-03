@@ -5,6 +5,17 @@
 Hermes collects reports from all Prometheus agents at the end of each cycle,
 compiles a unified digest, and emails it to you via Gmail.
 
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| Clymene | **Hermes** — compiles digest and delivers via email | Audit (Pronoia) |
+
+**Reads from:** Metis briefs, Aletheia knowledge graph, Clymene reports, Eos digests
+**Writes to:** `agents/hermes/digests/YYYY-MM-DD_digest.md`, email via Gmail SMTP
+
+---
+
 ## What Hermes Collects
 
 | Agent | What | Source |
@@ -76,16 +87,20 @@ Hermes runs as the **last step** in Pronoia's scan cycle, after all other
 agents have written their outputs:
 
 ```
-Eos → Aletheia → Metis → Clymene (if due) → Hermes → Publish
+Eos → Aletheia → Skopos ASSESS → Metis → Clymene (if due) → Hermes → Audit → Skopos GENERATE → Publish
 ```
 
-If Metis's brief contains "Act on this" items, Hermes prepends `[ACTION]`
-to the email subject line.
+## Email Triggering Logic
+
+- Hermes always saves the digest locally to `agents/hermes/digests/YYYY-MM-DD_digest.md`
+- If email is configured (`config.json` or env vars) and `enabled` is true, the digest is emailed via Gmail SMTP (SSL, port 465)
+- If Metis's brief contains "Act on this" items, the email subject is prefixed with `[ACTION]` so you can spot it in your inbox
+- If email is not configured, Hermes degrades gracefully — digest is saved locally only, no error
 
 ## Output
 
 - **Digest file:** `agents/hermes/digests/YYYY-MM-DD_digest.md`
-- **Email:** sent via Gmail SMTP (SSL, port 465)
+- **Email:** sent via Gmail SMTP (SSL, port 465) when configured
 
 ## Security
 

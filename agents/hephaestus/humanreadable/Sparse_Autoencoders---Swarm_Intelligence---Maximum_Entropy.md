@@ -2,40 +2,61 @@
 
 **Fields**: Computer Science, Biology, Statistical Physics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T18:23:21.193984
-**Report Generated**: 2026-03-27T06:37:47.090953
+**Nous Timestamp**: 2026-04-01T23:49:21.913641
+**Report Generated**: 2026-04-02T04:20:03.350317
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Sparse‑Swarm MaxEnt Scorer**  
-1. **Feature extraction (Sparse Autoencoder front‑end)**  
-   - Run a deterministic regex parser on the question and each candidate answer to pull out atomic propositions:  
-     *Negations* (`not`, `no`), *Comparatives* (`greater than`, `less than`), *Conditionals* (`if … then …`), *Numeric values* (integers, floats), *Causal claims* (`because`, `leads to`), *Ordering relations* (`before`, `after`, `first`, `last`).  
-   - Each proposition type maps to a binary feature (e.g., `has_negation`, `comparative_gt`, `conditional_antecedent`).  
-   - Assemble a binary matrix **X** ∈ {0,1}^{P×F} where *P* = number of propositions extracted from the prompt + candidate, *F* ≈ 30–50 hand‑crafted feature dimensions.  
-   - Learn a fixed dictionary **D** ∈ ℝ^{F×K} (K ≈ 200) offline with a simple iterative hard‑thresholding sparse coding step (no back‑prop): for each row x, solve min‖x‑Dz‖₂² s.t.‖z‖₀ ≤ s (s = 5) using orthogonal matching pursuit (numpy only). The sparse code **z** ∈ ℝ^{K} is the representation of that proposition set.
+**Algorithm**  
+We build a three‑stage scorer that works only with NumPy and the Python standard library.
 
-2. **Constraint collection**  
-   - From the same regex pass produce a set of logical constraints **C** (implication, equivalence, ordering, numeric equality/inequality). Each constraint is expressed as a linear expectation on features: cᵀ 𝔼[z] = b, where **c** is a sparse weight vector indicating which features participate in the constraint and *b*∈{0,1} is the required truth value.
+1. **Sparse dictionary learning (SAE‑like)** – From a small set of annotated reasoning examples we extract binary structural features \(f_j\) (e.g., “contains a negation”, “numeric value > 5”, “antecedent → consequent”). Stack them into a matrix \(F\in\{0,1\}^{N\times M}\) (N examples, M features). We learn a dictionary \(D\in\mathbb{R}^{M\times K}\) and sparse codes \(Z\in\mathbb{R}^{K\times N}\) by minimizing  
+\[
+\|F - DZ\|_F^2 + \lambda\|Z\|_1
+\]  
+using coordinate descent (updates for \(D\) and \(Z\) are simple NumPy dot‑products and soft‑thresholding). The result is a set of K latent logical atoms, each a sparse combination of observable features.
 
-3. **Maximum‑Entropy model with Swarm‑optimized multipliers**  
-   - The MaxEnt distribution over sparse codes is p(z) ∝ exp(λᵀz) subject to the constraint expectations.  
-   - Instead of solving the dual analytically, we treat λ as a particle in a Swarm Intelligence optimizer (Particle Swarm Optimization). Each particle λᵢ ∈ ℝ^{K} has velocity vᵢ. Fitness of a particle is the negative dual objective:  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+2. **Swarm‑based feature selection (PSO)** – Each particle encodes a binary mask \(m\in\{0,1\}^K\) selecting a subset of latent atoms. The particle’s velocity is updated with the standard PSO rule (inertia, cognitive, social terms) using NumPy arrays. The fitness of a mask is the negative of the objective below; we run T iterations (e.g., T=30) with a swarm size of 20.
+
+3. **Maximum‑entropy scoring** – For a given mask \(m\), we compute a weight vector \(w = D m\) (only the selected atoms contribute). For a candidate answer \(a\) we compute its feature vector \(x_a\) (by applying the same regex‑based extractor used for the prompt). The score is the negative log‑likelihood under a MaxEnt model:  
+\[
+S(a|m) = -\, w^\top x_a + \log\!\sum_{a'\in\mathcal{C}} \exp(w^\top x_{a'}) ,
+\]  
+where \(\mathcal{C}\) is the set of candidate answers. The partition function is evaluated directly with NumPy’s logsumexp for stability. The swarm optimizes \(m\) to maximize the average score of the correct answer (or minimize the loss) while the \(L_1\) penalty in the dictionary learning enforces sparsity, and the MaxEnt term ensures the distribution is least biased given the selected features.
+
+**Structural features parsed**  
+- Negations (“not”, “no”)  
+- Comparatives (“greater than”, “less than”, “more … than”)  
+- Conditionals (“if … then”, “unless”)  
+- Numeric values and arithmetic relations  
+- Causal claims (“because”, “leads to”)  
+- Ordering relations (“first”, “before”, “after”)  
+- Quantifiers (“all”, “some”, “none”)  
+
+Each feature is extracted via a handful of regex patterns and stored as a binary column in \(F\).
+
+**Novelty**  
+Sparse coding for text, particle swarm optimization for feature selection, and MaxEnt scoring have each appeared separately (e.g., sparse autoencoders for disentanglement, PSO for feature selection in NLP, MaxEnt for language modeling). Tightly coupling them—using the sparse dictionary as a search space for a swarm that directly optimizes a MaxEnt likelihood—has not, to the best of my knowledge, been described in prior work, making the combination novel.
+
+**Ratings**  
+Reasoning: 7/10 — captures logical structure via sparse atoms and entropy‑based scoring, but approximations may miss deep inference.  
+Metacognition: 5/10 — limited self‑monitoring; the swarm adapts but does not reason about its own confidence.  
+Hypothesis generation: 6/10 — swarm explores subsets of latent atoms, generating alternative feature‑based hypotheses, though guided mainly by fitness.  
+Implementability: 8/10 — relies only on NumPy vector operations and standard library; no external APIs or autograd needed.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | N/A |
-| Metacognition | N/A |
-| Hypothesis Generation | N/A |
-| Implementability | N/A |
-| **Composite** | **0.0** |
+| Reasoning | 7/10 |
+| Metacognition | 5/10 |
+| Hypothesis Generation | 6/10 |
+| Implementability | 8/10 |
+| **Composite** | **6.0** |
 
-**Novelty**: unclear
+**Novelty**: novel
 **High Potential**: No
 
 ---

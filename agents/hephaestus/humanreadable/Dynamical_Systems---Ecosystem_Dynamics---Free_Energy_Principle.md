@@ -2,58 +2,60 @@
 
 **Fields**: Mathematics, Biology, Theoretical Neuroscience
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T15:10:31.806042
-**Report Generated**: 2026-03-27T05:13:34.607563
+**Nous Timestamp**: 2026-04-02T10:54:32.669297
+**Report Generated**: 2026-04-02T10:55:54.237746
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-Parse each candidate answer into a set of propositional nodes \(P_i\) using regex‑based extraction of: negations (“not”, “no”), comparatives (“greater than”, “less than”), conditionals (“if … then”), causal claims (“because”, “leads to”), ordering relations (“before”, “after”), and numeric values. For each extracted relation create a weighted directed edge \(W_{ij}\) in an adjacency matrix \(\mathbf{W}\in\mathbb{R}^{n\times n}\):  
-- Causal \(A\rightarrow B\) → \(W_{ij}=+1\)  
-- Inhibition \(A\rightarrow \neg B\) → \(W_{ij}=-1\)  
-- Comparative \(A > B\) → \(W_{ij}=+0.5\) (and opposite for \<)  
-- Conditional \(if A then B\) → \(W_{ij}=+0.8\)  
-- Ordering \(A\) before \(B\) → \(W_{ij}=+0.3\)  
-Negation of the target node flips the sign of the incoming weight.  
+**Algorithm – Predictive‑Coding Energy Flow (PCEF)**  
 
-Initialize a state vector \(\mathbf{s}^{(0)}\in[0,1]^n\) with the prior truth of each proposition (0.5 for unknown). Iterate a deterministic update reminiscent of a dynamical system:  
+1. **Parsing → Proposition Graph**  
+   - Use a handful of regex patterns to extract atomic propositions (subject‑predicate‑object triples) and label each edge with a relation type: ¬ (negation), < / > (comparative), → (conditional), ⟹ (causal), = / ≠ (numeric equivalence/inequivalence), ≤ / ≥ (ordering).  
+   - Each proposition becomes a node *i*. Edge weight *wᵢⱼ* is set by a fixed lookup:  
+     *causal* → 0.9, *conditional* → 0.7, *comparative* → 0.5, *ordering* → 0.4, *negation* → –0.6 (inhibitory), others → 0.1.  
+   - Build adjacency matrix **W** (numpy float64) and a node‑type vector **τ** (categorical: entity, attribute, quantity).  
 
-\[
-\mathbf{s}^{(t+1)} = \sigma\!\big(\mathbf{W}\,\mathbf{s}^{(t)} + \mathbf{b}\big)
-\]
+2. **State Initialization**  
+   - Reference answer *R* and candidate answer *C* are each turned into binary belief vectors **x⁰_R**, **x⁰_C** (1 if proposition appears, 0 otherwise).  
+   - To give keystone‑species influence, compute node centrality *bᵢ* (betweenness from **W**) and scale initial beliefs: **x⁰** ← **x⁰** * (1 + α·bᵢ), α=0.2.  
 
-where \(\sigma\) is the logistic sigmoid and \(\mathbf{b}\) encodes baseline bias from numeric values (e.g., a measured quantity shifts \(b_i\)). The system converges to an attractor \(\mathbf{s}^\*\) (when \(\|\mathbf{s}^{(t+1)}-\mathbf{s}^{(t)}\|<10^{-4}\)).  
+3. **Dynamical Update (Energy‑Flow + Prediction Error)**  
+   - For *t* = 0…T‑1 (T=20):  
+     **xᵗ⁺¹** = σ(**W** **xᵗ** + **β**)  
+     where σ is logistic sigmoid, **β** = γ·(**x⁰_R** – **x⁰_C**) drives the candidate toward the reference (γ=0.3).  
+   - Prediction error at step *t*: **eᵗ** = **x⁰_R** – **xᵗ**.  
+   - Variational free energy approximation:  
+     *F* = Σₜ (‖**eᵗ**‖₂²) + λ·Σᵢ H(**xᵗᵢ**)  
+     (H is binary entropy, λ=0.1).  
+   - Approximate maximal Lyapunov exponent via finite‑difference Jacobian **J** = ∂**xᵗ⁺¹**/∂**xᵗ** (computed as **W**·diag(σ′(...))) and compute λ_max ≈ (1/T) Σ log‖**J**·v‖ for a random unit vector *v*; add penalty η·max(0, λ_max) (η=0.5).  
 
-Free‑energy‑like score (to be minimized) combines prediction error and an entropy proxy:  
+4. **Scoring**  
+   - Final score = –(*F* + η·max(0, λ_max)). Lower free energy and non‑chaotic dynamics → higher score.  
+   - The score is a deterministic numpy‑only function of the parsed graph and the two belief vectors.  
 
-\[
-F = \underbrace{\|\mathbf{s}^\* - \mathbf{s}^{(0)}\|_2^2}_{\text{prediction error}} 
-    + \underbrace{\frac{1}{n}\sum_i \big[s^\*_i\log s^\*_i + (1-s^\*_i)\log(1-s^\*_i)\big]}_{\text{binary entropy}}
-\]
+**Structural Features Parsed**  
+Negations (¬), comparatives (<, >), conditionals (→), causal claims (⟹), numeric values/equivalences (=, ≠), ordering relations (≤, ≥), and explicit quantities extracted via regexes like `\d+(\.\d+)?`.  
 
-Lower \(F\) indicates the answer’s internal propositions are mutually consistent and dynamically stable; the final score is \(S = -F\) (higher = better). All operations use only numpy (matrix multiply, sigmoid, norm) and the Python re module for parsing.
+**Novelty**  
+The blend of energy‑based belief propagation (Free Energy Principle), trophic‑cascade weighting (ecosystem centrality), and Lyapunov‑exponent stability analysis (dynamical systems) is not found in existing public scoring tools; related work exists separately in predictive coding, belief propagation, and stability metrics, but their conjunction for answer scoring is novel.  
 
-**Structural features parsed** – negations, comparatives, conditionals, numeric values, causal claims, ordering relations.
-
-**Novelty** – The triplet merges variational free‑energy minimization (FPE) with attractor‑based dynamical‑systems analysis and ecosystem‑style energy‑flow weighting. While probabilistic soft logic and Markov Logic Networks handle weighted constraints, they lack the explicit Lyapunov‑style stability iteration and the entropy‑regularized free‑energy objective; thus the combination is not directly present in existing QA‑scoring work.
-
-**Rating**  
-Reasoning: 7/10 — captures logical consistency and dynamical stability but approximates semantics with simple weights.  
-Metacognition: 5/10 — provides no explicit self‑monitoring of parse confidence or uncertainty beyond entropy term.  
-Hypothesis generation: 6/10 — can propose alternative truth assignments via state updates, yet lacks generative proposal mechanisms.  
-Implementability: 8/10 — relies solely on numpy vector operations and regex; straightforward to code and run without external libraries.
+**Ratings**  
+Reasoning: 8/10 — captures logical structure and dynamical consistency well.  
+Metacognition: 6/10 — provides implicit confidence via free energy but lacks explicit self‑monitoring.  
+Hypothesis generation: 5/10 — focuses on evaluating given answers, not generating new ones.  
+Implementability: 9/10 — relies only on regex, numpy linear algebra, and basic loops; straightforward to code.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 6/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

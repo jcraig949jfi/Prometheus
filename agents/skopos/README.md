@@ -6,22 +6,61 @@
 Skopos is Prometheus's relevance filter. Where Aletheia catalogs everything,
 Skopos scores it against what we're actually trying to learn.
 
+## Pipeline Position
+
+| Upstream | This Agent | Downstream |
+|----------|-----------|------------|
+| Aletheia | **Skopos** — scores entities against research threads | Metis |
+
+**Reads from:** `agents/aletheia/data/knowledge_graph.db`
+**Writes to:** `agents/skopos/data/scores.db`, `agents/skopos/reports/YYYY-MM-DD_alignment.md`, `docs/titan_prompts/auto_YYYY-MM-DD.md`
+
+---
+
 ## What Skopos Does
 
 1. **Reads Aletheia's knowledge graph** — recently extracted entities (techniques, tools, terms, claims, motifs)
-2. **Scores each entity against active research threads** — 0-5 relevance via LLM
+2. **Scores each entity against active research threads** — 0 (irrelevant) to 5 (directly actionable) via LLM
 3. **Writes an alignment report** — which threads are getting fed, which are starving
 4. **Generates Titan Council prompts** — structured prompts for frontier models when high-relevance findings appear
 
-## Pipeline Position
+## Dual Stages
+
+Skopos runs **twice** in each pipeline cycle:
 
 ```
-Eos → Aletheia → SKOPOS (assess) → Metis → Clymene → Hermes → AUDIT → SKOPOS (generate) → Publish
+Eos → Aletheia → SKOPOS ASSESS → Metis → Clymene → Hermes → Audit → SKOPOS GENERATE → Publish
 ```
 
-Skopos runs twice:
-- **ASSESS** (after Aletheia): scores new entities
-- **GENERATE** (after Audit): creates Titan prompts if high-relevance entities found
+### Stage 1: ASSESS (after Aletheia, before Metis)
+
+- Reads all unscored entities from `knowledge_graph.db`
+- Sends each entity + research thread description to the LLM
+- Returns a score from 0 to 5:
+
+| Score | Meaning |
+|-------|---------|
+| 0 | Irrelevant to this thread |
+| 1 | Tangentially related |
+| 2 | Related but not actionable |
+| 3 | Useful context — worth noting |
+| 4 | Directly relevant — triggers GENERATE stage |
+| 5 | Critical finding — immediate action recommended |
+
+- Scores persist in `agents/skopos/data/scores.db` (SQLite) across cycles
+- The alignment report summarizes per-thread coverage and highlights gaps
+
+### Stage 2: GENERATE (after audit, before publish)
+
+- Triggered only if any entity scored **4 or higher** in the ASSESS stage
+- Synthesizes a Titan Council prompt: a structured document designed for frontier models (ChatGPT, Gemini, DeepSeek, Grok, Claude) under the Phalanx strategy
+- The prompt includes high-scoring findings, research thread context, and interlocking constraints that force the Titans to commit positions rather than hedge
+- Output: `docs/titan_prompts/auto_YYYY-MM-DD.md`
+- If no entities scored 4+, this stage is skipped silently
+
+## Integration with Metis
+
+Skopos alignment data is loaded by Metis as context for executive brief synthesis. This gives Metis quantitative backing for prioritization decisions — entities that score high against active threads get promoted to "Act on this" in the brief.
 
 ## Research Threads
 

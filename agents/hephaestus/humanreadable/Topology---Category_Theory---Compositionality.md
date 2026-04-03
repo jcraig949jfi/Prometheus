@@ -2,50 +2,47 @@
 
 **Fields**: Mathematics, Mathematics, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T05:27:29.270314
-**Report Generated**: 2026-03-31T14:34:55.760584
+**Nous Timestamp**: 2026-04-01T13:01:56.298014
+**Report Generated**: 2026-04-01T20:30:42.650150
 
 ---
 
 ## Nous Analysis
 
 **Algorithm**  
-1. **Parsing (Compositionality)** – Apply a handful of regex patterns to extract atomic propositions and their logical connectors:  
-   - Negation: `\bnot\s+(\w+)` → node label `¬p`  
-   - Comparatives: `(\w+)\s+(is\s+)?(greater|less|equal)\s+than\s+(\w+)` → edge label `>`, `<`, `=` between nodes `p` and `q`  
-   - Conditionals: `if\s+(.+?)\s+then\s+(.+)` → edge label `→` from antecedent to consequent  
-   - Causal: `(\w+)\s+(causes|leads\s+to)\s+(\w+)` → edge label `cause`  
-   - Ordering: `(\w+)\s+(before|after)\s+(\w+)` → edge label `before`/`after`  
-   Each proposition becomes a node; each extracted relation becomes a directed, labeled edge. Store the graph as two NumPy arrays: `nodes` (shape `N×d` for one‑hot label vectors) and `adj` (shape `N×N×k` where `k` is the number of relation types).  
+1. **Parsing layer (compositionality)** – A deterministic shift‑reduce parser (implemented with the std‑library `deque`) converts each token sequence into a typed syntax tree. Leaf nodes receive a semantic type from a fixed lexicon (e.g., `Prop`, `Quant`, `Compar`, `Cond`). Internal nodes apply combination rules stored in a small lookup table (numpy‑array of shape `(n_types, n_types, n_out)`) that yields the parent type and a payload: a propositional atom (`P`) or a binary morphism (`f : A → B`). The output is a list of *atomic propositions* and a list of *morphisms* (implication, equivalence, negation, ordering).  
 
-2. **Functorial Mapping (Category Theory)** – Treat each parsed graph as an object in the category **Graph**. The parsing step is a functor `F: Syntax → Graph` that preserves composition (the meaning of a whole sentence is the graph functorially built from its parts). A natural transformation between two graphs `G₁` and `G₂` is approximated by a graph homomorphism: a node‑wise mapping `φ` that respects edge labels.  
+2. **Category‑theoretic layer** – Propositions are objects in a thin category **C**; each morphism is a directed edge labeled with its logical kind. Composition of morphisms corresponds to chaining inferences (modus ponens, transitivity). We store the adjacency matrix **M** (boolean, size `V×V`) where `M[i,j]=True` iff there is a morphism `i→j`. Using numpy, we compute the transitive closure **T** by repeated squaring (`T = M; while changed: T = T | (T @ M)`) – this yields all derivable propositions.  
 
-3. **Topological Scoring** – Convert each graph to a clique complex (simplicial complex where every fully connected sub‑graph becomes a simplex). Compute the combinatorial Laplacian `L = D - A` (degree matrix minus adjacency summed over all relation types) using NumPy, then obtain its eigenvalues. The multiplicity of zero eigenvalues gives the Betti numbers β₀ (connected components) and β₁ (independent cycles). Form a topological signature vector `τ = [β₀, β₁]`.  
+3. **Topological layer** – Treat **M** as the 1‑skeleton of a simplicial complex. The boundary matrix **∂₁** (size `E×V`) is built (numpy `int8`) where each column corresponds to a vertex and each row to an edge, with entries `+1` (source) and `-1` (target). The rank of **∂₁** (via `numpy.linalg.matrix_rank` over GF(2) after converting to `bool` and using bit‑xor) gives the number of independent 1‑cycles. The first Betti number β₁ = E – rank(∂₁) – C (where C is the number of connected components obtained from `scipy.sparse.csgraph.connected_components` on the undirected version) quantifies “holes”: each hole indicates a contradictory cycle (e.g., `P → ¬P`).  
 
-4. **Similarity & Score** –  
-   - **Structural similarity**: approximate maximum common subgraph size via a greedy label‑preserving matching (node‑label Jaccard on matched pairs). Compute `S_graph = |MCS| / (|G_ref| + |G_cand| - |MCS|)`.  
-   - **Topological similarity**: `S_topo = 1 - ||τ_ref - τ_cand||₁ / (||τ_ref||₁ + ||τ_cand||₁ + ε)`.  
-   - **Final score**: `score = α·S_graph + (1-α)·S_topo` with α = 0.6 (empirically favoring structural match).  
+**Scoring**  
+- Consistency score `S_cons = 1 / (1 + β₁)` (higher when no contradictory cycles).  
+- Coverage score `S_cov = size_of_largest_strongly_component / V` (derived from numpy boolean reachability).  
+- Entailment score `S_ent = (# of query propositions true in T) / (# query propositions)`.  
+Final score = `0.4*S_cons + 0.3*S_cov + 0.3*S_ent`.  
 
-**Parsed Structural Features** – Negations, comparatives (`>`,`<`, `=`), conditionals (`→`), causal claims (`cause`), ordering relations (`before`/`after`), conjunctions/disjunctions (implicit via shared nodes).  
+**Parsed structural features**  
+Negations (`not`, `no`), comparatives (`greater than`, `less than`, `≥`, `≤`), conditionals (`if … then …`), causal claims (`because`, `leads to`), ordering relations (`before`, `after`, `precedes`), quantifiers (`all`, `some`, `none`), numeric literals, equality/inequality symbols, and conjunctive/disjunctive connectives.  
 
-**Novelty** – While graph‑based semantic parsing and topological data analysis each appear separately, the functorial enforcement of compositionality combined with a persistent‑homology‑inspired Betti‑vector similarity is not present in existing open‑source reasoning scorers.  
+**Novelty**  
+Topological hole detection has been used in AI for consistency checking, and category‑theoretic morphism composition appears in semantic parsing, but the joint use of a functorial syntax‑to‑semantics map, transitive closure via matrix squaring, and Betti‑number‑based penalty within a single numpy‑only pipeline is not documented in existing public reasoning‑evaluation tools.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and topological invariants but lacks deep inference beyond local homomorphisms.  
-Metacognition: 5/10 — provides a single confidence score without estimating its own uncertainty or alternative parses.  
-Hypothesis generation: 4/10 — limited to the deterministic regex parse; no active generation of alternative syntactic hypotheses.  
-Implementability: 8/10 — relies only on regex, NumPy linear algebra, and basic greedy matching; readily reproducible in <200 LOC.
+Reasoning: 8/10 — captures logical chaining, contradiction detection, and quantitative coverage in a unified algebraic framework.  
+Metacognition: 6/10 — the method can flag its own inconsistencies (high β₁) but does not explicitly reason about its confidence or alternative parses.  
+Hypothesis generation: 5/10 — generates implied propositions via transitive closure, yet lacks mechanisms for proposing novel structures beyond closure.  
+Implementability: 9/10 — relies only on numpy and the Python std‑library; all steps are deterministic and run in polynomial time.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
-| Implementability | 8/10 |
-| **Composite** | **5.33** |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 5/10 |
+| Implementability | 9/10 |
+| **Composite** | **6.33** |
 
 **Novelty**: novel
 **High Potential**: No

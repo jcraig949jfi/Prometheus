@@ -174,7 +174,37 @@ def main():
         log.error("No genomes found. Exiting.")
         return
 
-    log.info(f"\nFound {len(candidates)} genomes. Testing all combinations.\n")
+    # ── Cross-architecture compatibility checks ──────────────────────
+    n_layers = base.n_layers
+    d_model = base.d_model
+    skipped = []
+    for name in list(candidates.keys()):
+        vec, layer, eps, path = candidates[name]
+        # Check d_model compatibility
+        if vec.shape[-1] != d_model:
+            log.warning(f"  SKIP {name}: d_model mismatch — genome has "
+                        f"{vec.shape[-1]}, model has {d_model}")
+            skipped.append(name)
+            del candidates[name]
+            continue
+        # Check layer index within target model's depth
+        if layer >= n_layers:
+            log.warning(f"  SKIP {name}: layer {layer} exceeds target model's "
+                        f"{n_layers} layers (0-{n_layers - 1})")
+            skipped.append(name)
+            del candidates[name]
+            continue
+
+    if skipped:
+        log.info(f"  Skipped {len(skipped)} incompatible genome(s): "
+                 f"{', '.join(skipped)}")
+
+    if len(candidates) < 1:
+        log.error("No compatible genomes remain after filtering. Exiting.")
+        return
+
+    log.info(f"\nFound {len(candidates)} compatible genomes. "
+             f"Testing all combinations.\n")
 
     epsilon_scales = args.epsilon_scales or [1.0]
 

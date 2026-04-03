@@ -2,51 +2,57 @@
 
 **Fields**: Mathematics, Philosophy, Linguistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T20:43:53.866976
-**Report Generated**: 2026-03-27T06:37:40.361717
+**Nous Timestamp**: 2026-04-01T13:54:25.035562
+**Report Generated**: 2026-04-01T20:30:30.865329
 
 ---
 
 ## Nous Analysis
 
-**Algorithm – Ergodic Epistemic Compositional Scorer (EECS)**  
+**Algorithm**  
+1. **Parsing (Compositionality)** – Use a handful of regex patterns to extract atomic propositions from a prompt and each candidate answer:  
+   - Predicate `P(arg1, arg2, …)` with polarity (`+`/`-`) for negation.  
+   - Comparatives (`>`, `<`, `>=`, `<=`) → propositions of the form `GT(x,y)` etc.  
+   - Conditionals (`if … then …`) → implication `IMP(p,q)`.  
+   - Causal markers (`because`, `leads to`) → `CAUSE(p,q)`.  
+   - Ordering (`before`, `after`) → `BEFORE(x,y)`.  
+   - Numeric thresholds and quantifiers (`all`, `some`, `most`) → guarded predicates.  
+   Each proposition gets a unique ID and is stored as a dict: `{id, pred, args, polarity, modality}`.  
 
-1. **Parsing & Data Structure**  
-   - Use regex‑based patterns to extract atomic propositions and their logical operators:  
-     *Negation* (`not`, `no`), *comparatives* (`greater than`, `less than`, `more`), *conditionals* (`if … then …`), *causal cues* (`because`, `leads to`), *numeric values* (integers, floats, units), *ordering relations* (`before`, `after`, `first`, `last`).  
-   - Build a directed labeled graph **G = (V, E)** where each node *v∈V* corresponds to an atomic proposition (with attached feature vector *f(v)* encoding the extracted structural features). Edges *e = (u → v)* encode logical dependencies (e.g., antecedent → consequent in a conditional, cause → effect).  
-   - Assign an initial belief weight *b₀(v) ∈ [0,1]* based on epistemic justification:  
-     *Source reliability* (if a cue indicates a trusted authority → +0.2), *internal coherence* (if node participates in a cycle → +0.1), *empirical support* (presence of a numeric measurement matching a known constant → +0.15).  
+2. **Epistemic Graph Construction** – Nodes = propositions. Edges represent justificatory relations derived from the text:  
+   - **Foundational links**: propositions appearing as explicit premises get a high prior belief weight `w0`.  
+   - **Coherentism links**: if two propositions share arguments or appear in the same clause, add an undirected edge with weight proportional to lexical overlap.  
+   - **Reliabilism links**: if a proposition is derived via a trusted inference rule (modus ponens, transitivity) from other nodes, add a directed edge whose weight equals the product of source weights.  
+   All weights are collected in a NumPy matrix `W` (shape `n×n`).  
 
-2. **Ergodic Belief Propagation**  
-   - Treat belief updating as a discrete-time Markov chain on **G**:  
-     *b_{t+1}(v) = α·b_t(v) + (1‑α)· Σ_{u∈N(v)} w_{uv}·ϕ(f(u), f(v))*  
-     where *α∈[0,1]* is a damping factor, *N(v)* are parents of *v*, *w_{uv}* are edge weights derived from the type of relation (e.g., conditional → 0.9, causal → 0.7, comparative → 0.5), and *ϕ* is a compositional compatibility function (dot‑product of normalized feature vectors).  
-   - Iterate until ‖b_{t+1}−b_t‖₁ < ε (ε=1e‑4). By the **ergodic theorem** for finite, aperiodic chains, the time average of beliefs converges to the unique stationary distribution *π(v)*, which we compute as the limit *b_T*.  
+3. **Ergodic Averaging (Scoring)** – Convert `W` to a row‑stochastic transition matrix `T = W / W.sum(axis=1, keepdims=True)`.  
+   - Initialize a belief vector `b0` (uniform or seeded with premise weights).  
+   - Iterate `b_{k+1} = b_k @ T` until `‖b_{k+1} - b_k‖₁ < ε` (power iteration). The limit `b*` is the **time‑average** of a random walk over the graph.  
+   - By the ergodic theorem for finite Markov chains, `b*` equals the **space‑average** (stationary distribution), representing the global justified belief in each proposition.  
 
-3. **Scoring**  
-   - For a reference answer *R* and candidate answer *C*, compute their stationary belief vectors *π_R* and *π_C*.  
-   - Define the score *S(C) = 1 − D_KL(π_R‖π_C)*, where *D_KL* is the Kullback‑Leibler divergence (clipped to [0,1]). Higher *S* indicates the candidate’s belief dynamics ergodically align with the reference’s justified belief distribution.  
+4. **Answer Scoring** – For a candidate answer, build its proposition set `A` and compute a belief score `s = Σ_{i∈A} b*_i`. Normalize by the maximum possible sum (sum of all `b*`) to obtain a value in `[0,1]`. The final score is `1 - |s_ref - s_cand|`, where `s_ref` is the score of a gold‑standard answer (or the prompt’s own belief mass).  
 
-**Structural Features Parsed** – negations, comparatives, conditionals, causal claims, numeric values with units, and temporal/ordering relations.  
+**Structural Features Parsed**  
+Negations, comparatives (`>`, `<`, `=`), conditionals (`if‑then`), causal markers (`because`, `leads to`), ordering relations (`before/after`), numeric thresholds, quantifiers (`all`, `some`, `most`), and modal adjectives (`likely`, `possibly`).  
 
-**Novelty** – While Markov Logic Networks and Probabilistic Soft Logic combine logical structure with probabilistic inference, EECS explicitly invokes the ergodic theorem to guarantee convergence of belief averages and couples it with a compositional feature‑based compatibility function, a combination not present in existing neuro‑symbolic or pure logic‑based scorers.  
+**Novelty**  
+While epistemic graphs and compositional semantics appear in semantic parsing and probabilistic soft logic, coupling them with an explicit ergodic‑theoretic averaging step—using the long‑run distribution of a random walk as the aggregation mechanism for belief—is not standard in existing answer‑scoring tools. Most systems rely on static similarity or fixed‑point belief propagation; the ergodic formulation adds a principled temporal‑average interpretation that is novel in this context.  
 
 **Ratings**  
-Reasoning: 7/10 — captures dynamical justification and convergence but relies on hand‑crafted feature compatibility.  
-Metacognition: 6/10 — monitors belief stability via ergodic convergence, yet lacks explicit self‑reflection on uncertainty sources.  
-Hypothesis generation: 5/10 — can propose alternative belief states by perturbing edge weights, but does not autonomously generate new propositions.  
-Implementability: 8/10 — uses only regex, numpy for vector ops, and standard‑library data structures; no external APIs or neural nets needed.
+Reasoning: 8/10 — captures logical structure and uncertainty but struggles with vague or metaphorical language.  
+Metacognition: 7/10 — convergence diagnostics give a self‑check, yet no explicit uncertainty calibration beyond the stationary distribution.  
+Hypothesis generation: 6/10 — random walks can suggest alternative proposition paths, but generation is limited to graph traversal.  
+Implementability: 9/10 — relies only on regex, NumPy matrix ops, and standard‑library containers; no external dependencies.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
-| Implementability | 8/10 |
-| **Composite** | **6.0** |
+| Reasoning | 8/10 |
+| Metacognition | 7/10 |
+| Hypothesis Generation | 6/10 |
+| Implementability | 9/10 |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

@@ -2,46 +2,50 @@
 
 **Fields**: Signal Processing, Theoretical Neuroscience, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-28T01:13:02.305115
-**Report Generated**: 2026-03-31T14:34:55.584586
+**Nous Timestamp**: 2026-04-02T01:57:52.454395
+**Report Generated**: 2026-04-02T04:20:09.501746
 
 ---
 
 ## Nous Analysis
 
-**Algorithm**  
-1. **Parsing → symbolic graph** – Use regex patterns to extract propositional triples (subject, predicate, object) from the prompt and each candidate answer. Predicates are mapped to relation types: causal (“causes”, “leads to”), comparative (“greater than”, “less than”), ordering (“before”, “after”), negation (“not”, “no”), and numeric equality/inequality. Each triple becomes a directed edge \(e_{ij}\) with an initial weight \(w_{ij}=1\) (or 0.5 for hedged cues like “might”). The set of all edges forms a weighted adjacency matrix \(A\in\mathbb{R}^{n\times n}\) where \(n\) is the number of unique entities.  
-2. **Spectral embedding** – Compute the normalized Laplacian \(L = I - D^{-1/2} A D^{-1/2}\) (with \(D\) the degree matrix). Obtain the eigen‑decomposition \(L = U\Lambda U^\top\) via `numpy.linalg.eigh`. The eigenvectors corresponding to the smallest k non‑zero eigenvalues (e.g., k=3) give a low‑dimensional spectral embedding \(Z = U_{[:,:k]}\Lambda_{[:,:k]}^{1/2}\). This captures global frequency‑domain structure of the relational graph.  
-3. **Free‑energy‑like prediction error** – Treat the reference graph (from the prompt) as a generative model \(p\) with precision \(\Pi = \sigma^{-2}I\) (σ set to the median edge weight). For each candidate, compute the reconstruction error \(\epsilon = \|A_{cand} - A_{ref}\|_F^2\). Approximate variational free energy as \(F = \frac{1}{2}\text{tr}(\Pi\epsilon) + \frac{1}{2}\log|\Pi|\). Lower \(F\) indicates better prediction.  
-4. **Sensitivity analysis** – Perturb each edge weight \(w_{ij}\) by a small δ (e.g., ±0.01) and recompute \(F\). The sensitivity score \(S = \frac{1}{|E|}\sum_{e_{ij}}|F(w_{ij}+δ)-F(w_{ij})|/δ\) measures how much the free energy changes under input perturbations; high S signals fragility.  
-5. **Final score** – Combine prediction and robustness: \(\text{Score}= \exp(-F) / (1+S)\). Candidates are ranked by this scalar; the highest‑scoring answer is selected.
+The algorithm builds a lightweight probabilistic‑logic graph from the text and scores answers by jointly minimizing variational free energy, testing sensitivity to input perturbations, and examining the spectral structure of the proposition sequence.
+
+**Data structures**  
+- `props`: list of extracted proposition strings (order preserved).  
+- `X`: binary numpy array shape (n_props,) indicating observed truth of each proposition in the candidate answer (1 if the proposition is asserted, 0 if denied or absent).  
+- `W`: numpy matrix (n_props × n_props) of influence weights, initialized from heuristic rules: causal links → 1.0, comparative → 0.5, conditional → 0.7, negation flips sign of the target node.  
+- `y_pred`: numpy array shape (n_props,) of predicted truth values after one propagation step.  
+
+**Operations**  
+1. **Parsing** – Regex patterns extract: negations (`not`, `no`), comparatives (`more than`, `less than`, `-er`), conditionals (`if … then`, `provided that`), causal claims (`because`, `leads to`, `results in`), numeric values (`\d+(\.\d+)?`), and temporal ordering (`before`, `after`, `when`). Each match creates a proposition and updates `W` accordingly.  
+2. **Prediction step** – Compute `z = W @ X`; apply a logistic sigmoid `σ(z)` to obtain `y_pred = σ(z)`.  
+3. **Free‑energy term** – `FE = Σ (X - y_pred)^2 + λ‖W‖₂²` (prediction error plus complexity penalty).  
+4. **Sensitivity term** – Jacobian `J = diag(σ'(z)) @ W`; sensitivity norm `S = ‖J‖_F` (Frobenius norm).  
+5. **Spectral term** – Treat the ordered list `X` as a discrete signal; compute its FFT with `np.fft.rfft`, obtain power spectrum `P = |fft|^2`. Spectral flatness `SF = exp(mean(log P)) / mean(P)` (values ∈[0,1]; flat = 1). Spectral penalty `SP = 1 - SF`.  
+6. **Score** – `Score = FE + α·S + β·SP` (lower is better). Hyper‑parameters α, β are set to 0.1 and 0.5 respectively; all operations use only numpy and the standard library.
 
 **Structural features parsed**  
-- Negations (“not”, “no”) → invert edge polarity.  
-- Comparatives (“greater than”, “less than”) → directed edges with magnitude derived from numeric difference.  
-- Conditionals (“if … then …”) → create implication edges.  
-- Causal verbs (“causes”, “leads to”) → causal edges.  
-- Ordering terms (“before”, “after”) → temporal edges.  
-- Numeric values and units → enable quantitative comparative edges.  
+Negations, comparatives, conditionals, causal assertions, numeric quantities, and explicit temporal/ordering cues (before/after, when). These directly populate propositions and edge weights.
 
 **Novelty**  
-The combination mirrors recent work on graph‑based neural reasoning (e.g., Graph Attention Networks) but replaces learned weights with analytically derived spectral embeddings and a free‑energy‑inspired error term, while sensitivity analysis provides an explicit robustness check. No prior public tool couples Laplacian spectral decomposition, variational free‑energy approximation, and finite‑difference sensitivity for answer scoring in a pure‑numpy setting, making the approach novel in this specific configuration.
+While each component (spectral analysis of sequences, free‑energy minimization, sensitivity analysis) appears separately in cognitive‑science or ML literature, their joint application to score symbolic reasoning answers via a deterministic graph‑based energy function has not been reported in public tools or papers. The combination is therefore novel for this evaluation setting.
 
-**Rating**  
-Reasoning: 7/10 — Captures logical structure via graph spectra and prediction error, but relies on hand‑crafted regex and linear algebra, limiting deep inference.  
-Metacognition: 5/10 — Provides a sensitivity measure that hints at confidence, yet lacks explicit self‑monitoring of parsing failures.  
-Hypothesis generation: 4/10 — Focuses on scoring given candidates; does not propose new hypotheses beyond the extracted triples.  
-Implementability: 9/10 — Uses only numpy and stdlib; all steps (regex, eigen‑decomposition, finite differences) are straightforward to code and run efficiently.
+**Ratings**  
+Reasoning: 8/10 — captures logical structure, uncertainty, and robustness via principled energy minimization.  
+Metacognition: 6/10 — the method monitors prediction error but lacks explicit self‑reflective loops about its own confidence.  
+Hypothesis generation: 7/10 — sensitivity analysis reveals which propositions most affect the score, guiding alternative explanations.  
+Implementability: 9/10 — relies solely on regex, numpy linear algebra, and FFT; no external dependencies or training required.
 
 ### Scores
 
 | Metric | Score |
 |--------|-------|
-| Reasoning | 7/10 |
-| Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Reasoning | 8/10 |
+| Metacognition | 6/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **5.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No

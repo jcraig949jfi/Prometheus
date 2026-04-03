@@ -2,44 +2,37 @@
 
 **Fields**: Linguistics, Theoretical Neuroscience, Statistics
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-25T19:41:11.779844
-**Report Generated**: 2026-03-27T06:37:39.770706
+**Nous Timestamp**: 2026-04-02T02:56:19.138799
+**Report Generated**: 2026-04-02T04:19:56.610373
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Compositional Free‑Energy Sensitivity Scorer (CFESS)**  
+**Algorithm:**  
+1. **Parsing (Compositionality)** – Tokenize the prompt and each candidate answer with regex‑based patterns that extract atomic propositions:  
+   - Predicate‑argument tuples `(rel, arg1, arg2?)` for relations like *is‑greater‑than*, *causes*, *negates*.  
+   - Literals for numeric comparisons (`value1 < value2`), ordering chains, and boolean flags for negations.  
+   Store each proposition as a node in a directed hypergraph `G = (V, E)`, where `V` holds literals and `E` encodes the syntactic rule that combined them (e.g., conjunction, implication).  
 
-**Data structures**  
-- `ParseTree`: a directed acyclic graph where each node stores a token span, its syntactic role (subject, predicate, object, modifier), and a list of child node IDs.  
-- `FeatureVector`: a NumPy array of shape `(F,)` where each dimension corresponds to a structural feature extracted from the tree (see §2).  
-- `EnergyMap`: a dictionary `{node_id: float}` holding the variational free‑energy contribution of each node.  
+2. **Energy Definition (Free Energy Principle)** – Define a variational free energy `F(Q) = ⟨log Q - log P⟩_Q`, where `P` is a generative model of the prompt’s logical structure and `Q` is a candidate‑answer distribution over truth assignments to `V`.  
+   - Approximate `Q` as a product of independent Bernoulli variables per literal (mean‑field).  
+   - The expected log‑likelihood term reduces to a sum of clause potentials: each clause contributes `0` if satisfied under the current assignment, otherwise a penalty `λ` (hand‑tuned).  
+   - The entropy term is analytic for Bernoulli factors.  
 
-**Operations**  
-1. **Structural parsing** – Using only `re` and the standard library, the prompt and each candidate answer are tokenized and a shallow dependency‑like tree is built. Rules capture:  
-   - Negations (`not`, `n't`) → attach a `neg` flag to the predicate node.  
-   - Comparatives (`more`, `less`, `-er`, `than`) → create a `comp` node with left/right operands.  
-   - Conditionals (`if … then …`) → split into antecedent and consequent sub‑trees linked by a `cond` node.  
-   - Numeric values → leaf nodes with a `num` type and the float value stored.  
-   - Causal verbs (`cause`, `lead to`, `result in`) → edge label `cause`.  
-   - Ordering relations (`before`, `after`, `first`, `last`) → edge label `order`.  
+3. **Sensitivity‑Guided Optimization** – Compute the gradient of `F` w.r.t each literal’s marginal probability `p_i` using finite differences (perturb `p_i` by ε, re‑evaluate clause satisfaction). This yields a sensitivity vector `∂F/∂p`.  
+   - Perform a few steps of gradient descent on the mean‑field parameters to minimize `F`, projecting probabilities back to `[0,1]`.  
+   - The final free energy `F*` serves as the score; lower `F*` indicates higher alignment of the candidate answer with the prompt’s logical constraints.  
 
-2. **Free‑energy computation** – For each node `n`, compute a local error term `e_n` as the squared difference between the node’s observed feature value (e.g., presence/absence of a negation, numeric magnitude) and a prior expectation `p_n` (set to 0.5 for binary features, 0 for numeric features). The node’s free energy is `F_n = e_n + λ * Σ_{c∈children(n)} F_c`, where λ=0.1 implements a hierarchical prior (the Free Energy Principle). The total free energy of a candidate is `F_total = Σ_n F_n`. Lower `F_total` indicates better compositional fit.
+**Structural features parsed:** negations (`not`, `no`), comparatives (`greater than`, `less than`), conditionals (`if … then …`), causal verbs (`causes`, leads to`), numeric values and units, ordering chains (`A > B > C`), and conjunction/disjunction markers.  
 
-3. **Sensitivity analysis** – Perturb each binary feature by flipping its value (±1) and each numeric feature by adding Gaussian noise σ=0.05. Re‑compute `F_total` for each perturbation; the sensitivity score `S = std(F_total_perturbations)`. High sensitivity means the answer’s score changes sharply under small input changes, indicating low robustness.
-
-4. **Scoring logic** – Final score = `-(F_total + α * S)`, with α=0.2 to penalize sensitivity. Higher (less negative) scores rank candidates better.
-
-**Structural features parsed** (the `FeatureVector` dimensions): presence of negation, comparative direction, conditional antecedent/consequent, numeric magnitude, causal edge count, ordering edge depth, subject‑verb‑object triple count, modal verb presence, quantifier scope.
-
-**Novelty** – The combination mirrors recent work on energy‑based language models (e.g., contrastive predictive coding) and sensitivity‑driven robustness checks, but it explicitly couples compositional syntactic parsing with a variational free‑energy recursion and a perturbation‑based sensitivity term. No published tool uses exactly this triple‑layered scoring pipeline, so the approach is novel in its algorithmic concretization.
+**Novelty:** The combination mirrors recent neuro‑symbolic proposals (e.g., DeepProbLog, Neural Theorem Provers) but replaces learned neural potentials with hand‑crafted clause potentials and uses a pure‑numpy mean‑field free‑energy minimization with explicit sensitivity steps—a configuration not reported in existing open‑source reasoning evaluators.  
 
 **Ratings**  
-Reasoning: 7/10 — captures logical structure and uncertainty via free‑energy minimization.  
-Metacognition: 5/10 — provides a sensitivity proxy but lacks explicit self‑monitoring of reasoning steps.  
-Hypothesis generation: 4/10 — focuses on scoring given answers; does not propose new candidates.  
-Implementability: 8/10 — relies only on regex, basic tree ops, NumPy arithmetic, and stdlib.
+Reasoning: 7/10 — captures logical structure and propagates constraints, but limited to hand‑crafted predicates.  
+Metacognition: 5/10 — no explicit self‑monitoring of uncertainty beyond entropy term.  
+Hypothesis generation: 6/10 — gradient step proposes new truth assignments, akin to local search.  
+Implementability: 8/10 — relies only on regex, numpy arrays, and basic loops; no external libraries.
 
 ### Scores
 
@@ -47,9 +40,9 @@ Implementability: 8/10 — relies only on regex, basic tree ops, NumPy arithmeti
 |--------|-------|
 | Reasoning | 7/10 |
 | Metacognition | 5/10 |
-| Hypothesis Generation | 4/10 |
+| Hypothesis Generation | 6/10 |
 | Implementability | 8/10 |
-| **Composite** | **5.33** |
+| **Composite** | **6.0** |
 
 **Novelty**: novel
 **High Potential**: No

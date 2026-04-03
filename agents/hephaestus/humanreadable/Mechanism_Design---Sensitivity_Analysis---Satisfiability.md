@@ -2,45 +2,41 @@
 
 **Fields**: Economics, Statistics, Logic
 **Nous Model**: nvidia/nemotron-3-super-120b-a12b
-**Nous Timestamp**: 2026-03-26T21:32:17.486734
-**Report Generated**: 2026-03-31T19:09:43.909529
+**Nous Timestamp**: 2026-04-02T03:02:41.114259
+**Report Generated**: 2026-04-02T04:20:05.308287
 
 ---
 
 ## Nous Analysis
 
-**Algorithm: Incentive‑Sensitive SAT‑Scorer (ISSS)**  
+**Algorithm**  
+1. **Parsing → CNF matrix** – Extract atomic propositions from the prompt using regex patterns for negations (`not`), comparatives (`>`, `<`, `=`), conditionals (`if … then …`), causal cues (`because`, `leads to`), and numeric thresholds. Each proposition becomes a Boolean variable \(x_i\). Encode each sentence as a clause (list of literals) and store the clause‑variable incidence in a binary NumPy matrix \(C\in\{0,1,-1\}^{m\times n}\) where \(C_{jk}=1\) means \(x_k\) appears positively, \(-1\) means negated, 0 means absent.  
+2. **Candidate answer → assignment** – Convert each candidate answer into a truth vector \(a\in\{0,1\}^n\) (1 = asserted true, 0 = false) by matching its statements to the same propositions.  
+3. **Satisfiability check** – Compute clause satisfaction \(s_j = \bigvee_{k} (C_{jk}=1 \land a_k) \lor (C_{jk}=-1 \land \lnot a_k)\) using vectorized NumPy operations. The number of unsatisfied clauses \(u = \sum_j \lnot s_j\) is the base conflict count.  
+4. **Sensitivity weighting** – For each numeric literal (e.g., “price > 100”), perturb the threshold by a small \(\epsilon\) (using `np.nextafter`) and recompute \(u\). The sensitivity penalty \(p = \sum_{\text{numeric clauses}} |u(\theta+\epsilon)-u(\theta)|/\epsilon\) measures how fragile the answer is to input changes.  
+5. **Mechanism‑design scoring rule** – Define a proper scoring function:  
+\[
+\text{score}(a) = -\bigl( \alpha\,u + \beta\,p \bigr) - \gamma\,\|a-\bar a\|_2^2,
+\]  
+where \(\bar a\) is the mean assignment across all candidates (encouraging conformity to the group’s inferred truth) and \(\alpha,\beta,\gamma\) are tunable weights. Because the score is strictly decreasing in both conflict count and sensitivity, a rational, self‑interested agent maximizes it by reporting the assignment that best satisfies the prompt under minimal perturbation – a truthful answer under the designed incentive.  
 
-*Data structures*  
-- **Clause database**: list of Python `frozenset` objects, each containing literals encoded as integers (positive for affirmed atom, negative for negated atom).  
-- **Variable table**: NumPy 1‑D array `vars` of shape `(n_vars,)` holding the current truth assignment (`-1` = unassigned, `0` = false, `1` = true).  
-- **Weight vector**: NumPy array `w` of shape `(n_clauses,)` initialized to 1.0; updated by a sensitivity‑analysis step.  
-- **Agent utility map**: dict `agent_utils` mapping each candidate answer index to a scalar utility computed from mechanism‑design principles.
+**Structural features parsed**  
+- Negations (`not`, `no`)  
+- Comparatives (`>`, `<`, `>=`, `<=`, `=`)  
+- Conditionals (`if … then …`, `unless`)  
+- Causal cues (`because`, `leads to`, `results in`)  
+- Ordering relations (`before`, `after`, `more than`)  
+- Numeric values and thresholds  
+- Quantifier‑like patterns (`all`, `some`, `none`) via keyword detection  
 
-*Operations*  
-1. **Parsing** – Regex extracts atomic propositions (e.g., “X > Y”, “cause → effect”, numeric comparisons) and maps each to a variable ID. Negatives become negated literals. Conditionals are transformed into implication clauses `(¬A ∨ B)`.  
-2. **Initial SAT check** – A pure‑Python DPLL unit‑propagation loop runs on the clause database using `vars`. If satisfiable, a base score `s₀ = 1` is assigned; otherwise `s₀ = 0`.  
-3. **Sensitivity analysis** – For each clause `c`, compute the finite‑difference impact on satisfiability by flipping a random subset of its literals (using NumPy’s `random.choice`) and re‑running unit propagation. The proportion of flips that change satisfiability becomes `δ_c`. Update weights: `w ← w * (1 + α·δ_c)` with small α (e.g., 0.1).  
-4. **Mechanism‑design scoring** – Treat each candidate answer as an “agent” that proposes a truth assignment. Compute its utility as the weighted sum of satisfied clauses: `u_i = Σ_j w_j * satisfied_{ij}` where `satisfied_{ij}` is 1 if clause `j` is true under answer *i*’s assignment (checked via NumPy dot product). Apply the Vickrey‑Clarke‑Groves (VCG) payment rule to align incentives: final score `score_i = u_i - Σ_{k≠i} u_k / (N-1)`. Higher scores indicate answers that both satisfy the logical structure and are robust to perturbations.  
-5. **Output** – Normalize scores to `[0,1]` for comparison.
-
-*Structural features parsed*  
-- Atomic predicates (entity‑property, relational).  
-- Negations (`not`, `no`).  
-- Comparatives (`greater than`, `less than`, `≥`, `≤`).  
-- Conditionals (`if … then …`, `implies`).  
-- Causal language (`cause`, `leads to`, `because`).  
-- Numeric values and units.  
-- Ordering/temporal markers (`before`, `after`, `first`, `last`).  
-
-*Novelty*  
-The combination mirrors existing work in weighted MaxSAT (sensitivity‑based clause weighting) and VCG‑based scoring for truthful elicitation, but the explicit integration of DPLL unit propagation with mechanism‑design incentives for answer scoring is not found in standard SAT‑based QA pipelines, making the approach novel in this context.
+**Novelty**  
+Pure SAT‑based solvers ignore numeric fragility; sensitivity analysis is rarely coupled with logical conflict counting; mechanism‑design scoring rules are not used to incentivize truthful logical answers. The triple integration is therefore novel in the context of answer‑scoring tools.  
 
 **Ratings**  
-Reasoning: 8/10 — Combines logical satisfiability with robustness and incentive alignment, yielding nuanced scores beyond pure hit/miss.  
-Metacognition: 6/10 — The tool can detect when its own clause weights are unstable (high sensitivity) but does not explicitly reason about its uncertainty.  
-Hypothesis generation: 5/10 — Generates alternative assignments via clause flips, yet lacks a structured search for novel explanatory hypotheses.  
-Implementability: 9/10 — Relies only on regex, NumPy arrays, and pure‑Python DPLL; no external libraries or APIs needed.
+Reasoning: 8/10 — The algorithm directly evaluates logical consistency and robustness, capturing core reasoning demands.  
+Metacognition: 6/10 — It does not model the answerer’s uncertainty about its own reasoning process, only the sensitivity of the answer to input changes.  
+Hypothesis generation: 7/10 — By exploring perturbations, it implicitly generates alternative assignments that could satisfy the prompt, supporting hypothesis ranking.  
+Implementability: 9/10 — All steps rely on regex, NumPy vectorized logic, and basic arithmetic; no external libraries or APIs are needed.
 
 ### Scores
 
@@ -48,9 +44,9 @@ Implementability: 9/10 — Relies only on regex, NumPy arrays, and pure‑Python
 |--------|-------|
 | Reasoning | 8/10 |
 | Metacognition | 6/10 |
-| Hypothesis Generation | 5/10 |
+| Hypothesis Generation | 7/10 |
 | Implementability | 9/10 |
-| **Composite** | **6.33** |
+| **Composite** | **7.0** |
 
 **Novelty**: novel
 **High Potential**: No
