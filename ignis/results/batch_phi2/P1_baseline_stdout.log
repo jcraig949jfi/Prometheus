@@ -1,0 +1,24 @@
+2026-04-02 19:32:59,818 [PREFLIGHT] Loading microsoft/phi-2...
+2026-04-02 19:32:59,818 [PREFLIGHT] Loading model microsoft/phi-2 requires setting trust_remote_code=True
+2026-04-02 19:33:00,072 [PREFLIGHT] Loading model microsoft/phi-2 state dict requires setting trust_remote_code=True
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:01<00:01,  1.72s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.28it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.08it/s]
+Loaded pretrained model microsoft/phi-2 into HookedTransformer
+2026-04-02 19:33:09,955 [PREFLIGHT] epsilon-scale=0.0 — running unsteered baseline (no genomes needed)
+2026-04-02 19:33:09,955 [PREFLIGHT] 
+Running 1 evaluation passes...
+
+2026-04-02 19:33:14,080 [PREFLIGHT]   Run 1/1: 24/30 correct  (4.1s)
+2026-04-02 19:33:14,080 [PREFLIGHT] 
+======================================================================
+2026-04-02 19:33:14,080 [PREFLIGHT] STABILITY RESULTS (1 runs)
+2026-04-02 19:33:14,080 [PREFLIGHT] ======================================================================
+2026-04-02 19:33:14,080 [PREFLIGHT]   Scores: [24]
+2026-04-02 19:33:14,080 [PREFLIGHT]   Min=24  Max=24  Mean=24.0
+2026-04-02 19:33:14,080 [PREFLIGHT]   Perfect runs: 0/1
+2026-04-02 19:33:14,080 [PREFLIGHT] 
+  Trap-level stability:
+2026-04-02 19:33:14,080 [PREFLIGHT]     ~  THIN:       Finish Before 3rd               flip_rate=0%  margin=[-0.014, -0.014]  mean=-0.014
+2026-04-02 19:33:14,080 [PREFLIGHT]     No stochastic traps. All traps flip consistently across 1 runs.
+2026-04-02 19:33:14,082 [PREFLIGHT] 
+  Results saved to results\batch_phi2\P1_baseline\stability_test_20260402_193314.json

@@ -1,0 +1,58 @@
+2026-04-03 07:30:59,455 [PREFLIGHT] Loading microsoft/phi-2...
+2026-04-03 07:30:59,456 [PREFLIGHT] Loading model microsoft/phi-2 requires setting trust_remote_code=True
+2026-04-03 07:30:59,734 [PREFLIGHT] Loading model microsoft/phi-2 state dict requires setting trust_remote_code=True
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:01<00:01,  1.52s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.40it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.20it/s]
+Loaded pretrained model microsoft/phi-2 into HookedTransformer
+2026-04-03 07:31:10,605 [PREFLIGHT] 
+Found 3 genomes. Testing all combinations.
+
+2026-04-03 07:31:14,740 [PREFLIGHT]   L12 (eps×0.5)                                       SR=25/30  flip=1  break=0  net=+1
+2026-04-03 07:31:18,681 [PREFLIGHT]   L12 (eps×1.0)                                       SR=25/30  flip=1  break=0  net=+1
+2026-04-03 07:31:22,629 [PREFLIGHT]   L12 (eps×1.5)                                       SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:31:26,579 [PREFLIGHT]   L12 (eps×2.0)                                       SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:31:30,528 [PREFLIGHT]   L20 (eps×0.5)                                       SR=25/30  flip=1  break=0  net=+1
+2026-04-03 07:31:34,474 [PREFLIGHT]   L20 (eps×1.0)                                       SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:31:38,407 [PREFLIGHT]   L20 (eps×1.5)                                       SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:31:42,349 [PREFLIGHT]   L20 (eps×2.0)                                       SR=27/30  flip=3  break=0  net=+3
+2026-04-03 07:31:46,288 [PREFLIGHT]   L28 (eps×0.5)                                       SR=25/30  flip=1  break=0  net=+1
+2026-04-03 07:31:50,234 [PREFLIGHT]   L28 (eps×1.0)                                       SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:31:54,173 [PREFLIGHT]   L28 (eps×1.5)                                       SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:31:58,119 [PREFLIGHT]   L28 (eps×2.0)                                       SR=27/30  flip=3  break=0  net=+3
+2026-04-03 07:32:02,068 [PREFLIGHT]   L12 + L20 (eps×0.5)                                 SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:32:06,017 [PREFLIGHT]   L12 + L20 (eps×1.0)                                 SR=27/30  flip=3  break=0  net=+3
+2026-04-03 07:32:09,956 [PREFLIGHT]   L12 + L20 (eps×1.5)                                 SR=29/30  flip=5  break=0  net=+5
+2026-04-03 07:32:13,892 [PREFLIGHT]   L12 + L20 (eps×2.0)                                 SR=30/30  flip=6  break=0  net=+6
+2026-04-03 07:32:17,836 [PREFLIGHT]   L12 + L28 (eps×0.5)                                 SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:32:21,783 [PREFLIGHT]   L12 + L28 (eps×1.0)                                 SR=27/30  flip=3  break=0  net=+3
+2026-04-03 07:32:25,723 [PREFLIGHT]   L12 + L28 (eps×1.5)                                 SR=28/30  flip=4  break=0  net=+4
+2026-04-03 07:32:29,688 [PREFLIGHT]   L12 + L28 (eps×2.0)                                 SR=30/30  flip=6  break=0  net=+6
+2026-04-03 07:32:33,683 [PREFLIGHT]   L20 + L28 (eps×0.5)                                 SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:32:37,712 [PREFLIGHT]   L20 + L28 (eps×1.0)                                 SR=27/30  flip=3  break=0  net=+3
+2026-04-03 07:32:41,730 [PREFLIGHT]   L20 + L28 (eps×1.5)                                 SR=28/30  flip=4  break=0  net=+4
+2026-04-03 07:32:45,752 [PREFLIGHT]   L20 + L28 (eps×2.0)                                 SR=29/30  flip=5  break=0  net=+5
+2026-04-03 07:32:49,792 [PREFLIGHT]   L12 + L20 + L28 (eps×0.5)                           SR=26/30  flip=2  break=0  net=+2
+2026-04-03 07:32:53,803 [PREFLIGHT]   L12 + L20 + L28 (eps×1.0)                           SR=28/30  flip=4  break=0  net=+4
+2026-04-03 07:32:57,842 [PREFLIGHT]   L12 + L20 + L28 (eps×1.5)                           SR=30/30  flip=6  break=0  net=+6
+2026-04-03 07:33:01,817 [PREFLIGHT]   L12 + L20 + L28 (eps×2.0)                           SR=30/30  flip=6  break=0  net=+6
+2026-04-03 07:33:01,817 [PREFLIGHT] 
+======================================================================
+2026-04-03 07:33:01,817 [PREFLIGHT] TOP 10 COMBINATIONS
+2026-04-03 07:33:01,817 [PREFLIGHT] ======================================================================
+2026-04-03 07:33:01,817 [PREFLIGHT]   #1: L12 + L20 (eps×2.0)                                 SR=30/30  net=+6 (flip=6, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #2: L12 + L28 (eps×2.0)                                 SR=30/30  net=+6 (flip=6, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #3: L12 + L20 + L28 (eps×1.5)                           SR=30/30  net=+6 (flip=6, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #4: L12 + L20 + L28 (eps×2.0)                           SR=30/30  net=+6 (flip=6, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #5: L12 + L20 (eps×1.5)                                 SR=29/30  net=+5 (flip=5, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #6: L20 + L28 (eps×2.0)                                 SR=29/30  net=+5 (flip=5, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #7: L12 + L28 (eps×1.5)                                 SR=28/30  net=+4 (flip=4, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #8: L20 + L28 (eps×1.5)                                 SR=28/30  net=+4 (flip=4, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #9: L12 + L20 + L28 (eps×1.0)                           SR=28/30  net=+4 (flip=4, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT]   #10: L20 (eps×2.0)                                       SR=27/30  net=+3 (flip=3, break=0)
+2026-04-03 07:33:01,817 [PREFLIGHT] 
+======================================================================
+2026-04-03 07:33:01,817 [PREFLIGHT] PARETO FRONT (best SR per break count)
+2026-04-03 07:33:01,817 [PREFLIGHT] ======================================================================
+2026-04-03 07:33:01,817 [PREFLIGHT]   breaks=0: L12 + L20 (eps×2.0)                                 SR=30/30
+2026-04-03 07:33:01,827 [PREFLIGHT] 
+Results saved to results\batch_phi2\P5_combo\multilayer_eval_20260403_073301.json

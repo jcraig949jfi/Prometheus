@@ -1,0 +1,62 @@
+2026-04-03 07:33:25,634 [V3-EVAL] Loading microsoft/phi-2...
+2026-04-03 07:33:25,635 [V3-EVAL] Loading model microsoft/phi-2 requires setting trust_remote_code=True
+2026-04-03 07:33:25,843 [V3-EVAL] Loading model microsoft/phi-2 state dict requires setting trust_remote_code=True
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:01<00:01,  1.11s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.87it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.61it/s]
+Loaded pretrained model microsoft/phi-2 into HookedTransformer
+2026-04-03 07:33:35,218 [V3-EVAL] Tokenization audit:
+2026-04-03 07:33:35,228 [V3-EVAL] 
+Evaluating 30 v3 traps on microsoft/phi-2...
+
+2026-04-03 07:33:35,228 [V3-EVAL] Trap                                  Margin   Status
+2026-04-03 07:33:35,228 [V3-EVAL] ----------------------------------- -------- --------
+2026-04-03 07:33:35,422 [V3-EVAL]   Nested Relative Day                   +0.925  CORRECT
+2026-04-03 07:33:35,495 [V3-EVAL]   Age Constraint                        +0.785  CORRECT
+2026-04-03 07:33:35,561 [V3-EVAL]   Duration Across Midnight              +0.493  CORRECT
+2026-04-03 07:33:35,634 [V3-EVAL]   Concurrent Finish                     +1.693  CORRECT
+2026-04-03 07:33:35,706 [V3-EVAL]   Blocked Mediator                      -0.041    WRONG
+2026-04-03 07:33:35,771 [V3-EVAL]   Confounded Correlation                +0.634  CORRECT
+2026-04-03 07:33:35,836 [V3-EVAL]   Counterfactual Universal              +1.241  CORRECT
+2026-04-03 07:33:35,910 [V3-EVAL]   Second Order Belief                   -1.604    WRONG
+2026-04-03 07:33:35,975 [V3-EVAL]   Strategic Deception                   -0.946    WRONG
+2026-04-03 07:33:36,049 [V3-EVAL]   Information Asymmetry                 -0.702    WRONG
+2026-04-03 07:33:36,123 [V3-EVAL]   Liar Puzzle Simple                    +0.148  CORRECT
+2026-04-03 07:33:36,194 [V3-EVAL]   Pigeonhole                            +1.157  CORRECT
+2026-04-03 07:33:36,259 [V3-EVAL]   Vacuous Truth                         -0.101    WRONG
+2026-04-03 07:33:36,369 [V3-EVAL]   Order of Operations                   +0.314  CORRECT
+2026-04-03 07:33:36,434 [V3-EVAL]   Direction Composition                 +0.853  CORRECT
+2026-04-03 07:33:36,501 [V3-EVAL]   Multi-Step State                      -1.838    WRONG
+2026-04-03 07:33:36,574 [V3-EVAL]   Base Rate Neglect                     +0.904  CORRECT
+2026-04-03 07:33:36,640 [V3-EVAL]   Gambler's Fallacy                     +0.751  CORRECT
+2026-04-03 07:33:36,715 [V3-EVAL]   Conjunction Fallacy                   +1.995  CORRECT
+2026-04-03 07:33:36,779 [V3-EVAL]   Diagonal Count                        -0.976    WRONG
+2026-04-03 07:33:36,852 [V3-EVAL]   Handshake Scaling                     +0.792  CORRECT
+2026-04-03 07:33:36,914 [V3-EVAL]   Circular Arrangement                  -0.010    WRONG
+2026-04-03 07:33:36,989 [V3-EVAL]   Sunk Cost                             +0.431  CORRECT
+2026-04-03 07:33:37,055 [V3-EVAL]   Survivorship Bias                     +0.582  CORRECT
+2026-04-03 07:33:37,127 [V3-EVAL]   Anchoring Resistance                  +0.627  CORRECT
+2026-04-03 07:33:37,192 [V3-EVAL]   Converse Error                        +0.489  CORRECT
+2026-04-03 07:33:37,256 [V3-EVAL]   Necessary vs Sufficient               -0.692    WRONG
+2026-04-03 07:33:37,322 [V3-EVAL]   Inclusion Exclusion                   -0.462    WRONG
+2026-04-03 07:33:37,385 [V3-EVAL]   Clock Arithmetic                      -0.724    WRONG
+2026-04-03 07:33:37,455 [V3-EVAL]   Remainder Reasoning                   +0.063  CORRECT
+2026-04-03 07:33:37,455 [V3-EVAL] 
+============================================================
+2026-04-03 07:33:37,455 [V3-EVAL] CATEGORY BREAKDOWN
+2026-04-03 07:33:37,455 [V3-EVAL] ============================================================
+2026-04-03 07:33:37,455 [V3-EVAL]   Temporal            : 4/4 (100%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Causal              : 2/3 (67%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Theory of Mind      : 0/3 (0%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Constraint          : 2/3 (67%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Compositional       : 2/3 (67%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Probability         : 3/3 (100%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Counting            : 1/3 (33%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Bias Resistance     : 3/3 (100%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Logic               : 1/3 (33%)
+2026-04-03 07:33:37,455 [V3-EVAL]   Modular             : 1/2 (50%)
+2026-04-03 07:33:37,455 [V3-EVAL] 
+============================================================
+2026-04-03 07:33:37,455 [V3-EVAL] OVERALL: 19/30 (63.3%)
+2026-04-03 07:33:37,455 [V3-EVAL] ============================================================
+2026-04-03 07:33:37,456 [V3-EVAL] 
+Saved to results\batch_phi2\P7_v3_baseline\v3_baseline_20260403_073337.json

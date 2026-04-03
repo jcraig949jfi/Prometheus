@@ -49,22 +49,25 @@ def main():
     model = base.model
     output_dir = base.output_dir
 
-    # Load winning combo genomes
-    results_root = Path(__file__).resolve().parent.parent / "results"
-    genome_specs = {
-        "L19": results_root / "layer_sweep" / "L19" / "best_genome_1_5b.pt",
-        "L20": results_root / "layer_sweep" / "L20" / "best_genome_1_5b.pt",
-        "L21": results_root / "batch4_followup" / "stage2_L21" / "best_genome_1_5b.pt",
-    }
-
+    # Load winning combo genomes (skip if epsilon-scale is 0 — pure baseline)
     hooks = []
-    for name, path in genome_specs.items():
-        vec, layer, eps = load_genome(str(path))
-        v_hat = vec / (vec.norm() + 1e-8)
-        v_hat = v_hat.to(args.device)
-        hook_name, hook_fn = make_steering_hook(v_hat, layer, epsilon=eps * args.epsilon_scale)
-        hooks.append((hook_name, hook_fn))
-        log.info(f"Loaded {name}: layer={layer}, eps={eps * args.epsilon_scale:.1f}")
+    if args.epsilon_scale == 0.0:
+        log.info("epsilon-scale=0.0 — running unsteered baseline (no genomes needed)")
+    else:
+        results_root = Path(__file__).resolve().parent.parent / "results"
+        genome_specs = {
+            "L19": results_root / "layer_sweep" / "L19" / "best_genome_1_5b.pt",
+            "L20": results_root / "layer_sweep" / "L20" / "best_genome_1_5b.pt",
+            "L21": results_root / "batch4_followup" / "stage2_L21" / "best_genome_1_5b.pt",
+        }
+
+        for name, path in genome_specs.items():
+            vec, layer, eps = load_genome(str(path))
+            v_hat = vec / (vec.norm() + 1e-8)
+            v_hat = v_hat.to(args.device)
+            hook_name, hook_fn = make_steering_hook(v_hat, layer, epsilon=eps * args.epsilon_scale)
+            hooks.append((hook_name, hook_fn))
+            log.info(f"Loaded {name}: layer={layer}, eps={eps * args.epsilon_scale:.1f}")
 
     log.info(f"\nRunning {args.n_runs} evaluation passes...\n")
 

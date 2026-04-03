@@ -1,0 +1,61 @@
+2026-04-03 07:33:07,206 [PREFLIGHT] Loading microsoft/phi-2...
+2026-04-03 07:33:07,206 [PREFLIGHT] Loading model microsoft/phi-2 requires setting trust_remote_code=True
+2026-04-03 07:33:07,510 [PREFLIGHT] Loading model microsoft/phi-2 state dict requires setting trust_remote_code=True
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:01<00:01,  1.11s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.86it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.60it/s]
+Loaded pretrained model microsoft/phi-2 into HookedTransformer
+2026-04-03 07:33:16,330 [PREFLIGHT] Loaded L12: layer=12, eps=3.0, norm=14.40
+2026-04-03 07:33:16,330 [PREFLIGHT] Loaded L20: layer=20, eps=3.0, norm=14.46
+2026-04-03 07:33:16,331 [PREFLIGHT] Loaded L28: layer=28, eps=3.0, norm=14.67
+2026-04-03 07:33:16,331 [PREFLIGHT] 
+Analyzing 30 traps...
+
+2026-04-03 07:33:16,331 [PREFLIGHT] Trap                            cos_w_resid  norm_ratio    margin    status
+2026-04-03 07:33:16,331 [PREFLIGHT] ------------------------------  -----------  ----------  --------  --------
+2026-04-03 07:33:16,666 [PREFLIGHT]   Decimal Magnitude               -0.0057      0.9946     +0.367   FLIP
+2026-04-03 07:33:16,816 [PREFLIGHT]   Prime Check                     -0.0284      0.9965     +1.010   OK
+2026-04-03 07:33:16,948 [PREFLIGHT]   Density Illusion                -0.0196      0.9818     -0.000   WRONG
+2026-04-03 07:33:17,078 [PREFLIGHT]   Spatial Inversion               -0.0289      1.0008     +0.038   FLIP
+2026-04-03 07:33:17,225 [PREFLIGHT]   CRT Ball                        -0.0208      1.0040     +4.898   OK
+2026-04-03 07:33:17,356 [PREFLIGHT]   CRT Widgets                     -0.0281      0.9979     +2.140   OK
+2026-04-03 07:33:17,486 [PREFLIGHT]   Overtake Race                   -0.0147      1.0083     +2.448   OK
+2026-04-03 07:33:17,614 [PREFLIGHT]   Repeating Decimal               -0.0353      0.9986     +1.329   OK
+2026-04-03 07:33:17,741 [PREFLIGHT]   Monty Hall                      -0.0395      0.9966     +1.171   OK
+2026-04-03 07:33:17,871 [PREFLIGHT]   Simpson's Paradox               -0.0367      0.9946     +1.885   OK
+2026-04-03 07:33:18,001 [PREFLIGHT]   Overtake 2nd                    -0.0147      1.0083     +2.448   OK
+2026-04-03 07:33:18,132 [PREFLIGHT]   Overtake Last                   -0.0208      0.9966     +0.639   FLIP
+2026-04-03 07:33:18,262 [PREFLIGHT]   Finish Before 3rd               -0.0093      1.0188     +1.942   FLIP
+2026-04-03 07:33:18,395 [PREFLIGHT]   Elevator Floor                  -0.0023      1.0056     +1.223   OK
+2026-04-03 07:33:18,525 [PREFLIGHT]   Queue Position                  -0.0110      1.0066     +1.136   OK
+2026-04-03 07:33:18,654 [PREFLIGHT]   Day After Tomorrow              -0.0148      1.0051     +0.942   OK
+2026-04-03 07:33:18,783 [PREFLIGHT]   Counting Fence Posts            -0.0216      0.9984     +1.071   OK
+2026-04-03 07:33:18,932 [PREFLIGHT]   Meeting Point                   -0.0203      1.0028     +1.966   OK
+2026-04-03 07:33:19,061 [PREFLIGHT]   Handshakes                      -0.0100      1.0007     +1.257   OK
+2026-04-03 07:33:19,205 [PREFLIGHT]   Siblings                        -0.0101      1.0047     +0.865   OK
+2026-04-03 07:33:19,351 [PREFLIGHT]   Clock Angle                     -0.0229      1.0077     +0.389   OK
+2026-04-03 07:33:19,482 [PREFLIGHT]   Staircase Steps                 -0.0047      1.0056     +0.801   OK
+2026-04-03 07:33:19,612 [PREFLIGHT]   Cutting Rope                    -0.0073      1.0028     -0.296   WRONG
+2026-04-03 07:33:19,741 [PREFLIGHT]   Month Ordering                  +0.0019      1.0021     +1.107   OK
+2026-04-03 07:33:19,873 [PREFLIGHT]   Birthday Paradox Direction      -0.0288      1.0009     +0.596   OK
+2026-04-03 07:33:20,007 [PREFLIGHT]   Rank Reversal                   -0.0229      0.9991     +2.458   OK
+2026-04-03 07:33:20,141 [PREFLIGHT]   Pages in Book                   -0.0332      1.0030     +1.253   OK
+2026-04-03 07:33:20,271 [PREFLIGHT]   Round Robin Games               -0.0165      1.0035     +1.088   OK
+2026-04-03 07:33:20,417 [PREFLIGHT]   Overlapping Intervals           -0.0119      1.0010     +0.707   OK
+2026-04-03 07:33:20,546 [PREFLIGHT]   Off-by-One Inclusive            -0.0105      1.0054     +0.457   OK
+2026-04-03 07:33:20,547 [PREFLIGHT] 
+======================================================================
+2026-04-03 07:33:20,547 [PREFLIGHT] GHOST TRAP SUMMARY
+2026-04-03 07:33:20,547 [PREFLIGHT] ======================================================================
+2026-04-03 07:33:20,547 [PREFLIGHT]   Overall mean cos_with_residual:   -0.0183
+2026-04-03 07:33:20,547 [PREFLIGHT]   Flipped traps mean cos_with_resid: -0.0162
+2026-04-03 07:33:20,547 [PREFLIGHT]   Overall mean norm_ratio:           1.0017
+2026-04-03 07:33:20,547 [PREFLIGHT] 
+  Four-Quadrant Classification (cos threshold=0.1):
+2026-04-03 07:33:20,547 [PREFLIGHT]     Correct + High cos (NATIVE AMPLIFICATION): 0
+2026-04-03 07:33:20,547 [PREFLIGHT]     Correct + Low cos  (BYPASS):               28
+2026-04-03 07:33:20,547 [PREFLIGHT]     Wrong   + High cos (natural dir unhelpful): 0
+2026-04-03 07:33:20,547 [PREFLIGHT]     Wrong   + Low cos  (noise):                 2
+2026-04-03 07:33:20,547 [PREFLIGHT] 
+  VERDICT: Dominant mechanism is BYPASS
+2026-04-03 07:33:20,551 [PREFLIGHT] 
+  Results saved to results\batch_phi2\P6_ghost\ghost_trap_analysis_20260403_073320.json

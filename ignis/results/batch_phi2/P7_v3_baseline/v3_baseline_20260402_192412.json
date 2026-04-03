@@ -1,0 +1,241 @@
+{
+  "timestamp": "20260402_192412",
+  "model": "microsoft/phi-2",
+  "n_correct": 19,
+  "n_total": 30,
+  "sr": 0.6333333333333333,
+  "categories": {
+    "Temporal": {
+      "correct": 4,
+      "total": 4,
+      "pct": 100.0
+    },
+    "Causal": {
+      "correct": 2,
+      "total": 3,
+      "pct": 66.66666666666666
+    },
+    "Theory of Mind": {
+      "correct": 0,
+      "total": 3,
+      "pct": 0.0
+    },
+    "Constraint": {
+      "correct": 2,
+      "total": 3,
+      "pct": 66.66666666666666
+    },
+    "Compositional": {
+      "correct": 2,
+      "total": 3,
+      "pct": 66.66666666666666
+    },
+    "Probability": {
+      "correct": 3,
+      "total": 3,
+      "pct": 100.0
+    },
+    "Counting": {
+      "correct": 1,
+      "total": 3,
+      "pct": 33.33333333333333
+    },
+    "Bias Resistance": {
+      "correct": 3,
+      "total": 3,
+      "pct": 100.0
+    },
+    "Logic": {
+      "correct": 1,
+      "total": 3,
+      "pct": 33.33333333333333
+    },
+    "Modular": {
+      "correct": 1,
+      "total": 2,
+      "pct": 50.0
+    }
+  },
+  "traps": {
+    "Nested Relative Day": {
+      "margin": 0.9247169494628906,
+      "correct": true,
+      "target": "Saturday",
+      "anti": "Friday"
+    },
+    "Age Constraint": {
+      "margin": 0.7845344543457031,
+      "correct": true,
+      "target": "Fourteen",
+      "anti": "Nine"
+    },
+    "Duration Across Midnight": {
+      "margin": 0.4927711486816406,
+      "correct": true,
+      "target": "Before",
+      "anti": "After"
+    },
+    "Concurrent Finish": {
+      "margin": 1.6925301551818848,
+      "correct": true,
+      "target": "Yes",
+      "anti": "No"
+    },
+    "Blocked Mediator": {
+      "margin": -0.040500640869140625,
+      "correct": false,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Confounded Correlation": {
+      "margin": 0.6335735321044922,
+      "correct": true,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Counterfactual Universal": {
+      "margin": 1.2410221099853516,
+      "correct": true,
+      "target": "Yes",
+      "anti": "No"
+    },
+    "Second Order Belief": {
+      "margin": -1.6044185161590576,
+      "correct": false,
+      "target": "Blue",
+      "anti": "Red"
+    },
+    "Strategic Deception": {
+      "margin": -0.9463963508605957,
+      "correct": false,
+      "target": "Right",
+      "anti": "Left"
+    },
+    "Information Asymmetry": {
+      "margin": -0.7017955780029297,
+      "correct": false,
+      "target": "Three",
+      "anti": "Six"
+    },
+    "Liar Puzzle Simple": {
+      "margin": 0.14819717407226562,
+      "correct": true,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Pigeonhole": {
+      "margin": 1.1568808555603027,
+      "correct": true,
+      "target": "Four",
+      "anti": "Three"
+    },
+    "Vacuous Truth": {
+      "margin": -0.10136651992797852,
+      "correct": false,
+      "target": "True",
+      "anti": "False"
+    },
+    "Order of Operations": {
+      "margin": 0.3142075538635254,
+      "correct": true,
+      "target": "Fourteen",
+      "anti": "Twenty"
+    },
+    "Direction Composition": {
+      "margin": 0.8529289960861206,
+      "correct": true,
+      "target": "East",
+      "anti": "West"
+    },
+    "Multi-Step State": {
+      "margin": -1.8377926349639893,
+      "correct": false,
+      "target": "Eleven",
+      "anti": "Twenty"
+    },
+    "Base Rate Neglect": {
+      "margin": 0.904271125793457,
+      "correct": true,
+      "target": "Below",
+      "anti": "Above"
+    },
+    "Gambler's Fallacy": {
+      "margin": 0.7510194778442383,
+      "correct": true,
+      "target": "Yes",
+      "anti": "No"
+    },
+    "Conjunction Fallacy": {
+      "margin": 1.9947099685668945,
+      "correct": true,
+      "target": "Teller",
+      "anti": "Both"
+    },
+    "Diagonal Count": {
+      "margin": -0.9758432507514954,
+      "correct": false,
+      "target": "Nine",
+      "anti": "Twelve"
+    },
+    "Handshake Scaling": {
+      "margin": 0.7920451164245605,
+      "correct": true,
+      "target": "Below",
+      "anti": "Above"
+    },
+    "Circular Arrangement": {
+      "margin": -0.01024627685546875,
+      "correct": false,
+      "target": "Six",
+      "anti": "Twenty"
+    },
+    "Sunk Cost": {
+      "margin": 0.43125438690185547,
+      "correct": true,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Survivorship Bias": {
+      "margin": 0.581636905670166,
+      "correct": true,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Anchoring Resistance": {
+      "margin": 0.6268577575683594,
+      "correct": true,
+      "target": "Second",
+      "anti": "First"
+    },
+    "Converse Error": {
+      "margin": 0.48948001861572266,
+      "correct": true,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Necessary vs Sufficient": {
+      "margin": -0.6920833587646484,
+      "correct": false,
+      "target": "No",
+      "anti": "Yes"
+    },
+    "Inclusion Exclusion": {
+      "margin": -0.46158266067504883,
+      "correct": false,
+      "target": "Five",
+      "anti": "Zero"
+    },
+    "Clock Arithmetic": {
+      "margin": -0.7244265079498291,
+      "correct": false,
+      "target": "Eleven",
+      "anti": "Nine"
+    },
+    "Remainder Reasoning": {
+      "margin": 0.0629425048828125,
+      "correct": true,
+      "target": "Three",
+      "anti": "Four"
+    }
+  }
+}

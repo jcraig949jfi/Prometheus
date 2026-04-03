@@ -1,0 +1,2028 @@
+{
+  "timestamp": "20260403_073320",
+  "epsilon_scale": 1.0,
+  "summary": {
+    "mean_cos_all": -0.018319413021931224,
+    "mean_cos_flipped": -0.01619074466483047,
+    "mean_norm_ratio": 1.0017424046993255,
+    "quadrants": {
+      "correct_high_cos": 0,
+      "correct_low_cos": 28,
+      "wrong_high_cos": 0,
+      "wrong_low_cos": 2
+    },
+    "verdict": "BYPASS"
+  },
+  "traps": [
+    {
+      "name": "Decimal Magnitude",
+      "baseline_margin": -0.15711307525634766,
+      "steered_margin": 0.3666114807128906,
+      "flipped": true,
+      "correct": true,
+      "mean_cos_with_residual": -0.005747081711888313,
+      "mean_norm_ratio": 0.9946112434069315,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.013481667265295982,
+          "norm_ratio": 1.0096107721328735,
+          "unsteered_norm": 50.259559631347656,
+          "steered_norm": 50.742591857910156
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": 0.023127004504203796,
+          "norm_ratio": 0.9826786518096924,
+          "unsteered_norm": 78.47393035888672,
+          "steered_norm": 77.11465454101562
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.026886582374572754,
+          "norm_ratio": 0.9915443062782288,
+          "unsteered_norm": 152.67787170410156,
+          "steered_norm": 151.38687133789062
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8478834629058838,
+          "abs_delta": 0.8478834629058838
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.7814979553222656,
+          "abs_delta": 0.7814979553222656
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.7169697284698486,
+          "abs_delta": 0.7169697284698486
+        },
+        {
+          "token_id": 11695,
+          "token_str": " sixth",
+          "delta": 0.6193796396255493,
+          "abs_delta": 0.6193796396255493
+        },
+        {
+          "token_id": 5544,
+          "token_str": " fourth",
+          "delta": 0.5894631147384644,
+          "abs_delta": 0.5894631147384644
+        }
+      ]
+    },
+    {
+      "name": "Prime Check",
+      "baseline_margin": 0.7502012252807617,
+      "steered_margin": 1.0102448463439941,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.02844472974538803,
+      "mean_norm_ratio": 0.9964813192685446,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.027982616797089577,
+          "norm_ratio": 1.010040283203125,
+          "unsteered_norm": 48.720890045166016,
+          "steered_norm": 49.210060119628906
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.03662242740392685,
+          "norm_ratio": 0.9928036332130432,
+          "unsteered_norm": 72.24234008789062,
+          "steered_norm": 71.72245788574219
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.020729145035147667,
+          "norm_ratio": 0.9866000413894653,
+          "unsteered_norm": 127.64704895019531,
+          "steered_norm": 125.93658447265625
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.9035491943359375,
+          "abs_delta": 0.9035491943359375
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.8633483648300171,
+          "abs_delta": 0.8633483648300171
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.8383910655975342,
+          "abs_delta": 0.8383910655975342
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -0.755548357963562,
+          "abs_delta": 0.755548357963562
+        },
+        {
+          "token_id": 12957,
+          "token_str": "last",
+          "delta": -0.7453378438949585,
+          "abs_delta": 0.7453378438949585
+        }
+      ]
+    },
+    {
+      "name": "Density Illusion",
+      "baseline_margin": -3.0210609436035156,
+      "steered_margin": -0.0004634857177734375,
+      "flipped": false,
+      "correct": false,
+      "mean_cos_with_residual": -0.0196202100875477,
+      "mean_norm_ratio": 0.9817609588305155,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.05418911576271057,
+          "norm_ratio": 1.0110526084899902,
+          "unsteered_norm": 50.3189697265625,
+          "steered_norm": 50.875125885009766
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.011390372179448605,
+          "norm_ratio": 0.9765928387641907,
+          "unsteered_norm": 82.30504608154297,
+          "steered_norm": 80.3785171508789
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.006718857679516077,
+          "norm_ratio": 0.9576374292373657,
+          "unsteered_norm": 159.50840759277344,
+          "steered_norm": 152.751220703125
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 34501,
+          "token_str": " Feather",
+          "delta": 2.4378652572631836,
+          "abs_delta": 2.4378652572631836
+        },
+        {
+          "token_id": 27400,
+          "token_str": " feathers",
+          "delta": 2.189746856689453,
+          "abs_delta": 2.189746856689453
+        },
+        {
+          "token_id": 39870,
+          "token_str": "gm",
+          "delta": -2.1296029090881348,
+          "abs_delta": 2.1296029090881348
+        },
+        {
+          "token_id": 40020,
+          "token_str": " Airways",
+          "delta": 2.001903533935547,
+          "abs_delta": 2.001903533935547
+        },
+        {
+          "token_id": 3701,
+          "token_str": " Air",
+          "delta": 1.968104362487793,
+          "abs_delta": 1.968104362487793
+        }
+      ]
+    },
+    {
+      "name": "Spatial Inversion",
+      "baseline_margin": -1.0944533348083496,
+      "steered_margin": 0.037724971771240234,
+      "flipped": true,
+      "correct": true,
+      "mean_cos_with_residual": -0.028940387070178986,
+      "mean_norm_ratio": 1.0008113980293274,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.05587982386350632,
+          "norm_ratio": 1.006311297416687,
+          "unsteered_norm": 51.47346496582031,
+          "steered_norm": 51.7983283996582
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.009734470397233963,
+          "norm_ratio": 0.9982219338417053,
+          "unsteered_norm": 90.4551773071289,
+          "steered_norm": 90.29434204101562
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.021206866949796677,
+          "norm_ratio": 0.9979009628295898,
+          "unsteered_norm": 158.73687744140625,
+          "steered_norm": 158.4036865234375
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 9861,
+          "token_str": "Gl",
+          "delta": -0.8980789184570312,
+          "abs_delta": 0.8980789184570312
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8326157331466675,
+          "abs_delta": 0.8326157331466675
+        },
+        {
+          "token_id": 18819,
+          "token_str": "Left",
+          "delta": -0.8220295906066895,
+          "abs_delta": 0.8220295906066895
+        },
+        {
+          "token_id": 47698,
+          "token_str": "Glass",
+          "delta": -0.781301736831665,
+          "abs_delta": 0.781301736831665
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.7675471305847168,
+          "abs_delta": 0.7675471305847168
+        }
+      ]
+    },
+    {
+      "name": "CRT Ball",
+      "baseline_margin": 4.786663055419922,
+      "steered_margin": 4.898482322692871,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.02081672738616665,
+      "mean_norm_ratio": 1.004013478755951,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.03309718146920204,
+          "norm_ratio": 1.0124276876449585,
+          "unsteered_norm": 50.401309967041016,
+          "steered_norm": 51.027679443359375
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.024101916700601578,
+          "norm_ratio": 1.0067553520202637,
+          "unsteered_norm": 75.82046508789062,
+          "steered_norm": 76.33265686035156
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.005251083988696337,
+          "norm_ratio": 0.9928573966026306,
+          "unsteered_norm": 151.71592712402344,
+          "steered_norm": 150.6322784423828
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 24661,
+          "token_str": "Recently",
+          "delta": -1.1043941974639893,
+          "abs_delta": 1.1043941974639893
+        },
+        {
+          "token_id": 9398,
+          "token_str": " Ha",
+          "delta": 1.0463337898254395,
+          "abs_delta": 1.0463337898254395
+        },
+        {
+          "token_id": 33560,
+          "token_str": "Summer",
+          "delta": -1.0342895984649658,
+          "abs_delta": 1.0342895984649658
+        },
+        {
+          "token_id": 24460,
+          "token_str": "gallery",
+          "delta": -1.031656265258789,
+          "abs_delta": 1.031656265258789
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -1.0244741439819336,
+          "abs_delta": 1.0244741439819336
+        }
+      ]
+    },
+    {
+      "name": "CRT Widgets",
+      "baseline_margin": 2.037900924682617,
+      "steered_margin": 2.139645576477051,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.028141458208362263,
+      "mean_norm_ratio": 0.997904638449351,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.03235885500907898,
+          "norm_ratio": 1.0082951784133911,
+          "unsteered_norm": 52.004150390625,
+          "steered_norm": 52.43553161621094
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.03551614284515381,
+          "norm_ratio": 0.993703305721283,
+          "unsteered_norm": 72.83502960205078,
+          "steered_norm": 72.37641143798828
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.016549376770853996,
+          "norm_ratio": 0.9917154312133789,
+          "unsteered_norm": 111.74177551269531,
+          "steered_norm": 110.8160400390625
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 1.090632438659668,
+          "abs_delta": 1.090632438659668
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.0847761631011963,
+          "abs_delta": 1.0847761631011963
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.0814213752746582,
+          "abs_delta": 1.0814213752746582
+        },
+        {
+          "token_id": 28980,
+          "token_str": " Sixth",
+          "delta": 0.8897974491119385,
+          "abs_delta": 0.8897974491119385
+        },
+        {
+          "token_id": 12957,
+          "token_str": "last",
+          "delta": -0.8553661108016968,
+          "abs_delta": 0.8553661108016968
+        }
+      ]
+    },
+    {
+      "name": "Overtake Race",
+      "baseline_margin": 1.35725998878479,
+      "steered_margin": 2.4481098651885986,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.014660263744493326,
+      "mean_norm_ratio": 1.0082544088363647,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.043588727712631226,
+          "norm_ratio": 1.0121179819107056,
+          "unsteered_norm": 48.959800720214844,
+          "steered_norm": 49.553096771240234
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.003299856558442116,
+          "norm_ratio": 1.003234624862671,
+          "unsteered_norm": 79.25684356689453,
+          "steered_norm": 79.5132064819336
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.0029077930375933647,
+          "norm_ratio": 1.0094106197357178,
+          "unsteered_norm": 144.11312866210938,
+          "steered_norm": 145.4693145751953
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 2.212726593017578,
+          "abs_delta": 2.212726593017578
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 2.093613862991333,
+          "abs_delta": 2.093613862991333
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 2.0430078506469727,
+          "abs_delta": 2.0430078506469727
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 2.013162851333618,
+          "abs_delta": 2.013162851333618
+        },
+        {
+          "token_id": 28980,
+          "token_str": " Sixth",
+          "delta": 1.447965145111084,
+          "abs_delta": 1.447965145111084
+        }
+      ]
+    },
+    {
+      "name": "Repeating Decimal",
+      "baseline_margin": 1.3068132400512695,
+      "steered_margin": 1.3289031982421875,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.03528765682131052,
+      "mean_norm_ratio": 0.9985833962758383,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.04300890862941742,
+          "norm_ratio": 1.0076411962509155,
+          "unsteered_norm": 50.978302001953125,
+          "steered_norm": 51.36783981323242
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.05010537803173065,
+          "norm_ratio": 0.9941718578338623,
+          "unsteered_norm": 76.07228088378906,
+          "steered_norm": 75.62892150878906
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.01274868380278349,
+          "norm_ratio": 0.9939371347427368,
+          "unsteered_norm": 133.5220489501953,
+          "steered_norm": 132.7125244140625
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.0471198558807373,
+          "abs_delta": 1.0471198558807373
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.0192091464996338,
+          "abs_delta": 1.0192091464996338
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.8755044937133789,
+          "abs_delta": 0.8755044937133789
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 0.7802718877792358,
+          "abs_delta": 0.7802718877792358
+        },
+        {
+          "token_id": 30556,
+          "token_str": "Same",
+          "delta": 0.6750272512435913,
+          "abs_delta": 0.6750272512435913
+        }
+      ]
+    },
+    {
+      "name": "Monty Hall",
+      "baseline_margin": 1.0327606201171875,
+      "steered_margin": 1.1714482307434082,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.03950388915836811,
+      "mean_norm_ratio": 0.9965849121411642,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.051220402121543884,
+          "norm_ratio": 1.0077049732208252,
+          "unsteered_norm": 47.92007064819336,
+          "steered_norm": 48.2892951965332
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.049443699419498444,
+          "norm_ratio": 0.9907317757606506,
+          "unsteered_norm": 81.51758575439453,
+          "steered_norm": 80.7620620727539
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.017847565934062004,
+          "norm_ratio": 0.9913179874420166,
+          "unsteered_norm": 144.49981689453125,
+          "steered_norm": 143.24526977539062
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.0586693286895752,
+          "abs_delta": 1.0586693286895752
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.9883682131767273,
+          "abs_delta": 0.9883682131767273
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 0.947601854801178,
+          "abs_delta": 0.947601854801178
+        },
+        {
+          "token_id": 12340,
+          "token_str": "\"),",
+          "delta": 0.9181737899780273,
+          "abs_delta": 0.9181737899780273
+        },
+        {
+          "token_id": 4943,
+          "token_str": "\")",
+          "delta": 0.8920726776123047,
+          "abs_delta": 0.8920726776123047
+        }
+      ]
+    },
+    {
+      "name": "Simpson's Paradox",
+      "baseline_margin": 1.8932232856750488,
+      "steered_margin": 1.8853259086608887,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.03672374909122785,
+      "mean_norm_ratio": 0.9946277141571045,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.04266371950507164,
+          "norm_ratio": 1.0080478191375732,
+          "unsteered_norm": 53.15889358520508,
+          "steered_norm": 53.586708068847656
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.05154632031917572,
+          "norm_ratio": 0.9895158410072327,
+          "unsteered_norm": 78.96127319335938,
+          "steered_norm": 78.13343048095703
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.015961207449436188,
+          "norm_ratio": 0.9863194823265076,
+          "unsteered_norm": 157.64248657226562,
+          "steered_norm": 155.48585510253906
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8847695589065552,
+          "abs_delta": 0.8847695589065552
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.801466703414917,
+          "abs_delta": 0.801466703414917
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 0.700865626335144,
+          "abs_delta": 0.700865626335144
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.6837339401245117,
+          "abs_delta": 0.6837339401245117
+        },
+        {
+          "token_id": 11695,
+          "token_str": " sixth",
+          "delta": 0.6675701141357422,
+          "abs_delta": 0.6675701141357422
+        }
+      ]
+    },
+    {
+      "name": "Overtake 2nd",
+      "baseline_margin": 1.35725998878479,
+      "steered_margin": 2.4481098651885986,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.014660263744493326,
+      "mean_norm_ratio": 1.0082544088363647,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.043588727712631226,
+          "norm_ratio": 1.0121179819107056,
+          "unsteered_norm": 48.959800720214844,
+          "steered_norm": 49.553096771240234
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.003299856558442116,
+          "norm_ratio": 1.003234624862671,
+          "unsteered_norm": 79.25684356689453,
+          "steered_norm": 79.5132064819336
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.0029077930375933647,
+          "norm_ratio": 1.0094106197357178,
+          "unsteered_norm": 144.11312866210938,
+          "steered_norm": 145.4693145751953
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 2.212726593017578,
+          "abs_delta": 2.212726593017578
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 2.093613862991333,
+          "abs_delta": 2.093613862991333
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 2.0430078506469727,
+          "abs_delta": 2.0430078506469727
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 2.013162851333618,
+          "abs_delta": 2.013162851333618
+        },
+        {
+          "token_id": 28980,
+          "token_str": " Sixth",
+          "delta": 1.447965145111084,
+          "abs_delta": 1.447965145111084
+        }
+      ]
+    },
+    {
+      "name": "Overtake Last",
+      "baseline_margin": -1.0105280876159668,
+      "steered_margin": 0.6385138034820557,
+      "flipped": true,
+      "correct": true,
+      "mean_cos_with_residual": -0.020768200668195885,
+      "mean_norm_ratio": 0.9966299732526144,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.04228207468986511,
+          "norm_ratio": 1.010867714881897,
+          "unsteered_norm": 51.999732971191406,
+          "steered_norm": 52.56485366821289
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.003437359817326069,
+          "norm_ratio": 0.9942086935043335,
+          "unsteered_norm": 80.03034210205078,
+          "steered_norm": 79.56686401367188
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.01658516749739647,
+          "norm_ratio": 0.9848135113716125,
+          "unsteered_norm": 156.2271270751953,
+          "steered_norm": 153.85458374023438
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.4119175672531128,
+          "abs_delta": 1.4119175672531128
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 1.4068565368652344,
+          "abs_delta": 1.4068565368652344
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 1.3444575071334839,
+          "abs_delta": 1.3444575071334839
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.2446403503417969,
+          "abs_delta": 1.2446403503417969
+        },
+        {
+          "token_id": 1218,
+          "token_str": " second",
+          "delta": 1.0741541385650635,
+          "abs_delta": 1.0741541385650635
+        }
+      ]
+    },
+    {
+      "name": "Finish Before 3rd",
+      "baseline_margin": -0.0141754150390625,
+      "steered_margin": 1.941695213317871,
+      "flipped": true,
+      "correct": true,
+      "mean_cos_with_residual": -0.009307309209058682,
+      "mean_norm_ratio": 1.0188350280125935,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.0271514393389225,
+          "norm_ratio": 1.0142062902450562,
+          "unsteered_norm": 46.93824768066406,
+          "steered_norm": 47.605064392089844
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.004080017562955618,
+          "norm_ratio": 1.0306330919265747,
+          "unsteered_norm": 79.29975891113281,
+          "steered_norm": 81.72895812988281
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.003309529274702072,
+          "norm_ratio": 1.01166570186615,
+          "unsteered_norm": 140.38665771484375,
+          "steered_norm": 142.0243682861328
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 27385,
+          "token_str": "lys",
+          "delta": -2.4296088218688965,
+          "abs_delta": 2.4296088218688965
+        },
+        {
+          "token_id": 12716,
+          "token_str": " unfortunately",
+          "delta": -2.2593729496002197,
+          "abs_delta": 2.2593729496002197
+        },
+        {
+          "token_id": 23216,
+          "token_str": "Additionally",
+          "delta": -2.2471816539764404,
+          "abs_delta": 2.2471816539764404
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 2.180161476135254,
+          "abs_delta": 2.180161476135254
+        },
+        {
+          "token_id": 19960,
+          "token_str": " tended",
+          "delta": -2.14434552192688,
+          "abs_delta": 2.14434552192688
+        }
+      ]
+    },
+    {
+      "name": "Elevator Floor",
+      "baseline_margin": 0.8938007354736328,
+      "steered_margin": 1.2228763103485107,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.00232973617191116,
+      "mean_norm_ratio": 1.0056129495302837,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.0027622682973742485,
+          "norm_ratio": 1.0147851705551147,
+          "unsteered_norm": 50.523765563964844,
+          "steered_norm": 51.27076721191406
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.0002971929498016834,
+          "norm_ratio": 1.0039714574813843,
+          "unsteered_norm": 82.65444946289062,
+          "steered_norm": 82.98271179199219
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.0039297472685575485,
+          "norm_ratio": 0.9980822205543518,
+          "unsteered_norm": 138.18780517578125,
+          "steered_norm": 137.92279052734375
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.428611397743225,
+          "abs_delta": 1.428611397743225
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 1.368448257446289,
+          "abs_delta": 1.368448257446289
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.1924045085906982,
+          "abs_delta": 1.1924045085906982
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 1.1344890594482422,
+          "abs_delta": 1.1344890594482422
+        },
+        {
+          "token_id": 7525,
+          "token_str": " primarily",
+          "delta": -1.110680341720581,
+          "abs_delta": 1.110680341720581
+        }
+      ]
+    },
+    {
+      "name": "Queue Position",
+      "baseline_margin": 0.9111392498016357,
+      "steered_margin": 1.1356487274169922,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.011039275055130323,
+      "mean_norm_ratio": 1.0065753658612568,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.02734970673918724,
+          "norm_ratio": 1.0128127336502075,
+          "unsteered_norm": 51.019222259521484,
+          "steered_norm": 51.67292022705078
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.0045527508482337,
+          "norm_ratio": 1.009700059890747,
+          "unsteered_norm": 79.15381622314453,
+          "steered_norm": 79.92161560058594
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.001215367577970028,
+          "norm_ratio": 0.9972133040428162,
+          "unsteered_norm": 144.25030517578125,
+          "steered_norm": 143.84832763671875
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 2.0666885375976562,
+          "abs_delta": 2.0666885375976562
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.9697293043136597,
+          "abs_delta": 1.9697293043136597
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.692701816558838,
+          "abs_delta": 1.692701816558838
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 1.6748713254928589,
+          "abs_delta": 1.6748713254928589
+        },
+        {
+          "token_id": 28980,
+          "token_str": " Sixth",
+          "delta": 1.347501277923584,
+          "abs_delta": 1.347501277923584
+        }
+      ]
+    },
+    {
+      "name": "Day After Tomorrow",
+      "baseline_margin": 0.9027576446533203,
+      "steered_margin": 0.9422035217285156,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.014759137916068235,
+      "mean_norm_ratio": 1.0051305294036865,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.024836406111717224,
+          "norm_ratio": 1.0107736587524414,
+          "unsteered_norm": 51.907257080078125,
+          "steered_norm": 52.466487884521484
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.013271290808916092,
+          "norm_ratio": 1.0002174377441406,
+          "unsteered_norm": 85.94196319580078,
+          "steered_norm": 85.96064758300781
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.006169716827571392,
+          "norm_ratio": 1.0044004917144775,
+          "unsteered_norm": 155.204345703125,
+          "steered_norm": 155.88731384277344
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.922960638999939,
+          "abs_delta": 0.922960638999939
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.8827414512634277,
+          "abs_delta": 0.8827414512634277
+        },
+        {
+          "token_id": 28980,
+          "token_str": " Sixth",
+          "delta": 0.878291130065918,
+          "abs_delta": 0.878291130065918
+        },
+        {
+          "token_id": 6498,
+          "token_str": " Right",
+          "delta": 0.8740143775939941,
+          "abs_delta": 0.8740143775939941
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.8402089476585388,
+          "abs_delta": 0.8402089476585388
+        }
+      ]
+    },
+    {
+      "name": "Counting Fence Posts",
+      "baseline_margin": 0.9717540740966797,
+      "steered_margin": 1.0711774826049805,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.021640931566556294,
+      "mean_norm_ratio": 0.9984492063522339,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.033423248678445816,
+          "norm_ratio": 1.0087796449661255,
+          "unsteered_norm": 54.38658905029297,
+          "steered_norm": 54.86408233642578
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.021079163998365402,
+          "norm_ratio": 0.9914050102233887,
+          "unsteered_norm": 91.86824035644531,
+          "steered_norm": 91.0786361694336
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.010420382022857666,
+          "norm_ratio": 0.9951629638671875,
+          "unsteered_norm": 157.8448486328125,
+          "steered_norm": 157.0813446044922
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8966915607452393,
+          "abs_delta": 0.8966915607452393
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.7936525344848633,
+          "abs_delta": 0.7936525344848633
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.7368872165679932,
+          "abs_delta": 0.7368872165679932
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 0.7053794264793396,
+          "abs_delta": 0.7053794264793396
+        },
+        {
+          "token_id": 11695,
+          "token_str": " sixth",
+          "delta": 0.6320968866348267,
+          "abs_delta": 0.6320968866348267
+        }
+      ]
+    },
+    {
+      "name": "Meeting Point",
+      "baseline_margin": 1.9649734497070312,
+      "steered_margin": 1.965907096862793,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.020300691636900108,
+      "mean_norm_ratio": 1.002759834130605,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.03611447662115097,
+          "norm_ratio": 1.0141385793685913,
+          "unsteered_norm": 52.928585052490234,
+          "steered_norm": 53.676918029785156
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.012647595256567001,
+          "norm_ratio": 0.9959672689437866,
+          "unsteered_norm": 88.02644348144531,
+          "steered_norm": 87.67145538330078
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.01214000303298235,
+          "norm_ratio": 0.9981736540794373,
+          "unsteered_norm": 170.21473693847656,
+          "steered_norm": 169.90386962890625
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 5867,
+          "token_str": " 300",
+          "delta": 0.9165682792663574,
+          "abs_delta": 0.9165682792663574
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8762911558151245,
+          "abs_delta": 0.8762911558151245
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.8644013404846191,
+          "abs_delta": 0.8644013404846191
+        },
+        {
+          "token_id": 10053,
+          "token_str": " 600",
+          "delta": 0.7930617332458496,
+          "abs_delta": 0.7930617332458496
+        },
+        {
+          "token_id": 939,
+          "token_str": " 200",
+          "delta": 0.786949634552002,
+          "abs_delta": 0.786949634552002
+        }
+      ]
+    },
+    {
+      "name": "Handshakes",
+      "baseline_margin": 1.0763912200927734,
+      "steered_margin": 1.2574825286865234,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.009972576051950455,
+      "mean_norm_ratio": 1.0007150769233704,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.03134685754776001,
+          "norm_ratio": 1.0121839046478271,
+          "unsteered_norm": 53.17680740356445,
+          "steered_norm": 53.824710845947266
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.002634220290929079,
+          "norm_ratio": 0.9921309351921082,
+          "unsteered_norm": 90.2206039428711,
+          "steered_norm": 89.51065063476562
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.004063349682837725,
+          "norm_ratio": 0.9978303909301758,
+          "unsteered_norm": 165.23985290527344,
+          "steered_norm": 164.88134765625
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8329702615737915,
+          "abs_delta": 0.8329702615737915
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.8007597923278809,
+          "abs_delta": 0.8007597923278809
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -0.7467054128646851,
+          "abs_delta": 0.7467054128646851
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.6942811608314514,
+          "abs_delta": 0.6942811608314514
+        },
+        {
+          "token_id": 6498,
+          "token_str": " Right",
+          "delta": 0.6755561828613281,
+          "abs_delta": 0.6755561828613281
+        }
+      ]
+    },
+    {
+      "name": "Siblings",
+      "baseline_margin": 0.645744800567627,
+      "steered_margin": 0.865025520324707,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.010073115583509207,
+      "mean_norm_ratio": 1.004661500453949,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.018362056463956833,
+          "norm_ratio": 1.0167192220687866,
+          "unsteered_norm": 51.32961654663086,
+          "steered_norm": 52.187808990478516
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.011448855511844158,
+          "norm_ratio": 0.9942383170127869,
+          "unsteered_norm": 83.8327407836914,
+          "steered_norm": 83.34972381591797
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.00040843477472662926,
+          "norm_ratio": 1.0030269622802734,
+          "unsteered_norm": 185.7049102783203,
+          "steered_norm": 186.26702880859375
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 718,
+          "token_str": " 6",
+          "delta": 0.8455972671508789,
+          "abs_delta": 0.8455972671508789
+        },
+        {
+          "token_id": 807,
+          "token_str": " 8",
+          "delta": 0.6803512573242188,
+          "abs_delta": 0.6803512573242188
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.6769070625305176,
+          "abs_delta": 0.6769070625305176
+        },
+        {
+          "token_id": 12957,
+          "token_str": "last",
+          "delta": -0.6733332872390747,
+          "abs_delta": 0.6733332872390747
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -0.6713106632232666,
+          "abs_delta": 0.6713106632232666
+        }
+      ]
+    },
+    {
+      "name": "Clock Angle",
+      "baseline_margin": 0.29440832138061523,
+      "steered_margin": 0.38872814178466797,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.022922287384668987,
+      "mean_norm_ratio": 1.0077166557312012,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.04308290034532547,
+          "norm_ratio": 1.014712929725647,
+          "unsteered_norm": 51.757415771484375,
+          "steered_norm": 52.518917083740234
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.020308010280132294,
+          "norm_ratio": 1.0056915283203125,
+          "unsteered_norm": 85.6025161743164,
+          "steered_norm": 86.08972930908203
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.005375951528549194,
+          "norm_ratio": 1.002745509147644,
+          "unsteered_norm": 162.02194213867188,
+          "steered_norm": 162.46678161621094
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.8870797157287598,
+          "abs_delta": 0.8870797157287598
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.7760119438171387,
+          "abs_delta": 0.7760119438171387
+        },
+        {
+          "token_id": 31499,
+          "token_str": "tags",
+          "delta": -0.7718567848205566,
+          "abs_delta": 0.7718567848205566
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.7516270279884338,
+          "abs_delta": 0.7516270279884338
+        },
+        {
+          "token_id": 575,
+          "token_str": " Y",
+          "delta": 0.7350625991821289,
+          "abs_delta": 0.7350625991821289
+        }
+      ]
+    },
+    {
+      "name": "Staircase Steps",
+      "baseline_margin": 0.6597900390625,
+      "steered_margin": 0.8010296821594238,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.004662140427778165,
+      "mean_norm_ratio": 1.0055917104085286,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.006190863903611898,
+          "norm_ratio": 1.0177428722381592,
+          "unsteered_norm": 50.487152099609375,
+          "steered_norm": 51.382938385009766
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.004521923139691353,
+          "norm_ratio": 0.9975873231887817,
+          "unsteered_norm": 80.525390625,
+          "steered_norm": 80.33110809326172
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.0032736342400312424,
+          "norm_ratio": 1.001444935798645,
+          "unsteered_norm": 147.3301239013672,
+          "steered_norm": 147.5430145263672
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 7525,
+          "token_str": " primarily",
+          "delta": -1.1766796112060547,
+          "abs_delta": 1.1766796112060547
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 1.148317813873291,
+          "abs_delta": 1.148317813873291
+        },
+        {
+          "token_id": 9398,
+          "token_str": " Ha",
+          "delta": 1.1481809616088867,
+          "abs_delta": 1.1481809616088867
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.1452523469924927,
+          "abs_delta": 1.1452523469924927
+        },
+        {
+          "token_id": 7303,
+          "token_str": " shares",
+          "delta": -1.1115097999572754,
+          "abs_delta": 1.1115097999572754
+        }
+      ]
+    },
+    {
+      "name": "Cutting Rope",
+      "baseline_margin": -1.3259220123291016,
+      "steered_margin": -0.295989990234375,
+      "flipped": false,
+      "correct": false,
+      "mean_cos_with_residual": -0.007309884453813235,
+      "mean_norm_ratio": 1.0027764836947124,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.012766670435667038,
+          "norm_ratio": 1.017774224281311,
+          "unsteered_norm": 51.92177200317383,
+          "steered_norm": 52.84463882446289
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.0065427254885435104,
+          "norm_ratio": 0.9915827512741089,
+          "unsteered_norm": 86.14868927001953,
+          "steered_norm": 85.42355346679688
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.0026202574372291565,
+          "norm_ratio": 0.998972475528717,
+          "unsteered_norm": 150.75877380371094,
+          "steered_norm": 150.60386657714844
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 1.1134834289550781,
+          "abs_delta": 1.1134834289550781
+        },
+        {
+          "token_id": 28980,
+          "token_str": " Sixth",
+          "delta": 1.1067759990692139,
+          "abs_delta": 1.1067759990692139
+        },
+        {
+          "token_id": 5639,
+          "token_str": "LC",
+          "delta": -1.0996994972229004,
+          "abs_delta": 1.0996994972229004
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.0760397911071777,
+          "abs_delta": 1.0760397911071777
+        },
+        {
+          "token_id": 16126,
+          "token_str": " Neither",
+          "delta": 1.038827896118164,
+          "abs_delta": 1.038827896118164
+        }
+      ]
+    },
+    {
+      "name": "Month Ordering",
+      "baseline_margin": 1.1056222915649414,
+      "steered_margin": 1.1066222190856934,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": 0.0018840818665921688,
+      "mean_norm_ratio": 1.002061168352763,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.0023545376025140285,
+          "norm_ratio": 1.017993688583374,
+          "unsteered_norm": 52.05145263671875,
+          "steered_norm": 52.9880485534668
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": 0.0035607246682047844,
+          "norm_ratio": 0.9916016459465027,
+          "unsteered_norm": 89.4077377319336,
+          "steered_norm": 88.6568603515625
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.004446058534085751,
+          "norm_ratio": 0.9965881705284119,
+          "unsteered_norm": 166.82589721679688,
+          "steered_norm": 166.2567138671875
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.0088282823562622,
+          "abs_delta": 1.0088282823562622
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.9943898916244507,
+          "abs_delta": 0.9943898916244507
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.9426836967468262,
+          "abs_delta": 0.9426836967468262
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 0.8224135637283325,
+          "abs_delta": 0.8224135637283325
+        },
+        {
+          "token_id": 16974,
+          "token_str": " eighth",
+          "delta": 0.6547620892524719,
+          "abs_delta": 0.6547620892524719
+        }
+      ]
+    },
+    {
+      "name": "Birthday Paradox Direction",
+      "baseline_margin": 0.5854947566986084,
+      "steered_margin": 0.5960054397583008,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.028803365925947826,
+      "mean_norm_ratio": 1.0009421110153198,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.05381865054368973,
+          "norm_ratio": 1.00603449344635,
+          "unsteered_norm": 53.581085205078125,
+          "steered_norm": 53.9044189453125
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.023888997733592987,
+          "norm_ratio": 0.9965485334396362,
+          "unsteered_norm": 81.27535247802734,
+          "steered_norm": 80.99483489990234
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.00870244950056076,
+          "norm_ratio": 1.0002433061599731,
+          "unsteered_norm": 148.4105682373047,
+          "steered_norm": 148.44668579101562
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 29215,
+          "token_str": " pathetic",
+          "delta": 1.1251847743988037,
+          "abs_delta": 1.1251847743988037
+        },
+        {
+          "token_id": 8531,
+          "token_str": " stupid",
+          "delta": 1.0425138473510742,
+          "abs_delta": 1.0425138473510742
+        },
+        {
+          "token_id": 11441,
+          "token_str": " ridiculous",
+          "delta": 1.0237963199615479,
+          "abs_delta": 1.0237963199615479
+        },
+        {
+          "token_id": 39544,
+          "token_str": " Nope",
+          "delta": 1.0036635398864746,
+          "abs_delta": 1.0036635398864746
+        },
+        {
+          "token_id": 7427,
+          "token_str": " awesome",
+          "delta": 0.9763689041137695,
+          "abs_delta": 0.9763689041137695
+        }
+      ]
+    },
+    {
+      "name": "Rank Reversal",
+      "baseline_margin": 2.3196144104003906,
+      "steered_margin": 2.45766282081604,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.022920144023373723,
+      "mean_norm_ratio": 0.9990977247556051,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.05458138510584831,
+          "norm_ratio": 1.0076260566711426,
+          "unsteered_norm": 50.179012298583984,
+          "steered_norm": 50.56167984008789
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.0030274519231170416,
+          "norm_ratio": 0.9967543482780457,
+          "unsteered_norm": 86.23404693603516,
+          "steered_norm": 85.95416259765625
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.011151595041155815,
+          "norm_ratio": 0.992912769317627,
+          "unsteered_norm": 151.2523651123047,
+          "steered_norm": 150.18040466308594
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 27520,
+          "token_str": "Rank",
+          "delta": -1.2975258827209473,
+          "abs_delta": 1.2975258827209473
+        },
+        {
+          "token_id": 2215,
+          "token_str": "When",
+          "delta": -1.1227757930755615,
+          "abs_delta": 1.1227757930755615
+        },
+        {
+          "token_id": 29313,
+          "token_str": "anth",
+          "delta": -1.0015525817871094,
+          "abs_delta": 1.0015525817871094
+        },
+        {
+          "token_id": 19930,
+          "token_str": "LP",
+          "delta": -0.9956767559051514,
+          "abs_delta": 0.9956767559051514
+        },
+        {
+          "token_id": 46344,
+          "token_str": "Solution",
+          "delta": -0.9930181503295898,
+          "abs_delta": 0.9930181503295898
+        }
+      ]
+    },
+    {
+      "name": "Pages in Book",
+      "baseline_margin": 1.046976089477539,
+      "steered_margin": 1.2532157897949219,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.033159527306755386,
+      "mean_norm_ratio": 1.0029957095781963,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.05060752108693123,
+          "norm_ratio": 1.00751793384552,
+          "unsteered_norm": 50.504817962646484,
+          "steered_norm": 50.8845100402832
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.01931685209274292,
+          "norm_ratio": 1.00563383102417,
+          "unsteered_norm": 88.65421295166016,
+          "steered_norm": 89.15367889404297
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.029554208740592003,
+          "norm_ratio": 0.9958353638648987,
+          "unsteered_norm": 165.03656005859375,
+          "steered_norm": 164.3492431640625
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.7837777137756348,
+          "abs_delta": 0.7837777137756348
+        },
+        {
+          "token_id": 6159,
+          "token_str": " neither",
+          "delta": 0.7096056938171387,
+          "abs_delta": 0.7096056938171387
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -0.7091703414916992,
+          "abs_delta": 0.7091703414916992
+        },
+        {
+          "token_id": 47426,
+          "token_str": " Directions",
+          "delta": -0.6645760536193848,
+          "abs_delta": 0.6645760536193848
+        },
+        {
+          "token_id": 16516,
+          "token_str": "Activity",
+          "delta": -0.6524699330329895,
+          "abs_delta": 0.6524699330329895
+        }
+      ]
+    },
+    {
+      "name": "Round Robin Games",
+      "baseline_margin": 1.0924444198608398,
+      "steered_margin": 1.088179111480713,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.01650911569595337,
+      "mean_norm_ratio": 1.0034585197766621,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.033768635243177414,
+          "norm_ratio": 1.0135430097579956,
+          "unsteered_norm": 51.51716232299805,
+          "steered_norm": 52.21486282348633
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.009864694438874722,
+          "norm_ratio": 0.9967024922370911,
+          "unsteered_norm": 86.3124008178711,
+          "steered_norm": 86.02778625488281
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.005894017405807972,
+          "norm_ratio": 1.0001300573349,
+          "unsteered_norm": 151.37332153320312,
+          "steered_norm": 151.39300537109375
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.0366830825805664,
+          "abs_delta": 1.0366830825805664
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.9252228736877441,
+          "abs_delta": 0.9252228736877441
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 0.884602963924408,
+          "abs_delta": 0.884602963924408
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 0.8307462930679321,
+          "abs_delta": 0.8307462930679321
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -0.8068480491638184,
+          "abs_delta": 0.8068480491638184
+        }
+      ]
+    },
+    {
+      "name": "Overlapping Intervals",
+      "baseline_margin": 0.43229055404663086,
+      "steered_margin": 0.7067975997924805,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.01189578448732694,
+      "mean_norm_ratio": 1.000992218653361,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.011442380025982857,
+          "norm_ratio": 1.0171924829483032,
+          "unsteered_norm": 50.42757034301758,
+          "steered_norm": 51.2945442199707
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.018001269549131393,
+          "norm_ratio": 0.9947716593742371,
+          "unsteered_norm": 80.52983856201172,
+          "steered_norm": 80.10880279541016
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": -0.0062437038868665695,
+          "norm_ratio": 0.9910125136375427,
+          "unsteered_norm": 147.89573669433594,
+          "steered_norm": 146.5665283203125
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 1.1972076892852783,
+          "abs_delta": 1.1972076892852783
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 1.1158037185668945,
+          "abs_delta": 1.1158037185668945
+        },
+        {
+          "token_id": 22747,
+          "token_str": "Third",
+          "delta": 1.1107940673828125,
+          "abs_delta": 1.1107940673828125
+        },
+        {
+          "token_id": 5956,
+          "token_str": "Last",
+          "delta": -1.0851365327835083,
+          "abs_delta": 1.0851365327835083
+        },
+        {
+          "token_id": 17089,
+          "token_str": "third",
+          "delta": 1.006035327911377,
+          "abs_delta": 1.006035327911377
+        }
+      ]
+    },
+    {
+      "name": "Off-by-One Inclusive",
+      "baseline_margin": 0.3804473876953125,
+      "steered_margin": 0.45708513259887695,
+      "flipped": false,
+      "correct": true,
+      "mean_cos_with_residual": -0.010546832190205654,
+      "mean_norm_ratio": 1.005382498105367,
+      "layer_metrics": [
+        {
+          "layer_name": "L12",
+          "layer_index": 12,
+          "cos_with_residual": -0.017194241285324097,
+          "norm_ratio": 1.0148435831069946,
+          "unsteered_norm": 46.04170608520508,
+          "steered_norm": 46.72513198852539
+        },
+        {
+          "layer_name": "L20",
+          "layer_index": 20,
+          "cos_with_residual": -0.017474358901381493,
+          "norm_ratio": 1.000283122062683,
+          "unsteered_norm": 83.11621856689453,
+          "steered_norm": 83.1397476196289
+        },
+        {
+          "layer_name": "L28",
+          "layer_index": 28,
+          "cos_with_residual": 0.0030281036160886288,
+          "norm_ratio": 1.0010207891464233,
+          "unsteered_norm": 160.52098083496094,
+          "steered_norm": 160.68484497070312
+        }
+      ],
+      "logit_shift_signature": [
+        {
+          "token_id": 24460,
+          "token_str": "gallery",
+          "delta": -0.6945724487304688,
+          "abs_delta": 0.6945724487304688
+        },
+        {
+          "token_id": 2368,
+          "token_str": " third",
+          "delta": 0.6818149089813232,
+          "abs_delta": 0.6818149089813232
+        },
+        {
+          "token_id": 43187,
+          "token_str": "Jennifer",
+          "delta": -0.6671799421310425,
+          "abs_delta": 0.6671799421310425
+        },
+        {
+          "token_id": 10467,
+          "token_str": " Third",
+          "delta": 0.6592855453491211,
+          "abs_delta": 0.6592855453491211
+        },
+        {
+          "token_id": 31499,
+          "token_str": "tags",
+          "delta": -0.6553801894187927,
+          "abs_delta": 0.6553801894187927
+        }
+      ]
+    }
+  ]
+}

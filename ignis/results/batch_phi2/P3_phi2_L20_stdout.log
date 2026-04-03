@@ -1,0 +1,549 @@
+2026-04-02 23:32:33,769 [PREFLIGHT] The logger is already configured. The default configuration will not be applied. Call `set_default_logger_config` with `override=True` to override the current configuration.
+======================================================================
+CMA-ES EVOLUTION — Qwen2.5-1.5B-Instruct Steering Vector Search
+Finding low-epsilon channels through ridged attractor basins
+======================================================================
+2026-04-02 23:32:45,583 [PREFLIGHT] Loading microsoft/phi-2...
+2026-04-02 23:32:45,583 [PREFLIGHT] Loading model microsoft/phi-2 requires setting trust_remote_code=True
+2026-04-02 23:32:45,850 [PREFLIGHT] Loading model microsoft/phi-2 state dict requires setting trust_remote_code=True
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|#####     | 1/2 [00:01<00:01,  1.61s/it]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.32it/s]Loading checkpoint shards: 100%|##########| 2/2 [00:01<00:00,  1.13it/s]
+Loaded pretrained model microsoft/phi-2 into HookedTransformer
+2026-04-02 23:32:56,324 [PREFLIGHT] d_model=2560 (genome dimension)
+
+  Model:       microsoft/phi-2
+  d_model:     2560
+  n_layers:    32
+  Layer:       20
+  Epsilon:     3.0
+  Popsize:     24
+  Generations: 300
+  Output:      results\batch_phi2\P3_phi2_L20
+
+======================================================================
+BASELINE CALIBRATION
+======================================================================
+
+  6 traps FAIL at baseline (fitness targets)
+    [-] Decimal Magnitude               margin = -0.157
+    [-] Density Illusion                margin = -3.021
+    [-] Spatial Inversion               margin = -1.094
+    [-] Overtake Last                   margin = -1.011
+    [-] Finish Before 3rd               margin = -0.014
+    [-] Cutting Rope                    margin = -1.326
+
+  24 traps PASS at baseline (guard rails)
+    [+] Prime Check                     margin = +0.750
+    [+] CRT Ball                        margin = +4.787
+    [+] CRT Widgets                     margin = +2.038
+    [+] Overtake Race                   margin = +1.357
+    [+] Repeating Decimal               margin = +1.307
+    [+] Monty Hall                      margin = +1.033
+    [+] Simpson's Paradox               margin = +1.893
+    [+] Overtake 2nd                    margin = +1.357
+    [+] Elevator Floor                  margin = +0.894
+    [+] Queue Position                  margin = +0.911
+    [+] Day After Tomorrow              margin = +0.903
+    [+] Counting Fence Posts            margin = +0.972
+    [+] Meeting Point                   margin = +1.965
+    [+] Handshakes                      margin = +1.076
+    [+] Siblings                        margin = +0.646
+    [+] Clock Angle                     margin = +0.294
+    [+] Staircase Steps                 margin = +0.660
+    [+] Month Ordering                  margin = +1.106
+    [+] Birthday Paradox Direction      margin = +0.585
+    [+] Rank Reversal                   margin = +2.320
+    [+] Pages in Book                   margin = +1.047
+    [+] Round Robin Games               margin = +1.092
+    [+] Overlapping Intervals           margin = +0.432
+    [+] Off-by-One Inclusive            margin = +0.380
+2026-04-02 23:32:58,500 [PREFLIGHT] Instance of `SteeringProblem` (id:1878966261264) -- The `dtype` for the problem's decision variables is set as torch.float32
+2026-04-02 23:32:58,500 [PREFLIGHT] Instance of `SteeringProblem` (id:1878966261264) -- `eval_dtype` (the dtype of the fitnesses and evaluation data) is set as torch.float32
+2026-04-02 23:32:58,500 [PREFLIGHT] Instance of `SteeringProblem` (id:1878966261264) -- The `device` of the problem is set as cpu
+2026-04-02 23:32:58,500 [PREFLIGHT] Instance of `SteeringProblem` (id:1878966261264) -- The number of actors that will be allocated for parallelized evaluation is 0
+C:\Users\James\AppData\Local\Programs\Python\Python312\Lib\site-packages\evotorch\tools\misc.py:1201: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.detach().clone() or sourceTensor.detach().clone().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  result = torch.tensor(data, **kwargs)
+
+======================================================================
+EVOLUTION
+======================================================================
+
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=-0.083)... all 24 done.
+  Gen    1/300  |  best=-0.043  mean=-0.129  ||v||=3.8666  |  global_best=-0.043 (gen 1)  |  ETA 238m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=-0.107)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=-0.023)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.015)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.037)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.144)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.195)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.247)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.310)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.259)... all 24 done.
+  Gen   10/300  |  best=+0.370  mean=+0.308  ||v||=4.7598  |  global_best=+0.370 (gen 10)  |  ETA 231m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.331)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.484)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.353)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.555)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.466)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.551)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.578)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.544)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.590)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.660)... all 24 done.
+  Gen   20/300  |  best=+0.718  mean=+0.644  ||v||=5.6535  |  global_best=+0.718 (gen 20)  |  ETA 222m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.631)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.692)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.697)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.757)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.721)... all 24 done.
+
+  --- Held-out evaluation (gen 25) ---
+  Correct: 25/30 (baseline: 24/30)
+  Flipped: 1  Broken: 0
+    [FLIP] Finish Before 3rd               -0.014 -> +0.121
+
+2026-04-02 23:52:53,194 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0025.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.789)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.751)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.819)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.876)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.896)... all 24 done.
+  Gen   30/300  |  best=+0.933  mean=+0.867  ||v||=6.3096  |  global_best=+0.933 (gen 30)  |  ETA 215m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.890)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.916)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.940)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.941)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.983)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=0.945)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.037)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.066)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.003)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.088)... all 24 done.
+  Gen   40/300  |  best=+1.149  mean=+1.095  ||v||=6.9483  |  global_best=+1.149 (gen 40)  |  ETA 207m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.120)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.119)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.175)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.129)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.176)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.145)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.161)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.194)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.245)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.269)... all 24 done.
+  Gen   50/300  |  best=+1.279  mean=+1.247  ||v||=7.4825  |  global_best=+1.279 (gen 50)  |  ETA 199m
+
+  --- Held-out evaluation (gen 50) ---
+  Correct: 25/30 (baseline: 24/30)
+  Flipped: 1  Broken: 0
+    [FLIP] Finish Before 3rd               -0.014 -> +0.207
+
+2026-04-03 00:12:47,376 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0050.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.266)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.237)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.269)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.290)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.351)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.351)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.379)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.374)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.411)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.397)... all 24 done.
+  Gen   60/300  |  best=+1.436  mean=+1.416  ||v||=8.0135  |  global_best=+1.436 (gen 60)  |  ETA 191m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.420)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.463)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.439)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.454)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.502)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.498)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.508)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.530)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.525)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.550)... all 24 done.
+  Gen   70/300  |  best=+1.565  mean=+1.533  ||v||=8.3247  |  global_best=+1.565 (gen 70)  |  ETA 183m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.550)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.608)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.582)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.598)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.610)... all 24 done.
+
+  --- Held-out evaluation (gen 75) ---
+  Correct: 25/30 (baseline: 24/30)
+  Flipped: 1  Broken: 0
+    [FLIP] Finish Before 3rd               -0.014 -> +0.277
+
+2026-04-03 00:32:40,259 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0075.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.622)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.608)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.651)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.646)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.671)... all 24 done.
+  Gen   80/300  |  best=+1.678  mean=+1.655  ||v||=8.7176  |  global_best=+1.679 (gen 79)  |  ETA 175m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.661)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.689)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.659)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.688)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.706)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.733)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.717)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.698)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.745)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.765)... all 24 done.
+  Gen   90/300  |  best=+1.781  mean=+1.759  ||v||=9.1669  |  global_best=+1.786 (gen 89)  |  ETA 167m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.745)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.736)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.798)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.799)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.797)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.819)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.815)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.831)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.854)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.868)... all 24 done.
+  Gen  100/300  |  best=+1.902  mean=+1.872  ||v||=9.5691  |  global_best=+1.902 (gen 100)  |  ETA 159m
+
+  --- Held-out evaluation (gen 100) ---
+  Correct: 25/30 (baseline: 24/30)
+  Flipped: 1  Broken: 0
+    [FLIP] Finish Before 3rd               -0.014 -> +0.319
+
+2026-04-03 00:52:32,180 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0100.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.881)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.897)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.924)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.923)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.910)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.938)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.945)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.954)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.954)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.965)... all 24 done.
+  Gen  110/300  |  best=+1.987  mean=+1.967  ||v||=9.8693  |  global_best=+1.987 (gen 110)  |  ETA 151m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.974)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.963)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.972)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.014)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.971)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.013)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.006)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=1.985)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.011)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.027)... all 24 done.
+  Gen  120/300  |  best=+2.038  mean=+2.017  ||v||=10.2075  |  global_best=+2.039 (gen 119)  |  ETA 143m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.016)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.028)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.044)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.051)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.055)... all 24 done.
+
+  --- Held-out evaluation (gen 125) ---
+  Correct: 25/30 (baseline: 24/30)
+  Flipped: 1  Broken: 0
+    [FLIP] Finish Before 3rd               -0.014 -> +0.361
+
+2026-04-03 01:12:25,158 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0125.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.074)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.068)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.106)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.105)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.122)... all 24 done.
+  Gen  130/300  |  best=+2.122  mean=+2.108  ||v||=10.4345  |  global_best=+2.126 (gen 129)  |  ETA 135m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.102)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.128)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.105)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.114)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.128)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.141)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.156)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.156)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.177)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.176)... all 24 done.
+  Gen  140/300  |  best=+2.193  mean=+2.178  ||v||=10.7331  |  global_best=+2.193 (gen 140)  |  ETA 127m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.164)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.197)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.209)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.208)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.207)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.213)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.248)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.228)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.247)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.252)... all 24 done.
+  Gen  150/300  |  best=+2.276  mean=+2.256  ||v||=11.1172  |  global_best=+2.276 (gen 150)  |  ETA 119m
+
+  --- Held-out evaluation (gen 150) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.026
+    [FLIP] Finish Before 3rd               -0.014 -> +0.436
+
+2026-04-03 01:32:18,181 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0150.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.252)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.270)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.268)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.283)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.276)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.293)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.301)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.292)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.299)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.308)... all 24 done.
+  Gen  160/300  |  best=+2.332  mean=+2.318  ||v||=11.1823  |  global_best=+2.332 (gen 160)  |  ETA 111m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.313)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.333)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.318)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.332)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.348)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.351)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.358)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.330)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.338)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.376)... all 24 done.
+  Gen  170/300  |  best=+2.388  mean=+2.369  ||v||=11.5074  |  global_best=+2.388 (gen 170)  |  ETA 103m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.365)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.380)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.381)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.383)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.388)... all 24 done.
+
+  --- Held-out evaluation (gen 175) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.031
+    [FLIP] Finish Before 3rd               -0.014 -> +0.452
+
+2026-04-03 01:52:11,168 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0175.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.406)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.396)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.397)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.397)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.419)... all 24 done.
+  Gen  180/300  |  best=+2.451  mean=+2.426  ||v||=11.7515  |  global_best=+2.451 (gen 180)  |  ETA 95m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.427)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.447)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.452)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.436)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.458)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.469)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.483)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.482)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.464)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.468)... all 24 done.
+  Gen  190/300  |  best=+2.497  mean=+2.482  ||v||=12.0469  |  global_best=+2.497 (gen 190)  |  ETA 87m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.491)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.489)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.486)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.502)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.524)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.506)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.509)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.539)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.535)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.533)... all 24 done.
+  Gen  200/300  |  best=+2.550  mean=+2.534  ||v||=12.3904  |  global_best=+2.550 (gen 200)  |  ETA 80m
+
+  --- Held-out evaluation (gen 200) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.028
+    [FLIP] Finish Before 3rd               -0.014 -> +0.462
+
+2026-04-03 02:12:04,919 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0200.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.539)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.546)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.555)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.553)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.575)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.559)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.569)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.571)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.585)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.580)... all 24 done.
+  Gen  210/300  |  best=+2.592  mean=+2.572  ||v||=12.6292  |  global_best=+2.592 (gen 210)  |  ETA 72m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.582)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.581)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.593)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.598)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.605)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.614)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.619)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.621)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.622)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.628)... all 24 done.
+  Gen  220/300  |  best=+2.642  mean=+2.626  ||v||=12.8570  |  global_best=+2.642 (gen 220)  |  ETA 64m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.627)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.625)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.644)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.652)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.643)... all 24 done.
+
+  --- Held-out evaluation (gen 225) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.039
+    [FLIP] Finish Before 3rd               -0.014 -> +0.473
+
+2026-04-03 02:31:57,194 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0225.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.644)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.662)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.654)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.659)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.681)... all 24 done.
+  Gen  230/300  |  best=+2.686  mean=+2.670  ||v||=13.1215  |  global_best=+2.686 (gen 230)  |  ETA 56m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.671)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.684)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.676)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.677)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.706)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.690)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.701)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.691)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.692)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.714)... all 24 done.
+  Gen  240/300  |  best=+2.717  mean=+2.705  ||v||=13.2245  |  global_best=+2.720 (gen 238)  |  ETA 48m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.702)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.714)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.705)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.721)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.728)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.728)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.720)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.729)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.717)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.733)... all 24 done.
+  Gen  250/300  |  best=+2.746  mean=+2.732  ||v||=13.6060  |  global_best=+2.746 (gen 250)  |  ETA 40m
+
+  --- Held-out evaluation (gen 250) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.036
+    [FLIP] Finish Before 3rd               -0.014 -> +0.488
+
+2026-04-03 02:51:50,039 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0250.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.746)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.739)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.747)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.755)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.755)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.754)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.756)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.765)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.764)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.766)... all 24 done.
+  Gen  260/300  |  best=+2.784  mean=+2.772  ||v||=13.7420  |  global_best=+2.791 (gen 259)  |  ETA 32m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.770)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.775)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.782)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.776)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.779)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.792)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.786)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.785)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.804)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.801)... all 24 done.
+  Gen  270/300  |  best=+2.813  mean=+2.798  ||v||=13.9018  |  global_best=+2.813 (gen 270)  |  ETA 24m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.806)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.809)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.826)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.830)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.815)... all 24 done.
+
+  --- Held-out evaluation (gen 275) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.038
+    [FLIP] Finish Before 3rd               -0.014 -> +0.497
+
+2026-04-03 03:11:43,635 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0275.pt
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.810)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.812)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.825)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.829)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.824)... all 24 done.
+  Gen  280/300  |  best=+2.846  mean=+2.834  ||v||=14.0814  |  global_best=+2.846 (gen 280)  |  ETA 16m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.842)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.841)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.843)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.846)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.847)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.844)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.850)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.855)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.846)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.846)... all 24 done.
+  Gen  290/300  |  best=+2.865  mean=+2.853  ||v||=14.3277  |  global_best=+2.865 (gen 290)  |  ETA 8m
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.864)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.859)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.860)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.849)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.860)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.874)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.883)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.878)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.890)... all 24 done.
+    [eval] batch of 24, starting... candidate 1/24 done (fitness=2.884)... all 24 done.
+  Gen  300/300  |  best=+2.901  mean=+2.882  ||v||=14.4610  |  global_best=+2.901 (gen 300)  |  ETA 0m
+
+  --- Held-out evaluation (gen 300) ---
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+    [FLIP] Decimal Magnitude               -0.157 -> +0.038
+    [FLIP] Finish Before 3rd               -0.014 -> +0.487
+
+2026-04-03 03:31:37,335 [PREFLIGHT] Checkpoint saved: results\batch_phi2\P3_phi2_L20\checkpoint_gen0300.pt
+
+======================================================================
+EVOLUTION COMPLETE
+======================================================================
+  Total time:    238.6 minutes
+  Best fitness:  +2.9011
+  Best gen:      300
+  Vector norm:   14.4610
+
+  Genome saved: results\batch_phi2\P3_phi2_L20\best_genome_1_5b.pt
+  Log saved:    results\batch_phi2\P3_phi2_L20\evolution_log_20260403_033137.json
+
+======================================================================
+FINAL HELD-OUT EVALUATION
+======================================================================
+
+  Correct: 26/30 (baseline: 24/30)
+  Flipped: 2  Broken: 0
+  [ -> ] Decimal Magnitude               baseline=-0.157  steered=+0.038
+  [    ] Prime Check                     baseline=+0.750  steered=+0.790
+  [    ] Density Illusion                baseline=-3.021  steered=-2.251
+  [    ] Spatial Inversion               baseline=-1.094  steered=-0.665
+  [    ] CRT Ball                        baseline=+4.787  steered=+4.790
+  [    ] CRT Widgets                     baseline=+2.038  steered=+2.045
+  [    ] Overtake Race                   baseline=+1.357  steered=+1.748
+  [    ] Repeating Decimal               baseline=+1.307  steered=+1.308
+  [    ] Monty Hall                      baseline=+1.033  steered=+1.059
+  [    ] Simpson's Paradox               baseline=+1.893  steered=+1.889
+  [    ] Overtake 2nd                    baseline=+1.357  steered=+1.748
+  [    ] Overtake Last                   baseline=-1.011  steered=-0.393
+  [ -> ] Finish Before 3rd               baseline=-0.014  steered=+0.487
+  [    ] Elevator Floor                  baseline=+0.894  steered=+0.936
+  [    ] Queue Position                  baseline=+0.911  steered=+0.995
+  [    ] Day After Tomorrow              baseline=+0.903  steered=+0.903
+  [    ] Counting Fence Posts            baseline=+0.972  steered=+0.991
+  [    ] Meeting Point                   baseline=+1.965  steered=+1.970
+  [    ] Handshakes                      baseline=+1.076  steered=+1.120
+  [    ] Siblings                        baseline=+0.646  steered=+0.732
+  [    ] Clock Angle                     baseline=+0.294  steered=+0.362
+  [    ] Staircase Steps                 baseline=+0.660  steered=+0.669
+  [    ] Cutting Rope                    baseline=-1.326  steered=-0.930
+  [    ] Month Ordering                  baseline=+1.106  steered=+1.094
+  [    ] Birthday Paradox Direction      baseline=+0.585  steered=+0.606
+  [    ] Rank Reversal                   baseline=+2.320  steered=+2.333
+  [    ] Pages in Book                   baseline=+1.047  steered=+1.067
+  [    ] Round Robin Games               baseline=+1.092  steered=+1.098
+  [    ] Overlapping Intervals           baseline=+0.432  steered=+0.502
+  [    ] Off-by-One Inclusive            baseline=+0.380  steered=+0.385
+
+  Eval saved:   results\batch_phi2\P3_phi2_L20\final_eval_20260403_033141.json
+
+======================================================================
+  Next steps:
+    1. Run full analysis:  run_full_analysis.bat results\batch_phi2\P3_phi2_L20\best_genome_1_5b.pt
+    2. Basin histogram:    python basin_escape_histogram.py --genome results\batch_phi2\P3_phi2_L20\best_genome_1_5b.pt
+    3. If fitness > 0 and flips > 0: precipitation confirmed at low epsilon.
+======================================================================
