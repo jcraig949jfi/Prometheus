@@ -1,154 +1,258 @@
 """
-compiler.py — Compile organisms into executable ReasoningTool classes.
+compiler.py — Compile Organism DAGs into executable ReasoningTool source code.
 
-Approach: Each organism starts as a whole forge tool source code.
-Mutations modify the source directly (parameter tweaks, method swaps).
-The compiler validates and wraps with ctx-dict instrumentation.
+The compiler generates Python source that:
+1. Imports the needed Frame H primitives
+2. Builds a _execute_dag() that runs primitives in topological order
+3. Embeds the organism's router_logic as _route()
+4. Wraps everything in evaluate() / confidence() interface
 """
 
 import ast
-import re
 import textwrap
 from dataclasses import dataclass
-from pathlib import Path
+
+from genome import Organism, ALL_PRIMITIVES, get_primitive_signature
 
 
 @dataclass
 class CompilationResult:
     success: bool
-    source_code: str = None
-    error: str = None
+    source_code: str = ""
+    error: str = ""
 
 
-def compile_from_source(source_code: str) -> CompilationResult:
-    """Validate source code is a working ReasoningTool. Minimal wrapper."""
+def compile_organism(organism: Organism) -> CompilationResult:
+    """Compile an Organism into executable ReasoningTool Python source."""
+
+    # ── Validate ──────────────────────────────────────────────
+    if not organism.primitive_sequence:
+        return CompilationResult(False, error="Empty primitive sequence")
+
+    for pc in organism.primitive_sequence:
+        if pc.primitive_name not in ALL_PRIMITIVES:
+            return CompilationResult(False, error=f"Unknown primitive: {pc.primitive_name}")
+
+    # Validate router_logic is parseable Python
+    router_body = organism.router_logic.strip()
+    if not router_body:
+        return CompilationResult(False, error="Empty router_logic")
+
     try:
-        ast.parse(source_code)
+        # Wrap in a function to check syntax
+        test_code = f"def _test(prompt, candidates, outputs, params):\n"
+        for line in router_body.split('\n'):
+            test_code += f"    {line}\n"
+        ast.parse(test_code)
     except SyntaxError as e:
-        return CompilationResult(False, error=f"SyntaxError: {e}")
+        return CompilationResult(False, error=f"Router syntax error: {e}")
 
-    # Check it has ReasoningTool class with evaluate and confidence
-    tree = ast.parse(source_code)
-    has_class = False
-    has_evaluate = False
-    has_confidence = False
+    # Check for DAG cycles
+    topo = organism.topological_order()
+    if not topo:
+        return CompilationResult(False, error="DAG has cycles")
 
-    for node in ast.walk(tree):
-        if isinstance(node, ast.ClassDef) and node.name == 'ReasoningTool':
-            has_class = True
-            for item in node.body:
-                if isinstance(item, ast.FunctionDef):
-                    if item.name == 'evaluate':
-                        has_evaluate = True
-                    elif item.name == 'confidence':
-                        has_confidence = True
-
-    if not has_class:
-        return CompilationResult(False, error="No ReasoningTool class")
-    if not has_evaluate:
-        return CompilationResult(False, error="No evaluate method")
-    if not has_confidence:
-        return CompilationResult(False, error="No confidence method")
-
-    return CompilationResult(True, source_code=source_code)
-
-
-def load_forge_tool_source(filepath: str) -> str:
-    """Load a forge tool's source code."""
-    return Path(filepath).read_text(encoding='utf-8')
-
-
-def apply_parameter_mutation(source_code: str, param_name: str,
-                             old_value: float, new_value: float) -> str:
-    """Modify a numeric parameter in __init__."""
-    # Find self.param_name = old_value and replace with new_value
-    pattern = rf'(self\.{re.escape(param_name)}\s*=\s*){re.escape(str(old_value))}'
-    replacement = rf'\g<1>{new_value}'
-    result = re.sub(pattern, replacement, source_code, count=1)
-    if result == source_code:
-        # Try a more flexible match
-        pattern = rf'(self\.{re.escape(param_name)}\s*=\s*)[\d.eE+-]+'
-        replacement = rf'\g<1>{new_value}'
-        result = re.sub(pattern, replacement, source_code, count=1)
-    return result
-
-
-def extract_parameters(source_code: str) -> dict:
-    """Extract all self.X = <number> from __init__."""
-    params = {}
+    # ── Generate source ───────────────────────────────────────
     try:
-        tree = ast.parse(source_code)
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef) and node.name == 'ReasoningTool':
-                for item in node.body:
-                    if isinstance(item, ast.FunctionDef) and item.name == '__init__':
-                        for stmt in ast.walk(item):
-                            if isinstance(stmt, ast.Assign):
-                                for target in stmt.targets:
-                                    if (isinstance(target, ast.Attribute) and
-                                        isinstance(target.value, ast.Name) and
-                                        target.value.id == 'self'):
-                                        try:
-                                            val = ast.literal_eval(stmt.value)
-                                            if isinstance(val, (int, float)):
-                                                params[target.attr] = float(val)
-                                        except (ValueError, TypeError):
-                                            pass
-    except:
-        pass
-    return params
+        source = _generate_source(organism, topo)
+    except Exception as e:
+        return CompilationResult(False, error=f"Code generation error: {e}")
 
-
-def extract_methods(source_code: str) -> dict:
-    """Extract method names and their source from a ReasoningTool class."""
-    methods = {}
+    # Final syntax check on generated source
     try:
-        tree = ast.parse(source_code)
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef) and node.name == 'ReasoningTool':
-                for item in node.body:
-                    if isinstance(item, ast.FunctionDef):
-                        method_src = ast.get_source_segment(source_code, item)
-                        if method_src:
-                            methods[item.name] = method_src
-    except:
-        pass
-    return methods
+        ast.parse(source)
+    except SyntaxError as e:
+        return CompilationResult(False, error=f"Generated code syntax error: {e}")
+
+    return CompilationResult(True, source_code=source)
 
 
-def swap_method(source_a: str, source_b: str, method_name: str) -> str:
-    """Replace method_name in source_a with the version from source_b."""
-    methods_a = extract_methods(source_a)
-    methods_b = extract_methods(source_b)
+def _generate_source(organism: Organism, topo_order: list[str]) -> str:
+    """Generate the full Python source code for a ReasoningTool."""
 
-    if method_name not in methods_a or method_name not in methods_b:
-        return source_a
+    # Collect unique primitive names for imports
+    unique_prims = sorted(set(pc.primitive_name for pc in organism.primitive_sequence))
 
-    old_method = methods_a[method_name]
-    new_method = methods_b[method_name]
+    # Build node lookup
+    node_map = {pc.node_id: pc for pc in organism.primitive_sequence}
 
-    # Ensure same indentation
-    old_indent = len(old_method) - len(old_method.lstrip())
-    new_indent = len(new_method) - len(new_method.lstrip())
-    if old_indent != new_indent:
-        # Re-indent new method to match
-        dedented = textwrap.dedent(new_method)
-        new_method = textwrap.indent(dedented, ' ' * old_indent)
+    # ── Import block ──────────────────────────────────────────
+    imports = [
+        "import re",
+        "import math",
+        "import numpy as np",
+        f"from forge_primitives import {', '.join(unique_prims)}",
+    ]
 
-    return source_a.replace(old_method, new_method)
+    # ── Parameters dict literal ───────────────────────────────
+    params_repr = repr(organism.parameters)
+
+    # ── _execute_dag body ─────────────────────────────────────
+    dag_lines = ["        outputs = {}"]
+    for node_id in topo_order:
+        pc = node_map[node_id]
+        sig = get_primitive_signature(pc.primitive_name)
+
+        # Build argument resolution for each parameter
+        arg_parts = []
+        for param_name in sig:
+            source = pc.input_mapping.get(param_name, "")
+            resolved = _resolve_input(source, param_name, pc.primitive_name)
+            arg_parts.append(f"{param_name}={resolved}")
+
+        args_str = ", ".join(arg_parts)
+        dag_lines.append(f"        # Node {node_id}: {pc.primitive_name}")
+        dag_lines.append(f"        try:")
+        dag_lines.append(f"            outputs['{node_id}'] = {pc.primitive_name}({args_str})")
+        dag_lines.append(f"        except Exception:")
+        dag_lines.append(f"            outputs['{node_id}'] = None")
+
+    dag_lines.append("        return outputs")
+    dag_body = "\n".join(dag_lines)
+
+    # ── _route body ───────────────────────────────────────────
+    router_body = organism.router_logic.strip()
+    route_lines = []
+    for line in router_body.split('\n'):
+        route_lines.append(f"        {line}")
+    route_body = "\n".join(route_lines)
+
+    # ── Full source ───────────────────────────────────────────
+    source = f"""\
+{chr(10).join(imports)}
+
+class ReasoningTool:
+    def __init__(self):
+        self.params = {params_repr}
+
+    def _execute_dag(self, prompt, candidates):
+{dag_body}
+
+    def _route(self, prompt, candidates, outputs):
+        params = self.params
+{route_body}
+
+    def evaluate(self, prompt, candidates):
+        outputs = self._execute_dag(prompt, candidates)
+        try:
+            scores = self._route(prompt, candidates, outputs)
+        except Exception:
+            scores = [0.5] * len(candidates)
+
+        if not isinstance(scores, (list, tuple)):
+            scores = [0.5] * len(candidates)
+        if len(scores) != len(candidates):
+            scores = list(scores) + [0.5] * (len(candidates) - len(scores))
+            scores = scores[:len(candidates)]
+
+        results = []
+        for cand, score in zip(candidates, scores):
+            results.append({{
+                'candidate': cand,
+                'score': float(score) if isinstance(score, (int, float)) else 0.5,
+                'reasoning': str({{k: type(v).__name__ for k, v in outputs.items()}}),
+            }})
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results
+
+    def confidence(self, prompt, answer):
+        outputs = self._execute_dag(prompt, [answer])
+        score_vals = []
+        for v in outputs.values():
+            if isinstance(v, (int, float)) and not isinstance(v, bool):
+                score_vals.append(float(v))
+            elif isinstance(v, bool):
+                score_vals.append(1.0 if v else 0.0)
+        if not score_vals:
+            return 0.5
+        # Normalize to [0, 1] range
+        vals = np.array(score_vals)
+        if vals.max() == vals.min():
+            return 0.5
+        normed = (vals - vals.min()) / (vals.max() - vals.min())
+        return float(np.mean(normed))
+"""
+    return source
 
 
-def smoke_test(source_code: str, trap: dict, timeout: float = 2.0) -> tuple:
-    """Quick test: compile, run, check discrimination. Returns (runs, discriminates)."""
-    try:
-        namespace = {}
-        exec(source_code, namespace)
-        tool = namespace['ReasoningTool']()
-        results = tool.evaluate(trap['prompt'], trap['candidates'])
-        if not results or len(results) < 2:
-            return True, False
-        scores = [r['score'] for r in results]
-        discriminates = len(set(round(s, 8) for s in scores)) > 1
-        return True, discriminates
-    except Exception:
-        return False, False
+def _resolve_input(source: str, param_name: str, primitive_name: str) -> str:
+    """Convert an input_mapping source reference to Python expression."""
+    if not source:
+        return _default_for_param(param_name, primitive_name)
+
+    if source == "prompt":
+        return "prompt"
+    if source == "candidates":
+        return "candidates"
+
+    # Node output reference: "n2.output"
+    if source.startswith("n") and ".output" in source:
+        node_id = source.split(".")[0]
+        return f"outputs.get('{node_id}')"
+
+    # Parameter reference: "param.bayesian_update_prior"
+    if source.startswith("param."):
+        param_key = source[6:]
+        return f"self.params.get('{param_key}', 0.5)"
+
+    return _default_for_param(param_name, primitive_name)
+
+
+def _default_for_param(param_name: str, primitive_name: str) -> str:
+    """Provide a sensible default expression for unresolved parameters."""
+    # Type-based defaults for common parameter patterns
+    defaults = {
+        # Probability
+        'prior': '0.5',
+        'likelihood': '0.5',
+        'false_positive': '0.1',
+        'probs': '[0.5, 0.5]',
+        'outcomes': '[(0.5, 1.0)]',
+        'n_flips': '2',
+        'target_heads': '1',
+        # Logic
+        'clauses': '[[1]]',
+        'n_vars': '1',
+        'premises': '[]',
+        'facts': 'set()',
+        'relations': '[]',
+        'statement': 'prompt',
+        # Graph
+        'edges': '[]',
+        'start': '""',
+        'values': '{}',
+        'intervene_node': '""',
+        'intervene_value': '0.0',
+        # Constraints
+        'variables': '[]',
+        'domains': '{}',
+        'constraints': '[]',
+        'items': '2',
+        'containers': '1',
+        'n_segments': '1',
+        'include_both_ends': 'True',
+        # Arithmetic
+        'total': '0.0',
+        'difference': '0.0',
+        'a': '0',
+        'b': '0',
+        'mod': '1',
+        'n': '0',
+        'A': '[[1.0]]',
+        # Temporal
+        'events': '[]',
+        'directions': '[]',
+        # Belief
+        'agents': '[]',
+        'observations': '[]',
+        'who_moved': '""',
+        'who_saw_move': 'set()',
+        'original_location': '""',
+        'new_location': '""',
+        # Meta
+        'scores': '[0.5]',
+        'n_unknowns': '1',
+        'n_constraints': '1',
+        'numbers': '[0]',
+    }
+    return defaults.get(param_name, '0.0')

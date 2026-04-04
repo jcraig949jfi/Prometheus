@@ -1,35 +1,52 @@
 """
-fitness.py — Margin-over-NCD accuracy + Brier calibration + NCD independence.
+fitness.py — 6-dimensional fitness for NSGA-II selection.
+
+Dimensions (all maximized):
+1. Accuracy margin over NCD baseline
+2. Calibration (1 - Brier score, margin over NCD)
+3. Ablation delta (min per-primitive impact — BYPASS KILLER)
+4. Generalization (held-out accuracy margin)
+5. Diversity (novelty score from archive)
+6. Parsimony (fewer primitives preferred)
 """
 
-import numpy as np
 import zlib
-from dataclasses import dataclass, asdict
+import numpy as np
+from dataclasses import dataclass, field
 
 
 @dataclass
 class FitnessVector:
-    adjusted_margin_accuracy: float = 0.0
-    margin_calibration: float = 0.0
-    novelty_score: float = 0.0
-    ncd_independence: float = 0.0
+    # The 6 Pareto objectives (all maximized by NSGA-II)
+    accuracy_margin: float = 0.0
+    calibration: float = 0.0
+    ablation_delta: float = 0.0
+    generalization: float = 0.0
+    diversity: float = 0.0
+    parsimony: float = 0.0
+
+    # Raw diagnostics (not in Pareto array)
     raw_accuracy: float = 0.0
     raw_brier: float = 1.0
-    raw_confidence_correct: float = 0.0
     crash_count: int = 0
-    gene_count: int = 0
+    primitive_count: int = 0
+    ncd_independence: float = 0.0
+    ablation_details: dict = field(default_factory=dict)
 
     def as_array(self) -> np.ndarray:
-        """Return the 3 Pareto objectives as an array (all maximized)."""
+        """Return the 6 Pareto objectives as numpy array."""
         return np.array([
-            self.adjusted_margin_accuracy,
-            self.margin_calibration,
-            self.novelty_score
+            self.accuracy_margin,
+            self.calibration,
+            self.ablation_delta,
+            self.generalization,
+            self.diversity,
+            self.parsimony,
         ])
 
 
 class NCDBaseline:
-    """Standalone NCD implementation for baseline computation."""
+    """NCD implementation for baseline computation."""
 
     def _ncd(self, s1: str, s2: str) -> float:
         b1 = s1.encode('utf-8', errors='replace')
@@ -46,7 +63,7 @@ class NCDBaseline:
         results = []
         for cand in candidates:
             ncd = self._ncd(prompt, cand)
-            score = 1.0 - ncd  # Lower NCD = higher similarity = higher score
+            score = 1.0 - ncd
             results.append({'candidate': cand, 'score': score, 'reasoning': 'NCD baseline'})
         results.sort(key=lambda x: x['score'], reverse=True)
         return results
@@ -81,13 +98,19 @@ def compute_ncd_baseline(tasks: list) -> dict:
 
 
 def compute_fitness(task_results: list, ncd_baseline: dict,
-                    ncd_independence: float = 1.0,
-                    ncd_independence_weight: float = 0.5,
-                    gene_count: int = 0) -> FitnessVector:
-    """Compute fitness from per-task evaluation results."""
+                    ncd_weight: float = 1.0,
+                    primitive_count: int = 0) -> FitnessVector:
+    """Compute fitness from per-task evaluation results.
+
+    Args:
+        task_results: list of dicts with 'correct', 'confidence_correct', etc.
+        ncd_baseline: dict with 'accuracy' and 'brier'
+        ncd_weight: NCD decay weight (1.0 full, 0.5 half, 0.0 raw)
+        primitive_count: number of primitives in organism
+    """
     n = len(task_results)
     if n == 0:
-        return FitnessVector()
+        return FitnessVector(primitive_count=primitive_count)
 
     # Accuracy
     n_correct = sum(1 for r in task_results if r.get('correct', False))
@@ -97,34 +120,32 @@ def compute_fitness(task_results: list, ncd_baseline: dict,
     brier_sum = 0.0
     for r in task_results:
         correct = r.get('correct', False)
-        conf = r.get('confidence_correct', 0.0) if correct else r.get('confidence_wrong', 0.0)
-        # If correct, we want conf close to 1. If wrong, we want conf close to 0.
-        # But confidence is always for the TOP-RANKED candidate
+        conf = r.get('confidence_correct', 0.0)
         if correct:
-            brier_sum += (r.get('confidence_correct', 0.0) - 1.0) ** 2
+            brier_sum += (conf - 1.0) ** 2
         else:
-            brier_sum += (r.get('confidence_correct', 0.0) - 0.0) ** 2
+            brier_sum += (conf - 0.0) ** 2
     raw_brier = brier_sum / n
 
-    # Margins over NCD
-    margin_accuracy = raw_accuracy - ncd_baseline.get('accuracy', 0.0)
+    # Margins over NCD (weighted by decay)
+    ncd_acc = ncd_baseline.get('accuracy', 0.0) * ncd_weight
+    accuracy_margin = raw_accuracy - ncd_acc
 
-    # Adjusted margin (NCD independence penalty)
-    adjusted_margin = margin_accuracy * (ncd_independence_weight + (1 - ncd_independence_weight) * ncd_independence)
+    ncd_cal = (1.0 - ncd_baseline.get('brier', 1.0)) * ncd_weight
+    calibration = (1.0 - raw_brier) - ncd_cal
 
-    # Calibration: 1 - brier, then subtract NCD's
-    margin_calibration = (1.0 - raw_brier) - (1.0 - ncd_baseline.get('brier', 1.0))
+    # Parsimony: fewer primitives = higher score. Normalize: 1/count
+    parsimony = 1.0 / max(primitive_count, 1)
 
     crash_count = sum(1 for r in task_results if r.get('error'))
 
     return FitnessVector(
-        adjusted_margin_accuracy=adjusted_margin,
-        margin_calibration=margin_calibration,
-        novelty_score=0.0,  # Filled later by novelty module
-        ncd_independence=ncd_independence,
+        accuracy_margin=accuracy_margin,
+        calibration=calibration,
+        parsimony=parsimony,
         raw_accuracy=raw_accuracy,
         raw_brier=raw_brier,
-        raw_confidence_correct=sum(r.get('confidence_correct', 0.0) for r in task_results) / n,
         crash_count=crash_count,
-        gene_count=gene_count,
+        primitive_count=primitive_count,
+        # ablation_delta, generalization, diversity filled by caller
     )

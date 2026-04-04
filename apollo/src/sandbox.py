@@ -8,15 +8,22 @@ Windows-compatible: no multiprocessing.Process needed.
 """
 
 import ast
+import sys
 import threading
 import time
+from pathlib import Path
+
+# Ensure forge_primitives is importable
+_primitives_dir = str(Path(__file__).parent.parent.parent / "agents" / "hephaestus" / "src")
+if _primitives_dir not in sys.path:
+    sys.path.insert(0, _primitives_dir)
 
 ALLOWED_IMPORTS = {
     'numpy', 'np', 'math', 're', 'zlib', 'hashlib', 'collections',
     'itertools', 'functools', 'statistics', 'random', 'string',
     'operator', 'heapq', 'bisect', 'decimal', 'fractions', 'struct',
     'copy', 'dataclasses',
-    'os', 'sys',  # v3 tools import these but don't use dangerous ops after inlining
+    'forge_primitives',  # Frame H primitives (safe, pure computation)
 }
 
 BLOCKED_IMPORTS = {
