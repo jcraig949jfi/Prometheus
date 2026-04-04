@@ -28,8 +28,10 @@ from analysis_base import (
     make_steering_hook,
 )
 from phase_transition_study import ORDINAL_TRAPS
+from trap_batteries_v3 import V3_TRAPS
 
-ALL_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+V2_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+ALL_TRAPS = V2_TRAPS  # default, overridden by --battery v3
 
 
 def main():
@@ -39,7 +41,15 @@ def main():
                         help="Injection epsilon (default: 3.0, matches CMA-ES)")
     parser.add_argument("--max-tokens", type=int, default=30,
                         help="Max tokens to generate (default: 30)")
+    parser.add_argument("--battery", type=str, default="v2", choices=["v2", "v3"],
+                        help="Trap battery version (default: v2)")
     args = parser.parse_args()
+
+    # Override global ALL_TRAPS if v3 requested
+    if args.battery == "v3":
+        global ALL_TRAPS
+        ALL_TRAPS = V3_TRAPS
+        print(f"Using v3 trap battery ({len(V3_TRAPS)} traps)")
 
     print("=" * 70)
     print("GENERATION CHECK — Does the steered model actually SAY the right answer?")
