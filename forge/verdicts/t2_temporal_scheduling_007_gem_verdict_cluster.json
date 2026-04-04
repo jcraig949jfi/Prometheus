@@ -1,0 +1,53 @@
+{
+  "home_cluster": "B",
+  "cluster_name": "Temporal / Scheduling / Simulation",
+  "cluster_score": 0.7667,
+  "seed_scores": [
+    0.75,
+    0.6667,
+    0.8333,
+    0.75,
+    0.8333
+  ],
+  "seed_stability": 0.1667,
+  "categories_passed": 3,
+  "min_categories_required": 3,
+  "per_category": {
+    "temporal_scheduling": {
+      "pass": true,
+      "failure_type": null
+    },
+    "rate_of_change": {
+      "pass": true,
+      "failure_type": null
+    },
+    "temporal_complex": {
+      "pass": true,
+      "failure_type": null
+    },
+    "stateful_register_machine": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_interval_algebra": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "process_simulation": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    }
+  },
+  "passes_score": true,
+  "passes_seed": true,
+  "passes_breadth": true,
+  "cluster_verdict": "PASS",
+  "adjacent_cluster_scores": {
+    "A": 0.65,
+    "C": 0.5143,
+    "D": 0.6167,
+    "E": 0.5286,
+    "F": 0.45
+  },
+  "generalist_tag": "generalist_5"
+}

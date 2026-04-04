@@ -28,7 +28,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "agents" / "hephaestus" / "src"))
 sys.path.insert(0, str(QUARANTINE))
 
-from forge.thresholds import THRESHOLDS
+from forge.thresholds import THRESHOLDS, CLUSTER_DEFINITIONS, CLUSTER_MAP, CLUSTER_THRESHOLDS
 
 
 def load_battery(tier, n_per_category, seed):
@@ -235,6 +235,155 @@ def compute_diversity(tool_path, existing_tool_paths):
     }
 
 
+def load_cluster_battery(cluster_id, n_per_category, seed):
+    """Load battery filtered to only categories in the specified cluster.
+
+    Pulls from BOTH the quarantine T2 battery (12 cross-eval categories)
+    and the main tier2 battery (24 wave categories), then filters to the
+    cluster's categories.
+    """
+    cluster_cats = set(CLUSTER_DEFINITIONS[cluster_id]["categories"])
+
+    # Load from quarantine (12 cross-eval categories)
+    from trap_generator_t2 import generate_t2_battery
+    quarantine_battery = generate_t2_battery(n_per_category=n_per_category, seed=seed)
+
+    # Load from main tier2 generator (24 wave categories)
+    sys.path.insert(0, str(ROOT / "agents" / "hephaestus" / "src"))
+    from trap_generator_tier2 import generate_tier2_battery
+    wave_battery = generate_tier2_battery(n_per_category=n_per_category, seed=seed)
+
+    # Combine and filter to cluster categories
+    combined = quarantine_battery + wave_battery
+    return [trap for trap in combined if trap.get("category") in cluster_cats]
+
+
+def run_cluster_eval(tool, home_category, tier, seeds=None, n_per_category=2):
+    """Evaluate a tool against its home cluster battery + compute generalist bonus.
+
+    Returns dict with cluster verdict, per-category results, and generalist tags.
+    """
+    if seeds is None:
+        seeds = [42, 0, 1, 99, 9999]
+
+    home_cluster = CLUSTER_MAP.get(home_category)
+    if not home_cluster:
+        return {"error": f"Category '{home_category}' not in CLUSTER_MAP"}
+
+    cluster_def = CLUSTER_DEFINITIONS[home_cluster]
+    cluster_name = cluster_def["name"]
+    cluster_cats = set(cluster_def["categories"])
+
+    # Run home cluster battery across seeds
+    seed_scores = []
+    all_category_results = {}
+    for seed in seeds:
+        battery = load_cluster_battery(home_cluster, n_per_category, seed)
+        if not battery:
+            return {"error": f"No traps generated for cluster {home_cluster}"}
+        result = run_battery(tool, battery)
+        seed_scores.append(result["overall_score"])
+        for cat, cat_result in result["per_category"].items():
+            if cat not in all_category_results:
+                all_category_results[cat] = {"pass": True, "failure_type": None}
+            if not cat_result["pass"]:
+                all_category_results[cat]["pass"] = False
+                all_category_results[cat]["failure_type"] = cat_result["failure_type"]
+
+    overall_score = sum(seed_scores) / len(seed_scores) if seed_scores else 0
+    seed_stability = max(seed_scores) - min(seed_scores) if seed_scores else 0
+
+    # Count categories passed within cluster
+    categories_passed = sum(
+        1 for cat, r in all_category_results.items()
+        if r["pass"] and cat in cluster_cats
+    )
+
+    # Determine min_categories_passed based on cluster size
+    cluster_size = len(cluster_cats)
+    if cluster_size <= CLUSTER_THRESHOLDS["small_cluster_size"]:
+        min_cats = CLUSTER_THRESHOLDS["min_categories_passed_small"]
+    else:
+        min_cats = CLUSTER_THRESHOLDS["min_categories_passed"]
+
+    # Check pass criteria
+    passes_score = overall_score >= CLUSTER_THRESHOLDS["cluster_pass_threshold"]
+    passes_seed = seed_stability <= CLUSTER_THRESHOLDS["max_seed_drop"]
+    passes_breadth = categories_passed >= min_cats
+
+    # Generalist bonus: check adjacent clusters
+    generalist_count = 0
+    adjacent_scores = {}
+    for other_id, other_def in CLUSTER_DEFINITIONS.items():
+        if other_id == home_cluster:
+            continue
+        other_scores = []
+        for seed in seeds:
+            other_battery = load_cluster_battery(other_id, n_per_category, seed)
+            if other_battery:
+                other_result = run_battery(tool, other_battery)
+                other_scores.append(other_result["overall_score"])
+        if other_scores:
+            avg = sum(other_scores) / len(other_scores)
+            adjacent_scores[other_id] = round(avg, 4)
+            if avg >= CLUSTER_THRESHOLDS["generalist_threshold"]:
+                generalist_count += 1
+
+    generalist_tag = f"generalist_{generalist_count}" if generalist_count > 0 else None
+
+    return {
+        "home_cluster": home_cluster,
+        "cluster_name": cluster_name,
+        "cluster_score": round(overall_score, 4),
+        "seed_scores": [round(s, 4) for s in seed_scores],
+        "seed_stability": round(seed_stability, 4),
+        "categories_passed": categories_passed,
+        "min_categories_required": min_cats,
+        "per_category": all_category_results,
+        "passes_score": passes_score,
+        "passes_seed": passes_seed,
+        "passes_breadth": passes_breadth,
+        "cluster_verdict": "PASS" if (passes_score and passes_seed and passes_breadth) else "FAIL",
+        "adjacent_cluster_scores": adjacent_scores,
+        "generalist_tag": generalist_tag,
+    }
+
+
+def _infer_home_category(tool_id):
+    """Infer a tool's home category from its ID.
+
+    Convention: t2_<category>_<number>[_gem] -> category
+    Examples: t2_simpson_paradox_018_gem -> simpson_paradox
+              t2_liar_detection_012 -> liar_detection
+    """
+    # Strip tier prefix
+    rest = tool_id
+    for prefix in ("t2_", "t3_"):
+        if rest.startswith(prefix):
+            rest = rest[len(prefix):]
+            break
+
+    # Strip trailing _gem, _NNN patterns
+    import re as _re
+    # Remove _gem suffix
+    rest = _re.sub(r'_gem$', '', rest)
+    # Remove trailing _NNN (3-digit number)
+    rest = _re.sub(r'_\d{3}$', '', rest)
+
+    # Check if the remaining string maps to a known cluster category
+    if rest in CLUSTER_MAP:
+        return rest
+
+    # Fallback: try progressively shorter prefixes
+    parts = rest.split('_')
+    for i in range(len(parts), 0, -1):
+        candidate = '_'.join(parts[:i])
+        if candidate in CLUSTER_MAP:
+            return candidate
+
+    return None
+
+
 def evaluate_tool(tool_path, tier, existing_tool_paths=None, seeds=None):
     """Full evaluation pipeline for a single tool.
 
@@ -275,11 +424,20 @@ def evaluate_tool(tool_path, tier, existing_tool_paths=None, seeds=None):
     print(f"  Computing diversity...")
     diversity = compute_diversity(tool_path, existing_tool_paths)
 
-    # 4. Determine verdict
-    passes_battery = seed_result["overall_score"] >= thresholds["pass_threshold"]
-    passes_seed = seed_result["seed_stability"] <= thresholds["max_seed_drop"]
+    # 4. Cluster evaluation (primary gate for T2+)
+    cluster_result = None
+    home_category = _infer_home_category(tool_id)
+    if home_category and home_category in CLUSTER_MAP:
+        print(f"  Running cluster eval (home: {home_category} -> Cluster {CLUSTER_MAP[home_category]})...")
+        cluster_result = run_cluster_eval(tool, home_category, tier, seeds)
+
+    # 5. Determine verdict — DUAL EVAL (Phase 2 migration)
+    #    Global eval remains the pass gate. Cluster eval is recorded for tracking.
+    #    Once tools are upgraded to handle wave categories, cluster eval becomes primary.
     passes_ablation = ablation_ok
     passes_diversity = diversity["passes_diversity_check"]
+    passes_battery = seed_result["overall_score"] >= thresholds["pass_threshold"]
+    passes_seed = seed_result["seed_stability"] <= thresholds["max_seed_drop"]
 
     if passes_battery and passes_seed and passes_ablation and passes_diversity:
         verdict = "PASS"
@@ -305,6 +463,10 @@ def evaluate_tool(tool_path, tier, existing_tool_paths=None, seeds=None):
         "verdict": verdict,
         "promising_primitives": promising,
     }
+
+    # Add cluster eval results if available
+    if cluster_result:
+        result["cluster_eval"] = cluster_result
 
     # Write verdict (NEVER contains test content)
     verdict_path = VERDICTS / f"{tool_id}_verdict.json"
@@ -360,6 +522,10 @@ if __name__ == "__main__":
     parser.add_argument("--tier", type=int, required=True, help="Tier (2 or 3)")
     parser.add_argument("--baselines", action="store_true", help="Run null baselines only")
     parser.add_argument("--existing", nargs="*", default=[], help="Existing tool paths for diversity")
+    parser.add_argument("--cluster-only", action="store_true",
+                        help="Run cluster eval only (no full battery)")
+    parser.add_argument("--home-category", type=str, default=None,
+                        help="Override home category for cluster eval")
     args = parser.parse_args()
 
     if args.baselines:
@@ -371,7 +537,32 @@ if __name__ == "__main__":
         existing[f"t{args.tier}"] = result
         out_path.write_text(json.dumps(existing, indent=2))
         print(f"  Written to {out_path}")
+    elif args.cluster_only and args.tool:
+        # Cluster eval only — quick check against home cluster
+        tool = load_tool(args.tool)
+        tool_id = Path(args.tool).stem
+        home_cat = args.home_category or _infer_home_category(tool_id)
+        if not home_cat or home_cat not in CLUSTER_MAP:
+            print(f"  Cannot determine home category for {tool_id}. Use --home-category.")
+            sys.exit(1)
+        cluster_id = CLUSTER_MAP[home_cat]
+        print(f"  Cluster eval: {tool_id} -> {home_cat} -> Cluster {cluster_id} "
+              f"({CLUSTER_DEFINITIONS[cluster_id]['name']})")
+        result = run_cluster_eval(tool, home_cat, args.tier)
+        print(f"  Cluster verdict: {result['cluster_verdict']} "
+              f"(score={result['cluster_score']:.1%}, "
+              f"cats={result['categories_passed']}/{result['min_categories_required']}, "
+              f"stability={result['seed_stability']:.3f})")
+        if result.get("generalist_tag"):
+            print(f"  Generalist bonus: {result['generalist_tag']}")
+        print(f"  Adjacent cluster scores: {result['adjacent_cluster_scores']}")
+        # Write cluster verdict
+        verdict_path = VERDICTS / f"{tool_id}_verdict_cluster.json"
+        VERDICTS.mkdir(parents=True, exist_ok=True)
+        with open(verdict_path, 'w') as f:
+            json.dump(result, f, indent=2, default=str)
+        print(f"  Written to {verdict_path}")
     elif args.tool:
         evaluate_tool(args.tool, args.tier, args.existing)
     else:
-        print("Specify --tool PATH or --baselines")
+        print("Specify --tool PATH, --baselines, or --cluster-only --tool PATH")

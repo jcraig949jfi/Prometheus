@@ -1,0 +1,143 @@
+{
+  "tool_id": "t2_temporal_scheduling_007_gem",
+  "tier": 2,
+  "timestamp": "2026-04-03T20:39:20.183042",
+  "overall_score": 0.9666666666666666,
+  "seed_scores": [
+    1.0,
+    0.9166666666666666,
+    1.0,
+    0.9583333333333334,
+    0.9583333333333334
+  ],
+  "seed_stability": 0.08333333333333337,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_counterfactual": {
+      "pass": true,
+      "failure_type": null
+    },
+    "conjunction_fallacy": {
+      "pass": true,
+      "failure_type": null
+    },
+    "strategic_deception": {
+      "pass": true,
+      "failure_type": null
+    },
+    "perspective_shift": {
+      "pass": true,
+      "failure_type": null
+    },
+    "temporal_scheduling": {
+      "pass": true,
+      "failure_type": null
+    },
+    "argument_strength": {
+      "pass": true,
+      "failure_type": null
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "compositional_multi_step": {
+      "pass": true,
+      "failure_type": null
+    },
+    "rate_of_change": {
+      "pass": true,
+      "failure_type": null
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_complex": {
+      "pass": true,
+      "failure_type": null
+    }
+  },
+  "ablation": {
+    "bayesian_update": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "entropy": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "confidence_from_agreement": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "topological_sort": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "solve_constraints": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "information_sufficiency": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "modular_arithmetic": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "track_beliefs": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "sally_anne_test": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "parity_check": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "negate": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "solve_first": {
+      "delta": 0.1667,
+      "load_bearing": false,
+      "budget_share": 0.5002
+    },
+    "is_uniquely_solvable": {
+      "delta": 0.0833,
+      "load_bearing": false,
+      "budget_share": 0.2499
+    },
+    "check_consistency": {
+      "delta": 0.0833,
+      "load_bearing": false,
+      "budget_share": 0.2499
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.2727,
+    "most_similar_tool": "t2_simpson_paradox_018_gem",
+    "passes_diversity_check": true
+  },
+  "verdict": "PASS",
+  "promising_primitives": []
+}

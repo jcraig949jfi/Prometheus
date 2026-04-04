@@ -18,8 +18,12 @@ You will produce: a single Python file defining a class `ReasoningTool` with an 
 
 ## HARD CONSTRAINTS (violating any one of these invalidates your output)
 
-1. You MUST import and CALL at least 3 T1 primitives whose return values influence the output.
-2. You MUST import and CALL at least 1 amino acid whose return value influences the output.
+1. You MUST import and CALL at least 3 T1 primitives whose return values DIRECTLY DETERMINE the output.
+   "Directly determine" means: if you replaced that primitive's return value with a different
+   number, your final scored ranking MUST change. If it wouldn't change, the primitive is
+   decorative and your tool will be rejected.
+2. You MUST import and CALL at least 1 amino acid whose return value DIRECTLY DETERMINES the output.
+   Same rule: replacing the amino acid's return value must change your final answer.
 3. You MUST NOT use regex matching against candidate text (no re.search, re.match on candidates).
 4. You MUST NOT hardcode answer strings (no `if candidate == "..."` or `if "..." in candidate`).
 5. You MUST NOT use lookup tables mapping keywords to answers.
@@ -73,6 +77,78 @@ The rule is simple: you may parse and analyze the PROMPT freely. You must NEVER
 pattern-match, substring-search, or regex-match against CANDIDATE text. Candidates
 are scored by how well they match your COMPUTED reasoning result, not by what
 words they contain.
+
+## ABLATION GATE — your tool will be tested for this
+
+After generation, every primitive and amino acid call in your tool is ABLATED: its return
+value is replaced with a neutral default, and the tool is re-run on the full test battery.
+If removing ANY primitive changes fewer than 20% of test case outputs, your tool is
+REJECTED as decorative. This means:
+
+- Every primitive call must sit on a CRITICAL PATH between input and output.
+- If you compute an answer using primitives but then ALSO compute the same answer
+  through a fallback path that ignores primitives, the ablation delta will be 0.0
+  because the fallback path produces identical results without the primitive.
+- The NCD fallback must be a LAST RESORT for when primitives genuinely cannot solve
+  the problem, not an always-available parallel path that makes primitives redundant.
+
+### ANTI-PATTERNS — these will cause ablation failure (delta = 0.0)
+
+```python
+# BAD: primitive called but return value stored and never used in decision
+topo = topological_sort(edges)        # computed...
+best_entity = entities[0]             # ...but decision ignores topo entirely
+
+# BAD: primitive output feeds confidence but not the answer itself
+posterior = bayesian_update(prior, lh) # influences confidence...
+computed_answer = entity_with_most_mentions  # ...but answer is determined independently
+score = base_score * confidence       # removing bayesian_update only changes score magnitude,
+                                      # not ranking, so delta ≈ 0.0
+
+# BAD: primitive result used in a branch that is never taken
+if paradox_result and paradox_result.get("is_paradox"):
+    best = subgroup_winner            # this branch is dead code for most inputs
+else:
+    best = aggregate_winner           # this always runs → primitive is decorative
+
+# BAD: entropy computed on dummy data, not on extracted problem data
+e = entropy([0.5, 0.5])              # always the same input → always same output → decorative
+```
+
+### LOAD-BEARING PATTERNS — these pass ablation
+
+```python
+# GOOD: primitive output directly gates which answer is selected
+posterior = bayesian_update(prior_from_data, likelihood_from_data, fp_rate)
+if posterior > 0.5:
+    computed_answer = entity_a        # THIS branch chosen because of bayesian_update
+else:
+    computed_answer = entity_b        # DIFFERENT answer if bayesian_update returns differently
+
+# GOOD: primitive output IS the computed answer
+solution = solve_linear_system(A_from_prompt, b_from_prompt)
+computed_answer = str(round(solution[0]))  # answer is literally the primitive's output
+
+# GOOD: primitive output changes which candidates score highest
+cf_values = counterfactual_intervention(edges, values, node, 0.0)
+if cf_values[target] < threshold:     # intervention killed the effect
+    computed_answer = "No"
+else:
+    computed_answer = "Yes"
+
+# GOOD: amino acid output determines the answer entity
+confounders = detect_confounders(model, x, y)
+if confounders:
+    computed_answer = f"{list(confounders)[0]} is the confounder"
+```
+
+### SELF-TEST before returning
+
+Before your _reason method returns, mentally verify: "If I replaced each primitive's
+return value with None/0.0/empty, would my computed_answer change?" If the answer is
+no for ANY primitive, you must restructure so that primitive's output is on the critical
+path. If you cannot make a primitive load-bearing, do not import it — importing unused
+primitives is worse than importing fewer primitives that all matter.
 
 ## TOOL STRUCTURE
 
@@ -167,8 +243,24 @@ def _reason(self, structure):
    ```
 
 3. If amino acid calls fail (return None or raise), fall through to a SIMPLER
-   computation that still uses the extracted data. Don't fall all the way back
-   to NCD — that throws away all your extraction work.
+   computation that still uses the extracted data AND still uses T1 primitives.
+   The fallback path must ALSO be primitive-dependent. Do NOT fall back to raw
+   NCD scoring — that throws away all your extraction work and makes every
+   primitive decorative (ablation delta = 0.0).
+
+   ```python
+   # GOOD fallback: still uses primitives
+   result = conditional_query(model, target, evidence)
+   if result is None:
+       # Amino acid failed, but still use T1 primitives on extracted data
+       posterior = bayesian_update(base_rate, subgroup_rate, false_positive)
+       computed_answer = entity_a if posterior > 0.5 else entity_b
+
+   # BAD fallback: abandons primitives entirely
+   result = conditional_query(model, target, evidence)
+   if result is None:
+       computed_answer = max(entities, key=lambda e: len(e))  # no primitives used
+   ```
 
 ## HOW TO SCORE CANDIDATES (critical — this is where most tools fail)
 
@@ -294,19 +386,23 @@ matching the category description, not just specific formats.
 
 T2_COMPOSITION_RULES = """
 ## T2 COMPOSITION RULES
-- At least 3 T1 primitives called with return values used
-- At least 1 amino acid called with return value used
+- At least 3 T1 primitives called with return values LOAD-BEARING (ablation delta >= 0.20)
+- At least 1 amino acid called with return value LOAD-BEARING (ablation delta >= 0.20)
 - 1 science field as reasoning scaffold
 - Total primitive + amino acid calls must be >= 4
+- Every primitive must sit on the critical path: prompt data → primitive → computed_answer → scoring
+- NCD is a last-resort tiebreaker, NOT the primary scoring mechanism
 """
 
 T3_COMPOSITION_RULES = """
 ## T3 COMPOSITION RULES
-- At least 2 T1 primitives called with return values used
-- At least 2 T2 primitives called with return values used
-- At least 1 amino acid called with return value used
+- At least 2 T1 primitives called with return values LOAD-BEARING (ablation delta >= 0.20)
+- At least 2 T2 primitives called with return values LOAD-BEARING (ablation delta >= 0.20)
+- At least 1 amino acid called with return value LOAD-BEARING (ablation delta >= 0.20)
 - Concepts from 2 different science fields (from different domains)
 - Total primitive + amino acid calls must be >= 5
+- Every primitive must sit on the critical path: prompt data → primitive → computed_answer → scoring
+- NCD is a last-resort tiebreaker, NOT the primary scoring mechanism
 """
 
 

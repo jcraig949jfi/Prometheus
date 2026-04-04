@@ -1,0 +1,256 @@
+{
+  "schema_version": "1.0.0",
+  "timestamp": "2026-04-03T21:00:00Z",
+  "source": "forge/verdicts/t2_*_verdict.json",
+  "thresholds": {
+    "pass_threshold": 0.40,
+    "max_seed_drop": 0.20,
+    "max_ablation_budget_share": 0.60,
+    "max_callgraph_overlap": 0.40
+  },
+
+  "summary": {
+    "total_categories": 12,
+    "covered_categories": 10,
+    "uncovered_categories": 2,
+    "coverage_pct": 83.3,
+    "total_passing_tools": 2,
+    "total_evaluated_tools": 7,
+    "gem_count": 2,
+    "non_gem_passing_count": 0,
+    "note": "Only 2 tools have verdict=PASS (the gems). The other 5 score >=40% but have verdict=FAIL_BATTERY (per-category failures). Coeus tracks verdict=PASS as the coverage gate."
+  },
+
+  "categories": {
+    "simpson_paradox": {
+      "status": "uncovered",
+      "passing_tools": [],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Gem scores 97.5% overall but per_category.simpson_paradox=fail across all tools"
+    },
+    "causal_counterfactual": {
+      "status": "covered",
+      "passing_tools": ["t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.967,
+      "best_tool_any": "t2_temporal_scheduling_007_gem",
+      "note": "Only gem_007 passes this category"
+    },
+    "conjunction_fallacy": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    },
+    "strategic_deception": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    },
+    "perspective_shift": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem", "t2_perspective_shift_017", "t2_simpson_paradox_018", "t2_simpson_paradox_003", "t2_temporal_scheduling_011"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Most widely passed category -- 6 of 7 tools pass it"
+    },
+    "temporal_scheduling": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    },
+    "argument_strength": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    },
+    "liar_detection": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Only gem_018 passes; gem_007 has format_error here"
+    },
+    "compositional_multi_step": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    },
+    "rate_of_change": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    },
+    "causal_confounding_hard": {
+      "status": "uncovered",
+      "passing_tools": [],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "No tool passes this category. Both gems fail (wrong_answer). Hardest category."
+    },
+    "temporal_complex": {
+      "status": "covered",
+      "passing_tools": ["t2_simpson_paradox_018_gem", "t2_temporal_scheduling_007_gem"],
+      "best_score_any_tool": 0.975,
+      "best_tool_any": "t2_simpson_paradox_018_gem",
+      "note": "Both gems pass"
+    }
+  },
+
+  "passing_tools": [
+    {
+      "tool_id": "t2_simpson_paradox_018_gem",
+      "overall_score": 0.975,
+      "verdict": "PASS",
+      "timestamp": "2026-04-03T20:34:46.319899",
+      "seed_stability": 0.083,
+      "categories_passed": 9,
+      "categories_failed": ["simpson_paradox", "causal_counterfactual", "causal_confounding_hard"],
+      "primitive_stack": ["bayesian_update", "entropy", "confidence_from_agreement", "modus_ponens", "topological_sort", "solve_constraints", "counterfactual_intervention", "dag_traverse", "solve_linear_system", "check_transitivity", "modular_arithmetic", "solve", "check_entailment", "detect_paradox"],
+      "load_bearing_primitives": [],
+      "dominant_primitives": {"solve": 0.5002, "check_entailment": 0.2499, "detect_paradox": 0.2499}
+    },
+    {
+      "tool_id": "t2_temporal_scheduling_007_gem",
+      "overall_score": 0.967,
+      "verdict": "PASS",
+      "timestamp": "2026-04-03T20:39:20.183042",
+      "seed_stability": 0.083,
+      "categories_passed": 9,
+      "categories_failed": ["simpson_paradox", "liar_detection", "causal_confounding_hard"],
+      "primitive_stack": ["bayesian_update", "entropy", "confidence_from_agreement", "topological_sort", "solve_constraints", "information_sufficiency", "modular_arithmetic", "track_beliefs", "sally_anne_test", "parity_check", "negate", "solve_first", "is_uniquely_solvable", "check_consistency"],
+      "load_bearing_primitives": [],
+      "dominant_primitives": {"solve_first": 0.5002, "is_uniquely_solvable": 0.2499, "check_consistency": 0.2499}
+    }
+  ],
+
+  "near_miss_tools": [
+    {
+      "tool_id": "t2_perspective_shift_017",
+      "overall_score": 0.45,
+      "verdict": "FAIL_BATTERY",
+      "timestamp": "2026-04-03T15:13:12.637000",
+      "seed_stability": 0.167,
+      "categories_passed": 2,
+      "categories_failed": ["simpson_paradox", "conjunction_fallacy", "strategic_deception", "temporal_scheduling", "argument_strength", "liar_detection", "compositional_multi_step", "rate_of_change", "causal_confounding_hard", "temporal_complex"],
+      "primitive_stack": ["track_beliefs", "sally_anne_test", "confidence_from_agreement", "entropy", "modus_ponens", "check_entailment", "detect_paradox"],
+      "load_bearing_primitives": ["track_beliefs", "sally_anne_test", "confidence_from_agreement", "entropy", "modus_ponens"],
+      "note": "5 load-bearing primitives at 0.2 budget_share each -- genuine composition"
+    },
+    {
+      "tool_id": "t2_simpson_paradox_018",
+      "overall_score": 0.433,
+      "verdict": "FAIL_BATTERY",
+      "timestamp": "2026-04-03T15:14:22.382737",
+      "seed_stability": 0.125,
+      "categories_passed": 1,
+      "categories_failed": ["simpson_paradox", "causal_counterfactual", "conjunction_fallacy", "strategic_deception", "temporal_scheduling", "argument_strength", "liar_detection", "compositional_multi_step", "rate_of_change", "causal_confounding_hard", "temporal_complex"],
+      "primitive_stack": ["bayesian_update", "entropy", "confidence_from_agreement", "expected_value", "build_bn", "conditional_query", "compare_conditional_marginal", "detect_confounders"],
+      "load_bearing_primitives": [],
+      "note": "Pre-gem ancestor of gem_018; all ablation deltas = 0"
+    },
+    {
+      "tool_id": "t2_temporal_scheduling_007",
+      "overall_score": 0.408,
+      "verdict": "FAIL_BATTERY",
+      "timestamp": "2026-04-03T20:10:04.725265",
+      "seed_stability": 0.167,
+      "categories_passed": 0,
+      "categories_failed": ["simpson_paradox", "causal_counterfactual", "conjunction_fallacy", "strategic_deception", "perspective_shift", "temporal_scheduling", "argument_strength", "liar_detection", "compositional_multi_step", "rate_of_change", "causal_confounding_hard", "temporal_complex"],
+      "primitive_stack": ["information_sufficiency", "topological_sort", "solve_constraints", "confidence_from_agreement", "entropy", "is_uniquely_solvable"],
+      "load_bearing_primitives": [],
+      "note": "Pre-gem ancestor of gem_007; 0 categories passed individually"
+    },
+    {
+      "tool_id": "t2_simpson_paradox_003",
+      "overall_score": 0.40,
+      "verdict": "FAIL_BATTERY",
+      "timestamp": "2026-04-03T15:13:32.958770",
+      "seed_stability": 0.167,
+      "categories_passed": 1,
+      "categories_failed": ["simpson_paradox", "causal_counterfactual", "conjunction_fallacy", "strategic_deception", "temporal_scheduling", "argument_strength", "liar_detection", "compositional_multi_step", "rate_of_change", "causal_confounding_hard", "temporal_complex"],
+      "primitive_stack": ["bayesian_update", "entropy", "confidence_from_agreement", "solve_linear_system", "build_bn", "conditional_query", "compare_conditional_marginal", "detect_confounders"],
+      "load_bearing_primitives": [],
+      "note": "All ablation deltas = 0"
+    },
+    {
+      "tool_id": "t2_temporal_scheduling_011",
+      "overall_score": 0.40,
+      "verdict": "FAIL_BATTERY",
+      "timestamp": "2026-04-03T20:10:13.378334",
+      "seed_stability": 0.167,
+      "categories_passed": 1,
+      "categories_failed": ["simpson_paradox", "causal_counterfactual", "conjunction_fallacy", "strategic_deception", "temporal_scheduling", "argument_strength", "liar_detection", "compositional_multi_step", "rate_of_change", "causal_confounding_hard", "temporal_complex"],
+      "primitive_stack": ["topological_sort", "information_sufficiency", "solve_constraints", "confidence_from_agreement", "entropy", "dag_traverse", "is_uniquely_solvable"],
+      "load_bearing_primitives": [],
+      "note": "All ablation deltas = 0"
+    }
+  ],
+
+  "diversity": {
+    "method": "Jaccard overlap of primitive stacks (callgraph proxy)",
+    "overlap_matrix": {
+      "t2_simpson_paradox_018_gem__t2_temporal_scheduling_007_gem": {
+        "shared_primitives": ["bayesian_update", "entropy", "confidence_from_agreement", "topological_sort", "solve_constraints", "modular_arithmetic"],
+        "union_size": 22,
+        "jaccard_overlap": 0.273,
+        "passes_diversity_check": true
+      }
+    },
+    "overall_diversity_index": 0.727,
+    "note": "Only 2 passing tools. Overlap is 27.3%, well under the 40% threshold. The two gems use largely disjoint dominant primitives (solve/check_entailment/detect_paradox vs solve_first/is_uniquely_solvable/check_consistency)."
+  },
+
+  "gap_analysis": {
+    "uncovered_categories": [
+      {
+        "category": "causal_confounding_hard",
+        "priority": 1,
+        "reason": "No tool passes this category. Both gems fail with wrong_answer. Requires specialized causal reasoning primitives.",
+        "failure_modes": {"wrong_answer": 7, "format_error": 0},
+        "nearest_miss": null
+      },
+      {
+        "category": "simpson_paradox",
+        "priority": 2,
+        "reason": "No tool passes this category individually despite being the namesake of the best-scoring tools. Gems score 97.5%+ overall but fail on simpson_paradox specifically.",
+        "failure_modes": {"wrong_answer": 7, "format_error": 0},
+        "nearest_miss": null
+      }
+    ],
+    "weakly_covered_categories": [
+      {
+        "category": "causal_counterfactual",
+        "priority": 3,
+        "reason": "Only 1 passing tool covers this (gem_007). gem_018 fails here. Single-point-of-failure.",
+        "tools_covering": 1
+      },
+      {
+        "category": "liar_detection",
+        "priority": 4,
+        "reason": "Only 1 passing tool covers this (gem_018). gem_007 has format_error. Single-point-of-failure.",
+        "tools_covering": 1
+      }
+    ],
+    "nous_feed": {
+      "priority_order": [
+        "causal_confounding_hard",
+        "simpson_paradox",
+        "causal_counterfactual",
+        "liar_detection"
+      ],
+      "strategy": "Next Nous run should bias concept selection toward causal confounding and paradox-detection primitives. Consider: d-separation, backdoor adjustment, instrument variables for causal_confounding_hard; aggregation reversal detectors for simpson_paradox."
+    }
+  }
+}

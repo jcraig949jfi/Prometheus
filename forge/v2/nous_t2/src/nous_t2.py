@@ -487,11 +487,15 @@ def main() -> None:
         description="Tier 2 Nous — Tool Combination Miner"
     )
     parser.add_argument("--n", type=int, default=50,
-                        help="Number of T2 triples to generate")
+                        help="Number of T2 triples to generate per cycle")
     parser.add_argument("--seed", type=int, default=None,
                         help="Random seed for reproducibility")
     parser.add_argument("--scan", action="store_true",
                         help="Just scan and report substrate pool stats")
+    parser.add_argument("--unlimited", action="store_true",
+                        help="Run continuously, re-scanning substrate each cycle")
+    parser.add_argument("--delay", type=float, default=120.0,
+                        help="Seconds between cycles in unlimited mode (default: 120)")
     args = parser.parse_args()
 
     pool = scan_substrate()
@@ -505,33 +509,68 @@ def main() -> None:
               file=sys.stderr)
         sys.exit(1)
 
-    rng = random.Random(args.seed)
-    print(f"Generating {args.n} T2 triples (seed={args.seed})...")
+    import signal
+    import time
 
-    results = generate_triples(pool, args.n, rng)
+    _shutdown = [False]
 
-    if not results:
-        print("[ERROR] No triples generated.", file=sys.stderr)
-        sys.exit(1)
+    def _sig_handler(sig, frame):
+        print("\n[INFO] Shutdown requested — finishing current batch...")
+        _shutdown[0] = True
 
-    out_path = save_results(results)
-    print(f"Saved {len(results)} triples to {out_path}")
-    print()
+    signal.signal(signal.SIGINT, _sig_handler)
 
-    # Summary
-    scores = [r["score"]["composite_score"] for r in results]
-    print(f"  Score range: {min(scores):.1f} — {max(scores):.1f}")
-    print(f"  Mean score:  {sum(scores)/len(scores):.1f}")
-    print()
+    seed = args.seed if args.seed is not None else int(time.time())
+    rng = random.Random(seed)
+    cycle = 0
 
-    # Print top 5
-    for i, r in enumerate(results[:5], 1):
-        print(f"  [{i}] score={r['score']['composite_score']:.1f}  "
-              f"{r['concept_names'][0]}  x  {r['concept_names'][1]}  "
-              f"via {r['concept_names'][2]}")
-        print(f"      comp={r['score']['ratings']['complementarity']:.1f}  "
-              f"nov={r['score']['ratings']['novelty']:.1f}  "
-              f"nm={r['score']['ratings']['near_miss_bonus']:.1f}")
+    while True:
+        cycle += 1
+
+        if cycle > 1:
+            # Re-scan substrate (picks up newly forged T1 tools)
+            pool = scan_substrate()
+            if not pool:
+                print(f"[WARN] Cycle {cycle}: No substrate — waiting {args.delay}s...")
+                time.sleep(args.delay)
+                continue
+
+        print(f"\n{'='*60}")
+        print(f"  Cycle {cycle} — {len(pool)} substrate tools, generating {args.n} triples")
+        print(f"{'='*60}")
+
+        results = generate_triples(pool, args.n, rng)
+
+        if not results:
+            print(f"[WARN] Cycle {cycle}: No triples generated.")
+        else:
+            out_path = save_results(results)
+            print(f"Saved {len(results)} triples to {out_path}")
+
+            # Summary
+            scores = [r["score"]["composite_score"] for r in results]
+            print(f"  Score range: {min(scores):.1f} — {max(scores):.1f}")
+            print(f"  Mean score:  {sum(scores)/len(scores):.1f}")
+
+            # Print top 5
+            for i, r in enumerate(results[:5], 1):
+                print(f"  [{i}] score={r['score']['composite_score']:.1f}  "
+                      f"{r['concept_names'][0]}  x  {r['concept_names'][1]}  "
+                      f"via {r['concept_names'][2]}")
+                print(f"      comp={r['score']['ratings']['complementarity']:.1f}  "
+                      f"nov={r['score']['ratings']['novelty']:.1f}  "
+                      f"nm={r['score']['ratings']['near_miss_bonus']:.1f}")
+
+        if not args.unlimited or _shutdown[0]:
+            break
+
+        # Sleep with interruptible chunks
+        print(f"\nSleeping {args.delay:.0f}s until next cycle...")
+        slept = 0.0
+        while slept < args.delay and not _shutdown[0]:
+            chunk = min(5.0, args.delay - slept)
+            time.sleep(chunk)
+            slept += chunk
 
 
 if __name__ == "__main__":

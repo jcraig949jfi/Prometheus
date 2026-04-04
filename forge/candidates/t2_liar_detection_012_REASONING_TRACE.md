@@ -1,6 +1,6 @@
 # Reasoning Trace: t2_liar_detection_012
 
-Science field(s): quantum_mechanics
+Science field(s): evolutionary_biology
 Category: liar_detection
-Generated: 2026-04-03T15:03:03.025953
+Generated: 2026-04-03T23:58:26.355515
 Model: deepseek-chat

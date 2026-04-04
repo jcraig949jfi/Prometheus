@@ -42,6 +42,13 @@ NEW_PACKAGES = {
     16: "package_16_ils_support_window",
     17: "package_17_wasserstein_l_functions",
     21: "package_21_finite_conductor_corrections",
+    27: "package_27_gap_oscillation",
+    28: "package_28_ari_ucurve",
+    29: "package_29_bsd_wall_theory",
+    30: "package_30_apollo_evolutionary_gp",
+    31: "package_31_surrogate_fitness",
+    32: "package_32_many_objective_nsga",
+    33: "package_33_llm_mutation_quality",
 }
 
 PENDING_PACKAGES = {
@@ -167,6 +174,9 @@ def main():
             return
         print("\n=== Submission Status ===\n")
         for pkg, info in status.items():
+            if "interaction_id" not in info:
+                print(f"  Package {pkg} ({info['dir']}): {info.get('state', 'unknown')} (no interaction_id)")
+                continue
             state, result = check_status(client, info["interaction_id"])
             print(f"  Package {pkg} ({info['dir']}): {state}")
             if state == "completed" and result:

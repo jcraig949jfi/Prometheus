@@ -1,16 +1,16 @@
 {
   "tool_id": "t2_simpson_paradox_014",
   "tier": 2,
-  "timestamp": "2026-04-03T15:14:13.968057",
-  "overall_score": 0.20833333333333334,
+  "timestamp": "2026-04-04T00:20:48.814002",
+  "overall_score": 0.17500000000000002,
   "seed_scores": [
-    0.25,
-    0.25,
-    0.25,
+    0.20833333333333334,
     0.125,
-    0.16666666666666666
+    0.20833333333333334,
+    0.125,
+    0.20833333333333334
   ],
-  "seed_stability": 0.125,
+  "seed_stability": 0.08333333333333334,
   "per_category": {
     "simpson_paradox": {
       "pass": false,
@@ -63,22 +63,22 @@
   },
   "ablation": {
     "bayesian_update": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     },
     "entropy": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     },
     "confidence_from_agreement": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     },
     "expected_value": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     },
@@ -88,26 +88,79 @@
       "budget_share": 0.0
     },
     "conditional_query": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     },
     "compare_conditional_marginal": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     },
     "detect_confounders": {
-      "delta": 0.25,
+      "delta": 0.2083,
       "load_bearing": true,
       "budget_share": 0.1429
     }
   },
   "diversity": {
-    "max_overlap": 0.0,
-    "most_similar_tool": null,
-    "passes_diversity_check": true
+    "max_overlap": 0.7778,
+    "most_similar_tool": "t2_simpson_paradox_003",
+    "passes_diversity_check": false
   },
   "verdict": "FAIL_BATTERY",
-  "promising_primitives": []
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "A",
+    "cluster_name": "Causal / Statistical",
+    "cluster_score": 0.2333,
+    "seed_scores": [
+      0.3333,
+      0.1667,
+      0.1667,
+      0.1667,
+      0.3333
+    ],
+    "seed_stability": 0.1667,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "simpson_paradox": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "causal_counterfactual": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "conjunction_fallacy": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "causal_confounding_hard": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "counterfactual_dependency": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "bayesian_update": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "B": 0.1167,
+      "C": 0.1429,
+      "D": 0.1667,
+      "E": 0.2,
+      "F": 0.125
+    },
+    "generalist_tag": null
+  }
 }

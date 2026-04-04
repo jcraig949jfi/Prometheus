@@ -1,7 +1,7 @@
 {
   "tool_id": "t2_perspective_shift_001",
   "tier": 2,
-  "timestamp": "2026-04-03T15:11:59.295028",
+  "timestamp": "2026-04-04T00:07:53.716577",
   "overall_score": 0.175,
   "seed_scores": [
     0.20833333333333334,
@@ -114,12 +114,65 @@
     }
   },
   "diversity": {
-    "max_overlap": 0.0,
-    "most_similar_tool": null,
-    "passes_diversity_check": true
+    "max_overlap": 0.5,
+    "most_similar_tool": "t2_liar_detection_000",
+    "passes_diversity_check": false
   },
   "verdict": "FAIL_BATTERY",
   "promising_primitives": [
     "check_entailment"
-  ]
+  ],
+  "cluster_eval": {
+    "home_cluster": "D",
+    "cluster_name": "Theory-of-Mind / Belief / Epistemic",
+    "cluster_score": 0.1,
+    "seed_scores": [
+      0.1667,
+      0.0833,
+      0.0833,
+      0.0833,
+      0.0833
+    ],
+    "seed_stability": 0.0833,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "strategic_deception": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "perspective_shift": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "epistemic_belief_tracking": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "information_sufficiency": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "defeasible_reasoning": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "referent_tracking_anaphora": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.0833,
+      "B": 0.1667,
+      "C": 0.1429,
+      "E": 0.1714,
+      "F": 0.025
+    },
+    "generalist_tag": null
+  }
 }

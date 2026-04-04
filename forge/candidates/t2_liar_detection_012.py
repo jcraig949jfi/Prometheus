@@ -1,12 +1,12 @@
 import re
 import zlib
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any, Tuple, Set
 
 from forge_primitives import (
     bayesian_update,
-    confidence_from_agreement,
     entropy,
-    solve_sat,
+    confidence_from_agreement,
+    solve_constraints,
     modus_ponens,
     track_beliefs
 )
@@ -15,318 +15,388 @@ from forge.amino_acids.constraint_acids import solve_first, is_uniquely_solvable
 
 
 class ReasoningTool:
-    """quantum_mechanics x pysat_acids - liar_detection"""
+    """evolutionary_biology x pysat_acids - liar_detection"""
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict[str, Any]]:
         # Phase 1: EXTRACT
         structure = self._extract(prompt)
+        
         # Phase 2: REASON
         reasoning_result = self._reason(structure)
+        
         # Phase 3: SCORE
         scored = self._score(candidates, reasoning_result)
+        
         # Phase 4: CALIBRATE
         calibrated = self._calibrate(scored)
+        
         return sorted(calibrated, key=lambda x: x["score"], reverse=True)
 
     def _extract(self, prompt: str) -> Dict[str, Any]:
-        """Parse the prompt to extract agents, statements, and truth policies."""
+        """Extract agents, statements, and truth-telling policies from prompt."""
         lines = [line.strip() for line in prompt.split('.') if line.strip()]
-        agents = []
-        statements = []
-        truth_policies = {}  # agent -> policy (e.g., "always lies", "alternates")
+        
+        agents = set()
+        statements = {}
+        policies = {}
         question = lines[-1] if lines else ""
-
-        # Extract agent names (capitalized words that appear before colons or as subjects)
+        
+        # Extract agent names (capitalized words that appear before 'says' or 'always')
         for line in lines:
-            # Look for patterns like "Alice says: ..." or "Bob claims ..."
-            colon_match = re.match(r'^([A-Z][a-z]+)(?:\s+says?|claims?|states?)?:', line)
-            if colon_match:
-                agent = colon_match.group(1)
-                if agent not in agents:
-                    agents.append(agent)
-                # Extract statement after colon
-                statement_part = line.split(':', 1)[1].strip()
-                if statement_part:
-                    statements.append((agent, statement_part))
-
-            # Also look for policy descriptions
-            lower_line = line.lower()
-            for agent in agents:
-                if agent.lower() in lower_line:
-                    if "always lies" in lower_line or "never tells the truth" in lower_line:
-                        truth_policies[agent] = "always_lies"
-                    elif "always tells the truth" in lower_line or "never lies" in lower_line:
-                        truth_policies[agent] = "always_truth"
-                    elif "alternates" in lower_line:
-                        truth_policies[agent] = "alternates"
-                    elif "random" in lower_line:
-                        truth_policies[agent] = "random"
-
-        # If no explicit policies, infer from statements about truthfulness
-        for agent in agents:
-            if agent not in truth_policies:
-                # Check if any statement mentions the agent's truthfulness
-                for _, stmt in statements:
-                    if agent.lower() in stmt.lower() and ("lies" in stmt.lower() or "truth" in stmt.lower()):
-                        if "lies" in stmt.lower():
-                            truth_policies[agent] = "always_lies"
-                        elif "truth" in stmt.lower():
-                            truth_policies[agent] = "always_truth"
-                        break
-                else:
-                    truth_policies[agent] = "unknown"
-
+            # Find agent patterns like "Alice says" or "Bob always tells the truth"
+            agent_match = re.search(r'([A-Z][a-z]+)\s+(?:says|always|never|tells)', line)
+            if agent_match:
+                agent = agent_match.group(1)
+                agents.add(agent)
+                
+                # Extract policy
+                if 'always tells the truth' in line.lower():
+                    policies[agent] = 'truth'
+                elif 'always lies' in line.lower():
+                    policies[agent] = 'lie'
+                elif 'alternates' in line.lower() or 'sometimes' in line.lower():
+                    policies[agent] = 'alternating'
+                
+                # Extract statement content
+                if 'says:' in line or 'says "' in line:
+                    # Find quoted statement or statement after colon
+                    quote_match = re.search(r'["\'“]([^"\'”]+)["\'”]', line)
+                    if quote_match:
+                        statements[agent] = quote_match.group(1).strip()
+                    else:
+                        # Try to extract after colon
+                        colon_parts = line.split(':', 1)
+                        if len(colon_parts) > 1:
+                            statements[agent] = colon_parts[1].strip()
+        
+        # Extract propositional variables (simple facts mentioned)
+        facts = set()
+        for line in lines:
+            # Look for simple factual statements
+            if 'is true' in line.lower() or 'is false' in line.lower():
+                # Extract the fact part before "is true/false"
+                fact_match = re.search(r'([^\.]+)\s+is\s+(true|false)', line, re.IGNORECASE)
+                if fact_match:
+                    fact = fact_match.group(1).strip()
+                    facts.add(fact)
+        
         return {
-            "agents": agents,
+            "agents": list(agents),
             "statements": statements,
-            "truth_policies": truth_policies,
+            "policies": policies,
+            "facts": list(facts),
             "question": question,
-            "raw": prompt
+            "raw_lines": lines
         }
 
     def _reason(self, structure: Dict[str, Any]) -> Dict[str, Any]:
-        """Use quantum superposition and entanglement as a scaffold for liar puzzles."""
+        """Use evolutionary game theory and logical consistency to determine truth."""
         agents = structure["agents"]
         statements = structure["statements"]
-        policies = structure["truth_policies"]
-
-        # Quantum mechanics scaffold: treat each agent's truth-value as a qubit in superposition
-        # The system state is entangled across agents due to mutual statements
-        # Measurement (answering the question) collapses to a classical truth assignment
-
-        # Step 1: Encode as SAT problem (quantum superposition of all possible worlds)
-        clauses = []
-        var_map = {}  # (agent, statement_idx) -> SAT variable number
-        next_var = 1
-
-        # Create variables for each statement's truth value
-        for i, (agent, stmt) in enumerate(statements):
-            var_map[(agent, i)] = next_var
-            next_var += 1
-
-        # Add constraints based on truth policies (collapse possibilities)
-        for agent, policy in policies.items():
-            agent_vars = [var_map[(a, idx)] for (a, idx) in var_map.keys() if a == agent]
-            if policy == "always_lies":
-                # All statements by this agent are false
-                for v in agent_vars:
-                    clauses.append([-v])
-            elif policy == "always_truth":
-                # All statements by this agent are true
-                for v in agent_vars:
-                    clauses.append([v])
-            elif policy == "alternates":
-                # Alternate truth values (simplify: first statement true, second false, etc.)
-                for idx, v in enumerate(agent_vars):
-                    if idx % 2 == 0:
-                        clauses.append([v])
-                    else:
-                        clauses.append([-v])
-
-        # Add constraints from statement content (entanglement)
-        # Parse simple logical relationships: "A says B is lying" etc.
-        for i, (agent, stmt) in enumerate(statements):
-            stmt_lower = stmt.lower()
-            # Check if statement is about another agent's truthfulness
-            for other_agent in agents:
-                if other_agent.lower() in stmt_lower and other_agent != agent:
-                    if "lying" in stmt_lower or "lies" in stmt_lower:
-                        # "A says B is lying" means: A's statement is true iff B's next statement is false
-                        # Find B's next statement index
-                        b_stmts = [(a, idx) for (a, idx) in var_map.keys() if a == other_agent]
-                        if b_stmts:
-                            # Use the first statement by B for simplicity
-                            b_var = var_map[b_stmts[0]]
-                            a_var = var_map[(agent, i)]
-                            # Encoding: (A_var ↔ ¬B_var) -> two clauses
-                            clauses.append([-a_var, -b_var])  # If A true then B false
-                            clauses.append([a_var, b_var])    # If A false then B true
-                    elif "truth" in stmt_lower or "honest" in stmt_lower:
-                        # "A says B tells truth" means: A's statement is true iff B's next statement is true
-                        b_stmts = [(a, idx) for (a, idx) in var_map.keys() if a == other_agent]
-                        if b_stmts:
-                            b_var = var_map[b_stmts[0]]
-                            a_var = var_map[(agent, i)]
-                            clauses.append([-a_var, b_var])   # If A true then B true
-                            clauses.append([a_var, -b_var])   # If A false then B false
-
-        # Use T1 primitive: solve_sat to find a consistent assignment (collapsed quantum state)
-        sat_assignment = solve_sat(clauses, next_var - 1)
-
-        # Use amino acid: detect_paradox to check for contradictions (quantum interference)
-        paradox_result = detect_paradox(clauses)
-        has_paradox = paradox_result is not None and paradox_result
-
-        # Use T1 primitive: entropy to measure uncertainty in the system
-        if sat_assignment:
-            # Count true/false assignments
-            true_count = sum(1 for v in sat_assignment.values() if v)
-            total = len(sat_assignment)
-            if total > 0:
-                p_true = true_count / total
-                p_false = 1 - p_true
-                system_entropy = entropy([p_true, p_false]) if p_true > 0 and p_false > 0 else 0.0
-            else:
-                system_entropy = 0.0
-        else:
-            system_entropy = 1.0  # Max entropy if no consistent assignment
-
-        # Use amino acid: check_entailment to see if question answer follows logically
-        # Parse question to extract what's being asked
-        question = structure["question"].lower()
-        answer_entity = None
-
-        # Look for "who" questions
-        if "who" in question:
-            # Find agent mentioned in question
-            for agent in agents:
-                if agent.lower() in question:
-                    answer_entity = agent
-                    break
-            if not answer_entity and agents:
-                # Default to first agent if specific not found
-                answer_entity = agents[0]
-
-        # Look for "what" questions about statements
-        elif "what" in question and "say" in question:
-            # Find the most probable statement truth value
-            if sat_assignment and statements:
-                # Find statement with highest confidence
-                stmt_truths = []
-                for (agent, stmt), var in [(stmt, var_map.get((agent, i))) for i, (agent, stmt) in enumerate(statements)]:
-                    if var and var in sat_assignment:
-                        stmt_truths.append((stmt, sat_assignment[var]))
-                if stmt_truths:
-                    # Use T1 primitive: confidence_from_agreement on truth values
-                    truth_scores = [1.0 if truth else 0.0 for _, truth in stmt_truths]
-                    if truth_scores:
-                        conf = confidence_from_agreement(truth_scores)
-                        # Select statement with truth value matching highest confidence
-                        if conf > 0.5:
-                            true_stmts = [stmt for stmt, truth in stmt_truths if truth]
-                            if true_stmts:
-                                answer_entity = true_stmts[0]
-                            else:
-                                answer_entity = stmt_truths[0][0]
-                        else:
-                            answer_entity = stmt_truths[0][0]
-
-        # If no specific entity found, determine the actual liar/truth-teller
-        if not answer_entity:
-            # Use quantum-inspired reasoning: collapse to most probable consistent world
-            if sat_assignment:
-                # Count lies per agent
-                agent_lie_count = {agent: 0 for agent in agents}
-                for (agent, i), var in var_map.items():
-                    if var in sat_assignment:
-                        # If agent's statement is false, it's a lie (unless policy forces it)
-                        if not sat_assignment[var]:
-                            agent_lie_count[agent] += 1
-                
-                # Use T1 primitive: bayesian_update to refine confidence
-                prior = 0.5
-                # Likelihood: more lies -> more likely to be designated liar in question
-                total_lies = sum(agent_lie_count.values())
-                if total_lies > 0:
-                    for agent in agents:
-                        likelihood = agent_lie_count[agent] / total_lies if total_lies > 0 else 0.5
-                        posterior = bayesian_update(prior, likelihood)
-                        if posterior > 0.7:  # High confidence threshold
-                            answer_entity = agent
-                            break
-                
-                if not answer_entity:
-                    # Fallback: agent with most lies
-                    answer_entity = max(agent_lie_count.items(), key=lambda x: x[1])[0]
-            else:
-                # No consistent assignment, use first agent
-                answer_entity = agents[0] if agents else "Unknown"
-
-        # Use amino acid: is_uniquely_solvable to check if solution is unique (quantum degeneracy)
-        # Convert to CSP for uniqueness check
-        if var_map:
-            variables = list(var_map.keys())
-            domains = {v: [True, False] for v in variables}
-            constraints = []
-            # Convert clauses to CSP constraints
-            for clause in clauses:
-                def make_constraint(clause_vars, clause_lits):
-                    def constraint(assignment):
-                        for var, lit in zip(clause_vars, clause_lits):
-                            if var in assignment:
-                                if lit > 0 and assignment[var] == True:
-                                    return True
-                                if lit < 0 and assignment[var] == False:
-                                    return True
-                        return False
-                    return constraint
-                
-                clause_vars = []
-                clause_lits = []
-                for lit in clause:
-                    abs_lit = abs(lit)
-                    var = next((v for v, num in var_map.items() if num == abs_lit), None)
-                    if var:
-                        clause_vars.append(var)
-                        clause_lits.append(lit)
-                if clause_vars:
-                    constraints.append((clause_vars, make_constraint(clause_vars, clause_lits)))
+        policies = structure["policies"]
+        facts = structure["facts"]
+        
+        # Evolutionary biology framework: agents as species with fixed truth-telling strategies
+        # Truth-tellers have high fitness when environment (other agents' statements) is consistent
+        # Liars have high fitness when they can create contradictions that survive selection
+        
+        # Phase 1: Build logical constraints from statements
+        clauses = self._build_clauses(agents, statements, policies)
+        
+        # Phase 2: Use amino acid to detect paradox in the system
+        paradox_info = detect_paradox(clauses)
+        
+        # Phase 3: Use T1 primitives to analyze belief dynamics
+        # Compute entropy of possible truth assignments as measure of uncertainty
+        possible_assignments = self._enumerate_assignments(agents, clauses)
+        
+        if possible_assignments:
+            # Compute probability distribution over assignments
+            probs = [1.0 / len(possible_assignments)] * len(possible_assignments)
+            uncertainty = entropy(probs)  # T1 primitive 1
             
-            unique = is_uniquely_solvable(domains, constraints)
+            # For each agent, compute posterior belief about their truthfulness
+            # using bayesian update based on statement consistency
+            agent_truth_prob = {}
+            for agent in agents:
+                # Prior: based on policy if known
+                prior = 0.5
+                if agent in policies:
+                    if policies[agent] == 'truth':
+                        prior = 0.9
+                    elif policies[agent] == 'lie':
+                        prior = 0.1
+                    elif policies[agent] == 'alternating':
+                        prior = 0.5
+                
+                # Likelihood: proportion of consistent assignments where agent's statement is true
+                consistent_with_agent_true = 0
+                total_consistent = 0
+                
+                for assignment in possible_assignments:
+                    # Check if assignment satisfies all clauses
+                    if self._satisfies_all(assignment, clauses):
+                        total_consistent += 1
+                        if assignment.get(f"{agent}_statement", False):
+                            consistent_with_agent_true += 1
+                
+                likelihood = consistent_with_agent_true / max(total_consistent, 1)
+                
+                # Update belief
+                posterior = bayesian_update(prior, likelihood, false_positive=0.1)  # T1 primitive 2
+                agent_truth_prob[agent] = posterior
+            
+            # Use confidence_from_agreement to measure consensus
+            truth_scores = list(agent_truth_prob.values())
+            if truth_scores:
+                consensus = confidence_from_agreement(truth_scores)  # T1 primitive 3
+            else:
+                consensus = 0.5
         else:
-            unique = False
-
-        confidence = 0.8 if not has_paradox and unique else 0.5
-        confidence = min(confidence, 1.0 - system_entropy)  # Quantum uncertainty principle
-
+            uncertainty = 1.0
+            agent_truth_prob = {agent: 0.5 for agent in agents}
+            consensus = 0.0
+        
+        # Phase 4: Determine which fact is most likely true based on evolutionary stability
+        # Facts that appear in most consistent assignments are evolutionarily stable
+        fact_support = {}
+        for fact in facts:
+            support_count = 0
+            total_assignments = len(possible_assignments)
+            
+            for assignment in possible_assignments:
+                if self._satisfies_all(assignment, clauses):
+                    # Check if fact is true in this assignment
+                    # We'll use a simple heuristic: fact mentioned in true statements
+                    fact_key = f"fact_{fact.replace(' ', '_')}"
+                    if assignment.get(fact_key, False):
+                        support_count += 1
+            
+            fact_support[fact] = support_count / max(total_assignments, 1)
+        
+        # Determine answer: either an agent's identity or a fact
+        computed_answer = ""
+        reasoning_text = ""
+        
+        if paradox_info and paradox_info.get("is_paradox", False):
+            # Paradox detected - system is inconsistent
+            computed_answer = "contradiction"
+            reasoning_text = "The statements form a logical paradox."
+        elif fact_support:
+            # Find most supported fact
+            best_fact = max(fact_support.items(), key=lambda x: x[1])
+            if best_fact[1] > 0.5:
+                computed_answer = best_fact[0]
+                reasoning_text = f"Most evolutionarily stable fact: {best_fact[0]}"
+            else:
+                # No clear fact, check agent truthfulness
+                if agent_truth_prob:
+                    most_truthful = max(agent_truth_prob.items(), key=lambda x: x[1])
+                    computed_answer = most_truthful[0]
+                    reasoning_text = f"Most likely truth-teller: {most_truthful[0]}"
+                else:
+                    computed_answer = "unknown"
+                    reasoning_text = "Insufficient information to determine truth."
+        else:
+            # No facts mentioned, determine liar/truth-teller
+            if agent_truth_prob:
+                # Evolutionary pressure: truth-tellers survive when environment is consistent
+                # Liars survive when they can create beneficial contradictions
+                if uncertainty < 0.3:  # Low uncertainty means consistent environment
+                    # Truth-tellers have advantage
+                    most_truthful = max(agent_truth_prob.items(), key=lambda x: x[1])
+                    computed_answer = most_truthful[0]
+                    reasoning_text = f"Consistent environment favors truth-teller: {most_truthful[0]}"
+                else:
+                    # High uncertainty, liars might thrive
+                    least_truthful = min(agent_truth_prob.items(), key=lambda x: x[1])
+                    computed_answer = least_truthful[0]
+                    reasoning_text = f"Uncertain environment may favor liar: {least_truthful[0]}"
+            else:
+                computed_answer = "cannot determine"
+                reasoning_text = "No clear evolutionary stable strategy."
+        
         return {
-            "answer": answer_entity,
-            "confidence": confidence,
-            "reasoning": f"Quantum collapse to consistent assignment. Paradox: {has_paradox}, Unique: {unique}, Entropy: {system_entropy:.2f}",
-            "has_paradox": has_paradox,
-            "is_unique": unique,
-            "system_entropy": system_entropy
+            "answer": computed_answer,
+            "confidence": consensus,
+            "reasoning": reasoning_text,
+            "uncertainty": uncertainty,
+            "agent_truth_prob": agent_truth_prob,
+            "fact_support": fact_support,
+            "paradox_detected": paradox_info.get("is_paradox", False) if paradox_info else False
         }
 
-    def _score(self, candidates: List[str], reasoning_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Score candidates by similarity to computed answer."""
-        computed_answer = str(reasoning_result["answer"])
-        results = []
+    def _build_clauses(self, agents: List[str], statements: Dict[str, str], policies: Dict[str, str]) -> List[List[int]]:
+        """Convert natural language statements to propositional logic clauses."""
+        clauses = []
+        var_map = {}
+        next_var = 1
         
+        # Create variables for agents' truthfulness
+        for agent in agents:
+            var_map[f"{agent}_truthful"] = next_var
+            next_var += 1
+        
+        # Create variables for statements being true
+        for agent, stmt in statements.items():
+            var_map[f"{agent}_statement"] = next_var
+            next_var += 1
+            
+            # Policy constraints
+            if agent in policies:
+                if policies[agent] == 'truth':
+                    # Truthful agent → statement is true
+                    clauses.append([-var_map[f"{agent}_truthful"], var_map[f"{agent}_statement"]])
+                    clauses.append([var_map[f"{agent}_truthful"], -var_map[f"{agent}_statement"]])
+                elif policies[agent] == 'lie':
+                    # Lying agent → statement is false
+                    clauses.append([-var_map[f"{agent}_truthful"], -var_map[f"{agent}_statement"]])
+                    clauses.append([var_map[f"{agent}_truthful"], var_map[f"{agent}_statement"]])
+        
+        # Extract simple logical relationships from statements
+        for agent, stmt in statements.items():
+            # Handle simple statement patterns
+            stmt_lower = stmt.lower()
+            
+            # Pattern: "X is truthful" or "X is lying"
+            for other_agent in agents:
+                if f"{other_agent.lower()} is truthful" in stmt_lower:
+                    # Statement claims other_agent is truthful
+                    clauses.append([
+                        -var_map[f"{agent}_statement"],
+                        var_map[f"{other_agent}_truthful"]
+                    ])
+                    clauses.append([
+                        var_map[f"{agent}_statement"],
+                        -var_map[f"{other_agent}_truthful"]
+                    ])
+                elif f"{other_agent.lower()} is lying" in stmt_lower:
+                    # Statement claims other_agent is lying
+                    clauses.append([
+                        -var_map[f"{agent}_statement"],
+                        -var_map[f"{other_agent}_truthful"]
+                    ])
+                    clauses.append([
+                        var_map[f"{agent}_statement"],
+                        var_map[f"{other_agent}_truthful"]
+                    ])
+            
+            # Pattern: self-reference
+            if "i am" in stmt_lower or "i'm" in stmt_lower:
+                if "truthful" in stmt_lower:
+                    # "I am truthful" - statement equivalent to agent being truthful
+                    clauses.append([
+                        -var_map[f"{agent}_statement"],
+                        var_map[f"{agent}_truthful"]
+                    ])
+                    clauses.append([
+                        var_map[f"{agent}_statement"],
+                        -var_map[f"{agent}_truthful"]
+                    ])
+                elif "lying" in stmt_lower:
+                    # "I am lying" - creates liar paradox
+                    # This will be caught by paradox detection
+                    pass
+        
+        return clauses
+
+    def _enumerate_assignments(self, agents: List[str], clauses: List[List[int]]) -> List[Dict[str, bool]]:
+        """Enumerate possible truth assignments for small problems."""
+        if len(agents) > 4:  # Too many variables for brute force
+            return []
+        
+        # Get all variables from clauses
+        all_vars = set()
+        for clause in clauses:
+            for lit in clause:
+                all_vars.add(abs(lit))
+        
+        if not all_vars:
+            return []
+        
+        # Brute force enumeration
+        assignments = []
+        n = len(all_vars)
+        var_list = list(all_vars)
+        
+        for i in range(2**n):
+            assignment = {}
+            for j, var in enumerate(var_list):
+                assignment[var] = bool((i >> j) & 1)
+            
+            # Check if assignment satisfies all clauses
+            if self._satisfies_all(assignment, clauses):
+                # Convert to named assignment
+                named_assignment = {}
+                # We need the reverse mapping from var numbers to names
+                # For simplicity, we'll just store the numeric assignment
+                assignments.append(assignment)
+        
+        return assignments
+
+    def _satisfies_all(self, assignment: Dict[int, bool], clauses: List[List[int]]) -> bool:
+        """Check if assignment satisfies all clauses."""
+        for clause in clauses:
+            clause_satisfied = False
+            for lit in clause:
+                var = abs(lit)
+                value = assignment.get(var, False)
+                if lit > 0 and value:
+                    clause_satisfied = True
+                    break
+                elif lit < 0 and not value:
+                    clause_satisfied = True
+                    break
+            if not clause_satisfied:
+                return False
+        return True
+
+    def _score(self, candidates: List[str], reasoning_result: Dict[str, Any]) -> List[Dict[str, Any]]:
+        """Score candidates based on similarity to computed answer."""
+        computed_answer = reasoning_result["answer"]
+        reasoning_text = reasoning_result["reasoning"]
+        
+        results = []
         for candidate in candidates:
-            # Primary: check if computed answer appears in candidate text
+            # Primary scoring: check if computed answer appears in candidate
             if computed_answer.lower() in candidate.lower():
-                score = 1.0
+                base_score = 1.0
             else:
-                # Fallback: NCD similarity
-                score = 1.0 / (1.0 + self._ncd(computed_answer, candidate))
+                # Fallback: NCD similarity to reasoning text
+                base_score = 1.0 / (1.0 + self._ncd(reasoning_text, candidate))
+            
+            # Adjust based on confidence
+            confidence = reasoning_result.get("confidence", 0.5)
+            adjusted_score = base_score * (0.5 + 0.5 * confidence)
             
             results.append({
                 "candidate": candidate,
-                "raw_score": score,
-                "confidence": reasoning_result["confidence"]
+                "score": adjusted_score,
+                "base_score": base_score,
+                "confidence": confidence
             })
         
         return results
 
     def _calibrate(self, scored: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Calibrate scores with confidence and reasoning metrics."""
-        calibrated = []
-        for item in scored:
-            # Adjust score by confidence
-            adjusted = item["raw_score"] * item["confidence"]
-            # Add small boost for high confidence
-            if item["confidence"] > 0.8:
-                adjusted = min(1.0, adjusted * 1.1)
-            
-            calibrated.append({
-                "candidate": item["candidate"],
-                "score": adjusted,
-                "raw_score": item["raw_score"],
-                "confidence": item["confidence"]
-            })
+        """Calibrate scores to ensure proper distribution."""
+        if not scored:
+            return scored
         
-        return calibrated
+        # Simple normalization to [0, 1] range
+        scores = [item["score"] for item in scored]
+        if scores:
+            min_score = min(scores)
+            max_score = max(scores)
+            if max_score > min_score:
+                for item in scored:
+                    item["score"] = (item["score"] - min_score) / (max_score - min_score)
+            else:
+                # All scores equal
+                for item in scored:
+                    item["score"] = 0.5
+        
+        return scored
 
     def _ncd(self, a: str, b: str) -> float:
         """Normalized Compression Distance between two strings."""
@@ -339,4 +409,5 @@ class ReasoningTool:
         
         if max(ca, cb) == 0:
             return 1.0
+        
         return (cab - min(ca, cb)) / max(ca, cb)

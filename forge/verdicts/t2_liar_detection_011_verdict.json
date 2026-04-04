@@ -1,16 +1,16 @@
 {
   "tool_id": "t2_liar_detection_011",
   "tier": 2,
-  "timestamp": "2026-04-03T15:11:56.426879",
-  "overall_score": 0.29166666666666663,
+  "timestamp": "2026-04-04T00:07:49.397241",
+  "overall_score": 0.3166666666666667,
   "seed_scores": [
-    0.25,
+    0.2916666666666667,
+    0.2916666666666667,
     0.3333333333333333,
-    0.25,
-    0.25,
+    0.2916666666666667,
     0.375
   ],
-  "seed_stability": 0.125,
+  "seed_stability": 0.08333333333333331,
   "per_category": {
     "simpson_paradox": {
       "pass": false,
@@ -67,12 +67,12 @@
       "load_bearing": false,
       "budget_share": 0
     },
-    "confidence_from_agreement": {
+    "entropy": {
       "delta": 0.0,
       "load_bearing": false,
       "budget_share": 0
     },
-    "entropy": {
+    "confidence_from_agreement": {
       "delta": 0.0,
       "load_bearing": false,
       "budget_share": 0
@@ -88,11 +88,6 @@
       "budget_share": 0
     },
     "track_beliefs": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
-    },
-    "solve": {
       "delta": 0.0,
       "load_bearing": false,
       "budget_share": 0
@@ -119,10 +114,67 @@
     }
   },
   "diversity": {
-    "max_overlap": 0.0,
-    "most_similar_tool": null,
-    "passes_diversity_check": true
+    "max_overlap": 0.6364,
+    "most_similar_tool": "t2_liar_detection_000",
+    "passes_diversity_check": false
   },
   "verdict": "FAIL_BATTERY",
-  "promising_primitives": []
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "C",
+    "cluster_name": "Logic / Constraint / Formal",
+    "cluster_score": 0.2571,
+    "seed_scores": [
+      0.3571,
+      0.0714,
+      0.2857,
+      0.4286,
+      0.1429
+    ],
+    "seed_stability": 0.3571,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "argument_strength": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "liar_detection": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "constraint_satisfaction": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "logical_consistency_checking": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "stable_model_finding": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "rule_application_order": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "truth_table_evaluation": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": false,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.2667,
+      "B": 0.2167,
+      "D": 0.3667,
+      "E": 0.2857,
+      "F": 0.45
+    },
+    "generalist_tag": "generalist_1"
+  }
 }

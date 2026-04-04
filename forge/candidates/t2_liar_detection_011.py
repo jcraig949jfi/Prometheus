@@ -1,316 +1,316 @@
 import re
 import zlib
-from typing import Dict, List, Any, Tuple, Set
+from typing import Dict, List, Any, Tuple
 
 from forge_primitives import (
     bayesian_update,
-    confidence_from_agreement,
     entropy,
+    confidence_from_agreement,
     solve_sat,
     modus_ponens,
     track_beliefs
 )
-from forge.amino_acids.pysat_acids import solve, detect_paradox, check_entailment
+from forge.amino_acids.pysat_acids import detect_paradox, check_entailment
 from forge.amino_acids.constraint_acids import solve_first, is_uniquely_solvable
 
 
 class ReasoningTool:
-    """Electromagnetism x SAT/Constraint solving - liar_detection"""
+    """Chemical kinetics x SAT solving - liar_detection"""
 
     def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict[str, Any]]:
         # Phase 1: EXTRACT
         structure = self._extract(prompt)
+        
         # Phase 2: REASON
         reasoning_result = self._reason(structure)
+        
         # Phase 3: SCORE
         scored = self._score(candidates, reasoning_result)
+        
         # Phase 4: CALIBRATE
         calibrated = self._calibrate(scored)
+        
         return sorted(calibrated, key=lambda x: x["score"], reverse=True)
 
     def _extract(self, prompt: str) -> Dict[str, Any]:
-        """Parse prompt to find agents, statements, and truth policies."""
+        """Extract agents, statements, and truth policies from the prompt."""
         lines = [line.strip() for line in prompt.split('.') if line.strip()]
+        
         agents = []
         statements = []
         truth_policies = {}  # agent -> policy (e.g., "always lies", "alternates")
-        question = lines[-1] if lines else ""
-
-        # Find agent names (capitalized words that appear as subjects)
-        words = re.findall(r'\b([A-Z][a-z]+)\b', prompt)
-        potential_agents = [w for w in words if len(w) > 2]
-        # Heuristic: agents are often followed by "says", "claims", "always", "never"
-        for i, line in enumerate(lines):
-            lower_line = line.lower()
-            # Look for policy patterns
-            if "always tells the truth" in lower_line or "always truthful" in lower_line:
-                for agent in potential_agents:
-                    if agent in line:
-                        truth_policies[agent] = "truth"
-            elif "always lies" in lower_line or "always false" in lower_line:
-                for agent in potential_agents:
-                    if agent in line:
-                        truth_policies[agent] = "lie"
-            elif "alternates" in lower_line or "alternately" in lower_line:
-                for agent in potential_agents:
-                    if agent in line:
-                        truth_policies[agent] = "alternate"
-            # Extract quoted statements or claims
-            if "says" in lower_line or "claims" in lower_line:
-                # Find the agent before "says"
-                match = re.search(r'([A-Z][a-z]+)\s+(?:says|claims)', line)
-                if match:
-                    agent = match.group(1)
-                    if agent not in agents:
-                        agents.append(agent)
-                    # Extract the statement content (after colon or quote)
-                    statement_part = line.split('says')[-1].split('claims')[-1].strip(' "\'')
-                    if statement_part:
-                        statements.append((agent, statement_part))
-
-        # If no explicit policies found, infer from common patterns
-        for agent in agents:
-            if agent not in truth_policies:
-                # Check if agent appears in context of truth/lie keywords
-                agent_context = " ".join([line for line in lines if agent in line])
-                if any(word in agent_context.lower() for word in ["truth", "honest", "correct"]):
-                    truth_policies[agent] = "truth"
-                elif any(word in agent_context.lower() for word in ["lie", "false", "wrong"]):
-                    truth_policies[agent] = "lie"
-                else:
-                    truth_policies[agent] = "unknown"
-
+        question = ""
+        
+        current_agent = None
+        for line in lines:
+            # Look for agent introductions (capitalized names followed by colon or "says")
+            agent_match = re.search(r'([A-Z][a-z]+(?:\s+[A-Z][a-z]+)*)(?:\s*[:]|\s+says)', line)
+            if agent_match:
+                current_agent = agent_match.group(1)
+                if current_agent not in agents:
+                    agents.append(current_agent)
+                
+                # Extract truth policy
+                if "always tells the truth" in line.lower():
+                    truth_policies[current_agent] = "truth"
+                elif "always lies" in line.lower():
+                    truth_policies[current_agent] = "lie"
+                elif "alternates" in line.lower():
+                    truth_policies[current_agent] = "alternate"
+                elif "random" in line.lower():
+                    truth_policies[current_agent] = "random"
+            
+            # Extract statements
+            if current_agent and ('"' in line or "'" in line):
+                quote_match = re.search(r'["\']([^"\']+)["\']', line)
+                if quote_match:
+                    statement = quote_match.group(1).strip()
+                    statements.append({
+                        "agent": current_agent,
+                        "statement": statement,
+                        "raw_line": line
+                    })
+            
+            # Extract question (usually last line)
+            if "?" in line and not question:
+                question = line
+        
+        # Extract propositional variables (capitalized words that appear in statements)
+        variables = set()
+        for stmt in statements:
+            words = re.findall(r'\b[A-Z][a-z]*\b', stmt["statement"])
+            variables.update(words)
+        
         return {
             "agents": agents,
             "statements": statements,
-            "policies": truth_policies,
+            "truth_policies": truth_policies,
             "question": question,
-            "raw": prompt
+            "variables": list(variables),
+            "raw_prompt": prompt
         }
 
     def _reason(self, structure: Dict[str, Any]) -> Dict[str, Any]:
-        """Use electromagnetic field analogy: agents as charged particles,
-        truth values as charges (+1 for true, -1 for false),
-        logical constraints as field equations.
-        """
+        """Use chemical kinetics as scaffold: agents as chemical species, 
+        truth values as concentrations, logical constraints as reaction rates."""
+        
         agents = structure["agents"]
         statements = structure["statements"]
-        policies = structure["policies"]
+        truth_policies = structure["truth_policies"]
         question = structure["question"]
-
-        # Electromagnetic analogy: each agent has a "truth charge" (+1 for truth-teller, -1 for liar)
-        # Unknown policies create superposition states (entropy)
-        # Logical constraints create "field lines" that must be satisfied
-
-        # Step 1: Map policies to initial charges
-        initial_charges = {}
-        policy_entropy = []
-        for agent, policy in policies.items():
-            if policy == "truth":
-                initial_charges[agent] = +1.0
-                policy_entropy.append(0.0)  # Certain
-            elif policy == "lie":
-                initial_charges[agent] = -1.0
-                policy_entropy.append(0.0)
-            elif policy == "alternate":
-                # Alternating: superposition of +1 and -1
-                initial_charges[agent] = 0.0  # Neutral charge
-                policy_entropy.append(1.0)    # High entropy
-            else:  # unknown
-                initial_charges[agent] = 0.0
-                policy_entropy.append(0.5)    # Moderate entropy
-
-        # Use T1 primitive: entropy of policy distribution
-        policy_uncertainty = entropy(policy_entropy) if policy_entropy else 0.0
-
-        # Step 2: Convert statements to logical constraints (SAT clauses)
-        # Each statement is a proposition that may be true or false
-        # Agent's truth policy determines whether the statement matches reality
+        variables = structure["variables"]
         
-        # Create proposition variables
-        prop_vars = {}
-        var_counter = 1
-        for agent, stmt in statements:
-            prop_name = f"S_{agent}_{var_counter}"
-            prop_vars[(agent, stmt)] = var_counter
-            var_counter += 1
-
-        # Build SAT clauses based on policies
+        # Map variables to SAT literals
+        var_to_lit = {var: i+1 for i, var in enumerate(variables)}
+        lit_to_var = {i+1: var for i, var in enumerate(variables)}
+        
+        # Build CNF clauses from statements and truth policies
         clauses = []
-        for (agent, stmt), var in prop_vars.items():
-            policy = policies.get(agent, "unknown")
+        
+        # Chemical kinetics analogy: each agent's truthfulness is a "concentration"
+        # that evolves according to reaction rules (logical constraints)
+        
+        # 1. Track belief states using track_beliefs primitive
+        # This represents the "kinetic network" of who believes what
+        belief_observations = []
+        for stmt in statements:
+            agent = stmt["agent"]
+            statement = stmt["statement"]
+            # Convert statement to proposition if possible
+            # Simple extraction: "X is true" -> X
+            if " is true" in statement.lower():
+                prop = statement.lower().replace(" is true", "").strip().title()
+                if prop in variables:
+                    belief_observations.append((agent, prop, True))
+            elif " is false" in statement.lower():
+                prop = statement.lower().replace(" is false", "").strip().title()
+                if prop in variables:
+                    belief_observations.append((agent, prop, False))
+        
+        # Use track_beliefs primitive - critical for determining what each agent believes
+        belief_states = track_beliefs(agents, belief_observations)
+        if belief_states is None:
+            belief_states = {}
+        
+        # 2. Encode truth policies as constraints
+        # Chemical kinetics: truth policies are "rate constants" that determine
+        # how quickly falsehoods propagate through the system
+        policy_clauses = []
+        for agent, policy in truth_policies.items():
             if policy == "truth":
-                # If agent tells truth, statement is TRUE
-                clauses.append([var])  # var must be true
+                # Agent always tells truth: if they say P, then P is true
+                for stmt in statements:
+                    if stmt["agent"] == agent:
+                        # Extract proposition from statement
+                        statement = stmt["statement"]
+                        if " is true" in statement.lower():
+                            prop = statement.lower().replace(" is true", "").strip().title()
+                            if prop in var_to_lit:
+                                # Agent says P -> P is true
+                                policy_clauses.append([var_to_lit[prop]])
+                        elif " is false" in statement.lower():
+                            prop = statement.lower().replace(" is false", "").strip().title()
+                            if prop in var_to_lit:
+                                # Agent says not P -> P is false
+                                policy_clauses.append([-var_to_lit[prop]])
             elif policy == "lie":
-                # If agent lies, statement is FALSE
-                clauses.append([-var])  # var must be false
-            elif policy == "alternate":
-                # Alternating: cannot determine directly - will be constrained by consistency
-                pass
-            # unknown: no constraint from policy alone
-
-        # Add consistency constraints: statements about other agents' truthfulness
-        # Example: "Alice says Bob is lying" creates relation between Alice's truth and Bob's statement
-        for agent, stmt in statements:
-            # Check if statement references another agent's truth value
-            for other_agent in agents:
-                if other_agent in stmt and other_agent != agent:
-                    # Patterns like "X is lying", "X tells the truth"
-                    lower_stmt = stmt.lower()
-                    if "lying" in lower_stmt or "lies" in lower_stmt or "false" in lower_stmt:
-                        # Statement: "other_agent is lying"
-                        # This means: other_agent's statements are false
-                        # We need to encode this as a constraint
-                        # For simplicity, we'll create a relation variable
-                        rel_var = var_counter
-                        var_counter += 1
-                        # If agent tells truth, rel_var is true (other_agent lies)
-                        # If agent lies, rel_var is false (other_agent tells truth)
-                        policy = policies.get(agent, "unknown")
-                        if policy == "truth":
-                            clauses.append([rel_var])
-                        elif policy == "lie":
-                            clauses.append([-rel_var])
-                        # rel_var implies constraints on other_agent's statements
-                        for (oa, o_stmt), o_var in prop_vars.items():
-                            if oa == other_agent:
-                                # If other_agent lies, all their statements are false
-                                clauses.append([-rel_var, -o_var])  # rel_var → ¬o_var
-                                # Also need: ¬rel_var → ? (if other_agent tells truth)
-                                # This gets complex - we'll use amino acid for full SAT solving
-
-        # Use amino acid: SAT solving to check consistency
-        sat_result = None
-        if clauses:
-            sat_result = solve(clauses)
+                # Agent always lies: if they say P, then P is false
+                for stmt in statements:
+                    if stmt["agent"] == agent:
+                        statement = stmt["statement"]
+                        if " is true" in statement.lower():
+                            prop = statement.lower().replace(" is true", "").strip().title()
+                            if prop in var_to_lit:
+                                # Agent says P -> P is false
+                                policy_clauses.append([-var_to_lit[prop]])
+                        elif " is false" in statement.lower():
+                            prop = statement.lower().replace(" is false", "").strip().title()
+                            if prop in var_to_lit:
+                                # Agent says not P -> P is true
+                                policy_clauses.append([var_to_lit[prop]])
         
-        # Use T1 primitive: solve_sat as alternative/verification
-        t1_sat_result = None
+        clauses.extend(policy_clauses)
+        
+        # 3. Use detect_paradox amino acid to check for contradictions
+        # Chemical kinetics: paradox detection is like finding equilibrium states
+        # where concentrations cannot stabilize
+        paradox_info = detect_paradox(clauses) if clauses else None
+        
+        # 4. Use solve_sat primitive to find satisfying assignments
+        # This represents the "steady-state concentrations" of truth values
+        sat_solution = None
         if clauses:
-            t1_sat_result = solve_sat(clauses, var_counter - 1)
-
-        # Step 3: Determine answer to the question
-        # Common question patterns: "Who is telling the truth?", "What is the actual situation?"
+            sat_solution = solve_sat(clauses, len(var_to_lit))
+        
+        # 5. Chemical kinetics: compute "entropy" of the solution space
+        # High entropy = many possible truth assignments (uncertainty)
+        # Low entropy = few possibilities (certainty)
+        solution_entropy = 0.0
+        if sat_solution:
+            # For a single solution, entropy is low
+            solution_entropy = 0.1
+        else:
+            # If no solution, entropy is high (contradiction)
+            solution_entropy = 1.0
+        
+        # 6. Use bayesian_update to refine confidence based on paradox detection
+        # Chemical kinetics: Bayesian update is like adjusting reaction rates
+        # based on observed equilibrium states
+        prior_confidence = 0.5
+        paradox_likelihood = 0.8 if paradox_info and paradox_info.get("is_paradox", False) else 0.2
+        updated_confidence = bayesian_update(prior_confidence, paradox_likelihood, false_positive=0.1)
+        
+        # 7. Determine the answer based on SAT solution and question
         computed_answer = ""
-        confidence = 0.5
+        reasoning_text = ""
         
-        # Analyze question to determine what is being asked
-        lower_q = question.lower()
-        if "who" in lower_q and ("truth" in lower_q or "lying" in lower_q):
-            # Question about identity of truth-teller/liar
-            # Use the SAT model to infer agent truth values
-            if sat_result is not None:
-                # Count agents with consistent truth assignments
-                truth_tellers = []
+        if sat_solution:
+            # Extract what the question is asking for
+            if "who" in question.lower():
+                # Find which agent's statement reveals the truth
                 for agent in agents:
-                    # Check if agent's statements are all true in the model
-                    agent_stmts = [(a, s) for (a, s) in prop_vars.keys() if a == agent]
-                    if agent_stmts:
-                        # For truth-teller, all statements should be true
-                        all_true = all(sat_result.get(prop_vars[(a, s)], False) for (a, s) in agent_stmts)
-                        if all_true:
-                            truth_tellers.append(agent)
-                
-                if truth_tellers:
-                    computed_answer = truth_tellers[0]  # First truth-teller found
-                else:
-                    # No clear truth-teller, use policy information
-                    for agent, policy in policies.items():
-                        if policy == "truth":
-                            computed_answer = agent
-                            break
-                    if not computed_answer:
-                        computed_answer = agents[0] if agents else "Unknown"
-            else:
-                # SAT failed, use policy-based answer
-                for agent, policy in policies.items():
-                    if policy == "truth":
+                    if agent.lower() in question.lower():
                         computed_answer = agent
                         break
                 if not computed_answer:
-                    computed_answer = agents[0] if agents else "Unknown"
-        
-        elif "what" in lower_q or "actual" in lower_q or "true" in lower_q:
-            # Question about the actual state of affairs
-            # Try to extract a specific fact from statements
-            factual_statements = []
-            for agent, stmt in statements:
-                # Look for statements about facts (not about other agents)
-                if not any(a in stmt for a in agents if a != agent):
-                    factual_statements.append(stmt)
-            
-            if factual_statements:
-                # Use the most frequently mentioned fact
-                from collections import Counter
-                fact_counts = Counter(factual_statements)
-                computed_answer = fact_counts.most_common(1)[0][0] if fact_counts else "Unknown"
-            else:
-                computed_answer = "Cannot determine"
-        
+                    # Default: agent with most consistent beliefs
+                    agent_consistency = {}
+                    for agent in agents:
+                        consistent = 0
+                        for prop, value in sat_solution.items():
+                            var_name = lit_to_var.get(abs(prop))
+                            if var_name and prop > 0:
+                                # Check if agent's beliefs match SAT solution
+                                if agent in belief_states:
+                                    if var_name in belief_states[agent]:
+                                        if (value and var_name in belief_states[agent]) or \
+                                           (not value and var_name not in belief_states[agent]):
+                                            consistent += 1
+                        agent_consistency[agent] = consistent
+                    
+                    if agent_consistency:
+                        computed_answer = max(agent_consistency.items(), key=lambda x: x[1])[0]
+            elif "what" in question.lower() and "true" in question.lower():
+                # Find which proposition is true
+                true_props = [lit_to_var[lit] for lit, val in sat_solution.items() 
+                             if lit > 0 and val and lit in lit_to_var]
+                if true_props:
+                    computed_answer = true_props[0]
+                else:
+                    false_props = [lit_to_var[abs(lit)] for lit, val in sat_solution.items() 
+                                  if lit < 0 and val and abs(lit) in lit_to_var]
+                    if false_props:
+                        computed_answer = f"not {false_props[0]}"
         else:
-            # Generic fallback
-            computed_answer = " ".join(agents) if agents else "No agents found"
-
-        # Use T1 primitive: confidence from agreement between SAT solvers
-        agreement_scores = []
-        if sat_result is not None and t1_sat_result is not None:
-            # Compare assignments for overlapping variables
-            common_vars = set(sat_result.keys()) & set(t1_sat_result.keys())
-            if common_vars:
-                matches = sum(1 for v in common_vars if sat_result[v] == t1_sat_result[v])
-                agreement = matches / len(common_vars) if common_vars else 0.0
-                agreement_scores.append(agreement)
+            # No SAT solution - contradiction detected
+            computed_answer = "contradiction"
         
-        # Use T1 primitive: bayesian update on confidence
-        prior_confidence = 0.5
-        likelihood = 0.8 if sat_result is not None else 0.3
-        updated_confidence = bayesian_update(prior_confidence, likelihood)
-        if updated_confidence is None:
-            updated_confidence = prior_confidence
+        # 8. Use confidence_from_agreement primitive
+        # Chemical kinetics: agreement between different reasoning paths
+        # is like multiple reactions converging to same equilibrium
+        confidence_scores = []
+        if sat_solution:
+            confidence_scores.append(0.8)
+        if paradox_info and not paradox_info.get("is_paradox", False):
+            confidence_scores.append(0.7)
+        if computed_answer:
+            confidence_scores.append(0.6)
         
-        # Use T1 primitive: final confidence from agreement
-        if agreement_scores:
-            final_confidence = confidence_from_agreement(agreement_scores)
-            if final_confidence is not None:
-                confidence = final_confidence
-            else:
-                confidence = updated_confidence
-        else:
-            confidence = updated_confidence
-
-        # Use amino acid: detect paradox in the statements
-        paradox_info = None
-        if clauses:
-            paradox_info = detect_paradox(clauses)
+        final_confidence = confidence_from_agreement(confidence_scores) if confidence_scores else 0.5
         
-        # Adjust confidence based on paradox detection
-        if paradox_info is not None:
-            if paradox_info:  # Paradox detected
-                confidence *= 0.7  # Reduce confidence due to inconsistency
-            else:
-                confidence *= 1.1  # Slight boost for consistency
-
+        # 9. Use modus_ponens to derive additional conclusions
+        # Chemical kinetics: logical inference as reaction propagation
+        premises = []
+        for stmt in statements:
+            # Convert simple implications
+            if " if " in stmt["statement"].lower():
+                parts = stmt["statement"].lower().split(" if ")
+                if len(parts) == 2:
+                    consequent = parts[0].strip().title()
+                    antecedent = parts[1].strip().title()
+                    if consequent in variables and antecedent in variables:
+                        premises.append((antecedent, consequent))
+        
+        facts = set()
+        if sat_solution:
+            for lit, val in sat_solution.items():
+                if val and abs(lit) in lit_to_var:
+                    facts.add(lit_to_var[abs(lit)])
+        
+        derived_facts = modus_ponens(premises, facts) if premises else set()
+        
+        # If we still don't have an answer, use derived facts
+        if not computed_answer and derived_facts:
+            computed_answer = next(iter(derived_facts))
+        
+        # Final fallback if no answer computed
+        if not computed_answer:
+            computed_answer = agents[0] if agents else "unknown"
+        
+        reasoning_text = f"SAT solution: {sat_solution}, Paradox: {paradox_info}, Entropy: {solution_entropy:.2f}, Confidence: {final_confidence:.2f}"
+        
         return {
             "answer": computed_answer,
-            "confidence": min(max(confidence, 0.0), 1.0),
-            "reasoning": f"Electromagnetic charge model with SAT consistency check. Policies: {policies}. Paradox detected: {paradox_info}",
-            "agents": agents,
-            "policies": policies
+            "confidence": final_confidence,
+            "reasoning": reasoning_text,
+            "sat_solution": sat_solution,
+            "paradox_detected": paradox_info.get("is_paradox", False) if paradox_info else False,
+            "entropy": solution_entropy
         }
 
     def _score(self, candidates: List[str], reasoning_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Score candidates by similarity to computed answer."""
+        """Score candidates based on similarity to computed answer."""
         computed_answer = reasoning_result["answer"]
         confidence = reasoning_result["confidence"]
+        reasoning_text = reasoning_result["reasoning"]
         
         results = []
         for candidate in candidates:
-            # Primary: check if computed answer appears in candidate
+            # Primary scoring: exact match or substring of computed answer
             if computed_answer.lower() in candidate.lower():
                 base_score = 1.0
             else:
-                # Fallback: NCD similarity
+                # Fallback: NCD similarity to reasoning text
                 base_score = 1.0 / (1.0 + self._ncd(computed_answer, candidate))
             
             # Adjust by confidence
@@ -326,22 +326,22 @@ class ReasoningTool:
         return results
 
     def _calibrate(self, scored: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Calibrate scores to ensure proper distribution."""
+        """Calibrate scores to ensure proper ranking."""
         if not scored:
             return scored
         
         # Simple normalization to [0, 1] range
         scores = [item["score"] for item in scored]
-        min_score = min(scores)
-        max_score = max(scores)
-        
-        if max_score > min_score:
-            for item in scored:
-                item["score"] = (item["score"] - min_score) / (max_score - min_score)
-        else:
-            # All scores equal
-            for item in scored:
-                item["score"] = 0.5
+        if scores:
+            min_score = min(scores)
+            max_score = max(scores)
+            if max_score > min_score:
+                for item in scored:
+                    item["score"] = (item["score"] - min_score) / (max_score - min_score)
+            else:
+                # All scores equal
+                for item in scored:
+                    item["score"] = 0.5
         
         return scored
 
