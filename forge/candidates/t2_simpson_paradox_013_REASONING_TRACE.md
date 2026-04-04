@@ -1,6 +1,6 @@
 # Reasoning Trace: t2_simpson_paradox_013
 
-Science field(s): number_theory
+Science field(s): evolutionary_biology
 Category: simpson_paradox
-Generated: 2026-04-03T09:56:05.432554
-Model: meta/llama-3.3-70b-instruct
+Generated: 2026-04-03T15:02:51.602000
+Model: deepseek-chat

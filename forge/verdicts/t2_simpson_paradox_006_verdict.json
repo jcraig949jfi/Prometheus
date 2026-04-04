@@ -1,20 +1,20 @@
 {
   "tool_id": "t2_simpson_paradox_006",
   "tier": 2,
-  "timestamp": "2026-04-03T09:59:31.260251",
-  "overall_score": 0.0,
+  "timestamp": "2026-04-03T15:13:45.761574",
+  "overall_score": 0.008333333333333333,
   "seed_scores": [
     0.0,
     0.0,
     0.0,
-    0.0,
+    0.041666666666666664,
     0.0
   ],
-  "seed_stability": 0.0,
+  "seed_stability": 0.041666666666666664,
   "per_category": {
     "simpson_paradox": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "causal_counterfactual": {
       "pass": false,
@@ -62,17 +62,22 @@
     }
   },
   "ablation": {
-    "entropy": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
-    },
     "bayesian_update": {
       "delta": 0.0,
       "load_bearing": false,
       "budget_share": 0
     },
+    "entropy": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
     "confidence_from_agreement": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_linear_system": {
       "delta": 0.0,
       "load_bearing": false,
       "budget_share": 0
@@ -83,11 +88,6 @@
       "budget_share": 0
     },
     "conditional_query": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
-    },
-    "detect_confounders": {
       "delta": 0.0,
       "load_bearing": false,
       "budget_share": 0

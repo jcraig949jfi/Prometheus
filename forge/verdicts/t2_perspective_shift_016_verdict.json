@@ -1,0 +1,120 @@
+{
+  "tool_id": "t2_perspective_shift_016",
+  "tier": 2,
+  "timestamp": "2026-04-03T15:13:12.383007",
+  "overall_score": 0.3833333333333333,
+  "seed_scores": [
+    0.4166666666666667,
+    0.4583333333333333,
+    0.4583333333333333,
+    0.375,
+    0.20833333333333334
+  ],
+  "seed_stability": 0.24999999999999997,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    }
+  },
+  "ablation": {
+    "track_beliefs": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "sally_anne_test": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "modus_ponens": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "confidence_from_agreement": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "entropy": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "check_entailment": {
+      "delta": 0.4167,
+      "load_bearing": true,
+      "budget_share": 1.0
+    },
+    "detect_paradox": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "solve_first": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    },
+    "is_uniquely_solvable": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.0,
+    "most_similar_tool": null,
+    "passes_diversity_check": true
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [
+    "check_entailment"
+  ]
+}

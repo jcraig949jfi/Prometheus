@@ -26,8 +26,20 @@
 | 11 | Geometric Langlands software | MEDIUM | Is anyone building tools, not just proofs? |
 | 12 | LMFDB graph structure | MEDIUM | Has anyone studied the connectivity of LMFDB? |
 
-### Reserved for Tomorrow (5 slots)
-Save for follow-up questions based on today's results.
+### Batch 2 — Council Response Follow-ups (2026-04-03)
+| # | Package | Priority | Key Question |
+|---|---------|----------|-------------|
+| 14 | Tamagawa theory | HIGHEST | Do Tamagawa numbers affect zeros 5-19 beyond conductor? |
+| 15 | Normalization artifacts | HIGH | Has Katz-Sarnak normalization ever created/destroyed a finding? |
+| 16 | ILS support window | HIGHEST | What zero index does ILS family discrimination end at N=5000? |
+| 17 | Wasserstein on L-functions | HIGH | Has anyone used optimal transport to compare L-function zeros? |
+| 21 | Finite-conductor corrections | HIGH | Is the 0.05 RMT gap a pre-asymptotic effect? |
+
+### Still Pending from Batch 1
+| # | Package | Priority | Status |
+|---|---------|----------|--------|
+| 10 | Nebentypus symmetry | MEDIUM | Resubmit — character anomaly still unresolved |
+| 13 | BSD invariants zero space | HIGHEST | Resubmit — Faltings height novelty check needed |
 
 ---
 

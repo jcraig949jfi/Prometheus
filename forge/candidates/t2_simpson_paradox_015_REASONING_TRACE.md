@@ -1,6 +1,6 @@
 # Reasoning Trace: t2_simpson_paradox_015
 
-Science field(s): epidemiology
+Science field(s): thermodynamics
 Category: simpson_paradox
-Generated: 2026-04-03T09:56:32.519599
-Model: meta/llama-3.3-70b-instruct
+Generated: 2026-04-03T15:05:00.098119
+Model: deepseek-chat

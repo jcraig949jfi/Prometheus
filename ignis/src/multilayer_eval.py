@@ -33,6 +33,7 @@ from analysis_base import (
     make_steering_hook,
 )
 from phase_transition_study import ORDINAL_TRAPS
+from trap_batteries_v3 import V3_TRAPS
 
 logging.basicConfig(
     level=logging.INFO,
@@ -41,7 +42,8 @@ logging.basicConfig(
 )
 log = logging.getLogger("ignis.multilayer")
 
-ALL_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+V2_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+ALL_TRAPS = V2_TRAPS  # default, overridden by --battery v3
 
 
 def load_genome(path):
@@ -147,7 +149,14 @@ def main():
                         help="Layer=path pairs, e.g. L21=path/to/genome.pt")
     parser.add_argument("--epsilon-scales", nargs="*", type=float, default=None,
                         help="Test different epsilon multipliers (e.g., 0.5 1.0 1.5)")
+    parser.add_argument("--battery", type=str, default="v2", choices=["v2", "v3"],
+                        help="Trap battery version: v2 (default) or v3 (harder traps)")
     args = parser.parse_args()
+
+    if args.battery == "v3":
+        global ALL_TRAPS
+        ALL_TRAPS = V3_TRAPS
+        log.info("Using v3 trap battery (%d traps)", len(V3_TRAPS))
 
     # Load model
     base = AnalysisBase(

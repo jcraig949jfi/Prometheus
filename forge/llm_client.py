@@ -10,9 +10,15 @@ from urllib import request, error
 ROOT = Path(__file__).resolve().parent.parent
 
 # ── Provider configuration ─────────────────────────────────────────────
-PROVIDER = "nvidia"  # "nvidia" or "openrouter"
+PROVIDER = "deepseek"  # "deepseek", "nvidia", or "openrouter"
 
 PROVIDERS = {
+    "deepseek": {
+        "url": "https://api.deepseek.com/chat/completions",
+        "model": "deepseek-chat",
+        "key_env": "DEEPSEEK_API_KEY",
+        "headers": {},
+    },
     "nvidia": {
         "url": "https://integrate.api.nvidia.com/v1/chat/completions",
         "model": "meta/llama-3.3-70b-instruct",
@@ -32,17 +38,26 @@ PROVIDERS = {
 
 
 def _load_api_key(key_name):
-    """Load API key from environment or agents/eos/.env."""
+    """Load API key from environment, agents/eos/.env, or DeepseekKey.txt."""
     key = os.environ.get(key_name, "")
     if key:
         return key
+    # Check agents/eos/.env
     env_path = ROOT / "agents" / "eos" / ".env"
     if env_path.exists():
         for line in env_path.read_text().splitlines():
             line = line.strip()
             if line.startswith(f"{key_name}="):
                 return line.split("=", 1)[1].strip()
-    raise RuntimeError(f"{key_name} not found in environment or agents/eos/.env")
+    # Check DeepseekKey.txt for DEEPSEEK_API_KEY
+    if key_name == "DEEPSEEK_API_KEY":
+        keyfile = ROOT / "DeepseekKey.txt"
+        if keyfile.exists():
+            for line in keyfile.read_text().splitlines():
+                line = line.strip()
+                if line.startswith("sk-"):
+                    return line
+    raise RuntimeError(f"{key_name} not found in environment or config files")
 
 
 def generate_tool(system_prompt, user_prompt=None, temperature=0.7, max_tokens=4096):

@@ -28,9 +28,11 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from analysis_base import AnalysisBase, LOGIT_TRAPS, HELD_OUT_TRAPS, get_logit_margin, make_steering_hook
 from phase_transition_study import ORDINAL_TRAPS
+from trap_batteries_v3 import V3_TRAPS
 from multilayer_eval import load_genome
 
-ALL_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+V2_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+ALL_TRAPS = V2_TRAPS  # default, overridden by --battery v3
 
 logging.basicConfig(
     level=logging.INFO,
@@ -66,7 +68,14 @@ def main():
     parser.add_argument("--genomes", nargs="*", default=None,
                         help="Layer=path pairs, e.g. L8=path/to/genome.pt. "
                              "If omitted, uses default Qwen winning combo.")
+    parser.add_argument("--battery", type=str, default="v2", choices=["v2", "v3"],
+                        help="Trap battery version: v2 (default) or v3 (harder traps)")
     args = parser.parse_args()
+
+    if args.battery == "v3":
+        global ALL_TRAPS
+        ALL_TRAPS = V3_TRAPS
+        log.info("Using v3 trap battery (%d traps)", len(V3_TRAPS))
 
     base = AnalysisBase(
         model_name=args.model,

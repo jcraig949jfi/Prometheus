@@ -1,111 +1,106 @@
 {
   "tool_id": "t2_simpson_paradox_012",
   "tier": 2,
-  "timestamp": "2026-04-03T10:00:06.119704",
-  "overall_score": 0.0,
+  "timestamp": "2026-04-03T15:14:06.075984",
+  "overall_score": 0.30833333333333335,
   "seed_scores": [
-    0.0,
-    0.0,
-    0.0,
-    0.0,
-    0.0
+    0.2916666666666667,
+    0.20833333333333334,
+    0.2916666666666667,
+    0.3333333333333333,
+    0.4166666666666667
   ],
-  "seed_stability": 0.0,
+  "seed_stability": 0.20833333333333334,
   "per_category": {
     "simpson_paradox": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "causal_counterfactual": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "conjunction_fallacy": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "strategic_deception": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "perspective_shift": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "temporal_scheduling": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "argument_strength": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "liar_detection": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "compositional_multi_step": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "rate_of_change": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "causal_confounding_hard": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     },
     "temporal_complex": {
       "pass": false,
-      "failure_type": "format_error"
+      "failure_type": "wrong_answer"
     }
   },
   "ablation": {
     "bayesian_update": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.3333
     },
     "entropy": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.3333
     },
     "confidence_from_agreement": {
       "delta": 0.0,
       "load_bearing": false,
-      "budget_share": 0
+      "budget_share": 0.0
+    },
+    "solve_linear_system": {
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.3333
     },
     "build_bn": {
       "delta": 0.0,
       "load_bearing": false,
-      "budget_share": 0
+      "budget_share": 0.0
     },
     "conditional_query": {
       "delta": 0.0,
       "load_bearing": false,
-      "budget_share": 0
+      "budget_share": 0.0
+    },
+    "compare_conditional_marginal": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0.0
     },
     "detect_confounders": {
       "delta": 0.0,
       "load_bearing": false,
-      "budget_share": 0
-    },
-    "solve": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
-    },
-    "detect_paradox": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
-    },
-    "check_entailment": {
-      "delta": 0.0,
-      "load_bearing": false,
-      "budget_share": 0
+      "budget_share": 0.0
     }
   },
   "diversity": {

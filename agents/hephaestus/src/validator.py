@@ -16,7 +16,11 @@ STDLIB_MODULES = set(sys.stdlib_module_names) if hasattr(sys, "stdlib_module_nam
     "re", "secrets", "statistics", "string", "struct", "sys", "textwrap",
     "time", "typing", "unittest", "uuid", "warnings",
 }
-ALLOWED_MODULES = STDLIB_MODULES | {"numpy", "np"}
+ALLOWED_MODULES = STDLIB_MODULES | {
+    "numpy", "np",
+    "forge_primitives",       # Frame H primordial-soup primitives
+    "sympy", "networkx", "nx", "scipy",  # Frame H external libs
+}
 
 
 def check_syntax(code: str) -> tuple[bool, str]:

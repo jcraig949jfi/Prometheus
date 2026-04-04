@@ -39,6 +39,13 @@ This combination has already passed theoretical review. Your job is implementati
 Implement this as a Python class with the following interface:
 
 ```python
+import re
+import math
+import collections
+import itertools
+import functools
+import numpy as np
+
 class ReasoningTool:
     def __init__(self):
         # Initialize any state

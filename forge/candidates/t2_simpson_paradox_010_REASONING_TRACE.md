@@ -1,6 +1,6 @@
 # Reasoning Trace: t2_simpson_paradox_010
 
-Science field(s): cryptography
+Science field(s): social_choice_theory
 Category: simpson_paradox
-Generated: 2026-04-03T09:55:19.868278
-Model: meta/llama-3.3-70b-instruct
+Generated: 2026-04-03T14:59:16.476453
+Model: deepseek-chat

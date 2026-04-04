@@ -146,6 +146,30 @@ def _reason(self, structure):
     return {"answer": best[0], "confidence": 0.8, "reasoning": "Computed from data"}
 ```
 
+## CRITICAL ERROR HANDLING RULES
+
+1. Do NOT wrap primitive/amino acid calls in bare `try: ... except Exception: pass`.
+   If a primitive returns None, handle it explicitly:
+   ```python
+   result = bayesian_update(prior, likelihood)
+   if result is None:
+       result = prior  # sensible fallback, not silent swallowing
+   ```
+
+2. Do NOT create dummy/placeholder values for BN CPDs. If you extract rates
+   [58%, 57%, 42%, 43%] from the prompt, USE THOSE VALUES in your model:
+   ```python
+   # GOOD: use extracted rates
+   cpd_values = [[r/100 for r in extracted_rates]]
+
+   # BAD: ignore extracted rates, use dummy values
+   cpd_values = [[0.6], [0.4]]  # Where did these come from? Not the prompt!
+   ```
+
+3. If amino acid calls fail (return None or raise), fall through to a SIMPLER
+   computation that still uses the extracted data. Don't fall all the way back
+   to NCD — that throws away all your extraction work.
+
 ## HOW TO SCORE CANDIDATES (critical — this is where most tools fail)
 
 ### What is BANNED

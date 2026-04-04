@@ -46,6 +46,7 @@ from analysis_base import (
     make_steering_hook,
 )
 from phase_transition_study import ORDINAL_TRAPS
+from trap_batteries_v3 import V3_TRAPS
 
 # ---------------------------------------------------------------------------
 # Logging
@@ -60,7 +61,8 @@ log = logging.getLogger("ignis.evolve")
 # ---------------------------------------------------------------------------
 # All traps for calibration (same battery used in basin_escape_histogram)
 # ---------------------------------------------------------------------------
-ALL_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+V2_TRAPS = LOGIT_TRAPS + HELD_OUT_TRAPS + ORDINAL_TRAPS
+ALL_TRAPS = V2_TRAPS  # default, overridden by --battery v3
 
 
 # ---------------------------------------------------------------------------
@@ -518,7 +520,15 @@ def main():
                         help="Path to checkpoint .pt file to resume from (centers CMA-ES on saved vector)")
     parser.add_argument("--target-trap", type=str, default=None,
                         help="Name of a specific failing trap to weight heavily (5x) in fitness")
+    parser.add_argument("--battery", type=str, default="v2", choices=["v2", "v3"],
+                        help="Trap battery version: v2 (30 traps, default) or v3 (30 harder traps)")
     args = parser.parse_args()
+
+    # Override global ALL_TRAPS if v3 requested
+    if args.battery == "v3":
+        global ALL_TRAPS
+        ALL_TRAPS = V3_TRAPS
+        log.info("Using v3 trap battery (%d traps)", len(V3_TRAPS))
 
     if args.output_dir is None:
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
