@@ -68,14 +68,15 @@ logging.basicConfig(
 )
 log = logging.getLogger("hermes")
 
-# Load .env from eos (shared API keys)
-_env_file = PROMETHEUS_ROOT / "agents" / "eos" / ".env"
-if _env_file.exists():
-    for line in _env_file.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            k, v = line.split("=", 1)
-            os.environ.setdefault(k.strip(), v.strip())
+# Load .env — root .env first, then eos/.env fallback
+for _env_file in [PROMETHEUS_ROOT / ".env", PROMETHEUS_ROOT / "agents" / "eos" / ".env"]:
+    if _env_file.exists():
+        for line in _env_file.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+        break  # use first found
 
 
 # ---------------------------------------------------------------------------

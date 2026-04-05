@@ -18,12 +18,15 @@ ROOT = Path(__file__).parent.parent
 REPORT_DIR = ROOT / "reports" / "council_responses"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Keys
-_keyfile = (ROOT.parent / "DeepseekKey.txt").read_text(encoding="utf-8").strip().split("\n")
-DEEPSEEK_KEY = _keyfile[1].strip()
-OPENAI_KEY = _keyfile[4].strip()
-CLAUDE_KEY = _keyfile[7].strip()
-GOOGLE_KEY = "AIzaSyBODkkNkxm1Xmghk5XR_L7Wb9jS9JnTWvE"
+# Keys -- loaded via central keys.py
+import sys
+sys.path.insert(0, str(ROOT.parent))
+from keys import get_key
+
+DEEPSEEK_KEY = get_key("DEEPSEEK")
+OPENAI_KEY = get_key("OPENAI")
+CLAUDE_KEY = get_key("CLAUDE")
+GOOGLE_KEY = get_key("GEMINI")
 
 # Prompt
 PROMPT = (ROOT / "docs" / "council_prompt_apollo_speedups.md").read_text(encoding="utf-8")

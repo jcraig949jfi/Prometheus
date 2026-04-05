@@ -93,6 +93,27 @@ computationally in this form.
 
 ---
 
+## Research Battery Results (April 4)
+
+### New Kill Tests (3 more stripped)
+| # | Mechanism | Method | Result |
+|---|-----------|--------|--------|
+| 10 | KS normalization | Exact Gamma unfolding | ARI unchanged (+0.003) |
+| 11 | Arithmetic vs analytic conductor | Renormalization | Delta = 0.000 |
+| 12 | Sha on tail | Hotelling T^2 | p = 0.109 (not significant) |
+| 13 | Tamagawa on rank signal | Partial regression + ARI | Explains 1.1% of residual |
+
+### New Findings
+1. **Structured gap pattern**: rank-dependent spacing is non-uniform. 8/15 gaps survive Bonferroni, permutation p=0.001. Strong compression z6-z9, dead zones z9-z11 and z14-z16, reversal at z17-z18.
+2. **ARI U-curve**: ARI decreases then increases with conductor. Partially demographic (rank-2 fraction rises). R^2 improves 0.32->0.62 after removing rank-2, but uptick persists.
+3. **Tamagawa two-hump pattern**: After controlling for conductor+rank, Tamagawa has partial correlations in TWO regions: z1-z3 (r=0.25,0.11,0.04) and z10-z16 (r=0.05-0.10), with a dead zone at z4-z9. Novel spectral fingerprint. BUT orthogonal to rank discrimination (ARI delta = -0.001).
+4. **BSD wall confirmed quantitatively**: All 4 BSD invariants significant for z1, all vanish in tail. Tamagawa is the reverse: strongest in z1 AND mid-tail but doesn't discriminate rank.
+
+### Council Consensus (Round 3)
+All three responders demand: finite-matrix RMT gap simulation as the definitive null for the gap oscillation pattern. The gap pattern is "paper-worthy" only if it survives this test.
+
+---
+
 ## The Paper
 
 **Target:** Experimental Mathematics.

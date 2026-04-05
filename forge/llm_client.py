@@ -37,8 +37,28 @@ PROVIDERS = {
 }
 
 
+import sys
+sys.path.insert(0, str(ROOT))
+from keys import get_key as _central_get_key
+
+# Map provider key env names to central keys.py friendly names
+_KEY_MAP = {
+    "DEEPSEEK_API_KEY": "DEEPSEEK",
+    "OPENAI_API_KEY": "OPENAI",
+    "NVIDIA_API_KEY": "NVIDIA",  # not in keys.py yet, will fall through
+    "OPENROUTER_API_KEY": "OPENROUTER",  # same
+}
+
 def _load_api_key(key_name):
-    """Load API key from environment, agents/eos/.env, or DeepseekKey.txt."""
+    """Load API key via central keys.py, with env var fallback."""
+    # Try central loader first
+    friendly = _KEY_MAP.get(key_name)
+    if friendly:
+        try:
+            return _central_get_key(friendly)
+        except ValueError:
+            pass
+    # Direct env var fallback
     key = os.environ.get(key_name, "")
     if key:
         return key
@@ -49,14 +69,6 @@ def _load_api_key(key_name):
             line = line.strip()
             if line.startswith(f"{key_name}="):
                 return line.split("=", 1)[1].strip()
-    # Check DeepseekKey.txt for DEEPSEEK_API_KEY
-    if key_name == "DEEPSEEK_API_KEY":
-        keyfile = ROOT / "DeepseekKey.txt"
-        if keyfile.exists():
-            for line in keyfile.read_text().splitlines():
-                line = line.strip()
-                if line.startswith("sk-"):
-                    return line
     raise RuntimeError(f"{key_name} not found in environment or config files")
 
 

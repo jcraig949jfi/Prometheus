@@ -5,7 +5,7 @@
 
 ## Status: Publishable Finding (Earned)
 
-Four-day sprint. 336K objects. Nine mechanisms stripped. The spectral tail signal
+Four-day sprint. 336K objects. Thirteen mechanisms stripped. The spectral tail signal
 decomposes into three layers: GUE repulsion (90%), arithmetic residual (10%),
 and the BSD wall. The core finding is stable. Paper target: Experimental Mathematics.
 
@@ -19,6 +19,9 @@ and the BSD wall. The core finding is stable. Paper target: Experimental Mathema
 - Signal is flat across conductor (not pre-asymptotic)
 - Inner twist / CM structure is NOT the mechanism (CM = 0.87x)
 - Fricke +1 enrichment (1.44x) in Type B forms is a new structural lead
+- 13 mechanisms stripped (KS normalization, arithmetic conductor, Sha on tail, Tamagawa on rank)
+- Gap pattern: 8/15 gaps survive Bonferroni, permutation p=0.001
+- Tamagawa two-hump: real spectral fingerprint but orthogonal to rank (1.1%)
 
 ### What's Open
 - What arithmetic mechanism produces the 0.05 gap beyond RMT?
@@ -26,6 +29,9 @@ and the BSD wall. The core finding is stable. Paper target: Experimental Mathema
 - Does the ablation plateau shift with 340 zeros (Dirichlet characters)?
 - Does character-form zero distance predict landscape position?
 - Does the 0.05 gap shrink at conductor > 5000?
+- Does the gap oscillation survive finite-matrix RMT simulation?
+- What produces the two-hump Tamagawa pattern?
+- Why does the ARI U-curve persist after removing rank-2?
 
 ---
 
@@ -79,13 +85,15 @@ and the BSD wall. The core finding is stable. Paper target: Experimental Mathema
 | Apr 2 | +1,252 | 3 | Spectral tail finding. BSD wall. |
 | Apr 3 | +0 | 3 | RMT hypothesis. Root number test. z=14.0. |
 | Apr 4 | +202,143 | 3 | RMT simulation. Validation battery. Residual holds. |
-| **Total** | **~336K** | **9** | **Three-layer decomposition. Paper-ready.** |
+| Apr 4 PM | +0 | 5 | Research battery (6 exp). Council round 3. Tamagawa + Galois careful tests. |
+| Apr 4 Eve | +0 | 2 | Murder board (10 tests). RMT gap sim. Council round 4. Torsion kill. |
+| **Total** | **~336K** | **16** | **Sign inversion. Fifteen mechanisms stripped. Paper pivot.** |
 
 ---
 
 ## Kill Test Results (Cumulative)
 
-### Nine Mechanisms Stripped
+### Fifteen Mechanisms Stripped
 | # | Mechanism | Method | Outcome |
 |---|-----------|--------|---------|
 | 1 | Central vanishing | Ablation | Removing z1 improves ARI |
@@ -97,6 +105,13 @@ and the BSD wall. The core finding is stable. Paper target: Experimental Mathema
 | 7 | Pre-asymptotic | Conductor scaling | FLAT (slope=-0.014) |
 | 8 | Truncation | Extended zeros (25+) | PLATEAU at z5-19 |
 | 9 | Inner twists | CM enrichment | CM=0.87x (depleted) |
+| 10 | KS normalization | Exact Gamma unfolding | ARI unchanged (+0.003) |
+| 11 | Arithmetic vs analytic conductor | Renormalization | Delta = 0.000 |
+| 12 | Sha on tail | Hotelling T^2 | p = 0.109 (not significant) |
+| 13 | Tamagawa on rank signal | Partial regression + ARI | Explains 1.1% of residual |
+| 14 | Galois image (mod-l surjectivity) | Conductor-matched KS + ARI | Affects zeros (6/16 sig) but orthogonal to rank (0.4%) |
+| 15 | Torsion subgroup | Hotelling T^2 + regression + ARI | Affects tail (p=1e-5) but orthogonal to rank (0.0%) |
+| 16 | Number of bad primes (omega) | Spearman + ARI regression | rho=-0.23 with gaps but orthogonal to rank (0.0%) |
 
 ### The 163 / Type B Forms
 | Test | Result | Implication |

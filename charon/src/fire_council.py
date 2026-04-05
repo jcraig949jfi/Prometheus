@@ -15,33 +15,18 @@ ROOT = Path(__file__).parent.parent
 REPORT_DIR = ROOT / "reports" / "council_responses"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Keys -- loaded from DeepseekKey.txt (line 1=label, line 2=key, etc.)
-_keyfile = (ROOT.parent / "DeepseekKey.txt").read_text(encoding="utf-8").strip().split("\n")
-_keys = {}
-_current_label = None
-for line in _keyfile:
-    line = line.strip()
-    if not line:
-        continue
-    if line.lower().startswith("deepseek"):
-        _current_label = "deepseek"
-    elif line.lower().startswith("openai"):
-        _current_label = "openai"
-    elif line.lower().startswith("claude"):
-        _current_label = "claude"
-    elif line.lower().startswith("gemini"):
-        _current_label = "gemini"
-    elif _current_label and line.startswith(("sk-", "AIza")):
-        _keys[_current_label] = line
-        _current_label = None
+# Keys -- loaded via central keys.py
+import sys
+sys.path.insert(0, str(ROOT.parent))
+from keys import get_key
 
-DEEPSEEK_KEY = _keys.get("deepseek", "")
-OPENAI_KEY = _keys.get("openai", "")
-CLAUDE_KEY = _keys.get("claude", "")
-GOOGLE_KEY = _keys.get("gemini", "")
+DEEPSEEK_KEY = get_key("DEEPSEEK")
+OPENAI_KEY = get_key("OPENAI")
+CLAUDE_KEY = get_key("CLAUDE")
+GOOGLE_KEY = get_key("GEMINI")
 
-# Prompt -- battery results
-PROMPT = (ROOT / "docs" / "council_prompt_battery_results.md").read_text(encoding="utf-8")
+# Prompt -- murder board results
+PROMPT = (ROOT / "docs" / "council_prompt_murder_board.md").read_text(encoding="utf-8")
 
 SYSTEM_MSG = ("You are a world-class mathematician and hostile scientific reviewer "
               "specializing in analytic number theory, random matrix theory, and L-functions. "
@@ -180,7 +165,8 @@ def call_deepseek(prompt_text, output_file, model="deepseek-reasoner"):
 
 
 def main():
-    print(f"Firing council prompts -- Battery Results to ChatGPT, Claude, Gemini, DeepSeek")
+    print(f"Firing council prompts -- Murder Board to ChatGPT, DeepSeek")
+    print(f"  (Claude: out of credits. Gemini: token limit reached.)")
     print(f"  Prompt length: {len(PROMPT)} chars")
     print(f"  Date: {TODAY}")
     print()
@@ -188,17 +174,11 @@ def main():
     targets = [
         ("ChatGPT", lambda: call_openai(
             PROMPT,
-            REPORT_DIR / f"chatgpt_battery_results_{TODAY}.md",
+            REPORT_DIR / f"chatgpt_murder_board_{TODAY}.md",
             "ChatGPT", "gpt-4.1")),
-        ("Claude", lambda: call_claude(
-            PROMPT,
-            REPORT_DIR / f"claude_battery_results_{TODAY}.md")),
-        ("Gemini", lambda: call_gemini(
-            PROMPT,
-            REPORT_DIR / f"gemini_battery_results_{TODAY}.md")),
         ("DeepSeek", lambda: call_deepseek(
             PROMPT,
-            REPORT_DIR / f"deepseek_battery_results_{TODAY}.md")),
+            REPORT_DIR / f"deepseek_murder_board_{TODAY}.md")),
     ]
 
     threads = []
