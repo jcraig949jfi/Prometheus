@@ -20,9 +20,14 @@ import sys
 import os
 import random
 import time
+import warnings
 import yaml
 import numpy as np
 from pathlib import Path
+
+# Suppress numerical warnings from organism code (exp overflow, NaN, etc.)
+warnings.filterwarnings("ignore", category=RuntimeWarning)
+np.seterr(all='ignore')
 
 sys.path.insert(0, str(Path(__file__).parent))
 # Also add the original src dir for modules not overridden in v2c
@@ -53,6 +58,7 @@ from monitor import StagnationMonitor
 from aos import AdaptiveOperatorSelector
 from map_elites import MAPElitesArchive
 from racing import evaluate_with_racing
+from health import compute_health_report
 
 # ── Path resolution ─────────────────────────────────────────────────
 
@@ -521,7 +527,10 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
              })
     log_info("=" * 60, stage="bootstrap")
 
+    selected_fitness = []
+
     while generation < max_gen:
+      try:
         generation += 1
         gen_start = time.time()
 
@@ -543,11 +552,11 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
             ncd_held_out = compute_ncd_baseline(held_out_tasks)
 
         # Get curriculum-adjusted tasks based on population capability
-        best_raw_acc = max((fv.raw_accuracy for fv in fitness_vectors), default=0.0) if generation > 1 else 0.0
-        if generation > 1:
-            curriculum_tasks = task_mgr.get_curriculum_tasks(generation, best_raw_acc)
-        else:
-            curriculum_tasks = evolution_tasks
+        try:
+            best_raw_acc = max((fv.raw_accuracy for fv in fitness_vectors), default=0.0)
+        except (UnboundLocalError, NameError):
+            best_raw_acc = 0.0  # First iteration after checkpoint resume
+        curriculum_tasks = task_mgr.get_curriculum_tasks(generation, best_raw_acc)
 
         # ── Evaluate population (no racing — these survived last gen) ─
         fitness_vectors = evaluate_population(
@@ -752,14 +761,15 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
                 })
 
         # ── Stagnation Monitor ────────────────────────────────────
-        stagnation_monitor.update(
-            selected_fitness, archive.size,
-            accepted=n_accepted,
-            total=len(offspring_results),
-            neutral_count=0,
-        )
+        if not is_warmup:
+            stagnation_monitor.update(
+                selected_fitness, archive.size,
+                accepted=n_accepted,
+                total=len(offspring_results),
+                neutral_count=0,
+            )
 
-        alerts = stagnation_monitor.check_alerts(generation)
+        alerts = stagnation_monitor.check_alerts(generation) if not is_warmup else []
         for alert in alerts:
             log_warning(alert, stage="monitor", generation=generation)
 
@@ -883,6 +893,18 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
             save_checkpoint(population, archive, generation,
                             checkpoint_dir=checkpoint_dir, keep_last=keep_last)
 
+        # ── Health diagnostics (every 10 gens) ────────────────────
+        if generation % 10 == 0 and not is_warmup:
+            try:
+                compute_health_report(
+                    population, compiled_sources, selected_fitness,
+                    curriculum_tasks, generation, config,
+                    evaluate_fn=evaluate_organism_on_tasks,
+                    timeout=config.get("sandbox_timeout_seconds", 0.5),
+                )
+            except Exception as e:
+                log_warning(f"Health report failed: {e}", stage="health", generation=generation)
+
         # ── Shared Pool Operations ────────────────────────────────
         if pool is not None and generation % 50 == 0 and not is_warmup:
             try:
@@ -940,6 +962,22 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
             alive_ids = {o.genome_id for o in population}
             ablation_cache = {k: v for k, v in ablation_cache.items()
                             if k in alive_ids}
+
+      except KeyboardInterrupt:
+        log_info("Interrupted by user", stage="shutdown", generation=generation)
+        break
+      except Exception as e:
+        log_error(f"Error in generation {generation}: {e}", stage="error", generation=generation)
+        import traceback
+        log_error(traceback.format_exc(), stage="error", generation=generation)
+        # Emergency checkpoint
+        try:
+            save_checkpoint(population, archive, generation,
+                            checkpoint_dir=checkpoint_dir, keep_last=keep_last)
+            log_info(f"Emergency checkpoint saved at gen {generation}", stage="checkpoint")
+        except Exception:
+            pass
+        break
 
     # ── Final report ─────────────────────────────────────────────
     elapsed = (time.time() - start_time) / 3600

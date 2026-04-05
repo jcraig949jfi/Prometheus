@@ -14,6 +14,7 @@ v2c additions:
 import random
 import ast
 import copy
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from genome import Organism, PrimitiveCall, Lineage, ALL_PRIMITIVES, get_primitive_signature
 from logger import log_info, log_debug, log_warning
@@ -169,13 +170,29 @@ def mutate_batch(organisms, population, generation, config,
             child.lineage.generation = generation
             results[i] = (child, 'parameter')
 
-    # Post-mutation annealing for structural mutations
+    # Post-mutation annealing for structural mutations (parallel)
     if annealing_tasks:
-        for i in range(len(results)):
-            child, op_name = results[i]
-            if op_name != 'parameter':
-                annealed = _anneal_child(child, annealing_tasks, generation)
-                results[i] = (annealed, op_name)
+        # Collect indices needing annealing
+        anneal_indices = [i for i in range(len(results))
+                          if results[i][1] != 'parameter']
+        if anneal_indices:
+            # ThreadPool (not Process) — annealing calls _quick_score which
+            # already fans out to ProcessPoolExecutor internally.
+            # max_workers=4 to avoid oversubscribing with nested parallelism.
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                futures = {}
+                for i in anneal_indices:
+                    child, op_name = results[i]
+                    fut = executor.submit(_anneal_child, child,
+                                          annealing_tasks, generation)
+                    futures[fut] = (i, op_name)
+                for future in as_completed(futures):
+                    i, op_name = futures[future]
+                    try:
+                        annealed = future.result()
+                        results[i] = (annealed, op_name)
+                    except Exception:
+                        pass  # Keep original unannealed child
 
     # Log each mutation outcome
     for child, op_name in results:
@@ -362,6 +379,9 @@ def mutate_with_annealing(organism, population, generation, config,
         return child  # Return uncompiled — caller will handle
 
     # Step 3: Anneal — run parameter drift rounds, keep best
+    # Preserve original mutation history (e.g., 'route_mutation_llm_batch')
+    original_mutations = list(child.lineage.mutations_applied)
+
     best_child = child
     best_source = cr.source_code
     best_score = _quick_score(best_source, annealing_tasks)
@@ -377,12 +397,13 @@ def mutate_with_annealing(organism, population, generation, config,
             best_source = var_cr.source_code
             best_score = var_score
 
-    best_child.lineage.mutations_applied.append('annealed')
+    # Restore original lineage + mark as annealed
+    best_child.lineage.mutations_applied = original_mutations + ['annealed']
     log_debug(
         f"Annealing: {n_rounds} rounds, score {best_score:.3f}",
         stage="mutation", generation=generation,
         data={"annealing_rounds": n_rounds, "final_score": best_score,
-              "mutation_type": best_child.lineage.mutations_applied[0]}
+              "mutation_type": original_mutations[0] if original_mutations else 'unknown'}
     )
     return best_child
 
@@ -395,6 +416,9 @@ def _anneal_child(child, annealing_tasks, generation, n_rounds=10, sigma=0.15):
     if not cr.success:
         return child
 
+    # Preserve original mutation history before annealing overwrites it
+    original_mutations = list(child.lineage.mutations_applied)
+
     best_child = child
     best_source = cr.source_code
     best_score = _quick_score(best_source, annealing_tasks)
@@ -410,12 +434,14 @@ def _anneal_child(child, annealing_tasks, generation, n_rounds=10, sigma=0.15):
             best_source = var_cr.source_code
             best_score = var_score
 
-    best_child.lineage.mutations_applied.append('annealed')
+    # Restore original lineage + mark as annealed
+    best_child.lineage.mutations_applied = original_mutations + ['annealed']
     best_child.lineage.generation = generation
     log_debug(
         f"Batch annealing: {n_rounds} rounds, score {best_score:.3f}",
         stage="mutation", generation=generation,
-        data={"annealing_rounds": n_rounds, "final_score": best_score}
+        data={"annealing_rounds": n_rounds, "final_score": best_score,
+              "mutation_type": original_mutations[0] if original_mutations else 'unknown'}
     )
     return best_child
 

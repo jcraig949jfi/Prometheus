@@ -17,6 +17,7 @@ for pkg in ['fastapi', 'uvicorn']:
     except ImportError:
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', pkg])
 
+import threading
 import torch
 import time
 from typing import List, Optional
@@ -36,6 +37,7 @@ app = FastAPI(title="Apollo LLM Server", version="2c")
 _model = None
 _tokenizer = None
 _model_name = None
+_model_lock = threading.Lock()
 
 
 def _load_model():
@@ -79,15 +81,16 @@ def _generate_single(prompt: str, max_tokens: int = 512,
     inputs = _tokenizer(text, return_tensors="pt", truncation=True,
                         max_length=2048).to(_model.device)
 
-    with torch.no_grad():
-        outputs = _model.generate(
-            **inputs,
-            max_new_tokens=max_tokens,
-            temperature=max(temperature, 0.01),
-            top_p=0.95,
-            do_sample=True,
-            pad_token_id=_tokenizer.pad_token_id,
-        )
+    with _model_lock:
+        with torch.no_grad():
+            outputs = _model.generate(
+                **inputs,
+                max_new_tokens=max_tokens,
+                temperature=max(temperature, 0.01),
+                top_p=0.95,
+                do_sample=True,
+                pad_token_id=_tokenizer.pad_token_id,
+            )
 
     generated = outputs[0][inputs['input_ids'].shape[1]:]
     return _tokenizer.decode(generated, skip_special_tokens=True)
@@ -101,15 +104,16 @@ def _generate_batch_internal(prompts: List[str], max_tokens: int = 512,
     inputs = _tokenizer(texts, return_tensors="pt", padding=True,
                         truncation=True, max_length=2048).to(_model.device)
 
-    with torch.no_grad():
-        outputs = _model.generate(
-            **inputs,
-            max_new_tokens=max_tokens,
-            temperature=max(temperature, 0.01),
-            top_p=0.95,
-            do_sample=True,
-            pad_token_id=_tokenizer.pad_token_id,
-        )
+    with _model_lock:
+        with torch.no_grad():
+            outputs = _model.generate(
+                **inputs,
+                max_new_tokens=max_tokens,
+                temperature=max(temperature, 0.01),
+                top_p=0.95,
+                do_sample=True,
+                pad_token_id=_tokenizer.pad_token_id,
+            )
 
     results = []
     for i, output in enumerate(outputs):

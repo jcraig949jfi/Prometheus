@@ -193,33 +193,41 @@ class LLMMutator:
         total_prompt_chars = sum(len(p) for p in prompts)
         t0 = time.time()
 
-        # Server mode: route through HTTP client
+        # Server mode: route through HTTP client in small chunks
         if self._client is not None:
-            try:
-                results = self._client.generate_batch(
-                    prompts, max_tokens=self.max_tokens,
-                    temperature=self.temperature
-                )
-                elapsed = time.time() - t0
-                total_output_chars = sum(len(r) for r in results)
-                log_debug(
-                    f"LLM call: batch({len(prompts)}) | {total_prompt_chars}ch in | {total_output_chars}ch out | {elapsed:.1f}s | ok",
-                    stage="llm",
-                    data={"prompt_chars": total_prompt_chars, "output_chars": total_output_chars,
-                          "elapsed_s": round(elapsed, 2), "success": True, "mode": "batch",
-                          "n_prompts": len(prompts)}
-                )
-                return results
-            except Exception:
-                elapsed = time.time() - t0
-                log_debug(
-                    f"LLM call: batch({len(prompts)}) | {total_prompt_chars}ch in | {elapsed:.1f}s | fail -> single fallback",
-                    stage="llm",
-                    data={"prompt_chars": total_prompt_chars, "elapsed_s": round(elapsed, 2),
-                          "success": False, "mode": "batch", "n_prompts": len(prompts)}
-                )
-                # Fallback to one-at-a-time
-                return [self._generate(p) for p in prompts]
+            CHUNK_SIZE = 4  # Keep batches small to avoid OOM
+            all_results = []
+            for chunk_start in range(0, len(prompts), CHUNK_SIZE):
+                chunk = prompts[chunk_start:chunk_start + CHUNK_SIZE]
+                chunk_chars = sum(len(p) for p in chunk)
+                ct0 = time.time()
+                try:
+                    results = self._client.generate_batch(
+                        chunk, max_tokens=self.max_tokens,
+                        temperature=self.temperature
+                    )
+                    celapsed = time.time() - ct0
+                    chunk_out_chars = sum(len(r) for r in results)
+                    log_debug(
+                        f"LLM call: batch({len(chunk)}) | {chunk_chars}ch in | {chunk_out_chars}ch out | {celapsed:.1f}s | ok",
+                        stage="llm",
+                        data={"prompt_chars": chunk_chars, "output_chars": chunk_out_chars,
+                              "elapsed_s": round(celapsed, 2), "success": True, "mode": "batch",
+                              "n_prompts": len(chunk)}
+                    )
+                    all_results.extend(results)
+                except Exception:
+                    celapsed = time.time() - ct0
+                    log_debug(
+                        f"LLM call: batch({len(chunk)}) | {chunk_chars}ch in | {celapsed:.1f}s | fail -> singles",
+                        stage="llm",
+                        data={"prompt_chars": chunk_chars, "elapsed_s": round(celapsed, 2),
+                              "success": False, "mode": "batch", "n_prompts": len(chunk)}
+                    )
+                    # Fallback: process this chunk one at a time
+                    for p in chunk:
+                        all_results.append(self._generate(p))
+            return all_results
 
         # Local batched generation
         texts = []

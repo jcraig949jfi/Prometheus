@@ -35,7 +35,7 @@ class FitnessVector:
 
     def as_array(self) -> np.ndarray:
         """Return the 6 Pareto objectives as numpy array."""
-        return np.array([
+        arr = np.array([
             self.accuracy_margin,
             self.calibration,
             self.ablation_delta,
@@ -43,6 +43,7 @@ class FitnessVector:
             self.diversity,
             self.parsimony,
         ])
+        return np.nan_to_num(arr, nan=-1.0, posinf=0.0, neginf=-1.0)
 
 
 class NCDBaseline:
