@@ -12,14 +12,22 @@ sys.path.insert(0, str(Path('src').resolve()))
 from validator import validate
 from test_harness import run_trap_battery, load_tool_from_code
 
-# Load env keys
-env_path = Path('../../agents/eos/.env')
-env_vars = {}
-if env_path.exists():
-    for line in env_path.read_text().strip().split('\n'):
-        if '=' in line and not line.startswith('#'):
-            k, v = line.split('=', 1)
-            env_vars[k.strip()] = v.strip()
+# Load env keys — try root .env via keys.py first, fall back to eos/.env
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+try:
+    from keys import _load_env_file
+    env_vars = _load_env_file()
+except ImportError:
+    env_vars = {}
+
+if not env_vars:
+    env_path = Path('../../agents/eos/.env')
+    if env_path.exists():
+        for line in env_path.read_text().strip().split('\n'):
+            if '=' in line and not line.startswith('#'):
+                k, v = line.split('=', 1)
+                env_vars[k.strip()] = v.strip()
 
 print("=== FREE MODEL CODE GENERATION BENCHMARK ===\n")
 print("Testing across 5 concept combinations...\n")

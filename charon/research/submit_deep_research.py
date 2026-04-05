@@ -50,6 +50,9 @@ NEW_PACKAGES = {
     32: "package_32_many_objective_nsga",
     33: "package_33_llm_mutation_quality",
     34: "package_34_apollo_v2c_throughput",
+    35: "package_35_galois_image_zeros",
+    36: "package_36_nonlinear_bsd",
+    37: "package_37_crrao_revelation_bridge",
 }
 
 PENDING_PACKAGES = {
@@ -61,7 +64,14 @@ ALL_PACKAGES = {**PENDING_PACKAGES, **NEW_PACKAGES}
 
 
 def load_api_key():
-    """Load API key from .env file or environment."""
+    """Load API key via central keys.py, with fallback to googleAI/.env."""
+    _sys = __import__("sys")
+    _sys.path.insert(0, str(PROJECT_ROOT))
+    try:
+        from keys import get_key
+        return get_key("GEMINI")
+    except (ImportError, ValueError):
+        pass
     key = os.environ.get("GEMINI_API_KEY")
     if key:
         return key
