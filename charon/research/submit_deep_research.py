@@ -49,6 +49,7 @@ NEW_PACKAGES = {
     31: "package_31_surrogate_fitness",
     32: "package_32_many_objective_nsga",
     33: "package_33_llm_mutation_quality",
+    34: "package_34_apollo_v2c_throughput",
 }
 
 PENDING_PACKAGES = {
