@@ -107,16 +107,17 @@ class CycleLogger:
             "completion_tokens": completion_tokens,
             "total_tokens": prompt_tokens + completion_tokens,
             "elapsed_s": round(elapsed_s, 2),
-            "system_msg_preview": system_msg[:200],
-            "prompt_preview": prompt_preview[:300],
-            "response_preview": response_preview[:500],
+            "system_msg": system_msg,
+            "prompt_full": prompt_preview,
+            "response_full": response_preview,
             "cumulative_prompt_tokens": self._token_totals["prompt_tokens"],
             "cumulative_completion_tokens": self._token_totals["completion_tokens"],
             "cumulative_api_calls": self._token_totals["api_calls"],
         })
         self._console_print("[council]",
-            f"{provider}/{model} | {prompt_tokens}in/{completion_tokens}out | {elapsed_s:.1f}s "
-            f"(total: {self._token_totals['prompt_tokens']+self._token_totals['completion_tokens']} tokens, "
+            f"{provider}/{model} | {prompt_tokens}in/{completion_tokens}out | {elapsed_s:.1f}s | "
+            f"prompt={len(prompt_preview)}ch response={len(response_preview)}ch "
+            f"(cumul: {self._token_totals['prompt_tokens']+self._token_totals['completion_tokens']} tok, "
             f"{self._token_totals['api_calls']} calls)")
 
     def log_hypothesis(self, index: int, hypothesis: dict):
