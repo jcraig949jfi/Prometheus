@@ -53,17 +53,21 @@ def _call_deepseek(system: str, prompt: str, model: str = "deepseek-chat",
 
 
 def _call_openai(system: str, prompt: str, model: str = "gpt-4.1",
-                 max_tokens: int = 4096, temperature: float = 0.3) -> dict:
+                 max_tokens: int = 4096, temperature: float = 0.3,
+                 json_mode: bool = False) -> dict:
     from openai import OpenAI
     client = OpenAI(api_key=get_key("OPENAI"))
     t0 = time.time()
-    r = client.chat.completions.create(
-        model=model,
-        messages=[{"role": "system", "content": system},
-                  {"role": "user", "content": prompt}],
-        max_tokens=max_tokens,
-        temperature=temperature,
-    )
+    kwargs = {
+        "model": model,
+        "messages": [{"role": "system", "content": system},
+                     {"role": "user", "content": prompt}],
+        "max_tokens": max_tokens,
+        "temperature": temperature,
+    }
+    if json_mode:
+        kwargs["response_format"] = {"type": "json_object"}
+    r = client.chat.completions.create(**kwargs)
     elapsed = time.time() - t0
     return {
         "text": r.choices[0].message.content,
@@ -314,8 +318,31 @@ def ask_json(prompt: str, system: str = "", provider: str = "deepseek",
     log = cycle_logger.get()
 
     for attempt in range(1 + retries):
-        text = ask(prompt, system=system, provider=provider, max_tokens=max_tokens,
-                   temperature=0.1)
+        # Use JSON mode for OpenAI to eliminate parse failures
+        if provider == "openai":
+            try:
+                result = _call_openai(system or "You are a research assistant.",
+                                      prompt, max_tokens=max_tokens, temperature=0.1,
+                                      json_mode=True)
+                text = result["text"]
+                if log:
+                    log.log_api_call(
+                        provider=result["provider"], model=result["model"],
+                        prompt_tokens=result["prompt_tokens"],
+                        completion_tokens=result["completion_tokens"],
+                        elapsed_s=result["elapsed_s"],
+                        system_msg=system, prompt_preview=prompt,
+                        response_preview=text,
+                    )
+            except Exception as e:
+                if log:
+                    log.warn("council", "json_mode_failed", {"error": str(e)},
+                             msg=f"JSON mode failed, falling back: {e}")
+                text = ask(prompt, system=system, provider=provider, max_tokens=max_tokens,
+                           temperature=0.1)
+        else:
+            text = ask(prompt, system=system, provider=provider, max_tokens=max_tokens,
+                       temperature=0.1)
         cleaned = _clean_json_text(text)
         try:
             parsed = json.loads(cleaned)

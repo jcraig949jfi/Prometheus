@@ -523,8 +523,13 @@ def mathlib_search_imports(module_name: str) -> list[dict]:
     imports = []
     imported_by = []
     for edge in edges:
-        src = edge.get("source", edge[0] if isinstance(edge, list) else "")
-        tgt = edge.get("target", edge[1] if isinstance(edge, list) else "")
+        if isinstance(edge, dict):
+            src = edge.get("source", "")
+            tgt = edge.get("target", "")
+        elif isinstance(edge, (list, tuple)) and len(edge) >= 2:
+            src, tgt = str(edge[0]), str(edge[1])
+        else:
+            continue
         if module_name.lower() in str(src).lower():
             imports.append(tgt)
         if module_name.lower() in str(tgt).lower():
@@ -874,7 +879,8 @@ def antedb_search_bounds(max_results: int = 30) -> list[dict]:
 
 SEARCH_REGISTRY = {
     "oeis_terms": oeis_search_terms,
-    "oeis_keyword": oeis_search_keyword,
+    # "oeis_keyword" disabled — names.gz is corrupted (HTML, not gzip). Re-enable after fix.
+    # "oeis_keyword": oeis_search_keyword,
     "oeis_growth": oeis_search_growth,
     "oeis_by_id": oeis_search_by_id,
     "oeis_find_containing": oeis_find_containing,
@@ -961,11 +967,11 @@ DATASET_REGISTRY = {
         "name": "OEIS",
         "description": "392K integer sequences with terms, growth rates, and cross-references",
         "path": OEIS_STRIPPED,
-        "searches": ["oeis_terms", "oeis_keyword", "oeis_growth", "oeis_by_id", "oeis_find_containing"],
+        "searches": ["oeis_terms", "oeis_growth", "oeis_by_id", "oeis_find_containing"],
         "prompt_block": """OEIS (392K integer sequences):
-- oeis_terms(target_terms=[list of ints], min_match=5) — find sequences containing these numbers
+- oeis_terms(target_terms=[list of ints], min_match=5) — find sequences containing these numbers. MUST pass actual integers, not strings.
 - oeis_by_id(seq_id="A000040") — fetch a specific sequence by A-number
-- oeis_find_containing(integers=[list of ints], min_fraction=0.5) — find sequences covering the input set
+- oeis_find_containing(integers=[list of ints], min_fraction=0.5) — find sequences covering the input set. MUST pass actual integers like [3,5,7,11,13].
 - oeis_growth(growth_type="exponential|polynomial|super-exponential|sub-linear") — find by growth class""",
     },
     "lmfdb": {
