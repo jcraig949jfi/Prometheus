@@ -1,0 +1,1313 @@
+{
+  "metadata": {
+    "n_constants": 74,
+    "n_bases": 6,
+    "bases": [
+      "base_2",
+      "base_e",
+      "base_phi",
+      "base_pi",
+      "base_10",
+      "base_12"
+    ],
+    "constant_names": [
+      "alladi_grinstead",
+      "apery_zeta3",
+      "backhouse",
+      "barban",
+      "bronze_ratio",
+      "brun",
+      "cahen",
+      "carefree",
+      "catalan",
+      "champernowne",
+      "conway",
+      "copeland_erdos",
+      "cube_root_2",
+      "de_bruijn_newman",
+      "dottie",
+      "e",
+      "embree_trefethen",
+      "erdos_borwein",
+      "erdos_tenenbaum_ford",
+      "euler_mascheroni",
+      "feigenbaum_alpha",
+      "feigenbaum_delta",
+      "feller_tornier",
+      "foias",
+      "fransen_robinson",
+      "gelfond",
+      "gibbs",
+      "glaisher_kinkelin",
+      "golden_ratio",
+      "golomb_dickman",
+      "hafner_sarnak_mccurley",
+      "heath_brown_moroz",
+      "imaginary_unit_abs",
+      "kepler_bouwkamp",
+      "khinchin",
+      "komornik_loreti",
+      "landau_ramanujan",
+      "landau_totient",
+      "laplace_limit",
+      "legendre",
+      "lengyel",
+      "levy",
+      "lieb_square_ice",
+      "liouville",
+      "magic_angle",
+      "meissel_mertens",
+      "mills",
+      "mrb",
+      "murata",
+      "niven",
+      "omega",
+      "pi",
+      "plastic_ratio",
+      "porter",
+      "prime_constant",
+      "prouhet_thue_morse",
+      "quadratic_class_number",
+      "reciprocal_fibonacci",
+      "robbins",
+      "sierpinski",
+      "silver_ratio",
+      "somos_quadratic",
+      "sqrt_2",
+      "sqrt_3",
+      "sqrt_5",
+      "sqrt_6",
+      "sqrt_7",
+      "stephens",
+      "taniguchi",
+      "tau",
+      "totient_constant",
+      "twelfth_root_2",
+      "twin_primes",
+      "universal_parabolic"
+    ]
+  },
+  "per_base_analysis": {
+    "base_2": {
+      "closest_pairs": [
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "pi",
+          "const_b": "tau",
+          "distance": 0.0
+        },
+        {
+          "const_a": "golden_ratio",
+          "const_b": "sqrt_5",
+          "distance": 0.11113073585248998
+        },
+        {
+          "const_a": "plastic_ratio",
+          "const_b": "twin_primes",
+          "distance": 0.14173406598769006
+        },
+        {
+          "const_a": "kepler_bouwkamp",
+          "const_b": "liouville",
+          "distance": 0.17223631771298512
+        }
+      ],
+      "most_isolated": [
+        {
+          "constant": "meissel_mertens",
+          "nearest_neighbor_dist": 0.29737193841102216
+        },
+        {
+          "constant": "prouhet_thue_morse",
+          "nearest_neighbor_dist": 0.29447829722132757
+        },
+        {
+          "constant": "hafner_sarnak_mccurley",
+          "nearest_neighbor_dist": 0.29132812246062867
+        },
+        {
+          "constant": "prime_constant",
+          "nearest_neighbor_dist": 0.270027978967258
+        },
+        {
+          "constant": "quadratic_class_number",
+          "nearest_neighbor_dist": 0.270027978967258
+        }
+      ]
+    },
+    "base_e": {
+      "closest_pairs": [
+        {
+          "const_a": "e",
+          "const_b": "imaginary_unit_abs",
+          "distance": 0.0
+        },
+        {
+          "const_a": "e",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "e",
+          "distance": 0.22226147170497995
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "imaginary_unit_abs",
+          "distance": 0.22226147170497995
+        }
+      ],
+      "most_isolated": [
+        {
+          "constant": "hafner_sarnak_mccurley",
+          "nearest_neighbor_dist": 0.5996984815938772
+        },
+        {
+          "constant": "champernowne",
+          "nearest_neighbor_dist": 0.5592561775062415
+        },
+        {
+          "constant": "liouville",
+          "nearest_neighbor_dist": 0.5366763608079347
+        },
+        {
+          "constant": "erdos_tenenbaum_ford",
+          "nearest_neighbor_dist": 0.49558419657390246
+        },
+        {
+          "constant": "kepler_bouwkamp",
+          "nearest_neighbor_dist": 0.49558419657390246
+        }
+      ]
+    },
+    "base_phi": {
+      "closest_pairs": [
+        {
+          "const_a": "golden_ratio",
+          "const_b": "imaginary_unit_abs",
+          "distance": 0.0
+        },
+        {
+          "const_a": "golden_ratio",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "golden_ratio",
+          "const_b": "sqrt_5",
+          "distance": 0.07408715723499332
+        },
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "sqrt_5",
+          "distance": 0.07408715723499332
+        }
+      ],
+      "most_isolated": [
+        {
+          "constant": "hafner_sarnak_mccurley",
+          "nearest_neighbor_dist": 0.22598194608495337
+        },
+        {
+          "constant": "mrb",
+          "nearest_neighbor_dist": 0.21016775469573468
+        },
+        {
+          "constant": "copeland_erdos",
+          "nearest_neighbor_dist": 0.20963485325135778
+        },
+        {
+          "constant": "meissel_mertens",
+          "nearest_neighbor_dist": 0.2034851326805684
+        },
+        {
+          "constant": "quadratic_class_number",
+          "nearest_neighbor_dist": 0.1941702490832322
+        }
+      ]
+    },
+    "base_pi": {
+      "closest_pairs": [
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "pi",
+          "distance": 0.0
+        },
+        {
+          "const_a": "legendre",
+          "const_b": "pi",
+          "distance": 0.0
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "imaginary_unit_abs",
+          "distance": 0.22226147170497995
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "legendre",
+          "distance": 0.22226147170497995
+        }
+      ],
+      "most_isolated": [
+        {
+          "constant": "erdos_tenenbaum_ford",
+          "nearest_neighbor_dist": 0.7415614133260826
+        },
+        {
+          "constant": "magic_angle",
+          "nearest_neighbor_dist": 0.7017109183406334
+        },
+        {
+          "constant": "golomb_dickman",
+          "nearest_neighbor_dist": 0.6994784437203392
+        },
+        {
+          "constant": "mills",
+          "nearest_neighbor_dist": 0.6577330111769336
+        },
+        {
+          "constant": "plastic_ratio",
+          "nearest_neighbor_dist": 0.6000164001498436
+        }
+      ]
+    },
+    "base_10": {
+      "closest_pairs": [
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "liouville",
+          "distance": 0.1574352091243608
+        },
+        {
+          "const_a": "legendre",
+          "const_b": "liouville",
+          "distance": 0.1574352091243608
+        },
+        {
+          "const_a": "silver_ratio",
+          "const_b": "sqrt_2",
+          "distance": 0.22226147170497995
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "imaginary_unit_abs",
+          "distance": 0.22670670113907956
+        }
+      ],
+      "most_isolated": [
+        {
+          "constant": "catalan",
+          "nearest_neighbor_dist": 2.433882449815348
+        },
+        {
+          "constant": "magic_angle",
+          "nearest_neighbor_dist": 2.4224196925109798
+        },
+        {
+          "constant": "carefree",
+          "nearest_neighbor_dist": 2.350658834270622
+        },
+        {
+          "constant": "feigenbaum_delta",
+          "nearest_neighbor_dist": 2.3265226947589377
+        },
+        {
+          "constant": "brun",
+          "nearest_neighbor_dist": 2.2665287160717003
+        }
+      ]
+    },
+    "base_12": {
+      "closest_pairs": [
+        {
+          "const_a": "imaginary_unit_abs",
+          "const_b": "legendre",
+          "distance": 0.0
+        },
+        {
+          "const_a": "silver_ratio",
+          "const_b": "sqrt_2",
+          "distance": 0.22226147170497995
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "imaginary_unit_abs",
+          "distance": 0.2866504656426479
+        },
+        {
+          "const_a": "de_bruijn_newman",
+          "const_b": "legendre",
+          "distance": 0.2866504656426479
+        },
+        {
+          "const_a": "feller_tornier",
+          "const_b": "twin_primes",
+          "distance": 1.8486925945156907
+        }
+      ],
+      "most_isolated": [
+        {
+          "constant": "landau_ramanujan",
+          "nearest_neighbor_dist": 2.854049533000963
+        },
+        {
+          "constant": "catalan",
+          "nearest_neighbor_dist": 2.8539385879381896
+        },
+        {
+          "constant": "taniguchi",
+          "nearest_neighbor_dist": 2.853192589956717
+        },
+        {
+          "constant": "stephens",
+          "nearest_neighbor_dist": 2.7243197383554616
+        },
+        {
+          "constant": "magic_angle",
+          "nearest_neighbor_dist": 2.6858372204230894
+        }
+      ]
+    }
+  },
+  "phi_unique_structure": [
+    {
+      "const_a": "brun",
+      "const_b": "imaginary_unit_abs",
+      "phi_distance": 0.1503754066064628,
+      "other_base_distances": {
+        "base_2": 0.546976288468675,
+        "base_e": 0.7558642690725276,
+        "base_pi": 1.0521149612953242,
+        "base_10": 4.49128455800403,
+        "base_12": 5.134525475758336
+      },
+      "phi_compression_ratio": 15.934474689671742
+    },
+    {
+      "const_a": "brun",
+      "const_b": "legendre",
+      "phi_distance": 0.1503754066064628,
+      "other_base_distances": {
+        "base_2": 0.546976288468675,
+        "base_e": 0.7558642690725276,
+        "base_pi": 1.0521149612953242,
+        "base_10": 4.49128455800403,
+        "base_12": 5.134525475758336
+      },
+      "phi_compression_ratio": 15.934474689671742
+    },
+    {
+      "const_a": "cahen",
+      "const_b": "golden_ratio",
+      "phi_distance": 0.1316451119063733,
+      "other_base_distances": {
+        "base_2": 0.4821637864768266,
+        "base_e": 0.7553256000265262,
+        "base_pi": 1.1553739627651811,
+        "base_10": 3.38759619071029,
+        "base_12": 3.8534642029114536
+      },
+      "phi_compression_ratio": 14.636204266728834
+    },
+    {
+      "const_a": "conway",
+      "const_b": "landau_ramanujan",
+      "phi_distance": 0.1572970340592426,
+      "other_base_distances": {
+        "base_2": 0.5475833134259369,
+        "base_e": 0.8648301636421484,
+        "base_pi": 1.076024790314092,
+        "base_10": 3.8995412494933026,
+        "base_12": 5.083041398603565
+      },
+      "phi_compression_ratio": 14.58517127685793
+    },
+    {
+      "const_a": "embree_trefethen",
+      "const_b": "lengyel",
+      "phi_distance": 0.1574842539736738,
+      "other_base_distances": {
+        "base_2": 0.5110408462598467,
+        "base_e": 0.8678404315815127,
+        "base_pi": 1.0650157669054185,
+        "base_10": 4.1427137420985005,
+        "base_12": 4.082025311101298
+      },
+      "phi_compression_ratio": 13.548828951153459
+    },
+    {
+      "const_a": "landau_ramanujan",
+      "const_b": "totient_constant",
+      "phi_distance": 0.1638575828500879,
+      "other_base_distances": {
+        "base_2": 0.43994099939353815,
+        "base_e": 0.7602534906539619,
+        "base_pi": 0.951576589086609,
+        "base_10": 4.097451415949664,
+        "base_12": 4.625486536425376
+      },
+      "phi_compression_ratio": 13.273366837662119
+    },
+    {
+      "const_a": "alladi_grinstead",
+      "const_b": "robbins",
+      "phi_distance": 0.1697068282671277,
+      "other_base_distances": {
+        "base_2": 0.43572565778637956,
+        "base_e": 0.9060036020909155,
+        "base_pi": 0.9852322468707418,
+        "base_10": 3.988090965312206,
+        "base_12": 3.9226882998595283
+      },
+      "phi_compression_ratio": 12.06520783689978
+    },
+    {
+      "const_a": "cahen",
+      "const_b": "sqrt_3",
+      "phi_distance": 0.1738272292741525,
+      "other_base_distances": {
+        "base_2": 0.4957462947552578,
+        "base_e": 0.7989173614470629,
+        "base_pi": 1.0844056065077585,
+        "base_10": 3.3676448900255793,
+        "base_12": 3.9754299703864024
+      },
+      "phi_compression_ratio": 11.185985261018837
+    }
+  ],
+  "pca_normalization_manifold": {
+    "n_valid_constants": 73,
+    "n_valid_normalizations": 73,
+    "n_components_90pct": 1,
+    "effective_dimensionality": 1,
+    "explained_variance_top10": [
+      100.0,
+      5.889143781087661e-30,
+      9.847253423049963e-31,
+      9.847253423049963e-31,
+      9.847253423049963e-31,
+      9.847253423049963e-31,
+      9.847253423049963e-31,
+      9.847253423049963e-31,
+      9.847253423049963e-31,
+      9.847253423049963e-31
+    ],
+    "cumulative_variance_top10": [
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0
+    ],
+    "top_components": [
+      {
+        "pc": 1,
+        "explained_variance_pct": 100.0,
+        "top_drivers": [
+          {
+            "constant": "kepler_bouwkamp",
+            "loading": -0.11704114719613057
+          },
+          {
+            "constant": "heath_brown_moroz",
+            "loading": -0.11704114719613057
+          },
+          {
+            "constant": "apery_zeta3",
+            "loading": -0.11704114719613057
+          },
+          {
+            "constant": "cahen",
+            "loading": -0.11704114719613057
+          },
+          {
+            "constant": "tau",
+            "loading": -0.11704114719613055
+          }
+        ]
+      },
+      {
+        "pc": 2,
+        "explained_variance_pct": 5.889143781087661e-30,
+        "top_drivers": [
+          {
+            "constant": "heath_brown_moroz",
+            "loading": -0.7133249862240408
+          },
+          {
+            "constant": "kepler_bouwkamp",
+            "loading": -0.42881578549450095
+          },
+          {
+            "constant": "erdos_tenenbaum_ford",
+            "loading": 0.2331495565684362
+          },
+          {
+            "constant": "gelfond",
+            "loading": 0.17627526775878036
+          },
+          {
+            "constant": "quadratic_class_number",
+            "loading": -0.13667077416913676
+          }
+        ]
+      },
+      {
+        "pc": 3,
+        "explained_variance_pct": 9.847253423049963e-31,
+        "top_drivers": [
+          {
+            "constant": "meissel_mertens",
+            "loading": 0.3070101577538195
+          },
+          {
+            "constant": "cahen",
+            "loading": -0.2721448811682227
+          },
+          {
+            "constant": "sierpinski",
+            "loading": -0.26616938249167915
+          },
+          {
+            "constant": "omega",
+            "loading": -0.2519283769484371
+          },
+          {
+            "constant": "heath_brown_moroz",
+            "loading": 0.2400363080427937
+          }
+        ]
+      },
+      {
+        "pc": 4,
+        "explained_variance_pct": 9.847253423049963e-31,
+        "top_drivers": [
+          {
+            "constant": "porter",
+            "loading": -0.3291130665766019
+          },
+          {
+            "constant": "feigenbaum_delta",
+            "loading": -0.24994953020604674
+          },
+          {
+            "constant": "tau",
+            "loading": 0.2367746527592007
+          },
+          {
+            "constant": "golomb_dickman",
+            "loading": -0.21900122323541926
+          },
+          {
+            "constant": "conway",
+            "loading": 0.21530202065013077
+          }
+        ]
+      },
+      {
+        "pc": 5,
+        "explained_variance_pct": 9.847253423049963e-31,
+        "top_drivers": [
+          {
+            "constant": "khinchin",
+            "loading": -0.3206030992580476
+          },
+          {
+            "constant": "heath_brown_moroz",
+            "loading": 0.2547132597745363
+          },
+          {
+            "constant": "golden_ratio",
+            "loading": -0.23589333064527268
+          },
+          {
+            "constant": "somos_quadratic",
+            "loading": -0.21017642341682571
+          },
+          {
+            "constant": "omega",
+            "loading": 0.20128155180089122
+          }
+        ]
+      }
+    ]
+  },
+  "pca_cross_base": {
+    "mean_distance_pca": {
+      "n_components_90pct": 4,
+      "explained_variance": [
+        38.56054339690858,
+        31.685435514827525,
+        13.921681962592366,
+        7.089722907261899,
+        5.063412244304306,
+        3.679203974105337
+      ],
+      "cumulative_variance": [
+        38.56054339690858,
+        70.2459789117361,
+        84.16766087432846,
+        91.25738378159036,
+        96.32079602589468,
+        100.0
+      ],
+      "base_loadings_per_pc": [
+        {
+          "pc": 1,
+          "explained_variance_pct": 38.56054339690858,
+          "base_loadings": {
+            "base_2": 0.5176958979566452,
+            "base_e": 0.5136118707766154,
+            "base_phi": 0.38426702999237383,
+            "base_pi": 0.5097336167388467,
+            "base_10": 0.1835639691498832,
+            "base_12": 0.16434281941516096
+          }
+        },
+        {
+          "pc": 2,
+          "explained_variance_pct": 31.685435514827525,
+          "base_loadings": {
+            "base_2": 0.289534018567311,
+            "base_e": -0.00018817034962561525,
+            "base_phi": 0.3232961646160462,
+            "base_pi": -0.10569850231854228,
+            "base_10": -0.6351587713608333,
+            "base_12": -0.6301196460988601
+          }
+        },
+        {
+          "pc": 3,
+          "explained_variance_pct": 13.921681962592366,
+          "base_loadings": {
+            "base_2": -0.20953447578470535,
+            "base_e": 0.4514852283018632,
+            "base_phi": -0.6614246944876007,
+            "base_pi": 0.4273967364058632,
+            "base_10": -0.20716109670172242,
+            "base_12": -0.29864707486895575
+          }
+        }
+      ],
+      "pc1_extreme_constants": {
+        "low": [
+          {
+            "constant": "backhouse",
+            "pc1_score": -1.9835090417137184
+          },
+          {
+            "constant": "twelfth_root_2",
+            "pc1_score": -1.9128444233027988
+          },
+          {
+            "constant": "feigenbaum_delta",
+            "pc1_score": -1.8252910145817771
+          },
+          {
+            "constant": "porter",
+            "pc1_score": -1.80904005160017
+          },
+          {
+            "constant": "bronze_ratio",
+            "pc1_score": -1.6718767324936732
+          }
+        ],
+        "high": [
+          {
+            "constant": "meissel_mertens",
+            "pc1_score": 3.5441069042780042
+          },
+          {
+            "constant": "liouville",
+            "pc1_score": 3.487108294438165
+          },
+          {
+            "constant": "erdos_tenenbaum_ford",
+            "pc1_score": 3.2570803445793852
+          },
+          {
+            "constant": "de_bruijn_newman",
+            "pc1_score": 3.133546081363579
+          },
+          {
+            "constant": "copeland_erdos",
+            "pc1_score": 3.090994210249996
+          }
+        ]
+      }
+    },
+    "full_profile_pca": {
+      "n_components_90pct": 27,
+      "explained_variance_top10": [
+        22.317014246520728,
+        15.106468479197414,
+        8.886000590228775,
+        6.980990390423285,
+        4.6955388373419,
+        4.08322639550062,
+        3.325420218252396,
+        2.8270916345913952,
+        2.3509332148326036,
+        2.2291614615795496
+      ],
+      "cumulative_variance_top10": [
+        22.317014246520728,
+        37.42348272571814,
+        46.30948331594691,
+        53.2904737063702,
+        57.98601254371209,
+        62.06923893921271,
+        65.39465915746511,
+        68.2217507920565,
+        70.5726840068891,
+        72.80184546846866
+      ],
+      "pc1_extremes": {
+        "low": [
+          {
+            "constant": "twin_primes",
+            "score": -11.725303039481355
+          },
+          {
+            "constant": "feller_tornier",
+            "score": -11.459970364028337
+          },
+          {
+            "constant": "robbins",
+            "score": -11.425587374027941
+          },
+          {
+            "constant": "taniguchi",
+            "score": -11.380130552169504
+          },
+          {
+            "constant": "laplace_limit",
+            "score": -11.196184110524513
+          }
+        ],
+        "high": [
+          {
+            "constant": "meissel_mertens",
+            "score": 21.98973852461476
+          },
+          {
+            "constant": "kepler_bouwkamp",
+            "score": 21.76726960426712
+          },
+          {
+            "constant": "liouville",
+            "score": 21.481115843741268
+          },
+          {
+            "constant": "champernowne",
+            "score": 21.441550762883193
+          },
+          {
+            "constant": "copeland_erdos",
+            "score": 21.330676962038947
+          }
+        ]
+      }
+    }
+  },
+  "cross_base_analysis": {
+    "most_base_sensitive": [
+      {
+        "const_a": "silver_ratio",
+        "const_b": "sqrt_2",
+        "distances_by_base": {
+          "base_2": 0.36648569594686387,
+          "base_e": 0.22226147170497995,
+          "base_phi": 0.29470566211283916,
+          "base_pi": 0.22226147170497995,
+          "base_10": 0.22226147170497995,
+          "base_12": 0.22226147170497995
+        },
+        "normalized_distances": {
+          "base_2": 0.41788706836558553,
+          "base_e": 0.16600587883887513,
+          "base_phi": 0.38261021907916615,
+          "base_pi": 0.14048483812277004,
+          "base_10": 0.03530589969183021,
+          "base_12": 0.028601973019168156
+        },
+        "mean_normalized": 0.19514931285289924,
+        "std_normalized": 0.15377428088723946,
+        "coefficient_of_variation": 0.7879826920177389
+      },
+      {
+        "const_a": "de_bruijn_newman",
+        "const_b": "imaginary_unit_abs",
+        "distances_by_base": {
+          "base_2": 0.22226147170497995,
+          "base_e": 0.22226147170497995,
+          "base_phi": 0.22226147170497995,
+          "base_pi": 0.22226147170497995,
+          "base_10": 0.22670670113907956,
+          "base_12": 0.2866504656426479
+        },
+        "normalized_distances": {
+          "base_2": 0.25343470658915196,
+          "base_e": 0.16600587883887513,
+          "base_phi": 0.2885574365019824,
+          "base_pi": 0.14048483812277004,
+          "base_10": 0.03601201768566682,
+          "base_12": 0.03688794473171529
+        },
+        "mean_normalized": 0.15356380374502696,
+        "std_normalized": 0.09657037259295187,
+        "coefficient_of_variation": 0.628861556160035
+      },
+      {
+        "const_a": "de_bruijn_newman",
+        "const_b": "legendre",
+        "distances_by_base": {
+          "base_2": 0.22226147170497995,
+          "base_e": 0.22226147170497995,
+          "base_phi": 0.22226147170497995,
+          "base_pi": 0.22226147170497995,
+          "base_10": 0.22670670113907956,
+          "base_12": 0.2866504656426479
+        },
+        "normalized_distances": {
+          "base_2": 0.25343470658915196,
+          "base_e": 0.16600587883887513,
+          "base_phi": 0.2885574365019824,
+          "base_pi": 0.14048483812277004,
+          "base_10": 0.03601201768566682,
+          "base_12": 0.03688794473171529
+        },
+        "mean_normalized": 0.15356380374502696,
+        "std_normalized": 0.09657037259295187,
+        "coefficient_of_variation": 0.628861556160035
+      },
+      {
+        "const_a": "e",
+        "const_b": "imaginary_unit_abs",
+        "distances_by_base": {
+          "base_2": 0.39699594220906576,
+          "base_e": 0.0,
+          "base_phi": 0.09753743464351596,
+          "base_pi": 1.0425989287762814,
+          "base_10": 3.9941146460751935,
+          "base_12": 4.753104247316104
+        },
+        "normalized_distances": {
+          "base_2": 0.4526765226516054,
+          "base_e": 0.0,
+          "base_phi": 0.1266308185931174,
+          "base_pi": 0.6589956442406998,
+          "base_10": 0.634459089874015,
+          "base_12": 0.6116586846841379
+        },
+        "mean_normalized": 0.4140701266739293,
+        "std_normalized": 0.25921899427460865,
+        "coefficient_of_variation": 0.6260267949219569
+      },
+      {
+        "const_a": "e",
+        "const_b": "legendre",
+        "distances_by_base": {
+          "base_2": 0.39699594220906576,
+          "base_e": 0.0,
+          "base_phi": 0.09753743464351596,
+          "base_pi": 1.0425989287762814,
+          "base_10": 3.9941146460751935,
+          "base_12": 4.753104247316104
+        },
+        "normalized_distances": {
+          "base_2": 0.4526765226516054,
+          "base_e": 0.0,
+          "base_phi": 0.1266308185931174,
+          "base_pi": 0.6589956442406998,
+          "base_10": 0.634459089874015,
+          "base_12": 0.6116586846841379
+        },
+        "mean_normalized": 0.4140701266739293,
+        "std_normalized": 0.25921899427460865,
+        "coefficient_of_variation": 0.6260267949219569
+      },
+      {
+        "const_a": "pi",
+        "const_b": "tau",
+        "distances_by_base": {
+          "base_2": 0.0,
+          "base_e": 0.7346659531071339,
+          "base_phi": 0.4391704971227026,
+          "base_pi": 0.22226147170497995,
+          "base_10": 2.65827596665798,
+          "base_12": 3.1206175813639794
+        },
+        "normalized_distances": {
+          "base_2": 0.0,
+          "base_e": 0.5487179863563235,
+          "base_phi": 0.570165903541027,
+          "base_pi": 0.14048483812277004,
+          "base_10": 0.422263129601723,
+          "base_12": 0.40158026121499163
+        },
+        "mean_normalized": 0.3472020198061392,
+        "std_normalized": 0.20904304872754537,
+        "coefficient_of_variation": 0.6020790110733367
+      },
+      {
+        "const_a": "imaginary_unit_abs",
+        "const_b": "pi",
+        "distances_by_base": {
+          "base_2": 0.3624099900394448,
+          "base_e": 0.4663606771846166,
+          "base_phi": 0.2084644590694917,
+          "base_pi": 0.0,
+          "base_10": 3.7550502440287583,
+          "base_12": 4.400898602565087
+        },
+        "normalized_distances": {
+          "base_2": 0.4132397252031975,
+          "base_e": 0.34832224171847137,
+          "base_phi": 0.2706450625446712,
+          "base_pi": 0.0,
+          "base_10": 0.59648407003008,
+          "base_12": 0.566334696360427
+        },
+        "mean_normalized": 0.3658376326428079,
+        "std_normalized": 0.19952000643074477,
+        "coefficient_of_variation": 0.5453785740668995
+      },
+      {
+        "const_a": "legendre",
+        "const_b": "pi",
+        "distances_by_base": {
+          "base_2": 0.3624099900394448,
+          "base_e": 0.4663606771846166,
+          "base_phi": 0.2084644590694917,
+          "base_pi": 0.0,
+          "base_10": 3.7550502440287583,
+          "base_12": 4.400898602565087
+        },
+        "normalized_distances": {
+          "base_2": 0.4132397252031975,
+          "base_e": 0.34832224171847137,
+          "base_phi": 0.2706450625446712,
+          "base_pi": 0.0,
+          "base_10": 0.59648407003008,
+          "base_12": 0.566334696360427
+        },
+        "mean_normalized": 0.3658376326428079,
+        "std_normalized": 0.19952000643074477,
+        "coefficient_of_variation": 0.5453785740668995
+      },
+      {
+        "const_a": "golden_ratio",
+        "const_b": "sqrt_5",
+        "distances_by_base": {
+          "base_2": 0.11113073585248998,
+          "base_e": 0.7285518613091035,
+          "base_phi": 0.07408715723499332,
+          "base_pi": 0.8617153325715697,
+          "base_10": 2.0935232378850457,
+          "base_12": 2.7647412387158887
+        },
+        "normalized_distances": {
+          "base_2": 0.12671735329457598,
+          "base_e": 0.5441514045981463,
+          "base_phi": 0.09618581216732747,
+          "base_pi": 0.544664525414971,
+          "base_10": 0.33255301007542515,
+          "base_12": 0.3557839049122143
+        },
+        "mean_normalized": 0.3333426684104434,
+        "std_normalized": 0.17726575081252183,
+        "coefficient_of_variation": 0.5317823597495633
+      },
+      {
+        "const_a": "golomb_dickman",
+        "const_b": "murata",
+        "distances_by_base": {
+          "base_2": 0.35116010961968036,
+          "base_e": 0.7035605046717961,
+          "base_phi": 0.11470353506566391,
+          "base_pi": 1.4009645400802622,
+          "base_10": 2.964294916864551,
+          "base_12": 2.017866106494488
+        },
+        "normalized_distances": {
+          "base_2": 0.40041199522608983,
+          "base_e": 0.525485496871868,
+          "base_phi": 0.14891720900776176,
+          "base_pi": 0.8855078440682655,
+          "base_10": 0.4708737784780766,
+          "base_12": 0.2596714198440003
+        },
+        "mean_normalized": 0.44847795724934375,
+        "std_normalized": 0.23278092100351075,
+        "coefficient_of_variation": 0.519046515532735
+      }
+    ],
+    "most_base_invariant": [
+      {
+        "const_a": "imaginary_unit_abs",
+        "const_b": "legendre",
+        "distances_by_base": {
+          "base_2": 0.0,
+          "base_e": 0.0,
+          "base_phi": 0.0,
+          "base_pi": 0.0,
+          "base_10": 0.0,
+          "base_12": 0.0
+        },
+        "normalized_distances": {
+          "base_2": 0.0,
+          "base_e": 0.0,
+          "base_phi": 0.0,
+          "base_pi": 0.0,
+          "base_10": 0.0,
+          "base_12": 0.0
+        },
+        "mean_normalized": 0.0,
+        "std_normalized": 0.0,
+        "coefficient_of_variation": 0.0
+      },
+      {
+        "const_a": "pi",
+        "const_b": "reciprocal_fibonacci",
+        "distances_by_base": {
+          "base_2": 0.3250240137524134,
+          "base_e": 0.49411409630665837,
+          "base_phi": 0.29255307919396445,
+          "base_pi": 0.6498497706179004,
+          "base_10": 2.4153504600283293,
+          "base_12": 2.9667968169658585
+        },
+        "normalized_distances": {
+          "base_2": 0.3706101868573462,
+          "base_e": 0.3690511188234229,
+          "base_phi": 0.379815565538165,
+          "base_pi": 0.41075063135798295,
+          "base_10": 0.383674779115869,
+          "base_12": 0.3817856593015179
+        },
+        "mean_normalized": 0.382614656832384,
+        "std_normalized": 0.01371954769324148,
+        "coefficient_of_variation": 0.03585735007337094
+      },
+      {
+        "const_a": "champernowne",
+        "const_b": "stephens",
+        "distances_by_base": {
+          "base_2": 0.5165999106935869,
+          "base_e": 0.8404711052431018,
+          "base_phi": 0.4702099042216813,
+          "base_pi": 0.9064358307100158,
+          "base_10": 3.4530305414385167,
+          "base_12": 4.549103405102276
+        },
+        "normalized_distances": {
+          "base_2": 0.5890555199976112,
+          "base_e": 0.6277432763954639,
+          "base_phi": 0.6104637188767923,
+          "base_pi": 0.5729310166496211,
+          "base_10": 0.5485086956081867,
+          "base_12": 0.5854066017651857
+        },
+        "mean_normalized": 0.5890181382154768,
+        "std_normalized": 0.02540473797843442,
+        "coefficient_of_variation": 0.043130654779837636
+      },
+      {
+        "const_a": "erdos_tenenbaum_ford",
+        "const_b": "stephens",
+        "distances_by_base": {
+          "base_2": 0.5294773457961554,
+          "base_e": 0.770347907570094,
+          "base_phi": 0.4264478148229997,
+          "base_pi": 0.9700263097059575,
+          "base_10": 3.933503831817018,
+          "base_12": 4.942194474460336
+        },
+        "normalized_distances": {
+          "base_2": 0.6037390769893161,
+          "base_e": 0.5753686431879983,
+          "base_phi": 0.5536483102682512,
+          "base_pi": 0.6131246592065831,
+          "base_10": 0.6248311534079066,
+          "base_12": 0.6359919779602056
+        },
+        "mean_normalized": 0.6011173035033769,
+        "std_normalized": 0.02841929716979994,
+        "coefficient_of_variation": 0.047277456503363305
+      },
+      {
+        "const_a": "brun",
+        "const_b": "porter",
+        "distances_by_base": {
+          "base_2": 0.3627691218193912,
+          "base_e": 0.5616354000053446,
+          "base_phi": 0.31906362601326804,
+          "base_pi": 0.6911125794843047,
+          "base_10": 2.9944772787229987,
+          "base_12": 3.4972796483472366
+        },
+        "normalized_distances": {
+          "base_2": 0.4136492269336566,
+          "base_e": 0.4194824116375245,
+          "base_phi": 0.41423365596005357,
+          "base_pi": 0.4368316204723807,
+          "base_10": 0.4756682011553966,
+          "base_12": 0.45005145235107485
+        },
+        "mean_normalized": 0.4349860947516812,
+        "std_normalized": 0.022404220511676246,
+        "coefficient_of_variation": 0.05150560163185459
+      },
+      {
+        "const_a": "champernowne",
+        "const_b": "twin_primes",
+        "distances_by_base": {
+          "base_2": 0.5836041498057285,
+          "base_e": 0.9546100527446244,
+          "base_phi": 0.46060991382033106,
+          "base_pi": 1.0077114607531312,
+          "base_10": 4.040816157548922,
+          "base_12": 5.0972211939705625
+        },
+        "normalized_distances": {
+          "base_2": 0.6654574242473729,
+          "base_e": 0.7129930326594955,
+          "base_phi": 0.5980002514147653,
+          "base_pi": 0.6369443176650748,
+          "base_10": 0.6418775545629238,
+          "base_12": 0.6559417695937607
+        },
+        "mean_normalized": 0.6518690583572321,
+        "std_normalized": 0.03454899249155422,
+        "coefficient_of_variation": 0.05299989629607632
+      },
+      {
+        "const_a": "de_bruijn_newman",
+        "const_b": "glaisher_kinkelin",
+        "distances_by_base": {
+          "base_2": 0.5186947998327717,
+          "base_e": 0.7799269977528722,
+          "base_phi": 0.4342484490365615,
+          "base_pi": 1.0219445290378437,
+          "base_10": 3.4661288581026324,
+          "base_12": 4.3285757711096355
+        },
+        "normalized_distances": {
+          "base_2": 0.5914442273622003,
+          "base_e": 0.582523213307914,
+          "base_phi": 0.5637757110925508,
+          "base_pi": 0.6459406150378477,
+          "base_10": 0.5505893434628402,
+          "base_12": 0.5570277496454138
+        },
+        "mean_normalized": 0.5818834766514612,
+        "std_normalized": 0.03193784407761934,
+        "coefficient_of_variation": 0.0548870097865824
+      },
+      {
+        "const_a": "feigenbaum_delta",
+        "const_b": "pi",
+        "distances_by_base": {
+          "base_2": 0.43655478785154717,
+          "base_e": 0.5930824814741252,
+          "base_phi": 0.3449972764254181,
+          "base_pi": 0.7395092001521867,
+          "base_10": 3.260474389244366,
+          "base_12": 3.729863544601743
+        },
+        "normalized_distances": {
+          "base_2": 0.49778368567676234,
+          "base_e": 0.44297006496806646,
+          "base_phi": 0.44790277379979176,
+          "base_pi": 0.46742167896547476,
+          "base_10": 0.5179214411359616,
+          "base_12": 0.4799817784410345
+        },
+        "mean_normalized": 0.47566357049784863,
+        "std_normalized": 0.026461071908889897,
+        "coefficient_of_variation": 0.05562980549718086
+      },
+      {
+        "const_a": "gelfond",
+        "const_b": "tau",
+        "distances_by_base": {
+          "base_2": 0.48770407451005027,
+          "base_e": 0.7588809697984487,
+          "base_phi": 0.39462407818420664,
+          "base_pi": 0.755077502197899,
+          "base_10": 3.2619796049174066,
+          "base_12": 4.1366351872766565
+        },
+        "normalized_distances": {
+          "base_2": 0.5561069045284249,
+          "base_e": 0.566804050018655,
+          "base_phi": 0.5123322162373729,
+          "base_pi": 0.47726193771999864,
+          "base_10": 0.5181605423763128,
+          "base_12": 0.532327654941815
+        },
+        "mean_normalized": 0.5271655509704298,
+        "std_normalized": 0.029515387186200743,
+        "coefficient_of_variation": 0.055988839050403624
+      },
+      {
+        "const_a": "laplace_limit",
+        "const_b": "sqrt_6",
+        "distances_by_base": {
+          "base_2": 0.4846019962496856,
+          "base_e": 0.6805776651274005,
+          "base_phi": 0.3927527278224333,
+          "base_pi": 0.8825487389551082,
+          "base_10": 3.4753093472354886,
+          "base_12": 4.654331913279328
+        },
+        "normalized_distances": {
+          "base_2": 0.5525697449492081,
+          "base_e": 0.5083197395882822,
+          "base_phi": 0.5099026810640114,
+          "base_pi": 0.5578326993719138,
+          "base_10": 0.5520476503207953,
+          "base_12": 0.5989480533205966
+        },
+        "mean_normalized": 0.546603428102468,
+        "std_normalized": 0.03094047633273539,
+        "coefficient_of_variation": 0.05660498039711378
+      }
+    ],
+    "total_pairs": 2701,
+    "mean_cv": 0.2281184855484498,
+    "median_cv": 0.22456157488401304
+  }
+}
