@@ -16,9 +16,12 @@ cd /d F:\Prometheus\cartography\shared\scripts
 
 set TOPIC=What cross-domain bridges exist between mathematical constants, knot invariants, L-function spectral properties, formal proof structures, and metabolic network algebra? Find correlations that survive statistical testing.
 
+REM Provider: openai (~$10/6hr) or deepseek (~$2/6hr)
+set PROVIDER=deepseek
+
 if "%1"=="once" (
     echo === CHARON: Single cycle ===
-    python research_cycle.py --provider openai --hypotheses 3 --loop 3 --tensor-review-every 3 --topic "%TOPIC%"
+    python research_cycle.py --provider %PROVIDER% --hypotheses 3 --loop 3 --tensor-review-every 3 --topic "%TOPIC%"
     echo === DONE ===
     pause
     goto :eof
@@ -42,9 +45,9 @@ REM Every 10th iteration: tensor review + external research
 set /a MOD=%ITERATION% %% 10
 if %MOD%==1 (
     echo Running with external research feed...
-    python research_cycle.py --provider openai --hypotheses 3 --loop 5 --tensor-review-every 5 --external-research --topic "%TOPIC%"
+    python research_cycle.py --provider %PROVIDER% --hypotheses 3 --loop 5 --tensor-review-every 5 --external-research --topic "%TOPIC%"
 ) else (
-    python research_cycle.py --provider openai --hypotheses 3 --loop 5 --tensor-review-every 5 --topic "%TOPIC%"
+    python research_cycle.py --provider %PROVIDER% --hypotheses 3 --loop 5 --tensor-review-every 5 --topic "%TOPIC%"
 )
 
 REM Brief pause between iterations (30 seconds)
