@@ -181,11 +181,113 @@ def validate_hypothesis(hypothesis: dict, log) -> tuple[bool, str]:
 
 
 # ---------------------------------------------------------------------------
+# Step 1b: ENRICH search plans — replace LLM placeholder strings with real data
+# ---------------------------------------------------------------------------
+
+def enrich_search_plan(searches: list[dict]) -> list[dict]:
+    """Replace placeholder strings in search params with actual data.
+
+    The LLM often writes params like:
+      {"integers": "[list of knot determinants]", "min_fraction": 0.5}
+    instead of actual numbers. This function detects string placeholders
+    where lists are expected and substitutes real data.
+    """
+    log = cycle_logger.get()
+    enriched = []
+    # Cache of data we've fetched for substitution
+    _cache = {}
+
+    def _get_knot_determinants():
+        if "knot_dets" not in _cache:
+            r = dispatch_search("knots_determinant_list", {})
+            if r and isinstance(r, list) and r[0].get("data", {}).get("determinants"):
+                _cache["knot_dets"] = r[0]["data"]["determinants"][:100]
+            else:
+                _cache["knot_dets"] = []
+        return _cache["knot_dets"]
+
+    def _get_lmfdb_conductors():
+        if "conductors" not in _cache:
+            r = dispatch_search("lmfdb_conductor", {"low": 11, "high": 1000, "max_results": 50})
+            if r and isinstance(r, list):
+                conds = [x["data"]["conductor"] for x in r if "data" in x and "conductor" in x.get("data", {})]
+                _cache["conductors"] = sorted(set(conds))
+            else:
+                _cache["conductors"] = []
+        return _cache["conductors"]
+
+    for s in searches:
+        st = s.get("search_type", "")
+        params = dict(s.get("params", {}))
+        enriched_any = False
+
+        # Fix: integer list params that are actually strings
+        for key in ["integers", "target_terms"]:
+            val = params.get(key)
+            if isinstance(val, str):
+                # LLM wrote a string placeholder — substitute real data
+                val_lower = val.lower()
+                if any(w in val_lower for w in ["knot", "determinant"]):
+                    params[key] = _get_knot_determinants()
+                    enriched_any = True
+                elif any(w in val_lower for w in ["conductor", "lmfdb", "elliptic"]):
+                    params[key] = _get_lmfdb_conductors()
+                    enriched_any = True
+                elif any(w in val_lower for w in ["first", "list", "from"]):
+                    # Generic placeholder — try knot determinants as default
+                    dets = _get_knot_determinants()
+                    if dets:
+                        params[key] = dets
+                        enriched_any = True
+
+        # Fix: crossing_number as string
+        if st == "knots_crossing" and isinstance(params.get("crossing_number"), str):
+            try:
+                params["crossing_number"] = int(params["crossing_number"])
+                enriched_any = True
+            except (ValueError, TypeError):
+                params["crossing_number"] = 7  # sensible default
+                enriched_any = True
+
+        # Fix: target_det as string
+        if st == "knots_determinant" and isinstance(params.get("target_det"), str):
+            try:
+                params["target_det"] = int(params["target_det"])
+                enriched_any = True
+            except (ValueError, TypeError):
+                pass
+
+        # Fix: det_range as string
+        if st == "knots_determinant" and isinstance(params.get("det_range"), str):
+            params["det_range"] = (1, 200)  # sensible default range
+            enriched_any = True
+
+        # Fix: lmfdb_neighbors with placeholder labels
+        if st == "lmfdb_neighbors" and isinstance(params.get("label"), str):
+            label = params["label"]
+            if any(w in label.lower() for w in ["sample", "placeholder", "pick", "from"]):
+                params["label"] = "11.a1"  # known valid label
+                enriched_any = True
+
+        if enriched_any and log:
+            log.info("enrich", "search_enriched", {
+                "search_type": st,
+                "enriched_params": {k: str(v)[:80] for k, v in params.items()},
+            }, msg=f"Enriched {st} params (replaced placeholders)")
+
+        enriched.append({"search_type": st, "params": params})
+
+    return enriched
+
+
+# ---------------------------------------------------------------------------
 # Step 2: SEARCH
 # ---------------------------------------------------------------------------
 
 def run_searches(thread_id: str, searches: list[dict]) -> list[dict]:
     log = cycle_logger.get()
+    # Enrich search plans before executing
+    searches = enrich_search_plan(searches)
     log.info("search", "search_plan_started", {
         "thread_id": thread_id,
         "n_searches": len(searches),
@@ -361,7 +463,61 @@ def _extract_numerical_groups(evidence: list[dict]) -> tuple:
         if len(c0) >= 10:
             return (c0, c1, {}, f"Distributions: {cond_dists[0].get('label','')} vs {cond_dists[1].get('label','')}")
 
-    # Strategy 4: Score distributions across sources
+    # Strategy 4: KnotInfo determinants vs LMFDB conductors (cross-domain)
+    knot_dets = []
+    lmfdb_conds = []
+    for ev in evidence:
+        data = ev.get("data", {})
+        src = ev.get("source", "")
+        if isinstance(data, dict):
+            if src == "KnotInfo" and "determinants" in data:
+                knot_dets.extend([float(d) for d in data["determinants"]
+                                  if isinstance(d, (int, float))])
+            elif src == "KnotInfo" and "determinant" in data and isinstance(data["determinant"], (int, float)):
+                knot_dets.append(float(data["determinant"]))
+            elif src == "LMFDB" and "conductor" in data and isinstance(data["conductor"], (int, float)):
+                lmfdb_conds.append(float(data["conductor"]))
+            elif src == "LMFDB" and "conductors_sample" in data:
+                lmfdb_conds.extend([float(c) for c in data["conductors_sample"]
+                                    if isinstance(c, (int, float))])
+    if len(knot_dets) >= 10 and len(lmfdb_conds) >= 10:
+        return (np.array(knot_dets[:500]), np.array(lmfdb_conds[:500]), {},
+                f"Cross-domain: knot determinants (n={min(len(knot_dets),500)}) vs LMFDB conductors (n={min(len(lmfdb_conds),500)})")
+
+    # Strategy 5: Fungrim symbol counts per module
+    fungrim_results = [ev for ev in evidence if ev.get("source") == "Fungrim"]
+    if len(fungrim_results) >= 10:
+        n_syms = [ev.get("data", {}).get("n_symbols", 0) for ev in fungrim_results
+                  if isinstance(ev.get("data", {}).get("n_symbols"), (int, float))]
+        if len(n_syms) >= 10:
+            arr = np.array(n_syms, dtype=float)
+            med = np.median(arr)
+            a, b = arr[arr <= med], arr[arr > med]
+            if len(a) >= 5 and len(b) >= 5:
+                return (a, b, {}, f"Fungrim symbol counts split at {med:.0f} (n={len(a)}+{len(b)})")
+
+    # Strategy 6: ANTEDB numerical bounds as testable exponents
+    antedb_nums = []
+    for ev in evidence:
+        data = ev.get("data", {})
+        if ev.get("source") == "ANTEDB" and isinstance(data, dict):
+            for val in data.get("bounds", data.get("numerical_values", [])):
+                try:
+                    if "/" in str(val):
+                        num, den = str(val).split("/")
+                        antedb_nums.append(float(num) / float(den))
+                    else:
+                        antedb_nums.append(float(val))
+                except (ValueError, ZeroDivisionError):
+                    pass
+    if len(antedb_nums) >= 10:
+        arr = np.array(antedb_nums, dtype=float)
+        med = np.median(arr)
+        a, b = arr[arr <= med], arr[arr > med]
+        if len(a) >= 5 and len(b) >= 5:
+            return (a, b, {}, f"ANTEDB bounds split at {med:.4f} (n={len(a)}+{len(b)})")
+
+    # Strategy 7: Score distributions across sources (skip trivial all-1.0)
     by_source = {}
     for ev in evidence:
         src = ev.get("source", "unknown")
@@ -372,18 +528,19 @@ def _extract_numerical_groups(evidence: list[dict]) -> tuple:
                        if isinstance(r.get("score"), (int, float))], dtype=float)
         sb = np.array([r.get("score", 0) for r in by_source[sources[1]]
                        if isinstance(r.get("score"), (int, float))], dtype=float)
-        if len(sa) >= 5 and len(sb) >= 5:
+        if len(sa) >= 5 and len(sb) >= 5 and not (np.std(sa) == 0 and np.std(sb) == 0):
             return (sa, sb, {}, f"Scores: {sources[0]} (n={len(sa)}) vs {sources[1]} (n={len(sb)})")
 
-    # Strategy 5: Numerical field split by median
+    # Strategy 8: Numerical field split by median
     nums = []
     for ev in evidence:
         data = ev.get("data", {})
         if isinstance(data, dict):
-            for key in ["conductor", "band_gap", "distance", "avg_ratio", "fraction"]:
+            for key in ["conductor", "determinant", "band_gap", "distance",
+                        "avg_ratio", "fraction", "crossing_number"]:
                 val = data.get(key)
                 if isinstance(val, (int, float)):
-                    nums.append(val)
+                    nums.append(float(val))
                     break
     if len(nums) >= 10:
         arr = np.array(nums, dtype=float)
