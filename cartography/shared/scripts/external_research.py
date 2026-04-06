@@ -91,6 +91,7 @@ SCHOLARLY_QUERIES = [
     "agentic AI research pipeline",
     "cross-domain mathematical correlation discovery",
     "self-improving AI research loop",
+    "mathematical database structured download API",
 ]
 
 
@@ -206,7 +207,7 @@ def run_scholarly_search() -> list[dict]:
 
 TAVILY_QUERIES = [
     "autonomous AI scientific research pipeline 2026",
-    "self-improving machine learning research agent",
+    "new mathematical database open data structured download 2025 2026",
 ]
 
 
