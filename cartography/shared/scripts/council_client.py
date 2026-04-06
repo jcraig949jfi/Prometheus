@@ -278,6 +278,13 @@ def _clean_json_text(text: str) -> str:
     cleaned = cleaned.replace("\u2014", "--").replace("\u2013", "-")
     cleaned = cleaned.replace("\u201c", '"').replace("\u201d", '"')
     cleaned = cleaned.replace("\u2018", "'").replace("\u2019", "'")
+    # Replace Python tuples with JSON arrays: (1, 100) → [1, 100]
+    import re
+    cleaned = re.sub(r'\((\s*-?\d+(?:\.\d+)?\s*(?:,\s*-?\d+(?:\.\d+)?\s*)+)\)', r'[\1]', cleaned)
+    # Replace Python True/False/None with JSON true/false/null
+    cleaned = re.sub(r'\bTrue\b', 'true', cleaned)
+    cleaned = re.sub(r'\bFalse\b', 'false', cleaned)
+    cleaned = re.sub(r'\bNone\b', 'null', cleaned)
     # Strip markdown code fences
     if cleaned.startswith("```"):
         lines = cleaned.split("\n")
