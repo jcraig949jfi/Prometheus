@@ -26,6 +26,9 @@ OEIS_NAMES = CARTOGRAPHY / "oeis" / "data" / "names.gz"
 MATHLIB_GRAPH = CARTOGRAPHY / "mathlib" / "data" / "import_graph.json"
 METAMATH_INDEX = CARTOGRAPHY / "metamath" / "data" / "theorem_list.json"
 MATERIALS_JSON = CARTOGRAPHY / "physics" / "data" / "materials_project_1000.json"
+KNOTS_JSON = CARTOGRAPHY / "knots" / "data" / "knots.json"
+FUNGRIM_JSON = CARTOGRAPHY / "fungrim" / "data" / "fungrim_index.json"
+ANTEDB_JSON = CARTOGRAPHY / "antedb" / "data" / "antedb_index.json"
 CHARON_DB = CHARON / "data" / "charon.duckdb"
 
 
@@ -631,6 +634,241 @@ def materials_search(crystal_system: str = None, band_gap_range: tuple = None,
 
 
 # ---------------------------------------------------------------------------
+# KnotInfo Search
+# ---------------------------------------------------------------------------
+
+_knots_cache: dict = {}
+
+
+def _load_knots():
+    if _knots_cache:
+        return
+    if not KNOTS_JSON.exists():
+        print(f"  [Knots] WARNING: {KNOTS_JSON} not found. Run ingest_knotinfo.py first.")
+        return
+    data = json.loads(KNOTS_JSON.read_text(encoding="utf-8"))
+    _knots_cache.update(data)
+    print(f"  [Knots] Loaded {data['n_knots']:,} knots")
+
+
+def knots_search_determinant(target_det: int = None, det_range: tuple = None,
+                              max_results: int = 20) -> list[dict]:
+    """Search knots by determinant value or range. Bridge to OEIS and LMFDB conductors."""
+    _load_knots()
+    results = []
+    for k in _knots_cache.get("knots", []):
+        det = k.get("determinant")
+        if det is None:
+            continue
+        match = False
+        if target_det is not None and det == target_det:
+            match = True
+        elif det_range and det_range[0] <= det <= det_range[1]:
+            match = True
+        if match:
+            results.append({
+                "source": "KnotInfo",
+                "id": k["name"],
+                "label": k["name"],
+                "match_reason": f"determinant={det}, crossing={k['crossing_number']}",
+                "data": {
+                    "determinant": det,
+                    "crossing_number": k["crossing_number"],
+                    "alex_coeffs": k.get("alex_coeffs", [])[:10],
+                    "jones_coeffs": k.get("jones_coeffs", [])[:10],
+                },
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"]["crossing_number"])
+    return results[:max_results]
+
+
+def knots_search_crossing(crossing_number: int, max_results: int = 50) -> list[dict]:
+    """Find all knots with a specific crossing number."""
+    _load_knots()
+    results = []
+    for k in _knots_cache.get("knots", []):
+        if k["crossing_number"] == crossing_number:
+            results.append({
+                "source": "KnotInfo",
+                "id": k["name"],
+                "label": k["name"],
+                "match_reason": f"crossing_number={crossing_number}",
+                "data": {
+                    "determinant": k.get("determinant"),
+                    "alex_coeffs": k.get("alex_coeffs", [])[:10],
+                    "jones_coeffs": k.get("jones_coeffs", [])[:10],
+                },
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def knots_determinant_list() -> list[dict]:
+    """Return all unique knot determinants as a sorted list. Bridge query to OEIS/LMFDB."""
+    _load_knots()
+    dets = _knots_cache.get("determinants_list", [])
+    return [{
+        "source": "KnotInfo",
+        "id": "determinant_list",
+        "label": f"{len(dets)} unique knot determinants",
+        "match_reason": f"All unique determinants from {_knots_cache.get('n_knots', 0)} knots",
+        "data": {"determinants": dets, "n_determinants": len(dets)},
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
+# Fungrim Search
+# ---------------------------------------------------------------------------
+
+_fungrim_cache: dict = {}
+
+
+def _load_fungrim():
+    if _fungrim_cache:
+        return
+    if not FUNGRIM_JSON.exists():
+        print(f"  [Fungrim] WARNING: {FUNGRIM_JSON} not found. Run ingest_fungrim.py first.")
+        return
+    data = json.loads(FUNGRIM_JSON.read_text(encoding="utf-8"))
+    _fungrim_cache.update(data)
+    print(f"  [Fungrim] Loaded {data['n_formulas']:,} formulas, {data['n_symbols']} symbols")
+
+
+def fungrim_search_symbol(symbol: str, max_results: int = 20) -> list[dict]:
+    """Find formulas containing a specific mathematical symbol."""
+    _load_fungrim()
+    sym_lower = symbol.lower()
+    results = []
+    for f in _fungrim_cache.get("formulas", []):
+        for s in f.get("symbols", []):
+            if sym_lower in s.lower():
+                results.append({
+                    "source": "Fungrim",
+                    "id": f["id"],
+                    "label": f"{f['module']}/{f['id']}",
+                    "match_reason": f"Contains symbol '{s}' in module {f['module']}",
+                    "data": {
+                        "module": f["module"],
+                        "type": f["type"],
+                        "symbols": f["symbols"][:10],
+                        "n_symbols": f["n_symbols"],
+                    },
+                    "score": 1.0 if sym_lower == s.lower() else 0.5,
+                })
+                break  # One match per formula
+    results.sort(key=lambda x: -x["score"])
+    return results[:max_results]
+
+
+def fungrim_search_module(module: str, max_results: int = 20) -> list[dict]:
+    """Find formulas in a specific topic module (e.g., 'dirichlet', 'bernoulli')."""
+    _load_fungrim()
+    mod_lower = module.lower()
+    results = []
+    for f in _fungrim_cache.get("formulas", []):
+        if mod_lower in f.get("module", "").lower():
+            results.append({
+                "source": "Fungrim",
+                "id": f["id"],
+                "label": f"{f['module']}/{f['id']}",
+                "match_reason": f"Module: {f['module']}, type: {f['type']}",
+                "data": {
+                    "module": f["module"],
+                    "type": f["type"],
+                    "symbols": f["symbols"][:10],
+                },
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def fungrim_bridge_symbols() -> list[dict]:
+    """Return symbols that appear across 3+ modules — cross-domain bridges."""
+    _load_fungrim()
+    bridges = _fungrim_cache.get("bridge_symbols", {})
+    results = []
+    for symbol, modules in sorted(bridges.items(), key=lambda x: -len(x[1])):
+        results.append({
+            "source": "Fungrim",
+            "id": symbol,
+            "label": symbol,
+            "match_reason": f"Appears in {len(modules)} modules: {', '.join(modules[:5])}",
+            "data": {"modules": modules, "n_modules": len(modules)},
+            "score": len(modules) / 10.0,
+        })
+    return results[:30]
+
+
+# ---------------------------------------------------------------------------
+# ANTEDB Search
+# ---------------------------------------------------------------------------
+
+_antedb_cache: dict = {}
+
+
+def _load_antedb():
+    if _antedb_cache:
+        return
+    if not ANTEDB_JSON.exists():
+        print(f"  [ANTEDB] WARNING: {ANTEDB_JSON} not found. Run ingest_antedb.py first.")
+        return
+    data = json.loads(ANTEDB_JSON.read_text(encoding="utf-8"))
+    _antedb_cache.update(data)
+    print(f"  [ANTEDB] Loaded {data['n_chapters']} chapters, {data['n_theorems']} theorems")
+
+
+def antedb_search_topic(topic: str, max_results: int = 20) -> list[dict]:
+    """Search ANTEDB chapters and theorems by topic keyword."""
+    _load_antedb()
+    topic_lower = topic.lower()
+    results = []
+    for ch in _antedb_cache.get("chapters", []):
+        if topic_lower in ch["chapter"].lower():
+            for t in ch.get("theorems", []):
+                results.append({
+                    "source": "ANTEDB",
+                    "id": f"{ch['chapter']}/{t['label']}",
+                    "label": t["label"],
+                    "match_reason": f"{t['type']} in {ch['chapter']}",
+                    "data": {
+                        "chapter": ch["chapter"],
+                        "type": t["type"],
+                        "numerical_values": t.get("numerical_values", []),
+                        "body_preview": t.get("body_preview", "")[:150],
+                    },
+                    "score": 1.0,
+                })
+    results.sort(key=lambda x: x["id"])
+    return results[:max_results]
+
+
+def antedb_search_bounds(max_results: int = 30) -> list[dict]:
+    """Return all theorems with numerical bounds. Battery-testable exponent values."""
+    _load_antedb()
+    results = []
+    for ch in _antedb_cache.get("chapters", []):
+        for t in ch.get("theorems", []):
+            nums = t.get("numerical_values", [])
+            if nums:
+                results.append({
+                    "source": "ANTEDB",
+                    "id": f"{ch['chapter']}/{t['label']}",
+                    "label": t["label"],
+                    "match_reason": f"{t['type']}: {len(nums)} bounds in {ch['chapter']}",
+                    "data": {
+                        "chapter": ch["chapter"],
+                        "type": t["type"],
+                        "bounds": nums,
+                    },
+                    "score": len(nums) / 5.0,
+                })
+    results.sort(key=lambda x: -x["score"])
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
 # Dispatcher — route search requests from hypotheses
 # ---------------------------------------------------------------------------
 
@@ -650,6 +888,14 @@ SEARCH_REGISTRY = {
     "mathlib_imports": mathlib_search_imports,
     "metamath_search": metamath_search,
     "materials_search": materials_search,
+    "knots_determinant": knots_search_determinant,
+    "knots_crossing": knots_search_crossing,
+    "knots_determinant_list": knots_determinant_list,
+    "fungrim_symbol": fungrim_search_symbol,
+    "fungrim_module": fungrim_search_module,
+    "fungrim_bridges": fungrim_bridge_symbols,
+    "antedb_topic": antedb_search_topic,
+    "antedb_bounds": antedb_search_bounds,
 }
 
 
@@ -759,6 +1005,35 @@ DATASET_REGISTRY = {
         "searches": ["materials_search"],
         "prompt_block": """Materials Project (1K crystal structures):
 - materials_search(crystal_system="cubic"|etc, band_gap_range=(low,high)) — search crystals""",
+    },
+    "knots": {
+        "name": "KnotInfo",
+        "description": "13K knots with polynomial invariants (Alexander, Jones, Conway), determinants, crossing numbers",
+        "path": KNOTS_JSON,
+        "searches": ["knots_determinant", "knots_crossing", "knots_determinant_list"],
+        "prompt_block": """KnotInfo (13K knots, polynomial invariants):
+- knots_determinant(target_det=int) or knots_determinant(det_range=(low,high)) — find knots by determinant value. Determinants bridge to OEIS and LMFDB conductors.
+- knots_crossing(crossing_number=int) — find all knots with N crossings
+- knots_determinant_list() — get all unique knot determinants as a list (for OEIS/LMFDB bridge queries)""",
+    },
+    "fungrim": {
+        "name": "Fungrim",
+        "description": "3.1K machine-readable mathematical formulas, 825 symbols, 280 cross-domain bridge symbols",
+        "path": FUNGRIM_JSON,
+        "searches": ["fungrim_symbol", "fungrim_module", "fungrim_bridges"],
+        "prompt_block": """Fungrim (3.1K formulas, 825 symbols, cross-domain):
+- fungrim_symbol(symbol="Zeta"|"BernoulliB"|"DirichletL"|etc) — find formulas using a symbol
+- fungrim_module(module="dirichlet"|"bernoulli"|"zeta"|etc) — find formulas by topic
+- fungrim_bridges() — symbols appearing in 3+ modules (cross-domain connections)""",
+    },
+    "antedb": {
+        "name": "ANTEDB",
+        "description": "244 theorems on analytic number theory exponents (Tao), zero density, L-function bounds",
+        "path": ANTEDB_JSON,
+        "searches": ["antedb_topic", "antedb_bounds"],
+        "prompt_block": """ANTEDB — Analytic Number Theory Exponent Database (244 theorems, Tao et al.):
+- antedb_topic(topic="zero_density"|"zeta"|"primes"|"exponent_pairs"|etc) — search by topic
+- antedb_bounds() — all theorems with numerical bounds (exponent values, battery-testable)""",
     },
 }
 

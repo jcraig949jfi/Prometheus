@@ -266,8 +266,14 @@ def ask_all(prompt: str, system: str = "", providers: list[str] = None,
 # ---------------------------------------------------------------------------
 
 def _clean_json_text(text: str) -> str:
-    """Strip markdown fences and trailing garbage from LLM JSON output."""
+    """Strip markdown fences, trailing garbage, and problematic Unicode from LLM JSON output."""
     cleaned = text.strip()
+    # Replace common Unicode that LLMs insert into JSON strings
+    cleaned = cleaned.replace("\u2264", "<=").replace("\u2265", ">=")
+    cleaned = cleaned.replace("\u2192", "->").replace("\u2190", "<-")
+    cleaned = cleaned.replace("\u2014", "--").replace("\u2013", "-")
+    cleaned = cleaned.replace("\u201c", '"').replace("\u201d", '"')
+    cleaned = cleaned.replace("\u2018", "'").replace("\u2019", "'")
     # Strip markdown code fences
     if cleaned.startswith("```"):
         lines = cleaned.split("\n")
