@@ -118,6 +118,15 @@ def generate_hypotheses(topic: str, provider: str = "deepseek",
               "Be specific and quantitative. Every hypothesis must use the search functions listed. "
               "For distribution comparisons, always use lmfdb_rank_comparison or lmfdb_conductor_distribution.")
 
+    # Log the full prompt for audit trail
+    log.debug("cycle", "hypothesis_prompt", {
+        "system": system,
+        "prompt_full": prompt,
+        "prompt_length": len(prompt),
+        "datasets_selected": datasets,
+        "n_seeds": len(seed_hypotheses) if seed_hypotheses else 0,
+    })
+
     try:
         hypotheses = ask_json(prompt, system=system, provider=provider, max_tokens=4096)
         if not isinstance(hypotheses, list):
@@ -282,11 +291,15 @@ def check_evidence_relevance(hypothesis: str, evidence: list[dict],
 
     try:
         from council_client import ask
+        log.debug("nli", "relevance_api_prompt", {
+            "prompt": prompt, "evidence_summary": ev_summary,
+        })
         response = ask(prompt, system="Reply with exactly one word: RELEVANT or IRRELEVANT.",
                       provider="deepseek", max_tokens=10, temperature=0.0)
         word = response.strip().upper().split()[0] if response else "IRRELEVANT"
         verdict = "RELEVANT" if "RELEVANT" in word and "IRRELEVANT" not in word else "IRRELEVANT"
-        log.info("nli", "relevance_api", {"method": "api", "verdict": verdict, "raw": response.strip()},
+        log.info("nli", "relevance_api", {"method": "api", "verdict": verdict,
+                 "raw": response.strip(), "prompt": prompt},
                  msg=f"NLI API: {verdict}")
         return verdict
     except Exception as e:
@@ -410,6 +423,10 @@ def run_battery_on_evidence(thread_id: str, evidence: list[dict],
     kill_tests = [r["test"] for r in results if r["verdict"] == "FAIL"]
     scale_warnings = any(r.get("scale_warning") for r in results)
 
+    # Extract kill diagnosis from battery (classify_kill runs inside run_battery)
+    from falsification_battery import classify_kill
+    kill_diagnosis = classify_kill(results, kill_tests) if kill_tests else {}
+
     return {
         "battery_verdict": verdict,
         "description": description,
@@ -418,6 +435,7 @@ def run_battery_on_evidence(thread_id: str, evidence: list[dict],
         "failed": sum(1 for r in results if r["verdict"] == "FAIL"),
         "skipped": sum(1 for r in results if r["verdict"] == "SKIP"),
         "kill_tests": kill_tests,
+        "kill_diagnosis": kill_diagnosis,
         "scale_warnings": scale_warnings,
         "results": results,
     }
@@ -575,6 +593,14 @@ def generate_report(cycle_id: str, topic: str, threads: list[dict],
             lines.append(f"- Kill tests: {', '.join(battery.get('kill_tests', []))}")
             if battery.get("scale_warnings"):
                 lines.append(f"- SCALE WARNING (cf. Charon April 5)")
+            # Kill diagnosis
+            diag = battery.get("kill_diagnosis", {})
+            if isinstance(diag, dict) and diag.get("category"):
+                cat = diag["category"]
+                conf = diag.get("confidence", "?")
+                retry = diag.get("retry_recommended", False)
+                lines.append(f"- **Diagnosis: {cat.upper()}** (confidence: {conf}, retry: {'yes' if retry else 'no'})")
+                lines.append(f"- {diag.get('explanation', '')}")
             for r in battery.get("results", []):
                 if r["verdict"] == "FAIL":
                     d = {k: v for k, v in r.items() if k not in ("test", "verdict")}
@@ -679,10 +705,27 @@ def run_cycle(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
         battery = run_battery_on_evidence(tid, evidence, hyp_text, n_hypotheses)
         bv = battery.get("battery_verdict", "SKIP")
 
-        # Classify
+        # Classify — use kill diagnosis to distinguish genuine falsification from near-misses
         if bv == "KILLED":
-            final_status = "falsified"
-            reason = f"KILLED by battery ({battery.get('kill_tests', [])})"
+            diag = battery.get("kill_diagnosis", {})
+            diag_cat = diag.get("category", "mixed") if isinstance(diag, dict) else "mixed"
+            retry = diag.get("retry_recommended", False) if isinstance(diag, dict) else False
+
+            if diag_cat in ("genuine_null",):
+                final_status = "falsified"
+                reason = f"KILLED (genuine null): {battery.get('kill_tests', [])}"
+            elif diag_cat in ("resolution_limit", "borderline") and retry:
+                final_status = "open"
+                reason = f"KILLED but {diag_cat} — retry recommended. {diag.get('explanation', '')[:100]}"
+            elif diag_cat == "normalization_artifact" and retry:
+                final_status = "open"
+                reason = f"KILLED (normalization artifact) — retry with different normalization"
+            elif diag_cat == "data_problem" and retry:
+                final_status = "open"
+                reason = f"KILLED (data problem) — retry with better data"
+            else:
+                final_status = "falsified"
+                reason = f"KILLED ({diag_cat}): {battery.get('kill_tests', [])}"
         elif bv == "SURVIVES":
             final_status = "open"  # "confirmed" requires human review
             reason = f"SURVIVES battery ({battery.get('passed',0)} pass)"

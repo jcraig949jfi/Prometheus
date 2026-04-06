@@ -500,6 +500,109 @@ def f11_cross_validation(values_a: np.ndarray, values_b: np.ndarray,
 # Master Battery Runner
 # ---------------------------------------------------------------------------
 
+def classify_kill(results: list[dict], kill_tests: list[str]) -> dict:
+    """Diagnose WHY the battery killed a hypothesis.
+
+    Returns a dict with:
+      - category: genuine_null | data_problem | resolution_limit | normalization_artifact | borderline
+      - confidence: how sure we are this classification is right
+      - retry_recommended: should the hypothesis be retried with better data?
+      - explanation: human-readable diagnosis
+
+    Kill categories:
+      genuine_null      — Effect genuinely doesn't exist. Multiple independent tests agree.
+      data_problem      — Data quality or relevance issue, not a real test of the hypothesis.
+      resolution_limit  — Effect might exist but is too small for our data to detect.
+      normalization_artifact — Sign flips under normalization. Might be scale, not structure.
+      borderline        — Close to thresholds. Could go either way with more data.
+    """
+    kill_set = set(kill_tests)
+    test_map = {r["test"]: r for r in results}
+
+    # Count how many tests actually ran (not skipped)
+    ran = sum(1 for r in results if r["verdict"] != "SKIP")
+    failed = len(kill_tests)
+    passed = sum(1 for r in results if r["verdict"] == "PASS")
+
+    # --- Genuine null: multiple independent failures, clear evidence of no effect ---
+    if failed >= 4 and "F1_permutation_null" in kill_set and "F3_effect_size" in kill_set:
+        return {
+            "category": "genuine_null",
+            "confidence": "high",
+            "retry_recommended": False,
+            "explanation": f"Strong null: {failed}/{ran} tests failed including permutation and effect size. "
+                          f"The data shows no meaningful difference.",
+        }
+
+    # --- Normalization artifact: sign flips under different normalization ---
+    if "F5_alternative_normalization" in kill_set:
+        f5 = test_map.get("F5_alternative_normalization", {})
+        return {
+            "category": "normalization_artifact",
+            "confidence": "high",
+            "retry_recommended": True,
+            "explanation": f"Sign flips under normalization — this is likely a scale effect, not structure. "
+                          f"Retry with log-transformed or rank-transformed data. "
+                          f"d_by_normalization: {f5.get('d_by_normalization', {})}",
+        }
+
+    # --- Resolution limit: effect too small but direction is consistent ---
+    if kill_set == {"F3_effect_size"} or kill_set == {"F11_cross_validation"}:
+        f3 = test_map.get("F3_effect_size", {})
+        d = abs(f3.get("cohens_d", 0))
+        return {
+            "category": "resolution_limit",
+            "confidence": "medium",
+            "retry_recommended": True,
+            "explanation": f"Effect exists (passed permutation) but too small to be meaningful "
+                          f"(d={d:.3f} < 0.2). Try finer binning, larger sample, or subpopulation.",
+        }
+
+    if kill_set == {"F3_effect_size", "F11_cross_validation"}:
+        f3 = test_map.get("F3_effect_size", {})
+        f11 = test_map.get("F11_cross_validation", {})
+        d = abs(f3.get("cohens_d", 0))
+        acc = f11.get("mean_accuracy", 0)
+        return {
+            "category": "resolution_limit",
+            "confidence": "medium",
+            "retry_recommended": True,
+            "explanation": f"Effect too small (d={d:.3f}) and not predictive (CV acc={acc:.1%}). "
+                          f"But passed permutation and normalization — the direction may be real. "
+                          f"Try finer resolution or a different parameter.",
+        }
+
+    # --- Data problem: only failed on base rate or simpler explanation ---
+    if kill_set <= {"F6_base_rate", "F9_simpler_explanation"}:
+        return {
+            "category": "data_problem",
+            "confidence": "low",
+            "retry_recommended": True,
+            "explanation": f"Failed on statistical correction or baseline comparison, not on the core signal. "
+                          f"The effect might be real but our test isn't distinguishing it from noise. "
+                          f"Try with more specific data or fewer simultaneous hypotheses.",
+        }
+
+    # --- Borderline: passed most tests, failed 1-2 ---
+    if failed <= 2 and passed >= 5:
+        return {
+            "category": "borderline",
+            "confidence": "low",
+            "retry_recommended": True,
+            "explanation": f"Near-miss: {passed}/{ran} passed, only {failed} failed ({kill_tests}). "
+                          f"Could be real with better data. Worth retrying with refined search.",
+        }
+
+    # --- Default: mixed signals ---
+    return {
+        "category": "mixed",
+        "confidence": "medium",
+        "retry_recommended": failed < ran // 2,
+        "explanation": f"{failed}/{ran} tests failed: {kill_tests}. "
+                      f"No clear pattern — could be data quality or genuine null.",
+    }
+
+
 def run_battery(values_a: np.ndarray, values_b: np.ndarray,
                 confounds: dict[str, np.ndarray] = None,
                 dose_levels: list[np.ndarray] = None,
@@ -584,7 +687,11 @@ def run_battery(values_a: np.ndarray, values_b: np.ndarray,
     passed = sum(1 for r in results if r["verdict"] == "PASS")
     failed = sum(1 for r in results if r["verdict"] == "FAIL")
     skipped = sum(1 for r in results if r["verdict"] == "SKIP")
+    kill_tests = [r["test"] for r in results if r["verdict"] == "FAIL"]
     verdict = "SURVIVES" if failed == 0 else "KILLED"
+
+    # Diagnose the kill: genuine falsification vs data/methodology problem?
+    kill_diagnosis = classify_kill(results, kill_tests) if failed > 0 else "N/A"
 
     summary = {
         "verdict": verdict,
@@ -593,7 +700,8 @@ def run_battery(values_a: np.ndarray, values_b: np.ndarray,
         "skipped": skipped,
         "total": len(results),
         "elapsed_s": round(elapsed, 2),
-        "kill_tests": [r["test"] for r in results if r["verdict"] == "FAIL"],
+        "kill_tests": kill_tests,
+        "kill_diagnosis": kill_diagnosis,
     }
 
     if log:
