@@ -63,6 +63,109 @@ Respond as a JSON list of 3 objects:
 JSON only. No commentary."""
 
 
+def generate_hypotheses_from_bridges(n: int = 3, log=None) -> list[dict]:
+    """Generate hypotheses from tensor bridge detection. No LLM needed.
+
+    Loads bridges from concept_index or tensor_bridge, creates hypothesis
+    dicts compatible with the pipeline. Returns top N by bridge score.
+    """
+    try:
+        from tensor_bridge import find_top_bridges, bridge_to_hypothesis
+        bridges = find_top_bridges(top_k=n * 2)  # get extras in case dedup kills some
+        hypotheses = []
+        for bridge in bridges[:n * 2]:
+            h = bridge_to_hypothesis(bridge)
+            if h:
+                hypotheses.append(h)
+            if len(hypotheses) >= n:
+                break
+        if log and hypotheses:
+            log.info("cycle", "bridge_hypotheses", {
+                "count": len(hypotheses),
+                "source": "tensor_bridge",
+            }, msg=f"Generated {len(hypotheses)} hypotheses from tensor bridges (0 LLM calls)")
+        return hypotheses
+    except ImportError:
+        # tensor_bridge not yet built — fall through to concept_index bridges
+        pass
+    except Exception as e:
+        if log:
+            log.warn("cycle", "bridge_gen_failed", {"error": str(e)},
+                     msg=f"Bridge hypothesis generation failed: {e}")
+
+    # Fallback: use concept_index bridges directly
+    try:
+        bridges_file = Path(__file__).resolve().parents[2] / "convergence" / "data" / "bridges.jsonl"
+        if bridges_file.exists():
+            bridges = []
+            with open(bridges_file, "r", encoding="utf-8") as f:
+                for line in f:
+                    bridges.append(json.loads(line))
+
+            hypotheses = []
+            for b in sorted(bridges, key=lambda x: -x.get("n_datasets", 0))[:n * 3]:
+                concept = b.get("concept", "")
+                datasets = b.get("datasets", {})
+                samples = b.get("sample_objects", {})
+
+                if len(datasets) < 2:
+                    continue
+
+                ds_names = list(datasets.keys())
+                ds1, ds2 = ds_names[0], ds_names[1]
+                s1 = samples.get(ds1, ["?"])[0]
+                s2 = samples.get(ds2, ["?"])[0]
+
+                h = {
+                    "hypothesis": f"Objects sharing concept '{concept}' across {ds1} ({s1}) and {ds2} ({s2}) have correlated deeper invariants beyond the shared concept.",
+                    "rationale": f"Concept bridge: {concept} appears in {len(datasets)} datasets with {sum(datasets.values())} total objects.",
+                    "searches": _build_bridge_searches(ds1, ds2, concept, samples),
+                    "falsification": "No correlation beyond the shared concept value",
+                    "_source": "concept_bridge",
+                }
+                hypotheses.append(h)
+                if len(hypotheses) >= n:
+                    break
+
+            if log and hypotheses:
+                log.info("cycle", "bridge_hypotheses", {
+                    "count": len(hypotheses),
+                    "source": "concept_index",
+                }, msg=f"Generated {len(hypotheses)} hypotheses from concept bridges (0 LLM calls)")
+            return hypotheses
+    except Exception as e:
+        if log:
+            log.warn("cycle", "concept_bridge_failed", {"error": str(e)},
+                     msg=f"Concept bridge generation failed: {e}")
+
+    return []
+
+
+def _build_bridge_searches(ds1: str, ds2: str, concept: str, samples: dict) -> list[dict]:
+    """Build search plan from a bridge's dataset pair."""
+    searches = []
+
+    # Map dataset names to their most useful aggregate search
+    aggregate_searches = {
+        "KnotInfo": {"search_type": "knots_determinant_list", "params": {}},
+        "LMFDB": {"search_type": "lmfdb_rank_comparison", "params": {"conductor_max": 5000, "bin_size": 100}},
+        "Fungrim": {"search_type": "fungrim_bridges", "params": {}},
+        "ANTEDB": {"search_type": "antedb_bounds", "params": {}},
+        "mathlib": {"search_type": "mathlib_namespace", "params": {"namespace": "NumberTheory"}},
+    }
+
+    if ds1 in aggregate_searches:
+        searches.append(aggregate_searches[ds1])
+    if ds2 in aggregate_searches:
+        searches.append(aggregate_searches[ds2])
+
+    # If no aggregate available, use a generic search
+    if not searches:
+        searches.append({"search_type": "lmfdb_stats", "params": {}})
+
+    return searches
+
+
 def select_datasets(n: int = 4, required: list[str] = None) -> list[str]:
     """Pick n random available datasets. Always includes any in 'required'."""
     avail = available_datasets()
@@ -847,9 +950,19 @@ def run_cycle(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
         "n_seeds": len(seed_hypotheses) if seed_hypotheses else 0,
     }, msg=f"CYCLE {cycle_id} | {topic[:60]} | seeds={len(seed_hypotheses) if seed_hypotheses else 0}")
 
-    # Step 1: Generate (1 LLM call)
-    hypotheses = generate_hypotheses(topic, provider=provider,
-                                     seed_hypotheses=seed_hypotheses)
+    # Step 1: Generate hypotheses
+    # v3: Try bridge-driven first (0 LLM calls), fall back to LLM if needed
+    hypotheses = generate_hypotheses_from_bridges(n=n_hypotheses, log=log)
+
+    if len(hypotheses) < n_hypotheses:
+        # Not enough bridges — supplement with LLM generation
+        n_remaining = n_hypotheses - len(hypotheses)
+        log.info("cycle", "llm_fallback", {"n_bridge": len(hypotheses), "n_needed": n_remaining},
+                 msg=f"Bridges: {len(hypotheses)}, need {n_remaining} more from LLM")
+        llm_hyps = generate_hypotheses(topic, provider=provider,
+                                        seed_hypotheses=seed_hypotheses)
+        hypotheses.extend(llm_hyps[:n_remaining])
+
     if not hypotheses:
         log.error("cycle", "cycle_aborted", {}, msg="ABORT: No valid hypotheses")
         log.close()
