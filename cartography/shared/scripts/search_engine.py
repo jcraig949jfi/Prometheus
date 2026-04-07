@@ -23,12 +23,14 @@ CHARON = REPO / "charon"
 
 OEIS_STRIPPED = CARTOGRAPHY / "oeis" / "data" / "stripped_full.gz"
 OEIS_NAMES = CARTOGRAPHY / "oeis" / "data" / "names.gz"
+OEIS_NAMES_TXT = CARTOGRAPHY / "oeis" / "data" / "names.txt"  # Uncompressed, from James download
 MATHLIB_GRAPH = CARTOGRAPHY / "mathlib" / "data" / "import_graph.json"
 METAMATH_INDEX = CARTOGRAPHY / "metamath" / "data" / "theorem_list.json"
 MATERIALS_JSON = CARTOGRAPHY / "physics" / "data" / "materials_project_1000.json"
 KNOTS_JSON = CARTOGRAPHY / "knots" / "data" / "knots.json"
 FUNGRIM_JSON = CARTOGRAPHY / "fungrim" / "data" / "fungrim_index.json"
 ANTEDB_JSON = CARTOGRAPHY / "antedb" / "data" / "antedb_index.json"
+NUMBER_FIELDS_JSON = CARTOGRAPHY / "number_fields" / "data" / "number_fields.json"
 CHARON_DB = CHARON / "data" / "charon.duckdb"
 
 
@@ -71,9 +73,25 @@ def _load_oeis():
 
 
 def _load_oeis_names():
-    """Lazy-load OEIS sequence names."""
+    """Lazy-load OEIS sequence names. Try uncompressed first, then gzip."""
     if _oeis_names_cache:
         return
+    # Try uncompressed names.txt first (James download, 38MB)
+    if OEIS_NAMES_TXT.exists():
+        try:
+            with open(OEIS_NAMES_TXT, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    idx = line.find(" ")
+                    if idx > 0:
+                        _oeis_names_cache[line[:idx]] = line[idx+1:].strip()
+            print(f"  [OEIS] Loaded {len(_oeis_names_cache):,} sequence names from names.txt")
+            return
+        except Exception as e:
+            print(f"  [OEIS] WARNING: Could not load names.txt: {e}")
+    # Fallback to gzip
     if not OEIS_NAMES.exists():
         return
     try:
@@ -86,7 +104,7 @@ def _load_oeis_names():
                 if idx > 0:
                     _oeis_names_cache[line[:idx]] = line[idx+1:].strip()
     except Exception as e:
-        print(f"  [OEIS] WARNING: Could not load names: {e}")
+        print(f"  [OEIS] WARNING: Could not load names.gz: {e}")
 
 
 def oeis_search_terms(target_terms: list[int], min_match: int = 5,
@@ -874,13 +892,110 @@ def antedb_search_bounds(max_results: int = 30) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# Number Fields Search
+# ---------------------------------------------------------------------------
+
+_nf_cache: list = []
+
+
+def _load_nf():
+    if _nf_cache:
+        return
+    if not NUMBER_FIELDS_JSON.exists():
+        print(f"  [NF] WARNING: {NUMBER_FIELDS_JSON} not found")
+        return
+    data = json.loads(NUMBER_FIELDS_JSON.read_text(encoding="utf-8"))
+    _nf_cache.extend(data if isinstance(data, list) else [])
+    print(f"  [NF] Loaded {len(_nf_cache):,} number fields")
+
+
+def nf_search_degree(degree: int, max_results: int = 50) -> list[dict]:
+    """Search number fields by degree."""
+    _load_nf()
+    results = []
+    for f in _nf_cache:
+        if f.get("degree") == degree:
+            results.append({
+                "source": "NumberFields",
+                "id": f.get("label", ""),
+                "label": f.get("label", ""),
+                "match_reason": f"degree={degree}, disc={f.get('disc_abs')}, class_number={f.get('class_number')}",
+                "data": {
+                    "degree": degree,
+                    "disc_abs": f.get("disc_abs"),
+                    "disc_sign": f.get("disc_sign"),
+                    "class_number": f.get("class_number"),
+                    "class_group": f.get("class_group"),
+                    "galois_label": f.get("galois_label"),
+                    "regulator": f.get("regulator"),
+                },
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: int(x["data"].get("disc_abs", 0) or 0))
+    return results[:max_results]
+
+
+def nf_search_class_number(class_number: int, max_results: int = 50) -> list[dict]:
+    """Search number fields by class number. Bridge to OEIS."""
+    _load_nf()
+    results = []
+    for f in _nf_cache:
+        cn = f.get("class_number")
+        if cn is not None and str(cn) == str(class_number):
+            results.append({
+                "source": "NumberFields",
+                "id": f.get("label", ""),
+                "label": f.get("label", ""),
+                "match_reason": f"class_number={class_number}, degree={f.get('degree')}, disc={f.get('disc_abs')}",
+                "data": {
+                    "degree": f.get("degree"),
+                    "disc_abs": f.get("disc_abs"),
+                    "class_number": class_number,
+                    "galois_label": f.get("galois_label"),
+                },
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def nf_class_number_distribution() -> list[dict]:
+    """Return distribution of class numbers. Battery-testable."""
+    _load_nf()
+    import numpy as np
+    class_numbers = [int(f.get("class_number", 0)) for f in _nf_cache
+                     if f.get("class_number") is not None]
+    if not class_numbers:
+        return [{"error": "No class numbers found"}]
+
+    cn_arr = np.array(class_numbers)
+    from collections import Counter
+    cn_dist = Counter(class_numbers)
+
+    return [{
+        "source": "NumberFields",
+        "id": "class_number_distribution",
+        "label": f"Class number distribution ({len(class_numbers)} fields)",
+        "match_reason": f"{len(cn_dist)} unique class numbers",
+        "data": {
+            "n_fields": len(class_numbers),
+            "unique_class_numbers": len(cn_dist),
+            "mean": round(float(cn_arr.mean()), 2),
+            "median": int(np.median(cn_arr)),
+            "max": int(cn_arr.max()),
+            "class_numbers": class_numbers[:500],
+            "distribution": {str(k): v for k, v in cn_dist.most_common(20)},
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
 # Dispatcher — route search requests from hypotheses
 # ---------------------------------------------------------------------------
 
 SEARCH_REGISTRY = {
     "oeis_terms": oeis_search_terms,
-    # "oeis_keyword" disabled — names.gz is corrupted (HTML, not gzip). Re-enable after fix.
-    # "oeis_keyword": oeis_search_keyword,
+    "oeis_keyword": oeis_search_keyword,  # Re-enabled — James downloaded names.txt
     "oeis_growth": oeis_search_growth,
     "oeis_by_id": oeis_search_by_id,
     "oeis_find_containing": oeis_find_containing,
@@ -902,6 +1017,9 @@ SEARCH_REGISTRY = {
     "fungrim_bridges": fungrim_bridge_symbols,
     "antedb_topic": antedb_search_topic,
     "antedb_bounds": antedb_search_bounds,
+    "nf_degree": nf_search_degree,
+    "nf_class_number": nf_search_class_number,
+    "nf_class_distribution": nf_class_number_distribution,
 }
 
 
@@ -1031,6 +1149,16 @@ DATASET_REGISTRY = {
 - fungrim_symbol(symbol="Zeta"|"BernoulliB"|"DirichletL"|etc) — find formulas using a symbol
 - fungrim_module(module="dirichlet"|"bernoulli"|"zeta"|etc) — find formulas by topic
 - fungrim_bridges() — symbols appearing in 3+ modules (cross-domain connections)""",
+    },
+    "number_fields": {
+        "name": "Number Fields",
+        "description": "9.1K algebraic number fields with class numbers, discriminants, Galois groups, regulators",
+        "path": NUMBER_FIELDS_JSON,
+        "searches": ["nf_degree", "nf_class_number", "nf_class_distribution"],
+        "prompt_block": """Number Fields (9.1K algebraic number fields):
+- nf_degree(degree=2) — find fields by degree (quadratic, cubic, etc.)
+- nf_class_number(class_number=1) — find fields with a specific class number. Bridge to OEIS.
+- nf_class_distribution() — distribution of class numbers across all fields. Battery-testable.""",
     },
     "antedb": {
         "name": "ANTEDB",
