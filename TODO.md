@@ -8,10 +8,10 @@
 ## JAMES — Downloads & Unblocks
 
 ### Immediate (blocks progress)
-- [ ] **MMLKG Download** — 2.2GB from figshare: https://figshare.com/articles/dataset/23528316 → `cartography/mmlkg/data/`. Mizar math proof graph — bridges mathlib AND Metamath.
-- [ ] **GAP System** — `conda install -c conda-forge gap-system`. Unblocks SmallGroups character tables (97MB already cloned).
-- [ ] **Bilbao Crystallographic** — SSL blocks Python. Browser download from https://www.cryst.ehu.es/ → `cartography/physics/data/bilbao/`. Space group tables for physics bridge.
-- [ ] **OEIS oeisdata repo** — You cloned it to `charon/james_downloads/oeisdata/`. Has 395 dirs of sequence files + cross-references. Need to parse and ingest.
+- [x] **MMLKG Download** — 23GB GraphML + 355MB CSVs at `charon/james_downloads/mmlkg/`. 464K theorem refs, 1.8M local refs, 1.5M predicates. Claude needs to ingest CSVs into search engine.
+- [x] **GAP System** — INSTALLED at `charon/james_downloads/GAP/`. GAP 4.15.1.
+- [x] **Bilbao Crystallographic** — 230 space group JSONs in `cartography/physics/data/bilbao/`. 229/230 have JSON parse errors from GAP script — Claude needs to fix parser.
+- [x] **OEIS data** — names.txt (394K names) + stripped copied to `cartography/oeis/data/`. Keyword search restored. oeisdata repo at `charon/james_downloads/oeisdata/` still needs cross-reference parsing.
 
 ### Nice to Have (enrichment)
 - [ ] **Local Fields DB** — https://math.la.asu.edu/~jj/localfields/ → `cartography/local_fields/data/`. Ramification data, connects to Charon spectral findings.

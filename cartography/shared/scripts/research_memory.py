@@ -113,9 +113,9 @@ def is_duplicate(hypothesis: str) -> tuple[bool, str]:
         count = entry["count"]
         status = entry["status"]
 
-        if status == "falsified":
-            return True, f"Previously falsified ({count}x): {entry.get('hypothesis', '')[:80]}"
-        if count >= 3:
+        if status == "falsified" and count >= 3:
+            return True, f"Previously falsified {count}x: {entry.get('hypothesis', '')[:80]}"
+        if count >= 5:
             return True, f"Tested {count}x already (status={status}): {entry.get('hypothesis', '')[:80]}"
 
     return False, ""
