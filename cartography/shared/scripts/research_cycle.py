@@ -423,6 +423,20 @@ def enrich_search_plan(searches: list[dict]) -> list[dict]:
                 params["label"] = "11.a1"  # known valid label
                 enriched_any = True
 
+        # Fix: lmfdb_rank_comparison with hallucinated extra params
+        if st == "lmfdb_rank_comparison":
+            for bad in ["rank", "ranks", "dataset1", "dataset2", "conductor_range"]:
+                if bad in params:
+                    del params[bad]
+                    enriched_any = True
+
+        # Fix: lmfdb_conductor_distribution with hallucinated params
+        if st == "lmfdb_conductor_distribution":
+            for bad in ["dataset1", "dataset2"]:
+                if bad in params:
+                    del params[bad]
+                    enriched_any = True
+
         if enriched_any and log:
             log.info("enrich", "search_enriched", {
                 "search_type": st,
