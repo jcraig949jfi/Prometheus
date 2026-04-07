@@ -32,6 +32,7 @@ from search_engine import (dispatch_search, inventory, validate_search_params,
 from thread_tracker import (create_thread, update_status, add_evidence,
                             add_evaluation, get_thread, list_threads, summary)
 from falsification_battery import run_battery
+from research_memory import is_duplicate, is_tautology, record as record_hypothesis
 
 REPORT_DIR = Path(__file__).resolve().parents[2] / "convergence" / "reports"
 REPORT_DIR.mkdir(parents=True, exist_ok=True)
@@ -111,6 +112,24 @@ def generate_hypotheses(topic: str, provider: str = "deepseek",
             seed_context += f"  - [{status}] {hyp}\n    Reason: {reason}\n"
         seed_context += "\nBuild on these. Refine open threads. Branch from falsified ones.\n"
 
+    # Research memory: tell the LLM what's already been tested
+    from research_memory import summary as memory_summary, _load_memory, _memory_cache
+    _load_memory()
+    mem_s = memory_summary()
+    if mem_s["unique_hypotheses"] > 0:
+        seed_context += f"\nALREADY TESTED ({mem_s['unique_hypotheses']} hypotheses, {mem_s['by_status']}). "
+        seed_context += "Do NOT propose hypotheses similar to these:\n"
+        # Show the most recent falsified ones as exclusions
+        falsified = [e for e in _memory_cache.values() if e["status"] == "falsified"]
+        for entry in falsified[-5:]:
+            seed_context += f"  - [FALSIFIED] {entry.get('hypothesis', '')[:100]}\n"
+        # Show the most-tested ones (avoid repeats)
+        most_tested = sorted(_memory_cache.values(), key=lambda x: -x["count"])
+        for entry in most_tested[:3]:
+            if entry["count"] >= 2:
+                seed_context += f"  - [TESTED {entry['count']}x] {entry.get('hypothesis', '')[:100]}\n"
+        seed_context += "Propose NOVEL hypotheses that explore DIFFERENT connections.\n"
+
     prompt = DATA_INVENTORY_PROMPT.format(
         search_functions=search_functions, topic=topic, seed_context=seed_context)
 
@@ -157,16 +176,40 @@ def generate_hypotheses(topic: str, provider: str = "deepseek",
 
 
 def validate_hypothesis(hypothesis: dict, log) -> tuple[bool, str]:
-    """Validate search plan is executable. No LLM involved."""
+    """Validate a hypothesis. Checks (in order):
+    1. Has searches defined
+    2. Not a duplicate of previously tested hypothesis
+    3. Not a same-domain tautology
+    4. Search params are valid
+    5. At least one search returns results (dry-run)
+    """
+    hyp_text = hypothesis.get("hypothesis", "")
     searches = hypothesis.get("searches", [])
+
     if not searches:
         return False, "No searches defined"
 
+    # Dedup check: has this been tested before?
+    dup, dup_reason = is_duplicate(hyp_text)
+    if dup:
+        log.info("cycle", "hypothesis_dedup", {"reason": dup_reason},
+                 msg=f"  DEDUP: {dup_reason[:80]}")
+        return False, f"Duplicate: {dup_reason}"
+
+    # Tautology check: is this a same-domain non-discovery?
+    taut, taut_reason = is_tautology(hyp_text, searches)
+    if taut:
+        log.info("cycle", "hypothesis_tautology", {"reason": taut_reason},
+                 msg=f"  TAUTOLOGY: {taut_reason[:80]}")
+        return False, f"Tautology: {taut_reason}"
+
+    # Param validation
     for s in searches:
         ok, err = validate_search_params(s.get("search_type", ""), s.get("params", {}))
         if not ok:
             return False, err
 
+    # Dry-run
     non_empty_count = 0
     for s in searches:
         results = dispatch_search(s["search_type"], s.get("params", {}))
@@ -892,6 +935,9 @@ def run_cycle(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
 
         update_status(tid, final_status, reason)
         log.log_thread_transition(tid, "searching", final_status, reason)
+
+        # Record in research memory for future dedup
+        record_hypothesis(hyp_text, final_status)
 
         tracked = get_thread(tid)
         td = {
