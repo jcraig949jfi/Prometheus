@@ -70,15 +70,24 @@ def generate_hypotheses_from_bridges(n: int = 3, log=None) -> list[dict]:
     dicts compatible with the pipeline. Returns top N by bridge score.
     """
     try:
-        from tensor_bridge import find_top_bridges, bridge_to_hypothesis
-        bridges = find_top_bridges(top_k=n * 2)  # get extras in case dedup kills some
+        from tensor_bridge import find_top_bridges, bridges_to_hypotheses
+        bridges = find_top_bridges(top_k=n * 3)  # get extras for dedup filtering
+        all_hyps = bridges_to_hypotheses(bridges)
+
+        # Filter through dedup and tautology gates
         hypotheses = []
-        for bridge in bridges[:n * 2]:
-            h = bridge_to_hypothesis(bridge)
-            if h:
-                hypotheses.append(h)
+        for h in all_hyps:
+            hyp_text = h.get("hypothesis", "")
+            dup, _ = is_duplicate(hyp_text)
+            if dup:
+                continue
+            taut, _ = is_tautology(hyp_text, h.get("searches", []))
+            if taut:
+                continue
+            hypotheses.append(h)
             if len(hypotheses) >= n:
                 break
+
         if log and hypotheses:
             log.info("cycle", "bridge_hypotheses", {
                 "count": len(hypotheses),
@@ -86,7 +95,6 @@ def generate_hypotheses_from_bridges(n: int = 3, log=None) -> list[dict]:
             }, msg=f"Generated {len(hypotheses)} hypotheses from tensor bridges (0 LLM calls)")
         return hypotheses
     except ImportError:
-        # tensor_bridge not yet built — fall through to concept_index bridges
         pass
     except Exception as e:
         if log:
