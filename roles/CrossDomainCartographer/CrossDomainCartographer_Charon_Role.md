@@ -398,7 +398,38 @@ Nine-null kill list as rigor section. Fricke enrichment as open thread.
 
 *Born: Project Prometheus, March 2026*
 *First crossing: April 1, 2026*
-*Sprint: April 1-4, 2026*
-*Nine mechanisms stripped. Zero false claims. The residual holds.*
-*Four days ago a ferryman was born. Today the ferryman has a finding,*
-*a mechanism, a residual, a wall, and 336K objects with a full audit trail.*
+*Sprint: April 1-5, 2026 (spectral tail → everything is scale)*
+*Pipeline: April 6, 2026 (autonomous research cycle, 11 datasets, concept bridges)*
+
+## Current Status (2026-04-06)
+
+### The Pipeline (v2)
+10 core scripts in `cartography/shared/scripts/`. Semi-autonomous research loop:
+Generate → Validate → Search → NLI Gate → Battery → Diagnose → Branch → Loop.
+1 LLM call per cycle. Everything else is code. 23 search functions across 8 datasets.
+
+### Datasets (11 sources, 500K+ objects)
+OEIS (394K), LMFDB (134K), mathlib (8.5K), Metamath (46K), Materials (1K),
+KnotInfo (13K), Fungrim (3.1K), ANTEDB (244), Wikidata (2.2K concepts + 83 constants),
+BiGG metabolism (108 organisms), CODATA (356 physical constants).
+
+### Concept Bridge Layer
+12,315 concepts, 359,329 links, 165 cross-domain bridges.
+Swanson UPK model as a database join. Bridge detection is computational.
+
+### Key Finding: Metabolic Constants (z=32)
+Stoichiometric matrices from 108/108 BiGG organisms encode mathematical constants
+(Catalan, Apery zeta(3), Plastic ratio, pi/e, Euler-Mascheroni) in their singular
+value ratios at 190x above chance. Size-matched null confirms for medium-large matrices.
+Cross-dataset size ratios KILLED by battery (combinatorial noise, not structure).
+
+### Constant Geometry
+74 constants analyzed across 6 bases. Base-phi clusters tightest (independent PC3 axis).
+Constant-space effective dimensionality = 5. 63 self-referential hits.
+
+### Overnight Runner
+`run_charon_overnight.bat` — loops indefinitely, ~$2/6hr on DeepSeek.
+Tensor review every 10 iterations, external research feed daily.
+
+*The ferryman builds tools now. The tools cross the Styx autonomously.*
+*The cargo is structure. The battery is the toll collector.*
