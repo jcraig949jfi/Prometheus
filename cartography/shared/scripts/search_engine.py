@@ -23,6 +23,7 @@ CHARON = REPO / "charon"
 
 OEIS_STRIPPED = CARTOGRAPHY / "oeis" / "data" / "stripped_full.gz"
 OEIS_NAMES = CARTOGRAPHY / "oeis" / "data" / "names.gz"
+OEIS_NAMES_TXT = CARTOGRAPHY / "oeis" / "data" / "names.txt"  # Uncompressed, from James download
 MATHLIB_GRAPH = CARTOGRAPHY / "mathlib" / "data" / "import_graph.json"
 METAMATH_INDEX = CARTOGRAPHY / "metamath" / "data" / "theorem_list.json"
 MATERIALS_JSON = CARTOGRAPHY / "physics" / "data" / "materials_project_1000.json"
@@ -72,9 +73,25 @@ def _load_oeis():
 
 
 def _load_oeis_names():
-    """Lazy-load OEIS sequence names."""
+    """Lazy-load OEIS sequence names. Try uncompressed first, then gzip."""
     if _oeis_names_cache:
         return
+    # Try uncompressed names.txt first (James download, 38MB)
+    if OEIS_NAMES_TXT.exists():
+        try:
+            with open(OEIS_NAMES_TXT, "r", encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith("#"):
+                        continue
+                    idx = line.find(" ")
+                    if idx > 0:
+                        _oeis_names_cache[line[:idx]] = line[idx+1:].strip()
+            print(f"  [OEIS] Loaded {len(_oeis_names_cache):,} sequence names from names.txt")
+            return
+        except Exception as e:
+            print(f"  [OEIS] WARNING: Could not load names.txt: {e}")
+    # Fallback to gzip
     if not OEIS_NAMES.exists():
         return
     try:
@@ -87,7 +104,7 @@ def _load_oeis_names():
                 if idx > 0:
                     _oeis_names_cache[line[:idx]] = line[idx+1:].strip()
     except Exception as e:
-        print(f"  [OEIS] WARNING: Could not load names: {e}")
+        print(f"  [OEIS] WARNING: Could not load names.gz: {e}")
 
 
 def oeis_search_terms(target_terms: list[int], min_match: int = 5,
@@ -978,8 +995,7 @@ def nf_class_number_distribution() -> list[dict]:
 
 SEARCH_REGISTRY = {
     "oeis_terms": oeis_search_terms,
-    # "oeis_keyword" disabled — names.gz is corrupted (HTML, not gzip). Re-enable after fix.
-    # "oeis_keyword": oeis_search_keyword,
+    "oeis_keyword": oeis_search_keyword,  # Re-enabled — James downloaded names.txt
     "oeis_growth": oeis_search_growth,
     "oeis_by_id": oeis_search_by_id,
     "oeis_find_containing": oeis_find_containing,
