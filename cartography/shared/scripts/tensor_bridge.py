@@ -240,33 +240,122 @@ def find_bridges(matrices, ds_objects, dataset_idx, object_idx, concept_idx,
 # 5. Generate hypothesis dicts (compatible with research_cycle.py)
 # ---------------------------------------------------------------------------
 
-def bridges_to_hypotheses(bridges):
+def _dataset_object_search(dataset: str, object_id: str) -> list[dict]:
+    """Build search plans that fetch SPECIFIC objects from a bridge.
+
+    Returns search_type + params compatible with research_cycle dispatch.
     """
-    Convert scored bridges into hypothesis dicts for the research cycle.
+    searches = []
+
+    if dataset == "KnotInfo":
+        # Try to extract crossing number or determinant from object ID
+        # Knot IDs look like "3_1", "8_8", "12*n_145"
+        import re
+        m = re.match(r"(\d+)", object_id)
+        if m:
+            crossing = int(m.group(1))
+            searches.append({"search_type": "knots_crossing", "params": {"crossing_number": crossing, "max_results": 50}})
+        searches.append({"search_type": "knots_determinant_list", "params": {}})
+
+    elif dataset == "LMFDB":
+        # LMFDB labels contain conductor: "11.a1" → conductor=11
+        import re
+        m = re.match(r"(\d+)", object_id)
+        if m:
+            cond = int(m.group(1))
+            searches.append({"search_type": "lmfdb_conductor", "params": {"low": max(1, cond-10), "high": cond+10, "object_type": "elliptic_curve"}})
+        searches.append({"search_type": "lmfdb_neighbors", "params": {"label": object_id, "k": 10}})
+
+    elif dataset == "Fungrim":
+        # Fungrim IDs are hex strings. Find the module.
+        searches.append({"search_type": "fungrim_bridges", "params": {}})
+        # Also search by symbol if we can infer it from shared concepts
+        searches.append({"search_type": "fungrim_module", "params": {"module": "zeta"}})
+
+    elif dataset == "ANTEDB":
+        # ANTEDB IDs look like "chapter/label"
+        parts = object_id.split("/")
+        if parts:
+            topic = parts[0]
+            searches.append({"search_type": "antedb_topic", "params": {"topic": topic}})
+        searches.append({"search_type": "antedb_bounds", "params": {}})
+
+    elif dataset == "mathlib":
+        # mathlib module names contain namespace
+        parts = object_id.split(".")
+        if len(parts) >= 2:
+            ns = parts[1] if parts[0] == "Mathlib" else parts[0]
+            searches.append({"search_type": "mathlib_namespace", "params": {"namespace": ns}})
+        searches.append({"search_type": "mathlib_imports", "params": {"module_name": object_id}})
+
+    # Fallback
+    if not searches:
+        searches.append({"search_type": "lmfdb_stats", "params": {}})
+
+    return searches
+
+
+def bridges_to_hypotheses(bridges):
+    """Convert scored bridges into hypothesis dicts for the research cycle.
+
+    Generates OBJECT-SPECIFIC search plans that target the actual bridge
+    objects, not generic dataset queries.
     """
     hypotheses = []
     for b in bridges:
         top_concepts = b["shared_concepts"][:5]
         concept_str = ", ".join(top_concepts)
         n = b["n_shared_concepts"]
+        ds1, ds2 = b["dataset1"], b["dataset2"]
+        obj1, obj2 = b["object1"], b["object2"]
+
+        # Build searches targeting the specific bridge objects
+        searches = []
+        searches.extend(_dataset_object_search(ds1, obj1))
+        searches.extend(_dataset_object_search(ds2, obj2))
+
+        # Deduplicate search types
+        seen_types = set()
+        unique_searches = []
+        for s in searches:
+            key = f"{s['search_type']}_{json.dumps(s['params'], sort_keys=True)}"
+            if key not in seen_types:
+                seen_types.add(key)
+                unique_searches.append(s)
 
         hyp = {
             "hypothesis": (
-                f"Objects {b['object1']} ({b['dataset1']}) and "
-                f"{b['object2']} ({b['dataset2']}) share {n} concepts "
-                f"including {concept_str}. "
-                f"Their deeper invariants may correlate."
+                f"{obj1} ({ds1}) and {obj2} ({ds2}) share {n} concepts "
+                f"({concept_str}). Testing whether their deeper invariants "
+                f"correlate beyond the shared concept values."
             ),
-            "searches": [
-                {"dataset": b["dataset1"], "query": b["object1"]},
-                {"dataset": b["dataset2"], "query": b["object2"]},
-            ],
+            "rationale": (
+                f"Tensor bridge with score {b['score']:.4f}. "
+                f"Shared verb concepts suggest structural relationship."
+            ),
+            "searches": unique_searches,
             "falsification": "No correlation beyond shared concepts",
-            "source": "tensor_bridge",
-            "score": b["score"],
+            "_source": "tensor_bridge",
+            "_score": b["score"],
+            "_bridge": b,
         }
         hypotheses.append(hyp)
     return hypotheses
+
+
+def find_top_bridges(top_k: int = 10) -> list[dict]:
+    """Load precomputed bridges or compute fresh. Returns top K."""
+    bridges_file = Path(__file__).resolve().parents[2] / "convergence" / "data" / "tensor_bridges.json"
+    if bridges_file.exists():
+        data = json.loads(bridges_file.read_text(encoding="utf-8"))
+        return data.get("bridges", [])[:top_k]
+    return []
+
+
+def bridge_to_hypothesis(bridge: dict) -> dict:
+    """Convert a single bridge to a hypothesis dict."""
+    results = bridges_to_hypotheses([bridge])
+    return results[0] if results else None
 
 
 # ---------------------------------------------------------------------------
