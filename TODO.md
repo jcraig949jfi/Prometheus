@@ -110,5 +110,5 @@ python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-r
 python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-review-every 10 --topic "Find bridges between LMFDB modular form levels, Fungrim formula symbol patterns, and ANTEDB zero-density exponent bounds. Focus on structural relationships not integer coincidences."
 
 # Terminal 3:
-python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-review-every 10 --topic "Test irregular primes, Heegner numbers, and class number 1 discriminants against knot determinants and metabolic eigenvalue ratios. Explore the sleeping beauties."
+python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-review-every 10 --topic "Test number field discriminants and class numbers against knot polynomial invariants and elliptic curve conductors. Do quadratic field regulators correlate with ANTEDB exponent bounds? Explore the sleeping beauties in OEIS."
 ```
