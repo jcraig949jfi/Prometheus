@@ -1,26 +1,27 @@
 # Prometheus — Master TODO List
-## Updated: 2026-04-06
+## Updated: 2026-04-07
 
 *Living document. Each agent session updates its section.*
 
 ---
 
-## JAMES — Human-in-the-Loop Action Items
+## JAMES — Downloads & Unblocks
 
-### Immediate
-- [ ] **OEIS Full Dump** — Register at oeis.org, download full dump with cross-references → `cartography/oeis/data/`. Blocks keyword search (names.gz corrupted).
-- [ ] **Review Suggestions Queue** — 19 pending items. Run: `cd cartography/shared/scripts && python suggestions.py`. Top: OEIS names (HIGH), Materials fields (HIGH), NLI check (HIGH).
-- [ ] **Review 4 Battery Survivors** — 4 hypotheses survived 11-test battery, need sign-off before "confirmed". See `cartography/convergence/data/active_threads.json`.
-- [ ] **Review External Research Roadmap** — `cartography/convergence/reports/external_research_roadmap_20260406.md`. 25 papers triaged into 5 priority buckets.
+### Immediate (blocks progress)
+- [ ] **MMLKG Download** — 2.2GB from figshare: https://figshare.com/articles/dataset/23528316 → `cartography/mmlkg/data/`. Mizar math proof graph — bridges mathlib AND Metamath.
+- [ ] **GAP System** — `conda install -c conda-forge gap-system`. Unblocks SmallGroups character tables (97MB already cloned).
+- [ ] **Bilbao Crystallographic** — SSL blocks Python. Browser download from https://www.cryst.ehu.es/ → `cartography/physics/data/bilbao/`. Space group tables for physics bridge.
+- [ ] **OEIS oeisdata repo** — You cloned it to `charon/james_downloads/oeisdata/`. Has 395 dirs of sequence files + cross-references. Need to parse and ingest.
 
-### When Available
-- [ ] **GAP System Install** — `conda install -c conda-forge gap-system`. Unblocks SmallGroups character tables.
-- [ ] **Bilbao Crystallographic** — SSL error from Python, works in browser. Download space groups from https://www.cryst.ehu.es/ → `cartography/physics/data/bilbao/`
-- [ ] **Materials Project Expansion** — 1K crystals ingested, 150K+ available. crystal_system/spacegroup fields 0% populated.
-- [ ] **Google Billing** — Check billing status, confirm free tier limits for Gemini in Eos
-- [ ] **Archive Old Repos** — bitfrost-mech, ArcanumInfinity → read-only
+### Nice to Have (enrichment)
+- [ ] **Local Fields DB** — https://math.la.asu.edu/~jj/localfields/ → `cartography/local_fields/data/`. Ramification data, connects to Charon spectral findings.
+- [ ] **polyDB** — https://polydb.org/ → `cartography/polytopes/data/`. Polytope f-vectors bridge to OEIS.
+- [ ] **Isogeny DB** — https://isogenies.enricflorit.com/ → supplements LMFDB graph.
+- [ ] **pi-Base** — https://topology.pi-base.org → `cartography/topology/data/`. Topological spaces, bridges mathlib Topology namespace.
+- [ ] **Materials Project API key** — Add to keys.py as "MATERIALS" to replace synthetic data with real 150K+ structures.
+- [ ] **Elicit/Consensus/Scite API keys** — For literature grounding layer (Sleeping Beauty detection).
 
-### Blocked (external)
+### Blocked (external, not fixable)
 - nLab: Cloudflare 403
 - ProofWiki: Cloudflare 403
 - House of Graphs: 401 auth
@@ -29,123 +30,85 @@
 
 ---
 
-## Charon / Cartography (Cross-Domain Research Pipeline)
+## Charon / Cartography
 
-### Next Session
-- [ ] Fuzzy-match 2,166 Wikidata labels → 12K extracted concepts (ground the concept layer)
-- [ ] Generate hypotheses FROM bridges instead of LLM creativity (Phase 3)
-- [ ] Download MMLKG (2.2GB Mizar math proof graph — figshare)
-- [ ] Download OpenAlex concept taxonomy (65K concepts, maps papers → our data)
-- [ ] Track per-function success rates + branch outcome tracking
+### Active (in progress)
+- [ ] Wire OpenAlex 65K concepts into concept bridge layer (just downloaded)
+- [ ] Wire Number Fields 9.1K into concept extraction (just downloaded)
+- [ ] Rebuild tensor with new datasets + verb concepts
+- [ ] Run genocides on new data combinations
 
-### Pipeline Improvements (from process analysis)
-- [ ] Fix LLM hallucinating search function names — ongoing, validation gate catches most
-- [ ] Add more battery extraction strategies as new datasets are added
-- [ ] Add OEIS cross-reference graph when full dump available
-- [ ] Deeper Fungrim symbol → mathlib namespace bridge extraction
+### Pipeline v3 Status
+- [x] v3 tensor bridge architecture (0 cost, 0.8s/cycle)
+- [x] Verb concept extraction (26K concepts, 855K links, 7/10 pairs connected)
+- [x] Bridge-specific searches
+- [x] Research memory + dedup + tautology detection
+- [x] Integer-aware battery nulls
+- [x] Known truth battery: 38/39 validated (97.4%)
+- [x] Genocide: 33/54 survive (61%), all known math rediscoveries
+- [x] Modularity theorem independently rediscovered (z=72)
+- [x] Heegner numbers independently found from Number Fields data
+- [x] BSD small-prime signature found (div by 2,3,5 predicts rank)
+- [x] OEIS keyword search restored (James download)
+- [x] Number Fields downloaded (9,116 fields)
+- [x] OpenAlex downloaded (65K concepts)
+- [x] Materials expanded (10K, crystal_system fixed)
 
-### Data Expansion (from dataset candidates doc)
-- [ ] Lattice Catalogue (Sloane/Nebe) — theta series = modular forms bridge
-- [ ] Number Fields DB — 100K+ fields, LMFDB bridge
-- [ ] Local Fields DB — ramification data, Charon spectral bridge
-- [ ] polyDB — polytope f-vectors → OEIS
-- [ ] Isogeny DB — LMFDB supplement
-- [ ] pi-Base — topology, mathlib bridge
-
-### Completed (2026-04-06)
-- [x] Autonomous research cycle pipeline (10 files, ~5K lines)
-- [x] 8 datasets ingested (OEIS, LMFDB, mathlib, Metamath, Materials, KnotInfo, Fungrim, ANTEDB)
-- [x] 11-test falsification battery with 5-category kill diagnosis
-- [x] NLI relevance gate (Chen et al. pattern)
-- [x] Concept bridge layer (12K concepts, 359K links, 165 bridges)
-- [x] External research feed (Semantic Scholar + arXiv + Tavily)
-- [x] Council review + tensor review (periodic)
-- [x] Suggestions ledger (HITL-gated)
-- [x] Search plan enrichment (fixes placeholder string problem)
-- [x] Wikidata math concepts (2,166 downloaded)
-- [x] External research roadmap triaged
+### Findings Status
+- **Metabolism z=3.8** — Survives constrained null (p=0.005). Modest but real. NOT z=32.
+- **Cross-domain discoveries** — Zero novel bridges survive proper testing yet.
+- **Known math rediscoveries** — 33 across 4 genocide rounds. Validates pipeline.
 
 ---
 
 ## Ignis (Reasoning Circuit Discovery)
 
-### Precipitation Hunt
-- [x] Compute delta_proj at 1.5B
-- [x] Expand RPH eval to 53 pairs
-- [x] Build reasoning subspaces at layers 14, 18, 21
-- [x] Compute delta_proj across all 4 scales
 - [ ] Analyze multi-layer Ignis run results (L14/L18/L21 at 1.5B)
-- [ ] If mid-layer shows different bypass/native ratio → design follow-up
-
-**Key finding:** 0.5B/1.5B/3B produce ZERO self-corrections. Only Qwen3-4B self-corrects (3/8 traps).
-
-### Scale Gradient
-- [ ] 7B Qwen2.5 cloud run (Lambda/RunPod A100, ~$25-40)
-- [ ] Update scale gradient table with 7B results
-
-### SAE Decomposition
-- [ ] Install SAELens, train SAE on Qwen 2.5-3B residual stream
-- [ ] Decode best_genome.pt vectors through SAE
-- [ ] Get human-readable feature decomposition
-
-### RPH Paper
-- [ ] Integrate delta_proj results
-- [ ] Reframe around bypass finding
-- [ ] Add 7B results when available
+- [ ] 7B Qwen2.5 cloud run (~$25-40)
+- [ ] Install SAELens, train SAE on Qwen 2.5-3B
+- [ ] Reframe RPH paper around bypass finding
 
 ---
 
 ## Eos / Dawn (Horizon Scanner)
 
-### To Wire
-- [ ] Groq as fallback LLM (14.4K RPD free)
-- [ ] Cerebras for deep analysis (Qwen 3-235B free)
-- [ ] Serper for targeted web searches (2500 lifetime budget)
-
-### Infrastructure
-- [x] Paper dedup across cycles
-- [x] Persistent paper/repo index
-- [ ] Add log file output alongside console
+- [ ] Groq as fallback LLM
+- [ ] Cerebras for deep analysis
 - [ ] Alert mechanism for critical findings
 
 ---
 
-## Pronoia (Agent Orchestrator)
-
-- [x] Built pronoia.py with scan/eos/metis/status/review commands
-- [x] --every and --publish flags
-- [ ] Add `ignis` command
-- [ ] Add `all` command: Eos → Metis → review in one pass
-- [ ] Process health monitoring
-
----
-
-## Arcanum (Waste Stream Novelty Mining)
-
-- [ ] Smoke-test from F:\Prometheus\arcanum\
-- [ ] Review current 1.5B screening results
-- [ ] Plan 3B screening run
-
----
-
-## Quick Reference — Running Things
+## Quick Reference
 
 ```bash
-# Charon research cycle
+# Charon v3 research cycle (0 cost for bridge hypotheses)
 cd cartography/shared/scripts
-python research_cycle.py --provider openai --hypotheses 3 --loop 5 \
-  --tensor-review-every 5 --external-research \
-  --topic "your research question"
+python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 \
+  --tensor-review-every 10 --topic "your question"
 
-# Individual Charon components
-python concept_index.py          # 12K concepts, 165 bridges
-python tensor_review.py          # Dataset quality audit (free)
-python external_research.py      # Daily paper + web feed
-python suggestions.py            # View pending suggestions
+# Genocide (rapid hypothesis testing, no LLM)
+python genocide.py          # Round 1: 12 tests
+python genocide_r2.py       # Round 2: 12 tests
+python genocide_r3_wild.py  # Round 3: wild cross-domain
+python genocide_r4_massacre.py  # Round 4: 18 tests
+python known_truth_battery.py   # Calibration: 39 known truths
 
-# Eos horizon scan
-cd agents/eos && python -m src.eos_daemon
+# Data tools
+python concept_index.py     # Rebuild 26K concepts + verb bridges
+python tensor_bridge.py     # Tensor bridge detection (4 seconds)
+python tensor_review.py     # Dataset quality audit (3 seconds)
+python constant_matcher.py 1.618  # Identify mathematical constants
 
-# Pronoia orchestration
-cd agents/pronoia && python pronoia.py scan --every 3600 --publish
+# Overnight runner
+run_charon_overnight.bat    # Loops indefinitely (~$0.01/hr with DeepSeek)
+
+# Parallel research terminals (run 3 at once, different topics)
+# Terminal 1:
+python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-review-every 10 --topic "Find bridges between knot polynomial coefficients, number field class numbers, and OEIS sequences. Test the unpopular sequences."
+
+# Terminal 2:
+python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-review-every 10 --topic "Find bridges between LMFDB modular form levels, Fungrim formula symbol patterns, and ANTEDB zero-density exponent bounds. Focus on structural relationships not integer coincidences."
+
+# Terminal 3:
+python research_cycle.py --provider deepseek --hypotheses 3 --loop 20 --tensor-review-every 10 --topic "Test irregular primes, Heegner numbers, and class number 1 discriminants against knot determinants and metabolic eigenvalue ratios. Explore the sleeping beauties."
 ```
