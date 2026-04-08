@@ -7,7 +7,7 @@ Adapted from Charon's murder board (11-test battery that caught the
 mean-spacing normalization artifact). The lesson: LLMs build narratives.
 Only code catches artifacts.
 
-The battery runs 11 tests on any claimed correlation between two datasets.
+The battery runs 14 tests on any claimed correlation between two datasets.
 Each test returns: PASS, FAIL, or SKIP (insufficient data).
 A claim must pass ALL non-skipped tests to be marked "survives battery."
 One FAIL = claim is KILLED.
@@ -24,6 +24,9 @@ Tests:
   F9.  Simpler explanation (does random/trivial baseline match the pattern?)
   F10. Outlier sensitivity (remove top/bottom 5% — does it survive?)
   F11. Cross-validation (train on half, predict on half — above chance?)
+  F12. Partial correlation (does the correlation survive after removing obvious confounds?)
+  F13. Growth rate filter (is the correlation with the target or just with polynomial growth?)
+  F14. Phase-shift test (does correlation decay when index is shifted? Gemini April 7)
 
 Run:
     from falsification_battery import run_battery
@@ -497,6 +500,268 @@ def f11_cross_validation(values_a: np.ndarray, values_b: np.ndarray,
 
 
 # ---------------------------------------------------------------------------
+# F12: Partial Correlation Against Obvious Confounds
+# ---------------------------------------------------------------------------
+
+def f12_partial_correlation(values_a: np.ndarray, values_b: np.ndarray,
+                            index_values: np.ndarray = None) -> dict:
+    """Remove obvious confounds (index/size scaling) and retest correlation.
+
+    The April 5 lesson: two quantities that both scale with p will always
+    correlate. Remove p and the signal vanishes. This test catches that
+    automatically instead of requiring manual investigation.
+
+    Logic:
+      1. Identify confound: if index_values provided, use those; otherwise
+         use integer indices (0..N-1) as the confound (catches anything that
+         scales with position/size).
+      2. Compute raw Spearman correlation between a and b.
+      3. Residualize both a and b against the confound (OLS, subtract predicted).
+      4. Compute partial Spearman correlation on the residuals.
+      5. FAIL if raw correlation is significant (p < 0.05) BUT partial
+         correlation is not (p > 0.05). This means the confound explained
+         the entire relationship.
+
+    SKIP if either array has fewer than 20 elements.
+    """
+    n = min(len(values_a), len(values_b))
+
+    if n < 20:
+        return {"test": "F12_partial_correlation", "verdict": "SKIP",
+                "reason": f"Need >= 20 elements, got {n}"}
+
+    # Truncate to equal length if needed
+    a = np.asarray(values_a[:n], dtype=float)
+    b = np.asarray(values_b[:n], dtype=float)
+
+    # Determine confound
+    if index_values is not None:
+        confound = np.asarray(index_values[:n], dtype=float)
+        confound_name = "provided_index"
+    else:
+        # Auto-detect: use integer index as confound.
+        # This catches anything that scales linearly with position/size/prime.
+        confound = np.arange(n, dtype=float)
+        confound_name = "integer_index"
+
+    # Check whether both arrays actually scale with the confound
+    # (if neither correlates with confound, partial correlation is moot)
+    rho_a_conf, p_a_conf = stats.spearmanr(a, confound)
+    rho_b_conf, p_b_conf = stats.spearmanr(b, confound)
+
+    both_scale = (p_a_conf < 0.05) and (p_b_conf < 0.05)
+
+    if not both_scale:
+        return {
+            "test": "F12_partial_correlation",
+            "verdict": "PASS",
+            "reason": "confound does not correlate with both arrays — no shared scaling to remove",
+            "confound": confound_name,
+            "rho_a_confound": round(float(rho_a_conf), 4),
+            "p_a_confound": float(p_a_conf),
+            "rho_b_confound": round(float(rho_b_conf), 4),
+            "p_b_confound": float(p_b_conf),
+        }
+
+    # Raw Spearman correlation
+    rho_raw, p_raw = stats.spearmanr(a, b)
+
+    # Residualize: linear regression of each array against confound, take residuals
+    slope_a, intercept_a = np.polyfit(confound, a, 1)
+    resid_a = a - (slope_a * confound + intercept_a)
+
+    slope_b, intercept_b = np.polyfit(confound, b, 1)
+    resid_b = b - (slope_b * confound + intercept_b)
+
+    # Partial Spearman correlation on residuals
+    rho_partial, p_partial = stats.spearmanr(resid_a, resid_b)
+
+    # FAIL condition: raw is significant, partial is not.
+    # This means the confound explained the entire correlation.
+    raw_significant = p_raw < 0.05
+    partial_significant = p_partial < 0.05
+
+    if raw_significant and not partial_significant:
+        passed = False
+        explanation = (f"Raw Spearman rho={rho_raw:.4f} (p={p_raw:.2e}) is significant, "
+                       f"but after removing '{confound_name}', partial rho={rho_partial:.4f} "
+                       f"(p={p_partial:.2e}) is NOT significant. "
+                       f"The correlation was entirely explained by the confound. "
+                       f"Scale kills narratives.")
+    else:
+        passed = True
+        explanation = (f"Correlation survives confound removal. "
+                       f"Raw rho={rho_raw:.4f}, partial rho={rho_partial:.4f}."
+                       if raw_significant else
+                       f"Raw correlation not significant (p={p_raw:.2e}), "
+                       f"nothing to partial out.")
+
+    return {
+        "test": "F12_partial_correlation",
+        "verdict": "PASS" if passed else "FAIL",
+        "confound": confound_name,
+        "rho_raw": round(float(rho_raw), 4),
+        "p_raw": float(p_raw),
+        "rho_partial": round(float(rho_partial), 4),
+        "p_partial": float(p_partial),
+        "rho_a_confound": round(float(rho_a_conf), 4),
+        "rho_b_confound": round(float(rho_b_conf), 4),
+        "raw_significant": raw_significant,
+        "partial_significant": partial_significant,
+        "explanation": explanation,
+        "threshold": "if raw p < 0.05 then partial p must also be < 0.05",
+    }
+
+
+def f13_growth_rate_filter(values_a: np.ndarray, values_b: np.ndarray) -> dict:
+    """The April 7 lesson: polynomial growth mimics structural coupling.
+
+    If two sequences both grow quadratically, they'll correlate at r>0.9
+    even with no structural connection. This test compares the claimed
+    correlation against simple growth baselines (n, n^2, 2^n).
+
+    Logic:
+      1. Compute partial correlation of a vs b (controlling for index)
+      2. Compute partial correlation of a vs n^2 (controlling for index)
+      3. Compute partial correlation of a vs 2^n (controlling for index)
+      4. FAIL if correlation with a growth baseline EXCEEDS correlation with b
+         This means b isn't special — any sequence with similar growth matches.
+    """
+    a = np.array(values_a, dtype=float)
+    b = np.array(values_b, dtype=float)
+    n = min(len(a), len(b))
+
+    if n < 15:
+        return {"test": "F13_growth_rate_filter", "verdict": "SKIP",
+                "explanation": f"Need >= 15 elements, got {n}"}
+
+    a, b = a[:n], b[:n]
+    idx = np.arange(n, dtype=float)
+
+    # Residualize against index
+    a_resid = a - np.polyval(np.polyfit(idx, a, 1), idx)
+    b_resid = b - np.polyval(np.polyfit(idx, b, 1), idx)
+
+    if np.std(a_resid) < 1e-10 or np.std(b_resid) < 1e-10:
+        return {"test": "F13_growth_rate_filter", "verdict": "SKIP",
+                "explanation": "Constant residuals after detrending"}
+
+    rho_target, _ = stats.spearmanr(a_resid, b_resid)
+
+    # Growth baselines
+    baselines = {}
+    for bname, bvals in [("n_squared", idx ** 2), ("two_to_n", 2.0 ** np.minimum(idx, 50)),
+                         ("n_cubed", idx ** 3)]:
+        b_base = bvals[:n]
+        b_base_resid = b_base - np.polyval(np.polyfit(idx, b_base, 1), idx)
+        if np.std(b_base_resid) < 1e-10:
+            continue
+        rho_base, _ = stats.spearmanr(a_resid, b_base_resid)
+        baselines[bname] = round(float(rho_base), 4)
+
+    # FAIL if any baseline beats the target
+    max_baseline = max(abs(v) for v in baselines.values()) if baselines else 0
+    target_r = abs(float(rho_target))
+
+    if max_baseline > target_r and max_baseline > 0.5:
+        worst = max(baselines.items(), key=lambda x: abs(x[1]))
+        passed = False
+        explanation = (f"Growth rate mimic detected. Target r_partial={rho_target:.4f}, "
+                       f"but baseline '{worst[0]}' achieves r={worst[1]:.4f}. "
+                       f"The correlation is with polynomial/exponential growth, "
+                       f"not with the specific target. April 7 lesson: growth kills narratives.")
+    else:
+        passed = True
+        explanation = (f"Target r_partial={rho_target:.4f} exceeds all growth baselines "
+                       f"({baselines}). The correlation is target-specific, not growth-rate.")
+
+    return {
+        "test": "F13_growth_rate_filter",
+        "verdict": "PASS" if passed else "FAIL",
+        "rho_target": round(float(rho_target), 4),
+        "baselines": baselines,
+        "max_baseline": round(max_baseline, 4),
+        "explanation": explanation,
+        "threshold": "target r_partial must exceed all growth baselines",
+    }
+
+
+def f14_phase_shift(values_a: np.ndarray, values_b: np.ndarray,
+                    max_shift: int = 5) -> dict:
+    """Phase-shift test: true structural bridges decay under index offset.
+
+    From Gemini session April 7. If two sequences are structurally coupled,
+    shifting one by k positions should WEAKEN the correlation (phase decay).
+    If they merely share a growth rate, shifting doesn't matter — the
+    correlation persists at any offset.
+
+    The "A123648 Signature": a genuine bridge (Hecke eigenform ↔ primes)
+    shows phase decay. A growth mimic (quadratic ↔ primes) does not.
+
+    Logic:
+      1. Compute correlation at shift=0
+      2. Compute correlation at shifts 1..max_shift
+      3. PASS if correlation decays (monotonically or on average)
+      4. FAIL if shifted correlations are as strong as unshifted
+    """
+    a = np.array(values_a, dtype=float)
+    b = np.array(values_b, dtype=float)
+    n = min(len(a), len(b))
+
+    if n < 30:
+        return {"test": "F14_phase_shift", "verdict": "SKIP",
+                "explanation": f"Need >= 30 elements, got {n}"}
+
+    a, b = a[:n], b[:n]
+
+    # Correlation at shift=0
+    rho_0 = abs(float(stats.spearmanr(a, b)[0]))
+    if rho_0 < 0.1:
+        return {"test": "F14_phase_shift", "verdict": "SKIP",
+                "explanation": f"Base correlation too weak (rho={rho_0:.4f})"}
+
+    # Correlations at shifted offsets
+    shifted_rhos = []
+    for k in range(1, max_shift + 1):
+        if n - k < 15:
+            break
+        rho_k = abs(float(stats.spearmanr(a[k:], b[:n-k])[0]))
+        shifted_rhos.append(rho_k)
+
+    if not shifted_rhos:
+        return {"test": "F14_phase_shift", "verdict": "SKIP",
+                "explanation": "Not enough data for shifted correlations"}
+
+    mean_shifted = np.mean(shifted_rhos)
+    decay_ratio = mean_shifted / rho_0 if rho_0 > 0 else 1.0
+
+    # FAIL if shifted correlations maintain >90% of unshifted strength
+    # (indicates growth artifact, not structural coupling)
+    if decay_ratio > 0.90 and rho_0 > 0.5:
+        passed = False
+        explanation = (f"No phase decay. rho_0={rho_0:.4f}, mean_shifted={mean_shifted:.4f} "
+                       f"(decay ratio={decay_ratio:.4f} > 0.90). "
+                       f"The correlation persists at arbitrary offsets — likely a growth rate artifact, "
+                       f"not structural coupling. Gemini lesson: only phase-decaying bridges are real.")
+    else:
+        passed = True
+        explanation = (f"Phase decay detected. rho_0={rho_0:.4f}, mean_shifted={mean_shifted:.4f} "
+                       f"(decay ratio={decay_ratio:.4f}). "
+                       f"Correlation weakens with index shift — consistent with structural coupling.")
+
+    return {
+        "test": "F14_phase_shift",
+        "verdict": "PASS" if passed else "FAIL",
+        "rho_0": round(rho_0, 4),
+        "shifted_rhos": [round(r, 4) for r in shifted_rhos],
+        "mean_shifted": round(mean_shifted, 4),
+        "decay_ratio": round(decay_ratio, 4),
+        "explanation": explanation,
+        "threshold": "decay_ratio must be < 0.90 (or rho_0 < 0.5)",
+    }
+
+
+# ---------------------------------------------------------------------------
 # Master Battery Runner
 # ---------------------------------------------------------------------------
 
@@ -532,6 +797,46 @@ def classify_kill(results: list[dict], kill_tests: list[str]) -> dict:
             "retry_recommended": False,
             "explanation": f"Strong null: {failed}/{ran} tests failed including permutation and effect size. "
                           f"The data shows no meaningful difference.",
+        }
+
+    # --- Confound artifact: partial correlation killed it (April 5 lesson) ---
+    if "F12_partial_correlation" in kill_set:
+        f12 = test_map.get("F12_partial_correlation", {})
+        return {
+            "category": "confound_artifact",
+            "confidence": "high",
+            "retry_recommended": True,
+            "explanation": f"Correlation vanishes after removing shared confound "
+                          f"({f12.get('confound', '?')}). "
+                          f"Raw rho={f12.get('rho_raw', '?')}, partial rho={f12.get('rho_partial', '?')}. "
+                          f"Two quantities that both scale with the same variable will always correlate "
+                          f"— remove it and the signal vanishes. "
+                          f"Retry with residualized data or a confound-free comparison.",
+        }
+
+    # --- Growth rate mimic: correlation is with polynomial growth, not target ---
+    if "F13_growth_rate_filter" in kill_set:
+        f13 = test_map.get("F13_growth_rate_filter", {})
+        return {
+            "category": "growth_rate_mimic",
+            "confidence": "high",
+            "retry_recommended": False,
+            "explanation": f"Growth rate mimic — the correlation is with polynomial/exponential growth, "
+                          f"not with the specific target. Baselines: {f13.get('baselines', {})}. "
+                          f"April 7 lesson: growth kills narratives.",
+        }
+
+    # --- Phase artifact: correlation doesn't decay under index shift ---
+    if "F14_phase_shift" in kill_set:
+        f14 = test_map.get("F14_phase_shift", {})
+        return {
+            "category": "phase_artifact",
+            "confidence": "high",
+            "retry_recommended": False,
+            "explanation": f"No phase decay — correlation persists at arbitrary index offsets "
+                          f"(decay ratio={f14.get('decay_ratio', '?')}). "
+                          f"True structural bridges weaken when shifted; growth artifacts don't. "
+                          f"Gemini April 7: only phase-decaying bridges are real.",
         }
 
     # --- Normalization artifact: sign flips under different normalization ---
@@ -609,8 +914,14 @@ def run_battery(values_a: np.ndarray, values_b: np.ndarray,
                 dose_labels: list[str] = None,
                 subgroups: dict[str, tuple[np.ndarray, np.ndarray]] = None,
                 n_hypotheses_tested: int = 3,
+                index_values: np.ndarray = None,
                 claim: str = "") -> tuple[str, list[dict]]:
-    """Run full 11-test falsification battery.
+    """Run full 14-test falsification battery.
+
+    Args:
+        index_values: Optional array of index/confound values for F12 partial
+            correlation test (e.g., prime values if data is indexed by primes).
+            If None, F12 uses integer indices as the confound.
 
     Returns: (verdict, results_list)
       verdict: "SURVIVES" if all non-skipped tests pass, else "KILLED"
@@ -680,6 +991,33 @@ def run_battery(values_a: np.ndarray, values_b: np.ndarray,
 
     # F11: Cross-validation
     r = f11_cross_validation(values_a, values_b)
+    results.append(r)
+
+    # F12: Partial correlation against obvious confounds (April 5 lesson)
+    # Skip if either array has fewer than 20 elements
+    if len(values_a) >= 20 and len(values_b) >= 20:
+        r = f12_partial_correlation(values_a, values_b, index_values=index_values)
+    else:
+        r = {"test": "F12_partial_correlation", "verdict": "SKIP",
+             "reason": f"Need >= 20 elements per group, got {len(values_a)} and {len(values_b)}"}
+    results.append(r)
+
+    # F13: Growth rate filter (April 7 lesson)
+    # Polynomial/exponential growth mimics structural coupling.
+    if len(values_a) >= 15 and len(values_b) >= 15:
+        r = f13_growth_rate_filter(values_a, values_b)
+    else:
+        r = {"test": "F13_growth_rate_filter", "verdict": "SKIP",
+             "reason": f"Need >= 15 elements per group, got {len(values_a)} and {len(values_b)}"}
+    results.append(r)
+
+    # F14: Phase-shift test (Gemini April 7 lesson)
+    # True structural bridges show phase decay; growth artifacts don't.
+    if len(values_a) >= 30 and len(values_b) >= 30:
+        r = f14_phase_shift(values_a, values_b)
+    else:
+        r = {"test": "F14_phase_shift", "verdict": "SKIP",
+             "reason": f"Need >= 30 elements per group, got {len(values_a)} and {len(values_b)}"}
     results.append(r)
 
     # Tally
@@ -755,4 +1093,21 @@ if __name__ == "__main__":
     verdict, results = run_battery(a_artifact, b_artifact, claim="synthetic scale artifact")
     for r in results:
         print(f"  {r['test']:35s}: {r['verdict']}")
+    print(f"  VERDICT: {verdict}")
+    print()
+
+    # Test F12: confound artifact (both quantities scale with index)
+    # Simulates the R6 genocide finding: two things that correlate only
+    # because they both grow with p (prime). Remove p, signal vanishes.
+    p_vals = np.arange(100, 600)  # "primes" (stand-in for any shared index)
+    a_confound = 0.5 * p_vals + rng.normal(0, 10, 500)  # scales with p
+    b_confound = 0.3 * p_vals + rng.normal(0, 10, 500)  # also scales with p
+    print("--- Confound artifact (both scale with index, F12 should kill) ---")
+    verdict, results = run_battery(a_confound, b_confound,
+                                   index_values=p_vals,
+                                   claim="synthetic confound artifact (both scale with p)")
+    for r in results:
+        print(f"  {r['test']:35s}: {r['verdict']}")
+    f12_result = [r for r in results if r["test"] == "F12_partial_correlation"][0]
+    print(f"  F12 detail: {f12_result.get('explanation', '')}")
     print(f"  VERDICT: {verdict}")

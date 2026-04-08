@@ -148,6 +148,13 @@ def is_tautology(hypothesis: str, searches: list[dict]) -> tuple[bool, str]:
         elif st.startswith("mathlib"): datasets.add("mathlib")
         elif st.startswith("metamath"): datasets.add("metamath")
         elif st.startswith("materials"): datasets.add("materials")
+        elif st.startswith("nf_") or st.startswith("number_field"): datasets.add("number_fields")
+        elif st.startswith("isogeny"): datasets.add("isogenies")
+        elif st.startswith("local_field"): datasets.add("local_fields")
+        elif st.startswith("spacegroup"): datasets.add("spacegroups")
+        elif st.startswith("polytop"): datasets.add("polytopes")
+        elif st.startswith("pibase"): datasets.add("pibase")
+        elif st.startswith("mmlkg"): datasets.add("mmlkg")
 
     if len(datasets) <= 1:
         return True, f"Single-dataset hypothesis (only {datasets}). Not cross-domain."

@@ -6,6 +6,7 @@
 *_secret.txt
 *_api_key*
 credentials*.json
+keys.py
 agents/hermes/config.json
 agents/hermes/data/
 
@@ -156,3 +157,40 @@ cartography/convergence/archive/
 cartography/convergence/data/active_threads.json
 cartography/convergence/data/threads.jsonl
 cartography/convergence/logs/
+
+# Cartography large data files (generated/downloaded, regenerable)
+cartography/convergence/data/*.jsonl
+cartography/convergence/data/*.json
+cartography/convergence/data/*.py
+cartography/convergence/data/*.txt
+cartography/oeis/data/
+cartography/knots/data/
+cartography/fungrim/data/
+cartography/mathlib/data/
+cartography/metamath/data/
+cartography/physics/data/
+cartography/number_fields/data/
+cartography/isogenies/data/
+cartography/local_fields/data/
+cartography/polytopes/data/
+cartography/topology/data/
+cartography/antedb/data/
+cartography/atlas/data/
+cartography/genus2/data/
+cartography/maass/data/
+cartography/lattices/data/
+cartography/findstat/data/
+cartography/groups/data/
+cartography/graph/data/
+cartography/classify/data/
+cartography/metabolism/
+
+# Charon downloads (large, local only)
+charon/james_downloads/
+charon/data/
+
+# OEIS new terms queue (local, for submission)
+cartography/oeis/data/new_terms/
+
+# Cartography reports (generated)
+cartography/convergence/reports/
