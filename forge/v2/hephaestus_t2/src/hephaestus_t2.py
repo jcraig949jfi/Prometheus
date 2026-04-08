@@ -171,27 +171,29 @@ def _call_llm(
     return None
 
 
-def call_with_fallback(system_prompt: str) -> tuple[str | None, str]:
-    """Try DeepSeek first, fall back to NVIDIA. Returns (response, provider_name)."""
-    # DeepSeek primary
-    try:
-        ds_key = _load_api_key(DEEPSEEK["key_env"])
-        result = _call_llm(system_prompt, DEEPSEEK, ds_key)
-        if result:
-            return result, "deepseek"
-        logger.info("DeepSeek returned empty — trying NVIDIA fallback...")
-    except RuntimeError as e:
-        logger.warning("DeepSeek key not found: %s — trying NVIDIA...", e)
+_provider_counter = [0]  # mutable counter for round-robin
 
-    # NVIDIA fallback
-    try:
-        nv_key = _load_api_key(NVIDIA["key_env"])
-        result = _call_llm(system_prompt, NVIDIA, nv_key)
-        if result:
-            return result, "nvidia"
-        logger.warning("NVIDIA also returned empty.")
-    except RuntimeError as e:
-        logger.warning("NVIDIA key not found: %s", e)
+
+def call_with_fallback(system_prompt: str, temperature: float = 0.7) -> tuple[str | None, str]:
+    """Alternate between DeepSeek and NVIDIA each call. Returns (response, provider_name)."""
+    # Round-robin: alternate primary provider each call for diversity
+    providers = [
+        (DEEPSEEK, "deepseek", DEEPSEEK["key_env"]),
+        (NVIDIA, "nvidia", NVIDIA["key_env"]),
+    ]
+    if _provider_counter[0] % 2 == 1:
+        providers = list(reversed(providers))
+    _provider_counter[0] += 1
+
+    for provider_cfg, name, key_env in providers:
+        try:
+            key = _load_api_key(key_env)
+            result = _call_llm(system_prompt, provider_cfg, key, temperature=temperature)
+            if result:
+                return result, name
+            logger.info("%s returned empty — trying next provider...", name)
+        except RuntimeError as e:
+            logger.warning("%s key not found: %s — trying next...", name, e)
 
     return None, "failed"
 
@@ -350,8 +352,11 @@ def forge_one(
         return {"status": "scrap", "tool_id": tool_id, "reason": f"prompt_error:{e}",
                 "score": 0, "category": category, "provider": "", "fields": []}
 
-    # 2. Call API with fallback
-    raw, provider_used = call_with_fallback(prompt)
+    # 2. Call API with fallback — higher temp for categories with existing tools
+    existing = get_existing_tool_paths(2)
+    has_coverage = any(category in str(p) for p in existing)
+    temp = 0.9 if has_coverage else 0.7
+    raw, provider_used = call_with_fallback(prompt, temperature=temp)
     if raw is None:
         append_ledger(tool_id, "scrap", category, reason="api_failed", provider="failed")
         return {"status": "scrap", "tool_id": tool_id, "reason": "api_failed",

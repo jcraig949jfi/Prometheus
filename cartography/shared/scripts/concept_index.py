@@ -239,6 +239,560 @@ def extract_mathlib() -> tuple[list[dict], list[dict]]:
              "source": "mathlib"} for c in concepts], links
 
 
+def extract_number_fields() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from LMFDB Number Fields."""
+    from search_engine import NUMBER_FIELDS_JSON
+    if not NUMBER_FIELDS_JSON.exists(): return [], []
+    data = json.loads(NUMBER_FIELDS_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for field in data:
+        label = field.get("label", "")
+        degree = field.get("degree")
+        class_num = field.get("class_number")
+        galois = field.get("galois_label", "")
+        disc_abs = field.get("disc_abs")
+
+        obj_concepts = []
+        if degree is not None:
+            obj_concepts.append(f"degree_{degree}")
+        if class_num is not None:
+            cn = int(class_num) if class_num else 0
+            obj_concepts.append(f"class_number_{cn}")
+            obj_concepts.extend(_number_concepts(cn) if cn > 0 else [])
+        if galois:
+            obj_concepts.append(f"galois_{galois}")
+        if disc_abs:
+            d = abs(int(disc_abs))
+            if d < 10000:
+                obj_concepts.extend(_number_concepts(d))
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "NumberFields", "object_id": label,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "NumberFields"} for c in concepts], links
+
+
+def extract_isogenies() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from supersingular isogeny graphs."""
+    from search_engine import ISOGENY_GRAPHS
+    import numpy as np
+    if not ISOGENY_GRAPHS.exists(): return [], []
+
+    concepts = set()
+    links = []
+
+    for pdir in sorted(ISOGENY_GRAPHS.iterdir()):
+        if not pdir.is_dir(): continue
+        prime = pdir.name
+        try:
+            p = int(prime)
+        except ValueError:
+            continue
+
+        obj_id = f"isogeny_p{prime}"
+        obj_concepts = _number_concepts(p)
+        obj_concepts.append("supersingular_isogeny")
+
+        # Count nodes from first available npz
+        npz_files = list(pdir.glob("*.npz"))
+        if npz_files:
+            try:
+                adj = np.load(str(npz_files[0]))
+                for key in adj.files:
+                    n = adj[key].shape[0]
+                    obj_concepts.append(f"graph_nodes_{n}")
+                    break
+            except Exception:
+                pass
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Isogenies", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "Isogenies"} for c in concepts], links
+
+
+def extract_local_fields() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from wildly ramified local field extensions."""
+    from search_engine import LOCAL_FIELDS_DIR
+    if not LOCAL_FIELDS_DIR.exists(): return [], []
+
+    concepts = set()
+    links = []
+
+    for fpath in LOCAL_FIELDS_DIR.iterdir():
+        if not fpath.is_file(): continue
+        name = fpath.name  # e.g. p2d10all
+        # Extract prime and degree from filename
+        import re as _re
+        m = _re.match(r'p(\d+)d(\d+)', name)
+        if not m: continue
+        prime, degree = int(m.group(1)), int(m.group(2))
+
+        obj_id = f"localfield_p{prime}_d{degree}"
+        obj_concepts = [
+            f"ramification_prime_{prime}",
+            f"extension_degree_{degree}",
+            "wildly_ramified",
+        ]
+        obj_concepts.extend(_number_concepts(prime))
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "LocalFields", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "LocalFields"} for c in concepts], links
+
+
+def extract_spacegroups() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from Bilbao crystallographic space groups."""
+    from search_engine import BILBAO_DIR
+    if not BILBAO_DIR.exists(): return [], []
+
+    concepts = set()
+    links = []
+
+    # Crystal system mapping by space group number ranges
+    _sg_systems = {
+        range(1, 3): "triclinic", range(3, 16): "monoclinic",
+        range(16, 75): "orthorhombic", range(75, 143): "tetragonal",
+        range(143, 168): "trigonal", range(168, 195): "hexagonal",
+        range(195, 231): "cubic",
+    }
+
+    for sg_file in sorted(BILBAO_DIR.glob("sg_*.json")):
+        try:
+            data = json.loads(sg_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+
+        sg_num = data.get("space_group_number", 0)
+        obj_id = f"sg_{sg_num}"
+        obj_concepts = [f"spacegroup_{sg_num}"]
+
+        # Crystal system
+        for rng, system in _sg_systems.items():
+            if sg_num in rng:
+                obj_concepts.append(f"crystal_system_{system}")
+                break
+
+        # Point group order
+        pg_order = data.get("point_group_order")
+        if pg_order:
+            obj_concepts.append(f"point_group_order_{pg_order}")
+            obj_concepts.extend(_number_concepts(int(pg_order)))
+
+        # Number of Wyckoff positions
+        n_wyckoff = data.get("num_wyckoff_positions")
+        if n_wyckoff:
+            obj_concepts.append(f"wyckoff_positions_{n_wyckoff}")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "SpaceGroups", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "SpaceGroups"} for c in concepts], links
+
+
+def extract_polytopes() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from polyDB polytope collections."""
+    from search_engine import POLYTOPES_DIR
+    if not POLYTOPES_DIR.exists(): return [], []
+
+    concepts = set()
+    links = []
+
+    for json_file in sorted(POLYTOPES_DIR.glob("*.json")):
+        if json_file.name == "manifest.json": continue
+        try:
+            entries = json.loads(json_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        if not isinstance(entries, list): continue
+
+        collection_name = json_file.stem
+        for i, entry in enumerate(entries[:200]):  # Cap per collection
+            if not isinstance(entry, dict) or not entry: continue
+            obj_id = f"{collection_name}_{i}"
+            obj_concepts = [f"collection_{collection_name}"]
+
+            dim = entry.get("DIM") or entry.get("AMBIENT_DIM")
+            if dim is not None:
+                obj_concepts.append(f"dimension_{dim}")
+
+            fvec = entry.get("F_VECTOR")
+            if fvec and isinstance(fvec, list):
+                obj_concepts.append(f"fvector_len_{len(fvec)}")
+
+            n_verts = entry.get("N_VERTICES")
+            if n_verts:
+                obj_concepts.append(f"vertices_{n_verts}")
+
+            for concept in obj_concepts:
+                concepts.add(concept)
+                links.append({
+                    "concept": concept, "dataset": "Polytopes", "object_id": obj_id,
+                    "relationship": "has_property",
+                })
+
+    return [{"id": c, "type": "property", "source": "Polytopes"} for c in concepts], links
+
+
+def extract_pibase() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from pi-Base topological spaces."""
+    from search_engine import PIBASE_DIR
+    if not PIBASE_DIR.exists(): return [], []
+
+    concepts = set()
+    links = []
+
+    spaces_dir = PIBASE_DIR / "spaces"
+    if not spaces_dir.exists(): return [], []
+
+    for space_dir in sorted(spaces_dir.iterdir()):
+        if not space_dir.is_dir(): continue
+        readme = space_dir / "README.md"
+        if not readme.exists(): continue
+
+        # Parse YAML frontmatter
+        text = readme.read_text(encoding="utf-8", errors="replace")
+        uid = space_dir.name
+        name = ""
+        if text.startswith("---"):
+            end = text.find("---", 3)
+            if end > 0:
+                fm = text[3:end]
+                for line in fm.split("\n"):
+                    if line.startswith("name:"):
+                        name = line.split(":", 1)[1].strip().strip('"').strip("'")
+
+        obj_id = uid
+        obj_concepts = ["topological_space"]
+
+        # Extract math keywords from name
+        name_lower = name.lower()
+        for kw in ["compact", "hausdorff", "metrizable", "connected", "discrete",
+                    "countable", "separable", "regular", "normal", "paracompact",
+                    "locally_compact", "complete", "totally_bounded"]:
+            if kw.replace("_", " ") in name_lower or kw in name_lower:
+                obj_concepts.append(f"topo_{kw}")
+
+        # Read properties
+        props_dir = space_dir / "properties"
+        if props_dir.is_dir():
+            for prop_file in props_dir.glob("*.md"):
+                prop_text = prop_file.read_text(encoding="utf-8", errors="replace")
+                if "value: true" in prop_text.lower():
+                    prop_name = prop_file.stem
+                    obj_concepts.append(f"topo_prop_{prop_name}")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "piBase", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "piBase"} for c in concepts], links
+
+
+def extract_mmlkg() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from MMLKG theorem reference graph."""
+    from search_engine import MMLKG_REFS
+    import csv
+    if not MMLKG_REFS.exists(): return [], []
+
+    concepts = set()
+    links = []
+    article_topics = defaultdict(set)
+
+    with open(MMLKG_REFS, "r", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if len(row) < 2: continue
+            src_article = row[0]
+            tgt_article = row[2] if len(row) > 2 else row[1]
+            article_topics[src_article].add(tgt_article)
+
+    # Extract concepts from article names (Mizar naming convention)
+    for article, refs in article_topics.items():
+        obj_id = f"mizar_{article}"
+        obj_concepts = [f"mizar_article_{article}"]
+
+        # Hub articles (many references) are interesting bridge points
+        if len(refs) > 20:
+            obj_concepts.append("mizar_hub")
+        if len(refs) > 50:
+            obj_concepts.append("mizar_superhub")
+
+        # Extract topic from article name prefix
+        prefix = article.rstrip("_0123456789")
+        if prefix:
+            obj_concepts.append(f"mizar_topic_{prefix}")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "MMLKG", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "MMLKG"} for c in concepts], links
+
+
+def extract_genus2() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from genus-2 curves."""
+    from search_engine import GENUS2_JSON
+    if not GENUS2_JSON.exists(): return [], []
+    data = json.loads(GENUS2_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for curve in data:
+        label = curve.get("label", "")
+        cond = curve.get("conductor")
+        st = curve.get("st_group", "")
+        rn = curve.get("root_number")
+        torsion = curve.get("torsion", [])
+
+        obj_concepts = ["genus_2_curve"]
+        if cond is not None and cond < 10000:
+            obj_concepts.extend(_number_concepts(cond))
+            obj_concepts.append("conductor")
+        if st:
+            obj_concepts.append(f"sato_tate_{st}")
+        if rn == 1:
+            obj_concepts.append("even_rank")
+        elif rn == -1:
+            obj_concepts.append("odd_rank")
+        if isinstance(torsion, list):
+            for t in torsion:
+                if isinstance(t, int) and t > 0:
+                    obj_concepts.extend(_number_concepts(t))
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Genus2", "object_id": label,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "Genus2"} for c in concepts], links
+
+
+def extract_maass() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from Maass forms."""
+    from search_engine import MAASS_JSON
+    if not MAASS_JSON.exists(): return [], []
+    data = json.loads(MAASS_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for form in data:
+        label = form.get("maass_label", "")
+        level = form.get("level")
+        fricke = form.get("fricke_eigenvalue")
+        sp = form.get("spectral_parameter")
+
+        obj_concepts = ["maass_form"]
+        if level is not None:
+            obj_concepts.append(f"level_{level}")
+        if fricke == 1:
+            obj_concepts.append("fricke_plus")
+        elif fricke == -1:
+            obj_concepts.append("fricke_minus")
+        if sp is not None:
+            # Bin spectral parameters into ranges for bridge detection
+            sp_bin = int(sp // 10) * 10
+            obj_concepts.append(f"spectral_bin_{sp_bin}")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Maass", "object_id": label,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "Maass"} for c in concepts], links
+
+
+def extract_lattices() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from named lattices."""
+    from search_engine import LATTICES_JSON
+    if not LATTICES_JSON.exists(): return [], []
+    raw = json.loads(LATTICES_JSON.read_text(encoding="utf-8"))
+    data = raw.get("lattices", raw) if isinstance(raw, dict) else raw
+
+    concepts = set()
+    links = []
+
+    for lat in data:
+        name = lat.get("name", "")
+        dim = lat.get("dim")
+        det = lat.get("det")
+        kissing = lat.get("kissing")
+
+        obj_concepts = ["lattice"]
+        if dim is not None:
+            obj_concepts.append(f"dimension_{dim}")
+        if det is not None:
+            obj_concepts.extend(_number_concepts(int(det)) if isinstance(det, (int, float)) and det > 0 else [])
+            obj_concepts.append("determinant")
+        if kissing is not None:
+            obj_concepts.append(f"kissing_{kissing}")
+            obj_concepts.extend(_number_concepts(int(kissing)) if isinstance(kissing, int) and kissing > 0 else [])
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Lattices", "object_id": name,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "Lattices"} for c in concepts], links
+
+
+def extract_openalex() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from OpenAlex academic taxonomy."""
+    from search_engine import OPENALEX_CONCEPTS
+    if not OPENALEX_CONCEPTS.exists(): return [], []
+    data = json.loads(OPENALEX_CONCEPTS.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    # Math/physics keywords that bridge to our other datasets
+    bridge_keywords = {
+        "prime", "number", "algebra", "topology", "geometry", "analysis",
+        "group", "ring", "field", "modular", "elliptic", "lattice",
+        "combinatorics", "graph", "polynomial", "matrix", "vector",
+        "manifold", "knot", "crystal", "symmetry", "representation",
+    }
+
+    for c in data:
+        name = c.get("display_name", "")
+        level = c.get("level")
+        desc = c.get("description", "")
+        obj_id = c.get("id", "")
+
+        obj_concepts = []
+        name_lower = name.lower()
+        # Extract bridge-relevant terms from name
+        for kw in bridge_keywords:
+            if kw in name_lower:
+                obj_concepts.append(kw)
+        if level is not None:
+            obj_concepts.append(f"openalex_level_{level}")
+
+        if obj_concepts:
+            for concept in obj_concepts:
+                concepts.add(concept)
+                links.append({
+                    "concept": concept, "dataset": "OpenAlex", "object_id": obj_id,
+                    "relationship": "has_property",
+                })
+
+    return [{"id": c, "type": "property", "source": "OpenAlex"} for c in concepts], links
+
+
+def extract_smallgroups() -> tuple[list[dict], list[dict]]:
+    """Extract concepts from GAP small groups library."""
+    from search_engine import SMALLGROUPS_JSON
+    if not SMALLGROUPS_JSON.exists(): return [], []
+    data = json.loads(SMALLGROUPS_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for g in data.get("groups", []):
+        order = g.get("order", 0)
+        n_groups = g.get("n_groups", 0)
+        obj_id = f"order_{order}"
+
+        obj_concepts = ["group"]
+        if order > 0:
+            obj_concepts.extend(_number_concepts(order))
+        if g.get("is_prime"):
+            obj_concepts.append("prime_order")
+        if g.get("all_abelian"):
+            obj_concepts.append("abelian")
+        if g.get("is_cyclic_only"):
+            obj_concepts.append("cyclic")
+        if g.get("is_squarefree"):
+            obj_concepts.append("squarefree_order")
+        if n_groups is not None and isinstance(n_groups, int):
+            if n_groups == 1:
+                obj_concepts.append("unique_group")
+            obj_concepts.extend(_number_concepts(n_groups) if n_groups > 0 else [])
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "SmallGroups", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "property", "source": "SmallGroups"} for c in concepts], links
+
+
+def extract_verb_smallgroups() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from small groups: group structure operations."""
+    from search_engine import SMALLGROUPS_JSON
+    if not SMALLGROUPS_JSON.exists(): return [], []
+    data = json.loads(SMALLGROUPS_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for g in data.get("groups", []):
+        order = g.get("order", 0)
+        obj_id = f"order_{order}"
+        obj_concepts = ["verb_involves_group", "verb_involves_order"]
+
+        if g.get("all_abelian"):
+            obj_concepts.append("verb_abelian_group")
+        if g.get("is_cyclic_only"):
+            obj_concepts.append("verb_cyclic_group")
+        if g.get("is_prime"):
+            obj_concepts.append("verb_involves_prime")
+        if g.get("is_squarefree"):
+            obj_concepts.append("verb_squarefree")
+
+        # Factorization bridges to number fields
+        fac = g.get("factorization", {})
+        if len(fac) >= 2:
+            obj_concepts.append("verb_composite_order")
+        for p in fac:
+            obj_concepts.append("verb_involves_prime")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "SmallGroups", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "SmallGroups"} for c in concepts], links
+
+
 # ---------------------------------------------------------------------------
 # Verb concept extractors — cross-domain bridges
 # ---------------------------------------------------------------------------
@@ -277,6 +831,23 @@ _CANONICAL = {
     "Alexander": "alexander", "Jones": "jones",
     "Knot": "knot", "Crossing": "crossing",
     "Dirichlet": "dirichlet",
+    "Isogeny": "isogeny", "Supersingular": "supersingular",
+    "Galois": "galois", "GaloisGroup": "galois_group",
+    "Discriminant": "discriminant", "ClassNumber": "class_number",
+    "Regulator": "regulator", "Ramification": "ramification",
+    "SpaceGroup": "space_group", "Wyckoff": "wyckoff",
+    "Crystal": "crystal", "Lattice": "lattice",
+    "Polytope": "polytope", "FVector": "f_vector",
+    "Compact": "compact", "Hausdorff": "hausdorff",
+    "Metrizable": "metrizable", "Connected": "connected",
+    "Separable": "separable", "Paracompact": "paracompact",
+    "Mizar": "mizar", "Theorem": "theorem",
+    "Convex": "convex", "Simplicial": "simplicial",
+    "Symmorphic": "symmorphic", "Centrosymmetric": "centrosymmetric",
+    "Ramified": "ramified", "WildlyRamified": "wildly_ramified",
+    "Triclinic": "triclinic", "Monoclinic": "monoclinic",
+    "Orthorhombic": "orthorhombic", "Tetragonal": "tetragonal",
+    "Trigonal": "trigonal", "Hexagonal": "hexagonal", "Cubic": "cubic",
 }
 
 
@@ -697,6 +1268,609 @@ def extract_verb_knotinfo() -> tuple[list[dict], list[dict]]:
     return [{"id": c, "type": "verb", "source": "KnotInfo"} for c in concepts], links
 
 
+def extract_verb_number_fields() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from Number Fields: class group structure, Galois type, quadratic type."""
+    from search_engine import NUMBER_FIELDS_JSON
+    if not NUMBER_FIELDS_JSON.exists():
+        return [], []
+    data = json.loads(NUMBER_FIELDS_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for field in data:
+        label = field.get("label", "")
+        degree = field.get("degree")
+        class_num = field.get("class_number")
+        galois = field.get("galois_label", "")
+        disc = field.get("disc_sign", 0)
+        reg = field.get("regulator")
+
+        obj_concepts = []
+
+        # Class number verbs
+        if class_num is not None:
+            cn = int(class_num) if class_num else 0
+            if cn == 1:
+                obj_concepts.append("verb_has_class_number_1")
+            elif cn > 1:
+                obj_concepts.append("verb_has_nontrivial_class_group")
+            obj_concepts.append("verb_involves_class_number")
+
+        # Degree verb
+        if degree is not None:
+            obj_concepts.append(f"verb_degree_{degree}")
+
+        # Galois type: abelian if transitive group label is nTm with m=1
+        if galois:
+            m_gal = re.match(r'(\d+)T(\d+)', galois)
+            if m_gal and m_gal.group(2) == "1":
+                obj_concepts.append("verb_galois_abelian")
+            obj_concepts.append("verb_involves_galois")
+
+        # Quadratic type (degree 2)
+        if degree == 2:
+            if disc is not None:
+                if int(disc) > 0:
+                    obj_concepts.append("verb_real_quadratic")
+                else:
+                    obj_concepts.append("verb_imaginary_quadratic")
+
+        # Regulator
+        if reg is not None:
+            obj_concepts.append("verb_has_regulator")
+            obj_concepts.append("verb_involves_regulator")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "NumberFields", "object_id": label,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "NumberFields"} for c in concepts], links
+
+
+def extract_verb_isogenies() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from Isogenies: supersingularity, graph diameter, special primes."""
+    from search_engine import ISOGENY_GRAPHS
+    import numpy as np
+    if not ISOGENY_GRAPHS.exists():
+        return [], []
+
+    concepts = set()
+    links = []
+
+    # Small primes with special isogeny structure
+    _SPECIAL_PRIMES = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47}
+
+    for pdir in sorted(ISOGENY_GRAPHS.iterdir()):
+        if not pdir.is_dir():
+            continue
+        prime = pdir.name
+        try:
+            p = int(prime)
+        except ValueError:
+            continue
+
+        obj_id = f"isogeny_p{prime}"
+        obj_concepts = ["verb_supersingular", "verb_involves_isogeny"]
+
+        # Special prime structure
+        if p in _SPECIAL_PRIMES:
+            obj_concepts.append(f"verb_involves_prime_{p}")
+
+        # Graph diameter from adjacency matrix
+        npz_files = list(pdir.glob("*.npz"))
+        if npz_files:
+            try:
+                adj = np.load(str(npz_files[0]))
+                for key in adj.files:
+                    mat = adj[key]
+                    n = mat.shape[0]
+                    if n > 0 and n < 500:
+                        # BFS-based diameter estimate
+                        from collections import deque
+                        diameter = 0
+                        binary = (mat > 0).astype(int)
+                        for start in range(min(n, 10)):  # sample starts
+                            dist = [-1] * n
+                            dist[start] = 0
+                            q = deque([start])
+                            while q:
+                                u = q.popleft()
+                                for v in range(n):
+                                    if binary[u, v] and dist[v] < 0:
+                                        dist[v] = dist[u] + 1
+                                        q.append(v)
+                            max_d = max(d for d in dist if d >= 0)
+                            diameter = max(diameter, max_d)
+                        if diameter > 0:
+                            obj_concepts.append(f"verb_graph_diameter_{diameter}")
+                    break
+            except Exception:
+                pass
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Isogenies", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "Isogenies"} for c in concepts], links
+
+
+def extract_verb_spacegroups() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from Space Groups: crystal system, centrosymmetry, Wyckoff, symmorphic."""
+    from search_engine import BILBAO_DIR
+    if not BILBAO_DIR.exists():
+        return [], []
+
+    concepts = set()
+    links = []
+
+    _sg_systems = {
+        range(1, 3): "triclinic", range(3, 16): "monoclinic",
+        range(16, 75): "orthorhombic", range(75, 143): "tetragonal",
+        range(143, 168): "trigonal", range(168, 195): "hexagonal",
+        range(195, 231): "cubic",
+    }
+
+    # Expected number of generators for symmorphic groups by crystal system
+    # (approximation: symmorphic groups have fewer generators than non-symmorphic)
+    _SYMMORPHIC_SG = {
+        1, 2, 3, 5, 6, 8, 10, 12, 16, 21, 22, 23, 25, 35, 38, 42, 44, 47,
+        65, 69, 71, 75, 79, 81, 82, 83, 87, 89, 97, 99, 107, 111, 115, 119,
+        121, 123, 131, 139, 143, 146, 147, 148, 149, 150, 155, 156, 157, 160,
+        162, 164, 166, 168, 174, 175, 177, 183, 187, 189, 191, 195, 196, 197,
+        200, 202, 204, 207, 209, 211, 215, 216, 217, 221, 225, 229,
+    }
+
+    for sg_file in sorted(BILBAO_DIR.glob("sg_*.json")):
+        try:
+            data = json.loads(sg_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+
+        sg_num = data.get("space_group_number", 0)
+        obj_id = f"sg_{sg_num}"
+        obj_concepts = []
+
+        # Crystal system verb
+        for rng, system in _sg_systems.items():
+            if sg_num in rng:
+                obj_concepts.append(f"verb_crystal_system_{_canonicalize(system)}")
+                break
+
+        # Centrosymmetric: point group order is even
+        pg_order = data.get("point_group_order")
+        if pg_order and int(pg_order) % 2 == 0:
+            obj_concepts.append("verb_centrosymmetric")
+
+        # Wyckoff positions
+        n_wyckoff = data.get("num_wyckoff_positions")
+        if n_wyckoff:
+            obj_concepts.append(f"verb_has_wyckoff_{n_wyckoff}")
+
+        # Symmorphic
+        if sg_num in _SYMMORPHIC_SG:
+            obj_concepts.append("verb_symmorphic")
+
+        # Cross-dataset bridge verbs
+        obj_concepts.append("verb_involves_space_group")
+        if pg_order:
+            obj_concepts.append("verb_involves_lattice")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "SpaceGroups", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "SpaceGroups"} for c in concepts], links
+
+
+def extract_verb_polytopes() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from Polytopes: convexity, simpliciality, dimension, symmetry."""
+    from search_engine import POLYTOPES_DIR
+    if not POLYTOPES_DIR.exists():
+        return [], []
+
+    concepts = set()
+    links = []
+
+    for json_file in sorted(POLYTOPES_DIR.glob("*.json")):
+        if json_file.name == "manifest.json":
+            continue
+        try:
+            entries = json.loads(json_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+        if not isinstance(entries, list):
+            continue
+
+        collection_name = json_file.stem
+        for i, entry in enumerate(entries[:200]):
+            if not isinstance(entry, dict) or not entry:
+                continue
+            obj_id = f"{collection_name}_{i}"
+            obj_concepts = []
+
+            dim = entry.get("DIM") or entry.get("AMBIENT_DIM")
+            n_verts = entry.get("N_VERTICES")
+            fvec = entry.get("F_VECTOR")
+
+            # Convex — polyDB polytopes are convex by construction
+            obj_concepts.append("verb_convex")
+            obj_concepts.append("verb_involves_polytope")
+
+            # Simplicial: f_0 = dim + 1 (minimal vertices for dimension)
+            if dim is not None and n_verts is not None:
+                if int(n_verts) == int(dim) + 1:
+                    obj_concepts.append("verb_simplicial")
+
+            # Dimension verb
+            if dim is not None:
+                obj_concepts.append(f"verb_dimension_{dim}")
+
+            # Symmetry: check for symmetry-related keys
+            if (entry.get("GROUP") or entry.get("N_ORBITS_OF_VERTICES")
+                    or entry.get("SYMMETRY") or entry.get("GROUP_ORDER")):
+                obj_concepts.append("verb_has_symmetry")
+
+            for concept in obj_concepts:
+                concepts.add(concept)
+                links.append({
+                    "concept": concept, "dataset": "Polytopes", "object_id": obj_id,
+                    "relationship": "has_property",
+                })
+
+    return [{"id": c, "type": "verb", "source": "Polytopes"} for c in concepts], links
+
+
+def extract_verb_pibase() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from pi-Base: topological property verbs."""
+    from search_engine import PIBASE_DIR
+    if not PIBASE_DIR.exists():
+        return [], []
+
+    concepts = set()
+    links = []
+
+    # Map pi-Base property IDs/filenames to canonical verb concepts
+    _PROP_VERB_MAP = {
+        "compact": "verb_topo_compact",
+        "hausdorff": "verb_topo_hausdorff",
+        "metrizable": "verb_topo_metrizable",
+        "connected": "verb_topo_connected",
+        "separable": "verb_topo_separable",
+        "t2": "verb_topo_hausdorff",       # T2 = Hausdorff
+        "t1": "verb_topo_hausdorff",        # conservative — T1 is weaker but bridge-worthy
+        "path_connected": "verb_topo_connected",
+        "second_countable": "verb_topo_separable",
+        "paracompact": "verb_topo_compact",
+    }
+
+    spaces_dir = PIBASE_DIR / "spaces"
+    if not spaces_dir.exists():
+        return [], []
+
+    for space_dir in sorted(spaces_dir.iterdir()):
+        if not space_dir.is_dir():
+            continue
+
+        obj_id = space_dir.name
+        obj_concepts = []
+
+        # Read properties from property files
+        props_dir = space_dir / "properties"
+        if props_dir.is_dir():
+            for prop_file in props_dir.glob("*.md"):
+                prop_text = prop_file.read_text(encoding="utf-8", errors="replace")
+                if "value: true" not in prop_text.lower():
+                    continue
+                prop_name = prop_file.stem.lower()
+
+                # Direct match to verb map
+                for key, verb in _PROP_VERB_MAP.items():
+                    if key in prop_name:
+                        obj_concepts.append(verb)
+
+                # Also check for the five core properties by name
+                for core in ["compact", "hausdorff", "metrizable", "connected", "separable"]:
+                    if core in prop_name:
+                        obj_concepts.append(f"verb_topo_{core}")
+
+        # Deduplicate per object
+        obj_concepts = list(set(obj_concepts))
+
+        # Always add topology involvement for cross-dataset bridging
+        obj_concepts.append("verb_involves_topology")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "piBase", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "piBase"} for c in concepts], links
+
+
+def extract_verb_mmlkg() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from MMLKG: hub status, foundational references, topic prefixes."""
+    from search_engine import MMLKG_REFS
+    import csv
+    if not MMLKG_REFS.exists():
+        return [], []
+
+    concepts = set()
+    links = []
+    article_refs = defaultdict(set)
+    article_in_degree = defaultdict(int)
+
+    with open(MMLKG_REFS, "r", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if len(row) < 2:
+                continue
+            src_article = row[0]
+            tgt_article = row[2] if len(row) > 2 else row[1]
+            article_refs[src_article].add(tgt_article)
+            article_in_degree[tgt_article] += 1
+
+    # Prefix-based topic classification
+    _ALGEBRAIC_PREFIXES = {
+        "group", "ring", "vectsp", "algstr", "mod", "ideal", "field",
+        "polynom", "matrix", "linalg", "matrlin", "grsolv", "rlvect",
+    }
+    _ANALYTIC_PREFIXES = {
+        "sin", "integr", "mesfunc", "measure", "comseq", "rfunct",
+        "seq", "series", "limfunc", "fcont", "fdiff",
+    }
+    _TOPOLOGICAL_PREFIXES = {
+        "tops", "topsp", "topalg", "metric", "tmap", "pcomps",
+        "connsp", "compts",
+    }
+    _FOUNDATIONAL = {"tarski", "xboole", "boole", "zfmisc", "subset", "ordinal"}
+
+    for article, refs in article_refs.items():
+        obj_id = f"mizar_{article}"
+        obj_concepts = []
+
+        # Hub status (high out-degree)
+        if len(refs) > 20:
+            obj_concepts.append("verb_mizar_hub")
+
+        # Foundational: references tarski or xboole-family articles
+        refs_lower = {r.lower() for r in refs}
+        if refs_lower & _FOUNDATIONAL:
+            obj_concepts.append("verb_mizar_foundational")
+
+        # Topic classification from article name prefix
+        art_lower = article.lower().rstrip("_0123456789")
+        for pfx in _ALGEBRAIC_PREFIXES:
+            if art_lower.startswith(pfx):
+                obj_concepts.append("verb_mizar_algebraic")
+                break
+        for pfx in _ANALYTIC_PREFIXES:
+            if art_lower.startswith(pfx):
+                obj_concepts.append("verb_mizar_analytic")
+                break
+        for pfx in _TOPOLOGICAL_PREFIXES:
+            if art_lower.startswith(pfx):
+                obj_concepts.append("verb_mizar_topological")
+                break
+
+        # Cross-dataset bridge verbs from topic
+        if "verb_mizar_algebraic" in obj_concepts:
+            obj_concepts.append("verb_involves_algebra")
+        if "verb_mizar_analytic" in obj_concepts:
+            obj_concepts.append("verb_involves_analysis")
+        if "verb_mizar_topological" in obj_concepts:
+            obj_concepts.append("verb_involves_topology")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "MMLKG", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "MMLKG"} for c in concepts], links
+
+
+def extract_verb_local_fields() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from Local Fields: wild ramification, prime, extension degree."""
+    from search_engine import LOCAL_FIELDS_DIR
+    if not LOCAL_FIELDS_DIR.exists():
+        return [], []
+
+    concepts = set()
+    links = []
+
+    for fpath in LOCAL_FIELDS_DIR.iterdir():
+        if not fpath.is_file():
+            continue
+        name = fpath.name
+        m = re.match(r'p(\d+)d(\d+)', name)
+        if not m:
+            continue
+        prime, degree = int(m.group(1)), int(m.group(2))
+
+        obj_id = f"localfield_p{prime}_d{degree}"
+        obj_concepts = [
+            "verb_wildly_ramified",
+            f"verb_ramification_prime_{prime}",
+            f"verb_extension_degree_{degree}",
+            "verb_involves_ramification",
+        ]
+
+        # Cross-dataset bridge: prime involvement
+        if _is_prime(prime):
+            obj_concepts.append("verb_involves_prime")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "LocalFields", "object_id": obj_id,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "LocalFields"} for c in concepts], links
+
+
+def extract_verb_genus2() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from genus-2 curves: conductor-discriminant relationships, Sato-Tate structure."""
+    from search_engine import GENUS2_JSON
+    if not GENUS2_JSON.exists(): return [], []
+    data = json.loads(GENUS2_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for curve in data:
+        label = curve.get("label", "")
+        cond = curve.get("conductor")
+        disc = curve.get("discriminant")
+        st = curve.get("st_group", "")
+        rn = curve.get("root_number")
+        torsion = curve.get("torsion", [])
+
+        obj_concepts = []
+
+        # Conductor-discriminant relationship (key bridge to EC and NF)
+        obj_concepts.append("verb_involves_conductor")
+        obj_concepts.append("verb_involves_discriminant")
+        if cond is not None and disc is not None and cond != 0:
+            ratio = abs(disc) / cond if cond != 0 else 0
+            if ratio == 1:
+                obj_concepts.append("verb_conductor_equals_discriminant")
+            elif ratio < 10:
+                obj_concepts.append("verb_small_disc_conductor_ratio")
+
+        # Sato-Tate group (bridges to Galois representations, modular forms)
+        if st:
+            obj_concepts.append("verb_has_sato_tate")
+            if "USp" in st:
+                obj_concepts.append("verb_generic_sato_tate")
+            else:
+                obj_concepts.append("verb_exceptional_sato_tate")
+
+        # Root number / rank parity (bridges to BSD, L-functions)
+        if rn is not None:
+            obj_concepts.append("verb_involves_root_number")
+            obj_concepts.append("verb_involves_l_function")
+
+        # Torsion structure
+        if isinstance(torsion, list) and torsion:
+            obj_concepts.append("verb_has_torsion")
+            if any(t > 1 for t in torsion if isinstance(t, int)):
+                obj_concepts.append("verb_nontrivial_torsion")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Genus2", "object_id": label,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "Genus2"} for c in concepts], links
+
+
+def extract_verb_maass() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from Maass forms: spectral theory, symmetry, Fricke."""
+    from search_engine import MAASS_JSON
+    if not MAASS_JSON.exists(): return [], []
+    data = json.loads(MAASS_JSON.read_text(encoding="utf-8"))
+
+    concepts = set()
+    links = []
+
+    for form in data:
+        label = form.get("maass_label", "")
+        level = form.get("level")
+        fricke = form.get("fricke_eigenvalue")
+        sp = form.get("spectral_parameter")
+
+        obj_concepts = ["verb_involves_spectral_parameter", "verb_involves_laplacian"]
+
+        # Fricke eigenvalue bridges to modular forms
+        if fricke is not None:
+            obj_concepts.append("verb_involves_fricke")
+            if fricke == 1:
+                obj_concepts.append("verb_fricke_plus")
+            elif fricke == -1:
+                obj_concepts.append("verb_fricke_minus")
+
+        # Level bridges to modular forms and elliptic curves
+        if level is not None:
+            obj_concepts.append("verb_involves_level")
+
+        # Spectral parameter is the key number-theoretic invariant
+        if sp is not None:
+            obj_concepts.append("verb_involves_eigenvalue")
+            # Connection to zeros of zeta function
+            obj_concepts.append("verb_involves_zeta")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Maass", "object_id": label,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "Maass"} for c in concepts], links
+
+
+def extract_verb_lattices() -> tuple[list[dict], list[dict]]:
+    """Extract verb concepts from lattices: packing, coding theory, modular forms connection."""
+    from search_engine import LATTICES_JSON
+    if not LATTICES_JSON.exists(): return [], []
+    raw = json.loads(LATTICES_JSON.read_text(encoding="utf-8"))
+    data = raw.get("lattices", raw) if isinstance(raw, dict) else raw
+
+    concepts = set()
+    links = []
+
+    for lat in data:
+        name = lat.get("name", "")
+        dim = lat.get("dim")
+        det = lat.get("det")
+        kissing = lat.get("kissing")
+        min_norm = lat.get("min_norm")
+
+        obj_concepts = ["verb_involves_packing", "verb_involves_lattice"]
+
+        # Theta series connection (bridges to modular forms)
+        obj_concepts.append("verb_involves_theta_series")
+        obj_concepts.append("verb_involves_modular_form")
+
+        # Root lattices bridge to Lie algebras
+        if name and re.match(r'^[ADE]\d', name):
+            obj_concepts.append("verb_root_lattice")
+            obj_concepts.append("verb_involves_lie_algebra")
+
+        # Kissing number bridges to sphere packing and coding theory
+        if kissing is not None:
+            obj_concepts.append("verb_involves_kissing_number")
+
+        # Determinant bridges to discriminants
+        if det is not None:
+            obj_concepts.append("verb_involves_determinant")
+
+        for concept in obj_concepts:
+            concepts.add(concept)
+            links.append({
+                "concept": concept, "dataset": "Lattices", "object_id": name,
+                "relationship": "has_property",
+            })
+
+    return [{"id": c, "type": "verb", "source": "Lattices"} for c in concepts], links
+
+
 def extract_verb_concepts() -> tuple[list[dict], list[dict]]:
     """
     Master verb extractor: runs all per-dataset verb extractors.
@@ -711,6 +1885,17 @@ def extract_verb_concepts() -> tuple[list[dict], list[dict]]:
         ("ANTEDB-verbs", extract_verb_antedb),
         ("LMFDB-verbs", extract_verb_lmfdb),
         ("KnotInfo-verbs", extract_verb_knotinfo),
+        ("NumberFields-verbs", extract_verb_number_fields),
+        ("Isogenies-verbs", extract_verb_isogenies),
+        ("SpaceGroups-verbs", extract_verb_spacegroups),
+        ("Polytopes-verbs", extract_verb_polytopes),
+        ("piBase-verbs", extract_verb_pibase),
+        ("MMLKG-verbs", extract_verb_mmlkg),
+        ("LocalFields-verbs", extract_verb_local_fields),
+        ("Genus2-verbs", extract_verb_genus2),
+        ("Maass-verbs", extract_verb_maass),
+        ("Lattices-verbs", extract_verb_lattices),
+        ("SmallGroups-verbs", extract_verb_smallgroups),
     ]
 
     for name, fn in verb_extractors:
@@ -744,6 +1929,18 @@ def build_index() -> dict:
         ("Fungrim", extract_fungrim),
         ("ANTEDB", extract_antedb),
         ("mathlib", extract_mathlib),
+        ("NumberFields", extract_number_fields),
+        ("Isogenies", extract_isogenies),
+        ("LocalFields", extract_local_fields),
+        ("SpaceGroups", extract_spacegroups),
+        ("Polytopes", extract_polytopes),
+        ("piBase", extract_pibase),
+        ("MMLKG", extract_mmlkg),
+        ("Genus2", extract_genus2),
+        ("Maass", extract_maass),
+        ("Lattices", extract_lattices),
+        ("OpenAlex", extract_openalex),
+        ("SmallGroups", extract_smallgroups),
     ]
 
     for name, fn in extractors:
@@ -804,7 +2001,7 @@ def build_index() -> dict:
     return stats
 
 
-def find_bridges(min_datasets: int = 2, max_results: int = 100) -> list[dict]:
+def find_bridges(min_datasets: int = 2, max_results: int = 5000) -> list[dict]:
     """Find concepts shared across multiple datasets — these are bridge points."""
     print("\nFinding bridges...")
 
@@ -819,9 +2016,11 @@ def find_bridges(min_datasets: int = 2, max_results: int = 100) -> list[dict]:
     bridges = []
     for concept, datasets in links_by_concept.items():
         if len(datasets) >= min_datasets:
-            # Skip trivial concepts (too many objects = not informative)
             total_objects = sum(len(objs) for objs in datasets.values())
-            if total_objects > 10000:
+            # Verb bridges are always valuable regardless of object count.
+            # Noun bridges with >50K objects are too generic (e.g. "even", "odd").
+            is_verb = concept.startswith("verb_")
+            if not is_verb and total_objects > 50000:
                 continue
 
             bridge = {

@@ -288,6 +288,54 @@ def _dataset_object_search(dataset: str, object_id: str) -> list[dict]:
             searches.append({"search_type": "mathlib_namespace", "params": {"namespace": ns}})
         searches.append({"search_type": "mathlib_imports", "params": {"module_name": object_id}})
 
+    elif dataset == "NumberFields":
+        # object_id is the LMFDB label like "2.2.5.1"
+        import re
+        m = re.match(r"(\d+)", object_id)
+        if m:
+            degree = int(m.group(1))
+            searches.append({"search_type": "nf_degree", "params": {"degree": degree}})
+        searches.append({"search_type": "nf_class_distribution", "params": {}})
+
+    elif dataset == "Isogenies":
+        # object_id looks like "isogeny_p13"
+        import re
+        m = re.search(r"p(\d+)", object_id)
+        if m:
+            prime = int(m.group(1))
+            searches.append({"search_type": "isogeny_prime", "params": {"prime": prime}})
+        searches.append({"search_type": "isogeny_stats", "params": {}})
+
+    elif dataset == "LocalFields":
+        # object_id looks like "localfield_p2_d10"
+        import re
+        m = re.search(r"p(\d+)", object_id)
+        if m:
+            prime = int(m.group(1))
+            searches.append({"search_type": "local_fields_search", "params": {"prime": prime}})
+
+    elif dataset == "SpaceGroups":
+        # object_id looks like "sg_225"
+        import re
+        m = re.search(r"(\d+)", object_id)
+        if m:
+            sg_num = int(m.group(1))
+            searches.append({"search_type": "spacegroup_search", "params": {"sg_number": sg_num}})
+
+    elif dataset == "Polytopes":
+        searches.append({"search_type": "polytopes_fvector", "params": {"dimension": 3}})
+        searches.append({"search_type": "polytopes_dimension", "params": {"dimension": 4}})
+
+    elif dataset == "piBase":
+        # object_id is like "S000042"
+        searches.append({"search_type": "pibase_property", "params": {"property_name": "compact"}})
+
+    elif dataset == "MMLKG":
+        # object_id looks like "mizar_tarski"
+        article = object_id.replace("mizar_", "") if object_id.startswith("mizar_") else object_id
+        searches.append({"search_type": "mmlkg_article", "params": {"article": article}})
+        searches.append({"search_type": "mmlkg_stats", "params": {}})
+
     # Fallback
     if not searches:
         searches.append({"search_type": "lmfdb_stats", "params": {}})

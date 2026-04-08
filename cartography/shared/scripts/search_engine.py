@@ -26,12 +26,26 @@ OEIS_NAMES = CARTOGRAPHY / "oeis" / "data" / "names.gz"
 OEIS_NAMES_TXT = CARTOGRAPHY / "oeis" / "data" / "names.txt"  # Uncompressed, from James download
 MATHLIB_GRAPH = CARTOGRAPHY / "mathlib" / "data" / "import_graph.json"
 METAMATH_INDEX = CARTOGRAPHY / "metamath" / "data" / "theorem_list.json"
-MATERIALS_JSON = CARTOGRAPHY / "physics" / "data" / "materials_project_1000.json"
+MATERIALS_JSON = CARTOGRAPHY / "physics" / "data" / "materials_project_full.json"
 KNOTS_JSON = CARTOGRAPHY / "knots" / "data" / "knots.json"
 FUNGRIM_JSON = CARTOGRAPHY / "fungrim" / "data" / "fungrim_index.json"
 ANTEDB_JSON = CARTOGRAPHY / "antedb" / "data" / "antedb_index.json"
 NUMBER_FIELDS_JSON = CARTOGRAPHY / "number_fields" / "data" / "number_fields.json"
 CHARON_DB = CHARON / "data" / "charon.duckdb"
+POLYTOPES_DIR = CARTOGRAPHY / "polytopes" / "data"
+PIBASE_DIR = CARTOGRAPHY / "topology" / "data" / "pi-base"
+MMLKG_REFS = CHARON / "james_downloads" / "mmlkg" / "csvs" / "theorem_references.csv"
+ISOGENY_GRAPHS = CARTOGRAPHY / "isogenies" / "data" / "graphs"
+LOCAL_FIELDS_DIR = CARTOGRAPHY / "local_fields" / "data" / "wildly_ramified"
+BILBAO_DIR = CARTOGRAPHY / "physics" / "data" / "bilbao"
+OEIS_CROSSREFS = CARTOGRAPHY / "oeis" / "data" / "oeis_crossrefs.jsonl"
+OPENALEX_CONCEPTS = CARTOGRAPHY / "convergence" / "data" / "openalex_concepts.json"
+OPENALEX_EDGES = CARTOGRAPHY / "convergence" / "data" / "openalex_concept_edges.json"
+GENUS2_JSON = CARTOGRAPHY / "genus2" / "data" / "genus2_curves_full.json"
+MAASS_JSON = CARTOGRAPHY / "maass" / "data" / "maass_forms_full.json"
+LATTICES_JSON = CARTOGRAPHY / "lattices" / "data" / "lattices.json"
+FINDSTAT_JSON = CARTOGRAPHY / "findstat" / "data" / "findstat_index.json"
+SMALLGROUPS_JSON = CARTOGRAPHY / "atlas" / "data" / "small_groups.json"
 
 
 # ---------------------------------------------------------------------------
@@ -244,6 +258,151 @@ def oeis_search_growth(growth_type: str = "exponential",
                 "data": {"first_10": terms[:10], "avg_ratio": round(avg_ratio, 3)},
                 "score": max(0, score),
             })
+    results.sort(key=lambda x: -x["score"])
+    return results[:max_results]
+
+
+# --- OEIS Cross-Reference Graph ---
+
+_oeis_xref_cache: dict = {}  # seq_id → set of referenced seq_ids
+_oeis_xref_reverse: dict = {}  # seq_id → set of sequences that reference it
+
+
+def _load_oeis_crossrefs():
+    """Load OEIS cross-reference graph from JSONL."""
+    if _oeis_xref_cache:
+        return
+    if not OEIS_CROSSREFS.exists():
+        return
+    import json
+    count = 0
+    with open(OEIS_CROSSREFS, "r", encoding="utf-8") as f:
+        for line in f:
+            try:
+                edge = json.loads(line)
+                src, tgt = edge["source"], edge["target"]
+                _oeis_xref_cache.setdefault(src, set()).add(tgt)
+                _oeis_xref_reverse.setdefault(tgt, set()).add(src)
+                count += 1
+            except (json.JSONDecodeError, KeyError):
+                pass
+    print(f"  [OEIS Xref] Loaded {count:,} cross-reference edges, {len(_oeis_xref_cache):,} source sequences")
+
+
+def oeis_crossrefs(seq_id: str, max_results: int = 50) -> list[dict]:
+    """Find sequences cross-referenced by a given OEIS sequence (outgoing + incoming edges)."""
+    _load_oeis_crossrefs()
+    _load_oeis_names()
+    seq_id = seq_id.upper().strip()
+
+    results = []
+    outgoing = _oeis_xref_cache.get(seq_id, set())
+    incoming = _oeis_xref_reverse.get(seq_id, set())
+
+    for ref_id in sorted(outgoing)[:max_results // 2]:
+        results.append({
+            "source": "OEIS",
+            "id": ref_id,
+            "label": _oeis_names_cache.get(ref_id, ""),
+            "match_reason": f"Referenced BY {seq_id}",
+            "data": {"direction": "outgoing", "from": seq_id, "to": ref_id},
+            "score": 1.0,
+        })
+    for ref_id in sorted(incoming)[:max_results // 2]:
+        if ref_id not in outgoing:  # avoid duplicates
+            results.append({
+                "source": "OEIS",
+                "id": ref_id,
+                "label": _oeis_names_cache.get(ref_id, ""),
+                "match_reason": f"References {seq_id}",
+                "data": {"direction": "incoming", "from": ref_id, "to": seq_id},
+                "score": 0.9,
+            })
+
+    return results[:max_results]
+
+
+def oeis_xref_hubs(min_degree: int = 50, max_results: int = 50) -> list[dict]:
+    """Find OEIS hub sequences with many cross-references (high degree nodes)."""
+    _load_oeis_crossrefs()
+    _load_oeis_names()
+
+    hub_scores = []
+    for seq_id, refs in _oeis_xref_cache.items():
+        out_deg = len(refs)
+        in_deg = len(_oeis_xref_reverse.get(seq_id, set()))
+        total = out_deg + in_deg
+        if total >= min_degree:
+            hub_scores.append((seq_id, total, out_deg, in_deg))
+
+    hub_scores.sort(key=lambda x: -x[1])
+    results = []
+    for seq_id, total, out_deg, in_deg in hub_scores[:max_results]:
+        results.append({
+            "source": "OEIS",
+            "id": seq_id,
+            "label": _oeis_names_cache.get(seq_id, ""),
+            "match_reason": f"Hub: {total} xrefs (out={out_deg}, in={in_deg})",
+            "data": {"total_degree": total, "out_degree": out_deg, "in_degree": in_deg},
+            "score": min(1.0, total / 500),
+        })
+
+    return results
+
+
+def oeis_sleeping_beauties(min_entropy: float = 4.0, max_degree: int = 2,
+                           max_results: int = 50) -> list[dict]:
+    """Find Sleeping Beauty sequences: high internal structure, low connectivity.
+
+    The Isolatus Metric: sequences with high Shannon entropy of first differences
+    (complex internal structure) but near-zero cross-reference degree (nobody noticed).
+    These are the 'dark matter' of mathematics — structurally rich, arithmetically poor.
+    """
+    _load_oeis()
+    _load_oeis_names()
+    _load_oeis_crossrefs()
+
+    results = []
+    for seq_id, terms in _oeis_cache.items():
+        if len(terms) < 8:
+            continue
+
+        # Connectivity: total cross-reference degree
+        out_deg = len(_oeis_xref_cache.get(seq_id, set()))
+        in_deg = len(_oeis_xref_reverse.get(seq_id, set()))
+        total_deg = out_deg + in_deg
+        if total_deg > max_degree:
+            continue
+
+        # Internal structure: Shannon entropy of first differences
+        diffs = [terms[i+1] - terms[i] for i in range(min(len(terms)-1, 30))]
+        if not diffs:
+            continue
+        from collections import Counter as _Counter
+        counts = _Counter(diffs)
+        total = len(diffs)
+        import math as _math
+        entropy = -sum((c/total) * _math.log2(c/total) for c in counts.values() if c > 0)
+        if entropy < min_entropy:
+            continue
+
+        # Isolatus score: entropy / (1 + log(1 + degree))
+        isolatus = entropy / (1 + _math.log2(1 + total_deg))
+
+        results.append({
+            "source": "OEIS",
+            "id": seq_id,
+            "label": _oeis_names_cache.get(seq_id, ""),
+            "match_reason": f"Sleeping Beauty: entropy={entropy:.2f}, degree={total_deg}, isolatus={isolatus:.2f}",
+            "data": {
+                "entropy": round(entropy, 3),
+                "total_degree": total_deg,
+                "isolatus_score": round(isolatus, 3),
+                "first_terms": terms[:10],
+            },
+            "score": isolatus,
+        })
+
     results.sort(key=lambda x: -x["score"])
     return results[:max_results]
 
@@ -990,11 +1149,1203 @@ def nf_class_number_distribution() -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
+# polyDB Polytopes Search
+# ---------------------------------------------------------------------------
+
+_polytopes_cache: list = []
+
+
+def _load_polytopes():
+    if _polytopes_cache:
+        return
+    if not POLYTOPES_DIR.exists():
+        print(f"  [Polytopes] WARNING: {POLYTOPES_DIR} not found")
+        return
+    json_files = [f for f in POLYTOPES_DIR.glob("*.json") if f.name != "manifest.json"]
+    if not json_files:
+        print(f"  [Polytopes] WARNING: No JSON files in {POLYTOPES_DIR}")
+        return
+    for jf in sorted(json_files):
+        try:
+            data = json.loads(jf.read_text(encoding="utf-8"))
+            if isinstance(data, list):
+                for obj in data:
+                    obj["_collection"] = jf.stem
+                _polytopes_cache.extend(data)
+        except Exception as e:
+            print(f"  [Polytopes] WARNING: Could not load {jf.name}: {e}")
+    print(f"  [Polytopes] Loaded {len(_polytopes_cache):,} polytopes from {len(json_files)} collections")
+
+
+def polytopes_search_fvector(dimension: int, max_results: int = 50) -> list[dict]:
+    """Find polytopes by dimension, return f-vectors."""
+    _load_polytopes()
+    results = []
+    for p in _polytopes_cache:
+        dim = p.get("DIM") or p.get("dim") or p.get("dimension")
+        if dim is not None and int(dim) == dimension:
+            fv = p.get("F_VECTOR") or p.get("f_vector") or []
+            results.append({
+                "source": "polyDB",
+                "id": f"{p.get('_collection', 'unknown')}_{len(results)}",
+                "label": f"dim={dimension} f_vector={fv}",
+                "match_reason": f"DIM={dimension}, collection={p.get('_collection', '')}",
+                "data": {
+                    "dimension": dimension,
+                    "f_vector": fv,
+                    "n_vertices": p.get("N_VERTICES") or p.get("n_vertices"),
+                    "n_facets": p.get("N_FACETS") or p.get("n_facets"),
+                    "n_edges": p.get("N_EDGES") or p.get("n_edges"),
+                    "collection": p.get("_collection", ""),
+                },
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: str(x["data"].get("f_vector", [])))
+    return results[:max_results]
+
+
+def polytopes_search_dimension(dimension: int, max_results: int = 50) -> list[dict]:
+    """Find all polytopes of a given dimension."""
+    _load_polytopes()
+    results = []
+    for p in _polytopes_cache:
+        dim = p.get("DIM") or p.get("dim") or p.get("dimension")
+        if dim is not None and int(dim) == dimension:
+            results.append({
+                "source": "polyDB",
+                "id": f"{p.get('_collection', 'unknown')}_{len(results)}",
+                "label": f"dim={dimension} vertices={p.get('N_VERTICES', '?')}",
+                "match_reason": f"DIM={dimension}, collection={p.get('_collection', '')}",
+                "data": {k: p.get(k) for k in
+                         ["DIM", "N_VERTICES", "N_FACETS", "N_EDGES", "F_VECTOR", "_collection"]
+                         if k in p},
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
+# pi-Base Topology Search
+# ---------------------------------------------------------------------------
+
+_pibase_spaces: list = []   # [{uid, name, aliases, properties: {pid: bool}}]
+_pibase_props: dict = {}    # {pid: name}
+
+
+def _load_pibase():
+    if _pibase_spaces:
+        return
+    if not PIBASE_DIR.exists():
+        print(f"  [pi-Base] WARNING: {PIBASE_DIR} not found")
+        return
+    # Load property names
+    props_dir = PIBASE_DIR / "properties"
+    if props_dir.exists():
+        for pf in sorted(props_dir.glob("P*.md")):
+            try:
+                text = pf.read_text(encoding="utf-8")
+                pid = pf.stem
+                name = ""
+                for line in text.splitlines():
+                    if line.startswith("name:"):
+                        name = line.split(":", 1)[1].strip().strip('"').strip("'")
+                        # Strip LaTeX dollar signs for cleaner matching
+                        name = name.replace("$", "")
+                        break
+                if name:
+                    _pibase_props[pid] = name
+            except Exception:
+                pass
+    # Load spaces
+    spaces_dir = PIBASE_DIR / "spaces"
+    if not spaces_dir.exists():
+        print(f"  [pi-Base] WARNING: {spaces_dir} not found")
+        return
+    for sd in sorted(spaces_dir.iterdir()):
+        if not sd.is_dir():
+            continue
+        readme = sd / "README.md"
+        if not readme.exists():
+            continue
+        try:
+            text = readme.read_text(encoding="utf-8")
+            uid = sd.name
+            name = ""
+            aliases = []
+            for line in text.splitlines():
+                if line.startswith("name:"):
+                    name = line.split(":", 1)[1].strip().strip('"').strip("'")
+                    name = name.replace("$", "")
+                elif line.strip().startswith("- ") and aliases is not None:
+                    aliases.append(line.strip()[2:].strip('"').strip("'"))
+                elif line.startswith("counterexamples_id:") or line.startswith("refs:"):
+                    aliases = None  # Stop collecting aliases
+            # Load properties for this space
+            props = {}
+            prop_dir = sd / "properties"
+            if prop_dir.exists():
+                for pf in prop_dir.glob("P*.md"):
+                    try:
+                        pt = pf.read_text(encoding="utf-8")
+                        pid = pf.stem
+                        val = None
+                        for pline in pt.splitlines():
+                            if pline.startswith("value:"):
+                                val_str = pline.split(":", 1)[1].strip()
+                                val = val_str.lower() == "true"
+                                break
+                        if val is not None:
+                            props[pid] = val
+                    except Exception:
+                        pass
+            _pibase_spaces.append({
+                "uid": uid,
+                "name": name,
+                "aliases": aliases if isinstance(aliases, list) else [],
+                "properties": props,
+            })
+        except Exception:
+            pass
+    print(f"  [pi-Base] Loaded {len(_pibase_spaces)} spaces, {len(_pibase_props)} properties")
+
+
+def pibase_search_property(property_name: str = "compact",
+                           max_results: int = 50) -> list[dict]:
+    """Find spaces with a given topological property (e.g., 'compact', 'Hausdorff')."""
+    _load_pibase()
+    prop_lower = property_name.lower()
+    # Find matching property IDs
+    matching_pids = [pid for pid, pname in _pibase_props.items()
+                     if prop_lower in pname.lower()]
+    if not matching_pids:
+        return [{"error": f"Property '{property_name}' not found in pi-Base. "
+                 f"Available samples: {list(_pibase_props.values())[:10]}"}]
+    results = []
+    for space in _pibase_spaces:
+        for pid in matching_pids:
+            if space["properties"].get(pid) is True:
+                results.append({
+                    "source": "pi-Base",
+                    "id": space["uid"],
+                    "label": space["name"],
+                    "match_reason": f"Has property {_pibase_props.get(pid, pid)} = true",
+                    "data": {
+                        "space": space["name"],
+                        "uid": space["uid"],
+                        "property": _pibase_props.get(pid, pid),
+                        "property_id": pid,
+                        "n_true_properties": sum(1 for v in space["properties"].values() if v),
+                    },
+                    "score": 1.0,
+                })
+                break  # One match per space per search
+    return results[:max_results]
+
+
+def pibase_search_space(space_name: str = "real line",
+                        max_results: int = 20) -> list[dict]:
+    """Search pi-Base spaces by name or alias."""
+    _load_pibase()
+    name_lower = space_name.lower()
+    results = []
+    for space in _pibase_spaces:
+        matched = False
+        if name_lower in space["name"].lower():
+            matched = True
+        else:
+            for alias in space.get("aliases", []):
+                if name_lower in alias.lower():
+                    matched = True
+                    break
+        if matched:
+            # Resolve property names
+            named_props = {}
+            for pid, val in space["properties"].items():
+                pname = _pibase_props.get(pid, pid)
+                named_props[pname] = val
+            results.append({
+                "source": "pi-Base",
+                "id": space["uid"],
+                "label": space["name"],
+                "match_reason": f"Name matches '{space_name}'",
+                "data": {
+                    "space": space["name"],
+                    "uid": space["uid"],
+                    "aliases": space.get("aliases", [])[:5],
+                    "properties": named_props,
+                    "n_properties": len(space["properties"]),
+                },
+                "score": 1.0 if name_lower == space["name"].lower() else 0.5,
+            })
+    results.sort(key=lambda x: -x["score"])
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
+# MMLKG Theorem References Search
+# ---------------------------------------------------------------------------
+
+_mmlkg_graph: dict = {}   # {article: set_of_referenced_articles}
+_mmlkg_reverse: dict = {}  # {article: set_of_articles_referencing_it}
+
+
+def _load_mmlkg():
+    if _mmlkg_graph:
+        return
+    if not MMLKG_REFS.exists():
+        print(f"  [MMLKG] WARNING: {MMLKG_REFS} not found")
+        return
+    import csv
+    try:
+        with open(MMLKG_REFS, "r", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if len(row) < 4:
+                    continue
+                src_article = row[0].strip()
+                tgt_article = row[2].strip()
+                if not src_article or not tgt_article:
+                    continue
+                if src_article not in _mmlkg_graph:
+                    _mmlkg_graph[src_article] = set()
+                _mmlkg_graph[src_article].add(tgt_article)
+                if tgt_article not in _mmlkg_reverse:
+                    _mmlkg_reverse[tgt_article] = set()
+                _mmlkg_reverse[tgt_article].add(src_article)
+        n_edges = sum(len(v) for v in _mmlkg_graph.values())
+        all_articles = set(_mmlkg_graph.keys()) | set(_mmlkg_reverse.keys())
+        print(f"  [MMLKG] Loaded {len(all_articles):,} articles, {n_edges:,} edges")
+    except Exception as e:
+        print(f"  [MMLKG] WARNING: Could not load {MMLKG_REFS}: {e}")
+
+
+def mmlkg_search_article(article: str = "tarski",
+                         max_results: int = 50) -> list[dict]:
+    """Find articles referencing or referenced by a given article name."""
+    _load_mmlkg()
+    article_lower = article.lower()
+    results = []
+    # Find matching articles
+    all_articles = set(_mmlkg_graph.keys()) | set(_mmlkg_reverse.keys())
+    matching = [a for a in all_articles if article_lower in a.lower()]
+    for art in sorted(matching):
+        refs_out = _mmlkg_graph.get(art, set())
+        refs_in = _mmlkg_reverse.get(art, set())
+        results.append({
+            "source": "MMLKG",
+            "id": art,
+            "label": art,
+            "match_reason": f"references {len(refs_out)} articles, referenced by {len(refs_in)}",
+            "data": {
+                "article": art,
+                "references": sorted(refs_out)[:20],
+                "referenced_by": sorted(refs_in)[:20],
+                "n_references": len(refs_out),
+                "n_referenced_by": len(refs_in),
+            },
+            "score": 1.0 if article_lower == art.lower() else 0.5,
+        })
+    results.sort(key=lambda x: -x["score"])
+    return results[:max_results]
+
+
+def mmlkg_stats() -> list[dict]:
+    """Return graph statistics: n_articles, n_edges, top hub articles."""
+    _load_mmlkg()
+    all_articles = set(_mmlkg_graph.keys()) | set(_mmlkg_reverse.keys())
+    n_edges = sum(len(v) for v in _mmlkg_graph.values())
+    # Top hubs by total degree (out + in)
+    degree = {}
+    for art in all_articles:
+        degree[art] = len(_mmlkg_graph.get(art, set())) + len(_mmlkg_reverse.get(art, set()))
+    top_hubs = sorted(degree.items(), key=lambda x: -x[1])[:20]
+    return [{
+        "source": "MMLKG",
+        "id": "graph_stats",
+        "label": f"MMLKG reference graph ({len(all_articles):,} articles, {n_edges:,} edges)",
+        "match_reason": "Graph statistics",
+        "data": {
+            "n_articles": len(all_articles),
+            "n_edges": n_edges,
+            "n_sources": len(_mmlkg_graph),
+            "n_targets": len(_mmlkg_reverse),
+            "top_hubs": [{"article": a, "degree": d} for a, d in top_hubs],
+            "avg_degree": round(2 * n_edges / max(len(all_articles), 1), 2),
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
+# Isogeny Graphs Search
+# ---------------------------------------------------------------------------
+
+_isogeny_cache: dict = {}  # {prime_str: metadata_dict}
+
+
+def _load_isogeny():
+    if _isogeny_cache:
+        return
+    if not ISOGENY_GRAPHS.exists():
+        print(f"  [Isogeny] WARNING: {ISOGENY_GRAPHS} not found")
+        return
+    count = 0
+    for d in ISOGENY_GRAPHS.iterdir():
+        if d.is_dir() and d.name.isdigit():
+            meta_file = d / f"{d.name}_metadata.json"
+            if meta_file.exists():
+                try:
+                    data = json.loads(meta_file.read_text(encoding="utf-8"))
+                    _isogeny_cache[d.name] = data
+                    count += 1
+                except Exception:
+                    pass
+    print(f"  [Isogeny] Loaded {count:,} prime graphs")
+
+
+def isogeny_search_prime(prime: int, max_results: int = 20) -> list[dict]:
+    """Find isogeny graph data for a specific prime."""
+    _load_isogeny()
+    key = str(prime)
+    if key in _isogeny_cache:
+        meta = _isogeny_cache[key]
+        return [{
+            "source": "IsogenyGraphs",
+            "id": f"isogeny_{prime}",
+            "label": f"Isogeny graph for p={prime}",
+            "match_reason": f"Exact match: p={prime}, {meta.get('nodes', 0)} nodes",
+            "data": meta,
+            "score": 1.0,
+        }]
+    # Try range search: find primes near the requested value
+    results = []
+    for k, meta in _isogeny_cache.items():
+        p = int(k)
+        if abs(p - prime) <= max(prime // 10, 10):
+            results.append({
+                "source": "IsogenyGraphs",
+                "id": f"isogeny_{p}",
+                "label": f"Isogeny graph for p={p}",
+                "match_reason": f"Near p={prime}: p={p}, {meta.get('nodes', 0)} nodes",
+                "data": meta,
+                "score": 1.0 / (1.0 + abs(p - prime)),
+            })
+    results.sort(key=lambda x: -x["score"])
+    return results[:max_results]
+
+
+def isogeny_stats() -> list[dict]:
+    """Summary statistics for the isogeny graph database."""
+    _load_isogeny()
+    if not _isogeny_cache:
+        return [{"error": "No isogeny data loaded"}]
+    primes = sorted(int(k) for k in _isogeny_cache)
+    nodes_list = [m.get("nodes", 0) for m in _isogeny_cache.values()]
+    return [{
+        "source": "IsogenyGraphs",
+        "id": "isogeny_stats",
+        "label": f"Isogeny graph database ({len(primes)} primes)",
+        "match_reason": "Database statistics",
+        "data": {
+            "n_primes": len(primes),
+            "prime_range": [primes[0], primes[-1]],
+            "total_nodes": sum(nodes_list),
+            "mean_nodes": round(sum(nodes_list) / max(len(nodes_list), 1), 2),
+            "max_nodes": max(nodes_list) if nodes_list else 0,
+            "sample_primes": primes[:20],
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
+# Local Fields Search
+# ---------------------------------------------------------------------------
+
+_local_fields_cache: dict = {}  # {prime: [{field_data}, ...]}
+
+
+def _load_local_fields():
+    if _local_fields_cache:
+        return
+    if not LOCAL_FIELDS_DIR.exists():
+        print(f"  [LocalFields] WARNING: {LOCAL_FIELDS_DIR} not found")
+        return
+    count = 0
+    for f in LOCAL_FIELDS_DIR.iterdir():
+        if not f.is_file():
+            continue
+        # Filenames like p2d4all, p3d6all — extract prime from name
+        m = re.match(r"p(\d+)d(\d+)all", f.name)
+        if not m:
+            continue
+        prime = int(m.group(1))
+        degree = int(m.group(2))
+        try:
+            text = f.read_text(encoding="utf-8").strip()
+            # Count entries: each top-level sub-list is a field extension
+            # The data is a PARI/GP-style nested list; we store file metadata
+            # Full parsing is expensive, so we store summary info
+            n_entries = text.count("], [")  # Approximate count
+            if prime not in _local_fields_cache:
+                _local_fields_cache[prime] = []
+            _local_fields_cache[prime].append({
+                "prime": prime,
+                "degree": degree,
+                "file": f.name,
+                "n_extensions_approx": n_entries + 1,
+            })
+            count += 1
+        except Exception:
+            pass
+    print(f"  [LocalFields] Loaded {count} wildly ramified data files "
+          f"({len(_local_fields_cache)} primes)")
+
+
+def local_fields_search(prime: int, max_results: int = 20) -> list[dict]:
+    """Search wildly ramified local field extensions by ramification prime."""
+    _load_local_fields()
+    entries = _local_fields_cache.get(prime, [])
+    if not entries:
+        # List available primes
+        available = sorted(_local_fields_cache.keys())
+        return [{
+            "source": "LocalFields",
+            "id": f"local_fields_p{prime}",
+            "label": f"No data for p={prime}",
+            "match_reason": f"Available primes: {available}",
+            "data": {"available_primes": available},
+            "score": 0.0,
+        }]
+    results = []
+    total_ext = sum(e["n_extensions_approx"] for e in entries)
+    degrees = sorted(set(e["degree"] for e in entries))
+    results.append({
+        "source": "LocalFields",
+        "id": f"local_fields_p{prime}",
+        "label": f"Wildly ramified extensions over Q_{prime}",
+        "match_reason": f"p={prime}: {len(entries)} degree files, ~{total_ext} extensions",
+        "data": {
+            "prime": prime,
+            "degrees": degrees,
+            "files": entries,
+            "n_extensions_approx": total_ext,
+        },
+        "score": 1.0,
+    })
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
+# Bilbao Space Groups Search
+# ---------------------------------------------------------------------------
+
+_spacegroup_cache: dict = {}  # {sg_number: data_dict}
+
+# Standard crystal system classification by space group number ranges
+_CRYSTAL_SYSTEM_RANGES = [
+    (1, 2, "triclinic"),
+    (3, 15, "monoclinic"),
+    (16, 74, "orthorhombic"),
+    (75, 142, "tetragonal"),
+    (143, 167, "trigonal"),
+    (168, 194, "hexagonal"),
+    (195, 230, "cubic"),
+]
+
+
+def _sg_crystal_system(sg_number: int) -> str:
+    """Return crystal system for a space group number."""
+    for low, high, system in _CRYSTAL_SYSTEM_RANGES:
+        if low <= sg_number <= high:
+            return system
+    return "unknown"
+
+
+def _load_spacegroups():
+    if _spacegroup_cache:
+        return
+    if not BILBAO_DIR.exists():
+        print(f"  [SpaceGroups] WARNING: {BILBAO_DIR} not found")
+        return
+    count = 0
+    for f in sorted(BILBAO_DIR.glob("sg_*.json")):
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+            sg_num = data.get("space_group_number", int(f.stem.split("_")[1]))
+            data["crystal_system"] = _sg_crystal_system(sg_num)
+            _spacegroup_cache[sg_num] = data
+            count += 1
+        except Exception:
+            pass
+    print(f"  [SpaceGroups] Loaded {count} space groups")
+
+
+def spacegroup_search(sg_number: int) -> list[dict]:
+    """Find a space group by its ITA number (1-230)."""
+    _load_spacegroups()
+    data = _spacegroup_cache.get(sg_number)
+    if not data:
+        return [{"error": f"Space group {sg_number} not found (available: 1-230)"}]
+    return [{
+        "source": "BilbaoSpaceGroups",
+        "id": f"sg_{sg_number}",
+        "label": f"Space group #{sg_number} ({data['crystal_system']})",
+        "match_reason": f"Exact match: SG {sg_number}",
+        "data": {
+            "space_group_number": sg_number,
+            "crystal_system": data["crystal_system"],
+            "num_generators": data.get("num_generators"),
+            "point_group_order": data.get("point_group_order"),
+            "num_wyckoff_positions": data.get("num_wyckoff_positions"),
+            "translation_basis": data.get("translation_basis"),
+        },
+        "score": 1.0,
+    }]
+
+
+def spacegroup_by_crystal_system(system: str, max_results: int = 50) -> list[dict]:
+    """Find all space groups belonging to a crystal system."""
+    _load_spacegroups()
+    system_lower = system.lower()
+    results = []
+    for sg_num, data in sorted(_spacegroup_cache.items()):
+        if system_lower in data.get("crystal_system", "").lower():
+            results.append({
+                "source": "BilbaoSpaceGroups",
+                "id": f"sg_{sg_num}",
+                "label": f"Space group #{sg_num} ({data['crystal_system']})",
+                "match_reason": f"Crystal system: {data['crystal_system']}",
+                "data": {
+                    "space_group_number": sg_num,
+                    "crystal_system": data["crystal_system"],
+                    "num_generators": data.get("num_generators"),
+                    "point_group_order": data.get("point_group_order"),
+                    "num_wyckoff_positions": data.get("num_wyckoff_positions"),
+                },
+                "score": 1.0,
+            })
+    if not results:
+        valid = sorted(set(d.get("crystal_system", "") for d in _spacegroup_cache.values()))
+        return [{"error": f"Crystal system '{system}' not found. Valid: {valid}"}]
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
+# OpenAlex Concept Taxonomy Search (10K+ concepts, 6 hierarchy levels)
+# ---------------------------------------------------------------------------
+
+_openalex_cache: list = []
+_openalex_id_map: dict = {}  # concept_id -> concept
+_openalex_name_index: dict = {}  # lowercase name -> concept
+
+
+def _load_openalex():
+    """Lazy-load OpenAlex concepts into cache."""
+    if _openalex_cache:
+        return
+    if not OPENALEX_CONCEPTS.exists():
+        print(f"  [OpenAlex] WARNING: {OPENALEX_CONCEPTS} not found")
+        return
+    print(f"  [OpenAlex] Loading {OPENALEX_CONCEPTS.name}...")
+    with open(OPENALEX_CONCEPTS, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    for c in data:
+        _openalex_cache.append(c)
+        cid = c.get("id", "")
+        _openalex_id_map[cid] = c
+        # Also index by short ID (e.g. "C41008148")
+        if cid.startswith("https://openalex.org/"):
+            short_id = cid.split("/")[-1]
+            _openalex_id_map[short_id] = c
+        name_lower = c.get("display_name", "").lower()
+        if name_lower:
+            _openalex_name_index[name_lower] = c
+    print(f"  [OpenAlex] Loaded {len(_openalex_cache):,} concepts")
+
+
+def openalex_concept(keyword: str, max_results: int = 20) -> list[dict]:
+    """Search OpenAlex concepts by name or description keyword."""
+    _load_openalex()
+    kw_lower = keyword.lower()
+    results = []
+    for c in _openalex_cache:
+        name = c.get("display_name") or ""
+        desc = c.get("description") or ""
+        name_match = kw_lower in name.lower()
+        desc_match = kw_lower in desc.lower()
+        if name_match or desc_match:
+            score = 1.0 if kw_lower == name.lower() else (0.8 if name_match else 0.4)
+            results.append({
+                "source": "OpenAlex",
+                "id": c["id"],
+                "label": name,
+                "match_reason": f"{'Name' if name_match else 'Description'} contains '{keyword}'",
+                "data": {
+                    "level": c.get("level"),
+                    "description": desc[:200],
+                    "works_count": c.get("works_count", 0),
+                    "cited_by_count": c.get("cited_by_count", 0),
+                    "wikidata": c.get("wikidata", ""),
+                },
+                "score": score,
+            })
+    results.sort(key=lambda x: (-x["score"], -x["data"]["works_count"]))
+    return results[:max_results]
+
+
+def openalex_hierarchy(concept_id: str, max_results: int = 50) -> list[dict]:
+    """Find parent and child concepts for a given concept ID.
+
+    Accepts full URL (https://openalex.org/C41008148) or short ID (C41008148).
+    Since ancestor data may be sparse, also infers hierarchy from levels:
+    returns concepts at level-1 (potential parents) and level+1 (potential children)
+    that share name tokens with the target concept.
+    """
+    _load_openalex()
+    concept = _openalex_id_map.get(concept_id)
+    if not concept:
+        # Try exact name match
+        concept = _openalex_name_index.get(concept_id.lower())
+    if not concept:
+        return [{"error": f"Concept '{concept_id}' not found. Try openalex_concept(keyword) first."}]
+
+    target_level = concept.get("level")
+    target_name = concept.get("display_name", "")
+    target_id = concept.get("id", "")
+
+    results = [{
+        "source": "OpenAlex",
+        "id": target_id,
+        "label": target_name,
+        "match_reason": "Target concept",
+        "data": {
+            "level": target_level,
+            "description": concept.get("description", "")[:200],
+            "works_count": concept.get("works_count", 0),
+            "role": "target",
+        },
+        "score": 1.0,
+    }]
+
+    # Check explicit ancestors stored in the concept
+    for anc in concept.get("ancestors", []):
+        anc_full = _openalex_id_map.get(anc.get("id", ""))
+        if anc_full:
+            results.append({
+                "source": "OpenAlex",
+                "id": anc["id"],
+                "label": anc.get("display_name", ""),
+                "match_reason": f"Ancestor (level {anc.get('level')})",
+                "data": {
+                    "level": anc.get("level"),
+                    "description": anc_full.get("description", "")[:200],
+                    "works_count": anc_full.get("works_count", 0),
+                    "role": "ancestor",
+                },
+                "score": 0.9,
+            })
+
+    # Find concepts that list this concept as an ancestor (children)
+    for c in _openalex_cache:
+        if c.get("id") == target_id:
+            continue
+        for anc in c.get("ancestors", []):
+            if anc.get("id") == target_id:
+                results.append({
+                    "source": "OpenAlex",
+                    "id": c["id"],
+                    "label": c.get("display_name", ""),
+                    "match_reason": f"Child concept (level {c.get('level')})",
+                    "data": {
+                        "level": c.get("level"),
+                        "description": c.get("description", "")[:200],
+                        "works_count": c.get("works_count", 0),
+                        "role": "child",
+                    },
+                    "score": 0.8,
+                })
+
+    # If we found no explicit hierarchy, use level-based heuristic
+    ancestor_child_count = sum(1 for r in results if r["data"].get("role") in ("ancestor", "child"))
+    if ancestor_child_count == 0 and target_level is not None:
+        # Find related concepts at adjacent levels sharing name tokens
+        name_tokens = set(target_name.lower().split()) - {"of", "the", "and", "in", "for", "a", "an"}
+        for c in _openalex_cache:
+            c_level = c.get("level")
+            if c_level is None or c.get("id") == target_id:
+                continue
+            if abs(c_level - target_level) == 1:
+                c_tokens = set(c.get("display_name", "").lower().split())
+                overlap = name_tokens & c_tokens
+                if overlap and len(overlap) >= 1:
+                    role = "inferred_parent" if c_level < target_level else "inferred_child"
+                    results.append({
+                        "source": "OpenAlex",
+                        "id": c["id"],
+                        "label": c.get("display_name", ""),
+                        "match_reason": f"{role} (shared tokens: {overlap})",
+                        "data": {
+                            "level": c_level,
+                            "description": c.get("description", "")[:200],
+                            "works_count": c.get("works_count", 0),
+                            "role": role,
+                        },
+                        "score": 0.5 * len(overlap) / max(len(name_tokens), 1),
+                    })
+
+    results.sort(key=lambda x: (-x["score"], -x["data"].get("works_count", 0)))
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
+# Genus-2 Curves (66K curves from LMFDB g2c database)
+# ---------------------------------------------------------------------------
+
+_genus2_cache: list = []
+
+
+def _load_genus2():
+    """Lazy-load genus-2 curves."""
+    if _genus2_cache:
+        return
+    if not GENUS2_JSON.exists():
+        print(f"  [Genus2] WARNING: {GENUS2_JSON} not found")
+        return
+    print(f"  [Genus2] Loading {GENUS2_JSON.name}...")
+    with open(GENUS2_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    _genus2_cache.extend(data)
+    print(f"  [Genus2] Loaded {len(_genus2_cache):,} curves")
+
+
+def genus2_search_conductor(low: int = 1, high: int = 1000,
+                            max_results: int = 50) -> list[dict]:
+    """Search genus-2 curves by conductor range."""
+    _load_genus2()
+    results = []
+    for c in _genus2_cache:
+        cond = c.get("conductor", 0)
+        if low <= cond <= high:
+            results.append({
+                "source": "Genus2",
+                "id": c["label"],
+                "label": f"g2c cond={cond}",
+                "match_reason": f"Conductor {cond} in [{low},{high}]",
+                "data": c,
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"]["conductor"])
+    return results[:max_results]
+
+
+def genus2_search_rank(rank: int = 0, max_results: int = 50) -> list[dict]:
+    """Search genus-2 curves by analytic rank (from root_number: -1→odd, +1→even)."""
+    _load_genus2()
+    results = []
+    for c in _genus2_cache:
+        rn = c.get("root_number")
+        # root_number=-1 means odd rank (≥1), +1 means even rank (likely 0)
+        if rank == 0 and rn == 1:
+            match = True
+        elif rank >= 1 and rn == -1:
+            match = True
+        else:
+            match = False
+        if match:
+            results.append({
+                "source": "Genus2",
+                "id": c["label"],
+                "label": f"g2c rn={rn}",
+                "match_reason": f"Root number {rn} (rank parity {'even' if rn==1 else 'odd'})",
+                "data": c,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def genus2_search_st_group(st_group: str = "USp(4)",
+                           max_results: int = 50) -> list[dict]:
+    """Search genus-2 curves by Sato-Tate group."""
+    _load_genus2()
+    target = st_group.lower()
+    results = []
+    for c in _genus2_cache:
+        if target in c.get("st_group", "").lower():
+            results.append({
+                "source": "Genus2",
+                "id": c["label"],
+                "label": f"g2c ST={c['st_group']}",
+                "match_reason": f"Sato-Tate group matches '{st_group}'",
+                "data": c,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def genus2_stats() -> list[dict]:
+    """Summary statistics for genus-2 curves."""
+    _load_genus2()
+    if not _genus2_cache:
+        return [{"error": "No genus-2 data loaded"}]
+    conductors = [c["conductor"] for c in _genus2_cache if "conductor" in c]
+    st_groups = {}
+    for c in _genus2_cache:
+        sg = c.get("st_group", "unknown")
+        st_groups[sg] = st_groups.get(sg, 0) + 1
+    return [{
+        "source": "Genus2",
+        "id": "genus2_stats",
+        "label": "Genus-2 Curve Statistics",
+        "match_reason": "Summary",
+        "data": {
+            "n_curves": len(_genus2_cache),
+            "conductor_range": [min(conductors), max(conductors)] if conductors else [],
+            "st_group_distribution": dict(sorted(st_groups.items(), key=lambda x: -x[1])[:15]),
+            "root_number_counts": {
+                "+1 (even rank)": sum(1 for c in _genus2_cache if c.get("root_number") == 1),
+                "-1 (odd rank)": sum(1 for c in _genus2_cache if c.get("root_number") == -1),
+            },
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
+# Maass Forms (300 rigorously computed forms from LMFDB)
+# ---------------------------------------------------------------------------
+
+_maass_cache: list = []
+
+
+def _load_maass():
+    """Lazy-load Maass forms."""
+    if _maass_cache:
+        return
+    if not MAASS_JSON.exists():
+        print(f"  [Maass] WARNING: {MAASS_JSON} not found")
+        return
+    print(f"  [Maass] Loading {MAASS_JSON.name}...")
+    with open(MAASS_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    _maass_cache.extend(data)
+    print(f"  [Maass] Loaded {len(_maass_cache):,} forms")
+
+
+def maass_search_spectral(low: float = 0.0, high: float = 50.0,
+                          max_results: int = 50) -> list[dict]:
+    """Search Maass forms by spectral parameter range."""
+    _load_maass()
+    results = []
+    for m in _maass_cache:
+        sp = m.get("spectral_parameter")
+        if sp is not None and low <= sp <= high:
+            results.append({
+                "source": "Maass",
+                "id": m.get("maass_label", ""),
+                "label": f"Maass R={sp:.4f}",
+                "match_reason": f"Spectral parameter {sp:.6f} in [{low},{high}]",
+                "data": m,
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"].get("spectral_parameter", 0))
+    return results[:max_results]
+
+
+def maass_search_symmetry(symmetry: str = "even",
+                          max_results: int = 50) -> list[dict]:
+    """Search Maass forms by symmetry type (even/odd)."""
+    _load_maass()
+    target = symmetry.lower()
+    results = []
+    for m in _maass_cache:
+        sym = str(m.get("symmetry", "")).lower()
+        # symmetry may be stored as 0/1 or even/odd
+        match = (target == sym) or (target == "even" and sym in ("0", "even")) or (target == "odd" and sym in ("1", "odd"))
+        if match:
+            results.append({
+                "source": "Maass",
+                "id": m.get("maass_label", ""),
+                "label": f"Maass sym={symmetry}",
+                "match_reason": f"Symmetry = {symmetry}",
+                "data": m,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def maass_stats() -> list[dict]:
+    """Summary statistics for Maass forms."""
+    _load_maass()
+    if not _maass_cache:
+        return [{"error": "No Maass data loaded"}]
+    spectral = [m["spectral_parameter"] for m in _maass_cache if "spectral_parameter" in m]
+    levels = {}
+    for m in _maass_cache:
+        lv = m.get("level", "?")
+        levels[lv] = levels.get(lv, 0) + 1
+    return [{
+        "source": "Maass",
+        "id": "maass_stats",
+        "label": "Maass Form Statistics",
+        "match_reason": "Summary",
+        "data": {
+            "n_forms": len(_maass_cache),
+            "spectral_range": [min(spectral), max(spectral)] if spectral else [],
+            "level_distribution": levels,
+            "fricke_counts": {
+                "+1": sum(1 for m in _maass_cache if m.get("fricke_eigenvalue") == 1),
+                "-1": sum(1 for m in _maass_cache if m.get("fricke_eigenvalue") == -1),
+            },
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
+# Lattices (root lattices, Leech, etc.)
+# ---------------------------------------------------------------------------
+
+_lattices_cache: list = []
+
+
+def _load_lattices():
+    """Lazy-load lattice data."""
+    if _lattices_cache:
+        return
+    if not LATTICES_JSON.exists():
+        print(f"  [Lattices] WARNING: {LATTICES_JSON} not found")
+        return
+    print(f"  [Lattices] Loading {LATTICES_JSON.name}...")
+    with open(LATTICES_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    _lattices_cache.extend(data.get("lattices", data) if isinstance(data, dict) else data)
+    print(f"  [Lattices] Loaded {len(_lattices_cache):,} lattices")
+
+
+def lattices_search(keyword: str = "", max_results: int = 50) -> list[dict]:
+    """Search lattices by name keyword (e.g. 'Leech', 'E8', 'A2')."""
+    _load_lattices()
+    kw = keyword.lower()
+    results = []
+    for lat in _lattices_cache:
+        name = lat.get("name", "")
+        if not kw or kw in name.lower():
+            results.append({
+                "source": "Lattices",
+                "id": name,
+                "label": f"{name} (dim={lat.get('dim')}, det={lat.get('det')})",
+                "match_reason": f"Name contains '{keyword}'" if kw else "All lattices",
+                "data": lat,
+                "score": 1.0 if kw and kw == name.lower() else 0.8,
+            })
+    results.sort(key=lambda x: (-x["score"], x["data"].get("dim", 0)))
+    return results[:max_results]
+
+
+def lattices_by_dimension(dimension: int, max_results: int = 50) -> list[dict]:
+    """Search lattices by dimension."""
+    _load_lattices()
+    results = []
+    for lat in _lattices_cache:
+        if lat.get("dim") == dimension:
+            results.append({
+                "source": "Lattices",
+                "id": lat.get("name", ""),
+                "label": f"{lat.get('name')} (kissing={lat.get('kissing')})",
+                "match_reason": f"Dimension = {dimension}",
+                "data": lat,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+# ---------------------------------------------------------------------------
+# FindStat (combinatorial statistics on discrete structures)
+# ---------------------------------------------------------------------------
+
+_findstat_cache: dict = {}
+
+
+def _load_findstat():
+    """Lazy-load FindStat index."""
+    if _findstat_cache:
+        return
+    if not FINDSTAT_JSON.exists():
+        print(f"  [FindStat] WARNING: {FINDSTAT_JSON} not found")
+        return
+    print(f"  [FindStat] Loading {FINDSTAT_JSON.name}...")
+    with open(FINDSTAT_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    _findstat_cache.update(data)
+    n_stats = len(data.get("statistics", []))
+    n_maps = len(data.get("maps", []))
+    n_cols = len(data.get("collections", []))
+    print(f"  [FindStat] Loaded {n_stats} statistics, {n_maps} maps, {n_cols} collections")
+
+
+def findstat_search(keyword: str = "", max_results: int = 50) -> list[dict]:
+    """Search FindStat statistics by keyword in description or ID."""
+    _load_findstat()
+    # Try enriched data first
+    enriched_path = FINDSTAT_JSON.parent / "findstat_enriched.json"
+    if enriched_path.exists() and "enriched" not in _findstat_cache:
+        import json as _json
+        enriched = _json.loads(enriched_path.read_text(encoding="utf-8"))
+        _findstat_cache["enriched"] = enriched.get("statistics", [])
+
+    enriched_stats = _findstat_cache.get("enriched", [])
+    if enriched_stats:
+        kw = keyword.lower()
+        results = []
+        for s in enriched_stats:
+            sid = s.get("id", "")
+            title = s.get("title", "")
+            desc = s.get("description", "")
+            coll = s.get("collection", "")
+            text = f"{sid} {title} {desc} {coll}".lower()
+            if not kw or kw in text:
+                score = 1.0 if kw and kw in sid.lower() else (0.8 if kw and kw in title.lower() else 0.5)
+                results.append({
+                    "source": "FindStat",
+                    "id": sid,
+                    "label": title[:100] if title else sid,
+                    "match_reason": f"Matches '{keyword}' in {'title' if kw in title.lower() else 'description'}",
+                    "data": {"statistic_id": sid, "collection": coll, "description": desc[:200]},
+                    "score": score,
+                })
+        results.sort(key=lambda x: -x["score"])
+        return results[:max_results]
+
+    # Fallback to ID-only
+    stats = _findstat_cache.get("statistics", [])
+    kw = keyword.upper()
+    results = []
+    for sid in stats:
+        if not kw or kw in sid:
+            results.append({
+                "source": "FindStat",
+                "id": sid,
+                "label": sid,
+                "match_reason": f"Statistic ID contains '{keyword}'" if kw else "All statistics",
+                "data": {"statistic_id": sid},
+                "score": 1.0 if kw and kw == sid else 0.5,
+            })
+    return results[:max_results]
+
+
+def findstat_stats() -> list[dict]:
+    """Summary of FindStat database contents."""
+    _load_findstat()
+    return [{
+        "source": "FindStat",
+        "id": "findstat_stats",
+        "label": "FindStat Summary",
+        "match_reason": "Summary",
+        "data": {
+            "n_statistics": len(_findstat_cache.get("statistics", [])),
+            "n_maps": len(_findstat_cache.get("maps", [])),
+            "n_collections": len(_findstat_cache.get("collections", [])),
+            "sample_statistics": _findstat_cache.get("statistics", [])[:10],
+            "sample_collections": _findstat_cache.get("collections", [])[:10],
+            "sample_maps": _findstat_cache.get("maps", [])[:10],
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
+# Small Groups (GAP SmallGrp library — number of groups of order n)
+# ---------------------------------------------------------------------------
+
+_smallgroups_cache: list = []
+
+
+def _load_smallgroups():
+    """Lazy-load small groups data."""
+    if _smallgroups_cache:
+        return
+    if not SMALLGROUPS_JSON.exists():
+        print(f"  [SmallGroups] WARNING: {SMALLGROUPS_JSON} not found")
+        return
+    print(f"  [SmallGroups] Loading {SMALLGROUPS_JSON.name}...")
+    with open(SMALLGROUPS_JSON, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    _smallgroups_cache.extend(data.get("groups", []))
+    print(f"  [SmallGroups] Loaded {len(_smallgroups_cache):,} orders")
+
+
+def smallgroups_search_order(order: int, max_results: int = 50) -> list[dict]:
+    """Search for groups of a specific order."""
+    _load_smallgroups()
+    results = []
+    for g in _smallgroups_cache:
+        if g.get("order") == order:
+            results.append({
+                "source": "SmallGroups",
+                "id": f"order_{order}",
+                "label": f"{g.get('n_groups', '?')} groups of order {order}",
+                "match_reason": f"Order = {order}",
+                "data": g,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def smallgroups_search_count(min_groups: int = 1, max_groups: int = 100,
+                             max_results: int = 50) -> list[dict]:
+    """Search for orders with a specific number of groups."""
+    _load_smallgroups()
+    results = []
+    for g in _smallgroups_cache:
+        ng = g.get("n_groups", 0)
+        if ng is not None and min_groups <= ng <= max_groups:
+            results.append({
+                "source": "SmallGroups",
+                "id": f"order_{g['order']}",
+                "label": f"{ng} groups of order {g['order']}",
+                "match_reason": f"n_groups={ng} in [{min_groups},{max_groups}]",
+                "data": g,
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"].get("n_groups", 0))
+    return results[:max_results]
+
+
+def smallgroups_stats() -> list[dict]:
+    """Summary statistics for the small groups library."""
+    _load_smallgroups()
+    if not _smallgroups_cache:
+        return [{"error": "No small groups data loaded"}]
+    orders = [g["order"] for g in _smallgroups_cache]
+    counts = [g.get("n_groups", 0) for g in _smallgroups_cache if g.get("n_groups")]
+    abelian_only = sum(1 for g in _smallgroups_cache if g.get("all_abelian"))
+    return [{
+        "source": "SmallGroups",
+        "id": "smallgroups_stats",
+        "label": "Small Groups Library Statistics",
+        "match_reason": "Summary",
+        "data": {
+            "n_orders": len(_smallgroups_cache),
+            "order_range": [min(orders), max(orders)] if orders else [],
+            "total_groups": sum(counts),
+            "max_groups_at_order": max(counts) if counts else 0,
+            "all_abelian_orders": abelian_only,
+            "prime_orders": sum(1 for g in _smallgroups_cache if g.get("is_prime")),
+        },
+        "score": 1.0,
+    }]
+
+
+# ---------------------------------------------------------------------------
 # Dispatcher — route search requests from hypotheses
 # ---------------------------------------------------------------------------
 
 SEARCH_REGISTRY = {
     "oeis_terms": oeis_search_terms,
+    "oeis_crossrefs": oeis_crossrefs,
+    "oeis_xref_hubs": oeis_xref_hubs,
+    "oeis_sleeping_beauties": oeis_sleeping_beauties,
     "oeis_keyword": oeis_search_keyword,  # Re-enabled — James downloaded names.txt
     "oeis_growth": oeis_search_growth,
     "oeis_by_id": oeis_search_by_id,
@@ -1020,6 +2371,33 @@ SEARCH_REGISTRY = {
     "nf_degree": nf_search_degree,
     "nf_class_number": nf_search_class_number,
     "nf_class_distribution": nf_class_number_distribution,
+    "polytopes_fvector": polytopes_search_fvector,
+    "polytopes_dimension": polytopes_search_dimension,
+    "pibase_property": pibase_search_property,
+    "pibase_space": pibase_search_space,
+    "mmlkg_article": mmlkg_search_article,
+    "mmlkg_stats": mmlkg_stats,
+    "isogeny_prime": isogeny_search_prime,
+    "isogeny_stats": isogeny_stats,
+    "local_fields_search": local_fields_search,
+    "spacegroup_search": spacegroup_search,
+    "spacegroup_crystal_system": spacegroup_by_crystal_system,
+    "openalex_concept": openalex_concept,
+    "openalex_hierarchy": openalex_hierarchy,
+    "genus2_conductor": genus2_search_conductor,
+    "genus2_rank": genus2_search_rank,
+    "genus2_st_group": genus2_search_st_group,
+    "genus2_stats": genus2_stats,
+    "maass_spectral": maass_search_spectral,
+    "maass_symmetry": maass_search_symmetry,
+    "maass_stats": maass_stats,
+    "lattices_search": lattices_search,
+    "lattices_dimension": lattices_by_dimension,
+    "findstat_search": findstat_search,
+    "findstat_stats": findstat_stats,
+    "smallgroups_order": smallgroups_search_order,
+    "smallgroups_count": smallgroups_search_count,
+    "smallgroups_stats": smallgroups_stats,
 }
 
 
@@ -1085,12 +2463,15 @@ DATASET_REGISTRY = {
         "name": "OEIS",
         "description": "392K integer sequences with terms, growth rates, and cross-references",
         "path": OEIS_STRIPPED,
-        "searches": ["oeis_terms", "oeis_growth", "oeis_by_id", "oeis_find_containing"],
-        "prompt_block": """OEIS (392K integer sequences):
+        "searches": ["oeis_terms", "oeis_growth", "oeis_by_id", "oeis_find_containing", "oeis_crossrefs", "oeis_xref_hubs", "oeis_sleeping_beauties"],
+        "prompt_block": """OEIS (392K integer sequences, 1.6M cross-reference edges, 64K sleeping beauties):
 - oeis_terms(target_terms=[list of ints], min_match=5) — find sequences containing these numbers. MUST pass actual integers, not strings.
 - oeis_by_id(seq_id="A000040") — fetch a specific sequence by A-number
 - oeis_find_containing(integers=[list of ints], min_fraction=0.5) — find sequences covering the input set. MUST pass actual integers like [3,5,7,11,13].
-- oeis_growth(growth_type="exponential|polynomial|super-exponential|sub-linear") — find by growth class""",
+- oeis_growth(growth_type="exponential|polynomial|super-exponential|sub-linear") — find by growth class
+- oeis_crossrefs(seq_id="A000045") — find all sequences cross-referenced by/to this sequence (the OEIS citation graph)
+- oeis_xref_hubs(min_degree=50) — find hub sequences with many cross-references
+- oeis_sleeping_beauties(min_entropy=4.0, max_degree=2) — find Sleeping Beauty sequences: high internal structure, low connectivity. The dark matter of mathematics.""",
     },
     "lmfdb": {
         "name": "LMFDB",
@@ -1168,6 +2549,117 @@ DATASET_REGISTRY = {
         "prompt_block": """ANTEDB — Analytic Number Theory Exponent Database (244 theorems, Tao et al.):
 - antedb_topic(topic="zero_density"|"zeta"|"primes"|"exponent_pairs"|etc) — search by topic
 - antedb_bounds() — all theorems with numerical bounds (exponent values, battery-testable)""",
+    },
+    "polytopes": {
+        "name": "polyDB Polytopes",
+        "description": "Polytopes from polyDB: combinatorial, lattice, tropical collections with f-vectors and dimensions",
+        "path": POLYTOPES_DIR,
+        "searches": ["polytopes_fvector", "polytopes_dimension"],
+        "prompt_block": """polyDB Polytopes (17 collections, combinatorial/lattice/tropical):
+- polytopes_fvector(dimension=3) — find polytopes by dimension, return f-vectors
+- polytopes_dimension(dimension=4) — find all polytopes of a given dimension""",
+    },
+    "pibase": {
+        "name": "pi-Base Topology",
+        "description": "220 topological spaces with 230 properties from Steen & Seebach pi-Base",
+        "path": PIBASE_DIR,
+        "searches": ["pibase_property", "pibase_space"],
+        "prompt_block": """pi-Base Topology (220 spaces, 230 properties):
+- pibase_property(property_name="compact"|"Hausdorff"|"metrizable"|etc) — find spaces with a topological property
+- pibase_space(space_name="real line"|"Sorgenfrey"|etc) — search spaces by name or alias""",
+    },
+    "mmlkg": {
+        "name": "MMLKG Theorem References",
+        "description": "464K theorem reference edges from Mizar Mathematical Library Knowledge Graph",
+        "path": MMLKG_REFS,
+        "searches": ["mmlkg_article", "mmlkg_stats"],
+        "prompt_block": """MMLKG — Mizar Mathematical Library Knowledge Graph (464K reference edges):
+- mmlkg_article(article="tarski"|"xboole"|etc) — find articles referencing or referenced by a given article
+- mmlkg_stats() — graph statistics: n_articles, n_edges, top hub articles""",
+    },
+    "isogenies": {
+        "name": "Isogeny Graphs",
+        "description": "3.2K supersingular isogeny graphs indexed by prime, with adjacency matrices for multiple isogeny degrees",
+        "path": ISOGENY_GRAPHS,
+        "searches": ["isogeny_prime", "isogeny_stats"],
+        "prompt_block": """Isogeny Graphs (3.2K primes, supersingular isogeny graphs):
+- isogeny_prime(prime=13) — find isogeny graph data for a specific prime (nodes, spine, diameters per ell)
+- isogeny_stats() — summary statistics: n_primes, node counts, prime range""",
+    },
+    "local_fields": {
+        "name": "Local Fields",
+        "description": "Wildly ramified local field extensions (LMFDB format) indexed by prime and degree",
+        "path": LOCAL_FIELDS_DIR,
+        "searches": ["local_fields_search"],
+        "prompt_block": """Local Fields (wildly ramified extensions):
+- local_fields_search(prime=2) — find wildly ramified extensions by ramification prime (available: 2, 3, 5)""",
+    },
+    "spacegroups": {
+        "name": "Bilbao Space Groups",
+        "description": "230 crystallographic space groups with generators, Wyckoff positions, point groups",
+        "path": BILBAO_DIR,
+        "searches": ["spacegroup_search", "spacegroup_crystal_system"],
+        "prompt_block": """Bilbao Space Groups (230 crystallographic space groups):
+- spacegroup_search(sg_number=1) — find space group by ITA number (1-230)
+- spacegroup_crystal_system(system="cubic"|"hexagonal"|"trigonal"|"tetragonal"|"orthorhombic"|"monoclinic"|"triclinic") — find all SGs in a crystal system""",
+    },
+    "openalex": {
+        "name": "OpenAlex Concepts",
+        "description": "10K academic concepts from OpenAlex taxonomy with 6 hierarchy levels, works counts, and descriptions",
+        "path": OPENALEX_CONCEPTS,
+        "searches": ["openalex_concept", "openalex_hierarchy"],
+        "prompt_block": """OpenAlex Concept Taxonomy (10K academic concepts, 6 hierarchy levels):
+- openalex_concept(keyword="topology"|"number theory"|etc) — find concepts by name or description keyword
+- openalex_hierarchy(concept_id="https://openalex.org/C41008148"|"C41008148"|"Mathematics") — find parent/child concepts in the hierarchy""",
+    },
+    "genus2": {
+        "name": "Genus-2 Curves",
+        "description": "66K genus-2 curves from LMFDB with conductors, discriminants, Sato-Tate groups, torsion",
+        "path": GENUS2_JSON,
+        "searches": ["genus2_conductor", "genus2_rank", "genus2_st_group", "genus2_stats"],
+        "prompt_block": """Genus-2 Curves (66K curves from LMFDB g2c database):
+- genus2_conductor(low=1, high=1000) — search curves by conductor range. Bridges to LMFDB EC conductors and number field discriminants.
+- genus2_rank(rank=0) — search by analytic rank parity (0=even root number, 1=odd). Bridge to BSD conjecture.
+- genus2_st_group(st_group="USp(4)") — search by Sato-Tate group. Bridges to Galois representations.
+- genus2_stats() — summary: conductor range, ST group distribution, rank parity counts.""",
+    },
+    "maass": {
+        "name": "Maass Forms",
+        "description": "300 rigorously computed Maass forms with spectral parameters, symmetry, Fricke eigenvalues",
+        "path": MAASS_JSON,
+        "searches": ["maass_spectral", "maass_symmetry", "maass_stats"],
+        "prompt_block": """Maass Forms (300 rigorously computed, LMFDB):
+- maass_spectral(low=9.0, high=50.0) — search by spectral parameter range. The spectral parameters are eigenvalues of the Laplacian on the upper half-plane.
+- maass_symmetry(symmetry="even"|"odd") — search by symmetry type.
+- maass_stats() — summary: spectral range, level distribution, Fricke eigenvalue counts.""",
+    },
+    "lattices": {
+        "name": "Lattices",
+        "description": "21 named lattices (Z, A2, D4, E8, Leech, etc.) with dimensions, determinants, kissing numbers",
+        "path": LATTICES_JSON,
+        "searches": ["lattices_search", "lattices_dimension"],
+        "prompt_block": """Lattices (21 named lattices: Z, A2, D4, E8, Leech, etc.):
+- lattices_search(keyword="Leech"|"E8"|"") — search by name. Small but bridges to dimension theory, sphere packing, modular forms.
+- lattices_dimension(dimension=8) — find lattices by dimension.""",
+    },
+    "findstat": {
+        "name": "FindStat",
+        "description": "1993 combinatorial statistics, 336 maps, 24 collections on discrete structures",
+        "path": FINDSTAT_JSON,
+        "searches": ["findstat_search", "findstat_stats"],
+        "prompt_block": """FindStat (1993 combinatorial statistics, 336 maps, 24 collections):
+- findstat_search(keyword="St000001") — search statistic IDs. Currently ID-only index.
+- findstat_stats() — summary: counts of statistics, maps, collections with samples.""",
+    },
+    "smallgroups": {
+        "name": "Small Groups",
+        "description": "2,416 orders with group counts from GAP SmallGrp (A000001), factorizations, abelian/cyclic flags",
+        "path": SMALLGROUPS_JSON,
+        "searches": ["smallgroups_order", "smallgroups_count", "smallgroups_stats"],
+        "prompt_block": """Small Groups (2,416 orders, GAP SmallGrp library, OEIS A000001):
+- smallgroups_order(order=12) — find groups of a specific order (returns count, factorization, properties)
+- smallgroups_count(min_groups=1, max_groups=10) — find orders with N groups. Bridges to OEIS A000001 and number field Galois groups.
+- smallgroups_stats() — summary: order range, total groups, abelian-only count.""",
     },
 }
 

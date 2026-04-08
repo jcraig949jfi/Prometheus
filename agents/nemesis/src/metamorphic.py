@@ -75,17 +75,36 @@ def _verb_inversion(prompt: str, candidates: list[str], correct: str,
 def _negation_inject(prompt: str, candidates: list[str], correct: str,
                      rng: random.Random) -> tuple[str, list[str], str] | None:
     """Add negation to change the expected answer."""
-    if "not" in prompt.lower():
+    if " not " in prompt.lower() or "n't " in prompt.lower():
         return None  # already negated, skip
-    # Add "not" before key verb
+
+    # Find the question or conclusion sentence — negate THERE, not in arbitrary premises
+    # Look for question sentence first, then conclusion, then fall back to last sentence
+    q_match = re.search(r"([^.!?\n]*\?)", prompt)
+    concl_match = re.search(r"(Conclusion:[^\n.]*\.?)", prompt, re.IGNORECASE)
+    target = q_match or concl_match
+    if not target:
+        # Fall back to last sentence
+        sentences = re.split(r'(?<=[.!?])\s+', prompt)
+        if not sentences:
+            return None
+        target_text = sentences[-1]
+        target_start = prompt.rfind(target_text)
+    else:
+        target_text = target.group(1)
+        target_start = target.start()
+
+    # Add "not" before key verb WITHIN the target sentence
     for pattern, replacement in [
         (r"(\bis\b)", "is not"),
         (r"(\bare\b)", "are not"),
         (r"(\bcan\b)", "cannot"),
     ]:
-        m = re.search(pattern, prompt)
+        m = re.search(pattern, target_text)
         if m:
-            new_prompt = prompt[:m.start()] + replacement + prompt[m.end():]
+            abs_start = target_start + m.start()
+            abs_end = target_start + m.end()
+            new_prompt = prompt[:abs_start] + replacement + prompt[abs_end:]
             new_correct = "No" if correct.lower().startswith("yes") else "Yes"
             return new_prompt, candidates, new_correct
     return None
@@ -94,10 +113,22 @@ def _negation_inject(prompt: str, candidates: list[str], correct: str,
 def _premise_shuffle(prompt: str, candidates: list[str], correct: str,
                      rng: random.Random) -> tuple[str, list[str], str] | None:
     """Shuffle the order of premises in a multi-premise prompt."""
-    # Split on period or comma followed by space and a capital letter
+    # Structured argument prompts: preserve header/conclusion, shuffle only premises
+    premise_lines = re.findall(r"(Premise\s+\d+:\s*.+?)(?=\n|Premise\s+\d+:|Conclusion:|$)",
+                               prompt, re.IGNORECASE)
+    if len(premise_lines) >= 2:
+        rng.shuffle(premise_lines)
+        new_prompt = prompt
+        # Replace original premises in order with shuffled ones
+        originals = list(re.finditer(r"(Premise\s+\d+:\s*.+?)(?=\n|Premise\s+\d+:|Conclusion:|$)",
+                                     prompt, re.IGNORECASE))
+        for orig, shuffled in zip(reversed(originals), reversed(premise_lines)):
+            new_prompt = new_prompt[:orig.start()] + shuffled + new_prompt[orig.end():]
+        return new_prompt, candidates, correct
+
+    # Fallback: split on sentence boundaries
     sentences = re.split(r'(?<=[.!?])\s+(?=[A-Z])', prompt)
     if len(sentences) < 2:
-        # Try splitting on "and" or comma
         parts = re.split(r',\s+and\s+|\s+and\s+|,\s+', prompt)
         if len(parts) < 2:
             return None
@@ -237,10 +268,14 @@ def _chain_extend(prompt: str, candidates: list[str], correct: str,
 def _conditional_weaken(prompt: str, candidates: list[str], correct: str,
                         rng: random.Random) -> tuple[str, list[str], str] | None:
     """Weaken a conditional: 'if P then Q' -> 'if P then Q might be true'."""
-    m = re.search(r"[Ii]f\s+(.+?),?\s+(?:then\s+)?(.+?)(?:\.|$)", prompt)
+    # Match only the FIRST if-then in the prompt; require 'then' keyword to avoid
+    # partial captures, and stop at sentence boundary (period, comma, newline).
+    m = re.search(r"[Ii]f\s+(.+?),\s+then\s+([^.,\n]+)(?:\.|,|$)", prompt)
     if not m:
         return None
-    ante, cons = m.group(1), m.group(2)
+    ante, cons = m.group(1).strip(), m.group(2).strip()
+    if len(cons.split()) < 2:
+        return None  # consequent too short, would produce garbled output
     weakened = f"If {ante}, then {cons} might be true"
     new_prompt = prompt[:m.start()] + weakened + prompt[m.end():]
     # Weakened conditional makes modus tollens uncertain
@@ -296,7 +331,10 @@ def _numeric_distractor(prompt: str, candidates: list[str], correct: str,
 def _scale_transform(prompt: str, candidates: list[str], correct: str,
                      rng: random.Random) -> tuple[str, list[str], str] | None:
     """Multiply all numbers by a constant. Ordering should be preserved."""
-    nums = list(re.finditer(r"\b(\d+\.?\d*)\b", prompt))
+    # Exclude numbers that are labels (Premise 1, Step 2) or inside times (14:30)
+    nums = [m for m in re.finditer(r"\b(\d+\.?\d*)\b", prompt)
+            if not re.match(r"(?:Premise|Step|Task|Phase)\s+$", prompt[:m.start()], re.IGNORECASE)
+            and not re.match(r":", prompt[m.end():m.end()+1])]
     if len(nums) < 2:
         return None
     scale = rng.choice([10, 100, 0.1, 0.01, 7, 13])

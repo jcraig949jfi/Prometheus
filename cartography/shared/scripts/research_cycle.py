@@ -52,9 +52,9 @@ IMPORTANT: For distribution comparisons, use functions returning histograms or p
 
 TOPIC: {topic}
 
-Propose exactly 3 testable hypotheses. Each must involve at least 2 of the datasets above.
+Propose exactly {n_hypotheses} testable hypotheses. Each must involve at least 2 of the datasets above.
 
-Respond as a JSON list of 3 objects:
+Respond as a JSON list of {n_hypotheses} objects:
 - "hypothesis": one-sentence testable claim
 - "rationale": why this might be true (2 sentences)
 - "searches": list of {{"search_type": "...", "params": {{...}}}}
@@ -68,14 +68,19 @@ def generate_hypotheses_from_bridges(n: int = 3, log=None) -> list[dict]:
 
     Loads bridges from concept_index or tensor_bridge, creates hypothesis
     dicts compatible with the pipeline. Returns top N by bridge score.
+    Enforces diversity: max 1 hypothesis per dataset pair.
     """
     try:
         from tensor_bridge import find_top_bridges, bridges_to_hypotheses
-        bridges = find_top_bridges(top_k=n * 3)  # get extras for dedup filtering
+        bridges = find_top_bridges(top_k=n * 10)  # get many extras for diversity filtering
         all_hyps = bridges_to_hypotheses(bridges)
 
-        # Filter through dedup and tautology gates
+        # Shuffle to avoid always getting the same top bridge
+        random.shuffle(all_hyps)
+
+        # Filter through dedup, tautology, and diversity gates
         hypotheses = []
+        seen_pairs = set()  # track dataset pairs to enforce diversity
         for h in all_hyps:
             hyp_text = h.get("hypothesis", "")
             dup, _ = is_duplicate(hyp_text)
@@ -84,6 +89,27 @@ def generate_hypotheses_from_bridges(n: int = 3, log=None) -> list[dict]:
             taut, _ = is_tautology(hyp_text, h.get("searches", []))
             if taut:
                 continue
+
+            # Diversity: extract dataset pair from search types
+            search_datasets = set()
+            for s in h.get("searches", []):
+                st = s.get("search_type", "")
+                # Map search type prefix to dataset
+                for prefix, ds in [("oeis", "oeis"), ("lmfdb", "lmfdb"), ("knots", "knots"),
+                                   ("fungrim", "fungrim"), ("antedb", "antedb"),
+                                   ("mathlib", "mathlib"), ("metamath", "metamath"),
+                                   ("materials", "materials"), ("nf_", "nf"),
+                                   ("isogeny", "isogeny"), ("local_field", "local_fields"),
+                                   ("spacegroup", "spacegroup"), ("polytop", "polytopes"),
+                                   ("pibase", "pibase"), ("mmlkg", "mmlkg")]:
+                    if st.startswith(prefix):
+                        search_datasets.add(ds)
+                        break
+            pair_key = frozenset(search_datasets) if len(search_datasets) >= 2 else frozenset({str(search_datasets), hyp_text[:30]})
+            if pair_key in seen_pairs:
+                continue
+            seen_pairs.add(pair_key)
+
             hypotheses.append(h)
             if len(hypotheses) >= n:
                 break
@@ -198,7 +224,8 @@ def select_datasets(n: int = 4, required: list[str] = None) -> list[str]:
 
 def generate_hypotheses(topic: str, provider: str = "deepseek",
                         seed_hypotheses: list[dict] = None,
-                        datasets: list[str] = None) -> list[dict]:
+                        datasets: list[str] = None,
+                        n_hypotheses: int = 3) -> list[dict]:
     """Generate hypotheses. This is the ONLY LLM call in the cycle."""
     log = cycle_logger.get()
 
@@ -242,7 +269,8 @@ def generate_hypotheses(topic: str, provider: str = "deepseek",
         seed_context += "Propose NOVEL hypotheses that explore DIFFERENT connections.\n"
 
     prompt = DATA_INVENTORY_PROMPT.format(
-        search_functions=search_functions, topic=topic, seed_context=seed_context)
+        search_functions=search_functions, topic=topic, seed_context=seed_context,
+        n_hypotheses=n_hypotheses)
 
     system = ("You are a scientist proposing falsifiable hypotheses. "
               "Be specific and quantitative. Every hypothesis must use the search functions listed. "
@@ -314,7 +342,11 @@ def validate_hypothesis(hypothesis: dict, log) -> tuple[bool, str]:
                  msg=f"  TAUTOLOGY: {taut_reason[:80]}")
         return False, f"Tautology: {taut_reason}"
 
-    # Param validation
+    # Enrich search plans BEFORE validation — fixes LLM hallucinated params
+    searches = enrich_search_plan(searches)
+    hypothesis["searches"] = searches  # update in-place so downstream gets clean params
+
+    # Param validation (after enrichment strips bad params)
     for s in searches:
         ok, err = validate_search_params(s.get("search_type", ""), s.get("params", {}))
         if not ok:
@@ -347,7 +379,6 @@ def enrich_search_plan(searches: list[dict]) -> list[dict]:
     where lists are expected and substitutes real data.
     """
     log = cycle_logger.get()
-    enriched = []
     # Cache of data we've fetched for substitution
     _cache = {}
 
@@ -370,10 +401,19 @@ def enrich_search_plan(searches: list[dict]) -> list[dict]:
                 _cache["conductors"] = []
         return _cache["conductors"]
 
+    enriched = []
     for s in searches:
         st = s.get("search_type", "")
         params = dict(s.get("params", {}))
         enriched_any = False
+
+        # Skip unknown search types entirely — LLM hallucinated them
+        from search_engine import SEARCH_REGISTRY
+        if st not in SEARCH_REGISTRY:
+            if log:
+                log.info("enrich", "search_dropped", {"search_type": st},
+                         msg=f"Dropped unknown search type: {st}")
+            continue
 
         # Fix: integer list params that are actually strings
         for key in ["integers", "target_terms"]:
@@ -436,6 +476,89 @@ def enrich_search_plan(searches: list[dict]) -> list[dict]:
                 if bad in params:
                     del params[bad]
                     enriched_any = True
+
+        # Fix: isogeny_prime with string prime
+        if st == "isogeny_prime" and isinstance(params.get("prime"), str):
+            try:
+                params["prime"] = int(params["prime"])
+            except (ValueError, TypeError):
+                params["prime"] = 13  # sensible default
+            enriched_any = True
+
+        # Fix: spacegroup_search with string sg_number
+        if st == "spacegroup_search" and isinstance(params.get("sg_number"), str):
+            try:
+                params["sg_number"] = int(params["sg_number"])
+            except (ValueError, TypeError):
+                params["sg_number"] = 225  # Fm-3m, common cubic
+            enriched_any = True
+
+        # Fix: spacegroup_crystal_system with hallucinated params
+        if st == "spacegroup_crystal_system":
+            valid_systems = {"cubic", "hexagonal", "trigonal", "tetragonal",
+                             "orthorhombic", "monoclinic", "triclinic"}
+            sys_val = params.get("system", "").lower().strip()
+            if sys_val not in valid_systems:
+                params["system"] = "cubic"
+                enriched_any = True
+
+        # Fix: nf_degree, nf_class_number with string values
+        if st in ("nf_degree", "nf_class_number"):
+            for key in ["degree", "class_number"]:
+                if key in params and isinstance(params[key], str):
+                    try:
+                        params[key] = int(params[key])
+                    except (ValueError, TypeError):
+                        params[key] = 2
+                    enriched_any = True
+
+        # Fix: polytopes_fvector, polytopes_dimension with string dimension
+        if st in ("polytopes_fvector", "polytopes_dimension"):
+            if isinstance(params.get("dimension"), str):
+                try:
+                    params["dimension"] = int(params["dimension"])
+                except (ValueError, TypeError):
+                    params["dimension"] = 3
+                enriched_any = True
+
+        # Fix: pibase_property with hallucinated property names
+        if st == "pibase_property" and isinstance(params.get("property_name"), str):
+            pn = params["property_name"].lower().strip()
+            if any(w in pn for w in ["sample", "placeholder", "pick", "choose"]):
+                params["property_name"] = "compact"
+                enriched_any = True
+
+        # Fix: local_fields_search with string or out-of-range prime
+        if st == "local_fields_search":
+            p = params.get("prime")
+            if isinstance(p, str):
+                try:
+                    params["prime"] = int(p)
+                except (ValueError, TypeError):
+                    params["prime"] = 2
+                enriched_any = True
+            elif isinstance(p, int) and p not in (2, 3, 5):
+                params["prime"] = 2  # only 2, 3, 5 available
+                enriched_any = True
+
+        # Fix: mmlkg_article with placeholder
+        if st == "mmlkg_article" and isinstance(params.get("article"), str):
+            art = params["article"].lower()
+            if any(w in art for w in ["sample", "placeholder", "pick", "choose"]):
+                params["article"] = "tarski"
+                enriched_any = True
+
+        # Generic fix: strip any hallucinated params not in the function signature
+        # (catches "rank", "dataset1", etc. for all search types)
+        from search_engine import SEARCH_REGISTRY
+        if st in SEARCH_REGISTRY:
+            import inspect
+            fn = SEARCH_REGISTRY[st]
+            valid_params = set(inspect.signature(fn).parameters.keys())
+            bad_keys = [k for k in params if k not in valid_params]
+            for k in bad_keys:
+                del params[k]
+                enriched_any = True
 
         if enriched_any and log:
             log.info("enrich", "search_enriched", {
@@ -962,9 +1085,11 @@ def generate_report(cycle_id: str, topic: str, threads: list[dict],
 # ---------------------------------------------------------------------------
 
 def run_cycle(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
-              seed_hypotheses: list[dict] = None) -> tuple[Path, list[dict]]:
+              seed_hypotheses: list[dict] = None,
+              tag: str = "") -> tuple[Path, list[dict]]:
     """Run one research cycle. Returns (report_path, branches_for_next_cycle)."""
-    cycle_id = datetime.now().strftime("%Y%m%d-%H%M%S")
+    ts = datetime.now().strftime("%Y%m%d-%H%M%S")
+    cycle_id = f"{tag}_{ts}" if tag else ts
     log = cycle_logger.init(cycle_id, console=True)
 
     log.info("cycle", "cycle_config", {
@@ -978,11 +1103,14 @@ def run_cycle(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
 
     if len(hypotheses) < n_hypotheses:
         # Not enough bridges — supplement with LLM generation
+        # Ask for 3x what we need so tautology/dedup gates have a bigger pool
         n_remaining = n_hypotheses - len(hypotheses)
-        log.info("cycle", "llm_fallback", {"n_bridge": len(hypotheses), "n_needed": n_remaining},
-                 msg=f"Bridges: {len(hypotheses)}, need {n_remaining} more from LLM")
+        n_request = max(n_remaining * 3, 6)
+        log.info("cycle", "llm_fallback", {"n_bridge": len(hypotheses), "n_needed": n_remaining, "n_request": n_request},
+                 msg=f"Bridges: {len(hypotheses)}, need {n_remaining} more from LLM (requesting {n_request})")
         llm_hyps = generate_hypotheses(topic, provider=provider,
-                                        seed_hypotheses=seed_hypotheses)
+                                        seed_hypotheses=seed_hypotheses,
+                                        n_hypotheses=n_request)
         hypotheses.extend(llm_hyps[:n_remaining])
 
     if not hypotheses:
@@ -1106,7 +1234,8 @@ def run_loop(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
              max_iterations: int = 3, review_every: int = 0,
              review_providers: list[str] = None,
              tensor_review_every: int = 0,
-             external_research: bool = False) -> list[Path]:
+             external_research: bool = False,
+             tag: str = "") -> list[Path]:
     """Run multiple cycles, feeding branches forward.
 
     Args:
@@ -1137,7 +1266,8 @@ def run_loop(topic: str, provider: str = "deepseek", n_hypotheses: int = 3,
 
         report, branches = run_cycle(topic, provider=provider,
                                      n_hypotheses=n_hypotheses,
-                                     seed_hypotheses=seeds)
+                                     seed_hypotheses=seeds,
+                                     tag=tag)
         if report:
             reports.append(report)
 
@@ -1238,6 +1368,8 @@ def main():
                         help="Run dataset quality audit every N iterations (0=never, free)")
     parser.add_argument("--external-research", action="store_true",
                         help="Run daily external research feed (Scholarly + Tavily + Gemini)")
+    parser.add_argument("--tag", type=str, default="",
+                        help="Tag prefix for log/report filenames (avoids collisions across terminals)")
     args = parser.parse_args()
 
     if args.loop > 1:
@@ -1246,10 +1378,12 @@ def main():
                  review_every=args.review_every,
                  review_providers=args.review_providers,
                  tensor_review_every=args.tensor_review_every,
-                 external_research=args.external_research)
+                 external_research=args.external_research,
+                 tag=args.tag)
     else:
         report, branches = run_cycle(args.topic, provider=args.provider,
-                                     n_hypotheses=args.hypotheses)
+                                     n_hypotheses=args.hypotheses,
+                                     tag=args.tag)
         if report:
             print(f"\nReport: {report}")
             if branches:
