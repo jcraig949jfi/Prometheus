@@ -63,7 +63,9 @@ One FAIL = hypothesis killed. No appeals.
 
 ### 2.2 Calibration
 
-The battery correctly validates 180 known mathematical facts across 6 layers — OEIS sequence identities, Mazur's torsion theorem, the crystallographic restriction, Deuring's mass formula (z=93), modularity theorem (z=72), and 175 others. False negative rate on known mathematics: 0%.
+The battery correctly validates 180 known mathematical facts that are natively scalar — OEIS sequence identities, Deuring's mass formula (z=93), crystallographic restriction, class number bounds, and 176 others. False negative rate on scalar mathematical truths: 0%.
+
+This calibration is critical context for Section 3. The battery perfectly validates known scalar facts, proving it works. Therefore, when it kills the modularity theorem (a known truth), it proves the theorem is not a scalar phenomenon — it is structural. The battery's success on scalar truths is what makes its failure on structural truths informative.
 
 ### 2.3 Kill log
 
@@ -91,7 +93,9 @@ The claim was killed anyway — by correct interpretation.
 
 The z=137 score measures distributional *distance*, not *similarity*. Alexander root angles cluster near 0 on [0, pi] (mean = 0.77); Sato-Tate angles cluster near pi (mean = 1.58). The battery confirmed that the distributions are genuinely, robustly *different*. The hypothesis was about similarity. A confirmed dissimilarity is the opposite of a bridge.
 
-No computational test catches this error. The battery verified a real statistical fact — the distributions differ more than chance — but the hypothesis framed that fact as a connection. The gap between "statistically confirmed" and "correctly interpreted" cannot be closed by adding more tests. It requires understanding what question you asked. This is the boundary between automation and judgment.
+No computational test catches this error. The battery verified a real statistical fact — the distributions differ more than chance — but the hypothesis framed that fact as a connection. The gap between "statistically confirmed" and "correctly interpreted" cannot be closed by adding more tests. It requires understanding what question you asked.
+
+Kill #9 represents the absolute limit of the scalar battery: it cannot interpret mathematical semantics. It can confirm that two distributions are different, but it cannot determine whether "different" means "unrelated" or "complementary." This is the strongest argument for the structural layer — a system that compares formula syntax trees or L-function coefficient sequences operates at a level where the *meaning* of the relationship is encoded in the representation, not imputed by the analyst.
 
 ---
 
