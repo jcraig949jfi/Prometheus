@@ -229,7 +229,12 @@ def find_bridges(profiles, domain_map, min_lenses=3):
     by_domain = defaultdict(list)
     for fid, profile in profiles.items():
         domain = domain_map.get(fid, "unknown")
-        if len(profile) >= 2:  # need at least 2 lenses to compare
+        # Minimum complexity: need 2+ lenses AND non-trivial formula
+        # Kill #12 fix: tiny formulas (2-3 nodes) match on everything trivially
+        op_sig = profile.get("operadic", {})
+        skel = op_sig.get("skeleton_str", "") if isinstance(op_sig, dict) else ""
+        # Skeleton length > 20 chars means non-trivial structure
+        if len(profile) >= 2 and len(skel) > 20:
             by_domain[domain].append(fid)
 
     domains = sorted(by_domain.keys())
