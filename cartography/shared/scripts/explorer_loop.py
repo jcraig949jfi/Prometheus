@@ -18,6 +18,7 @@ Usage:
     python explorer_loop.py --interval 300   # 5 min between sweeps
 """
 
+import json
 import os
 import sys
 import time
@@ -44,6 +45,64 @@ def _yield():
     time.sleep(0.5)
 
 
+FRONTIER_TARGETS = Path(__file__).resolve().parents[3] / "cartography" / "convergence" / "data" / "frontier_targets.jsonl"
+
+
+def _load_frontier_priorities():
+    """Load frontier targets from the novelty scorer and extract priority datasets.
+
+    Returns a set of dataset names that appear in high-novelty concepts,
+    plus the raw list of frontier entries for logging.
+    Returns (priority_datasets: set, frontier_entries: list).
+    If the file doesn't exist, returns (set(), []).
+    """
+    if not FRONTIER_TARGETS.exists():
+        return set(), []
+
+    entries = []
+    priority_datasets = set()
+    try:
+        with open(FRONTIER_TARGETS) as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                    entries.append(entry)
+                    # Only count concepts spanning 2+ datasets as frontier bridges
+                    if entry.get("n_datasets", 0) >= 2:
+                        for ds in entry.get("datasets", []):
+                            priority_datasets.add(ds)
+                except (json.JSONDecodeError, KeyError):
+                    pass
+    except Exception as e:
+        print(f"    WARNING: Could not load frontier targets: {e}")
+        return set(), []
+
+    return priority_datasets, entries
+
+
+def _boost_void_results_by_frontier(void_results, priority_datasets):
+    """Re-sort void scan results so pairs involving frontier datasets come first.
+
+    Pairs are scored by how many of their two datasets appear in the
+    priority set (0, 1, or 2), then by their original concept overlap score.
+    Returns a new sorted list (does not mutate the original).
+    """
+    if not priority_datasets:
+        return void_results
+
+    def _frontier_score(vr):
+        pair = vr.get("pair", "")
+        parts = pair.split("--")
+        hits = sum(1 for p in parts if p in priority_datasets)
+        concept_score = (vr.get("concept_overlap") or {}).get("score", 0)
+        return (-hits, -concept_score)
+
+    return sorted(void_results, key=_frontier_score)
+
+
 def run_sweep(sweep_num):
     """Run one complete exploration sweep."""
     print(f"\n{'='*70}")
@@ -51,6 +110,23 @@ def run_sweep(sweep_num):
     print(f"{'='*70}")
 
     t0 = time.time()
+
+    # Phase 0: Frontier targeting (novelty scorer steering)
+    print(f"\n  [0/4] Frontier Targeting...")
+    priority_datasets, frontier_entries = _load_frontier_priorities()
+    if priority_datasets:
+        frontier_concepts = [e for e in frontier_entries if e.get("n_datasets", 0) >= 2]
+        print(f"    Loaded {len(frontier_entries)} frontier targets, "
+              f"{len(frontier_concepts)} span 2+ datasets")
+        print(f"    Priority datasets ({len(priority_datasets)}): "
+              f"{', '.join(sorted(priority_datasets)[:10])}"
+              f"{'...' if len(priority_datasets) > 10 else ''}")
+        for fc in frontier_concepts[:5]:
+            print(f"      {fc['concept_id']:25s}  novelty={fc['novelty_score']:.3f}  "
+                  f"datasets={fc['n_datasets']}")
+    else:
+        print(f"    No frontier targets found — falling back to unsteered exploration")
+    _yield()
 
     # Phase 1: Void scan
     print(f"\n  [1/4] Void Scanner...")
@@ -61,11 +137,11 @@ def run_sweep(sweep_num):
         print(f"    ERROR: {e}")
     _yield()
 
-    # Phase 2: Bridge hunt
+    # Phase 2: Bridge hunt (frontier-steered if targets available)
     print(f"\n  [2/4] Bridge Hunter...")
     try:
         from bridge_hunter import hunt_bridges
-        hunt_bridges()
+        hunt_bridges(priority_datasets=priority_datasets if priority_datasets else None)
     except Exception as e:
         print(f"    ERROR: {e}")
     _yield()

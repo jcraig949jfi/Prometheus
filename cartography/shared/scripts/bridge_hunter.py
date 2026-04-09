@@ -258,7 +258,28 @@ def classify_survivor(hypothesis, test_result):
     }
 
 
-def hunt_bridges(pair_filter=None, weak_only=False, max_tests=None):
+def _load_tested_keys():
+    """Load already-tested (pair, type, claim_hash) from results log to avoid retesting."""
+    tested_keys = set()
+    if not HUNTER_RESULTS.exists():
+        return tested_keys
+    try:
+        with open(HUNTER_RESULTS) as f:
+            for line in f:
+                try:
+                    d = json.loads(line)
+                    h = d.get("hypothesis", {})
+                    key = (h.get("d1", ""), h.get("d2", ""), h.get("type", ""),
+                           h.get("verb", ""), str(h.get("shared_integers", "")))
+                    tested_keys.add(key)
+                except Exception:
+                    pass
+    except Exception:
+        pass
+    return tested_keys
+
+
+def hunt_bridges(pair_filter=None, weak_only=False, max_tests=None, priority_datasets=None):
     """Main hunting loop."""
     print("=" * 70)
     print("  BRIDGE HUNTER — Autonomous discovery pipeline")
@@ -266,8 +287,13 @@ def hunt_bridges(pair_filter=None, weak_only=False, max_tests=None):
     print("=" * 70)
 
     t0 = time.time()
+
+    # Load already-tested hypotheses to avoid grinding the same pairs
+    already_tested = _load_tested_keys()
+    print(f"\n  Already tested: {len(already_tested)} unique hypotheses (will skip)")
+
     void_results = load_void_scan()
-    print(f"\n  Loaded {len(void_results)} void scan results")
+    print(f"  Loaded {len(void_results)} void scan results")
 
     # Filter
     if pair_filter:
@@ -275,23 +301,38 @@ def hunt_bridges(pair_filter=None, weak_only=False, max_tests=None):
     if weak_only:
         void_results = [r for r in void_results if r["type"] == "weak"]
 
-    # Prioritize: pairs with concept overlap first, then numerical bridges
-    void_results.sort(key=lambda r: (
-        -(r.get("concept_overlap", {}) or {}).get("score", 0),
-        -(r.get("numerical_bridge", {}) or {}).get("jaccard", 0),
-    ))
+    # Prioritize: frontier-steered pairs first, then concept overlap, then numerical bridges
+    _pds = priority_datasets or set()
+    def _sort_key(r):
+        parts = r.get("pair", "").split("--")
+        frontier_hits = -sum(1 for p in parts if p in _pds) if _pds else 0
+        concept = -(r.get("concept_overlap", {}) or {}).get("score", 0)
+        numerical = -(r.get("numerical_bridge", {}) or {}).get("jaccard", 0)
+        return (frontier_hits, concept, numerical)
+    void_results.sort(key=_sort_key)
+    if _pds:
+        n_steered = sum(1 for r in void_results
+                        if any(p in _pds for p in r.get("pair", "").split("--")))
+        print(f"  Frontier steering active: {n_steered}/{len(void_results)} pairs boosted")
 
     all_hypotheses = []
     tested = 0
     passed = 0
     candidates = []
+    skipped = 0
 
     for vr in void_results:
         # Generate hypotheses
         hyps = generate_verb_hypotheses(vr) + generate_numerical_hypotheses(vr)
-        all_hypotheses.extend(hyps)
+        for hyp in hyps:
+            key = (hyp.get("d1", ""), hyp.get("d2", ""), hyp.get("type", ""),
+                   hyp.get("verb", ""), str(hyp.get("shared_integers", "")))
+            if key in already_tested:
+                skipped += 1
+                continue
+            all_hypotheses.append(hyp)
 
-    print(f"  Generated {len(all_hypotheses)} hypotheses from {len(void_results)} pairs")
+    print(f"  Generated {len(all_hypotheses)} NEW hypotheses ({skipped} skipped as already tested)")
 
     if max_tests:
         all_hypotheses = all_hypotheses[:max_tests]
