@@ -144,13 +144,19 @@ def _tree_to_sympy(node, var_map):
 
     if op == "add":
         vals = [_tree_to_sympy(c, var_map) for c in children]
-        if any(v is None for v in vals):
+        if any(v is None or isinstance(v, (list, tuple)) for v in vals):
             return None
-        return sum(vals[1:], vals[0])
+        try:
+            result = vals[0]
+            for v in vals[1:]:
+                result = result + v
+            return result
+        except (TypeError, AttributeError):
+            return None
 
     if op == "sub":
         vals = [_tree_to_sympy(c, var_map) for c in children]
-        if any(v is None for v in vals) or len(vals) < 2:
+        if any(v is None or isinstance(v, (list, tuple)) for v in vals) or len(vals) < 2:
             return None
         result = vals[0]
         for v in vals[1:]:
@@ -311,8 +317,11 @@ def run(max_formulas=None, sample_n=None):
             var_map = {name: sv for name, sv in zip(var_names, sym_vars)}
 
             # Convert tree to sympy
-            expr = _tree_to_sympy(root, var_map)
-            if expr is None:
+            try:
+                expr = _tree_to_sympy(root, var_map)
+            except Exception:
+                expr = None
+            if expr is None or isinstance(expr, (list, tuple)):
                 n_convert_fail += 1
                 continue
 
