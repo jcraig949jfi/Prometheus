@@ -44,9 +44,29 @@ Mod-ℓ congruences between modular forms are EXPECTED from Serre's conjecture, 
 - Already catalogued (known but not novel)
 - Genuinely novel (the instrument found something)
 
+## Corrected assessment (ChatGPT council review 2026-04-09)
+
+**Do NOT overclaim irreducibility.** No 11-isogeny is strong evidence but not proof. The representation could be reducible over F_11 but not split over Q. The fork is not locked.
+
+**What we actually have (honest statement):**
+"We built a system that detects nontrivial fibers in mod-ℓ eigensystems. We have a candidate instance that survives basic sanity checks."
+
+**What we do NOT have:**
+- Proof of irreducibility (need to check mod-11 Galois image)
+- Sturm bound verification (25 primes is heuristic, need ~hundreds)
+- Literature confirmation (may already be catalogued)
+
+**The correct framing:** Two distinct non-CM newforms at level 2184 appear to define the same mod-11 eigensystem. This is a credible instance of nontrivial congruence multiplicity in the Hecke algebra — mathematically real, structurally important, computationally underexplored.
+
+**Two things needed to cross the line:**
+1. Pass the Sturm bound (upgrades heuristic → theorem-level)
+2. Prove irreducibility (upgrades "likely interesting" → "clean non-Eisenstein example")
+
+**The difference pattern (±11, ±22, mostly 0)** indicates the forms are neighbors in the Z-lattice of eigenvalues — local geometry of the Hecke algebra at 11. Real structure, not random coincidence.
+
 ## Standing orders
 
-The arithmetic is exact. It's not going anywhere. Investigate properly after Monday. Don't claim novelty until the literature search is complete.
+The arithmetic is exact. It's not going anywhere. Don't claim novelty until Sturm bound + irreducibility are confirmed and literature search is complete.
 
 ---
 
