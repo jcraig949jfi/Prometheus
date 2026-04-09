@@ -378,6 +378,82 @@ For S3 (modular arithmetic), we could process ALL 27M formulas on GPU in under 3
 
 ---
 
+### S29. Differential Galois Theory (Picard-Vessiot)
+**From Gemini review.** For linear differential equations, the differential Galois group tells you whether solutions can be expressed in elementary functions at all. This is a HARD invariant — it's not a statistical test, it's an algebraic classification.
+**Tractability:** MODERATE (Kovacic's algorithm for order 2, harder for higher order). **Priority:** 8/10. **Time:** ~1 hour/10K (order 2 only).
+**Connection:** Extends S10 (polynomial Galois groups) to the differential setting. If two equations from different domains have isomorphic differential Galois groups, their solution spaces have the same algebraic structure.
+
+### S30. Tropicalization (Tropical Semiring)
+**From Gemini review.** Replace addition with max/min, multiplication with addition. Smooth algebraic curves snap into piecewise-linear skeletons. The combinatorial properties of these skeletons (edge lengths, vertex connections, genus of the tropical curve) are robust, easily comparable signatures.
+**Tractability:** TRACTABLE for polynomials (essentially Newton polygon + subdivision). **Priority:** 8/10. **Time:** ~30 min/100K.
+**Connection:** Extends S14 (Newton polytope) and S18 (tropical geometry). The tropical skeleton is coarser than the full variety but captures the combinatorial backbone.
+**Note:** S18 was listed earlier but S30 emphasizes the skeletal graph as a comparable signature, not just the tropical variety itself.
+
+---
+
+## Retrieval Architecture
+
+### The cross-domain matching problem
+
+With 8+ signature types per formula across 27M formulas, the matching question is: how do we find formulas from different domains that share signatures?
+
+### Tiered matching (Gemini's suggestion — adopted)
+
+**Tier 1: Exact match on hard invariants.**
+- Mod-p fingerprint (S3): identical mod-p vectors = algebraically equivalent (Schwartz-Zippel)
+- Newton polytope vertex hash (S14): identical exponent structure
+- Operadic skeleton hash (S22): identical computational pattern
+- Parity + variable symmetry order (S9): identical symmetry class
+
+These are exact, discrete signatures. Use hash-based lookup (dict/set). O(1) per query.
+
+**Tier 2: Approximate match on soft invariants.**
+- Spectral signature (S5): cosine similarity on 14-float vectors
+- Convexity profile (S23): Euclidean distance on curvature vectors
+- Discriminant value (S13): log-ratio within tolerance
+
+These are continuous signatures. Use approximate nearest neighbor (FAISS, annoy, or sklearn BallTree).
+
+**Tier 3: Cross-tier confirmation.**
+A claimed bridge must match on at least 1 Tier-1 invariant AND 2 Tier-2 invariants. This prevents:
+- False positives from single-invariant coincidence
+- Combinatorial explosion from soft matching alone
+
+### Implementation plan
+```
+formula_signatures_index.py
+  1. Load all per-formula signature files
+  2. Build hash indices for Tier 1 (dict: hash -> [formula_ids])
+  3. Build FAISS index for Tier 2 (concatenated soft vectors)
+  4. For each Tier 1 match across domains:
+     a. Check Tier 2 distance
+     b. If passes: run falsification battery
+     c. Feed result to shadow tensor
+```
+
+### Tensor train compression (Gemini's suggestion — queued)
+
+When the full signature matrix is built (27M formulas × 50+ signature dimensions), tensor train decomposition can compress the representation while preserving the invariant structure. The bond dimensions between TT cores reveal which signature types are entangled — e.g., if mod-p fingerprint and Newton polytope are strongly correlated, the bond dimension between those cores will be high.
+
+This is queued for after the signature extractors are complete and we have actual data to compress.
+
+---
+
+## Shadow Tensor as Contrastive Space
+
+### The twilight zone (Gemini's question — answered)
+
+The transition between Illuminated (known truths, battery survivors) and Shadow (killed hypotheses, failed bridges) is NOT a hard binary boundary. The shadow tensor already encodes a continuous gradient:
+
+1. **Illuminated:** 180/180 calibration truths. Known theorems. Battery survivors with high z-scores.
+2. **Twilight:** Hypotheses that survive some battery tests but fail others. Near-misses. The 41 regime changes (real but modest). The Maass↔MF survivor (Tier 3, speculative).
+3. **Shadow:** 9 killed false discoveries. 18K+ falsified hypotheses. The prime atmosphere (96% of all signal).
+4. **Void:** Untested regions. The 10 FindStat zero-test pairs. The 50 frontier targets.
+
+The novelty scorer's surprise component measures gradient — how different is a region's battery behavior from its neighbors? High surprise = the boundary is unexpected. That's where the system actively attempts to construct bridges between known truth and known failure.
+
+The shadow tensor IS the contrastive space. Every test record positions a hypothesis on the gradient. Tensor train decomposition across both spaces reveals the geometric shape of the boundary — where does mathematical truth break down, and what structural signature predicts the break?
+
 ---
 
 ## Speed Hacks (from literature survey 2026-04-09)
@@ -405,4 +481,17 @@ For S3 (modular arithmetic), we could process ALL 27M formulas on GPU in under 3
 
 *This document is a strategy database. Each strategy has: description, algorithm, GPU applicability, existing data, tractability, priority, execution time. New strategies are appended with sequential numbering. Scores are updated as we learn what works.*
 
+---
+
+## Strategy Count: 30
+
+| Category | Strategies | Priority range |
+|----------|-----------|---------------|
+| Evaluation-based | S1, S2, S3, S5, S6, S7, S8, S12, S21 | 6-10 |
+| Tree-based (no eval) | S9, S13, S14, S18, S22, S23, S30 | 7-10 |
+| Algebraic | S10, S11, S15, S16, S19, S20, S29 | 6-9 |
+| Information-theoretic | S24, S25, S26, S27, S28 | 6-7 |
+| Architectural | Retrieval (tiered matching), TT compression, shadow contrastive | N/A |
+
+*30 dissection strategies + retrieval architecture + shadow tensor contrastive framework.*
 *Charon v5 planning — 2026-04-09*
