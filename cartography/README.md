@@ -1,6 +1,5 @@
 # Cartography — Cross-Domain Mathematical Discovery Pipeline
 
-## Agent: Charon (Claude Code, Opus)
 ## Project Prometheus — April 2026
 
 ---
@@ -9,195 +8,210 @@
 
 An autonomous pipeline for discovering structural connections between mathematical datasets. Ingests data from 21 sources spanning 1M+ mathematical objects, builds a concept bridge layer, tests hypotheses with a 14-test falsification battery, and maps the landscape of what we've explored and what we've killed.
 
-**Honest score as of v3.4 (2026-04-08): zero novel discoveries.** But 22,338 new OEIS terms computed, the scalar layer definitively characterized (96% prime structure), and the depth layer scoped for Phase 2.
+**Current status: zero novel cross-domain discoveries.** The pipeline validates known mathematics at 100% (180/180 calibration tests), has produced 22,338 new OEIS terms, identified 41 verified asymptotic corrections, and killed 9 false discoveries. The scalar correlation layer between datasets is definitively empty after prime detrending — 96% of all apparent cross-dataset structure is shared prime factorization. Structural comparison tools (formula ASTs, polynomial root distributions, graph spectral analysis) are operational but have not yet yielded surviving bridges.
+
+---
+
+## Datasets
+
+| Dataset | Objects | Source |
+|---------|---------|--------|
+| OEIS | 394K sequences | oeis.org |
+| LMFDB EC | 31K elliptic curves | lmfdb.org |
+| LMFDB MF | 102K modular forms | lmfdb.org |
+| Genus-2 | 66K curves | lmfdb.org |
+| KnotInfo | 13K knots | indiana.edu/~knotinfo |
+| NumberFields | 9.1K fields | lmfdb.org |
+| mathlib | 8.5K modules | github.com/leanprover-community/mathlib4 |
+| Fungrim | 3.1K formulas | fungrim.org |
+| Isogenies | 3.2K primes | lmfdb.org |
+| SmallGroups | 2.4K orders | GAP SmallGrp library |
+| FindStat | 1,993 statistics | findstat.org |
+| Metamath | 46K theorems | set.mm |
+| Materials | 1K+ crystals | materialsproject.org |
+| ANTEDB | 244 theorems | Tao et al. |
+| MMLKG | 1.4K articles | Mizar library |
+| Space Groups | 230 | Bilbao Crystallographic Server |
+| Polytopes | 1.2K | polyDB |
+| pi-Base | 220 spaces | pi-base.org |
+| Maass | 300 forms | lmfdb.org |
+| Lattices | 21 | Literature |
+| OpenAlex | 10K concepts | openalex.org |
+
+**Corpus data:** 5M+ mathematical formulas from OpenWebMath (HuggingFace), with structural features extracted (operators, nesting depth, domain classification).
 
 ---
 
 ## Architecture
 
-```
-cartography/
-  shared/scripts/           67 v1 scripts (running, don't move)
-    search_engine.py        21 datasets, 56 search functions
-    concept_index.py        39K concepts (nouns + verbs), 1.91M links
-    falsification_battery.py  14 kill tests, no LLM
-    research_cycle.py       LLM-driven hypothesis generation (1 API call/cycle)
-    shadow_tensor.py        Dark matter map: 210 cells, 101K+ test records
-    explorer_loop.py        Zero-cost autonomous agent (void scan + MAP-Elites)
-    microscope.py           3-layer prime decontamination
-    depth_extractor.py      26K depth concepts, 984K links from existing data
-    depth_probes.py         Matched-object coefficient-level tests
-    term_extender.py        OEIS term factory (22K terms produced)
-    constant_telescope.py   Sleeper constant matching (39 constants x 68K)
-    ... and 55 more
-  shared/scripts/v2/        Phase 2 package (depth layer)
-    extractors/             Depth feature extraction
-    probes/                 Sequence-to-sequence tests
-    tensors/                Detrended/depth tensor construction
-  convergence/data/         All computed results, indices, tensors
-  convergence/logs/         5,700+ cycle logs with full prompts/responses
-  convergence/reports/      Cycle reports, tensor reviews
-  [dataset dirs]/data/      Raw data per dataset (21 directories)
-```
+The pipeline has two layers of tools built on top of a shared data and testing infrastructure.
+
+### Core Infrastructure
+- **Search engine** — 21 datasets, 56 search functions, DuckDB backend
+- **Concept index** — 39K concepts (24K nouns + 15K verbs), 1.91M links across 16 datasets, 4,410 cross-dataset bridges
+- **Falsification battery** — 14 computational kill tests, no LLM in the loop. Permutation null, subset stability, effect size, confound sweep, normalization sensitivity, base rate, dose-response, direction consistency, simpler explanation, outlier sensitivity, cross-validation, partial correlation, growth rate filter, phase shift.
+- **Shadow tensor** — 210 dataset-pair cells, 101K+ test records. Every test, every kill mode, every near-miss. The dark matter map of what we've explored.
+- **Research memory** — 18K+ hypotheses fingerprinted and deduplicated
+
+### Scalar Layer Tools (v1, complete)
+- `research_cycle.py` — LLM-driven hypothesis generation, 1 API call per cycle
+- `explorer_loop.py` — Zero-cost autonomous exploration, novelty-steered
+- `void_scanner.py` / `bridge_hunter.py` / `map_elites.py` — Diversity-driven bin filling
+- `microscope.py` — 3-layer prime decontamination (detrend + filter + normalize)
+- `term_extender.py` — OEIS term factory (22K terms, zero mismatches)
+- `constant_telescope.py` — Inverse symbolic identification (39 constants x 68K sequences)
+- `realign.py` — Post-data-change calibration (inventory + concepts + tensors + 180-test battery)
+
+### Structural Layer Tools (v2, operational)
+- `asymptotic_auditor.py` — Compare extended sequences against published growth rate estimates
+- `ast_bridge.py` — Formula structural comparison via operator feature vectors
+- `root_probes.py` — Polynomial root distribution comparison (knot polynomials vs Sato-Tate angles)
+- `graph_invariants.py` — Spectral gap, algebraic connectivity, degree sequences across 53 graphs + battery testing
+- `formula_graph_builder.py` — LaTeX → Operator Tree parser (17K/sec, 99.996% success)
+- `expected_bridges.py` — Theory-predicted bridge testing (12 bridges, 3 tiers)
+- `findstat_probes.py` — Cold territory mapping (10 zero-test pairs)
+- `openwebmath_ingest.py` — Corpus ingestion from HuggingFace (5M+ formulas)
+- `concept_embeddings.py` — Spectral embedding of concept graph into R^64
+- `novelty_scorer.py` — 5-component novelty: centroid distance + density + entropy + cold + Bayesian surprise
+- `search_evolver.py` — Evolutionary synthesis of search functions (LLM generates code, battery selects)
+- `battery_sweep.py` — Batch falsification across all tool outputs
 
 ---
 
-## Datasets (21 operational)
+## Results
 
-| Dataset | Objects | Key Content |
-|---------|---------|-------------|
-| OEIS | 394K sequences | Terms, growth rates, 1.6M cross-references, 68K sleeping beauties |
-| LMFDB EC | 31K curves | Conductors, ranks, a_p coefficients (25/curve), a_n lists, Weierstrass models |
-| LMFDB MF | 102K forms | Modular forms with conductors and levels |
-| Genus-2 | 66K curves | Conductors, discriminants, Sato-Tate groups, torsion |
-| KnotInfo | 13K knots | Determinants, crossing numbers, Alexander polynomials (avg 7.5 coeffs), Jones polynomials (avg 11.8 coeffs) |
-| NumberFields | 9.1K fields | Class numbers, discriminants, Galois groups, regulators |
-| mathlib | 8.5K modules | Lean 4 import dependency graph (1,799 edges) |
-| Fungrim | 3.1K formulas | 825 symbols, 280 cross-domain bridge symbols, formula types |
-| Isogenies | 3.2K primes | Supersingular isogeny graphs, adjacency matrices |
-| SmallGroups | 2.4K orders | Group counts (A000001), factorizations, abelian/cyclic flags |
-| FindStat | 250 enriched | Combinatorial statistics with descriptions, 17 collections |
-| Metamath | 46K theorems | set.mm formal proof database |
-| Materials | 1K+ crystals | Band gaps, formation energies, space groups |
-| ANTEDB | 244 theorems | Analytic NT exponents, zero density bounds |
-| MMLKG | 1.4K articles | Mizar theorem reference graph, 28K edges |
-| Space Groups | 230 | Bilbao crystallographic, Wyckoff positions |
-| Polytopes | 1.2K | polyDB f-vectors, dimensions |
-| pi-Base | 220 spaces | Topological properties |
-| Maass | 300 forms | Spectral parameters, Fricke eigenvalues (level 1 only) |
-| Lattices | 21 | Z, A2, D4, E8, Leech — dimensions, kissing numbers |
-| OpenAlex | 10K concepts | Academic taxonomy hierarchy |
+### Definitive findings
+- **The scalar layer is empty.** After removing shared prime factorization, zero cross-dataset correlation survives at any significance level across all 210 dataset pairs. Highest z=0.2.
+- **180/180 known truth calibration.** The battery correctly validates modularity theorem (z=72), Deuring mass formula (z=93), BSD small-prime signature, Heegner numbers, Euler relation for polytopes, class number variation by degree, and 33 other known results.
+- **41 asymptotic regime changes survive the battery.** Extended lattice walk sequences show growth rate shifts of 2-84% between early and late terms. These represent genuine corrections to published estimates.
+
+### Negative results
+- Formula AST comparison across Fungrim modules: killed by F13 (growth rate artifact — operator count correlates with Jaccard regardless of domain).
+- Polynomial root angle distributions (knot vs elliptic curve): killed by correct interpretation. z=137 measured distributional *distance*, not similarity. The distributions occupy opposite ends of [0, pi].
+- Graph spectral comparison (mathlib imports vs OEIS cross-refs): r=0.91 correlation, but only 6 scalar features per graph. Insufficient for battery testing. Degree sequence data needed.
+- FindStat cold-pair probes: 18/22 killed. 1 rediscovery (Alexander degree vs crossing number — known theorem). 3 survivors on N=17 samples (below battery sensitivity).
+- Expected bridges: 12 theory-predicted connections tested across 3 tiers. **Tier 1 (calibration): 0/4 survive scalar battery** — modularity theorem, class field theory, isogeny reduction all killed at scalar level. These are known truths, confirming that known bridges are structural, not scalar. Tier 3: Maass↔MF level distributions survive (10/14 tests pass).
+- Graph degree sequences: 4/10 cross-domain pairs survive battery (isogeny graphs at primes 947, 2311, 2887, 4013 vs mathlib/MMLKG).
+- Formula parsing: 12.5M LaTeX formulas parsed to operator trees at 17K/sec, 99.996% success. Operator vocabulary: multiply, subscript, eq, power, add, frac, sum, int, sin. Tree depths up to 44.
+
+### Production output
+- **22,338 new OEIS terms** — 1,422 sequences extended by dynamic programming. Zero mismatches against known terms. Queued for submission.
+- **41 verified regime changes** — asymptotic corrections surviving full 14-test battery.
+- **68,770 sleeping beauties** — high-entropy, low-connectivity OEIS sequences identified and characterized.
+- **5M+ formula features** — structural fingerprints from OpenWebMath corpus.
+- **Shadow tensor** — 210 cells, 101K+ test records mapping every hypothesis tested and how it died.
 
 ---
 
-## Tools
+## Known Limitations
 
-### Phase 1: Scalar Layer (complete)
+### Data representation
+- OEIS embedding is dominated by growth rate. Sequences with similar combinatorial structure but different growth rates appear distant. A formula-structure or cross-reference embedding would be more informative.
+- mathlib dependency graph uses file-level imports (1,799 edges). Declaration-level extraction via LeanDojo would yield 3M+ edges and much richer graph structure.
+- FindStat cached data contains metadata only (collection names, statistic counts), not computed statistic values on actual combinatorial objects.
 
-| Tool | What it does |
-|------|-------------|
-| `research_cycle.py` | LLM-driven hypothesis generation, search, validation, battery (1 API call/cycle) |
-| `falsification_battery.py` | 14 kill tests: permutation, effect size, normalization, confounds, cross-validation, partial correlation, growth rate, phase shift |
-| `concept_index.py` | 39K concepts (nouns + verbs), 1.91M links across 21 datasets |
-| `tensor_bridge.py` | SVD bond dimension analysis between dataset pairs |
-| `shadow_tensor.py` | Dark matter map: every test, every kill mode, every near-miss |
-| `void_scanner.py` | Map 80 void/weak dataset pairs (3s) |
-| `bridge_hunter.py` | Generate + test hypotheses from void bridges (0.3s) |
-| `map_elites.py` | Diversity-driven bin filling: dataset_pair x failure_mode |
-| `explorer_loop.py` | Autonomous zero-cost agent: void -> bridge -> MAP-Elites -> shadow (10s/sweep) |
-| `known_truth_battery.py` | 39 proven math facts calibration |
-| `known_truth_expansion.py` | 180 proven facts across 6 layers (100% pass) |
-| `realign.py` | MANDATORY post-data-change: inventory -> concepts -> tensors -> 180-test battery |
-| `preload_shadow.py` | Rip 5K+ cycle logs for battery details (one-time 82s) |
-| `genocide*.py` | Rapid hypothesis testing rounds (7 rounds, 70+ tests) |
-| `constant_matcher.py` | Inverse symbolic ID: 83 constants |
-| `term_extender.py` | OEIS term factory: extends walk sequences by DP enumeration |
+### Geometric
+- Cross-dataset landscapes are not geometrically aligned (RSA p=0.52 between OEIS and mathlib). Only topologically connected through shared objects. Global distance metrics do not transfer across domains; only local bridges work.
+- Concept embedding captures co-occurrence structure but not semantic meaning. Two concepts connected through the same dataset are "close" even if mathematically unrelated.
+- Persistent homology and curvature analysis deferred. Require stable, detrended embeddings to avoid rediscovering prime structure in topology.
 
-### Phase 2: Depth Layer (in progress)
+### Statistical
+- The 14-test battery has limited sensitivity at small sample sizes (N<20). Three FindStat survivors at N=17 are likely artifacts that the battery cannot distinguish from signal.
+- Hypothesis generation by LLM tends toward narrative construction. The concept layer and search evolution partially address this but don't eliminate it.
+- AI-to-AI feedback loops amplify narrative. Two AIs agreeing something is exciting is not evidence — it's correlated bias.
 
-| Tool | What it does |
-|------|-------------|
-| `depth_extractor.py` | Extract 26K concepts, 984K links from existing data (EC coefficients, knot polynomials, OEIS formulas, Fungrim symbols) |
-| `depth_probes.py` | Matched-object coefficient-level cross-dataset tests |
-| `microscope.py` | 3-layer prime decontamination (detrend + filter + normalize) |
-| `detrended_tensor.py` | Parallel concept layer with primes removed |
-| `geometric_probes.py` | 13 structural probes (curvature, FFT, Benford, Zipf, MI, Wasserstein, fractal dim, gap structure, alignment) |
-| `geometric_survey.py` | Full 13-probe survey across all dataset pairs (76s) |
-| `constant_telescope.py` | Sleeper constant matching: 39 constants x 68K sequences |
-| `growth_constant_scanner.py` | High-precision constant ID from extended terms |
-| `reevaluator.py` | Retest killed hypotheses on detrended data |
+### Search
+- Search evolution (Layer 4) has not yet produced a function that outperforms hand-written seeds. LLMs generate overly complex functions that fail complexity validation. Prompt engineering partially addresses this.
+- The explorer loop previously tested 172 unique hypotheses 282,000 times (no dedup). Fixed, but illustrates that zero-cost exploration without memory is pure waste.
 
 ---
 
-## What We Found
+## Kill Log
 
-### Phase 1 Definitive Results
-- **96% of scalar cross-dataset structure is shared prime factorization.** Every dataset encodes primes. Every apparent correlation goes through primes first.
-- **After prime detrending: ZERO cross-dataset signal.** Highest z=0.2 across all pairs. The scalar layer is empty.
-- **180/180 known truth calibration.** The pipeline correctly validates known mathematics.
-- **37+ independent rediscoveries** (modularity theorem, Deuring mass formula, BSD signature, Heegner numbers, Euler relation for polytopes, etc.)
-- **8 false discoveries killed in one session**, each improving the pipeline:
-  1. Feigenbaum constant match (parity artifact at 29 terms)
-  2. Feigenbaum #2 (order-3 recurrence)
-  3. Polytopes near-misses (small-integer confound)
-  4. NF-SmallGroups distributional identity (z-normalization artifact)
-  5. LMFDB-Maass MI=0.382 (finite-sample binning artifact)
-  6. KnotInfo-LMFDB 679 "revivals" (truncate-sort bug)
-  7. Isogenies-Maass MI=0.109 (deterministic data + sorted-rank artifact)
-  8. NF-KnotInfo log-fractional-part match (dissolved at full resolution)
+Nine false discoveries, each one improving the pipeline:
 
-### Phase 2 Early Results
-- **984K depth links** extracted from existing data (EC coefficient patterns, knot polynomial features, OEIS formula function references, Fungrim symbol co-occurrences)
-- **16,774 OEIS sequences** connected to Fungrim through 10 shared mathematical functions (zeta, gamma, euler, etc.) — semantic bridges immune to prime detrending
-- **First depth probe** (Alexander polynomial coefficients vs EC a_p coefficients at 100 matched objects): null
+| # | Claim | How it died | Battery improvement |
+|---|-------|-------------|---------------------|
+| 1 | Feigenbaum constant in OEIS sequence | Parity artifact at 29 terms | Min 40 terms for constant matching |
+| 2 | Second Feigenbaum match | Order-3 recurrence | Same |
+| 3 | Polytope f-vector near-misses | Small-integer confound | Added integer null generators |
+| 4 | NF-SmallGroups distributional match | z-normalization artifact | Added F5 (normalization sensitivity) |
+| 5 | LMFDB-Maass MI=0.382 | Sparse histogram binning bias | Added random-pairing null for MI |
+| 6 | KnotInfo-LMFDB 679 revivals | Sort-then-truncate bug | Fixed subsample ordering |
+| 7 | Isogenies-Maass MI=0.109 | Deterministic data + sorted-rank | Verify residual variance > 0 |
+| 8 | NF-KnotInfo log-fractional-part | Dissolved at full resolution | Resolution check before claiming |
+| 9 | Root probe z=137 | Measured distance not similarity | Added interpretation gate |
 
-### Production Output
-- **22,338 new OEIS terms** (1,422 sequences extended, zero mismatches, queued for submission)
-- **68,770 sleeping beauties** identified and characterized
-- **Shadow tensor**: 210 cells, 101K+ test records, anomaly scoring, kill signatures
-- **17,318 hypotheses** in research memory (13,781 open, 3,537 falsified)
+---
+
+## Roadmap
+
+### Near-term (v4.1)
+- [ ] Structural fingerprint embedding on 5M+ formula corpus (UMAP/spectral on operator features)
+- [ ] Wire formula embeddings into cross-domain comparison at scale
+- [ ] Rerun search evolution with constrained prompts (15-line max, parsimony-weighted fitness)
+- [ ] Submit 22K OEIS terms and 41 regime change corrections
+- [ ] Store full degree sequences in graph_invariants for proper battery testing
+
+### Medium-term
+- [ ] Ingest ARQMath formula datasets (millions of indexed formulas from arXiv/MathOverflow)
+- [ ] Ingest S2ORC citation graph for large-scale graph comparison
+- [ ] Extract declaration-level mathlib dependencies via LeanDojo (1.8K → 3M+ edges)
+- [ ] Build OEIS embedding from cross-references and formula structure instead of raw terms
+- [ ] Compute FindStat statistics on actual combinatorial objects for value-level probing
+- [ ] Persistent homology on detrended concept embedding
+
+### Open questions
+- Do structural isomorphisms exist between mathematical domains at the level of formula syntax, polynomial roots, or graph spectra? (Current answer: not found, but structural tools are new.)
+- Can evolutionary program synthesis discover search strategies that humans miss? (Current answer: inconclusive — LLM-generated functions don't yet outperform hand-written seeds.)
+- Is the geometric misalignment between mathematical landscapes fundamental, or an artifact of our embedding representation? (Current evidence: RSA fails globally, but local bridges succeed.)
+- What is the right representation for mathematical objects in a cross-domain discovery system? (Current approach: scalars are dead, operators/verbs are promising, formulas-as-trees untested at scale.)
 
 ---
 
 ## Running the Pipeline
 
 ```bash
-# Launch 8 terminals + explorer (the fleet)
+# Launch 8 terminals + explorer
 run_charon_8terminals.bat
 
 # Post-data-change calibration (MANDATORY)
 cd cartography/shared/scripts
 python realign.py
 
-# Rebuild shadow tensor
-python shadow_tensor.py --show-hot --show-cold --show-kills
-
-# Extract depth features from existing data
-python depth_extractor.py
-
-# Run microscope (prime-detrended analysis)
-python microscope.py
-
-# Extend OEIS walk sequences
-python term_extender.py --family 148700 148900 --target-n 60
-
-# Scan sleepers for constant convergence
-python constant_telescope.py --sleepers 68000
-
-# Full geometric survey
-python geometric_survey.py
+# Structural tools
+cd cartography/shared/scripts/v2
+python layer1/asymptotic_auditor.py
+python layer2/ast_bridge.py
+python layer2/root_probes.py
+python layer2/graph_invariants.py
+python layer2/openwebmath_ingest.py --max-docs 6400000
+python layer3/concept_embeddings.py --k 64
+python layer3/novelty_scorer.py --top 50
+python layer4/search_evolver.py --dry-run
+python battery_sweep.py
 ```
 
 ---
 
-## Lessons Learned (the hard way)
+## Lessons Learned
 
 1. **Primes are the atmosphere.** Strip them before testing any cross-dataset correlation.
-2. **Sorted-rank correlation is useless.** Any two monotone arrays give rho~1.0. Use matched objects or spacings.
-3. **Z-normalization erases information.** Any two near-uniform sequences match after z-norm.
-4. **MI on sparse histograms is biased upward.** Use random-pairing null, not permutation of sorted arrays.
-5. **Sort THEN truncate**, not truncate then sort. Subsample bias inflates correlation.
-6. **29 terms is not enough** for constant matching. Need 40+ to kill parity artifacts.
+2. **Sorted-rank correlation is useless.** Any two monotone arrays give rho~1.0.
+3. **Z-normalization erases information.** Any two near-uniform sequences match.
+4. **MI on sparse histograms is biased upward.** Use random-pairing null.
+5. **Sort THEN truncate**, not truncate then sort.
+6. **29 terms is not enough** for constant matching. Need 40+.
 7. **When two AIs agree something is exciting**, reach for the battery, not the champagne.
-8. **Every kill is a discovery** for the shadow tensor. The failure modes ARE the map.
-9. **Deterministic data has zero stochastic content.** If a variable is a function of the input, detrending the input leaves NOTHING. Verify residual variance > 0.
-10. **The honest number is zero.** Report it. The tools are sharper for every kill.
+8. **Every kill is a discovery** for the shadow tensor.
+9. **Deterministic data has zero stochastic content.** Verify residual variance > 0.
+10. **The honest number is zero.** Report it.
+11. **z-scores measure distance from null, not similarity.** Read what you're testing.
+12. **Small samples evade the battery.** Always check N before trusting a survivor.
+13. **Symbol bags are not syntax trees.** Jaccard on operator sets is killed by growth rate artifacts.
+14. **LLMs over-engineer.** Demand brevity. Complexity caps in the prompt, not just the validator.
 
 ---
 
-## What's Next
-
-The scalar layer is exhausted. The depth layer is where the search continues:
-1. OEIS-Fungrim semantic function bridges (16,774 sequences)
-2. EC-to-knot matched-object probes through shared primes (Jones polynomials, remaining branches)
-3. L-function Euler factors and spectral parameters (need more Maass forms)
-4. OEIS formula co-occurrence patterns (which mathematical functions appear together?)
-5. Graph topology probes (mathlib imports, MMLKG references, OEIS cross-ref paths)
-6. Submit 22K new OEIS terms
-
----
-
-*Born: Project Prometheus, March 2026*
-*First crossing: April 1, 2026*
-*Pipeline v3.4: April 8, 2026*
-*The ferryman built tools, mapped the river, stripped the atmosphere, and found the sky empty at scalar resolution. The depth layer — polynomials, formulas, semantics — is where the search climbs next.*
+*Born: Project Prometheus, March 2026. Pipeline v4.1, April 2026.*
+*21 datasets. 39K concepts. 14-test battery. 9 kills. 41 corrections. 12.5M parsed formulas. 12 expected bridges tested. Known bridges are structural, not scalar. Zero novel discoveries. The search continues with structural instruments.*

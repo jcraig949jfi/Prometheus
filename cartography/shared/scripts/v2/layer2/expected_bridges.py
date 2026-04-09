@@ -1,0 +1,742 @@
+"""
+Expected Bridges — Theory-predicted connections vs pipeline reality.
+====================================================================
+Defines dataset pairs where mathematical theory PREDICTS a connection,
+then tests whether our pipeline can find it.
+
+Expected bridges that FAIL are the interesting results: they reveal
+where theory and data diverge, or where our pipeline is blind.
+
+Tier 1: Known theorems (calibration — must pass)
+Tier 2: Strong theoretical expectations (failures = interesting)
+Tier 3: Speculative but plausible (failures = expected)
+
+Usage:
+    python expected_bridges.py
+    python expected_bridges.py --tier 1          # calibration only
+    python expected_bridges.py --dry-run         # list bridges without running
+"""
+
+import argparse
+import json
+import sys
+import time
+import traceback
+import numpy as np
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from search_engine import dispatch_search
+from falsification_battery import run_battery
+
+# Suppress cycle_logger if not available
+try:
+    import cycle_logger
+except ImportError:
+    pass
+
+# Output
+ROOT = Path(__file__).resolve().parents[5]
+OUT_DIR = ROOT / "cartography" / "convergence" / "data"
+OUT_FILE = OUT_DIR / "expected_bridges.jsonl"
+
+
+class _NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, (np.integer,)):
+            return int(obj)
+        if isinstance(obj, (np.floating,)):
+            return float(obj)
+        if isinstance(obj, (np.bool_,)):
+            return bool(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super().default(obj)
+
+
+# ---------------------------------------------------------------------------
+# Expected bridge definitions
+# ---------------------------------------------------------------------------
+
+EXPECTED_BRIDGES = [
+    # -- Tier 1: Known theorems (calibration) --
+    {
+        "id": "T1_EC_MF_modularity",
+        "pair": ["LMFDB_EC", "LMFDB_MF"],
+        "theorem": "Modularity theorem (Wiles et al.): every elliptic curve over Q "
+                   "has an associated modular form with the same conductor.",
+        "expected_signal": "Conductor values should overlap heavily between EC and MF datasets.",
+        "tier": 1,
+    },
+    {
+        "id": "T1_EC_NF_discriminant",
+        "pair": ["LMFDB_EC", "NumberFields"],
+        "theorem": "Elliptic curves defined over number fields. Conductor relates to "
+                   "discriminant via local data at bad primes.",
+        "expected_signal": "EC conductors and NF discriminants should share common prime factors.",
+        "tier": 1,
+    },
+    {
+        "id": "T1_Isogeny_EC_reduction",
+        "pair": ["Isogenies", "LMFDB_EC"],
+        "theorem": "Isogeny graphs at prime p connect to EC reduction type at p. "
+                   "Supersingular primes match bad reduction primes.",
+        "expected_signal": "Primes indexing isogeny graphs should appear as bad primes of ECs.",
+        "tier": 1,
+    },
+    {
+        "id": "T1_OEIS_SmallGroups",
+        "pair": ["OEIS", "SmallGroups"],
+        "theorem": "A000001 is the OEIS sequence counting groups of order n. "
+                   "The SmallGroups database IS this sequence.",
+        "expected_signal": "SmallGroups counts should match A000001 terms exactly.",
+        "tier": 1,
+    },
+
+    # -- Tier 2: Strong theoretical expectations --
+    {
+        "id": "T2_Knots_NF_alexander",
+        "pair": ["KnotInfo", "NumberFields"],
+        "theorem": "Knot groups are quotients of braid groups; Alexander polynomial "
+                   "relates to Fox calculus over number fields.",
+        "expected_signal": "Alexander polynomial discriminants may overlap with NF discriminants.",
+        "tier": 2,
+    },
+    {
+        "id": "T2_Knots_Genus2_braid",
+        "pair": ["KnotInfo", "Genus2"],
+        "theorem": "Braids -> mapping class groups -> Jacobians of genus-2 curves. "
+                   "Crossing number may relate to conductor.",
+        "expected_signal": "Knot determinants may share number-theoretic features with G2 conductors.",
+        "tier": 2,
+    },
+    {
+        "id": "T2_Fungrim_MF_Lfunctions",
+        "pair": ["Fungrim", "LMFDB_MF"],
+        "theorem": "Modular form L-functions appear in Fungrim's formula catalog. "
+                   "DirichletL, ModularFormLfunction symbols bridge the datasets.",
+        "expected_signal": "Fungrim symbols referencing L-functions should match MF dataset objects.",
+        "tier": 2,
+    },
+    {
+        "id": "T2_OEIS_Fungrim_functions",
+        "pair": ["OEIS", "Fungrim"],
+        "theorem": "Mathematical functions (zeta, gamma, Dirichlet) bridge sequences "
+                   "to formulas. Known: 16,774 sequences connected through 10 shared functions.",
+        "expected_signal": "OEIS sequences generated by special functions should match Fungrim formulas.",
+        "tier": 2,
+    },
+
+    # -- Tier 3: Speculative but plausible --
+    {
+        "id": "T3_Lattices_MF_theta",
+        "pair": ["Lattices", "LMFDB_MF"],
+        "theorem": "Theta series of lattices are modular forms. E8 lattice's theta "
+                   "series is a level-1 weight-4 modular form.",
+        "expected_signal": "Lattice kissing numbers / determinants relate to MF levels and weights.",
+        "tier": 3,
+    },
+    {
+        "id": "T3_Materials_SpaceGroups",
+        "pair": ["Materials", "SpaceGroups"],
+        "theorem": "Crystal structures are classified by space groups. Every crystal "
+                   "has a space group number in {1,...,230}.",
+        "expected_signal": "Space group numbers in Materials should be a subset of Bilbao SG numbers.",
+        "tier": 3,
+    },
+    {
+        "id": "T3_Knots_OEIS_invariants",
+        "pair": ["KnotInfo", "OEIS"],
+        "theorem": "Many knot invariant sequences appear in OEIS (e.g., knot determinants, "
+                   "crossing numbers, Jones polynomial evaluations).",
+        "expected_signal": "Knot determinant sequence should match or overlap with OEIS sequences.",
+        "tier": 3,
+    },
+    {
+        "id": "T3_Maass_MF_spectral",
+        "pair": ["Maass", "LMFDB_MF"],
+        "theorem": "Maass forms and holomorphic modular forms share spectral theory. "
+                   "Both are eigenfunctions of Hecke operators.",
+        "expected_signal": "Level distribution of Maass forms should mirror MF level distribution.",
+        "tier": 3,
+    },
+]
+
+
+# ---------------------------------------------------------------------------
+# Bridge test functions — each returns (values_a, values_b, note) or None
+# ---------------------------------------------------------------------------
+
+def _extract_conductors_ec(max_cond=5000, max_results=500):
+    """Get EC conductors from LMFDB."""
+    results = dispatch_search("lmfdb_conductor", {
+        "low": 1, "high": max_cond, "object_type": "elliptic_curve",
+        "max_results": max_results,
+    })
+    if not results or "error" in results[0]:
+        return None
+    return np.array([r["data"]["conductor"] for r in results
+                     if "data" in r and r["data"].get("conductor")], dtype=float)
+
+
+def _extract_conductors_mf(max_cond=5000, max_results=500):
+    """Get MF conductors from LMFDB."""
+    results = dispatch_search("lmfdb_conductor", {
+        "low": 1, "high": max_cond, "object_type": "modular_form",
+        "max_results": max_results,
+    })
+    if not results or "error" in results[0]:
+        return None
+    return np.array([r["data"]["conductor"] for r in results
+                     if "data" in r and r["data"].get("conductor")], dtype=float)
+
+
+def test_T1_EC_MF_modularity():
+    """Modularity: EC and MF conductor distributions should overlap."""
+    ec_cond = _extract_conductors_ec()
+    mf_cond = _extract_conductors_mf()
+    if ec_cond is None or mf_cond is None:
+        return None, None, "SKIP: Could not load EC or MF conductors"
+    if len(ec_cond) < 10 or len(mf_cond) < 10:
+        return None, None, f"SKIP: Insufficient data (EC={len(ec_cond)}, MF={len(mf_cond)})"
+    # Use conductor distributions as the two groups
+    return ec_cond, mf_cond, f"EC conductors (n={len(ec_cond)}) vs MF conductors (n={len(mf_cond)})"
+
+
+def test_T1_EC_NF_discriminant():
+    """EC conductors vs NF absolute discriminants — shared prime structure."""
+    ec_cond = _extract_conductors_ec()
+    nf_results = dispatch_search("nf_degree", {"degree": 2, "max_results": 500})
+    if ec_cond is None or not nf_results or "error" in nf_results[0]:
+        return None, None, "SKIP: Could not load EC or NF data"
+    nf_disc = np.array([abs(r["data"]["disc_abs"]) for r in nf_results
+                        if "data" in r and r["data"].get("disc_abs")], dtype=float)
+    if len(ec_cond) < 10 or len(nf_disc) < 10:
+        return None, None, f"SKIP: Insufficient data (EC={len(ec_cond)}, NF={len(nf_disc)})"
+    return ec_cond, nf_disc, f"EC conductors (n={len(ec_cond)}) vs NF |disc| (n={len(nf_disc)})"
+
+
+def test_T1_Isogeny_EC_reduction():
+    """Isogeny primes vs EC bad reduction primes — structural, not scalar."""
+    iso_stats = dispatch_search("isogeny_stats", {})
+    if not iso_stats or "error" in iso_stats[0]:
+        return None, None, "STRUCTURAL: Isogeny data not available"
+
+    # Get a few isogeny graphs and EC objects to compare primes
+    ec_results = dispatch_search("lmfdb_conductor", {
+        "low": 1, "high": 100, "object_type": "elliptic_curve", "max_results": 200,
+    })
+    if not ec_results or "error" in ec_results[0]:
+        return None, None, "SKIP: Could not load EC data"
+
+    # Extract conductor prime factors from ECs
+    ec_conductors = [r["data"]["conductor"] for r in ec_results
+                     if "data" in r and r["data"].get("conductor")]
+
+    # Try to get isogeny graph primes
+    iso_primes = []
+    for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]:
+        iso_data = dispatch_search("isogeny_prime", {"prime": p})
+        if iso_data and "error" not in iso_data[0]:
+            iso_primes.append(p)
+
+    if not iso_primes or not ec_conductors:
+        return None, None, "STRUCTURAL: Could not extract comparable numerical data"
+
+    # Count how many EC conductors are divisible by each isogeny prime
+    iso_arr = np.array(iso_primes, dtype=float)
+    ec_arr = np.array(ec_conductors[:len(iso_primes)], dtype=float)
+    if len(ec_arr) < 10:
+        return None, None, "STRUCTURAL — isogeny primes vs EC conductors not directly comparable as arrays"
+
+    return iso_arr, ec_arr, (
+        f"Isogeny primes (n={len(iso_arr)}) vs EC conductors (n={len(ec_arr)}). "
+        "NOTE: structural bridge, scalar test is approximate."
+    )
+
+
+def test_T1_OEIS_SmallGroups():
+    """A000001 terms should exactly match SmallGroups counts."""
+    oeis_result = dispatch_search("oeis_by_id", {"seq_id": "A000001"})
+    sg_stats = dispatch_search("smallgroups_stats", {})
+
+    if not oeis_result or "error" in oeis_result[0]:
+        return None, None, "SKIP: Could not load A000001"
+    if not sg_stats or "error" in sg_stats[0]:
+        return None, None, "SKIP: Could not load SmallGroups"
+
+    oeis_terms = oeis_result[0]["data"]["terms"]
+
+    # Get SmallGroups counts for orders 1..len(oeis_terms)
+    sg_counts = []
+    max_order = min(len(oeis_terms), 100)  # Sample first 100
+    for order in range(1, max_order + 1):
+        sg_result = dispatch_search("smallgroups_order", {"order": order})
+        if sg_result and "error" not in sg_result[0]:
+            sg_counts.append(sg_result[0]["data"].get("n_groups", 0))
+        else:
+            sg_counts.append(0)
+
+    oeis_arr = np.array(oeis_terms[:max_order], dtype=float)
+    sg_arr = np.array(sg_counts, dtype=float)
+
+    # Check exact match rate
+    match_rate = np.mean(oeis_arr == sg_arr)
+
+    return oeis_arr, sg_arr, (
+        f"A000001 terms vs SmallGroups counts (n={max_order}), "
+        f"exact match rate = {match_rate:.1%}"
+    )
+
+
+def test_T2_Knots_NF_alexander():
+    """Knot determinants vs NF discriminants — shared number theory."""
+    knot_results = dispatch_search("knots_determinant", {"det_range": (1, 500), "max_results": 200})
+    nf_results = dispatch_search("nf_degree", {"degree": 2, "max_results": 200})
+
+    if not knot_results or "error" in knot_results[0]:
+        return None, None, "SKIP: Could not load knot data"
+    if not nf_results or "error" in nf_results[0]:
+        return None, None, "SKIP: Could not load NF data"
+
+    knot_dets = np.array([r["data"]["determinant"] for r in knot_results
+                          if "data" in r and r["data"].get("determinant")], dtype=float)
+    nf_disc = np.array([abs(r["data"]["disc_abs"]) for r in nf_results
+                        if "data" in r and r["data"].get("disc_abs")], dtype=float)
+
+    if len(knot_dets) < 10 or len(nf_disc) < 10:
+        return None, None, f"SKIP: Insufficient data (knots={len(knot_dets)}, NF={len(nf_disc)})"
+
+    return knot_dets, nf_disc, (
+        f"Knot determinants (n={len(knot_dets)}) vs NF |disc| (n={len(nf_disc)})"
+    )
+
+
+def test_T2_Knots_Genus2_braid():
+    """Knot determinants vs genus-2 conductors — via braid/MCG/Jacobian chain."""
+    knot_results = dispatch_search("knots_determinant", {"det_range": (1, 1000), "max_results": 200})
+    g2_results = dispatch_search("genus2_conductor", {"low": 1, "high": 1000, "max_results": 200})
+
+    if not knot_results or "error" in knot_results[0]:
+        return None, None, "SKIP: Could not load knot data"
+    if not g2_results or "error" in g2_results[0]:
+        return None, None, "SKIP: Could not load genus-2 data"
+
+    knot_dets = np.array([r["data"]["determinant"] for r in knot_results
+                          if "data" in r and r["data"].get("determinant")], dtype=float)
+    g2_cond = np.array([r["data"]["conductor"] for r in g2_results
+                        if "data" in r and r["data"].get("conductor")], dtype=float)
+
+    if len(knot_dets) < 10 or len(g2_cond) < 10:
+        return None, None, f"SKIP: Insufficient data (knots={len(knot_dets)}, g2={len(g2_cond)})"
+
+    return knot_dets, g2_cond, (
+        f"Knot determinants (n={len(knot_dets)}) vs G2 conductors (n={len(g2_cond)})"
+    )
+
+
+def test_T2_Fungrim_MF_Lfunctions():
+    """Fungrim L-function formulas vs MF data — structural bridge."""
+    fungrim_results = dispatch_search("fungrim_symbol", {"symbol": "DirichletL"})
+    if not fungrim_results or "error" in fungrim_results[0]:
+        # Try broader search
+        fungrim_results = dispatch_search("fungrim_bridges", {})
+
+    if not fungrim_results or "error" in fungrim_results[0]:
+        return None, None, "STRUCTURAL: Could not load Fungrim data"
+
+    # Count how many Fungrim formulas reference L-function-related symbols
+    l_func_count = len([r for r in fungrim_results
+                        if "data" in r and any(
+                            s in str(r.get("data", {}))
+                            for s in ["Dirichlet", "Lfun", "Modular", "Euler", "Zeta"]
+                        )])
+
+    return None, None, (
+        f"STRUCTURAL: {l_func_count} Fungrim entries reference L-function symbols "
+        f"out of {len(fungrim_results)} results. Scalar test not applicable."
+    )
+
+
+def test_T2_OEIS_Fungrim_functions():
+    """OEIS sequences connected through shared mathematical functions."""
+    # Check if Fungrim has zeta-related formulas
+    fungrim_zeta = dispatch_search("fungrim_symbol", {"symbol": "Zeta", "max_results": 50})
+    # Check OEIS for Riemann zeta related sequences
+    oeis_result = dispatch_search("oeis_by_id", {"seq_id": "A002117"})  # zeta(3) = Apery's constant digits
+
+    if not fungrim_zeta or "error" in fungrim_zeta[0]:
+        return None, None, "STRUCTURAL: Could not load Fungrim zeta data"
+
+    return None, None, (
+        f"STRUCTURAL: {len(fungrim_zeta)} Fungrim formulas use Zeta symbol. "
+        f"Known: 16,774 sequences connected through 10 shared functions. "
+        "Scalar test not applicable — connection is via shared function symbols."
+    )
+
+
+def test_T3_Lattices_MF_theta():
+    """Lattice theta series are modular forms — compare dimensions/levels."""
+    lattice_results = dispatch_search("lattices_search", {"keyword": ""})
+    mf_cond = _extract_conductors_mf(max_cond=100, max_results=200)
+
+    if not lattice_results or "error" in lattice_results[0]:
+        return None, None, "SKIP: Could not load lattice data"
+    if mf_cond is None or len(mf_cond) < 5:
+        return None, None, "SKIP: Insufficient MF data"
+
+    lat_dims = np.array([r["data"]["dim"] for r in lattice_results
+                         if "data" in r and r["data"].get("dim")], dtype=float)
+
+    if len(lat_dims) < 5:
+        return None, None, f"SKIP: Only {len(lat_dims)} lattice dimensions found"
+
+    # Lattice dimensions vs MF conductors is a rough comparison
+    # The real bridge is: theta(lattice) IS a MF, but we test the scalar shadow
+    return lat_dims, mf_cond[:len(lat_dims)], (
+        f"Lattice dimensions (n={len(lat_dims)}) vs MF conductors (n={min(len(mf_cond), len(lat_dims))}). "
+        "NOTE: Real bridge is theta_series(L) = modular_form; scalar test is approximate."
+    )
+
+
+def test_T3_Materials_SpaceGroups():
+    """Materials space group numbers should be a subset of Bilbao SG {1..230}."""
+    mat_results = dispatch_search("materials_search", {"crystal_system": "cubic"})
+    sg_results = dispatch_search("spacegroup_crystal_system", {"system": "cubic"})
+
+    if not mat_results or (len(mat_results) == 1 and "error" in mat_results[0]):
+        # Try without filter
+        mat_results = dispatch_search("materials_search", {
+            "band_gap_range": (0.0, 10.0),
+        })
+
+    if not mat_results or (len(mat_results) == 1 and "error" in mat_results[0]):
+        return None, None, "SKIP: Could not load Materials data"
+    if not sg_results or "error" in sg_results[0]:
+        return None, None, "SKIP: Could not load SpaceGroups data"
+
+    # Extract SG numbers from materials
+    mat_sg = []
+    for r in mat_results:
+        data = r.get("data", {})
+        sg = data.get("spacegroup_number") or data.get("sg_number")
+        if sg:
+            mat_sg.append(float(sg))
+
+    sg_numbers = []
+    for r in sg_results:
+        data = r.get("data", {})
+        num = data.get("number") or data.get("sg_number")
+        if num:
+            sg_numbers.append(float(num))
+
+    if not mat_sg or not sg_numbers:
+        return None, None, (
+            "STRUCTURAL: Materials and SpaceGroups loaded but SG number extraction "
+            "failed — field names may differ. Manual inspection needed."
+        )
+
+    mat_arr = np.array(mat_sg, dtype=float)
+    sg_arr = np.array(sg_numbers, dtype=float)
+
+    # Check subset relationship
+    mat_set = set(int(x) for x in mat_sg)
+    sg_set = set(int(x) for x in sg_numbers)
+    overlap = mat_set & sg_set
+    coverage = len(overlap) / len(mat_set) if mat_set else 0
+
+    return mat_arr, sg_arr, (
+        f"Materials SG numbers (n={len(mat_arr)}) vs Bilbao SG numbers (n={len(sg_arr)}). "
+        f"Overlap: {len(overlap)}/{len(mat_set)} = {coverage:.0%}."
+    )
+
+
+def test_T3_Knots_OEIS_invariants():
+    """Knot determinant sequence should overlap with OEIS sequences."""
+    det_list = dispatch_search("knots_determinant_list", {})
+    if not det_list or "error" in det_list[0]:
+        return None, None, "SKIP: Could not load knot determinant list"
+
+    dets = det_list[0].get("data", {}).get("determinants", [])
+    if not dets:
+        return None, None, "SKIP: No determinants returned"
+
+    # Search OEIS for a subsequence of knot determinants
+    sample_dets = sorted(set(dets))[:20]
+    oeis_hits = dispatch_search("oeis_terms", {
+        "target_terms": sample_dets[:10], "min_match": 3,
+    })
+
+    if not oeis_hits or "error" in oeis_hits[0]:
+        return None, None, (
+            f"STRUCTURAL: {len(dets)} knot determinants extracted, "
+            "but OEIS term search returned no matches. "
+            "May need exact sequence match rather than term overlap."
+        )
+
+    return None, None, (
+        f"STRUCTURAL: {len(dets)} unique knot determinants, "
+        f"{len(oeis_hits)} OEIS sequences share terms. "
+        "Scalar test not applicable — connection is combinatorial."
+    )
+
+
+def test_T3_Maass_MF_spectral():
+    """Maass form levels vs MF levels — shared spectral theory."""
+    maass_results = dispatch_search("maass_spectral", {"low": 0.0, "high": 100.0, "max_results": 200})
+    mf_results = dispatch_search("lmfdb_conductor", {
+        "low": 1, "high": 100, "object_type": "modular_form", "max_results": 200,
+    })
+
+    if not maass_results or "error" in maass_results[0]:
+        return None, None, "SKIP: Could not load Maass form data"
+    if not mf_results or "error" in mf_results[0]:
+        return None, None, "SKIP: Could not load MF data"
+
+    # Extract levels
+    maass_levels = np.array([r["data"].get("level", 1) for r in maass_results
+                             if "data" in r and r["data"].get("level")], dtype=float)
+    mf_levels = np.array([r["data"].get("conductor", 1) for r in mf_results
+                          if "data" in r and r["data"].get("conductor")], dtype=float)
+
+    if len(maass_levels) < 10 or len(mf_levels) < 10:
+        return None, None, f"SKIP: Insufficient data (Maass={len(maass_levels)}, MF={len(mf_levels)})"
+
+    return maass_levels, mf_levels, (
+        f"Maass levels (n={len(maass_levels)}) vs MF levels (n={len(mf_levels)})"
+    )
+
+
+# Map bridge IDs to test functions
+BRIDGE_TESTS = {
+    "T1_EC_MF_modularity": test_T1_EC_MF_modularity,
+    "T1_EC_NF_discriminant": test_T1_EC_NF_discriminant,
+    "T1_Isogeny_EC_reduction": test_T1_Isogeny_EC_reduction,
+    "T1_OEIS_SmallGroups": test_T1_OEIS_SmallGroups,
+    "T2_Knots_NF_alexander": test_T2_Knots_NF_alexander,
+    "T2_Knots_Genus2_braid": test_T2_Knots_Genus2_braid,
+    "T2_Fungrim_MF_Lfunctions": test_T2_Fungrim_MF_Lfunctions,
+    "T2_OEIS_Fungrim_functions": test_T2_OEIS_Fungrim_functions,
+    "T3_Lattices_MF_theta": test_T3_Lattices_MF_theta,
+    "T3_Materials_SpaceGroups": test_T3_Materials_SpaceGroups,
+    "T3_Knots_OEIS_invariants": test_T3_Knots_OEIS_invariants,
+    "T3_Maass_MF_spectral": test_T3_Maass_MF_spectral,
+}
+
+
+# ---------------------------------------------------------------------------
+# Main runner
+# ---------------------------------------------------------------------------
+
+def run_expected_bridges(tier_filter=None, dry_run=False):
+    """Run all expected bridge tests and write results."""
+
+    bridges = EXPECTED_BRIDGES
+    if tier_filter is not None:
+        bridges = [b for b in bridges if b["tier"] == tier_filter]
+
+    print("=" * 72)
+    print(f"EXPECTED BRIDGES — {len(bridges)} bridges to test")
+    print(f"  Tier 1 (calibration): {sum(1 for b in bridges if b['tier'] == 1)}")
+    print(f"  Tier 2 (theoretical): {sum(1 for b in bridges if b['tier'] == 2)}")
+    print(f"  Tier 3 (speculative): {sum(1 for b in bridges if b['tier'] == 3)}")
+    print("=" * 72)
+
+    if dry_run:
+        print("\n[DRY RUN] Listing bridges without testing:\n")
+        for b in bridges:
+            print(f"  T{b['tier']}  {b['id']}")
+            print(f"       {b['pair'][0]} <-> {b['pair'][1]}")
+            print(f"       {b['theorem'][:80]}...")
+            print()
+        return
+
+    results = []
+    t_start = time.time()
+
+    for i, bridge in enumerate(bridges, 1):
+        bid = bridge["id"]
+        tier = bridge["tier"]
+        pair = bridge["pair"]
+
+        print(f"\n{'-' * 72}")
+        print(f"[{i}/{len(bridges)}] T{tier} {bid}")
+        print(f"  {pair[0]} <-> {pair[1]}")
+        print(f"  Theorem: {bridge['theorem'][:100]}...")
+
+        test_fn = BRIDGE_TESTS.get(bid)
+        if test_fn is None:
+            print(f"  WARNING: No test function for {bid}")
+            results.append({
+                "id": bid, "pair": pair, "tier": tier,
+                "theorem": bridge["theorem"],
+                "verdict": "NO_TEST",
+                "note": "No test function implemented",
+            })
+            continue
+
+        t0 = time.time()
+        try:
+            values_a, values_b, note = test_fn()
+        except Exception as e:
+            elapsed = time.time() - t0
+            print(f"  ERROR in {elapsed:.1f}s: {e}")
+            traceback.print_exc()
+            results.append({
+                "id": bid, "pair": pair, "tier": tier,
+                "theorem": bridge["theorem"],
+                "verdict": "ERROR",
+                "note": str(e),
+                "elapsed_s": round(elapsed, 2),
+            })
+            continue
+
+        elapsed_extract = time.time() - t0
+        print(f"  Data extraction: {elapsed_extract:.1f}s — {note}")
+
+        # Determine if we can run the battery
+        if values_a is None or values_b is None:
+            # Structural bridge or data unavailable
+            is_structural = note and "STRUCTURAL" in note
+            verdict = "STRUCTURAL" if is_structural else "SKIP"
+            print(f"  --> {verdict}: {note}")
+            results.append({
+                "id": bid, "pair": pair, "tier": tier,
+                "theorem": bridge["theorem"],
+                "verdict": verdict,
+                "note": note,
+                "elapsed_s": round(elapsed_extract, 2),
+            })
+            continue
+
+        # Run the 14-test battery
+        print(f"  Running 14-test battery on {len(values_a)} vs {len(values_b)} values...")
+        t1 = time.time()
+        try:
+            battery_verdict, battery_results = run_battery(
+                values_a, values_b,
+                claim=f"Expected bridge: {bid} ({pair[0]} <-> {pair[1]})",
+            )
+        except Exception as e:
+            elapsed = time.time() - t0
+            print(f"  BATTERY ERROR: {e}")
+            results.append({
+                "id": bid, "pair": pair, "tier": tier,
+                "theorem": bridge["theorem"],
+                "verdict": "ERROR",
+                "note": f"Battery failed: {e}",
+                "elapsed_s": round(elapsed, 2),
+            })
+            continue
+
+        elapsed_battery = time.time() - t1
+        elapsed_total = time.time() - t0
+
+        # Summarize battery
+        passed = sum(1 for r in battery_results if r["verdict"] == "PASS")
+        failed = sum(1 for r in battery_results if r["verdict"] == "FAIL")
+        skipped = sum(1 for r in battery_results if r["verdict"] == "SKIP")
+        kill_tests = [r["test"] for r in battery_results if r["verdict"] == "FAIL"]
+
+        if battery_verdict == "SURVIVES":
+            print(f"  --> SURVIVES battery ({passed} pass, {skipped} skip) in {elapsed_battery:.1f}s")
+        else:
+            print(f"  --> KILLED ({passed} pass, {failed} fail, {skipped} skip) in {elapsed_battery:.1f}s")
+            print(f"      Kill tests: {kill_tests}")
+
+        # Check expectation: Tier 1 should survive
+        expectation_met = True
+        if tier == 1 and battery_verdict != "SURVIVES":
+            expectation_met = False
+            print(f"  *** CALIBRATION FAILURE: Tier 1 bridge killed! Pipeline may be miscalibrated. ***")
+
+        # Serialize battery results (strip numpy for JSON)
+        battery_summary = []
+        for r in battery_results:
+            entry = {"test": r["test"], "verdict": r["verdict"]}
+            for k, v in r.items():
+                if k in ("test", "verdict"):
+                    continue
+                try:
+                    json.dumps(v, cls=_NumpyEncoder)
+                    entry[k] = v
+                except (TypeError, ValueError):
+                    entry[k] = str(v)
+            battery_summary.append(entry)
+
+        results.append({
+            "id": bid, "pair": pair, "tier": tier,
+            "theorem": bridge["theorem"],
+            "verdict": battery_verdict,
+            "note": note,
+            "expectation_met": expectation_met,
+            "battery": {
+                "passed": passed, "failed": failed, "skipped": skipped,
+                "kill_tests": kill_tests,
+                "details": battery_summary,
+            },
+            "elapsed_s": round(elapsed_total, 2),
+        })
+
+    # -- Write output --
+    elapsed_total = time.time() - t_start
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    with open(OUT_FILE, "w") as f:
+        for r in results:
+            f.write(json.dumps(r, cls=_NumpyEncoder) + "\n")
+    print(f"\nResults written to {OUT_FILE}")
+
+    # -- Summary table --
+    print(f"\n{'=' * 72}")
+    print(f"SUMMARY — {len(results)} bridges tested in {elapsed_total:.0f}s")
+    print(f"{'=' * 72}")
+    print(f"{'ID':<35} {'Tier':>4} {'Verdict':<12} {'Note'}")
+    print(f"{'-' * 35} {'-' * 4} {'-' * 12} {'-' * 30}")
+
+    tier_stats = {1: {"total": 0, "pass": 0}, 2: {"total": 0, "pass": 0}, 3: {"total": 0, "pass": 0}}
+    for r in results:
+        t = r["tier"]
+        tier_stats[t]["total"] += 1
+        v = r["verdict"]
+        short_note = ""
+        if v == "SURVIVES":
+            tier_stats[t]["pass"] += 1
+            short_note = f"{r.get('battery', {}).get('passed', '?')} pass"
+        elif v == "KILLED":
+            kills = r.get("battery", {}).get("kill_tests", [])
+            short_note = f"killed by {', '.join(kills[:3])}"
+        elif v in ("STRUCTURAL", "SKIP", "NO_TEST", "ERROR"):
+            short_note = (r.get("note", "")[:50] if r.get("note") else v)
+
+        print(f"  {r['id']:<33} T{t:>1}   {v:<12} {short_note}")
+
+    print(f"\n{'-' * 72}")
+    for t in [1, 2, 3]:
+        s = tier_stats[t]
+        if s["total"] == 0:
+            continue
+        label = {1: "Calibration", 2: "Theoretical", 3: "Speculative"}[t]
+        rate = s["pass"] / s["total"] * 100 if s["total"] else 0
+        marker = ""
+        if t == 1 and rate < 100:
+            marker = " *** CALIBRATION FAILURE ***"
+        print(f"  Tier {t} ({label}): {s['pass']}/{s['total']} survived ({rate:.0f}%){marker}")
+
+    print(f"\nTotal elapsed: {elapsed_total:.0f}s")
+    return results
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Test expected mathematical bridges")
+    parser.add_argument("--tier", type=int, choices=[1, 2, 3],
+                        help="Run only bridges of a specific tier")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="List bridges without running tests")
+    args = parser.parse_args()
+
+    run_expected_bridges(tier_filter=args.tier, dry_run=args.dry_run)
