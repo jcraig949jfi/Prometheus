@@ -527,11 +527,164 @@ Formulas from the 271 OEIS sequences referenced by open Erdos problems.
 3. If signal found: scale to Set C, then full corpus
 4. If no signal in targeted sets: 27M won't help. Rethink representation.
 
+### DeepSeek correction: 30K is still too many. Start with <500.
+
+**Ultra-targeted set (dissect these FIRST):**
+1. **271 Erdos OEIS sequences** — mathematically guaranteed non-trivial structure (Set D, promoted to first)
+2. **50 frontier targets** — highest novelty/surprise in concept embedding
+3. **41 regime change survivors** — real asymptotic corrections, already battery-verified
+4. **Formulas appearing in 2+ of our datasets with degree >= 3** — maybe 50-100
+
+**Total: ~400 formulas.** Not 30K. Not 27M.
+
+If no high-surprise bridges emerge from 400 targeted formulas, 30K won't help. If they do, scale up.
+
 **Claude's maxim: "You have enough strategies. What you need now is triage."**
+**DeepSeek's correction: "Your triage isn't aggressive enough."**
+
+### S34. Categorical Equivalence (Functoriality)
+**From DeepSeek review.** Two formulas from different domains are related if there exists a natural transformation between the categories they live in. For each formula, compute its "categorical context" — the minimal mathematical category that contains it (Set, Grp, Top, Sch, etc.) using the Mathlib/Metamath proof graph. Two formulas from different categories cannot be directly isomorphic, but they can be related by an adjunction. Signature: (source_category, target_category, adjunction_type).
+**Tractability:** TRACTABLE (proof graph is finite, category assignment is lookup + graph traversal). **Priority:** 9/10. **Time:** ~30 min/1K formulas.
+**Connection:** Directly addresses Langlands-style bridges. Modularity theorem IS a functor between categories of elliptic curves and categories of modular forms.
 
 ---
 
-## Strategy Count: 33
+## Surprise Definition (from DeepSeek review 2026-04-09)
+
+The current surprise score (KL divergence on battery profiles) is under-specified. DeepSeek's correction:
+
+**Formal surprise = (predicted_survival - actual_survival)²**
+
+Implementation:
+1. Train an ensemble of weak predictors (random forest on Tier-2 signature features) to predict: given a formula's signatures, what is P(battery survival)?
+2. For each new formula, compute predicted P(survival)
+3. After battery: surprise = (predicted - actual)²
+4. High surprise = the formula behaved differently than its signatures predict
+5. **Dissect only formulas with surprise > 2σ**
+
+This turns the shadow tensor into an active learning system: it prioritizes formulas that would teach it the most, not formulas that confirm what it already knows.
+
+**Why this matters:** Flooding the pipeline with 30K formulas where 29,500 behave exactly as predicted wastes compute. The 500 that surprise the predictor are where the bridges hide.
+
+---
+
+## Transformation Complexity (from DeepSeek review 2026-04-09)
+
+M1 (transformation catalog) will produce thousands of candidate leaf mappings between formulas. Most are trivial (rename x→y).
+
+**Filter:** transformation_complexity = n_nodes_in_mapping / min(tree_size_a, tree_size_b)
+
+Keep only transformations with complexity ≤ 0.3. These are non-obvious structural mappings where the transformation itself encodes mathematical content, not just notation change.
+
+Then cluster surviving transformations by type:
+- Fourier-type (frequency ↔ time)
+- Mellin-type (multiplicative ↔ additive)
+- Legendre-type (variable ↔ dual variable)
+- Substitution-type (algebraic change of variable)
+- Gauge-type (symmetry transformation preserving invariants)
+
+That cluster graph is the hidden geometry of mathematical knowledge.
+
+---
+
+## GPU Memory Fix (from DeepSeek review 2026-04-09)
+
+S1 (complex grid) at 200×200 = 40K points × 100K formulas = 4B evaluations.
+At 32 bytes per complex result = 128 GB/min memory traffic. Exceeds 17GB VRAM.
+
+**Fix:**
+- Use float16 for grid evaluation (halves memory)
+- Store only pole/zero locations, not full grid
+- Evaluate in 10K-formula batches, transfer signatures to CPU, discard grid
+- Fits in ~12GB VRAM
+
+Apply same batching pattern to S5 (FFT) and S2 (fractional derivatives).
+
+---
+
+## Meta-Strategies: Above the Formula Level (from ChatGPT review 2026-04-09)
+
+### The insight
+
+We're dissecting individual formulas. The deeper game is dissecting the SPACE of formulas — cataloging transformations between them, finding equivalence classes, and compressing to minimal generating kernels.
+
+"The most powerful equations are not those that describe reality — they are those that generate the space of possible realities while remaining invariant under transformation."
+
+### M1. Transformation Catalog
+
+Instead of asking "what signatures does formula A have?" ask "what transformation maps formula A to formula B?" If two formulas from different domains are connected by a known transformation (variable substitution, gauge change, Fourier transform, Legendre transform), that transformation IS the bridge.
+
+**Implementation:**
+1. For each pair of formulas with matching Tier 1 signatures (same operadic skeleton, same Newton polytope):
+   - Attempt to find a variable substitution that maps one to the other
+   - If the trees have same skeleton but different leaves: extract the leaf mapping
+   - The leaf mapping IS the cross-domain dictionary
+2. Build a "transformation graph": nodes = formulas, edges = transformations, edge labels = transformation type
+
+**This is the S22 operadic skeleton taken one level up.** S22 tells you two formulas have the same computational pattern. M1 tells you what the specific mapping between them is.
+
+### M2. Equation Coordinate System (6-axis scoring)
+
+Score each formula on meta-axes that describe its ROLE, not its algebraic structure:
+
+| Axis | Low | High |
+|------|-----|------|
+| **Compression Ratio (CR)** | Local approximation (Taylor) | Universal law (Einstein) |
+| **Generative Depth (GD)** | Single phenomenon | Emergent layers (QFT → particles → chemistry) |
+| **Universality Class (UC)** | Narrow regime (ideal gas) | Cross-scale (renormalization) |
+| **Symmetry Encoding Density (SED)** | Low symmetry (F=ma) | Dense symmetry (Yang-Mills) |
+| **Computational Irreducibility (CI)** | Shortcuttable (linear) | Must simulate (Navier-Stokes turbulence) |
+| **Ontological Depth (OD)** | Emergent (thermodynamics) | Fundamental (path integrals) |
+
+**Implementation:**
+- CR: inverse of formula complexity normalized by domain coverage (how many datasets does this formula type touch?)
+- GD: depth of the concept chain from formula to observable consequences (from concept index)
+- UC: number of mathematical domains where formulas of this type appear (from operadic clusters)
+- SED: symmetry order from S9 × number of conserved quantities
+- CI: ratio of formula depth to evaluability (intractable formulas score high)
+- OD: distance from "fundamental" nodes in the mathlib/Metamath proof graph
+
+These 6 scores per formula create a meta-signature orthogonal to all our structural signatures. Two formulas can have different algebraic structures but the same meta-profile — that's a higher-order bridge.
+
+### M3. Equivalence Class Detection
+
+The goal isn't 27M individual signatures — it's discovering that 27M formulas collapse into N equivalence classes under transformation, where N << 27M.
+
+**Implementation:**
+1. S22 operadic skeleton gives the coarsest equivalence: same tree shape
+2. Within each operadic class, S3 mod-p fingerprint gives the next partition: same arithmetic behavior
+3. Within each mod-p class, S9 symmetry + S23 convexity give finer structure
+4. The REMAINING variation after all partitions = the "leaf content" = the domain-specific dressing
+
+**The leaf content IS the projection.** Two formulas in the same equivalence class with different leaf content are the same higher-dimensional object projected into different domains.
+
+### M4. Minimal Generating Basis
+
+Once we have equivalence classes + transformations between them, compress:
+- Find the minimal set of "generating kernels" from which all other formulas can be derived by transformation
+- This is analogous to finding generators of a group, or a basis for a vector space
+- The generating kernels are the FUNDAMENTAL mathematical structures
+- Everything else is a coordinate change
+
+**This is the endgame.** If 27M formulas collapse to 500 generating kernels + a transformation algebra, we've found the compressed representation of mathematical knowledge. The cross-domain bridges ARE the transformations.
+
+### M5. Formula-Space Coordinate System
+
+Map every formula to a point in a continuous space defined by:
+
+| Axis | Description |
+|------|-------------|
+| **Local ↔ Global** | Does the formula describe a neighborhood or an entire space? |
+| **Deterministic ↔ Probabilistic** | Exact vs statistical |
+| **Linear ↔ Nonlinear** | Superposition holds vs doesn't |
+| **Static ↔ Generative** | Fixed constraint vs produces new structure |
+| **Observable ↔ Hidden-variable** | All terms measurable vs latent variables |
+
+These 5 axes + the 6 meta-scores = an 11-dimensional equation-space. The dissection signatures (S1-S33) are the coordinates within each equivalence class. The meta-axes describe which equivalence class the formula belongs to.
+
+---
+
+## Strategy Count: 33 + 5 meta-strategies
 
 | Category | Strategies | Priority range |
 |----------|-----------|---------------|
