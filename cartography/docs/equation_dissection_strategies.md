@@ -527,7 +527,78 @@ Formulas from the 271 OEIS sequences referenced by open Erdos problems.
 3. If signal found: scale to Set C, then full corpus
 4. If no signal in targeted sets: 27M won't help. Rethink representation.
 
+### DeepSeek correction: 30K is still too many. Start with <500.
+
+**Ultra-targeted set (dissect these FIRST):**
+1. **271 Erdos OEIS sequences** — mathematically guaranteed non-trivial structure (Set D, promoted to first)
+2. **50 frontier targets** — highest novelty/surprise in concept embedding
+3. **41 regime change survivors** — real asymptotic corrections, already battery-verified
+4. **Formulas appearing in 2+ of our datasets with degree >= 3** — maybe 50-100
+
+**Total: ~400 formulas.** Not 30K. Not 27M.
+
+If no high-surprise bridges emerge from 400 targeted formulas, 30K won't help. If they do, scale up.
+
 **Claude's maxim: "You have enough strategies. What you need now is triage."**
+**DeepSeek's correction: "Your triage isn't aggressive enough."**
+
+### S34. Categorical Equivalence (Functoriality)
+**From DeepSeek review.** Two formulas from different domains are related if there exists a natural transformation between the categories they live in. For each formula, compute its "categorical context" — the minimal mathematical category that contains it (Set, Grp, Top, Sch, etc.) using the Mathlib/Metamath proof graph. Two formulas from different categories cannot be directly isomorphic, but they can be related by an adjunction. Signature: (source_category, target_category, adjunction_type).
+**Tractability:** TRACTABLE (proof graph is finite, category assignment is lookup + graph traversal). **Priority:** 9/10. **Time:** ~30 min/1K formulas.
+**Connection:** Directly addresses Langlands-style bridges. Modularity theorem IS a functor between categories of elliptic curves and categories of modular forms.
+
+---
+
+## Surprise Definition (from DeepSeek review 2026-04-09)
+
+The current surprise score (KL divergence on battery profiles) is under-specified. DeepSeek's correction:
+
+**Formal surprise = (predicted_survival - actual_survival)²**
+
+Implementation:
+1. Train an ensemble of weak predictors (random forest on Tier-2 signature features) to predict: given a formula's signatures, what is P(battery survival)?
+2. For each new formula, compute predicted P(survival)
+3. After battery: surprise = (predicted - actual)²
+4. High surprise = the formula behaved differently than its signatures predict
+5. **Dissect only formulas with surprise > 2σ**
+
+This turns the shadow tensor into an active learning system: it prioritizes formulas that would teach it the most, not formulas that confirm what it already knows.
+
+**Why this matters:** Flooding the pipeline with 30K formulas where 29,500 behave exactly as predicted wastes compute. The 500 that surprise the predictor are where the bridges hide.
+
+---
+
+## Transformation Complexity (from DeepSeek review 2026-04-09)
+
+M1 (transformation catalog) will produce thousands of candidate leaf mappings between formulas. Most are trivial (rename x→y).
+
+**Filter:** transformation_complexity = n_nodes_in_mapping / min(tree_size_a, tree_size_b)
+
+Keep only transformations with complexity ≤ 0.3. These are non-obvious structural mappings where the transformation itself encodes mathematical content, not just notation change.
+
+Then cluster surviving transformations by type:
+- Fourier-type (frequency ↔ time)
+- Mellin-type (multiplicative ↔ additive)
+- Legendre-type (variable ↔ dual variable)
+- Substitution-type (algebraic change of variable)
+- Gauge-type (symmetry transformation preserving invariants)
+
+That cluster graph is the hidden geometry of mathematical knowledge.
+
+---
+
+## GPU Memory Fix (from DeepSeek review 2026-04-09)
+
+S1 (complex grid) at 200×200 = 40K points × 100K formulas = 4B evaluations.
+At 32 bytes per complex result = 128 GB/min memory traffic. Exceeds 17GB VRAM.
+
+**Fix:**
+- Use float16 for grid evaluation (halves memory)
+- Store only pole/zero locations, not full grid
+- Evaluate in 10K-formula batches, transfer signatures to CPU, discard grid
+- Fits in ~12GB VRAM
+
+Apply same batching pattern to S5 (FFT) and S2 (fractional derivatives).
 
 ---
 
