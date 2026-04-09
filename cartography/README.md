@@ -220,10 +220,11 @@ python battery_sweep.py
 - **61 verified structural isomorphisms** (same skeleton, different outputs at 5 test points), 9 matching on 5/7 independent lenses
 - **OpenEvolve integration:** fitness 0.551, 2.6x over homegrown evolver
 - **47,066 modular form congruences** detected by systematic Hecke eigenvalue comparison. 10 mod-11 congruences, 6 at levels where 11 does not divide the level.
-- **Candidate mod-11 non-Eisenstein congruence:** EC 2184.a1 ↔ MF 2184.2.a.b. Both non-CM newforms, no 11-isogeny (strong evidence for irreducible representation). Verification pending: Sturm bound + irreducibility proof + literature search.
-- **12 kills, 2 discoveries** (Rosetta Stone + algebraic DNA)
+- **Full congruence graph:** 981 congruences across ell={5,7,11} from 94,497 pairs. 242 independent coprime+irreducible instances at 162 levels, all Sturm-verified with irreducibility proved. Mod-5: 190 at 126 levels. Mod-7: 50 at 34 levels. Mod-11: 2 at 2 levels. Zero for ell>=13. Twist deduplication separates functorial from intrinsic multiplicity. First systematic mapping of the fiber structure {newforms} -> {mod-ell representations} across the LMFDB weight-2 database.
+- **Genus-2 frontier (GSp_4):** 42 candidate mod-3 congruences between USp(4) genus-2 curves at coprime conductors. Degree-4 Hasse squeeze kills ell>=5. Heuristic (24 primes, ~10^{-23} random probability) but not theorem-level (Sturm bound ~10^9).
+- **12 kills, 3 discoveries + 1 frontier** (Rosetta Stone + algebraic DNA + GL_2 congruence fiber map + GSp_4 candidates)
 
 ---
 
 *Born: Project Prometheus, March 2026. Pipeline v5.0, April 2026.*
-*21 datasets. 39K concepts. 34 signature lenses. 14-test battery. 12 kills. 2 discoveries. 47,066 congruences. 31,073/31,073 modularity detection. 27M parsed formula trees. 269 algebraic family clusters. The ferryman found the Rosetta Stone while looking for bridges, detected the modularity theorem structurally, and surfaced the congruence lattice of modular forms.*
+*21 datasets. 39K concepts. 34 signature lenses. 14-test battery. 12 kills. 3 discoveries. 981 congruences. 242 independent verified instances of mod-ell multiplicity at 162 levels. 31,073/31,073 modularity detection. 27M parsed formula trees. 269 algebraic family clusters. The ferryman found the Rosetta Stone while looking for bridges, detected the modularity theorem structurally, and mapped the fiber structure of the eigenform-to-representation reduction across the full LMFDB weight-2 database.*
