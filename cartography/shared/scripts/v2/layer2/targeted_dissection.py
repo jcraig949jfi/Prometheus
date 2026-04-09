@@ -17,7 +17,6 @@ Usage:
 import argparse
 import hashlib
 import json
-import subprocess
 import sys
 import time
 from collections import Counter, defaultdict
@@ -444,44 +443,40 @@ def select_targets(cap=500):
 # ── Tree loading via grep ────────────────────────────────────────────
 
 def load_trees_for_hashes(hashes):
-    """Grep formula_trees.jsonl for specific hashes. Returns {hash: root}."""
+    """Stream formula_trees.jsonl, extracting only target hashes. Returns {hash: root}."""
     if not hashes:
         return {}
 
-    # Build grep pattern: alternation of all target hashes
-    # Use batched grep to avoid command-line length limits
     trees = {}
-    hash_list = list(hashes)
-    batch_size = 100
+    remaining = set(hashes)
     t0 = time.time()
+    scanned = 0
 
-    for i in range(0, len(hash_list), batch_size):
-        batch = hash_list[i:i+batch_size]
-        pattern = "|".join(batch)
-        try:
-            result = subprocess.run(
-                ["grep", "-E", f'"hash":"({pattern})"', str(TREES)],
-                capture_output=True, text=True, timeout=120,
-                encoding="utf-8", errors="replace"
-            )
-            for line in result.stdout.strip().split("\n"):
-                if not line:
-                    continue
-                try:
-                    rec = json.loads(line)
-                    h = rec.get("hash", "")
-                    if h in hashes:
-                        trees[h] = rec.get("root", {})
-                except json.JSONDecodeError:
-                    continue
-        except subprocess.TimeoutExpired:
-            print(f"  WARN: grep batch {i//batch_size} timed out")
-            continue
-        except Exception as e:
-            print(f"  WARN: grep batch {i//batch_size} error: {e}")
-            continue
+    with open(TREES, "r", encoding="utf-8", errors="replace") as f:
+        for line in f:
+            scanned += 1
+            if scanned % 2_000_000 == 0:
+                print(f"    scanned {scanned/1e6:.0f}M lines, found {len(trees)}/{len(hashes)}...")
+            # Fast pre-check: hash is always near start of line
+            # Format: {"hash":"XXXXXXXXXXXX","root":...}
+            # Hash starts at position 9, 12 chars
+            if len(line) < 24:
+                continue
+            h_candidate = line[9:21]  # extract hash without JSON parse
+            if h_candidate not in remaining:
+                continue
+            try:
+                rec = json.loads(line)
+                h = rec.get("hash", "")
+                if h in remaining:
+                    trees[h] = rec.get("root", {})
+                    remaining.discard(h)
+                    if not remaining:
+                        break
+            except json.JSONDecodeError:
+                continue
 
-    print(f"  loaded {len(trees)} trees in {time.time()-t0:.1f}s")
+    print(f"  loaded {len(trees)}/{len(hashes)} trees in {time.time()-t0:.1f}s ({scanned/1e6:.1f}M lines scanned)")
     return trees
 
 
@@ -543,6 +538,9 @@ def print_summary(results):
     print(f"\n{'='*60}")
     print(f"TARGETED DISSECTION SUMMARY: {n} formulas processed")
     print(f"{'='*60}")
+    if n == 0:
+        print("  No results to summarize.")
+        return
 
     # Set membership
     set_counts = Counter()
