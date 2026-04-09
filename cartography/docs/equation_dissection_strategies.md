@@ -378,6 +378,82 @@ For S3 (modular arithmetic), we could process ALL 27M formulas on GPU in under 3
 
 ---
 
+### S29. Differential Galois Theory (Picard-Vessiot)
+**From Gemini review.** For linear differential equations, the differential Galois group tells you whether solutions can be expressed in elementary functions at all. This is a HARD invariant — it's not a statistical test, it's an algebraic classification.
+**Tractability:** MODERATE (Kovacic's algorithm for order 2, harder for higher order). **Priority:** 8/10. **Time:** ~1 hour/10K (order 2 only).
+**Connection:** Extends S10 (polynomial Galois groups) to the differential setting. If two equations from different domains have isomorphic differential Galois groups, their solution spaces have the same algebraic structure.
+
+### S30. Tropicalization (Tropical Semiring)
+**From Gemini review.** Replace addition with max/min, multiplication with addition. Smooth algebraic curves snap into piecewise-linear skeletons. The combinatorial properties of these skeletons (edge lengths, vertex connections, genus of the tropical curve) are robust, easily comparable signatures.
+**Tractability:** TRACTABLE for polynomials (essentially Newton polygon + subdivision). **Priority:** 8/10. **Time:** ~30 min/100K.
+**Connection:** Extends S14 (Newton polytope) and S18 (tropical geometry). The tropical skeleton is coarser than the full variety but captures the combinatorial backbone.
+**Note:** S18 was listed earlier but S30 emphasizes the skeletal graph as a comparable signature, not just the tropical variety itself.
+
+---
+
+## Retrieval Architecture
+
+### The cross-domain matching problem
+
+With 8+ signature types per formula across 27M formulas, the matching question is: how do we find formulas from different domains that share signatures?
+
+### Tiered matching (Gemini's suggestion — adopted)
+
+**Tier 1: Exact match on hard invariants.**
+- Mod-p fingerprint (S3): identical mod-p vectors = algebraically equivalent (Schwartz-Zippel)
+- Newton polytope vertex hash (S14): identical exponent structure
+- Operadic skeleton hash (S22): identical computational pattern
+- Parity + variable symmetry order (S9): identical symmetry class
+
+These are exact, discrete signatures. Use hash-based lookup (dict/set). O(1) per query.
+
+**Tier 2: Approximate match on soft invariants.**
+- Spectral signature (S5): cosine similarity on 14-float vectors
+- Convexity profile (S23): Euclidean distance on curvature vectors
+- Discriminant value (S13): log-ratio within tolerance
+
+These are continuous signatures. Use approximate nearest neighbor (FAISS, annoy, or sklearn BallTree).
+
+**Tier 3: Cross-tier confirmation.**
+A claimed bridge must match on at least 1 Tier-1 invariant AND 2 Tier-2 invariants. This prevents:
+- False positives from single-invariant coincidence
+- Combinatorial explosion from soft matching alone
+
+### Implementation plan
+```
+formula_signatures_index.py
+  1. Load all per-formula signature files
+  2. Build hash indices for Tier 1 (dict: hash -> [formula_ids])
+  3. Build FAISS index for Tier 2 (concatenated soft vectors)
+  4. For each Tier 1 match across domains:
+     a. Check Tier 2 distance
+     b. If passes: run falsification battery
+     c. Feed result to shadow tensor
+```
+
+### Tensor train compression (Gemini's suggestion — queued)
+
+When the full signature matrix is built (27M formulas × 50+ signature dimensions), tensor train decomposition can compress the representation while preserving the invariant structure. The bond dimensions between TT cores reveal which signature types are entangled — e.g., if mod-p fingerprint and Newton polytope are strongly correlated, the bond dimension between those cores will be high.
+
+This is queued for after the signature extractors are complete and we have actual data to compress.
+
+---
+
+## Shadow Tensor as Contrastive Space
+
+### The twilight zone (Gemini's question — answered)
+
+The transition between Illuminated (known truths, battery survivors) and Shadow (killed hypotheses, failed bridges) is NOT a hard binary boundary. The shadow tensor already encodes a continuous gradient:
+
+1. **Illuminated:** 180/180 calibration truths. Known theorems. Battery survivors with high z-scores.
+2. **Twilight:** Hypotheses that survive some battery tests but fail others. Near-misses. The 41 regime changes (real but modest). The Maass↔MF survivor (Tier 3, speculative).
+3. **Shadow:** 9 killed false discoveries. 18K+ falsified hypotheses. The prime atmosphere (96% of all signal).
+4. **Void:** Untested regions. The 10 FindStat zero-test pairs. The 50 frontier targets.
+
+The novelty scorer's surprise component measures gradient — how different is a region's battery behavior from its neighbors? High surprise = the boundary is unexpected. That's where the system actively attempts to construct bridges between known truth and known failure.
+
+The shadow tensor IS the contrastive space. Every test record positions a hypothesis on the gradient. Tensor train decomposition across both spaces reveals the geometric shape of the boundary — where does mathematical truth break down, and what structural signature predicts the break?
+
 ---
 
 ## Speed Hacks (from literature survey 2026-04-09)
@@ -405,4 +481,65 @@ For S3 (modular arithmetic), we could process ALL 27M formulas on GPU in under 3
 
 *This document is a strategy database. Each strategy has: description, algorithm, GPU applicability, existing data, tractability, priority, execution time. New strategies are appended with sequential numbering. Scores are updated as we learn what works.*
 
+---
+
+### S31. Functional Equation Symmetry
+**From Claude review.** Many important formulas satisfy functional equations: f(1-s) = ...f(s) (reflection), f(x+1) = ...f(x) (shift), f(cx) = ...f(x) (scaling). The type is a discrete invariant. L-functions have reflection symmetry. Gamma has shift. EC and modular forms SHARE a functional equation — directly relevant to the modularity benchmark.
+**Tractability:** MODERATE (need to detect functional equations from tree structure). **Priority:** 9/10. **Time:** ~1 hour/50K.
+
+### S32. Coefficient Field
+**From Claude review.** For polynomial formulas, what number field do the coefficients live in? Rational, quadratic extension, cyclotomic? Computable from parsed trees by checking if coefficients are integers, rationals, or algebraic. Connects directly to NumberFields dataset.
+**Tractability:** TRACTABLE for polynomials with explicit coefficients. **Priority:** 8/10. **Time:** ~10 min/100K.
+
+### S33. Recursion Operator Extraction
+**From Claude review.** For OEIS sequences defined by recurrences, extract the recurrence operator as an algebraic object. Two sequences with isomorphic recurrence operators (same characteristic polynomial up to scaling) are structurally related regardless of initial conditions. Strongest bridge between OEIS and algebraic datasets.
+**Tractability:** TRACTABLE for linear recurrences (Berlekamp-Massey). **Priority:** 9/10. **Time:** ~20 min/100K sequences.
+
+---
+
+## TRIAGE: The Selection Principle (from Claude review 2026-04-09)
+
+### The problem
+30 strategies × 27M formulas = 810M computations. Even Tier 1 (7 strategies) = 189M. This is a combinatorial bomb.
+
+### The solution: targeted dissection
+Don't dissect everything. Dissect the formulas that MATTER — the ones near boundaries where scalar methods failed but structural methods haven't been tried.
+
+### Priority formula sets (dissect these first)
+
+**Set A: OEIS-Fungrim bridges (16,774 formulas)**
+Formulas connected to OEIS through shared mathematical functions (zeta, gamma, Dirichlet). These are known cross-domain objects. If structural signatures can't find bridges HERE, they won't find them anywhere.
+
+**Set B: Expected bridge targets (~5K formulas)**
+Formulas directly associated with objects in our calibration targets: EC equations (Weierstrass models), modular form q-expansions, knot polynomials (Alexander, Jones), number field minimal polynomials.
+
+**Set C: Shadow tensor hot spots (~10K formulas)**
+Formulas from domains where the shadow tensor shows near-misses or high surprise scores. These are regions where the battery almost passed — structural signatures might push them over.
+
+**Set D: Erdos problem formulas (~1K)**
+Formulas from the 271 OEIS sequences referenced by open Erdos problems.
+
+**Total targeted set: ~30K formulas** (not 27M)
+
+### Execution order
+1. Run S3 (mod-p) + S22 (operadic) on Set A (16,774 formulas) → battery → shadow tensor
+2. Run S13 (discriminant) + S14 (Newton polytope) on Set B (5K) → battery → shadow tensor
+3. If signal found: scale to Set C, then full corpus
+4. If no signal in targeted sets: 27M won't help. Rethink representation.
+
+**Claude's maxim: "You have enough strategies. What you need now is triage."**
+
+---
+
+## Strategy Count: 33
+
+| Category | Strategies | Priority range |
+|----------|-----------|---------------|
+| Evaluation-based | S1, S2, S3, S5, S6, S7, S8, S12, S21 | 6-10 |
+| Tree-based (no eval) | S9, S13, S14, S18, S22, S23, S30 | 7-10 |
+| Algebraic | S10, S11, S15, S16, S19, S20, S29 | 6-9 |
+| Information-theoretic | S24, S25, S26, S27, S28 | 6-7 |
+| Architectural | Retrieval (tiered matching), TT compression, shadow contrastive | N/A |
+
+*30 dissection strategies + retrieval architecture + shadow tensor contrastive framework.*
 *Charon v5 planning — 2026-04-09*
