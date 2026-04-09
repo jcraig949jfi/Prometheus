@@ -341,8 +341,13 @@ def compute_signature(coeffs, disc_val):
 # ── Known discriminant loader ────────────────────────────────────────────
 
 def load_known_discriminants():
-    """Load discriminants from genus-2 curves and number fields."""
-    known = {}  # abs_disc -> list of (source, label)
+    """Load discriminants from genus-2 curves and number fields.
+
+    Returns dict mapping SIGNED discriminant (int) -> list of (source, label).
+    Matching on signed discriminant ensures e.g. disc=+7668 does NOT match
+    NF 3.1.7668.1 which has disc=-7668.
+    """
+    known = {}  # signed_disc (int) -> list of (source, label)
 
     # Genus-2 curves
     if GENUS2_FILE.exists():
@@ -354,9 +359,10 @@ def load_known_discriminants():
             for c in curves:
                 d = c.get("discriminant")
                 if d is not None:
-                    d_abs = abs(int(d))
-                    known.setdefault(d_abs, []).append(("genus2", c.get("label", "?")))
-            print(f"    {len(known)} unique |disc| values from genus-2")
+                    d_signed = int(d)
+                    known.setdefault(d_signed, []).append(("genus2", c.get("label", "?")))
+            n_unique = len(known)
+            print(f"    {n_unique} unique signed disc values from genus-2")
         except Exception as e:
             print(f"    WARNING: genus-2 load failed: {e}")
 
@@ -368,20 +374,55 @@ def load_known_discriminants():
             with open(NF_FILE) as f:
                 data = json.load(f)
             for nf in data:
+                # Reconstruct signed discriminant from disc_abs and disc_sign
                 d_abs = nf.get("disc_abs")
+                d_sign = nf.get("disc_sign", 1)
                 if d_abs is not None:
                     try:
-                        d_abs = abs(int(d_abs))
+                        d_abs = int(d_abs)
+                        d_sign = int(d_sign) if d_sign is not None else 1
                     except (ValueError, TypeError):
                         continue
-                    known.setdefault(d_abs, []).append(("nf", nf.get("label", "?")))
+                    d_signed = d_abs * (d_sign if d_sign != 0 else 1)
+                    known.setdefault(d_signed, []).append(("nf", nf.get("label", "?")))
                     n_nf += 1
             print(f"    {n_nf} number field entries loaded")
         except Exception as e:
             print(f"    WARNING: number field load failed: {e}")
 
-    print(f"  Known discriminants: {len(known)} unique |disc| values total")
+    print(f"  Known discriminants: {len(known)} unique signed disc values total")
     return known
+
+
+# ── Domain / tautology detection ─────────────────────────────────────────
+
+# Keywords whose presence in a formula's LaTeX indicates the formula
+# belongs to the number-theory / algebraic-number-theory domain.
+# A discriminant match from such a formula to NumberFields is TAUTOLOGICAL.
+_NT_KEYWORDS = {
+    "field", "galois", "extension", "algebraic", "irreducible",
+    "splitting", "ramif", "discriminant", "minkowski", "dedekind",
+    "ideal", "norm", "trace", "ring of integers",
+}
+
+
+def _is_number_theory_formula(latex_str):
+    """Return True if LaTeX contains number-theory keywords."""
+    if not latex_str:
+        return False
+    low = latex_str.lower()
+    return any(kw in low for kw in _NT_KEYWORDS)
+
+
+# ── Coefficient-based dedup ──────────────────────────────────────────────
+
+def _coeff_dedup_key(coeffs):
+    """Hash the coefficient tuple for content-based dedup.
+    Two formula trees that differ only by LaTeX whitespace produce the
+    same polynomial; this catches them."""
+    # Snap to 8 decimal places to avoid floating-point noise
+    rounded = tuple(round(c, 8) for c in coeffs)
+    return hashlib.md5(str(rounded).encode()).hexdigest()
 
 
 # ── Main pipeline ─────────────────────────────────────────────────────────
@@ -421,13 +462,17 @@ def run(max_formulas=None, sample_n=None):
     n_poly = 0
     n_disc = 0
     n_matched = 0
+    n_tautological = 0
+    n_deduped = 0
     sigs = []
     matches = []
     disc_counter = Counter()
+    seen_coeff_keys = set()  # coefficient-based dedup
 
     for i, tree in enumerate(trees):
         if (i + 1) % 50000 == 0:
-            print(f"  ... {i+1:,}/{len(trees):,} processed, {n_poly} polynomials, {n_disc} discriminants")
+            print(f"  ... {i+1:,}/{len(trees):,} processed, {n_poly} polynomials, "
+                  f"{n_disc} discriminants, {n_deduped} deduped")
 
         h = tree.get("hash", "")
         root = tree.get("root", {})
@@ -439,6 +484,13 @@ def run(max_formulas=None, sample_n=None):
         coeffs = extract_coefficients(root, var)
         if coeffs is None or len(coeffs) < 3:
             continue
+
+        # Coefficient-based dedup: skip if we already saw this polynomial
+        ckey = _coeff_dedup_key(coeffs)
+        if ckey in seen_coeff_keys:
+            n_deduped += 1
+            continue
+        seen_coeff_keys.add(ckey)
 
         n_poly += 1
         disc_val, method = compute_discriminant(coeffs)
@@ -452,24 +504,34 @@ def run(max_formulas=None, sample_n=None):
             n_disc += 1
             disc_counter[method] += 1
 
-            # Cross-reference with known discriminants
-            abs_disc_int = None
+            # Cross-reference with known discriminants using SIGNED value
+            disc_int = None
             try:
-                abs_disc_int = abs(int(round(disc_val)))
+                disc_int = int(round(disc_val))
             except (OverflowError, ValueError):
                 pass
 
-            if abs_disc_int is not None and abs_disc_int in known_disc:
+            if disc_int is not None and disc_int in known_disc:
+                # Check if match is tautological (formula is from number theory domain)
+                latex = tree.get("latex", "") or tree.get("tex", "") or ""
+                is_tautological = _is_number_theory_formula(latex)
+
                 n_matched += 1
-                for source, label in known_disc[abs_disc_int]:
+                if is_tautological:
+                    n_tautological += 1
+
+                for source, label in known_disc[disc_int]:
+                    # A number-theory formula matching NumberFields is tautological
+                    taut_flag = is_tautological and source == "nf"
                     matches.append({
                         "formula_hash": h,
                         "discriminant": float(disc_val),
-                        "abs_disc": abs_disc_int,
+                        "disc_signed": disc_int,
                         "match_source": source,
                         "match_label": label,
                         "degree": sig["degree"],
                         "coefficients": coeffs,
+                        "tautological": taut_flag,
                     })
 
     # Write outputs
@@ -486,12 +548,14 @@ def run(max_formulas=None, sample_n=None):
     print(f"  Wrote {len(matches):,} matches to {OUT_MATCHES.name}")
 
     # Summary
+    n_genuine = n_matched - n_tautological
     elapsed = time.time() - t0
     print(f"\n{'=' * 70}")
     print(f"  Total trees:       {len(trees):,}")
     print(f"  Polynomial:        {n_poly:,}")
+    print(f"  Coeff-deduped:     {n_deduped:,}")
     print(f"  With discriminant: {n_disc:,}")
-    print(f"  Cross-matches:     {n_matched:,}")
+    print(f"  Cross-matches:     {n_matched:,} ({n_genuine:,} genuine, {n_tautological:,} tautological)")
     print(f"  Methods:           {dict(disc_counter)}")
     print(f"  Time:              {elapsed:.1f}s")
     print("=" * 70)
