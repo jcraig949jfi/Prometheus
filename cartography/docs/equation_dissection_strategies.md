@@ -483,7 +483,55 @@ The shadow tensor IS the contrastive space. Every test record positions a hypoth
 
 ---
 
-## Strategy Count: 30
+### S31. Functional Equation Symmetry
+**From Claude review.** Many important formulas satisfy functional equations: f(1-s) = ...f(s) (reflection), f(x+1) = ...f(x) (shift), f(cx) = ...f(x) (scaling). The type is a discrete invariant. L-functions have reflection symmetry. Gamma has shift. EC and modular forms SHARE a functional equation — directly relevant to the modularity benchmark.
+**Tractability:** MODERATE (need to detect functional equations from tree structure). **Priority:** 9/10. **Time:** ~1 hour/50K.
+
+### S32. Coefficient Field
+**From Claude review.** For polynomial formulas, what number field do the coefficients live in? Rational, quadratic extension, cyclotomic? Computable from parsed trees by checking if coefficients are integers, rationals, or algebraic. Connects directly to NumberFields dataset.
+**Tractability:** TRACTABLE for polynomials with explicit coefficients. **Priority:** 8/10. **Time:** ~10 min/100K.
+
+### S33. Recursion Operator Extraction
+**From Claude review.** For OEIS sequences defined by recurrences, extract the recurrence operator as an algebraic object. Two sequences with isomorphic recurrence operators (same characteristic polynomial up to scaling) are structurally related regardless of initial conditions. Strongest bridge between OEIS and algebraic datasets.
+**Tractability:** TRACTABLE for linear recurrences (Berlekamp-Massey). **Priority:** 9/10. **Time:** ~20 min/100K sequences.
+
+---
+
+## TRIAGE: The Selection Principle (from Claude review 2026-04-09)
+
+### The problem
+30 strategies × 27M formulas = 810M computations. Even Tier 1 (7 strategies) = 189M. This is a combinatorial bomb.
+
+### The solution: targeted dissection
+Don't dissect everything. Dissect the formulas that MATTER — the ones near boundaries where scalar methods failed but structural methods haven't been tried.
+
+### Priority formula sets (dissect these first)
+
+**Set A: OEIS-Fungrim bridges (16,774 formulas)**
+Formulas connected to OEIS through shared mathematical functions (zeta, gamma, Dirichlet). These are known cross-domain objects. If structural signatures can't find bridges HERE, they won't find them anywhere.
+
+**Set B: Expected bridge targets (~5K formulas)**
+Formulas directly associated with objects in our calibration targets: EC equations (Weierstrass models), modular form q-expansions, knot polynomials (Alexander, Jones), number field minimal polynomials.
+
+**Set C: Shadow tensor hot spots (~10K formulas)**
+Formulas from domains where the shadow tensor shows near-misses or high surprise scores. These are regions where the battery almost passed — structural signatures might push them over.
+
+**Set D: Erdos problem formulas (~1K)**
+Formulas from the 271 OEIS sequences referenced by open Erdos problems.
+
+**Total targeted set: ~30K formulas** (not 27M)
+
+### Execution order
+1. Run S3 (mod-p) + S22 (operadic) on Set A (16,774 formulas) → battery → shadow tensor
+2. Run S13 (discriminant) + S14 (Newton polytope) on Set B (5K) → battery → shadow tensor
+3. If signal found: scale to Set C, then full corpus
+4. If no signal in targeted sets: 27M won't help. Rethink representation.
+
+**Claude's maxim: "You have enough strategies. What you need now is triage."**
+
+---
+
+## Strategy Count: 33
 
 | Category | Strategies | Priority range |
 |----------|-----------|---------------|
