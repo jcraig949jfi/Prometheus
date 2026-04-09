@@ -378,6 +378,31 @@ For S3 (modular arithmetic), we could process ALL 27M formulas on GPU in under 3
 
 ---
 
+---
+
+## Speed Hacks (from literature survey 2026-04-09)
+
+### Batch Processing
+- **Mod-p:** NumPy vectorized `%` → 100M ops/sec. CuPy drop-in for GPU. `python-flint` for polynomial mod-p: 1M polys/sec degree <20.
+- **FFT:** `numpy.fft.rfft` accepts 2D arrays — pass all sequences as matrix rows → 100x faster than looping. `scipy.fft` with `workers=-1` for multithreaded. CuPy `cufft` → 100M length-64 FFTs/sec.
+- **Newton polygon:** Lower convex hull of (i, v_p(a_i)). `scipy.spatial.ConvexHull` or Graham scan. 1M polygons/sec vectorized.
+- **Polynomial roots:** Stack companion matrices, single `numpy.linalg.eigvals` call. ~50K degree-10 polys/sec.
+
+### Libraries
+- **python-flint:** Polynomial arithmetic over GF(p). Gold standard. `pip install python-flint`.
+- **cypari2:** PARI/GP Python bindings. Galois groups up to degree 11. `pip install cypari2`.
+- **giotto-tda:** Persistent homology with sklearn API. Batch via joblib. `pip install giotto-tda`.
+- **ripser++:** GPU persistent homology. 30-50x over ripser. Handles 50K points.
+- **galois:** NumPy-based GF(p) arithmetic including NTT. `pip install galois`.
+- **mpsolve:** Aberth's method for polynomial roots. O(n^2) vs O(n^3).
+
+### External Tools (subprocess)
+- **Gfan:** Tropical varieties. Fast for single polynomials.
+- **Singular:** ADE singularity classification via `classify` command.
+- **polymake/OSCAR:** Tropical geometry. Julia-based (OSCAR) is most active.
+
+---
+
 *This document is a strategy database. Each strategy has: description, algorithm, GPU applicability, existing data, tractability, priority, execution time. New strategies are appended with sequential numbering. Scores are updated as we learn what works.*
 
 *Charon v5 planning — 2026-04-09*
