@@ -283,4 +283,24 @@ All 20 datasets in random pool. Topics steer the LLM. Tags prevent log collision
 *Pipeline v3.2: April 8, 2026 (shadow tensor, MAP-Elites, explorer loop, 14-test battery, 92K test records)*
 *Pipeline v3.3: April 8, 2026 (21 datasets, 56 searches, microscope, geometric probes, term factory, 22K new OEIS terms)*
 *Pipeline v3.4: April 8, 2026 (detrended tensor, depth probes, 8 kills, definitive null on scalar layer, depth layer scoped)*
-*The scalar layer is empty after detrending. The depth layer — polynomial coefficients, L-function sequences, formula structures — is where the search continues. Primes were the atmosphere. The microscope stripped them. The sky is empty at scalar resolution. Climb higher.*
+*Pipeline v5.0: April 9, 2026 (34 signature extractors, Rosetta Stone, algebraic DNA, 12.5M formula dissection, GL_2 fiber map complete)*
+*Pipeline v5.1: April 9, 2026 evening (GSp_4 37/37 at 10^{-88}, 733 mod-2, Lehmer tau mod-23 S_4 image rediscovery, umbral moonshine functor from OEIS, 10 new scripts, 5 frontier roadmaps)*
+
+### v5.1 New Tools
+| File | Purpose | Location |
+|------|---------|----------|
+| genus2_c2_fast.py | F_{p^2} point counting with norm trick (80x speedup) | v2/ |
+| genus2_structural_analysis.py | Twist dedup + IC classification + mod-2 scan | v2/ |
+| genus2_twist_verify.py | Quadratic twist identification via Kronecker symbols | v2/ |
+| genus2_mod5_extended.py | Extended mod-5 scan (confirmed extinction) | v2/ |
+| tau_extend.py | Ramanujan tau q-expansion + mod-p + Sato-Tate + impossibility | v2/ |
+| moonshine_oeis_bridge.py | Moonshine OEIS cross-reference (21 core, 2609 neighborhood) | v2/ |
+| moonshine_filter.py | Recursion complexity filter (3315 -> 47 genuine bridges) | v2/ |
+
+### v5.1 Key Results
+- **GSp_4:** 37/37 verified (c1+c2, 92 primes, 10^{-88}). 0 twists. 2 geometric, 35 rep-theoretic. 733 mod-2 irreducible. Mod-5+ extinct.
+- **Lehmer:** tau(n) for n=1..3000. Mod-23 residue starvation = S_4 Galois image shadow. Weight-12 Sato-Tate verified.
+- **Moonshine:** 47 genuine bridges. Mock theta f(q) -> McKay-Thompson 6E (umbral functor). A058728 umbral-to-monstrous bridge.
+- **Norm trick:** z square in F_{p^2} iff N(z) square in F_p. 80x speedup. Extends to F_{p^3}.
+
+*The instrument graduated from syntactic matching to arithmetic structure. It detects Galois representations from coefficients (mod-23 S_4 image) and categorical equivalences from sequence data (umbral moonshine functor). Three frontiers mapped: GSp_4 (bedrock), Lehmer (illuminated), Moonshine (epiphany). Two rediscoveries, zero novel cross-domain bridges. The honest number is still zero. But the instruments are sharper.*

@@ -1,0 +1,2196 @@
+{
+  "core_sequences": {
+    "A000521": {
+      "terms": 17,
+      "meta": {
+        "name": "Klein j-function coefficients",
+        "type": "monstrous",
+        "group": "Monster"
+      }
+    },
+    "A007191": {
+      "terms": 22,
+      "meta": {
+        "name": "McKay-Thompson T_2 for Monster",
+        "type": "monstrous",
+        "group": "Monster"
+      }
+    },
+    "A014708": {
+      "terms": 17,
+      "meta": {
+        "name": "McKay-Thompson T_3 for Monster",
+        "type": "monstrous",
+        "group": "Monster"
+      }
+    },
+    "A007246": {
+      "terms": 22,
+      "meta": {
+        "name": "McKay-Thompson T_5 for Monster",
+        "type": "monstrous",
+        "group": "Monster"
+      }
+    },
+    "A007267": {
+      "terms": 18,
+      "meta": {
+        "name": "j-function expansion (1728*j)",
+        "type": "monstrous",
+        "group": "Monster"
+      }
+    },
+    "A000594": {
+      "terms": 30,
+      "meta": {
+        "name": "Ramanujan tau (Delta, weight 12)",
+        "type": "modular",
+        "weight": 12
+      }
+    },
+    "A006352": {
+      "terms": 47,
+      "meta": {
+        "name": "Eisenstein E_2 coefficients",
+        "type": "modular",
+        "weight": 2
+      }
+    },
+    "A004009": {
+      "terms": 29,
+      "meta": {
+        "name": "Eisenstein E_4 coefficients",
+        "type": "modular",
+        "weight": 4
+      }
+    },
+    "A013973": {
+      "terms": 25,
+      "meta": {
+        "name": "Eisenstein E_6 coefficients",
+        "type": "modular",
+        "weight": 6
+      }
+    },
+    "A008410": {
+      "terms": 18,
+      "meta": {
+        "name": "Eisenstein E_8 coefficients",
+        "type": "modular",
+        "weight": 8
+      }
+    },
+    "A013974": {
+      "terms": 17,
+      "meta": {
+        "name": "Eisenstein E_10 coefficients",
+        "type": "modular",
+        "weight": 10
+      }
+    },
+    "A029829": {
+      "terms": 12,
+      "meta": {
+        "name": "Eisenstein E_12 coefficients",
+        "type": "modular",
+        "weight": 12
+      }
+    },
+    "A045488": {
+      "terms": 49,
+      "meta": {
+        "name": "Ramanujan mock theta f(q)",
+        "type": "mock_theta",
+        "order": 3
+      }
+    },
+    "A001488": {
+      "terms": 37,
+      "meta": {
+        "name": "Ramanujan mock theta 2nd order",
+        "type": "mock_theta",
+        "order": 2
+      }
+    },
+    "A053250": {
+      "terms": 90,
+      "meta": {
+        "name": "Umbral moonshine M24",
+        "type": "umbral",
+        "group": "M24"
+      }
+    },
+    "A000118": {
+      "terms": 57,
+      "meta": {
+        "name": "Representations as sum of 4 squares",
+        "type": "theta",
+        "formula": "theta_3^4"
+      }
+    },
+    "A008443": {
+      "terms": 79,
+      "meta": {
+        "name": "Representations as sum of 8 triangular numbers",
+        "type": "theta"
+      }
+    },
+    "A000122": {
+      "terms": 105,
+      "meta": {
+        "name": "Jacobi theta_3 coefficients",
+        "type": "theta"
+      }
+    },
+    "A004011": {
+      "terms": 53,
+      "meta": {
+        "name": "D_4 lattice theta",
+        "type": "lattice_theta",
+        "lattice": "D4"
+      }
+    },
+    "A008408": {
+      "terms": 17,
+      "meta": {
+        "name": "E_8 lattice theta",
+        "type": "lattice_theta",
+        "lattice": "E8"
+      }
+    },
+    "A004027": {
+      "terms": 7,
+      "meta": {
+        "name": "Leech lattice theta",
+        "type": "lattice_theta",
+        "lattice": "Leech"
+      }
+    }
+  },
+  "neighborhood_size": 2609,
+  "top_connections": [
+    {
+      "seq_id": "A004009",
+      "n_core_links": 9,
+      "name": "Expansion of Eisenstein series E_4(q) (alternate convention E_2(q)); theta series of E_8 lattice.",
+      "cores": [
+        "A006352",
+        "A013974",
+        "A000594",
+        "A013973",
+        "A004011",
+        "A029829",
+        "A008410",
+        "A008408",
+        "A000122"
+      ]
+    },
+    {
+      "seq_id": "A013973",
+      "n_core_links": 8,
+      "name": "Expansion of Eisenstein series E_6(q) (alternate convention E_3(q)).",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A000594",
+        "A004011",
+        "A029829",
+        "A008410",
+        "A008408"
+      ]
+    },
+    {
+      "seq_id": "A000700",
+      "n_core_links": 7,
+      "name": "Expansion of Product_{k>=0} (1 + x^(2k+1)); number of partitions of n into distinct odd parts; number of self-conjugate partitions; number of symmetric Ferrers graphs with n nodes.",
+      "cores": [
+        "A053250",
+        "A004009",
+        "A045488",
+        "A007191",
+        "A008443",
+        "A007246",
+        "A000122"
+      ]
+    },
+    {
+      "seq_id": "A006352",
+      "n_core_links": 7,
+      "name": "Coefficients in expansion of Eisenstein series E_2 (also called E_1 or G_2).",
+      "cores": [
+        "A004009",
+        "A013974",
+        "A000594",
+        "A013973",
+        "A004011",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A121373",
+      "n_core_links": 6,
+      "name": "Expansion of f(x) = f(x, -x^2) in powers of x where f(, ) is Ramanujan's general theta function.",
+      "cores": [
+        "A004009",
+        "A045488",
+        "A007191",
+        "A008443",
+        "A007246",
+        "A000122"
+      ]
+    },
+    {
+      "seq_id": "A000122",
+      "n_core_links": 6,
+      "name": "Expansion of Jacobi theta function theta_3(x) = Sum_{m =-oo..oo} x^(m^2) (number of integer solutions to k^2 = n).",
+      "cores": [
+        "A000118",
+        "A004009",
+        "A045488",
+        "A007191",
+        "A008443",
+        "A007246"
+      ]
+    },
+    {
+      "seq_id": "A010054",
+      "n_core_links": 6,
+      "name": "a(n) = 1 if n is a triangular number, otherwise 0.",
+      "cores": [
+        "A004009",
+        "A045488",
+        "A007191",
+        "A008443",
+        "A007246",
+        "A000122"
+      ]
+    },
+    {
+      "seq_id": "A282182",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_30(q) (alternate convention E_15(q)), multiplied by 1723168255201.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A282401",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_28(q) (alternate convention E_14(q)), multiplied by 3392780147.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A282540",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_32(q) (alternate convention E_16(q)), multiplied by 7709321041217.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A279892",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_18(q) (alternate convention E_9(q)), multiplied by 43867.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A282356",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_26(q) (alternate convention E_13(q)), multiplied by 657931.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A029831",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_24(q) (alternate convention E_12(q)), multiplied by 236364091.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A029828",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_12(q) (alternate convention E_6(q)), multiplied by 691.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A058550",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_14(q) (alternate convention E_7(q)).",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A029830",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_20(q) (alternate convention E_10(q)), multiplied by 174611.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A145154",
+      "n_core_links": 6,
+      "name": "Coefficients in expansion of Eisenstein series E_1.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A279893",
+      "n_core_links": 6,
+      "name": "Eisenstein series E_22(q) (alternate convention E_11(q)), multiplied by 77683.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A185152",
+      "n_core_links": 5,
+      "name": "Expansion of (q/2) * phi(q)^3 (d/dq) phi(q) in powers of q.",
+      "cores": [
+        "A006352",
+        "A000118",
+        "A004009",
+        "A013973",
+        "A000122"
+      ]
+    },
+    {
+      "seq_id": "A008410",
+      "n_core_links": 5,
+      "name": "a(0) = 1, a(n) = 480*sigma_7(n).",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A029829"
+      ]
+    },
+    {
+      "seq_id": "A013974",
+      "n_core_links": 5,
+      "name": "Eisenstein series E_10(q) (alternate convention E_5(q)).",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013973",
+        "A029829",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A029829",
+      "n_core_links": 5,
+      "name": "Eisenstein series E_16(q) (alternate convention E_8(q)), multiplied by 3617.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A341875",
+      "n_core_links": 5,
+      "name": "Coefficients of the series whose 24th power equals E_2(x)*E_4(x)/E_6(x), where E_2(x), E_4(x) and E_6(x) are the Eisenstein series A006352, A004009 and A013973.",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A013974",
+        "A013973",
+        "A008410"
+      ]
+    },
+    {
+      "seq_id": "A058491",
+      "n_core_links": 4,
+      "name": "Coefficients of replicable function number 12c.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058487",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 12I for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058688",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 46A for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058533",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 18C for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058574",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 24D for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058532",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 18B for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058539",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 18d for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058630",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 32B for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058632",
+      "n_core_links": 4,
+      "name": "Coefficients of replicable function number \"32b\".",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058516",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 16C for Monster.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A145200",
+      "n_core_links": 4,
+      "name": "Coefficients of expansion of Phi(tau) = E_2*E_4/(E_6*j).",
+      "cores": [
+        "A000521",
+        "A006352",
+        "A004009",
+        "A013973"
+      ]
+    },
+    {
+      "seq_id": "A014103",
+      "n_core_links": 4,
+      "name": "Expansion of (eta(q^2) / eta(q))^24 in powers of q.",
+      "cores": [
+        "A000521",
+        "A007191",
+        "A000122",
+        "A000594"
+      ]
+    },
+    {
+      "seq_id": "A058647",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 36D for the Monster simple group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058543",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 18e for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058490",
+      "n_core_links": 4,
+      "name": "Coefficients of replicable function number 12b.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A289063",
+      "n_core_links": 4,
+      "name": "Coefficients in expansion of E_6^2/Product_{k>=1} (1-q^k)^24.",
+      "cores": [
+        "A000521",
+        "A000594",
+        "A014708",
+        "A013973"
+      ]
+    },
+    {
+      "seq_id": "A058728",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 60D for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058530",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 17A for the Monster simple group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A022601",
+      "n_core_links": 4,
+      "name": "Expansion of Product_{m>=1} (1+q^m)^(-6).",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A030185",
+      "n_core_links": 4,
+      "name": "Coefficients in expansion of E_2*E_4/(E_6*j) in powers of 1/j.",
+      "cores": [
+        "A000521",
+        "A006352",
+        "A004009",
+        "A013973"
+      ]
+    },
+    {
+      "seq_id": "A058639",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 34a for the Monster group.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A058098",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 10B for the Monster group with a(0) = 0.",
+      "cores": [
+        "A000521",
+        "A000122",
+        "A014708",
+        "A007267"
+      ]
+    },
+    {
+      "seq_id": "A035099",
+      "n_core_links": 4,
+      "name": "McKay-Thompson series of class 2B for the Monster group with a(0) = 40.",
+      "cores": [
+        "A007246",
+        "A007191",
+        "A000122",
+        "A004011"
+      ]
+    },
+    {
+      "seq_id": "A319134",
+      "n_core_links": 4,
+      "name": "Expansion of -((25*E_4^4 - 49*E_6^2*E4) + 48*E_6*E_4^2*E_2 + (-49*E_4^3 + 25*E_6^2)*E_2^2)/(3657830400*delta^2) where E_2, E_4, E_6 are the Eisenstein series shown in A006352, A004009, A013973, respectively and delta is A000594.",
+      "cores": [
+        "A013973",
+        "A006352",
+        "A004009",
+        "A000594"
+      ]
+    },
+    {
+      "seq_id": "A282254",
+      "n_core_links": 4,
+      "name": "Coefficients in q-expansion of (3*E_4^3 + 2*E_6^2 - 5*E_2*E_4*E_6)/1584, where E_2, E_4, E_6 are the Eisenstein series shown in A006352, A004009, A013973, respectively.",
+      "cores": [
+        "A013973",
+        "A006352",
+        "A004009",
+        "A000594"
+      ]
+    },
+    {
+      "seq_id": "A281373",
+      "n_core_links": 4,
+      "name": "Coefficients in q-expansion of (E_2*E_4 - E_6)^2/(300*(E_6^2-E_4^3)), where E_2, E_4, E_6 are the Eisenstein series shown in A006352, A004009, A013973, respectively.",
+      "cores": [
+        "A013973",
+        "A006352",
+        "A004009",
+        "A000594"
+      ]
+    },
+    {
+      "seq_id": "A064987",
+      "n_core_links": 4,
+      "name": "a(n) = n*sigma(n).",
+      "cores": [
+        "A006352",
+        "A004009",
+        "A000118",
+        "A000594"
+      ]
+    }
+  ],
+  "coefficient_bridges": [
+    {
+      "core": "A000521",
+      "match": "A007240",
+      "window": [
+        196884,
+        21493760,
+        864299970,
+        20245856256,
+        333202640600,
+        4252023300096
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A000521",
+      "match": "A289063",
+      "window": [
+        196884,
+        21493760,
+        864299970,
+        20245856256,
+        333202640600,
+        4252023300096
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007191",
+      "match": "A035099",
+      "window": [
+        276,
+        -2048,
+        11202,
+        -49152,
+        184024,
+        -614400
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007191",
+      "match": "A045479",
+      "window": [
+        276,
+        -2048,
+        11202,
+        -49152,
+        184024,
+        -614400
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A014708",
+      "match": "A007240",
+      "window": [
+        196884,
+        21493760,
+        864299970,
+        20245856256,
+        333202640600,
+        4252023300096
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A014708",
+      "match": "A289063",
+      "window": [
+        196884,
+        21493760,
+        864299970,
+        20245856256,
+        333202640600,
+        4252023300096
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007246",
+      "match": "A035099",
+      "window": [
+        276,
+        -2048,
+        11202,
+        -49152,
+        184024,
+        -614400
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007246",
+      "match": "A045479",
+      "window": [
+        276,
+        -2048,
+        11202,
+        -49152,
+        184024,
+        -614400
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007267",
+      "match": "A007241",
+      "window": [
+        4372,
+        96256,
+        1240002,
+        10698752,
+        74428120,
+        431529984
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007267",
+      "match": "A045478",
+      "window": [
+        4372,
+        96256,
+        1240002,
+        10698752,
+        74428120,
+        431529984
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007267",
+      "match": "A101558",
+      "window": [
+        4372,
+        96256,
+        1240002,
+        10698752,
+        74428120,
+        431529984
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A007267",
+      "match": "A106207",
+      "window": [
+        4372,
+        96256,
+        1240002,
+        10698752,
+        74428120,
+        431529984
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A029829",
+      "match": "A058552",
+      "window": [
+        16320,
+        534790080,
+        234174178560,
+        17524001357760,
+        498046875016320,
+        7673653657232640
+      ],
+      "core_offset": 1,
+      "match_offset": 1
+    },
+    {
+      "core": "A045488",
+      "match": "A007258",
+      "window": [
+        6,
+        4,
+        -3,
+        -12,
+        -8,
+        12
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A045488",
+      "match": "A105559",
+      "window": [
+        6,
+        4,
+        -3,
+        -12,
+        -8,
+        12
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A045488",
+      "match": "A128632",
+      "window": [
+        6,
+        4,
+        -3,
+        -12,
+        -8,
+        12
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A045488",
+      "match": "A128633",
+      "window": [
+        6,
+        4,
+        -3,
+        -12,
+        -8,
+        12
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A045488",
+      "match": "A258094",
+      "window": [
+        6,
+        4,
+        -3,
+        -12,
+        -8,
+        12
+      ],
+      "core_offset": 2,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A002121",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A008683",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A014282",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 9
+    },
+    {
+      "core": "A053250",
+      "match": "A015556",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 30
+    },
+    {
+      "core": "A053250",
+      "match": "A016118",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A016242",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 60
+    },
+    {
+      "core": "A053250",
+      "match": "A037012",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 3
+    },
+    {
+      "core": "A053250",
+      "match": "A038498",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A050305",
+      "window": [
+        -2,
+        1,
+        3,
+        -1,
+        -2,
+        1
+      ],
+      "core_offset": 11,
+      "match_offset": 4
+    },
+    {
+      "core": "A053250",
+      "match": "A051160",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A051793",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 7
+    },
+    {
+      "core": "A053250",
+      "match": "A051794",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 11
+    },
+    {
+      "core": "A053250",
+      "match": "A053864",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 5
+    },
+    {
+      "core": "A053250",
+      "match": "A054527",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 18
+    },
+    {
+      "core": "A053250",
+      "match": "A055651",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 3
+    },
+    {
+      "core": "A053250",
+      "match": "A056223",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A058728",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 6
+    },
+    {
+      "core": "A053250",
+      "match": "A068344",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 7
+    },
+    {
+      "core": "A053250",
+      "match": "A068717",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 6
+    },
+    {
+      "core": "A053250",
+      "match": "A069158",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A079054",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 9
+    },
+    {
+      "core": "A053250",
+      "match": "A080232",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 3
+    },
+    {
+      "core": "A053250",
+      "match": "A080323",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A089497",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 73
+    },
+    {
+      "core": "A053250",
+      "match": "A089509",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 29
+    },
+    {
+      "core": "A053250",
+      "match": "A090584",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 81
+    },
+    {
+      "core": "A053250",
+      "match": "A092152",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A094754",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 30
+    },
+    {
+      "core": "A053250",
+      "match": "A099990",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 26
+    },
+    {
+      "core": "A053250",
+      "match": "A102517",
+      "window": [
+        1,
+        1,
+        -1,
+        -2,
+        1,
+        3
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A102552",
+      "window": [
+        1,
+        1,
+        -1,
+        -1,
+        0,
+        2
+      ],
+      "core_offset": 0,
+      "match_offset": 9
+    },
+    {
+      "core": "A053250",
+      "match": "A106180",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A106346",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 35
+    },
+    {
+      "core": "A053250",
+      "match": "A106743",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 43
+    },
+    {
+      "core": "A053250",
+      "match": "A111317",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 4
+    },
+    {
+      "core": "A053250",
+      "match": "A111330",
+      "window": [
+        2,
+        0,
+        -2,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 9,
+      "match_offset": 6
+    },
+    {
+      "core": "A053250",
+      "match": "A111405",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 77
+    },
+    {
+      "core": "A053250",
+      "match": "A111963",
+      "window": [
+        1,
+        -1,
+        -2,
+        1,
+        3,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A112690",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 1
+    },
+    {
+      "core": "A053250",
+      "match": "A112712",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 10
+    },
+    {
+      "core": "A053250",
+      "match": "A113706",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 57
+    },
+    {
+      "core": "A053250",
+      "match": "A117568",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 21
+    },
+    {
+      "core": "A053250",
+      "match": "A118206",
+      "window": [
+        -1,
+        -1,
+        0,
+        2,
+        0,
+        -2
+      ],
+      "core_offset": 3,
+      "match_offset": 7
+    },
+    {
+      "core": "A053250",
+      "match": "A123230",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 9
+    },
+    {
+      "core": "A053250",
+      "match": "A124897",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 31
+    },
+    {
+      "core": "A053250",
+      "match": "A128494",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 4
+    },
+    {
+      "core": "A053250",
+      "match": "A129407",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 32
+    },
+    {
+      "core": "A053250",
+      "match": "A129667",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 66
+    },
+    {
+      "core": "A053250",
+      "match": "A131038",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A131372",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 3
+    },
+    {
+      "core": "A053250",
+      "match": "A131379",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 3
+    },
+    {
+      "core": "A053250",
+      "match": "A132339",
+      "window": [
+        1,
+        -1,
+        -1,
+        0,
+        2,
+        0
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A133639",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A140302",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 5
+    },
+    {
+      "core": "A053250",
+      "match": "A143241",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 81
+    },
+    {
+      "core": "A053250",
+      "match": "A143604",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A143751",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 6
+    },
+    {
+      "core": "A053250",
+      "match": "A144702",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 5
+    },
+    {
+      "core": "A053250",
+      "match": "A145704",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 6
+    },
+    {
+      "core": "A053250",
+      "match": "A151684",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 1
+    },
+    {
+      "core": "A053250",
+      "match": "A152065",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A157412",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 34
+    },
+    {
+      "core": "A053250",
+      "match": "A157657",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 65
+    },
+    {
+      "core": "A053250",
+      "match": "A157658",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 65
+    },
+    {
+      "core": "A053250",
+      "match": "A158924",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 47
+    },
+    {
+      "core": "A053250",
+      "match": "A168395",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 7
+    },
+    {
+      "core": "A053250",
+      "match": "A178411",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A178536",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A180494",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A181434",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A181435",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A182533",
+      "window": [
+        -1,
+        1,
+        1,
+        -1,
+        -1,
+        0
+      ],
+      "core_offset": 3,
+      "match_offset": 6
+    },
+    {
+      "core": "A053250",
+      "match": "A185331",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A185778",
+      "window": [
+        1,
+        -1,
+        -1,
+        0,
+        2,
+        0
+      ],
+      "core_offset": 0,
+      "match_offset": 0
+    },
+    {
+      "core": "A053250",
+      "match": "A189021",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 5
+    },
+    {
+      "core": "A053250",
+      "match": "A191904",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 34
+    },
+    {
+      "core": "A053250",
+      "match": "A197774",
+      "window": [
+        1,
+        1,
+        0,
+        -1,
+        1,
+        1
+      ],
+      "core_offset": 0,
+      "match_offset": 33
+    },
+    {
+      "core": "A053250",
+      "match": "A199324",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A206706",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 10
+    },
+    {
+      "core": "A053250",
+      "match": "A210826",
+      "window": [
+        0,
+        -1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "core_offset": 2,
+      "match_offset": 11
+    },
+    {
+      "core": "A053250",
+      "match": "A213953",
+      "window": [
+        1,
+        0,
+        -1,
+        1,
+        1,
+        -1
+      ],
+      "core_offset": 0,
+      "match_offset": 2
+    },
+    {
+      "core": "A053250",
+      "match": "A214303",
+      "window": [
+        1,
+        -1,
+        -1,
+        0,
+        2,
+        0
+      ],
+      "core_offset": 0,
+      "match_offset": 55
+    }
+  ],
+  "keyword_counts": {
+    "mock theta": 66,
+    "theta function": 1129,
+    "eta function": 1403,
+    "ramanujan": 1227,
+    "partition function": 180,
+    "monster group": 271,
+    "leech lattice": 19,
+    "modular form": 86,
+    "cusp form": 86,
+    "mckay-thompson": 425,
+    "eisenstein series": 134,
+    "weight 12": 30,
+    "mathieu": 18,
+    "niemeier": 40,
+    "jacobi form": 23,
+    "siegel modular": 6,
+    "j-invariant": 8,
+    "dedekind eta": 18,
+    "j-function": 14,
+    "mock modular": 12
+  },
+  "total_adjacent": 2759
+}

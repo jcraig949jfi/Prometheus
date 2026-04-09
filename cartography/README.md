@@ -8,7 +8,7 @@
 
 An autonomous pipeline for discovering structural connections between mathematical datasets. Ingests data from 21 sources spanning 1M+ mathematical objects, builds a concept bridge layer, tests hypotheses with a 14-test falsification battery, and maps the landscape of what we've explored and what we've killed.
 
-**Current status: zero novel cross-domain discoveries.** The pipeline validates known mathematics at 100% (180/180 calibration tests), has produced 22,338 new OEIS terms, identified 41 verified asymptotic corrections, and killed 9 false discoveries. The scalar correlation layer between datasets is definitively empty after prime detrending — 96% of all apparent cross-dataset structure is shared prime factorization. Structural comparison tools (formula ASTs, polynomial root distributions, graph spectral analysis) are operational but have not yet yielded surviving bridges.
+**Current status: zero novel cross-domain discoveries. Two genuine rediscoveries from structural instruments.** The pipeline validates known mathematics at 100% (180/180 calibration tests), has produced 22,338 new OEIS terms, identified 41 verified asymptotic corrections, and killed 12 false discoveries. The scalar correlation layer between datasets is definitively empty after prime detrending. Structural tools now operate across three frontiers: (1) 37 verified GSp_4 congruences at 10^{-88}, mapping the fiber structure of the paramodular Hecke algebra; (2) Ramanujan tau mod-23 Galois image rediscovered from raw coefficient distribution; (3) Umbral moonshine functor (mock theta -> McKay-Thompson 6E) detected from OEIS coefficient matching.
 
 ---
 
@@ -38,7 +38,13 @@ An autonomous pipeline for discovering structural connections between mathematic
 | Lattices | 21 | Literature |
 | OpenAlex | 10K concepts | openalex.org |
 
-**Corpus data:** 5M+ mathematical formulas from OpenWebMath (HuggingFace), with structural features extracted (operators, nesting depth, domain classification).
+**Corpus data:** 12.5M mathematical formulas from OpenWebMath (HuggingFace), with structural features extracted (operators, nesting depth, domain classification).
+
+**Congruence data:** 981 GL_2 congruences (242 independent at 162 levels), 37 GSp_4 mod-3 irreducible congruences verified at 10^{-88}, 733 GSp_4 mod-2 irreducible congruences. Complete genus-2 landscape: ell=2 dense, ell=3 sparse, ell>=5 extinct.
+
+**Moonshine data:** 21 core moonshine OEIS sequences, 2,609 cross-referenced neighborhood, 47 genuine coefficient bridges (filtered from 3,315 by recursion complexity).
+
+**Lehmer data:** tau(n) for n=1..3000 via q-expansion, tau(p) for 430 primes.
 
 ---
 
@@ -70,11 +76,25 @@ The pipeline has two layers of tools built on top of a shared data and testing i
 - `formula_graph_builder.py` — LaTeX → Operator Tree parser (17K/sec, 99.996% success)
 - `expected_bridges.py` — Theory-predicted bridge testing (12 bridges, 3 tiers)
 - `findstat_probes.py` — Cold territory mapping (10 zero-test pairs)
-- `openwebmath_ingest.py` — Corpus ingestion from HuggingFace (5M+ formulas)
+- `openwebmath_ingest.py` — Corpus ingestion from HuggingFace (12.5M formulas)
 - `concept_embeddings.py` — Spectral embedding of concept graph into R^64
 - `novelty_scorer.py` — 5-component novelty: centroid distance + density + entropy + cold + Bayesian surprise
 - `search_evolver.py` — Evolutionary synthesis of search functions (LLM generates code, battery selects)
 - `battery_sweep.py` — Batch falsification across all tool outputs
+
+### Congruence Tools (v2, verified)
+- `congruence_verifier.py` — Three-gate GL_2 verification: Sturm bound + irreducibility + Frobenius distribution
+- `congruence_graph.py` — Full fiber map of {newforms} -> {mod-ell representations} across LMFDB weight-2
+- `genus2_congruence_scan.py` — GSp_4 congruence detection with degree-4 Hasse squeeze analysis
+- `genus2_irreducibility.py` — 4D char poly factorization over F_ell for GSp_4 irreducibility
+- `genus2_c2_fast.py` — **F_{p^2} point counting with norm-based square detection (80x speedup)**
+- `genus2_structural_analysis.py` — Twist deduplication + geometric/rep-theoretic classification + mod-2 scan
+- `genus2_twist_verify.py` — Quadratic twist identification via Kronecker symbol matching
+
+### Frontier Tools (v2, active)
+- `tau_extend.py` — Ramanujan tau q-expansion + mod-p analysis + Sato-Tate + impossibility scan
+- `moonshine_oeis_bridge.py` — Moonshine OEIS cross-reference: 21 core sequences, 2,609 neighborhood, coefficient matching
+- `moonshine_filter.py` — Recursion complexity + entropy + zero-fraction filter (3,315 -> 47 genuine bridges)
 
 ---
 
@@ -84,6 +104,9 @@ The pipeline has two layers of tools built on top of a shared data and testing i
 - **The scalar layer is empty.** After removing shared prime factorization, zero cross-dataset correlation survives at any significance level across all 210 dataset pairs. Highest z=0.2.
 - **180/180 known truth calibration.** The battery correctly validates modularity theorem (z=72), Deuring mass formula (z=93), BSD small-prime signature, Heegner numbers, Euler relation for polytopes, class number variation by degree, and 33 other known results.
 - **41 asymptotic regime changes survive the battery.** Extended lattice walk sequences show growth rate shifts of 2-84% between early and late terms. These represent genuine corrections to published estimates.
+- **37 GSp_4 mod-3 congruences verified at 10^{-88}.** Both Euler factor components at 92 primes. 35 representation-theoretic (different geometry, shared Galois rep). 0 twists. Complete genus-2 landscape: 733 at ell=2, 37 at ell=3, 0 at ell>=5.
+- **Ramanujan tau mod-23 S_4 image.** Instrument detects that tau(n) occupies only 5/23 residue classes mod 23 — the structural shadow of the S_4 projective Galois image — from raw coefficient data.
+- **Umbral moonshine functor.** Mock theta f(q) shares [6,4,-3,-12,-8,12] with 5 McKay-Thompson 6E series for the Monster. Detected from OEIS coefficient matching, filtered by recursion complexity (47/3315 survive).
 
 ### Negative results
 - Formula AST comparison across Fungrim modules: killed by F13 (growth rate artifact — operator count correlates with Jaccard regardless of domain).
@@ -100,6 +123,9 @@ The pipeline has two layers of tools built on top of a shared data and testing i
 - **68,770 sleeping beauties** — high-entropy, low-connectivity OEIS sequences identified and characterized.
 - **5M+ formula features** — structural fingerprints from OpenWebMath corpus.
 - **Shadow tensor** — 210 cells, 101K+ test records mapping every hypothesis tested and how it died.
+- **Congruence landscape** — 981 GL_2 congruences, 37 GSp_4 mod-3 (10^{-88}), 733 GSp_4 mod-2.
+- **Moonshine network** — 21 core sequences, 47 genuine bridges, 4 multi-core hubs.
+- **Lehmer framework** — 3,000 tau(n) values, 430 tau(p) primes, mod-p distributions.
 
 ---
 
@@ -226,5 +252,5 @@ python battery_sweep.py
 
 ---
 
-*Born: Project Prometheus, March 2026. Pipeline v5.0, April 2026.*
-*21 datasets. 39K concepts. 34 signature lenses. 14-test battery. 12 kills. 3 discoveries. 981 congruences. 242 independent verified instances of mod-ell multiplicity at 162 levels. 31,073/31,073 modularity detection. 27M parsed formula trees. 269 algebraic family clusters. The ferryman found the Rosetta Stone while looking for bridges, detected the modularity theorem structurally, and mapped the fiber structure of the eigenform-to-representation reduction across the full LMFDB weight-2 database.*
+*Born: Project Prometheus, March 2026. Pipeline v5.1, April 2026.*
+*21 datasets. 39K concepts. 34 signature lenses. 14-test battery. 12 kills. 3 discoveries + 2 rediscoveries. 981 GL_2 congruences (242 independent at 162 levels). 37 GSp_4 congruences at 10^{-88}. 733 mod-2 genus-2 congruences. 31,073/31,073 modularity detection. 27M parsed formula trees. 269 algebraic family clusters. 47 moonshine bridges. 3,000 tau(n) values. The ferryman found the Rosetta Stone, detected modularity structurally, mapped fiber structure in GL_2 and GSp_4, rediscovered the mod-23 Galois image of Delta from coefficients, and identified the umbral moonshine functor from OEIS data.*
