@@ -70,10 +70,11 @@ def _classify_tree(root):
 
     walk(root)
 
-    # Heuristic: if we have > 8 single-char variables, it's likely
-    # decomposed text, not a real formula
+    # Heuristic: text artifact detection (tightened after Kill #11)
+    # - >5 single-char vars = likely parsed text
+    # - >12 total vars = definitely not a single formula
     single_chars = {v for v in n_vars if len(v) == 1}
-    if len(single_chars) > 8:
+    if len(single_chars) > 5 or len(n_vars) > 12:
         return "text_artifact", ops, n_vars
 
     if ops & TRANSCENDENTAL_OPS:
@@ -247,7 +248,11 @@ def compute_fingerprint(root, primes, var_name=None):
         sorted_vars = sorted(variables)
         eval_var = sorted_vars[0]
 
-    other_vars = {v: 1 for v in variables if v != eval_var}
+    # Evaluate at multiple base points for non-eval variables (Kill #11 fix)
+    # Using {2,3} instead of just {1} avoids identity-fingerprint degeneracy
+    base_points = [2, 3]
+    other_vars_base = {v: base_points[i % len(base_points)]
+                       for i, v in enumerate(sorted(v2 for v2 in variables if v2 != eval_var))}
 
     signature = []
     all_ok = True
@@ -255,7 +260,7 @@ def compute_fingerprint(root, primes, var_name=None):
     for p in primes:
         residues = []
         for x in range(p):
-            var_val = dict(other_vars)
+            var_val = dict(other_vars_base)
             if eval_var is not None:
                 var_val[eval_var] = x
             val, ok = _eval_tree_mod_p(root, var_val, p)

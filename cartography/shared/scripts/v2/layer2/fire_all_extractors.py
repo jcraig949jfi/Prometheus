@@ -68,10 +68,13 @@ def run_extractor(name, module_name, max_formulas, extractor_type):
     """Run a single extractor and return (name, success, elapsed, n_results, error)."""
     t0 = time.time()
     try:
-        # Build command args
-        args = ["--max-formulas", str(max_formulas)]
-        if extractor_type == "oeis":
+        # Build command args — try the flag each script expects
+        if module_name == "info_theoretic_signatures":
+            args = ["--max-seqs", str(max_formulas), "--max-formulas", str(max_formulas)]
+        elif extractor_type == "oeis":
             args = ["--max", str(max_formulas)]
+        else:
+            args = ["--max-formulas", str(max_formulas)]
 
         # Import and run via subprocess to isolate failures
         import subprocess

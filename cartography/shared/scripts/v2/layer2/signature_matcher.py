@@ -159,12 +159,37 @@ def build_tier1_indices(sigs, triage):
     return indices
 
 
-def find_cross_domain_buckets(index):
-    """Return list of (hash_key, items) where items span 2+ domains."""
+def find_cross_domain_buckets(index, min_skeleton_len=20):
+    """Return list of (hash_key, items) where items span 2+ domains.
+
+    Filters out generic skeletons (Kill #11 fix): skeletons shorter than
+    min_skeleton_len chars are too generic to be meaningful bridges.
+    Also excludes buckets where all items have the same skeleton string
+    of just 'V' or 'eq(V,V)' etc.
+    """
+    # Trivial skeletons to exclude (too generic to be bridges)
+    TRIVIAL_SKELETONS = {
+        "V", "N", "eq(V,V)", "eq(V,N)", "eq(N,V)", "eq(N,N)",
+        "multiply(V,V)", "add(V,V)", "sub(V,V)",
+        "eq(V,multiply(V,V))", "eq(V,add(V,V))",
+        "eq(V,multiply(V,V,V,V))", "to(V,V)",
+    }
     cross = []
     for key, items in index.items():
         domains = {d for _, d, _ in items}
         if len(domains) >= 2:
+            # Filter generic skeletons (Kill #11 fix)
+            skeletons = set()
+            for _, _, rec in items:
+                s = rec.get("skeleton_str", "") if isinstance(rec, dict) else ""
+                if s:
+                    skeletons.add(s[:50])
+            if skeletons and all(s in TRIVIAL_SKELETONS for s in skeletons):
+                continue
+            # Filter text artifacts: skip if any item has >12 variables
+            if any(isinstance(rec, dict) and rec.get("n_variables", 0) > 12
+                   for _, _, rec in items):
+                continue
             cross.append((key, items))
     return cross
 
