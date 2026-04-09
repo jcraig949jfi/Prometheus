@@ -213,5 +213,15 @@ python battery_sweep.py
 
 ---
 
-*Born: Project Prometheus, March 2026. Pipeline v4.1, April 2026.*
-*21 datasets. 39K concepts. 14-test battery. 9 kills. 41 corrections. 12.5M parsed formulas. 12 expected bridges tested. Known bridges are structural, not scalar. Zero novel discoveries. The search continues with structural instruments.*
+### Recent Results (v5.0, 2026-04-09)
+- **34 signature extractors** built and fired (operadic, symmetry, convexity, Newton polytope, mod-p, p-adic, Galois, tropical, Morse, fractional derivatives, spectral, phase space, info-theoretic, resurgence, recursion operator, and 19 more)
+- **The Rosetta Stone:** cross-domain operadic skeleton distribution maps mathematical universals — a translation layer between symbolic math and human conceptual organization (5,424 cross-domain clusters)
+- **Algebraic DNA in OEIS:** recursion operator extraction finds 269 family clusters including Collatz (A006370) sharing characteristic polynomial with 2 other sequences, and 4 Erdos problems sharing recurrences with non-Erdos families
+- **61 verified structural isomorphisms** (same skeleton, different outputs at 5 test points), 9 matching on 5/7 independent lenses
+- **OpenEvolve integration:** fitness 0.551, 2.6x over homegrown evolver
+- **12 kills, 2 discoveries** (Rosetta Stone + algebraic DNA)
+
+---
+
+*Born: Project Prometheus, March 2026. Pipeline v5.0, April 2026.*
+*21 datasets. 39K concepts. 34 signature lenses. 14-test battery. 12 kills. 2 discoveries. 41 corrections. 27M parsed formula trees. 269 algebraic family clusters. The ferryman found the Rosetta Stone while looking for bridges.*

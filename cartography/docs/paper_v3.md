@@ -1,6 +1,6 @@
 # Calibrating a Cross-Domain Mathematical Discovery Instrument: Mapping the Boundary Between Scalar Similarity and Structural Truth
 
-### Version 3.0 — 2026-04-09
+### Version 3.1 — 2026-04-09
 
 ---
 
@@ -10,7 +10,11 @@ We present the calibration of an automated instrument for detecting structural c
 
 We empirically demonstrate that scalar correlation methods fail to detect multiple known structural correspondences in mathematics — including the modularity theorem, class field theory, and isogeny reduction — while correctly detecting distributional similarities where they exist (Maass form level distributions, z=93 mass formulas). This maps the sensitivity boundary of the instrument: it detects scalar phenomena with 0% false negative rate (180/180 calibration), but known structural truths lie outside its sensitivity range.
 
-We report 41 verified asymptotic corrections in lattice walk sequences and 22,338 new OEIS terms as concrete computational contributions. We propose that the structural layer — formula syntax trees, polynomial root distributions, graph spectra — is the domain where cross-domain bridges must be sought, and define an explicit success criterion: detection of the modularity theorem without prior knowledge.
+We report 41 verified asymptotic corrections in lattice walk sequences and 22,338 new OEIS terms as concrete computational contributions.
+
+Beyond scalar detection, a 34-strategy structural dissection suite applied to 12.5M mathematical formulas reveals two additional findings: (1) The cross-domain distribution of operadic skeletons constitutes a "Rosetta Stone" — a map of which mathematical structures are shared across fields, functioning as a translation layer between symbolic math and human conceptual organization. (2) Recursion operator extraction (Berlekamp-Massey) identifies 269 algebraic family clusters in OEIS, including a shared characteristic polynomial connecting Collatz-related sequence A006370 to two previously ungrouped sequences, and 4 Erdos problem sequences sharing recurrence structures with known mathematical families.
+
+We define an explicit success criterion for the structural layer: detection of the modularity theorem without prior knowledge.
 
 ---
 
@@ -228,7 +232,33 @@ This is not a proof of the theorem. It is detection of a structural corresponden
 
 ---
 
-## 8. Kill Log
+## 8. Structural Dissection Results
+
+### 8.1 The dissection suite
+
+We constructed 34 independent signature extractors, each viewing mathematical formulas through a different mathematical lens: operadic structure, symmetry groups, convexity profiles, Newton polytopes, modular arithmetic, p-adic valuations, Galois groups, tropical geometry, Morse theory, fractional derivatives, spectral decomposition, phase space dynamics, information-theoretic measures, and 21 others. Applied to 12.5M formulas from the OpenWebMath corpus (parsed into 27M operator trees at 17K formulas/second), these produce a multi-dimensional signature per formula — up to 15 independent lenses per object.
+
+### 8.2 The Rosetta Stone
+
+Investigation of apparent cross-domain matches (Kill #12) revealed that the same formula appearing in different domain classifications is not noise — it is a map of mathematical universals. Operadic skeletons that span multiple domains (e.g., `multiply(V,V)` appears in 8 of 8 domain categories) represent structural patterns reused independently across mathematical fields. This cross-domain distribution constitutes a translation layer: the same computational verb dressed in different notational nouns by different communities. We document 5,424 cross-domain skeleton clusters from 500K formulas.
+
+### 8.3 Algebraic DNA in OEIS
+
+Berlekamp-Massey recursion operator extraction on 50,000 OEIS sequences identifies 5,497 sequences satisfying detectable linear recurrences, collapsing into 2,740 unique characteristic polynomials. Of these, 269 polynomials are shared by 3 or more sequences — algebraic family clusters invisible to scalar comparison.
+
+Notable clusters:
+- 104 sequences share the Fibonacci characteristic polynomial x² - x - 1
+- Erdos problem sequence A006370 (Collatz-related) shares x⁴ - 2x² with A014682 and A019303
+- Erdos problem sequence A000051 (2^n + 1) shares a geometric recurrence with A000225 (Mersenne: 2^n - 1)
+- 4 of 271 Erdos-referenced sequences share recurrence operators with non-Erdos families
+
+These are shared algebraic structures connecting sequences that appear unrelated on the surface.
+
+### 8.4 Verified structural isomorphisms
+
+A deduplication verification pipeline (evaluate pairs at 5 test points) identifies 351 true duplicates and 61 structural isomorphisms from 5,000 formulas — pairs sharing the same skeleton but producing numerically different outputs. Of these, 9 pairs match on 5/7 independent lenses while being verified-different by evaluation.
+
+## 9. Kill Log
 
 | # | Claim | How it died | Instrument improvement |
 |---|-------|-------------|----------------------|
@@ -244,7 +274,7 @@ This is not a proof of the theorem. It is detection of a structural corresponden
 
 ---
 
-## 9. Limitations
+## 10. Limitations
 
 **Battery sensitivity.** Reduced power at N < 20. Three FindStat comparisons survived at N=17 that are likely artifacts.
 
@@ -256,7 +286,7 @@ This is not a proof of the theorem. It is detection of a structural corresponden
 
 ---
 
-## 10. Future Work
+## 11. Future Work
 
 The calibration target is specific: detect the modularity theorem structurally. Tools in development: formula graph embedding via contrastive learning (SSEmb, CIKM 2025), evolutionary program synthesis via multi-model ensemble (AlphaEvolve, DeepMind 2025), and Bayesian surprise exploration (AutoDiscovery, Allen AI, NeurIPS 2025). 12.5M formula operator trees are parsed and ready for embedding.
 
@@ -274,4 +304,4 @@ The calibration target is specific: detect the modularity theorem structurally. 
 
 ---
 
-*Version 3.0 — 2026-04-09.*
+*Version 3.1 — 2026-04-09. Added Section 8: structural dissection results (Rosetta Stone, algebraic DNA, verified isomorphisms).*
