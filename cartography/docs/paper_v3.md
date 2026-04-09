@@ -142,7 +142,7 @@ The scalar battery kills both bridges — Euler on F13/F14 (growth rate), modula
 
 The modularity detection deserves emphasis: 31,073 elliptic curves each matched exactly one modular form through identical coefficient sequences, conductor matching level in every case. This is detection of an algebraic identity through structural comparison in 0.4 seconds. Not a statistical correlation — an exact match at 25 independent verification points per pair.
 
-**177 partial matches** — curves whose first 10 coefficients match a form at a different level but diverge before 25 — define the twilight zone between known modularity and potential novel correspondences.
+**177 partial matches** define the twilight zone. Of these, 14 occur at the SAME conductor/level — curves and forms sharing the first 10 Hecke eigenvalues before diverging. These are candidate **modular form congruences**, a phenomenon connected to Galois representations and the Langlands program. The remaining 163 involve different levels related by small prime factors (2, 3, 5, 7), consistent with **level-raising** phenomena. All 177 diverge at coefficient 10-11 (primes 29-31), suggesting a systematic arithmetic boundary. These partial matches are the explicit next calibration target: if any represent previously uncatalogued congruences, the pipeline has produced a novel number-theoretic finding.
 
 ### 4.4 Cross-domain calibration: scalar positive control
 
