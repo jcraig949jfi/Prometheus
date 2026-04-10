@@ -1,0 +1,72 @@
+{
+  "problem": "F21",
+  "title": "Graph Spectral Rigidity Constant",
+  "method": "k-NN graph (k=10) on mod-5 fingerprints, 5% edge rewiring, R = 1 - (mean L2 spectral shift / spectrum L2 norm), 20 perturbation trials per domain",
+  "domains": {
+    "OEIS": {
+      "n_objects": 500,
+      "unique_fingerprints": 495,
+      "n_edges": 3536,
+      "spectral_rigidity_R": 0.984172,
+      "spectral_rigidity_std": 0.000651,
+      "spectral_gap": 0.020202,
+      "max_eigenvalue": 1.373848,
+      "spectrum_L2_norm": 23.14575
+    },
+    "EC": {
+      "n_objects": 500,
+      "unique_fingerprints": 419,
+      "n_edges": 3335,
+      "spectral_rigidity_R": 0.984372,
+      "spectral_rigidity_std": 0.00071,
+      "spectral_gap": 0.067847,
+      "max_eigenvalue": 1.40282,
+      "spectrum_L2_norm": 23.187629
+    },
+    "Knots": {
+      "n_objects": 500,
+      "unique_fingerprints": 368,
+      "n_edges": 3317,
+      "spectral_rigidity_R": 0.981767,
+      "spectral_rigidity_std": 0.000476,
+      "spectral_gap": 0.05939,
+      "max_eigenvalue": 1.448651,
+      "spectrum_L2_norm": 23.192606
+    },
+    "MF": {
+      "n_objects": 500,
+      "unique_fingerprints": 499,
+      "n_edges": 3453,
+      "spectral_rigidity_R": 0.982396,
+      "spectral_rigidity_std": 0.000569,
+      "spectral_gap": 0.000866,
+      "max_eigenvalue": 1.371244,
+      "spectrum_L2_norm": 23.164236
+    },
+    "Lattices": {
+      "n_objects": 500,
+      "unique_fingerprints": 92,
+      "n_edges": 3457,
+      "spectral_rigidity_R": 0.96908,
+      "spectral_rigidity_std": 0.000782,
+      "spectral_gap": 0.002265,
+      "max_eigenvalue": 1.624303,
+      "spectrum_L2_norm": 23.146176
+    },
+    "NULL_RANDOM": {
+      "n_objects": 500,
+      "spectral_rigidity_R": 0.983524,
+      "spectral_rigidity_std": 0.000678,
+      "note": "Null baseline: random Dirichlet fingerprints"
+    }
+  },
+  "ranking": [
+    "EC",
+    "OEIS",
+    "MF",
+    "Knots",
+    "Lattices"
+  ],
+  "most_rigid_domain": "EC",
+  "least_rigid_domain": "Lattices"
+}
