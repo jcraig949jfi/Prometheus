@@ -70,24 +70,44 @@ def fetch_energy_levels(element):
         with urllib.request.urlopen(req, timeout=30) as resp:
             html = resp.read().decode("utf-8", errors="replace")
 
-        # Parse the HTML table (rough extraction)
-        lines = []
-        in_pre = False
-        for line in html.split("\n"):
-            if "<pre>" in line.lower():
-                in_pre = True
-                continue
-            if "</pre>" in line.lower():
-                in_pre = False
-                continue
-            if in_pre and line.strip():
-                lines.append(line)
+        # Response is tab-delimited text, not HTML
+        # First line is header, rest are data
+        lines = [l.strip() for l in html.split("\n") if l.strip()]
+
+        # Parse into structured records
+        if lines:
+            header = lines[0]
+            data_lines = lines[1:]
+        else:
+            header = ""
+            data_lines = []
+
+        # Extract energy levels
+        levels = []
+        for line in data_lines:
+            fields = line.split("\t")
+            if len(fields) >= 5:
+                try:
+                    config = fields[0].strip().strip('"')
+                    term = fields[1].strip().strip('"') if len(fields) > 1 else ""
+                    j_val = fields[2].strip().strip('"') if len(fields) > 2 else ""
+                    energy_str = fields[4].strip().strip('"') if len(fields) > 4 else ""
+                    if energy_str:
+                        energy = float(energy_str)
+                        levels.append({
+                            "config": config,
+                            "term": term,
+                            "J": j_val,
+                            "energy_eV": energy,
+                        })
+                except (ValueError, IndexError):
+                    pass
 
         result = {
             "element": element,
             "spectrum": f"{element} I",
-            "n_lines": len(lines),
-            "raw_lines": lines[:500],  # cap to avoid huge files
+            "n_levels": len(levels),
+            "levels": levels,
             "fetched": time.strftime("%Y-%m-%dT%H:%M:%S"),
         }
 
