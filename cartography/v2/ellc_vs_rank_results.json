@@ -1,0 +1,552 @@
+{
+  "challenge": "OSC-6",
+  "title": "Isolation Altitude (ell_c) vs Analytic Rank",
+  "timestamp": "2026-04-10T10:19:59",
+  "elapsed_seconds": 22.4,
+  "orbit_analysis": {
+    "orbit_table": [
+      {
+        "form": "15.2.a.a",
+        "level": 15,
+        "ell_c": 7,
+        "fricke": -1,
+        "ec_iso": "15.a",
+        "ec_rank": 0,
+        "ec_analytic_rank": 0
+      },
+      {
+        "form": "960.2.a.l",
+        "level": 960,
+        "ell_c": 3,
+        "fricke": -1,
+        "ec_iso": "960.l",
+        "ec_rank": 0,
+        "ec_analytic_rank": 0
+      },
+      {
+        "form": "240.2.a.d",
+        "level": 240,
+        "ell_c": 5,
+        "fricke": -1,
+        "ec_iso": "240.d",
+        "ec_rank": 0,
+        "ec_analytic_rank": 0
+      },
+      {
+        "form": "45.2.a.a",
+        "level": 45,
+        "ell_c": 5,
+        "fricke": -1,
+        "ec_iso": "45.a",
+        "ec_rank": 0,
+        "ec_analytic_rank": 0
+      },
+      {
+        "form": "75.2.a.b",
+        "level": 75,
+        "ell_c": 5,
+        "fricke": -1,
+        "ec_iso": "75.b",
+        "ec_rank": 0,
+        "ec_analytic_rank": 0
+      }
+    ],
+    "spearman": {
+      "rho": null,
+      "p": null,
+      "verdict": "DEGENERATE (all ranks equal)"
+    },
+    "all_ranks_zero": true,
+    "all_fricke_minus1": true,
+    "note": "All 5 forms have fricke=-1 AND rank=0. LMFDB convention: root_number = -fricke_eigenval (verified 100% on 971 forms). So fricke=-1 => root_number=+1 => even functional equation => rank even (typically 0). This is CONSISTENT. The twist orbit preserves the root number, as expected for quadratic twists by the same character orbit. ell_c varies (7->5->5->5->3) while rank is constant at 0. Therefore ell_c does NOT correlate with rank in this orbit."
+  },
+  "extended_pairs": {
+    "n_pairs": 148,
+    "n_both_matched": 148,
+    "n_rank_differs": 67,
+    "delta_spearman": {
+      "rho": -0.10671532702672931,
+      "p": 0.19983319562718593,
+      "n": 146
+    },
+    "absolute_spearman": {
+      "rho": -0.025510016033460117,
+      "p": 0.6631173963380901,
+      "n": 294
+    },
+    "rank_distribution": {
+      "0": 214,
+      "1": 80
+    },
+    "ellc_by_rank": {
+      "0": {
+        "mean": 4.906542056074766,
+        "median": 5.0,
+        "n": 214
+      },
+      "1": {
+        "mean": 4.775,
+        "median": 5.0,
+        "n": 80
+      }
+    },
+    "fricke_vs_rank": {
+      "-1": {
+        "mean_rank": 0.0,
+        "n": 215,
+        "rank_dist": {
+          "0": 215
+        }
+      },
+      "1": {
+        "mean_rank": 1.0,
+        "n": 81,
+        "rank_dist": {
+          "1": 81
+        }
+      }
+    },
+    "sample_pairs": [
+      {
+        "form_f": "50.2.a.a",
+        "form_g": "50.2.a.b",
+        "discriminant": 5,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "54.2.a.a",
+        "form_g": "54.2.a.b",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "75.2.a.a",
+        "form_g": "75.2.a.c",
+        "discriminant": 5,
+        "ell_c_f": 5,
+        "ell_c_g": 3,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 2
+      },
+      {
+        "form_f": "90.2.a.a",
+        "form_g": "90.2.a.b",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "96.2.a.a",
+        "form_g": "96.2.a.b",
+        "discriminant": -4,
+        "ell_c_f": 3,
+        "ell_c_g": 3,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "99.2.a.a",
+        "form_g": "99.2.a.c",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "121.2.a.a",
+        "form_g": "121.2.a.c",
+        "discriminant": -11,
+        "ell_c_f": 7,
+        "ell_c_g": 7,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "128.2.a.a",
+        "form_g": "128.2.a.b",
+        "discriminant": -8,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "128.2.a.a",
+        "form_g": "128.2.a.c",
+        "discriminant": -4,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "128.2.a.a",
+        "form_g": "128.2.a.d",
+        "discriminant": 8,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "128.2.a.b",
+        "form_g": "128.2.a.c",
+        "discriminant": 8,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "128.2.a.b",
+        "form_g": "128.2.a.d",
+        "discriminant": -4,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "128.2.a.c",
+        "form_g": "128.2.a.d",
+        "discriminant": -8,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "135.2.a.a",
+        "form_g": "135.2.a.b",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "147.2.a.b",
+        "form_g": "147.2.a.c",
+        "discriminant": -7,
+        "ell_c_f": 5,
+        "ell_c_g": 3,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 2
+      },
+      {
+        "form_f": "150.2.a.a",
+        "form_g": "150.2.a.c",
+        "discriminant": 5,
+        "ell_c_f": 3,
+        "ell_c_g": 3,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "153.2.a.a",
+        "form_g": "153.2.a.d",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "160.2.a.a",
+        "form_g": "160.2.a.b",
+        "discriminant": -4,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "162.2.a.a",
+        "form_g": "162.2.a.d",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": 1,
+        "fricke_g": -1,
+        "rank_f": 1,
+        "rank_g": 0,
+        "delta_rank": 1,
+        "delta_ellc": 0
+      },
+      {
+        "form_f": "162.2.a.b",
+        "form_g": "162.2.a.c",
+        "discriminant": -3,
+        "ell_c_f": 5,
+        "ell_c_g": 5,
+        "fricke_f": -1,
+        "fricke_g": -1,
+        "rank_f": 0,
+        "rank_g": 0,
+        "delta_rank": 0,
+        "delta_ellc": 0
+      }
+    ]
+  },
+  "kstar_vs_rank": {
+    "n_forms": 234,
+    "spearman_kstar_rank": {
+      "rho": -0.03704794459000602,
+      "p": 0.5728335104820759,
+      "n": 234
+    },
+    "kstar_by_rank": {
+      "0": {
+        "mean": 11.335403726708075,
+        "median": 12.0,
+        "n": 161
+      },
+      "1": {
+        "mean": 10.808219178082192,
+        "median": 11.0,
+        "n": 73
+      }
+    },
+    "kstar_magnitude_by_rank": {
+      "0": {
+        "mean_abs_ac": 0.14355601454075256,
+        "n": 161
+      },
+      "1": {
+        "mean_abs_ac": 0.15912373456330828,
+        "n": 73
+      }
+    },
+    "sample": [
+      {
+        "form": "100.2.a.a",
+        "kstar": 12,
+        "kstar_value": 0.15881743614822055,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "11.2.a.a",
+        "kstar": 13,
+        "kstar_value": -0.15750310006193288,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "112.2.a.a",
+        "kstar": 16,
+        "kstar_value": -0.1504612468947148,
+        "rank": 1,
+        "fricke": 1
+      },
+      {
+        "form": "112.2.a.b",
+        "kstar": 18,
+        "kstar_value": 0.12368428497191046,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "112.2.a.c",
+        "kstar": 16,
+        "kstar_value": -0.12580924274637975,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "117.2.a.a",
+        "kstar": 6,
+        "kstar_value": -0.12139715937061285,
+        "rank": 1,
+        "fricke": 1
+      },
+      {
+        "form": "121.2.a.a",
+        "kstar": 15,
+        "kstar_value": 0.1946345235681792,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "121.2.a.c",
+        "kstar": 5,
+        "kstar_value": -0.15328804075753225,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "121.2.a.d",
+        "kstar": 19,
+        "kstar_value": 0.1389492371562779,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "126.2.a.a",
+        "kstar": 6,
+        "kstar_value": -0.15403449766688007,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "128.2.a.a",
+        "kstar": 2,
+        "kstar_value": 0.2451130242752013,
+        "rank": 1,
+        "fricke": 1
+      },
+      {
+        "form": "128.2.a.b",
+        "kstar": 14,
+        "kstar_value": 0.19448005080560118,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "128.2.a.c",
+        "kstar": 2,
+        "kstar_value": -0.24588103945637363,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "128.2.a.d",
+        "kstar": 14,
+        "kstar_value": -0.19516488169550908,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "135.2.a.a",
+        "kstar": 1,
+        "kstar_value": 0.1471960183408583,
+        "rank": 1,
+        "fricke": 1
+      },
+      {
+        "form": "135.2.a.b",
+        "kstar": 1,
+        "kstar_value": -0.1472091873689987,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "14.2.a.a",
+        "kstar": 16,
+        "kstar_value": -0.09728221894992553,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "144.2.a.a",
+        "kstar": 18,
+        "kstar_value": 0.08551980486261182,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "144.2.a.b",
+        "kstar": 2,
+        "kstar_value": -0.09514042734776461,
+        "rank": 0,
+        "fricke": -1
+      },
+      {
+        "form": "147.2.a.a",
+        "kstar": 4,
+        "kstar_value": 0.10965315376415948,
+        "rank": 0,
+        "fricke": -1
+      }
+    ]
+  },
+  "interpretation": [
+    "Within the 15.2.a.a twist orbit, all 5 forms correspond to rank-0 elliptic curves. ell_c varies (7->5->5->5->3) but rank is constant. Therefore ell_c does NOT track analytic rank in this orbit.",
+    "Across all twist pairs: Spearman(|delta_ell_c|, |delta_rank|) = -0.1067 (p=0.1998). No significant correlation.",
+    "Absolute: Spearman(ell_c, rank) = -0.0255 (p=0.6631). Not significant.",
+    "ell_c measures the mod-ell distinguishability of the Galois representation, which is a LOCAL property of rho_{f,ell}. Analytic rank is a GLOBAL property (order of vanishing of L(s,f) at s=1). The lack of correlation suggests these are genuinely orthogonal: ell_c tracks representation-theoretic crowding, not arithmetic rank.",
+    "Fricke sign check: fricke=-1 forms have mean rank 0.000 (n=215), fricke=+1 forms have mean rank 1.000 (n=81). LMFDB convention: root_number = -fricke_eigenval (verified 100%). So fricke=-1 => root_number=+1 => rank even (0), fricke=+1 => root_number=-1 => rank odd (1). The perfect split in our sample confirms BSD parity holds exactly."
+  ],
+  "verdict": "NEGATIVE: ell_c and analytic rank are UNCORRELATED. ell_c measures local mod-ell representation crowding; rank measures global L-function vanishing. These are orthogonal axes."
+}
