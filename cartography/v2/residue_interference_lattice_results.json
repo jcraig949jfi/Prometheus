@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "grid_size": [
+      200,
+      200
+    ],
+    "N": 40000,
+    "small_primes": [
+      2,
+      3,
+      5,
+      7
+    ],
+    "primorial": 210,
+    "euler_phi_210": 48,
+    "survivor_fraction_theoretical": 0.228571,
+    "monte_carlo_trials_nn": 500,
+    "monte_carlo_trials_chi2": 200,
+    "quadrat_block_size": 10
+  },
+  "sublattice_structure": {
+    "2": {
+      "positions_marked": 20000,
+      "fraction_of_grid": 0.5,
+      "theoretical_fraction": 0.5
+    },
+    "3": {
+      "positions_marked": 13333,
+      "fraction_of_grid": 0.333325,
+      "theoretical_fraction": 0.333333
+    },
+    "5": {
+      "positions_marked": 8000,
+      "fraction_of_grid": 0.2,
+      "theoretical_fraction": 0.2
+    },
+    "7": {
+      "positions_marked": 5714,
+      "fraction_of_grid": 0.14285,
+      "theoretical_fraction": 0.142857
+    }
+  },
+  "Q1_primes_as_survivors": {
+    "total_primes_in_range": 4203,
+    "primes_that_are_sieve_survivors": 4199,
+    "primes_excluded_by_sieve": 4,
+    "excluded_primes_are": [
+      2,
+      3,
+      5,
+      7
+    ],
+    "fraction_primes_that_are_survivors": 0.9990483,
+    "interpretation": "All primes except {2,3,5,7} are coprime to 210, so ~99.9% are survivors"
+  },
+  "Q2_spatial_overlap": {
+    "total_sieve_survivors": 9142,
+    "survivor_fraction_of_grid": 0.22855,
+    "primes_on_survivor_positions": 4199,
+    "expected_if_uniform": 960.6,
+    "overlap_enrichment_ratio": 4.371246,
+    "interpretation": "Enrichment ratio >> 1 means primes are heavily concentrated on survivor positions. This is trivially expected since primes > 7 MUST be coprime to 210."
+  },
+  "Q3_clustering_within_survivor_sublattice": {
+    "nearest_neighbor_analysis": {
+      "actual_prime_nn_mean": 1.7652,
+      "actual_prime_nn_std": 0.6603,
+      "random_placement_nn_mean": 1.7594,
+      "random_placement_nn_std": 0.674,
+      "z_score_clustering": 0.5504,
+      "interpretation": "z < -2 would mean primes are MORE clustered than random on the survivor sublattice. z > 2 would mean primes are MORE spread out (repulsion). |z| < 2 means no significant deviation."
+    },
+    "quadrat_chi2_analysis": {
+      "chi2_primes": 223.42,
+      "dof": 399,
+      "chi2_random_mean": 214.7,
+      "chi2_random_std": 15.87,
+      "chi2_z_score": 0.5495,
+      "interpretation": "chi2_z >> 2 means primes show excess spatial variation beyond what random placement on the survivor lattice produces. This captures density gradients."
+    },
+    "row_density_pnt_residual": {
+      "residual_mean": -0.003304,
+      "residual_std": 0.056211,
+      "residual_max_abs": 0.167346,
+      "interpretation": "Residual after subtracting PNT-predicted density among survivors. Small residual_std means PNT + sieve explains nearly all row-to-row variation."
+    }
+  },
+  "verdict": {
+    "sieve_explains_spatial_structure": true,
+    "residual_clustering_detected": false,
+    "residual_density_gradient_detected": false,
+    "summary": "The sieve lattice is the COMPLETE explanation for prime spatial structure on this grid. Once you condition on the survivor sublattice, primes show no excess clustering (NN z=0.55) and no excess density variation (chi2 z=0.55). All apparent 'structure' of primes on the 200x200 grid is fully accounted for by the mod-2, mod-3, mod-5, mod-7 exclusion pattern."
+  }
+}
