@@ -1,0 +1,782 @@
+{
+  "metadata": {
+    "n_forms": 17314,
+    "H_0_bits": 14.079651,
+    "formula": "H(form|partition) = sum_i (n_i/N) * log2(n_i); H=0 at complete reconstruction",
+    "primes_25": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29,
+      31,
+      37,
+      41,
+      43,
+      47,
+      53,
+      59,
+      61,
+      67,
+      71,
+      73,
+      79,
+      83,
+      89,
+      97
+    ],
+    "ells_orderings": [
+      3,
+      5,
+      7
+    ],
+    "ells_single": [
+      3,
+      5,
+      7,
+      11
+    ],
+    "clustering_method": "good_prime_agreement_with_cross_level_merge",
+    "min_shared_primes": 20,
+    "timestamp": "2026-04-10 03:01:08",
+    "elapsed_seconds": 26.29
+  },
+  "single_prime_entropy": {
+    "mod_3": {
+      "conditional_entropy_bits": 2.336761,
+      "n_clusters": 7901,
+      "n_singletons": 4750,
+      "n_non_singleton_clusters": 3151,
+      "max_cluster_size": 1307,
+      "cross_level_merges": 5297,
+      "size_distribution_top10": {
+        "1": 4750,
+        "2": 1857,
+        "3": 519,
+        "4": 282,
+        "5": 135,
+        "6": 77,
+        "7": 67,
+        "8": 48,
+        "12": 23,
+        "10": 22
+      },
+      "information_gain_bits": 11.74289,
+      "pct_of_total_info": 83.4033
+    },
+    "mod_5": {
+      "conditional_entropy_bits": 0.334713,
+      "n_clusters": 15021,
+      "n_singletons": 13364,
+      "n_non_singleton_clusters": 1657,
+      "max_cluster_size": 96,
+      "cross_level_merges": 1491,
+      "size_distribution_top10": {
+        "1": 13364,
+        "2": 1376,
+        "3": 176,
+        "4": 62,
+        "5": 27,
+        "6": 4,
+        "7": 3,
+        "10": 2,
+        "96": 1,
+        "33": 1
+      },
+      "information_gain_bits": 13.744938,
+      "pct_of_total_info": 97.6227
+    },
+    "mod_7": {
+      "conditional_entropy_bits": 0.058922,
+      "n_clusters": 16839,
+      "n_singletons": 16415,
+      "n_non_singleton_clusters": 424,
+      "max_cluster_size": 13,
+      "cross_level_merges": 315,
+      "size_distribution_top10": {
+        "1": 16415,
+        "2": 399,
+        "3": 18,
+        "4": 3,
+        "13": 1,
+        "7": 1,
+        "10": 1,
+        "5": 1
+      },
+      "information_gain_bits": 14.020729,
+      "pct_of_total_info": 99.5815
+    },
+    "mod_11": {
+      "conditional_entropy_bits": 0.001964,
+      "n_clusters": 17297,
+      "n_singletons": 17280,
+      "n_non_singleton_clusters": 17,
+      "max_cluster_size": 2,
+      "cross_level_merges": 12,
+      "size_distribution_top10": {
+        "1": 17280,
+        "2": 17
+      },
+      "information_gain_bits": 14.077687,
+      "pct_of_total_info": 99.9861
+    }
+  },
+  "single_prime_ranking": [
+    {
+      "ell": "mod_11",
+      "info_bits": 14.077687
+    },
+    {
+      "ell": "mod_7",
+      "info_bits": 14.020729
+    },
+    {
+      "ell": "mod_5",
+      "info_bits": 13.744938
+    },
+    {
+      "ell": "mod_3",
+      "info_bits": 11.74289
+    }
+  ],
+  "orderings": {
+    "3,5,7": {
+      "ordering": [
+        3,
+        5,
+        7
+      ],
+      "depths": {
+        "depth_1": {
+          "ells_used": [
+            3
+          ],
+          "H_conditional_bits": 2.336761,
+          "info_gain_step_bits": 11.74289,
+          "info_gain_cumulative_bits": 11.74289,
+          "n_clusters": 7901,
+          "n_singletons": 4750,
+          "n_non_singleton_clusters": 3151,
+          "max_cluster_size": 1307,
+          "cross_level_merges": 5297
+        },
+        "depth_2": {
+          "ells_used": [
+            3,
+            5
+          ],
+          "H_conditional_bits": 0.000462,
+          "info_gain_step_bits": 2.336299,
+          "info_gain_cumulative_bits": 14.079189,
+          "n_clusters": 17310,
+          "n_singletons": 17306,
+          "n_non_singleton_clusters": 4,
+          "max_cluster_size": 2,
+          "cross_level_merges": 4
+        },
+        "depth_3": {
+          "ells_used": [
+            3,
+            5,
+            7
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.000462,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        }
+      }
+    },
+    "3,7,5": {
+      "ordering": [
+        3,
+        7,
+        5
+      ],
+      "depths": {
+        "depth_1": {
+          "ells_used": [
+            3
+          ],
+          "H_conditional_bits": 2.336761,
+          "info_gain_step_bits": 11.74289,
+          "info_gain_cumulative_bits": 11.74289,
+          "n_clusters": 7901,
+          "n_singletons": 4750,
+          "n_non_singleton_clusters": 3151,
+          "max_cluster_size": 1307,
+          "cross_level_merges": 5297
+        },
+        "depth_2": {
+          "ells_used": [
+            3,
+            7
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 2.336761,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        },
+        "depth_3": {
+          "ells_used": [
+            3,
+            7,
+            5
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.0,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        }
+      }
+    },
+    "5,3,7": {
+      "ordering": [
+        5,
+        3,
+        7
+      ],
+      "depths": {
+        "depth_1": {
+          "ells_used": [
+            5
+          ],
+          "H_conditional_bits": 0.334713,
+          "info_gain_step_bits": 13.744938,
+          "info_gain_cumulative_bits": 13.744938,
+          "n_clusters": 15021,
+          "n_singletons": 13364,
+          "n_non_singleton_clusters": 1657,
+          "max_cluster_size": 96,
+          "cross_level_merges": 1491
+        },
+        "depth_2": {
+          "ells_used": [
+            5,
+            3
+          ],
+          "H_conditional_bits": 0.000462,
+          "info_gain_step_bits": 0.334251,
+          "info_gain_cumulative_bits": 14.079189,
+          "n_clusters": 17310,
+          "n_singletons": 17306,
+          "n_non_singleton_clusters": 4,
+          "max_cluster_size": 2,
+          "cross_level_merges": 4
+        },
+        "depth_3": {
+          "ells_used": [
+            5,
+            3,
+            7
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.000462,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        }
+      }
+    },
+    "5,7,3": {
+      "ordering": [
+        5,
+        7,
+        3
+      ],
+      "depths": {
+        "depth_1": {
+          "ells_used": [
+            5
+          ],
+          "H_conditional_bits": 0.334713,
+          "info_gain_step_bits": 13.744938,
+          "info_gain_cumulative_bits": 13.744938,
+          "n_clusters": 15021,
+          "n_singletons": 13364,
+          "n_non_singleton_clusters": 1657,
+          "max_cluster_size": 96,
+          "cross_level_merges": 1491
+        },
+        "depth_2": {
+          "ells_used": [
+            5,
+            7
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.334713,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        },
+        "depth_3": {
+          "ells_used": [
+            5,
+            7,
+            3
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.0,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        }
+      }
+    },
+    "7,3,5": {
+      "ordering": [
+        7,
+        3,
+        5
+      ],
+      "depths": {
+        "depth_1": {
+          "ells_used": [
+            7
+          ],
+          "H_conditional_bits": 0.058922,
+          "info_gain_step_bits": 14.020729,
+          "info_gain_cumulative_bits": 14.020729,
+          "n_clusters": 16839,
+          "n_singletons": 16415,
+          "n_non_singleton_clusters": 424,
+          "max_cluster_size": 13,
+          "cross_level_merges": 315
+        },
+        "depth_2": {
+          "ells_used": [
+            7,
+            3
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.058922,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        },
+        "depth_3": {
+          "ells_used": [
+            7,
+            3,
+            5
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.0,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        }
+      }
+    },
+    "7,5,3": {
+      "ordering": [
+        7,
+        5,
+        3
+      ],
+      "depths": {
+        "depth_1": {
+          "ells_used": [
+            7
+          ],
+          "H_conditional_bits": 0.058922,
+          "info_gain_step_bits": 14.020729,
+          "info_gain_cumulative_bits": 14.020729,
+          "n_clusters": 16839,
+          "n_singletons": 16415,
+          "n_non_singleton_clusters": 424,
+          "max_cluster_size": 13,
+          "cross_level_merges": 315
+        },
+        "depth_2": {
+          "ells_used": [
+            7,
+            5
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.058922,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        },
+        "depth_3": {
+          "ells_used": [
+            7,
+            5,
+            3
+          ],
+          "H_conditional_bits": 0.0,
+          "info_gain_step_bits": 0.0,
+          "info_gain_cumulative_bits": 14.079651,
+          "n_clusters": 17314,
+          "n_singletons": 17314,
+          "n_non_singleton_clusters": 0,
+          "max_cluster_size": 1,
+          "cross_level_merges": 0
+        }
+      }
+    }
+  },
+  "ordering_invariance": {
+    "depth_1": {
+      "3,5,7": {
+        "ells_used": [
+          3
+        ],
+        "H_bits": 2.336761
+      },
+      "3,7,5": {
+        "ells_used": [
+          3
+        ],
+        "H_bits": 2.336761
+      },
+      "5,3,7": {
+        "ells_used": [
+          5
+        ],
+        "H_bits": 0.334713
+      },
+      "5,7,3": {
+        "ells_used": [
+          5
+        ],
+        "H_bits": 0.334713
+      },
+      "7,3,5": {
+        "ells_used": [
+          7
+        ],
+        "H_bits": 0.058922
+      },
+      "7,5,3": {
+        "ells_used": [
+          7
+        ],
+        "H_bits": 0.058922
+      }
+    },
+    "depth_2": {
+      "3,5,7": {
+        "ells_used": [
+          3,
+          5
+        ],
+        "H_bits": 0.000462
+      },
+      "3,7,5": {
+        "ells_used": [
+          3,
+          7
+        ],
+        "H_bits": 0.0
+      },
+      "5,3,7": {
+        "ells_used": [
+          5,
+          3
+        ],
+        "H_bits": 0.000462
+      },
+      "5,7,3": {
+        "ells_used": [
+          5,
+          7
+        ],
+        "H_bits": 0.0
+      },
+      "7,3,5": {
+        "ells_used": [
+          7,
+          3
+        ],
+        "H_bits": 0.0
+      },
+      "7,5,3": {
+        "ells_used": [
+          7,
+          5
+        ],
+        "H_bits": 0.0
+      }
+    },
+    "depth_3": {
+      "3,5,7": {
+        "ells_used": [
+          3,
+          5,
+          7
+        ],
+        "H_bits": 0.0
+      },
+      "3,7,5": {
+        "ells_used": [
+          3,
+          7,
+          5
+        ],
+        "H_bits": 0.0
+      },
+      "5,3,7": {
+        "ells_used": [
+          5,
+          3,
+          7
+        ],
+        "H_bits": 0.0
+      },
+      "5,7,3": {
+        "ells_used": [
+          5,
+          7,
+          3
+        ],
+        "H_bits": 0.0
+      },
+      "7,3,5": {
+        "ells_used": [
+          7,
+          3,
+          5
+        ],
+        "H_bits": 0.0
+      },
+      "7,5,3": {
+        "ells_used": [
+          7,
+          5,
+          3
+        ],
+        "H_bits": 0.0
+      }
+    },
+    "summary": {
+      "depth_1_H_range": [
+        0.058922,
+        2.336761
+      ],
+      "depth_2_H_range": [
+        0.0,
+        0.000462
+      ],
+      "depth_3_H_range": [
+        0.0,
+        0.0
+      ],
+      "depth_1_spread_bits": 2.277839,
+      "depth_2_spread_bits": 0.000462,
+      "depth_3_converged_to_zero": true
+    },
+    "best_first_prime": {
+      "ell": 7,
+      "info_gain_bits": 14.020729,
+      "all_first_primes": {
+        "3": 11.74289,
+        "5": 13.744938,
+        "7": 14.020729
+      }
+    }
+  },
+  "canonical_curve": {
+    "ordering": [
+      3,
+      5,
+      7
+    ],
+    "depths": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "H_conditional_bits": [
+      14.079651,
+      2.336761,
+      0.000462,
+      0.0
+    ],
+    "I_cumulative_bits": [
+      0.0,
+      11.74289,
+      14.079189,
+      14.079651
+    ],
+    "I_step_bits": [
+      11.74289,
+      2.336299,
+      0.000462
+    ],
+    "slope_ratios": {
+      "I2_over_I1": 0.198954,
+      "I3_over_I2": 0.000198,
+      "I3_over_I1": 3.9e-05
+    },
+    "pct_per_step": [
+      83.4033,
+      16.5934,
+      0.0033
+    ]
+  },
+  "bits_per_prime": {
+    "3,5,7": {
+      "total_info_bits": 14.079651,
+      "avg_bits_per_prime": 4.693217,
+      "steps": [
+        11.74289,
+        2.336299,
+        0.000462
+      ],
+      "n_informative_primes": 2,
+      "pattern": "diminishing"
+    },
+    "3,7,5": {
+      "total_info_bits": 14.079651,
+      "avg_bits_per_prime": 4.693217,
+      "steps": [
+        11.74289,
+        2.336761,
+        0.0
+      ],
+      "n_informative_primes": 2,
+      "pattern": "diminishing"
+    },
+    "5,3,7": {
+      "total_info_bits": 14.079651,
+      "avg_bits_per_prime": 4.693217,
+      "steps": [
+        13.744938,
+        0.334251,
+        0.000462
+      ],
+      "n_informative_primes": 2,
+      "pattern": "diminishing"
+    },
+    "5,7,3": {
+      "total_info_bits": 14.079651,
+      "avg_bits_per_prime": 4.693217,
+      "steps": [
+        13.744938,
+        0.334713,
+        0.0
+      ],
+      "n_informative_primes": 2,
+      "pattern": "diminishing"
+    },
+    "7,3,5": {
+      "total_info_bits": 14.079651,
+      "avg_bits_per_prime": 4.693217,
+      "steps": [
+        14.020729,
+        0.058922,
+        0.0
+      ],
+      "n_informative_primes": 2,
+      "pattern": "diminishing"
+    },
+    "7,5,3": {
+      "total_info_bits": 14.079651,
+      "avg_bits_per_prime": 4.693217,
+      "steps": [
+        14.020729,
+        0.058922,
+        0.0
+      ],
+      "n_informative_primes": 2,
+      "pattern": "diminishing"
+    }
+  },
+  "theoretical_compression": {
+    "mod_3": {
+      "theoretical_max_bits": 39.624063,
+      "actual_info_bits": 11.74289,
+      "efficiency": 0.296358,
+      "n_distinct_clusters": 7901,
+      "compression_factor": 3.3743
+    },
+    "mod_5": {
+      "theoretical_max_bits": 58.048202,
+      "actual_info_bits": 13.744938,
+      "efficiency": 0.236785,
+      "n_distinct_clusters": 15021,
+      "compression_factor": 4.2232
+    },
+    "mod_7": {
+      "theoretical_max_bits": 70.183873,
+      "actual_info_bits": 14.020729,
+      "efficiency": 0.199771,
+      "n_distinct_clusters": 16839,
+      "compression_factor": 5.0057
+    },
+    "mod_11": {
+      "theoretical_max_bits": 86.48579,
+      "actual_info_bits": 14.077687,
+      "efficiency": 0.162775,
+      "n_distinct_clusters": 17297,
+      "compression_factor": 6.1435
+    }
+  },
+  "physical_interpretation": {
+    "total_identity_bits": 14.079651,
+    "canonical_ordering": [
+      3,
+      5,
+      7
+    ],
+    "H_after_each_depth": [
+      14.0797,
+      2.3368,
+      0.0005,
+      0.0
+    ],
+    "bits_per_step": [
+      11.7429,
+      2.3363,
+      0.0005
+    ],
+    "pct_per_step": [
+      83.4033,
+      16.5934,
+      0.0033
+    ],
+    "three_primes_sufficient": true,
+    "mod3_is_always_best_first": false,
+    "ordering_matters_at_depth_1": true,
+    "ordering_converges_at_depth_3": true,
+    "description": "RECONSTRUCTION ENTROPY for 17314 weight-2 newforms (14.08 bits of identity):\n\n  Depth 0 (no info):   H = 14.0797 bits\n  Depth 1 (mod-3):     H = 2.3368 bits  (gained 11.7429 = 83.4%)\n  Depth 2 (mod-3,5):   H = 0.0005 bits  (gained 2.3363 = 16.6%)\n  Depth 3 (mod-3,5,7): H = 0.0000 bits  (gained 0.0005 = 0.0%)\n\n  mod-3 alone captures 83.4% of all identity information.\n  Ordering matters at depth 1 (spread = 2.28 bits)\n  but converges at depth 3: True\n\n  Single-prime ranking: mod-3 >> mod-5 >> mod-7 >> mod-11\n    mod-3:  11.7429 bits\n    mod-5:  13.7449 bits\n    mod-7:  14.0207 bits\n    mod-11: 14.0777 bits\n\n  Compression: mod-3 fingerprint has 40 theoretical bits\n  but only 11.74 bits are informative (3x compression)."
+  }
+}

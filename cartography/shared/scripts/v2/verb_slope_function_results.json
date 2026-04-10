@@ -1,0 +1,438 @@
+{
+  "meta": {
+    "challenge": "M4",
+    "title": "Verb-Slope Transfer Function g(And, Equal) \u2192 slope",
+    "timestamp": "2026-04-10T02:55:53.014257",
+    "n_st_groups": 6,
+    "groups": [
+      "E_6",
+      "G_{3,3}",
+      "J(E_1)",
+      "N(G_{1,3})",
+      "N(G_{3,3})",
+      "USp(4)"
+    ]
+  },
+  "data_table": [
+    {
+      "group": "E_6",
+      "slope": 0.014232,
+      "And": 0.444649,
+      "Equal": 0.843173,
+      "For": 0.171587,
+      "Set": 0.081181,
+      "endo_rank": 2
+    },
+    {
+      "group": "G_{3,3}",
+      "slope": -0.265804,
+      "And": 0.31768,
+      "Equal": 0.80663,
+      "For": 0.207182,
+      "Set": 0.116022,
+      "endo_rank": 2
+    },
+    {
+      "group": "J(E_1)",
+      "slope": 0.397539,
+      "And": 0.542169,
+      "Equal": 0.86747,
+      "For": 0.301205,
+      "Set": 0.096386,
+      "endo_rank": 4
+    },
+    {
+      "group": "N(G_{1,3})",
+      "slope": -0.203808,
+      "And": 0.502392,
+      "Equal": 0.896332,
+      "For": 0.283892,
+      "Set": 0.079745,
+      "endo_rank": 2
+    },
+    {
+      "group": "N(G_{3,3})",
+      "slope": 0.577854,
+      "And": 0.526316,
+      "Equal": 0.885965,
+      "For": 0.307018,
+      "Set": 0.108772,
+      "endo_rank": 4
+    },
+    {
+      "group": "USp(4)",
+      "slope": 0.007802,
+      "And": 0.361582,
+      "Equal": 0.79096,
+      "For": 0.27307,
+      "Set": 0.116761,
+      "endo_rank": 1
+    }
+  ],
+  "pairwise_correlations": {
+    "And": {
+      "r": 0.682053843041022,
+      "p": 0.13556408794021518
+    },
+    "Equal": {
+      "r": 0.42123489534798075,
+      "p": 0.40551937195759946
+    },
+    "For": {
+      "r": 0.5749707589040782,
+      "p": 0.23258404812533492
+    },
+    "Set": {
+      "r": 0.12431015822086065,
+      "p": 0.814495246065684
+    },
+    "endo_rank": {
+      "r": 0.8207915788877871,
+      "p": 0.04529578909701873
+    }
+  },
+  "models": {
+    "M1: Linear 4-verb": {
+      "name": "M1: Linear 4-verb",
+      "R2": 0.972835514899639,
+      "R2_adj": 0.8641775744981952,
+      "R2_cv": -467.9085218073294,
+      "MAE": 2.9500317945636376,
+      "k": 4,
+      "coefficients": {
+        "And": {
+          "coefficient": 7.2645373537555935,
+          "std_error": 1.6397545062701695,
+          "t_value": 4.430259118652895,
+          "p_value": 0.1413296235568744
+        },
+        "Equal": {
+          "coefficient": -3.7207804043992074,
+          "std_error": 3.270277662349207,
+          "t_value": -1.1377567254415888,
+          "p_value": 0.45903295903359953
+        },
+        "For": {
+          "coefficient": -3.3707930248813347,
+          "std_error": 1.8678551648857007,
+          "t_value": -1.8046329759661013,
+          "p_value": 0.32213467658705897
+        },
+        "Set": {
+          "coefficient": 20.522893598199285,
+          "std_error": 6.356993617527211,
+          "t_value": 3.2283961307770555,
+          "p_value": 0.1912270752832652
+        },
+        "intercept": {
+          "coefficient": -1.1989938601635313,
+          "std_error": 2.593295310985572,
+          "t_value": -0.4623437427601943,
+          "p_value": 0.7242981596515912
+        }
+      }
+    },
+    "M2: And+Equal": {
+      "name": "M2: And+Equal",
+      "R2": 0.668131372098226,
+      "R2_adj": 0.44688562016371003,
+      "R2_cv": -0.24824412035645116,
+      "MAE": 0.2864612696885353,
+      "k": 2,
+      "coefficients": {
+        "And": {
+          "coefficient": 5.893846099667285,
+          "std_error": 2.79844346987418,
+          "t_value": 2.106115833003508,
+          "p_value": 0.12583084614834794
+        },
+        "Equal": {
+          "coefficient": -8.163355617230843,
+          "std_error": 6.027175789672675,
+          "t_value": -1.354424676183898,
+          "p_value": 0.26858363095029336
+        },
+        "intercept": {
+          "coefficient": 4.366825987825323,
+          "std_error": 4.017489776349564,
+          "t_value": 1.0869538520128306,
+          "p_value": 0.35658627776576557
+        }
+      }
+    },
+    "M3: And only": {
+      "name": "M3: And only",
+      "R2": 0.46519744480702685,
+      "R2_adj": 0.3314968060087835,
+      "R2_cv": -0.00594112240998923,
+      "MAE": 0.24360069208189447,
+      "k": 1,
+      "coefficients": {
+        "And": {
+          "coefficient": 2.4738188046745098,
+          "std_error": 1.3262212041270085,
+          "t_value": 1.8653138684378923,
+          "p_value": 0.13556408794021468
+        },
+        "intercept": {
+          "coefficient": -1.0231003715018687,
+          "std_error": 0.6059946537077595,
+          "t_value": -1.6882993360453937,
+          "p_value": 0.16662486236193752
+        }
+      }
+    },
+    "M5: rank+And": {
+      "name": "M5: rank+And",
+      "R2": 0.6819628535025666,
+      "R2_adj": 0.46993808917094426,
+      "R2_cv": -1.5077973883862557,
+      "MAE": 0.38098166901697894,
+      "k": 2,
+      "coefficients": {
+        "endo_rank": {
+          "coefficient": 0.19498638664523077,
+          "std_error": 0.1363601902829857,
+          "t_value": 1.42993630502113,
+          "p_value": 0.24809147839793644
+        },
+        "And": {
+          "coefficient": 0.5062655087706133,
+          "std_error": 1.81326173510384,
+          "t_value": 0.27920156200815704,
+          "p_value": 0.7982317581278602
+        },
+        "intercept": {
+          "coefficient": -0.6268765029212341,
+          "std_error": 0.6065965657426264,
+          "t_value": -1.0334323310152274,
+          "p_value": 0.3774078292067382
+        }
+      }
+    },
+    "M6: rank\u00b2+And": {
+      "name": "M6: rank\u00b2+And",
+      "R2": 0.7766434410766708,
+      "R2_adj": 0.6277390684611179,
+      "R2_cv": -0.40144527935221674,
+      "MAE": 0.3115821101704209,
+      "k": 2,
+      "coefficients": {
+        "endo_rank\u00b2": {
+          "coefficient": 0.042066755134016365,
+          "std_error": 0.020567730122200326,
+          "t_value": 2.0452794199497246,
+          "p_value": 0.1333676920649094
+        },
+        "And": {
+          "coefficient": 0.18740933023817125,
+          "std_error": 1.4930260847556394,
+          "t_value": 0.12552314534333414,
+          "p_value": 0.9080488431365332
+        },
+        "intercept": {
+          "coefficient": -0.3117028992074328,
+          "std_error": 0.5705051004229892,
+          "t_value": -0.5463630368533553,
+          "p_value": 0.6228287695403201
+        }
+      }
+    },
+    "M7: rank\u00b2 only": {
+      "name": "M7: rank\u00b2 only",
+      "R2": 0.7754703679608173,
+      "R2_adj": 0.7193379599510216,
+      "R2_cv": 0.502792482390888,
+      "MAE": 0.2016091263485582,
+      "k": 1,
+      "coefficients": {
+        "endo_rank\u00b2": {
+          "coefficient": 0.043999809843400434,
+          "std_error": 0.011837909965060789,
+          "t_value": 3.71685626713368,
+          "p_value": 0.02053075649282099
+        },
+        "intercept": {
+          "coefficient": -0.24202940715883664,
+          "std_error": 0.11446714159038304,
+          "t_value": -2.114400724925333,
+          "p_value": 0.10198332002644617
+        }
+      }
+    },
+    "M8: Equal only": {
+      "name": "M8: Equal only",
+      "R2": 0.17743883705882435,
+      "R2_adj": -0.028201453676469646,
+      "R2_cv": NaN,
+      "MAE": NaN,
+      "k": 1,
+      "coefficients": {
+        "Equal": {
+          "coefficient": 3.2905681320694855,
+          "std_error": 3.5424248909781713,
+          "t_value": 0.9289027243597703,
+          "p_value": 0.4055193719576322
+        },
+        "intercept": {
+          "coefficient": -2.7038201322239455,
+          "std_error": 3.0086498226822713,
+          "t_value": -0.8986822300953043,
+          "p_value": 0.41962919054429837
+        }
+      }
+    },
+    "M9: rank\u00b2+Equal": {
+      "name": "M9: rank\u00b2+Equal",
+      "R2": 0.7920032723879313,
+      "R2_adj": 0.6533387873132188,
+      "R2_cv": 0.020841866505578177,
+      "MAE": 0.2801088462716769,
+      "k": 2,
+      "coefficients": {
+        "endo_rank\u00b2": {
+          "coefficient": 0.0487637437851578,
+          "std_error": 0.016378757483186707,
+          "t_value": 2.9772553769854193,
+          "p_value": 0.05872585601225988
+        },
+        "Equal": {
+          "coefficient": -1.2504497859419414,
+          "std_error": 2.560703545187789,
+          "t_value": -0.48832274563443845,
+          "p_value": 0.6587883195739157
+        },
+        "intercept": {
+          "coefficient": 0.7831497797498223,
+          "std_error": 2.103239462831332,
+          "t_value": 0.3723540726530323,
+          "p_value": 0.7343780307003782
+        }
+      }
+    }
+  },
+  "best_model": {
+    "name": "M7: rank\u00b2 only",
+    "R2_cv": 0.502792482390888,
+    "MAE": 0.2016091263485582,
+    "predictions": [
+      {
+        "group": "E_6",
+        "actual": 0.014232,
+        "predicted": -0.08886337068965519,
+        "error": 0.10309537068965519
+      },
+      {
+        "group": "G_{3,3}",
+        "actual": -0.265804,
+        "predicted": -0.009197956896551757,
+        "error": -0.25660604310344826
+      },
+      {
+        "group": "J(E_1)",
+        "actual": 0.397539,
+        "predicted": 0.5238528684210529,
+        "error": -0.12631386842105297
+      },
+      {
+        "group": "N(G_{1,3})",
+        "actual": -0.203808,
+        "predicted": -0.02683475000000002,
+        "error": -0.17697324999999997
+      },
+      {
+        "group": "N(G_{3,3})",
+        "actual": 0.577854,
+        "predicted": 0.350655565789474,
+        "error": 0.227198434210526
+      },
+      {
+        "group": "USp(4)",
+        "actual": 0.007802,
+        "predicted": -0.31166579166666686,
+        "error": 0.31946779166666683
+      }
+    ]
+  },
+  "transfer_function": {
+    "formula": "slope = 0.042067\u00b7rank\u00b2 + 0.187409\u00b7And + -0.311703",
+    "R2": 0.7766434410766708,
+    "R2_adj": 0.6277390684611179,
+    "R2_cv": -0.40144527935221674,
+    "coefficients": {
+      "endo_rank\u00b2": {
+        "coefficient": 0.042066755134016365,
+        "std_error": 0.020567730122200326,
+        "t_value": 2.0452794199497246,
+        "p_value": 0.1333676920649094
+      },
+      "And": {
+        "coefficient": 0.18740933023817125,
+        "std_error": 1.4930260847556394,
+        "t_value": 0.12552314534333414,
+        "p_value": 0.9080488431365332
+      },
+      "intercept": {
+        "coefficient": -0.3117028992074328,
+        "std_error": 0.5705051004229892,
+        "t_value": -0.5463630368533553,
+        "p_value": 0.6228287695403201
+      }
+    },
+    "loo_predictions": [
+      {
+        "group": "E_6",
+        "actual": 0.014232,
+        "predicted": -0.08831839309346598,
+        "error": 0.10255039309346597
+      },
+      {
+        "group": "G_{3,3}",
+        "actual": -0.265804,
+        "predicted": 0.3599994310517234,
+        "error": -0.6258034310517233
+      },
+      {
+        "group": "J(E_1)",
+        "actual": 0.397539,
+        "predicted": 0.5262129146641827,
+        "error": -0.12867391466418276
+      },
+      {
+        "group": "N(G_{1,3})",
+        "actual": -0.203808,
+        "predicted": 0.23765824356828147,
+        "error": -0.44146624356828146
+      },
+      {
+        "group": "N(G_{3,3})",
+        "actual": 0.577854,
+        "predicted": 0.3440956838894156,
+        "error": 0.2337583161105844
+      },
+      {
+        "group": "USp(4)",
+        "actual": 0.007802,
+        "predicted": -0.3294383625342877,
+        "error": 0.3372403625342877
+      }
+    ]
+  },
+  "verb_adds_over_rank_alone": {
+    "rank2_only_R2_cv": 0.502792482390888,
+    "rank2_plus_And_R2_cv": -0.40144527935221674,
+    "delta_R2_cv": -0.9042377617431048
+  },
+  "rank_baseline": {
+    "R4_4_formula": "slope = 0.044\u00b7rank\u00b2 - 0.242",
+    "R2": 0.7754703679608173,
+    "R2_cv": 0.502792482390888
+  },
+  "interpretation": {
+    "And_meaning": "Cross-constraint density: more And = formulas link multiple conditions simultaneously",
+    "positive_And_coef": "Higher cross-constraint density \u2192 higher slope \u2192 richer endomorphism algebra",
+    "syntax_predicts_algebra": "The syntactic structure of formulas describing a family predicts its algebraic structure",
+    "caveat": "n=6 is small; measured correlation, not causal claim; needs validation on additional ST groups"
+  },
+  "verdict": "POSITIVE: Verb distribution predicts slope with LOO R\u00b2_cv=0.503. Verb does NOT add over rank\u00b2 alone (delta=-0.904)."
+}

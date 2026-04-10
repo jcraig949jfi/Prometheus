@@ -1,0 +1,772 @@
+{
+  "challenge": "M2",
+  "title": "Enrichment-Position Curve E(n)",
+  "timestamp": "2026-04-10T02:56:55",
+  "config": {
+    "primes": [
+      2,
+      5,
+      11
+    ],
+    "fp_len": 20,
+    "window_step": 10,
+    "max_start": 80,
+    "n_random_pairs": 50000,
+    "bm_sample_size": 40000,
+    "min_family_size": 3
+  },
+  "data": {
+    "n_sequences": 21219,
+    "n_families": 33,
+    "n_family_sequences": 212,
+    "positions": [
+      0,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80
+    ],
+    "windows": [
+      "[0:20]",
+      "[10:30]",
+      "[20:40]",
+      "[30:50]",
+      "[40:60]",
+      "[50:70]",
+      "[60:80]",
+      "[70:90]",
+      "[80:100]"
+    ]
+  },
+  "enrichment_curves": {
+    "2": [
+      167.92611251049541,
+      113.48852658676336,
+      113.48852658676336,
+      88.26885401192706,
+      73.76754228139619,
+      61.30415200093415,
+      71.60559031445518,
+      58.12826971517148,
+      51.92452163153476
+    ],
+    "5": [
+      1353.904282115869,
+      null,
+      944.5843828715365,
+      1574.3073047858943,
+      787.1536523929472,
+      593.7387549478229,
+      539.7625044980209,
+      472.29219143576825,
+      928.8413098236774
+    ],
+    "11": [
+      2518.891687657431,
+      1070.528967254408,
+      4282.115869017632,
+      611.7308384310904,
+      475.7906521130702,
+      3778.337531486146,
+      545.75986565911,
+      1133.501259445844,
+      556.2552476910159
+    ]
+  },
+  "detailed_data": {
+    "2": [
+      {
+        "position": 0,
+        "window": "[0:20]",
+        "family_rate": 0.15113350125944586,
+        "family_pairs": 794,
+        "family_matches": 120,
+        "random_rate": 0.0009,
+        "random_pairs": 50000,
+        "random_matches": 45,
+        "enrichment": 167.92611251049541
+      },
+      {
+        "position": 10,
+        "window": "[10:30]",
+        "family_rate": 0.20654911838790932,
+        "family_pairs": 794,
+        "family_matches": 164,
+        "random_rate": 0.00182,
+        "random_pairs": 50000,
+        "random_matches": 91,
+        "enrichment": 113.48852658676336
+      },
+      {
+        "position": 20,
+        "window": "[20:40]",
+        "family_rate": 0.20654911838790932,
+        "family_pairs": 794,
+        "family_matches": 164,
+        "random_rate": 0.00182,
+        "random_pairs": 50000,
+        "random_matches": 91,
+        "enrichment": 113.48852658676336
+      },
+      {
+        "position": 30,
+        "window": "[30:50]",
+        "family_rate": 0.20654911838790932,
+        "family_pairs": 794,
+        "family_matches": 164,
+        "random_rate": 0.00234,
+        "random_pairs": 50000,
+        "random_matches": 117,
+        "enrichment": 88.26885401192706
+      },
+      {
+        "position": 40,
+        "window": "[40:60]",
+        "family_rate": 0.20654911838790932,
+        "family_pairs": 794,
+        "family_matches": 164,
+        "random_rate": 0.0028,
+        "random_pairs": 50000,
+        "random_matches": 140,
+        "enrichment": 73.76754228139619
+      },
+      {
+        "position": 50,
+        "window": "[50:70]",
+        "family_rate": 0.18513853904282115,
+        "family_pairs": 794,
+        "family_matches": 147,
+        "random_rate": 0.00302,
+        "random_pairs": 50000,
+        "random_matches": 151,
+        "enrichment": 61.30415200093415
+      },
+      {
+        "position": 60,
+        "window": "[60:80]",
+        "family_rate": 0.17758186397984888,
+        "family_pairs": 794,
+        "family_matches": 141,
+        "random_rate": 0.00248,
+        "random_pairs": 50000,
+        "random_matches": 124,
+        "enrichment": 71.60559031445518
+      },
+      {
+        "position": 70,
+        "window": "[70:90]",
+        "family_rate": 0.181360201511335,
+        "family_pairs": 794,
+        "family_matches": 144,
+        "random_rate": 0.00312,
+        "random_pairs": 50000,
+        "random_matches": 156,
+        "enrichment": 58.12826971517148
+      },
+      {
+        "position": 80,
+        "window": "[80:100]",
+        "family_rate": 0.17758186397984888,
+        "family_pairs": 794,
+        "family_matches": 141,
+        "random_rate": 0.00342,
+        "random_pairs": 50000,
+        "random_matches": 171,
+        "enrichment": 51.92452163153476
+      }
+    ],
+    "5": [
+      {
+        "position": 0,
+        "window": "[0:20]",
+        "family_rate": 0.05415617128463476,
+        "family_pairs": 794,
+        "family_matches": 43,
+        "random_rate": 4e-05,
+        "random_pairs": 50000,
+        "random_matches": 2,
+        "enrichment": 1353.904282115869
+      },
+      {
+        "position": 10,
+        "window": "[10:30]",
+        "family_rate": 0.09445843828715365,
+        "family_pairs": 794,
+        "family_matches": 75,
+        "random_rate": 0.0,
+        "random_pairs": 50000,
+        "random_matches": 0,
+        "enrichment": null
+      },
+      {
+        "position": 20,
+        "window": "[20:40]",
+        "family_rate": 0.09445843828715365,
+        "family_pairs": 794,
+        "family_matches": 75,
+        "random_rate": 0.0001,
+        "random_pairs": 50000,
+        "random_matches": 5,
+        "enrichment": 944.5843828715365
+      },
+      {
+        "position": 30,
+        "window": "[30:50]",
+        "family_rate": 0.09445843828715365,
+        "family_pairs": 794,
+        "family_matches": 75,
+        "random_rate": 6e-05,
+        "random_pairs": 50000,
+        "random_matches": 3,
+        "enrichment": 1574.3073047858943
+      },
+      {
+        "position": 40,
+        "window": "[40:60]",
+        "family_rate": 0.09445843828715365,
+        "family_pairs": 794,
+        "family_matches": 75,
+        "random_rate": 0.00012,
+        "random_pairs": 50000,
+        "random_matches": 6,
+        "enrichment": 787.1536523929472
+      },
+      {
+        "position": 50,
+        "window": "[50:70]",
+        "family_rate": 0.08312342569269521,
+        "family_pairs": 794,
+        "family_matches": 66,
+        "random_rate": 0.00014,
+        "random_pairs": 50000,
+        "random_matches": 7,
+        "enrichment": 593.7387549478229
+      },
+      {
+        "position": 60,
+        "window": "[60:80]",
+        "family_rate": 0.07556675062972293,
+        "family_pairs": 794,
+        "family_matches": 60,
+        "random_rate": 0.00014,
+        "random_pairs": 50000,
+        "random_matches": 7,
+        "enrichment": 539.7625044980209
+      },
+      {
+        "position": 70,
+        "window": "[70:90]",
+        "family_rate": 0.07556675062972293,
+        "family_pairs": 794,
+        "family_matches": 60,
+        "random_rate": 0.00016,
+        "random_pairs": 50000,
+        "random_matches": 8,
+        "enrichment": 472.29219143576825
+      },
+      {
+        "position": 80,
+        "window": "[80:100]",
+        "family_rate": 0.0743073047858942,
+        "family_pairs": 794,
+        "family_matches": 59,
+        "random_rate": 8e-05,
+        "random_pairs": 50000,
+        "random_matches": 4,
+        "enrichment": 928.8413098236774
+      }
+    ],
+    "11": [
+      {
+        "position": 0,
+        "window": "[0:20]",
+        "family_rate": 0.05037783375314862,
+        "family_pairs": 794,
+        "family_matches": 40,
+        "random_rate": 2e-05,
+        "random_pairs": 50000,
+        "random_matches": 1,
+        "enrichment": 2518.891687657431
+      },
+      {
+        "position": 10,
+        "window": "[10:30]",
+        "family_rate": 0.08564231738035265,
+        "family_pairs": 794,
+        "family_matches": 68,
+        "random_rate": 8e-05,
+        "random_pairs": 50000,
+        "random_matches": 4,
+        "enrichment": 1070.528967254408
+      },
+      {
+        "position": 20,
+        "window": "[20:40]",
+        "family_rate": 0.08564231738035265,
+        "family_pairs": 794,
+        "family_matches": 68,
+        "random_rate": 2e-05,
+        "random_pairs": 50000,
+        "random_matches": 1,
+        "enrichment": 4282.115869017632
+      },
+      {
+        "position": 30,
+        "window": "[30:50]",
+        "family_rate": 0.08564231738035265,
+        "family_pairs": 794,
+        "family_matches": 68,
+        "random_rate": 0.00014,
+        "random_pairs": 50000,
+        "random_matches": 7,
+        "enrichment": 611.7308384310904
+      },
+      {
+        "position": 40,
+        "window": "[40:60]",
+        "family_rate": 0.08564231738035265,
+        "family_pairs": 794,
+        "family_matches": 68,
+        "random_rate": 0.00018,
+        "random_pairs": 50000,
+        "random_matches": 9,
+        "enrichment": 475.7906521130702
+      },
+      {
+        "position": 50,
+        "window": "[50:70]",
+        "family_rate": 0.07556675062972293,
+        "family_pairs": 794,
+        "family_matches": 60,
+        "random_rate": 2e-05,
+        "random_pairs": 50000,
+        "random_matches": 1,
+        "enrichment": 3778.337531486146
+      },
+      {
+        "position": 60,
+        "window": "[60:80]",
+        "family_rate": 0.0654911838790932,
+        "family_pairs": 794,
+        "family_matches": 52,
+        "random_rate": 0.00012,
+        "random_pairs": 50000,
+        "random_matches": 6,
+        "enrichment": 545.75986565911
+      },
+      {
+        "position": 70,
+        "window": "[70:90]",
+        "family_rate": 0.06801007556675064,
+        "family_pairs": 794,
+        "family_matches": 54,
+        "random_rate": 6e-05,
+        "random_pairs": 50000,
+        "random_matches": 3,
+        "enrichment": 1133.501259445844
+      },
+      {
+        "position": 80,
+        "window": "[80:100]",
+        "family_rate": 0.06675062972292191,
+        "family_pairs": 794,
+        "family_matches": 53,
+        "random_rate": 0.00012,
+        "random_pairs": 50000,
+        "random_matches": 6,
+        "enrichment": 556.2552476910159
+      }
+    ]
+  },
+  "characterization": {
+    "2": {
+      "peak_position": 0,
+      "peak_enrichment": 167.92611251049541,
+      "trough_position": 80,
+      "trough_enrichment": 51.92452163153476,
+      "mean_enrichment": 88.87801062660455,
+      "std_enrichment": 35.05300086451026,
+      "cv": 0.3943945259055739,
+      "n_data_points": 9,
+      "dip_at_20_40": {
+        "E_0": 167.92611251049541,
+        "E_20": 113.48852658676336,
+        "E_40": 73.76754228139619,
+        "dip_exists": false,
+        "dip_depth": null
+      },
+      "monotonically_increasing": false,
+      "monotonically_decreasing": false,
+      "trend": "decreasing",
+      "plateau_at_end": "False",
+      "plateau_range_pct": 32.50232965241962
+    },
+    "5": {
+      "peak_position": 30,
+      "peak_enrichment": 1574.3073047858943,
+      "trough_position": 70,
+      "trough_enrichment": 472.29219143576825,
+      "mean_enrichment": 899.323047858942,
+      "std_enrichment": 367.8944535982819,
+      "cv": 0.4090793119048205,
+      "n_data_points": 8,
+      "dip_at_20_40": {
+        "E_0": 1353.904282115869,
+        "E_20": 944.5843828715365,
+        "E_40": 787.1536523929472,
+        "dip_exists": false,
+        "dip_depth": null
+      },
+      "monotonically_increasing": false,
+      "monotonically_decreasing": false,
+      "trend": "decreasing",
+      "plateau_at_end": "False",
+      "plateau_range_pct": 70.5677867902665
+    },
+    "11": {
+      "peak_position": 20,
+      "peak_enrichment": 4282.115869017632,
+      "trough_position": 40,
+      "trough_enrichment": 475.7906521130702,
+      "mean_enrichment": 1663.6568798617498,
+      "std_enrichment": 1401.8281990254761,
+      "cv": 0.8426185807869038,
+      "n_data_points": 9,
+      "dip_at_20_40": {
+        "E_0": 2518.891687657431,
+        "E_20": 4282.115869017632,
+        "E_40": 475.7906521130702,
+        "dip_exists": false,
+        "dip_depth": null
+      },
+      "monotonically_increasing": false,
+      "monotonically_decreasing": false,
+      "trend": "decreasing",
+      "plateau_at_end": "False",
+      "plateau_range_pct": 78.87323943661974
+    }
+  },
+  "model_fits": {
+    "2": {
+      "linear": {
+        "params": {
+          "a": 138.26585787235297,
+          "b": -1.2346961811437125
+        },
+        "r_squared": 0.8271390859162633,
+        "formula": "E(n) = 138.27 + -1.2347*n"
+      },
+      "quadratic": {
+        "params": {
+          "a": 157.03646844845477,
+          "b": -2.843605659095293,
+          "c": 0.020111368474394768
+        },
+        "r_squared": 0.9397916409151613,
+        "vertex_position": 70.69647355712497,
+        "vertex_enrichment": 56.5200223058941,
+        "formula": "E(n) = 157.04 + -2.8436*n + 0.020111*n^2"
+      },
+      "logarithmic": {
+        "params": {
+          "a": 174.35712387796852,
+          "b": -26.265521599013216
+        },
+        "r_squared": 0.9432996361147243,
+        "formula": "E(n) = 174.36 + -26.2655*log(n+1)"
+      },
+      "periodic": {
+        "params": {
+          "a": 88.74258211936422,
+          "b": 18.990304835672397,
+          "c": 0.12897465243000522,
+          "d": 1.040450891113213
+        },
+        "r_squared": 0.16043201584902067,
+        "implied_period": 48.716435274671376,
+        "formula": "E(n) = 88.74 + 18.99*sin(0.1290*n + 1.04)"
+      },
+      "best_model": "logarithmic",
+      "best_r_squared": 0.9432996361147243
+    },
+    "5": {
+      "linear": {
+        "params": {
+          "a": 1317.880658825906,
+          "b": -9.567031107816323
+        },
+        "r_squared": 0.4216002046831455,
+        "formula": "E(n) = 1317.88 + -9.5670*n"
+      },
+      "quadratic": {
+        "params": {
+          "a": 1447.1720678195718,
+          "b": -19.791606819050052,
+          "c": 0.12533350871834883
+        },
+        "r_squared": 0.46521486815579205,
+        "vertex_position": 78.9557677808495,
+        "vertex_enrichment": 665.8413118121751,
+        "formula": "E(n) = 1447.17 + -19.7916*n + 0.125334*n^2"
+      },
+      "logarithmic": {
+        "params": {
+          "a": 1447.4618287237809,
+          "b": -163.06428989934096
+        },
+        "r_squared": 0.3510546824728529,
+        "formula": "E(n) = 1447.46 + -163.0643*log(n+1)"
+      },
+      "periodic": {
+        "params": {
+          "a": 883.9221297867896,
+          "b": -276.9218037954652,
+          "c": 0.13125794779451802,
+          "d": -0.007723900836812969
+        },
+        "r_squared": 0.23878468161019273,
+        "implied_period": 47.86898936600625,
+        "formula": "E(n) = 883.92 + -276.92*sin(0.1313*n + -0.01)"
+      },
+      "best_model": "quadratic",
+      "best_r_squared": 0.46521486815579205
+    },
+    "11": {
+      "linear": {
+        "params": {
+          "a": 2461.5058263253036,
+          "b": -19.946223661588895
+        },
+        "r_squared": 0.13497101883261953,
+        "formula": "E(n) = 2461.51 + -19.9462*n"
+      },
+      "quadratic": {
+        "params": {
+          "a": 2246.9840542888396,
+          "b": -1.5586432013204174,
+          "c": -0.22984475575335606
+        },
+        "r_squared": 0.14417101870688642,
+        "vertex_position": -3.3906433849484494,
+        "vertex_enrichment": 2249.6264559188658,
+        "formula": "E(n) = 2246.98 + -1.5586*n + -0.229845*n^2"
+      },
+      "logarithmic": {
+        "params": {
+          "a": 2714.2199204232784,
+          "b": -322.81086201550556
+        },
+        "r_squared": 0.08909117970384928,
+        "formula": "E(n) = 2714.22 + -322.8109*log(n+1)"
+      },
+      "periodic": {
+        "params": {
+          "a": 1606.5506940680966,
+          "b": 1571.8839112030798,
+          "c": 0.2387693357244713,
+          "d": -3.586825899673676
+        },
+        "r_squared": 0.587583931949018,
+        "implied_period": 26.314875350786625,
+        "formula": "E(n) = 1606.55 + 1571.88*sin(0.2388*n + -3.59)"
+      },
+      "best_model": "periodic",
+      "best_r_squared": 0.587583931949018
+    }
+  },
+  "characteristic_length": {
+    "2": {
+      "peak_position": 0,
+      "peak_enrichment": 167.92611251049541,
+      "min_position": 80,
+      "min_enrichment": 51.92452163153476,
+      "ratio_peak_to_min": 3.23404255319149
+    },
+    "5": {
+      "peak_position": 30,
+      "peak_enrichment": 1574.3073047858943,
+      "min_position": 70,
+      "min_enrichment": 472.29219143576825,
+      "ratio_peak_to_min": 3.3333333333333335
+    },
+    "11": {
+      "peak_position": 20,
+      "peak_enrichment": 4282.115869017632,
+      "min_position": 40,
+      "min_enrichment": 475.7906521130702,
+      "ratio_peak_to_min": 9.0
+    },
+    "family_degree_distribution": {
+      "3": 9,
+      "2": 7,
+      "4": 7,
+      "5": 5,
+      "6": 3,
+      "7": 1,
+      "8": 1
+    },
+    "median_recurrence_order": 4.0,
+    "mean_recurrence_order": 3.8484848484848486,
+    "degree_peak_correlation": NaN,
+    "degree_stratified_peaks": {
+      "2": {
+        "peak_position": 0,
+        "peak_enrichment": 340.51609470603887
+      },
+      "3": {
+        "peak_position": 0,
+        "peak_enrichment": 149.57264957264957
+      },
+      "4": {
+        "peak_position": 0,
+        "peak_enrichment": 60.70640176600442
+      },
+      "5": {
+        "peak_position": 0,
+        "peak_enrichment": 72.95466388744138
+      },
+      "6": {
+        "peak_position": 0,
+        "peak_enrichment": 46.2962962962963
+      }
+    }
+  },
+  "degree_stratified_curves": {
+    "2": {
+      "n_families": 7,
+      "n_sequences": 48,
+      "curve": [
+        340.51609470603887,
+        299.15300054063795,
+        237.78828248101993,
+        220.80340516094708,
+        159.89212097861684,
+        122.72186097627987,
+        131.07004727116458,
+        95.34450651769089,
+        113.56351314222914
+      ]
+    },
+    "3": {
+      "n_families": 9,
+      "n_sequences": 55,
+      "curve": [
+        149.57264957264957,
+        142.77389277389278,
+        138.57466063348417,
+        107.08041958041957,
+        94.23076923076923,
+        72.48520710059172,
+        87.25071225071224,
+        64.54162276080083,
+        68.28316610925306
+      ]
+    },
+    "4": {
+      "n_families": 7,
+      "n_sequences": 45,
+      "curve": [
+        60.70640176600442,
+        39.13305237808549,
+        44.150110375275936,
+        41.99644645453076,
+        27.771843623157444,
+        33.761849110505125,
+        33.761849110505125,
+        25.321386832878847,
+        24.597918637653734
+      ]
+    },
+    "5": {
+      "n_families": 5,
+      "n_sequences": 39,
+      "curve": [
+        72.95466388744138,
+        35.203520352035206,
+        44.00440044004401,
+        42.815092320042815,
+        29.889781430973287,
+        26.52050919377652,
+        27.002700270027002,
+        21.216407355021214,
+        21.002100210021005
+      ]
+    },
+    "6": {
+      "n_families": 3,
+      "n_sequences": 13,
+      "curve": [
+        46.2962962962963,
+        21.367521367521366,
+        20.833333333333332,
+        16.666666666666664,
+        14.367816091954023,
+        17.006802721088434,
+        13.661202185792348,
+        17.006802721088434,
+        22.52252252252252
+      ]
+    }
+  },
+  "elapsed_seconds": 9.82651400566101,
+  "verdict": {
+    "dip_reproducible": false,
+    "rising_after_40": true,
+    "has_peak": true,
+    "peak_position": 20.0,
+    "plateaus": false,
+    "best_model": "logarithmic",
+    "characteristic_length_explanation": "Peak position does NOT correlate with recurrence order (r=nan)",
+    "diagnostic": {
+      "2": {
+        "family_rate_range": [
+          0.15113350125944586,
+          0.20654911838790932
+        ],
+        "random_rate_range": [
+          0.0009,
+          0.00342
+        ],
+        "family_rate_slope": -8.186397984886681e-05,
+        "random_rate_slope": 2.6633333333333328e-05,
+        "family_rate_cv": 0.09670352608665914,
+        "random_rate_cv": 0.30990978816202713,
+        "enrichment_driven_by": "random_baseline_rising"
+      },
+      "5": {
+        "family_rate_range": [
+          0.05415617128463476,
+          0.09445843828715365
+        ],
+        "random_rate_range": [
+          0.0,
+          0.00016
+        ],
+        "family_rate_slope": -4.198152812762401e-05,
+        "random_rate_slope": 1.3333333333333326e-06,
+        "family_rate_cv": 0.1589021581877289,
+        "random_rate_cv": 0.5345224838248488,
+        "enrichment_driven_by": "random_baseline_rising"
+      },
+      "11": {
+        "family_rate_range": [
+          0.05037783375314862,
+          0.08564231738035265
+        ],
+        "random_rate_range": [
+          2e-05,
+          0.00018
+        ],
+        "family_rate_slope": -6.297229219143592e-05,
+        "random_rate_slope": 7e-07,
+        "family_rate_cv": 0.15939814666289137,
+        "random_rate_cv": 0.658420842273516,
+        "enrichment_driven_by": "random_baseline_rising"
+      }
+    }
+  }
+}
