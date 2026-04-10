@@ -1,0 +1,546 @@
+{
+  "challenge": "OSC-4",
+  "title": "Ablate the 2-Adic Camouflage",
+  "timestamp": "2026-04-10T09:51:57",
+  "elapsed_seconds": 5.6,
+  "target": "15.2.a.a",
+  "target_level": 15,
+  "target_v2": 0,
+  "population": {
+    "total": 17314,
+    "odd_conductor": 4324,
+    "even_conductor": 12990,
+    "odd_fraction": 0.2497,
+    "v2_distribution": {
+      "0": 4324,
+      "1": 6830,
+      "2": 1475,
+      "3": 1411,
+      "4": 1591,
+      "5": 577,
+      "6": 778,
+      "7": 228,
+      "8": 100
+    }
+  },
+  "full_neighborhoods": {
+    "2": 2342,
+    "3": 30,
+    "5": 2,
+    "7": 0,
+    "11": 0,
+    "13": 0
+  },
+  "odd_only_neighborhoods": {
+    "2": 295,
+    "3": 30,
+    "5": 2,
+    "7": 0,
+    "11": 0,
+    "13": 0
+  },
+  "even_matches": {
+    "2": 2047,
+    "3": 0,
+    "5": 0,
+    "7": 0,
+    "11": 0,
+    "13": 0
+  },
+  "decomposition": {
+    "2": {
+      "full_N": 2342,
+      "odd_only_N": 295,
+      "even_matches": 2047,
+      "even_pct": 87.4,
+      "reduction_pct": 87.4,
+      "evaporates": "YES"
+    },
+    "3": {
+      "full_N": 30,
+      "odd_only_N": 30,
+      "even_matches": 0,
+      "even_pct": 0.0,
+      "reduction_pct": 0.0,
+      "evaporates": "NO"
+    },
+    "5": {
+      "full_N": 2,
+      "odd_only_N": 2,
+      "even_matches": 0,
+      "even_pct": 0.0,
+      "reduction_pct": 0.0,
+      "evaporates": "NO"
+    },
+    "7": {
+      "full_N": 0,
+      "odd_only_N": 0,
+      "even_matches": 0,
+      "even_pct": 0,
+      "reduction_pct": 0,
+      "evaporates": "N/A"
+    },
+    "11": {
+      "full_N": 0,
+      "odd_only_N": 0,
+      "even_matches": 0,
+      "even_pct": 0,
+      "reduction_pct": 0,
+      "evaporates": "N/A"
+    },
+    "13": {
+      "full_N": 0,
+      "odd_only_N": 0,
+      "even_matches": 0,
+      "even_pct": 0,
+      "reduction_pct": 0,
+      "evaporates": "N/A"
+    }
+  },
+  "gradient_comparison": {
+    "2": {
+      "log2_full": 11.194,
+      "log2_odd": 8.205,
+      "ratio": 0.126
+    },
+    "3": {
+      "log2_full": 4.907,
+      "log2_odd": 4.907,
+      "ratio": 1.0
+    },
+    "5": {
+      "log2_full": 1.0,
+      "log2_odd": 1.0,
+      "ratio": 1.0
+    },
+    "7": {
+      "log2_full": 0,
+      "log2_odd": 0,
+      "ratio": 0
+    },
+    "11": {
+      "log2_full": 0,
+      "log2_odd": 0,
+      "ratio": 0
+    },
+    "13": {
+      "log2_full": 0,
+      "log2_odd": 0,
+      "ratio": 0
+    }
+  },
+  "clique_comparison_mod2": {
+    "full": {
+      "n_clusters": 2211,
+      "max": 2343,
+      "top_10": [
+        2343,
+        2325,
+        1065,
+        323,
+        181,
+        118,
+        96,
+        84,
+        82,
+        72
+      ],
+      "mean_size": 7.83,
+      "ge5": 631
+    },
+    "odd_only": {
+      "n_clusters": 1249,
+      "max": 483,
+      "top_10": [
+        483,
+        296,
+        170,
+        162,
+        27,
+        27,
+        25,
+        22,
+        21,
+        19
+      ],
+      "mean_size": 3.46,
+      "ge5": 153
+    },
+    "even_only": {
+      "n_clusters": 1389,
+      "max": 2047,
+      "top_10": [
+        2047,
+        1842,
+        895,
+        166,
+        161,
+        91,
+        90,
+        84,
+        66,
+        58
+      ],
+      "mean_size": 9.35,
+      "ge5": 455
+    },
+    "density_in_large": {
+      "full": 0.8136,
+      "odd": 0.5502,
+      "even": 0.8383
+    }
+  },
+  "proportional_analysis": {
+    "2": {
+      "expected_proportional": 584.9,
+      "actual": 295,
+      "ratio_to_expected": 0.504,
+      "interpretation": "MIXED"
+    },
+    "3": {
+      "expected_proportional": 7.5,
+      "actual": 30,
+      "ratio_to_expected": 4.004,
+      "interpretation": "STRUCTURAL"
+    },
+    "5": {
+      "expected_proportional": 0.5,
+      "actual": 2,
+      "ratio_to_expected": 4.004,
+      "interpretation": "STRUCTURAL"
+    },
+    "7": {
+      "expected_proportional": 0,
+      "actual": 0,
+      "ratio_to_expected": 0,
+      "interpretation": "STRUCTURAL"
+    },
+    "11": {
+      "expected_proportional": 0,
+      "actual": 0,
+      "ratio_to_expected": 0,
+      "interpretation": "STRUCTURAL"
+    },
+    "13": {
+      "expected_proportional": 0,
+      "actual": 0,
+      "ratio_to_expected": 0,
+      "interpretation": "STRUCTURAL"
+    }
+  },
+  "control_results": {
+    "1251.2.a.d": {
+      "level": 1251,
+      "v2_level": 0,
+      "is_odd_conductor": true,
+      "full_N": {
+        "2": 1064,
+        "3": 2,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "odd_only_N": {
+        "2": 169,
+        "3": 2,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "even_matches": {
+        "2": 895,
+        "3": 0,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "mod2_reduction_pct": 84.1
+    },
+    "363.2.a.b": {
+      "level": 363,
+      "v2_level": 0,
+      "is_odd_conductor": true,
+      "full_N": {
+        "2": 2342,
+        "3": 7,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "odd_only_N": {
+        "2": 295,
+        "3": 7,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "even_matches": {
+        "2": 2047,
+        "3": 0,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "mod2_reduction_pct": 87.4
+    },
+    "2751.2.a.c": {
+      "level": 2751,
+      "v2_level": 0,
+      "is_odd_conductor": true,
+      "full_N": {
+        "2": 2342,
+        "3": 0,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "odd_only_N": {
+        "2": 295,
+        "3": 0,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "even_matches": {
+        "2": 2047,
+        "3": 0,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "mod2_reduction_pct": 87.4
+    },
+    "1890.2.a.k": {
+      "level": 1890,
+      "v2_level": 1,
+      "is_odd_conductor": false,
+      "full_N": {
+        "2": 5,
+        "3": 91,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "odd_only_N": {
+        "2": -1,
+        "3": -1,
+        "5": -1,
+        "7": -1,
+        "11": -1,
+        "13": -1
+      },
+      "even_matches": {
+        "2": 5,
+        "3": 85,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "mod2_reduction_pct": 100.0
+    },
+    "1758.2.a.c": {
+      "level": 1758,
+      "v2_level": 1,
+      "is_odd_conductor": false,
+      "full_N": {
+        "2": 1,
+        "3": 188,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "odd_only_N": {
+        "2": -1,
+        "3": -1,
+        "5": -1,
+        "7": -1,
+        "11": -1,
+        "13": -1
+      },
+      "even_matches": {
+        "2": 1,
+        "3": 163,
+        "5": 0,
+        "7": 0,
+        "11": 0,
+        "13": 0
+      },
+      "mod2_reduction_pct": 100.0
+    }
+  },
+  "control_proportional_ratios_ell2": {
+    "1251.2.a.d": 0.636,
+    "363.2.a.b": 0.504,
+    "2751.2.a.c": 0.504,
+    "1890.2.a.k": 0.0,
+    "1758.2.a.c": 0.0
+  },
+  "v2_stratification": {
+    "0": {
+      "2": {
+        "stratum_size": 4324,
+        "matches": 295,
+        "density": 0.068224
+      },
+      "3": {
+        "stratum_size": 4324,
+        "matches": 30,
+        "density": 0.006938
+      },
+      "5": {
+        "stratum_size": 4324,
+        "matches": 2,
+        "density": 0.000463
+      }
+    },
+    "1": {
+      "2": {
+        "stratum_size": 6830,
+        "matches": 516,
+        "density": 0.075549
+      },
+      "3": {
+        "stratum_size": 6830,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 6830,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "2": {
+      "2": {
+        "stratum_size": 1475,
+        "matches": 133,
+        "density": 0.090169
+      },
+      "3": {
+        "stratum_size": 1475,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 1475,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "3": {
+      "2": {
+        "stratum_size": 1411,
+        "matches": 288,
+        "density": 0.204111
+      },
+      "3": {
+        "stratum_size": 1411,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 1411,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "4": {
+      "2": {
+        "stratum_size": 1591,
+        "matches": 414,
+        "density": 0.260214
+      },
+      "3": {
+        "stratum_size": 1591,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 1591,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "5": {
+      "2": {
+        "stratum_size": 577,
+        "matches": 238,
+        "density": 0.412478
+      },
+      "3": {
+        "stratum_size": 577,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 577,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "6": {
+      "2": {
+        "stratum_size": 778,
+        "matches": 342,
+        "density": 0.439589
+      },
+      "3": {
+        "stratum_size": 778,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 778,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "7": {
+      "2": {
+        "stratum_size": 228,
+        "matches": 88,
+        "density": 0.385965
+      },
+      "3": {
+        "stratum_size": 228,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 228,
+        "matches": 0,
+        "density": 0.0
+      }
+    },
+    "8": {
+      "2": {
+        "stratum_size": 100,
+        "matches": 28,
+        "density": 0.28
+      },
+      "3": {
+        "stratum_size": 100,
+        "matches": 0,
+        "density": 0.0
+      },
+      "5": {
+        "stratum_size": 100,
+        "matches": 0,
+        "density": 0.0
+      }
+    }
+  },
+  "assessment": "Odd-conductor forms: 4324/17314 (25.0%). Mod-2 ablation: full N=2342, odd-only N=295, reduction=87.4%. Camouflage EVAPORATES after removing even conductors. Proportional test at ell=2: ratio=0.504 [MIXED]. Camouflage is mixed \u2014 partly database composition, partly structural. Effect is UNIVERSAL (controls show similar reduction), not specific to 15.2.a.a"
+}
