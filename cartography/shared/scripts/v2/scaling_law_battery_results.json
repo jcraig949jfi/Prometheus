@@ -1,0 +1,461 @@
+{
+  "timestamp": "2026-04-09T20:31:29",
+  "n_families": 30,
+  "n_sequences": 441,
+  "primes_tested": [
+    2,
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "tests": {
+    "K0_baseline": {
+      "2": {
+        "family_rate": 0.20077914294276297,
+        "random_rate": 0.0189,
+        "enrichment": 10.623235076336664,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "3": {
+        "family_rate": 0.09709319748276896,
+        "random_rate": 0.0012,
+        "enrichment": 80.91099790230747,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "5": {
+        "family_rate": 0.04974528019178903,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "7": {
+        "family_rate": 0.027869343721905904,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "11": {
+        "family_rate": 0.012286484866646689,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "13": {
+        "family_rate": 0.010188792328438718,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "17": {
+        "family_rate": 0.008690440515433023,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "19": {
+        "family_rate": 0.008390770152831885,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      },
+      "23": {
+        "family_rate": 0.00719208870242733,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 3337,
+        "random_pairs": 10000
+      }
+    },
+    "K1_prime_detrended": {
+      "2": {
+        "family_rate": 0.5382079712316452,
+        "random_rate": 0.5021,
+        "enrichment": 1.0719139040662125,
+        "family_pairs": 3337
+      },
+      "3": {
+        "family_rate": 0.16212166616721607,
+        "random_rate": 0.0201,
+        "enrichment": 8.065754535682391,
+        "family_pairs": 3337
+      },
+      "5": {
+        "family_rate": 0.14024572969733293,
+        "random_rate": 0.0096,
+        "enrichment": 14.608930176805515,
+        "family_pairs": 3337
+      },
+      "7": {
+        "family_rate": 0.13275397063230446,
+        "random_rate": 0.0113,
+        "enrichment": 11.748138994009246,
+        "family_pairs": 3337
+      },
+      "11": {
+        "family_rate": 0.1330536409949056,
+        "random_rate": 0.0084,
+        "enrichment": 15.839719166060192,
+        "family_pairs": 3337
+      },
+      "13": {
+        "family_rate": 0.13125561881929876,
+        "random_rate": 0.0114,
+        "enrichment": 11.513650773622699,
+        "family_pairs": 3337
+      },
+      "17": {
+        "family_rate": 0.1330536409949056,
+        "random_rate": 0.012,
+        "enrichment": 11.087803416242133,
+        "family_pairs": 3337
+      },
+      "19": {
+        "family_rate": 0.13125561881929876,
+        "random_rate": 0.0089,
+        "enrichment": 14.747822339247051,
+        "family_pairs": 3337
+      },
+      "23": {
+        "family_rate": 0.13125561881929876,
+        "random_rate": 0.0094,
+        "enrichment": 13.963363704180718,
+        "family_pairs": 3337
+      }
+    },
+    "K2_size_stratified": {
+      "small_2-5": {
+        "note": "empty stratum"
+      },
+      "medium_6-20": {
+        "2": {
+          "family_rate": 0.20077914294276297,
+          "enrichment": 14.76317227520316,
+          "pairs": 3337
+        },
+        "5": {
+          "family_rate": 0.04974528019178903,
+          "enrichment": 248.72640095894513,
+          "pairs": 3337
+        },
+        "11": {
+          "family_rate": 0.012286484866646689,
+          "enrichment": Infinity,
+          "pairs": 3337
+        }
+      },
+      "large_21+": {
+        "note": "empty stratum"
+      }
+    },
+    "K3_synthetic_null": {
+      "2": {
+        "fake_family_rate": 0.015582858855259216,
+        "real_family_rate": 0.20077914294276297,
+        "random_rate": 0.0189,
+        "fake_enrichment": 0.8244898865216517,
+        "real_enrichment": 10.623235076336664
+      },
+      "3": {
+        "fake_family_rate": 0.00029967036260113877,
+        "real_family_rate": 0.09709319748276896,
+        "random_rate": 0.0012,
+        "fake_enrichment": 0.24972530216761565,
+        "real_enrichment": 80.91099790230747
+      },
+      "5": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.04974528019178903,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      },
+      "7": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.027869343721905904,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      },
+      "11": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.012286484866646689,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      },
+      "13": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.010188792328438718,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      },
+      "17": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.008690440515433023,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      },
+      "19": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.008390770152831885,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      },
+      "23": {
+        "fake_family_rate": 0.0,
+        "real_family_rate": 0.00719208870242733,
+        "random_rate": 0.0,
+        "fake_enrichment": 1.0,
+        "real_enrichment": Infinity
+      }
+    },
+    "K4_nontrivial_only": {
+      "2": {
+        "family_rate": 0.18097014925373134,
+        "random_rate": 0.0175,
+        "enrichment": 10.341151385927503,
+        "family_pairs": 2680
+      },
+      "3": {
+        "family_rate": 0.07835820895522388,
+        "random_rate": 0.0009,
+        "enrichment": 87.06467661691543,
+        "family_pairs": 2680
+      },
+      "5": {
+        "family_rate": 0.038432835820895524,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      },
+      "7": {
+        "family_rate": 0.022388059701492536,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      },
+      "11": {
+        "family_rate": 0.008955223880597015,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      },
+      "13": {
+        "family_rate": 0.008955223880597015,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      },
+      "17": {
+        "family_rate": 0.007462686567164179,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      },
+      "19": {
+        "family_rate": 0.006716417910447761,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      },
+      "23": {
+        "family_rate": 0.005970149253731343,
+        "random_rate": 0.0,
+        "enrichment": Infinity,
+        "family_pairs": 2680
+      }
+    },
+    "K5_position_sensitivity": {
+      "start_0": {
+        "2": {
+          "family_rate": 0.20077914294276297,
+          "enrichment": 12.548696433922686
+        },
+        "5": {
+          "family_rate": 0.04974528019178903,
+          "enrichment": Infinity
+        },
+        "11": {
+          "family_rate": 0.012286484866646689,
+          "enrichment": Infinity
+        }
+      },
+      "start_20": {
+        "2": {
+          "family_rate": 0.2558809409505521,
+          "enrichment": 10.573592601262483
+        },
+        "5": {
+          "family_rate": 0.071531445031205,
+          "enrichment": 357.65722515602494
+        },
+        "11": {
+          "family_rate": 0.035525684109457514,
+          "enrichment": Infinity
+        }
+      },
+      "start_40": {
+        "2": {
+          "family_rate": 0.20610057708161583,
+          "enrichment": 32.20321516900247
+        },
+        "5": {
+          "family_rate": 0.07089859851607584,
+          "enrichment": 354.49299258037917
+        },
+        "11": {
+          "family_rate": 0.043693322341302555,
+          "enrichment": Infinity
+        }
+      }
+    },
+    "K6_cross_validation": {
+      "split_a": {
+        "2": {
+          "family_rate": 0.20599250936329588,
+          "enrichment": 11.704119850187265,
+          "pairs": 1869
+        },
+        "3": {
+          "family_rate": 0.09577314071696094,
+          "enrichment": 119.71642589620117,
+          "pairs": 1869
+        },
+        "5": {
+          "family_rate": 0.05029427501337614,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "7": {
+          "family_rate": 0.02835741037988229,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "11": {
+          "family_rate": 0.012841091492776886,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "13": {
+          "family_rate": 0.012841091492776886,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "17": {
+          "family_rate": 0.010700909577314071,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "19": {
+          "family_rate": 0.009630818619582664,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "23": {
+          "family_rate": 0.008560727661851257,
+          "enrichment": Infinity,
+          "pairs": 1869
+        },
+        "monotonically_increasing": true
+      },
+      "split_b": {
+        "2": {
+          "family_rate": 0.194141689373297,
+          "enrichment": 10.437725235123496,
+          "pairs": 1468
+        },
+        "3": {
+          "family_rate": 0.09877384196185286,
+          "enrichment": 123.46730245231608,
+          "pairs": 1468
+        },
+        "5": {
+          "family_rate": 0.04904632152588556,
+          "enrichment": 245.2316076294278,
+          "pairs": 1468
+        },
+        "7": {
+          "family_rate": 0.027247956403269755,
+          "enrichment": Infinity,
+          "pairs": 1468
+        },
+        "11": {
+          "family_rate": 0.011580381471389645,
+          "enrichment": Infinity,
+          "pairs": 1468
+        },
+        "13": {
+          "family_rate": 0.006811989100817439,
+          "enrichment": Infinity,
+          "pairs": 1468
+        },
+        "17": {
+          "family_rate": 0.006130790190735695,
+          "enrichment": Infinity,
+          "pairs": 1468
+        },
+        "19": {
+          "family_rate": 0.006811989100817439,
+          "enrichment": Infinity,
+          "pairs": 1468
+        },
+        "23": {
+          "family_rate": 0.005449591280653951,
+          "enrichment": Infinity,
+          "pairs": 1468
+        },
+        "monotonically_increasing": true
+      }
+    },
+    "K7_bootstrap_ci": {
+      "2": {
+        "median": 10.532227527228997,
+        "ci_95_lo": 7.5267667860260445,
+        "ci_95_hi": 13.4555133229225,
+        "std": 1.5492216246473214
+      },
+      "5": {
+        "median": Infinity,
+        "ci_95_lo": Infinity,
+        "ci_95_hi": Infinity,
+        "std": NaN
+      },
+      "11": {
+        "median": Infinity,
+        "ci_95_lo": Infinity,
+        "ci_95_hi": Infinity,
+        "std": NaN
+      }
+    },
+    "K8_scaling_exponent": {
+      "note": "insufficient data points for fit"
+    }
+  },
+  "verdict": {
+    "kills": [],
+    "survives": [
+      "K1: survives detrending (max enrichment 15.8x)",
+      "K3: synthetic null (1.0x) << real (10.6x)",
+      "K4: survives trivial filter (max enrichment 87.1x)",
+      "K6: monotonic scaling replicates in both cross-validation halves"
+    ],
+    "signal_alive": true,
+    "summary": "SIGNAL SURVIVES ALL TESTS"
+  }
+}

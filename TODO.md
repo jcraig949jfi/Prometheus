@@ -1,5 +1,5 @@
 # Prometheus — Master TODO List
-## Updated: 2026-04-07
+## Updated: 2026-04-09
 
 *Living document. Each agent session updates its section.*
 
@@ -20,6 +20,26 @@
 - [x] **pi-Base** — Cloned 2026-04-07. 220 spaces, 230 properties, 859 theorems at `cartography/topology/data/pi-base/`.
 - [x] **Materials Project API key** — Added to keys.py as "MATERIALS" 2026-04-07. Fetch script updated to pull full 150K+ structures (running).
 - [ ] ~~**Elicit/Consensus/Scite API keys**~~ — Too expensive. Use free alternatives: Semantic Scholar API + OpenAlex (already in use by Charon).
+
+### Data Sprint (2026-04-09) — DONE
+- [x] **LMFDB PostgreSQL mirror** — 271 files, 23 GB from devmirror.lmfdb.xyz. Parsed to JSON.
+- [x] **Maass forms** — 35,416 rigorous (was 300). Wired into search engine + concept index.
+- [x] **Lattices** — 39,293 (was 21). Wired into search engine + concept index.
+- [x] **Genus-2 full** — 66,158 curves with 50+ fields (was 13 fields). Wired.
+- [x] **Siegel modular forms** — 129 samples + 3,094 eigenvalues + 26,212 Fourier coefficients. Ready for Sprint 2.
+- [x] **Hilbert modular forms** — 368K forms. Ready for Sprint 2.
+- [x] **Bianchi modular forms** — 233K forms. Ready for Sprint 2.
+- [x] **Hypergeometric motives** — 61K families. Ready for Sprint 2.
+- [x] **Abstract groups** — 545K. Ready for Sprint 2.
+- [x] **Realignment** — 180/180 battery pass. 63 search functions. 2.74M concept links across 17 datasets.
+
+### Needs from James (unblocks challenge queue)
+- [ ] **Poor-Yuen paramodular form database** — Weight-2 paramodular newforms at levels up to ~1000. LMFDB only has levels 1-2. This is THE missing piece for paramodular conjecture probe (C01). The probe infrastructure is built and ready. Check: https://www.math.siue.edu/~cobre/siegel/ or contact Poor/Yuen directly.
+- [ ] **Genus-3 curve data** — Need point counts / Frobenius polynomials for genus-3 curves. Not in standard LMFDB tables. Blocks C13 (Sato-Tate 410 groups). Check if Drew Sutherland's database has this.
+- [ ] **Higher-weight Hecke polynomials** — Need T_p characteristic polynomials for S_k(SL_2(Z)) at weights k=12,16,18,20,22,24,26,28. Blocks C14 (Maeda conjecture). May be computable via Sage.
+- [x] **HMF form metadata** — 368K records now available in hmf_forms.json. But NO eigenvalues.
+- [ ] **HMF Hecke eigenvalues** — Need `hmf_hecke` table from devmirror.lmfdb.xyz. This is the ONLY missing piece for C04. 132K dim-1 forms, 1.37M candidate pairs pre-identified. Run: `python lmfdb_postgres_dump.py --table hmf_hecke`
+- [x] **SageMath in WSL** — INSTALLED. SageMath 10.7 in conda env. Call via `wsl -d Ubuntu -- bash -c "$HOME/miniforge3/envs/sage/bin/sage -c '...'"`. Genus-3 Frobenius computation launched (R5-10).
 
 ### Blocked (external, not fixable)
 - nLab: Cloudflare 403
@@ -66,7 +86,25 @@
 - [x] Microscope built: 3-layer decontamination (prime detrend + small int filter + scale normalization)
 - **Key finding: 96-100% of gap structure = prime factorization. Real bridges at 3-4 decimal precision in residuals.**
 
-### Queued
+### Data Sprint Wiring (2026-04-09) — Sprint 1 DONE
+- [x] Wired Maass 35K (was 300), Lattices 39K (was 21), Genus-2 66K (50+ fields) into search engine
+- [x] Added 7 new search functions: maass_level, maass_fricke, lattices_det, lattices_class_number, lattices_stats, genus2_endomorphism, genus2_gl2
+- [x] Fixed concept_index.py extractors for postgres envelope format + field normalization
+- [x] Fixed tensor_bridge.py unhashable list guard
+- [x] Realignment: 180/180 battery, 2.74M links, 17 contributing datasets, 279K objects in tensor
+- [ ] **Sprint 2**: Wire Siegel modular forms (3K eigenvalues + 26K Fourier coefficients)
+- [ ] **Sprint 3**: Wire Hilbert (368K) + Bianchi (233K) + HGM (61K) + Abstract Groups (545K)
+
+### Challenge Queue (2026-04-09) — 6 Tier 1, 6 Tier 2, 5 Tier 3
+See `cartography/docs/challenges/challenge_queue.md` for full list.
+- [ ] C01: Paramodular conjecture probe (Siegel vs genus-2)
+- [ ] C02: Mod-p residue starvation scan (102K MF + 35K Maass)
+- [ ] C03: Berlekamp-Massey on GSp_4 difference sequences
+- [ ] C04: Hilbert modular form congruence scan (368K HMF)
+- [ ] C05: Spectral operator matching (35K Maass spectral params)
+- [ ] C06: Lattice-NumberField determinant bridge (sv=5829)
+
+### Queued (lower priority)
 - [ ] Run microscope with fixed matched-object comparison (not sorted-rank)
 - [ ] Build Isolatus metric as first-class search function (high entropy / low centrality)
 - [ ] Submit 22K OEIS terms (batch b-file submission)

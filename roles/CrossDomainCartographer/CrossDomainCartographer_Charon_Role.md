@@ -192,12 +192,24 @@ Downloaded but not yet wired into search engine:
 - [ ] Wire OpenAlex concepts into concept bridge layer (populate edges)
 - [ ] Rebuild concept_index.py with verb extractors for new datasets
 
+### LMFDB PostgreSQL Mirror — Direct Database Access
+**Host:** devmirror.lmfdb.xyz | **Port:** 5432 | **DB:** lmfdb | **User/Pass:** lmfdb/lmfdb
+**Dump script:** `cartography/shared/scripts/lmfdb_postgres_dump.py` (--list, --table, --max-rows)
+**Output:** `cartography/lmfdb_dump/` (200+ tables already dumped 2026-04-09)
+
+Key tables: hecke_algebras (1421), hecke_orbits (454 with T_p operators), mf_hecke_charpolys (211K+), smf_* (Siegel), g2c_* (genus-2), hgcwa_* (higher genus automorphisms only — NOT point counts), maass_*, modcurve_*, lfunc_*, gps_*
+
+**C14 (Maeda conjecture): UNBLOCKED** — Level-1 Hecke algebras for weights 12-288, all num_orbits=1. Full T_p characteristic polynomials in hecke_orbits + mf_hecke_charpolys.
+**C13 (Sato-Tate 410 groups): PARTIALLY UNBLOCKED** — 82K genus-3 curves (`cartography/genus3/spqcurves.txt`) + 410 ST group moment fingerprints (`cartography/genus3/st3_groups_410.md`). Still need Frobenius computation (SageMath/Magma).
+**C01 (Paramodular conjecture): UNBLOCKED** — Poor-Yuen weight-2 Fourier coefficients at prime levels 277-587 (`cartography/paramodular_wt2/eig*.txt`) + squarefree composites 249,295. Assaf et al. weight-3 Hecke eigenvalues at levels < 1000 (`cartography/omf5_data/`, 447 MB). g2c has 159 abelian surfaces with conductor ≤ 1000 for matching.
+**C04 (Hilbert congruence scan): UNBLOCKED** — hmf_forms.json pulled (368K records, 130 MB).
+
 ### Data Enrichment (more cargo) — queued
 - [x] OEIS cross-reference graph — DONE (1.59M edges, 335K sources)
 - [ ] Materials Project full 150K+ structures (API key active)
 - [ ] Small Groups library parsing (GAP 4.15.1 installed)
 - [ ] Hilbert modular forms
-- [ ] Siegel modular forms
+- [x] Siegel modular forms — DONE (smf_* tables in LMFDB dump)
 
 ### Pipeline Enrichment (sharper tools)
 - [x] Verb extractors for 15 datasets — DONE (all have verbs)
@@ -262,15 +274,16 @@ All 20 datasets in random pool. Topics steer the LLM. Tags prevent log collision
 ## Principles
 
 1. **The fare is tokens. The cargo is structure.** Every API call advances the loop.
-2. **The battery is the toll collector.** 11 tests, no LLM, no mercy. Battery overrides narrative.
-3. **Known bridges calibrate.** 97.4% recovery on 39 known truths. If this drops, the pipeline is broken.
-4. **Kills are the most valuable output.** Each kill teaches more than a survivor. The battery's job is murder.
+2. **The battery is the toll collector.** 14 tests (3-4 effective dimensions), no LLM, no mercy. Battery overrides narrative.
+3. **Known bridges calibrate.** 100% recovery on 180 known truths. If this drops, the pipeline is broken.
+4. **Kills are the most valuable output.** 15 kills and counting. Each kill teaches more than a survivor. The battery's job is murder.
 5. **Schema emerges from data.** Don't design the type system a priori. Let the data tell you.
-6. **Parallel, not serial.** 4 terminals, concurrent datasets, append-only logs.
-7. **The landscape is not the territory.** Geometric proximity is a hypothesis, not a proof.
-8. **Adjacent to Aletheia, not subordinate.** Independent landscape. Shared boundary is a discovery, not an assumption.
-9. **Fail fast, loop tight.** Velocity matters more than perfection. One cycle = 30 seconds.
-10. **The GPU never sleeps.** When I'm not searching, I'm killing. When I'm not killing, I'm bridging. When I'm not bridging, I'm searching.
+6. **Three layers, not one.** Scalar (dead), Structural (sweet spot), Transformational (frontier). Know which layer you're probing.
+7. **The landscape is not the territory.** But the Gamma metric IS a genuine pseudometric (0 triangle inequality violations / 13,800 triples). Geometric proximity is now measurable.
+8. **Three primes reconstruct.** Mod-3 ∩ mod-5 ∩ mod-7 = complete singleton rigidity. Independence is absolute across fibers.
+9. **The scaling slope measures endomorphism rank.** slope = 0.044·(endo_rank)² − 0.242. The instrument now measures, not just detects.
+10. **Moonshine is different.** Generic families: flat ~8x enrichment. Moonshine: increases with prime. Different mechanism. Treat accordingly.
+11. **Read the inventory before proposing.** Challenges grounded in existing data go 10/10. Challenges requiring unbuilt infrastructure block. James proved this twice.
 
 ---
 
@@ -285,6 +298,7 @@ All 20 datasets in random pool. Topics steer the LLM. Tags prevent log collision
 *Pipeline v3.4: April 8, 2026 (detrended tensor, depth probes, 8 kills, definitive null on scalar layer, depth layer scoped)*
 *Pipeline v5.0: April 9, 2026 (34 signature extractors, Rosetta Stone, algebraic DNA, 12.5M formula dissection, GL_2 fiber map complete)*
 *Pipeline v5.1: April 9, 2026 evening (GSp_4 37/37 at 10^{-88}, 733 mod-2, Lehmer tau mod-23 S_4 image rediscovery, umbral moonshine functor from OEIS, 10 new scripts, 5 frontier roadmaps)*
+*Pipeline v5.4: April 10, 2026 (41 challenges across 4 rounds, 15 kills, 14 publishable results, Layer 3 open, scaling law = endomorphism rank detector, Gamma = genuine metric, 3-prime adelic reconstruction, moonshine breaks flat enrichment, cross-ell absolute independence, 193 resurrected Layer 3 candidates, battery has 3-4 dimensions)*
 
 ### v5.1 New Tools
 | File | Purpose | Location |

@@ -1,0 +1,811 @@
+{
+  "timestamp": "2026-04-10T01:11:33",
+  "parameters": {
+    "fft_len": 64,
+    "n_freqs": 32,
+    "min_terms": 30,
+    "freq_resolutions": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "n_random_pairs": 10000,
+    "fp_len": 20,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ]
+  },
+  "n_families": 25,
+  "n_sequences": 368,
+  "spectral_enrichment_curve": {
+    "4": {
+      "n_freqs": 4,
+      "family_mean_sim": 0.9918695838131043,
+      "family_median_sim": 0.9999942077139464,
+      "family_std": 0.03315103174106283,
+      "random_mean_sim": 0.8472058837080989,
+      "random_median_sim": 0.8849253036963006,
+      "random_std": 0.1569462208840498,
+      "enrichment": 1.1707538898004735,
+      "n_family_pairs": 2587,
+      "n_random_pairs": 10000
+    },
+    "8": {
+      "n_freqs": 8,
+      "family_mean_sim": 0.9798777121313215,
+      "family_median_sim": 0.9999855403996777,
+      "family_std": 0.0721397605744126,
+      "random_mean_sim": 0.7517252413261282,
+      "random_median_sim": 0.7217483465303771,
+      "random_std": 0.2417417509180171,
+      "enrichment": 1.3035051349382742,
+      "n_family_pairs": 2587,
+      "n_random_pairs": 10000
+    },
+    "16": {
+      "n_freqs": 16,
+      "family_mean_sim": 0.9664631866641222,
+      "family_median_sim": 0.999984097730925,
+      "family_std": 0.12430873432341119,
+      "random_mean_sim": 0.638319212305847,
+      "random_median_sim": 0.6359155019351646,
+      "random_std": 0.3359055339786876,
+      "enrichment": 1.514075039623039,
+      "n_family_pairs": 2664,
+      "n_random_pairs": 10000
+    },
+    "32": {
+      "n_freqs": 32,
+      "family_mean_sim": 0.9462022964546397,
+      "family_median_sim": 0.9999741853948411,
+      "family_std": 0.15797054020599668,
+      "random_mean_sim": 0.5176813174859537,
+      "random_median_sim": 0.5800802548216122,
+      "random_std": 0.3752398095911447,
+      "enrichment": 1.8277698354071144,
+      "n_family_pairs": 2854,
+      "n_random_pairs": 10000
+    }
+  },
+  "spectral_scaling": {
+    "enrichments": [
+      1.1707538898004735,
+      1.3035051349382742,
+      1.514075039623039,
+      1.8277698354071144
+    ],
+    "monotonically_increasing": true
+  },
+  "per_family_spectral": {
+    "[-1, -1]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[0, -1]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-3, 2]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 171,
+      "n_seqs": 19
+    },
+    "[-1, -2]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 78,
+      "n_seqs": 13
+    },
+    "[-3, 1]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 6,
+      "n_seqs": 4
+    },
+    "[-2, -1]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 45,
+      "n_seqs": 10
+    },
+    "[-2, 0]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 36,
+      "n_seqs": 9
+    },
+    "[-2, 0, 1, -1]": {
+      "mean_sim": 1.0,
+      "enrichment": 1.9235182891462443,
+      "n_pairs": 36,
+      "n_seqs": 9
+    },
+    "[-5, 9, -7, 2]": {
+      "mean_sim": 0.9999999999999791,
+      "enrichment": 1.9235182891462044,
+      "n_pairs": 36,
+      "n_seqs": 9
+    },
+    "[-4, 4]": {
+      "mean_sim": 0.9999986458038338,
+      "enrichment": 1.9235156843251517,
+      "n_pairs": 21,
+      "n_seqs": 7
+    },
+    "[-2, 0, 2, -1]": {
+      "mean_sim": 0.9999781455285942,
+      "enrichment": 1.9234762516707957,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-1, 0, -1, 1]": {
+      "mean_sim": 0.9999651521252719,
+      "enrichment": 1.923451258621867,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-2, 2, -2, 1]": {
+      "mean_sim": 0.9999396063671875,
+      "enrichment": 1.9234021208889815,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-3, 3, -1, 0]": {
+      "mean_sim": 0.9998519876232328,
+      "enrichment": 1.9232335846325126,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-1, -1, 1, 0]": {
+      "mean_sim": 0.998690949250197,
+      "enrichment": 1.9210003060875778,
+      "n_pairs": 66,
+      "n_seqs": 12
+    },
+    "[0, 0, -1, 0]": {
+      "mean_sim": 0.998238460229669,
+      "enrichment": 1.9201299351809542,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-2, 1, 0, 0]": {
+      "mean_sim": 0.9981393574443306,
+      "enrichment": 1.9199393091608505,
+      "n_pairs": 78,
+      "n_seqs": 13
+    },
+    "[-2, 1]": {
+      "mean_sim": 0.9975858521486548,
+      "enrichment": 1.9188746316014789,
+      "n_pairs": 136,
+      "n_seqs": 17
+    },
+    "[-4, 6, -4, 1]": {
+      "mean_sim": 0.9963503352246772,
+      "enrichment": 1.9164980922016581,
+      "n_pairs": 171,
+      "n_seqs": 19
+    },
+    "[0, 0]": {
+      "mean_sim": 0.9360349201572589,
+      "enrichment": 1.800480288202032,
+      "n_pairs": 45,
+      "n_seqs": 10
+    },
+    "[0, -2, 0, 1]": {
+      "mean_sim": 0.8795546028758984,
+      "enrichment": 1.6918393649345524,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-1, 0, 1, -1]": {
+      "mean_sim": 0.7736493085335915,
+      "enrichment": 1.488128594349709,
+      "n_pairs": 105,
+      "n_seqs": 15
+    },
+    "[-1, 0]": {
+      "mean_sim": 0.6812409456168772,
+      "enrichment": 1.3103794182093453,
+      "n_pairs": 190,
+      "n_seqs": 20
+    },
+    "[-1, 0, 0, 0]": {
+      "mean_sim": 0.6628269935661814,
+      "enrichment": 1.27495984466437,
+      "n_pairs": 36,
+      "n_seqs": 9
+    },
+    "[0, 0, 0, -1]": {
+      "mean_sim": 0.6187527580985761,
+      "enrichment": 1.190182246662293,
+      "n_pairs": 78,
+      "n_seqs": 13
+    }
+  },
+  "per_family_modp_summary": {
+    "[-2, 0]": {
+      "geo_mean_enrichment": 484.16084622072356
+    },
+    "[-2, 1]": {
+      "geo_mean_enrichment": 54.28009670770154
+    },
+    "[-3, 3, -1, 0]": {
+      "geo_mean_enrichment": 44.060197011927976
+    },
+    "[0, 0]": {
+      "geo_mean_enrichment": 34.43407280278359
+    },
+    "[-1, 0]": {
+      "geo_mean_enrichment": 32.01172270237447
+    },
+    "[-3, 2]": {
+      "geo_mean_enrichment": 3.7508994173712905e-05
+    },
+    "[-2, -1]": {
+      "geo_mean_enrichment": 1.6829008781824598e-06
+    },
+    "[0, -1]": {
+      "geo_mean_enrichment": 1.4471163292521563e-06
+    },
+    "[-1, -1]": {
+      "geo_mean_enrichment": 1.176206381140775e-06
+    },
+    "[-4, 6, -4, 1]": {
+      "geo_mean_enrichment": 1.0574431552590127e-06
+    },
+    "[-1, 0, 1, -1]": {
+      "geo_mean_enrichment": 9.12890274196721e-07
+    },
+    "[-1, -2]": {
+      "geo_mean_enrichment": 5.743341370169157e-08
+    },
+    "[0, 0, -1, 0]": {
+      "geo_mean_enrichment": 5.4122398692834994e-08
+    },
+    "[-2, 1, 0, 0]": {
+      "geo_mean_enrichment": 4.689844457437909e-08
+    },
+    "[0, 0, 0, -1]": {
+      "geo_mean_enrichment": 4.088069611888161e-08
+    },
+    "[-2, 0, 2, -1]": {
+      "geo_mean_enrichment": 3.5684719084591365e-08
+    },
+    "[-3, 1]": {
+      "geo_mean_enrichment": 2.534123837984146e-09
+    },
+    "[-4, 4]": {
+      "geo_mean_enrichment": 2.362914885239828e-09
+    },
+    "[-1, 0, 0, 0]": {
+      "geo_mean_enrichment": 2.2453219937704003e-09
+    },
+    "[-1, -1, 1, 0]": {
+      "geo_mean_enrichment": 2.04777623249849e-09
+    },
+    "[0, -2, 0, 1]": {
+      "geo_mean_enrichment": 1.9566359978506352e-09
+    },
+    "[-1, 0, -1, 1]": {
+      "geo_mean_enrichment": 1.7942431211192798e-09
+    },
+    "[-2, 2, -2, 1]": {
+      "geo_mean_enrichment": 1.7942431211192798e-09
+    },
+    "[-5, 9, -7, 2]": {
+      "geo_mean_enrichment": 9.999999999999996e-11
+    },
+    "[-2, 0, 1, -1]": {
+      "geo_mean_enrichment": 9.999999999999996e-11
+    }
+  },
+  "invariant_2d": {
+    "points": [
+      {
+        "family": "[-2, 1]",
+        "coeffs": [
+          -2,
+          1
+        ],
+        "degree": 2,
+        "n_seqs": 17,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9188746316014789,
+        "spectral_mean_sim": 0.9975858521486548,
+        "modp_geo_enrichment": 54.28009670770154,
+        "quadrant": "arithmetically_visible_only"
+      },
+      {
+        "family": "[-1, 0, -1, 1]",
+        "coeffs": [
+          -1,
+          0,
+          -1,
+          1
+        ],
+        "degree": 4,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.923451258621867,
+        "spectral_mean_sim": 0.9999651521252719,
+        "modp_geo_enrichment": 1.7942431211192798e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-1, -1]",
+        "coeffs": [
+          -1,
+          -1
+        ],
+        "degree": 2,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 1.176206381140775e-06,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-4, 6, -4, 1]",
+        "coeffs": [
+          -4,
+          6,
+          -4,
+          1
+        ],
+        "degree": 4,
+        "n_seqs": 19,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9164980922016581,
+        "spectral_mean_sim": 0.9963503352246772,
+        "modp_geo_enrichment": 1.0574431552590127e-06,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[0, -1]",
+        "coeffs": [
+          0,
+          -1
+        ],
+        "degree": 2,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 1.4471163292521563e-06,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-2, 0, 2, -1]",
+        "coeffs": [
+          -2,
+          0,
+          2,
+          -1
+        ],
+        "degree": 4,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9234762516707957,
+        "spectral_mean_sim": 0.9999781455285942,
+        "modp_geo_enrichment": 3.5684719084591365e-08,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-1, 0]",
+        "coeffs": [
+          -1,
+          0
+        ],
+        "degree": 2,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.3103794182093453,
+        "spectral_mean_sim": 0.6812409456168772,
+        "modp_geo_enrichment": 32.01172270237447,
+        "quadrant": "arithmetically_visible_only"
+      },
+      {
+        "family": "[-3, 3, -1, 0]",
+        "coeffs": [
+          -3,
+          3,
+          -1,
+          0
+        ],
+        "degree": 4,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9232335846325126,
+        "spectral_mean_sim": 0.9998519876232328,
+        "modp_geo_enrichment": 44.060197011927976,
+        "quadrant": "arithmetically_visible_only"
+      },
+      {
+        "family": "[0, -2, 0, 1]",
+        "coeffs": [
+          0,
+          -2,
+          0,
+          1
+        ],
+        "degree": 4,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.6918393649345524,
+        "spectral_mean_sim": 0.8795546028758984,
+        "modp_geo_enrichment": 1.9566359978506352e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-2, 2, -2, 1]",
+        "coeffs": [
+          -2,
+          2,
+          -2,
+          1
+        ],
+        "degree": 4,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9234021208889815,
+        "spectral_mean_sim": 0.9999396063671875,
+        "modp_geo_enrichment": 1.7942431211192798e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-3, 2]",
+        "coeffs": [
+          -3,
+          2
+        ],
+        "degree": 2,
+        "n_seqs": 19,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 3.7508994173712905e-05,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[0, 0, -1, 0]",
+        "coeffs": [
+          0,
+          0,
+          -1,
+          0
+        ],
+        "degree": 4,
+        "n_seqs": 20,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9201299351809542,
+        "spectral_mean_sim": 0.998238460229669,
+        "modp_geo_enrichment": 5.4122398692834994e-08,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-1, 0, 1, -1]",
+        "coeffs": [
+          -1,
+          0,
+          1,
+          -1
+        ],
+        "degree": 4,
+        "n_seqs": 15,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.488128594349709,
+        "spectral_mean_sim": 0.7736493085335915,
+        "modp_geo_enrichment": 9.12890274196721e-07,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-1, -2]",
+        "coeffs": [
+          -1,
+          -2
+        ],
+        "degree": 2,
+        "n_seqs": 13,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 5.743341370169157e-08,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-3, 1]",
+        "coeffs": [
+          -3,
+          1
+        ],
+        "degree": 2,
+        "n_seqs": 4,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 2.534123837984146e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-2, 1, 0, 0]",
+        "coeffs": [
+          -2,
+          1,
+          0,
+          0
+        ],
+        "degree": 4,
+        "n_seqs": 13,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9199393091608505,
+        "spectral_mean_sim": 0.9981393574443306,
+        "modp_geo_enrichment": 4.689844457437909e-08,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[0, 0, 0, -1]",
+        "coeffs": [
+          0,
+          0,
+          0,
+          -1
+        ],
+        "degree": 4,
+        "n_seqs": 13,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.190182246662293,
+        "spectral_mean_sim": 0.6187527580985761,
+        "modp_geo_enrichment": 4.088069611888161e-08,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-1, -1, 1, 0]",
+        "coeffs": [
+          -1,
+          -1,
+          1,
+          0
+        ],
+        "degree": 4,
+        "n_seqs": 12,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9210003060875778,
+        "spectral_mean_sim": 0.998690949250197,
+        "modp_geo_enrichment": 2.04777623249849e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-2, -1]",
+        "coeffs": [
+          -2,
+          -1
+        ],
+        "degree": 2,
+        "n_seqs": 10,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 1.6829008781824598e-06,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-4, 4]",
+        "coeffs": [
+          -4,
+          4
+        ],
+        "degree": 2,
+        "n_seqs": 7,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235156843251517,
+        "spectral_mean_sim": 0.9999986458038338,
+        "modp_geo_enrichment": 2.362914885239828e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[0, 0]",
+        "coeffs": [
+          0,
+          0
+        ],
+        "degree": 2,
+        "n_seqs": 10,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.800480288202032,
+        "spectral_mean_sim": 0.9360349201572589,
+        "modp_geo_enrichment": 34.43407280278359,
+        "quadrant": "arithmetically_visible_only"
+      },
+      {
+        "family": "[-2, 0]",
+        "coeffs": [
+          -2,
+          0
+        ],
+        "degree": 2,
+        "n_seqs": 9,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 484.16084622072356,
+        "quadrant": "arithmetically_visible_only"
+      },
+      {
+        "family": "[-1, 0, 0, 0]",
+        "coeffs": [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "degree": 4,
+        "n_seqs": 9,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.27495984466437,
+        "spectral_mean_sim": 0.6628269935661814,
+        "modp_geo_enrichment": 2.2453219937704003e-09,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-5, 9, -7, 2]",
+        "coeffs": [
+          -5,
+          9,
+          -7,
+          2
+        ],
+        "degree": 4,
+        "n_seqs": 9,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462044,
+        "spectral_mean_sim": 0.9999999999999791,
+        "modp_geo_enrichment": 9.999999999999996e-11,
+        "quadrant": "neither"
+      },
+      {
+        "family": "[-2, 0, 1, -1]",
+        "coeffs": [
+          -2,
+          0,
+          1,
+          -1
+        ],
+        "degree": 4,
+        "n_seqs": 9,
+        "is_ec": false,
+        "is_genus2": false,
+        "spectral_enrichment": 1.9235182891462443,
+        "spectral_mean_sim": 1.0,
+        "modp_geo_enrichment": 9.999999999999996e-11,
+        "quadrant": "neither"
+      }
+    ],
+    "quadrant_counts": {
+      "arithmetically_visible_only": 5,
+      "neither": 20
+    },
+    "pearson_r": 0.09095182563351477,
+    "spearman_r": 0.013494108671516373,
+    "spearman_p": 0.9489551013200636
+  },
+  "spectrally_visible_only": [],
+  "arithmetically_visible_only": [
+    {
+      "family": "[-2, 0]",
+      "coeffs": [
+        -2,
+        0
+      ],
+      "degree": 2,
+      "n_seqs": 9,
+      "is_ec": false,
+      "is_genus2": false,
+      "spectral_enrichment": 1.9235182891462443,
+      "spectral_mean_sim": 1.0,
+      "modp_geo_enrichment": 484.16084622072356,
+      "quadrant": "arithmetically_visible_only"
+    },
+    {
+      "family": "[-2, 1]",
+      "coeffs": [
+        -2,
+        1
+      ],
+      "degree": 2,
+      "n_seqs": 17,
+      "is_ec": false,
+      "is_genus2": false,
+      "spectral_enrichment": 1.9188746316014789,
+      "spectral_mean_sim": 0.9975858521486548,
+      "modp_geo_enrichment": 54.28009670770154,
+      "quadrant": "arithmetically_visible_only"
+    },
+    {
+      "family": "[-3, 3, -1, 0]",
+      "coeffs": [
+        -3,
+        3,
+        -1,
+        0
+      ],
+      "degree": 4,
+      "n_seqs": 20,
+      "is_ec": false,
+      "is_genus2": false,
+      "spectral_enrichment": 1.9232335846325126,
+      "spectral_mean_sim": 0.9998519876232328,
+      "modp_geo_enrichment": 44.060197011927976,
+      "quadrant": "arithmetically_visible_only"
+    },
+    {
+      "family": "[0, 0]",
+      "coeffs": [
+        0,
+        0
+      ],
+      "degree": 2,
+      "n_seqs": 10,
+      "is_ec": false,
+      "is_genus2": false,
+      "spectral_enrichment": 1.800480288202032,
+      "spectral_mean_sim": 0.9360349201572589,
+      "modp_geo_enrichment": 34.43407280278359,
+      "quadrant": "arithmetically_visible_only"
+    },
+    {
+      "family": "[-1, 0]",
+      "coeffs": [
+        -1,
+        0
+      ],
+      "degree": 2,
+      "n_seqs": 20,
+      "is_ec": false,
+      "is_genus2": false,
+      "spectral_enrichment": 1.3103794182093453,
+      "spectral_mean_sim": 0.6812409456168772,
+      "modp_geo_enrichment": 32.01172270237447,
+      "quadrant": "arithmetically_visible_only"
+    }
+  ]
+}

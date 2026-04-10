@@ -1,0 +1,263 @@
+{
+  "challenge": "R3-4: Cross-Ell Independence on GSp_4",
+  "question": "Does mod-2/mod-3 entangle in degree 4?",
+  "population": {
+    "N_curves": 65534,
+    "N_same_conductor_pairs": 18464
+  },
+  "curve_level_test": {
+    "mod2_curves_ALL": 4855,
+    "mod3_curves_ALL": 192,
+    "observed_overlap": 62,
+    "expected_overlap": 14.224,
+    "enrichment": 4.359,
+    "p_value": 6.13099e-24,
+    "verdict": "SIGNIFICANT ENRICHMENT"
+  },
+  "pair_level_test": {
+    "mod2_pairs_ALL": 4348,
+    "mod3_pairs_ALL": 157,
+    "observed_simultaneous": 37,
+    "expected_simultaneous": 36.971,
+    "enrichment": 1.001,
+    "p_value": 0.5289482,
+    "verdict": "CONSISTENT WITH INDEPENDENCE"
+  },
+  "conductor_level": {
+    "shared_conductors": 50,
+    "note": "shared_conductors list truncated at 50 in source data"
+  },
+  "tiered_analysis": {
+    "ALL": {
+      "mod2_curves": 9101,
+      "mod3_curves": 296,
+      "expected_curve_overlap": 41.107,
+      "mod2_pairs": 11356,
+      "mod3_pairs": 181,
+      "expected_pair_overlap": 111.321
+    },
+    "coprime_USp4": {
+      "mod2_curves": 1961,
+      "mod3_curves": 84,
+      "expected_curve_overlap": 2.514,
+      "mod2_pairs": 1115,
+      "mod3_pairs": 42,
+      "expected_pair_overlap": 2.536
+    },
+    "irreducible": {
+      "mod2_curves": 1150,
+      "mod3_curves": 72,
+      "expected_curve_overlap": 1.263,
+      "mod2_pairs": 640,
+      "mod3_pairs": 36,
+      "expected_pair_overlap": 1.248
+    }
+  },
+  "same_partner_analysis": {
+    "same_partner_count": 13,
+    "different_partner_count": 7,
+    "total_simultaneous": 20,
+    "same_partner_fraction": 0.65,
+    "interpretation": "Same-partner = genuine mod-6 congruence (rho_f == rho_g mod 6). Different-partner = curve is a hub in both graphs but with different connections.",
+    "pair_details": [
+      {
+        "conductor": 1350,
+        "curve1_disc": "5400",
+        "curve2_disc": "6750",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 2156,
+        "curve1_disc": "275968",
+        "curve2_disc": "34496",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 2700,
+        "curve1_disc": "324000",
+        "curve2_disc": "81000",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 5046,
+        "curve1_disc": "20184",
+        "curve2_disc": "20184",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 5497,
+        "curve1_disc": "5497",
+        "curve2_disc": "5497",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 5835,
+        "curve1_disc": "5835",
+        "curve2_disc": "5835",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 8649,
+        "curve1_disc": "700569",
+        "curve2_disc": "700569",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 13716,
+        "curve1_disc": "27432",
+        "curve2_disc": "27432",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 20736,
+        "curve1_disc": "186624",
+        "curve2_disc": "186624",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 26244,
+        "curve1_disc": "52488",
+        "curve2_disc": "52488",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 31312,
+        "curve1_disc": "125248",
+        "curve2_disc": "500992",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 35721,
+        "curve1_disc": "107163",
+        "curve2_disc": "750141",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 36265,
+        "curve1_disc": "36265",
+        "curve2_disc": "36265",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 45056,
+        "curve1_disc": "45056",
+        "curve2_disc": "45056",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 46656,
+        "curve1_disc": "46656",
+        "curve2_disc": "46656",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 46656,
+        "curve1_disc": "46656",
+        "curve2_disc": "93312",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 46656,
+        "curve1_disc": "93312",
+        "curve2_disc": "93312",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 50173,
+        "curve1_disc": "50173",
+        "curve2_disc": "50173",
+        "type": "SAME_PARTNER"
+      },
+      {
+        "conductor": 56144,
+        "curve1_disc": "56144",
+        "curve2_disc": "617584",
+        "type": "DIFFERENT_PARTNER"
+      },
+      {
+        "conductor": 60507,
+        "curve1_disc": "181521",
+        "curve2_disc": "181521",
+        "type": "SAME_PARTNER"
+      }
+    ]
+  },
+  "gl2_comparison": {
+    "gl2_cross_ell_overlap": 0,
+    "gl2_total_pairs": 29043,
+    "gl2_enrichment": 0.0,
+    "gl2_verdict": "TOTAL INDEPENDENCE",
+    "gsp4_enrichment_pairs": 1.001,
+    "gsp4_enrichment_curves": 4.359,
+    "comparison": "GL_2: 0x enrichment (0 overlap). GSp_4: 1.0x enrichment (37 overlaps). Degree-4 preserves cross-prime independence."
+  },
+  "entanglement_verdict": "INDEPENDENT",
+  "sato_tate_breakdown": {
+    "mod2": {
+      "USp(4) x USp(4)": 9410,
+      "G_{3,3} x G_{3,3}": 923,
+      "G_{3,3} x USp(4)": 421,
+      "N(G_{1,3}) x N(G_{1,3})": 123,
+      "N(G_{1,3}) x USp(4)": 117,
+      "N(G_{3,3}) x USp(4)": 91,
+      "G_{3,3} x N(G_{3,3})": 46,
+      "G_{3,3} x N(G_{1,3})": 31,
+      "E_4 x G_{3,3}": 15,
+      "G_{3,3} x J(E_1)": 15,
+      "J(E_1) x USp(4)": 14,
+      "N(G_{3,3}) x N(G_{3,3})": 12,
+      "N(G_{1,3}) x N(G_{3,3})": 11,
+      "G_{3,3} x J(E_4)": 11,
+      "J(E_4) x USp(4)": 10,
+      "E_1 x G_{3,3}": 8,
+      "E_4 x J(E_1)": 8,
+      "E_4 x USp(4)": 7,
+      "J(E_1) x J(E_1)": 6,
+      "E_6 x USp(4)": 5,
+      "J(E_2) x J(E_4)": 5,
+      "E_6 x E_6": 4,
+      "E_3 x E_6": 4,
+      "J(E_1) x N(G_{3,3})": 4,
+      "J(C_2) x N(G_{1,3})": 4,
+      "E_4 x N(G_{1,3})": 4,
+      "J(E_4) x J(E_4)": 4,
+      "G_{3,3} x J(E_2)": 4,
+      "J(E_4) x N(G_{3,3})": 4,
+      "E_4 x E_4": 3
+    },
+    "mod3": {
+      "USp(4) x USp(4)": 113,
+      "G_{3,3} x USp(4)": 20,
+      "G_{3,3} x G_{3,3}": 18,
+      "E_6 x E_6": 8,
+      "N(G_{1,3}) x USp(4)": 5,
+      "J(E_3) x USp(4)": 4,
+      "J(E_1) x USp(4)": 2,
+      "J(E_1) x J(E_3)": 2,
+      "J(E_6) x J(E_6)": 2,
+      "J(E_6) x USp(4)": 2,
+      "D_{3,2} x J(E_1)": 1,
+      "N(G_{1,3}) x N(G_{1,3})": 1,
+      "J(E_3) x J(E_3)": 1,
+      "G_{3,3} x N(G_{1,3})": 1,
+      "E_6 x USp(4)": 1
+    }
+  },
+  "conductor_concentration": {
+    "unique_conductors_in_overlap": 40,
+    "multi_conductor_overlap": 10,
+    "max_per_conductor": 2,
+    "top_conductors": {
+      "1350": 2,
+      "2156": 2,
+      "2700": 2,
+      "20432": 2,
+      "31312": 2,
+      "35721": 2,
+      "46656": 2,
+      "56144": 2,
+      "84564": 2,
+      "91854": 2
+    }
+  }
+}

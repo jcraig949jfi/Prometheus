@@ -1,0 +1,3471 @@
+{
+  "meta": {
+    "timestamp": "2026-04-09T21:02:52",
+    "elapsed_seconds": 4.6,
+    "n_formulas": 3133,
+    "n_gamma_formulas": 177,
+    "n_gamma_modules": 25,
+    "gamma_symbols_used": [
+      "Gamma",
+      "LogGamma",
+      "UpperGamma"
+    ]
+  },
+  "symbol_distance_summary": {
+    "avg_gamma_distance": 0.770514,
+    "avg_nongamma_distance": 0.88214,
+    "avg_random_distance": 0.881317,
+    "n_gamma_pairs": 13412,
+    "n_nongamma_pairs": 38454,
+    "n_random_pairs": 14091,
+    "gamma_closer_count": 260,
+    "total_testable_pairs": 300,
+    "gamma_closer_fraction": 0.8667
+  },
+  "pair_details_top30": [
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.349859,
+      "nongamma_mean_dist": 0.855561,
+      "gamma_n_pairs": 92,
+      "nongamma_n_pairs": 276,
+      "gamma_closer": true,
+      "delta": 0.505702
+    },
+    {
+      "module_a": "agm",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.398148,
+      "nongamma_mean_dist": 0.896862,
+      "gamma_n_pairs": 24,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.498714
+    },
+    {
+      "module_a": "agm",
+      "module_b": "legendre_elliptic",
+      "gamma_mean_dist": 0.371914,
+      "nongamma_mean_dist": 0.862405,
+      "gamma_n_pairs": 108,
+      "nongamma_n_pairs": 324,
+      "gamma_closer": true,
+      "delta": 0.490491
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.459325,
+      "nongamma_mean_dist": 0.859911,
+      "gamma_n_pairs": 16,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.400586
+    },
+    {
+      "module_a": "legendre_elliptic",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.422581,
+      "nongamma_mean_dist": 0.807745,
+      "gamma_n_pairs": 72,
+      "nongamma_n_pairs": 216,
+      "gamma_closer": true,
+      "delta": 0.385164
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "eisenstein",
+      "gamma_mean_dist": 0.478114,
+      "nongamma_mean_dist": 0.858874,
+      "gamma_n_pairs": 12,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.380759
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "eisenstein",
+      "gamma_mean_dist": 0.510679,
+      "nongamma_mean_dist": 0.890961,
+      "gamma_n_pairs": 92,
+      "nongamma_n_pairs": 276,
+      "gamma_closer": true,
+      "delta": 0.380282
+    },
+    {
+      "module_a": "agm",
+      "module_b": "dedekind_eta",
+      "gamma_mean_dist": 0.530362,
+      "nongamma_mean_dist": 0.902154,
+      "gamma_n_pairs": 18,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.371792
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "legendre_elliptic",
+      "gamma_mean_dist": 0.47917,
+      "nongamma_mean_dist": 0.848672,
+      "gamma_n_pairs": 414,
+      "nongamma_n_pairs": 1242,
+      "gamma_closer": true,
+      "delta": 0.369501
+    },
+    {
+      "module_a": "agm",
+      "module_b": "carlson_elliptic",
+      "gamma_mean_dist": 0.482407,
+      "nongamma_mean_dist": 0.848684,
+      "gamma_n_pairs": 138,
+      "nongamma_n_pairs": 414,
+      "gamma_closer": true,
+      "delta": 0.366277
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "dedekind_eta",
+      "gamma_mean_dist": 0.560394,
+      "nongamma_mean_dist": 0.899215,
+      "gamma_n_pairs": 69,
+      "nongamma_n_pairs": 207,
+      "gamma_closer": true,
+      "delta": 0.338821
+    },
+    {
+      "module_a": "agm",
+      "module_b": "eisenstein",
+      "gamma_mean_dist": 0.58064,
+      "nongamma_mean_dist": 0.910985,
+      "gamma_n_pairs": 24,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.330345
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.545139,
+      "nongamma_mean_dist": 0.872672,
+      "gamma_n_pairs": 4,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.327533
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "legendre_elliptic",
+      "gamma_mean_dist": 0.56196,
+      "nongamma_mean_dist": 0.888383,
+      "gamma_n_pairs": 54,
+      "nongamma_n_pairs": 162,
+      "gamma_closer": true,
+      "delta": 0.326423
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "legendre_elliptic",
+      "gamma_mean_dist": 0.58092,
+      "nongamma_mean_dist": 0.90546,
+      "gamma_n_pairs": 72,
+      "nongamma_n_pairs": 216,
+      "gamma_closer": true,
+      "delta": 0.324539
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "imaginary_unit",
+      "gamma_mean_dist": 0.553662,
+      "nongamma_mean_dist": 0.867915,
+      "gamma_n_pairs": 23,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.314253
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.545623,
+      "nongamma_mean_dist": 0.842855,
+      "gamma_n_pairs": 12,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.297232
+    },
+    {
+      "module_a": "agm",
+      "module_b": "imaginary_unit",
+      "gamma_mean_dist": 0.60101,
+      "nongamma_mean_dist": 0.895273,
+      "gamma_n_pairs": 6,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.294263
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "imaginary_unit",
+      "gamma_mean_dist": 0.577778,
+      "nongamma_mean_dist": 0.871585,
+      "gamma_n_pairs": 4,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.293808
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "riemann_zeta",
+      "gamma_mean_dist": 0.62044,
+      "nongamma_mean_dist": 0.909128,
+      "gamma_n_pairs": 14,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.288687
+    },
+    {
+      "module_a": "riemann_zeta",
+      "module_b": "sine",
+      "gamma_mean_dist": 0.64881,
+      "nongamma_mean_dist": 0.928871,
+      "gamma_n_pairs": 2,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.280062
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "riemann_zeta",
+      "gamma_mean_dist": 0.637821,
+      "nongamma_mean_dist": 0.908756,
+      "gamma_n_pairs": 6,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.270936
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "eisenstein",
+      "gamma_mean_dist": 0.618182,
+      "nongamma_mean_dist": 0.88761,
+      "gamma_n_pairs": 4,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.269428
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "const_catalan",
+      "gamma_mean_dist": 0.636765,
+      "nongamma_mean_dist": 0.902946,
+      "gamma_n_pairs": 23,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.266181
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "legendre_elliptic",
+      "gamma_mean_dist": 0.610269,
+      "nongamma_mean_dist": 0.869599,
+      "gamma_n_pairs": 18,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.259329
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "riemann_zeta",
+      "gamma_mean_dist": 0.672932,
+      "nongamma_mean_dist": 0.931036,
+      "gamma_n_pairs": 2,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.258103
+    },
+    {
+      "module_a": "jacobi_theta",
+      "module_b": "pi",
+      "gamma_mean_dist": 0.608814,
+      "nongamma_mean_dist": 0.854842,
+      "gamma_n_pairs": 28,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.246028
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "jacobi_theta",
+      "gamma_mean_dist": 0.575174,
+      "nongamma_mean_dist": 0.816752,
+      "gamma_n_pairs": 28,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.241578
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "factorials",
+      "gamma_mean_dist": 0.592593,
+      "nongamma_mean_dist": 0.830181,
+      "gamma_n_pairs": 3,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.237589
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "jacobi_theta",
+      "gamma_mean_dist": 0.637728,
+      "nongamma_mean_dist": 0.872518,
+      "gamma_n_pairs": 7,
+      "nongamma_n_pairs": 100,
+      "gamma_closer": true,
+      "delta": 0.23479
+    }
+  ],
+  "gamma_distance_matrix": {
+    "modules": [
+      "agm",
+      "airy",
+      "barnes_g",
+      "bessel",
+      "beta_function",
+      "carlson_elliptic",
+      "confluent_hypergeometric",
+      "const_catalan",
+      "const_gamma",
+      "coulomb_wave",
+      "dedekind_eta",
+      "digamma_function",
+      "dirichlet",
+      "eisenstein",
+      "factorials",
+      "gamma",
+      "gauss_hypergeometric",
+      "hurwitz_zeta",
+      "imaginary_unit",
+      "integrals",
+      "jacobi_theta",
+      "legendre_elliptic",
+      "pi",
+      "riemann_zeta",
+      "sine"
+    ],
+    "distances": {
+      "agm": {
+        "agm": 0.182222,
+        "airy": 0.75641,
+        "barnes_g": 0.85415,
+        "bessel": 0.876343,
+        "beta_function": 0.849817,
+        "carlson_elliptic": 0.482407,
+        "confluent_hypergeometric": 0.84685,
+        "const_catalan": 0.675214,
+        "const_gamma": 0.83042,
+        "coulomb_wave": 0.834164,
+        "dedekind_eta": 0.530362,
+        "digamma_function": 0.914679,
+        "dirichlet": 0.852381,
+        "eisenstein": 0.58064,
+        "factorials": 0.842232,
+        "gamma": 0.810006,
+        "gauss_hypergeometric": 0.827959,
+        "hurwitz_zeta": 0.808901,
+        "imaginary_unit": 0.60101,
+        "integrals": 0.938725,
+        "jacobi_theta": 0.650202,
+        "legendre_elliptic": 0.371914,
+        "pi": 0.398148,
+        "riemann_zeta": 0.785539,
+        "sine": 0.734848
+      },
+      "airy": {
+        "agm": 0.75641,
+        "airy": 0.166667,
+        "barnes_g": 0.942892,
+        "bessel": 0.910331,
+        "beta_function": 0.923077,
+        "carlson_elliptic": 0.824026,
+        "confluent_hypergeometric": 0.913993,
+        "const_catalan": 0.846154,
+        "const_gamma": 0.912879,
+        "coulomb_wave": 0.970175,
+        "dedekind_eta": 0.792125,
+        "digamma_function": 0.970833,
+        "dirichlet": 0.952381,
+        "eisenstein": 0.825758,
+        "factorials": 0.919048,
+        "gamma": 0.897927,
+        "gauss_hypergeometric": 0.933993,
+        "hurwitz_zeta": 0.943918,
+        "imaginary_unit": 0.923077,
+        "integrals": 1.0,
+        "jacobi_theta": 0.874661,
+        "legendre_elliptic": 0.781358,
+        "pi": 0.79899,
+        "riemann_zeta": 0.911765,
+        "sine": 0.916667
+      },
+      "barnes_g": {
+        "agm": 0.85415,
+        "airy": 0.942892,
+        "barnes_g": 0.72009,
+        "bessel": 0.823386,
+        "beta_function": 0.749501,
+        "carlson_elliptic": 0.827536,
+        "confluent_hypergeometric": 0.760056,
+        "const_catalan": 0.78602,
+        "const_gamma": 0.857684,
+        "coulomb_wave": 0.774371,
+        "dedekind_eta": 0.841442,
+        "digamma_function": 0.697308,
+        "dirichlet": 0.771824,
+        "eisenstein": 0.824525,
+        "factorials": 0.746542,
+        "gamma": 0.849075,
+        "gauss_hypergeometric": 0.733463,
+        "hurwitz_zeta": 0.76028,
+        "imaginary_unit": 0.874422,
+        "integrals": 0.819742,
+        "jacobi_theta": 0.796112,
+        "legendre_elliptic": 0.851066,
+        "pi": 0.812953,
+        "riemann_zeta": 0.731067,
+        "sine": 0.811136
+      },
+      "bessel": {
+        "agm": 0.876343,
+        "airy": 0.910331,
+        "barnes_g": 0.823386,
+        "bessel": 0.714286,
+        "beta_function": 0.72,
+        "carlson_elliptic": 0.854367,
+        "confluent_hypergeometric": 0.787569,
+        "const_catalan": 0.885338,
+        "const_gamma": 0.923936,
+        "coulomb_wave": 0.729186,
+        "dedekind_eta": 0.839298,
+        "digamma_function": 0.791895,
+        "dirichlet": 0.780303,
+        "eisenstein": 0.811298,
+        "factorials": 0.767407,
+        "gamma": 0.84662,
+        "gauss_hypergeometric": 0.761778,
+        "hurwitz_zeta": 0.778102,
+        "imaginary_unit": 0.87963,
+        "integrals": 0.871429,
+        "jacobi_theta": 0.836539,
+        "legendre_elliptic": 0.872924,
+        "pi": 0.866034,
+        "riemann_zeta": 0.770614,
+        "sine": 0.873303
+      },
+      "beta_function": {
+        "agm": 0.849817,
+        "airy": 0.923077,
+        "barnes_g": 0.749501,
+        "bessel": 0.72,
+        "beta_function": 0.0,
+        "carlson_elliptic": 0.81623,
+        "confluent_hypergeometric": 0.648485,
+        "const_catalan": 0.846154,
+        "const_gamma": 0.809091,
+        "coulomb_wave": 0.693723,
+        "dedekind_eta": 0.85348,
+        "digamma_function": 0.659887,
+        "dirichlet": 0.777778,
+        "eisenstein": 0.825758,
+        "factorials": 0.592593,
+        "gamma": 0.794541,
+        "gauss_hypergeometric": 0.554683,
+        "hurwitz_zeta": 0.689305,
+        "imaginary_unit": 0.833333,
+        "integrals": 0.857143,
+        "jacobi_theta": 0.804358,
+        "legendre_elliptic": 0.846824,
+        "pi": 0.79899,
+        "riemann_zeta": 0.678571,
+        "sine": 0.7
+      },
+      "carlson_elliptic": {
+        "agm": 0.482407,
+        "airy": 0.824026,
+        "barnes_g": 0.827536,
+        "bessel": 0.854367,
+        "beta_function": 0.81623,
+        "carlson_elliptic": 0.380436,
+        "confluent_hypergeometric": 0.815643,
+        "const_catalan": 0.636765,
+        "const_gamma": 0.809009,
+        "coulomb_wave": 0.798841,
+        "dedekind_eta": 0.560394,
+        "digamma_function": 0.895088,
+        "dirichlet": 0.822957,
+        "eisenstein": 0.510679,
+        "factorials": 0.812443,
+        "gamma": 0.778537,
+        "gauss_hypergeometric": 0.793827,
+        "hurwitz_zeta": 0.779493,
+        "imaginary_unit": 0.553662,
+        "integrals": 0.930019,
+        "jacobi_theta": 0.617166,
+        "legendre_elliptic": 0.47917,
+        "pi": 0.349859,
+        "riemann_zeta": 0.752756,
+        "sine": 0.683432
+      },
+      "confluent_hypergeometric": {
+        "agm": 0.84685,
+        "airy": 0.913993,
+        "barnes_g": 0.760056,
+        "bessel": 0.787569,
+        "beta_function": 0.648485,
+        "carlson_elliptic": 0.815643,
+        "confluent_hypergeometric": 0.545657,
+        "const_catalan": 0.793407,
+        "const_gamma": 0.757121,
+        "coulomb_wave": 0.739243,
+        "dedekind_eta": 0.828095,
+        "digamma_function": 0.69851,
+        "dirichlet": 0.74152,
+        "eisenstein": 0.81292,
+        "factorials": 0.680179,
+        "gamma": 0.800654,
+        "gauss_hypergeometric": 0.643406,
+        "hurwitz_zeta": 0.74275,
+        "imaginary_unit": 0.850549,
+        "integrals": 0.771795,
+        "jacobi_theta": 0.766894,
+        "legendre_elliptic": 0.841812,
+        "pi": 0.799767,
+        "riemann_zeta": 0.722227,
+        "sine": 0.736364
+      },
+      "const_catalan": {
+        "agm": 0.675214,
+        "airy": 0.846154,
+        "barnes_g": 0.78602,
+        "bessel": 0.885338,
+        "beta_function": 0.846154,
+        "carlson_elliptic": 0.636765,
+        "confluent_hypergeometric": 0.793407,
+        "const_catalan": 0.0,
+        "const_gamma": 0.713636,
+        "coulomb_wave": 0.857493,
+        "dedekind_eta": 0.647436,
+        "digamma_function": 0.846293,
+        "dirichlet": 0.789474,
+        "eisenstein": 0.618182,
+        "factorials": 0.838095,
+        "gamma": 0.814285,
+        "gauss_hypergeometric": 0.815391,
+        "hurwitz_zeta": 0.790009,
+        "imaginary_unit": 0.75,
+        "integrals": 0.785714,
+        "jacobi_theta": 0.637728,
+        "legendre_elliptic": 0.667969,
+        "pi": 0.552778,
+        "riemann_zeta": 0.78125,
+        "sine": 0.727273
+      },
+      "const_gamma": {
+        "agm": 0.83042,
+        "airy": 0.912879,
+        "barnes_g": 0.857684,
+        "bessel": 0.923936,
+        "beta_function": 0.809091,
+        "carlson_elliptic": 0.809009,
+        "confluent_hypergeometric": 0.757121,
+        "const_catalan": 0.713636,
+        "const_gamma": 0.428571,
+        "coulomb_wave": 0.891679,
+        "dedekind_eta": 0.801379,
+        "digamma_function": 0.761447,
+        "dirichlet": 0.828431,
+        "eisenstein": 0.79899,
+        "factorials": 0.794553,
+        "gamma": 0.841788,
+        "gauss_hypergeometric": 0.830562,
+        "hurwitz_zeta": 0.852511,
+        "imaginary_unit": 0.809091,
+        "integrals": 0.839744,
+        "jacobi_theta": 0.800982,
+        "legendre_elliptic": 0.826375,
+        "pi": 0.762202,
+        "riemann_zeta": 0.866369,
+        "sine": 0.788889
+      },
+      "coulomb_wave": {
+        "agm": 0.834164,
+        "airy": 0.970175,
+        "barnes_g": 0.774371,
+        "bessel": 0.729186,
+        "beta_function": 0.693723,
+        "carlson_elliptic": 0.798841,
+        "confluent_hypergeometric": 0.739243,
+        "const_catalan": 0.857493,
+        "const_gamma": 0.891679,
+        "coulomb_wave": 0.462704,
+        "dedekind_eta": 0.766316,
+        "digamma_function": 0.765282,
+        "dirichlet": 0.767031,
+        "eisenstein": 0.716667,
+        "factorials": 0.796037,
+        "gamma": 0.819131,
+        "gauss_hypergeometric": 0.728182,
+        "hurwitz_zeta": 0.71853,
+        "imaginary_unit": 0.7625,
+        "integrals": 0.830694,
+        "jacobi_theta": 0.745314,
+        "legendre_elliptic": 0.834517,
+        "pi": 0.822795,
+        "riemann_zeta": 0.752595,
+        "sine": 0.743398
+      },
+      "dedekind_eta": {
+        "agm": 0.530362,
+        "airy": 0.792125,
+        "barnes_g": 0.841442,
+        "bessel": 0.839298,
+        "beta_function": 0.85348,
+        "carlson_elliptic": 0.560394,
+        "confluent_hypergeometric": 0.828095,
+        "const_catalan": 0.647436,
+        "const_gamma": 0.801379,
+        "coulomb_wave": 0.766316,
+        "dedekind_eta": 0.418182,
+        "digamma_function": 0.890601,
+        "dirichlet": 0.835714,
+        "eisenstein": 0.478114,
+        "factorials": 0.846368,
+        "gamma": 0.806096,
+        "gauss_hypergeometric": 0.828997,
+        "hurwitz_zeta": 0.79689,
+        "imaginary_unit": 0.616162,
+        "integrals": 0.894281,
+        "jacobi_theta": 0.609923,
+        "legendre_elliptic": 0.56196,
+        "pi": 0.545623,
+        "riemann_zeta": 0.789828,
+        "sine": 0.742424
+      },
+      "digamma_function": {
+        "agm": 0.914679,
+        "airy": 0.970833,
+        "barnes_g": 0.697308,
+        "bessel": 0.791895,
+        "beta_function": 0.659887,
+        "carlson_elliptic": 0.895088,
+        "confluent_hypergeometric": 0.69851,
+        "const_catalan": 0.846293,
+        "const_gamma": 0.761447,
+        "coulomb_wave": 0.765282,
+        "dedekind_eta": 0.890601,
+        "digamma_function": 0.439188,
+        "dirichlet": 0.713949,
+        "eisenstein": 0.896879,
+        "factorials": 0.660766,
+        "gamma": 0.851995,
+        "gauss_hypergeometric": 0.685917,
+        "hurwitz_zeta": 0.744682,
+        "imaginary_unit": 0.907639,
+        "integrals": 0.789563,
+        "jacobi_theta": 0.833822,
+        "legendre_elliptic": 0.911884,
+        "pi": 0.894118,
+        "riemann_zeta": 0.70192,
+        "sine": 0.824335
+      },
+      "dirichlet": {
+        "agm": 0.852381,
+        "airy": 0.952381,
+        "barnes_g": 0.771824,
+        "bessel": 0.780303,
+        "beta_function": 0.777778,
+        "carlson_elliptic": 0.822957,
+        "confluent_hypergeometric": 0.74152,
+        "const_catalan": 0.789474,
+        "const_gamma": 0.828431,
+        "coulomb_wave": 0.767031,
+        "dedekind_eta": 0.835714,
+        "digamma_function": 0.713949,
+        "dirichlet": 0.0,
+        "eisenstein": 0.837719,
+        "factorials": 0.702206,
+        "gamma": 0.840608,
+        "gauss_hypergeometric": 0.722047,
+        "hurwitz_zeta": 0.730331,
+        "imaginary_unit": 0.842105,
+        "integrals": 0.857143,
+        "jacobi_theta": 0.789465,
+        "legendre_elliptic": 0.850722,
+        "pi": 0.823223,
+        "riemann_zeta": 0.672932,
+        "sine": 0.764706
+      },
+      "eisenstein": {
+        "agm": 0.58064,
+        "airy": 0.825758,
+        "barnes_g": 0.824525,
+        "bessel": 0.811298,
+        "beta_function": 0.825758,
+        "carlson_elliptic": 0.510679,
+        "confluent_hypergeometric": 0.81292,
+        "const_catalan": 0.618182,
+        "const_gamma": 0.79899,
+        "coulomb_wave": 0.716667,
+        "dedekind_eta": 0.478114,
+        "digamma_function": 0.896879,
+        "dirichlet": 0.837719,
+        "eisenstein": 0.261905,
+        "factorials": 0.814459,
+        "gamma": 0.771882,
+        "gauss_hypergeometric": 0.803431,
+        "hurwitz_zeta": 0.776842,
+        "imaginary_unit": 0.577778,
+        "integrals": 0.892857,
+        "jacobi_theta": 0.575174,
+        "legendre_elliptic": 0.58092,
+        "pi": 0.459325,
+        "riemann_zeta": 0.758333,
+        "sine": 0.683333
+      },
+      "factorials": {
+        "agm": 0.842232,
+        "airy": 0.919048,
+        "barnes_g": 0.746542,
+        "bessel": 0.767407,
+        "beta_function": 0.592593,
+        "carlson_elliptic": 0.812443,
+        "confluent_hypergeometric": 0.680179,
+        "const_catalan": 0.838095,
+        "const_gamma": 0.794553,
+        "coulomb_wave": 0.796037,
+        "dedekind_eta": 0.846368,
+        "digamma_function": 0.660766,
+        "dirichlet": 0.702206,
+        "eisenstein": 0.814459,
+        "factorials": 0.518519,
+        "gamma": 0.801983,
+        "gauss_hypergeometric": 0.655651,
+        "hurwitz_zeta": 0.738809,
+        "imaginary_unit": 0.823362,
+        "integrals": 0.883333,
+        "jacobi_theta": 0.819643,
+        "legendre_elliptic": 0.838676,
+        "pi": 0.782053,
+        "riemann_zeta": 0.637821,
+        "sine": 0.734848
+      },
+      "gamma": {
+        "agm": 0.810006,
+        "airy": 0.897927,
+        "barnes_g": 0.849075,
+        "bessel": 0.84662,
+        "beta_function": 0.794541,
+        "carlson_elliptic": 0.778537,
+        "confluent_hypergeometric": 0.800654,
+        "const_catalan": 0.814285,
+        "const_gamma": 0.841788,
+        "coulomb_wave": 0.819131,
+        "dedekind_eta": 0.806096,
+        "digamma_function": 0.851995,
+        "dirichlet": 0.840608,
+        "eisenstein": 0.771882,
+        "factorials": 0.801983,
+        "gamma": 0.826513,
+        "gauss_hypergeometric": 0.789764,
+        "hurwitz_zeta": 0.820923,
+        "imaginary_unit": 0.779526,
+        "integrals": 0.877554,
+        "jacobi_theta": 0.795225,
+        "legendre_elliptic": 0.805716,
+        "pi": 0.744317,
+        "riemann_zeta": 0.807817,
+        "sine": 0.776252
+      },
+      "gauss_hypergeometric": {
+        "agm": 0.827959,
+        "airy": 0.933993,
+        "barnes_g": 0.733463,
+        "bessel": 0.761778,
+        "beta_function": 0.554683,
+        "carlson_elliptic": 0.793827,
+        "confluent_hypergeometric": 0.643406,
+        "const_catalan": 0.815391,
+        "const_gamma": 0.830562,
+        "coulomb_wave": 0.728182,
+        "dedekind_eta": 0.828997,
+        "digamma_function": 0.685917,
+        "dirichlet": 0.722047,
+        "eisenstein": 0.803431,
+        "factorials": 0.655651,
+        "gamma": 0.789764,
+        "gauss_hypergeometric": 0.503318,
+        "hurwitz_zeta": 0.706517,
+        "imaginary_unit": 0.80172,
+        "integrals": 0.806525,
+        "jacobi_theta": 0.743424,
+        "legendre_elliptic": 0.824975,
+        "pi": 0.77693,
+        "riemann_zeta": 0.62044,
+        "sine": 0.619318
+      },
+      "hurwitz_zeta": {
+        "agm": 0.808901,
+        "airy": 0.943918,
+        "barnes_g": 0.76028,
+        "bessel": 0.778102,
+        "beta_function": 0.689305,
+        "carlson_elliptic": 0.779493,
+        "confluent_hypergeometric": 0.74275,
+        "const_catalan": 0.790009,
+        "const_gamma": 0.852511,
+        "coulomb_wave": 0.71853,
+        "dedekind_eta": 0.79689,
+        "digamma_function": 0.744682,
+        "dirichlet": 0.730331,
+        "eisenstein": 0.776842,
+        "factorials": 0.738809,
+        "gamma": 0.820923,
+        "gauss_hypergeometric": 0.706517,
+        "hurwitz_zeta": 0.694228,
+        "imaginary_unit": 0.797009,
+        "integrals": 0.819167,
+        "jacobi_theta": 0.751532,
+        "legendre_elliptic": 0.80409,
+        "pi": 0.770391,
+        "riemann_zeta": 0.705156,
+        "sine": 0.731894
+      },
+      "imaginary_unit": {
+        "agm": 0.60101,
+        "airy": 0.923077,
+        "barnes_g": 0.874422,
+        "bessel": 0.87963,
+        "beta_function": 0.833333,
+        "carlson_elliptic": 0.553662,
+        "confluent_hypergeometric": 0.850549,
+        "const_catalan": 0.75,
+        "const_gamma": 0.809091,
+        "coulomb_wave": 0.7625,
+        "dedekind_eta": 0.616162,
+        "digamma_function": 0.907639,
+        "dirichlet": 0.842105,
+        "eisenstein": 0.577778,
+        "factorials": 0.823362,
+        "gamma": 0.779526,
+        "gauss_hypergeometric": 0.80172,
+        "hurwitz_zeta": 0.797009,
+        "imaginary_unit": 0.0,
+        "integrals": 0.933333,
+        "jacobi_theta": 0.639547,
+        "legendre_elliptic": 0.610269,
+        "pi": 0.545139,
+        "riemann_zeta": 0.80625,
+        "sine": 0.7
+      },
+      "integrals": {
+        "agm": 0.938725,
+        "airy": 1.0,
+        "barnes_g": 0.819742,
+        "bessel": 0.871429,
+        "beta_function": 0.857143,
+        "carlson_elliptic": 0.930019,
+        "confluent_hypergeometric": 0.771795,
+        "const_catalan": 0.785714,
+        "const_gamma": 0.839744,
+        "coulomb_wave": 0.830694,
+        "dedekind_eta": 0.894281,
+        "digamma_function": 0.789563,
+        "dirichlet": 0.857143,
+        "eisenstein": 0.892857,
+        "factorials": 0.883333,
+        "gamma": 0.877554,
+        "gauss_hypergeometric": 0.806525,
+        "hurwitz_zeta": 0.819167,
+        "imaginary_unit": 0.933333,
+        "integrals": 0.0,
+        "jacobi_theta": 0.773489,
+        "legendre_elliptic": 0.929934,
+        "pi": 0.922848,
+        "riemann_zeta": 0.891813,
+        "sine": 0.928571
+      },
+      "jacobi_theta": {
+        "agm": 0.650202,
+        "airy": 0.874661,
+        "barnes_g": 0.796112,
+        "bessel": 0.836539,
+        "beta_function": 0.804358,
+        "carlson_elliptic": 0.617166,
+        "confluent_hypergeometric": 0.766894,
+        "const_catalan": 0.637728,
+        "const_gamma": 0.800982,
+        "coulomb_wave": 0.745314,
+        "dedekind_eta": 0.609923,
+        "digamma_function": 0.833822,
+        "dirichlet": 0.789465,
+        "eisenstein": 0.575174,
+        "factorials": 0.819643,
+        "gamma": 0.795225,
+        "gauss_hypergeometric": 0.743424,
+        "hurwitz_zeta": 0.751532,
+        "imaginary_unit": 0.639547,
+        "integrals": 0.773489,
+        "jacobi_theta": 0.452648,
+        "legendre_elliptic": 0.664188,
+        "pi": 0.608814,
+        "riemann_zeta": 0.735412,
+        "sine": 0.72619
+      },
+      "legendre_elliptic": {
+        "agm": 0.371914,
+        "airy": 0.781358,
+        "barnes_g": 0.851066,
+        "bessel": 0.872924,
+        "beta_function": 0.846824,
+        "carlson_elliptic": 0.47917,
+        "confluent_hypergeometric": 0.841812,
+        "const_catalan": 0.667969,
+        "const_gamma": 0.826375,
+        "coulomb_wave": 0.834517,
+        "dedekind_eta": 0.56196,
+        "digamma_function": 0.911884,
+        "dirichlet": 0.850722,
+        "eisenstein": 0.58092,
+        "factorials": 0.838676,
+        "gamma": 0.805716,
+        "gauss_hypergeometric": 0.824975,
+        "hurwitz_zeta": 0.80409,
+        "imaginary_unit": 0.610269,
+        "integrals": 0.929934,
+        "jacobi_theta": 0.664188,
+        "legendre_elliptic": 0.339277,
+        "pi": 0.422581,
+        "riemann_zeta": 0.782317,
+        "sine": 0.728147
+      },
+      "pi": {
+        "agm": 0.398148,
+        "airy": 0.79899,
+        "barnes_g": 0.812953,
+        "bessel": 0.866034,
+        "beta_function": 0.79899,
+        "carlson_elliptic": 0.349859,
+        "confluent_hypergeometric": 0.799767,
+        "const_catalan": 0.552778,
+        "const_gamma": 0.762202,
+        "coulomb_wave": 0.822795,
+        "dedekind_eta": 0.545623,
+        "digamma_function": 0.894118,
+        "dirichlet": 0.823223,
+        "eisenstein": 0.459325,
+        "factorials": 0.782053,
+        "gamma": 0.744317,
+        "gauss_hypergeometric": 0.77693,
+        "hurwitz_zeta": 0.770391,
+        "imaginary_unit": 0.545139,
+        "integrals": 0.922848,
+        "jacobi_theta": 0.608814,
+        "legendre_elliptic": 0.422581,
+        "pi": 0.177778,
+        "riemann_zeta": 0.729968,
+        "sine": 0.622024
+      },
+      "riemann_zeta": {
+        "agm": 0.785539,
+        "airy": 0.911765,
+        "barnes_g": 0.731067,
+        "bessel": 0.770614,
+        "beta_function": 0.678571,
+        "carlson_elliptic": 0.752756,
+        "confluent_hypergeometric": 0.722227,
+        "const_catalan": 0.78125,
+        "const_gamma": 0.866369,
+        "coulomb_wave": 0.752595,
+        "dedekind_eta": 0.789828,
+        "digamma_function": 0.70192,
+        "dirichlet": 0.672932,
+        "eisenstein": 0.758333,
+        "factorials": 0.637821,
+        "gamma": 0.807817,
+        "gauss_hypergeometric": 0.62044,
+        "hurwitz_zeta": 0.705156,
+        "imaginary_unit": 0.80625,
+        "integrals": 0.891813,
+        "jacobi_theta": 0.735412,
+        "legendre_elliptic": 0.782317,
+        "pi": 0.729968,
+        "riemann_zeta": 0.357143,
+        "sine": 0.64881
+      },
+      "sine": {
+        "agm": 0.734848,
+        "airy": 0.916667,
+        "barnes_g": 0.811136,
+        "bessel": 0.873303,
+        "beta_function": 0.7,
+        "carlson_elliptic": 0.683432,
+        "confluent_hypergeometric": 0.736364,
+        "const_catalan": 0.727273,
+        "const_gamma": 0.788889,
+        "coulomb_wave": 0.743398,
+        "dedekind_eta": 0.742424,
+        "digamma_function": 0.824335,
+        "dirichlet": 0.764706,
+        "eisenstein": 0.683333,
+        "factorials": 0.734848,
+        "gamma": 0.776252,
+        "gauss_hypergeometric": 0.619318,
+        "hurwitz_zeta": 0.731894,
+        "imaginary_unit": 0.7,
+        "integrals": 0.928571,
+        "jacobi_theta": 0.72619,
+        "legendre_elliptic": 0.728147,
+        "pi": 0.622024,
+        "riemann_zeta": 0.64881,
+        "sine": 0.0
+      }
+    }
+  },
+  "modp_scaling": {
+    "2": {
+      "gamma_mean": 0.449954,
+      "control_mean": 0.480724,
+      "random_mean": 0.500444,
+      "expected_random": 0.5,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "3": {
+      "gamma_mean": 0.613169,
+      "control_mean": 0.636873,
+      "random_mean": 0.657674,
+      "expected_random": 0.666667,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "5": {
+      "gamma_mean": 0.745143,
+      "control_mean": 0.754283,
+      "random_mean": 0.77675,
+      "expected_random": 0.8,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "7": {
+      "gamma_mean": 0.798765,
+      "control_mean": 0.818074,
+      "random_mean": 0.839775,
+      "expected_random": 0.857143,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "11": {
+      "gamma_mean": 0.857633,
+      "control_mean": 0.868816,
+      "random_mean": 0.888609,
+      "expected_random": 0.909091,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "13": {
+      "gamma_mean": 0.866865,
+      "control_mean": 0.882378,
+      "random_mean": 0.90047,
+      "expected_random": 0.923077,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "17": {
+      "gamma_mean": 0.886147,
+      "control_mean": 0.897079,
+      "random_mean": 0.917178,
+      "expected_random": 0.941176,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "19": {
+      "gamma_mean": 0.892891,
+      "control_mean": 0.898526,
+      "random_mean": 0.924251,
+      "expected_random": 0.947368,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "23": {
+      "gamma_mean": 0.899623,
+      "control_mean": 0.907925,
+      "random_mean": 0.933613,
+      "expected_random": 0.956522,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    },
+    "29": {
+      "gamma_mean": 0.912957,
+      "control_mean": 0.915958,
+      "random_mean": 0.939108,
+      "expected_random": 0.965517,
+      "gamma_n": 37922,
+      "control_n": 6705,
+      "gamma_closer_than_control": true
+    }
+  },
+  "companion_analysis": {
+    "universal_companions": {
+      "Equal": 24,
+      "Pi": 17,
+      "Div": 15,
+      "And": 15,
+      "CC": 15,
+      "ConstI": 12,
+      "For": 12,
+      "Exp": 11,
+      "NotElement": 10,
+      "Sqrt": 9,
+      "ZZLessEqual": 9,
+      "Infinity": 9,
+      "ZZGreaterEqual": 8,
+      "Pow": 6,
+      "Greater": 6,
+      "Re": 6,
+      "Integral": 6,
+      "SetMinus": 6,
+      "Sum": 5,
+      "Set": 5
+    },
+    "bridge_cargo": [
+      {
+        "module_a": "barnes_g",
+        "module_b": "gamma",
+        "shared_companions": [
+          "BernoulliB",
+          "Bounds",
+          "CC",
+          "ComplexDerivative",
+          "ConstI",
+          "Div",
+          "Exp",
+          "Greater",
+          "Infinity",
+          "Integral",
+          "Less",
+          "Log",
+          "NotElement",
+          "OpenClosedInterval",
+          "Pi",
+          "Product",
+          "Re",
+          "RiemannZeta",
+          "Series",
+          "Sum",
+          "ZZ",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 23
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Cos",
+          "Derivatives",
+          "Div",
+          "Exp",
+          "Greater",
+          "Infinity",
+          "Integral",
+          "Log",
+          "NotElement",
+          "Pi",
+          "Re",
+          "SetMinus",
+          "Sqrt",
+          "Sum",
+          "ZZ",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 19
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Exp",
+          "Greater",
+          "HurwitzZeta",
+          "Infinity",
+          "Integral",
+          "Log",
+          "NotElement",
+          "Pi",
+          "PolyLog",
+          "Re",
+          "Sum",
+          "ZZ",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 17
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "gauss_hypergeometric",
+        "shared_companions": [
+          "Abs",
+          "Bounds",
+          "CC",
+          "ClosedOpenInterval",
+          "Factorial",
+          "Greater",
+          "Infinity",
+          "Less",
+          "NotElement",
+          "OpenClosedInterval",
+          "Pi",
+          "Re",
+          "RisingFactorial",
+          "SetMinus",
+          "Sin",
+          "Sum",
+          "ZZLessEqual"
+        ],
+        "n_shared": 17
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "gamma",
+        "shared_companions": [
+          "Abs",
+          "CC",
+          "ClosedOpenInterval",
+          "ConstI",
+          "Div",
+          "Entries",
+          "Exp",
+          "Infinity",
+          "LessEqual",
+          "NotElement",
+          "Section",
+          "SeeTopics",
+          "SetMinus",
+          "Title",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 16
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "gauss_hypergeometric",
+        "shared_companions": [
+          "Bounds",
+          "CC",
+          "Greater",
+          "Infinity",
+          "Less",
+          "NotElement",
+          "OpenClosedInterval",
+          "Pi",
+          "Re",
+          "Sum",
+          "ZZLessEqual"
+        ],
+        "n_shared": 11
+      },
+      {
+        "module_a": "confluent_hypergeometric",
+        "module_b": "gamma",
+        "shared_companions": [
+          "CC",
+          "Div",
+          "Exp",
+          "Factorial",
+          "Infinity",
+          "NotElement",
+          "NotEqual",
+          "RisingFactorial",
+          "Sum",
+          "ZZ"
+        ],
+        "n_shared": 10
+      },
+      {
+        "module_a": "digamma_function",
+        "module_b": "gamma",
+        "shared_companions": [
+          "CC",
+          "ComplexDerivative",
+          "ConstGamma",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "Product",
+          "Representation",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 10
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Greater",
+          "Infinity",
+          "Integral",
+          "Pi",
+          "Re",
+          "RiemannZeta",
+          "Sqrt"
+        ],
+        "n_shared": 10
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "riemann_zeta",
+        "shared_companions": [
+          "CC",
+          "Cos",
+          "Div",
+          "NotElement",
+          "Pi",
+          "PowerSeries",
+          "RiemannZeta",
+          "Sin",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 10
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "bessel",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Exp",
+          "Im",
+          "Infinity",
+          "NotElement",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 9
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "digamma_function",
+        "shared_companions": [
+          "Brackets",
+          "CC",
+          "ComplexDerivative",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "Product",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 9
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Greater",
+          "Infinity",
+          "Integral",
+          "Pi",
+          "Re",
+          "RiemannZeta"
+        ],
+        "n_shared": 9
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "SetMinus",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 9
+      },
+      {
+        "module_a": "gauss_hypergeometric",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "Greater",
+          "Infinity",
+          "NotElement",
+          "Pi",
+          "Re",
+          "SetMinus",
+          "Sum",
+          "ZZLessEqual"
+        ],
+        "n_shared": 9
+      },
+      {
+        "module_a": "hurwitz_zeta",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Greater",
+          "Infinity",
+          "Integral",
+          "Pi",
+          "Re",
+          "Sqrt"
+        ],
+        "n_shared": 9
+      },
+      {
+        "module_a": "agm",
+        "module_b": "legendre_elliptic",
+        "shared_companions": [
+          "Add",
+          "ConstI",
+          "Div",
+          "Mul",
+          "Pi",
+          "Pow",
+          "Sqrt",
+          "Sub"
+        ],
+        "n_shared": 8
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "carlson_elliptic",
+        "shared_companions": [
+          "CC",
+          "Cases",
+          "ConstI",
+          "Div",
+          "Im",
+          "Less",
+          "Pi",
+          "Re"
+        ],
+        "n_shared": 8
+      },
+      {
+        "module_a": "carlson_elliptic",
+        "module_b": "gamma",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "GreaterEqual",
+          "Less",
+          "Pi",
+          "Re",
+          "Sqrt"
+        ],
+        "n_shared": 8
+      },
+      {
+        "module_a": "agm",
+        "module_b": "carlson_elliptic",
+        "shared_companions": [
+          "Add",
+          "ConstI",
+          "Div",
+          "Mul",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "confluent_hypergeometric",
+        "shared_companions": [
+          "CC",
+          "Div",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "Sum",
+          "ZZ"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "riemann_zeta",
+        "shared_companions": [
+          "CC",
+          "Div",
+          "NotElement",
+          "Pi",
+          "RiemannZeta",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "gauss_hypergeometric",
+        "shared_companions": [
+          "Abs",
+          "CC",
+          "ClosedOpenInterval",
+          "Infinity",
+          "NotElement",
+          "SetMinus",
+          "ZZLessEqual"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "carlson_elliptic",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Pi",
+          "Pow",
+          "Re",
+          "Sqrt"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "carlson_elliptic",
+        "module_b": "legendre_elliptic",
+        "shared_companions": [
+          "Add",
+          "ConstI",
+          "Div",
+          "Mul",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "confluent_hypergeometric",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "Div",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "Sum",
+          "ZZ"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "hurwitz_zeta",
+        "module_b": "riemann_zeta",
+        "shared_companions": [
+          "CC",
+          "Cos",
+          "Div",
+          "NotElement",
+          "Pi",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 7
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "confluent_hypergeometric",
+        "shared_companions": [
+          "CC",
+          "Div",
+          "Exp",
+          "HypergeometricUStar",
+          "Infinity",
+          "NotElement"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "digamma_function",
+        "shared_companions": [
+          "CC",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "carlson_elliptic",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Div",
+          "Pi",
+          "Re",
+          "Sqrt"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "confluent_hypergeometric",
+        "module_b": "gauss_hypergeometric",
+        "shared_companions": [
+          "CC",
+          "Factorial",
+          "Infinity",
+          "NotElement",
+          "RisingFactorial",
+          "Sum"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "coulomb_wave",
+        "module_b": "gamma",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Derivatives",
+          "Exp",
+          "Pi",
+          "SetMinus"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "coulomb_wave",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Derivatives",
+          "Exp",
+          "Pi",
+          "SetMinus"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "dedekind_eta",
+        "module_b": "legendre_elliptic",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Exp",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "digamma_function",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "CC",
+          "Exp",
+          "Infinity",
+          "NotElement",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "factorials",
+        "module_b": "gamma",
+        "shared_companions": [
+          "CC",
+          "Factorial",
+          "NotElement",
+          "RisingFactorial",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 6
+      },
+      {
+        "module_a": "agm",
+        "module_b": "dedekind_eta",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "agm",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "barnes_g",
+        "module_b": "dirichlet",
+        "shared_companions": [
+          "CC",
+          "Cases",
+          "NotElement",
+          "Pi",
+          "ZZGreaterEqual"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "coulomb_wave",
+        "shared_companions": [
+          "CC",
+          "ConstI",
+          "Exp",
+          "HypergeometricUStar",
+          "SetMinus"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "bessel",
+        "module_b": "riemann_zeta",
+        "shared_companions": [
+          "CC",
+          "Div",
+          "NotElement",
+          "ZZGreaterEqual",
+          "ZZLessEqual"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "carlson_elliptic",
+        "module_b": "dedekind_eta",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "dedekind_eta",
+        "module_b": "gamma",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Exp",
+          "Pi",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "dedekind_eta",
+        "module_b": "hurwitz_zeta",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Exp",
+          "Pi",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "dedekind_eta",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Pi",
+          "Pow",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "factorials",
+        "module_b": "gauss_hypergeometric",
+        "shared_companions": [
+          "CC",
+          "Factorial",
+          "NotElement",
+          "RisingFactorial",
+          "ZZLessEqual"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "imaginary_unit",
+        "shared_companions": [
+          "Abs",
+          "ConstI",
+          "Pi",
+          "Sinh",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "integrals",
+        "shared_companions": [
+          "Exp",
+          "Greater",
+          "Infinity",
+          "Integral",
+          "RR"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "gamma",
+        "module_b": "legendre_elliptic",
+        "shared_companions": [
+          "ConstI",
+          "Div",
+          "Exp",
+          "Pi",
+          "Sqrt"
+        ],
+        "n_shared": 5
+      },
+      {
+        "module_a": "gauss_hypergeometric",
+        "module_b": "jacobi_theta",
+        "shared_companions": [
+          "CC",
+          "Greater",
+          "Infinity",
+          "Pi",
+          "Re"
+        ],
+        "n_shared": 5
+      }
+    ]
+  },
+  "gamma_family": {
+    "core_modules": [
+      "agm",
+      "airy",
+      "barnes_g",
+      "bessel",
+      "beta_function",
+      "carlson_elliptic",
+      "confluent_hypergeometric",
+      "const_catalan",
+      "const_gamma",
+      "coulomb_wave",
+      "dedekind_eta",
+      "digamma_function",
+      "dirichlet",
+      "eisenstein",
+      "factorials",
+      "gamma",
+      "gauss_hypergeometric",
+      "hurwitz_zeta",
+      "imaginary_unit",
+      "integrals",
+      "jacobi_theta",
+      "legendre_elliptic",
+      "pi",
+      "riemann_zeta",
+      "sine"
+    ],
+    "extended_modules": [
+      "agm",
+      "airy",
+      "barnes_g",
+      "bessel",
+      "beta_function",
+      "carlson_elliptic",
+      "confluent_hypergeometric",
+      "const_catalan",
+      "const_gamma",
+      "coulomb_wave",
+      "dedekind_eta",
+      "digamma_function",
+      "dirichlet",
+      "eisenstein",
+      "factorials",
+      "gamma",
+      "gauss_hypergeometric",
+      "hurwitz_zeta",
+      "imaginary_unit",
+      "integrals",
+      "jacobi_theta",
+      "legendre_elliptic",
+      "pi",
+      "riemann_zeta",
+      "sine",
+      "totient"
+    ],
+    "extended_only": [
+      "totient"
+    ]
+  },
+  "operadic_depth": {
+    "n_gamma_bridges": 2,
+    "n_nongamma_bridges": 12,
+    "gamma_avg_operadic_dist": 0.0,
+    "nongamma_avg_operadic_dist": 0.014286
+  },
+  "cross_pairs_ranked": [
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "pi",
+      "distance": 0.349859
+    },
+    {
+      "module_a": "agm",
+      "module_b": "legendre_elliptic",
+      "distance": 0.371914
+    },
+    {
+      "module_a": "agm",
+      "module_b": "pi",
+      "distance": 0.398148
+    },
+    {
+      "module_a": "legendre_elliptic",
+      "module_b": "pi",
+      "distance": 0.422581
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "pi",
+      "distance": 0.459325
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "eisenstein",
+      "distance": 0.478114
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "legendre_elliptic",
+      "distance": 0.47917
+    },
+    {
+      "module_a": "agm",
+      "module_b": "carlson_elliptic",
+      "distance": 0.482407
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "eisenstein",
+      "distance": 0.510679
+    },
+    {
+      "module_a": "agm",
+      "module_b": "dedekind_eta",
+      "distance": 0.530362
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "pi",
+      "distance": 0.545139
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "pi",
+      "distance": 0.545623
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "pi",
+      "distance": 0.552778
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "imaginary_unit",
+      "distance": 0.553662
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.554683
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "dedekind_eta",
+      "distance": 0.560394
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "legendre_elliptic",
+      "distance": 0.56196
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "jacobi_theta",
+      "distance": 0.575174
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "imaginary_unit",
+      "distance": 0.577778
+    },
+    {
+      "module_a": "agm",
+      "module_b": "eisenstein",
+      "distance": 0.58064
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "legendre_elliptic",
+      "distance": 0.58092
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "factorials",
+      "distance": 0.592593
+    },
+    {
+      "module_a": "agm",
+      "module_b": "imaginary_unit",
+      "distance": 0.60101
+    },
+    {
+      "module_a": "jacobi_theta",
+      "module_b": "pi",
+      "distance": 0.608814
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "jacobi_theta",
+      "distance": 0.609923
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "legendre_elliptic",
+      "distance": 0.610269
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "imaginary_unit",
+      "distance": 0.616162
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "jacobi_theta",
+      "distance": 0.617166
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "eisenstein",
+      "distance": 0.618182
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "sine",
+      "distance": 0.619318
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "riemann_zeta",
+      "distance": 0.62044
+    },
+    {
+      "module_a": "pi",
+      "module_b": "sine",
+      "distance": 0.622024
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "const_catalan",
+      "distance": 0.636765
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "jacobi_theta",
+      "distance": 0.637728
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "riemann_zeta",
+      "distance": 0.637821
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "jacobi_theta",
+      "distance": 0.639547
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.643406
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "dedekind_eta",
+      "distance": 0.647436
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "confluent_hypergeometric",
+      "distance": 0.648485
+    },
+    {
+      "module_a": "riemann_zeta",
+      "module_b": "sine",
+      "distance": 0.64881
+    },
+    {
+      "module_a": "agm",
+      "module_b": "jacobi_theta",
+      "distance": 0.650202
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.655651
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "digamma_function",
+      "distance": 0.659887
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "factorials",
+      "distance": 0.660766
+    },
+    {
+      "module_a": "jacobi_theta",
+      "module_b": "legendre_elliptic",
+      "distance": 0.664188
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "legendre_elliptic",
+      "distance": 0.667969
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "riemann_zeta",
+      "distance": 0.672932
+    },
+    {
+      "module_a": "agm",
+      "module_b": "const_catalan",
+      "distance": 0.675214
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "riemann_zeta",
+      "distance": 0.678571
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "factorials",
+      "distance": 0.680179
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "sine",
+      "distance": 0.683333
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "sine",
+      "distance": 0.683432
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.685917
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.689305
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "coulomb_wave",
+      "distance": 0.693723
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "digamma_function",
+      "distance": 0.697308
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "digamma_function",
+      "distance": 0.69851
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "sine",
+      "distance": 0.7
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "sine",
+      "distance": 0.7
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "riemann_zeta",
+      "distance": 0.70192
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "factorials",
+      "distance": 0.702206
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "riemann_zeta",
+      "distance": 0.705156
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.706517
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "const_gamma",
+      "distance": 0.713636
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "dirichlet",
+      "distance": 0.713949
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "eisenstein",
+      "distance": 0.716667
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.71853
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "beta_function",
+      "distance": 0.72
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.722047
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "riemann_zeta",
+      "distance": 0.722227
+    },
+    {
+      "module_a": "jacobi_theta",
+      "module_b": "sine",
+      "distance": 0.72619
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "sine",
+      "distance": 0.727273
+    },
+    {
+      "module_a": "legendre_elliptic",
+      "module_b": "sine",
+      "distance": 0.728147
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.728182
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "coulomb_wave",
+      "distance": 0.729186
+    },
+    {
+      "module_a": "pi",
+      "module_b": "riemann_zeta",
+      "distance": 0.729968
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.730331
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "riemann_zeta",
+      "distance": 0.731067
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "sine",
+      "distance": 0.731894
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.733463
+    },
+    {
+      "module_a": "agm",
+      "module_b": "sine",
+      "distance": 0.734848
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "sine",
+      "distance": 0.734848
+    },
+    {
+      "module_a": "jacobi_theta",
+      "module_b": "riemann_zeta",
+      "distance": 0.735412
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "sine",
+      "distance": 0.736364
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.738809
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "coulomb_wave",
+      "distance": 0.739243
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "dirichlet",
+      "distance": 0.74152
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "sine",
+      "distance": 0.742424
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.74275
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "sine",
+      "distance": 0.743398
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "jacobi_theta",
+      "distance": 0.743424
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "pi",
+      "distance": 0.744317
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.744682
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "jacobi_theta",
+      "distance": 0.745314
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "factorials",
+      "distance": 0.746542
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "beta_function",
+      "distance": 0.749501
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "imaginary_unit",
+      "distance": 0.75
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "jacobi_theta",
+      "distance": 0.751532
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "riemann_zeta",
+      "distance": 0.752595
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "riemann_zeta",
+      "distance": 0.752756
+    },
+    {
+      "module_a": "agm",
+      "module_b": "airy",
+      "distance": 0.75641
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "const_gamma",
+      "distance": 0.757121
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "riemann_zeta",
+      "distance": 0.758333
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "confluent_hypergeometric",
+      "distance": 0.760056
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.76028
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "digamma_function",
+      "distance": 0.761447
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.761778
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "pi",
+      "distance": 0.762202
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "imaginary_unit",
+      "distance": 0.7625
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "sine",
+      "distance": 0.764706
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "digamma_function",
+      "distance": 0.765282
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "dedekind_eta",
+      "distance": 0.766316
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "jacobi_theta",
+      "distance": 0.766894
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "dirichlet",
+      "distance": 0.767031
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "factorials",
+      "distance": 0.767407
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "pi",
+      "distance": 0.770391
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "riemann_zeta",
+      "distance": 0.770614
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "integrals",
+      "distance": 0.771795
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "dirichlet",
+      "distance": 0.771824
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "gamma",
+      "distance": 0.771882
+    },
+    {
+      "module_a": "integrals",
+      "module_b": "jacobi_theta",
+      "distance": 0.773489
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "coulomb_wave",
+      "distance": 0.774371
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "sine",
+      "distance": 0.776252
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.776842
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "pi",
+      "distance": 0.77693
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "dirichlet",
+      "distance": 0.777778
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.778102
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "gamma",
+      "distance": 0.778537
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.779493
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "imaginary_unit",
+      "distance": 0.779526
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "dirichlet",
+      "distance": 0.780303
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "riemann_zeta",
+      "distance": 0.78125
+    },
+    {
+      "module_a": "airy",
+      "module_b": "legendre_elliptic",
+      "distance": 0.781358
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "pi",
+      "distance": 0.782053
+    },
+    {
+      "module_a": "legendre_elliptic",
+      "module_b": "riemann_zeta",
+      "distance": 0.782317
+    },
+    {
+      "module_a": "agm",
+      "module_b": "riemann_zeta",
+      "distance": 0.785539
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "integrals",
+      "distance": 0.785714
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "const_catalan",
+      "distance": 0.78602
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "confluent_hypergeometric",
+      "distance": 0.787569
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "sine",
+      "distance": 0.788889
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "jacobi_theta",
+      "distance": 0.789465
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "dirichlet",
+      "distance": 0.789474
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "integrals",
+      "distance": 0.789563
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.789764
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "riemann_zeta",
+      "distance": 0.789828
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.790009
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "digamma_function",
+      "distance": 0.791895
+    },
+    {
+      "module_a": "airy",
+      "module_b": "dedekind_eta",
+      "distance": 0.792125
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "const_catalan",
+      "distance": 0.793407
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.793827
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "gamma",
+      "distance": 0.794541
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "factorials",
+      "distance": 0.794553
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "jacobi_theta",
+      "distance": 0.795225
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "factorials",
+      "distance": 0.796037
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "jacobi_theta",
+      "distance": 0.796112
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.79689
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "imaginary_unit",
+      "distance": 0.797009
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "coulomb_wave",
+      "distance": 0.798841
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "eisenstein",
+      "distance": 0.79899
+    },
+    {
+      "module_a": "airy",
+      "module_b": "pi",
+      "distance": 0.79899
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "pi",
+      "distance": 0.79899
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "pi",
+      "distance": 0.799767
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "gamma",
+      "distance": 0.800654
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "jacobi_theta",
+      "distance": 0.800982
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "dedekind_eta",
+      "distance": 0.801379
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "imaginary_unit",
+      "distance": 0.80172
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "gamma",
+      "distance": 0.801983
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.803431
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "legendre_elliptic",
+      "distance": 0.80409
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "jacobi_theta",
+      "distance": 0.804358
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "legendre_elliptic",
+      "distance": 0.805716
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "gamma",
+      "distance": 0.806096
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "riemann_zeta",
+      "distance": 0.80625
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "integrals",
+      "distance": 0.806525
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "riemann_zeta",
+      "distance": 0.807817
+    },
+    {
+      "module_a": "agm",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.808901
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "const_gamma",
+      "distance": 0.809009
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "const_gamma",
+      "distance": 0.809091
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "imaginary_unit",
+      "distance": 0.809091
+    },
+    {
+      "module_a": "agm",
+      "module_b": "gamma",
+      "distance": 0.810006
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "sine",
+      "distance": 0.811136
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "eisenstein",
+      "distance": 0.811298
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "factorials",
+      "distance": 0.812443
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "eisenstein",
+      "distance": 0.81292
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "pi",
+      "distance": 0.812953
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "gamma",
+      "distance": 0.814285
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "factorials",
+      "distance": 0.814459
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.815391
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "confluent_hypergeometric",
+      "distance": 0.815643
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "carlson_elliptic",
+      "distance": 0.81623
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "gamma",
+      "distance": 0.819131
+    },
+    {
+      "module_a": "hurwitz_zeta",
+      "module_b": "integrals",
+      "distance": 0.819167
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "jacobi_theta",
+      "distance": 0.819643
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "integrals",
+      "distance": 0.819742
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.820923
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "pi",
+      "distance": 0.822795
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "dirichlet",
+      "distance": 0.822957
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "pi",
+      "distance": 0.823223
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "imaginary_unit",
+      "distance": 0.823362
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "bessel",
+      "distance": 0.823386
+    },
+    {
+      "module_a": "airy",
+      "module_b": "carlson_elliptic",
+      "distance": 0.824026
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "sine",
+      "distance": 0.824335
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "eisenstein",
+      "distance": 0.824525
+    },
+    {
+      "module_a": "gauss_hypergeometric",
+      "module_b": "legendre_elliptic",
+      "distance": 0.824975
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "eisenstein",
+      "distance": 0.825758
+    },
+    {
+      "module_a": "airy",
+      "module_b": "eisenstein",
+      "distance": 0.825758
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "legendre_elliptic",
+      "distance": 0.826375
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "carlson_elliptic",
+      "distance": 0.827536
+    },
+    {
+      "module_a": "agm",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.827959
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "dedekind_eta",
+      "distance": 0.828095
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "dirichlet",
+      "distance": 0.828431
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.828997
+    },
+    {
+      "module_a": "agm",
+      "module_b": "const_gamma",
+      "distance": 0.83042
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.830562
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "integrals",
+      "distance": 0.830694
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "imaginary_unit",
+      "distance": 0.833333
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "jacobi_theta",
+      "distance": 0.833822
+    },
+    {
+      "module_a": "agm",
+      "module_b": "coulomb_wave",
+      "distance": 0.834164
+    },
+    {
+      "module_a": "coulomb_wave",
+      "module_b": "legendre_elliptic",
+      "distance": 0.834517
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "dirichlet",
+      "distance": 0.835714
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "jacobi_theta",
+      "distance": 0.836539
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "eisenstein",
+      "distance": 0.837719
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "factorials",
+      "distance": 0.838095
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "legendre_elliptic",
+      "distance": 0.838676
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "dedekind_eta",
+      "distance": 0.839298
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "integrals",
+      "distance": 0.839744
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "gamma",
+      "distance": 0.840608
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "dedekind_eta",
+      "distance": 0.841442
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "gamma",
+      "distance": 0.841788
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "legendre_elliptic",
+      "distance": 0.841812
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "imaginary_unit",
+      "distance": 0.842105
+    },
+    {
+      "module_a": "agm",
+      "module_b": "factorials",
+      "distance": 0.842232
+    },
+    {
+      "module_a": "airy",
+      "module_b": "const_catalan",
+      "distance": 0.846154
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "const_catalan",
+      "distance": 0.846154
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "digamma_function",
+      "distance": 0.846293
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "factorials",
+      "distance": 0.846368
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "gamma",
+      "distance": 0.84662
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "legendre_elliptic",
+      "distance": 0.846824
+    },
+    {
+      "module_a": "agm",
+      "module_b": "confluent_hypergeometric",
+      "distance": 0.84685
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "gamma",
+      "distance": 0.849075
+    },
+    {
+      "module_a": "agm",
+      "module_b": "beta_function",
+      "distance": 0.849817
+    },
+    {
+      "module_a": "confluent_hypergeometric",
+      "module_b": "imaginary_unit",
+      "distance": 0.850549
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "legendre_elliptic",
+      "distance": 0.850722
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "legendre_elliptic",
+      "distance": 0.851066
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "gamma",
+      "distance": 0.851995
+    },
+    {
+      "module_a": "agm",
+      "module_b": "dirichlet",
+      "distance": 0.852381
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.852511
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "dedekind_eta",
+      "distance": 0.85348
+    },
+    {
+      "module_a": "agm",
+      "module_b": "barnes_g",
+      "distance": 0.85415
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "carlson_elliptic",
+      "distance": 0.854367
+    },
+    {
+      "module_a": "beta_function",
+      "module_b": "integrals",
+      "distance": 0.857143
+    },
+    {
+      "module_a": "dirichlet",
+      "module_b": "integrals",
+      "distance": 0.857143
+    },
+    {
+      "module_a": "const_catalan",
+      "module_b": "coulomb_wave",
+      "distance": 0.857493
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "const_gamma",
+      "distance": 0.857684
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "pi",
+      "distance": 0.866034
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "riemann_zeta",
+      "distance": 0.866369
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "integrals",
+      "distance": 0.871429
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "legendre_elliptic",
+      "distance": 0.872924
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "sine",
+      "distance": 0.873303
+    },
+    {
+      "module_a": "barnes_g",
+      "module_b": "imaginary_unit",
+      "distance": 0.874422
+    },
+    {
+      "module_a": "airy",
+      "module_b": "jacobi_theta",
+      "distance": 0.874661
+    },
+    {
+      "module_a": "agm",
+      "module_b": "bessel",
+      "distance": 0.876343
+    },
+    {
+      "module_a": "gamma",
+      "module_b": "integrals",
+      "distance": 0.877554
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "imaginary_unit",
+      "distance": 0.87963
+    },
+    {
+      "module_a": "factorials",
+      "module_b": "integrals",
+      "distance": 0.883333
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "const_catalan",
+      "distance": 0.885338
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "digamma_function",
+      "distance": 0.890601
+    },
+    {
+      "module_a": "const_gamma",
+      "module_b": "coulomb_wave",
+      "distance": 0.891679
+    },
+    {
+      "module_a": "integrals",
+      "module_b": "riemann_zeta",
+      "distance": 0.891813
+    },
+    {
+      "module_a": "eisenstein",
+      "module_b": "integrals",
+      "distance": 0.892857
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "pi",
+      "distance": 0.894118
+    },
+    {
+      "module_a": "dedekind_eta",
+      "module_b": "integrals",
+      "distance": 0.894281
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "digamma_function",
+      "distance": 0.895088
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "eisenstein",
+      "distance": 0.896879
+    },
+    {
+      "module_a": "airy",
+      "module_b": "gamma",
+      "distance": 0.897927
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "imaginary_unit",
+      "distance": 0.907639
+    },
+    {
+      "module_a": "airy",
+      "module_b": "bessel",
+      "distance": 0.910331
+    },
+    {
+      "module_a": "airy",
+      "module_b": "riemann_zeta",
+      "distance": 0.911765
+    },
+    {
+      "module_a": "digamma_function",
+      "module_b": "legendre_elliptic",
+      "distance": 0.911884
+    },
+    {
+      "module_a": "airy",
+      "module_b": "const_gamma",
+      "distance": 0.912879
+    },
+    {
+      "module_a": "airy",
+      "module_b": "confluent_hypergeometric",
+      "distance": 0.913993
+    },
+    {
+      "module_a": "agm",
+      "module_b": "digamma_function",
+      "distance": 0.914679
+    },
+    {
+      "module_a": "airy",
+      "module_b": "sine",
+      "distance": 0.916667
+    },
+    {
+      "module_a": "airy",
+      "module_b": "factorials",
+      "distance": 0.919048
+    },
+    {
+      "module_a": "integrals",
+      "module_b": "pi",
+      "distance": 0.922848
+    },
+    {
+      "module_a": "airy",
+      "module_b": "beta_function",
+      "distance": 0.923077
+    },
+    {
+      "module_a": "airy",
+      "module_b": "imaginary_unit",
+      "distance": 0.923077
+    },
+    {
+      "module_a": "bessel",
+      "module_b": "const_gamma",
+      "distance": 0.923936
+    },
+    {
+      "module_a": "integrals",
+      "module_b": "sine",
+      "distance": 0.928571
+    },
+    {
+      "module_a": "integrals",
+      "module_b": "legendre_elliptic",
+      "distance": 0.929934
+    },
+    {
+      "module_a": "carlson_elliptic",
+      "module_b": "integrals",
+      "distance": 0.930019
+    },
+    {
+      "module_a": "imaginary_unit",
+      "module_b": "integrals",
+      "distance": 0.933333
+    },
+    {
+      "module_a": "airy",
+      "module_b": "gauss_hypergeometric",
+      "distance": 0.933993
+    },
+    {
+      "module_a": "agm",
+      "module_b": "integrals",
+      "distance": 0.938725
+    },
+    {
+      "module_a": "airy",
+      "module_b": "barnes_g",
+      "distance": 0.942892
+    },
+    {
+      "module_a": "airy",
+      "module_b": "hurwitz_zeta",
+      "distance": 0.943918
+    },
+    {
+      "module_a": "airy",
+      "module_b": "dirichlet",
+      "distance": 0.952381
+    },
+    {
+      "module_a": "airy",
+      "module_b": "coulomb_wave",
+      "distance": 0.970175
+    },
+    {
+      "module_a": "airy",
+      "module_b": "digamma_function",
+      "distance": 0.970833
+    },
+    {
+      "module_a": "airy",
+      "module_b": "integrals",
+      "distance": 1.0
+    }
+  ],
+  "interpretation": "Gamma IS carrying algebraic structure: Gamma-connected pairs are 12.7% closer than non-Gamma controls. Gamma distance = 0.7705, non-Gamma = 0.8821, random = 0.8813. Gamma is closer in 260/300 module pairs."
+}

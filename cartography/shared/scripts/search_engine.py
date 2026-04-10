@@ -42,8 +42,11 @@ OEIS_CROSSREFS = CARTOGRAPHY / "oeis" / "data" / "oeis_crossrefs.jsonl"
 OPENALEX_CONCEPTS = CARTOGRAPHY / "convergence" / "data" / "openalex_concepts.json"
 OPENALEX_EDGES = CARTOGRAPHY / "convergence" / "data" / "openalex_concept_edges.json"
 GENUS2_JSON = CARTOGRAPHY / "genus2" / "data" / "genus2_curves_full.json"
-MAASS_JSON = CARTOGRAPHY / "maass" / "data" / "maass_forms_full.json"
-LATTICES_JSON = CARTOGRAPHY / "lattices" / "data" / "lattices.json"
+GENUS2_PG = CARTOGRAPHY / "lmfdb_dump" / "g2c_curves.json"  # postgres dump, 50+ fields
+MAASS_JSON = CARTOGRAPHY / "maass" / "data" / "maass_rigor_full.json"
+MAASS_PG = CARTOGRAPHY / "lmfdb_dump" / "maass_rigor.json"  # postgres dump, richer fields
+LATTICES_JSON = CARTOGRAPHY / "lattices" / "data" / "lattices_full.json"
+LATTICES_PG = CARTOGRAPHY / "lmfdb_dump" / "lat_lattices.json"  # postgres dump, 19 fields
 FINDSTAT_JSON = CARTOGRAPHY / "findstat" / "data" / "findstat_index.json"
 SMALLGROUPS_JSON = CARTOGRAPHY / "atlas" / "data" / "small_groups.json"
 
@@ -1906,17 +1909,39 @@ _genus2_cache: list = []
 
 
 def _load_genus2():
-    """Lazy-load genus-2 curves."""
+    """Lazy-load genus-2 curves. Prefer postgres dump (50+ fields), fall back to flat JSON."""
     if _genus2_cache:
         return
-    if not GENUS2_JSON.exists():
-        print(f"  [Genus2] WARNING: {GENUS2_JSON} not found")
+    # Try postgres dump first (richest: analytic_rank, igusa_clebsch_inv, eqn, regulator, etc.)
+    src = None
+    for path in [GENUS2_PG, GENUS2_JSON]:
+        if path.exists():
+            src = path
+            break
+    if src is None:
+        print(f"  [Genus2] WARNING: No genus-2 data found")
         return
-    print(f"  [Genus2] Loading {GENUS2_JSON.name}...")
-    with open(GENUS2_JSON, "r", encoding="utf-8") as f:
+    print(f"  [Genus2] Loading {src.name}...")
+    with open(src, "r", encoding="utf-8") as f:
         data = json.load(f)
-    _genus2_cache.extend(data)
-    print(f"  [Genus2] Loaded {len(_genus2_cache):,} curves")
+    # Handle postgres envelope or flat list
+    if isinstance(data, dict) and "records" in data:
+        records = data["records"]
+    elif isinstance(data, list):
+        records = data
+    else:
+        records = data.get("curves", [])
+    # Normalize field names: postgres uses 'cond', flat uses 'conductor'
+    for r in records:
+        if "cond" in r and "conductor" not in r:
+            r["conductor"] = r["cond"]
+        if "conductor" not in r:
+            r["conductor"] = 0
+        # Ensure st_group has a default
+        if "st_group" not in r:
+            r["st_group"] = "unknown"
+    _genus2_cache.extend(records)
+    print(f"  [Genus2] Loaded {len(_genus2_cache):,} curves from {src.name}")
 
 
 def genus2_search_conductor(low: int = 1, high: int = 1000,
@@ -1940,24 +1965,28 @@ def genus2_search_conductor(low: int = 1, high: int = 1000,
 
 
 def genus2_search_rank(rank: int = 0, max_results: int = 50) -> list[dict]:
-    """Search genus-2 curves by analytic rank (from root_number: -1→odd, +1→even)."""
+    """Search genus-2 curves by analytic rank. Uses analytic_rank if available, else root_number parity."""
     _load_genus2()
     results = []
     for c in _genus2_cache:
-        rn = c.get("root_number")
-        # root_number=-1 means odd rank (≥1), +1 means even rank (likely 0)
-        if rank == 0 and rn == 1:
-            match = True
-        elif rank >= 1 and rn == -1:
-            match = True
+        ar = c.get("analytic_rank")
+        if ar is not None:
+            match = (ar == rank)
         else:
-            match = False
+            rn = c.get("root_number")
+            if rank == 0 and rn == 1:
+                match = True
+            elif rank >= 1 and rn == -1:
+                match = True
+            else:
+                match = False
         if match:
+            ar_str = str(ar) if ar is not None else f"rn={c.get('root_number')}"
             results.append({
                 "source": "Genus2",
                 "id": c["label"],
-                "label": f"g2c rn={rn}",
-                "match_reason": f"Root number {rn} (rank parity {'even' if rn==1 else 'odd'})",
+                "label": f"g2c rank={ar_str}",
+                "match_reason": f"Analytic rank = {ar_str}",
                 "data": c,
                 "score": 1.0,
             })
@@ -1983,16 +2012,61 @@ def genus2_search_st_group(st_group: str = "USp(4)",
     return results[:max_results]
 
 
+def genus2_search_endomorphism(end_alg: str = "Q", max_results: int = 50) -> list[dict]:
+    """Search genus-2 curves by endomorphism algebra (Q, RM, CM, QM)."""
+    _load_genus2()
+    target = end_alg.upper()
+    results = []
+    for c in _genus2_cache:
+        ea = str(c.get("end_alg", "")).upper()
+        if target in ea:
+            results.append({
+                "source": "Genus2",
+                "id": c["label"],
+                "label": f"g2c end={c.get('end_alg')}",
+                "match_reason": f"Endomorphism algebra matches '{end_alg}'",
+                "data": c,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def genus2_search_gl2(is_gl2: bool = True, max_results: int = 50) -> list[dict]:
+    """Search genus-2 curves by GL(2)-type (modular abelian surface)."""
+    _load_genus2()
+    results = []
+    for c in _genus2_cache:
+        if c.get("is_gl2_type") == is_gl2:
+            results.append({
+                "source": "Genus2",
+                "id": c["label"],
+                "label": f"g2c GL2={is_gl2}",
+                "match_reason": f"is_gl2_type = {is_gl2}",
+                "data": c,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
 def genus2_stats() -> list[dict]:
     """Summary statistics for genus-2 curves."""
     _load_genus2()
     if not _genus2_cache:
         return [{"error": "No genus-2 data loaded"}]
-    conductors = [c["conductor"] for c in _genus2_cache if "conductor" in c]
+    conductors = [c["conductor"] for c in _genus2_cache if c.get("conductor")]
     st_groups = {}
     for c in _genus2_cache:
         sg = c.get("st_group", "unknown")
         st_groups[sg] = st_groups.get(sg, 0) + 1
+    rank_dist = {}
+    for c in _genus2_cache:
+        ar = c.get("analytic_rank")
+        if ar is not None:
+            rank_dist[ar] = rank_dist.get(ar, 0) + 1
+    end_algs = {}
+    for c in _genus2_cache:
+        ea = c.get("end_alg", "unknown")
+        end_algs[ea] = end_algs.get(ea, 0) + 1
     return [{
         "source": "Genus2",
         "id": "genus2_stats",
@@ -2002,34 +2076,63 @@ def genus2_stats() -> list[dict]:
             "n_curves": len(_genus2_cache),
             "conductor_range": [min(conductors), max(conductors)] if conductors else [],
             "st_group_distribution": dict(sorted(st_groups.items(), key=lambda x: -x[1])[:15]),
+            "analytic_rank_distribution": dict(sorted(rank_dist.items())),
+            "endomorphism_algebra_distribution": dict(sorted(end_algs.items(), key=lambda x: -x[1])),
             "root_number_counts": {
                 "+1 (even rank)": sum(1 for c in _genus2_cache if c.get("root_number") == 1),
                 "-1 (odd rank)": sum(1 for c in _genus2_cache if c.get("root_number") == -1),
             },
+            "gl2_type_count": sum(1 for c in _genus2_cache if c.get("is_gl2_type")),
         },
         "score": 1.0,
     }]
 
 
 # ---------------------------------------------------------------------------
-# Maass Forms (300 rigorously computed forms from LMFDB)
+# Maass Forms (35,416 rigorously computed forms from LMFDB)
 # ---------------------------------------------------------------------------
 
 _maass_cache: list = []
 
 
 def _load_maass():
-    """Lazy-load Maass forms."""
+    """Lazy-load Maass forms. Prefer postgres dump (richer fields), fall back to local."""
     if _maass_cache:
         return
-    if not MAASS_JSON.exists():
-        print(f"  [Maass] WARNING: {MAASS_JSON} not found")
+    src = None
+    for path in [MAASS_PG, MAASS_JSON]:
+        if path.exists():
+            src = path
+            break
+    if src is None:
+        print(f"  [Maass] WARNING: No Maass data found")
         return
-    print(f"  [Maass] Loading {MAASS_JSON.name}...")
-    with open(MAASS_JSON, "r", encoding="utf-8") as f:
+    print(f"  [Maass] Loading {src.name}...")
+    with open(src, "r", encoding="utf-8") as f:
         data = json.load(f)
-    _maass_cache.extend(data)
-    print(f"  [Maass] Loaded {len(_maass_cache):,} forms")
+    # Handle postgres envelope or flat list
+    if isinstance(data, dict) and "records" in data:
+        records = data["records"]
+    elif isinstance(data, list):
+        records = data
+    else:
+        records = []
+    # Normalize fields across data sources
+    for r in records:
+        # Convert spectral_parameter from high-precision string to float
+        sp = r.get("spectral_parameter")
+        if isinstance(sp, str):
+            try:
+                r["spectral_parameter"] = float(sp)
+            except (ValueError, OverflowError):
+                r["spectral_parameter"] = None
+        # Normalize field names: local uses 'label'/'fricke', postgres uses 'maass_label'/'fricke_eigenvalue'
+        if "maass_label" not in r and "label" in r:
+            r["maass_label"] = r["label"]
+        if "fricke_eigenvalue" not in r and "fricke" in r:
+            r["fricke_eigenvalue"] = r["fricke"]
+    _maass_cache.extend(records)
+    print(f"  [Maass] Loaded {len(_maass_cache):,} forms from {src.name}")
 
 
 def maass_search_spectral(low: float = 0.0, high: float = 50.0,
@@ -2074,16 +2177,59 @@ def maass_search_symmetry(symmetry: str = "even",
     return results[:max_results]
 
 
+def maass_search_level(level: int = 1, max_results: int = 50) -> list[dict]:
+    """Search Maass forms by level (conductor)."""
+    _load_maass()
+    results = []
+    for m in _maass_cache:
+        if m.get("level") == level:
+            sp = m.get("spectral_parameter", 0)
+            results.append({
+                "source": "Maass",
+                "id": m.get("maass_label", ""),
+                "label": f"Maass level={level} R={sp:.4f}" if sp else f"Maass level={level}",
+                "match_reason": f"Level = {level}",
+                "data": m,
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"].get("spectral_parameter", 0))
+    return results[:max_results]
+
+
+def maass_search_fricke(fricke: int = 1, max_results: int = 50) -> list[dict]:
+    """Search Maass forms by Fricke eigenvalue (+1 or -1)."""
+    _load_maass()
+    results = []
+    for m in _maass_cache:
+        if m.get("fricke_eigenvalue") == fricke:
+            sp = m.get("spectral_parameter", 0)
+            results.append({
+                "source": "Maass",
+                "id": m.get("maass_label", ""),
+                "label": f"Maass fricke={fricke} R={sp:.4f}" if sp else f"Maass fricke={fricke}",
+                "match_reason": f"Fricke eigenvalue = {fricke}",
+                "data": m,
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"].get("spectral_parameter", 0))
+    return results[:max_results]
+
+
 def maass_stats() -> list[dict]:
     """Summary statistics for Maass forms."""
     _load_maass()
     if not _maass_cache:
         return [{"error": "No Maass data loaded"}]
-    spectral = [m["spectral_parameter"] for m in _maass_cache if "spectral_parameter" in m]
+    spectral = [m["spectral_parameter"] for m in _maass_cache
+                if m.get("spectral_parameter") is not None]
     levels = {}
     for m in _maass_cache:
         lv = m.get("level", "?")
         levels[lv] = levels.get(lv, 0) + 1
+    symmetry_counts = {}
+    for m in _maass_cache:
+        s = m.get("symmetry", "?")
+        symmetry_counts[s] = symmetry_counts.get(s, 0) + 1
     return [{
         "source": "Maass",
         "id": "maass_stats",
@@ -2092,7 +2238,9 @@ def maass_stats() -> list[dict]:
         "data": {
             "n_forms": len(_maass_cache),
             "spectral_range": [min(spectral), max(spectral)] if spectral else [],
-            "level_distribution": levels,
+            "n_levels": len(levels),
+            "level_distribution": dict(sorted(levels.items(), key=lambda x: -x[1])[:20]),
+            "symmetry_counts": symmetry_counts,
             "fricke_counts": {
                 "+1": sum(1 for m in _maass_cache if m.get("fricke_eigenvalue") == 1),
                 "-1": sum(1 for m in _maass_cache if m.get("fricke_eigenvalue") == -1),
@@ -2110,34 +2258,63 @@ _lattices_cache: list = []
 
 
 def _load_lattices():
-    """Lazy-load lattice data."""
+    """Lazy-load lattice data. Prefer postgres dump (39K lattices), fall back to local."""
     if _lattices_cache:
         return
-    if not LATTICES_JSON.exists():
-        print(f"  [Lattices] WARNING: {LATTICES_JSON} not found")
+    src = None
+    for path in [LATTICES_PG, LATTICES_JSON]:
+        if path.exists():
+            src = path
+            break
+    if src is None:
+        print(f"  [Lattices] WARNING: No lattice data found")
         return
-    print(f"  [Lattices] Loading {LATTICES_JSON.name}...")
-    with open(LATTICES_JSON, "r", encoding="utf-8") as f:
+    print(f"  [Lattices] Loading {src.name}...")
+    with open(src, "r", encoding="utf-8") as f:
         data = json.load(f)
-    _lattices_cache.extend(data.get("lattices", data) if isinstance(data, dict) else data)
-    print(f"  [Lattices] Loaded {len(_lattices_cache):,} lattices")
+    # Handle postgres envelope, dict-with-lattices-key, or flat list
+    if isinstance(data, dict) and "records" in data:
+        records = data["records"]
+    elif isinstance(data, dict) and "lattices" in data:
+        records = data["lattices"]
+    elif isinstance(data, list):
+        records = data
+    else:
+        records = []
+    # Normalize: local had 'dimension'/'determinant', postgres has 'dim'/'det'
+    for r in records:
+        if "dimension" in r and "dim" not in r:
+            r["dim"] = r["dimension"]
+        if "determinant" in r and "det" not in r:
+            r["det"] = r["determinant"]
+        if "minimal_vector" in r and "minimum" not in r:
+            r["minimum"] = r["minimal_vector"]
+        if "aut_group_order" in r and "aut" not in r:
+            r["aut"] = r["aut_group_order"]
+        if "name" not in r:
+            r["name"] = r.get("label", "")
+    _lattices_cache.extend(records)
+    print(f"  [Lattices] Loaded {len(_lattices_cache):,} lattices from {src.name}")
 
 
 def lattices_search(keyword: str = "", max_results: int = 50) -> list[dict]:
-    """Search lattices by name keyword (e.g. 'Leech', 'E8', 'A2')."""
+    """Search lattices by name or label keyword (e.g. 'Leech', 'E8', 'A2')."""
     _load_lattices()
     kw = keyword.lower()
     results = []
     for lat in _lattices_cache:
         name = lat.get("name", "")
-        if not kw or kw in name.lower():
+        label = lat.get("label", "")
+        searchable = f"{name} {label}".lower()
+        if not kw or kw in searchable:
+            display = name if name else label
             results.append({
                 "source": "Lattices",
-                "id": name,
-                "label": f"{name} (dim={lat.get('dim')}, det={lat.get('det')})",
-                "match_reason": f"Name contains '{keyword}'" if kw else "All lattices",
+                "id": label or name,
+                "label": f"{display} (dim={lat.get('dim')}, det={lat.get('det')})",
+                "match_reason": f"Name/label contains '{keyword}'" if kw else "All lattices",
                 "data": lat,
-                "score": 1.0 if kw and kw == name.lower() else 0.8,
+                "score": 1.0 if kw and kw in name.lower() else 0.8,
             })
     results.sort(key=lambda x: (-x["score"], x["data"].get("dim", 0)))
     return results[:max_results]
@@ -2149,15 +2326,87 @@ def lattices_by_dimension(dimension: int, max_results: int = 50) -> list[dict]:
     results = []
     for lat in _lattices_cache:
         if lat.get("dim") == dimension:
+            display = lat.get("name") or lat.get("label", "")
             results.append({
                 "source": "Lattices",
-                "id": lat.get("name", ""),
-                "label": f"{lat.get('name')} (kissing={lat.get('kissing')})",
+                "id": lat.get("label", display),
+                "label": f"{display} (kissing={lat.get('kissing')}, det={lat.get('det')})",
                 "match_reason": f"Dimension = {dimension}",
                 "data": lat,
                 "score": 1.0,
             })
     return results[:max_results]
+
+
+def lattices_by_det(det_low: int = 1, det_high: int = 100,
+                    max_results: int = 50) -> list[dict]:
+    """Search lattices by determinant range."""
+    _load_lattices()
+    results = []
+    for lat in _lattices_cache:
+        d = lat.get("det")
+        if d is not None and det_low <= d <= det_high:
+            display = lat.get("name") or lat.get("label", "")
+            results.append({
+                "source": "Lattices",
+                "id": lat.get("label", display),
+                "label": f"{display} (dim={lat.get('dim')}, det={d})",
+                "match_reason": f"Determinant {d} in [{det_low},{det_high}]",
+                "data": lat,
+                "score": 1.0,
+            })
+    results.sort(key=lambda x: x["data"].get("det", 0))
+    return results[:max_results]
+
+
+def lattices_by_class_number(class_number: int = 1,
+                             max_results: int = 50) -> list[dict]:
+    """Search lattices by class number (genus class number)."""
+    _load_lattices()
+    results = []
+    for lat in _lattices_cache:
+        if lat.get("class_number") == class_number:
+            display = lat.get("name") or lat.get("label", "")
+            results.append({
+                "source": "Lattices",
+                "id": lat.get("label", display),
+                "label": f"{display} (dim={lat.get('dim')}, det={lat.get('det')})",
+                "match_reason": f"Class number = {class_number}",
+                "data": lat,
+                "score": 1.0,
+            })
+    return results[:max_results]
+
+
+def lattices_stats() -> list[dict]:
+    """Summary statistics for lattices."""
+    _load_lattices()
+    if not _lattices_cache:
+        return [{"error": "No lattice data loaded"}]
+    dims = [l["dim"] for l in _lattices_cache if "dim" in l]
+    dets = [l["det"] for l in _lattices_cache if "det" in l]
+    cn = {}
+    for l in _lattices_cache:
+        c = l.get("class_number", "?")
+        cn[c] = cn.get(c, 0) + 1
+    dim_dist = {}
+    for d in dims:
+        dim_dist[d] = dim_dist.get(d, 0) + 1
+    return [{
+        "source": "Lattices",
+        "id": "lattices_stats",
+        "label": "Lattice Statistics",
+        "match_reason": "Summary",
+        "data": {
+            "n_lattices": len(_lattices_cache),
+            "dimension_range": [min(dims), max(dims)] if dims else [],
+            "determinant_range": [min(dets), max(dets)] if dets else [],
+            "dimension_distribution": dict(sorted(dim_dist.items())[:20]),
+            "class_number_distribution": dict(sorted(cn.items(), key=lambda x: -x[1])[:15]),
+            "named_lattices": sum(1 for l in _lattices_cache if l.get("name")),
+        },
+        "score": 1.0,
+    }]
 
 
 # ---------------------------------------------------------------------------
@@ -2387,12 +2636,19 @@ SEARCH_REGISTRY = {
     "genus2_conductor": genus2_search_conductor,
     "genus2_rank": genus2_search_rank,
     "genus2_st_group": genus2_search_st_group,
+    "genus2_endomorphism": genus2_search_endomorphism,
+    "genus2_gl2": genus2_search_gl2,
     "genus2_stats": genus2_stats,
     "maass_spectral": maass_search_spectral,
     "maass_symmetry": maass_search_symmetry,
+    "maass_level": maass_search_level,
+    "maass_fricke": maass_search_fricke,
     "maass_stats": maass_stats,
     "lattices_search": lattices_search,
     "lattices_dimension": lattices_by_dimension,
+    "lattices_det": lattices_by_det,
+    "lattices_class_number": lattices_by_class_number,
+    "lattices_stats": lattices_stats,
     "findstat_search": findstat_search,
     "findstat_stats": findstat_stats,
     "smallgroups_order": smallgroups_search_order,
@@ -2614,33 +2870,40 @@ DATASET_REGISTRY = {
     },
     "genus2": {
         "name": "Genus-2 Curves",
-        "description": "66K genus-2 curves from LMFDB with conductors, discriminants, Sato-Tate groups, torsion",
-        "path": GENUS2_JSON,
-        "searches": ["genus2_conductor", "genus2_rank", "genus2_st_group", "genus2_stats"],
-        "prompt_block": """Genus-2 Curves (66K curves from LMFDB g2c database):
+        "description": "66K genus-2 curves from LMFDB with conductors, analytic ranks, Sato-Tate groups, endomorphism algebras, Igusa invariants",
+        "path": GENUS2_PG if GENUS2_PG.exists() else GENUS2_JSON,
+        "searches": ["genus2_conductor", "genus2_rank", "genus2_st_group", "genus2_endomorphism", "genus2_gl2", "genus2_stats"],
+        "prompt_block": """Genus-2 Curves (66K curves from LMFDB g2c database, 50+ fields per curve):
 - genus2_conductor(low=1, high=1000) — search curves by conductor range. Bridges to LMFDB EC conductors and number field discriminants.
-- genus2_rank(rank=0) — search by analytic rank parity (0=even root number, 1=odd). Bridge to BSD conjecture.
+- genus2_rank(rank=0) — search by analytic rank (0, 1, 2, ...). Uses proven analytic_rank when available.
 - genus2_st_group(st_group="USp(4)") — search by Sato-Tate group. Bridges to Galois representations.
-- genus2_stats() — summary: conductor range, ST group distribution, rank parity counts.""",
+- genus2_endomorphism(end_alg="Q"|"RM"|"CM"|"QM") — search by endomorphism algebra. GL(2)-type iff end_alg != "Q".
+- genus2_gl2(is_gl2=True) — search by GL(2)-type flag. These are modular abelian surfaces.
+- genus2_stats() — summary: conductor range, ST group distribution, rank distribution, endomorphism algebras.""",
     },
     "maass": {
         "name": "Maass Forms",
-        "description": "300 rigorously computed Maass forms with spectral parameters, symmetry, Fricke eigenvalues",
-        "path": MAASS_JSON,
-        "searches": ["maass_spectral", "maass_symmetry", "maass_stats"],
-        "prompt_block": """Maass Forms (300 rigorously computed, LMFDB):
+        "description": "35K rigorously computed Maass forms with spectral parameters, levels, symmetry, Fricke eigenvalues",
+        "path": MAASS_PG if MAASS_PG.exists() else MAASS_JSON,
+        "searches": ["maass_spectral", "maass_symmetry", "maass_level", "maass_fricke", "maass_stats"],
+        "prompt_block": """Maass Forms (35,416 rigorously computed, LMFDB):
 - maass_spectral(low=9.0, high=50.0) — search by spectral parameter range. The spectral parameters are eigenvalues of the Laplacian on the upper half-plane.
-- maass_symmetry(symmetry="even"|"odd") — search by symmetry type.
-- maass_stats() — summary: spectral range, level distribution, Fricke eigenvalue counts.""",
+- maass_symmetry(symmetry="even"|"odd") — search by symmetry type (0=even, 1=odd).
+- maass_level(level=1) — search by level (conductor). Level 1 forms live on SL(2,Z)\\H.
+- maass_fricke(fricke=1) — search by Fricke eigenvalue (+1 or -1). Determines functional equation sign.
+- maass_stats() — summary: spectral range, level distribution, symmetry counts, Fricke eigenvalue counts.""",
     },
     "lattices": {
         "name": "Lattices",
-        "description": "21 named lattices (Z, A2, D4, E8, Leech, etc.) with dimensions, determinants, kissing numbers",
-        "path": LATTICES_JSON,
-        "searches": ["lattices_search", "lattices_dimension"],
-        "prompt_block": """Lattices (21 named lattices: Z, A2, D4, E8, Leech, etc.):
-- lattices_search(keyword="Leech"|"E8"|"") — search by name. Small but bridges to dimension theory, sphere packing, modular forms.
-- lattices_dimension(dimension=8) — find lattices by dimension.""",
+        "description": "39K integral lattices from LMFDB with dimensions, determinants, kissing numbers, class numbers, theta series",
+        "path": LATTICES_PG if LATTICES_PG.exists() else LATTICES_JSON,
+        "searches": ["lattices_search", "lattices_dimension", "lattices_det", "lattices_class_number", "lattices_stats"],
+        "prompt_block": """Lattices (39,293 integral lattices from LMFDB):
+- lattices_search(keyword="Leech"|"E8"|"") — search by name or label. Bridges to modular forms, sphere packing, coding theory.
+- lattices_dimension(dimension=8) — find lattices by dimension. Dimension distribution bridges to number fields.
+- lattices_det(det_low=1, det_high=100) — search by determinant range. Determinant bridges to discriminants.
+- lattices_class_number(class_number=1) — search by genus class number. Connects to mass formulas.
+- lattices_stats() — summary: dimension range, determinant range, class number distribution.""",
     },
     "findstat": {
         "name": "FindStat",

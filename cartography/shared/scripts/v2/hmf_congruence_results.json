@@ -1,0 +1,906 @@
+{
+  "timestamp": "2026-04-10T01:05:48.798479Z",
+  "challenge": "C04 \u2014 HMF Congruence Scan",
+  "status": "DATA_INVENTORY_COMPLETE",
+  "critical_finding": "The LMFDB HMF dump contains NO Hecke eigenvalues. The hmf_forms table has only metadata (label, level, dimension, CM, base_change). Eigenvalues are in a SEPARATE table: hmf_hecke. Congruence detection is BLOCKED until hmf_hecke is acquired.",
+  "data_inventory": {
+    "total_forms": 368356,
+    "available_columns": [
+      "deg",
+      "dimension",
+      "disc",
+      "field_bad_primes",
+      "field_label",
+      "id",
+      "is_CM",
+      "is_base_change",
+      "label",
+      "label_nsuffix",
+      "label_suffix",
+      "level_bad_primes",
+      "level_ideal",
+      "level_label",
+      "level_norm",
+      "parallel_weight",
+      "short_label",
+      "weight"
+    ],
+    "eigenvalue_fields_found": [],
+    "has_eigenvalues": false,
+    "distinct_fields": 400,
+    "field_distribution_top20": [
+      [
+        "2.2.8.1",
+        24480
+      ],
+      [
+        "2.2.12.1",
+        19466
+      ],
+      [
+        "2.2.5.1",
+        14288
+      ],
+      [
+        "2.2.13.1",
+        11110
+      ],
+      [
+        "2.2.21.1",
+        8560
+      ],
+      [
+        "2.2.40.1",
+        8044
+      ],
+      [
+        "2.2.24.1",
+        7901
+      ],
+      [
+        "2.2.33.1",
+        6633
+      ],
+      [
+        "2.2.17.1",
+        6505
+      ],
+      [
+        "2.2.41.1",
+        6369
+      ],
+      [
+        "2.2.28.1",
+        6138
+      ],
+      [
+        "4.4.2048.1",
+        5847
+      ],
+      [
+        "2.2.37.1",
+        5612
+      ],
+      [
+        "4.4.725.1",
+        5361
+      ],
+      [
+        "2.2.29.1",
+        5170
+      ],
+      [
+        "2.2.44.1",
+        4019
+      ],
+      [
+        "4.4.2304.1",
+        3456
+      ],
+      [
+        "2.2.57.1",
+        3447
+      ],
+      [
+        "4.4.2225.1",
+        3369
+      ],
+      [
+        "2.2.65.1",
+        3327
+      ]
+    ],
+    "degree_distribution": {
+      "2": 188459,
+      "3": 45880,
+      "4": 102780,
+      "5": 16226,
+      "6": 15011
+    },
+    "dimension_distribution_top15": [
+      [
+        1,
+        132081
+      ],
+      [
+        2,
+        57309
+      ],
+      [
+        4,
+        24123
+      ],
+      [
+        3,
+        22889
+      ],
+      [
+        6,
+        13121
+      ],
+      [
+        5,
+        10353
+      ],
+      [
+        8,
+        9869
+      ],
+      [
+        7,
+        6659
+      ],
+      [
+        10,
+        6581
+      ],
+      [
+        12,
+        6087
+      ],
+      [
+        9,
+        5359
+      ],
+      [
+        14,
+        4272
+      ],
+      [
+        16,
+        3949
+      ],
+      [
+        11,
+        3767
+      ],
+      [
+        13,
+        3224
+      ]
+    ],
+    "dim1_forms": 132081,
+    "dim1_fraction": 0.3586,
+    "distinct_discriminants": 393,
+    "disc_top10": [
+      [
+        8,
+        24480
+      ],
+      [
+        12,
+        19466
+      ],
+      [
+        5,
+        14288
+      ],
+      [
+        13,
+        11110
+      ],
+      [
+        21,
+        8560
+      ],
+      [
+        40,
+        8044
+      ],
+      [
+        24,
+        7901
+      ],
+      [
+        33,
+        6633
+      ],
+      [
+        17,
+        6505
+      ],
+      [
+        41,
+        6369
+      ]
+    ],
+    "is_base_change": {
+      "yes": 10385,
+      "no": 357971
+    },
+    "is_CM": {
+      "no": 365625,
+      "yes": 2731
+    },
+    "parallel_weight": {
+      "2": 368356
+    },
+    "level_norm_min": 1,
+    "level_norm_max": 5000,
+    "level_norm_median": 244
+  },
+  "dim1_field_analysis": {
+    "total_fields": 382,
+    "total_same_level_candidate_pairs": 1415798,
+    "top10_fields": {
+      "2.2.12.1": {
+        "count": 12252,
+        "distinct_levels": 1020,
+        "levels_with_multiplicity": 1014,
+        "max_multiplicity": 104,
+        "potential_same_level_pairs": 144446,
+        "disc": 12,
+        "deg": 2,
+        "cm_count": 98,
+        "base_change_count": 350
+      },
+      "2.2.41.1": {
+        "count": 2840,
+        "distinct_levels": 164,
+        "levels_with_multiplicity": 159,
+        "max_multiplicity": 266,
+        "potential_same_level_pairs": 95761,
+        "disc": 41,
+        "deg": 2,
+        "cm_count": 3,
+        "base_change_count": 46
+      },
+      "2.2.8.1": {
+        "count": 8104,
+        "distinct_levels": 955,
+        "levels_with_multiplicity": 936,
+        "max_multiplicity": 102,
+        "potential_same_level_pairs": 79683,
+        "disc": 8,
+        "deg": 2,
+        "cm_count": 43,
+        "base_change_count": 192
+      },
+      "2.2.21.1": {
+        "count": 4758,
+        "distinct_levels": 363,
+        "levels_with_multiplicity": 361,
+        "max_multiplicity": 126,
+        "potential_same_level_pairs": 68075,
+        "disc": 21,
+        "deg": 2,
+        "cm_count": 62,
+        "base_change_count": 180
+      },
+      "2.2.13.1": {
+        "count": 3656,
+        "distinct_levels": 329,
+        "levels_with_multiplicity": 316,
+        "max_multiplicity": 98,
+        "potential_same_level_pairs": 56257,
+        "disc": 13,
+        "deg": 2,
+        "cm_count": 10,
+        "base_change_count": 98
+      },
+      "2.2.33.1": {
+        "count": 2465,
+        "distinct_levels": 149,
+        "levels_with_multiplicity": 147,
+        "max_multiplicity": 100,
+        "potential_same_level_pairs": 41968,
+        "disc": 33,
+        "deg": 2,
+        "cm_count": 29,
+        "base_change_count": 73
+      },
+      "2.2.17.1": {
+        "count": 2434,
+        "distinct_levels": 199,
+        "levels_with_multiplicity": 190,
+        "max_multiplicity": 116,
+        "potential_same_level_pairs": 37161,
+        "disc": 17,
+        "deg": 2,
+        "cm_count": 6,
+        "base_change_count": 50
+      },
+      "2.2.37.1": {
+        "count": 1706,
+        "distinct_levels": 140,
+        "levels_with_multiplicity": 136,
+        "max_multiplicity": 152,
+        "potential_same_level_pairs": 35901,
+        "disc": 37,
+        "deg": 2,
+        "cm_count": 4,
+        "base_change_count": 34
+      },
+      "4.4.2048.1": {
+        "count": 2310,
+        "distinct_levels": 151,
+        "levels_with_multiplicity": 146,
+        "max_multiplicity": 74,
+        "potential_same_level_pairs": 34636,
+        "disc": 2048,
+        "deg": 4,
+        "cm_count": 4,
+        "base_change_count": 54
+      },
+      "2.2.28.1": {
+        "count": 2223,
+        "distinct_levels": 174,
+        "levels_with_multiplicity": 172,
+        "max_multiplicity": 100,
+        "potential_same_level_pairs": 30507,
+        "disc": 28,
+        "deg": 2,
+        "cm_count": 31,
+        "base_change_count": 85
+      }
+    }
+  },
+  "proxy_congruence_candidates": {
+    "total_candidate_pairs": 1365490,
+    "groups_with_multiplicity": 15338,
+    "group_size_distribution": {
+      "2": 3734,
+      "3": 706,
+      "4": 3506,
+      "5": 321,
+      "6": 1134,
+      "7": 169,
+      "8": 1660,
+      "9": 146,
+      "10": 498,
+      "11": 61,
+      "12": 816,
+      "13": 51,
+      "14": 247,
+      "15": 44,
+      "16": 531,
+      "17": 16,
+      "18": 158,
+      "19": 14,
+      "20": 300,
+      "21": 23,
+      "22": 80,
+      "23": 14,
+      "24": 236,
+      "25": 7,
+      "26": 56,
+      "27": 9,
+      "28": 133,
+      "29": 2,
+      "30": 56,
+      "31": 1,
+      "32": 120,
+      "33": 6,
+      "34": 29,
+      "35": 2,
+      "36": 71,
+      "37": 3,
+      "38": 21,
+      "39": 1,
+      "40": 48,
+      "41": 1,
+      "42": 22,
+      "44": 49,
+      "45": 3,
+      "46": 7,
+      "47": 1,
+      "48": 37,
+      "50": 14,
+      "51": 1,
+      "52": 16,
+      "54": 7,
+      "56": 24,
+      "57": 4,
+      "58": 6,
+      "59": 2,
+      "60": 13,
+      "62": 2,
+      "64": 11,
+      "65": 1,
+      "66": 10,
+      "68": 5,
+      "70": 3,
+      "72": 9,
+      "74": 3,
+      "75": 1,
+      "76": 13,
+      "78": 1,
+      "80": 3,
+      "81": 1,
+      "82": 1,
+      "84": 4,
+      "86": 2,
+      "88": 5,
+      "90": 1,
+      "92": 2,
+      "94": 1,
+      "96": 1,
+      "98": 2,
+      "100": 3,
+      "102": 2,
+      "104": 4,
+      "108": 1,
+      "111": 1,
+      "112": 1,
+      "116": 2,
+      "120": 1,
+      "144": 1,
+      "152": 1,
+      "154": 1,
+      "266": 1
+    },
+    "examples": [
+      {
+        "field": "3.3.49.1",
+        "level_norm": 41,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-41.1-a",
+          "3.3.49.1-41.3-a",
+          "3.3.49.1-41.2-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 71,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-71.1-a",
+          "3.3.49.1-71.3-a",
+          "3.3.49.1-71.2-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 91,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-91.1-a",
+          "3.3.49.1-91.3-a",
+          "3.3.49.1-91.2-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 97,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-97.1-a",
+          "3.3.49.1-97.2-a",
+          "3.3.49.1-97.3-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 104,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 6,
+        "labels": [
+          "3.3.49.1-104.1-a",
+          "3.3.49.1-104.1-b",
+          "3.3.49.1-104.3-a",
+          "3.3.49.1-104.2-a",
+          "3.3.49.1-104.3-b"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 113,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-113.1-a",
+          "3.3.49.1-113.2-a",
+          "3.3.49.1-113.3-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 127,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-127.1-a",
+          "3.3.49.1-127.2-a",
+          "3.3.49.1-127.3-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 512,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-512.1-a",
+          "3.3.49.1-512.1-c",
+          "3.3.49.1-512.1-d"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 169,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-169.1-a",
+          "3.3.49.1-169.2-a",
+          "3.3.49.1-169.3-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 181,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 6,
+        "labels": [
+          "3.3.49.1-181.1-a",
+          "3.3.49.1-181.1-b",
+          "3.3.49.1-181.2-b",
+          "3.3.49.1-181.2-a",
+          "3.3.49.1-181.3-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 203,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 9,
+        "labels": [
+          "3.3.49.1-203.1-a",
+          "3.3.49.1-203.1-b",
+          "3.3.49.1-203.1-c",
+          "3.3.49.1-203.2-a",
+          "3.3.49.1-203.3-c"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 211,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 6,
+        "labels": [
+          "3.3.49.1-211.1-a",
+          "3.3.49.1-211.1-b",
+          "3.3.49.1-211.2-a",
+          "3.3.49.1-211.3-a",
+          "3.3.49.1-211.2-b"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 216,
+        "is_CM": "no",
+        "is_base_change": "yes",
+        "count": 2,
+        "labels": [
+          "3.3.49.1-216.1-a",
+          "3.3.49.1-216.1-b"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 232,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 6,
+        "labels": [
+          "3.3.49.1-232.1-a",
+          "3.3.49.1-232.1-b",
+          "3.3.49.1-232.3-a",
+          "3.3.49.1-232.2-a",
+          "3.3.49.1-232.3-b"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 251,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-251.1-a",
+          "3.3.49.1-251.3-a",
+          "3.3.49.1-251.2-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 287,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 9,
+        "labels": [
+          "3.3.49.1-287.1-a",
+          "3.3.49.1-287.1-b",
+          "3.3.49.1-287.1-c",
+          "3.3.49.1-287.3-a",
+          "3.3.49.1-287.2-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 301,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-301.1-a",
+          "3.3.49.1-301.2-a",
+          "3.3.49.1-301.3-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 328,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 3,
+        "labels": [
+          "3.3.49.1-328.1-a",
+          "3.3.49.1-328.3-a",
+          "3.3.49.1-328.2-a"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 351,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 9,
+        "labels": [
+          "3.3.49.1-351.1-a",
+          "3.3.49.1-351.1-b",
+          "3.3.49.1-351.1-c",
+          "3.3.49.1-351.2-a",
+          "3.3.49.1-351.3-b"
+        ]
+      },
+      {
+        "field": "3.3.49.1",
+        "level_norm": 377,
+        "is_CM": "no",
+        "is_base_change": "no",
+        "count": 21,
+        "labels": [
+          "3.3.49.1-377.1-a",
+          "3.3.49.1-377.2-a",
+          "3.3.49.1-377.2-b",
+          "3.3.49.1-377.2-c",
+          "3.3.49.1-377.6-a"
+        ]
+      }
+    ]
+  },
+  "cross_field_overlap": {
+    "2.2.5.1 vs 2.2.8.1": {
+      "shared_norms": 175,
+      "f1_norms": 693,
+      "f2_norms": 955,
+      "jaccard": 0.1188
+    },
+    "2.2.5.1 vs 2.2.12.1": {
+      "shared_norms": 136,
+      "f1_norms": 693,
+      "f2_norms": 1020,
+      "jaccard": 0.0862
+    },
+    "2.2.5.1 vs 2.2.13.1": {
+      "shared_norms": 75,
+      "f1_norms": 693,
+      "f2_norms": 329,
+      "jaccard": 0.0792
+    },
+    "2.2.5.1 vs 2.2.17.1": {
+      "shared_norms": 41,
+      "f1_norms": 693,
+      "f2_norms": 199,
+      "jaccard": 0.0482
+    },
+    "2.2.8.1 vs 2.2.12.1": {
+      "shared_norms": 262,
+      "f1_norms": 955,
+      "f2_norms": 1020,
+      "jaccard": 0.1529
+    },
+    "2.2.8.1 vs 2.2.13.1": {
+      "shared_norms": 79,
+      "f1_norms": 955,
+      "f2_norms": 329,
+      "jaccard": 0.0656
+    },
+    "2.2.8.1 vs 2.2.17.1": {
+      "shared_norms": 90,
+      "f1_norms": 955,
+      "f2_norms": 199,
+      "jaccard": 0.0846
+    },
+    "2.2.12.1 vs 2.2.13.1": {
+      "shared_norms": 102,
+      "f1_norms": 1020,
+      "f2_norms": 329,
+      "jaccard": 0.0818
+    },
+    "2.2.12.1 vs 2.2.17.1": {
+      "shared_norms": 68,
+      "f1_norms": 1020,
+      "f2_norms": 199,
+      "jaccard": 0.0591
+    },
+    "2.2.13.1 vs 2.2.17.1": {
+      "shared_norms": 53,
+      "f1_norms": 329,
+      "f2_norms": 199,
+      "jaccard": 0.1116
+    }
+  },
+  "hasse_squeeze_predictions": {
+    "ell=3, P=5": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 0.004115226337448558,
+      "expected_random_pairs": 43624.321
+    },
+    "ell=3, P=10": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 1.693508780843028e-05,
+      "expected_random_pairs": 179.524
+    },
+    "ell=3, P=15": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 6.969171937625627e-08,
+      "expected_random_pairs": 0.7388
+    },
+    "ell=3, P=20": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 2.867971990792438e-10,
+      "expected_random_pairs": 0.003
+    },
+    "ell=5, P=5": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 0.0003200000000000001,
+      "expected_random_pairs": 3392.2272
+    },
+    "ell=5, P=10": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 1.0240000000000006e-07,
+      "expected_random_pairs": 1.0855
+    },
+    "ell=5, P=15": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 3.276800000000003e-11,
+      "expected_random_pairs": 0.0003
+    },
+    "ell=5, P=20": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 1.0485760000000012e-14,
+      "expected_random_pairs": 0.0
+    },
+    "ell=7, P=5": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 5.949901826619859e-05,
+      "expected_random_pairs": 630.7318
+    },
+    "ell=7, P=10": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 3.5401331746414338e-09,
+      "expected_random_pairs": 0.0375
+    },
+    "ell=7, P=15": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 2.1063444842276627e-13,
+      "expected_random_pairs": 0.0
+    },
+    "ell=7, P=20": {
+      "n_forms": 4605,
+      "n_pairs": 10600710,
+      "probability_per_pair": 1.2532542894196834e-17,
+      "expected_random_pairs": 0.0
+    }
+  },
+  "gl2_comparison": {
+    "GL2_over_Q": {
+      "total_forms_scanned": "~73K (weight-2 newforms, level <= 5000)",
+      "congruences_found": 981,
+      "independent_congruences": 242,
+      "primes_tested": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "eigenvalue_availability": "Full (from LMFDB)",
+      "source": "congruence_graph.py results"
+    },
+    "HMF_comparison": {
+      "total_forms": 368356,
+      "dim1_forms": 132081,
+      "eigenvalue_availability": "NONE in current dump",
+      "congruence_detection_possible": false,
+      "structural_proxy_available": true,
+      "candidate_pairs_identified": "See proxy_congruence_analysis",
+      "estimated_congruences_if_eigenvalues_available": "For Q(sqrt5) alone: 4605 dim-1 forms, ~10.6M pairs. At mod-3 with 10 primes: expect ~0.18 random pairs. Any detection = signal."
+    }
+  },
+  "eigenvalue_roadmap": {
+    "option_1_lmfdb_api": {
+      "description": "Query LMFDB API for individual HMF Hecke eigenvalues",
+      "endpoint": "https://www.lmfdb.org/api/hmf_hecke/?label=LABEL",
+      "feasibility": "Slow. 132K dim-1 forms x API rate limits = weeks",
+      "data_table": "hmf_hecke (separate from hmf_forms)",
+      "priority": "HIGH \u2014 this is the missing piece"
+    },
+    "option_2_postgres_dump": {
+      "description": "Download hmf_hecke table from LMFDB PostgreSQL mirror",
+      "method": "Same approach as hmf_forms dump (lmfdb_postgres_dump.py)",
+      "table": "hmf_hecke",
+      "expected_columns": [
+        "label",
+        "hecke_eigenvalues",
+        "hecke_polynomial"
+      ],
+      "feasibility": "Best option. Single dump, all eigenvalues at once.",
+      "priority": "CRITICAL \u2014 next action"
+    },
+    "option_3_magma_computation": {
+      "description": "Compute eigenvalues directly using Magma/Sage",
+      "feasibility": "Very expensive. Only for forms not in LMFDB.",
+      "priority": "LOW \u2014 LMFDB should have everything"
+    },
+    "next_step": "Run lmfdb_postgres_dump.py targeting the 'hmf_hecke' table. This should give hecke_eigenvalues for all 368K forms. Then re-run this scan with eigenvalue comparison enabled."
+  },
+  "key_statistics": {
+    "total_forms": 368356,
+    "dim1_forms": 132081,
+    "real_quadratic_dim1": 66684,
+    "fields_with_dim1": 382,
+    "structural_candidate_pairs": 1365490,
+    "eigenvalues_available": false,
+    "congruences_detected": 0
+  }
+}

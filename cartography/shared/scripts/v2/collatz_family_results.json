@@ -1,0 +1,6243 @@
+{
+  "challenge": "C17",
+  "title": "Collatz Algebraic Family Deep Dive",
+  "characteristic_polynomial": "x^4 - 2x^2 + 1 = (x-1)^2(x+1)^2",
+  "recurrence": "a(n) = 2*a(n-2) - a(n-4)",
+  "general_solution": "a(n) = (A + B*n) + (-1)^n * (C + D*n)",
+  "family_size": 105,
+  "sequences": [
+    {
+      "seq_id": "A001281",
+      "name": "Image of n under the map n->n/2 if n even, n->3n-1 if n odd.",
+      "n_terms": 64,
+      "first_terms": [
+        0,
+        2,
+        1,
+        8,
+        2,
+        14,
+        3,
+        20,
+        4,
+        26,
+        5,
+        32,
+        6,
+        38,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 60,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 64
+      },
+      "abcd_fit": {
+        "A": -0.5000000000000084,
+        "B": 1.7500000000000004,
+        "C": 0.49999999999998723,
+        "D": -1.2500000000000009,
+        "residual_norm": 3.4447932309731513e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.07327894810112905,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999034111579703,
+        "n_terms": 64
+      }
+    },
+    {
+      "seq_id": "A006370",
+      "name": "The Collatz or 3x+1 map: a(n) = n/2 if n is even, 3n + 1 if n is odd.",
+      "n_terms": 67,
+      "first_terms": [
+        0,
+        4,
+        1,
+        10,
+        2,
+        16,
+        3,
+        22,
+        4,
+        28,
+        5,
+        34,
+        6,
+        40,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 63,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 67
+      },
+      "abcd_fit": {
+        "A": 0.500000000000075,
+        "B": 1.7500000000000002,
+        "C": -0.5000000000000192,
+        "D": -1.25,
+        "residual_norm": 6.618773970278859e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.032464818466870535,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999182535065204,
+        "n_terms": 67
+      }
+    },
+    {
+      "seq_id": "A014682",
+      "name": "The Collatz or 3x+1 function: a(n) = n/2 if n is even, otherwise (3n+1)/2.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        2,
+        1,
+        5,
+        2,
+        8,
+        3,
+        11,
+        4,
+        14,
+        5,
+        17,
+        6,
+        20,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": 0.24999999999999103,
+        "B": 1.0000000000000002,
+        "C": -0.24999999999999073,
+        "D": -0.5000000000000004,
+        "residual_norm": 1.1218948208889882e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.05810652527325628,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999257210979104,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A019303",
+      "name": "\"Pascal sweep\" for k=2: draw a horizontal line through the 1 at C(k,0) in Pascal's triangle; rotate this line and record the sum of the numbers on it (excluding the initial 1).",
+      "n_terms": 87,
+      "first_terms": [
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8,
+        1,
+        9,
+        1,
+        10,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 83,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 87
+      },
+      "abcd_fit": {
+        "A": 2.2499999999999973,
+        "B": 0.24999999999999992,
+        "C": -1.2500000000000018,
+        "D": -0.24999999999999958,
+        "residual_norm": 1.8979943697225045e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 4.131062417209885e-17,
+        "growth_type": "bounded",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999643497990204,
+        "n_terms": 87
+      }
+    },
+    {
+      "seq_id": "A022998",
+      "name": "If n is odd then n, otherwise 2n.",
+      "n_terms": 68,
+      "first_terms": [
+        0,
+        1,
+        4,
+        3,
+        8,
+        5,
+        12,
+        7,
+        16,
+        9,
+        20,
+        11,
+        24,
+        13,
+        28
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": -2.935661416010588e-14,
+        "B": 1.5000000000000007,
+        "C": -6.228071865236201e-15,
+        "D": 0.5000000000000004,
+        "residual_norm": 1.561136235297012e-13,
+        "max_residual": 3.558468602534208e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06370746393016616,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999177442736629,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A026741",
+      "name": "a(n) = n if n odd, n/2 if n even.",
+      "n_terms": 77,
+      "first_terms": [
+        0,
+        1,
+        1,
+        3,
+        2,
+        5,
+        3,
+        7,
+        4,
+        9,
+        5,
+        11,
+        6,
+        13,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 73,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 77
+      },
+      "abcd_fit": {
+        "A": -1.2357289598154366e-14,
+        "B": 0.75,
+        "C": 8.625139189351168e-15,
+        "D": -0.2500000000000003,
+        "residual_norm": 1.267843608666252e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.04850114879635181,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999359282395626,
+        "n_terms": 77
+      }
+    },
+    {
+      "seq_id": "A027656",
+      "name": "Expansion of 1/(1-x^2)^2 (included only for completeness - the policy is always to omit the zeros from such sequences).",
+      "n_terms": 86,
+      "first_terms": [
+        1,
+        0,
+        2,
+        0,
+        3,
+        0,
+        4,
+        0,
+        5,
+        0,
+        6,
+        0,
+        7,
+        0,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 82,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 86
+      },
+      "abcd_fit": {
+        "A": 0.500000000000007,
+        "B": 0.2500000000000001,
+        "C": 0.5000000000000044,
+        "D": 0.24999999999999972,
+        "residual_norm": 1.4607275047514483e-13,
+        "max_residual": 3.808064974464287e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "convergent",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999554349145772,
+        "n_terms": 86
+      }
+    },
+    {
+      "seq_id": "A029578",
+      "name": "The natural numbers interleaved with the even numbers.",
+      "n_terms": 74,
+      "first_terms": [
+        0,
+        0,
+        1,
+        2,
+        2,
+        4,
+        3,
+        6,
+        4,
+        8,
+        5,
+        10,
+        6,
+        12,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 70,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 74
+      },
+      "abcd_fit": {
+        "A": -0.4999999999999948,
+        "B": 0.7500000000000003,
+        "C": 0.4999999999999972,
+        "D": -0.25000000000000006,
+        "residual_norm": 1.73829870667918e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.060234734070648666,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999179380416047,
+        "n_terms": 74
+      }
+    },
+    {
+      "seq_id": "A029579",
+      "name": "a(2*n) = n+1, a(2*n-1) = 2*n-1.",
+      "n_terms": 73,
+      "first_terms": [
+        1,
+        1,
+        2,
+        3,
+        3,
+        5,
+        4,
+        7,
+        5,
+        9,
+        6,
+        11,
+        7,
+        13,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 69,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 73
+      },
+      "abcd_fit": {
+        "A": 0.5000000000000165,
+        "B": 0.7499999999999998,
+        "C": 0.5000000000000061,
+        "D": -0.25,
+        "residual_norm": 9.791638385290724e-14,
+        "max_residual": 2.2648549702353193e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05015163767561423,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999154273783755,
+        "n_terms": 73
+      }
+    },
+    {
+      "seq_id": "A043547",
+      "name": "Odd numbers interspersed with double the previous odd number.",
+      "n_terms": 68,
+      "first_terms": [
+        1,
+        2,
+        3,
+        6,
+        5,
+        10,
+        7,
+        14,
+        9,
+        18,
+        11,
+        22,
+        13,
+        26,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 0.4999999999999806,
+        "B": 1.5000000000000002,
+        "C": 0.49999999999999467,
+        "D": -0.49999999999999983,
+        "residual_norm": 1.122768714965149e-13,
+        "max_residual": 2.4646951146678475e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0731020865664315,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999099138085289,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A057979",
+      "name": "a(n) = 1 for even n and (n-1)/2 for odd n.",
+      "n_terms": 89,
+      "first_terms": [
+        1,
+        0,
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 85,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 89
+      },
+      "abcd_fit": {
+        "A": 0.249999999999999,
+        "B": 0.24999999999999994,
+        "C": 0.7499999999999954,
+        "D": -0.25,
+        "residual_norm": 5.555834340543481e-14,
+        "max_residual": 9.103828801926284e-15,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_alternating",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "bounded",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999409797535828,
+        "n_terms": 89
+      }
+    },
+    {
+      "seq_id": "A059029",
+      "name": "a(n) = n if n is even, 2*n + 1 if n is odd.",
+      "n_terms": 68,
+      "first_terms": [
+        0,
+        3,
+        2,
+        7,
+        4,
+        11,
+        6,
+        15,
+        8,
+        19,
+        10,
+        23,
+        12,
+        27,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 0.4999999999999841,
+        "B": 1.5000000000000002,
+        "C": -0.4999999999999941,
+        "D": -0.5000000000000001,
+        "residual_norm": 8.49087652744284e-14,
+        "max_residual": 2.1316282072803006e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.057676704390459355,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999247905886894,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A063914",
+      "name": "Odd numbers interlaced with numbers 3m+2.",
+      "n_terms": 71,
+      "first_terms": [
+        1,
+        2,
+        3,
+        5,
+        5,
+        8,
+        7,
+        11,
+        9,
+        14,
+        11,
+        17,
+        13,
+        20,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 67,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 71
+      },
+      "abcd_fit": {
+        "A": 0.7499999999999939,
+        "B": 1.25,
+        "C": 0.2499999999999952,
+        "D": -0.25000000000000006,
+        "residual_norm": 7.665300086179912e-14,
+        "max_residual": 1.4210854715202004e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06089542681487593,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.99991770563291,
+        "n_terms": 71
+      }
+    },
+    {
+      "seq_id": "A064455",
+      "name": "a(2n) = 3n, a(2n-1) = n.",
+      "n_terms": 72,
+      "first_terms": [
+        1,
+        3,
+        2,
+        6,
+        3,
+        9,
+        4,
+        12,
+        5,
+        15,
+        6,
+        18,
+        7,
+        21,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": 1.2500000000000229,
+        "B": 1.0,
+        "C": -0.2500000000000092,
+        "D": -0.49999999999999967,
+        "residual_norm": 2.0051304028902135e-13,
+        "max_residual": 3.552713678800501e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06594551024118626,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999297295635793,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A064680",
+      "name": "Halve every even number, double every odd number.",
+      "n_terms": 71,
+      "first_terms": [
+        0,
+        2,
+        1,
+        6,
+        2,
+        10,
+        3,
+        14,
+        4,
+        18,
+        5,
+        22,
+        6,
+        26,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 67,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 71
+      },
+      "abcd_fit": {
+        "A": -2.2340904888939505e-14,
+        "B": 1.2500000000000004,
+        "C": -6.762687452822638e-15,
+        "D": -0.7499999999999999,
+        "residual_norm": 1.0381828134801536e-13,
+        "max_residual": 2.910359234176214e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.04148117218738358,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999245596166553,
+        "n_terms": 71
+      }
+    },
+    {
+      "seq_id": "A065262",
+      "name": "The nonpositive side (-1, -2, -3, ...) of the site swap sequence A065261. The bisection of odd terms of A065261.",
+      "n_terms": 70,
+      "first_terms": [
+        1,
+        1,
+        5,
+        2,
+        9,
+        3,
+        13,
+        4,
+        17,
+        5,
+        21,
+        6,
+        25,
+        7,
+        29
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": 0.7499999999999806,
+        "B": 1.2500000000000007,
+        "C": 0.25000000000000744,
+        "D": 0.7500000000000001,
+        "residual_norm": 1.7013533039281483e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05152678349984661,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999246353487171,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A065423",
+      "name": "Number of ordered length 2 compositions of n with at least one even summand.",
+      "n_terms": 75,
+      "first_terms": [
+        0,
+        0,
+        2,
+        1,
+        4,
+        2,
+        6,
+        3,
+        8,
+        4,
+        10,
+        5,
+        12,
+        6,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 71,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 75
+      },
+      "abcd_fit": {
+        "A": -0.24999999999999345,
+        "B": 0.7500000000000004,
+        "C": 0.25000000000000094,
+        "D": 0.2499999999999998,
+        "residual_norm": 2.353256048905516e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05015163767561423,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999377030773327,
+        "n_terms": 75
+      }
+    },
+    {
+      "seq_id": "A066070",
+      "name": "a(1) = 1; for m > 0, a(2m) = 2(2m+1), a(2m+1) = 2m+1.",
+      "n_terms": 68,
+      "first_terms": [
+        1,
+        6,
+        3,
+        10,
+        5,
+        14,
+        7,
+        18,
+        9,
+        22,
+        11,
+        26,
+        13,
+        30,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 2.4999999999999942,
+        "B": 1.4999999999999998,
+        "C": -1.4999999999999982,
+        "D": -0.49999999999999983,
+        "residual_norm": 1.756202984904607e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07354109977846576,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999368653262507,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A066104",
+      "name": "a(2n) = 2n, a(2n+1) = 4(n+1).",
+      "n_terms": 68,
+      "first_terms": [
+        0,
+        4,
+        2,
+        8,
+        4,
+        12,
+        6,
+        16,
+        8,
+        20,
+        10,
+        24,
+        12,
+        28,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 0.9999999999999863,
+        "B": 1.5000000000000007,
+        "C": -1.000000000000001,
+        "D": -0.5000000000000002,
+        "residual_norm": 1.6576105666920548e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=half|C=int|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.053429704918426704,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999311388685165,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A071045",
+      "name": "Number of 0's in n-th row of triangle in A071030.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        0,
+        3,
+        1,
+        6,
+        2,
+        9,
+        3,
+        12,
+        4,
+        15,
+        5,
+        18,
+        6,
+        21
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -0.2500000000000204,
+        "B": 1.0000000000000002,
+        "C": 0.250000000000006,
+        "D": 0.4999999999999999,
+        "residual_norm": 1.2794718271415468e-13,
+        "max_residual": 2.609024107869118e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0362350482977321,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999257210979104,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A071054",
+      "name": "a(2n)=3n+1, a(2n+1)=2n+2.",
+      "n_terms": 68,
+      "first_terms": [
+        1,
+        3,
+        4,
+        5,
+        7,
+        7,
+        10,
+        9,
+        13,
+        11,
+        16,
+        13,
+        19,
+        15,
+        22
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 1.4999999999999725,
+        "B": 1.2500000000000007,
+        "C": -0.5000000000000011,
+        "D": 0.25000000000000006,
+        "residual_norm": 1.1794749411233425e-13,
+        "max_residual": 2.864375403532904e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06319561947160089,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999012019458869,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A080512",
+      "name": "a(n) = n if n is odd, a(n) = 3*n/2 if n is even.",
+      "n_terms": 68,
+      "first_terms": [
+        1,
+        3,
+        3,
+        6,
+        5,
+        9,
+        7,
+        12,
+        9,
+        15,
+        11,
+        18,
+        13,
+        21,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 1.2499999999999982,
+        "B": 1.25,
+        "C": -0.24999999999999706,
+        "D": -0.24999999999999992,
+        "residual_norm": 3.234923947455718e-14,
+        "max_residual": 7.105427357601002e-15,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06902944497439212,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999247905886894,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A091574",
+      "name": "Poincar\u00e9 series [or Poincare series] of the preprojective algebra of an extended Dynkin diagram of type D_4.",
+      "n_terms": 52,
+      "first_terms": [
+        5,
+        8,
+        15,
+        16,
+        25,
+        24,
+        35,
+        32,
+        45,
+        40,
+        55,
+        48,
+        65,
+        56,
+        75
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 48,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 52
+      },
+      "abcd_fit": {
+        "A": 4.500000000000062,
+        "B": 4.4999999999999964,
+        "C": 0.500000000000002,
+        "D": 0.5,
+        "residual_norm": 4.627264660020084e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07310000327974935,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998744349568129,
+        "n_terms": 52
+      }
+    },
+    {
+      "seq_id": "A093178",
+      "name": "If n is even then 1, otherwise n.",
+      "n_terms": 86,
+      "first_terms": [
+        1,
+        1,
+        1,
+        3,
+        1,
+        5,
+        1,
+        7,
+        1,
+        9,
+        1,
+        11,
+        1,
+        13,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 82,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 86
+      },
+      "abcd_fit": {
+        "A": 0.5000000000000068,
+        "B": 0.5,
+        "C": 0.5000000000000013,
+        "D": -0.49999999999999956,
+        "residual_norm": 2.1983357874809985e-13,
+        "max_residual": 4.3520742565306136e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.05226648537047423,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999449234702664,
+        "n_terms": 86
+      }
+    },
+    {
+      "seq_id": "A097362",
+      "name": "a(n) = (n+1)/2 if n is odd, n+2 otherwise.",
+      "n_terms": 73,
+      "first_terms": [
+        1,
+        4,
+        2,
+        6,
+        3,
+        8,
+        4,
+        10,
+        5,
+        12,
+        6,
+        14,
+        7,
+        16,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 69,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 73
+      },
+      "abcd_fit": {
+        "A": 2.0000000000000235,
+        "B": 0.75,
+        "C": -0.9999999999999906,
+        "D": -0.25,
+        "residual_norm": 2.1665546483614454e-13,
+        "max_residual": 3.552713678800501e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=quarter|C=int|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05015163767561423,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999485197261895,
+        "n_terms": 73
+      }
+    },
+    {
+      "seq_id": "A106832",
+      "name": "4*n-2 and 6*n alternatively.",
+      "n_terms": 50,
+      "first_terms": [
+        2,
+        6,
+        6,
+        12,
+        10,
+        18,
+        14,
+        24,
+        18,
+        30,
+        22,
+        36,
+        26,
+        42,
+        30
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 46,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 50
+      },
+      "abcd_fit": {
+        "A": 2.49999999999997,
+        "B": 2.5000000000000004,
+        "C": -0.49999999999999195,
+        "D": -0.5000000000000008,
+        "residual_norm": 2.005179579943147e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.08811200231706758,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998647465903584,
+        "n_terms": 50
+      }
+    },
+    {
+      "seq_id": "A106833",
+      "name": "3n and 2n, alternating.",
+      "n_terms": 61,
+      "first_terms": [
+        3,
+        4,
+        9,
+        8,
+        15,
+        12,
+        21,
+        16,
+        27,
+        20,
+        33,
+        24,
+        39,
+        28,
+        45
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 57,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 61
+      },
+      "abcd_fit": {
+        "A": 2.5000000000000058,
+        "B": 2.500000000000002,
+        "C": 0.5000000000000029,
+        "D": 0.5,
+        "residual_norm": 6.346692051615016e-13,
+        "max_residual": 1.4210854715202004e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06851456440288851,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999073098673472,
+        "n_terms": 61
+      }
+    },
+    {
+      "seq_id": "A109043",
+      "name": "a(n) = lcm(n,2).",
+      "n_terms": 68,
+      "first_terms": [
+        0,
+        2,
+        2,
+        6,
+        4,
+        10,
+        6,
+        14,
+        8,
+        18,
+        10,
+        22,
+        12,
+        26,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": -3.1832666566987717e-15,
+        "B": 1.4999999999999998,
+        "C": -1.5651891384846203e-15,
+        "D": -0.49999999999999983,
+        "residual_norm": 1.2217041150074354e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06370746393016614,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999177442736629,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A113497",
+      "name": "Ascending descending base exponent transform of sequence A000034(n) = 1 + n mod 2.",
+      "n_terms": 69,
+      "first_terms": [
+        1,
+        3,
+        6,
+        6,
+        11,
+        9,
+        16,
+        12,
+        21,
+        15,
+        26,
+        18,
+        31,
+        21,
+        36
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 65,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 69
+      },
+      "abcd_fit": {
+        "A": 1.249999999999929,
+        "B": 1.9999999999999996,
+        "C": -0.2499999999999965,
+        "D": 0.4999999999999998,
+        "residual_norm": 7.330184441828749e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07561269936033324,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999164450160429,
+        "n_terms": 69
+      }
+    },
+    {
+      "seq_id": "A114752",
+      "name": "a(2n)=2n, a(2n+1)=4n+1.",
+      "n_terms": 69,
+      "first_terms": [
+        1,
+        2,
+        5,
+        4,
+        9,
+        6,
+        13,
+        8,
+        17,
+        10,
+        21,
+        12,
+        25,
+        14,
+        29
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 65,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 69
+      },
+      "abcd_fit": {
+        "A": 0.9999999999999738,
+        "B": 1.4999999999999993,
+        "C": -5.562719239865296e-16,
+        "D": 0.49999999999999983,
+        "residual_norm": 4.3044045380784723e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07235266067394301,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999200905639,
+        "n_terms": 69
+      }
+    },
+    {
+      "seq_id": "A114753",
+      "name": "First column of A114751.",
+      "n_terms": 69,
+      "first_terms": [
+        1,
+        3,
+        3,
+        7,
+        5,
+        11,
+        7,
+        15,
+        9,
+        19,
+        11,
+        23,
+        13,
+        27,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 65,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 69
+      },
+      "abcd_fit": {
+        "A": 0.9999999999999595,
+        "B": 1.4999999999999998,
+        "C": -1.5280782074449433e-14,
+        "D": -0.5000000000000002,
+        "residual_norm": 4.648827287497863e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.062266272126430273,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999200905639,
+        "n_terms": 69
+      }
+    },
+    {
+      "seq_id": "A123167",
+      "name": "Continued fraction for c=sqrt(2)*(exp(sqrt(2))+1)/(exp(sqrt(2))-1). a(2*n-1) = 8*n-6, a(2*n) = 4*n-1.",
+      "n_terms": 62,
+      "first_terms": [
+        2,
+        3,
+        10,
+        7,
+        18,
+        11,
+        26,
+        15,
+        34,
+        19,
+        42,
+        23,
+        50,
+        27,
+        58
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 58,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 62
+      },
+      "abcd_fit": {
+        "A": 1.4999999999999873,
+        "B": 2.9999999999999996,
+        "C": 0.5000000000000151,
+        "D": 0.9999999999999999,
+        "residual_norm": 2.6236916798929696e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=int|C=half|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.06752519958708969,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999056984716419,
+        "n_terms": 62
+      }
+    },
+    {
+      "seq_id": "A123684",
+      "name": "Alternate A016777(n) with A000027(n).",
+      "n_terms": 72,
+      "first_terms": [
+        1,
+        1,
+        4,
+        2,
+        7,
+        3,
+        10,
+        4,
+        13,
+        5,
+        16,
+        6,
+        19,
+        7,
+        22
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": 0.750000000000019,
+        "B": 0.9999999999999996,
+        "C": 0.250000000000013,
+        "D": 0.5,
+        "residual_norm": 1.282766499633182e-13,
+        "max_residual": 3.197442310920451e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.050472097724734,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999297295635793,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A124625",
+      "name": "Even numbers sandwiched between 1's.",
+      "n_terms": 86,
+      "first_terms": [
+        1,
+        0,
+        1,
+        2,
+        1,
+        4,
+        1,
+        6,
+        1,
+        8,
+        1,
+        10,
+        1,
+        12,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 82,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 86
+      },
+      "abcd_fit": {
+        "A": -4.595762369720176e-15,
+        "B": 0.5000000000000002,
+        "C": 1.0000000000000018,
+        "D": -0.49999999999999967,
+        "residual_norm": 1.7207497049210127e-13,
+        "max_residual": 4.707345624410664e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=0|B=half|C=int|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.053383334925823055,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999407944964984,
+        "n_terms": 86
+      }
+    },
+    {
+      "seq_id": "A133090",
+      "name": "A133081 * [1,2,3,...].",
+      "n_terms": 72,
+      "first_terms": [
+        1,
+        1,
+        5,
+        3,
+        9,
+        5,
+        13,
+        7,
+        17,
+        9,
+        21,
+        11,
+        25,
+        13,
+        29
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": 0.5000000000000383,
+        "B": 1.4999999999999991,
+        "C": 0.5000000000000168,
+        "D": 0.49999999999999983,
+        "residual_norm": 1.8917209973902675e-13,
+        "max_residual": 5.5067062021407764e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06003774474706079,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999326267063009,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A133265",
+      "name": "Diagonal of the A135356 triangle.",
+      "n_terms": 80,
+      "first_terms": [
+        2,
+        2,
+        2,
+        4,
+        2,
+        6,
+        2,
+        8,
+        2,
+        10,
+        2,
+        12,
+        2,
+        14,
+        2
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 76,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 80
+      },
+      "abcd_fit": {
+        "A": 1.5000000000000073,
+        "B": 0.5000000000000001,
+        "C": 0.49999999999999994,
+        "D": -0.5000000000000002,
+        "residual_norm": 1.633898293163833e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.04669467663435362,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999359488956933,
+        "n_terms": 80
+      }
+    },
+    {
+      "seq_id": "A133622",
+      "name": "a(n) = 1 if n is odd, a(n) = n/2+1 if n is even.",
+      "n_terms": 87,
+      "first_terms": [
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 83,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 87
+      },
+      "abcd_fit": {
+        "A": 1.2500000000000016,
+        "B": 0.24999999999999986,
+        "C": -0.24999999999999759,
+        "D": -0.25000000000000006,
+        "residual_norm": 5.37462624142332e-14,
+        "max_residual": 1.021405182655144e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "bounded",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999532620169103,
+        "n_terms": 87
+      }
+    },
+    {
+      "seq_id": "A141310",
+      "name": "The odd numbers interlaced with the constant-2 sequence.",
+      "n_terms": 97,
+      "first_terms": [
+        1,
+        2,
+        3,
+        2,
+        5,
+        2,
+        7,
+        2,
+        9,
+        2,
+        11,
+        2,
+        13,
+        2,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 93,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 97
+      },
+      "abcd_fit": {
+        "A": 1.500000000000006,
+        "B": 0.49999999999999967,
+        "C": -0.4999999999999908,
+        "D": 0.5,
+        "residual_norm": 1.6236790637941231e-13,
+        "max_residual": 3.1530333899354446e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.04765323935941016,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999571076241002,
+        "n_terms": 97
+      }
+    },
+    {
+      "seq_id": "A142150",
+      "name": "The nonnegative integers interleaved with 0's.",
+      "n_terms": 88,
+      "first_terms": [
+        0,
+        0,
+        1,
+        0,
+        2,
+        0,
+        3,
+        0,
+        4,
+        0,
+        5,
+        0,
+        6,
+        0,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 84,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 88
+      },
+      "abcd_fit": {
+        "A": -8.838607119020109e-15,
+        "B": 0.2500000000000001,
+        "C": 1.3899426842068966e-15,
+        "D": 0.25000000000000006,
+        "residual_norm": 6.137898887015424e-14,
+        "max_residual": 1.0173038651995747e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "convergent",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999510374807791,
+        "n_terms": 88
+      }
+    },
+    {
+      "seq_id": "A144433",
+      "name": "Multiples of 8 interleaved with the sequence of odd numbers >= 3.",
+      "n_terms": 65,
+      "first_terms": [
+        8,
+        3,
+        16,
+        5,
+        24,
+        7,
+        32,
+        9,
+        40,
+        11,
+        48,
+        13,
+        56,
+        15,
+        64
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": 4.999999999999929,
+        "B": 2.5,
+        "C": 2.9999999999999774,
+        "D": 1.5,
+        "residual_norm": 5.955395260074362e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=half|C=int|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.05463293064791372,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.999925167323469,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A145051",
+      "name": "Numerator of the first convergent to sqrt(n) using the recursion x = (n/x + x)/2.",
+      "n_terms": 74,
+      "first_terms": [
+        1,
+        3,
+        2,
+        5,
+        3,
+        7,
+        4,
+        9,
+        5,
+        11,
+        6,
+        13,
+        7,
+        15,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 70,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 74
+      },
+      "abcd_fit": {
+        "A": 1.5000000000000082,
+        "B": 0.7500000000000003,
+        "C": -0.500000000000003,
+        "D": -0.25,
+        "residual_norm": 2.0604830082608287e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05914367278816864,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999410684936874,
+        "n_terms": 74
+      }
+    },
+    {
+      "seq_id": "A147601",
+      "name": "First differences of A132355.",
+      "n_terms": 51,
+      "first_terms": [
+        7,
+        4,
+        21,
+        8,
+        35,
+        12,
+        49,
+        16,
+        63,
+        20,
+        77,
+        24,
+        91,
+        28,
+        105
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 47,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 51
+      },
+      "abcd_fit": {
+        "A": 4.499999999999974,
+        "B": 4.500000000000001,
+        "C": 2.4999999999999925,
+        "D": 2.5000000000000027,
+        "residual_norm": 4.685158001393492e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07863651265448648,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998696073749075,
+        "n_terms": 51
+      }
+    },
+    {
+      "seq_id": "A152053",
+      "name": "a(n) = A144433(3n+1) + A144433(3n+2) + A144433(3n+3).",
+      "n_terms": 41,
+      "first_terms": [
+        27,
+        36,
+        81,
+        72,
+        135,
+        108,
+        189,
+        144,
+        243,
+        180,
+        297,
+        216,
+        351,
+        252,
+        405
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 37,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 41
+      },
+      "abcd_fit": {
+        "A": 22.500000000000334,
+        "B": 22.49999999999998,
+        "C": 4.499999999999964,
+        "D": 4.500000000000001,
+        "residual_norm": 1.7514121756984655e-12,
+        "max_residual": 6.821210263296962e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0928393016676077,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998032756715427,
+        "n_terms": 41
+      }
+    },
+    {
+      "seq_id": "A152271",
+      "name": "a(n)=1 for even n and (n+1)/2 for odd n.",
+      "n_terms": 88,
+      "first_terms": [
+        1,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 84,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 88
+      },
+      "abcd_fit": {
+        "A": 0.7499999999999996,
+        "B": 0.25,
+        "C": 0.25000000000000033,
+        "D": -0.25000000000000017,
+        "residual_norm": 8.106574538453473e-14,
+        "max_residual": 1.432187701766452e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.043496432573773114,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999474989201121,
+        "n_terms": 88
+      }
+    },
+    {
+      "seq_id": "A158416",
+      "name": "Expansion of g.f. (1+x-x^3)/(1-x^2)^2.",
+      "n_terms": 88,
+      "first_terms": [
+        1,
+        1,
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        5,
+        1,
+        6,
+        1,
+        7,
+        1,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 84,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 88
+      },
+      "abcd_fit": {
+        "A": 0.9999999999999902,
+        "B": 0.25000000000000017,
+        "C": 9.45853474356834e-16,
+        "D": 0.2500000000000001,
+        "residual_norm": 8.090860266130662e-14,
+        "max_residual": 2.1316282072803006e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 1.0208947352875003e-17,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999510374807791,
+        "n_terms": 88
+      }
+    },
+    {
+      "seq_id": "A165351",
+      "name": "Numerator of 3*n/2.",
+      "n_terms": 66,
+      "first_terms": [
+        0,
+        3,
+        3,
+        9,
+        6,
+        15,
+        9,
+        21,
+        12,
+        27,
+        15,
+        33,
+        18,
+        39,
+        21
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 62,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 66
+      },
+      "abcd_fit": {
+        "A": 1.3475199752164246e-14,
+        "B": 2.250000000000001,
+        "C": -1.79941487280314e-14,
+        "D": -0.7499999999999998,
+        "residual_norm": 3.980430687689113e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06522480109211932,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999126476358952,
+        "n_terms": 66
+      }
+    },
+    {
+      "seq_id": "A165355",
+      "name": "a(n) = 3n + 1 if n is even, or a(n) = (3n + 1)/2 if n is odd.",
+      "n_terms": 66,
+      "first_terms": [
+        1,
+        2,
+        7,
+        5,
+        13,
+        8,
+        19,
+        11,
+        25,
+        14,
+        31,
+        17,
+        37,
+        20,
+        43
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 62,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 66
+      },
+      "abcd_fit": {
+        "A": 0.7500000000000215,
+        "B": 2.25,
+        "C": 0.25000000000000466,
+        "D": 0.7500000000000003,
+        "residual_norm": 2.3221492300827716e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.07053796121031651,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999153083773353,
+        "n_terms": 66
+      }
+    },
+    {
+      "seq_id": "A165367",
+      "name": "Trisection a(n) = A026741(3n + 2).",
+      "n_terms": 66,
+      "first_terms": [
+        1,
+        5,
+        4,
+        11,
+        7,
+        17,
+        10,
+        23,
+        13,
+        29,
+        16,
+        35,
+        19,
+        41,
+        22
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 62,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 66
+      },
+      "abcd_fit": {
+        "A": 1.5000000000000318,
+        "B": 2.2500000000000004,
+        "C": -0.5000000000000325,
+        "D": -0.75,
+        "residual_norm": 4.551554918215767e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.08128005736519982,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999178747171912,
+        "n_terms": 66
+      }
+    },
+    {
+      "seq_id": "A165988",
+      "name": "First trisection of A022998.",
+      "n_terms": 60,
+      "first_terms": [
+        0,
+        3,
+        12,
+        9,
+        24,
+        15,
+        36,
+        21,
+        48,
+        27,
+        60,
+        33,
+        72,
+        39,
+        84
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 56,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 60
+      },
+      "abcd_fit": {
+        "A": 4.368052707399343e-15,
+        "B": 4.5000000000000036,
+        "C": -3.7712704622692483e-14,
+        "D": 1.5000000000000013,
+        "residual_norm": 9.50618759791379e-13,
+        "max_residual": 2.2737367544323206e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07030236972251243,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998941566931585,
+        "n_terms": 60
+      }
+    },
+    {
+      "seq_id": "A165998",
+      "name": "Denominators of Taylor series expansion of 1/(3*x)*log((1+x)/(1-x)^2).",
+      "n_terms": 66,
+      "first_terms": [
+        1,
+        6,
+        3,
+        12,
+        5,
+        18,
+        7,
+        24,
+        9,
+        30,
+        11,
+        36,
+        13,
+        42,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 62,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 66
+      },
+      "abcd_fit": {
+        "A": 2.0000000000000147,
+        "B": 2.0000000000000013,
+        "C": -1.0000000000000195,
+        "D": -0.9999999999999999,
+        "residual_norm": 5.018612844260816e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=int|C=int|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.0813579543183775,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.999920350355535,
+        "n_terms": 66
+      }
+    },
+    {
+      "seq_id": "A166138",
+      "name": "Trisection A022998(3n+1).",
+      "n_terms": 66,
+      "first_terms": [
+        1,
+        8,
+        7,
+        20,
+        13,
+        32,
+        19,
+        44,
+        25,
+        56,
+        31,
+        68,
+        37,
+        80,
+        43
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 62,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 66
+      },
+      "abcd_fit": {
+        "A": 1.5000000000000435,
+        "B": 4.500000000000002,
+        "C": -0.5000000000000142,
+        "D": -1.5,
+        "residual_norm": 9.153849634157036e-13,
+        "max_residual": 1.7053025658242404e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0918655667660071,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999153083773353,
+        "n_terms": 66
+      }
+    },
+    {
+      "seq_id": "A166304",
+      "name": "Third trisection of A022998.",
+      "n_terms": 60,
+      "first_terms": [
+        4,
+        5,
+        16,
+        11,
+        28,
+        17,
+        40,
+        23,
+        52,
+        29,
+        64,
+        35,
+        76,
+        41,
+        88
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 56,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 60
+      },
+      "abcd_fit": {
+        "A": 3.0000000000000067,
+        "B": 4.500000000000003,
+        "C": 0.9999999999999627,
+        "D": 1.5000000000000016,
+        "residual_norm": 7.402349053828605e-13,
+        "max_residual": 1.7053025658242404e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=half|C=int|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0644252787240825,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.999901114660762,
+        "n_terms": 60
+      }
+    },
+    {
+      "seq_id": "A173237",
+      "name": "Alternate k and 10k for each k.",
+      "n_terms": 65,
+      "first_terms": [
+        1,
+        10,
+        2,
+        20,
+        3,
+        30,
+        4,
+        40,
+        5,
+        50,
+        6,
+        60,
+        7,
+        70,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": 2.999999999999937,
+        "B": 2.7499999999999987,
+        "C": -1.9999999999999842,
+        "D": -2.2500000000000004,
+        "residual_norm": 8.88297039109283e-13,
+        "max_residual": 1.6342482922482304e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=quarter|C=int|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.054632930647914024,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999170843834668,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A174007",
+      "name": "a(2n+1)=2. a(2n)= 1-n.",
+      "n_terms": 73,
+      "first_terms": [
+        2,
+        0,
+        2,
+        -1,
+        2,
+        -2,
+        2,
+        -3,
+        2,
+        -4,
+        2,
+        -5,
+        2,
+        -6,
+        2
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 69,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 73
+      },
+      "abcd_fit": {
+        "A": 1.2499999999999896,
+        "B": -0.24999999999999983,
+        "C": 0.7499999999999943,
+        "D": 0.24999999999999992,
+        "residual_norm": 9.062093001572831e-14,
+        "max_residual": 1.5987211554602254e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": -2.5376526277146434e-17,
+        "growth_type": "bounded",
+        "oscillation_rate": 0.9722222222222222,
+        "autocorrelation": -0.9999442438667021,
+        "n_terms": 73
+      }
+    },
+    {
+      "seq_id": "A174012",
+      "name": "a(n) = 3 * A064680(n).",
+      "n_terms": 65,
+      "first_terms": [
+        0,
+        6,
+        3,
+        18,
+        6,
+        30,
+        9,
+        42,
+        12,
+        54,
+        15,
+        66,
+        18,
+        78,
+        21
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": -2.3971835517863262e-14,
+        "B": 3.749999999999999,
+        "C": 1.5404723871421224e-14,
+        "D": -2.25,
+        "residual_norm": 4.864707256905348e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.04400934479745683,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999098733719048,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A174029",
+      "name": "a(n) = 3*(3*n+1)*(5 - (-1)^n)/4.",
+      "n_terms": 51,
+      "first_terms": [
+        3,
+        18,
+        21,
+        45,
+        39,
+        72,
+        57,
+        99,
+        75,
+        126,
+        93,
+        153,
+        111,
+        180,
+        129
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 47,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 51
+      },
+      "abcd_fit": {
+        "A": 3.749999999999945,
+        "B": 11.250000000000009,
+        "C": -0.7499999999999697,
+        "D": -2.250000000000003,
+        "residual_norm": 1.6142500448968546e-12,
+        "max_residual": 4.547473508864641e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.10034559673629849,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998587898222852,
+        "n_terms": 51
+      }
+    },
+    {
+      "seq_id": "A174239",
+      "name": "a(n) = (3*n + 1 + (-1)^n*(n+3))/4.",
+      "n_terms": 81,
+      "first_terms": [
+        1,
+        0,
+        3,
+        1,
+        5,
+        2,
+        7,
+        3,
+        9,
+        4,
+        11,
+        5,
+        13,
+        6,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 77,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 81
+      },
+      "abcd_fit": {
+        "A": 0.25000000000000583,
+        "B": 0.75,
+        "C": 0.7499999999999999,
+        "D": 0.2500000000000004,
+        "residual_norm": 1.6162971340793717e-13,
+        "max_residual": 3.552713678800501e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.04225431879492731,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999536613110972,
+        "n_terms": 81
+      }
+    },
+    {
+      "seq_id": "A174390",
+      "name": "a(2n) = -n, a(2n+1) = 2*n+4.",
+      "n_terms": 51,
+      "first_terms": [
+        0,
+        4,
+        -1,
+        6,
+        -2,
+        8,
+        -3,
+        10,
+        -4,
+        12,
+        -5,
+        14,
+        -6,
+        16,
+        -7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 47,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 51
+      },
+      "abcd_fit": {
+        "A": 1.5000000000000064,
+        "B": 0.25,
+        "C": -1.5000000000000058,
+        "D": -0.7500000000000003,
+        "residual_norm": 1.2226756678775184e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.03739962170914918,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.98,
+        "autocorrelation": -0.9998840609332109,
+        "n_terms": 51
+      }
+    },
+    {
+      "seq_id": "A176447",
+      "name": "a(2n) = -n, a(2n+1) = 2n+1.",
+      "n_terms": 71,
+      "first_terms": [
+        0,
+        1,
+        -1,
+        3,
+        -2,
+        5,
+        -3,
+        7,
+        -4,
+        9,
+        -5,
+        11,
+        -6,
+        13,
+        -7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 67,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 71
+      },
+      "abcd_fit": {
+        "A": -9.144372596558098e-15,
+        "B": 0.25000000000000017,
+        "C": 2.7390249106285778e-15,
+        "D": -0.7499999999999998,
+        "residual_norm": 1.0809614089971552e-13,
+        "max_residual": 2.1316282072803006e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.051526783499846567,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.9857142857142858,
+        "autocorrelation": -0.9999245596166553,
+        "n_terms": 71
+      }
+    },
+    {
+      "seq_id": "A176592",
+      "name": "List of pairs n, 11*n.",
+      "n_terms": 64,
+      "first_terms": [
+        1,
+        11,
+        2,
+        22,
+        3,
+        33,
+        4,
+        44,
+        5,
+        55,
+        6,
+        66,
+        7,
+        77,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 60,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 64
+      },
+      "abcd_fit": {
+        "A": 3.2499999999999853,
+        "B": 3.000000000000001,
+        "C": -2.2500000000000187,
+        "D": -2.4999999999999987,
+        "residual_norm": 3.362679155305856e-13,
+        "max_residual": 1.1013412404281553e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.09307351072377935,
+        "growth_type": "divergent",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999147029525622,
+        "n_terms": 64
+      }
+    },
+    {
+      "seq_id": "A176593",
+      "name": "List of pairs n,13*n.",
+      "n_terms": 65,
+      "first_terms": [
+        1,
+        13,
+        2,
+        26,
+        3,
+        39,
+        4,
+        52,
+        5,
+        65,
+        6,
+        78,
+        7,
+        91,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": 3.749999999999948,
+        "B": 3.5000000000000004,
+        "C": -2.7499999999999623,
+        "D": -3.0000000000000004,
+        "residual_norm": 3.6725506413263756e-13,
+        "max_residual": 8.881784197001252e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=half|C=quarter|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.0546329306479138,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999172985936764,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A178414",
+      "name": "Least odd number in the Collatz (3x+1) preimage of odd numbers not a multiple of 3.",
+      "n_terms": 63,
+      "first_terms": [
+        1,
+        3,
+        9,
+        7,
+        17,
+        11,
+        25,
+        15,
+        33,
+        19,
+        41,
+        23,
+        49,
+        27,
+        57
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 59,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 63
+      },
+      "abcd_fit": {
+        "A": 1.0000000000000822,
+        "B": 2.999999999999999,
+        "C": 1.0541821311805397e-15,
+        "D": 1.0000000000000004,
+        "residual_norm": 4.917445861672746e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "collatz_adjacent",
+      "parameter_signature": "A=int|B=int|C=0|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.08899117574943073,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999040138217885,
+        "n_terms": 63
+      }
+    },
+    {
+      "seq_id": "A181762",
+      "name": "a(n) = n/2 if n is even, otherwise 3n+5.",
+      "n_terms": 75,
+      "first_terms": [
+        0,
+        8,
+        1,
+        14,
+        2,
+        20,
+        3,
+        26,
+        4,
+        32,
+        5,
+        38,
+        6,
+        44,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 71,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 75
+      },
+      "abcd_fit": {
+        "A": 2.500000000000055,
+        "B": 1.749999999999999,
+        "C": -2.4999999999999902,
+        "D": -1.2499999999999993,
+        "residual_norm": 3.7189017873888867e-13,
+        "max_residual": 6.483702463810914e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.020979128369375166,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999424897072889,
+        "n_terms": 75
+      }
+    },
+    {
+      "seq_id": "A185452",
+      "name": "Image of n under the map n -> n/2 if n even, (5*n+1)/2 if n odd.",
+      "n_terms": 80,
+      "first_terms": [
+        0,
+        3,
+        1,
+        8,
+        2,
+        13,
+        3,
+        18,
+        4,
+        23,
+        5,
+        28,
+        6,
+        33,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 76,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 80
+      },
+      "abcd_fit": {
+        "A": 0.24999999999997916,
+        "B": 1.5000000000000007,
+        "C": -0.24999999999999423,
+        "D": -1.0000000000000004,
+        "residual_norm": 1.7367054019611926e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=quarter|B=half|C=quarter|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.05371352233367213,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999418129519005,
+        "n_terms": 80
+      }
+    },
+    {
+      "seq_id": "A189327",
+      "name": "Number of nondecreasing arrangements of 4 numbers in 0..n with the last equal to n and each after the second equal to the sum of one or two of the preceding four.",
+      "n_terms": 63,
+      "first_terms": [
+        2,
+        6,
+        7,
+        12,
+        12,
+        18,
+        17,
+        24,
+        22,
+        30,
+        27,
+        36,
+        32,
+        42,
+        37
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 59,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 63
+      },
+      "abcd_fit": {
+        "A": 2.500000000000035,
+        "B": 2.7500000000000004,
+        "C": -0.50000000000001,
+        "D": -0.24999999999999942,
+        "residual_norm": 4.361136928711264e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.07037255846432845,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999207745217197,
+        "n_terms": 63
+      }
+    },
+    {
+      "seq_id": "A193356",
+      "name": "If n is even then 0, otherwise n.",
+      "n_terms": 75,
+      "first_terms": [
+        1,
+        0,
+        3,
+        0,
+        5,
+        0,
+        7,
+        0,
+        9,
+        0,
+        11,
+        0,
+        13,
+        0,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 71,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 75
+      },
+      "abcd_fit": {
+        "A": 0.4999999999999973,
+        "B": 0.5000000000000002,
+        "C": 0.5000000000000019,
+        "D": 0.4999999999999999,
+        "residual_norm": 6.548671473859303e-14,
+        "max_residual": 1.6708856520608606e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999377030773327,
+        "n_terms": 75
+      }
+    },
+    {
+      "seq_id": "A195013",
+      "name": "Multiples of 2 and of 3 interleaved: a(2n-1) = 2n, a(2n) = 3n.",
+      "n_terms": 68,
+      "first_terms": [
+        2,
+        3,
+        4,
+        6,
+        6,
+        9,
+        8,
+        12,
+        10,
+        15,
+        12,
+        18,
+        14,
+        21,
+        16
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 1.7499999999999898,
+        "B": 1.2500000000000002,
+        "C": 0.2500000000000002,
+        "D": -0.25,
+        "residual_norm": 5.1589425106275076e-14,
+        "max_residual": 1.4210854715202004e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.058683964667527296,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999099138085289,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A195019",
+      "name": "Multiples of 3 and of 4 interleaved: a(2*n-1) = 3*n, a(2*n) = 4*n.",
+      "n_terms": 64,
+      "first_terms": [
+        3,
+        4,
+        6,
+        8,
+        9,
+        12,
+        12,
+        16,
+        15,
+        20,
+        18,
+        24,
+        21,
+        28,
+        24
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 60,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 64
+      },
+      "abcd_fit": {
+        "A": 2.499999999999995,
+        "B": 1.7500000000000004,
+        "C": 0.49999999999999495,
+        "D": -0.24999999999999986,
+        "residual_norm": 1.0900015639224403e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05957806309923024,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998870327742558,
+        "n_terms": 64
+      }
+    },
+    {
+      "seq_id": "A195031",
+      "name": "Multiples of 5 and of 12 interleaved: a(2n-1) = 5n, a(2n) = 12n.",
+      "n_terms": 58,
+      "first_terms": [
+        5,
+        12,
+        10,
+        24,
+        15,
+        36,
+        20,
+        48,
+        25,
+        60,
+        30,
+        72,
+        35,
+        84,
+        40
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 54,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 58
+      },
+      "abcd_fit": {
+        "A": 5.499999999999961,
+        "B": 4.250000000000002,
+        "C": -0.5000000000000004,
+        "D": -1.7500000000000009,
+        "residual_norm": 2.9206353316249266e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.07443446609369082,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998900512806967,
+        "n_terms": 58
+      }
+    },
+    {
+      "seq_id": "A195033",
+      "name": "Multiples of 21 and of 20 interleaved: a(2n-1) = 21n, a(2n) = 20n.",
+      "n_terms": 54,
+      "first_terms": [
+        21,
+        20,
+        42,
+        40,
+        63,
+        60,
+        84,
+        80,
+        105,
+        100,
+        126,
+        120,
+        147,
+        140,
+        168
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 50,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 54
+      },
+      "abcd_fit": {
+        "A": 15.499999999999988,
+        "B": 10.249999999999995,
+        "C": 5.499999999999975,
+        "D": 0.2500000000000001,
+        "residual_norm": 1.2947874628684087e-12,
+        "max_residual": 2.8421709430404007e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06126503211009238,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999830600294946,
+        "n_terms": 54
+      }
+    },
+    {
+      "seq_id": "A195035",
+      "name": "Multiples of 15 and of 8 interleaved: a(2n-1) = 15n, a(2n) = 8n.",
+      "n_terms": 54,
+      "first_terms": [
+        15,
+        8,
+        30,
+        16,
+        45,
+        24,
+        60,
+        32,
+        75,
+        40,
+        90,
+        48,
+        105,
+        56,
+        120
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 50,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 54
+      },
+      "abcd_fit": {
+        "A": 9.500000000000032,
+        "B": 5.749999999999998,
+        "C": 5.499999999999992,
+        "D": 1.7500000000000009,
+        "residual_norm": 3.6782598621174835e-13,
+        "max_residual": 1.4210854715202004e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.05032506050154627,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999076179015747,
+        "n_terms": 54
+      }
+    },
+    {
+      "seq_id": "A195140",
+      "name": "Multiples of 5 and odd numbers interleaved.",
+      "n_terms": 64,
+      "first_terms": [
+        0,
+        1,
+        5,
+        3,
+        10,
+        5,
+        15,
+        7,
+        20,
+        9,
+        25,
+        11,
+        30,
+        13,
+        35
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 60,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 64
+      },
+      "abcd_fit": {
+        "A": 2.4080328894203877e-15,
+        "B": 1.7500000000000007,
+        "C": 1.453316585392682e-14,
+        "D": 0.75,
+        "residual_norm": 2.7797407378857496e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06682475365147636,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999070623330925,
+        "n_terms": 64
+      }
+    },
+    {
+      "seq_id": "A195159",
+      "name": "Multiples of 7 and odd numbers interleaved.",
+      "n_terms": 62,
+      "first_terms": [
+        0,
+        1,
+        7,
+        3,
+        14,
+        5,
+        21,
+        7,
+        28,
+        9,
+        35,
+        11,
+        42,
+        13,
+        49
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 58,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 62
+      },
+      "abcd_fit": {
+        "A": -3.092679849538207e-14,
+        "B": 2.250000000000001,
+        "C": 2.0638760208300227e-14,
+        "D": 1.2500000000000004,
+        "residual_norm": 3.2241448302555803e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06851456440288851,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999009238563241,
+        "n_terms": 62
+      }
+    },
+    {
+      "seq_id": "A195161",
+      "name": "Multiples of 8 and odd numbers interleaved.",
+      "n_terms": 60,
+      "first_terms": [
+        0,
+        1,
+        8,
+        3,
+        16,
+        5,
+        24,
+        7,
+        32,
+        9,
+        40,
+        11,
+        48,
+        13,
+        56
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 56,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 60
+      },
+      "abcd_fit": {
+        "A": -3.897226303075843e-14,
+        "B": 2.5000000000000018,
+        "C": -2.7292153530144073e-14,
+        "D": 1.5000000000000007,
+        "residual_norm": 3.2005892938195424e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07030236972251243,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998941566931585,
+        "n_terms": 60
+      }
+    },
+    {
+      "seq_id": "A195312",
+      "name": "Multiples of 9 and odd numbers interleaved.",
+      "n_terms": 62,
+      "first_terms": [
+        0,
+        1,
+        9,
+        3,
+        18,
+        5,
+        27,
+        7,
+        36,
+        9,
+        45,
+        11,
+        54,
+        13,
+        63
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 58,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 62
+      },
+      "abcd_fit": {
+        "A": -4.7313838143718895e-14,
+        "B": 2.7500000000000004,
+        "C": 3.2848692062235296e-14,
+        "D": 1.750000000000001,
+        "residual_norm": 6.045608707249338e-13,
+        "max_residual": 1.2079226507921703e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06851456440288847,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999009238563241,
+        "n_terms": 62
+      }
+    },
+    {
+      "seq_id": "A195817",
+      "name": "Multiples of 10 and odd numbers interleaved.",
+      "n_terms": 61,
+      "first_terms": [
+        0,
+        1,
+        10,
+        3,
+        20,
+        5,
+        30,
+        7,
+        40,
+        9,
+        50,
+        11,
+        60,
+        13,
+        70
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 57,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 61
+      },
+      "abcd_fit": {
+        "A": 2.847152814304664e-14,
+        "B": 3.000000000000001,
+        "C": -2.866962862808817e-14,
+        "D": 2.0000000000000004,
+        "residual_norm": 5.241147268371096e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=int|C=0|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.096674279231461,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998975637236316,
+        "n_terms": 61
+      }
+    },
+    {
+      "seq_id": "A204904",
+      "name": "p(n)-q(n), where (p(n), q(n)) is the least pair of odd primes for which n divides p(n)-q(n).",
+      "n_terms": 65,
+      "first_terms": [
+        2,
+        2,
+        6,
+        4,
+        10,
+        6,
+        14,
+        8,
+        18,
+        10,
+        22,
+        12,
+        26,
+        14,
+        30
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": 1.500000000000005,
+        "B": 1.5,
+        "C": 0.5000000000000033,
+        "D": 0.49999999999999956,
+        "residual_norm": 1.1216571734232036e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06522480109211932,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999179373377928,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A227906",
+      "name": "Coins left after packing heart patterns (fixed orientation) into n X n coins.",
+      "n_terms": 65,
+      "first_terms": [
+        0,
+        1,
+        2,
+        5,
+        4,
+        9,
+        6,
+        13,
+        8,
+        17,
+        10,
+        21,
+        12,
+        25,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": -0.5000000000000268,
+        "B": 1.5000000000000007,
+        "C": 0.5000000000000093,
+        "D": -0.4999999999999998,
+        "residual_norm": 2.0367703303729353e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06601401719618526,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999008674099175,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A228967",
+      "name": "Table read by rows; T(n,k) = 2n for k = 1, T(n,k) = 9n for k = 2.",
+      "n_terms": 64,
+      "first_terms": [
+        2,
+        9,
+        4,
+        18,
+        6,
+        27,
+        8,
+        36,
+        10,
+        45,
+        12,
+        54,
+        14,
+        63,
+        16
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 60,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 64
+      },
+      "abcd_fit": {
+        "A": 3.249999999999987,
+        "B": 2.7500000000000018,
+        "C": -1.2499999999999902,
+        "D": -1.7500000000000016,
+        "residual_norm": 6.41019508151876e-13,
+        "max_residual": 2.2737367544323206e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.07888592539009535,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999131885077437,
+        "n_terms": 64
+      }
+    },
+    {
+      "seq_id": "A235800",
+      "name": "Length of n-th vertical line segment from left to right in a diagram of a two-dimensional version of the 3x+1 (or Collatz) problem.",
+      "n_terms": 64,
+      "first_terms": [
+        3,
+        1,
+        7,
+        2,
+        11,
+        3,
+        15,
+        4,
+        19,
+        5,
+        23,
+        6,
+        27,
+        7,
+        31
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 60,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 64
+      },
+      "abcd_fit": {
+        "A": 1.7499999999999938,
+        "B": 1.2500000000000002,
+        "C": 1.2500000000000062,
+        "D": 0.7500000000000003,
+        "residual_norm": 1.471363876761438e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=quarter|C=quarter|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.03757339070050183,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999206352723867,
+        "n_terms": 64
+      }
+    },
+    {
+      "seq_id": "A237420",
+      "name": "If n is odd, then a(n) = 0; otherwise, a(n) = n.",
+      "n_terms": 75,
+      "first_terms": [
+        0,
+        0,
+        2,
+        0,
+        4,
+        0,
+        6,
+        0,
+        8,
+        0,
+        10,
+        0,
+        12,
+        0,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 71,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 75
+      },
+      "abcd_fit": {
+        "A": 4.3372959239071465e-15,
+        "B": 0.5000000000000004,
+        "C": -3.773180585820134e-16,
+        "D": 0.4999999999999998,
+        "residual_norm": 2.184138446036117e-13,
+        "max_residual": 5.445260548569617e-14,
+        "exact_fit": "True"
+      },
+      "classification": "trivial_linear",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.999932442322556,
+        "n_terms": 75
+      }
+    },
+    {
+      "seq_id": "A261671",
+      "name": "If n even, a(n) = 6n+3, otherwise a(n) = n.",
+      "n_terms": 61,
+      "first_terms": [
+        3,
+        1,
+        15,
+        3,
+        27,
+        5,
+        39,
+        7,
+        51,
+        9,
+        63,
+        11,
+        75,
+        13,
+        87
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 57,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 61
+      },
+      "abcd_fit": {
+        "A": 1.4999999999999896,
+        "B": 3.5000000000000027,
+        "C": 1.5000000000000184,
+        "D": 2.499999999999999,
+        "residual_norm": 6.688705917211118e-13,
+        "max_residual": 1.9895196601282805e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.07992984242661233,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999035478209055,
+        "n_terms": 61
+      }
+    },
+    {
+      "seq_id": "A265722",
+      "name": "Number of ON (black) cells in the n-th iteration of the \"Rule 1\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 72,
+      "first_terms": [
+        1,
+        0,
+        1,
+        4,
+        1,
+        8,
+        1,
+        12,
+        1,
+        16,
+        1,
+        20,
+        1,
+        24,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": -0.4999999999999666,
+        "B": 0.9999999999999991,
+        "C": 1.4999999999999853,
+        "D": -0.9999999999999997,
+        "residual_norm": 1.7683800179295544e-13,
+        "max_residual": 4.6629367034256575e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=int|C=half|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.07161800612477262,
+        "growth_type": "divergent",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999165855712903,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A265723",
+      "name": "Number of OFF (white) cells in the n-th iteration of the \"Rule 1\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 72,
+      "first_terms": [
+        0,
+        3,
+        4,
+        3,
+        8,
+        3,
+        12,
+        3,
+        16,
+        3,
+        20,
+        3,
+        24,
+        3,
+        28
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": 1.4999999999999996,
+        "B": 1.0,
+        "C": -1.5000000000000102,
+        "D": 0.9999999999999994,
+        "residual_norm": 2.9428508962077e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=int|C=half|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999165855712903,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A266072",
+      "name": "Number of ON (black) cells in the n-th iteration of the \"Rule 3\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 72,
+      "first_terms": [
+        1,
+        1,
+        1,
+        5,
+        1,
+        9,
+        1,
+        13,
+        1,
+        17,
+        1,
+        21,
+        1,
+        25,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": 3.1648267976925003e-14,
+        "B": 0.9999999999999991,
+        "C": 0.999999999999984,
+        "D": -0.9999999999999994,
+        "residual_norm": 2.0774583896099743e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=0|B=int|C=int|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.06970084352645307,
+        "growth_type": "divergent",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999201224787382,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A266073",
+      "name": "Number of OFF (white) cells in the n-th iteration of the \"Rule 3\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 72,
+      "first_terms": [
+        0,
+        2,
+        4,
+        2,
+        8,
+        2,
+        12,
+        2,
+        16,
+        2,
+        20,
+        2,
+        24,
+        2,
+        28
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 68,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 72
+      },
+      "abcd_fit": {
+        "A": 1.000000000000011,
+        "B": 0.9999999999999999,
+        "C": -0.9999999999999862,
+        "D": 0.9999999999999997,
+        "residual_norm": 9.654549468862722e-14,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=int|C=int|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999201224787382,
+        "n_terms": 72
+      }
+    },
+    {
+      "seq_id": "A266285",
+      "name": "Number of ON (black) cells in the n-th iteration of the \"Rule 13\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 67,
+      "first_terms": [
+        1,
+        1,
+        2,
+        4,
+        3,
+        7,
+        4,
+        10,
+        5,
+        13,
+        6,
+        16,
+        7,
+        19,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 63,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 67
+      },
+      "abcd_fit": {
+        "A": 0.25000000000003614,
+        "B": 0.9999999999999999,
+        "C": 0.7499999999999925,
+        "D": -0.49999999999999956,
+        "residual_norm": 2.71244549002378e-13,
+        "max_residual": 4.973799150320701e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.05342970491842672,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999025684514273,
+        "n_terms": 67
+      }
+    },
+    {
+      "seq_id": "A266286",
+      "name": "Number of OFF (white) cells in the n-th iteration of the \"Rule 13\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 68,
+      "first_terms": [
+        0,
+        2,
+        3,
+        3,
+        6,
+        4,
+        9,
+        5,
+        12,
+        6,
+        15,
+        7,
+        18,
+        8,
+        21
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 64,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 68
+      },
+      "abcd_fit": {
+        "A": 0.74999999999999,
+        "B": 1.0,
+        "C": -0.7500000000000115,
+        "D": 0.5000000000000004,
+        "residual_norm": 1.1722293893198286e-13,
+        "max_residual": 2.842170943040401e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.04336668001408284,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999056746005637,
+        "n_terms": 68
+      }
+    },
+    {
+      "seq_id": "A266303",
+      "name": "Number of ON (black) cells in the n-th iteration of the \"Rule 15\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 71,
+      "first_terms": [
+        1,
+        2,
+        1,
+        6,
+        1,
+        10,
+        1,
+        14,
+        1,
+        18,
+        1,
+        22,
+        1,
+        26,
+        1
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 67,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 71
+      },
+      "abcd_fit": {
+        "A": 0.49999999999997397,
+        "B": 1.0000000000000002,
+        "C": 0.49999999999998845,
+        "D": -0.9999999999999997,
+        "residual_norm": 1.5918166955204928e-13,
+        "max_residual": 3.752553823233029e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=half|B=int|C=half|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.0,
+        "growth_type": "bounded",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999212195236358,
+        "n_terms": 71
+      }
+    },
+    {
+      "seq_id": "A266981",
+      "name": "Number of ON (black) cells in the n-th iteration of the \"Rule 79\" elementary cellular automaton starting with a single ON (black) cell.",
+      "n_terms": 67,
+      "first_terms": [
+        1,
+        2,
+        2,
+        5,
+        3,
+        8,
+        4,
+        11,
+        5,
+        14,
+        6,
+        17,
+        7,
+        20,
+        8
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 63,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 67
+      },
+      "abcd_fit": {
+        "A": 0.7500000000000329,
+        "B": 1.0,
+        "C": 0.24999999999998726,
+        "D": -0.49999999999999983,
+        "residual_norm": 2.748299634800678e-13,
+        "max_residual": 4.618527782440651e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=int|C=quarter|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.05342970491842666,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999112229071137,
+        "n_terms": 67
+      }
+    },
+    {
+      "seq_id": "A271478",
+      "name": "If n is even, a(n)=n/2, otherwise 2*n+2.",
+      "n_terms": 71,
+      "first_terms": [
+        0,
+        4,
+        1,
+        8,
+        2,
+        12,
+        3,
+        16,
+        4,
+        20,
+        5,
+        24,
+        6,
+        28,
+        7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 67,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 71
+      },
+      "abcd_fit": {
+        "A": 0.9999999999999664,
+        "B": 1.2500000000000002,
+        "C": -1.0000000000000089,
+        "D": -0.75,
+        "residual_norm": 2.517204920222127e-13,
+        "max_residual": 4.2521541843143495e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=quarter|C=int|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.03143556087492069,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.999932686953128,
+        "n_terms": 71
+      }
+    },
+    {
+      "seq_id": "A272708",
+      "name": "First differences of number of active (ON, black) cells in n-th stage of growth of two-dimensional cellular automaton defined by \"Rule 515\", based on the 5-celled von Neumann neighborhood.",
+      "n_terms": 56,
+      "first_terms": [
+        4,
+        8,
+        12,
+        24,
+        20,
+        40,
+        28,
+        56,
+        36,
+        72,
+        44,
+        88,
+        52,
+        104,
+        60
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 52,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 56
+      },
+      "abcd_fit": {
+        "A": 2.000000000000103,
+        "B": 5.9999999999999964,
+        "C": 2.000000000000016,
+        "D": -2.0,
+        "residual_norm": 4.0267701864691575e-13,
+        "max_residual": 1.1901590823981678e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=int|C=int|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.08546327937804392,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998640640316858,
+        "n_terms": 56
+      }
+    },
+    {
+      "seq_id": "A294178",
+      "name": "a(2n) = 2*n + 1, a(2n+1) = 6*n + 3.",
+      "n_terms": 52,
+      "first_terms": [
+        1,
+        3,
+        3,
+        9,
+        5,
+        15,
+        7,
+        21,
+        9,
+        27,
+        11,
+        33,
+        13,
+        39,
+        15
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 48,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 52
+      },
+      "abcd_fit": {
+        "A": 0.500000000000016,
+        "B": 1.9999999999999991,
+        "C": 0.5000000000000009,
+        "D": -0.9999999999999997,
+        "residual_norm": 1.2194353315630303e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=int|C=half|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.09863603767436153,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9998500638436663,
+        "n_terms": 52
+      }
+    },
+    {
+      "seq_id": "A317311",
+      "name": "Multiples of 11 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        11,
+        3,
+        22,
+        5,
+        33,
+        7,
+        44,
+        9,
+        55,
+        11,
+        66,
+        13,
+        77
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -2.4329910564080698e-14,
+        "B": 3.2500000000000004,
+        "C": 4.899905025652835e-15,
+        "D": 2.2500000000000004,
+        "residual_norm": 2.5608254873043524e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06226627212643027,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208656,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A317312",
+      "name": "Multiples of 12 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        12,
+        3,
+        24,
+        5,
+        36,
+        7,
+        48,
+        9,
+        60,
+        11,
+        72,
+        13,
+        84
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -6.184453900355446e-14,
+        "B": 3.500000000000002,
+        "C": 2.0444172776294498e-14,
+        "D": 2.5000000000000004,
+        "residual_norm": 4.540858373025405e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.0622662721264303,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208656,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A317313",
+      "name": "Multiples of 13 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        13,
+        3,
+        26,
+        5,
+        39,
+        7,
+        52,
+        9,
+        65,
+        11,
+        78,
+        13,
+        91
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -4.384657428221712e-14,
+        "B": 3.7500000000000013,
+        "C": 3.598844052693616e-14,
+        "D": 2.750000000000001,
+        "residual_norm": 6.205451416538867e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06226627212643024,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208656,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A317314",
+      "name": "Multiples of 14 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        14,
+        3,
+        28,
+        5,
+        42,
+        7,
+        56,
+        9,
+        70,
+        11,
+        84,
+        13,
+        98
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -2.3511274636605774e-14,
+        "B": 4.000000000000002,
+        "C": -1.996565450828226e-14,
+        "D": 3.0000000000000004,
+        "residual_norm": 3.834035063153181e-13,
+        "max_residual": 8.526512829121202e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=int|C=0|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.06226627212643034,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208656,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A317316",
+      "name": "Multiples of 16 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        16,
+        3,
+        32,
+        5,
+        48,
+        7,
+        64,
+        9,
+        80,
+        11,
+        96,
+        13,
+        112
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -1.4163201087201656e-14,
+        "B": 4.5,
+        "C": -4.420241351751126e-15,
+        "D": 3.500000000000001,
+        "residual_norm": 3.1621244373976487e-13,
+        "max_residual": 7.105427357601002e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.062266272126430315,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208658,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A317317",
+      "name": "Multiples of 17 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        17,
+        3,
+        34,
+        5,
+        51,
+        7,
+        68,
+        9,
+        85,
+        11,
+        102,
+        13,
+        119
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -7.539552065919312e-14,
+        "B": 4.75,
+        "C": -1.7297683031513472e-14,
+        "D": 3.7500000000000004,
+        "residual_norm": 7.683135852242874e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=quarter|C=0|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06226627212643027,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208657,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A317324",
+      "name": "Multiples of 24 and odd numbers interleaved.",
+      "n_terms": 70,
+      "first_terms": [
+        0,
+        1,
+        24,
+        3,
+        48,
+        5,
+        72,
+        7,
+        96,
+        9,
+        120,
+        11,
+        144,
+        13,
+        168
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 66,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 70
+      },
+      "abcd_fit": {
+        "A": -1.1505884501170391e-14,
+        "B": 6.499999999999999,
+        "C": 3.5556950781870274e-14,
+        "D": 5.500000000000003,
+        "residual_norm": 1.1914844072174633e-12,
+        "max_residual": 2.7711166694643907e-13,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=half|C=0|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.06226627212643043,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999224076208656,
+        "n_terms": 70
+      }
+    },
+    {
+      "seq_id": "A319556",
+      "name": "a(n) gives the alternating sum of length n, starting at n: n - (n+1) + (n+2) - ... + (-1)^(n+1) * (2n-1).",
+      "n_terms": 60,
+      "first_terms": [
+        1,
+        -1,
+        4,
+        -2,
+        7,
+        -3,
+        10,
+        -4,
+        13,
+        -5,
+        16,
+        -6,
+        19,
+        -7,
+        22
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 56,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 60
+      },
+      "abcd_fit": {
+        "A": 0.24999999999999192,
+        "B": 0.5000000000000004,
+        "C": 0.7499999999999862,
+        "D": 1.0000000000000009,
+        "residual_norm": 1.397750064862099e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=quarter|B=half|C=quarter|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.057647413248511116,
+        "growth_type": "moderate",
+        "oscillation_rate": 1.0,
+        "autocorrelation": -0.9999019461522298,
+        "n_terms": 60
+      }
+    },
+    {
+      "seq_id": "A321220",
+      "name": "a(n) = n+2 if n is even, otherwise a(n) = 2*n+1 if n is odd.",
+      "n_terms": 65,
+      "first_terms": [
+        2,
+        3,
+        4,
+        7,
+        6,
+        11,
+        8,
+        15,
+        10,
+        19,
+        12,
+        23,
+        14,
+        27,
+        16
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": 1.4999999999999738,
+        "B": 1.5000000000000002,
+        "C": 0.5000000000000097,
+        "D": -0.4999999999999998,
+        "residual_norm": 2.3079782366786414e-13,
+        "max_residual": 4.263256414560601e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=half|C=half|D=half",
+      "phase_space": {
+        "lyapunov_estimate": 0.054632930647913754,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999008674099175,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A340519",
+      "name": "Smallest order of a non-abelian group with a center of order n.",
+      "n_terms": 62,
+      "first_terms": [
+        6,
+        8,
+        18,
+        16,
+        30,
+        24,
+        42,
+        32,
+        54,
+        40,
+        66,
+        48,
+        78,
+        56,
+        90
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 58,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 62
+      },
+      "abcd_fit": {
+        "A": 4.999999999999984,
+        "B": 5.000000000000001,
+        "C": 1.0000000000000453,
+        "D": 0.9999999999999997,
+        "residual_norm": 4.036993200295543e-13,
+        "max_residual": 1.1368683772161603e-13,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=int|B=int|C=int|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.061010971753064365,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999102056443747,
+        "n_terms": 62
+      }
+    },
+    {
+      "seq_id": "A347365",
+      "name": "a(n) = n * (2-(-1)^n), or zero together with first differences of even triangular numbers halved (A074378).",
+      "n_terms": 65,
+      "first_terms": [
+        0,
+        3,
+        2,
+        9,
+        4,
+        15,
+        6,
+        21,
+        8,
+        27,
+        10,
+        33,
+        12,
+        39,
+        14
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 61,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 65
+      },
+      "abcd_fit": {
+        "A": -1.941150417128072e-14,
+        "B": 1.9999999999999993,
+        "C": 2.2140038759675475e-14,
+        "D": -1.0000000000000002,
+        "residual_norm": 3.631180226472454e-13,
+        "max_residual": 7.105427357601002e-14,
+        "exact_fit": "True"
+      },
+      "classification": "linear_times_alternating",
+      "parameter_signature": "A=0|B=int|C=0|D=int",
+      "phase_space": {
+        "lyapunov_estimate": 0.048575726899866105,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.0,
+        "autocorrelation": -0.9999098733719046,
+        "n_terms": 65
+      }
+    },
+    {
+      "seq_id": "A381055",
+      "name": "a(n) = -n/2 if n is even, 3n + 1 if n is odd.",
+      "n_terms": 58,
+      "first_terms": [
+        0,
+        4,
+        -1,
+        10,
+        -2,
+        16,
+        -3,
+        22,
+        -4,
+        28,
+        -5,
+        34,
+        -6,
+        40,
+        -7
+      ],
+      "recurrence_verification": {
+        "holds": true,
+        "errors": 0,
+        "checks": 54,
+        "error_rate": 0.0,
+        "first_error_idx": null,
+        "holds_for_first_n": 58
+      },
+      "abcd_fit": {
+        "A": 0.500000000000009,
+        "B": 1.2500000000000002,
+        "C": -0.49999999999999956,
+        "D": -1.7500000000000007,
+        "residual_norm": 2.026142723867967e-13,
+        "max_residual": 5.684341886080802e-14,
+        "exact_fit": "True"
+      },
+      "classification": "general_linear_combo",
+      "parameter_signature": "A=half|B=quarter|C=half|D=quarter",
+      "phase_space": {
+        "lyapunov_estimate": 0.06716428778024211,
+        "growth_type": "moderate",
+        "oscillation_rate": 0.9824561403508771,
+        "autocorrelation": -0.9998900512806967,
+        "n_terms": 58
+      }
+    }
+  ],
+  "parameter_signature_clusters": {
+    "A=half|B=quarter|C=half|D=quarter": [
+      "A001281",
+      "A006370",
+      "A027656",
+      "A029578",
+      "A029579",
+      "A071054",
+      "A145051",
+      "A165367",
+      "A174390",
+      "A181762",
+      "A189327",
+      "A195019",
+      "A195031",
+      "A195033",
+      "A195035",
+      "A381055"
+    ],
+    "A=quarter|B=int|C=quarter|D=half": [
+      "A014682",
+      "A064455",
+      "A071045",
+      "A113497",
+      "A123684",
+      "A176592",
+      "A266285",
+      "A266286",
+      "A266981"
+    ],
+    "A=quarter|B=quarter|C=quarter|D=quarter": [
+      "A019303",
+      "A057979",
+      "A063914",
+      "A065262",
+      "A065423",
+      "A080512",
+      "A133622",
+      "A152271",
+      "A165355",
+      "A174007",
+      "A174029",
+      "A174239",
+      "A195013",
+      "A228967",
+      "A235800"
+    ],
+    "A=0|B=half|C=0|D=half": [
+      "A022998",
+      "A109043",
+      "A165988",
+      "A195161",
+      "A237420",
+      "A317312",
+      "A317316",
+      "A317324"
+    ],
+    "A=0|B=quarter|C=0|D=quarter": [
+      "A026741",
+      "A064680",
+      "A142150",
+      "A165351",
+      "A174012",
+      "A176447",
+      "A195140",
+      "A195159",
+      "A195312",
+      "A317311",
+      "A317313",
+      "A317317"
+    ],
+    "A=half|B=half|C=half|D=half": [
+      "A043547",
+      "A059029",
+      "A066070",
+      "A091574",
+      "A093178",
+      "A106832",
+      "A106833",
+      "A133090",
+      "A133265",
+      "A141310",
+      "A147601",
+      "A152053",
+      "A166138",
+      "A193356",
+      "A204904",
+      "A227906",
+      "A261671",
+      "A321220"
+    ],
+    "A=int|B=half|C=int|D=half": [
+      "A066104",
+      "A144433",
+      "A166304"
+    ],
+    "A=int|B=quarter|C=int|D=quarter": [
+      "A097362",
+      "A173237",
+      "A271478"
+    ],
+    "A=int|B=half|C=0|D=half": [
+      "A114752",
+      "A114753"
+    ],
+    "A=half|B=int|C=half|D=int": [
+      "A123167",
+      "A265722",
+      "A265723",
+      "A266303",
+      "A294178"
+    ],
+    "A=0|B=half|C=int|D=half": [
+      "A124625"
+    ],
+    "A=int|B=quarter|C=0|D=quarter": [
+      "A158416"
+    ],
+    "A=int|B=int|C=int|D=int": [
+      "A165998",
+      "A266073",
+      "A272708",
+      "A340519"
+    ],
+    "A=quarter|B=half|C=quarter|D=int": [
+      "A176593",
+      "A185452",
+      "A319556"
+    ],
+    "A=int|B=int|C=0|D=int": [
+      "A178414"
+    ],
+    "A=0|B=int|C=0|D=int": [
+      "A195817",
+      "A317314",
+      "A347365"
+    ],
+    "A=0|B=int|C=int|D=int": [
+      "A266072"
+    ]
+  },
+  "abcd_clusters": {
+    "(-0.5, 1.75, 0.5, -1.25)": [
+      "A001281"
+    ],
+    "(0.5, 1.75, -0.5, -1.25)": [
+      "A006370"
+    ],
+    "(0.25, 1.0, -0.25, -0.5)": [
+      "A014682"
+    ],
+    "(2.25, 0.25, -1.25, -0.25)": [
+      "A019303"
+    ],
+    "(0.0, 1.5, 0.0, 0.5)": [
+      "A022998"
+    ],
+    "(0.0, 0.75, 0.0, -0.25)": [
+      "A026741"
+    ],
+    "(0.5, 0.25, 0.5, 0.25)": [
+      "A027656"
+    ],
+    "(-0.5, 0.75, 0.5, -0.25)": [
+      "A029578"
+    ],
+    "(0.5, 0.75, 0.5, -0.25)": [
+      "A029579"
+    ],
+    "(0.5, 1.5, 0.5, -0.5)": [
+      "A043547"
+    ],
+    "(0.25, 0.25, 0.75, -0.25)": [
+      "A057979"
+    ],
+    "(0.5, 1.5, -0.5, -0.5)": [
+      "A059029"
+    ],
+    "(0.75, 1.25, 0.25, -0.25)": [
+      "A063914"
+    ],
+    "(1.25, 1.0, -0.25, -0.5)": [
+      "A064455"
+    ],
+    "(0.0, 1.25, 0.0, -0.75)": [
+      "A064680"
+    ],
+    "(0.75, 1.25, 0.25, 0.75)": [
+      "A065262"
+    ],
+    "(-0.25, 0.75, 0.25, 0.25)": [
+      "A065423"
+    ],
+    "(2.5, 1.5, -1.5, -0.5)": [
+      "A066070"
+    ],
+    "(1.0, 1.5, -1.0, -0.5)": [
+      "A066104"
+    ],
+    "(-0.25, 1.0, 0.25, 0.5)": [
+      "A071045"
+    ],
+    "(1.5, 1.25, -0.5, 0.25)": [
+      "A071054"
+    ],
+    "(1.25, 1.25, -0.25, -0.25)": [
+      "A080512"
+    ],
+    "(4.5, 4.5, 0.5, 0.5)": [
+      "A091574"
+    ],
+    "(0.5, 0.5, 0.5, -0.5)": [
+      "A093178"
+    ],
+    "(2.0, 0.75, -1.0, -0.25)": [
+      "A097362"
+    ],
+    "(2.5, 2.5, -0.5, -0.5)": [
+      "A106832"
+    ],
+    "(2.5, 2.5, 0.5, 0.5)": [
+      "A106833"
+    ],
+    "(0.0, 1.5, 0.0, -0.5)": [
+      "A109043"
+    ],
+    "(1.25, 2.0, -0.25, 0.5)": [
+      "A113497"
+    ],
+    "(1.0, 1.5, 0.0, 0.5)": [
+      "A114752"
+    ],
+    "(1.0, 1.5, 0.0, -0.5)": [
+      "A114753"
+    ],
+    "(1.5, 3.0, 0.5, 1.0)": [
+      "A123167"
+    ],
+    "(0.75, 1.0, 0.25, 0.5)": [
+      "A123684"
+    ],
+    "(0.0, 0.5, 1.0, -0.5)": [
+      "A124625"
+    ],
+    "(0.5, 1.5, 0.5, 0.5)": [
+      "A133090"
+    ],
+    "(1.5, 0.5, 0.5, -0.5)": [
+      "A133265"
+    ],
+    "(1.25, 0.25, -0.25, -0.25)": [
+      "A133622"
+    ],
+    "(1.5, 0.5, -0.5, 0.5)": [
+      "A141310"
+    ],
+    "(0.0, 0.25, 0.0, 0.25)": [
+      "A142150"
+    ],
+    "(5.0, 2.5, 3.0, 1.5)": [
+      "A144433"
+    ],
+    "(1.5, 0.75, -0.5, -0.25)": [
+      "A145051"
+    ],
+    "(4.5, 4.5, 2.5, 2.5)": [
+      "A147601"
+    ],
+    "(22.5, 22.5, 4.5, 4.5)": [
+      "A152053"
+    ],
+    "(0.75, 0.25, 0.25, -0.25)": [
+      "A152271"
+    ],
+    "(1.0, 0.25, 0.0, 0.25)": [
+      "A158416"
+    ],
+    "(0.0, 2.25, 0.0, -0.75)": [
+      "A165351"
+    ],
+    "(0.75, 2.25, 0.25, 0.75)": [
+      "A165355"
+    ],
+    "(1.5, 2.25, -0.5, -0.75)": [
+      "A165367"
+    ],
+    "(0.0, 4.5, 0.0, 1.5)": [
+      "A165988"
+    ],
+    "(2.0, 2.0, -1.0, -1.0)": [
+      "A165998"
+    ],
+    "(1.5, 4.5, -0.5, -1.5)": [
+      "A166138"
+    ],
+    "(3.0, 4.5, 1.0, 1.5)": [
+      "A166304"
+    ],
+    "(3.0, 2.75, -2.0, -2.25)": [
+      "A173237"
+    ],
+    "(1.25, -0.25, 0.75, 0.25)": [
+      "A174007"
+    ],
+    "(0.0, 3.75, 0.0, -2.25)": [
+      "A174012"
+    ],
+    "(3.75, 11.25, -0.75, -2.25)": [
+      "A174029"
+    ],
+    "(0.25, 0.75, 0.75, 0.25)": [
+      "A174239"
+    ],
+    "(1.5, 0.25, -1.5, -0.75)": [
+      "A174390"
+    ],
+    "(0.0, 0.25, 0.0, -0.75)": [
+      "A176447"
+    ],
+    "(3.25, 3.0, -2.25, -2.5)": [
+      "A176592"
+    ],
+    "(3.75, 3.5, -2.75, -3.0)": [
+      "A176593"
+    ],
+    "(1.0, 3.0, 0.0, 1.0)": [
+      "A178414"
+    ],
+    "(2.5, 1.75, -2.5, -1.25)": [
+      "A181762"
+    ],
+    "(0.25, 1.5, -0.25, -1.0)": [
+      "A185452"
+    ],
+    "(2.5, 2.75, -0.5, -0.25)": [
+      "A189327"
+    ],
+    "(0.5, 0.5, 0.5, 0.5)": [
+      "A193356"
+    ],
+    "(1.75, 1.25, 0.25, -0.25)": [
+      "A195013"
+    ],
+    "(2.5, 1.75, 0.5, -0.25)": [
+      "A195019"
+    ],
+    "(5.5, 4.25, -0.5, -1.75)": [
+      "A195031"
+    ],
+    "(15.5, 10.25, 5.5, 0.25)": [
+      "A195033"
+    ],
+    "(9.5, 5.75, 5.5, 1.75)": [
+      "A195035"
+    ],
+    "(0.0, 1.75, 0.0, 0.75)": [
+      "A195140"
+    ],
+    "(0.0, 2.25, 0.0, 1.25)": [
+      "A195159"
+    ],
+    "(0.0, 2.5, 0.0, 1.5)": [
+      "A195161"
+    ],
+    "(0.0, 2.75, 0.0, 1.75)": [
+      "A195312"
+    ],
+    "(0.0, 3.0, 0.0, 2.0)": [
+      "A195817"
+    ],
+    "(1.5, 1.5, 0.5, 0.5)": [
+      "A204904"
+    ],
+    "(-0.5, 1.5, 0.5, -0.5)": [
+      "A227906"
+    ],
+    "(3.25, 2.75, -1.25, -1.75)": [
+      "A228967"
+    ],
+    "(1.75, 1.25, 1.25, 0.75)": [
+      "A235800"
+    ],
+    "(0.0, 0.5, 0.0, 0.5)": [
+      "A237420"
+    ],
+    "(1.5, 3.5, 1.5, 2.5)": [
+      "A261671"
+    ],
+    "(-0.5, 1.0, 1.5, -1.0)": [
+      "A265722"
+    ],
+    "(1.5, 1.0, -1.5, 1.0)": [
+      "A265723"
+    ],
+    "(0.0, 1.0, 1.0, -1.0)": [
+      "A266072"
+    ],
+    "(1.0, 1.0, -1.0, 1.0)": [
+      "A266073"
+    ],
+    "(0.25, 1.0, 0.75, -0.5)": [
+      "A266285"
+    ],
+    "(0.75, 1.0, -0.75, 0.5)": [
+      "A266286"
+    ],
+    "(0.5, 1.0, 0.5, -1.0)": [
+      "A266303"
+    ],
+    "(0.75, 1.0, 0.25, -0.5)": [
+      "A266981"
+    ],
+    "(1.0, 1.25, -1.0, -0.75)": [
+      "A271478"
+    ],
+    "(2.0, 6.0, 2.0, -2.0)": [
+      "A272708"
+    ],
+    "(0.5, 2.0, 0.5, -1.0)": [
+      "A294178"
+    ],
+    "(0.0, 3.25, 0.0, 2.25)": [
+      "A317311"
+    ],
+    "(0.0, 3.5, 0.0, 2.5)": [
+      "A317312"
+    ],
+    "(0.0, 3.75, 0.0, 2.75)": [
+      "A317313"
+    ],
+    "(0.0, 4.0, 0.0, 3.0)": [
+      "A317314"
+    ],
+    "(0.0, 4.5, 0.0, 3.5)": [
+      "A317316"
+    ],
+    "(0.0, 4.75, 0.0, 3.75)": [
+      "A317317"
+    ],
+    "(0.0, 6.5, 0.0, 5.5)": [
+      "A317324"
+    ],
+    "(0.25, 0.5, 0.75, 1.0)": [
+      "A319556"
+    ],
+    "(1.5, 1.5, 0.5, -0.5)": [
+      "A321220"
+    ],
+    "(5.0, 5.0, 1.0, 1.0)": [
+      "A340519"
+    ],
+    "(0.0, 2.0, 0.0, -1.0)": [
+      "A347365"
+    ],
+    "(0.5, 1.25, -0.5, -1.75)": [
+      "A381055"
+    ]
+  },
+  "phase_space_growth_types": {
+    "moderate": [
+      "A001281",
+      "A006370",
+      "A014682",
+      "A022998",
+      "A026741",
+      "A029578",
+      "A029579",
+      "A043547",
+      "A059029",
+      "A063914",
+      "A064455",
+      "A064680",
+      "A065262",
+      "A065423",
+      "A066070",
+      "A066104",
+      "A071045",
+      "A071054",
+      "A080512",
+      "A091574",
+      "A093178",
+      "A097362",
+      "A106832",
+      "A106833",
+      "A109043",
+      "A113497",
+      "A114752",
+      "A114753",
+      "A123167",
+      "A123684",
+      "A124625",
+      "A133090",
+      "A133265",
+      "A141310",
+      "A144433",
+      "A145051",
+      "A147601",
+      "A152053",
+      "A152271",
+      "A158416",
+      "A165351",
+      "A165355",
+      "A165367",
+      "A165988",
+      "A165998",
+      "A166138",
+      "A166304",
+      "A173237",
+      "A174012",
+      "A174029",
+      "A174239",
+      "A174390",
+      "A176447",
+      "A176593",
+      "A178414",
+      "A181762",
+      "A185452",
+      "A189327",
+      "A193356",
+      "A195013",
+      "A195019",
+      "A195031",
+      "A195033",
+      "A195035",
+      "A195140",
+      "A195159",
+      "A195161",
+      "A195312",
+      "A195817",
+      "A204904",
+      "A227906",
+      "A228967",
+      "A235800",
+      "A237420",
+      "A261671",
+      "A265723",
+      "A266073",
+      "A266285",
+      "A266286",
+      "A266981",
+      "A271478",
+      "A272708",
+      "A294178",
+      "A317311",
+      "A317312",
+      "A317313",
+      "A317314",
+      "A317316",
+      "A317317",
+      "A317324",
+      "A319556",
+      "A321220",
+      "A340519",
+      "A347365",
+      "A381055"
+    ],
+    "bounded": [
+      "A019303",
+      "A057979",
+      "A133622",
+      "A174007",
+      "A266303"
+    ],
+    "convergent": [
+      "A027656",
+      "A142150"
+    ],
+    "divergent": [
+      "A176592",
+      "A265722",
+      "A266072"
+    ]
+  },
+  "lyapunov_stats": {
+    "mean": 0.05538000006269688,
+    "std": 0.02455403704175389,
+    "min": -2.5376526277146434e-17,
+    "max": 0.10034559673629849
+  },
+  "cross_references": {
+    "n_internal_edges": 200,
+    "internal_edges": [
+      [
+        "A001281",
+        "A006370"
+      ],
+      [
+        "A006370",
+        "A381055"
+      ],
+      [
+        "A006370",
+        "A235800"
+      ],
+      [
+        "A006370",
+        "A181762"
+      ],
+      [
+        "A006370",
+        "A014682"
+      ],
+      [
+        "A014682",
+        "A064455"
+      ],
+      [
+        "A014682",
+        "A347365"
+      ],
+      [
+        "A014682",
+        "A235800"
+      ],
+      [
+        "A014682",
+        "A193356"
+      ],
+      [
+        "A014682",
+        "A109043"
+      ],
+      [
+        "A014682",
+        "A071045"
+      ],
+      [
+        "A014682",
+        "A123684"
+      ],
+      [
+        "A022998",
+        "A317317"
+      ],
+      [
+        "A022998",
+        "A043547"
+      ],
+      [
+        "A022998",
+        "A165367"
+      ],
+      [
+        "A022998",
+        "A166304"
+      ],
+      [
+        "A022998",
+        "A317314"
+      ],
+      [
+        "A022998",
+        "A195140"
+      ],
+      [
+        "A022998",
+        "A174007"
+      ],
+      [
+        "A022998",
+        "A317312"
+      ],
+      [
+        "A022998",
+        "A059029"
+      ],
+      [
+        "A022998",
+        "A178414"
+      ],
+      [
+        "A022998",
+        "A165355"
+      ],
+      [
+        "A022998",
+        "A317311"
+      ],
+      [
+        "A022998",
+        "A026741"
+      ],
+      [
+        "A022998",
+        "A317313"
+      ],
+      [
+        "A022998",
+        "A195161"
+      ],
+      [
+        "A022998",
+        "A317316"
+      ],
+      [
+        "A022998",
+        "A195817"
+      ],
+      [
+        "A022998",
+        "A317324"
+      ],
+      [
+        "A022998",
+        "A195312"
+      ],
+      [
+        "A022998",
+        "A195159"
+      ],
+      [
+        "A022998",
+        "A165988"
+      ],
+      [
+        "A026741",
+        "A317317"
+      ],
+      [
+        "A026741",
+        "A165367"
+      ],
+      [
+        "A026741",
+        "A176447"
+      ],
+      [
+        "A026741",
+        "A029579"
+      ],
+      [
+        "A026741",
+        "A317314"
+      ],
+      [
+        "A026741",
+        "A195140"
+      ],
+      [
+        "A026741",
+        "A347365"
+      ],
+      [
+        "A026741",
+        "A165351"
+      ],
+      [
+        "A026741",
+        "A195019"
+      ],
+      [
+        "A026741",
+        "A317312"
+      ],
+      [
+        "A026741",
+        "A064680"
+      ],
+      [
+        "A026741",
+        "A065423"
+      ],
+      [
+        "A026741",
+        "A174239"
+      ],
+      [
+        "A026741",
+        "A165355"
+      ],
+      [
+        "A026741",
+        "A317311"
+      ],
+      [
+        "A026741",
+        "A174390"
+      ],
+      [
+        "A026741",
+        "A195161"
+      ]
+    ],
+    "n_components": 26,
+    "component_sizes": [
+      80,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "components": [
+      [
+        "A001281",
+        "A006370",
+        "A014682",
+        "A022998",
+        "A026741",
+        "A027656",
+        "A029578",
+        "A029579",
+        "A043547",
+        "A057979",
+        "A059029",
+        "A064455",
+        "A064680",
+        "A065423",
+        "A066104",
+        "A071045",
+        "A071054",
+        "A080512",
+        "A093178",
+        "A097362",
+        "A106832",
+        "A106833",
+        "A109043",
+        "A114752",
+        "A114753",
+        "A123167",
+        "A123684",
+        "A124625",
+        "A133265",
+        "A133622",
+        "A141310",
+        "A142150",
+        "A144433",
+        "A145051",
+        "A152053",
+        "A152271",
+        "A158416",
+        "A165351",
+        "A165355",
+        "A165367",
+        "A165988",
+        "A165998",
+        "A166138",
+        "A166304",
+        "A174007",
+        "A174012",
+        "A174029",
+        "A174239",
+        "A174390",
+        "A176447",
+        "A178414",
+        "A181762",
+        "A193356",
+        "A195013",
+        "A195019",
+        "A195031",
+        "A195033",
+        "A195035",
+        "A195140",
+        "A195159",
+        "A195161",
+        "A195312",
+        "A195817",
+        "A204904",
+        "A227906",
+        "A235800",
+        "A237420",
+        "A294178",
+        "A317311",
+        "A317312",
+        "A317313",
+        "A317314",
+        "A317316",
+        "A317317",
+        "A317324",
+        "A319556",
+        "A321220",
+        "A340519",
+        "A347365",
+        "A381055"
+      ],
+      [
+        "A019303"
+      ],
+      [
+        "A063914"
+      ],
+      [
+        "A065262"
+      ],
+      [
+        "A066070"
+      ],
+      [
+        "A091574"
+      ],
+      [
+        "A113497"
+      ],
+      [
+        "A133090"
+      ],
+      [
+        "A147601"
+      ],
+      [
+        "A173237"
+      ],
+      [
+        "A176592"
+      ],
+      [
+        "A176593"
+      ],
+      [
+        "A185452"
+      ],
+      [
+        "A189327"
+      ],
+      [
+        "A228967"
+      ],
+      [
+        "A261671"
+      ],
+      [
+        "A265722"
+      ],
+      [
+        "A265723"
+      ],
+      [
+        "A266072"
+      ],
+      [
+        "A266073"
+      ],
+      [
+        "A266285"
+      ],
+      [
+        "A266286"
+      ],
+      [
+        "A266303"
+      ],
+      [
+        "A266981"
+      ],
+      [
+        "A271478"
+      ],
+      [
+        "A272708"
+      ]
+    ],
+    "is_connected": false,
+    "top_external_refs": [
+      {
+        "seq": "A005408",
+        "count": 22
+      },
+      {
+        "seq": "A001477",
+        "count": 18
+      },
+      {
+        "seq": "A195151",
+        "count": 16
+      },
+      {
+        "seq": "A317326",
+        "count": 16
+      },
+      {
+        "seq": "A317322",
+        "count": 9
+      },
+      {
+        "seq": "A317325",
+        "count": 9
+      },
+      {
+        "seq": "A317315",
+        "count": 9
+      },
+      {
+        "seq": "A317320",
+        "count": 9
+      },
+      {
+        "seq": "A317318",
+        "count": 9
+      },
+      {
+        "seq": "A317319",
+        "count": 9
+      },
+      {
+        "seq": "A317323",
+        "count": 9
+      },
+      {
+        "seq": "A317321",
+        "count": 9
+      },
+      {
+        "seq": "A008585",
+        "count": 8
+      },
+      {
+        "seq": "A005843",
+        "count": 8
+      },
+      {
+        "seq": "A000034",
+        "count": 7
+      },
+      {
+        "seq": "A281098",
+        "count": 7
+      },
+      {
+        "seq": "A008619",
+        "count": 6
+      },
+      {
+        "seq": "A000027",
+        "count": 6
+      },
+      {
+        "seq": "A210530",
+        "count": 6
+      },
+      {
+        "seq": "A016945",
+        "count": 5
+      }
+    ]
+  },
+  "collatz_a006370": {
+    "a006370_present": true,
+    "n_terms": 67,
+    "recurrence_detail": {
+      "holds": true,
+      "errors": 0,
+      "checks": 63,
+      "error_rate": 0.0,
+      "first_error_idx": null,
+      "holds_for_first_n": 67
+    },
+    "matches_collatz_definition": true,
+    "predicted_ABCD": {
+      "A": 0.5,
+      "B": 1.75,
+      "C": -0.5,
+      "D": -1.25
+    },
+    "explanation": "A006370 (Collatz map: n/2 if even, 3n+1 if odd) IS an exact member of the (x-1)^2(x+1)^2 family. It has the closed form a(n) = (1/2 + 7n/4) + (-1)^n*(-1/2 - 5n/4) = n/2 when n even, 3n+1 when n odd. The recurrence a(n)=2a(n-2)-a(n-4) holds exactly because both the even and odd subsequences are linear in n."
+  },
+  "classification_summary": {
+    "general_linear_combo": [
+      "A001281",
+      "A006370",
+      "A019303",
+      "A027656",
+      "A029579",
+      "A063914",
+      "A064455",
+      "A065262",
+      "A066070",
+      "A066104",
+      "A071054",
+      "A080512",
+      "A091574",
+      "A093178",
+      "A097362",
+      "A106832",
+      "A106833",
+      "A113497",
+      "A114752",
+      "A114753",
+      "A123167",
+      "A123684",
+      "A124625",
+      "A133090",
+      "A133265",
+      "A133622",
+      "A141310",
+      "A144433",
+      "A145051",
+      "A147601",
+      "A152053",
+      "A152271",
+      "A158416",
+      "A165355",
+      "A165367",
+      "A165998",
+      "A166138",
+      "A166304",
+      "A173237",
+      "A174007",
+      "A174029",
+      "A174239",
+      "A174390",
+      "A176592",
+      "A176593",
+      "A181762",
+      "A189327",
+      "A193356",
+      "A195013",
+      "A195019",
+      "A195031",
+      "A195033",
+      "A195035",
+      "A204904",
+      "A227906",
+      "A228967",
+      "A235800",
+      "A261671",
+      "A265722",
+      "A265723",
+      "A266072",
+      "A266073",
+      "A266285",
+      "A266286",
+      "A266981",
+      "A271478",
+      "A272708",
+      "A294178",
+      "A319556",
+      "A321220",
+      "A340519",
+      "A381055"
+    ],
+    "linear_times_alternating": [
+      "A014682",
+      "A022998",
+      "A059029",
+      "A064680",
+      "A165351",
+      "A165988",
+      "A174012",
+      "A185452",
+      "A195140",
+      "A195159",
+      "A195161",
+      "A195312",
+      "A195817",
+      "A266303",
+      "A317311",
+      "A317312",
+      "A317313",
+      "A317314",
+      "A317316",
+      "A317317",
+      "A317324",
+      "A347365"
+    ],
+    "trivial_linear": [
+      "A026741",
+      "A029578",
+      "A043547",
+      "A065423",
+      "A071045",
+      "A109043",
+      "A142150",
+      "A237420"
+    ],
+    "trivial_alternating": [
+      "A057979",
+      "A176447"
+    ],
+    "collatz_adjacent": [
+      "A178414"
+    ]
+  },
+  "assessment": "The (x-1)^2(x+1)^2 family contains 105 sequences that all satisfy a(n) = 2*a(n-2) - a(n-4). This recurrence is equivalent to requiring that both the even-indexed and odd-indexed subsequences be arithmetic progressions (i.e., linear in n). This is a VERY common structural pattern. Any function that is linear-on-evens and linear-on-odds satisfies it. The Collatz map a(n)=n/2 if even, 3n+1 if odd is simply one example. 10 of 105 members are trivially classifiable (pure linear, alternating, or constant-alternating forms). This is NOT a deep 'Collatz family' \u2014 it is the family of all sequences that are piecewise-linear on even/odd indices. The connection to Collatz is real but shallow: Collatz happens to be piecewise-linear on n (not on iterates), which is all this recurrence captures."
+}

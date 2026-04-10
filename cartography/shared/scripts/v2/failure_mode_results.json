@@ -1,0 +1,1950 @@
+{
+  "meta": {
+    "timestamp": "2026-04-09T21:01:51",
+    "elapsed_seconds": 2.19,
+    "sources": {
+      "shadow_preload": 6240,
+      "bridge_hunter": 282096,
+      "genocide_rounds": 67,
+      "shadow_tensor_cells": 210
+    }
+  },
+  "kill_distribution_by_test": {
+    "total_records": 6240,
+    "total_kills": 3988,
+    "total_survives": 2252,
+    "kill_rate": 0.6391,
+    "per_test": {
+      "F3_effect_size": {
+        "short_name": "F3",
+        "kill_count": 3024,
+        "pct_of_all_kills": 75.83,
+        "pct_of_all_records": 48.46
+      },
+      "F11_cross_validation": {
+        "short_name": "F11",
+        "kill_count": 2653,
+        "pct_of_all_kills": 66.52,
+        "pct_of_all_records": 42.52
+      },
+      "F12_partial_correlation": {
+        "short_name": "F12",
+        "kill_count": 2563,
+        "pct_of_all_kills": 64.27,
+        "pct_of_all_records": 41.07
+      },
+      "F14_phase_shift": {
+        "short_name": "F14",
+        "kill_count": 905,
+        "pct_of_all_kills": 22.69,
+        "pct_of_all_records": 14.5
+      },
+      "F13_growth_rate_filter": {
+        "short_name": "F13",
+        "kill_count": 459,
+        "pct_of_all_kills": 11.51,
+        "pct_of_all_records": 7.36
+      },
+      "F1_permutation_null": {
+        "short_name": "F1",
+        "kill_count": 269,
+        "pct_of_all_kills": 6.75,
+        "pct_of_all_records": 4.31
+      },
+      "F6_base_rate": {
+        "short_name": "F6",
+        "kill_count": 258,
+        "pct_of_all_kills": 6.47,
+        "pct_of_all_records": 4.13
+      },
+      "F9_simpler_explanation": {
+        "short_name": "F9",
+        "kill_count": 247,
+        "pct_of_all_kills": 6.19,
+        "pct_of_all_records": 3.96
+      },
+      "F2_subset_stability": {
+        "short_name": "F2",
+        "kill_count": 69,
+        "pct_of_all_kills": 1.73,
+        "pct_of_all_records": 1.11
+      },
+      "F10_outlier_sensitivity": {
+        "short_name": "F10",
+        "kill_count": 29,
+        "pct_of_all_kills": 0.73,
+        "pct_of_all_records": 0.46
+      },
+      "F5_alternative_normalization": {
+        "short_name": "F5",
+        "kill_count": 21,
+        "pct_of_all_kills": 0.53,
+        "pct_of_all_records": 0.34
+      }
+    }
+  },
+  "kill_distribution_by_pair": {
+    "KnotInfo--LMFDB": {
+      "total": 870,
+      "kills": 646,
+      "survives": 224,
+      "kill_rate": 0.7425
+    },
+    "ANTEDB--LMFDB": {
+      "total": 434,
+      "kills": 393,
+      "survives": 41,
+      "kill_rate": 0.9055
+    },
+    "ANTEDB--OEIS": {
+      "total": 240,
+      "kills": 209,
+      "survives": 31,
+      "kill_rate": 0.8708
+    },
+    "LMFDB--OEIS": {
+      "total": 249,
+      "kills": 197,
+      "survives": 52,
+      "kill_rate": 0.7912
+    },
+    "LMFDB--NumberFields": {
+      "total": 187,
+      "kills": 157,
+      "survives": 30,
+      "kill_rate": 0.8396
+    },
+    "Genus2--LMFDB": {
+      "total": 148,
+      "kills": 140,
+      "survives": 8,
+      "kill_rate": 0.9459
+    },
+    "ANTEDB--KnotInfo": {
+      "total": 197,
+      "kills": 139,
+      "survives": 58,
+      "kill_rate": 0.7056
+    },
+    "ANTEDB--Isogenies": {
+      "total": 132,
+      "kills": 124,
+      "survives": 8,
+      "kill_rate": 0.9394
+    },
+    "Isogenies--LMFDB": {
+      "total": 158,
+      "kills": 121,
+      "survives": 37,
+      "kill_rate": 0.7658
+    },
+    "ANTEDB--mathlib": {
+      "total": 132,
+      "kills": 113,
+      "survives": 19,
+      "kill_rate": 0.8561
+    },
+    "ANTEDB--NumberFields": {
+      "total": 107,
+      "kills": 95,
+      "survives": 12,
+      "kill_rate": 0.8879
+    },
+    "ANTEDB--MMLKG": {
+      "total": 121,
+      "kills": 90,
+      "survives": 31,
+      "kill_rate": 0.7438
+    },
+    "Fungrim--LMFDB": {
+      "total": 169,
+      "kills": 87,
+      "survives": 82,
+      "kill_rate": 0.5148
+    },
+    "ANTEDB--Fungrim": {
+      "total": 222,
+      "kills": 86,
+      "survives": 136,
+      "kill_rate": 0.3874
+    },
+    "LMFDB--SpaceGroups": {
+      "total": 122,
+      "kills": 85,
+      "survives": 37,
+      "kill_rate": 0.6967
+    },
+    "ANTEDB--piBase": {
+      "total": 98,
+      "kills": 83,
+      "survives": 15,
+      "kill_rate": 0.8469
+    },
+    "ANTEDB--Polytopes": {
+      "total": 87,
+      "kills": 82,
+      "survives": 5,
+      "kill_rate": 0.9425
+    },
+    "Genus2--KnotInfo": {
+      "total": 82,
+      "kills": 76,
+      "survives": 6,
+      "kill_rate": 0.9268
+    },
+    "ANTEDB--Metamath": {
+      "total": 87,
+      "kills": 73,
+      "survives": 14,
+      "kill_rate": 0.8391
+    },
+    "LMFDB--piBase": {
+      "total": 87,
+      "kills": 70,
+      "survives": 17,
+      "kill_rate": 0.8046
+    },
+    "ANTEDB--Materials": {
+      "total": 80,
+      "kills": 64,
+      "survives": 16,
+      "kill_rate": 0.8
+    },
+    "ANTEDB--SpaceGroups": {
+      "total": 74,
+      "kills": 63,
+      "survives": 11,
+      "kill_rate": 0.8514
+    },
+    "LMFDB--Polytopes": {
+      "total": 71,
+      "kills": 59,
+      "survives": 12,
+      "kill_rate": 0.831
+    },
+    "LMFDB--Materials": {
+      "total": 77,
+      "kills": 40,
+      "survives": 37,
+      "kill_rate": 0.5195
+    },
+    "LMFDB--Metamath": {
+      "total": 43,
+      "kills": 39,
+      "survives": 4,
+      "kill_rate": 0.907
+    },
+    "ANTEDB--Genus2": {
+      "total": 36,
+      "kills": 36,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--KnotInfo": {
+      "total": 71,
+      "kills": 33,
+      "survives": 38,
+      "kill_rate": 0.4648
+    },
+    "KnotInfo--NumberFields": {
+      "total": 67,
+      "kills": 25,
+      "survives": 42,
+      "kill_rate": 0.3731
+    },
+    "Fungrim--OEIS": {
+      "total": 105,
+      "kills": 24,
+      "survives": 81,
+      "kill_rate": 0.2286
+    },
+    "LMFDB--MMLKG": {
+      "total": 33,
+      "kills": 22,
+      "survives": 11,
+      "kill_rate": 0.6667
+    },
+    "LMFDB--mathlib": {
+      "total": 33,
+      "kills": 21,
+      "survives": 12,
+      "kill_rate": 0.6364
+    },
+    "NumberFields--OEIS": {
+      "total": 25,
+      "kills": 21,
+      "survives": 4,
+      "kill_rate": 0.84
+    },
+    "Genus2--Isogenies": {
+      "total": 20,
+      "kills": 20,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "OEIS--mathlib": {
+      "total": 28,
+      "kills": 20,
+      "survives": 8,
+      "kill_rate": 0.7143
+    },
+    "ANTEDB--Lattices": {
+      "total": 16,
+      "kills": 15,
+      "survives": 1,
+      "kill_rate": 0.9375
+    },
+    "KnotInfo--Maass": {
+      "total": 15,
+      "kills": 15,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "ANTEDB--LocalFields": {
+      "total": 14,
+      "kills": 14,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "LMFDB--LocalFields": {
+      "total": 23,
+      "kills": 13,
+      "survives": 10,
+      "kill_rate": 0.5652
+    },
+    "Fungrim--mathlib": {
+      "total": 503,
+      "kills": 12,
+      "survives": 491,
+      "kill_rate": 0.0239
+    },
+    "Fungrim--KnotInfo": {
+      "total": 38,
+      "kills": 12,
+      "survives": 26,
+      "kill_rate": 0.3158
+    },
+    "MMLKG--mathlib": {
+      "total": 12,
+      "kills": 12,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--OEIS": {
+      "total": 13,
+      "kills": 12,
+      "survives": 1,
+      "kill_rate": 0.9231
+    },
+    "Metamath--mathlib": {
+      "total": 11,
+      "kills": 11,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "ANTEDB--Maass": {
+      "total": 11,
+      "kills": 11,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--NumberFields": {
+      "total": 12,
+      "kills": 10,
+      "survives": 2,
+      "kill_rate": 0.8333
+    },
+    "MMLKG--Metamath": {
+      "total": 10,
+      "kills": 10,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "KnotInfo--SpaceGroups": {
+      "total": 76,
+      "kills": 9,
+      "survives": 67,
+      "kill_rate": 0.1184
+    },
+    "Isogenies--Maass": {
+      "total": 9,
+      "kills": 9,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "NumberFields--piBase": {
+      "total": 8,
+      "kills": 8,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--Lattices": {
+      "total": 9,
+      "kills": 8,
+      "survives": 1,
+      "kill_rate": 0.8889
+    },
+    "Maass--Polytopes": {
+      "total": 8,
+      "kills": 8,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Fungrim--Metamath": {
+      "total": 40,
+      "kills": 7,
+      "survives": 33,
+      "kill_rate": 0.175
+    },
+    "KnotInfo--OEIS": {
+      "total": 32,
+      "kills": 7,
+      "survives": 25,
+      "kill_rate": 0.2188
+    },
+    "Materials--SpaceGroups": {
+      "total": 88,
+      "kills": 7,
+      "survives": 81,
+      "kill_rate": 0.0795
+    },
+    "Maass--SpaceGroups": {
+      "total": 8,
+      "kills": 7,
+      "survives": 1,
+      "kill_rate": 0.875
+    },
+    "OEIS--SpaceGroups": {
+      "total": 8,
+      "kills": 7,
+      "survives": 1,
+      "kill_rate": 0.875
+    },
+    "Metamath--OEIS": {
+      "total": 8,
+      "kills": 6,
+      "survives": 2,
+      "kill_rate": 0.75
+    },
+    "OEIS--Polytopes": {
+      "total": 8,
+      "kills": 6,
+      "survives": 2,
+      "kill_rate": 0.75
+    },
+    "MMLKG--Maass": {
+      "total": 7,
+      "kills": 6,
+      "survives": 1,
+      "kill_rate": 0.8571
+    },
+    "Maass--OEIS": {
+      "total": 6,
+      "kills": 6,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "MMLKG--OEIS": {
+      "total": 11,
+      "kills": 6,
+      "survives": 5,
+      "kill_rate": 0.5455
+    },
+    "NumberFields--SpaceGroups": {
+      "total": 12,
+      "kills": 6,
+      "survives": 6,
+      "kill_rate": 0.5
+    },
+    "OEIS--piBase": {
+      "total": 7,
+      "kills": 6,
+      "survives": 1,
+      "kill_rate": 0.8571
+    },
+    "Polytopes--SpaceGroups": {
+      "total": 6,
+      "kills": 6,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Lattices--OEIS": {
+      "total": 6,
+      "kills": 6,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "MMLKG--SpaceGroups": {
+      "total": 6,
+      "kills": 6,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Lattices--NumberFields": {
+      "total": 7,
+      "kills": 6,
+      "survives": 1,
+      "kill_rate": 0.8571
+    },
+    "KnotInfo--piBase": {
+      "total": 38,
+      "kills": 5,
+      "survives": 33,
+      "kill_rate": 0.1316
+    },
+    "Maass--NumberFields": {
+      "total": 5,
+      "kills": 5,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "MMLKG--OpenAlex": {
+      "total": 5,
+      "kills": 5,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "OpenAlex--piBase": {
+      "total": 5,
+      "kills": 5,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "KnotInfo--Metamath": {
+      "total": 12,
+      "kills": 4,
+      "survives": 8,
+      "kill_rate": 0.3333
+    },
+    "Fungrim--NumberFields": {
+      "total": 29,
+      "kills": 4,
+      "survives": 25,
+      "kill_rate": 0.1379
+    },
+    "Fungrim--Isogenies": {
+      "total": 53,
+      "kills": 4,
+      "survives": 49,
+      "kill_rate": 0.0755
+    },
+    "ANTEDB--OpenAlex": {
+      "total": 4,
+      "kills": 4,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "LMFDB--Lattices": {
+      "total": 9,
+      "kills": 4,
+      "survives": 5,
+      "kill_rate": 0.4444
+    },
+    "Maass--Metamath": {
+      "total": 4,
+      "kills": 4,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Polytopes--piBase": {
+      "total": 4,
+      "kills": 4,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--piBase": {
+      "total": 4,
+      "kills": 4,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Fungrim--MMLKG": {
+      "total": 33,
+      "kills": 3,
+      "survives": 30,
+      "kill_rate": 0.0909
+    },
+    "Materials--OEIS": {
+      "total": 16,
+      "kills": 3,
+      "survives": 13,
+      "kill_rate": 0.1875
+    },
+    "Fungrim--SpaceGroups": {
+      "total": 29,
+      "kills": 3,
+      "survives": 26,
+      "kill_rate": 0.1034
+    },
+    "NumberFields--mathlib": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--mathlib": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "LMFDB--Maass": {
+      "total": 5,
+      "kills": 3,
+      "survives": 2,
+      "kill_rate": 0.6
+    },
+    "Maass--piBase": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Lattices--SpaceGroups": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Maass--Materials": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Fungrim--Genus2": {
+      "total": 5,
+      "kills": 3,
+      "survives": 2,
+      "kill_rate": 0.6
+    },
+    "MMLKG--piBase": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "OpenAlex--SpaceGroups": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Fungrim--OpenAlex": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--SpaceGroups": {
+      "total": 9,
+      "kills": 3,
+      "survives": 6,
+      "kill_rate": 0.3333
+    },
+    "Maass--mathlib": {
+      "total": 3,
+      "kills": 3,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "FindStat--Fungrim": {
+      "total": 3,
+      "kills": 2,
+      "survives": 1,
+      "kill_rate": 0.6667
+    },
+    "Isogenies--OpenAlex": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Lattices--Maass": {
+      "total": 3,
+      "kills": 2,
+      "survives": 1,
+      "kill_rate": 0.6667
+    },
+    "Fungrim--Polytopes": {
+      "total": 14,
+      "kills": 2,
+      "survives": 12,
+      "kill_rate": 0.1429
+    },
+    "Metamath--piBase": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "NumberFields--Polytopes": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "MMLKG--Polytopes": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "OEIS--OpenAlex": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--Polytopes": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "OpenAlex--Polytopes": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "ANTEDB--FindStat": {
+      "total": 2,
+      "kills": 2,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "KnotInfo--mathlib": {
+      "total": 12,
+      "kills": 1,
+      "survives": 11,
+      "kill_rate": 0.0833
+    },
+    "KnotInfo--Polytopes": {
+      "total": 22,
+      "kills": 1,
+      "survives": 21,
+      "kill_rate": 0.0455
+    },
+    "MMLKG--NumberFields": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "KnotInfo--LocalFields": {
+      "total": 7,
+      "kills": 1,
+      "survives": 6,
+      "kill_rate": 0.1429
+    },
+    "KnotInfo--MMLKG": {
+      "total": 9,
+      "kills": 1,
+      "survives": 8,
+      "kill_rate": 0.1111
+    },
+    "Materials--NumberFields": {
+      "total": 16,
+      "kills": 1,
+      "survives": 15,
+      "kill_rate": 0.0625
+    },
+    "OpenAlex--mathlib": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Fungrim--Lattices": {
+      "total": 4,
+      "kills": 1,
+      "survives": 3,
+      "kill_rate": 0.25
+    },
+    "FindStat--MMLKG": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "KnotInfo--Lattices": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Lattices--Materials": {
+      "total": 5,
+      "kills": 1,
+      "survives": 4,
+      "kill_rate": 0.2
+    },
+    "Genus2--NumberFields": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "FindStat--SpaceGroups": {
+      "total": 2,
+      "kills": 1,
+      "survives": 1,
+      "kill_rate": 0.5
+    },
+    "LocalFields--OEIS": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Genus2--SpaceGroups": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "LocalFields--SpaceGroups": {
+      "total": 3,
+      "kills": 1,
+      "survives": 2,
+      "kill_rate": 0.3333
+    },
+    "SpaceGroups--piBase": {
+      "total": 3,
+      "kills": 1,
+      "survives": 2,
+      "kill_rate": 0.3333
+    },
+    "SpaceGroups--mathlib": {
+      "total": 4,
+      "kills": 1,
+      "survives": 3,
+      "kill_rate": 0.25
+    },
+    "Lattices--mathlib": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Lattices--MMLKG": {
+      "total": 3,
+      "kills": 1,
+      "survives": 2,
+      "kill_rate": 0.3333
+    },
+    "FindStat--Lattices": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "FindStat--mathlib": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Isogenies--MMLKG": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Metamath--SpaceGroups": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Metamath--Polytopes": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Genus2--Polytopes": {
+      "total": 1,
+      "kills": 1,
+      "survives": 0,
+      "kill_rate": 1.0
+    },
+    "Fungrim--Materials": {
+      "total": 7,
+      "kills": 0,
+      "survives": 7,
+      "kill_rate": 0.0
+    },
+    "KnotInfo--Materials": {
+      "total": 13,
+      "kills": 0,
+      "survives": 13,
+      "kill_rate": 0.0
+    },
+    "Fungrim--piBase": {
+      "total": 21,
+      "kills": 0,
+      "survives": 21,
+      "kill_rate": 0.0
+    },
+    "Fungrim--Maass": {
+      "total": 1,
+      "kills": 0,
+      "survives": 1,
+      "kill_rate": 0.0
+    },
+    "Isogenies--Materials": {
+      "total": 10,
+      "kills": 0,
+      "survives": 10,
+      "kill_rate": 0.0
+    },
+    "Fungrim--LocalFields": {
+      "total": 4,
+      "kills": 0,
+      "survives": 4,
+      "kill_rate": 0.0
+    },
+    "MMLKG--Materials": {
+      "total": 3,
+      "kills": 0,
+      "survives": 3,
+      "kill_rate": 0.0
+    },
+    "Polytopes--mathlib": {
+      "total": 1,
+      "kills": 0,
+      "survives": 1,
+      "kill_rate": 0.0
+    },
+    "Materials--piBase": {
+      "total": 1,
+      "kills": 0,
+      "survives": 1,
+      "kill_rate": 0.0
+    },
+    "LocalFields--Materials": {
+      "total": 1,
+      "kills": 0,
+      "survives": 1,
+      "kill_rate": 0.0
+    },
+    "Materials--mathlib": {
+      "total": 1,
+      "kills": 0,
+      "survives": 1,
+      "kill_rate": 0.0
+    },
+    "FindStat--LMFDB": {
+      "total": 1,
+      "kills": 0,
+      "survives": 1,
+      "kill_rate": 0.0
+    }
+  },
+  "failure_patterns": {
+    "clean_kill_1_test": 641,
+    "double_kill_2_tests": 1358,
+    "triple_kill_3_tests": 969,
+    "multi_kill_4plus": 1020,
+    "total_killed": 3988,
+    "mean_kill_tests": 2.63,
+    "median_kill_tests": 2.0,
+    "top_co_occurrences": [
+      {
+        "test_1": "F11",
+        "test_2": "F3",
+        "test_1_full": "F11_cross_validation",
+        "test_2_full": "F3_effect_size",
+        "co_kill_count": 2434
+      },
+      {
+        "test_1": "F12",
+        "test_2": "F3",
+        "test_1_full": "F12_partial_correlation",
+        "test_2_full": "F3_effect_size",
+        "co_kill_count": 2213
+      },
+      {
+        "test_1": "F11",
+        "test_2": "F12",
+        "test_1_full": "F11_cross_validation",
+        "test_2_full": "F12_partial_correlation",
+        "co_kill_count": 1698
+      },
+      {
+        "test_1": "F12",
+        "test_2": "F14",
+        "test_1_full": "F12_partial_correlation",
+        "test_2_full": "F14_phase_shift",
+        "co_kill_count": 851
+      },
+      {
+        "test_1": "F11",
+        "test_2": "F14",
+        "test_1_full": "F11_cross_validation",
+        "test_2_full": "F14_phase_shift",
+        "co_kill_count": 793
+      },
+      {
+        "test_1": "F14",
+        "test_2": "F3",
+        "test_1_full": "F14_phase_shift",
+        "test_2_full": "F3_effect_size",
+        "co_kill_count": 778
+      },
+      {
+        "test_1": "F1",
+        "test_2": "F6",
+        "test_1_full": "F1_permutation_null",
+        "test_2_full": "F6_base_rate",
+        "co_kill_count": 258
+      },
+      {
+        "test_1": "F1",
+        "test_2": "F9",
+        "test_1_full": "F1_permutation_null",
+        "test_2_full": "F9_simpler_explanation",
+        "co_kill_count": 247
+      },
+      {
+        "test_1": "F6",
+        "test_2": "F9",
+        "test_1_full": "F6_base_rate",
+        "test_2_full": "F9_simpler_explanation",
+        "co_kill_count": 247
+      },
+      {
+        "test_1": "F11",
+        "test_2": "F1",
+        "test_1_full": "F11_cross_validation",
+        "test_2_full": "F1_permutation_null",
+        "co_kill_count": 243
+      },
+      {
+        "test_1": "F11",
+        "test_2": "F6",
+        "test_1_full": "F11_cross_validation",
+        "test_2_full": "F6_base_rate",
+        "co_kill_count": 233
+      },
+      {
+        "test_1": "F11",
+        "test_2": "F9",
+        "test_1_full": "F11_cross_validation",
+        "test_2_full": "F9_simpler_explanation",
+        "co_kill_count": 227
+      },
+      {
+        "test_1": "F12",
+        "test_2": "F13",
+        "test_1_full": "F12_partial_correlation",
+        "test_2_full": "F13_growth_rate_filter",
+        "co_kill_count": 81
+      },
+      {
+        "test_1": "F1",
+        "test_2": "F3",
+        "test_1_full": "F1_permutation_null",
+        "test_2_full": "F3_effect_size",
+        "co_kill_count": 56
+      },
+      {
+        "test_1": "F3",
+        "test_2": "F6",
+        "test_1_full": "F3_effect_size",
+        "test_2_full": "F6_base_rate",
+        "co_kill_count": 56
+      }
+    ]
+  },
+  "near_miss_analysis": {
+    "total_near_misses": 1999,
+    "almost_real_count": 641,
+    "near_miss_killers": {
+      "F3": 1255,
+      "F12": 859,
+      "F11": 690,
+      "F13": 409,
+      "F14": 108,
+      "F2": 20,
+      "F1": 12,
+      "F6": 4
+    },
+    "near_miss_families": {
+      "effect_size_artifact": 2114,
+      "replication_failure": 710,
+      "growth_rate_artifact": 409,
+      "phase_structure": 108,
+      "statistical_null": 16
+    },
+    "top_near_misses": [
+      {
+        "pair": "ANTEDB--SpaceGroups",
+        "claim": "The number of space groups in each crystal system (Bilbao) follows the same relative frequency distribution as the number of ANTEDB theorems per topic category when both are normalized to percentages.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "ANTEDB--OEIS",
+        "claim": "The distribution of sleeping beauty OEIS sequences (min_entropy=4.0, max_degree=2) by their first term modulo 3 is statistically indistinguishable from the distribution of ANTEDB theorem topics (zero_",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "Isogenies--LMFDB",
+        "claim": "The distribution of class numbers for cubic number fields with discriminant absolute value less than 10^4 is statistically indistinguishable from the distribution of node counts in isogeny graphs of e",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Isogenies--KnotInfo",
+        "claim": "Knots with determinant equal to a prime number p have crossing numbers that follow the same distribution as the number of isogeny classes of elliptic curves with conductor p in LMFDB.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim": "The set of knot determinants for prime alternating knots with crossing number 16 equals the intersection of conductor values for rank-0 and rank-2 elliptic curves in LMFDB with conductor <= 1000.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "LMFDB--SpaceGroups",
+        "claim": "The ratio of rank-0 to rank-1 elliptic curves with prime conductors p < 1000 equals the ratio of cubic to hexagonal space groups among all 230 crystallographic groups.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "ANTEDB--Polytopes",
+        "claim": "ANTEDB theorems with both 'primes' and 'exponent_pairs' topics have numerical bounds that correlate with the dimension distribution of polytopes in polyDB.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F3_effect_size"
+        ],
+        "kill_families": [
+          "effect_size_artifact"
+        ]
+      },
+      {
+        "pair": "Genus2--KnotInfo",
+        "claim": "The distribution of knot determinants for alternating knots with crossing number 11 matches the distribution of conductors for genus-2 curves with odd analytic rank parity and conductors under 500.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "Metamath--OEIS",
+        "claim": "Metamath theorems about group theory reference OEIS sequences that are more likely to contain Sato-Tate group classification numbers than other sequences.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "The number of Mizar articles that are referenced by at least 10 other articles and contain theorems about 'group' theory is positively correlated with the number of genus-2 curves with Sato-Tate group",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "ANTEDB--Materials",
+        "claim": "The ratio of exponential to polynomial growth sequences in OEIS that contain prime number subsequences equals the ratio of cubic to non-cubic crystals in Materials Project with band gaps above 1.5 eV.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "The distribution of conductor values for genus-2 curves with Sato-Tate group USp(4) is statistically indistinguishable from the distribution of band gap values for cubic crystal systems in the Materia",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "The distribution of f-vector sums for 3-dimensional polytopes is statistically indistinguishable from the distribution of conductor values for genus-2 curves with Sato-Tate group USp(4) and conductor ",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "ANTEDB--OEIS",
+        "claim": "The number of OEIS hub sequences (min_degree 50) that contain terms from exponent pairs in ANTEDB is greater than the number of hub sequences containing terms from zero density bounds.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F12_partial_correlation"
+        ],
+        "kill_families": [
+          "effect_size_artifact"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "Quadratic number fields (degree=2) with class number 1 have discriminants whose absolute values follow the same distribution as conductors of genus-2 curves with even root number (rank parity 0) in th",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "Cubic number fields (degree=3) with class number 1 have discriminants whose distribution is statistically indistinguishable from the distribution of conductors of genus-2 curves with Sato-Tate group U",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim": "The set of unique knot determinants for alternating knots with crossing number 11 is a subset of the set of conductors for rank-1 elliptic curves in LMFDB with conductor less than 1000.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim": "The set of unique knot determinants for 11-crossing alternating knots is a subset of the set of conductors for rank-1 elliptic curves in LMFDB with conductor < 1000.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Genus2--KnotInfo",
+        "claim": "The distribution of knot determinants for prime alternating knots with crossing number 14 correlates positively (r > 0.7) with the distribution of conductors for genus-2 curves with Sato-Tate group J(",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "OEIS sequences that cross-reference Mizar hub articles have term sets that show greater overlap with the set of genus-2 curve conductors than sequences that do not reference Mizar articles.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      }
+    ],
+    "almost_real": [
+      {
+        "pair": "ANTEDB--SpaceGroups",
+        "claim": "The number of space groups in each crystal system (Bilbao) follows the same relative frequency distribution as the number of ANTEDB theorems per topic category when both are normalized to percentages.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "ANTEDB--OEIS",
+        "claim": "The distribution of sleeping beauty OEIS sequences (min_entropy=4.0, max_degree=2) by their first term modulo 3 is statistically indistinguishable from the distribution of ANTEDB theorem topics (zero_",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "Isogenies--LMFDB",
+        "claim": "The distribution of class numbers for cubic number fields with discriminant absolute value less than 10^4 is statistically indistinguishable from the distribution of node counts in isogeny graphs of e",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Isogenies--KnotInfo",
+        "claim": "Knots with determinant equal to a prime number p have crossing numbers that follow the same distribution as the number of isogeny classes of elliptic curves with conductor p in LMFDB.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim": "The set of knot determinants for prime alternating knots with crossing number 16 equals the intersection of conductor values for rank-0 and rank-2 elliptic curves in LMFDB with conductor <= 1000.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "LMFDB--SpaceGroups",
+        "claim": "The ratio of rank-0 to rank-1 elliptic curves with prime conductors p < 1000 equals the ratio of cubic to hexagonal space groups among all 230 crystallographic groups.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "ANTEDB--Polytopes",
+        "claim": "ANTEDB theorems with both 'primes' and 'exponent_pairs' topics have numerical bounds that correlate with the dimension distribution of polytopes in polyDB.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F3_effect_size"
+        ],
+        "kill_families": [
+          "effect_size_artifact"
+        ]
+      },
+      {
+        "pair": "Genus2--KnotInfo",
+        "claim": "The distribution of knot determinants for alternating knots with crossing number 11 matches the distribution of conductors for genus-2 curves with odd analytic rank parity and conductors under 500.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      },
+      {
+        "pair": "Metamath--OEIS",
+        "claim": "Metamath theorems about group theory reference OEIS sequences that are more likely to contain Sato-Tate group classification numbers than other sequences.",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F14_phase_shift"
+        ],
+        "kill_families": [
+          "phase_structure"
+        ]
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim": "The number of Mizar articles that are referenced by at least 10 other articles and contain theorems about 'group' theory is positively correlated with the number of genus-2 curves with Sato-Tate group",
+        "passed": 10,
+        "failed": 1,
+        "skipped": 3,
+        "kill_tests": [
+          "F13_growth_rate_filter"
+        ],
+        "kill_families": [
+          "growth_rate_artifact"
+        ]
+      }
+    ]
+  },
+  "kill_family_taxonomy": {
+    "effect_size_artifact": {
+      "total_kills_involving": 5587,
+      "primary_kills": 3307,
+      "near_misses": 1589,
+      "avg_passed_before_death": 7.26,
+      "member_tests": [
+        "F3",
+        "F12"
+      ]
+    },
+    "replication_failure": {
+      "total_kills_involving": 2722,
+      "primary_kills": 49,
+      "near_misses": 35,
+      "avg_passed_before_death": 8,
+      "member_tests": [
+        "F2",
+        "F8",
+        "F11"
+      ]
+    },
+    "phase_structure": {
+      "total_kills_involving": 905,
+      "primary_kills": 31,
+      "near_misses": 31,
+      "avg_passed_before_death": 10,
+      "member_tests": [
+        "F14"
+      ]
+    },
+    "statistical_null": {
+      "total_kills_involving": 527,
+      "primary_kills": 269,
+      "near_misses": 12,
+      "avg_passed_before_death": 4.48,
+      "member_tests": [
+        "F1",
+        "F6"
+      ]
+    },
+    "growth_rate_artifact": {
+      "total_kills_involving": 459,
+      "primary_kills": 332,
+      "near_misses": 332,
+      "avg_passed_before_death": 9.01,
+      "member_tests": [
+        "F13"
+      ]
+    },
+    "confound_or_simpler": {
+      "total_kills_involving": 247,
+      "primary_kills": 0,
+      "near_misses": 0,
+      "avg_passed_before_death": 0,
+      "member_tests": [
+        "F4",
+        "F9"
+      ]
+    },
+    "normalization_sensitivity": {
+      "total_kills_involving": 50,
+      "primary_kills": 0,
+      "near_misses": 0,
+      "avg_passed_before_death": 0,
+      "member_tests": [
+        "F5",
+        "F10"
+      ]
+    }
+  },
+  "bridge_hunter_types": {
+    "by_type": {
+      "prime_enrichment": {
+        "total": 36330,
+        "kills": 36330,
+        "kill_rate": 1.0
+      },
+      "integer_clustering": {
+        "total": 56281,
+        "kills": 30871,
+        "kill_rate": 0.5485
+      },
+      "research_cycle": {
+        "total": 80277,
+        "kills": 10497,
+        "kill_rate": 0.1308
+      },
+      "verb_bridge": {
+        "total": 109208,
+        "kills": 0,
+        "kill_rate": 0.0
+      }
+    },
+    "top_pair_type_kills": [
+      {
+        "pair_type": "Lattices--LocalFields:integer_clustering",
+        "kills": 5461
+      },
+      {
+        "pair_type": "Lattices--LocalFields:prime_enrichment",
+        "kills": 5460
+      },
+      {
+        "pair_type": "LocalFields--Polytopes:integer_clustering",
+        "kills": 5460
+      },
+      {
+        "pair_type": "LocalFields--Polytopes:prime_enrichment",
+        "kills": 5460
+      },
+      {
+        "pair_type": "Polytopes--SpaceGroups:integer_clustering",
+        "kills": 5460
+      },
+      {
+        "pair_type": "Polytopes--SpaceGroups:prime_enrichment",
+        "kills": 5460
+      },
+      {
+        "pair_type": "KnotInfo--Polytopes:prime_enrichment",
+        "kills": 5460
+      },
+      {
+        "pair_type": "Genus2--Polytopes:prime_enrichment",
+        "kills": 5460
+      },
+      {
+        "pair_type": "LMFDB--Maass:integer_clustering",
+        "kills": 5460
+      },
+      {
+        "pair_type": "Maass--NumberFields:integer_clustering",
+        "kills": 5460
+      },
+      {
+        "pair_type": "NumberFields--Polytopes:prime_enrichment",
+        "kills": 5460
+      },
+      {
+        "pair_type": "Maass--SmallGroups:integer_clustering",
+        "kills": 3570
+      },
+      {
+        "pair_type": "Polytopes--SmallGroups:prime_enrichment",
+        "kills": 3570
+      },
+      {
+        "pair_type": "KnotInfo--LMFDB:research_cycle",
+        "kills": 1598
+      },
+      {
+        "pair_type": "ANTEDB--LMFDB:research_cycle",
+        "kills": 969
+      },
+      {
+        "pair_type": "LMFDB--OEIS:research_cycle",
+        "kills": 636
+      },
+      {
+        "pair_type": "LMFDB--NumberFields:research_cycle",
+        "kills": 507
+      },
+      {
+        "pair_type": "ANTEDB--OEIS:research_cycle",
+        "kills": 477
+      },
+      {
+        "pair_type": "Isogenies--LMFDB:research_cycle",
+        "kills": 397
+      },
+      {
+        "pair_type": "Genus2--LMFDB:research_cycle",
+        "kills": 363
+      }
+    ]
+  },
+  "genocide_patterns": {
+    "total_tested": 67,
+    "kills": 24,
+    "survives": 43,
+    "kill_reasons": {
+      "other": 24
+    }
+  },
+  "shadow_tensor_cells": {
+    "total_cells": 210,
+    "explored_cells": 184,
+    "total_tests": 301043,
+    "total_kills": 81344,
+    "total_passes": 73591,
+    "high_kill_rate_cells": [
+      {
+        "pair": "Genus2--Materials",
+        "n_tested": 17,
+        "n_killed": 17,
+        "n_passed": 0,
+        "kill_rate": 1.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Maass--SmallGroups",
+        "n_tested": 3570,
+        "n_killed": 3570,
+        "n_passed": 0,
+        "kill_rate": 1.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 0.8231
+      },
+      {
+        "pair": "Lattices--LocalFields",
+        "n_tested": 10927,
+        "n_killed": 10921,
+        "n_passed": 0,
+        "kill_rate": 0.9994509014368079,
+        "anomaly_score": 6.77,
+        "near_miss_count": 0,
+        "best_p": 0.125
+      },
+      {
+        "pair": "LocalFields--Polytopes",
+        "n_tested": 10958,
+        "n_killed": 10920,
+        "n_passed": 0,
+        "kill_rate": 0.9965322139076473,
+        "anomaly_score": 6.77,
+        "near_miss_count": 0,
+        "best_p": 0.125
+      },
+      {
+        "pair": "Maass--NumberFields",
+        "n_tested": 5550,
+        "n_killed": 5488,
+        "n_passed": 35,
+        "kill_rate": 0.9888288288288288,
+        "anomaly_score": 90.28,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "LMFDB--Maass",
+        "n_tested": 5547,
+        "n_killed": 5478,
+        "n_passed": 37,
+        "kill_rate": 0.9875608436992969,
+        "anomaly_score": 90.28,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Polytopes--SpaceGroups",
+        "n_tested": 11185,
+        "n_killed": 10939,
+        "n_passed": 39,
+        "kill_rate": 0.9780062583817613,
+        "anomaly_score": 112.24,
+        "near_miss_count": 5460,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Genus2--Metamath",
+        "n_tested": 9,
+        "n_killed": 8,
+        "n_passed": 0,
+        "kill_rate": 0.8888888888888888,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Genus2--LocalFields",
+        "n_tested": 28,
+        "n_killed": 23,
+        "n_passed": 0,
+        "kill_rate": 0.8214285714285714,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Genus2--NumberFields",
+        "n_tested": 84,
+        "n_killed": 62,
+        "n_passed": 7,
+        "kill_rate": 0.7380952380952381,
+        "anomaly_score": 90.28,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Genus2--piBase",
+        "n_tested": 19,
+        "n_killed": 14,
+        "n_passed": 0,
+        "kill_rate": 0.7368421052631579,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Genus2--MMLKG",
+        "n_tested": 18,
+        "n_killed": 13,
+        "n_passed": 0,
+        "kill_rate": 0.7222222222222222,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Genus2--SpaceGroups",
+        "n_tested": 60,
+        "n_killed": 34,
+        "n_passed": 7,
+        "kill_rate": 0.5666666666666667,
+        "anomaly_score": 90.28,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Genus2--mathlib",
+        "n_tested": 18,
+        "n_killed": 10,
+        "n_passed": 0,
+        "kill_rate": 0.5555555555555556,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Genus2--Polytopes",
+        "n_tested": 10994,
+        "n_killed": 5511,
+        "n_passed": 5467,
+        "kill_rate": 0.5012734218664726,
+        "anomaly_score": 112.62,
+        "near_miss_count": 5460,
+        "best_p": 9.999000099990002e-05
+      }
+    ],
+    "low_kill_rate_cells": [
+      {
+        "pair": "FindStat--LMFDB",
+        "n_tested": 15,
+        "n_killed": 0,
+        "n_passed": 8,
+        "kill_rate": 0.0,
+        "anomaly_score": 45.72,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Fungrim--LocalFields",
+        "n_tested": 5532,
+        "n_killed": 0,
+        "n_passed": 37,
+        "kill_rate": 0.0,
+        "anomaly_score": 70.97,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Fungrim--Maass",
+        "n_tested": 5477,
+        "n_killed": 0,
+        "n_passed": 8,
+        "kill_rate": 0.0,
+        "anomaly_score": 61.13,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Fungrim--Materials",
+        "n_tested": 97,
+        "n_killed": 0,
+        "n_passed": 58,
+        "kill_rate": 0.0,
+        "anomaly_score": 56.55,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "Isogenies--LocalFields",
+        "n_tested": 63,
+        "n_killed": 0,
+        "n_passed": 0,
+        "kill_rate": 0.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "Isogenies--Metamath",
+        "n_tested": 123,
+        "n_killed": 0,
+        "n_passed": 0,
+        "kill_rate": 0.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "LocalFields--Materials",
+        "n_tested": 24,
+        "n_killed": 0,
+        "n_passed": 8,
+        "kill_rate": 0.0,
+        "anomaly_score": 43.96,
+        "near_miss_count": 0,
+        "best_p": 9.999000099990002e-05
+      },
+      {
+        "pair": "LocalFields--Metamath",
+        "n_tested": 19,
+        "n_killed": 0,
+        "n_passed": 0,
+        "kill_rate": 0.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "LocalFields--NumberFields",
+        "n_tested": 30,
+        "n_killed": 0,
+        "n_passed": 0,
+        "kill_rate": 0.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      },
+      {
+        "pair": "LocalFields--piBase",
+        "n_tested": 15,
+        "n_killed": 0,
+        "n_passed": 0,
+        "kill_rate": 0.0,
+        "anomaly_score": 0.0,
+        "near_miss_count": 0,
+        "best_p": 1.0
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "priority": 1,
+      "recommendation": "Strengthen 'effect_size_artifact' tests - this family has the most near-misses (2114)",
+      "rationale": "Near-misses that slip through this family are the most likely false positives in our survivors"
+    },
+    {
+      "priority": 2,
+      "recommendation": "Investigate dormant tests: ['F7', 'F8', 'F4']",
+      "rationale": "These tests never killed anything - either they're too lenient or never triggered"
+    },
+    {
+      "priority": 3,
+      "recommendation": "The F3 test is the primary near-miss killer - consider a stricter variant",
+      "rationale": "It kills 1255 near-misses that passed most other tests"
+    },
+    {
+      "priority": 4,
+      "recommendation": "Add F15: Prime detrending test",
+      "rationale": "F3 kills 3024 vs F1 kills 269 - many hypotheses have real permutation signal but tiny effect size. A prime-detrending test would catch the 96%+ of cross-dataset structure that is just primes."
+    },
+    {
+      "priority": 5,
+      "recommendation": "Add transformation-based tests (Layer 3) for 641 'almost real' hypotheses",
+      "rationale": "These passed 7+ tests but failed on 1. A transformation/embedding test could distinguish real-but-hard-to-see structure from artifacts."
+    }
+  ]
+}

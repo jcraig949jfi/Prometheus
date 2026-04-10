@@ -53,6 +53,9 @@ def load_links(path: Path):
             rec = json.loads(line)
             ds = rec["dataset"]
             obj = rec["object_id"]
+            # Guard against non-hashable object_ids (e.g. lists from postgres data)
+            if not isinstance(obj, str):
+                obj = str(obj)
             con = rec["concept"]
             links.append((ds, obj, con))
             datasets.add(ds)

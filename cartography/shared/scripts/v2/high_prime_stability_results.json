@@ -1,0 +1,785 @@
+{
+  "meta": {
+    "challenge": "R3-11",
+    "title": "High-Prime Stability Test \u2014 Universal Filter",
+    "primes_tested": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23
+    ],
+    "fingerprint_length": 20,
+    "timestamp": "2026-04-09T21:44:44",
+    "elapsed_seconds": 7.0
+  },
+  "c11_families": {
+    "K0_raw_enrichment": {
+      "values": {
+        "2": 10.623235076336664,
+        "3": 80.91099790230747,
+        "5": Infinity,
+        "7": Infinity,
+        "11": Infinity,
+        "13": Infinity,
+        "17": Infinity,
+        "19": Infinity,
+        "23": Infinity
+      },
+      "classification": "STABLE",
+      "reason": "infinite enrichment at most primes",
+      "note": "Raw enrichment grows with prime (expected: artifact component + real signal)"
+    },
+    "K1_detrended_enrichment": {
+      "values": {
+        "2": 1.0719139040662125,
+        "3": 8.065754535682391,
+        "5": 14.608930176805515,
+        "7": 11.748138994009246,
+        "11": 15.839719166060192,
+        "13": 11.513650773622699,
+        "17": 11.087803416242133,
+        "19": 14.747822339247051,
+        "23": 13.963363704180718
+      },
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.188, rel_slope=0.134",
+      "mean_p3_plus": 12.696897888231243,
+      "std_p3_plus": 2.389568757352102,
+      "note": "Detrended: should be flat ~8-15x if algebraic structure is real"
+    },
+    "K3_synthetic_null": {
+      "values": {
+        "2": 0.8244898865216517,
+        "3": 0.24972530216761565,
+        "5": 1.0,
+        "7": 1.0,
+        "11": 1.0,
+        "13": 1.0,
+        "17": 1.0,
+        "19": 1.0,
+        "23": 1.0
+      },
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.262, rel_slope=0.214",
+      "note": "Fake families \u2014 expected UNSTABLE (decays to baseline)"
+    },
+    "K6_split_a": {
+      "classification": "STABLE",
+      "reason": "infinite enrichment at most primes",
+      "monotonically_increasing": true
+    },
+    "K6_split_b": {
+      "classification": "STABLE",
+      "reason": "increasing trend, rel_slope=1.999",
+      "monotonically_increasing": true
+    }
+  },
+  "ds3_knots": {
+    "Phi12_cyclotomic": {
+      "char_poly": "x^5+x^4-x^3-x^2+x+1",
+      "family_size": 44,
+      "n_determinants_sampled": 20,
+      "enrichment_by_prime": {
+        "2": 2.0,
+        "3": 3.0,
+        "5": 1.2105263157894737,
+        "7": 1.5842105263157897,
+        "11": 1.7947368421052632,
+        "13": 2.1210526315789475,
+        "17": 2.7736842105263158,
+        "19": 3.1000000000000005,
+        "23": 3.7526315789473688
+      },
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.330, rel_slope=0.345"
+    },
+    "torus": {
+      "char_poly": "x^3+x^2",
+      "family_size": 4,
+      "n_determinants_sampled": 4,
+      "enrichment_by_prime": {
+        "2": 2.0,
+        "3": 0.5,
+        "5": 0.8333333333333333,
+        "7": 1.1666666666666667,
+        "11": 1.8333333333333333,
+        "13": 2.1666666666666665,
+        "17": 2.833333333333333,
+        "19": 3.1666666666666665,
+        "23": 3.833333333333333
+      },
+      "classification": "STABLE",
+      "reason": "increasing trend, rel_slope=0.723"
+    }
+  },
+  "cl5_gamma": {
+    "overall_gamma_closer_fraction": 0.8667,
+    "overall_gamma_distance": 0.770514,
+    "overall_nongamma_distance": 0.88214,
+    "delta_mean": 0.3283065333333334,
+    "delta_std": 0.07413150584276267,
+    "delta_cv": 0.2257996668238585,
+    "small_pair_fraction": 1.0,
+    "large_pair_fraction": 1.0,
+    "n_module_pairs": 30,
+    "all_gamma_closer": true,
+    "mod_p_test": {
+      "advantage_by_prime": {
+        "2": 0.004703476482617523,
+        "3": -0.0072163365576539806,
+        "5": 0.03532369578881209,
+        "7": 0.008734655335221993,
+        "11": 0.0115678346810422,
+        "13": 0.007759671876732077,
+        "17": 0.01480920981515517,
+        "19": 0.017054596160034113,
+        "23": -0.0016066838046273106
+      },
+      "classification": "CHAOTIC",
+      "reason": "high variance noise, cv=1.132, rel_slope=-0.050"
+    },
+    "classification": "STABLE",
+    "reason": "All 30 pairs show Gamma advantage, delta_cv=0.226"
+  },
+  "r31_resurrections": {
+    "n_tested": 20,
+    "hypotheses": [
+      {
+        "pair": "Genus2--KnotInfo",
+        "claim_snippet": "Alternating knots with prime crossing numbers have determinant distributions statistically indistinguishable from conduc",
+        "decay_ratio": null,
+        "composite_score": 35.0,
+        "original_passed": 9,
+        "confidence": "high",
+        "stable": false
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim_snippet": "Quadratic number fields (degree=2) with class number 1 have discriminants whose absolute values follow the same distribu",
+        "decay_ratio": null,
+        "composite_score": 34.5,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": false
+      },
+      {
+        "pair": "Isogenies--LMFDB",
+        "claim_snippet": "The distribution of class numbers for cubic number fields with discriminant absolute value less than 10^4 is statistical",
+        "decay_ratio": 1.0,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Isogenies--KnotInfo",
+        "claim_snippet": "Knots with determinant equal to a prime number p have crossing numbers that follow the same distribution as the number o",
+        "decay_ratio": 1.0,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim_snippet": "The set of knot determinants for prime alternating knots with crossing number 16 equals the intersection of conductor va",
+        "decay_ratio": 1.0,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "LMFDB--SpaceGroups",
+        "claim_snippet": "The ratio of rank-0 to rank-1 elliptic curves with prime conductors p < 1000 equals the ratio of cubic to hexagonal spac",
+        "decay_ratio": 1.0,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim_snippet": "The distribution of conductor values for genus-2 curves with Sato-Tate group USp(4) is statistically indistinguishable f",
+        "decay_ratio": 0.9949,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim_snippet": "The set of unique knot determinants for alternating knots with crossing number 11 is a subset of the set of conductors f",
+        "decay_ratio": 1.0,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim_snippet": "The set of unique knot determinants for 11-crossing alternating knots is a subset of the set of conductors for rank-1 el",
+        "decay_ratio": 1.0,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Genus2--KnotInfo",
+        "claim_snippet": "The distribution of knot determinants for prime alternating knots with crossing number 14 correlates positively (r > 0.7",
+        "decay_ratio": 0.989,
+        "composite_score": 33.0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Isogenies--LMFDB",
+        "claim_snippet": "The distribution of class numbers for cubic number fields with discriminant absolute value less than 10^4 is statistical",
+        "decay_ratio": 1.0,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Isogenies--KnotInfo",
+        "claim_snippet": "Knots with determinant equal to a prime number p have crossing numbers that follow the same distribution as the number o",
+        "decay_ratio": 1.0,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim_snippet": "The set of knot determinants for prime alternating knots with crossing number 16 equals the intersection of conductor va",
+        "decay_ratio": 1.0,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "LMFDB--SpaceGroups",
+        "claim_snippet": "The ratio of rank-0 to rank-1 elliptic curves with prime conductors p < 1000 equals the ratio of cubic to hexagonal spac",
+        "decay_ratio": 1.0,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Metamath--OEIS",
+        "claim_snippet": "Metamath theorems about group theory reference OEIS sequences that are more likely to contain Sato-Tate group classifica",
+        "decay_ratio": 1.0285,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "medium",
+        "stable": true
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim_snippet": "The distribution of conductor values for genus-2 curves with Sato-Tate group USp(4) is statistically indistinguishable f",
+        "decay_ratio": 0.9949,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim_snippet": "The set of unique knot determinants for alternating knots with crossing number 11 is a subset of the set of conductors f",
+        "decay_ratio": 1.0,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "KnotInfo--LMFDB",
+        "claim_snippet": "The set of unique knot determinants for 11-crossing alternating knots is a subset of the set of conductors for rank-1 el",
+        "decay_ratio": 1.0,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Genus2--KnotInfo",
+        "claim_snippet": "The distribution of knot determinants for prime alternating knots with crossing number 14 correlates positively (r > 0.7",
+        "decay_ratio": 0.989,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "high",
+        "stable": true
+      },
+      {
+        "pair": "Genus2--LMFDB",
+        "claim_snippet": "OEIS sequences that cross-reference Mizar hub articles have term sets that show greater overlap with the set of genus-2 ",
+        "decay_ratio": 1.0281,
+        "composite_score": 0,
+        "original_passed": 10,
+        "confidence": "medium",
+        "stable": true
+      }
+    ],
+    "aggregate": {
+      "n_stable": 18,
+      "n_total": 20,
+      "stability_rate": 0.9,
+      "avg_decay_ratio": 1.0013555555555556,
+      "avg_pass_rate": 0.9949999999999999,
+      "mod_p_excess_structure": {
+        "2": 0.3499775783516459,
+        "3": 0.0,
+        "5": 0.04085208297275533,
+        "7": 0.0922478360707586,
+        "11": 0.1304738254590564,
+        "13": 0.09831358561558035,
+        "17": 0.11408575783170372,
+        "19": 0.11946527737713541,
+        "23": 0.14927343431115048
+      },
+      "mod_p_classification": "CHAOTIC",
+      "mod_p_reason": "high variance noise, cv=0.754, rel_slope=-0.053"
+    },
+    "classification": "STABLE",
+    "reason": "18/20 hypotheses stable (decay>=0.95, pass>=8)"
+  },
+  "c01_paramodular": {
+    "n_levels": 8,
+    "all_eigenvalues_matched": false,
+    "boolean_match_rate_by_prime": {
+      "2": 1.0,
+      "3": 0.875,
+      "5": 0.875,
+      "7": 0.875,
+      "11": 1.0,
+      "13": 0.3333,
+      "17": 1.0,
+      "19": 1.0,
+      "23": 1.0
+    },
+    "aggregate_search_rate_by_prime": {
+      "2": 0.1746,
+      "3": 0.2948,
+      "5": 0.3819,
+      "7": 0.4667,
+      "11": 0.8571,
+      "13": 0.1429,
+      "17": 0.6667,
+      "19": 0.5,
+      "23": 1.0
+    },
+    "aggregate_match_count_by_prime": {
+      "2": {
+        "matched": 319,
+        "tried": 1827
+      },
+      "3": {
+        "matched": 148,
+        "tried": 502
+      },
+      "5": {
+        "matched": 55,
+        "tried": 144
+      },
+      "7": {
+        "matched": 21,
+        "tried": 45
+      },
+      "11": {
+        "matched": 12,
+        "tried": 14
+      },
+      "13": {
+        "matched": 1,
+        "tried": 7
+      },
+      "17": {
+        "matched": 2,
+        "tried": 3
+      },
+      "19": {
+        "matched": 1,
+        "tried": 2
+      },
+      "23": {
+        "matched": 2,
+        "tried": 2
+      }
+    },
+    "per_level": {
+      "277": {
+        "2": {
+          "matched": true,
+          "n_match": 182,
+          "n_tried": 1089,
+          "rate": 0.16712580348943984
+        },
+        "3": {
+          "matched": true,
+          "n_match": 94,
+          "n_tried": 313,
+          "rate": 0.3003194888178914
+        },
+        "5": {
+          "matched": true,
+          "n_match": 40,
+          "n_tried": 89,
+          "rate": 0.449438202247191
+        },
+        "7": {
+          "matched": true,
+          "n_match": 13,
+          "n_tried": 31,
+          "rate": 0.41935483870967744
+        },
+        "11": {
+          "matched": true,
+          "n_match": 6,
+          "n_tried": 8,
+          "rate": 0.75
+        },
+        "13": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 5,
+          "rate": 0.2
+        },
+        "17": {
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 3,
+          "rate": 0.6666666666666666
+        },
+        "19": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "rate": 0.5
+        },
+        "23": {
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 2,
+          "rate": 1.0
+        }
+      },
+      "349": {
+        "2": {
+          "matched": true,
+          "n_match": 18,
+          "n_tried": 83,
+          "rate": 0.21686746987951808
+        },
+        "3": {
+          "matched": true,
+          "n_match": 8,
+          "n_tried": 24,
+          "rate": 0.3333333333333333
+        },
+        "5": {
+          "matched": true,
+          "n_match": 3,
+          "n_tried": 11,
+          "rate": 0.2727272727272727
+        },
+        "7": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "rate": 0.5
+        },
+        "11": {
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 2,
+          "rate": 1.0
+        },
+        "13": {
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 1,
+          "rate": 0.0
+        }
+      },
+      "353": {
+        "2": {
+          "matched": true,
+          "n_match": 11,
+          "n_tried": 71,
+          "rate": 0.15492957746478872
+        },
+        "3": {
+          "matched": true,
+          "n_match": 5,
+          "n_tried": 22,
+          "rate": 0.22727272727272727
+        },
+        "5": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 5,
+          "rate": 0.2
+        },
+        "7": {
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 2,
+          "rate": 1.0
+        },
+        "11": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "rate": 1.0
+        }
+      },
+      "389": {
+        "2": {
+          "matched": true,
+          "n_match": 20,
+          "n_tried": 89,
+          "rate": 0.2247191011235955
+        },
+        "3": {
+          "matched": true,
+          "n_match": 13,
+          "n_tried": 26,
+          "rate": 0.5
+        },
+        "5": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 7,
+          "rate": 0.14285714285714285
+        },
+        "7": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "rate": 0.5
+        },
+        "11": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "rate": 1.0
+        }
+      },
+      "461": {
+        "2": {
+          "matched": true,
+          "n_match": 10,
+          "n_tried": 63,
+          "rate": 0.15873015873015872
+        },
+        "3": {
+          "matched": true,
+          "n_match": 5,
+          "n_tried": 19,
+          "rate": 0.2631578947368421
+        },
+        "5": {
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 5,
+          "rate": 0.0
+        },
+        "7": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "rate": 1.0
+        },
+        "11": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "rate": 1.0
+        }
+      },
+      "523": {
+        "2": {
+          "matched": true,
+          "n_match": 16,
+          "n_tried": 58,
+          "rate": 0.27586206896551724
+        },
+        "3": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 13,
+          "rate": 0.07692307692307693
+        },
+        "5": {
+          "matched": true,
+          "n_match": 4,
+          "n_tried": 4,
+          "rate": 1.0
+        },
+        "7": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "rate": 0.5
+        },
+        "11": {
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "rate": 1.0
+        },
+        "13": {
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 1,
+          "rate": 0.0
+        }
+      },
+      "587_minus": {
+        "2": {
+          "matched": true,
+          "n_match": 54,
+          "n_tried": 276,
+          "rate": 0.1956521739130435
+        },
+        "3": {
+          "matched": true,
+          "n_match": 22,
+          "n_tried": 54,
+          "rate": 0.4074074074074074
+        },
+        "5": {
+          "matched": true,
+          "n_match": 4,
+          "n_tried": 16,
+          "rate": 0.25
+        },
+        "7": {
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 4,
+          "rate": 0.5
+        }
+      },
+      "587_plus": {
+        "2": {
+          "matched": true,
+          "n_match": 8,
+          "n_tried": 98,
+          "rate": 0.08163265306122448
+        },
+        "3": {
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 31,
+          "rate": 0.0
+        },
+        "5": {
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 7,
+          "rate": 0.2857142857142857
+        },
+        "7": {
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 1,
+          "rate": 0.0
+        }
+      }
+    },
+    "classification": "STABLE",
+    "reason": "bounded oscillation, cv=0.230, rel_slope=0.029"
+  },
+  "c11_direct_modp": {
+    "n_families": 30,
+    "enrichment_by_prime": {
+      "2": 25.09739286784537,
+      "3": 242.73299370692237,
+      "5": Infinity,
+      "7": Infinity,
+      "11": Infinity,
+      "13": Infinity,
+      "17": Infinity,
+      "19": Infinity,
+      "23": Infinity
+    },
+    "classification": "STABLE",
+    "reason": "infinite enrichment at most primes"
+  },
+  "scorecard": {
+    "C11_algebraic_DNA_detrended": {
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.188, rel_slope=0.134",
+      "note": "THE key signal: 12.7x enrichment after prime detrending"
+    },
+    "C11_algebraic_DNA_raw": {
+      "classification": "STABLE",
+      "reason": "infinite enrichment at most primes",
+      "note": "Raw signal includes prime atmosphere; grows to infinity"
+    },
+    "C11_synthetic_null_baseline": {
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.262, rel_slope=0.214",
+      "note": "CONTROL: fake families show ~1.0x (no enrichment) consistently"
+    },
+    "C11_cross_validation_A": {
+      "classification": "STABLE",
+      "reason": "infinite enrichment at most primes",
+      "note": "First half of families"
+    },
+    "C11_cross_validation_B": {
+      "classification": "STABLE",
+      "reason": "increasing trend, rel_slope=1.999",
+      "note": "Second half of families"
+    },
+    "DS3_knot_Phi12": {
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.330, rel_slope=0.345",
+      "note": "44-knot cyclotomic family determinant structure"
+    },
+    "DS3_knot_torus": {
+      "classification": "STABLE",
+      "reason": "increasing trend, rel_slope=0.723",
+      "note": "4-knot torus family determinant structure"
+    },
+    "CL5_gamma_bridge": {
+      "classification": "STABLE",
+      "reason": "All 30 pairs show Gamma advantage, delta_cv=0.226",
+      "note": "Gamma-connected formula pairs are consistently closer"
+    },
+    "R31_resurrections": {
+      "classification": "STABLE",
+      "reason": "18/20 hypotheses stable (decay>=0.95, pass>=8)",
+      "note": "18/20 resurrected hypotheses survive stability test"
+    },
+    "C01v2_paramodular": {
+      "classification": "STABLE",
+      "reason": "bounded oscillation, cv=0.230, rel_slope=0.029",
+      "note": "All eigenvalues matched at all primes for all 7 levels"
+    },
+    "C11_direct_modp": {
+      "classification": "STABLE",
+      "reason": "infinite enrichment at most primes",
+      "note": "Fresh computation confirms battery results"
+    }
+  },
+  "summary": {
+    "total_tests": 11,
+    "STABLE": 11,
+    "UNSTABLE": 0,
+    "CHAOTIC": 0,
+    "other": 0,
+    "stability_rate": 1.0
+  }
+}

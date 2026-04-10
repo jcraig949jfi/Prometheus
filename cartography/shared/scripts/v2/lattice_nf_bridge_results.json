@@ -1,0 +1,195 @@
+{
+  "A": {
+    "test": "A_det_disc_overlap",
+    "unique_lat_dets": 1511,
+    "unique_nf_discs": 6292,
+    "overlap": 624,
+    "jaccard": 0.08692,
+    "overlap_frac": 0.412972,
+    "restricted_overlap": 624,
+    "restricted_frac": 0.45614,
+    "pval_full": 0.001,
+    "pval_restricted": 1.0,
+    "effect_full": 2878.86,
+    "effect_restricted": -13.95,
+    "verdict": "PRIME ARTIFACT"
+  },
+  "B": {
+    "test": "B_class_number_bridge",
+    "lat_cn_unique": 54,
+    "nf_cn_unique": 129,
+    "cn_overlap": 54,
+    "freq_correlation": 0.6585,
+    "freq_pval": 1.0,
+    "freq_effect": 0.0,
+    "joint_overlap": 15,
+    "joint_pval": 1.0,
+    "joint_effect": -56.91,
+    "verdict": "PRIME ARTIFACT"
+  },
+  "C": {
+    "test": "C_prime_detrending",
+    "shared_primes": 168,
+    "prime_freq_correlation": 0.9557,
+    "shared_signatures": 62,
+    "within_sig_overlap": 624,
+    "residual_frac": 0.475248,
+    "null_mean": 0.065541,
+    "pval": 0.001,
+    "effect": 56.97,
+    "omega_ks_stat": 0.2719,
+    "omega_ks_pval": 0.0,
+    "verdict": "GENUINE"
+  },
+  "D": {
+    "test": "D_matched_dimension",
+    "by_dim": {
+      "2": {
+        "n_lat": 1609,
+        "n_nf": 6086,
+        "log_ks_stat": 0.4335,
+        "log_ks_pval": 3.2876e-216,
+        "overlap": 237,
+        "overlap_frac": 0.5656,
+        "overlap_pval": 0.001,
+        "overlap_effect": 40.49,
+        "norm_ks_stat": 0.7178,
+        "norm_ks_pval": 0.0,
+        "verdict": "GENUINE"
+      },
+      "3": {
+        "n_lat": 36585,
+        "n_nf": 1902,
+        "log_ks_stat": 0.8197,
+        "log_ks_pval": 0.0,
+        "overlap": 149,
+        "overlap_frac": 0.1277,
+        "overlap_pval": 0.001,
+        "overlap_effect": 12.74,
+        "norm_ks_stat": 0.9874,
+        "norm_ks_pval": 0.0,
+        "verdict": "GENUINE"
+      },
+      "4": {
+        "n_lat": 481,
+        "n_nf": 1044,
+        "log_ks_stat": 0.6028,
+        "log_ks_pval": 2.4703e-112,
+        "overlap": 22,
+        "overlap_frac": 0.1818,
+        "overlap_pval": 0.001,
+        "overlap_effect": 9.05,
+        "norm_ks_stat": 0.9376,
+        "norm_ks_pval": 1.4897e-231,
+        "verdict": "GENUINE"
+      },
+      "5": {
+        "n_lat": 295,
+        "n_nf": 82,
+        "log_ks_stat": 0.6542,
+        "log_ks_pval": 9.1359e-27,
+        "overlap": 0,
+        "overlap_frac": 0.0,
+        "overlap_pval": 1.0,
+        "overlap_effect": 0.0,
+        "norm_ks_stat": 1.0,
+        "norm_ks_pval": 1.3748e-48,
+        "verdict": "PRIME ARTIFACT"
+      },
+      "6": {
+        "verdict": "INSUFFICIENT DATA",
+        "n_lat": 186,
+        "n_nf": 1
+      },
+      "8": {
+        "verdict": "INSUFFICIENT DATA",
+        "n_lat": 37,
+        "n_nf": 0
+      }
+    },
+    "overall_verdict": "GENUINE"
+  },
+  "E": {
+    "test": "E_kissing_bridge",
+    "n_with_kissing": 39293,
+    "unique_kissing": 43,
+    "kissing_disc_overlap": 12,
+    "kissing_cn_overlap": 35,
+    "fisher_odds": 1.029,
+    "fisher_pval": 0.848,
+    "verdict": "NO BRIDGE"
+  },
+  "overall": "PARTIAL \u2014 some genuine signal, mostly artifact",
+  "corrected_analysis": {
+    "note": "Original Test D permutation null was flawed (shuffled pooled values instead of random-integer baseline). Density-corrected reanalysis below.",
+    "D_corrected": {
+      "dim2": {
+        "actual_overlap": 237,
+        "expected_random": 226.0,
+        "ratio": 1.049,
+        "pval_corrected": 0.063,
+        "effect_corrected": 1.62,
+        "verdict": "DENSITY ARTIFACT \u2014 NF discs cover 56% of integers in range"
+      },
+      "dim3": {
+        "actual_overlap": 149,
+        "expected_random": 195.9,
+        "ratio": 0.761,
+        "pval_corrected": 1.0,
+        "effect_corrected": -3.03,
+        "verdict": "ANTI-CORRELATED \u2014 lattice dets AVOID NF discriminants at degree 3"
+      },
+      "dim4": {
+        "actual_overlap": 22,
+        "expected_random": 8.5,
+        "ratio": 2.577,
+        "pval_corrected": 0.001,
+        "effect_corrected": 4.79,
+        "verdict": "GENUINE \u2014 2.6x enrichment, p<0.001, overlap values are highly composite (125,144,256,432,...)",
+        "overlap_values": [
+          125,
+          144,
+          189,
+          256,
+          432,
+          512,
+          784,
+          1024,
+          1125,
+          1372,
+          1728,
+          2000,
+          2048,
+          2197,
+          3072,
+          3888,
+          3993,
+          4752,
+          4913,
+          5488,
+          6144,
+          6912
+        ],
+        "interpretation": "Both dim-4 lattice dets and deg-4 NF discs are enriched for smooth numbers (small prime powers). Shared bias toward algebraically constrained integers, not random overlap."
+      },
+      "dim5": {
+        "verdict": "ZERO OVERLAP \u2014 insufficient data"
+      }
+    },
+    "C_interpretation": {
+      "note": "Within-signature overlap (47.5%) appears high vs Poisson null (6.5%), but this is because both datasets draw from the SAME finite pool of small integers with each signature. For primes: 16/17 lattice primes appear as NF discs, but expected is 17.0 because NF discs cover 99.9% of primes up to 10K.",
+      "revised_verdict": "SHARED SMALL-INTEGER BIAS \u2014 not prime artifact per se, but shared constraint toward small smooth numbers"
+    }
+  },
+  "corrected_summary": {
+    "A_det_disc_overlap": "PRIME ARTIFACT (confirmed)",
+    "B_class_number": "PRIME ARTIFACT (confirmed \u2014 class numbers are small integers)",
+    "C_prime_detrending": "SHARED SMALL-INTEGER BIAS (within-signature overlap is expected given finite pools)",
+    "D_matched_dim2": "DENSITY ARTIFACT (NF discs cover 56% of range)",
+    "D_matched_dim3": "ANTI-CORRELATED (lattice dets avoid NF disc values)",
+    "D_matched_dim4": "GENUINE (2.6x enrichment, 4.8sigma, smooth-number bridge)",
+    "D_matched_dim5": "ZERO OVERLAP",
+    "E_kissing": "NO BRIDGE (confirmed)",
+    "overall": "MOSTLY ARTIFACT with one genuine signal at dim=4: both 4-dimensional lattice determinants and degree-4 number field discriminants are enriched for highly composite numbers (125,144,256,432,...). This reflects shared algebraic constraints on 4-dimensional objects, NOT a deep structural bridge. The tensor bridge SV=5829 is inflated by shared concept labels (determinant, dimension_N, class_number) that map to trivially overlapping small-integer sets."
+  }
+}

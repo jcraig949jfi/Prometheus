@@ -1,0 +1,703 @@
+{
+  "challenge": "R3-3",
+  "title": "Scaling Law Peak Prime \u2014 Enrichment Curve to p=31",
+  "timestamp": "2026-04-09T21:31:58",
+  "family_source": "C11",
+  "n_families": 668,
+  "n_sequences": 4010,
+  "primes_tested": [
+    2,
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31
+  ],
+  "fp_length": 20,
+  "random_pairs": 50000,
+  "raw_curve": {
+    "2": {
+      "family_rate": 0.15460720614294152,
+      "random_rate": 0.0179,
+      "enrichment": 8.63727408619785,
+      "smoothed_enrichment": 8.62780682405493,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "3": {
+      "family_rate": 0.06417601890135853,
+      "random_rate": 0.0008,
+      "enrichment": 80.22002362669816,
+      "smoothed_enrichment": 78.26500295333727,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "5": {
+      "family_rate": 0.023331364441819255,
+      "random_rate": 0.00012,
+      "enrichment": 194.42803701516044,
+      "smoothed_enrichment": 166.65593620791492,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "7": {
+      "family_rate": 0.012551683402244536,
+      "random_rate": 2e-05,
+      "enrichment": 627.5841701122267,
+      "smoothed_enrichment": 313.7983608978145,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "11": {
+      "family_rate": 0.0047844063792085055,
+      "random_rate": 0.0,
+      "enrichment": Infinity,
+      "smoothed_enrichment": 239.22510336680446,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "13": {
+      "family_rate": 0.003396337861783816,
+      "random_rate": 0.0,
+      "enrichment": Infinity,
+      "smoothed_enrichment": 169.8202894270526,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "17": {
+      "family_rate": 0.00212640283520378,
+      "random_rate": 0.0,
+      "enrichment": Infinity,
+      "smoothed_enrichment": 106.3222681630242,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "19": {
+      "family_rate": 0.001831069108092144,
+      "random_rate": 0.0,
+      "enrichment": Infinity,
+      "smoothed_enrichment": 91.55528647371528,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "23": {
+      "family_rate": 0.0016538688718251624,
+      "random_rate": 2e-05,
+      "enrichment": 82.69344359125812,
+      "smoothed_enrichment": 41.34754873006497,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "29": {
+      "family_rate": 0.000531600708800945,
+      "random_rate": 0.0,
+      "enrichment": Infinity,
+      "smoothed_enrichment": 26.58056704075605,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "31": {
+      "family_rate": 0.0006497341996455995,
+      "random_rate": 0.0,
+      "enrichment": Infinity,
+      "smoothed_enrichment": 32.487359716479624,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    }
+  },
+  "detrended_curve": {
+    "2": {
+      "family_rate": 0.5158889545186061,
+      "random_rate": 0.5076,
+      "enrichment": 1.0163296976331875,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "3": {
+      "family_rate": 0.13269344359125812,
+      "random_rate": 0.02332,
+      "enrichment": 5.690113361546231,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "5": {
+      "family_rate": 0.11993502658003544,
+      "random_rate": 0.01608,
+      "enrichment": 7.458645931594243,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "7": {
+      "family_rate": 0.12504430005906675,
+      "random_rate": 0.01392,
+      "enrichment": 8.983067532978932,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "11": {
+      "family_rate": 0.125812167749557,
+      "random_rate": 0.01398,
+      "enrichment": 8.999439753187197,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "13": {
+      "family_rate": 0.11724748966331955,
+      "random_rate": 0.01314,
+      "enrichment": 8.922944418821883,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "17": {
+      "family_rate": 0.11733608978145305,
+      "random_rate": 0.01336,
+      "enrichment": 8.782641450707564,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "19": {
+      "family_rate": 0.11733608978145305,
+      "random_rate": 0.01336,
+      "enrichment": 8.782641450707564,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "23": {
+      "family_rate": 0.11727702303603071,
+      "random_rate": 0.01332,
+      "enrichment": 8.804581309011315,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "29": {
+      "family_rate": 0.11724748966331955,
+      "random_rate": 0.01384,
+      "enrichment": 8.47163942654043,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    },
+    "31": {
+      "family_rate": 0.11727702303603071,
+      "random_rate": 0.01438,
+      "enrichment": 8.155564884285862,
+      "family_pairs": 33860,
+      "random_pairs": 50000
+    }
+  },
+  "raw_model_fits": {
+    "power_law": {
+      "A": 141.10535505325873,
+      "alpha": -0.08370080697192554,
+      "r_squared": 0.014106880315359338,
+      "rss": 92632.75570105169,
+      "aic": 134.64017873465986,
+      "bic": 135.4359692802566,
+      "predicted": [
+        133.15180016024527,
+        128.7087468277762,
+        123.32159765343025,
+        119.89694241141801,
+        115.44578674707144,
+        113.84279201488488,
+        111.31506089065137,
+        110.28356271160145,
+        108.53399199525501,
+        106.44851404296408,
+        105.85596085609288
+      ]
+    },
+    "logistic": {
+      "E_max": 231.7596866076867,
+      "k": 8.664956132025513e-13,
+      "p_half": 0.004281385309323066,
+      "r_squared": -5.533373759192273e-11,
+      "rss": 93958.21297120726,
+      "aic": 136.79645934481664,
+      "bic": 137.99014516321176,
+      "predicted": [
+        115.87984330394355,
+        115.87984330399374,
+        115.87984330409415,
+        115.87984330419457,
+        115.87984330439538,
+        115.8798433044958,
+        115.8798433046966,
+        115.87984330479702,
+        115.87984330499785,
+        115.87984330529908,
+        115.87984330539948
+      ]
+    },
+    "gaussian_peak": {
+      "A": 281.58416436475875,
+      "B": 0.024755399642775133,
+      "p_peak": 9.533300070470325,
+      "r_squared": 0.7874805696397076,
+      "rss": 19967.9458972071,
+      "aic": 119.76051890831819,
+      "bic": 120.9542047267133,
+      "predicted": [
+        69.09949060373405,
+        97.8828804947021,
+        169.30264045594882,
+        240.22137800542214,
+        266.9809633470798,
+        209.12262184582525,
+        70.8296752939945,
+        30.62730385061646,
+        3.1613210027704937,
+        0.023737792716088613,
+        0.0031280914648717235
+      ]
+    },
+    "best_model": "gaussian_peak",
+    "best_aic": 119.76051890831819
+  },
+  "detrended_model_fits": {
+    "power_law": {
+      "A": 4.321324180805095,
+      "alpha": 0.23394278218294023,
+      "r_squared": 0.49502027309190255,
+      "rss": 29.25381860314332,
+      "aic": 45.975911002329426,
+      "bic": 46.77170154792617,
+      "predicted": [
+        5.082069997949452,
+        5.587736546419407,
+        6.2970310575152215,
+        6.81273403233703,
+        7.572567442532906,
+        7.874370676827509,
+        8.384390395540539,
+        8.605419036808136,
+        8.998771958897652,
+        9.500234034579053,
+        9.649618676868467
+      ]
+    },
+    "logistic": {
+      "E_max": 8.601169193086648,
+      "k": 2.5934660446816684,
+      "p_half": 2.7501714517689053,
+      "r_squared": 0.9657393819740199,
+      "rss": 1.9847408748470547,
+      "aic": 18.3801717334907,
+      "bic": 19.573857551885816,
+      "predicted": [
+        1.0754904754417345,
+        5.647028868877475,
+        8.576093978405797,
+        8.601028637038635,
+        8.601169188695838,
+        8.601169193062105,
+        8.601169193086648,
+        8.601169193086648,
+        8.601169193086648,
+        8.601169193086648,
+        8.601169193086648
+      ]
+    },
+    "gaussian_peak": {
+      "A": 9.666733357818709,
+      "B": 0.00206621721666375,
+      "p_peak": 20.040936759925103,
+      "r_squared": 0.5664112586235592,
+      "rss": 25.11809031672283,
+      "aic": 46.299271208874345,
+      "bic": 47.492957027269455,
+      "predicted": [
+        4.934185269725893,
+        5.305130324207857,
+        6.057217746291543,
+        6.802546844157365,
+        8.164543920048896,
+        8.725573135590482,
+        9.483785182175206,
+        9.645115217195668,
+        9.493416214082464,
+        8.189443112419568,
+        7.542363148209918
+      ]
+    },
+    "best_model": "logistic",
+    "best_aic": 18.3801717334907
+  },
+  "detrended_slope_analysis": {
+    "linear_slope": 0.12481356466121245,
+    "linear_intercept": 5.827039897383676,
+    "linear_r_squared": 0.2771779765854313,
+    "is_flat": "True",
+    "peak_prime": 11,
+    "min_enrichment": 1.0163296976331875,
+    "max_enrichment": 8.999439753187197,
+    "mean_enrichment": 7.642509928819493,
+    "std_enrichment": 2.294869362125441
+  },
+  "family_specific_curves": {
+    "x^3 -x^2 +3x -3": {
+      "n_sequences": 50,
+      "curve": {
+        "2": {
+          "family_rate": 0.14285714285714285,
+          "enrichment": 7.980845969672785,
+          "pairs": 1225
+        },
+        "3": {
+          "family_rate": 0.05061224489795919,
+          "enrichment": 63.26530612244898,
+          "pairs": 1225
+        },
+        "5": {
+          "family_rate": 0.006530612244897959,
+          "enrichment": 54.421768707483,
+          "pairs": 1225
+        },
+        "7": {
+          "family_rate": 0.006530612244897959,
+          "enrichment": 326.53061224489795,
+          "pairs": 1225
+        },
+        "11": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "13": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "17": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "19": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "23": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": 40.816326530612244,
+          "pairs": 1225
+        },
+        "29": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "31": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        }
+      },
+      "peak_prime": 7,
+      "sample_seqs": [
+        "A381424",
+        "A060787",
+        "A022289",
+        "A051873",
+        "A104249"
+      ]
+    },
+    "x^3 +x^2 -x -1": {
+      "n_sequences": 50,
+      "curve": {
+        "2": {
+          "family_rate": 0.14122448979591837,
+          "enrichment": 7.889636301447954,
+          "pairs": 1225
+        },
+        "3": {
+          "family_rate": 0.04,
+          "enrichment": 50.0,
+          "pairs": 1225
+        },
+        "5": {
+          "family_rate": 0.013877551020408163,
+          "enrichment": 115.64625850340136,
+          "pairs": 1225
+        },
+        "7": {
+          "family_rate": 0.004081632653061225,
+          "enrichment": 204.08163265306123,
+          "pairs": 1225
+        },
+        "11": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "13": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "17": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "19": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "23": {
+          "family_rate": 0.0,
+          "enrichment": 0.0,
+          "pairs": 1225
+        },
+        "29": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "31": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        }
+      },
+      "peak_prime": 7,
+      "sample_seqs": [
+        "A047264",
+        "A047336",
+        "A168282",
+        "A168373",
+        "A168413"
+      ]
+    },
+    "x^5 +x^4 -x^3 -1": {
+      "n_sequences": 50,
+      "curve": {
+        "2": {
+          "family_rate": 0.04,
+          "enrichment": 2.23463687150838,
+          "pairs": 1225
+        },
+        "3": {
+          "family_rate": 0.006530612244897959,
+          "enrichment": 8.16326530612245,
+          "pairs": 1225
+        },
+        "5": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": 6.802721088435375,
+          "pairs": 1225
+        },
+        "7": {
+          "family_rate": 0.0,
+          "enrichment": 0.0,
+          "pairs": 1225
+        },
+        "11": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "13": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "17": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "19": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "23": {
+          "family_rate": 0.0,
+          "enrichment": 0.0,
+          "pairs": 1225
+        },
+        "29": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "31": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        }
+      },
+      "peak_prime": 3,
+      "sample_seqs": [
+        "A047201",
+        "A047510",
+        "A047227",
+        "A265428",
+        "A047203"
+      ]
+    },
+    "x^2 -x -1": {
+      "n_sequences": 50,
+      "curve": {
+        "2": {
+          "family_rate": 0.2563265306122449,
+          "enrichment": 14.3199179112986,
+          "pairs": 1225
+        },
+        "3": {
+          "family_rate": 0.10857142857142857,
+          "enrichment": 135.7142857142857,
+          "pairs": 1225
+        },
+        "5": {
+          "family_rate": 0.04,
+          "enrichment": 333.3333333333333,
+          "pairs": 1225
+        },
+        "7": {
+          "family_rate": 0.026122448979591838,
+          "enrichment": 1306.1224489795918,
+          "pairs": 1225
+        },
+        "11": {
+          "family_rate": 0.013877551020408163,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "13": {
+          "family_rate": 0.00816326530612245,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "17": {
+          "family_rate": 0.0032653061224489797,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "19": {
+          "family_rate": 0.005714285714285714,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "23": {
+          "family_rate": 0.005714285714285714,
+          "enrichment": 285.71428571428567,
+          "pairs": 1225
+        },
+        "29": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "31": {
+          "family_rate": 0.0008163265306122449,
+          "enrichment": Infinity,
+          "pairs": 1225
+        }
+      },
+      "peak_prime": 7,
+      "sample_seqs": [
+        "A000032",
+        "A000045",
+        "A000204",
+        "A000285",
+        "A001060"
+      ]
+    },
+    "x^5 -x^3": {
+      "n_sequences": 50,
+      "curve": {
+        "2": {
+          "family_rate": 0.35918367346938773,
+          "enrichment": 20.066127009463003,
+          "pairs": 1225
+        },
+        "3": {
+          "family_rate": 0.16653061224489796,
+          "enrichment": 208.16326530612244,
+          "pairs": 1225
+        },
+        "5": {
+          "family_rate": 0.062040816326530614,
+          "enrichment": 517.0068027210884,
+          "pairs": 1225
+        },
+        "7": {
+          "family_rate": 0.026938775510204082,
+          "enrichment": 1346.938775510204,
+          "pairs": 1225
+        },
+        "11": {
+          "family_rate": 0.009795918367346938,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "13": {
+          "family_rate": 0.00816326530612245,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "17": {
+          "family_rate": 0.004081632653061225,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "19": {
+          "family_rate": 0.0032653061224489797,
+          "enrichment": Infinity,
+          "pairs": 1225
+        },
+        "23": {
+          "family_rate": 0.0032653061224489797,
+          "enrichment": 163.26530612244898,
+          "pairs": 1225
+        },
+        "29": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        },
+        "31": {
+          "family_rate": 0.0,
+          "enrichment": 1.0,
+          "pairs": 1225
+        }
+      },
+      "peak_prime": 7,
+      "sample_seqs": [
+        "A040928",
+        "A190567",
+        "A040294",
+        "A107453",
+        "A040867"
+      ]
+    }
+  },
+  "peak_analysis": {
+    "raw_peak_prime_smoothed": 7,
+    "raw_peak_enrichment_smoothed": 313.7983608978145,
+    "raw_smoothed_monotone": false,
+    "family_rate_monotone_declining": false,
+    "family_peak_primes": {
+      "x^3 -x^2 +3x -3": 7,
+      "x^3 +x^2 -x -1": 7,
+      "x^5 +x^4 -x^3 -1": 3,
+      "x^2 -x -1": 7,
+      "x^5 -x^3": 7
+    },
+    "families_agree_on_peak": false
+  },
+  "interpretation": [
+    "Smoothed raw enrichment peaks at p=7, then declines \u2014 there IS a peak prime in the raw curve.",
+    "Detrended curve is FLAT (slope=0.1248): after removing shared prime factors, the residual enrichment is a constant ~7.6x across all primes.",
+    "The raw scaling law is ENTIRELY driven by prime factor sharing; the algebraic signal itself has no prime-dependent structure.",
+    "Different families peak at different primes \u2014 the peak prime is a new algebraic invariant, likely related to Galois image size or the largest prime dividing the discriminant/conductor."
+  ]
+}

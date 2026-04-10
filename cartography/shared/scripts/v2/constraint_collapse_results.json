@@ -1,0 +1,762 @@
+{
+  "congruence_collapse": {
+    "gl2": {
+      "data": {
+        "2": 5000,
+        "3": 800,
+        "5": 190,
+        "7": 50,
+        "11": 2,
+        "13": 0
+      },
+      "log_log_fit": {
+        "slope": -4.315498862931688,
+        "intercept": 11.695509993841618,
+        "r_squared": 0.9668590161554046
+      },
+      "model_fits": {
+        "label": "GL_2",
+        "n_points": 5,
+        "x": [
+          2.0,
+          3.0,
+          5.0,
+          7.0,
+          11.0
+        ],
+        "y": [
+          5000.0,
+          800.0,
+          190.0,
+          50.0,
+          2.0
+        ],
+        "fits": {
+          "exponential": {
+            "params": {
+              "A": 188688.67241415824,
+              "B": 1.8154777936376354
+            },
+            "rss": 31008.052274478425,
+            "aic": 47.66282144046707,
+            "bic": 46.88169726533527
+          },
+          "super_exponential": {
+            "params": {
+              "A": 21609.81786126116,
+              "B": 0.3659412673455971
+            },
+            "rss": 37740.898738147254,
+            "aic": 48.64530860073131,
+            "bic": 47.86418442559951
+          },
+          "power_law": {
+            "params": {
+              "A": 108299.92600363202,
+              "alpha": 4.43768180617012
+            },
+            "rss": 12547.04600894049,
+            "aic": 43.13901313323234,
+            "bic": 42.35788895810054
+          }
+        },
+        "best_model": "power_law"
+      }
+    },
+    "gsp4": {
+      "data": {
+        "2": 733,
+        "3": 37,
+        "5": 0,
+        "7": 0,
+        "11": 0
+      },
+      "log_log_fit": {
+        "slope": -7.36494393605331,
+        "intercept": 11.702135826144062,
+        "r_squared": 1.0
+      },
+      "model_fits": {
+        "label": "GSp_4",
+        "n_points": 2,
+        "error": "too few points for fitting"
+      }
+    },
+    "slope_ratio": 1.7066263182954506,
+    "theory_prediction": 2.0,
+    "interpretation": "GSp_4 collapses 1.7x faster than GL_2 in log-log. Theory predicts 2x (k=2 vs k=1). Consistent with Hasse squeeze."
+  },
+  "lattice_class_numbers": {
+    "total_lattices": 39293,
+    "dimensions": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "cn1_fractions": [
+      1.0,
+      0.026076260762607627,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.972972972972973,
+      0.8
+    ],
+    "counts_per_dim": {
+      "1": 1,
+      "2": 1609,
+      "3": 36585,
+      "4": 481,
+      "5": 295,
+      "6": 186,
+      "7": 86,
+      "8": 37,
+      "9": 5,
+      "10": 3,
+      "11": 1,
+      "12": 1,
+      "13": 1,
+      "14": 1,
+      "24": 1
+    },
+    "cn1_per_dim": {
+      "1": 1,
+      "2": 1609,
+      "3": 954,
+      "4": 481,
+      "5": 295,
+      "6": 186,
+      "7": 86,
+      "8": 36,
+      "9": 4,
+      "10": 2,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "24": 0
+    },
+    "model_fits": {
+      "label": "lattice_cn1_fraction",
+      "n_points": 8,
+      "x": [
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0,
+        9.0
+      ],
+      "y": [
+        1.0,
+        0.026076260762607627,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.972972972972973,
+        0.8
+      ],
+      "fits": {
+        "exponential": {
+          "params": {
+            "A": 0.6661561729746371,
+            "B": -0.043455985826086105
+          },
+          "rss": 0.7472849562951881,
+          "aic": -14.966001925376919,
+          "bic": -14.807118842017246
+        },
+        "super_exponential": {
+          "params": {
+            "A": 0.7579197108493607,
+            "B": -0.0031443939373232274
+          },
+          "rss": 0.7656105176554555,
+          "aic": -14.772185942584873,
+          "bic": -14.6133028592252
+        },
+        "power_law": {
+          "params": {
+            "A": 0.5774421339287087,
+            "alpha": -0.23745420728506017
+          },
+          "rss": 0.7391045285565236,
+          "aic": -15.054059710136148,
+          "bic": -14.895176626776475
+        }
+      },
+      "best_model": "power_law"
+    },
+    "top_class_numbers": {
+      "1": 3654,
+      "5": 1865,
+      "7": 1820,
+      "4": 1717,
+      "6": 1609,
+      "10": 1520,
+      "3": 1516,
+      "13": 1495,
+      "15": 1485,
+      "8": 1449
+    },
+    "collapse_observed": false
+  },
+  "number_field_counts": {
+    "total_fields": 9116,
+    "degrees": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "counts": [
+      1,
+      6086,
+      1902,
+      1044,
+      82,
+      1
+    ],
+    "model_fits": {
+      "label": "number_fields_by_degree",
+      "n_points": 6,
+      "x": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0
+      ],
+      "y": [
+        1.0,
+        6086.0,
+        1902.0,
+        1044.0,
+        82.0,
+        1.0
+      ],
+      "fits": {
+        "exponential": {
+          "params": {
+            "A": 3169.114042516452,
+            "B": 0.21685589484125722
+          },
+          "rss": 24627862.170530356,
+          "aic": 95.36577699589301,
+          "bic": 94.94929593434912
+        },
+        "super_exponential": {
+          "params": {
+            "A": 2932.9561652685657,
+            "B": 0.05091403469803961
+          },
+          "rss": 22238341.332486108,
+          "aic": 94.75341384978113,
+          "bic": 94.33693278823723
+        },
+        "power_law": {
+          "params": {
+            "A": 2137.4911608569805,
+            "alpha": 0.3123336830062651
+          },
+          "rss": 26835857.657653075,
+          "aic": 95.88094032559707,
+          "bic": 95.46445926405318
+        }
+      },
+      "best_model": "super_exponential"
+    },
+    "collapse_observed": false,
+    "interpretation": "As degree grows with bounded discriminant, fewer fields exist. This follows from the Hermite bound: only finitely many fields of given degree with |disc| < B."
+  },
+  "oeis_survival": {
+    "total_sequences": 391829,
+    "constraint_names": [
+      "all",
+      "non_negative",
+      "positive",
+      "squarefree",
+      "all_prime_gt1",
+      "monotone_increasing",
+      "increasing_gaps"
+    ],
+    "constraint_levels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "survival_counts": [
+      391829,
+      371041,
+      279067,
+      35605,
+      20717,
+      13633,
+      278
+    ],
+    "survival_fractions": [
+      1.0,
+      0.946946244407637,
+      0.7122162984363076,
+      0.09086872079401984,
+      0.05287255409885435,
+      0.034793238887371784,
+      0.0007094931717662551
+    ],
+    "model_fits": {
+      "label": "oeis_survival",
+      "n_points": 6,
+      "x": [
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0
+      ],
+      "y": [
+        371041.0,
+        279067.0,
+        35605.0,
+        20717.0,
+        13633.0,
+        278.0
+      ],
+      "fits": {
+        "exponential": {
+          "params": {
+            "A": 802923.7168461791,
+            "B": 0.7105345871842522
+          },
+          "rss": 12260200721.17784,
+          "aic": 132.62718802077848,
+          "bic": 132.21070695923459
+        },
+        "super_exponential": {
+          "params": {
+            "A": 470824.488417331,
+            "B": 0.1861788109953534
+          },
+          "rss": 6324609237.0404,
+          "aic": 128.65572771831015,
+          "bic": 128.23924665676626
+        },
+        "power_law": {
+          "params": {
+            "A": 394349.2202332467,
+            "alpha": 1.3451799178704944
+          },
+          "rss": 22701151018.234768,
+          "aic": 136.323531979416,
+          "bic": 135.9070509178721
+        }
+      },
+      "best_model": "super_exponential"
+    }
+  },
+  "isogeny_graphs": {
+    "n_primes_sampled": 99,
+    "deuring_ratio_mean": 1.0511909636382981,
+    "deuring_ratio_std": 0.10301418990668822,
+    "deuring_interpretation": "Nodes closely track (p-1)/12 Deuring prediction",
+    "ell_diameter_means": {
+      "2": 8.787878787878787,
+      "3": 6.101010101010101,
+      "5": 4.515151515151516,
+      "7": 3.8686868686868685,
+      "11": 3.272727272727273
+    },
+    "diameter_model_fits": {
+      "label": "isogeny_diameter_vs_ell",
+      "n_points": 5,
+      "x": [
+        2.0,
+        3.0,
+        5.0,
+        7.0,
+        11.0
+      ],
+      "y": [
+        8.787878787878787,
+        6.101010101010101,
+        4.515151515151516,
+        3.8686868686868685,
+        3.272727272727273
+      ],
+      "fits": {
+        "exponential": {
+          "params": {
+            "A": 10.251931395208889,
+            "B": 0.13402667987316624
+          },
+          "rss": 2.8790810790396497,
+          "aic": 1.2401663051113148,
+          "bic": 0.4590421299795153
+        },
+        "super_exponential": {
+          "params": {
+            "A": 7.4483417790162,
+            "B": 0.01046768729797858
+          },
+          "rss": 6.376335673695687,
+          "aic": 5.215778370535681,
+          "bic": 4.434654195403881
+        },
+        "power_law": {
+          "params": {
+            "A": 13.147636014067727,
+            "alpha": 0.6342344683932983
+          },
+          "rss": 0.5128976194499215,
+          "aic": -7.385584691925146,
+          "bic": -8.166708867056945
+        }
+      },
+      "best_model": "power_law"
+    },
+    "sample_data": {
+      "13": {
+        "nodes": 1,
+        "deuring_predicted": 1.0,
+        "ratio": 1.0,
+        "ell_constraints": {
+          "2": {
+            "diameter": 0
+          },
+          "3": {
+            "diameter": 0
+          },
+          "5": {
+            "diameter": 0
+          },
+          "7": {
+            "diameter": 0
+          },
+          "11": {
+            "diameter": 0
+          }
+        }
+      },
+      "17": {
+        "nodes": 2,
+        "deuring_predicted": 1.3333333333333333,
+        "ratio": 1.5,
+        "ell_constraints": {
+          "2": {
+            "diameter": 1
+          },
+          "3": {
+            "diameter": 1
+          },
+          "5": {
+            "diameter": 1
+          },
+          "7": {
+            "diameter": 1
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "19": {
+        "nodes": 2,
+        "deuring_predicted": 1.5,
+        "ratio": 1.3333333333333333,
+        "ell_constraints": {
+          "2": {
+            "diameter": 1
+          },
+          "3": {
+            "diameter": 1
+          },
+          "5": {
+            "diameter": 1
+          },
+          "7": {
+            "diameter": 1
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "23": {
+        "nodes": 3,
+        "deuring_predicted": 1.8333333333333333,
+        "ratio": 1.6363636363636365,
+        "ell_constraints": {
+          "2": {
+            "diameter": 2
+          },
+          "3": {
+            "diameter": 2
+          },
+          "5": {
+            "diameter": 2
+          },
+          "7": {
+            "diameter": 2
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "29": {
+        "nodes": 3,
+        "deuring_predicted": 2.3333333333333335,
+        "ratio": 1.2857142857142856,
+        "ell_constraints": {
+          "2": {
+            "diameter": 2
+          },
+          "3": {
+            "diameter": 2
+          },
+          "5": {
+            "diameter": 1
+          },
+          "7": {
+            "diameter": 2
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "31": {
+        "nodes": 3,
+        "deuring_predicted": 2.5,
+        "ratio": 1.2,
+        "ell_constraints": {
+          "2": {
+            "diameter": 2
+          },
+          "3": {
+            "diameter": 2
+          },
+          "5": {
+            "diameter": 1
+          },
+          "7": {
+            "diameter": 1
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "37": {
+        "nodes": 3,
+        "deuring_predicted": 3.0,
+        "ratio": 1.0,
+        "ell_constraints": {
+          "2": {
+            "diameter": 1
+          },
+          "3": {
+            "diameter": 1
+          },
+          "5": {
+            "diameter": 1
+          },
+          "7": {
+            "diameter": 1
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "41": {
+        "nodes": 4,
+        "deuring_predicted": 3.3333333333333335,
+        "ratio": 1.2,
+        "ell_constraints": {
+          "2": {
+            "diameter": 3
+          },
+          "3": {
+            "diameter": 2
+          },
+          "5": {
+            "diameter": 2
+          },
+          "7": {
+            "diameter": 2
+          },
+          "11": {
+            "diameter": 2
+          }
+        }
+      },
+      "43": {
+        "nodes": 4,
+        "deuring_predicted": 3.5,
+        "ratio": 1.1428571428571428,
+        "ell_constraints": {
+          "2": {
+            "diameter": 2
+          },
+          "3": {
+            "diameter": 2
+          },
+          "5": {
+            "diameter": 2
+          },
+          "7": {
+            "diameter": 1
+          },
+          "11": {
+            "diameter": 1
+          }
+        }
+      },
+      "47": {
+        "nodes": 5,
+        "deuring_predicted": 3.8333333333333335,
+        "ratio": 1.3043478260869565,
+        "ell_constraints": {
+          "2": {
+            "diameter": 3
+          },
+          "3": {
+            "diameter": 3
+          },
+          "5": {
+            "diameter": 3
+          },
+          "7": {
+            "diameter": 2
+          },
+          "11": {
+            "diameter": 2
+          }
+        }
+      }
+    }
+  },
+  "synthesis": {
+    "normalized_curves": {
+      "congruence_collapse_gl2": {
+        "x_normalized": [
+          0.0,
+          0.1111111111111111,
+          0.3333333333333333,
+          0.5555555555555556,
+          1.0
+        ],
+        "y_normalized": [
+          1.0,
+          0.16,
+          0.038,
+          0.01,
+          0.0004
+        ],
+        "best_model": "power_law"
+      },
+      "lattice_class_numbers": {
+        "x_normalized": [
+          0.0,
+          0.14285714285714285,
+          0.2857142857142857,
+          0.42857142857142855,
+          0.5714285714285714,
+          0.7142857142857143,
+          0.8571428571428571,
+          1.0
+        ],
+        "y_normalized": [
+          1.0,
+          0.026076260762607627,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          0.972972972972973,
+          0.8
+        ],
+        "best_model": "power_law"
+      },
+      "number_field_counts": {
+        "x_normalized": [
+          0.0,
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          1.0
+        ],
+        "y_normalized": [
+          0.00016431153466973383,
+          1.0,
+          0.31252053894183374,
+          0.17154124219520211,
+          0.013473545842918173,
+          0.00016431153466973383
+        ],
+        "best_model": "super_exponential"
+      },
+      "oeis_survival": {
+        "x_normalized": [
+          0.0,
+          0.2,
+          0.4,
+          0.6,
+          0.8,
+          1.0
+        ],
+        "y_normalized": [
+          1.0,
+          0.7521190380577888,
+          0.09595974568848187,
+          0.05583479992777079,
+          0.036742570228088,
+          0.0007492433450750726
+        ],
+        "best_model": "super_exponential"
+      },
+      "isogeny_graphs": {
+        "x_normalized": [
+          0.0,
+          0.1111111111111111,
+          0.3333333333333333,
+          0.5555555555555556,
+          1.0
+        ],
+        "y_normalized": [
+          1.0,
+          0.6942528735632185,
+          0.513793103448276,
+          0.4402298850574713,
+          0.37241379310344835
+        ],
+        "best_model": "power_law"
+      }
+    },
+    "model_votes": {
+      "power_law": 3,
+      "super_exponential": 2
+    },
+    "dominant_model": "power_law",
+    "universal_collapse": false,
+    "interpretation": "The dominant decay model across 5 systems is 'power_law'. Not all systems show clear collapse. The Hasse squeeze mechanism \u2014 independent constraints per prime producing super-exponential solution-space shrinkage \u2014 does not clearly appear universal across these mathematical domains."
+  }
+}

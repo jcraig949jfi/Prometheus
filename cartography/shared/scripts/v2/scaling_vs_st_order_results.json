@@ -1,0 +1,546 @@
+{
+  "challenge": "R4-4",
+  "title": "Scaling Law Exponent vs Sato-Tate Group Order",
+  "st_slopes_with_ci": {
+    "USp(4)": {
+      "slope": 0.007801557461898241,
+      "ci_lo": -0.004369406121152261,
+      "ci_hi": 0.01456436511214304,
+      "bootstrap_std": 0.004817416638573335,
+      "n_curves": 9537
+    },
+    "G_{3,3}": {
+      "slope": -0.26580403417470333,
+      "ci_lo": -0.689574148805294,
+      "ci_hi": 0.08195716111561115,
+      "bootstrap_std": 0.2623223173162106,
+      "n_curves": 383
+    },
+    "N(G_{1,3})": {
+      "slope": -0.20380807600992268,
+      "ci_lo": -0.6400928585766427,
+      "ci_hi": 0.1911501842771222,
+      "bootstrap_std": 0.2673963417112309,
+      "n_curves": 35
+    },
+    "N(G_{3,3})": {
+      "slope": 0.5778542271913247,
+      "ci_lo": 0.2889497237900111,
+      "ci_hi": 0.7991357339804053,
+      "bootstrap_std": 0.17718416581852856,
+      "n_curves": 15
+    },
+    "E_6": {
+      "slope": 0.014231961704460427,
+      "ci_lo": -0.6734579611886645,
+      "ci_hi": 0.2551658632834379,
+      "bootstrap_std": 0.2992278233257051,
+      "n_curves": 13
+    },
+    "J(E_1)": {
+      "slope": 0.39753881813479536,
+      "ci_lo": 0.07915871231539164,
+      "ci_hi": 0.7035606510743784,
+      "bootstrap_std": 0.1660434347654472,
+      "n_curves": 5
+    }
+  },
+  "endo_slopes_with_ci": {
+    "CM": {
+      "slope": 0.12116975854816339,
+      "ci_lo": -0.4678229304222972,
+      "ci_hi": 0.3313238209827595,
+      "n_curves": 16
+    },
+    "Q": {
+      "slope": 0.0007500476528321639,
+      "ci_lo": -0.021392448435182093,
+      "ci_hi": 0.020689277108307293,
+      "n_curves": 9538
+    },
+    "QM": {
+      "slope": 0.5672085027545419,
+      "ci_lo": 0.46425864257513116,
+      "ci_hi": 0.6917322533498138,
+      "n_curves": 12
+    },
+    "RM": {
+      "slope": -0.25808834455873264,
+      "ci_lo": -0.6829559747613053,
+      "ci_hi": 0.08085966559953635,
+      "n_curves": 434
+    }
+  },
+  "group_parameters": {
+    "USp(4)": {
+      "pi0_order": 1,
+      "dim_ST0": 10,
+      "identity": "USp(4)",
+      "endo_type": "Q",
+      "endo_rank": 1,
+      "weight": 1
+    },
+    "G_{3,3}": {
+      "pi0_order": 3,
+      "dim_ST0": 6,
+      "identity": "SU(2)xSU(2)",
+      "endo_type": "RM",
+      "endo_rank": 2,
+      "weight": 3
+    },
+    "N(G_{1,3})": {
+      "pi0_order": 6,
+      "dim_ST0": 6,
+      "identity": "SU(2)xSU(2)",
+      "endo_type": "RM",
+      "endo_rank": 2,
+      "weight": 6
+    },
+    "N(G_{3,3})": {
+      "pi0_order": 6,
+      "dim_ST0": 6,
+      "identity": "SU(2)xSU(2)",
+      "endo_type": "QM",
+      "endo_rank": 4,
+      "weight": 6
+    },
+    "E_6": {
+      "pi0_order": 6,
+      "dim_ST0": 2,
+      "identity": "U(1)xU(1)",
+      "endo_type": "CM",
+      "endo_rank": 2,
+      "weight": 6
+    },
+    "J(E_1)": {
+      "pi0_order": 2,
+      "dim_ST0": 4,
+      "identity": "SU(2)xU(1)",
+      "endo_type": "QM",
+      "endo_rank": 4,
+      "weight": 2
+    }
+  },
+  "models": {
+    "slope_vs_rank2": {
+      "R2": 0.7754706097605333,
+      "a": 0.04399982676264099,
+      "b": -0.24202962500183195,
+      "model": "slope = a*rank\u00b2 + b",
+      "n": 6,
+      "p_value": 0.020530710253883925
+    },
+    "slope_vs_endo_rank": {
+      "R2": 0.673699154739591,
+      "a": 0.22387697413818874,
+      "b": -0.4717233596274964,
+      "model": "slope = a*endo_rank + b",
+      "n": 6,
+      "p_value": 0.04529568809101742
+    },
+    "slope_vs_pi0*rank": {
+      "R2": 0.34511369484121457,
+      "a": 0.025188877127465686,
+      "b": -0.17651413412041422,
+      "model": "slope = a*|\u03c0\u2080|*endo_rank + b",
+      "n": 6,
+      "p_value": 0.22017522555784294
+    },
+    "slope_vs_rank/dim": {
+      "R2": 0.2896361358838366,
+      "a": 0.4764113934737539,
+      "b": -0.18464411054756147,
+      "model": "slope = a*(endo_rank/dim) + b",
+      "n": 6,
+      "p_value": 0.2706701727069916
+    },
+    "slope_vs_rank/dim_v2": {
+      "R2": 0.2896361358838366,
+      "a": 0.4764113934737539,
+      "b": -0.18464411054756147,
+      "model": "slope = a*(rank/dim) + b",
+      "n": 6,
+      "p_value": 0.2706701727069916
+    },
+    "slope_vs_log_dim": {
+      "R2": 0.008917710732245383,
+      "a": -0.05822240179094695,
+      "b": 0.18265136481347594,
+      "model": "slope = a*log(dim(ST\u2080)) + b",
+      "n": 6,
+      "p_value": 0.8587706188606933
+    },
+    "slope_vs_pi0": {
+      "R2": 0.0034548976191001225,
+      "a": 0.008610690434274725,
+      "b": 0.053526313980876566,
+      "model": "slope = a*|\u03c0\u2080| + b",
+      "n": 6,
+      "p_value": 0.9119339709290446
+    },
+    "slope_vs_1/pi0": {
+      "R2": 0.001701269842778184,
+      "a": -0.0420427912777526,
+      "b": 0.10431905010376814,
+      "model": "slope = a/|\u03c0\u2080| + b",
+      "n": 6,
+      "p_value": 0.9381654069420811
+    },
+    "slope_vs_(pi0-1)/dim": {
+      "R2": 0.001580839967062769,
+      "a": -0.014754069619973163,
+      "b": 0.09964938083378755,
+      "model": "slope = a*(|\u03c0\u2080|-1)/dim + b",
+      "n": 6,
+      "p_value": 0.9403917595374554
+    },
+    "slope_vs_log_pi0": {
+      "R2": 0.0015452656160647325,
+      "a": 0.017682677902983616,
+      "b": 0.06684700533532174,
+      "model": "slope = a*log(|\u03c0\u2080|) + b",
+      "n": 6,
+      "p_value": 0.9410655721171964
+    },
+    "slope_vs_1/dim": {
+      "R2": 0.0007561851395912961,
+      "a": 0.06429004160622165,
+      "b": 0.07350381635657559,
+      "model": "slope = a/dim(ST\u2080) + b",
+      "n": 6,
+      "p_value": 0.95876216605795
+    },
+    "slope_vs_1/pi0_weighted": {
+      "R2": -0.14687998481268005,
+      "a": 0.31474707257374784,
+      "b": -0.30733975810095204,
+      "model": "slope = a/|\u03c0\u2080| + b (weighted)",
+      "n": 6,
+      "p_value": null
+    },
+    "slope_vs_pi0_weighted": {
+      "R2": -0.3609202138878007,
+      "a": -0.06361040963322397,
+      "b": 0.06815472817820274,
+      "model": "slope = a*|\u03c0\u2080| + b (weighted)",
+      "n": 6,
+      "p_value": null
+    },
+    "slope_vs_1/dim_weighted": {
+      "R2": -0.45781858539201514,
+      "a": -1.5591766203196507,
+      "b": 0.15898064575540283,
+      "model": "slope = a/dim(ST\u2080) + b (weighted)",
+      "n": 6,
+      "p_value": null
+    },
+    "slope_vs_endo_rank_weighted": {
+      "R2": -0.6781437592479358,
+      "a": -0.12885462348022253,
+      "b": 0.13281691511962543,
+      "model": "slope = a*endo_rank + b (weighted)",
+      "n": 6,
+      "p_value": null
+    }
+  },
+  "endo_models": {
+    "slope_vs_endo_dim": {
+      "R2": 0.8150248015646955,
+      "a": 0.10053984515743784,
+      "b": -0.26926442824119073,
+      "model": "slope = a*endo_dim + b",
+      "n": 4,
+      "p_value": 0.0972127595248726
+    },
+    "slope_vs_log_endo_dim": {
+      "R2": 0.605874099527456,
+      "a": 0.2998834196703855,
+      "b": -0.20403502916260263,
+      "model": "slope = a*log(endo_dim) + b",
+      "n": 4,
+      "p_value": 0.22162085104529167
+    },
+    "slope_vs_endo_rank": {
+      "R2": 0.6214109475962447,
+      "a": 0.21598041405411586,
+      "b": -0.3781959405225595,
+      "model": "slope = a*endo_rank + b",
+      "n": 4,
+      "p_value": 0.21170376913482272
+    },
+    "slope_vs_1/endo_dim": {
+      "R2": 0.32782396196390867,
+      "a": -0.5101091738850568,
+      "b": 0.3468736663578216,
+      "model": "slope = a/endo_dim + b",
+      "n": 4,
+      "p_value": 0.4274408659676202
+    }
+  },
+  "best_model": {
+    "name": "slope_vs_rank2",
+    "R2": 0.7754706097605333,
+    "a": 0.04399982676264099,
+    "b": -0.24202962500183195,
+    "model": "slope = a*rank\u00b2 + b",
+    "n": 6,
+    "p_value": 0.020530710253883925
+  },
+  "predictions_unmeasured": {
+    "J(E_6)": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 12,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "J(E_4)": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 8,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "E_4": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 4,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "E_1": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 1,
+      "dim_ST0": 4,
+      "endo_type": "RM",
+      "endo_rank": 2
+    },
+    "E_3": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 3,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "J(E_2)": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 4,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "F_{ac}": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 2,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "J(E_3)": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 6,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "E_2": {
+      "predicted_slope": -0.06603031795126799,
+      "pi0_order": 2,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "D_{2,1}": {
+      "predicted_slope": 0.4619676032004239,
+      "pi0_order": 4,
+      "dim_ST0": 4,
+      "endo_type": "QM",
+      "endo_rank": 4
+    },
+    "J(C_2)": {
+      "predicted_slope": 0.4619676032004239,
+      "pi0_order": 4,
+      "dim_ST0": 4,
+      "endo_type": "QM",
+      "endo_rank": 4
+    },
+    "D_{6,2}": {
+      "predicted_slope": 0.4619676032004239,
+      "pi0_order": 12,
+      "dim_ST0": 4,
+      "endo_type": "QM",
+      "endo_rank": 4
+    },
+    "D_{3,2}": {
+      "predicted_slope": 0.4619676032004239,
+      "pi0_order": 6,
+      "dim_ST0": 4,
+      "endo_type": "QM",
+      "endo_rank": 4
+    },
+    "J(C_4)": {
+      "predicted_slope": 0.4619676032004239,
+      "pi0_order": 8,
+      "dim_ST0": 4,
+      "endo_type": "QM",
+      "endo_rank": 4
+    }
+  },
+  "moment_growth_slopes": {
+    "USp(4)": {
+      "moment_growth_slope": 2.258563122008483,
+      "r_squared": 0.8812305917544263,
+      "n_curves": 62861
+    },
+    "G_{3,3}": {
+      "moment_growth_slope": 2.9276857906705382,
+      "r_squared": 0.9012242611107252,
+      "n_curves": 2437
+    },
+    "N(G_{1,3})": {
+      "moment_growth_slope": 2.840689941608321,
+      "r_squared": 0.8910040761841659,
+      "n_curves": 254
+    },
+    "N(G_{3,3})": {
+      "moment_growth_slope": 2.879265121961808,
+      "r_squared": 0.9140333732471762,
+      "n_curves": 142
+    },
+    "E_6": {
+      "moment_growth_slope": 3.285668909930169,
+      "r_squared": 0.9214718092705223,
+      "n_curves": 51
+    },
+    "J(E_1)": {
+      "moment_growth_slope": 3.2051666557294336,
+      "r_squared": 0.9061038192791907,
+      "n_curves": 24
+    },
+    "J(E_6)": {
+      "moment_growth_slope": 2.888104440603795,
+      "r_squared": 0.8938503728011904,
+      "n_curves": 17
+    },
+    "J(E_4)": {
+      "moment_growth_slope": 2.5748434282858104,
+      "r_squared": 0.8988664079003833,
+      "n_curves": 16
+    },
+    "E_4": {
+      "moment_growth_slope": 3.275851095136516,
+      "r_squared": 0.9235036203227508,
+      "n_curves": 10
+    },
+    "E_1": {
+      "moment_growth_slope": 3.332335686524932,
+      "r_squared": 0.9152501134152098,
+      "n_curves": 8
+    },
+    "E_3": {
+      "moment_growth_slope": 3.478721113600098,
+      "r_squared": 0.933469497077733,
+      "n_curves": 7
+    },
+    "J(E_2)": {
+      "moment_growth_slope": 3.2771568390700394,
+      "r_squared": 0.9188351534591865,
+      "n_curves": 7
+    },
+    "F_{ac}": {
+      "moment_growth_slope": 3.3559195507397446,
+      "r_squared": 0.8941860557792802,
+      "n_curves": 6
+    },
+    "J(E_3)": {
+      "moment_growth_slope": 2.8619205518630317,
+      "r_squared": 0.9158365693984292,
+      "n_curves": 4
+    },
+    "E_2": {
+      "moment_growth_slope": 3.9713330397482043,
+      "r_squared": 0.9407884628035641,
+      "n_curves": 3
+    },
+    "D_{2,1}": {
+      "moment_growth_slope": 3.6861684490495428,
+      "r_squared": 0.8998530306584911,
+      "n_curves": 3
+    }
+  },
+  "data_table": [
+    {
+      "group": "USp(4)",
+      "slope": 0.007801557461898241,
+      "ci_lo": -0.004369406121152261,
+      "ci_hi": 0.01456436511214304,
+      "n_curves": 9537,
+      "pi0_order": 1,
+      "dim_ST0": 10,
+      "endo_type": "Q",
+      "endo_rank": 1,
+      "identity": "USp(4)"
+    },
+    {
+      "group": "G_{3,3}",
+      "slope": -0.26580403417470333,
+      "ci_lo": -0.689574148805294,
+      "ci_hi": 0.08195716111561115,
+      "n_curves": 383,
+      "pi0_order": 3,
+      "dim_ST0": 6,
+      "endo_type": "RM",
+      "endo_rank": 2,
+      "identity": "SU(2)xSU(2)"
+    },
+    {
+      "group": "N(G_{1,3})",
+      "slope": -0.20380807600992268,
+      "ci_lo": -0.6400928585766427,
+      "ci_hi": 0.1911501842771222,
+      "n_curves": 35,
+      "pi0_order": 6,
+      "dim_ST0": 6,
+      "endo_type": "RM",
+      "endo_rank": 2,
+      "identity": "SU(2)xSU(2)"
+    },
+    {
+      "group": "N(G_{3,3})",
+      "slope": 0.5778542271913247,
+      "ci_lo": 0.2889497237900111,
+      "ci_hi": 0.7991357339804053,
+      "n_curves": 15,
+      "pi0_order": 6,
+      "dim_ST0": 6,
+      "endo_type": "QM",
+      "endo_rank": 4,
+      "identity": "SU(2)xSU(2)"
+    },
+    {
+      "group": "E_6",
+      "slope": 0.014231961704460427,
+      "ci_lo": -0.6734579611886645,
+      "ci_hi": 0.2551658632834379,
+      "n_curves": 13,
+      "pi0_order": 6,
+      "dim_ST0": 2,
+      "endo_type": "CM",
+      "endo_rank": 2,
+      "identity": "U(1)xU(1)"
+    },
+    {
+      "group": "J(E_1)",
+      "slope": 0.39753881813479536,
+      "ci_lo": 0.07915871231539164,
+      "ci_hi": 0.7035606510743784,
+      "n_curves": 5,
+      "pi0_order": 2,
+      "dim_ST0": 4,
+      "endo_type": "QM",
+      "endo_rank": 4,
+      "identity": "SU(2)xU(1)"
+    }
+  ],
+  "verdict": "MODERATE FIT: Best model R\u00b2=0.7755. Partial correlation exists but not a clean rational function.\n  WARNING: 3 groups have <20 curves \u2014 slopes may be unreliable: ['N(G_{3,3})', 'E_6', 'J(E_1)']"
+}

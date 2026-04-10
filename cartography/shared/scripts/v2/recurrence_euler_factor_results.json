@@ -1,0 +1,1125 @@
+{
+  "challenge": "C08",
+  "title": "Recurrence Operator Duality \u2014 OEIS Characteristic Polynomials vs Euler Factors",
+  "timestamp": "2026-04-09T19:24:09",
+  "coverage": {
+    "total_sequences_scanned": 55497,
+    "s33_cached": 5497,
+    "newly_scanned": 50000,
+    "degree_2_polynomials": 903,
+    "degree_4_polynomials": 886
+  },
+  "ec_euler_factor": {
+    "matches": 15,
+    "total_deg2": 903,
+    "match_rate": 0.016611,
+    "null_rate": 0.0656,
+    "excess_over_null": 0.2532,
+    "sequences": [
+      {
+        "seq_id": "A001607",
+        "char_poly": "x^2 + (1)*x + (2)",
+        "prime": 2,
+        "a_p": -1,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A002249",
+        "char_poly": "x^2 + (-1)*x + (2)",
+        "prime": 2,
+        "a_p": 1,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A009116",
+        "char_poly": "x^2 + (2)*x + (2)",
+        "prime": 2,
+        "a_p": -2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A009545",
+        "char_poly": "x^2 + (-2)*x + (2)",
+        "prime": 2,
+        "a_p": 2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A078020",
+        "char_poly": "x^2 + (-1)*x + (2)",
+        "prime": 2,
+        "a_p": 1,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A134142",
+        "char_poly": "x^2 + (2)*x + (2)",
+        "prime": 2,
+        "a_p": -2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A000748",
+        "char_poly": "x^2 + (3)*x + (3)",
+        "prime": 3,
+        "a_p": -3,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A057083",
+        "char_poly": "x^2 + (-3)*x + (3)",
+        "prime": 3,
+        "a_p": 3,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A214733",
+        "char_poly": "x^2 + (1)*x + (3)",
+        "prime": 3,
+        "a_p": -1,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A006495",
+        "char_poly": "x^2 + (-2)*x + (5)",
+        "prime": 5,
+        "a_p": 2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A006496",
+        "char_poly": "x^2 + (-2)*x + (5)",
+        "prime": 5,
+        "a_p": 2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A045873",
+        "char_poly": "x^2 + (-2)*x + (5)",
+        "prime": 5,
+        "a_p": 2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A116484",
+        "char_poly": "x^2 + (-2)*x + (5)",
+        "prime": 5,
+        "a_p": 2,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A099456",
+        "char_poly": "x^2 + (-4)*x + (5)",
+        "prime": 5,
+        "a_p": 4,
+        "lmfdb_labels": []
+      },
+      {
+        "seq_id": "A190959",
+        "char_poly": "x^2 + (-3)*x + (5)",
+        "prime": 5,
+        "a_p": 3,
+        "lmfdb_labels": []
+      }
+    ]
+  },
+  "genus2_euler_factor": {
+    "matches": 18,
+    "total_deg4": 886,
+    "match_rate": 0.020316,
+    "null_rate": 0.0018,
+    "excess_over_null": 11.2867,
+    "sequences": [
+      {
+        "seq_id": "A002536",
+        "char_poly": "x^4 + (0)*x^3 + (-8)*x^2 + (0)*x + (9)",
+        "prime": 3,
+        "a": 0,
+        "b": -8
+      },
+      {
+        "seq_id": "A026950",
+        "char_poly": "x^4 + (0)*x^3 + (-10)*x^2 + (0)*x + (25)",
+        "prime": 5,
+        "a": 0,
+        "b": -10
+      },
+      {
+        "seq_id": "A048481",
+        "char_poly": "x^4 + (-6)*x^3 + (13)*x^2 + (-12)*x + (4)",
+        "prime": 2,
+        "a": 6,
+        "b": 13
+      },
+      {
+        "seq_id": "A054145",
+        "char_poly": "x^4 + (-8)*x^3 + (20)*x^2 + (-16)*x + (4)",
+        "prime": 2,
+        "a": 8,
+        "b": 20
+      },
+      {
+        "seq_id": "A054146",
+        "char_poly": "x^4 + (-8)*x^3 + (20)*x^2 + (-16)*x + (4)",
+        "prime": 2,
+        "a": 8,
+        "b": 20
+      },
+      {
+        "seq_id": "A059222",
+        "char_poly": "x^4 + (0)*x^3 + (-5)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -5
+      },
+      {
+        "seq_id": "A060590",
+        "char_poly": "x^4 + (0)*x^3 + (-5)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -5
+      },
+      {
+        "seq_id": "A320770",
+        "char_poly": "x^4 + (0)*x^3 + (0)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": 0
+      },
+      {
+        "seq_id": "A118434",
+        "char_poly": "x^4 + (0)*x^3 + (0)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": 0
+      },
+      {
+        "seq_id": "A238720",
+        "char_poly": "x^4 + (0)*x^3 + (-5)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -5
+      },
+      {
+        "seq_id": "A171647",
+        "char_poly": "x^4 + (0)*x^3 + (-4)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -4
+      },
+      {
+        "seq_id": "A099603",
+        "char_poly": "x^4 + (0)*x^3 + (-6)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -6
+      },
+      {
+        "seq_id": "A080880",
+        "char_poly": "x^4 + (0)*x^3 + (-5)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -5
+      },
+      {
+        "seq_id": "A277800",
+        "char_poly": "x^4 + (0)*x^3 + (-5)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -5
+      },
+      {
+        "seq_id": "A138380",
+        "char_poly": "x^4 + (0)*x^3 + (0)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": 0
+      },
+      {
+        "seq_id": "A277867",
+        "char_poly": "x^4 + (0)*x^3 + (-5)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -5
+      },
+      {
+        "seq_id": "A203231",
+        "char_poly": "x^4 + (0)*x^3 + (-6)*x^2 + (0)*x + (9)",
+        "prime": 3,
+        "a": 0,
+        "b": -6
+      },
+      {
+        "seq_id": "A132344",
+        "char_poly": "x^4 + (0)*x^3 + (-4)*x^2 + (0)*x + (4)",
+        "prime": 2,
+        "a": 0,
+        "b": -4
+      }
+    ]
+  },
+  "null_baseline": {
+    "n_trials": 10000,
+    "ec_null_uniform": {
+      "matches": 1166,
+      "rate": 0.1166
+    },
+    "ec_null_resampled": {
+      "matches": 656,
+      "rate": 0.0656
+    },
+    "genus2_null_uniform": {
+      "matches": 0,
+      "rate": 0.0
+    },
+    "genus2_null_resampled": {
+      "matches": 18,
+      "rate": 0.0018
+    },
+    "coeff_range_a": [
+      -22,
+      6
+    ],
+    "coeff_range_b": [
+      -48,
+      120
+    ],
+    "note": "Resampled null shuffles empirical coefficient pools independently; more conservative than uniform"
+  },
+  "polynomial_clusters": {
+    "total_clusters": 173,
+    "top_clusters": [
+      {
+        "char_poly_coeffs": [
+          -2,
+          1
+        ],
+        "degree": 2,
+        "n_sequences": 303,
+        "sequences": [
+          "A000027",
+          "A001477",
+          "A001478",
+          "A001489",
+          "A004766",
+          "A004767",
+          "A004768",
+          "A004769",
+          "A004770",
+          "A004771",
+          "A004924",
+          "A004926",
+          "A004928",
+          "A004930",
+          "A004932",
+          "A004934",
+          "A004944",
+          "A004945",
+          "A004946",
+          "A004947"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          0,
+          -1,
+          1
+        ],
+        "degree": 4,
+        "n_sequences": 161,
+        "sequences": [
+          "A002264",
+          "A004396",
+          "A004482",
+          "A004483",
+          "A004523",
+          "A004772",
+          "A004773",
+          "A008611",
+          "A008620",
+          "A008854",
+          "A028837",
+          "A029739",
+          "A032793",
+          "A038123",
+          "A042965",
+          "A042968",
+          "A047202",
+          "A047205",
+          "A047206",
+          "A047212"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          -1
+        ],
+        "degree": 2,
+        "n_sequences": 109,
+        "sequences": [
+          "A000032",
+          "A000045",
+          "A000204",
+          "A000285",
+          "A001060",
+          "A013655",
+          "A020695",
+          "A020701",
+          "A022086",
+          "A022087",
+          "A022088",
+          "A022089",
+          "A022090",
+          "A022091",
+          "A022092",
+          "A022093",
+          "A022095",
+          "A022096",
+          "A022097",
+          "A022098"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -4,
+          6,
+          -4,
+          1
+        ],
+        "degree": 4,
+        "n_sequences": 63,
+        "sequences": [
+          "A000125",
+          "A000292",
+          "A000297",
+          "A000578",
+          "A001093",
+          "A004006",
+          "A004466",
+          "A005581",
+          "A005900",
+          "A006001",
+          "A006003",
+          "A006527",
+          "A007290",
+          "A007531",
+          "A008511",
+          "A008778",
+          "A011826",
+          "A015243",
+          "A016743",
+          "A016767"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          0,
+          -1
+        ],
+        "degree": 2,
+        "n_sequences": 61,
+        "sequences": [
+          "A000034",
+          "A000035",
+          "A010673",
+          "A010674",
+          "A010675",
+          "A010676",
+          "A010677",
+          "A010678",
+          "A010679",
+          "A010680",
+          "A010681",
+          "A010684",
+          "A010685",
+          "A010686",
+          "A010687",
+          "A010688",
+          "A010689",
+          "A010690",
+          "A010691",
+          "A010693"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -2,
+          0,
+          2,
+          -1
+        ],
+        "degree": 4,
+        "n_sequences": 42,
+        "sequences": [
+          "A000982",
+          "A001859",
+          "A002620",
+          "A004116",
+          "A004652",
+          "A006578",
+          "A007590",
+          "A014616",
+          "A014848",
+          "A024206",
+          "A032525",
+          "A032526",
+          "A032527",
+          "A032528",
+          "A033638",
+          "A035104",
+          "A035608",
+          "A036572",
+          "A036573",
+          "A047838"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          0
+        ],
+        "degree": 2,
+        "n_sequences": 39,
+        "sequences": [
+          "A020793",
+          "A021019",
+          "A021022",
+          "A036453",
+          "A040000",
+          "A040002",
+          "A040006",
+          "A040012",
+          "A040020",
+          "A040030",
+          "A040042",
+          "A040056",
+          "A040072",
+          "A040090",
+          "A040110",
+          "A040132",
+          "A040156",
+          "A040182",
+          "A040210",
+          "A040240"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -3,
+          3,
+          -1,
+          0
+        ],
+        "degree": 4,
+        "n_sequences": 39,
+        "sequences": [
+          "A000338",
+          "A003682",
+          "A005897",
+          "A005899",
+          "A005901",
+          "A005903",
+          "A005905",
+          "A005914",
+          "A005918",
+          "A005919",
+          "A008527",
+          "A010000",
+          "A010001",
+          "A010002",
+          "A010003",
+          "A010006",
+          "A010008",
+          "A010009",
+          "A010011",
+          "A010012"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          0,
+          -2,
+          0,
+          1
+        ],
+        "degree": 4,
+        "n_sequences": 38,
+        "sequences": [
+          "A001281",
+          "A006370",
+          "A014682",
+          "A019303",
+          "A022998",
+          "A026741",
+          "A027656",
+          "A029578",
+          "A029579",
+          "A043547",
+          "A057979",
+          "A059029",
+          "A114752",
+          "A133090",
+          "A174390",
+          "A195140",
+          "A093178",
+          "A321220",
+          "A165988",
+          "A106833"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -2,
+          2,
+          -2,
+          1
+        ],
+        "degree": 4,
+        "n_sequences": 36,
+        "sequences": [
+          "A002081",
+          "A004443",
+          "A004524",
+          "A004525",
+          "A013574",
+          "A047229",
+          "A047237",
+          "A047251",
+          "A047255",
+          "A047262",
+          "A047273",
+          "A047401",
+          "A047404",
+          "A047415",
+          "A047431",
+          "A047444",
+          "A047481",
+          "A047495",
+          "A047508",
+          "A047538"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -3,
+          2
+        ],
+        "degree": 2,
+        "n_sequences": 25,
+        "sequences": [
+          "A000051",
+          "A000225",
+          "A000918",
+          "A028399",
+          "A033484",
+          "A036563",
+          "A048487",
+          "A048488",
+          "A048489",
+          "A048490",
+          "A048491",
+          "A048578",
+          "A062709",
+          "A159741",
+          "A139635",
+          "A153893",
+          "A139634",
+          "A182467",
+          "A305065",
+          "A196305"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          0,
+          0,
+          -1,
+          0
+        ],
+        "degree": 4,
+        "n_sequences": 20,
+        "sequences": [
+          "A010133",
+          "A021058",
+          "A021078",
+          "A021139",
+          "A021189",
+          "A021226",
+          "A021559",
+          "A021670",
+          "A040118",
+          "A040252",
+          "A040350",
+          "A040436",
+          "A040670",
+          "A040954",
+          "A118517",
+          "A180593",
+          "A082204",
+          "A267208",
+          "A167420",
+          "A118619"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          0,
+          1,
+          -1
+        ],
+        "degree": 4,
+        "n_sequences": 15,
+        "sequences": [
+          "A020806",
+          "A021017",
+          "A021081",
+          "A021095",
+          "A021147",
+          "A021433",
+          "A021697",
+          "A028356",
+          "A033940",
+          "A134977",
+          "A070425",
+          "A070374",
+          "A182480",
+          "A070365",
+          "A173432"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -4,
+          3
+        ],
+        "degree": 2,
+        "n_sequences": 14,
+        "sequences": [
+          "A003462",
+          "A007051",
+          "A024023",
+          "A029858",
+          "A034472",
+          "A036543",
+          "A036545",
+          "A036546",
+          "A036547",
+          "A036548",
+          "A036549",
+          "A048473",
+          "A057198",
+          "A058481"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          -2
+        ],
+        "degree": 2,
+        "n_sequences": 13,
+        "sequences": [
+          "A001045",
+          "A014113",
+          "A014551",
+          "A048573",
+          "A062092",
+          "A062510",
+          "A201630",
+          "A083595",
+          "A321643",
+          "A352692",
+          "A259713",
+          "A171160",
+          "A369404"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -3,
+          1
+        ],
+        "degree": 2,
+        "n_sequences": 13,
+        "sequences": [
+          "A001519",
+          "A001906",
+          "A002878",
+          "A005248",
+          "A025169",
+          "A048575",
+          "A054486",
+          "A054492",
+          "A055267",
+          "A055273",
+          "A055849",
+          "A055850",
+          "A056123"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -2,
+          1,
+          0,
+          0
+        ],
+        "degree": 4,
+        "n_sequences": 13,
+        "sequences": [
+          "A004275",
+          "A004280",
+          "A019442",
+          "A026488",
+          "A032612",
+          "A033627",
+          "A061570",
+          "A215537",
+          "A355497",
+          "A086570",
+          "A222945",
+          "A144917",
+          "A131439"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          0,
+          0,
+          0,
+          -1
+        ],
+        "degree": 4,
+        "n_sequences": 13,
+        "sequences": [
+          "A010873",
+          "A010883",
+          "A011763",
+          "A011765",
+          "A057446",
+          "A182215",
+          "A158459",
+          "A364447",
+          "A143025",
+          "A070432",
+          "A132400",
+          "A131729",
+          "A070416"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          -1,
+          1,
+          0
+        ],
+        "degree": 4,
+        "n_sequences": 13,
+        "sequences": [
+          "A014681",
+          "A045506",
+          "A049624",
+          "A049636",
+          "A053438",
+          "A092899",
+          "A063228",
+          "A063289",
+          "A063102",
+          "A063243",
+          "A063118",
+          "A065164",
+          "A261953"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -2,
+          -1
+        ],
+        "degree": 2,
+        "n_sequences": 11,
+        "sequences": [
+          "A000129",
+          "A001333",
+          "A002203",
+          "A048654",
+          "A048655",
+          "A048693",
+          "A048694",
+          "A048695",
+          "A048696",
+          "A048697",
+          "A078057"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -4,
+          1
+        ],
+        "degree": 2,
+        "n_sequences": 11,
+        "sequences": [
+          "A001075",
+          "A001353",
+          "A001834",
+          "A001835",
+          "A003500",
+          "A010905",
+          "A052530",
+          "A054485",
+          "A054491",
+          "A055845",
+          "A057819"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -4,
+          -1
+        ],
+        "degree": 2,
+        "n_sequences": 11,
+        "sequences": [
+          "A001076",
+          "A001077",
+          "A014445",
+          "A014448",
+          "A015448",
+          "A033887",
+          "A048875",
+          "A048876",
+          "A048877",
+          "A048878",
+          "A048879"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -4,
+          4
+        ],
+        "degree": 2,
+        "n_sequences": 10,
+        "sequences": [
+          "A001787",
+          "A001792",
+          "A014480",
+          "A036289",
+          "A053220",
+          "A053565",
+          "A058922",
+          "A059162",
+          "A059165",
+          "A079859"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          0,
+          0
+        ],
+        "degree": 2,
+        "n_sequences": 10,
+        "sequences": [
+          "A019590",
+          "A020773",
+          "A033322",
+          "A063524",
+          "A178333",
+          "A159075",
+          "A130706",
+          "A274981",
+          "A152623",
+          "A152627"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -5,
+          4
+        ],
+        "degree": 2,
+        "n_sequences": 9,
+        "sequences": [
+          "A002446",
+          "A002450",
+          "A007583",
+          "A020988",
+          "A020989",
+          "A024036",
+          "A047849",
+          "A052539",
+          "A058896"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -2,
+          0
+        ],
+        "degree": 2,
+        "n_sequences": 9,
+        "sequences": [
+          "A003945",
+          "A011782",
+          "A042950",
+          "A169400",
+          "A169496",
+          "A170108",
+          "A169448",
+          "A170588",
+          "A171449"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -6,
+          8
+        ],
+        "degree": 2,
+        "n_sequences": 9,
+        "sequences": [
+          "A006516",
+          "A007582",
+          "A010036",
+          "A020522",
+          "A028402",
+          "A028403",
+          "A032125",
+          "A049775",
+          "A059153"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -1,
+          0,
+          0,
+          0
+        ],
+        "degree": 4,
+        "n_sequences": 9,
+        "sequences": [
+          "A000655",
+          "A021028",
+          "A037147",
+          "A046698",
+          "A329503",
+          "A236213",
+          "A271220",
+          "A329683",
+          "A217789"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -5,
+          9,
+          -7,
+          2
+        ],
+        "degree": 4,
+        "n_sequences": 9,
+        "sequences": [
+          "A002662",
+          "A014833",
+          "A014844",
+          "A014846",
+          "A024012",
+          "A048492",
+          "A335439",
+          "A084634",
+          "A220588"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      },
+      {
+        "char_poly_coeffs": [
+          -2,
+          0,
+          1,
+          -1
+        ],
+        "degree": 4,
+        "n_sequences": 9,
+        "sequences": [
+          "A049856",
+          "A049858",
+          "A049861",
+          "A049864",
+          "A049866",
+          "A049868",
+          "A049870",
+          "A049873",
+          "A059633"
+        ],
+        "is_ec_euler": false,
+        "is_genus2_euler": false
+      }
+    ]
+  },
+  "lmfdb_hits": [],
+  "elapsed_seconds": 12.5
+}

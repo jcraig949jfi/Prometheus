@@ -558,16 +558,18 @@ def extract_mmlkg() -> tuple[list[dict], list[dict]]:
 
 def extract_genus2() -> tuple[list[dict], list[dict]]:
     """Extract concepts from genus-2 curves."""
-    from search_engine import GENUS2_JSON
-    if not GENUS2_JSON.exists(): return [], []
-    data = json.loads(GENUS2_JSON.read_text(encoding="utf-8"))
+    from search_engine import GENUS2_PG, GENUS2_JSON
+    src = GENUS2_PG if GENUS2_PG.exists() else GENUS2_JSON
+    if not src.exists(): return [], []
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
 
     concepts = set()
     links = []
 
     for curve in data:
         label = curve.get("label", "")
-        cond = curve.get("conductor")
+        cond = curve.get("conductor") or curve.get("cond")
         st = curve.get("st_group", "")
         rn = curve.get("root_number")
         torsion = curve.get("torsion", [])
@@ -598,19 +600,26 @@ def extract_genus2() -> tuple[list[dict], list[dict]]:
 
 
 def extract_maass() -> tuple[list[dict], list[dict]]:
-    """Extract concepts from Maass forms."""
-    from search_engine import MAASS_JSON
-    if not MAASS_JSON.exists(): return [], []
-    data = json.loads(MAASS_JSON.read_text(encoding="utf-8"))
+    """Extract concepts from Maass forms (35K rigorous)."""
+    from search_engine import MAASS_PG, MAASS_JSON
+    src = MAASS_PG if MAASS_PG.exists() else MAASS_JSON
+    if not src.exists(): return [], []
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
 
     concepts = set()
     links = []
 
     for form in data:
-        label = form.get("maass_label", "")
+        label = form.get("maass_label", form.get("label", ""))
         level = form.get("level")
-        fricke = form.get("fricke_eigenvalue")
+        fricke = form.get("fricke_eigenvalue", form.get("fricke"))
         sp = form.get("spectral_parameter")
+        if isinstance(sp, str):
+            try:
+                sp = float(sp)
+            except (ValueError, OverflowError):
+                sp = None
 
         obj_concepts = ["maass_form"]
         if level is not None:
@@ -635,17 +644,21 @@ def extract_maass() -> tuple[list[dict], list[dict]]:
 
 
 def extract_lattices() -> tuple[list[dict], list[dict]]:
-    """Extract concepts from named lattices."""
-    from search_engine import LATTICES_JSON
-    if not LATTICES_JSON.exists(): return [], []
-    raw = json.loads(LATTICES_JSON.read_text(encoding="utf-8"))
-    data = raw.get("lattices", raw) if isinstance(raw, dict) else raw
+    """Extract concepts from lattices (39K integral)."""
+    from search_engine import LATTICES_PG, LATTICES_JSON
+    src = LATTICES_PG if LATTICES_PG.exists() else LATTICES_JSON
+    if not src.exists(): return [], []
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    data = raw.get("records", raw.get("lattices", raw)) if isinstance(raw, dict) else raw
 
     concepts = set()
     links = []
 
     for lat in data:
         name = lat.get("name", "")
+        if not isinstance(name, str):
+            name = str(name) if name else ""
+        obj_id = name or lat.get("label", "")
         dim = lat.get("dim")
         det = lat.get("det")
         kissing = lat.get("kissing")
@@ -663,7 +676,7 @@ def extract_lattices() -> tuple[list[dict], list[dict]]:
         for concept in obj_concepts:
             concepts.add(concept)
             links.append({
-                "concept": concept, "dataset": "Lattices", "object_id": name,
+                "concept": concept, "dataset": "Lattices", "object_id": obj_id,
                 "relationship": "has_property",
             })
 
@@ -1724,16 +1737,18 @@ def extract_verb_local_fields() -> tuple[list[dict], list[dict]]:
 
 def extract_verb_genus2() -> tuple[list[dict], list[dict]]:
     """Extract verb concepts from genus-2 curves: conductor-discriminant relationships, Sato-Tate structure."""
-    from search_engine import GENUS2_JSON
-    if not GENUS2_JSON.exists(): return [], []
-    data = json.loads(GENUS2_JSON.read_text(encoding="utf-8"))
+    from search_engine import GENUS2_PG, GENUS2_JSON
+    src = GENUS2_PG if GENUS2_PG.exists() else GENUS2_JSON
+    if not src.exists(): return [], []
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
 
     concepts = set()
     links = []
 
     for curve in data:
         label = curve.get("label", "")
-        cond = curve.get("conductor")
+        cond = curve.get("conductor") or curve.get("cond")
         disc = curve.get("discriminant")
         st = curve.get("st_group", "")
         rn = curve.get("root_number")
@@ -1782,17 +1797,19 @@ def extract_verb_genus2() -> tuple[list[dict], list[dict]]:
 
 def extract_verb_maass() -> tuple[list[dict], list[dict]]:
     """Extract verb concepts from Maass forms: spectral theory, symmetry, Fricke."""
-    from search_engine import MAASS_JSON
-    if not MAASS_JSON.exists(): return [], []
-    data = json.loads(MAASS_JSON.read_text(encoding="utf-8"))
+    from search_engine import MAASS_PG, MAASS_JSON
+    src = MAASS_PG if MAASS_PG.exists() else MAASS_JSON
+    if not src.exists(): return [], []
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
 
     concepts = set()
     links = []
 
     for form in data:
-        label = form.get("maass_label", "")
+        label = form.get("maass_label", form.get("label", ""))
         level = form.get("level")
-        fricke = form.get("fricke_eigenvalue")
+        fricke = form.get("fricke_eigenvalue", form.get("fricke"))
         sp = form.get("spectral_parameter")
 
         obj_concepts = ["verb_involves_spectral_parameter", "verb_involves_laplacian"]
@@ -1827,16 +1844,20 @@ def extract_verb_maass() -> tuple[list[dict], list[dict]]:
 
 def extract_verb_lattices() -> tuple[list[dict], list[dict]]:
     """Extract verb concepts from lattices: packing, coding theory, modular forms connection."""
-    from search_engine import LATTICES_JSON
-    if not LATTICES_JSON.exists(): return [], []
-    raw = json.loads(LATTICES_JSON.read_text(encoding="utf-8"))
-    data = raw.get("lattices", raw) if isinstance(raw, dict) else raw
+    from search_engine import LATTICES_PG, LATTICES_JSON
+    src = LATTICES_PG if LATTICES_PG.exists() else LATTICES_JSON
+    if not src.exists(): return [], []
+    raw = json.loads(src.read_text(encoding="utf-8"))
+    data = raw.get("records", raw.get("lattices", raw)) if isinstance(raw, dict) else raw
 
     concepts = set()
     links = []
 
     for lat in data:
         name = lat.get("name", "")
+        if not isinstance(name, str):
+            name = str(name) if name else ""
+        obj_id = name or lat.get("label", "")
         dim = lat.get("dim")
         det = lat.get("det")
         kissing = lat.get("kissing")
@@ -1849,7 +1870,7 @@ def extract_verb_lattices() -> tuple[list[dict], list[dict]]:
         obj_concepts.append("verb_involves_modular_form")
 
         # Root lattices bridge to Lie algebras
-        if name and re.match(r'^[ADE]\d', name):
+        if name and isinstance(name, str) and re.match(r'^[ADE]\d', name):
             obj_concepts.append("verb_root_lattice")
             obj_concepts.append("verb_involves_lie_algebra")
 
@@ -1864,7 +1885,7 @@ def extract_verb_lattices() -> tuple[list[dict], list[dict]]:
         for concept in obj_concepts:
             concepts.add(concept)
             links.append({
-                "concept": concept, "dataset": "Lattices", "object_id": name,
+                "concept": concept, "dataset": "Lattices", "object_id": obj_id,
                 "relationship": "has_property",
             })
 

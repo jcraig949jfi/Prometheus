@@ -1,0 +1,1189 @@
+{
+  "level_bijection": {
+    "eigenform_levels": [
+      277,
+      349,
+      353,
+      389,
+      461,
+      523,
+      587
+    ],
+    "curve_conductors": [
+      277,
+      349,
+      353,
+      389,
+      461,
+      523,
+      587
+    ],
+    "perfect_bijection": true,
+    "curves_without_eigenform": [],
+    "eigenforms_without_curve": []
+  },
+  "root_number": {
+    "277": {
+      "root_number": 1,
+      "expected_space": "plus",
+      "eigenform_file": "eig277.txt",
+      "match": true,
+      "analytic_rank": 0
+    },
+    "349": {
+      "root_number": 1,
+      "expected_space": "plus",
+      "eigenform_file": "eig349.txt",
+      "match": true,
+      "analytic_rank": 0
+    },
+    "353": {
+      "root_number": 1,
+      "expected_space": "plus",
+      "eigenform_file": "eig353.txt",
+      "match": true,
+      "analytic_rank": 0
+    },
+    "389": {
+      "root_number": 1,
+      "expected_space": "plus",
+      "eigenform_file": "eig389.txt",
+      "match": true,
+      "analytic_rank": 0
+    },
+    "461": {
+      "root_number": 1,
+      "expected_space": "plus",
+      "eigenform_file": "eig461.txt",
+      "match": true,
+      "analytic_rank": 0
+    },
+    "523": {
+      "root_number": 1,
+      "expected_space": "plus",
+      "eigenform_file": "eig523.txt",
+      "match": true,
+      "analytic_rank": 0
+    },
+    "587": {
+      "root_number": -1,
+      "expected_space": "minus",
+      "eigenform_files": [
+        "eig587minus.txt",
+        "eig587plus.txt"
+      ],
+      "match": true,
+      "analytic_rank": 1
+    }
+  },
+  "level_analysis": {
+    "277": {
+      "N": 277,
+      "eigenform_file": "eig277.txt",
+      "n_fourier_coefficients": 9984,
+      "det_range": [
+        3,
+        2436
+      ],
+      "n_curves": 2,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "277.a.277.1",
+        "277.a.277.2"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 9504,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 182,
+          "n_tried": 1089,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 4,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 3,
+          "legendre": 1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 94,
+          "n_tried": 313,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": 1,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": -2
+          }
+        },
+        {
+          "p": 5,
+          "legendre": -1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 40,
+          "n_tried": 89,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": -2,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 7,
+          "legendre": 1,
+          "spin_lambda": 1,
+          "matched": true,
+          "n_match": 13,
+          "n_tried": 31,
+          "a1_lmfdb": -1,
+          "a2_lmfdb": 3,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": -2
+          }
+        },
+        {
+          "p": 11,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 6,
+          "n_tried": 8,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 4,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 13,
+          "legendre": 1,
+          "spin_lambda": 3,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 5,
+          "a1_lmfdb": -3,
+          "a2_lmfdb": 7,
+          "matching_T": {
+            "det": 7,
+            "reduced": [
+              2,
+              1,
+              4
+            ],
+            "coeff": -1
+          }
+        },
+        {
+          "p": 17,
+          "legendre": -1,
+          "spin_lambda": -4,
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 3,
+          "a1_lmfdb": 4,
+          "a2_lmfdb": 28,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 19,
+          "legendre": 1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": -22,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": -2
+          }
+        },
+        {
+          "p": 23,
+          "legendre": 1,
+          "spin_lambda": 3,
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 2,
+          "a1_lmfdb": -3,
+          "a2_lmfdb": 22,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 9,
+        "n_primes_matched": 9,
+        "primes_matched": [
+          2,
+          3,
+          5,
+          7,
+          11,
+          13,
+          17,
+          19,
+          23
+        ],
+        "primes_unmatched": [],
+        "match_rate": "9/9"
+      },
+      "space": "plus"
+    },
+    "349": {
+      "N": 349,
+      "eigenform_file": "eig349.txt",
+      "n_fourier_coefficients": 665,
+      "det_range": [
+        3,
+        551
+      ],
+      "n_curves": 1,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "349.a.349.1"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 636,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 18,
+          "n_tried": 83,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": 3
+          }
+        },
+        {
+          "p": 3,
+          "legendre": 1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 8,
+          "n_tried": 24,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": -1,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 5,
+          "legendre": 1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 3,
+          "n_tried": 11,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": 7,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": 3
+          }
+        },
+        {
+          "p": 7,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 12,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 11,
+          "legendre": -1,
+          "spin_lambda": 1,
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 2,
+          "a1_lmfdb": -1,
+          "a2_lmfdb": -6,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": 3
+          }
+        },
+        {
+          "p": 13,
+          "legendre": -1,
+          "spin_lambda": 2,
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 1,
+          "a1_lmfdb": -2,
+          "a2_lmfdb": 14,
+          "matching_T": null
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 6,
+        "n_primes_matched": 5,
+        "primes_matched": [
+          2,
+          3,
+          5,
+          7,
+          11
+        ],
+        "primes_unmatched": [
+          {
+            "p": 13,
+            "legendre": -1,
+            "expected_lambda": 2,
+            "n_tried": 1
+          }
+        ],
+        "match_rate": "5/6"
+      },
+      "space": "plus"
+    },
+    "353": {
+      "N": 353,
+      "eigenform_file": "eig353.txt",
+      "n_fourier_coefficients": 648,
+      "det_range": [
+        4,
+        547
+      ],
+      "n_curves": 1,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "353.a.353.1"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 619,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": 1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 11,
+          "n_tried": 71,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": 3,
+          "matching_T": {
+            "det": 11,
+            "reduced": [
+              2,
+              1,
+              6
+            ],
+            "coeff": 1
+          }
+        },
+        {
+          "p": 3,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 5,
+          "n_tried": 22,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 4,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 5,
+          "legendre": -1,
+          "spin_lambda": 1,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 5,
+          "a1_lmfdb": -1,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 8,
+            "reduced": [
+              2,
+              0,
+              4
+            ],
+            "coeff": 1
+          }
+        },
+        {
+          "p": 7,
+          "legendre": -1,
+          "spin_lambda": 0,
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 2,
+          "a1_lmfdb": 0,
+          "a2_lmfdb": -6,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 11,
+          "legendre": 1,
+          "spin_lambda": 2,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "a1_lmfdb": -2,
+          "a2_lmfdb": 1,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 5,
+        "n_primes_matched": 5,
+        "primes_matched": [
+          2,
+          3,
+          5,
+          7,
+          11
+        ],
+        "primes_unmatched": [],
+        "match_rate": "5/5"
+      },
+      "space": "plus"
+    },
+    "389": {
+      "N": 389,
+      "eigenform_file": "eig389.txt",
+      "n_fourier_coefficients": 786,
+      "det_range": [
+        4,
+        531
+      ],
+      "n_curves": 2,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "389.a.389.2",
+        "389.a.389.1"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 719,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 20,
+          "n_tried": 89,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 11,
+            "reduced": [
+              2,
+              1,
+              6
+            ],
+            "coeff": -1
+          }
+        },
+        {
+          "p": 3,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 13,
+          "n_tried": 26,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": -2
+          }
+        },
+        {
+          "p": 5,
+          "legendre": 1,
+          "spin_lambda": 1,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 7,
+          "a1_lmfdb": -1,
+          "a2_lmfdb": 0,
+          "matching_T": {
+            "det": 7,
+            "reduced": [
+              2,
+              1,
+              4
+            ],
+            "coeff": 1
+          }
+        },
+        {
+          "p": 7,
+          "legendre": 1,
+          "spin_lambda": -3,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "a1_lmfdb": 3,
+          "a2_lmfdb": 6,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": -2
+          }
+        },
+        {
+          "p": 11,
+          "legendre": 1,
+          "spin_lambda": 4,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "a1_lmfdb": -4,
+          "a2_lmfdb": 26,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": -2
+          }
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 5,
+        "n_primes_matched": 5,
+        "primes_matched": [
+          2,
+          3,
+          5,
+          7,
+          11
+        ],
+        "primes_unmatched": [],
+        "match_rate": "5/5"
+      },
+      "space": "plus"
+    },
+    "461": {
+      "N": 461,
+      "eigenform_file": "eig461.txt",
+      "n_fourier_coefficients": 569,
+      "det_range": [
+        4,
+        504
+      ],
+      "n_curves": 2,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "461.a.461.1",
+        "461.a.461.2"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 503,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": 0,
+          "matched": true,
+          "n_match": 10,
+          "n_tried": 63,
+          "a1_lmfdb": 0,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 19,
+            "reduced": [
+              2,
+              1,
+              10
+            ],
+            "coeff": -1
+          }
+        },
+        {
+          "p": 3,
+          "legendre": -1,
+          "spin_lambda": -3,
+          "matched": true,
+          "n_match": 5,
+          "n_tried": 19,
+          "a1_lmfdb": 3,
+          "a2_lmfdb": 6,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 5,
+          "legendre": 1,
+          "spin_lambda": 1,
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 5,
+          "a1_lmfdb": -1,
+          "a2_lmfdb": 1,
+          "matching_T": null
+        },
+        {
+          "p": 7,
+          "legendre": -1,
+          "spin_lambda": 0,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "a1_lmfdb": 0,
+          "a2_lmfdb": 6,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 11,
+          "legendre": -1,
+          "spin_lambda": 2,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "a1_lmfdb": -2,
+          "a2_lmfdb": 14,
+          "matching_T": {
+            "det": 4,
+            "reduced": [
+              2,
+              0,
+              2
+            ],
+            "coeff": 2
+          }
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 5,
+        "n_primes_matched": 4,
+        "primes_matched": [
+          2,
+          3,
+          7,
+          11
+        ],
+        "primes_unmatched": [
+          {
+            "p": 5,
+            "legendre": 1,
+            "expected_lambda": 1,
+            "n_tried": 5
+          }
+        ],
+        "match_rate": "4/5"
+      },
+      "space": "plus"
+    },
+    "523": {
+      "N": 523,
+      "eigenform_file": "eig523.txt",
+      "n_fourier_coefficients": 411,
+      "det_range": [
+        3,
+        507
+      ],
+      "n_curves": 2,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "523.a.523.1",
+        "523.a.523.2"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 378,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": -1,
+          "matched": true,
+          "n_match": 16,
+          "n_tried": 58,
+          "a1_lmfdb": 1,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 3,
+          "legendre": -1,
+          "spin_lambda": 0,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 13,
+          "a1_lmfdb": 0,
+          "a2_lmfdb": 0,
+          "matching_T": {
+            "det": 27,
+            "reduced": [
+              6,
+              3,
+              6
+            ],
+            "coeff": 3
+          }
+        },
+        {
+          "p": 5,
+          "legendre": -1,
+          "spin_lambda": -4,
+          "matched": true,
+          "n_match": 4,
+          "n_tried": 4,
+          "a1_lmfdb": 4,
+          "a2_lmfdb": 10,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 7,
+          "legendre": 1,
+          "spin_lambda": 2,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 2,
+          "a1_lmfdb": -2,
+          "a2_lmfdb": 6,
+          "matching_T": {
+            "det": 8,
+            "reduced": [
+              2,
+              0,
+              4
+            ],
+            "coeff": -2
+          }
+        },
+        {
+          "p": 11,
+          "legendre": 1,
+          "spin_lambda": 2,
+          "matched": true,
+          "n_match": 1,
+          "n_tried": 1,
+          "a1_lmfdb": -2,
+          "a2_lmfdb": 2,
+          "matching_T": {
+            "det": 3,
+            "reduced": [
+              2,
+              1,
+              2
+            ],
+            "coeff": -3
+          }
+        },
+        {
+          "p": 13,
+          "legendre": 1,
+          "spin_lambda": 1,
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 1,
+          "a1_lmfdb": -1,
+          "a2_lmfdb": 24,
+          "matching_T": null
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 6,
+        "n_primes_matched": 5,
+        "primes_matched": [
+          2,
+          3,
+          5,
+          7,
+          11
+        ],
+        "primes_unmatched": [
+          {
+            "p": 13,
+            "legendre": 1,
+            "expected_lambda": 1,
+            "n_tried": 1
+          }
+        ],
+        "match_rate": "5/6"
+      },
+      "space": "plus"
+    },
+    "587_minus": {
+      "N": 587,
+      "eigenform_file": "eig587minus.txt",
+      "n_fourier_coefficients": 2994,
+      "det_range": [
+        8,
+        1111
+      ],
+      "n_curves": 1,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "587.a.587.1"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 2246,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": -3,
+          "matched": true,
+          "n_match": 54,
+          "n_tried": 276,
+          "a1_lmfdb": 3,
+          "a2_lmfdb": 5,
+          "matching_T": {
+            "det": 32,
+            "reduced": [
+              2,
+              0,
+              16
+            ],
+            "coeff": -1
+          }
+        },
+        {
+          "p": 3,
+          "legendre": 1,
+          "spin_lambda": -4,
+          "matched": true,
+          "n_match": 22,
+          "n_tried": 54,
+          "a1_lmfdb": 4,
+          "a2_lmfdb": 9,
+          "matching_T": {
+            "det": 39,
+            "reduced": [
+              4,
+              1,
+              10
+            ],
+            "coeff": 1
+          }
+        },
+        {
+          "p": 5,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 4,
+          "n_tried": 16,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 1,
+          "matching_T": {
+            "det": 23,
+            "reduced": [
+              2,
+              1,
+              12
+            ],
+            "coeff": -1
+          }
+        },
+        {
+          "p": 7,
+          "legendre": 1,
+          "spin_lambda": 0,
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 4,
+          "a1_lmfdb": 0,
+          "a2_lmfdb": -5,
+          "matching_T": {
+            "det": 15,
+            "reduced": [
+              2,
+              1,
+              8
+            ],
+            "coeff": 1
+          }
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 4,
+        "n_primes_matched": 4,
+        "primes_matched": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "primes_unmatched": [],
+        "match_rate": "4/4"
+      },
+      "space": "minus"
+    },
+    "587_plus": {
+      "N": 587,
+      "eigenform_file": "eig587plus.txt",
+      "n_fourier_coefficients": 827,
+      "det_range": [
+        8,
+        528
+      ],
+      "n_curves": 1,
+      "n_isogeny_classes": 1,
+      "curve_labels": [
+        "587.a.587.1"
+      ],
+      "hasse_weil_ok": true,
+      "n_fund_matrices": 794,
+      "eigenvalue_checks": [
+        {
+          "p": 2,
+          "legendre": -1,
+          "spin_lambda": -3,
+          "matched": true,
+          "n_match": 8,
+          "n_tried": 98,
+          "a1_lmfdb": 3,
+          "a2_lmfdb": 5,
+          "matching_T": {
+            "det": 15,
+            "reduced": [
+              2,
+              1,
+              8
+            ],
+            "coeff": -1
+          }
+        },
+        {
+          "p": 3,
+          "legendre": 1,
+          "spin_lambda": -4,
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 31,
+          "a1_lmfdb": 4,
+          "a2_lmfdb": 9,
+          "matching_T": null
+        },
+        {
+          "p": 5,
+          "legendre": -1,
+          "spin_lambda": -2,
+          "matched": true,
+          "n_match": 2,
+          "n_tried": 7,
+          "a1_lmfdb": 2,
+          "a2_lmfdb": 1,
+          "matching_T": {
+            "det": 11,
+            "reduced": [
+              2,
+              1,
+              6
+            ],
+            "coeff": 2
+          }
+        },
+        {
+          "p": 7,
+          "legendre": 1,
+          "spin_lambda": 0,
+          "matched": false,
+          "n_match": 0,
+          "n_tried": 1,
+          "a1_lmfdb": 0,
+          "a2_lmfdb": -5,
+          "matching_T": null
+        }
+      ],
+      "eigenvalue_summary": {
+        "n_primes_checked": 4,
+        "n_primes_matched": 2,
+        "primes_matched": [
+          2,
+          5
+        ],
+        "primes_unmatched": [
+          {
+            "p": 3,
+            "legendre": 1,
+            "expected_lambda": -4,
+            "n_tried": 31
+          },
+          {
+            "p": 7,
+            "legendre": 1,
+            "expected_lambda": 0,
+            "n_tried": 1
+          }
+        ],
+        "match_rate": "2/4"
+      },
+      "space": "plus"
+    }
+  },
+  "summary": {
+    "level_bijection": true,
+    "root_number_all_match": true,
+    "eigenvalue_match": "37/40",
+    "eigenvalue_match_rate": 92.5,
+    "n_unmatched_qr": 2,
+    "n_unmatched_qnr": 1,
+    "n_levels_checked": 7,
+    "levels": [
+      277,
+      349,
+      353,
+      389,
+      461,
+      523,
+      587
+    ],
+    "status": "CONSISTENT -- no contradictions found"
+  }
+}

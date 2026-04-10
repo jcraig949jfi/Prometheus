@@ -1,0 +1,374 @@
+{
+  "meta": {
+    "test": "R4-1 Triangle Inequality",
+    "n_modules": 25,
+    "modules": [
+      "agm",
+      "airy",
+      "barnes_g",
+      "bessel",
+      "beta_function",
+      "carlson_elliptic",
+      "confluent_hypergeometric",
+      "const_catalan",
+      "const_gamma",
+      "coulomb_wave",
+      "dedekind_eta",
+      "digamma_function",
+      "dirichlet",
+      "eisenstein",
+      "factorials",
+      "gamma",
+      "gauss_hypergeometric",
+      "hurwitz_zeta",
+      "imaginary_unit",
+      "integrals",
+      "jacobi_theta",
+      "legendre_elliptic",
+      "pi",
+      "riemann_zeta",
+      "sine"
+    ],
+    "total_ordered_triples": 13800
+  },
+  "identity_test": {
+    "n_violations": 19,
+    "zero_self_modules": [
+      "beta_function",
+      "const_catalan",
+      "dirichlet",
+      "imaginary_unit",
+      "integrals",
+      "sine"
+    ],
+    "nonzero_self_modules": [
+      "agm",
+      "airy",
+      "barnes_g",
+      "bessel",
+      "carlson_elliptic",
+      "confluent_hypergeometric",
+      "const_gamma",
+      "coulomb_wave",
+      "dedekind_eta",
+      "digamma_function",
+      "eisenstein",
+      "factorials",
+      "gamma",
+      "gauss_hypergeometric",
+      "hurwitz_zeta",
+      "jacobi_theta",
+      "legendre_elliptic",
+      "pi",
+      "riemann_zeta"
+    ],
+    "violations": [
+      {
+        "module": "agm",
+        "d_self": 0.182222
+      },
+      {
+        "module": "airy",
+        "d_self": 0.166667
+      },
+      {
+        "module": "barnes_g",
+        "d_self": 0.72009
+      },
+      {
+        "module": "bessel",
+        "d_self": 0.714286
+      },
+      {
+        "module": "carlson_elliptic",
+        "d_self": 0.380436
+      },
+      {
+        "module": "confluent_hypergeometric",
+        "d_self": 0.545657
+      },
+      {
+        "module": "const_gamma",
+        "d_self": 0.428571
+      },
+      {
+        "module": "coulomb_wave",
+        "d_self": 0.462704
+      },
+      {
+        "module": "dedekind_eta",
+        "d_self": 0.418182
+      },
+      {
+        "module": "digamma_function",
+        "d_self": 0.439188
+      },
+      {
+        "module": "eisenstein",
+        "d_self": 0.261905
+      },
+      {
+        "module": "factorials",
+        "d_self": 0.518519
+      },
+      {
+        "module": "gamma",
+        "d_self": 0.826513
+      },
+      {
+        "module": "gauss_hypergeometric",
+        "d_self": 0.503318
+      },
+      {
+        "module": "hurwitz_zeta",
+        "d_self": 0.694228
+      },
+      {
+        "module": "jacobi_theta",
+        "d_self": 0.452648
+      },
+      {
+        "module": "legendre_elliptic",
+        "d_self": 0.339277
+      },
+      {
+        "module": "pi",
+        "d_self": 0.177778
+      },
+      {
+        "module": "riemann_zeta",
+        "d_self": 0.357143
+      }
+    ]
+  },
+  "symmetry_test": {
+    "n_violations": 0,
+    "max_asymmetry": 0.0,
+    "is_symmetric": true,
+    "top_violations": []
+  },
+  "positive_definiteness_test": {
+    "n_violations": 0,
+    "is_positive_definite": true,
+    "violations": []
+  },
+  "triangle_inequality": {
+    "raw": {
+      "n_violations": 0,
+      "n_tested": 13800,
+      "violation_rate": 0.0,
+      "worst_ratio": null,
+      "top_violations": []
+    },
+    "symmetrized": {
+      "n_violations": 0,
+      "worst_ratio": null,
+      "top_violations": []
+    },
+    "corrected": {
+      "n_violations": 261,
+      "worst_ratio": 1.319135,
+      "top_violations": [
+        {
+          "A": "bessel",
+          "B": "gamma",
+          "C": "pi",
+          "d_AC": 0.420002,
+          "d_AB_plus_d_BC": 0.318392,
+          "excess": 0.10161,
+          "shortcut_ratio": 1.319135
+        },
+        {
+          "A": "digamma_function",
+          "B": "gamma",
+          "C": "pi",
+          "d_AC": 0.585635,
+          "d_AB_plus_d_BC": 0.461316,
+          "excess": 0.124319,
+          "shortcut_ratio": 1.269488
+        },
+        {
+          "A": "carlson_elliptic",
+          "B": "gamma",
+          "C": "digamma_function",
+          "d_AC": 0.485276,
+          "d_AB_plus_d_BC": 0.394207,
+          "excess": 0.091069,
+          "shortcut_ratio": 1.231018
+        },
+        {
+          "A": "digamma_function",
+          "B": "gamma",
+          "C": "carlson_elliptic",
+          "d_AC": 0.485276,
+          "d_AB_plus_d_BC": 0.394207,
+          "excess": 0.091069,
+          "shortcut_ratio": 1.231018
+        },
+        {
+          "A": "confluent_hypergeometric",
+          "B": "gamma",
+          "C": "pi",
+          "d_AC": 0.438049,
+          "d_AB_plus_d_BC": 0.356741,
+          "excess": 0.081309,
+          "shortcut_ratio": 1.227922
+        },
+        {
+          "A": "digamma_function",
+          "B": "gamma",
+          "C": "eisenstein",
+          "d_AC": 0.546332,
+          "d_AB_plus_d_BC": 0.446817,
+          "excess": 0.099515,
+          "shortcut_ratio": 1.22272
+        },
+        {
+          "A": "eisenstein",
+          "B": "gamma",
+          "C": "digamma_function",
+          "d_AC": 0.546332,
+          "d_AB_plus_d_BC": 0.446817,
+          "excess": 0.099515,
+          "shortcut_ratio": 1.22272
+        },
+        {
+          "A": "bessel",
+          "B": "gamma",
+          "C": "carlson_elliptic",
+          "d_AC": 0.307006,
+          "d_AB_plus_d_BC": 0.251283,
+          "excess": 0.055723,
+          "shortcut_ratio": 1.221754
+        },
+        {
+          "A": "carlson_elliptic",
+          "B": "gamma",
+          "C": "bessel",
+          "d_AC": 0.307006,
+          "d_AB_plus_d_BC": 0.251283,
+          "excess": 0.055723,
+          "shortcut_ratio": 1.221754
+        },
+        {
+          "A": "carlson_elliptic",
+          "B": "gamma",
+          "C": "confluent_hypergeometric",
+          "d_AC": 0.352597,
+          "d_AB_plus_d_BC": 0.289631,
+          "excess": 0.062965,
+          "shortcut_ratio": 1.217397
+        },
+        {
+          "A": "confluent_hypergeometric",
+          "B": "gamma",
+          "C": "carlson_elliptic",
+          "d_AC": 0.352596,
+          "d_AB_plus_d_BC": 0.289632,
+          "excess": 0.062965,
+          "shortcut_ratio": 1.217397
+        },
+        {
+          "A": "bessel",
+          "B": "gamma",
+          "C": "const_gamma",
+          "d_AC": 0.352507,
+          "d_AB_plus_d_BC": 0.290466,
+          "excess": 0.062041,
+          "shortcut_ratio": 1.213591
+        },
+        {
+          "A": "const_gamma",
+          "B": "gamma",
+          "C": "bessel",
+          "d_AC": 0.352507,
+          "d_AB_plus_d_BC": 0.290466,
+          "excess": 0.062041,
+          "shortcut_ratio": 1.213591
+        },
+        {
+          "A": "dedekind_eta",
+          "B": "gamma",
+          "C": "factorials",
+          "d_AC": 0.378018,
+          "d_AB_plus_d_BC": 0.313215,
+          "excess": 0.064802,
+          "shortcut_ratio": 1.206893
+        },
+        {
+          "A": "factorials",
+          "B": "gamma",
+          "C": "dedekind_eta",
+          "d_AC": 0.378018,
+          "d_AB_plus_d_BC": 0.313215,
+          "excess": 0.064802,
+          "shortcut_ratio": 1.206893
+        },
+        {
+          "A": "coulomb_wave",
+          "B": "gamma",
+          "C": "pi",
+          "d_AC": 0.502554,
+          "d_AB_plus_d_BC": 0.416694,
+          "excess": 0.08586,
+          "shortcut_ratio": 1.20605
+        },
+        {
+          "A": "confluent_hypergeometric",
+          "B": "gamma",
+          "C": "imaginary_unit",
+          "d_AC": 0.577721,
+          "d_AB_plus_d_BC": 0.480839,
+          "excess": 0.096882,
+          "shortcut_ratio": 1.201486
+        },
+        {
+          "A": "confluent_hypergeometric",
+          "B": "gamma",
+          "C": "eisenstein",
+          "d_AC": 0.409139,
+          "d_AB_plus_d_BC": 0.342242,
+          "excess": 0.066897,
+          "shortcut_ratio": 1.195467
+        },
+        {
+          "A": "eisenstein",
+          "B": "gamma",
+          "C": "confluent_hypergeometric",
+          "d_AC": 0.409139,
+          "d_AB_plus_d_BC": 0.342242,
+          "excess": 0.066897,
+          "shortcut_ratio": 1.195467
+        },
+        {
+          "A": "eisenstein",
+          "B": "gamma",
+          "C": "gauss_hypergeometric",
+          "d_AC": 0.420819,
+          "d_AB_plus_d_BC": 0.352521,
+          "excess": 0.068298,
+          "shortcut_ratio": 1.193741
+        }
+      ]
+    }
+  },
+  "violation_heatmap": {
+    "endpoint_counts": [],
+    "intermediary_counts": []
+  },
+  "geodesics": {
+    "diameter": 1.0,
+    "diameter_endpoints": [
+      "airy",
+      "integrals"
+    ],
+    "diameter_path": [
+      "airy",
+      "integrals"
+    ],
+    "n_compressed_paths": 0,
+    "top_compressions": []
+  },
+  "is_metric": false,
+  "classification": "pre-metric (multiple failures)"
+}

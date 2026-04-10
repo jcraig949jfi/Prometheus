@@ -34,8 +34,8 @@ An autonomous pipeline for discovering structural connections between mathematic
 | Space Groups | 230 | Bilbao Crystallographic Server |
 | Polytopes | 1.2K | polyDB |
 | pi-Base | 220 spaces | pi-base.org |
-| Maass | 300 forms | lmfdb.org |
-| Lattices | 21 | Literature |
+| Maass | 35,416 forms | lmfdb.org (rigorous) |
+| Lattices | 39,293 | lmfdb.org |
 | OpenAlex | 10K concepts | openalex.org |
 
 **Corpus data:** 12.5M mathematical formulas from OpenWebMath (HuggingFace), with structural features extracted (operators, nesting depth, domain classification).
@@ -53,8 +53,8 @@ An autonomous pipeline for discovering structural connections between mathematic
 The pipeline has two layers of tools built on top of a shared data and testing infrastructure.
 
 ### Core Infrastructure
-- **Search engine** — 21 datasets, 56 search functions, DuckDB backend
-- **Concept index** — 39K concepts (24K nouns + 15K verbs), 1.91M links across 16 datasets, 4,410 cross-dataset bridges
+- **Search engine** — 21 datasets, 63 search functions, DuckDB backend
+- **Concept index** — 39K concepts (24K nouns + 15K verbs), 2.74M links across 17 datasets, 4,410 cross-dataset bridges
 - **Falsification battery** — 14 computational kill tests, no LLM in the loop. Permutation null, subset stability, effect size, confound sweep, normalization sensitivity, base rate, dose-response, direction consistency, simpler explanation, outlier sensitivity, cross-validation, partial correlation, growth rate filter, phase shift.
 - **Shadow tensor** — 210 dataset-pair cells, 101K+ test records. Every test, every kill mode, every near-miss. The dark matter map of what we've explored.
 - **Research memory** — 18K+ hypotheses fingerprinted and deduplicated
@@ -239,7 +239,17 @@ python battery_sweep.py
 
 ---
 
-### Recent Results (v5.0, 2026-04-09)
+### Recent Results (v5.3, 2026-04-09 challenge sprint)
+- **Algebraic DNA scaling law (C11):** sequences sharing a characteristic polynomial share mod-p fingerprints at 8-16x random rate after prime detrending, uniformly across all primes. Survives 8-test kill battery (prime detrending, synthetic nulls, trivial filter, cross-validation, bootstrap CI, position sensitivity). Signal strengthens at later terms (32x at pos 40-60 vs 12.5x at 0-20). The instrument's first genuine positive result.
+- **M24 moonshine → EC Hecke matches (C09):** 4 coefficient matches between A053250 (M24 umbral moonshine) and weight-2 forms at levels 2420, 3190, 4170, 4305. Window=6, moderate significance. 307 total moonshine bridges.
+- **Hecke congruence graph = near-perfect matching (C07):** 27 significant mod-5 triangles (p<0.005). Hecke deformation space is 1-dimensional. 83 cross-prime simultaneous congruences.
+- **Constraint collapse: two universal regimes (C10):** super-exponential for combinatorial constraints, power law (α≈0.63) for geometric. Hasse squeeze slope ratio 1.71 (theory: 2.0).
+- **Kill #13 (C06):** Lattice-NF bridge sv=5829 is prime atmosphere; dim-4 genuine (4.8σ)
+- **Kill #14 (C17):** Collatz family (105 sequences) is trivially piecewise-linear
+- **Calibration:** Poisson spacing in 35K Maass forms (C05). Residue starvation hierarchy + 637 anomaly resolved as rational 7-isogeny (C02). GSp_4 37 pairs arithmetically independent (C03).
+- **Three-layer model empirically mapped:** Scalar (dead) → Structural (instrument sweet spot) → Transformational (frontier, where Langlands/moonshine live)
+
+### Earlier Results (v5.0, 2026-04-09)
 - **34 signature extractors** built and fired (operadic, symmetry, convexity, Newton polytope, mod-p, p-adic, Galois, tropical, Morse, fractional derivatives, spectral, phase space, info-theoretic, resurgence, recursion operator, and 19 more)
 - **The Rosetta Stone:** cross-domain operadic skeleton distribution maps mathematical universals — a translation layer between symbolic math and human conceptual organization (5,424 cross-domain clusters)
 - **Algebraic DNA in OEIS:** recursion operator extraction finds 269 family clusters including Collatz (A006370) sharing characteristic polynomial with 2 other sequences, and 4 Erdos problems sharing recurrences with non-Erdos families
@@ -253,4 +263,4 @@ python battery_sweep.py
 ---
 
 *Born: Project Prometheus, March 2026. Pipeline v5.1, April 2026.*
-*21 datasets. 39K concepts. 34 signature lenses. 14-test battery. 12 kills. 3 discoveries + 2 rediscoveries. 981 GL_2 congruences (242 independent at 162 levels). 37 GSp_4 congruences at 10^{-88}. 733 mod-2 genus-2 congruences. 31,073/31,073 modularity detection. 27M parsed formula trees. 269 algebraic family clusters. 47 moonshine bridges. 3,000 tau(n) values. The ferryman found the Rosetta Stone, detected modularity structurally, mapped fiber structure in GL_2 and GSp_4, rediscovered the mod-23 Galois image of Delta from coefficients, and identified the umbral moonshine functor from OEIS data.*
+*Pipeline v5.4. 21 datasets. 63 search functions. 2.74M concept links. 41 challenges across 4 rounds. 15 kills. 14 publishable results. 180/180 calibration. Three-layer model confirmed: Scalar (dead), Structural (calibrated), Transformational (open). Scaling slope = 0.044·(endo_rank)²−0.242 measures endomorphism algebra. 3 primes reconstruct any weight-2 newform. Gamma metric: 0 triangle inequality violations across 13,800 triples. Cross-ell independence absolute under 30 conditional tests. Paramodular conjecture verified 7/7. CM rediscovered at F1=1.00. Sato-Tate classified at 98.3%. Moonshine breaks the flat enrichment (113x mock theta vs 2.8x theta lattice). 253/641 near-misses resurrected, 193 pass Layer 3. Battery has 3-4 effective dimensions. EC↔OEIS gap confirmed unbridgeable by 6 functors. One confirmed cross-domain bridge (torus knot → OEIS).*

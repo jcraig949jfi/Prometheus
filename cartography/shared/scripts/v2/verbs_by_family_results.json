@@ -1,0 +1,911 @@
+{
+  "meta": {
+    "challenge": "CL3_P3_10",
+    "title": "Universal Verbs by Scaling-Law Family",
+    "timestamp": "2026-04-10T01:11:55",
+    "n_modules": 60,
+    "n_formulas": 3133,
+    "n_st_groups": 6,
+    "universal_verbs": [
+      "Equal",
+      "For",
+      "And",
+      "Set"
+    ]
+  },
+  "slope_verb_correlations": {
+    "Equal": {
+      "pearson_r": 0.683613,
+      "n_modules": 60,
+      "mean_fraction": 0.716671,
+      "std_fraction": 0.220207
+    },
+    "For": {
+      "pearson_r": 0.332932,
+      "n_modules": 60,
+      "mean_fraction": 0.294102,
+      "std_fraction": 0.247998
+    },
+    "And": {
+      "pearson_r": 0.287194,
+      "n_modules": 60,
+      "mean_fraction": 0.39184,
+      "std_fraction": 0.265933
+    },
+    "Set": {
+      "pearson_r": -0.239347,
+      "n_modules": 60,
+      "mean_fraction": 0.164447,
+      "std_fraction": 0.181133
+    }
+  },
+  "slope_gamma_correlations": {
+    "coherence_vs_gamma_delta": null,
+    "coherence_vs_gamma_core": 0.037247,
+    "n_modules": 60
+  },
+  "st_group_verb_profiles": {
+    "USp(4)": {
+      "slope": 0.007802,
+      "ci_lo": -0.004369,
+      "ci_hi": 0.014564,
+      "n_curves": 9537,
+      "linked_modules": [
+        "riemann_zeta",
+        "dirichlet",
+        "gamma",
+        "pi",
+        "weierstrass_elliptic",
+        "legendre_elliptic",
+        "eisenstein"
+      ],
+      "total_linked_formulas": 531,
+      "universal_verb_fractions": {
+        "Equal": 0.79096,
+        "For": 0.27307,
+        "And": 0.361582,
+        "Set": 0.116761
+      },
+      "top_specific_ops": {
+        "Pi": 240,
+        "Div": 129,
+        "Infinity": 101,
+        "Sqrt": 69,
+        "Gamma": 67,
+        "EisensteinE": 63,
+        "ConstI": 61,
+        "Sum": 58
+      },
+      "endo_type": "Q",
+      "endo_rank": 1
+    },
+    "G_{3,3}": {
+      "slope": -0.265804,
+      "ci_lo": -0.689574,
+      "ci_hi": 0.081957,
+      "n_curves": 383,
+      "linked_modules": [
+        "weierstrass_elliptic",
+        "legendre_elliptic",
+        "modular_j",
+        "eisenstein",
+        "dedekind_eta",
+        "riemann_zeta"
+      ],
+      "total_linked_formulas": 362,
+      "universal_verb_fractions": {
+        "Equal": 0.80663,
+        "For": 0.207182,
+        "And": 0.31768,
+        "Set": 0.116022
+      },
+      "top_specific_ops": {
+        "Pi": 134,
+        "Div": 97,
+        "ConstI": 90,
+        "EisensteinE": 63,
+        "Sqrt": 57,
+        "Infinity": 48,
+        "ForElement": 47,
+        "DedekindEta": 37
+      },
+      "endo_type": "RM",
+      "endo_rank": 2
+    },
+    "N(G_{1,3})": {
+      "slope": -0.203808,
+      "ci_lo": -0.640093,
+      "ci_hi": 0.19115,
+      "n_curves": 35,
+      "linked_modules": [
+        "weierstrass_elliptic",
+        "legendre_elliptic",
+        "modular_j",
+        "eisenstein",
+        "dedekind_eta",
+        "jacobi_theta"
+      ],
+      "total_linked_formulas": 627,
+      "universal_verb_fractions": {
+        "Equal": 0.896332,
+        "For": 0.283892,
+        "And": 0.502392,
+        "Set": 0.079745
+      },
+      "top_specific_ops": {
+        "JacobiTheta": 329,
+        "ConstI": 265,
+        "Pi": 255,
+        "Div": 166,
+        "Infinity": 132,
+        "Exp": 126,
+        "Sqrt": 102,
+        "EisensteinE": 63
+      },
+      "endo_type": "RM",
+      "endo_rank": 2
+    },
+    "N(G_{3,3})": {
+      "slope": 0.577854,
+      "ci_lo": 0.28895,
+      "ci_hi": 0.799136,
+      "n_curves": 15,
+      "linked_modules": [
+        "modular_j",
+        "eisenstein",
+        "jacobi_theta",
+        "weierstrass_elliptic",
+        "dedekind_eta",
+        "modular_lambda"
+      ],
+      "total_linked_formulas": 570,
+      "universal_verb_fractions": {
+        "Equal": 0.885965,
+        "For": 0.307018,
+        "And": 0.526316,
+        "Set": 0.108772
+      },
+      "top_specific_ops": {
+        "JacobiTheta": 329,
+        "ConstI": 286,
+        "Pi": 200,
+        "Div": 147,
+        "Exp": 126,
+        "Infinity": 124,
+        "Sqrt": 64,
+        "EisensteinE": 63
+      },
+      "endo_type": "QM",
+      "endo_rank": 4
+    },
+    "E_6": {
+      "slope": 0.014232,
+      "ci_lo": -0.673458,
+      "ci_hi": 0.255166,
+      "n_curves": 13,
+      "linked_modules": [
+        "weierstrass_elliptic",
+        "legendre_elliptic",
+        "carlson_elliptic",
+        "modular_j",
+        "eisenstein",
+        "const_gamma"
+      ],
+      "total_linked_formulas": 542,
+      "universal_verb_fractions": {
+        "Equal": 0.843173,
+        "For": 0.171587,
+        "And": 0.444649,
+        "Set": 0.081181
+      },
+      "top_specific_ops": {
+        "Pi": 198,
+        "Sqrt": 157,
+        "Infinity": 157,
+        "Div": 156,
+        "ConstI": 119,
+        "CarlsonRF": 66,
+        "EisensteinE": 63,
+        "CarlsonRJ": 62
+      },
+      "endo_type": "CM",
+      "endo_rank": 2
+    },
+    "J(E_1)": {
+      "slope": 0.397539,
+      "ci_lo": 0.079159,
+      "ci_hi": 0.703561,
+      "n_curves": 5,
+      "linked_modules": [
+        "modular_j",
+        "eisenstein",
+        "jacobi_theta",
+        "weierstrass_elliptic",
+        "dedekind_eta",
+        "gamma"
+      ],
+      "total_linked_formulas": 581,
+      "universal_verb_fractions": {
+        "Equal": 0.86747,
+        "For": 0.301205,
+        "And": 0.542169,
+        "Set": 0.096386
+      },
+      "top_specific_ops": {
+        "JacobiTheta": 329,
+        "ConstI": 278,
+        "Pi": 213,
+        "Div": 159,
+        "Exp": 137,
+        "Infinity": 134,
+        "Sqrt": 72,
+        "EisensteinE": 63
+      },
+      "endo_type": "QM",
+      "endo_rank": 4
+    }
+  },
+  "st_slope_vs_verb_correlations": {
+    "Equal": {
+      "pearson_r": 0.421235,
+      "n_groups": 6
+    },
+    "For": {
+      "pearson_r": 0.574971,
+      "n_groups": 6
+    },
+    "And": {
+      "pearson_r": 0.682054,
+      "n_groups": 6
+    },
+    "Set": {
+      "pearson_r": 0.12431,
+      "n_groups": 6
+    }
+  },
+  "coherence_comparison": {
+    "high_coherence_modules": [
+      "integrals",
+      "gaussian_quadrature",
+      "integer_sequences",
+      "const_catalan",
+      "multiple_zeta_values",
+      "jacobi_theta",
+      "beta_function",
+      "legendre_polynomial",
+      "error_functions",
+      "modular_j",
+      "general_functions",
+      "bessel",
+      "chebyshev",
+      "fibonacci",
+      "golden_ratio",
+      "stirling_numbers",
+      "sinc",
+      "powers",
+      "sine",
+      "sqrt"
+    ],
+    "low_coherence_modules": [
+      "complex_plane",
+      "airy",
+      "carlson_elliptic",
+      "halphen_constant",
+      "bernoulli_numbers",
+      "atan",
+      "operators",
+      "imaginary_unit",
+      "partitions",
+      "dirichlet",
+      "bell_numbers",
+      "gamma",
+      "barnes_g",
+      "complex_parts",
+      "landau_function",
+      "modular_transformations",
+      "prime_numbers",
+      "riemann_zeta",
+      "numbers",
+      "symbolic_expressions"
+    ],
+    "high_coherence_verb_profile": {
+      "Equal": 0.860552,
+      "For": 0.376505,
+      "And": 0.465186,
+      "Set": 0.114754
+    },
+    "low_coherence_verb_profile": {
+      "Equal": 0.542394,
+      "For": 0.243703,
+      "And": 0.302024,
+      "Set": 0.20123
+    },
+    "verb_difference_high_minus_low": {
+      "Equal": 0.318158,
+      "For": 0.132802,
+      "And": 0.163162,
+      "Set": -0.086476
+    },
+    "interpretation": "Positive diff = verb is MORE common in high-coherence (tight) families; Negative = more common in low-coherence (loose) families"
+  },
+  "top_coherence_modules": [
+    {
+      "module": "integrals",
+      "coherence": 0.504649,
+      "n_formulas": 7,
+      "verb_presence": {
+        "Equal": 1.0,
+        "For": 1.0,
+        "And": 0.7142857142857143,
+        "Set": 0.0
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "Infinity",
+        "Integral",
+        "Greater",
+        "Exp",
+        "Re"
+      ]
+    },
+    {
+      "module": "gaussian_quadrature",
+      "coherence": 0.489088,
+      "n_formulas": 3,
+      "verb_presence": {
+        "Equal": 1.0,
+        "For": 1.0,
+        "And": 1.0,
+        "Set": 0.0
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "GaussLegendreWeight",
+        "LegendrePolynomialZero",
+        "Abs",
+        "BernsteinEllipse",
+        "Better"
+      ]
+    },
+    {
+      "module": "integer_sequences",
+      "coherence": 0.449325,
+      "n_formulas": 11,
+      "verb_presence": {
+        "Equal": 0.8181818181818182,
+        "For": 0.09090909090909091,
+        "And": 0.09090909090909091,
+        "Set": 0.09090909090909091
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "SloaneA",
+        "Encyclopedia",
+        "Integer",
+        "Line",
+        "OEIS"
+      ]
+    },
+    {
+      "module": "const_catalan",
+      "coherence": 0.447294,
+      "n_formulas": 35,
+      "verb_presence": {
+        "Equal": 0.9428571428571428,
+        "For": 0.7714285714285715,
+        "And": 0.0,
+        "Set": 0.0
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "ConstCatalan",
+        "Integral",
+        "Div",
+        "Pi",
+        "Infinity"
+      ]
+    },
+    {
+      "module": "multiple_zeta_values",
+      "coherence": 0.440985,
+      "n_formulas": 12,
+      "verb_presence": {
+        "Equal": 0.9166666666666666,
+        "For": 0.25,
+        "And": 0.16666666666666666,
+        "Set": 0.0
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "MultiZetaValue",
+        "RiemannZeta",
+        "Div",
+        "Sum",
+        "Step"
+      ]
+    },
+    {
+      "module": "jacobi_theta",
+      "coherence": 0.434245,
+      "n_formulas": 336,
+      "verb_presence": {
+        "Equal": 0.9285714285714286,
+        "For": 0.3541666666666667,
+        "And": 0.6755952380952381,
+        "Set": 0.05654761904761905
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "JacobiTheta",
+        "ConstI",
+        "Pi",
+        "Infinity",
+        "Exp"
+      ]
+    },
+    {
+      "module": "beta_function",
+      "coherence": 0.402456,
+      "n_formulas": 24,
+      "verb_presence": {
+        "Equal": 0.875,
+        "For": 0.20833333333333334,
+        "And": 0.875,
+        "Set": 0.041666666666666664
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "BetaFunction",
+        "SetMinus",
+        "IncompleteBeta",
+        "IncompleteBetaRegularized",
+        "NotElement"
+      ]
+    },
+    {
+      "module": "legendre_polynomial",
+      "coherence": 0.368937,
+      "n_formulas": 44,
+      "verb_presence": {
+        "Equal": 0.7272727272727273,
+        "For": 0.3181818181818182,
+        "And": 0.5909090909090909,
+        "Set": 0.1590909090909091
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "LegendrePolynomial",
+        "Div",
+        "Abs",
+        "ComplexDerivative",
+        "LessEqual"
+      ]
+    },
+    {
+      "module": "error_functions",
+      "coherence": 0.365419,
+      "n_formulas": 19,
+      "verb_presence": {
+        "Equal": 0.7894736842105263,
+        "For": 0.2631578947368421,
+        "And": 0.15789473684210525,
+        "Set": 0.0
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "Erf",
+        "Pi",
+        "Sqrt",
+        "Exp",
+        "Erfc"
+      ]
+    },
+    {
+      "module": "modular_j",
+      "coherence": 0.356457,
+      "n_formulas": 32,
+      "verb_presence": {
+        "Equal": 0.84375,
+        "For": 0.09375,
+        "And": 0.15625,
+        "Set": 0.15625
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "ModularJ",
+        "ConstI",
+        "Sqrt",
+        "Pow",
+        "Div"
+      ]
+    },
+    {
+      "module": "general_functions",
+      "coherence": 0.350483,
+      "n_formulas": 5,
+      "verb_presence": {
+        "Equal": 0.8,
+        "For": 1.0,
+        "And": 0.6,
+        "Set": 0.0
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "Abs",
+        "ComplexDerivative",
+        "Sum",
+        "ClosedDisk",
+        "Factorial"
+      ]
+    },
+    {
+      "module": "bessel",
+      "coherence": 0.349166,
+      "n_formulas": 75,
+      "verb_presence": {
+        "Equal": 0.8533333333333334,
+        "For": 0.10666666666666667,
+        "And": 0.7066666666666667,
+        "Set": 0.7733333333333333
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "SetMinus",
+        "BesselJ",
+        "Div",
+        "Pi",
+        "BesselK"
+      ]
+    },
+    {
+      "module": "chebyshev",
+      "coherence": 0.346273,
+      "n_formulas": 91,
+      "verb_presence": {
+        "Equal": 0.8681318681318682,
+        "For": 0.31868131868131866,
+        "And": 0.7582417582417582,
+        "Set": 0.12087912087912088
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "ChebyshevT",
+        "ChebyshevU",
+        "Sqrt",
+        "Sum",
+        "LessEqual"
+      ]
+    },
+    {
+      "module": "fibonacci",
+      "coherence": 0.346019,
+      "n_formulas": 68,
+      "verb_presence": {
+        "Equal": 0.8235294117647058,
+        "For": 0.3088235294117647,
+        "And": 0.16176470588235295,
+        "Set": 0.058823529411764705
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "Fibonacci",
+        "Sqrt",
+        "Sum",
+        "GoldenRatio",
+        "Infinity"
+      ]
+    },
+    {
+      "module": "golden_ratio",
+      "coherence": 0.345505,
+      "n_formulas": 18,
+      "verb_presence": {
+        "Equal": 0.8333333333333334,
+        "For": 0.05555555555555555,
+        "And": 0.05555555555555555,
+        "Set": 0.1111111111111111
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "GoldenRatio",
+        "Pi",
+        "Infinity",
+        "Sin",
+        "Fibonacci"
+      ]
+    }
+  ],
+  "bottom_coherence_modules": [
+    {
+      "module": "atan",
+      "coherence": 0.232645,
+      "n_formulas": 84,
+      "verb_presence": {
+        "Equal": 0.7380952380952381,
+        "For": 0.13095238095238096,
+        "And": 0.4880952380952381,
+        "Set": 0.20238095238095238
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "Atan",
+        "Infinity",
+        "Pi",
+        "ConstI",
+        "Union"
+      ]
+    },
+    {
+      "module": "operators",
+      "coherence": 0.232138,
+      "n_formulas": 43,
+      "verb_presence": {
+        "Equal": 0.4186046511627907,
+        "For": 0.9767441860465116,
+        "And": 0.11627906976744186,
+        "Set": 0.13953488372093023
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "The",
+        "ForElement",
+        "Infinity",
+        "GreaterEqual",
+        "If"
+      ]
+    },
+    {
+      "module": "imaginary_unit",
+      "coherence": 0.225569,
+      "n_formulas": 23,
+      "verb_presence": {
+        "Equal": 0.8260869565217391,
+        "For": 0.0,
+        "And": 0.0,
+        "Set": 0.043478260869565216
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "ConstI",
+        "Pi",
+        "Sqrt",
+        "Div",
+        "Abs"
+      ]
+    },
+    {
+      "module": "partitions",
+      "coherence": 0.22272,
+      "n_formulas": 24,
+      "verb_presence": {
+        "Equal": 0.4583333333333333,
+        "For": 0.25,
+        "And": 0.16666666666666666,
+        "Set": 0.20833333333333334
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "PartitionsP",
+        "Sum",
+        "LessEqual",
+        "Cardinality",
+        "Div"
+      ]
+    },
+    {
+      "module": "dirichlet",
+      "coherence": 0.206064,
+      "n_formulas": 99,
+      "verb_presence": {
+        "Equal": 0.797979797979798,
+        "For": 0.36363636363636365,
+        "And": 0.6666666666666666,
+        "Set": 0.20202020202020202
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "DirichletGroup",
+        "DirichletCharacter",
+        "DirichletL",
+        "Sum",
+        "Cases"
+      ]
+    },
+    {
+      "module": "bell_numbers",
+      "coherence": 0.198474,
+      "n_formulas": 39,
+      "verb_presence": {
+        "Equal": 0.41025641025641024,
+        "For": 0.2564102564102564,
+        "And": 0.1794871794871795,
+        "Set": 0.1282051282051282
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "BellNumber",
+        "Factorial",
+        "LessEqual",
+        "Sum",
+        "GreaterEqual"
+      ]
+    },
+    {
+      "module": "gamma",
+      "coherence": 0.186272,
+      "n_formulas": 59,
+      "verb_presence": {
+        "Equal": 0.6271186440677966,
+        "For": 0.1694915254237288,
+        "And": 0.3898305084745763,
+        "Set": 0.15254237288135594
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "Gamma",
+        "Pi",
+        "Div",
+        "Infinity",
+        "Abs"
+      ]
+    },
+    {
+      "module": "barnes_g",
+      "coherence": 0.180715,
+      "n_formulas": 67,
+      "verb_presence": {
+        "Equal": 0.7014925373134329,
+        "For": 0.40298507462686567,
+        "And": 0.43283582089552236,
+        "Set": 0.07462686567164178
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "BarnesG",
+        "LogBarnesG",
+        "Pi",
+        "Infinity",
+        "Log"
+      ]
+    },
+    {
+      "module": "complex_parts",
+      "coherence": 0.168532,
+      "n_formulas": 35,
+      "verb_presence": {
+        "Equal": 0.6,
+        "For": 0.0,
+        "And": 0.2571428571428571,
+        "Set": 0.2857142857142857
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "Abs",
+        "Arg",
+        "ConstI",
+        "Codomain",
+        "Domain"
+      ]
+    },
+    {
+      "module": "landau_function",
+      "coherence": 0.156782,
+      "n_formulas": 8,
+      "verb_presence": {
+        "Equal": 0.375,
+        "For": 0.375,
+        "And": 0.25,
+        "Set": 0.25
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "LandauG",
+        "Log",
+        "Sqrt",
+        "The",
+        "LessEqual"
+      ]
+    },
+    {
+      "module": "modular_transformations",
+      "coherence": 0.155793,
+      "n_formulas": 14,
+      "verb_presence": {
+        "Equal": 0.5,
+        "For": 0.35714285714285715,
+        "And": 0.5,
+        "Set": 0.2857142857142857
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "ModularGroupFundamentalDomain",
+        "ModularGroupAction",
+        "ConstI",
+        "Pi",
+        "Modular"
+      ]
+    },
+    {
+      "module": "prime_numbers",
+      "coherence": 0.141521,
+      "n_formulas": 17,
+      "verb_presence": {
+        "Equal": 0.11764705882352941,
+        "For": 0.0,
+        "And": 0.23529411764705882,
+        "Set": 0.17647058823529413
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "PrimeNumber",
+        "PrimePi",
+        "Log",
+        "Less",
+        "LessEqual"
+      ]
+    },
+    {
+      "module": "riemann_zeta",
+      "coherence": 0.118358,
+      "n_formulas": 71,
+      "verb_presence": {
+        "Equal": 0.5915492957746479,
+        "For": 0.22535211267605634,
+        "And": 0.38028169014084506,
+        "Set": 0.15492957746478872
+      },
+      "gamma_core": true,
+      "top_specific": [
+        "RiemannZeta",
+        "Div",
+        "LessEqual",
+        "Re",
+        "Infinity"
+      ]
+    },
+    {
+      "module": "numbers",
+      "coherence": 0.09774,
+      "n_formulas": 20,
+      "verb_presence": {
+        "Equal": 0.15,
+        "For": 0.1,
+        "And": 0.15,
+        "Set": 0.45
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "ForElement",
+        "Union",
+        "ConstI",
+        "Infinity",
+        "CodeExample"
+      ]
+    },
+    {
+      "module": "symbolic_expressions",
+      "coherence": 0.096619,
+      "n_formulas": 14,
+      "verb_presence": {
+        "Equal": 0.07142857142857142,
+        "For": 0.21428571428571427,
+        "And": 0.0,
+        "Set": 0.07142857142857142
+      },
+      "gamma_core": false,
+      "top_specific": [
+        "Ellipsis",
+        "Hints",
+        "Semantically",
+        "Entry",
+        "Less"
+      ]
+    }
+  ],
+  "interpretation": {
+    "slope_verb": "Correlation between module coherence (1 - operadic distance) and fraction of formulas using each universal verb. Positive r means tighter families use that verb MORE.",
+    "slope_gamma": "Correlation between module coherence and Gamma bridge strength. Tests whether algebraically tight families are more/less Gamma-connected.",
+    "st_groups": "For each genus-2 ST group, verb distributions are aggregated from conceptually linked Fungrim modules. High-slope ST groups (N(G_{3,3}), J(E_1)) should show different verb signatures than low-slope (G_{3,3}).",
+    "key_question": "If high-slope families are dominated by DIFFERENT verbs than low-slope families, algebraic depth (slope) connects to syntactic structure (operadic verb). This bridges CL1 and C12."
+  }
+}

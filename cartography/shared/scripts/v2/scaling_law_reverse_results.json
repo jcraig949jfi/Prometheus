@@ -1,0 +1,3193 @@
+{
+  "challenge": "C11_reverse",
+  "title": "Scaling Law in Reverse: Fungrim-to-LMFDB",
+  "timestamp": "2026-04-09T21:07:57",
+  "n_curves_total": 66158,
+  "n_curves_sampled": 10000,
+  "sato_tate_groups": {
+    "USp(4)": {
+      "n_curves": 9537,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.00032,
+          "random_rate": 0.0022,
+          "enrichment": 0.14545454545454545,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 16,
+          "random_matches": 22,
+          "group_size": 9537
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9537
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9537
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9537
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9537
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5051950000000025,
+          "random_sharing": 0.5095955263157886,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 0.9913646684703052,
+          "enrichment_vs_expected": 1.010390000000005,
+          "group_size": 9537,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3348823684210577,
+          "random_sharing": 0.33354684210526386,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0040040142708722,
+          "enrichment_vs_expected": 1.0046471052631731,
+          "group_size": 9537,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20141513157894514,
+          "random_sharing": 0.20076157894737184,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0032553670627617,
+          "enrichment_vs_expected": 1.0070756578947255,
+          "group_size": 9537,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14600578947368403,
+          "random_sharing": 0.14596289473684199,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.000293874254271,
+          "enrichment_vs_expected": 1.0220405263157883,
+          "group_size": 9537,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.09956447368420036,
+          "random_sharing": 0.09860263157894539,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0097547305771943,
+          "enrichment_vs_expected": 1.095209210526204,
+          "group_size": 9537,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "G_{3,3}": {
+      "n_curves": 383,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.92072,
+          "random_rate": 0.0039,
+          "enrichment": 236.08205128205128,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 46036,
+          "random_matches": 39,
+          "group_size": 383
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 383
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 383
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 383
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 383
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.9618001315789441,
+          "random_sharing": 0.5081918421052628,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.892592623278916,
+          "enrichment_vs_expected": 1.9236002631578881,
+          "group_size": 383,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.33431289473684345,
+          "random_sharing": 0.33598394736842163,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 0.9950263914551079,
+          "enrichment_vs_expected": 1.0029386842105303,
+          "group_size": 383,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20243263157894525,
+          "random_sharing": 0.201202105263161,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0061158719695045,
+          "enrichment_vs_expected": 1.012163157894726,
+          "group_size": 383,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14774723684210458,
+          "random_sharing": 0.14638184210526237,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0093276236806774,
+          "enrichment_vs_expected": 1.0342306578947322,
+          "group_size": 383,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.10582947368420287,
+          "random_sharing": 0.09899342105262979,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0690556257060628,
+          "enrichment_vs_expected": 1.1641242105262315,
+          "group_size": 383,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "N(G_{1,3})": {
+      "n_curves": 35,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.9428571428571428,
+          "random_rate": 0.0035,
+          "enrichment": 269.3877551020408,
+          "family_pairs": 595,
+          "random_pairs": 10000,
+          "family_matches": 561,
+          "random_matches": 35,
+          "group_size": 35
+        },
+        "3": {
+          "family_rate": 0.005042016806722689,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 595,
+          "random_pairs": 10000,
+          "family_matches": 3,
+          "random_matches": 0,
+          "group_size": 35
+        },
+        "5": {
+          "family_rate": 0.0033613445378151263,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 595,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 35
+        },
+        "7": {
+          "family_rate": 0.0033613445378151263,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 595,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 35
+        },
+        "11": {
+          "family_rate": 0.0033613445378151263,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 595,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 35
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.9771428571428569,
+          "random_sharing": 0.510037368421053,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.9158260112741243,
+          "enrichment_vs_expected": 1.9542857142857137,
+          "group_size": 35,
+          "n_pairs": 595
+        },
+        "3": {
+          "family_sharing": 0.34907563025210087,
+          "random_sharing": 0.33356868421052566,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0464880151392997,
+          "enrichment_vs_expected": 1.0472268907563027,
+          "group_size": 35,
+          "n_pairs": 595
+        },
+        "5": {
+          "family_sharing": 0.2137815126050422,
+          "random_sharing": 0.20060078947368706,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0657062375773154,
+          "enrichment_vs_expected": 1.068907563025211,
+          "group_size": 35,
+          "n_pairs": 595
+        },
+        "7": {
+          "family_sharing": 0.1566386554621849,
+          "random_sharing": 0.14580105263157933,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0743314443551433,
+          "enrichment_vs_expected": 1.0964705882352943,
+          "group_size": 35,
+          "n_pairs": 595
+        },
+        "11": {
+          "family_sharing": 0.12184873949579804,
+          "random_sharing": 0.0992378947368406,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.2278448652998633,
+          "enrichment_vs_expected": 1.3403361344537783,
+          "group_size": 35,
+          "n_pairs": 595
+        }
+      }
+    },
+    "N(G_{3,3})": {
+      "n_curves": 15,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 1.0,
+          "random_rate": 0.0031,
+          "enrichment": 322.5806451612903,
+          "family_pairs": 105,
+          "random_pairs": 10000,
+          "family_matches": 105,
+          "random_matches": 31,
+          "group_size": 15
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 105,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 15
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 105,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 15
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 105,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 15
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 105,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 15
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 1.0,
+          "random_sharing": 0.5130292105263173,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.9492067497951993,
+          "enrichment_vs_expected": 2.0,
+          "group_size": 15,
+          "n_pairs": 105
+        },
+        "3": {
+          "family_sharing": 0.5714285714285716,
+          "random_sharing": 0.33542631578947446,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.7035889688131107,
+          "enrichment_vs_expected": 1.7142857142857149,
+          "group_size": 15,
+          "n_pairs": 105
+        },
+        "5": {
+          "family_sharing": 0.5080952380952382,
+          "random_sharing": 0.2000334210526345,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 2.5400517344626317,
+          "enrichment_vs_expected": 2.5404761904761908,
+          "group_size": 15,
+          "n_pairs": 105
+        },
+        "7": {
+          "family_sharing": 0.48904761904761895,
+          "random_sharing": 0.14596973684210524,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 3.3503356903124337,
+          "enrichment_vs_expected": 3.423333333333333,
+          "group_size": 15,
+          "n_pairs": 105
+        },
+        "11": {
+          "family_sharing": 0.4738095238095239,
+          "random_sharing": 0.09948263157894517,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 4.762736130814241,
+          "enrichment_vs_expected": 5.211904761904763,
+          "group_size": 15,
+          "n_pairs": 105
+        }
+      }
+    },
+    "E_6": {
+      "n_curves": 13,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.0,
+          "random_rate": 0.0031,
+          "enrichment": 0.0,
+          "family_pairs": 78,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 31,
+          "group_size": 13
+        },
+        "3": {
+          "family_rate": 0.01282051282051282,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 78,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 13
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 78,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 13
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 78,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 13
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 78,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 13
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.508974358974359,
+          "random_sharing": 0.5097115789473667,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 0.9985536526862306,
+          "enrichment_vs_expected": 1.017948717948718,
+          "group_size": 13,
+          "n_pairs": 78
+        },
+        "3": {
+          "family_sharing": 0.6711538461538462,
+          "random_sharing": 0.33290947368421137,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 2.016025073502366,
+          "enrichment_vs_expected": 2.013461538461539,
+          "group_size": 13,
+          "n_pairs": 78
+        },
+        "5": {
+          "family_sharing": 0.23269230769230762,
+          "random_sharing": 0.19901473684210863,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1692214927627074,
+          "enrichment_vs_expected": 1.163461538461538,
+          "group_size": 13,
+          "n_pairs": 78
+        },
+        "7": {
+          "family_sharing": 0.17564102564102563,
+          "random_sharing": 0.1456744736842107,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.205709011324631,
+          "enrichment_vs_expected": 1.2294871794871796,
+          "group_size": 13,
+          "n_pairs": 78
+        },
+        "11": {
+          "family_sharing": 0.1346153846153846,
+          "random_sharing": 0.0994865789473661,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.3531009513012162,
+          "enrichment_vs_expected": 1.4807692307692306,
+          "group_size": 13,
+          "n_pairs": 78
+        }
+      }
+    },
+    "J(E_1)": {
+      "n_curves": 5,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 1.0,
+          "random_rate": 0.0032,
+          "enrichment": 312.5,
+          "family_pairs": 10,
+          "random_pairs": 10000,
+          "family_matches": 10,
+          "random_matches": 32,
+          "group_size": 5
+        },
+        "3": {
+          "family_rate": 0.1,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 10,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 5
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 10,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 5
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 10,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 5
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 10,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 5
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 1.0,
+          "random_sharing": 0.5097797368421075,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.9616315199082281,
+          "enrichment_vs_expected": 2.0,
+          "group_size": 5,
+          "n_pairs": 10
+        },
+        "3": {
+          "family_sharing": 0.585,
+          "random_sharing": 0.33642815789473746,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.7388556405645343,
+          "enrichment_vs_expected": 1.755,
+          "group_size": 5,
+          "n_pairs": 10
+        },
+        "5": {
+          "family_sharing": 0.42499999999999993,
+          "random_sharing": 0.2014981578947394,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 2.1092004236684665,
+          "enrichment_vs_expected": 2.1249999999999996,
+          "group_size": 5,
+          "n_pairs": 10
+        },
+        "7": {
+          "family_sharing": 0.39999999999999997,
+          "random_sharing": 0.14650447368421005,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 2.730292051437274,
+          "enrichment_vs_expected": 2.8,
+          "group_size": 5,
+          "n_pairs": 10
+        },
+        "11": {
+          "family_sharing": 0.365,
+          "random_sharing": 0.09937105263157682,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 3.673101877598659,
+          "enrichment_vs_expected": 4.015,
+          "group_size": 5,
+          "n_pairs": 10
+        }
+      }
+    }
+  },
+  "conductor_bins": {
+    "[130941, 361853)": {
+      "n_curves": 2759,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.00122,
+          "random_rate": 0.0036,
+          "enrichment": 0.3388888888888889,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 61,
+          "random_matches": 36,
+          "group_size": 2759
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 2759
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 2759
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 2759
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 2759
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5098086842105236,
+          "random_sharing": 0.5111626315789496,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 0.9973512395375153,
+          "enrichment_vs_expected": 1.0196173684210472,
+          "group_size": 2759,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3346723684210551,
+          "random_sharing": 0.3364499999999989,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 0.9947165059326978,
+          "enrichment_vs_expected": 1.0040171052631652,
+          "group_size": 2759,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20047868421052437,
+          "random_sharing": 0.20060342105263423,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 0.9993781918500925,
+          "enrichment_vs_expected": 1.0023934210526217,
+          "group_size": 2759,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14495855263157884,
+          "random_sharing": 0.14416657894736729,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.005493462423775,
+          "enrichment_vs_expected": 1.0147098684210518,
+          "group_size": 2759,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.09923842105262137,
+          "random_sharing": 0.0992121052631558,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0002652477678584,
+          "enrichment_vs_expected": 1.091622631578835,
+          "group_size": 2759,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "[17146, 47383)": {
+      "n_curves": 1013,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.00814,
+          "random_rate": 0.0031,
+          "enrichment": 2.6258064516129034,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 407,
+          "random_matches": 31,
+          "group_size": 1013
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1013
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1013
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1013
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1013
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5148100000000023,
+          "random_sharing": 0.5098926315789489,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0096439291656876,
+          "enrichment_vs_expected": 1.0296200000000046,
+          "group_size": 1013,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3354775000000056,
+          "random_sharing": 0.33407605263157797,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0041949949940685,
+          "enrichment_vs_expected": 1.006432500000017,
+          "group_size": 1013,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20060499999999715,
+          "random_sharing": 0.19953052631579327,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0053850090211427,
+          "enrichment_vs_expected": 1.0030249999999856,
+          "group_size": 1013,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14470999999999987,
+          "random_sharing": 0.1450410526315793,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 0.9977175246209752,
+          "enrichment_vs_expected": 1.012969999999999,
+          "group_size": 1013,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.09850749999998974,
+          "random_sharing": 0.09905736842105034,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 0.9944489902182406,
+          "enrichment_vs_expected": 1.083582499999887,
+          "group_size": 1013,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "[2245, 6205)": {
+      "n_curves": 189,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.04204660587639311,
+          "random_rate": 0.0027,
+          "enrichment": 15.572816991256706,
+          "family_pairs": 17766,
+          "random_pairs": 10000,
+          "family_matches": 747,
+          "random_matches": 27,
+          "group_size": 189
+        },
+        "3": {
+          "family_rate": 0.00016886187098953058,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 17766,
+          "random_pairs": 10000,
+          "family_matches": 3,
+          "random_matches": 0,
+          "group_size": 189
+        },
+        "5": {
+          "family_rate": 5.628729032984352e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 17766,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 189
+        },
+        "7": {
+          "family_rate": 5.628729032984352e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 17766,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 189
+        },
+        "11": {
+          "family_rate": 5.628729032984352e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 17766,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 189
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5504334121355449,
+          "random_sharing": 0.5102636842105274,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0787234701743815,
+          "enrichment_vs_expected": 1.1008668242710897,
+          "group_size": 189,
+          "n_pairs": 17766
+        },
+        "3": {
+          "family_sharing": 0.3369272768208989,
+          "random_sharing": 0.3349357894736856,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0059458780154331,
+          "enrichment_vs_expected": 1.0107818304626968,
+          "group_size": 189,
+          "n_pairs": 17766
+        },
+        "5": {
+          "family_sharing": 0.20345603962625014,
+          "random_sharing": 0.20091131578947713,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0126659059833119,
+          "enrichment_vs_expected": 1.0172801981312507,
+          "group_size": 189,
+          "n_pairs": 17766
+        },
+        "7": {
+          "family_sharing": 0.14763030507711464,
+          "random_sharing": 0.14423184210526213,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0235625013329044,
+          "enrichment_vs_expected": 1.0334121355398025,
+          "group_size": 189,
+          "n_pairs": 17766
+        },
+        "11": {
+          "family_sharing": 0.10293538219069272,
+          "random_sharing": 0.09818184210526157,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0484156742581265,
+          "enrichment_vs_expected": 1.1322892040976198,
+          "group_size": 189,
+          "n_pairs": 17766
+        }
+      }
+    },
+    "[294, 812)": {
+      "n_curves": 10,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.35555555555555557,
+          "random_rate": 0.0034,
+          "enrichment": 104.57516339869282,
+          "family_pairs": 45,
+          "random_pairs": 10000,
+          "family_matches": 16,
+          "random_matches": 34,
+          "group_size": 10
+        },
+        "3": {
+          "family_rate": 0.022222222222222223,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 45,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 10
+        },
+        "5": {
+          "family_rate": 0.022222222222222223,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 45,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 10
+        },
+        "7": {
+          "family_rate": 0.022222222222222223,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 45,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 10
+        },
+        "11": {
+          "family_rate": 0.022222222222222223,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 45,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 10
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.7211111111111115,
+          "random_sharing": 0.5073428947368441,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.4213485959730405,
+          "enrichment_vs_expected": 1.442222222222223,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "3": {
+          "family_sharing": 0.3766666666666667,
+          "random_sharing": 0.33417026315789417,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.1271699136457667,
+          "enrichment_vs_expected": 1.1300000000000001,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "5": {
+          "family_sharing": 0.23222222222222216,
+          "random_sharing": 0.1992042105263189,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1657495672840756,
+          "enrichment_vs_expected": 1.1611111111111108,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "7": {
+          "family_sharing": 0.19222222222222218,
+          "random_sharing": 0.14646210526315817,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.3124365642351226,
+          "enrichment_vs_expected": 1.3455555555555554,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "11": {
+          "family_sharing": 0.1511111111111111,
+          "random_sharing": 0.09830078947368265,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.537231917670071,
+          "enrichment_vs_expected": 1.6622222222222223,
+          "group_size": 10,
+          "n_pairs": 45
+        }
+      }
+    },
+    "[361853, 999969)": {
+      "n_curves": 3590,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.00074,
+          "random_rate": 0.0031,
+          "enrichment": 0.23870967741935484,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 37,
+          "random_matches": 31,
+          "group_size": 3590
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 3590
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 3590
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 3590
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 3590
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5057021052631552,
+          "random_sharing": 0.5097731578947376,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 0.9920139917754887,
+          "enrichment_vs_expected": 1.0114042105263104,
+          "group_size": 3590,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.33505486842105653,
+          "random_sharing": 0.334987894736843,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0001999286698589,
+          "enrichment_vs_expected": 1.0051646052631698,
+          "group_size": 3590,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.2010688157894711,
+          "random_sharing": 0.1999647368421071,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0055213682412203,
+          "enrichment_vs_expected": 1.0053440789473556,
+          "group_size": 3590,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14551552631578915,
+          "random_sharing": 0.14571394736842047,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 0.9986382837318267,
+          "enrichment_vs_expected": 1.0186086842105242,
+          "group_size": 3590,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.0998040789473588,
+          "random_sharing": 0.10051842105262987,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 0.9928934209492104,
+          "enrichment_vs_expected": 1.0978448684209468,
+          "group_size": 3590,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "[47383, 130941)": {
+      "n_curves": 1882,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.00496,
+          "random_rate": 0.004,
+          "enrichment": 1.24,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 248,
+          "random_matches": 40,
+          "group_size": 1882
+        },
+        "3": {
+          "family_rate": 2e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 1882
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1882
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1882
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 1882
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5143675000000023,
+          "random_sharing": 0.5100907894736832,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0083842143684496,
+          "enrichment_vs_expected": 1.0287350000000046,
+          "group_size": 1882,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3344375000000033,
+          "random_sharing": 0.3324142105263157,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0060866515618694,
+          "enrichment_vs_expected": 1.0033125000000098,
+          "group_size": 1882,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20013999999999715,
+          "random_sharing": 0.19937421052631843,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0038409655474354,
+          "enrichment_vs_expected": 1.0006999999999857,
+          "group_size": 1882,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14563000000000006,
+          "random_sharing": 0.14670736842105275,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 0.9926563441724302,
+          "enrichment_vs_expected": 1.0194100000000006,
+          "group_size": 1882,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.0988899999999899,
+          "random_sharing": 0.09969263157894566,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 0.9919489377876423,
+          "enrichment_vs_expected": 1.0877899999998888,
+          "group_size": 1882,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "[6205, 17146)": {
+      "n_curves": 493,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.0236,
+          "random_rate": 0.0038,
+          "enrichment": 6.2105263157894735,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 1180,
+          "random_matches": 38,
+          "group_size": 493
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 493
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 493
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 493
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 493
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5272500000000065,
+          "random_sharing": 0.5087563157894731,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.036350770765048,
+          "enrichment_vs_expected": 1.054500000000013,
+          "group_size": 493,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3353300000000044,
+          "random_sharing": 0.3342831578947384,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.003131602895757,
+          "enrichment_vs_expected": 1.0059900000000133,
+          "group_size": 493,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20067749999999707,
+          "random_sharing": 0.19888000000000253,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0090381134352098,
+          "enrichment_vs_expected": 1.0033874999999852,
+          "group_size": 493,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14650249999999887,
+          "random_sharing": 0.14616763157894647,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.002290988897029,
+          "enrichment_vs_expected": 1.025517499999992,
+          "group_size": 493,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.10022499999999049,
+          "random_sharing": 0.09916342105262956,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0107053481625803,
+          "enrichment_vs_expected": 1.1024749999998953,
+          "group_size": 493,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "[812, 2245)": {
+      "n_curves": 64,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.12648809523809523,
+          "random_rate": 0.0037,
+          "enrichment": 34.18597168597168,
+          "family_pairs": 2016,
+          "random_pairs": 10000,
+          "family_matches": 255,
+          "random_matches": 37,
+          "group_size": 64
+        },
+        "3": {
+          "family_rate": 0.000992063492063492,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 2016,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 64
+        },
+        "5": {
+          "family_rate": 0.000992063492063492,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 2016,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 64
+        },
+        "7": {
+          "family_rate": 0.000992063492063492,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 2016,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 64
+        },
+        "11": {
+          "family_rate": 0.000992063492063492,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 2016,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 64
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5867559523809512,
+          "random_sharing": 0.5119789473684211,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.146054843459648,
+          "enrichment_vs_expected": 1.1735119047619025,
+          "group_size": 64,
+          "n_pairs": 2016
+        },
+        "3": {
+          "family_sharing": 0.3345734126984119,
+          "random_sharing": 0.33381710526315805,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.002265634155139,
+          "enrichment_vs_expected": 1.0037202380952357,
+          "group_size": 64,
+          "n_pairs": 2016
+        },
+        "5": {
+          "family_sharing": 0.20225694444444353,
+          "random_sharing": 0.19935473684210764,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0145580067386837,
+          "enrichment_vs_expected": 1.0112847222222177,
+          "group_size": 64,
+          "n_pairs": 2016
+        },
+        "7": {
+          "family_sharing": 0.1461805555555558,
+          "random_sharing": 0.14601210526315797,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0011536734717594,
+          "enrichment_vs_expected": 1.0232638888888907,
+          "group_size": 64,
+          "n_pairs": 2016
+        },
+        "11": {
+          "family_sharing": 0.10473710317460348,
+          "random_sharing": 0.09925921052631392,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.055187751537046,
+          "enrichment_vs_expected": 1.1521081349206383,
+          "group_size": 64,
+          "n_pairs": 2016
+        }
+      }
+    }
+  },
+  "endomorphism_groups": {
+    "CM": {
+      "n_curves": 16,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.008333333333333333,
+          "random_rate": 0.0025,
+          "enrichment": 3.333333333333333,
+          "family_pairs": 120,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 25,
+          "group_size": 16
+        },
+        "3": {
+          "family_rate": 0.008333333333333333,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 120,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 16
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 120,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 16
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 120,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 16
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 120,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 16
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.5233333333333333,
+          "random_sharing": 0.5088139473684219,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0285357467891858,
+          "enrichment_vs_expected": 1.0466666666666666,
+          "group_size": 16,
+          "n_pairs": 120
+        },
+        "3": {
+          "family_sharing": 0.6433333333333332,
+          "random_sharing": 0.33574894736841976,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.9161142227719299,
+          "enrichment_vs_expected": 1.9299999999999997,
+          "group_size": 16,
+          "n_pairs": 120
+        },
+        "5": {
+          "family_sharing": 0.2512499999999999,
+          "random_sharing": 0.19979789473684587,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.257520757818403,
+          "enrichment_vs_expected": 1.2562499999999994,
+          "group_size": 16,
+          "n_pairs": 120
+        },
+        "7": {
+          "family_sharing": 0.1979166666666666,
+          "random_sharing": 0.14585447368421037,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.3569461509639815,
+          "enrichment_vs_expected": 1.3854166666666663,
+          "group_size": 16,
+          "n_pairs": 120
+        },
+        "11": {
+          "family_sharing": 0.15958333333333338,
+          "random_sharing": 0.09936815789473503,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.605980594934515,
+          "enrichment_vs_expected": 1.755416666666667,
+          "group_size": 16,
+          "n_pairs": 120
+        }
+      }
+    },
+    "Q": {
+      "n_curves": 9538,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.00038,
+          "random_rate": 0.0042,
+          "enrichment": 0.09047619047619049,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 19,
+          "random_matches": 42,
+          "group_size": 9538
+        },
+        "3": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9538
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9538
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9538
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 9538
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.505803552631579,
+          "random_sharing": 0.5114434210526307,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 0.9889726445020173,
+          "enrichment_vs_expected": 1.011607105263158,
+          "group_size": 9538,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3348882894736877,
+          "random_sharing": 0.3349452631578952,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 0.9998299015078752,
+          "enrichment_vs_expected": 1.0046648684210633,
+          "group_size": 9538,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20108078947368238,
+          "random_sharing": 0.19950473684210895,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0078998256207858,
+          "enrichment_vs_expected": 1.0054039473684118,
+          "group_size": 9538,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.1451107894736849,
+          "random_sharing": 0.14549184210526206,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 0.9973809347241511,
+          "enrichment_vs_expected": 1.0157755263157944,
+          "group_size": 9538,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.09961381578946424,
+          "random_sharing": 0.10051421052631443,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 0.9910421150190055,
+          "enrichment_vs_expected": 1.0957519736841066,
+          "group_size": 9538,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "QM": {
+      "n_curves": 12,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.42424242424242425,
+          "random_rate": 0.0036,
+          "enrichment": 117.84511784511785,
+          "family_pairs": 66,
+          "random_pairs": 10000,
+          "family_matches": 28,
+          "random_matches": 36,
+          "group_size": 12
+        },
+        "3": {
+          "family_rate": 0.030303030303030304,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 66,
+          "random_pairs": 10000,
+          "family_matches": 2,
+          "random_matches": 0,
+          "group_size": 12
+        },
+        "5": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 66,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 12
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 66,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 12
+        },
+        "11": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 66,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 12
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.8568181818181824,
+          "random_sharing": 0.5109381578947377,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.676950857122521,
+          "enrichment_vs_expected": 1.7136363636363647,
+          "group_size": 12,
+          "n_pairs": 66
+        },
+        "3": {
+          "family_sharing": 0.6462121212121212,
+          "random_sharing": 0.33590473684210487,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.9237957978421698,
+          "enrichment_vs_expected": 1.9386363636363637,
+          "group_size": 12,
+          "n_pairs": 66
+        },
+        "5": {
+          "family_sharing": 0.5098484848484848,
+          "random_sharing": 0.19868894736842432,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 2.566063646726582,
+          "enrichment_vs_expected": 2.549242424242424,
+          "group_size": 12,
+          "n_pairs": 66
+        },
+        "7": {
+          "family_sharing": 0.4583333333333331,
+          "random_sharing": 0.14650973684210625,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 3.128347256723828,
+          "enrichment_vs_expected": 3.2083333333333317,
+          "group_size": 12,
+          "n_pairs": 66
+        },
+        "11": {
+          "family_sharing": 0.43333333333333346,
+          "random_sharing": 0.09842815789473486,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 4.402534219900436,
+          "enrichment_vs_expected": 4.7666666666666675,
+          "group_size": 12,
+          "n_pairs": 66
+        }
+      }
+    },
+    "RM": {
+      "n_curves": 434,
+      "exact_enrichment": {
+        "2": {
+          "family_rate": 0.933,
+          "random_rate": 0.0034,
+          "enrichment": 274.4117647058824,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 46650,
+          "random_matches": 34,
+          "group_size": 434
+        },
+        "3": {
+          "family_rate": 8e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 4,
+          "random_matches": 0,
+          "group_size": 434
+        },
+        "5": {
+          "family_rate": 2e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 1,
+          "random_matches": 0,
+          "group_size": 434
+        },
+        "7": {
+          "family_rate": 0.0,
+          "random_rate": 0.0,
+          "enrichment": 1.0,
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 0,
+          "random_matches": 0,
+          "group_size": 434
+        },
+        "11": {
+          "family_rate": 8e-05,
+          "random_rate": 0.0,
+          "enrichment": "Infinity",
+          "family_pairs": 50000,
+          "random_pairs": 10000,
+          "family_matches": 4,
+          "random_matches": 0,
+          "group_size": 434
+        }
+      },
+      "sharing_enrichment": {
+        "2": {
+          "family_sharing": 0.9658728947368383,
+          "random_sharing": 0.5105928947368417,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.8916692823049308,
+          "enrichment_vs_expected": 1.9317457894736767,
+          "group_size": 434,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.33514210526315835,
+          "random_sharing": 0.33385473684210637,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0038560735523152,
+          "enrichment_vs_expected": 1.0054263157894752,
+          "group_size": 434,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.20324881578947046,
+          "random_sharing": 0.20089000000000382,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0117418278135626,
+          "enrichment_vs_expected": 1.0162440789473521,
+          "group_size": 434,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.14985289473684243,
+          "random_sharing": 0.14463763157894635,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0360574430109462,
+          "enrichment_vs_expected": 1.0489702631578972,
+          "group_size": 434,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.10771105263157264,
+          "random_sharing": 0.09994131578947202,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0777429912816807,
+          "enrichment_vs_expected": 1.1848215789472991,
+          "group_size": 434,
+          "n_pairs": 20000
+        }
+      }
+    }
+  },
+  "oeis_fungrim_modules": {
+    "atan": {
+      "n_sequences": 157,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5135700149145094,
+          "random_sharing": 0.505258257105809,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.016450513557782,
+          "enrichment_vs_expected": 1.0271400298290188,
+          "group_size": 157,
+          "n_pairs": 12246
+        },
+        "3": {
+          "family_sharing": 0.3457281993738881,
+          "random_sharing": 0.3395689747120797,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0181383610414667,
+          "enrichment_vs_expected": 1.0371845981216643,
+          "group_size": 157,
+          "n_pairs": 12246
+        },
+        "5": {
+          "family_sharing": 0.22929441433436595,
+          "random_sharing": 0.21471887617542584,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0678819599774352,
+          "enrichment_vs_expected": 1.1464720716718297,
+          "group_size": 157,
+          "n_pairs": 12246
+        },
+        "7": {
+          "family_sharing": 0.16922296936020945,
+          "random_sharing": 0.1626442852267274,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.04044829564292,
+          "enrichment_vs_expected": 1.1845607855214662,
+          "group_size": 157,
+          "n_pairs": 12246
+        },
+        "11": {
+          "family_sharing": 0.1206584538505245,
+          "random_sharing": 0.11019341745328742,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.094969705442463,
+          "enrichment_vs_expected": 1.3272429923557694,
+          "group_size": 157,
+          "n_pairs": 12246
+        }
+      }
+    },
+    "bell_numbers": {
+      "n_sequences": 26,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5296923076923072,
+          "random_sharing": 0.5010428818176129,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0571795886427204,
+          "enrichment_vs_expected": 1.0593846153846145,
+          "group_size": 26,
+          "n_pairs": 325
+        },
+        "3": {
+          "family_sharing": 0.36307692307692263,
+          "random_sharing": 0.34132657391971727,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0637229879508918,
+          "enrichment_vs_expected": 1.089230769230768,
+          "group_size": 26,
+          "n_pairs": 325
+        },
+        "5": {
+          "family_sharing": 0.2321538461538462,
+          "random_sharing": 0.2126178882602624,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0918829457551105,
+          "enrichment_vs_expected": 1.160769230769231,
+          "group_size": 26,
+          "n_pairs": 325
+        },
+        "7": {
+          "family_sharing": 0.18461538461538443,
+          "random_sharing": 0.16038372373971027,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1510855360547694,
+          "enrichment_vs_expected": 1.292307692307691,
+          "group_size": 26,
+          "n_pairs": 325
+        },
+        "11": {
+          "family_sharing": 0.13184615384615403,
+          "random_sharing": 0.11036532760410978,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.194633828471002,
+          "enrichment_vs_expected": 1.4503076923076943,
+          "group_size": 26,
+          "n_pairs": 325
+        }
+      }
+    },
+    "bernoulli_numbers": {
+      "n_sequences": 433,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5108293759916537,
+          "random_sharing": 0.5020646211352274,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0174574237806442,
+          "enrichment_vs_expected": 1.0216587519833074,
+          "group_size": 433,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3566529270132114,
+          "random_sharing": 0.34221708762685665,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0421832804622986,
+          "enrichment_vs_expected": 1.0699587810396343,
+          "group_size": 433,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.23687094111254023,
+          "random_sharing": 0.21562426727598386,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.09853563379006,
+          "enrichment_vs_expected": 1.184354705562701,
+          "group_size": 433,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.18075674949190326,
+          "random_sharing": 0.16165717765894277,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1181486161613927,
+          "enrichment_vs_expected": 1.265297246443323,
+          "group_size": 433,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.13621956325343484,
+          "random_sharing": 0.11092892944129919,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.227989523918725,
+          "enrichment_vs_expected": 1.4984151957877831,
+          "group_size": 433,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "chebyshev": {
+      "n_sequences": 161,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5079814324318458,
+          "random_sharing": 0.5008161925381128,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0143071250500506,
+          "enrichment_vs_expected": 1.0159628648636916,
+          "group_size": 161,
+          "n_pairs": 12880
+        },
+        "3": {
+          "family_sharing": 0.3526972376749344,
+          "random_sharing": 0.3426635478380414,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0292814625313906,
+          "enrichment_vs_expected": 1.0580917130248033,
+          "group_size": 161,
+          "n_pairs": 12880
+        },
+        "5": {
+          "family_sharing": 0.23461562200584157,
+          "random_sharing": 0.2156059422775391,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0881686261867136,
+          "enrichment_vs_expected": 1.1730781100292078,
+          "group_size": 161,
+          "n_pairs": 12880
+        },
+        "7": {
+          "family_sharing": 0.18449435894038796,
+          "random_sharing": 0.15927958672820175,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1583051082070752,
+          "enrichment_vs_expected": 1.2914605125827159,
+          "group_size": 161,
+          "n_pairs": 12880
+        },
+        "11": {
+          "family_sharing": 0.13571196175451494,
+          "random_sharing": 0.11091448824137386,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.2235728975206235,
+          "enrichment_vs_expected": 1.4928315792996643,
+          "group_size": 161,
+          "n_pairs": 12880
+        }
+      }
+    },
+    "dedekind_eta": {
+      "n_sequences": 1101,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5228473296491982,
+          "random_sharing": 0.49840917506126536,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0490323128279668,
+          "enrichment_vs_expected": 1.0456946592983964,
+          "group_size": 1101,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3576422538787286,
+          "random_sharing": 0.3438432284055806,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.040131735434008,
+          "enrichment_vs_expected": 1.072926761636186,
+          "group_size": 1101,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.23571607811799491,
+          "random_sharing": 0.2139768302200048,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1015962703795474,
+          "enrichment_vs_expected": 1.1785803905899745,
+          "group_size": 1101,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.1883670206565002,
+          "random_sharing": 0.15903405617645158,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1844445471949927,
+          "enrichment_vs_expected": 1.3185691445955015,
+          "group_size": 1101,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.13488219421509653,
+          "random_sharing": 0.1108669096147205,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.2166136377737309,
+          "enrichment_vs_expected": 1.483704136366062,
+          "group_size": 1101,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "dirichlet": {
+      "n_sequences": 504,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5550471970388604,
+          "random_sharing": 0.5032935417643939,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.102829961006521,
+          "enrichment_vs_expected": 1.1100943940777208,
+          "group_size": 504,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.38425988343248507,
+          "random_sharing": 0.3414840235516984,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.1252646007736602,
+          "enrichment_vs_expected": 1.1527796502974552,
+          "group_size": 504,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.28148750956365576,
+          "random_sharing": 0.21413593052071964,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.3145272205330307,
+          "enrichment_vs_expected": 1.4074375478182788,
+          "group_size": 504,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.2364951545311375,
+          "random_sharing": 0.1607221083779488,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.471453783912561,
+          "enrichment_vs_expected": 1.6554660817179627,
+          "group_size": 504,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.18901111375702834,
+          "random_sharing": 0.11071845036585112,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.707132940647849,
+          "enrichment_vs_expected": 2.0791222513273118,
+          "group_size": 504,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "eisenstein": {
+      "n_sequences": 50,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.7939664778191946,
+          "random_sharing": 0.5011589530550292,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.5842607878782402,
+          "enrichment_vs_expected": 1.5879329556383892,
+          "group_size": 50,
+          "n_pairs": 1225
+        },
+        "3": {
+          "family_sharing": 0.7135073257373112,
+          "random_sharing": 0.3408876278460098,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 2.093086599375282,
+          "enrichment_vs_expected": 2.1405219772119337,
+          "group_size": 50,
+          "n_pairs": 1225
+        },
+        "5": {
+          "family_sharing": 0.3173922024950321,
+          "random_sharing": 0.2149263086294528,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.4767489588361062,
+          "enrichment_vs_expected": 1.5869610124751603,
+          "group_size": 50,
+          "n_pairs": 1225
+        },
+        "7": {
+          "family_sharing": 0.34253940172560227,
+          "random_sharing": 0.1601896044993874,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 2.1383372709863466,
+          "enrichment_vs_expected": 2.397775812079216,
+          "group_size": 50,
+          "n_pairs": 1225
+        },
+        "11": {
+          "family_sharing": 0.14807637440941337,
+          "random_sharing": 0.11009721134300578,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.344960263780744,
+          "enrichment_vs_expected": 1.628840118503547,
+          "group_size": 50,
+          "n_pairs": 1225
+        }
+      }
+    },
+    "exp": {
+      "n_sequences": 4485,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5142011743281233,
+          "random_sharing": 0.5027881058969438,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0226995593120074,
+          "enrichment_vs_expected": 1.0284023486562466,
+          "group_size": 4485,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.35684248858898027,
+          "random_sharing": 0.3401294462817028,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0491372990194898,
+          "enrichment_vs_expected": 1.0705274657669408,
+          "group_size": 4485,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.23172765243291288,
+          "random_sharing": 0.2124001830195972,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0909955402982512,
+          "enrichment_vs_expected": 1.1586382621645643,
+          "group_size": 4485,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.1758117989977831,
+          "random_sharing": 0.15931344867679628,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1035590557985941,
+          "enrichment_vs_expected": 1.2306825929844818,
+          "group_size": 4485,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.1212422729734107,
+          "random_sharing": 0.1103281161300836,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0989245282721827,
+          "enrichment_vs_expected": 1.3336650027075176,
+          "group_size": 4485,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "factorial": {
+      "n_sequences": 2932,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5314340711021844,
+          "random_sharing": 0.5024521382405849,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0576809822385955,
+          "enrichment_vs_expected": 1.0628681422043689,
+          "group_size": 2932,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3751273917143157,
+          "random_sharing": 0.3403064466738131,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.1023223197234309,
+          "enrichment_vs_expected": 1.1253821751429471,
+          "group_size": 2932,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.2564572681601071,
+          "random_sharing": 0.2159309689227203,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1876817366196823,
+          "enrichment_vs_expected": 1.2822863408005354,
+          "group_size": 2932,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.1923681476916575,
+          "random_sharing": 0.15921219753629592,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.2082500629250026,
+          "enrichment_vs_expected": 1.3465770338416025,
+          "group_size": 2932,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.13912411160498012,
+          "random_sharing": 0.11010413000441044,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.2635685110032404,
+          "enrichment_vs_expected": 1.5303652276547812,
+          "group_size": 2932,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "fibonacci": {
+      "n_sequences": 1957,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5098783159354376,
+          "random_sharing": 0.5044187023940978,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0108235747711716,
+          "enrichment_vs_expected": 1.0197566318708753,
+          "group_size": 1957,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.34841436280029725,
+          "random_sharing": 0.34329531210276043,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0149115077225537,
+          "enrichment_vs_expected": 1.0452430884008919,
+          "group_size": 1957,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.22317356029074914,
+          "random_sharing": 0.2133466630153488,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0460607029728577,
+          "enrichment_vs_expected": 1.1158678014537455,
+          "group_size": 1957,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.1663001698703311,
+          "random_sharing": 0.1626912133875762,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0221828604483842,
+          "enrichment_vs_expected": 1.1641011890923179,
+          "group_size": 1957,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.11743232424717048,
+          "random_sharing": 0.11204640987366365,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0480686028189536,
+          "enrichment_vs_expected": 1.2917555667188754,
+          "group_size": 1957,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "gamma": {
+      "n_sequences": 661,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5760791667190707,
+          "random_sharing": 0.5038226292927936,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.1434166177245793,
+          "enrichment_vs_expected": 1.1521583334381413,
+          "group_size": 661,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.40039563302967385,
+          "random_sharing": 0.3396986076256061,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.1786790526706077,
+          "enrichment_vs_expected": 1.2011868990890215,
+          "group_size": 661,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.287068473996755,
+          "random_sharing": 0.2144959557762516,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.3383397974002194,
+          "enrichment_vs_expected": 1.4353423699837748,
+          "group_size": 661,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.22193200236811111,
+          "random_sharing": 0.1605537269017531,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.3822911909352122,
+          "enrichment_vs_expected": 1.5535240165767779,
+          "group_size": 661,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.16680896652323923,
+          "random_sharing": 0.1124477169201601,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.4834357787955499,
+          "enrichment_vs_expected": 1.8348986317556315,
+          "group_size": 661,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "golden_ratio": {
+      "n_sequences": 1547,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5151082341046471,
+          "random_sharing": 0.5074556367776523,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0150803277614353,
+          "enrichment_vs_expected": 1.0302164682092942,
+          "group_size": 1547,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.35119144080528036,
+          "random_sharing": 0.34352499061696773,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.022317008653559,
+          "enrichment_vs_expected": 1.0535743224158411,
+          "group_size": 1547,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.2259483909350351,
+          "random_sharing": 0.21531979384865463,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0493619137209984,
+          "enrichment_vs_expected": 1.1297419546751755,
+          "group_size": 1547,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.16672296520279284,
+          "random_sharing": 0.15968930300092027,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0440459196057237,
+          "enrichment_vs_expected": 1.1670607564195499,
+          "group_size": 1547,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.1176014813203175,
+          "random_sharing": 0.11104188215507997,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.059073198669998,
+          "enrichment_vs_expected": 1.2936162945234926,
+          "group_size": 1547,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "integer_sequences": {
+      "n_sequences": 10,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.48777777777777787,
+          "random_sharing": 0.5019007027368065,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 0.9718611173843392,
+          "enrichment_vs_expected": 0.9755555555555557,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "3": {
+          "family_sharing": 0.34555555555555556,
+          "random_sharing": 0.3419906168942859,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.010424083250131,
+          "enrichment_vs_expected": 1.0366666666666668,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "5": {
+          "family_sharing": 0.23555555555555552,
+          "random_sharing": 0.21459859160018036,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0976565773293618,
+          "enrichment_vs_expected": 1.1777777777777776,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "7": {
+          "family_sharing": 0.17666666666666667,
+          "random_sharing": 0.16134547013873612,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0949589505968547,
+          "enrichment_vs_expected": 1.2366666666666668,
+          "group_size": 10,
+          "n_pairs": 45
+        },
+        "11": {
+          "family_sharing": 0.12555555555555553,
+          "random_sharing": 0.11024875231106751,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.13883878886266,
+          "enrichment_vs_expected": 1.3811111111111107,
+          "group_size": 10,
+          "n_pairs": 45
+        }
+      }
+    },
+    "jacobi_theta": {
+      "n_sequences": 260,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.6488716003149003,
+          "random_sharing": 0.5004061308557277,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.2966899490325723,
+          "enrichment_vs_expected": 1.2977432006298006,
+          "group_size": 260,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.40433796446244213,
+          "random_sharing": 0.3444831314982759,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.173752580289888,
+          "enrichment_vs_expected": 1.2130138933873265,
+          "group_size": 260,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.25451363810166006,
+          "random_sharing": 0.21430923014163455,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1875999831339736,
+          "enrichment_vs_expected": 1.2725681905083002,
+          "group_size": 260,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.2025810335132678,
+          "random_sharing": 0.15994655995363474,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.2665544890242837,
+          "enrichment_vs_expected": 1.4180672345928746,
+          "group_size": 260,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.14774273391812773,
+          "random_sharing": 0.11033459180782879,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.3390427380694279,
+          "enrichment_vs_expected": 1.625170073099405,
+          "group_size": 260,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "log": {
+      "n_sequences": 1748,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5310789799068346,
+          "random_sharing": 0.5014354252043092,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0591173922154526,
+          "enrichment_vs_expected": 1.0621579598136692,
+          "group_size": 1748,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.37152114891386556,
+          "random_sharing": 0.3394073772087064,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0946171882569657,
+          "enrichment_vs_expected": 1.1145634467415968,
+          "group_size": 1748,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.24432711288517162,
+          "random_sharing": 0.21382476707460282,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.14265113545021,
+          "enrichment_vs_expected": 1.221635564425858,
+          "group_size": 1748,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.18293101128596853,
+          "random_sharing": 0.16015777947757445,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1421924797076923,
+          "enrichment_vs_expected": 1.2805170790017797,
+          "group_size": 1748,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.12632235276891685,
+          "random_sharing": 0.11038745008474243,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.144354296361964,
+          "enrichment_vs_expected": 1.3895458804580854,
+          "group_size": 1748,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "modular_transformations": {
+      "n_sequences": 23,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.8071146245059285,
+          "random_sharing": 0.49970044855857676,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.6151969181418806,
+          "enrichment_vs_expected": 1.614229249011857,
+          "group_size": 23,
+          "n_pairs": 253
+        },
+        "3": {
+          "family_sharing": 0.5283732465318142,
+          "random_sharing": 0.3438045172865512,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.5368420714828195,
+          "enrichment_vs_expected": 1.5851197395954426,
+          "group_size": 23,
+          "n_pairs": 253
+        },
+        "5": {
+          "family_sharing": 0.28029140509958933,
+          "random_sharing": 0.21390838699828074,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.3103338725182483,
+          "enrichment_vs_expected": 1.4014570254979466,
+          "group_size": 23,
+          "n_pairs": 253
+        },
+        "7": {
+          "family_sharing": 0.20900565759900785,
+          "random_sharing": 0.15996586500358947,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.3065641072507437,
+          "enrichment_vs_expected": 1.463039603193055,
+          "group_size": 23,
+          "n_pairs": 253
+        },
+        "11": {
+          "family_sharing": 0.1554173448035341,
+          "random_sharing": 0.10972187547316549,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.416466353070535,
+          "enrichment_vs_expected": 1.7095907928388752,
+          "group_size": 23,
+          "n_pairs": 253
+        }
+      }
+    },
+    "partitions": {
+      "n_sequences": 321,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5179021459687154,
+          "random_sharing": 0.4999030383458129,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0360051974928215,
+          "enrichment_vs_expected": 1.0358042919374308,
+          "group_size": 321,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.36341711271012367,
+          "random_sharing": 0.34229618674024714,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0617036554541117,
+          "enrichment_vs_expected": 1.0902513381303711,
+          "group_size": 321,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.2441473210269184,
+          "random_sharing": 0.2146449708036216,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1374471999639277,
+          "enrichment_vs_expected": 1.220736605134592,
+          "group_size": 321,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.18949882374676702,
+          "random_sharing": 0.15911566173549582,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1909501659351316,
+          "enrichment_vs_expected": 1.3264917662273692,
+          "group_size": 321,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.13786968079606732,
+          "random_sharing": 0.11097197319149482,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.2423828903011163,
+          "enrichment_vs_expected": 1.5165664887567405,
+          "group_size": 321,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "prime_numbers": {
+      "n_sequences": 1117,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5071077885184594,
+          "random_sharing": 0.506726775762508,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0007519096565956,
+          "enrichment_vs_expected": 1.0142155770369188,
+          "group_size": 1117,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.347938632285541,
+          "random_sharing": 0.33944106740267155,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0250339917555968,
+          "enrichment_vs_expected": 1.0438158968566231,
+          "group_size": 1117,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.2230908976588397,
+          "random_sharing": 0.21588845130402987,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0333618881014937,
+          "enrichment_vs_expected": 1.1154544882941984,
+          "group_size": 1117,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.17009320985000353,
+          "random_sharing": 0.16072574663167966,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0582822815549922,
+          "enrichment_vs_expected": 1.1906524689500249,
+          "group_size": 1117,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.12304420619885512,
+          "random_sharing": 0.11107814973897523,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.1077264654479677,
+          "enrichment_vs_expected": 1.3534862681874062,
+          "group_size": 1117,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "riemann_zeta": {
+      "n_sequences": 757,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5266790276330107,
+          "random_sharing": 0.5026736925600208,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0477553041432013,
+          "enrichment_vs_expected": 1.0533580552660213,
+          "group_size": 757,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.3597239267988184,
+          "random_sharing": 0.34556129659427426,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0409844225731466,
+          "enrichment_vs_expected": 1.0791717803964553,
+          "group_size": 757,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.24164707098112376,
+          "random_sharing": 0.2176149001179422,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.1104343997132395,
+          "enrichment_vs_expected": 1.2082353549056186,
+          "group_size": 757,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.19592033635073858,
+          "random_sharing": 0.1640405005666851,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.1943412491056977,
+          "enrichment_vs_expected": 1.3714423544551702,
+          "group_size": 757,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.14646646440203856,
+          "random_sharing": 0.11078680719392153,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.3220569137412117,
+          "enrichment_vs_expected": 1.611131108422424,
+          "group_size": 757,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "sine": {
+      "n_sequences": 1150,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5064754696404401,
+          "random_sharing": 0.5033799023254891,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0061495647733456,
+          "enrichment_vs_expected": 1.0129509392808802,
+          "group_size": 1150,
+          "n_pairs": 20000
+        },
+        "3": {
+          "family_sharing": 0.34519094797059247,
+          "random_sharing": 0.34309528531710703,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0061081068238769,
+          "enrichment_vs_expected": 1.0355728439117775,
+          "group_size": 1150,
+          "n_pairs": 20000
+        },
+        "5": {
+          "family_sharing": 0.21822194784918475,
+          "random_sharing": 0.21382031769142537,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0205856496954213,
+          "enrichment_vs_expected": 1.0911097392459237,
+          "group_size": 1150,
+          "n_pairs": 20000
+        },
+        "7": {
+          "family_sharing": 0.16457752894164554,
+          "random_sharing": 0.16088885783635004,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.022926827593291,
+          "enrichment_vs_expected": 1.1520427025915188,
+          "group_size": 1150,
+          "n_pairs": 20000
+        },
+        "11": {
+          "family_sharing": 0.11635003869045227,
+          "random_sharing": 0.10960599161416212,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.0615299125255007,
+          "enrichment_vs_expected": 1.279850425594975,
+          "group_size": 1150,
+          "n_pairs": 20000
+        }
+      }
+    },
+    "stirling_numbers": {
+      "n_sequences": 120,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5475303995801234,
+          "random_sharing": 0.5028404133731763,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0888750884344314,
+          "enrichment_vs_expected": 1.0950607991602468,
+          "group_size": 120,
+          "n_pairs": 7140
+        },
+        "3": {
+          "family_sharing": 0.43417502927052387,
+          "random_sharing": 0.3418427810369023,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.2701015009108945,
+          "enrichment_vs_expected": 1.3025250878115717,
+          "group_size": 120,
+          "n_pairs": 7140
+        },
+        "5": {
+          "family_sharing": 0.3338479923339223,
+          "random_sharing": 0.21255194724994902,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.5706654145178733,
+          "enrichment_vs_expected": 1.6692399616696114,
+          "group_size": 120,
+          "n_pairs": 7140
+        },
+        "7": {
+          "family_sharing": 0.2761514373485111,
+          "random_sharing": 0.16036767875571328,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.7219893652583838,
+          "enrichment_vs_expected": 1.9330600614395779,
+          "group_size": 120,
+          "n_pairs": 7140
+        },
+        "11": {
+          "family_sharing": 0.213534615825637,
+          "random_sharing": 0.10973261138414159,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.9459540161503595,
+          "enrichment_vs_expected": 2.348880774082007,
+          "group_size": 120,
+          "n_pairs": 7140
+        }
+      }
+    },
+    "totient": {
+      "n_sequences": 88,
+      "enrichment": {
+        "2": {
+          "family_sharing": 0.5136993668940907,
+          "random_sharing": 0.5007832885711648,
+          "expected_random": 0.5,
+          "enrichment_vs_random": 1.0257917518769006,
+          "enrichment_vs_expected": 1.0273987337881814,
+          "group_size": 88,
+          "n_pairs": 3828
+        },
+        "3": {
+          "family_sharing": 0.36396290491118144,
+          "random_sharing": 0.3409433693331953,
+          "expected_random": 0.3333333333333333,
+          "enrichment_vs_random": 1.0675171821731184,
+          "enrichment_vs_expected": 1.0918887147335443,
+          "group_size": 88,
+          "n_pairs": 3828
+        },
+        "5": {
+          "family_sharing": 0.22850974245497557,
+          "random_sharing": 0.21417419135087817,
+          "expected_random": 0.2,
+          "enrichment_vs_random": 1.0669340736793618,
+          "enrichment_vs_expected": 1.1425487122748779,
+          "group_size": 88,
+          "n_pairs": 3828
+        },
+        "7": {
+          "family_sharing": 0.17329737537648243,
+          "random_sharing": 0.16026480784781114,
+          "expected_random": 0.14285714285714285,
+          "enrichment_vs_random": 1.0813189601864879,
+          "enrichment_vs_expected": 1.213081627635377,
+          "group_size": 88,
+          "n_pairs": 3828
+        },
+        "11": {
+          "family_sharing": 0.1309215378941561,
+          "random_sharing": 0.1110004588024607,
+          "expected_random": 0.09090909090909091,
+          "enrichment_vs_random": 1.1794684391994041,
+          "enrichment_vs_expected": 1.440136916835717,
+          "group_size": 88,
+          "n_pairs": 3828
+        }
+      }
+    }
+  },
+  "slope_summary": {
+    "sato_tate": {
+      "USp(4)": {
+        "slope": 0.007801557461898252,
+        "n_curves": 9537,
+        "enrichment_curve": {
+          "2": 0.9913646684703052,
+          "3": 1.0040040142708722,
+          "5": 1.0032553670627617,
+          "7": 1.000293874254271,
+          "11": 1.0097547305771943
+        }
+      },
+      "G_{3,3}": {
+        "slope": -0.2658040341747039,
+        "n_curves": 383,
+        "enrichment_curve": {
+          "2": 1.892592623278916,
+          "3": 0.9950263914551079,
+          "5": 1.0061158719695045,
+          "7": 1.0093276236806774,
+          "11": 1.0690556257060628
+        }
+      },
+      "N(G_{1,3})": {
+        "slope": -0.2038080760099229,
+        "n_curves": 35,
+        "enrichment_curve": {
+          "2": 1.9158260112741243,
+          "3": 1.0464880151392997,
+          "5": 1.0657062375773154,
+          "7": 1.0743314443551433,
+          "11": 1.2278448652998633
+        }
+      },
+      "N(G_{3,3})": {
+        "slope": 0.5778542271913251,
+        "n_curves": 15,
+        "enrichment_curve": {
+          "2": 1.9492067497951993,
+          "3": 1.7035889688131107,
+          "5": 2.5400517344626317,
+          "7": 3.3503356903124337,
+          "11": 4.762736130814241
+        }
+      },
+      "E_6": {
+        "slope": 0.014231961704460313,
+        "n_curves": 13,
+        "enrichment_curve": {
+          "2": 0.9985536526862306,
+          "3": 2.016025073502366,
+          "5": 1.1692214927627074,
+          "7": 1.205709011324631,
+          "11": 1.3531009513012162
+        }
+      },
+      "J(E_1)": {
+        "slope": 0.39753881813479636,
+        "n_curves": 5,
+        "enrichment_curve": {
+          "2": 1.9616315199082281,
+          "3": 1.7388556405645343,
+          "5": 2.1092004236684665,
+          "7": 2.730292051437274,
+          "11": 3.673101877598659
+        }
+      }
+    },
+    "conductor_bins": {
+      "[130941, 361853)": {
+        "slope": 0.003862030870874758,
+        "n_curves": 2759
+      },
+      "[17146, 47383)": {
+        "slope": -0.008478901489904525,
+        "n_curves": 1013
+      },
+      "[2245, 6205)": {
+        "slope": -0.009567166272448264,
+        "n_curves": 189
+      },
+      "[294, 812)": {
+        "slope": 0.07008468527876074,
+        "n_curves": 10
+      },
+      "[361853, 999969)": {
+        "slope": 0.0002806104074433918,
+        "n_curves": 3590
+      },
+      "[47383, 130941)": {
+        "slope": -0.010695221197436613,
+        "n_curves": 1882
+      },
+      "[6205, 17146)": {
+        "slope": -0.011818294195968799,
+        "n_curves": 493
+      },
+      "[812, 2245)": {
+        "slope": -0.03894082939379191,
+        "n_curves": 64
+      }
+    },
+    "endomorphism": {
+      "CM": {
+        "slope": 0.1211697585481639,
+        "n_curves": 16,
+        "enrichment_curve": {
+          "2": 1.0285357467891858,
+          "3": 1.9161142227719299,
+          "5": 1.257520757818403,
+          "7": 1.3569461509639815,
+          "11": 1.605980594934515
+        }
+      },
+      "Q": {
+        "slope": 0.000750047652832163,
+        "n_curves": 9538,
+        "enrichment_curve": {
+          "2": 0.9889726445020173,
+          "3": 0.9998299015078752,
+          "5": 1.0078998256207858,
+          "7": 0.9973809347241511,
+          "11": 0.9910421150190055
+        }
+      },
+      "QM": {
+        "slope": 0.5672085027545424,
+        "n_curves": 12,
+        "enrichment_curve": {
+          "2": 1.676950857122521,
+          "3": 1.9237957978421698,
+          "5": 2.566063646726582,
+          "7": 3.128347256723828,
+          "11": 4.402534219900436
+        }
+      },
+      "RM": {
+        "slope": -0.2580883445587331,
+        "n_curves": 434,
+        "enrichment_curve": {
+          "2": 1.8916692823049308,
+          "3": 1.0038560735523152,
+          "5": 1.0117418278135626,
+          "7": 1.0360574430109462,
+          "11": 1.0777429912816807
+        }
+      }
+    },
+    "oeis_modules": {
+      "atan": {
+        "slope": 0.04108865887775493,
+        "n_sequences": 157
+      },
+      "bell_numbers": {
+        "slope": 0.07523612607635748,
+        "n_sequences": 26
+      },
+      "bernoulli_numbers": {
+        "slope": 0.10507010375721576,
+        "n_sequences": 433
+      },
+      "chebyshev": {
+        "slope": 0.11532635549667367,
+        "n_sequences": 161
+      },
+      "dedekind_eta": {
+        "slope": 0.09949035053751384,
+        "n_sequences": 1101
+      },
+      "dirichlet": {
+        "slope": 0.2679542720460136,
+        "n_sequences": 504
+      },
+      "eisenstein": {
+        "slope": -0.08236112976908665,
+        "n_sequences": 50
+      },
+      "exp": {
+        "slope": 0.046027389942998556,
+        "n_sequences": 4485
+      },
+      "factorial": {
+        "slope": 0.10576950616040783,
+        "n_sequences": 2932
+      },
+      "fibonacci": {
+        "slope": 0.019483688492418893,
+        "n_sequences": 1957
+      },
+      "gamma": {
+        "slope": 0.16076693618972104,
+        "n_sequences": 661
+      },
+      "golden_ratio": {
+        "slope": 0.025309353484456266,
+        "n_sequences": 1547
+      },
+      "integer_sequences": {
+        "slope": 0.09452146303333762,
+        "n_sequences": 10
+      },
+      "jacobi_theta": {
+        "slope": 0.031644031628997975,
+        "n_sequences": 260
+      },
+      "log": {
+        "slope": 0.04700768686549525,
+        "n_sequences": 1748
+      },
+      "modular_transformations": {
+        "slope": -0.10228411472834038,
+        "n_sequences": 23
+      },
+      "partitions": {
+        "slope": 0.11234116691905308,
+        "n_sequences": 321
+      },
+      "prime_numbers": {
+        "slope": 0.05477700115138764,
+        "n_sequences": 1117
+      },
+      "riemann_zeta": {
+        "slope": 0.14077320103695784,
+        "n_sequences": 757
+      },
+      "sine": {
+        "slope": 0.029126698076983974,
+        "n_sequences": 1150
+      },
+      "stirling_numbers": {
+        "slope": 0.34537411183082867,
+        "n_sequences": 120
+      },
+      "totient": {
+        "slope": 0.06815523773531419,
+        "n_sequences": 88
+      }
+    }
+  },
+  "verdict": "Mean log-log slope (enrichment vs prime):\n  Sato-Tate groups:  0.0880 (6 groups)\n  Conductor bins:    -0.0007 (8 bins)\n  Endomorphism type: 0.1078 (4 types)\n  OEIS modules:      0.0818 (22 modules)\n\nPositive slope counts:\n  ST groups: 4/6\n  Endo types: 3/4\n  OEIS modules: 20/22\n\nVERDICT: UNIVERSAL: Scaling law appears in BOTH OEIS and genus-2 data\n\nCM vs Q enrichment:\n  CM mean enrichment: 1.4330\n  Q  mean enrichment: 0.9970\n  CM/Q ratio: 1.4373",
+  "elapsed_seconds": 33.2
+}
