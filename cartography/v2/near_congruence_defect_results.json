@@ -1,0 +1,478 @@
+{
+  "metadata": {
+    "description": "Defect graph of near-congruence disagreement primes",
+    "source": "near_congruence_results.json",
+    "n_disagreement_sets_used": 763,
+    "n_unique_sets_in_source": 180
+  },
+  "graph_structure": {
+    "type": "disconnected",
+    "n_nodes": 17,
+    "n_edges": 58,
+    "nodes": [
+      3,
+      5,
+      7,
+      13,
+      19,
+      23,
+      31,
+      37,
+      41,
+      43,
+      61,
+      67,
+      71,
+      73,
+      79,
+      89,
+      97
+    ],
+    "density": 0.4265,
+    "is_clique": false,
+    "is_tree": false,
+    "is_path": false,
+    "n_components": 2,
+    "components": [
+      [
+        3,
+        5,
+        7,
+        13,
+        19,
+        31,
+        37,
+        41,
+        43,
+        61,
+        67,
+        73,
+        79,
+        97
+      ],
+      [
+        23,
+        71,
+        89
+      ]
+    ],
+    "diameter": 3,
+    "radius": 1,
+    "avg_clustering_coefficient": 0.8524,
+    "global_clustering_coefficient": 0.7397,
+    "degrees": {
+      "3": 6,
+      "5": 3,
+      "7": 7,
+      "13": 4,
+      "19": 8,
+      "23": 2,
+      "31": 10,
+      "37": 10,
+      "41": 3,
+      "43": 11,
+      "61": 11,
+      "67": 8,
+      "71": 2,
+      "73": 7,
+      "79": 11,
+      "89": 2,
+      "97": 11
+    },
+    "eccentricities": {
+      "3": 2,
+      "5": 3,
+      "7": 2,
+      "13": 3,
+      "19": 2,
+      "23": 1,
+      "31": 2,
+      "37": 2,
+      "41": 3,
+      "43": 2,
+      "61": 2,
+      "67": 2,
+      "71": 1,
+      "73": 2,
+      "79": 2,
+      "89": 1,
+      "97": 2
+    },
+    "clustering_per_node": {
+      "3": 0.9333,
+      "5": 1.0,
+      "7": 0.9048,
+      "13": 1.0,
+      "19": 0.8214,
+      "23": 1.0,
+      "31": 0.7333,
+      "37": 0.7111,
+      "41": 1.0,
+      "43": 0.6,
+      "61": 0.7091,
+      "67": 0.8929,
+      "71": 1.0,
+      "73": 0.8571,
+      "79": 0.7091,
+      "89": 1.0,
+      "97": 0.6182
+    }
+  },
+  "edge_weights": {
+    "total_edges": 58,
+    "min_weight": 1,
+    "max_weight": 331,
+    "mean_weight": 65.97,
+    "median_weight": 40,
+    "top_10_edges": [
+      {
+        "edge": [
+          37,
+          61
+        ],
+        "weight": 331
+      },
+      {
+        "edge": [
+          37,
+          79
+        ],
+        "weight": 278
+      },
+      {
+        "edge": [
+          61,
+          79
+        ],
+        "weight": 257
+      },
+      {
+        "edge": [
+          31,
+          43
+        ],
+        "weight": 179
+      },
+      {
+        "edge": [
+          43,
+          67
+        ],
+        "weight": 165
+      },
+      {
+        "edge": [
+          73,
+          97
+        ],
+        "weight": 160
+      },
+      {
+        "edge": [
+          61,
+          97
+        ],
+        "weight": 158
+      },
+      {
+        "edge": [
+          19,
+          43
+        ],
+        "weight": 152
+      },
+      {
+        "edge": [
+          43,
+          79
+        ],
+        "weight": 143
+      },
+      {
+        "edge": [
+          61,
+          73
+        ],
+        "weight": 139
+      }
+    ],
+    "bottom_5_edges": [
+      {
+        "edge": [
+          5,
+          41
+        ],
+        "weight": 1
+      },
+      {
+        "edge": [
+          5,
+          43
+        ],
+        "weight": 1
+      },
+      {
+        "edge": [
+          5,
+          97
+        ],
+        "weight": 1
+      },
+      {
+        "edge": [
+          41,
+          43
+        ],
+        "weight": 1
+      },
+      {
+        "edge": [
+          41,
+          97
+        ],
+        "weight": 1
+      }
+    ]
+  },
+  "cm_splitting": {
+    "per_prime": {
+      "3": {
+        "Q(sqrt(-3))": "ramified",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "split"
+      },
+      "5": {
+        "Q(sqrt(-3))": "inert",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "inert"
+      },
+      "7": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "ramified",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      },
+      "13": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "inert"
+      },
+      "19": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "split"
+      },
+      "23": {
+        "Q(sqrt(-3))": "inert",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      },
+      "31": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      },
+      "37": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "inert"
+      },
+      "41": {
+        "Q(sqrt(-3))": "inert",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "split"
+      },
+      "43": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "split"
+      },
+      "61": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "inert"
+      },
+      "67": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "split"
+      },
+      "71": {
+        "Q(sqrt(-3))": "inert",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      },
+      "73": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "split"
+      },
+      "79": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      },
+      "89": {
+        "Q(sqrt(-3))": "inert",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "split"
+      },
+      "97": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "split"
+      }
+    },
+    "pattern_groups": {
+      "('inert', 'split', 'ramified', 'inert')": [
+        3
+      ],
+      "('split', 'inert', 'inert', 'inert')": [
+        5
+      ],
+      "('inert', 'inert', 'split', 'ramified')": [
+        7
+      ],
+      "('split', 'inert', 'split', 'inert')": [
+        13,
+        61
+      ],
+      "('inert', 'split', 'split', 'inert')": [
+        19
+      ],
+      "('inert', 'inert', 'inert', 'split')": [
+        23,
+        71
+      ],
+      "('inert', 'inert', 'split', 'inert')": [
+        31
+      ],
+      "('split', 'inert', 'split', 'split')": [
+        37
+      ],
+      "('split', 'split', 'inert', 'inert')": [
+        41,
+        89
+      ],
+      "('inert', 'split', 'split', 'split')": [
+        43,
+        67
+      ],
+      "('split', 'split', 'split', 'inert')": [
+        73,
+        97
+      ],
+      "('inert', 'inert', 'split', 'split')": [
+        79
+      ]
+    }
+  },
+  "cm_graph_correlation": {
+    "split_in_Q_sqrt_neg3": [
+      7,
+      13,
+      19,
+      31,
+      37,
+      43,
+      61,
+      67,
+      73,
+      79,
+      97
+    ],
+    "inert_in_Q_sqrt_neg3": [
+      5,
+      23,
+      41,
+      71,
+      89
+    ],
+    "split_in_Q_sqrt_neg7": [
+      23,
+      37,
+      43,
+      67,
+      71,
+      79
+    ],
+    "inert_in_Q_sqrt_neg7": [
+      3,
+      5,
+      13,
+      19,
+      31,
+      41,
+      61,
+      73,
+      89,
+      97
+    ],
+    "top6_primes_splitting": {
+      "19": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "split"
+      },
+      "31": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      },
+      "37": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "inert"
+      },
+      "43": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "split"
+      },
+      "61": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "inert",
+        "Q(sqrt(-1))": "split",
+        "Q(sqrt(-2))": "inert"
+      },
+      "79": {
+        "Q(sqrt(-3))": "split",
+        "Q(sqrt(-7))": "split",
+        "Q(sqrt(-1))": "inert",
+        "Q(sqrt(-2))": "inert"
+      }
+    },
+    "interpretation": "If defect graph neighborhoods partition by CM splitting type, the disagreement is controlled by how primes decompose in the CM endomorphism ring."
+  },
+  "verdict": {
+    "structure_type": "disconnected",
+    "n_nodes": 17,
+    "n_edges": 58,
+    "density": 0.4265,
+    "n_components": 2,
+    "diameter": 3,
+    "avg_clustering": 0.8524,
+    "global_clustering": 0.7397,
+    "cm_correlation_summary": "Check whether split/inert partition matches graph neighborhoods"
+  }
+}

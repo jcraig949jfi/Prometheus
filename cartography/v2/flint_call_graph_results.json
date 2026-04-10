@@ -1,0 +1,1396 @@
+{
+  "metadata": {
+    "source": "FLINT C library",
+    "source_path": "F:\\Prometheus\\cartography\\physics\\data\\flint_src\\src",
+    "num_files_scanned": 9393,
+    "num_modules": 127,
+    "num_function_definitions": 6474,
+    "num_call_edges": 73459
+  },
+  "operadic_permeability": {
+    "within_module_edges": 11226,
+    "between_module_edges": 16664,
+    "total_resolved_edges": 27890,
+    "permeability_ratio": 0.5975,
+    "fungrim_c12_comparison": 0.813,
+    "interpretation": "Permeability < 0.813 means FLINT is more modular than Fungrim's formula network. Permeability > 0.813 means algorithms are more interconnected than formulas."
+  },
+  "degree_distribution": {
+    "power_law_alpha": 1.257,
+    "r_squared": 0.835,
+    "max_in_degree": 1925,
+    "median_in_degree": 2,
+    "num_nodes_with_calls": 6804
+  },
+  "hub_verbs_top20": [
+    {
+      "function": "fmpz_clear",
+      "in_degree": 1925,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_init",
+      "in_degree": 1721,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_set",
+      "in_degree": 676,
+      "module": "external"
+    },
+    {
+      "function": "mpoly_words_per_exp",
+      "in_degree": 650,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_is_zero",
+      "in_degree": 628,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_mul",
+      "in_degree": 615,
+      "module": "external"
+    },
+    {
+      "function": "n_randint",
+      "in_degree": 468,
+      "module": "ulong_extras"
+    },
+    {
+      "function": "fmpz_mat_entry",
+      "in_degree": 393,
+      "module": "external"
+    },
+    {
+      "function": "mpoly_monomial_set",
+      "in_degree": 375,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_is_one",
+      "in_degree": 364,
+      "module": "external"
+    },
+    {
+      "function": "nmod_mpoly_clear",
+      "in_degree": 356,
+      "module": "external"
+    },
+    {
+      "function": "n_poly_clear",
+      "in_degree": 356,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_one",
+      "in_degree": 352,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_mpoly_clear",
+      "in_degree": 343,
+      "module": "fmpz_mpoly"
+    },
+    {
+      "function": "n_poly_init",
+      "in_degree": 342,
+      "module": "external"
+    },
+    {
+      "function": "fq_nmod_ctx_degree",
+      "in_degree": 341,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_sgn",
+      "in_degree": 315,
+      "module": "external"
+    },
+    {
+      "function": "fq_nmod_mpoly_clear",
+      "in_degree": 295,
+      "module": "external"
+    },
+    {
+      "function": "_fmpz_vec_clear",
+      "in_degree": 294,
+      "module": "external"
+    },
+    {
+      "function": "fmpz_zero",
+      "in_degree": 294,
+      "module": "external"
+    }
+  ],
+  "bridge_modules_top10": [
+    {
+      "module": "nmod_mpoly_factor",
+      "bridge_score": 3597,
+      "outgoing_between": 3373,
+      "incoming_between": 224,
+      "num_functions": 168,
+      "distinct_target_modules": 17
+    },
+    {
+      "module": "nmod_mpoly",
+      "bridge_score": 3159,
+      "outgoing_between": 2083,
+      "incoming_between": 1076,
+      "num_functions": 481,
+      "distinct_target_modules": 19
+    },
+    {
+      "module": "fq_nmod_mpoly",
+      "bridge_score": 2539,
+      "outgoing_between": 1456,
+      "incoming_between": 1083,
+      "num_functions": 404,
+      "distinct_target_modules": 14
+    },
+    {
+      "module": "fmpz_mpoly",
+      "bridge_score": 2229,
+      "outgoing_between": 603,
+      "incoming_between": 1626,
+      "num_functions": 382,
+      "distinct_target_modules": 12
+    },
+    {
+      "module": "mpoly",
+      "bridge_score": 2009,
+      "outgoing_between": 52,
+      "incoming_between": 1957,
+      "num_functions": 181,
+      "distinct_target_modules": 5
+    },
+    {
+      "module": "ulong_extras",
+      "bridge_score": 1804,
+      "outgoing_between": 1237,
+      "incoming_between": 567,
+      "num_functions": 104,
+      "distinct_target_modules": 2
+    },
+    {
+      "module": "n_poly",
+      "bridge_score": 1763,
+      "outgoing_between": 120,
+      "incoming_between": 1643,
+      "num_functions": 245,
+      "distinct_target_modules": 8
+    },
+    {
+      "module": "fmpz_mod_mpoly",
+      "bridge_score": 1698,
+      "outgoing_between": 388,
+      "incoming_between": 1310,
+      "num_functions": 237,
+      "distinct_target_modules": 11
+    },
+    {
+      "module": "fmpz",
+      "bridge_score": 1564,
+      "outgoing_between": 43,
+      "incoming_between": 1521,
+      "num_functions": 173,
+      "distinct_target_modules": 5
+    },
+    {
+      "module": "fmpz_mod_mpoly_factor",
+      "bridge_score": 1543,
+      "outgoing_between": 1181,
+      "incoming_between": 362,
+      "num_functions": 258,
+      "distinct_target_modules": 13
+    }
+  ],
+  "module_stats": {
+    "acb": {
+      "num_functions": 16,
+      "num_edges": 129,
+      "within": 0,
+      "between": 6,
+      "total": 6,
+      "permeability": 1.0,
+      "distinct_targets": 2
+    },
+    "acb_calc": {
+      "num_functions": 2,
+      "num_edges": 3,
+      "within": 0,
+      "between": 1,
+      "total": 1,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "acb_dft": {
+      "num_functions": 5,
+      "num_edges": 26,
+      "within": 1,
+      "between": 2,
+      "total": 3,
+      "permeability": 0.6667,
+      "distinct_targets": 1
+    },
+    "acb_dirichlet": {
+      "num_functions": 12,
+      "num_edges": 231,
+      "within": 2,
+      "between": 34,
+      "total": 36,
+      "permeability": 0.9444,
+      "distinct_targets": 8
+    },
+    "acb_elliptic": {
+      "num_functions": 1,
+      "num_edges": 0,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "acb_hypgeom": {
+      "num_functions": 7,
+      "num_edges": 252,
+      "within": 1,
+      "between": 37,
+      "total": 38,
+      "permeability": 0.9737,
+      "distinct_targets": 4
+    },
+    "acb_mat": {
+      "num_functions": 10,
+      "num_edges": 80,
+      "within": 1,
+      "between": 10,
+      "total": 11,
+      "permeability": 0.9091,
+      "distinct_targets": 4
+    },
+    "acb_modular": {
+      "num_functions": 3,
+      "num_edges": 50,
+      "within": 0,
+      "between": 6,
+      "total": 6,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "acb_poly": {
+      "num_functions": 52,
+      "num_edges": 329,
+      "within": 70,
+      "between": 4,
+      "total": 74,
+      "permeability": 0.0541,
+      "distinct_targets": 1
+    },
+    "acb_theta": {
+      "num_functions": 5,
+      "num_edges": 132,
+      "within": 4,
+      "between": 9,
+      "total": 13,
+      "permeability": 0.6923,
+      "distinct_targets": 4
+    },
+    "aprcl": {
+      "num_functions": 2,
+      "num_edges": 405,
+      "within": 54,
+      "between": 1,
+      "total": 55,
+      "permeability": 0.0182,
+      "distinct_targets": 1
+    },
+    "arb": {
+      "num_functions": 62,
+      "num_edges": 924,
+      "within": 61,
+      "between": 64,
+      "total": 125,
+      "permeability": 0.512,
+      "distinct_targets": 3
+    },
+    "arb_calc": {
+      "num_functions": 6,
+      "num_edges": 80,
+      "within": 2,
+      "between": 0,
+      "total": 2,
+      "permeability": 0.0,
+      "distinct_targets": 0
+    },
+    "arb_fmpz_poly": {
+      "num_functions": 3,
+      "num_edges": 12,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "arb_fpwrap": {
+      "num_functions": 48,
+      "num_edges": 273,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "arb_hypgeom": {
+      "num_functions": 9,
+      "num_edges": 34,
+      "within": 1,
+      "between": 0,
+      "total": 1,
+      "permeability": 0.0,
+      "distinct_targets": 0
+    },
+    "arb_mat": {
+      "num_functions": 14,
+      "num_edges": 121,
+      "within": 2,
+      "between": 5,
+      "total": 7,
+      "permeability": 0.7143,
+      "distinct_targets": 2
+    },
+    "arb_poly": {
+      "num_functions": 12,
+      "num_edges": 74,
+      "within": 3,
+      "between": 1,
+      "total": 4,
+      "permeability": 0.25,
+      "distinct_targets": 1
+    },
+    "arf": {
+      "num_functions": 16,
+      "num_edges": 133,
+      "within": 2,
+      "between": 6,
+      "total": 8,
+      "permeability": 0.75,
+      "distinct_targets": 1
+    },
+    "arith": {
+      "num_functions": 24,
+      "num_edges": 173,
+      "within": 18,
+      "between": 29,
+      "total": 47,
+      "permeability": 0.617,
+      "distinct_targets": 5
+    },
+    "bernoulli": {
+      "num_functions": 12,
+      "num_edges": 97,
+      "within": 19,
+      "between": 4,
+      "total": 23,
+      "permeability": 0.1739,
+      "distinct_targets": 1
+    },
+    "bool_mat": {
+      "num_functions": 1,
+      "num_edges": 0,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "ca": {
+      "num_functions": 10,
+      "num_edges": 55,
+      "within": 2,
+      "between": 12,
+      "total": 14,
+      "permeability": 0.8571,
+      "distinct_targets": 5
+    },
+    "ca_ext": {
+      "num_functions": 3,
+      "num_edges": 9,
+      "within": 1,
+      "between": 1,
+      "total": 2,
+      "permeability": 0.5,
+      "distinct_targets": 1
+    },
+    "ca_field": {
+      "num_functions": 8,
+      "num_edges": 23,
+      "within": 1,
+      "between": 5,
+      "total": 6,
+      "permeability": 0.8333,
+      "distinct_targets": 3
+    },
+    "ca_mat": {
+      "num_functions": 5,
+      "num_edges": 82,
+      "within": 0,
+      "between": 3,
+      "total": 3,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "ca_poly": {
+      "num_functions": 2,
+      "num_edges": 11,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "calcium": {
+      "num_functions": 2,
+      "num_edges": 0,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "dirichlet": {
+      "num_functions": 1,
+      "num_edges": 1,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "dlog": {
+      "num_functions": 1,
+      "num_edges": 11,
+      "within": 0,
+      "between": 4,
+      "total": 4,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "double_interval": {
+      "num_functions": 4,
+      "num_edges": 8,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fexpr": {
+      "num_functions": 3,
+      "num_edges": 4,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fft": {
+      "num_functions": 61,
+      "num_edges": 531,
+      "within": 198,
+      "between": 26,
+      "total": 224,
+      "permeability": 0.1161,
+      "distinct_targets": 2
+    },
+    "fft_small": {
+      "num_functions": 115,
+      "num_edges": 1322,
+      "within": 179,
+      "between": 127,
+      "total": 306,
+      "permeability": 0.415,
+      "distinct_targets": 10
+    },
+    "fmpq": {
+      "num_functions": 117,
+      "num_edges": 1370,
+      "within": 187,
+      "between": 237,
+      "total": 424,
+      "permeability": 0.559,
+      "distinct_targets": 4
+    },
+    "fmpq_mat": {
+      "num_functions": 41,
+      "num_edges": 293,
+      "within": 11,
+      "between": 65,
+      "total": 76,
+      "permeability": 0.8553,
+      "distinct_targets": 5
+    },
+    "fmpq_mpoly": {
+      "num_functions": 138,
+      "num_edges": 1204,
+      "within": 173,
+      "between": 219,
+      "total": 392,
+      "permeability": 0.5587,
+      "distinct_targets": 6
+    },
+    "fmpq_mpoly_factor": {
+      "num_functions": 14,
+      "num_edges": 87,
+      "within": 17,
+      "between": 16,
+      "total": 33,
+      "permeability": 0.4848,
+      "distinct_targets": 4
+    },
+    "fmpq_poly": {
+      "num_functions": 157,
+      "num_edges": 1705,
+      "within": 484,
+      "between": 62,
+      "total": 546,
+      "permeability": 0.1136,
+      "distinct_targets": 5
+    },
+    "fmpq_vec": {
+      "num_functions": 5,
+      "num_edges": 9,
+      "within": 1,
+      "between": 3,
+      "total": 4,
+      "permeability": 0.75,
+      "distinct_targets": 2
+    },
+    "fmpz": {
+      "num_functions": 173,
+      "num_edges": 2014,
+      "within": 372,
+      "between": 45,
+      "total": 417,
+      "permeability": 0.1079,
+      "distinct_targets": 5
+    },
+    "fmpz_factor": {
+      "num_functions": 20,
+      "num_edges": 238,
+      "within": 32,
+      "between": 50,
+      "total": 82,
+      "permeability": 0.6098,
+      "distinct_targets": 6
+    },
+    "fmpz_lll": {
+      "num_functions": 19,
+      "num_edges": 550,
+      "within": 24,
+      "between": 17,
+      "total": 41,
+      "permeability": 0.4146,
+      "distinct_targets": 4
+    },
+    "fmpz_mat": {
+      "num_functions": 98,
+      "num_edges": 1400,
+      "within": 143,
+      "between": 206,
+      "total": 349,
+      "permeability": 0.5903,
+      "distinct_targets": 10
+    },
+    "fmpz_mod": {
+      "num_functions": 57,
+      "num_edges": 430,
+      "within": 105,
+      "between": 28,
+      "total": 133,
+      "permeability": 0.2105,
+      "distinct_targets": 1
+    },
+    "fmpz_mod_mat": {
+      "num_functions": 57,
+      "num_edges": 223,
+      "within": 18,
+      "between": 24,
+      "total": 42,
+      "permeability": 0.5714,
+      "distinct_targets": 7
+    },
+    "fmpz_mod_mpoly": {
+      "num_functions": 237,
+      "num_edges": 2312,
+      "within": 637,
+      "between": 425,
+      "total": 1062,
+      "permeability": 0.4002,
+      "distinct_targets": 11
+    },
+    "fmpz_mod_mpoly_factor": {
+      "num_functions": 258,
+      "num_edges": 4647,
+      "within": 870,
+      "between": 1779,
+      "total": 2649,
+      "permeability": 0.6716,
+      "distinct_targets": 13
+    },
+    "fmpz_mod_poly": {
+      "num_functions": 178,
+      "num_edges": 1417,
+      "within": 355,
+      "between": 100,
+      "total": 455,
+      "permeability": 0.2198,
+      "distinct_targets": 9
+    },
+    "fmpz_mod_poly_factor": {
+      "num_functions": 26,
+      "num_edges": 899,
+      "within": 24,
+      "between": 337,
+      "total": 361,
+      "permeability": 0.9335,
+      "distinct_targets": 8
+    },
+    "fmpz_mod_vec": {
+      "num_functions": 9,
+      "num_edges": 20,
+      "within": 1,
+      "between": 6,
+      "total": 7,
+      "permeability": 0.8571,
+      "distinct_targets": 2
+    },
+    "fmpz_mpoly": {
+      "num_functions": 382,
+      "num_edges": 4246,
+      "within": 1178,
+      "between": 680,
+      "total": 1858,
+      "permeability": 0.366,
+      "distinct_targets": 12
+    },
+    "fmpz_mpoly_factor": {
+      "num_functions": 212,
+      "num_edges": 4072,
+      "within": 573,
+      "between": 1859,
+      "total": 2432,
+      "permeability": 0.7644,
+      "distinct_targets": 22
+    },
+    "fmpz_poly": {
+      "num_functions": 143,
+      "num_edges": 1313,
+      "within": 157,
+      "between": 103,
+      "total": 260,
+      "permeability": 0.3962,
+      "distinct_targets": 8
+    },
+    "fmpz_poly_factor": {
+      "num_functions": 51,
+      "num_edges": 792,
+      "within": 108,
+      "between": 130,
+      "total": 238,
+      "permeability": 0.5462,
+      "distinct_targets": 7
+    },
+    "fmpz_poly_mat": {
+      "num_functions": 1,
+      "num_edges": 8,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fmpz_poly_q": {
+      "num_functions": 62,
+      "num_edges": 609,
+      "within": 246,
+      "between": 13,
+      "total": 259,
+      "permeability": 0.0502,
+      "distinct_targets": 3
+    },
+    "fmpz_vec": {
+      "num_functions": 24,
+      "num_edges": 83,
+      "within": 7,
+      "between": 15,
+      "total": 22,
+      "permeability": 0.6818,
+      "distinct_targets": 3
+    },
+    "fmpzi": {
+      "num_functions": 10,
+      "num_edges": 287,
+      "within": 16,
+      "between": 43,
+      "total": 59,
+      "permeability": 0.7288,
+      "distinct_targets": 3
+    },
+    "fq": {
+      "num_functions": 35,
+      "num_edges": 110,
+      "within": 10,
+      "between": 18,
+      "total": 28,
+      "permeability": 0.6429,
+      "distinct_targets": 4
+    },
+    "fq_default": {
+      "num_functions": 22,
+      "num_edges": 186,
+      "within": 3,
+      "between": 78,
+      "total": 81,
+      "permeability": 0.963,
+      "distinct_targets": 9
+    },
+    "fq_default_mat": {
+      "num_functions": 4,
+      "num_edges": 10,
+      "within": 0,
+      "between": 4,
+      "total": 4,
+      "permeability": 1.0,
+      "distinct_targets": 2
+    },
+    "fq_default_poly": {
+      "num_functions": 5,
+      "num_edges": 26,
+      "within": 0,
+      "between": 13,
+      "total": 13,
+      "permeability": 1.0,
+      "distinct_targets": 3
+    },
+    "fq_embed": {
+      "num_functions": 8,
+      "num_edges": 141,
+      "within": 8,
+      "between": 61,
+      "total": 69,
+      "permeability": 0.8841,
+      "distinct_targets": 4
+    },
+    "fq_embed_templates": {
+      "num_functions": 2,
+      "num_edges": 7,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fq_mat": {
+      "num_functions": 2,
+      "num_edges": 24,
+      "within": 0,
+      "between": 5,
+      "total": 5,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "fq_mat_templates": {
+      "num_functions": 1,
+      "num_edges": 11,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fq_nmod": {
+      "num_functions": 65,
+      "num_edges": 236,
+      "within": 45,
+      "between": 34,
+      "total": 79,
+      "permeability": 0.4304,
+      "distinct_targets": 5
+    },
+    "fq_nmod_embed": {
+      "num_functions": 3,
+      "num_edges": 20,
+      "within": 0,
+      "between": 2,
+      "total": 2,
+      "permeability": 1.0,
+      "distinct_targets": 2
+    },
+    "fq_nmod_mat": {
+      "num_functions": 3,
+      "num_edges": 64,
+      "within": 1,
+      "between": 18,
+      "total": 19,
+      "permeability": 0.9474,
+      "distinct_targets": 3
+    },
+    "fq_nmod_mpoly": {
+      "num_functions": 404,
+      "num_edges": 6265,
+      "within": 1765,
+      "between": 1497,
+      "total": 3262,
+      "permeability": 0.4589,
+      "distinct_targets": 14
+    },
+    "fq_nmod_mpoly_factor": {
+      "num_functions": 136,
+      "num_edges": 2715,
+      "within": 390,
+      "between": 1058,
+      "total": 1448,
+      "permeability": 0.7307,
+      "distinct_targets": 11
+    },
+    "fq_nmod_poly": {
+      "num_functions": 2,
+      "num_edges": 12,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fq_nmod_poly_factor": {
+      "num_functions": 3,
+      "num_edges": 33,
+      "within": 0,
+      "between": 14,
+      "total": 14,
+      "permeability": 1.0,
+      "distinct_targets": 5
+    },
+    "fq_nmod_vec": {
+      "num_functions": 1,
+      "num_edges": 8,
+      "within": 0,
+      "between": 4,
+      "total": 4,
+      "permeability": 1.0,
+      "distinct_targets": 2
+    },
+    "fq_poly_factor": {
+      "num_functions": 2,
+      "num_edges": 6,
+      "within": 0,
+      "between": 3,
+      "total": 3,
+      "permeability": 1.0,
+      "distinct_targets": 3
+    },
+    "fq_poly_factor_templates": {
+      "num_functions": 3,
+      "num_edges": 16,
+      "within": 0,
+      "between": 1,
+      "total": 1,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "fq_poly_templates": {
+      "num_functions": 3,
+      "num_edges": 4,
+      "within": 0,
+      "between": 1,
+      "total": 1,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "fq_templates": {
+      "num_functions": 1,
+      "num_edges": 28,
+      "within": 0,
+      "between": 4,
+      "total": 4,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "fq_vec": {
+      "num_functions": 1,
+      "num_edges": 7,
+      "within": 0,
+      "between": 2,
+      "total": 2,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "fq_vec_templates": {
+      "num_functions": 1,
+      "num_edges": 2,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fq_zech": {
+      "num_functions": 17,
+      "num_edges": 23,
+      "within": 0,
+      "between": 6,
+      "total": 6,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "fq_zech_embed": {
+      "num_functions": 4,
+      "num_edges": 17,
+      "within": 1,
+      "between": 10,
+      "total": 11,
+      "permeability": 0.9091,
+      "distinct_targets": 2
+    },
+    "fq_zech_mat": {
+      "num_functions": 1,
+      "num_edges": 1,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "fq_zech_mpoly": {
+      "num_functions": 102,
+      "num_edges": 712,
+      "within": 156,
+      "between": 131,
+      "total": 287,
+      "permeability": 0.4564,
+      "distinct_targets": 8
+    },
+    "fq_zech_mpoly_factor": {
+      "num_functions": 118,
+      "num_edges": 1489,
+      "within": 280,
+      "between": 394,
+      "total": 674,
+      "permeability": 0.5846,
+      "distinct_targets": 9
+    },
+    "fq_zech_poly_factor": {
+      "num_functions": 2,
+      "num_edges": 3,
+      "within": 0,
+      "between": 1,
+      "total": 1,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "generic_files": {
+      "num_functions": 44,
+      "num_edges": 91,
+      "within": 14,
+      "between": 2,
+      "total": 16,
+      "permeability": 0.125,
+      "distinct_targets": 2
+    },
+    "gr": {
+      "num_functions": 236,
+      "num_edges": 396,
+      "within": 44,
+      "between": 15,
+      "total": 59,
+      "permeability": 0.2542,
+      "distinct_targets": 8
+    },
+    "gr_generic": {
+      "num_functions": 93,
+      "num_edges": 384,
+      "within": 51,
+      "between": 48,
+      "total": 99,
+      "permeability": 0.4848,
+      "distinct_targets": 6
+    },
+    "gr_mat": {
+      "num_functions": 29,
+      "num_edges": 536,
+      "within": 40,
+      "between": 54,
+      "total": 94,
+      "permeability": 0.5745,
+      "distinct_targets": 3
+    },
+    "gr_mpoly": {
+      "num_functions": 58,
+      "num_edges": 364,
+      "within": 73,
+      "between": 49,
+      "total": 122,
+      "permeability": 0.4016,
+      "distinct_targets": 3
+    },
+    "gr_poly": {
+      "num_functions": 38,
+      "num_edges": 674,
+      "within": 88,
+      "between": 53,
+      "total": 141,
+      "permeability": 0.3759,
+      "distinct_targets": 3
+    },
+    "gr_series": {
+      "num_functions": 46,
+      "num_edges": 51,
+      "within": 2,
+      "between": 16,
+      "total": 18,
+      "permeability": 0.8889,
+      "distinct_targets": 2
+    },
+    "gr_special": {
+      "num_functions": 9,
+      "num_edges": 56,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "gr_vec": {
+      "num_functions": 4,
+      "num_edges": 15,
+      "within": 0,
+      "between": 5,
+      "total": 5,
+      "permeability": 1.0,
+      "distinct_targets": 2
+    },
+    "hypgeom": {
+      "num_functions": 1,
+      "num_edges": 2,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "long_extras": {
+      "num_functions": 5,
+      "num_edges": 8,
+      "within": 1,
+      "between": 6,
+      "total": 7,
+      "permeability": 0.8571,
+      "distinct_targets": 1
+    },
+    "mag": {
+      "num_functions": 6,
+      "num_edges": 21,
+      "within": 0,
+      "between": 0,
+      "total": 0,
+      "permeability": 0,
+      "distinct_targets": 0
+    },
+    "mpn_extras": {
+      "num_functions": 262,
+      "num_edges": 449,
+      "within": 55,
+      "between": 16,
+      "total": 71,
+      "permeability": 0.2254,
+      "distinct_targets": 3
+    },
+    "mpn_mod": {
+      "num_functions": 30,
+      "num_edges": 485,
+      "within": 8,
+      "between": 55,
+      "total": 63,
+      "permeability": 0.873,
+      "distinct_targets": 8
+    },
+    "mpoly": {
+      "num_functions": 181,
+      "num_edges": 862,
+      "within": 280,
+      "between": 52,
+      "total": 332,
+      "permeability": 0.1566,
+      "distinct_targets": 5
+    },
+    "n_poly": {
+      "num_functions": 245,
+      "num_edges": 1867,
+      "within": 399,
+      "between": 120,
+      "total": 519,
+      "permeability": 0.2312,
+      "distinct_targets": 8
+    },
+    "nf": {
+      "num_functions": 4,
+      "num_edges": 68,
+      "within": 1,
+      "between": 21,
+      "total": 22,
+      "permeability": 0.9545,
+      "distinct_targets": 3
+    },
+    "nf_elem": {
+      "num_functions": 46,
+      "num_edges": 807,
+      "within": 72,
+      "between": 154,
+      "total": 226,
+      "permeability": 0.6814,
+      "distinct_targets": 8
+    },
+    "nfloat": {
+      "num_functions": 50,
+      "num_edges": 414,
+      "within": 17,
+      "between": 24,
+      "total": 41,
+      "permeability": 0.5854,
+      "distinct_targets": 3
+    },
+    "nmod": {
+      "num_functions": 8,
+      "num_edges": 111,
+      "within": 4,
+      "between": 11,
+      "total": 15,
+      "permeability": 0.7333,
+      "distinct_targets": 2
+    },
+    "nmod_mat": {
+      "num_functions": 46,
+      "num_edges": 433,
+      "within": 32,
+      "between": 55,
+      "total": 87,
+      "permeability": 0.6322,
+      "distinct_targets": 5
+    },
+    "nmod_mpoly": {
+      "num_functions": 481,
+      "num_edges": 6593,
+      "within": 2044,
+      "between": 1285,
+      "total": 3329,
+      "permeability": 0.386,
+      "distinct_targets": 19
+    },
+    "nmod_mpoly_factor": {
+      "num_functions": 168,
+      "num_edges": 3521,
+      "within": 577,
+      "between": 1136,
+      "total": 1713,
+      "permeability": 0.6632,
+      "distinct_targets": 17
+    },
+    "nmod_poly": {
+      "num_functions": 144,
+      "num_edges": 1134,
+      "within": 226,
+      "between": 72,
+      "total": 298,
+      "permeability": 0.2416,
+      "distinct_targets": 7
+    },
+    "nmod_poly_factor": {
+      "num_functions": 17,
+      "num_edges": 574,
+      "within": 31,
+      "between": 120,
+      "total": 151,
+      "permeability": 0.7947,
+      "distinct_targets": 6
+    },
+    "nmod_poly_mat": {
+      "num_functions": 10,
+      "num_edges": 94,
+      "within": 6,
+      "between": 16,
+      "total": 22,
+      "permeability": 0.7273,
+      "distinct_targets": 3
+    },
+    "nmod_vec": {
+      "num_functions": 76,
+      "num_edges": 757,
+      "within": 52,
+      "between": 52,
+      "total": 104,
+      "permeability": 0.5,
+      "distinct_targets": 3
+    },
+    "padic": {
+      "num_functions": 67,
+      "num_edges": 862,
+      "within": 58,
+      "between": 83,
+      "total": 141,
+      "permeability": 0.5887,
+      "distinct_targets": 3
+    },
+    "padic_mat": {
+      "num_functions": 35,
+      "num_edges": 405,
+      "within": 46,
+      "between": 28,
+      "total": 74,
+      "permeability": 0.3784,
+      "distinct_targets": 7
+    },
+    "padic_poly": {
+      "num_functions": 63,
+      "num_edges": 527,
+      "within": 82,
+      "between": 67,
+      "total": 149,
+      "permeability": 0.4497,
+      "distinct_targets": 8
+    },
+    "perm": {
+      "num_functions": 1,
+      "num_edges": 1,
+      "within": 0,
+      "between": 1,
+      "total": 1,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "profile": {
+      "num_functions": 2,
+      "num_edges": 28,
+      "within": 0,
+      "between": 9,
+      "total": 9,
+      "permeability": 1.0,
+      "distinct_targets": 1
+    },
+    "qadic": {
+      "num_functions": 52,
+      "num_edges": 710,
+      "within": 45,
+      "between": 106,
+      "total": 151,
+      "permeability": 0.702,
+      "distinct_targets": 10
+    },
+    "qfb": {
+      "num_functions": 21,
+      "num_edges": 733,
+      "within": 90,
+      "between": 80,
+      "total": 170,
+      "permeability": 0.4706,
+      "distinct_targets": 2
+    },
+    "qqbar": {
+      "num_functions": 2,
+      "num_edges": 2,
+      "within": 0,
+      "between": 2,
+      "total": 2,
+      "permeability": 1.0,
+      "distinct_targets": 2
+    },
+    "qsieve": {
+      "num_functions": 47,
+      "num_edges": 332,
+      "within": 45,
+      "between": 44,
+      "total": 89,
+      "permeability": 0.4944,
+      "distinct_targets": 5
+    },
+    "radix": {
+      "num_functions": 49,
+      "num_edges": 445,
+      "within": 28,
+      "between": 72,
+      "total": 100,
+      "permeability": 0.72,
+      "distinct_targets": 9
+    },
+    "thread_pool": {
+      "num_functions": 17,
+      "num_edges": 82,
+      "within": 11,
+      "between": 0,
+      "total": 11,
+      "permeability": 0.0,
+      "distinct_targets": 0
+    },
+    "thread_support": {
+      "num_functions": 12,
+      "num_edges": 18,
+      "within": 4,
+      "between": 9,
+      "total": 13,
+      "permeability": 0.6923,
+      "distinct_targets": 1
+    },
+    "ulong_extras": {
+      "num_functions": 104,
+      "num_edges": 528,
+      "within": 184,
+      "between": 4,
+      "total": 188,
+      "permeability": 0.0213,
+      "distinct_targets": 2
+    }
+  },
+  "spectral": {
+    "num_nodes": 8904,
+    "num_undirected_edges": 39766,
+    "connected_components": 106,
+    "largest_component_size": 8603,
+    "largest_component_fraction": 0.9662,
+    "spectral_gap_lambda1": 0.04354424,
+    "lambda_max": 789.0319,
+    "spectral_ratio": 5.519e-05,
+    "smallest_eigenvalues_lcc": [
+      0.0,
+      0.04354424,
+      0.04866958,
+      0.06935099,
+      0.0701371,
+      0.07344853
+    ],
+    "smallest_eigenvalues_full": [
+      -0.0,
+      -0.0,
+      -0.0,
+      -0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.04354424,
+      0.04866958,
+      0.06935099
+    ],
+    "component_sizes": {
+      "0": 8603,
+      "1": 24,
+      "64": 17,
+      "87": 9,
+      "86": 7,
+      "84": 6,
+      "2": 5,
+      "10": 5,
+      "11": 4,
+      "42": 4
+    }
+  }
+}
