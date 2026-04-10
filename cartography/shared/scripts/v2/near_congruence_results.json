@@ -1,0 +1,666 @@
+{
+  "metadata": {
+    "description": "M14: Structure of Near-Congruences (80-99% agreement at ell=3)",
+    "ell": 3,
+    "n_forms_sampled": 2000,
+    "n_near_congruences": 1131,
+    "n_full_congruences": 14164,
+    "timestamp": "2026-04-10 04:04:03",
+    "elapsed_seconds": 7.4
+  },
+  "classification": {
+    "counts": {
+      "A": 3,
+      "B": 347,
+      "C": 781,
+      "other": 0
+    },
+    "type_A_fraction": 0.0027,
+    "type_B_fraction": 0.3068,
+    "type_C_fraction": 0.6905
+  },
+  "disagreement_prime_analysis": {
+    "prime_disagree_counts": {
+      "61": 578,
+      "79": 566,
+      "37": 439,
+      "43": 378,
+      "19": 355,
+      "31": 345,
+      "67": 328,
+      "97": 314,
+      "73": 278,
+      "13": 157,
+      "7": 147,
+      "3": 115,
+      "17": 23,
+      "89": 15,
+      "5": 14,
+      "47": 14,
+      "11": 14,
+      "29": 13,
+      "41": 10,
+      "53": 9,
+      "59": 7,
+      "71": 6,
+      "83": 5,
+      "23": 5
+    },
+    "total_disagreements": 4135,
+    "primes_for_50pct": 5,
+    "bad_prime_correlation": {
+      "disagree_at_bad_for_i": 0,
+      "disagree_at_bad_for_j": 0,
+      "disagree_at_bad_for_both": 0,
+      "disagree_at_bad_for_neither": 4135,
+      "total_disagreements": 4135
+    },
+    "bad_prime_pct": 0.0
+  },
+  "type_a_deep_dive": {
+    "n_pairs": 3,
+    "single_prime_distribution": {
+      "31": 3
+    },
+    "bad_prime_analysis": {
+      "bad_for_i_only": 0,
+      "bad_for_j_only": 0,
+      "bad_for_both": 0,
+      "good_for_both": 3,
+      "small_prime_le7": 0
+    },
+    "level_relationship": {
+      "same_level": 0,
+      "one_divides_other": 0,
+      "top_gcds": {
+        "2": 1,
+        "4": 1,
+        "6": 1
+      }
+    },
+    "disagree_prime_vs_level": {
+      "p_equals_level_i": 0,
+      "p_equals_level_j": 0,
+      "p_divides_some_level": 0,
+      "p_divides_some_level_pct": 0.0
+    },
+    "example_pairs": [
+      {
+        "label_i": "1274.2.a.j",
+        "label_j": "4800.2.a.ce",
+        "level_i": 1274,
+        "level_j": 4800,
+        "disagree_prime": 31,
+        "n_valid": 20,
+        "frac": 0.95
+      },
+      {
+        "label_i": "2548.2.a.d",
+        "label_j": "4800.2.a.ce",
+        "level_i": 2548,
+        "level_j": 4800,
+        "disagree_prime": 31,
+        "n_valid": 20,
+        "frac": 0.95
+      },
+      {
+        "label_i": "3822.2.a.s",
+        "label_j": "4800.2.a.ce",
+        "level_i": 3822,
+        "level_j": 4800,
+        "disagree_prime": 31,
+        "n_valid": 20,
+        "frac": 0.95
+      }
+    ]
+  },
+  "disagreement_pattern": {
+    "unique_sets": 180,
+    "top_repeated_sets": [
+      {
+        "primes": [
+          37,
+          61,
+          79
+        ],
+        "count": 118
+      },
+      {
+        "primes": [
+          19,
+          61,
+          73,
+          97
+        ],
+        "count": 76
+      },
+      {
+        "primes": [
+          19,
+          31,
+          43
+        ],
+        "count": 72
+      },
+      {
+        "primes": [
+          3,
+          37,
+          61,
+          79
+        ],
+        "count": 60
+      },
+      {
+        "primes": [
+          31,
+          43,
+          67,
+          79
+        ],
+        "count": 51
+      },
+      {
+        "primes": [
+          19,
+          43,
+          67,
+          79
+        ],
+        "count": 48
+      },
+      {
+        "primes": [
+          13,
+          37,
+          61,
+          79
+        ],
+        "count": 39
+      },
+      {
+        "primes": [
+          7,
+          61,
+          73,
+          97
+        ],
+        "count": 38
+      },
+      {
+        "primes": [
+          37,
+          43,
+          61,
+          67
+        ],
+        "count": 29
+      },
+      {
+        "primes": [
+          37,
+          61,
+          67
+        ],
+        "count": 24
+      },
+      {
+        "primes": [
+          31,
+          43,
+          79,
+          97
+        ],
+        "count": 23
+      },
+      {
+        "primes": [
+          31,
+          61,
+          73,
+          97
+        ],
+        "count": 22
+      },
+      {
+        "primes": [
+          37,
+          73,
+          79,
+          97
+        ],
+        "count": 21
+      },
+      {
+        "primes": [
+          19,
+          67,
+          97
+        ],
+        "count": 20
+      },
+      {
+        "primes": [
+          31,
+          37,
+          61,
+          97
+        ],
+        "count": 19
+      },
+      {
+        "primes": [
+          7,
+          37,
+          61,
+          79
+        ],
+        "count": 18
+      },
+      {
+        "primes": [
+          7,
+          43,
+          67,
+          79
+        ],
+        "count": 16
+      },
+      {
+        "primes": [
+          31,
+          37,
+          61,
+          79
+        ],
+        "count": 16
+      },
+      {
+        "primes": [
+          19,
+          31,
+          43,
+          67
+        ],
+        "count": 15
+      },
+      {
+        "primes": [
+          3,
+          19,
+          31,
+          43
+        ],
+        "count": 15
+      }
+    ],
+    "entropy_bits": 5.96,
+    "normalized_entropy": 0.588,
+    "interpretation": "concentrated"
+  },
+  "galois_image_correlation": {
+    "classified_pairs": 1131,
+    "unclassified_pairs": 0,
+    "pair_class_distribution": {
+      "norm_cartan-norm_cartan": 1077,
+      "full-full": 40,
+      "full-norm_cartan": 7,
+      "cartan-cartan": 7
+    },
+    "background_class_distribution": {
+      "full": 1595,
+      "norm_cartan": 384,
+      "cartan": 20,
+      "borel": 1
+    },
+    "enrichments": {
+      "norm_cartan-norm_cartan": 25.83,
+      "full-full": 0.06,
+      "full-norm_cartan": 0.02,
+      "cartan-cartan": 61.89
+    }
+  },
+  "galois_by_type": {
+    "A": {
+      "n": 3,
+      "pair_classes": {
+        "norm_cartan-norm_cartan": 3
+      }
+    },
+    "B": {
+      "n": 347,
+      "pair_classes": {
+        "norm_cartan-norm_cartan": 338,
+        "full-full": 6,
+        "full-norm_cartan": 2,
+        "cartan-cartan": 1
+      }
+    },
+    "C": {
+      "n": 781,
+      "pair_classes": {
+        "norm_cartan-norm_cartan": 736,
+        "full-full": 34,
+        "cartan-cartan": 6,
+        "full-norm_cartan": 5
+      }
+    }
+  },
+  "example_near_congruences": {
+    "type_a": [
+      {
+        "label_i": "1274.2.a.j",
+        "label_j": "4800.2.a.ce",
+        "level_i": 1274,
+        "level_j": 4800,
+        "n_valid": 20,
+        "frac": 0.95,
+        "disagree_primes": [
+          31
+        ]
+      },
+      {
+        "label_i": "2548.2.a.d",
+        "label_j": "4800.2.a.ce",
+        "level_i": 2548,
+        "level_j": 4800,
+        "n_valid": 20,
+        "frac": 0.95,
+        "disagree_primes": [
+          31
+        ]
+      },
+      {
+        "label_i": "3822.2.a.s",
+        "label_j": "4800.2.a.ce",
+        "level_i": 3822,
+        "level_j": 4800,
+        "n_valid": 20,
+        "frac": 0.95,
+        "disagree_primes": [
+          31
+        ]
+      }
+    ],
+    "type_b": [
+      {
+        "label_i": "240.2.a.b",
+        "label_j": "2450.2.a.bc",
+        "level_i": 240,
+        "level_j": 2450,
+        "n_valid": 21,
+        "frac": 0.8571,
+        "disagree_primes": [
+          37,
+          61,
+          79
+        ]
+      },
+      {
+        "label_i": "304.2.a.f",
+        "label_j": "3318.2.a.e",
+        "level_i": 304,
+        "level_j": 3318,
+        "n_valid": 20,
+        "frac": 0.85,
+        "disagree_primes": [
+          31,
+          43,
+          67
+        ]
+      },
+      {
+        "label_i": "432.2.a.g",
+        "label_j": "2450.2.a.bc",
+        "level_i": 432,
+        "level_j": 2450,
+        "n_valid": 21,
+        "frac": 0.8571,
+        "disagree_primes": [
+          37,
+          61,
+          79
+        ]
+      },
+      {
+        "label_i": "528.2.a.d",
+        "label_j": "2450.2.a.bc",
+        "level_i": 528,
+        "level_j": 2450,
+        "n_valid": 20,
+        "frac": 0.85,
+        "disagree_primes": [
+          37,
+          61,
+          79
+        ]
+      },
+      {
+        "label_i": "539.2.a.b",
+        "label_j": "1521.2.a.c",
+        "level_i": 539,
+        "level_j": 1521,
+        "n_valid": 21,
+        "frac": 0.8571,
+        "disagree_primes": [
+          37,
+          61,
+          67
+        ]
+      },
+      {
+        "label_i": "539.2.a.b",
+        "label_j": "3042.2.a.a",
+        "level_i": 539,
+        "level_j": 3042,
+        "n_valid": 20,
+        "frac": 0.85,
+        "disagree_primes": [
+          37,
+          61,
+          67
+        ]
+      },
+      {
+        "label_i": "539.2.a.b",
+        "label_j": "3600.2.a.br",
+        "level_i": 539,
+        "level_j": 3600,
+        "n_valid": 20,
+        "frac": 0.85,
+        "disagree_primes": [
+          37,
+          61,
+          79
+        ]
+      },
+      {
+        "label_i": "539.2.a.b",
+        "label_j": "4800.2.a.ce",
+        "level_i": 539,
+        "level_j": 4800,
+        "n_valid": 20,
+        "frac": 0.9,
+        "disagree_primes": [
+          13,
+          31
+        ]
+      },
+      {
+        "label_i": "570.2.a.l",
+        "label_j": "2838.2.a.d",
+        "level_i": 570,
+        "level_j": 2838,
+        "n_valid": 19,
+        "frac": 0.8421,
+        "disagree_primes": [
+          23,
+          71,
+          89
+        ]
+      },
+      {
+        "label_i": "675.2.a.f",
+        "label_j": "784.2.a.b",
+        "level_i": 675,
+        "level_j": 784,
+        "n_valid": 21,
+        "frac": 0.8571,
+        "disagree_primes": [
+          37,
+          61,
+          79
+        ]
+      }
+    ],
+    "type_c": [
+      {
+        "label_i": "38.2.a.a",
+        "label_j": "1488.2.a.g",
+        "level_i": 38,
+        "level_j": 1488,
+        "n_valid": 21,
+        "frac": 0.8095,
+        "disagree_primes": [
+          7,
+          43,
+          67,
+          79
+        ]
+      },
+      {
+        "label_i": "38.2.a.a",
+        "label_j": "1680.2.a.g",
+        "level_i": 38,
+        "level_j": 1680,
+        "n_valid": 20,
+        "frac": 0.8,
+        "disagree_primes": [
+          31,
+          43,
+          67,
+          79
+        ]
+      },
+      {
+        "label_i": "38.2.a.a",
+        "label_j": "3822.2.a.s",
+        "level_i": 38,
+        "level_j": 3822,
+        "n_valid": 20,
+        "frac": 0.8,
+        "disagree_primes": [
+          31,
+          61,
+          73,
+          97
+        ]
+      },
+      {
+        "label_i": "38.2.a.a",
+        "label_j": "4800.2.a.ce",
+        "level_i": 38,
+        "level_j": 4800,
+        "n_valid": 21,
+        "frac": 0.8095,
+        "disagree_primes": [
+          7,
+          61,
+          73,
+          97
+        ]
+      },
+      {
+        "label_i": "99.2.a.a",
+        "label_j": "3818.2.a.a",
+        "level_i": 99,
+        "level_j": 3818,
+        "n_valid": 20,
+        "frac": 0.8,
+        "disagree_primes": [
+          5,
+          41,
+          43,
+          97
+        ]
+      },
+      {
+        "label_i": "189.2.a.c",
+        "label_j": "304.2.a.f",
+        "level_i": 189,
+        "level_j": 304,
+        "n_valid": 21,
+        "frac": 0.8095,
+        "disagree_primes": [
+          31,
+          43,
+          67,
+          79
+        ]
+      },
+      {
+        "label_i": "189.2.a.c",
+        "label_j": "1488.2.a.g",
+        "level_i": 189,
+        "level_j": 1488,
+        "n_valid": 21,
+        "frac": 0.8095,
+        "disagree_primes": [
+          19,
+          43,
+          67,
+          79
+        ]
+      },
+      {
+        "label_i": "189.2.a.c",
+        "label_j": "1984.2.a.c",
+        "level_i": 189,
+        "level_j": 1984,
+        "n_valid": 21,
+        "frac": 0.8095,
+        "disagree_primes": [
+          13,
+          37,
+          61,
+          79
+        ]
+      },
+      {
+        "label_i": "189.2.a.c",
+        "label_j": "2480.2.a.n",
+        "level_i": 189,
+        "level_j": 2480,
+        "n_valid": 20,
+        "frac": 0.8,
+        "disagree_primes": [
+          19,
+          43,
+          67,
+          79
+        ]
+      },
+      {
+        "label_i": "189.2.a.c",
+        "label_j": "4800.2.a.ce",
+        "level_i": 189,
+        "level_j": 4800,
+        "n_valid": 21,
+        "frac": 0.8095,
+        "disagree_primes": [
+          19,
+          61,
+          73,
+          97
+        ]
+      }
+    ]
+  },
+  "verdict": {
+    "total_near_congruences": 1131,
+    "type_distribution": "A=3, B=347, C=781",
+    "disagreement_concentrated": true,
+    "bad_prime_dominated": false,
+    "interpretation": "Found 1131 near-congruence pairs at ell=3. Type A (single-prime disagreement): 3 (0.3%). Disagreements occur at bad primes 0.0% of the time. Disagreement set entropy: 0.588 (concentrated \u2014 specific primes are fragile). "
+  }
+}

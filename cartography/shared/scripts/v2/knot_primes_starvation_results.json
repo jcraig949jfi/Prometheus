@@ -1,0 +1,2027 @@
+{
+  "metadata": {
+    "challenge": "M13",
+    "title": "Knot-Primes Starvation Dictionary",
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11
+    ],
+    "starvation_threshold": 0.5,
+    "n_knots_analyzed": 2977,
+    "n_starved_mf": 7557
+  },
+  "starvation_summary": {
+    "alexander": {
+      "2": {
+        "starved": 0,
+        "total": 2977,
+        "fraction": 0.0
+      },
+      "3": {
+        "starved": 106,
+        "total": 2977,
+        "fraction": 0.0356
+      },
+      "5": {
+        "starved": 733,
+        "total": 2977,
+        "fraction": 0.2462
+      },
+      "7": {
+        "starved": 1718,
+        "total": 2977,
+        "fraction": 0.5771
+      },
+      "11": {
+        "starved": 2963,
+        "total": 2977,
+        "fraction": 0.9953
+      }
+    },
+    "jones": {
+      "2": {
+        "starved": 0,
+        "total": 2977,
+        "fraction": 0.0
+      },
+      "3": {
+        "starved": 0,
+        "total": 2977,
+        "fraction": 0.0
+      },
+      "5": {
+        "starved": 11,
+        "total": 2977,
+        "fraction": 0.0037
+      },
+      "7": {
+        "starved": 42,
+        "total": 2977,
+        "fraction": 0.0141
+      },
+      "11": {
+        "starved": 354,
+        "total": 2977,
+        "fraction": 0.1189
+      }
+    }
+  },
+  "alex_jones_correlation": {
+    "2": {
+      "both_starved": 0,
+      "alex_only": 0,
+      "jones_only": 0,
+      "neither": 2977,
+      "total": 2977,
+      "phi_coefficient": 0.0,
+      "interpretation": "independent"
+    },
+    "3": {
+      "both_starved": 0,
+      "alex_only": 106,
+      "jones_only": 0,
+      "neither": 2871,
+      "total": 2977,
+      "phi_coefficient": 0.0,
+      "interpretation": "independent"
+    },
+    "5": {
+      "both_starved": 3,
+      "alex_only": 730,
+      "jones_only": 8,
+      "neither": 2236,
+      "total": 2977,
+      "phi_coefficient": 0.0037,
+      "interpretation": "independent"
+    },
+    "7": {
+      "both_starved": 34,
+      "alex_only": 1684,
+      "jones_only": 8,
+      "neither": 1251,
+      "total": 2977,
+      "phi_coefficient": 0.0563,
+      "interpretation": "independent"
+    },
+    "11": {
+      "both_starved": 352,
+      "alex_only": 2611,
+      "jones_only": 2,
+      "neither": 12,
+      "total": 2977,
+      "phi_coefficient": -0.0051,
+      "interpretation": "independent"
+    }
+  },
+  "determinant_mod_analysis": {
+    "2": {
+      "n_divisible": 0,
+      "n_not_divisible": 2977,
+      "divisible_alex_avg_ratio": null,
+      "divisible_jones_avg_ratio": null,
+      "not_div_alex_avg_ratio": 0.9347,
+      "not_div_jones_avg_ratio": 0.998,
+      "divisible_alex_starved_frac": null,
+      "divisible_jones_starved_frac": null,
+      "not_div_alex_starved_frac": 0.0,
+      "not_div_jones_starved_frac": 0.0
+    },
+    "3": {
+      "n_divisible": 1084,
+      "n_not_divisible": 1893,
+      "divisible_alex_avg_ratio": 0.841,
+      "divisible_jones_avg_ratio": 0.9865,
+      "not_div_alex_avg_ratio": 0.8044,
+      "not_div_jones_avg_ratio": 0.9847,
+      "divisible_alex_starved_frac": 0.0,
+      "divisible_jones_starved_frac": 0.0,
+      "not_div_alex_starved_frac": 0.056,
+      "not_div_jones_starved_frac": 0.0
+    },
+    "5": {
+      "n_divisible": 670,
+      "n_not_divisible": 2307,
+      "divisible_alex_avg_ratio": 0.5937,
+      "divisible_jones_avg_ratio": 0.8931,
+      "not_div_alex_avg_ratio": 0.6043,
+      "not_div_jones_avg_ratio": 0.8941,
+      "divisible_alex_starved_frac": 0.2955,
+      "divisible_jones_starved_frac": 0.009,
+      "not_div_alex_starved_frac": 0.2319,
+      "not_div_jones_starved_frac": 0.0022
+    },
+    "7": {
+      "n_divisible": 479,
+      "n_not_divisible": 2498,
+      "divisible_alex_avg_ratio": 0.4691,
+      "divisible_jones_avg_ratio": 0.7993,
+      "not_div_alex_avg_ratio": 0.4775,
+      "not_div_jones_avg_ratio": 0.8065,
+      "divisible_alex_starved_frac": 0.6096,
+      "divisible_jones_starved_frac": 0.0188,
+      "not_div_alex_starved_frac": 0.5709,
+      "not_div_jones_starved_frac": 0.0132
+    },
+    "11": {
+      "n_divisible": 285,
+      "n_not_divisible": 2692,
+      "divisible_alex_avg_ratio": 0.3327,
+      "divisible_jones_avg_ratio": 0.6338,
+      "not_div_alex_avg_ratio": 0.3335,
+      "not_div_jones_avg_ratio": 0.6399,
+      "divisible_alex_starved_frac": 0.9895,
+      "divisible_jones_starved_frac": 0.1263,
+      "not_div_alex_starved_frac": 0.9959,
+      "not_div_jones_starved_frac": 0.1181
+    }
+  },
+  "determinant_residue_distribution": {
+    "2": {
+      "distribution": {
+        "1": 2977
+      },
+      "classes_hit": 1,
+      "missing": [
+        0
+      ],
+      "starvation_ratio": 0.5
+    },
+    "3": {
+      "distribution": {
+        "0": 1084,
+        "1": 978,
+        "2": 915
+      },
+      "classes_hit": 3,
+      "missing": [],
+      "starvation_ratio": 1.0
+    },
+    "5": {
+      "distribution": {
+        "0": 670,
+        "1": 584,
+        "2": 555,
+        "3": 560,
+        "4": 608
+      },
+      "classes_hit": 5,
+      "missing": [],
+      "starvation_ratio": 1.0
+    },
+    "7": {
+      "distribution": {
+        "0": 479,
+        "1": 435,
+        "2": 411,
+        "3": 399,
+        "4": 428,
+        "5": 420,
+        "6": 405
+      },
+      "classes_hit": 7,
+      "missing": [],
+      "starvation_ratio": 1.0
+    },
+    "11": {
+      "distribution": {
+        "0": 285,
+        "1": 281,
+        "2": 267,
+        "3": 280,
+        "4": 268,
+        "5": 278,
+        "6": 257,
+        "7": 272,
+        "8": 259,
+        "9": 274,
+        "10": 256
+      },
+      "classes_hit": 11,
+      "missing": [],
+      "starvation_ratio": 1.0
+    }
+  },
+  "mf_crossref": {
+    "n_overlap_values": 66,
+    "n_any_shared_starvation": 14,
+    "n_alex_mf_shared": 14,
+    "n_jones_mf_shared": 3,
+    "fraction_shared": 0.2121,
+    "sample_matches": [
+      {
+        "level_det": 11,
+        "n_mf_forms": 1,
+        "n_knots": 20,
+        "mf_starvation_primes": [
+          5
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          7,
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          5
+        ],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 15,
+        "n_mf_forms": 1,
+        "n_knots": 21,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 17,
+        "n_mf_forms": 1,
+        "n_knots": 16,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 19,
+        "n_mf_forms": 1,
+        "n_knots": 20,
+        "mf_starvation_primes": [
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          3
+        ],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 21,
+        "n_mf_forms": 1,
+        "n_knots": 25,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 27,
+        "n_mf_forms": 1,
+        "n_knots": 30,
+        "mf_starvation_primes": [
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 33,
+        "n_mf_forms": 1,
+        "n_knots": 23,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 35,
+        "n_mf_forms": 1,
+        "n_knots": 30,
+        "mf_starvation_primes": [
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 37,
+        "n_mf_forms": 1,
+        "n_knots": 23,
+        "mf_starvation_primes": [
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 39,
+        "n_mf_forms": 1,
+        "n_knots": 26,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 45,
+        "n_mf_forms": 1,
+        "n_knots": 40,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 49,
+        "n_mf_forms": 1,
+        "n_knots": 29,
+        "mf_starvation_primes": [
+          2,
+          7
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          7,
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          7
+        ],
+        "jones_mf_prime_overlap": [
+          7
+        ],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 51,
+        "n_mf_forms": 1,
+        "n_knots": 28,
+        "mf_starvation_primes": [
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 55,
+        "n_mf_forms": 1,
+        "n_knots": 31,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 57,
+        "n_mf_forms": 2,
+        "n_knots": 26,
+        "mf_starvation_primes": [
+          2,
+          5
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          5
+        ],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 63,
+        "n_mf_forms": 1,
+        "n_knots": 44,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 65,
+        "n_mf_forms": 1,
+        "n_knots": 32,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 69,
+        "n_mf_forms": 1,
+        "n_knots": 31,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 73,
+        "n_mf_forms": 1,
+        "n_knots": 29,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          5,
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 75,
+        "n_mf_forms": 3,
+        "n_knots": 32,
+        "mf_starvation_primes": [
+          2,
+          5
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          5,
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          5
+        ],
+        "jones_mf_prime_overlap": [
+          5
+        ],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 77,
+        "n_mf_forms": 2,
+        "n_knots": 31,
+        "mf_starvation_primes": [
+          2,
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          3
+        ],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 85,
+        "n_mf_forms": 1,
+        "n_knots": 37,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 89,
+        "n_mf_forms": 1,
+        "n_knots": 32,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 91,
+        "n_mf_forms": 1,
+        "n_knots": 35,
+        "mf_starvation_primes": [
+          3
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          3
+        ],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 99,
+        "n_mf_forms": 3,
+        "n_knots": 48,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 105,
+        "n_mf_forms": 1,
+        "n_knots": 35,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          7,
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 113,
+        "n_mf_forms": 1,
+        "n_knots": 24,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          3,
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 117,
+        "n_mf_forms": 1,
+        "n_knots": 33,
+        "mf_starvation_primes": [
+          2
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": false
+      },
+      {
+        "level_det": 121,
+        "n_mf_forms": 3,
+        "n_knots": 26,
+        "mf_starvation_primes": [
+          11
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [
+          11
+        ],
+        "alex_mf_prime_overlap": [
+          11
+        ],
+        "jones_mf_prime_overlap": [
+          11
+        ],
+        "any_shared_starvation_prime": true
+      },
+      {
+        "level_det": 123,
+        "n_mf_forms": 1,
+        "n_knots": 23,
+        "mf_starvation_primes": [
+          5
+        ],
+        "knot_alex_starvation_primes": [
+          5,
+          7,
+          11
+        ],
+        "knot_jones_starvation_primes": [],
+        "alex_mf_prime_overlap": [
+          5
+        ],
+        "jones_mf_prime_overlap": [],
+        "any_shared_starvation_prime": true
+      }
+    ]
+  },
+  "starvation_dictionary": {
+    "2": {
+      "knot_starvation_types": {
+        "A_both": 0,
+        "B_alex_only": 0,
+        "C_jones_only": 0,
+        "D_neither": 2977
+      },
+      "det_divisibility_crosstab": {
+        "p_divides_det_and_starved": 0,
+        "p_divides_det_not_starved": 0,
+        "p_not_div_and_starved": 0,
+        "p_not_div_not_starved": 2977
+      },
+      "mf_starved_at_prime": 6237,
+      "knot_top_missing_patterns": [
+        {
+          "missing": [
+            0
+          ],
+          "count": 389
+        }
+      ],
+      "mf_top_missing_patterns": [
+        {
+          "missing": [
+            1
+          ],
+          "count": 6237
+        }
+      ],
+      "shared_missing_patterns": [],
+      "n_shared_patterns": 0,
+      "dictionary_feasible": false
+    },
+    "3": {
+      "knot_starvation_types": {
+        "A_both": 0,
+        "B_alex_only": 106,
+        "C_jones_only": 0,
+        "D_neither": 2871
+      },
+      "det_divisibility_crosstab": {
+        "p_divides_det_and_starved": 0,
+        "p_divides_det_not_starved": 1084,
+        "p_not_div_and_starved": 106,
+        "p_not_div_not_starved": 1787
+      },
+      "mf_starved_at_prime": 1367,
+      "knot_top_missing_patterns": [
+        {
+          "missing": [
+            0
+          ],
+          "count": 576
+        },
+        {
+          "missing": [
+            2
+          ],
+          "count": 465
+        },
+        {
+          "missing": [
+            1
+          ],
+          "count": 375
+        },
+        {
+          "missing": [
+            0,
+            2
+          ],
+          "count": 57
+        },
+        {
+          "missing": [
+            0,
+            1
+          ],
+          "count": 49
+        }
+      ],
+      "mf_top_missing_patterns": [
+        {
+          "missing": [
+            1
+          ],
+          "count": 1367
+        }
+      ],
+      "shared_missing_patterns": [
+        [
+          1
+        ]
+      ],
+      "n_shared_patterns": 1,
+      "dictionary_feasible": true
+    },
+    "5": {
+      "knot_starvation_types": {
+        "A_both": 3,
+        "B_alex_only": 730,
+        "C_jones_only": 8,
+        "D_neither": 2236
+      },
+      "det_divisibility_crosstab": {
+        "p_divides_det_and_starved": 198,
+        "p_divides_det_not_starved": 472,
+        "p_not_div_and_starved": 535,
+        "p_not_div_not_starved": 1772
+      },
+      "mf_starved_at_prime": 139,
+      "knot_top_missing_patterns": [
+        {
+          "missing": [
+            0,
+            4
+          ],
+          "count": 223
+        },
+        {
+          "missing": [
+            3,
+            4
+          ],
+          "count": 212
+        },
+        {
+          "missing": [
+            4
+          ],
+          "count": 192
+        },
+        {
+          "missing": [
+            0,
+            3
+          ],
+          "count": 190
+        },
+        {
+          "missing": [
+            0
+          ],
+          "count": 181
+        }
+      ],
+      "mf_top_missing_patterns": [
+        {
+          "missing": [
+            1
+          ],
+          "count": 102
+        },
+        {
+          "missing": [
+            3,
+            4
+          ],
+          "count": 37
+        }
+      ],
+      "shared_missing_patterns": [
+        [
+          3,
+          4
+        ]
+      ],
+      "n_shared_patterns": 1,
+      "dictionary_feasible": true
+    },
+    "7": {
+      "knot_starvation_types": {
+        "A_both": 34,
+        "B_alex_only": 1684,
+        "C_jones_only": 8,
+        "D_neither": 1251
+      },
+      "det_divisibility_crosstab": {
+        "p_divides_det_and_starved": 292,
+        "p_divides_det_not_starved": 187,
+        "p_not_div_and_starved": 1426,
+        "p_not_div_not_starved": 1072
+      },
+      "mf_starved_at_prime": 8,
+      "knot_top_missing_patterns": [
+        {
+          "missing": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "count": 102
+        },
+        {
+          "missing": [
+            0,
+            4,
+            5,
+            6
+          ],
+          "count": 97
+        },
+        {
+          "missing": [
+            0,
+            3,
+            5
+          ],
+          "count": 96
+        },
+        {
+          "missing": [
+            2,
+            3,
+            4,
+            5
+          ],
+          "count": 71
+        },
+        {
+          "missing": [
+            0,
+            3,
+            4
+          ],
+          "count": 69
+        }
+      ],
+      "mf_top_missing_patterns": [
+        {
+          "missing": [
+            4,
+            6
+          ],
+          "count": 5
+        },
+        {
+          "missing": [
+            3,
+            5,
+            6
+          ],
+          "count": 3
+        }
+      ],
+      "shared_missing_patterns": [],
+      "n_shared_patterns": 0,
+      "dictionary_feasible": false
+    },
+    "11": {
+      "knot_starvation_types": {
+        "A_both": 352,
+        "B_alex_only": 2611,
+        "C_jones_only": 2,
+        "D_neither": 12
+      },
+      "det_divisibility_crosstab": {
+        "p_divides_det_and_starved": 282,
+        "p_divides_det_not_starved": 3,
+        "p_not_div_and_starved": 2681,
+        "p_not_div_not_starved": 11
+      },
+      "mf_starved_at_prime": 9,
+      "knot_top_missing_patterns": [
+        {
+          "missing": [
+            1,
+            3,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "count": 26
+        },
+        {
+          "missing": [
+            0,
+            2,
+            4,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "count": 25
+        },
+        {
+          "missing": [
+            0,
+            1,
+            3,
+            5,
+            6,
+            7,
+            8,
+            10
+          ],
+          "count": 24
+        },
+        {
+          "missing": [
+            0,
+            2,
+            3,
+            5,
+            7,
+            9,
+            10
+          ],
+          "count": 24
+        },
+        {
+          "missing": [
+            1,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "count": 23
+        }
+      ],
+      "mf_top_missing_patterns": [
+        {
+          "missing": [
+            4,
+            7
+          ],
+          "count": 6
+        },
+        {
+          "missing": [
+            3,
+            4,
+            6,
+            7
+          ],
+          "count": 1
+        },
+        {
+          "missing": [
+            1,
+            3,
+            4,
+            5,
+            9
+          ],
+          "count": 1
+        },
+        {
+          "missing": [
+            3,
+            4,
+            5,
+            7,
+            10
+          ],
+          "count": 1
+        }
+      ],
+      "shared_missing_patterns": [],
+      "n_shared_patterns": 0,
+      "dictionary_feasible": false
+    }
+  },
+  "dictionary_feasible_primes": [
+    3,
+    5
+  ],
+  "top_starved_knots": [
+    {
+      "name": "9_42",
+      "determinant": 7,
+      "crossing_number": 9,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 3,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        5,
+        7,
+        11
+      ]
+    },
+    {
+      "name": "12*n_475",
+      "determinant": 7,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "4_1",
+      "determinant": 5,
+      "crossing_number": 4,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 3,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        5,
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*a_367",
+      "determinant": 11,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_102",
+      "determinant": 3,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_163",
+      "determinant": 91,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_19",
+      "determinant": 5,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 2,
+      "n_jones_starved_primes": 3,
+      "alex_starved_at": [
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        5,
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_34",
+      "determinant": 1,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_38",
+      "determinant": 3,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_42",
+      "determinant": 1,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_57",
+      "determinant": 7,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_96",
+      "determinant": 7,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*a_1037",
+      "determinant": 185,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*n_149",
+      "determinant": 5,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*n_313",
+      "determinant": 1,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*n_430",
+      "determinant": 1,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*n_452",
+      "determinant": 55,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*n_462",
+      "determinant": 25,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "12*n_749",
+      "determinant": 7,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "3_1",
+      "determinant": 3,
+      "crossing_number": 3,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "5_1",
+      "determinant": 5,
+      "crossing_number": 5,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "5_2",
+      "determinant": 7,
+      "crossing_number": 5,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "7_1",
+      "determinant": 7,
+      "crossing_number": 7,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "8_20",
+      "determinant": 9,
+      "crossing_number": 8,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "9_1",
+      "determinant": 9,
+      "crossing_number": 9,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "10_132",
+      "determinant": 5,
+      "crossing_number": 10,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "10_140",
+      "determinant": 9,
+      "crossing_number": 10,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "10_145",
+      "determinant": 3,
+      "crossing_number": 10,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*a_247",
+      "determinant": 19,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*a_276",
+      "determinant": 161,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*a_337",
+      "determinant": 89,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 0,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": []
+    },
+    {
+      "name": "11*a_340",
+      "determinant": 87,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*a_357",
+      "determinant": 91,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 0,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": []
+    },
+    {
+      "name": "11*n_116",
+      "determinant": 1,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 2,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_131",
+      "determinant": 67,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_139",
+      "determinant": 9,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_24",
+      "determinant": 23,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 1,
+      "n_jones_starved_primes": 3,
+      "alex_starved_at": [
+        11
+      ],
+      "jones_starved_at": [
+        5,
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_49",
+      "determinant": 1,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 2,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "11*n_63",
+      "determinant": 39,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_73",
+      "determinant": 9,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_74",
+      "determinant": 9,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "11*n_90",
+      "determinant": 41,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 0,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": []
+    },
+    {
+      "name": "11*n_97",
+      "determinant": 9,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*a_104",
+      "determinant": 163,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        3,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*a_1188",
+      "determinant": 353,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*a_125",
+      "determinant": 181,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 2,
+      "n_jones_starved_primes": 2,
+      "alex_starved_at": [
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        7,
+        11
+      ]
+    },
+    {
+      "name": "12*a_1267",
+      "determinant": 145,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*a_1269",
+      "determinant": 169,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    },
+    {
+      "name": "12*a_128",
+      "determinant": 101,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 4,
+      "n_jones_starved_primes": 0,
+      "alex_starved_at": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": []
+    },
+    {
+      "name": "12*a_165",
+      "determinant": 105,
+      "crossing_number": 0,
+      "n_alex_starved_primes": 3,
+      "n_jones_starved_primes": 1,
+      "alex_starved_at": [
+        5,
+        7,
+        11
+      ],
+      "jones_starved_at": [
+        11
+      ]
+    }
+  ],
+  "report": {
+    "knot_starvation_patterns": "Analyzed 2977 knots at primes [2, 3, 5, 7, 11]. Alexander starvation rates: p=2: 0.0%, p=3: 3.6%, p=5: 24.6%, p=7: 57.7%, p=11: 99.5%. Jones starvation rates: p=2: 0.0%, p=3: 0.0%, p=5: 0.4%, p=7: 1.4%, p=11: 11.9%.",
+    "alex_jones_correlation": "Phi coefficients by prime: p=2: 0.000 (independent), p=3: 0.000 (independent), p=5: 0.004 (independent), p=7: 0.056 (independent), p=11: -0.005 (independent). This measures whether starvation in one polynomial predicts starvation in the other.",
+    "determinant_structure": "Knots whose determinant is divisible by p show p=2: alex ratio None vs 0.9347; p=3: alex ratio 0.841 vs 0.8044; p=5: alex ratio 0.5937 vs 0.6043; p=7: alex ratio 0.4691 vs 0.4775; p=11: alex ratio 0.3327 vs 0.3335",
+    "knot_mf_correspondence": "66 values where knot det = starved MF level. 14 have shared starvation prime (21.2%).",
+    "dictionary_feasibility": "Starvation dictionary feasible at primes: [3, 5]. Shared missing-class patterns exist at 2/5 primes. The arithmetic topology analogy has a computable manifestation via shared residue avoidance."
+  }
+}
