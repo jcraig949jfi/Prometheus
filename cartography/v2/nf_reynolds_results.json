@@ -1,0 +1,496 @@
+{
+  "global_reference": {
+    "Re_c_low": 4.372,
+    "Re_c_high": 13.681,
+    "habitable_zone_width": 9.309,
+    "source": "X12 reynolds_number_results.json"
+  },
+  "nf_specific": {
+    "total_hypotheses": 500,
+    "active_hypotheses": 500,
+    "survived": 278,
+    "killed": 222,
+    "skipped": 0,
+    "survival_rate": 0.556
+  },
+  "nf_habitable_zone_Re_z": {
+    "Re_c_low": 7.753,
+    "Re_c_high": 47.979,
+    "habitable_zone_width": 40.226,
+    "peak_Re": 13.81,
+    "peak_survival": 1.0
+  },
+  "nf_habitable_zone_Re_d": {
+    "Re_c_low": 0.223,
+    "Re_c_high": 1.244,
+    "peak_Re": 0.333,
+    "peak_survival": 1.0
+  },
+  "comparison_to_global": {
+    "verdict": "DISTINCT",
+    "detail": "IoU=0.136 \u2014 NF habitable zone is substantially different from global",
+    "IoU": 0.1359,
+    "shift": {
+      "nf_low_minus_global_low": 3.381,
+      "nf_high_minus_global_high": 34.298,
+      "nf_width": 40.226,
+      "global_width": 9.309,
+      "width_ratio": 4.321,
+      "center_shift": 18.84
+    }
+  },
+  "survival_curve_Re_z": {
+    "bin_centers": [
+      0.08,
+      1.417,
+      3.938,
+      5.76,
+      7.753,
+      10.971,
+      13.81,
+      15.68,
+      17.305,
+      18.67,
+      20.248,
+      22.445,
+      24.712,
+      26.978,
+      29.456,
+      31.852,
+      35.454,
+      40.105,
+      43.16,
+      45.255,
+      47.979,
+      50.713,
+      55.122,
+      61.605,
+      66.976,
+      72.867,
+      78.861,
+      84.431,
+      90.296,
+      95.203
+    ],
+    "survival_rates": [
+      0.0,
+      0.0,
+      0.1875,
+      0.2941,
+      0.5294,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.8824,
+      0.8235,
+      1.0,
+      1.0,
+      0.8235,
+      0.9375,
+      1.0,
+      0.25,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "bin_counts": [
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17
+    ]
+  },
+  "survival_curve_Re_d": {
+    "bin_centers": [
+      0.031,
+      0.09,
+      0.149,
+      0.223,
+      0.29,
+      0.333,
+      0.369,
+      0.401,
+      0.437,
+      0.484,
+      0.529,
+      0.571,
+      0.632,
+      0.707,
+      0.84,
+      0.977,
+      1.068,
+      1.161,
+      1.244,
+      1.358,
+      1.492,
+      1.715,
+      2.236,
+      2.893,
+      3.374,
+      4.053,
+      5.643,
+      17.518,
+      36.495
+    ],
+    "survival_rates": [
+      0.0,
+      0.0,
+      0.0,
+      0.9412,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.375,
+      0.4375,
+      0.4375,
+      0.0556,
+      0.1176,
+      0.0,
+      0.2,
+      0.0526,
+      0.125,
+      0.0,
+      0.0
+    ],
+    "bin_counts": [
+      34,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      17,
+      15,
+      17,
+      18,
+      16,
+      17,
+      17,
+      16,
+      17,
+      17,
+      16,
+      16,
+      16,
+      18,
+      17,
+      16,
+      15,
+      19,
+      16,
+      16,
+      18
+    ]
+  },
+  "quartile_analysis": {
+    "Q1": {
+      "n": 125,
+      "re_range": [
+        0,
+        15.922
+      ],
+      "survival_rate": 0.464,
+      "top_killers": {
+        "F3_effect_size": 67,
+        "F1_permutation_null": 32,
+        "F5_subset_stability": 3
+      }
+    },
+    "Q2": {
+      "n": 125,
+      "re_range": [
+        15.922,
+        30.765
+      ],
+      "survival_rate": 0.984,
+      "top_killers": {
+        "F12_effect_artifact": 2
+      }
+    },
+    "Q3": {
+      "n": 125,
+      "re_range": [
+        30.765,
+        56.146
+      ],
+      "survival_rate": 0.776,
+      "top_killers": {
+        "F11_too_good_to_be_true": 21,
+        "F12_effect_artifact": 7
+      }
+    },
+    "Q4": {
+      "n": 125,
+      "re_range": [
+        56.146,
+        1e+30
+      ],
+      "survival_rate": 0.0,
+      "top_killers": {
+        "F11_too_good_to_be_true": 125,
+        "F12_effect_artifact": 38,
+        "F3_effect_size": 1
+      }
+    }
+  },
+  "hypothesis_type_breakdown": {
+    "nonlinear": {
+      "n": 212,
+      "survival_rate": 0.5613,
+      "mean_Re_z": 41.298
+    },
+    "correlation": {
+      "n": 117,
+      "survival_rate": 0.5641,
+      "mean_Re_z": 39.617
+    },
+    "subset_comparison": {
+      "n": 47,
+      "survival_rate": 0.5106,
+      "mean_Re_z": 35.828
+    },
+    "conditional": {
+      "n": 114,
+      "survival_rate": 0.5351,
+      "mean_Re_z": 29.124
+    },
+    "ratio_correlation": {
+      "n": 10,
+      "survival_rate": 0.8,
+      "mean_Re_z": 28.624
+    }
+  },
+  "Re_z_distribution": {
+    "mean": 37.361,
+    "median": 30.765,
+    "std": 27.534,
+    "min": 0.0,
+    "max": 97.6,
+    "mean_survivors": 26.58,
+    "mean_killed": 50.862
+  },
+  "sample_survivors": [
+    {
+      "description": "disc_abs ~ class_number within degree=4",
+      "type": "conditional",
+      "Re_z": 4.242,
+      "cohens_d": 0.261,
+      "p_value": 0.001
+    },
+    {
+      "description": "class_number ~ log_disc_per_degree within degree=4",
+      "type": "conditional",
+      "Re_z": 4.557,
+      "cohens_d": 0.286,
+      "p_value": 0.001
+    },
+    {
+      "description": "disc_per_degree ~ h_over_R within degree=3",
+      "type": "conditional",
+      "Re_z": 4.724,
+      "cohens_d": -0.222,
+      "p_value": 0.001
+    },
+    {
+      "description": "log_disc ~ t_number within degree=4",
+      "type": "conditional",
+      "Re_z": 5.225,
+      "cohens_d": 0.333,
+      "p_value": 0.001
+    },
+    {
+      "description": "is_totally_real ~ log_h_over_R within degree=4",
+      "type": "conditional",
+      "Re_z": 5.536,
+      "cohens_d": 0.342,
+      "p_value": 0.001
+    },
+    {
+      "description": "disc_abs ~ class_number within degree=3",
+      "type": "conditional",
+      "Re_z": 5.625,
+      "cohens_d": 0.255,
+      "p_value": 0.001
+    },
+    {
+      "description": "class_number ~ log_disc_per_degree within degree=3",
+      "type": "conditional",
+      "Re_z": 5.679,
+      "cohens_d": 0.266,
+      "p_value": 0.001
+    },
+    {
+      "description": "t_number ~ log_h_over_R within degree=4",
+      "type": "conditional",
+      "Re_z": 6.315,
+      "cohens_d": -0.414,
+      "p_value": 0.001
+    },
+    {
+      "description": "t_number ~ h_over_R within degree=4",
+      "type": "conditional",
+      "Re_z": 6.319,
+      "cohens_d": -0.395,
+      "p_value": 0.001
+    },
+    {
+      "description": "log_regulator ~ class_group_order within degree=4",
+      "type": "conditional",
+      "Re_z": 6.516,
+      "cohens_d": -0.422,
+      "p_value": 0.001
+    }
+  ],
+  "sample_killed": [
+    {
+      "description": "degree ~ log_class_group_order within degree=4",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "degree ~ log_class_group_order within degree=3",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "log_disc ~ t_number within degree=2",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "log_disc ~ t_number within degree=2",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "degree ~ regulator within degree=2",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "t_number ~ log_h_over_R within degree=2",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "t_number ~ log_h_over_R within degree=2",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "degree ~ class_group_rank within degree=2",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "degree ~ class_group_rank within degree=3",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    },
+    {
+      "description": "degree ~ regulator within degree=4",
+      "type": "conditional",
+      "Re_z": 0.0,
+      "cohens_d": 0.0,
+      "kill_tests": [
+        "F1_permutation_null",
+        "F3_effect_size"
+      ]
+    }
+  ]
+}

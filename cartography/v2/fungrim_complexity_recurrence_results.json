@@ -1,0 +1,564 @@
+{
+  "status": "complete",
+  "n_fungrim_formulas_total": 2764,
+  "n_oeis_with_symbols": 80832,
+  "n_oeis_with_recurrence": 45620,
+  "n_oeis_with_both": 14485,
+  "n_paired_formulas": 2046,
+  "complexity_stats": {
+    "min": 5,
+    "max": 284,
+    "mean": 34.63,
+    "median": 29.0
+  },
+  "correlations": {
+    "complexity_score_vs_mean_recurrence_order": {
+      "spearman_rho": 0.032405,
+      "p_value": 0.1428469,
+      "n_pairs": 2046
+    },
+    "complexity_score_vs_median_recurrence_order": {
+      "spearman_rho": 0.037877,
+      "p_value": 0.08674364,
+      "n_pairs": 2046
+    },
+    "node_count_vs_mean_recurrence_order": {
+      "spearman_rho": 0.047165,
+      "p_value": 0.03289989,
+      "n_pairs": 2046
+    },
+    "node_count_vs_median_recurrence_order": {
+      "spearman_rho": 0.021733,
+      "p_value": 0.325829,
+      "n_pairs": 2046
+    },
+    "max_depth_vs_mean_recurrence_order": {
+      "spearman_rho": -0.002898,
+      "p_value": 0.8957554,
+      "n_pairs": 2046
+    },
+    "max_depth_vs_median_recurrence_order": {
+      "spearman_rho": 0.098047,
+      "p_value": 8.874396e-06,
+      "n_pairs": 2046
+    },
+    "n_distinct_ops_vs_mean_recurrence_order": {
+      "spearman_rho": -0.072675,
+      "p_value": 0.001003131,
+      "n_pairs": 2046
+    },
+    "n_distinct_ops_vs_median_recurrence_order": {
+      "spearman_rho": 0.084121,
+      "p_value": 0.0001392719,
+      "n_pairs": 2046
+    },
+    "n_math_symbols_vs_mean_recurrence_order": {
+      "spearman_rho": -0.16804,
+      "p_value": 1.998215e-14,
+      "n_pairs": 2046
+    },
+    "n_math_symbols_vs_median_recurrence_order": {
+      "spearman_rho": 0.11983,
+      "p_value": 5.433191e-08,
+      "n_pairs": 2046
+    }
+  },
+  "null_model": {
+    "observed_rho": 0.032405,
+    "null_mean": -0.000391,
+    "null_std": 0.022022,
+    "z_score": 1.4892,
+    "p_empirical": 0.147,
+    "n_shuffles": 1000
+  },
+  "binned_analysis": [
+    {
+      "bin": 1,
+      "complexity_range": [
+        5.0,
+        19.0
+      ],
+      "n_formulas": 391,
+      "mean_recurrence_order": 3.4262,
+      "median_recurrence_order": 2.9795,
+      "std_recurrence_order": 1.6552
+    },
+    {
+      "bin": 2,
+      "complexity_range": [
+        19.0,
+        27.0
+      ],
+      "n_formulas": 393,
+      "mean_recurrence_order": 3.5491,
+      "median_recurrence_order": 3.3535,
+      "std_recurrence_order": 1.6133
+    },
+    {
+      "bin": 3,
+      "complexity_range": [
+        27.0,
+        37.0
+      ],
+      "n_formulas": 436,
+      "mean_recurrence_order": 3.4767,
+      "median_recurrence_order": 3.1374,
+      "std_recurrence_order": 1.7343
+    },
+    {
+      "bin": 4,
+      "complexity_range": [
+        37.0,
+        51.0
+      ],
+      "n_formulas": 405,
+      "mean_recurrence_order": 3.1934,
+      "median_recurrence_order": 2.9315,
+      "std_recurrence_order": 1.2146
+    },
+    {
+      "bin": 5,
+      "complexity_range": [
+        51.0,
+        284.0
+      ],
+      "n_formulas": 421,
+      "mean_recurrence_order": 3.5618,
+      "median_recurrence_order": 3.1362,
+      "std_recurrence_order": 1.3441
+    }
+  ],
+  "top_bridging_symbols": [
+    {
+      "symbol": "Pi",
+      "count": 791
+    },
+    {
+      "symbol": "Exp",
+      "count": 349
+    },
+    {
+      "symbol": "JacobiTheta",
+      "count": 321
+    },
+    {
+      "symbol": "Sum",
+      "count": 320
+    },
+    {
+      "symbol": "Log",
+      "count": 190
+    },
+    {
+      "symbol": "Sin",
+      "count": 174
+    },
+    {
+      "symbol": "Gamma",
+      "count": 152
+    },
+    {
+      "symbol": "Factorial",
+      "count": 128
+    },
+    {
+      "symbol": "DigammaFunction",
+      "count": 123
+    },
+    {
+      "symbol": "Cos",
+      "count": 112
+    },
+    {
+      "symbol": "RiemannZeta",
+      "count": 80
+    },
+    {
+      "symbol": "GCD",
+      "count": 79
+    },
+    {
+      "symbol": "Binomial",
+      "count": 73
+    },
+    {
+      "symbol": "Fibonacci",
+      "count": 70
+    },
+    {
+      "symbol": "Totient",
+      "count": 65
+    },
+    {
+      "symbol": "LambertW",
+      "count": 60
+    },
+    {
+      "symbol": "ChebyshevT",
+      "count": 59
+    },
+    {
+      "symbol": "ConstGamma",
+      "count": 55
+    },
+    {
+      "symbol": "Product",
+      "count": 50
+    },
+    {
+      "symbol": "EisensteinE",
+      "count": 50
+    }
+  ],
+  "interpretation": {
+    "summary": "Negligible positive correlation (rho=0.0324, p=1.43e-01). not significant. Z-score vs null: 1.49. No monotonic trend in binned analysis.",
+    "correlation_strength": "negligible",
+    "direction": "positive",
+    "significance": "not significant",
+    "bin_monotonic": false
+  },
+  "sample_pairs": [
+    {
+      "formula_id": "6e69fc",
+      "complexity_score": 32,
+      "node_count": 19,
+      "max_depth": 5,
+      "n_distinct_ops": 8,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "RiemannZeta",
+        "Sum"
+      ],
+      "n_connected_oeis": 232,
+      "n_with_recurrence": 24,
+      "mean_recurrence_order": 2.2917,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "6c3523",
+      "complexity_score": 55,
+      "node_count": 37,
+      "max_depth": 8,
+      "n_distinct_ops": 10,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "RiemannZeta",
+        "Sum"
+      ],
+      "n_connected_oeis": 232,
+      "n_with_recurrence": 24,
+      "mean_recurrence_order": 2.2917,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "3e82c3",
+      "complexity_score": 22,
+      "node_count": 13,
+      "max_depth": 3,
+      "n_distinct_ops": 6,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "ConstCatalan",
+        "HurwitzZeta",
+        "Pi"
+      ],
+      "n_connected_oeis": 592,
+      "n_with_recurrence": 272,
+      "mean_recurrence_order": 2.3125,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "951f86",
+      "complexity_score": 22,
+      "node_count": 13,
+      "max_depth": 3,
+      "n_distinct_ops": 6,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "ConstCatalan",
+        "HurwitzZeta",
+        "Pi"
+      ],
+      "n_connected_oeis": 592,
+      "n_with_recurrence": 272,
+      "mean_recurrence_order": 2.3125,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "eda0f3",
+      "complexity_score": 25,
+      "node_count": 14,
+      "max_depth": 4,
+      "n_distinct_ops": 7,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Pi",
+        "RiemannZeta"
+      ],
+      "n_connected_oeis": 1773,
+      "n_with_recurrence": 116,
+      "mean_recurrence_order": 4.7069,
+      "median_recurrence_order": 4.0
+    },
+    {
+      "formula_id": "b347d3",
+      "complexity_score": 25,
+      "node_count": 14,
+      "max_depth": 4,
+      "n_distinct_ops": 7,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Pi",
+        "RiemannZeta"
+      ],
+      "n_connected_oeis": 1773,
+      "n_with_recurrence": 116,
+      "mean_recurrence_order": 4.7069,
+      "median_recurrence_order": 4.0
+    },
+    {
+      "formula_id": "2fabeb",
+      "complexity_score": 32,
+      "node_count": 19,
+      "max_depth": 5,
+      "n_distinct_ops": 8,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Pi",
+        "RiemannZeta"
+      ],
+      "n_connected_oeis": 1773,
+      "n_with_recurrence": 116,
+      "mean_recurrence_order": 4.7069,
+      "median_recurrence_order": 4.0
+    },
+    {
+      "formula_id": "edad97",
+      "complexity_score": 32,
+      "node_count": 19,
+      "max_depth": 5,
+      "n_distinct_ops": 8,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Pi",
+        "RiemannZeta"
+      ],
+      "n_connected_oeis": 1773,
+      "n_with_recurrence": 116,
+      "mean_recurrence_order": 4.7069,
+      "median_recurrence_order": 4.0
+    },
+    {
+      "formula_id": "84196a",
+      "complexity_score": 31,
+      "node_count": 18,
+      "max_depth": 5,
+      "n_distinct_ops": 8,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "DigammaFunction",
+        "Factorial",
+        "HurwitzZeta"
+      ],
+      "n_connected_oeis": 45,
+      "n_with_recurrence": 12,
+      "mean_recurrence_order": 2.1667,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "77e507",
+      "complexity_score": 42,
+      "node_count": 26,
+      "max_depth": 7,
+      "n_distinct_ops": 9,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Log",
+        "Sum"
+      ],
+      "n_connected_oeis": 456,
+      "n_with_recurrence": 76,
+      "mean_recurrence_order": 2.4605,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "498036",
+      "complexity_score": 50,
+      "node_count": 31,
+      "max_depth": 8,
+      "n_distinct_ops": 11,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "Exp",
+        "Gamma",
+        "HurwitzZeta"
+      ],
+      "n_connected_oeis": 1832,
+      "n_with_recurrence": 201,
+      "mean_recurrence_order": 1.8905,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "95e270",
+      "complexity_score": 55,
+      "node_count": 37,
+      "max_depth": 8,
+      "n_distinct_ops": 10,
+      "n_math_symbols": 3,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Log",
+        "Sum"
+      ],
+      "n_connected_oeis": 456,
+      "n_with_recurrence": 76,
+      "mean_recurrence_order": 2.4605,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "69a1a9",
+      "complexity_score": 68,
+      "node_count": 48,
+      "max_depth": 10,
+      "n_distinct_ops": 10,
+      "n_math_symbols": 5,
+      "math_symbols": [
+        "Cos",
+        "Gamma",
+        "HurwitzZeta",
+        "Pi",
+        "Sum"
+      ],
+      "n_connected_oeis": 5113,
+      "n_with_recurrence": 1564,
+      "mean_recurrence_order": 4.0281,
+      "median_recurrence_order": 4.0
+    },
+    {
+      "formula_id": "d25d10",
+      "complexity_score": 136,
+      "node_count": 110,
+      "max_depth": 11,
+      "n_distinct_ops": 15,
+      "n_math_symbols": 5,
+      "math_symbols": [
+        "BernoulliB",
+        "Factorial",
+        "HurwitzZeta",
+        "RisingFactorial",
+        "Sum"
+      ],
+      "n_connected_oeis": 1031,
+      "n_with_recurrence": 201,
+      "mean_recurrence_order": 2.3731,
+      "median_recurrence_order": 2.0
+    },
+    {
+      "formula_id": "f3b870",
+      "complexity_score": 26,
+      "node_count": 14,
+      "max_depth": 5,
+      "n_distinct_ops": 7,
+      "n_math_symbols": 4,
+      "math_symbols": [
+        "HurwitzZeta",
+        "Log",
+        "LogGamma",
+        "Pi"
+      ],
+      "n_connected_oeis": 3132,
+      "n_with_recurrence": 850,
+      "mean_recurrence_order": 3.5388,
+      "median_recurrence_order": 3.0
+    },
+    {
+      "formula_id": "53026a",
+      "complexity_score": 23,
+      "node_count": 13,
+      "max_depth": 4,
+      "n_distinct_ops": 6,
+      "n_math_symbols": 4,
+      "math_symbols": [
+        "Exp",
+        "Gamma",
+        "HurwitzZeta",
+        "Pi"
+      ],
+      "n_connected_oeis": 10014,
+      "n_with_recurrence": 1883,
+      "mean_recurrence_order": 2.8184,
+      "median_recurrence_order": 3.0
+    },
+    {
+      "formula_id": "52ea5f",
+      "complexity_score": 84,
+      "node_count": 64,
+      "max_depth": 9,
+      "n_distinct_ops": 11,
+      "n_math_symbols": 5,
+      "math_symbols": [
+        "Gamma",
+        "HurwitzZeta",
+        "Log",
+        "Pi",
+        "PolyLog"
+      ],
+      "n_connected_oeis": 5300,
+      "n_with_recurrence": 1122,
+      "mean_recurrence_order": 3.1194,
+      "median_recurrence_order": 3.0
+    },
+    {
+      "formula_id": "735409",
+      "complexity_score": 11,
+      "node_count": 6,
+      "max_depth": 2,
+      "n_distinct_ops": 3,
+      "n_math_symbols": 1,
+      "math_symbols": [
+        "Pi"
+      ],
+      "n_connected_oeis": 19895,
+      "n_with_recurrence": 4741,
+      "mean_recurrence_order": 3.529,
+      "median_recurrence_order": 3.0
+    },
+    {
+      "formula_id": "089f85",
+      "complexity_score": 15,
+      "node_count": 8,
+      "max_depth": 3,
+      "n_distinct_ops": 4,
+      "n_math_symbols": 1,
+      "math_symbols": [
+        "Pi"
+      ],
+      "n_connected_oeis": 19895,
+      "n_with_recurrence": 4741,
+      "mean_recurrence_order": 3.529,
+      "median_recurrence_order": 3.0
+    },
+    {
+      "formula_id": "a8b41c",
+      "complexity_score": 8,
+      "node_count": 4,
+      "max_depth": 2,
+      "n_distinct_ops": 2,
+      "n_math_symbols": 1,
+      "math_symbols": [
+        "Pi"
+      ],
+      "n_connected_oeis": 19895,
+      "n_with_recurrence": 4741,
+      "mean_recurrence_order": 3.529,
+      "median_recurrence_order": 3.0
+    }
+  ]
+}
