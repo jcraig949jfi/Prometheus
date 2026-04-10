@@ -1,0 +1,72 @@
+{
+  "experiment": "Q10: Prime Sieve Artifact Test (2D Grid)",
+  "description": "Maps 1..10000 to 100x100 grid. Tests whether prime clumping is a necessary consequence of excluding small prime factors.",
+  "grid_size": 100,
+  "N": 10000,
+  "n_random_trials": 200,
+  "stages": {
+    "primes": {
+      "label": "primes",
+      "count": 1229,
+      "observed_mnn": 1.675054,
+      "expected_mnn_random": 1.426926,
+      "expected_mnn_std": 0.02127,
+      "clumping_ratio": 1.17389,
+      "z_score": 11.6657,
+      "interpretation": "dispersed"
+    },
+    "sieve_remove_2": {
+      "label": "sieve_remove_2",
+      "count": 5001,
+      "observed_mnn": 1.0,
+      "expected_mnn_random": 0.649498,
+      "expected_mnn_std": 0.008855,
+      "clumping_ratio": 1.539651,
+      "z_score": 39.5845,
+      "interpretation": "dispersed"
+    },
+    "sieve_remove_2_3": {
+      "label": "sieve_remove_2_3",
+      "count": 3335,
+      "observed_mnn": 1.009895,
+      "expected_mnn_random": 0.831984,
+      "expected_mnn_std": 0.010047,
+      "clumping_ratio": 1.21384,
+      "z_score": 17.7074,
+      "interpretation": "dispersed"
+    },
+    "sieve_remove_2_3_5": {
+      "label": "sieve_remove_2_3_5",
+      "count": 2669,
+      "observed_mnn": 1.010116,
+      "expected_mnn_random": 0.943814,
+      "expected_mnn_std": 0.012195,
+      "clumping_ratio": 1.070249,
+      "z_score": 5.4367,
+      "interpretation": "dispersed"
+    }
+  },
+  "convergence": {
+    "remove_2": {
+      "clumping_ratio": 1.539651,
+      "gap_to_primes": 0.365761
+    },
+    "remove_2_3": {
+      "clumping_ratio": 1.21384,
+      "gap_to_primes": 0.03995
+    },
+    "remove_2_3_5": {
+      "clumping_ratio": 1.070249,
+      "gap_to_primes": 0.103641
+    }
+  },
+  "convergence_monotone": false,
+  "convergence_crossover": true,
+  "convergence_approaching": true,
+  "best_match_stage": "remove_2_3",
+  "best_match_gap": 0.03995,
+  "prime_clumping_ratio": 1.17389,
+  "final_sieve_gap": 0.103641,
+  "verdict": "ARTIFACT_WITH_CROSSOVER",
+  "explanation": "Sieve clumping ratio CROSSES the prime value (gap at crossover < 0.0399). Best match at remove_2_3 stage. The sieve trajectory passes through the prime clumping level, confirming it is an interpolation point on the sieve continuum. Structure is explained by factor exclusion; the non-monotonicity reflects the transition from lattice regularity to pseudo-random sieve residues."
+}

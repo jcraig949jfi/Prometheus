@@ -1,0 +1,164 @@
+{
+  "experiment": "Q4_diagonal_prime_clustering_permutation_null",
+  "parameters": {
+    "N": 100,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "row_major": {
+    "grid": "row_major",
+    "N": 100,
+    "total_primes": 1229,
+    "tests": {
+      "slope_1": {
+        "n_positions": 100,
+        "primes_on_line": 14,
+        "obs_fraction": 0.011391,
+        "exp_fraction": 0.01,
+        "enrichment": 1.1391,
+        "z_score": 0.5441,
+        "p_value": 0.342,
+        "significant": 0
+      },
+      "slope_-1": {
+        "n_positions": 100,
+        "primes_on_line": 21,
+        "obs_fraction": 0.017087,
+        "exp_fraction": 0.01,
+        "enrichment": 1.7087,
+        "z_score": 2.6494,
+        "p_value": 0.0083,
+        "significant": 0
+      },
+      "slope_2": {
+        "n_positions": 9996,
+        "primes_on_line": 1228,
+        "obs_fraction": 0.999186,
+        "exp_fraction": 0.9996,
+        "enrichment": 0.9996,
+        "z_score": -0.7846,
+        "p_value": 0.9242,
+        "significant": 0
+      },
+      "slope_1over2": {
+        "n_positions": 9996,
+        "primes_on_line": 1228,
+        "obs_fraction": 0.999186,
+        "exp_fraction": 0.9996,
+        "enrichment": 0.9996,
+        "z_score": -0.7643,
+        "p_value": 0.9227,
+        "significant": 0
+      },
+      "slope_3": {
+        "n_positions": 9994,
+        "primes_on_line": 1228,
+        "obs_fraction": 0.999186,
+        "exp_fraction": 0.9994,
+        "enrichment": 0.9998,
+        "z_score": -0.3141,
+        "p_value": 0.8364,
+        "significant": 0
+      },
+      "slope_1over3": {
+        "n_positions": 9994,
+        "primes_on_line": 1228,
+        "obs_fraction": 0.999186,
+        "exp_fraction": 0.9994,
+        "enrichment": 0.9998,
+        "z_score": -0.341,
+        "p_value": 0.8436,
+        "significant": 0
+      }
+    }
+  },
+  "ulam_spiral": {
+    "grid": "ulam_spiral",
+    "N": 100,
+    "total_primes": 1216,
+    "tests": {
+      "center_row": {
+        "n_positions": 100,
+        "primes_on_line": 20,
+        "obs_fraction": 0.016447,
+        "exp_fraction": 0.01,
+        "enrichment": 1.6447,
+        "z_score": 2.4334,
+        "p_value": 0.0169,
+        "significant": 0
+      },
+      "center_col": {
+        "n_positions": 100,
+        "primes_on_line": 22,
+        "obs_fraction": 0.018092,
+        "exp_fraction": 0.01,
+        "enrichment": 1.8092,
+        "z_score": 3.0142,
+        "p_value": 0.0042,
+        "significant": 1
+      },
+      "center_diag_slope1": {
+        "n_positions": 100,
+        "primes_on_line": 18,
+        "obs_fraction": 0.014803,
+        "exp_fraction": 0.01,
+        "enrichment": 1.4803,
+        "z_score": 1.7852,
+        "p_value": 0.0561,
+        "significant": 0
+      },
+      "center_diag_slope-1": {
+        "n_positions": 99,
+        "primes_on_line": 31,
+        "obs_fraction": 0.025493,
+        "exp_fraction": 0.0099,
+        "enrichment": 2.5751,
+        "z_score": 5.8658,
+        "p_value": 0.0,
+        "significant": 1
+      },
+      "all_slope1_diags": {
+        "n_positions": 9994,
+        "primes_on_line": 1216,
+        "obs_fraction": 1.0,
+        "exp_fraction": 0.9994,
+        "enrichment": 1.0006,
+        "z_score": 0.9224,
+        "p_value": 0.4573,
+        "significant": 0
+      },
+      "all_slope-1_diags": {
+        "n_positions": 9994,
+        "primes_on_line": 1216,
+        "obs_fraction": 1.0,
+        "exp_fraction": 0.9994,
+        "enrichment": 1.0006,
+        "z_score": 0.9155,
+        "p_value": 0.4546,
+        "significant": 0
+      },
+      "euler_n2_n_41": {
+        "n_positions": 86,
+        "primes_on_line": 86,
+        "obs_fraction": 0.070724,
+        "exp_fraction": 0.0086,
+        "enrichment": 8.2237,
+        "z_score": 25.0108,
+        "p_value": 0.0,
+        "significant": 1,
+        "note": "Euler prime-generating polynomial positions in Ulam grid"
+      }
+    }
+  },
+  "summary": {
+    "verdict": "MIXED",
+    "n_tests": 13,
+    "n_significant_z3": 3,
+    "significant_tests": [
+      "ulam_spiral/center_col",
+      "ulam_spiral/center_diag_slope-1",
+      "ulam_spiral/euler_n2_n_41"
+    ],
+    "interpretation": "Some geometric lines show significant prime clustering beyond the permutation null. Check enrichment values to distinguish real structure from density artifacts."
+  }
+}
