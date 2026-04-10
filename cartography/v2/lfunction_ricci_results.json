@@ -1,0 +1,128 @@
+{
+  "metadata": {
+    "script": "lfunction_ricci.py",
+    "description": "Ollivier-Ricci curvature on EC isogeny class mod-5 fingerprint similarity graph",
+    "n_sampled": 2000,
+    "mod_p": 5,
+    "top_percentile": 0.01,
+    "n_nodes_in_graph": 2000,
+    "n_edges_in_graph": 19990,
+    "n_connected_components": 1
+  },
+  "degree_distribution": {
+    "mean_degree": 19.99,
+    "median_degree": 18.0,
+    "max_degree": 94,
+    "min_degree": 2
+  },
+  "node_rank_distribution": {
+    "0": 914,
+    "1": 1018,
+    "2": 68
+  },
+  "global_orc": {
+    "n_edges_with_orc": 19990,
+    "mean_orc": -0.6322756766256553,
+    "median_orc": -0.6405640860799982,
+    "std_orc": 0.20800508713164184,
+    "pct_positive": 1.8459229614807404,
+    "pct_negative": 98.14907453726863,
+    "pct_zero": 0.005002501250625313
+  },
+  "orc_by_rank_stratum": {
+    "rank_0_to_0": {
+      "n_edges": 4895,
+      "mean_orc": -0.627308970045046,
+      "median_orc": -0.6297468354430376,
+      "std_orc": 0.19131164004744727,
+      "min_orc": -1.416666666666667,
+      "max_orc": 0.95,
+      "pct_positive": 1.1031664964249235,
+      "pct_negative": 98.89683350357508
+    },
+    "rank_0_to_1": {
+      "n_edges": 9363,
+      "mean_orc": -0.6322729381087515,
+      "median_orc": -0.6400000000000003,
+      "std_orc": 0.20605764408373317,
+      "min_orc": -1.305555555555555,
+      "max_orc": 0.9583333333333334,
+      "pct_positive": 1.8263377122717077,
+      "pct_negative": 98.16298195022962
+    },
+    "rank_0_to_2": {
+      "n_edges": 538,
+      "mean_orc": -0.6697068103269055,
+      "median_orc": -0.6666666666666666,
+      "std_orc": 0.20338871118787696,
+      "min_orc": -1.1363636363636358,
+      "max_orc": 0.9230769230769231,
+      "pct_positive": 0.5576208178438662,
+      "pct_negative": 99.44237918215613
+    },
+    "rank_1_to_1": {
+      "n_edges": 4656,
+      "mean_orc": -0.6297033298698906,
+      "median_orc": -0.649038461538461,
+      "std_orc": 0.23033847948499786,
+      "min_orc": -1.51923076923077,
+      "max_orc": 0.9411764705882353,
+      "pct_positive": 3.0283505154639174,
+      "pct_negative": 96.97164948453609
+    },
+    "rank_1_to_2": {
+      "n_edges": 518,
+      "mean_orc": -0.6589450609930627,
+      "median_orc": -0.6493477282950967,
+      "std_orc": 0.17824134525765378,
+      "min_orc": -1.35,
+      "max_orc": -0.23839009287925728,
+      "pct_positive": 0.0,
+      "pct_negative": 100.0
+    },
+    "rank_2_to_2": {
+      "n_edges": 20,
+      "mean_orc": -0.7503669219808671,
+      "median_orc": -0.7134238310708897,
+      "std_orc": 0.21076736042074615,
+      "min_orc": -1.083333333333333,
+      "max_orc": -0.3939393939393936,
+      "pct_positive": 0.0,
+      "pct_negative": 100.0
+    }
+  },
+  "phase_transition": {
+    "within_rank": {
+      "n": 9571,
+      "mean": -0.6287309007088422,
+      "std": 0.2113151306606286
+    },
+    "cross_rank": {
+      "n": 10419,
+      "mean": -0.6355319440505349,
+      "std": 0.20486329220206187
+    },
+    "cross_rank_0_to_1": {
+      "n": 9363,
+      "mean": -0.6322729381087515,
+      "std": 0.20605764408373317
+    },
+    "curvature_gap": 0.006801043341692736,
+    "welch_t_stat": 2.306491675493709,
+    "welch_p_value": 0.021093487952509482,
+    "mannwhitney_u": 50538609.0,
+    "mannwhitney_p": 0.09598384705512747
+  },
+  "interpretation": {
+    "global_geometry": "negatively curved (spread out / tree-like)",
+    "phase_transition": "MARGINAL: curvature gap = 0.0068 (p=2.11e-02). Suggestive but not conclusive.",
+    "rank_monotonicity": {
+      "rank_0_to_0": -0.627308970045046,
+      "rank_0_to_1": -0.6322729381087515,
+      "rank_0_to_2": -0.6697068103269055,
+      "rank_1_to_1": -0.6297033298698906,
+      "rank_1_to_2": -0.6589450609930627,
+      "rank_2_to_2": -0.7503669219808671
+    }
+  }
+}

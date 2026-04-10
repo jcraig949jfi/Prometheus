@@ -1,0 +1,930 @@
+{
+  "meta": {
+    "timestamp": "2026-04-10T15:30:15",
+    "n_formulas_analyzed": 3056,
+    "n_topological": 1476,
+    "n_algebraic": 1580,
+    "n_unclassified": 0,
+    "n_modules_topo": 26,
+    "n_modules_alg": 30
+  },
+  "class_verb_means": {
+    "topological": {
+      "Equal_frac": 0.12644455671744215,
+      "And_frac": 0.0545584118772784,
+      "Set_frac": 0.03799116151455766,
+      "For_frac": 0.022033690139809797,
+      "Topo_verb_frac": 0.017935798348726953,
+      "count": 1476
+    },
+    "algebraic": {
+      "Equal_frac": 0.13497324824051554,
+      "And_frac": 0.059589218201218964,
+      "Set_frac": 0.017701590933288984,
+      "For_frac": 0.03468796534231782,
+      "Topo_verb_frac": 0.029076629796720526,
+      "count": 1580
+    }
+  },
+  "fisher_discriminant": {
+    "direction_Set": 0.9952599878668819,
+    "direction_Equal": -0.09724996941497889,
+    "fisher_ratio": 3.0105962077721492e-05,
+    "topo_overlap_fraction": 0.9986449864498645,
+    "alg_overlap_fraction": 1.0,
+    "boundary_type": "gradual",
+    "interpretation": "Gradual transition: significant overlap in verb space between topological and algebraic formulas"
+  },
+  "four_d_analysis": {
+    "mahalanobis_distance": 0.38025777138108396,
+    "topo_centroid": {
+      "Equal": 0.12644455671744181,
+      "And": 0.05455841187727867,
+      "Set": 0.03799116151455774,
+      "For": 0.02203369013980982
+    },
+    "alg_centroid": {
+      "Equal": 0.1349732482405147,
+      "And": 0.05958921820121925,
+      "Set": 0.017701590933288977,
+      "For": 0.03468796534231795
+    }
+  },
+  "transition_matrix": {
+    "rows": [
+      "topological",
+      "algebraic"
+    ],
+    "cols": [
+      "Equal",
+      "And",
+      "Set",
+      "For"
+    ],
+    "matrix": [
+      [
+        0.4351747463359639,
+        0.260804208944006,
+        0.18564449455092072,
+        0.11837655016910936
+      ],
+      [
+        0.46826886969583176,
+        0.26023282012767557,
+        0.09012392039053699,
+        0.1813743897859557
+      ]
+    ],
+    "singular_values": [
+      0.7918283520966463,
+      0.08304509226316745
+    ],
+    "sigma_ratio": 9.534920493403337,
+    "effective_rank": 1.3685898645107053,
+    "dominant_verb_direction": {
+      "Equal": -0.8071788823671114,
+      "And": -0.4652054353949081,
+      "Set": -0.2447000984662775,
+      "For": -0.26864105522091963
+    },
+    "interpretation": "\u03c3\u2081/\u03c3\u2082 = 9.53: The divide is sharp \u2014 one singular value dominates, meaning a single direction in verb space separates the classes"
+  },
+  "cross_domain_formulas": {
+    "total": 1329,
+    "topo_in_alg_territory": 1138,
+    "alg_in_topo_territory": 191,
+    "cross_domain_verb_mean": {
+      "Equal": 0.1297059694657601,
+      "And": 0.05444450612004578,
+      "Set": 0.021044780793526396,
+      "For": 0.02457404443155441
+    },
+    "intermediacy_score": 0.8521180790581802,
+    "distance_to_topo": 0.01744370967157364,
+    "distance_to_alg": 0.012949154517570905,
+    "interpretation": "Intermediacy=0.852: Cross-domain formulas sit between the two classes \u2014 they are genuine bridges in verb space",
+    "top_cross_modules": {
+      "carlson_elliptic": 229
+    },
+    "examples": [
+      {
+        "id": "b0d256",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.25,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "eda1e3",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.16666666666666666,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "00d5df",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.0,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "c941c4",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.0,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "21f412",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.25,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "32b3b4",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.0,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "c38209",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.0,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "f9caac",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.0,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "098757",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.0,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "08329d",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.3333333333333333,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "8f176c",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.3333333333333333,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "3e1398",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.3333333333333333,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "b41bdd",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.3333333333333333,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "0d9352",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.125,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "e3896e",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.125,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "361801",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.1111111111111111,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "f9190b",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.1111111111111111,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "69d0a3",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.125,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "5174ea",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.125,
+        "Set_frac": 0.0
+      },
+      {
+        "id": "7b362f",
+        "module": "agm",
+        "cross_type": "topo_in_alg_territory",
+        "Equal_frac": 0.2,
+        "Set_frac": 0.0
+      }
+    ]
+  },
+  "verb_operadic_correlation": {
+    "pearson_r": 0.29903643082160863,
+    "interpretation": "r=0.299: Verb distance is weakly correlated with operadic distance \u2014 the divide is NOT a simple structural artifact"
+  },
+  "module_fingerprints": {
+    "carlson_elliptic": {
+      "class": "topological",
+      "n_formulas": 278,
+      "Equal_mean": 0.14651461226493837,
+      "And_mean": 0.06685697620654056,
+      "Set_mean": 0.02103941505889055,
+      "For_mean": 0.009095239130901676,
+      "Equal_std": 0.11242770519187395,
+      "And_std": 0.06844966615855506,
+      "Set_std": 0.05300996015193821,
+      "For_std": 0.02558846511881902
+    },
+    "bernoulli_numbers": {
+      "class": "algebraic",
+      "n_formulas": 28,
+      "Equal_mean": 0.10010901796616081,
+      "And_mean": 0.06475032903604332,
+      "Set_mean": 0.0,
+      "For_mean": 0.04007500436071864,
+      "Equal_std": 0.09943922854808807,
+      "And_std": 0.0750001185363355,
+      "Set_std": 0.0,
+      "For_std": 0.06025564906667148
+    },
+    "bell_numbers": {
+      "class": "algebraic",
+      "n_formulas": 39,
+      "Equal_mean": 0.0662013912013912,
+      "And_mean": 0.031207681207681207,
+      "Set_mean": 0.029914529914529916,
+      "For_mean": 0.032623857623857624,
+      "Equal_std": 0.08784710612441449,
+      "And_std": 0.06956740438148937,
+      "Set_std": 0.07891532184880079,
+      "For_std": 0.058220518763516436
+    },
+    "airy": {
+      "class": "topological",
+      "n_formulas": 24,
+      "Equal_mean": 0.11268338143338143,
+      "And_mean": 0.034905603655603655,
+      "Set_mean": 0.018536556036556035,
+      "For_mean": 0.011160714285714286,
+      "Equal_std": 0.1136804043039145,
+      "And_std": 0.05531532350811764,
+      "Set_std": 0.04221562272767827,
+      "For_std": 0.0371055286898562
+    },
+    "gauss_hypergeometric": {
+      "class": "topological",
+      "n_formulas": 22,
+      "Equal_mean": 0.11854849695758786,
+      "And_mean": 0.10945758786667877,
+      "Set_mean": 0.0924591822319095,
+      "For_mean": 0.016129829766193402,
+      "Equal_std": 0.06300004168839231,
+      "And_std": 0.06498927622207269,
+      "Set_std": 0.10995049710276483,
+      "For_std": 0.03108864452138335
+    },
+    "dedekind_eta": {
+      "class": "algebraic",
+      "n_formulas": 43,
+      "Equal_mean": 0.13820681902077248,
+      "And_mean": 0.02136481089969462,
+      "Set_mean": 0.014202657807308972,
+      "For_mean": 0.03689637236148864,
+      "Equal_std": 0.07207911407770064,
+      "And_std": 0.0531037484715803,
+      "Set_std": 0.04517860177597383,
+      "For_std": 0.05815384593743988
+    },
+    "exp": {
+      "class": "topological",
+      "n_formulas": 52,
+      "Equal_mean": 0.11591117216117217,
+      "And_mean": 0.04149184149184149,
+      "Set_mean": 0.057303113553113544,
+      "For_mean": 0.016697885447885447,
+      "Equal_std": 0.11272810780336819,
+      "And_std": 0.07113470321872885,
+      "Set_std": 0.1255621471011638,
+      "For_std": 0.04763340768505431
+    },
+    "gcd": {
+      "class": "algebraic",
+      "n_formulas": 97,
+      "Equal_mean": 0.17189196828372083,
+      "And_mean": 0.11645170408057005,
+      "Set_mean": 0.04393939393939394,
+      "For_mean": 0.01120594754615373,
+      "Equal_std": 0.11758247222622062,
+      "And_std": 0.08713339265503371,
+      "Set_std": 0.09202541204316528,
+      "For_std": 0.03368743063764925
+    },
+    "halphen_constant": {
+      "class": "algebraic",
+      "n_formulas": 10,
+      "Equal_mean": 0.057687400318979266,
+      "And_mean": 0.0,
+      "Set_mean": 0.005263157894736842,
+      "For_mean": 0.03657628920786815,
+      "Equal_std": 0.049792792042449054,
+      "And_std": 0.0,
+      "Set_std": 0.015789473684210523,
+      "For_std": 0.047273306013992364
+    },
+    "legendre_polynomial": {
+      "class": "algebraic",
+      "n_formulas": 44,
+      "Equal_mean": 0.1340466351829988,
+      "And_mean": 0.07941345270890725,
+      "Set_mean": 0.025252525252525252,
+      "For_mean": 0.03646612226157681,
+      "Equal_std": 0.10686725325866436,
+      "And_std": 0.07076945247538283,
+      "Set_std": 0.06170742744084545,
+      "For_std": 0.05460352659840522
+    },
+    "powers": {
+      "class": "topological",
+      "n_formulas": 14,
+      "Equal_mean": 0.1464002267573696,
+      "And_mean": 0.08930173518682835,
+      "Set_mean": 0.07463521640540274,
+      "For_mean": 0.0,
+      "Equal_std": 0.11009133420609236,
+      "And_std": 0.059509178683419865,
+      "Set_std": 0.10793218386469641,
+      "For_std": 0.0
+    },
+    "riemann_zeta": {
+      "class": "algebraic",
+      "n_formulas": 71,
+      "Equal_mean": 0.08037535532100751,
+      "And_mean": 0.036840087382454485,
+      "Set_mean": 0.023321553251130715,
+      "For_mean": 0.017720585057195884,
+      "Equal_std": 0.0980416539251811,
+      "And_std": 0.05352641818604786,
+      "Set_std": 0.06117298122875307,
+      "For_std": 0.03605613334990897
+    },
+    "landau_function": {
+      "class": "algebraic",
+      "n_formulas": 8,
+      "Equal_mean": 0.031249999999999997,
+      "And_mean": 0.018229166666666664,
+      "Set_mean": 0.018229166666666664,
+      "For_mean": 0.033854166666666664,
+      "Equal_std": 0.045405197328548676,
+      "And_std": 0.0320005357485534,
+      "Set_std": 0.0320005357485534,
+      "For_std": 0.04651190390492643
+    },
+    "sine": {
+      "class": "topological",
+      "n_formulas": 95,
+      "Equal_mean": 0.15258183337130704,
+      "And_mean": 0.05634540897698794,
+      "Set_mean": 0.017522974101921468,
+      "For_mean": 0.025455304928989137,
+      "Equal_std": 0.09991444439419725,
+      "And_std": 0.07614613390615152,
+      "Set_std": 0.04890885206711813,
+      "For_std": 0.05422196886884741
+    },
+    "gamma": {
+      "class": "topological",
+      "n_formulas": 59,
+      "Equal_mean": 0.11633254927746453,
+      "And_mean": 0.03557473632610065,
+      "Set_mean": 0.026530131826741996,
+      "For_mean": 0.012127011130002157,
+      "Equal_std": 0.14259710926986846,
+      "And_std": 0.05638425424986936,
+      "Set_std": 0.05886701640604924,
+      "For_std": 0.027736264515304667
+    },
+    "integer_sequences": {
+      "class": "algebraic",
+      "n_formulas": 11,
+      "Equal_mean": 0.196969696969697,
+      "And_mean": 0.011363636363636364,
+      "Set_mean": 0.011363636363636364,
+      "For_mean": 0.01515151515151515,
+      "Equal_std": 0.09582659576267816,
+      "And_std": 0.0359349734110043,
+      "Set_std": 0.0359349734110043,
+      "For_std": 0.047913297881339086
+    },
+    "const_catalan": {
+      "class": "algebraic",
+      "n_formulas": 35,
+      "Equal_mean": 0.1589795918367347,
+      "And_mean": 0.0,
+      "Set_mean": 0.0,
+      "For_mean": 0.1189795918367347,
+      "Equal_std": 0.05655762020913426,
+      "And_std": 0.0,
+      "Set_std": 0.0,
+      "For_std": 0.06991824026738673
+    },
+    "legendre_elliptic": {
+      "class": "topological",
+      "n_formulas": 105,
+      "Equal_mean": 0.1753726735449424,
+      "And_mean": 0.02714481674565708,
+      "Set_mean": 0.01201443125812874,
+      "For_mean": 0.012733840233840233,
+      "Equal_std": 0.11280849586800867,
+      "And_std": 0.057439777277719366,
+      "Set_std": 0.040988998043771666,
+      "For_std": 0.035045930244443156
+    },
+    "weierstrass_elliptic": {
+      "class": "topological",
+      "n_formulas": 31,
+      "Equal_mean": 0.08397337429595493,
+      "And_mean": 0.07804381997930385,
+      "Set_mean": 0.027206664303438495,
+      "For_mean": 0.011827956989247311,
+      "Equal_std": 0.061440689451883364,
+      "And_std": 0.05838674806420891,
+      "Set_std": 0.05677617253550475,
+      "For_std": 0.03087538497927146
+    },
+    "atan": {
+      "class": "topological",
+      "n_formulas": 84,
+      "Equal_mean": 0.11678460428460428,
+      "And_mean": 0.05820862338719483,
+      "Set_mean": 0.03152056277056277,
+      "For_mean": 0.012130495166209454,
+      "Equal_std": 0.09847970595114483,
+      "And_std": 0.06865955584042036,
+      "Set_std": 0.06603259119595652,
+      "For_std": 0.032449573033364196
+    },
+    "complex_plane": {
+      "class": "topological",
+      "n_formulas": 8,
+      "Equal_mean": 0.10758928571428572,
+      "And_mean": 0.05327380952380952,
+      "Set_mean": 0.10758928571428572,
+      "For_mean": 0.017857142857142856,
+      "Equal_std": 0.048166266137143164,
+      "And_std": 0.05550655080744688,
+      "Set_std": 0.048166266137143164,
+      "For_std": 0.04724555912615341
+    },
+    "modular_j": {
+      "class": "algebraic",
+      "n_formulas": 32,
+      "Equal_mean": 0.15810281958379785,
+      "And_mean": 0.017825041806020063,
+      "Set_mean": 0.015568097361575623,
+      "For_mean": 0.007608695652173913,
+      "Equal_std": 0.09728961352627186,
+      "And_std": 0.05004375936342861,
+      "Set_std": 0.03959769356721388,
+      "For_std": 0.02502361833308987
+    },
+    "error_functions": {
+      "class": "topological",
+      "n_formulas": 19,
+      "Equal_mean": 0.1461817422343738,
+      "And_mean": 0.014832535885167466,
+      "Set_mean": 0.0,
+      "For_mean": 0.030369484316852737,
+      "Equal_std": 0.10912473440438802,
+      "And_std": 0.03429657595685632,
+      "Set_std": 0.0,
+      "For_std": 0.05127907947614921
+    },
+    "gaussian_quadrature": {
+      "class": "topological",
+      "n_formulas": 3,
+      "Equal_mean": 0.06087696892294594,
+      "And_mean": 0.06087696892294594,
+      "Set_mean": 0.0,
+      "For_mean": 0.06087696892294594,
+      "Equal_std": 0.035536205627431594,
+      "And_std": 0.035536205627431594,
+      "Set_std": 0.0,
+      "For_std": 0.035536205627431594
+    },
+    "fibonacci": {
+      "class": "algebraic",
+      "n_formulas": 68,
+      "Equal_mean": 0.16309285077667432,
+      "And_mean": 0.028758169934640525,
+      "Set_mean": 0.011642156862745098,
+      "For_mean": 0.04123190943043885,
+      "Equal_std": 0.10791402287937868,
+      "And_std": 0.06849309911535417,
+      "Set_std": 0.05134196177656412,
+      "For_std": 0.06658122408947084
+    },
+    "agm": {
+      "class": "topological",
+      "n_formulas": 54,
+      "Equal_mean": 0.1345466594649601,
+      "And_mean": 0.06333119797172086,
+      "Set_mean": 0.0,
+      "For_mean": 0.02373557512446401,
+      "Equal_std": 0.10485041667263682,
+      "And_std": 0.0825104907490597,
+      "Set_std": 0.0,
+      "For_std": 0.05054599721419887
+    },
+    "integrals": {
+      "class": "topological",
+      "n_formulas": 7,
+      "Equal_mean": 0.13707482993197279,
+      "And_mean": 0.07993197278911565,
+      "Set_mean": 0.0,
+      "For_mean": 0.13707482993197279,
+      "Equal_std": 0.04286703985353643,
+      "And_std": 0.05300377726306485,
+      "Set_std": 0.0,
+      "For_std": 0.04286703985353643
+    },
+    "pi": {
+      "class": "algebraic",
+      "n_formulas": 86,
+      "Equal_mean": 0.18779111715158225,
+      "And_mean": 0.0,
+      "Set_mean": 0.0,
+      "For_mean": 0.0743544246451223,
+      "Equal_std": 0.09000224108797888,
+      "And_std": 0.0,
+      "Set_std": 0.0,
+      "For_std": 0.08323406423144135
+    },
+    "lambertw": {
+      "class": "topological",
+      "n_formulas": 65,
+      "Equal_mean": 0.10612973845767369,
+      "And_mean": 0.034089050387573844,
+      "Set_mean": 0.08317737500519114,
+      "For_mean": 0.011245562804267258,
+      "Equal_std": 0.11120068173247569,
+      "And_std": 0.04417146559130216,
+      "Set_std": 0.09145868684566986,
+      "For_std": 0.028082075097760718
+    },
+    "modular_lambda": {
+      "class": "algebraic",
+      "n_formulas": 48,
+      "Equal_mean": 0.15528978057760953,
+      "And_mean": 0.020570188826767772,
+      "Set_mean": 0.04958391237174131,
+      "For_mean": 0.020818956263035208,
+      "Equal_std": 0.1202040978040302,
+      "And_std": 0.05312427187508459,
+      "Set_std": 0.09322048461330594,
+      "For_std": 0.04291980188454726
+    },
+    "stirling_numbers": {
+      "class": "algebraic",
+      "n_formulas": 19,
+      "Equal_mean": 0.16645459803354543,
+      "And_mean": 0.13500096394833236,
+      "Set_mean": 0.0,
+      "For_mean": 0.05680547522652787,
+      "Equal_std": 0.11726492219991128,
+      "And_std": 0.1050669185189186,
+      "Set_std": 0.0,
+      "For_std": 0.07050602280103523
+    },
+    "golden_ratio": {
+      "class": "algebraic",
+      "n_formulas": 18,
+      "Equal_mean": 0.2486772486772487,
+      "And_mean": 0.011111111111111112,
+      "Set_mean": 0.020370370370370372,
+      "For_mean": 0.007936507936507936,
+      "Equal_std": 0.16368693545419677,
+      "And_std": 0.04581228472908512,
+      "Set_std": 0.05788333188180661,
+      "For_std": 0.03272306052077509
+    },
+    "const_gamma": {
+      "class": "algebraic",
+      "n_formulas": 16,
+      "Equal_mean": 0.13018353174603176,
+      "And_mean": 0.003676470588235294,
+      "Set_mean": 0.003676470588235294,
+      "For_mean": 0.11302666900093371,
+      "Equal_std": 0.08466510341176764,
+      "And_std": 0.014238909361056679,
+      "Set_std": 0.014238909361056679,
+      "For_std": 0.06791702510772124
+    },
+    "hurwitz_zeta": {
+      "class": "algebraic",
+      "n_formulas": 75,
+      "Equal_mean": 0.12923845880367618,
+      "And_mean": 0.056672321237538625,
+      "Set_mean": 0.04597239797239797,
+      "For_mean": 0.02122339978861718,
+      "Equal_std": 0.10823096011841893,
+      "And_std": 0.07159624481664062,
+      "Set_std": 0.08678405914944552,
+      "For_std": 0.03896673750287072
+    },
+    "beta_function": {
+      "class": "topological",
+      "n_formulas": 24,
+      "Equal_mean": 0.11572466884966885,
+      "And_mean": 0.11572466884966885,
+      "Set_mean": 0.07678317053317053,
+      "For_mean": 0.02061884874384874,
+      "Equal_std": 0.054881644053304736,
+      "And_std": 0.054881644053304736,
+      "Set_std": 0.0731831760250577,
+      "For_std": 0.04093362423432848
+    },
+    "jacobi_theta": {
+      "class": "algebraic",
+      "n_formulas": 336,
+      "Equal_mean": 0.13359179705548843,
+      "And_mean": 0.09219569881023607,
+      "Set_mean": 0.0054408843471343464,
+      "For_mean": 0.035027921846876406,
+      "Equal_std": 0.06815248082523763,
+      "And_std": 0.07724113889721856,
+      "Set_std": 0.02528296594277249,
+      "For_std": 0.05027512178048931
+    },
+    "complex_parts": {
+      "class": "topological",
+      "n_formulas": 35,
+      "Equal_mean": 0.12857142857142856,
+      "And_mean": 0.049761904761904764,
+      "Set_mean": 0.06138321995464852,
+      "For_mean": 0.0,
+      "Equal_std": 0.12318984114549075,
+      "And_std": 0.08606212490058346,
+      "Set_std": 0.10628995250118722,
+      "For_std": 0.0
+    },
+    "bessel": {
+      "class": "topological",
+      "n_formulas": 75,
+      "Equal_mean": 0.11073208273208274,
+      "And_mean": 0.08229287866129971,
+      "Set_mean": 0.17695516569200775,
+      "For_mean": 0.008329004329004328,
+      "Equal_std": 0.06553762579677007,
+      "And_std": 0.06341505742357144,
+      "Set_std": 0.11217535251807614,
+      "For_std": 0.024907852515232975
+    },
+    "modular_transformations": {
+      "class": "algebraic",
+      "n_formulas": 14,
+      "Equal_mean": 0.07848639455782312,
+      "And_mean": 0.07848639455782314,
+      "Set_mean": 0.04872448979591837,
+      "For_mean": 0.04872448979591837,
+      "Equal_std": 0.08868672580952686,
+      "And_std": 0.08868672580952686,
+      "Set_std": 0.07213155246641537,
+      "For_std": 0.07213155246641538
+    },
+    "totient": {
+      "class": "algebraic",
+      "n_formulas": 51,
+      "Equal_mean": 0.11574215544803781,
+      "And_mean": 0.05371219194748607,
+      "Set_mean": 0.006762300879947939,
+      "For_mean": 0.06570254364372011,
+      "Equal_std": 0.08690834248534915,
+      "And_std": 0.08552428412175674,
+      "Set_std": 0.027541818725751864,
+      "For_std": 0.07324665256390529
+    },
+    "prime_numbers": {
+      "class": "algebraic",
+      "n_formulas": 17,
+      "Equal_mean": 0.017156862745098037,
+      "And_mean": 0.036181139122315596,
+      "Set_mean": 0.024509803921568624,
+      "For_mean": 0.0,
+      "Equal_std": 0.0475262731119248,
+      "And_std": 0.07337177238796318,
+      "Set_std": 0.05358630173793001,
+      "For_std": 0.0
+    },
+    "digamma_function": {
+      "class": "topological",
+      "n_formulas": 124,
+      "Equal_mean": 0.11039904316113994,
+      "And_mean": 0.054309545740997354,
+      "Set_mean": 0.012144777265745008,
+      "For_mean": 0.03777359513246609,
+      "Equal_std": 0.08499521782398828,
+      "And_std": 0.056805143881502276,
+      "Set_std": 0.04450657124550999,
+      "For_std": 0.04888144207666793
+    },
+    "dirichlet": {
+      "class": "algebraic",
+      "n_formulas": 99,
+      "Equal_mean": 0.10793253512097967,
+      "And_mean": 0.0697901483249728,
+      "Set_mean": 0.023146764016135482,
+      "For_mean": 0.03307697785511786,
+      "Equal_std": 0.08711511063019578,
+      "And_std": 0.0611396136659979,
+      "Set_std": 0.05119388528274249,
+      "For_std": 0.04891731451386265
+    },
+    "log": {
+      "class": "topological",
+      "n_formulas": 33,
+      "Equal_mean": 0.11939743757925576,
+      "And_mean": 0.024003017184835367,
+      "Set_mean": 0.11114718614718616,
+      "For_mean": 0.015886134067952248,
+      "Equal_std": 0.10801200157946632,
+      "And_std": 0.04490219895878486,
+      "Set_std": 0.11980631908966168,
+      "For_std": 0.039543970172439755
+    },
+    "sqrt": {
+      "class": "topological",
+      "n_formulas": 45,
+      "Equal_mean": 0.14508016674683338,
+      "And_mean": 0.05005371172037838,
+      "Set_mean": 0.04051146384479718,
+      "For_mean": 0.015521083854417188,
+      "Equal_std": 0.10117358111399043,
+      "And_std": 0.05938077792057827,
+      "Set_std": 0.06596436698389348,
+      "For_std": 0.0364485070395637
+    },
+    "eisenstein": {
+      "class": "algebraic",
+      "n_formulas": 80,
+      "Equal_mean": 0.12481347378450254,
+      "And_mean": 0.04038522952580615,
+      "Set_mean": 0.019407180173627542,
+      "For_mean": 0.027619386621665375,
+      "Equal_std": 0.08951069285886237,
+      "And_std": 0.05678327389139715,
+      "Set_std": 0.043800102826289246,
+      "For_std": 0.04361073875290761
+    },
+    "partitions": {
+      "class": "algebraic",
+      "n_formulas": 24,
+      "Equal_mean": 0.09252645502645503,
+      "And_mean": 0.015277777777777779,
+      "Set_mean": 0.052083333333333336,
+      "For_mean": 0.030026455026455026,
+      "Equal_std": 0.11325522812047589,
+      "And_std": 0.03433113081752299,
+      "Set_std": 0.1015291077584267,
+      "For_std": 0.05590342085970055
+    },
+    "coulomb_wave": {
+      "class": "topological",
+      "n_formulas": 29,
+      "Equal_mean": 0.0772602059873865,
+      "And_mean": 0.08157055081497273,
+      "Set_mean": 0.11538732284168388,
+      "For_mean": 0.021618037135278514,
+      "Equal_std": 0.04031510407715441,
+      "And_std": 0.03846407920586969,
+      "Set_std": 0.08170092959983846,
+      "For_std": 0.038595000006147295
+    },
+    "numbers": {
+      "class": "algebraic",
+      "n_formulas": 20,
+      "Equal_mean": 0.015476190476190477,
+      "And_mean": 0.014835164835164835,
+      "Set_mean": 0.05412448662448662,
+      "For_mean": 0.012142857142857143,
+      "Equal_std": 0.03841015667833733,
+      "And_std": 0.0373100793876153,
+      "Set_std": 0.07364597694204676,
+      "For_std": 0.03705346385526553
+    },
+    "sinc": {
+      "class": "topological",
+      "n_formulas": 93,
+      "Equal_mean": 0.12188877869617903,
+      "And_mean": 0.026466817145185267,
+      "Set_mean": 0.004382147124082608,
+      "For_mean": 0.08140832128023781,
+      "Equal_std": 0.0837144684862833,
+      "And_std": 0.051609004620387866,
+      "Set_std": 0.021069986037545937,
+      "For_std": 0.07176870126133213
+    },
+    "imaginary_unit": {
+      "class": "algebraic",
+      "n_formulas": 23,
+      "Equal_mean": 0.23742236024844726,
+      "And_mean": 0.0,
+      "Set_mean": 0.005434782608695652,
+      "For_mean": 0.0,
+      "Equal_std": 0.16064499928413908,
+      "And_std": 0.0,
+      "Set_std": 0.02549138999904038,
+      "For_std": 0.0
+    },
+    "multiple_zeta_values": {
+      "class": "algebraic",
+      "n_formulas": 12,
+      "Equal_mean": 0.1839285714285714,
+      "And_mean": 0.022619047619047622,
+      "Set_mean": 0.0,
+      "For_mean": 0.025432900432900432,
+      "Equal_std": 0.07770764371126217,
+      "And_std": 0.05698141877987771,
+      "Set_std": 0.0,
+      "For_std": 0.046558813879500914
+    },
+    "chebyshev": {
+      "class": "algebraic",
+      "n_formulas": 91,
+      "Equal_mean": 0.1424356976069969,
+      "And_mean": 0.10174610636795511,
+      "Set_mean": 0.0157821923820631,
+      "For_mean": 0.030256484878333618,
+      "Equal_std": 0.09506132498560473,
+      "And_std": 0.06815266934958793,
+      "Set_std": 0.047185180482513515,
+      "For_std": 0.04545758908840742
+    },
+    "confluent_hypergeometric": {
+      "class": "topological",
+      "n_formulas": 31,
+      "Equal_mean": 0.09409330058735833,
+      "And_mean": 0.09409330058735833,
+      "Set_mean": 0.014309346567411082,
+      "For_mean": 0.03337093014512369,
+      "Equal_std": 0.06903850207953759,
+      "And_std": 0.06903850207953759,
+      "Set_std": 0.03908116375191207,
+      "For_std": 0.049151154521090645
+    },
+    "barnes_g": {
+      "class": "topological",
+      "n_formulas": 67,
+      "Equal_mean": 0.07683093505952893,
+      "And_mean": 0.035491786938115666,
+      "Set_mean": 0.015156361051883442,
+      "For_mean": 0.037500931903916984,
+      "Equal_std": 0.06549742521707387,
+      "And_std": 0.04409951657878286,
+      "Set_std": 0.048190679722054715,
+      "For_std": 0.0527247194344971
+    },
+    "factorials": {
+      "class": "algebraic",
+      "n_formulas": 65,
+      "Equal_mean": 0.15254540331463406,
+      "And_mean": 0.0949751957444265,
+      "Set_mean": 0.004395604395604396,
+      "For_mean": 0.023644304413535183,
+      "Equal_std": 0.12035436808170646,
+      "And_std": 0.0862063985586083,
+      "Set_std": 0.03516483516483516,
+      "For_std": 0.0521752273391362
+    }
+  }
+}

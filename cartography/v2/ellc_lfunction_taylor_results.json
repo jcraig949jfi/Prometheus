@@ -1,0 +1,340 @@
+{
+  "title": "Isogeny-Class-Level ell_c Analysis",
+  "timestamp": "2026-04-10T11:29:06",
+  "elapsed_seconds": 7.5,
+  "population": {
+    "total_forms": 17314,
+    "forms_with_ellc": 17314,
+    "forms_unisolated": 0,
+    "ellc_distribution": {
+      "2": 824,
+      "3": 8399,
+      "5": 6803,
+      "7": 1216,
+      "11": 70,
+      "13": 2
+    }
+  },
+  "correlation_all_ranks": {
+    "ell_c_vs_v2(N)": {
+      "spearman_rho": 0.138275,
+      "p_value": 1.1705128970926607e-74,
+      "significant": true
+    },
+    "ell_c_vs_analytic_rank": {
+      "spearman_rho": -0.099894,
+      "p_value": 1.2007370586292032e-39,
+      "significant": true
+    },
+    "ell_c_vs_class_size": {
+      "spearman_rho": 0.119617,
+      "p_value": 3.359413423902067e-56,
+      "significant": true
+    },
+    "v2(N)_vs_analytic_rank": {
+      "spearman_rho": -0.063081,
+      "p_value": 9.724580593293225e-17,
+      "significant": true
+    },
+    "v2(N)_vs_class_size": {
+      "spearman_rho": 0.129677,
+      "p_value": 8.225259504421631e-66,
+      "significant": true
+    },
+    "analytic_rank_vs_class_size": {
+      "spearman_rho": -0.172071,
+      "p_value": 3.6324297908687842e-115,
+      "significant": true
+    }
+  },
+  "correlation_rank_ge1": {
+    "ell_c_vs_v2(N)": {
+      "spearman_rho": 0.154885,
+      "p_value": 1.4802665390808655e-51,
+      "significant": true
+    },
+    "ell_c_vs_analytic_rank": {
+      "spearman_rho": -0.170797,
+      "p_value": 1.8361994928448596e-62,
+      "significant": true
+    },
+    "ell_c_vs_class_size": {
+      "spearman_rho": 0.136108,
+      "p_value": 4.15810056315213e-40,
+      "significant": true
+    },
+    "v2(N)_vs_analytic_rank": {
+      "spearman_rho": -0.07303,
+      "p_value": 1.3501724374161344e-12,
+      "significant": true
+    },
+    "v2(N)_vs_class_size": {
+      "spearman_rho": 0.156707,
+      "p_value": 9.509753382662024e-53,
+      "significant": true
+    },
+    "analytic_rank_vs_class_size": {
+      "spearman_rho": -0.140663,
+      "p_value": 9.585933938584408e-43,
+      "significant": true
+    }
+  },
+  "correlation_extended_rank_ge1": {
+    "ell_c_vs_v2(N)": {
+      "spearman_rho": 0.154885,
+      "p_value": 1.4802665390808655e-51,
+      "significant": true
+    },
+    "ell_c_vs_analytic_rank": {
+      "spearman_rho": -0.170797,
+      "p_value": 1.8361994928448596e-62,
+      "significant": true
+    },
+    "ell_c_vs_class_size": {
+      "spearman_rho": 0.136108,
+      "p_value": 4.15810056315213e-40,
+      "significant": true
+    },
+    "ell_c_vs_mod2_deg": {
+      "spearman_rho": 0.231831,
+      "p_value": 6.4610740122328375e-115,
+      "significant": true
+    },
+    "v2(N)_vs_analytic_rank": {
+      "spearman_rho": -0.07303,
+      "p_value": 1.3501724374161344e-12,
+      "significant": true
+    },
+    "v2(N)_vs_class_size": {
+      "spearman_rho": 0.156707,
+      "p_value": 9.509753382662024e-53,
+      "significant": true
+    },
+    "v2(N)_vs_mod2_deg": {
+      "spearman_rho": 0.403251,
+      "p_value": 0.0,
+      "significant": true
+    },
+    "analytic_rank_vs_class_size": {
+      "spearman_rho": -0.140663,
+      "p_value": 9.585933938584408e-43,
+      "significant": true
+    },
+    "analytic_rank_vs_mod2_deg": {
+      "spearman_rho": -0.149597,
+      "p_value": 3.541577101453962e-48,
+      "significant": true
+    },
+    "class_size_vs_mod2_deg": {
+      "spearman_rho": 0.524861,
+      "p_value": 0.0,
+      "significant": true
+    }
+  },
+  "spearman_matrix_all": {
+    "variables": [
+      "ell_c",
+      "v2(N)",
+      "analytic_rank",
+      "class_size"
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.138275,
+        -0.099894,
+        0.119617
+      ],
+      [
+        0.138275,
+        1.0,
+        -0.063081,
+        0.129677
+      ],
+      [
+        -0.099894,
+        -0.063081,
+        1.0,
+        -0.172071
+      ],
+      [
+        0.119617,
+        0.129677,
+        -0.172071,
+        1.0
+      ]
+    ]
+  },
+  "spearman_matrix_rank_ge1": {
+    "variables": [
+      "ell_c",
+      "v2(N)",
+      "analytic_rank",
+      "class_size"
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.154885,
+        -0.170797,
+        0.136108
+      ],
+      [
+        0.154885,
+        1.0,
+        -0.07303,
+        0.156707
+      ],
+      [
+        -0.170797,
+        -0.07303,
+        1.0,
+        -0.140663
+      ],
+      [
+        0.136108,
+        0.156707,
+        -0.140663,
+        1.0
+      ]
+    ]
+  },
+  "spearman_matrix_extended_rank_ge1": {
+    "variables": [
+      "ell_c",
+      "v2(N)",
+      "analytic_rank",
+      "class_size",
+      "mod2_deg"
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.154885,
+        -0.170797,
+        0.136108,
+        0.231831
+      ],
+      [
+        0.154885,
+        1.0,
+        -0.07303,
+        0.156707,
+        0.403251
+      ],
+      [
+        -0.170797,
+        -0.07303,
+        1.0,
+        -0.140663,
+        -0.149597
+      ],
+      [
+        0.136108,
+        0.156707,
+        -0.140663,
+        1.0,
+        0.524861
+      ],
+      [
+        0.231831,
+        0.403251,
+        -0.149597,
+        0.524861,
+        1.0
+      ]
+    ]
+  },
+  "ellc_by_rank": {
+    "1": {
+      "n": 8811,
+      "mean": 3.9916,
+      "median": 3.0,
+      "std": 1.2867,
+      "distribution": {
+        "2": 411,
+        "3": 4355,
+        "5": 3542,
+        "7": 490,
+        "11": 13
+      }
+    },
+    "2": {
+      "n": 589,
+      "mean": 3.1392,
+      "median": 3.0,
+      "std": 0.857,
+      "distribution": {
+        "2": 80,
+        "3": 433,
+        "5": 71,
+        "7": 5
+      }
+    }
+  },
+  "ellc_by_class_size": {
+    "1": {
+      "n": 5468,
+      "mean": 3.8118,
+      "median": 3.0
+    },
+    "2": {
+      "n": 2938,
+      "mean": 4.0946,
+      "median": 3.0
+    },
+    "3": {
+      "n": 142,
+      "mean": 4.6127,
+      "median": 5.0
+    },
+    "4": {
+      "n": 728,
+      "mean": 4.0755,
+      "median": 5.0
+    },
+    "6": {
+      "n": 100,
+      "mean": 4.14,
+      "median": 5.0
+    },
+    "8": {
+      "n": 24,
+      "mean": 4.5833,
+      "median": 5.0
+    }
+  },
+  "mod2_degeneracy_by_rank": {
+    "1": {
+      "n": 8811,
+      "mean": 40.9007,
+      "median": 9.0
+    },
+    "2": {
+      "n": 589,
+      "mean": 16.2581,
+      "median": 4.0
+    }
+  },
+  "rank0_vs_rank_ge1": {
+    "mann_whitney_U": 40246040.5,
+    "mann_whitney_p": 1.1629706674995774e-24,
+    "rank0_mean_ellc": 4.188653,
+    "rank_ge1_mean_ellc": 3.938191,
+    "significant": true
+  },
+  "constants": {
+    "mean_ellc_rank1_over_rank2": 1.271534,
+    "frac_rank_ge1_isolated_at_ell2": 0.052234,
+    "mean_ellc_rank_ge1": 3.938191,
+    "frac_v2_zero_rank_ge1": 0.273191,
+    "mod2_deg_rank1_over_rank2": 2.515712
+  },
+  "interpretation": [
+    "OSC-6 reported Spearman(ell_c, rank)=-0.026 on ~200 twist-pair forms. Full population (17,314 forms, all ranks): Spearman=-0.0999. After ablating rank-0 (9,400 rank>=1 classes): Spearman=-0.1708, p=1.84e-62. The NEGATIVE correlation strengthens after rank-0 ablation: higher-rank classes isolate at LOWER primes (smaller ell_c). Rank-2 mean ell_c=3.14 vs rank-1 mean ell_c=3.99. Effect is weak but highly significant.",
+    "Significant correlations (p<0.001) in rank>=1 classes: ell_c_vs_v2(N): rho=+0.1549; ell_c_vs_analytic_rank: rho=-0.1708; ell_c_vs_class_size: rho=+0.1361; ell_c_vs_mod2_deg: rho=+0.2318; v2(N)_vs_analytic_rank: rho=-0.0730; v2(N)_vs_class_size: rho=+0.1567; v2(N)_vs_mod2_deg: rho=+0.4033; analytic_rank_vs_class_size: rho=-0.1407; analytic_rank_vs_mod2_deg: rho=-0.1496; class_size_vs_mod2_deg: rho=+0.5249",
+    "v2(N) vs rank (rank>=1): Spearman=-0.0730, p=1.35e-12. Significant.",
+    "ell_c vs class_size (rank>=1): Spearman=+0.1361, p=4.16e-40. SIGNIFICANT \u2014 larger isogeny classes tend to have different isolation altitudes."
+  ],
+  "verdict": "REVISES OSC-6: Full-population analysis reveals ell_c and rank ARE weakly anticorrelated (rho=-0.17, p~1e-62) after ablating rank-0. Rank-2 classes isolate earlier (mean ell_c=3.14) than rank-1 (3.99). The mod-2 degeneracy channel is even stronger: rank-2 classes have 2.5x smaller mod-2 neighborhoods than rank-1 (16.3 vs 40.9). No universal constant found \u2014 the ratios (1.27 for ell_c, 2.52 for mod-2 deg) are not recognizable. The dominant correlation is class_size vs mod2_deg (rho=+0.52), reflecting that larger isogeny classes occupy denser mod-2 neighborhoods."
+}

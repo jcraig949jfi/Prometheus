@@ -1,0 +1,818 @@
+{
+  "matrix_size": 1961,
+  "n_edges": 1115,
+  "svd_time_seconds": 3.56,
+  "singular_values_top30": [
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    3.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0,
+    2.0
+  ],
+  "singular_values_nonzero": 1961,
+  "effective_rank_90": 1738,
+  "effective_rank_95": 1850,
+  "effective_rank_99": 1939,
+  "total_energy": 2230.0,
+  "energy_fraction_top1": 0.004036,
+  "energy_fraction_top3": 0.012108,
+  "energy_fraction_top10": 0.033632,
+  "gap_ratios_top15": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.5,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "spectrum": {
+    "edge_density": 0.00058019,
+    "mp_sigma_max_random": 1.0923,
+    "actual_sigma_max": 3.0,
+    "excess_over_mp": 2.7464,
+    "n_above_mp_bound": 78
+  },
+  "eigenvector_analysis": {
+    "conductor_correlations_top10": [
+      -0.036477,
+      -0.027213,
+      0.053035,
+      -0.075082,
+      -0.006973,
+      0.061369,
+      -0.070811,
+      0.00429,
+      -0.054231,
+      -0.054389
+    ],
+    "degree_correlations_top10": [
+      0.219722,
+      0.219722,
+      0.219722,
+      0.219722,
+      0.219722,
+      0.219722,
+      0.219722,
+      -0.088114,
+      -0.088114,
+      -0.088114
+    ],
+    "component_separation_eta2_top10": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "by_conductor_decade": {
+      "eigvec_0": {
+        "10^2": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 2
+        },
+        "10^3": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 175
+        },
+        "10^4": {
+          "mean_abs": 0.003012,
+          "mean_signed": 0.003012,
+          "std": 0.03869,
+          "count": 664
+        },
+        "10^5": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 1120
+        }
+      },
+      "eigvec_1": {
+        "10^2": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 2
+        },
+        "10^3": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 175
+        },
+        "10^4": {
+          "mean_abs": 0.003012,
+          "mean_signed": 0.003012,
+          "std": 0.03869,
+          "count": 664
+        },
+        "10^5": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 1120
+        }
+      },
+      "eigvec_2": {
+        "10^2": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 2
+        },
+        "10^3": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 175
+        },
+        "10^4": {
+          "mean_abs": 0.0,
+          "mean_signed": 0.0,
+          "std": 0.0,
+          "count": 664
+        },
+        "10^5": {
+          "mean_abs": 0.001786,
+          "mean_signed": 0.001786,
+          "std": 0.029827,
+          "count": 1120
+        }
+      }
+    }
+  },
+  "top3_eigenvectors": {
+    "eigvec_0": {
+      "singular_value": 3.0,
+      "energy_fraction": 0.004036,
+      "conductor_correlation": -0.036477,
+      "degree_correlation": 0.219722,
+      "component_separation_eta2": 1.0,
+      "sign_distribution": {
+        "positive": 4,
+        "negative": 0,
+        "near_zero": 1957
+      },
+      "top_nodes": [
+        {
+          "node": "N31475_31475_[-x^5-6*x^4-9*x^3-1,x+1]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 31475,
+          "degree": 3
+        },
+        {
+          "node": "N31475_786875_[5*x^5+7*x^4-10*x^3+x^2+2*x,x^",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 31475,
+          "degree": 3
+        },
+        {
+          "node": "N31475_786875_[x^5+4*x^4+2*x^3+2*x^2+x,x]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 31475,
+          "degree": 3
+        },
+        {
+          "node": "N31475_786875_[2*x^6-x^5-6*x^4-x^3+6*x^2+3*x",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 31475,
+          "degree": 3
+        },
+        {
+          "node": "N985109_985109_[x^5-5*x^3-3*x^2+x,x]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 985109,
+          "degree": 1
+        },
+        {
+          "node": "N985109_985109_[x^5+84*x^4+58*x^3+13*x^2+x,x]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 985109,
+          "degree": 1
+        },
+        {
+          "node": "N984531_984531_[8*x^6-6*x^5-48*x^4+27*x^3+87*",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N984531_984531_[7*x^5+72*x^4+203*x^3-192*x^2+",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N984531_984531_[-2*x^5+x^4+x^3-3*x^2,x^3+x+1]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N9843_9843_[x^5-x^4-3*x^3+x^2+x-1,x^3+x+1",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 9843,
+          "degree": 1
+        }
+      ]
+    },
+    "eigvec_1": {
+      "singular_value": 3.0,
+      "energy_fraction": 0.004036,
+      "conductor_correlation": -0.027213,
+      "degree_correlation": 0.219722,
+      "component_separation_eta2": 1.0,
+      "sign_distribution": {
+        "positive": 4,
+        "negative": 0,
+        "near_zero": 1957
+      },
+      "top_nodes": [
+        {
+          "node": "N43375_216875_[-2*x^4-x^3+2*x^2-x-2,x^3]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 43375,
+          "degree": 3
+        },
+        {
+          "node": "N43375_216875_[x^5-3*x^3-2*x^2+x+2,x^3]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 43375,
+          "degree": 3
+        },
+        {
+          "node": "N43375_216875_[x^5-x^4-4*x^3+6*x+4,1]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 43375,
+          "degree": 3
+        },
+        {
+          "node": "N43375_216875_[x^5+x^4-26*x^3+x^2+224*x-297,",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 43375,
+          "degree": 3
+        },
+        {
+          "node": "N985109_985109_[x^5-5*x^3-3*x^2+x,x]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 985109,
+          "degree": 1
+        },
+        {
+          "node": "N985109_985109_[x^5+84*x^4+58*x^3+13*x^2+x,x]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 985109,
+          "degree": 1
+        },
+        {
+          "node": "N984531_984531_[8*x^6-6*x^5-48*x^4+27*x^3+87*",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N984531_984531_[7*x^5+72*x^4+203*x^3-192*x^2+",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N984531_984531_[-2*x^5+x^4+x^3-3*x^2,x^3+x+1]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N9843_9843_[x^5-x^4-3*x^3+x^2+x-1,x^3+x+1",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 9843,
+          "degree": 1
+        }
+      ]
+    },
+    "eigvec_2": {
+      "singular_value": 3.0,
+      "energy_fraction": 0.004036,
+      "conductor_correlation": 0.053035,
+      "degree_correlation": 0.219722,
+      "component_separation_eta2": 1.0,
+      "sign_distribution": {
+        "positive": 4,
+        "negative": 0,
+        "near_zero": 1957
+      },
+      "top_nodes": [
+        {
+          "node": "N697691_697691_[x^5+2*x^4-4*x^2+x,x]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 697691,
+          "degree": 3
+        },
+        {
+          "node": "N697691_697691_[x^5+6*x^4+9*x^3+3*x^2+x,x]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 697691,
+          "degree": 3
+        },
+        {
+          "node": "N697691_697691_[x^5-10*x^4+15*x^3-7*x^2+x,x]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 697691,
+          "degree": 3
+        },
+        {
+          "node": "N697691_697691_[x^5+2*x^4-6*x^3+2*x^2+x,x]",
+          "value": 0.5,
+          "abs_value": 0.5,
+          "conductor": 697691,
+          "degree": 3
+        },
+        {
+          "node": "N985109_985109_[x^5-5*x^3-3*x^2+x,x]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 985109,
+          "degree": 1
+        },
+        {
+          "node": "N985109_985109_[x^5+84*x^4+58*x^3+13*x^2+x,x]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 985109,
+          "degree": 1
+        },
+        {
+          "node": "N984531_984531_[8*x^6-6*x^5-48*x^4+27*x^3+87*",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N984531_984531_[7*x^5+72*x^4+203*x^3-192*x^2+",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N984531_984531_[-2*x^5+x^4+x^3-3*x^2,x^3+x+1]",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 984531,
+          "degree": 2
+        },
+        {
+          "node": "N9843_9843_[x^5-x^4-3*x^3+x^2+x-1,x^3+x+1",
+          "value": 0.0,
+          "abs_value": 0.0,
+          "conductor": 9843,
+          "degree": 1
+        }
+      ]
+    }
+  },
+  "ablation": {
+    "remove_1_thresh_0.1": {
+      "n_modes_removed": 1,
+      "threshold": 0.1,
+      "n_edges": 1115,
+      "n_components": 938,
+      "largest_component": 4,
+      "size_distribution": {
+        "2": 860,
+        "3": 71,
+        "4": 7
+      },
+      "n_clique_components": 938,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.889,
+      "power_law_R2": 0.9942
+    },
+    "remove_1_thresh_0.3": {
+      "n_modes_removed": 1,
+      "threshold": 0.3,
+      "n_edges": 1109,
+      "n_components": 941,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 4,
+        "2": 860,
+        "3": 71,
+        "4": 6
+      },
+      "n_clique_components": 937,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.0968,
+      "power_law_R2": 0.991
+    },
+    "remove_1_thresh_0.5": {
+      "n_modes_removed": 1,
+      "threshold": 0.5,
+      "n_edges": 1109,
+      "n_components": 941,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 4,
+        "2": 860,
+        "3": 71,
+        "4": 6
+      },
+      "n_clique_components": 937,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.0968,
+      "power_law_R2": 0.991
+    },
+    "remove_1_thresh_0.7": {
+      "n_modes_removed": 1,
+      "threshold": 0.7,
+      "n_edges": 1109,
+      "n_components": 941,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 4,
+        "2": 860,
+        "3": 71,
+        "4": 6
+      },
+      "n_clique_components": 937,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.0968,
+      "power_law_R2": 0.991
+    },
+    "remove_2_thresh_0.1": {
+      "n_modes_removed": 2,
+      "threshold": 0.1,
+      "n_edges": 1115,
+      "n_components": 938,
+      "largest_component": 4,
+      "size_distribution": {
+        "2": 860,
+        "3": 71,
+        "4": 7
+      },
+      "n_clique_components": 938,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.889,
+      "power_law_R2": 0.9942
+    },
+    "remove_2_thresh_0.3": {
+      "n_modes_removed": 2,
+      "threshold": 0.3,
+      "n_edges": 1103,
+      "n_components": 944,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 8,
+        "2": 860,
+        "3": 71,
+        "4": 5
+      },
+      "n_clique_components": 936,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.3426,
+      "power_law_R2": 0.9867
+    },
+    "remove_2_thresh_0.5": {
+      "n_modes_removed": 2,
+      "threshold": 0.5,
+      "n_edges": 1103,
+      "n_components": 944,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 8,
+        "2": 860,
+        "3": 71,
+        "4": 5
+      },
+      "n_clique_components": 936,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.3426,
+      "power_law_R2": 0.9867
+    },
+    "remove_2_thresh_0.7": {
+      "n_modes_removed": 2,
+      "threshold": 0.7,
+      "n_edges": 1103,
+      "n_components": 944,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 8,
+        "2": 860,
+        "3": 71,
+        "4": 5
+      },
+      "n_clique_components": 936,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.3426,
+      "power_law_R2": 0.9867
+    },
+    "remove_3_thresh_0.1": {
+      "n_modes_removed": 3,
+      "threshold": 0.1,
+      "n_edges": 1115,
+      "n_components": 938,
+      "largest_component": 4,
+      "size_distribution": {
+        "2": 860,
+        "3": 71,
+        "4": 7
+      },
+      "n_clique_components": 938,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.889,
+      "power_law_R2": 0.9942
+    },
+    "remove_3_thresh_0.3": {
+      "n_modes_removed": 3,
+      "threshold": 0.3,
+      "n_edges": 1097,
+      "n_components": 947,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 12,
+        "2": 860,
+        "3": 71,
+        "4": 4
+      },
+      "n_clique_components": 935,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.6434,
+      "power_law_R2": 0.9808
+    },
+    "remove_3_thresh_0.5": {
+      "n_modes_removed": 3,
+      "threshold": 0.5,
+      "n_edges": 1097,
+      "n_components": 947,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 12,
+        "2": 860,
+        "3": 71,
+        "4": 4
+      },
+      "n_clique_components": 935,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.6434,
+      "power_law_R2": 0.9808
+    },
+    "remove_3_thresh_0.7": {
+      "n_modes_removed": 3,
+      "threshold": 0.7,
+      "n_edges": 1097,
+      "n_components": 947,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 12,
+        "2": 860,
+        "3": 71,
+        "4": 4
+      },
+      "n_clique_components": 935,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 7.6434,
+      "power_law_R2": 0.9808
+    },
+    "remove_5_thresh_0.1": {
+      "n_modes_removed": 5,
+      "threshold": 0.1,
+      "n_edges": 1115,
+      "n_components": 938,
+      "largest_component": 4,
+      "size_distribution": {
+        "2": 860,
+        "3": 71,
+        "4": 7
+      },
+      "n_clique_components": 938,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.889,
+      "power_law_R2": 0.9942
+    },
+    "remove_5_thresh_0.3": {
+      "n_modes_removed": 5,
+      "threshold": 0.3,
+      "n_edges": 1085,
+      "n_components": 953,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 20,
+        "2": 860,
+        "3": 71,
+        "4": 2
+      },
+      "n_clique_components": 933,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 8.5778,
+      "power_law_R2": 0.9606
+    },
+    "remove_5_thresh_0.5": {
+      "n_modes_removed": 5,
+      "threshold": 0.5,
+      "n_edges": 1085,
+      "n_components": 953,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 20,
+        "2": 860,
+        "3": 71,
+        "4": 2
+      },
+      "n_clique_components": 933,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 8.5778,
+      "power_law_R2": 0.9606
+    },
+    "remove_5_thresh_0.7": {
+      "n_modes_removed": 5,
+      "threshold": 0.7,
+      "n_edges": 1085,
+      "n_components": 953,
+      "largest_component": 4,
+      "size_distribution": {
+        "1": 20,
+        "2": 860,
+        "3": 71,
+        "4": 2
+      },
+      "n_clique_components": 933,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 8.5778,
+      "power_law_R2": 0.9606
+    },
+    "remove_10_thresh_0.1": {
+      "n_modes_removed": 10,
+      "threshold": 0.1,
+      "n_edges": 1115,
+      "n_components": 938,
+      "largest_component": 4,
+      "size_distribution": {
+        "2": 860,
+        "3": 71,
+        "4": 7
+      },
+      "n_clique_components": 938,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.889,
+      "power_law_R2": 0.9942
+    },
+    "remove_10_thresh_0.3": {
+      "n_modes_removed": 10,
+      "threshold": 0.3,
+      "n_edges": 1073,
+      "n_components": 959,
+      "largest_component": 3,
+      "size_distribution": {
+        "1": 28,
+        "2": 860,
+        "3": 71
+      },
+      "n_clique_components": 931,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.1516,
+      "power_law_R2": 1.0
+    },
+    "remove_10_thresh_0.5": {
+      "n_modes_removed": 10,
+      "threshold": 0.5,
+      "n_edges": 1064,
+      "n_components": 965,
+      "largest_component": 3,
+      "size_distribution": {
+        "1": 37,
+        "2": 860,
+        "3": 68
+      },
+      "n_clique_components": 928,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.2581,
+      "power_law_R2": 1.0
+    },
+    "remove_10_thresh_0.7": {
+      "n_modes_removed": 10,
+      "threshold": 0.7,
+      "n_edges": 1064,
+      "n_components": 965,
+      "largest_component": 3,
+      "size_distribution": {
+        "1": 37,
+        "2": 860,
+        "3": 68
+      },
+      "n_clique_components": 928,
+      "n_non_clique_components": 0,
+      "components_all_cliques": true,
+      "power_law_alpha": 6.2581,
+      "power_law_R2": 1.0
+    }
+  },
+  "sigma1_ablation_detail": {
+    "threshold": 0.3,
+    "original_edges": 1115,
+    "ablated_edges": 1109,
+    "preserved": 1109,
+    "preserved_fraction": 0.9946,
+    "lost": 6,
+    "gained": 0
+  },
+  "verdict_clique_survival": true,
+  "eigvec0_dominant_correlate": "degree",
+  "original_graph": {
+    "n_components": 938,
+    "size_distribution": {
+      "2": 860,
+      "3": 71,
+      "4": 7
+    },
+    "power_law_alpha": 6.889,
+    "power_law_R2": 0.9942,
+    "all_cliques": true
+  },
+  "elapsed_seconds": 18.0
+}

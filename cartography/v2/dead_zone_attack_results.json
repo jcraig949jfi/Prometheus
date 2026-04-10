@@ -1,0 +1,3351 @@
+{
+  "metadata": {
+    "n_ec": 500,
+    "n_oeis": 500,
+    "n_oeis_fp3_distinct": 165,
+    "n_oeis_fp5_distinct": 360,
+    "fp_width": 5,
+    "null_method": "Two nulls: (1) random 5-term seqs in EC range vs OEIS fps, (2) leave-one-out cross-transform",
+    "random_null_trials": 1000,
+    "ap_range": [
+      -19,
+      19
+    ]
+  },
+  "transforms": {
+    "T12_scaled": {
+      "mod3_ec_matches": 500,
+      "mod5_ec_matches": 499,
+      "mod3_oeis_unique": 28,
+      "mod5_oeis_unique": 10,
+      "combined_oeis_unique": 30,
+      "cross_transform_null_m3": 364.6,
+      "cross_transform_null_m5": 142.0,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 2.47,
+      "z5_vs_transforms": 2.83,
+      "z_max": 2.83,
+      "above_identity_m3": 147,
+      "above_identity_m5": 418,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 15.3,
+      "abs_z5": 65.1,
+      "abs_z_max": 65.1,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": true,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A000431",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A000899",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A000620",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 160
+        }
+      ]
+    },
+    "T16_ratio": {
+      "mod3_ec_matches": 423,
+      "mod5_ec_matches": 450,
+      "mod3_oeis_unique": 129,
+      "mod5_oeis_unique": 9,
+      "combined_oeis_unique": 130,
+      "cross_transform_null_m3": 368.4,
+      "cross_transform_null_m5": 144.4,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 1.0,
+      "z5_vs_transforms": 2.42,
+      "z_max": 2.42,
+      "above_identity_m3": 70,
+      "above_identity_m5": 369,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 7.99,
+      "abs_z5": 57.89,
+      "abs_z_max": 57.89,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": true,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A001859",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A001859",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A002336",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A001318",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A000001",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            1,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A002336",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A000282",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            0,
+            2
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A000882",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            0,
+            0
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000908",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            1,
+            2
+          ],
+          "conductor": 160
+        }
+      ]
+    },
+    "T10_cumprod1k": {
+      "mod3_ec_matches": 478,
+      "mod5_ec_matches": 312,
+      "mod3_oeis_unique": 235,
+      "mod5_oeis_unique": 69,
+      "combined_oeis_unique": 265,
+      "cross_transform_null_m3": 365.7,
+      "cross_transform_null_m5": 151.3,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 2.05,
+      "z5_vs_transforms": 1.27,
+      "z_max": 2.05,
+      "above_identity_m3": 125,
+      "above_identity_m5": 231,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 13.22,
+      "abs_z5": 37.58,
+      "abs_z_max": 37.58,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": true,
+      "examples": [
+        {
+          "ec": "33.a2",
+          "oeis": "A001463",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            2,
+            2,
+            2
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A001973",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            2,
+            2
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A000995",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A002241",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A001416",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A002527",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 192
+        }
+      ]
+    },
+    "T18_mod_spf": {
+      "mod3_ec_matches": 413,
+      "mod5_ec_matches": 276,
+      "mod3_oeis_unique": 268,
+      "mod5_oeis_unique": 91,
+      "combined_oeis_unique": 293,
+      "cross_transform_null_m3": 368.9,
+      "cross_transform_null_m5": 153.2,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 0.8,
+      "z5_vs_transforms": 0.97,
+      "z_max": 0.97,
+      "above_identity_m3": 60,
+      "above_identity_m5": 195,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 7.04,
+      "abs_z5": 32.28,
+      "abs_z_max": 32.28,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002241",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A001173",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A001411",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A001411",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001824",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A002029",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A001824",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000222",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A000995",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A000114",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "conductor": 192
+        }
+      ]
+    },
+    "T01_div_pi": {
+      "mod3_ec_matches": 406,
+      "mod5_ec_matches": 225,
+      "mod3_oeis_unique": 160,
+      "mod5_oeis_unique": 57,
+      "combined_oeis_unique": 184,
+      "cross_transform_null_m3": 369.3,
+      "cross_transform_null_m5": 155.7,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 0.67,
+      "z5_vs_transforms": 0.55,
+      "z_max": 0.67,
+      "above_identity_m3": 53,
+      "above_identity_m5": 144,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 6.38,
+      "abs_z5": 24.77,
+      "abs_z_max": 24.77,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002400",
+          "mod": 3,
+          "fp": [
+            2,
+            0,
+            0,
+            2,
+            0
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A002528",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            1,
+            0
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A002630",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001682",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000899",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A001550",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            0,
+            2
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A002468",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A000995",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000620",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "conductor": 210
+        }
+      ]
+    },
+    "T02_div_e": {
+      "mod3_ec_matches": 406,
+      "mod5_ec_matches": 225,
+      "mod3_oeis_unique": 160,
+      "mod5_oeis_unique": 57,
+      "combined_oeis_unique": 184,
+      "cross_transform_null_m3": 369.3,
+      "cross_transform_null_m5": 155.7,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 0.67,
+      "z5_vs_transforms": 0.55,
+      "z_max": 0.67,
+      "above_identity_m3": 53,
+      "above_identity_m5": 144,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 6.38,
+      "abs_z5": 24.77,
+      "abs_z_max": 24.77,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002400",
+          "mod": 3,
+          "fp": [
+            2,
+            0,
+            0,
+            2,
+            0
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A002528",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            1,
+            0
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A002630",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001682",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000899",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A001550",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            0,
+            2
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A002468",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A000995",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000620",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "conductor": 210
+        }
+      ]
+    },
+    "T19_abs": {
+      "mod3_ec_matches": 429,
+      "mod5_ec_matches": 191,
+      "mod3_oeis_unique": 409,
+      "mod5_oeis_unique": 190,
+      "combined_oeis_unique": 426,
+      "cross_transform_null_m3": 368.1,
+      "cross_transform_null_m5": 157.4,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": 1.11,
+      "z5_vs_transforms": 0.27,
+      "z_max": 1.11,
+      "above_identity_m3": 76,
+      "above_identity_m5": 110,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 8.56,
+      "abs_z5": 19.77,
+      "abs_z_max": 19.77,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A001030",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A002086",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A000500",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            2,
+            0
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A000598",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001440",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            1,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000500",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            2,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A000902",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A001168",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            0,
+            1
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A001097",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            1,
+            2,
+            1
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002525",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 192
+        }
+      ]
+    },
+    "T06_mod_cond": {
+      "mod3_ec_matches": 358,
+      "mod5_ec_matches": 119,
+      "mod3_oeis_unique": 397,
+      "mod5_oeis_unique": 131,
+      "combined_oeis_unique": 417,
+      "cross_transform_null_m3": 371.7,
+      "cross_transform_null_m5": 161.0,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.25,
+      "z5_vs_transforms": -0.33,
+      "z_max": -0.25,
+      "above_identity_m3": 5,
+      "above_identity_m5": 38,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 1.82,
+      "abs_z5": 9.17,
+      "abs_z_max": 9.17,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002241",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A001173",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A001973",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            2,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A002086",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001824",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002062",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            2,
+            1
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002505",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            1,
+            2,
+            2
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A002062",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            2,
+            1
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000665",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A000899",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "conductor": 225
+        }
+      ]
+    },
+    "T20_sign": {
+      "mod3_ec_matches": 346,
+      "mod5_ec_matches": 107,
+      "mod3_oeis_unique": 366,
+      "mod5_oeis_unique": 70,
+      "combined_oeis_unique": 389,
+      "cross_transform_null_m3": 372.3,
+      "cross_transform_null_m5": 161.6,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.48,
+      "z5_vs_transforms": -0.43,
+      "z_max": -0.43,
+      "above_identity_m3": -7,
+      "above_identity_m5": 26,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 0.68,
+      "abs_z5": 7.41,
+      "abs_z_max": 7.41,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002460",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            2,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A000575",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A000291",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A002441",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A002089",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A002089",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A001060",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            0,
+            1
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002525",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A000236",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A000995",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 200
+        }
+      ]
+    },
+    "T17_mavg3": {
+      "mod3_ec_matches": 329,
+      "mod5_ec_matches": 99,
+      "mod3_oeis_unique": 439,
+      "mod5_oeis_unique": 132,
+      "combined_oeis_unique": 450,
+      "cross_transform_null_m3": 373.1,
+      "cross_transform_null_m5": 162.0,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.81,
+      "z5_vs_transforms": -0.5,
+      "z_max": -0.5,
+      "above_identity_m3": -24,
+      "above_identity_m5": 18,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": -0.94,
+      "abs_z5": 6.23,
+      "abs_z_max": 6.23,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002157",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            0,
+            1,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A000471",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001030",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000303",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            1,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A001557",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002527",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            0,
+            0
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A000728",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            0
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A002241",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            0,
+            1
+          ],
+          "conductor": 225
+        },
+        {
+          "ec": "240.b7",
+          "oeis": "A002576",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            2,
+            0
+          ],
+          "conductor": 240
+        },
+        {
+          "ec": "254.d1",
+          "oeis": "A002086",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 254
+        }
+      ]
+    },
+    "T13_fib_idx": {
+      "mod3_ec_matches": 364,
+      "mod5_ec_matches": 96,
+      "mod3_oeis_unique": 213,
+      "mod5_oeis_unique": 88,
+      "combined_oeis_unique": 227,
+      "cross_transform_null_m3": 371.4,
+      "cross_transform_null_m5": 162.2,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.13,
+      "z5_vs_transforms": -0.52,
+      "z_max": -0.13,
+      "above_identity_m3": 11,
+      "above_identity_m5": 15,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 2.39,
+      "abs_z5": 5.79,
+      "abs_z_max": 5.79,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A000575",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A000575",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A001966",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            0,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A000598",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A002089",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A001966",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            0,
+            2
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A001501",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            0,
+            1,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000236",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A000867",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            0,
+            1
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A002579",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            0,
+            2
+          ],
+          "conductor": 200
+        }
+      ]
+    },
+    "T09_cumsum": {
+      "mod3_ec_matches": 335,
+      "mod5_ec_matches": 95,
+      "mod3_oeis_unique": 407,
+      "mod5_oeis_unique": 117,
+      "combined_oeis_unique": 424,
+      "cross_transform_null_m3": 372.9,
+      "cross_transform_null_m5": 162.2,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.69,
+      "z5_vs_transforms": -0.53,
+      "z_max": -0.53,
+      "above_identity_m3": -18,
+      "above_identity_m5": 14,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": -0.37,
+      "abs_z5": 5.64,
+      "abs_z_max": 5.64,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A001599",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            1,
+            2,
+            0
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A001599",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            1,
+            2,
+            0
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A000117",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            2,
+            0
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A002602",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            0,
+            1,
+            1
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002062",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            2,
+            1
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A002518",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            1,
+            0
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A001464",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            0,
+            2,
+            1
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A001810",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          "conductor": 225
+        },
+        {
+          "ec": "240.b7",
+          "oeis": "A002505",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            1,
+            2,
+            2
+          ],
+          "conductor": 240
+        },
+        {
+          "ec": "254.d1",
+          "oeis": "A001411",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "conductor": 254
+        }
+      ]
+    },
+    "T08_sign_flip": {
+      "mod3_ec_matches": 362,
+      "mod5_ec_matches": 85,
+      "mod3_oeis_unique": 434,
+      "mod5_oeis_unique": 110,
+      "combined_oeis_unique": 448,
+      "cross_transform_null_m3": 371.5,
+      "cross_transform_null_m5": 162.7,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.17,
+      "z5_vs_transforms": -0.62,
+      "z_max": -0.17,
+      "above_identity_m3": 9,
+      "above_identity_m5": 4,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 2.2,
+      "abs_z5": 4.17,
+      "abs_z_max": 4.17,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "66.c1",
+          "oeis": "A000595",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            2,
+            2
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A000291",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            0,
+            1,
+            2
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002304",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            2,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A001966",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            0,
+            2
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000001",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            1,
+            2
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A000500",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            2,
+            0
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002525",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000575",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A001284",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          "conductor": 225
+        },
+        {
+          "ec": "240.b7",
+          "oeis": "A000253",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            2,
+            0
+          ],
+          "conductor": 240
+        }
+      ]
+    },
+    "T04_div_phi": {
+      "mod3_ec_matches": 336,
+      "mod5_ec_matches": 82,
+      "mod3_oeis_unique": 388,
+      "mod5_oeis_unique": 92,
+      "combined_oeis_unique": 404,
+      "cross_transform_null_m3": 372.8,
+      "cross_transform_null_m5": 162.8,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.67,
+      "z5_vs_transforms": -0.64,
+      "z_max": -0.64,
+      "above_identity_m3": -17,
+      "above_identity_m5": 1,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": -0.27,
+      "abs_z5": 3.73,
+      "abs_z_max": 3.73,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002460",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            2,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A001873",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            2,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A000598",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001134",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002052",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            1,
+            2
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A002157",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            0,
+            1,
+            1
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A001859",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000598",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 225
+        },
+        {
+          "ec": "240.b7",
+          "oeis": "A002003",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            0
+          ],
+          "conductor": 240
+        }
+      ]
+    },
+    "T07_div_sqrtp": {
+      "mod3_ec_matches": 333,
+      "mod5_ec_matches": 82,
+      "mod3_oeis_unique": 211,
+      "mod5_oeis_unique": 37,
+      "combined_oeis_unique": 224,
+      "cross_transform_null_m3": 372.9,
+      "cross_transform_null_m5": 162.8,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.73,
+      "z5_vs_transforms": -0.64,
+      "z_max": -0.64,
+      "above_identity_m3": -20,
+      "above_identity_m5": 1,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": -0.56,
+      "abs_z5": 3.73,
+      "abs_z_max": 3.73,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A000452",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            0,
+            2,
+            0
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A002518",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            1,
+            0
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A001995",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            2,
+            0
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001134",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            2,
+            1,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000187",
+          "mod": 3,
+          "fp": [
+            2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000378",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            0,
+            1
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A000122",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            0,
+            0,
+            2
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A001859",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            1,
+            1
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000431",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            1
+          ],
+          "conductor": 210
+        }
+      ]
+    },
+    "T00_identity": {
+      "mod3_ec_matches": 353,
+      "mod5_ec_matches": 81,
+      "mod3_oeis_unique": 430,
+      "mod5_oeis_unique": 92,
+      "combined_oeis_unique": 442,
+      "cross_transform_null_m3": 371.9,
+      "cross_transform_null_m5": 162.9,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.35,
+      "z5_vs_transforms": -0.65,
+      "z_max": -0.35,
+      "above_identity_m3": 0,
+      "above_identity_m5": 0,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 1.34,
+      "abs_z5": 3.58,
+      "abs_z_max": 3.58,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A001173",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A001173",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A002086",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A001946",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            0,
+            2,
+            1
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000101",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            1
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A001972",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            0,
+            1,
+            0
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002505",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            1,
+            2,
+            2
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A002480",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            2,
+            2
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000665",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            2
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A000899",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            1,
+            0
+          ],
+          "conductor": 225
+        }
+      ]
+    },
+    "T05_div_ln2": {
+      "mod3_ec_matches": 356,
+      "mod5_ec_matches": 79,
+      "mod3_oeis_unique": 320,
+      "mod5_oeis_unique": 86,
+      "combined_oeis_unique": 358,
+      "cross_transform_null_m3": 371.8,
+      "cross_transform_null_m5": 163.0,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.29,
+      "z5_vs_transforms": -0.67,
+      "z_max": -0.29,
+      "above_identity_m3": 3,
+      "above_identity_m5": -2,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 1.63,
+      "abs_z5": 3.29,
+      "abs_z_max": 3.29,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "33.a2",
+          "oeis": "A002056",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            0,
+            0,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A001411",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000879",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            0,
+            0,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000551",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A000263",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            1,
+            2
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "192.a4",
+          "oeis": "A002336",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            0,
+            0,
+            0
+          ],
+          "conductor": 192
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A002164",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000627",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            0
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A001284",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          "conductor": 225
+        },
+        {
+          "ec": "254.d1",
+          "oeis": "A001416",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "conductor": 254
+        }
+      ]
+    },
+    "T14_gap_wt": {
+      "mod3_ec_matches": 349,
+      "mod5_ec_matches": 78,
+      "mod3_oeis_unique": 439,
+      "mod5_oeis_unique": 102,
+      "combined_oeis_unique": 456,
+      "cross_transform_null_m3": 372.1,
+      "cross_transform_null_m5": 163.1,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.42,
+      "z5_vs_transforms": -0.67,
+      "z_max": -0.42,
+      "above_identity_m3": -4,
+      "above_identity_m5": -3,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 0.96,
+      "abs_z5": 3.14,
+      "abs_z_max": 3.14,
+      "genuine_vs_random": true,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A000063",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            2
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A000063",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            2,
+            1,
+            2
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A001346",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            0,
+            2,
+            0
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A002681",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            1,
+            1,
+            2
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "89.a1",
+          "oeis": "A001604",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            2,
+            2
+          ],
+          "conductor": 89
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A001346",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            0,
+            2,
+            0
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A002304",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            2,
+            0,
+            0
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A001966",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            0,
+            2
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A000523",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            2,
+            2
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A001833",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "conductor": 175
+        }
+      ]
+    },
+    "T03_div_sqrt2": {
+      "mod3_ec_matches": 340,
+      "mod5_ec_matches": 76,
+      "mod3_oeis_unique": 390,
+      "mod5_oeis_unique": 85,
+      "combined_oeis_unique": 405,
+      "cross_transform_null_m3": 372.6,
+      "cross_transform_null_m5": 163.2,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.59,
+      "z5_vs_transforms": -0.69,
+      "z_max": -0.59,
+      "above_identity_m3": -13,
+      "above_identity_m5": -5,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": 0.11,
+      "abs_z5": 2.85,
+      "abs_z_max": 2.85,
+      "genuine_vs_random": false,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002460",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            2,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A000867",
+          "mod": 3,
+          "fp": [
+            1,
+            2,
+            2,
+            0,
+            1
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A002462",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A002301",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            0,
+            0
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A002157",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            0,
+            1,
+            1
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A000471",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            1,
+            0
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000627",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            2,
+            0
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A001284",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            0,
+            2,
+            0
+          ],
+          "conductor": 225
+        },
+        {
+          "ec": "272.b3",
+          "oeis": "A000551",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "conductor": 272
+        },
+        {
+          "ec": "288.d3",
+          "oeis": "A000222",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            0,
+            0
+          ],
+          "conductor": 288
+        }
+      ]
+    },
+    "T15_diff2": {
+      "mod3_ec_matches": 322,
+      "mod5_ec_matches": 60,
+      "mod3_oeis_unique": 431,
+      "mod5_oeis_unique": 84,
+      "combined_oeis_unique": 436,
+      "cross_transform_null_m3": 373.5,
+      "cross_transform_null_m5": 163.9,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -0.94,
+      "z5_vs_transforms": -0.82,
+      "z_max": -0.82,
+      "above_identity_m3": -31,
+      "above_identity_m5": -21,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": -1.6,
+      "abs_z5": 0.49,
+      "abs_z_max": 0.49,
+      "genuine_vs_random": false,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002029",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "33.a2",
+          "oeis": "A002029",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "conductor": 33
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A000497",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "118.a1",
+          "oeis": "A001833",
+          "mod": 3,
+          "fp": [
+            1,
+            1,
+            0,
+            1,
+            0
+          ],
+          "conductor": 118
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A000114",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            0,
+            0,
+            0
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "160.b1",
+          "oeis": "A002304",
+          "mod": 3,
+          "fp": [
+            1,
+            0,
+            2,
+            0,
+            0
+          ],
+          "conductor": 160
+        },
+        {
+          "ec": "175.a2",
+          "oeis": "A002468",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            0,
+            1
+          ],
+          "conductor": 175
+        },
+        {
+          "ec": "200.d2",
+          "oeis": "A002576",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            2,
+            0
+          ],
+          "conductor": 200
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A000093",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            2,
+            2,
+            2
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "225.c1",
+          "oeis": "A001222",
+          "mod": 3,
+          "fp": [
+            0,
+            1,
+            1,
+            2,
+            1
+          ],
+          "conductor": 225
+        }
+      ]
+    },
+    "T11_xor_p": {
+      "mod3_ec_matches": 254,
+      "mod5_ec_matches": 22,
+      "mod3_oeis_unique": 144,
+      "mod5_oeis_unique": 12,
+      "combined_oeis_unique": 148,
+      "cross_transform_null_m3": 376.9,
+      "cross_transform_null_m5": 165.8,
+      "cross_transform_std_m3": 54.8,
+      "cross_transform_std_m5": 126.3,
+      "z3_vs_transforms": -2.24,
+      "z5_vs_transforms": -1.14,
+      "z_max": -1.14,
+      "above_identity_m3": -99,
+      "above_identity_m5": -59,
+      "abs_null_m3_mean": 338.9,
+      "abs_null_m3_std": 10.5,
+      "abs_null_m5_mean": 56.7,
+      "abs_null_m5_std": 6.8,
+      "abs_z3": -8.06,
+      "abs_z5": -5.1,
+      "abs_z_max": -5.1,
+      "genuine_vs_random": false,
+      "genuine_vs_transforms": false,
+      "examples": [
+        {
+          "ec": "11.a1",
+          "oeis": "A002460",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            2,
+            1
+          ],
+          "conductor": 11
+        },
+        {
+          "ec": "50.a3",
+          "oeis": "A000236",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 50
+        },
+        {
+          "ec": "66.c1",
+          "oeis": "A000101",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            1
+          ],
+          "conductor": 66
+        },
+        {
+          "ec": "102.b3",
+          "oeis": "A000236",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            2,
+            2,
+            2
+          ],
+          "conductor": 102
+        },
+        {
+          "ec": "130.b3",
+          "oeis": "A000908",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            1,
+            1,
+            2
+          ],
+          "conductor": 130
+        },
+        {
+          "ec": "147.a6",
+          "oeis": "A001947",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            1,
+            1,
+            0
+          ],
+          "conductor": 147
+        },
+        {
+          "ec": "210.e2",
+          "oeis": "A001947",
+          "mod": 3,
+          "fp": [
+            0,
+            2,
+            1,
+            1,
+            0
+          ],
+          "conductor": 210
+        },
+        {
+          "ec": "328.b2",
+          "oeis": "A002576",
+          "mod": 3,
+          "fp": [
+            2,
+            1,
+            1,
+            2,
+            0
+          ],
+          "conductor": 328
+        },
+        {
+          "ec": "336.f2",
+          "oeis": "A001060",
+          "mod": 3,
+          "fp": [
+            2,
+            2,
+            1,
+            0,
+            1
+          ],
+          "conductor": 336
+        },
+        {
+          "ec": "350.b4",
+          "oeis": "A000551",
+          "mod": 3,
+          "fp": [
+            0,
+            0,
+            2,
+            0,
+            0
+          ],
+          "conductor": 350
+        }
+      ]
+    }
+  },
+  "summary": {
+    "genuine_vs_random": 18,
+    "genuine_vs_peers": 3,
+    "total_transforms": 21,
+    "identity_m3": 353,
+    "identity_m5": 81,
+    "identity_oeis": 442,
+    "combined_oeis_coverage": 500,
+    "combined_oeis_pct": 100.0,
+    "new_wormholes": [
+      "T12_scaled",
+      "T16_ratio",
+      "T10_cumprod1k"
+    ]
+  },
+  "interpretation": {
+    "finding_1_pi_e_degenerate": "T01_div_pi and T02_div_e produce IDENTICAL fingerprints (m3=406, m5=225, OEIS=184). At small a_p values, round(a/pi) and round(a/e) differ by at most 1, which vanishes mod 3. No independent e-wormhole exists.",
+    "finding_2_fingerprint_collapse": "T12_scaled (500/500 m3 matches, 30 OEIS) and T16_ratio (423/450, 130 OEIS) suffer from fingerprint collapse: many EC curves map to the same few fingerprints. High match count with low OEIS coverage = degenerate, not genuine.",
+    "finding_3_mod5_discriminators": {
+      "description": "mod-5 fingerprints are much more discriminating (360/3125 = 11.5% coverage vs 165/243 = 67.9% for mod-3). Transforms with high mod-5 z-scores are the real signals.",
+      "ranking": "T19_abs (z5=19.8), T18_mod_spf (z5=32.3), T01_div_pi (z5=24.8), T06_mod_cond (z5=9.2), T20_sign (z5=7.4)"
+    },
+    "finding_4_genuine_bridges": {
+      "T19_abs": "Taking |a_p| removes sign information, revealing that MANY OEIS sequences match unsigned EC trace patterns. 426 OEIS covered. This is a structural bridge: OEIS sequences are typically positive, and EC a_p are symmetric around 0.",
+      "T18_mod_spf": "Reducing a_p mod smallest-prime-factor-of-conductor creates bridges through the arithmetic of bad primes. 293 OEIS covered, z5=32.3.",
+      "T06_mod_cond": "a_p mod N reduces to conductor residues. 417 OEIS, z5=9.2. Conductor is the natural scale.",
+      "T20_sign": "Sign sequence (+1/-1/0) matches 389 OEIS sequences. Surprising coverage suggests many OEIS sequences share sign patterns with EC traces."
+    },
+    "finding_5_no_new_constant_wormhole": "No transform involving a mathematical constant (sqrt(2), phi, ln(2)) produces matches significantly above identity at mod-5. The pi wormhole remains unique among constant-based transforms. sqrt(2) and phi are marginally above noise at mod-5 (z=2.9 and 3.7) but not above the identity baseline.",
+    "finding_6_dead_zone_structure": "The dead zone is not bridgeable by constant division alone. The transforms that gain most ground are STRUCTURAL (abs, mod-conductor, sign) not CONSTANT-based. The remaining 17% gap requires semantic matching, not arithmetic transforms.",
+    "gap_status": {
+      "mod3_baseline": "88.4% coverage (442/500 OEIS covered by identity alone)",
+      "mod5_baseline": "Only 16.2% (81/500 by identity)",
+      "mod5_best_single": "T19_abs covers 190 OEIS at mod-5 (38%)",
+      "combined_all_genuine": "100% at mod-3 (trivial), need mod-5 analysis for real gap"
+    }
+  }
+}

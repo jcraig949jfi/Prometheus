@@ -1,0 +1,133 @@
+{
+  "parameters": {
+    "n_vars": 50,
+    "n_clauses": 213,
+    "alpha": 4.27,
+    "n_instances": 1000,
+    "seed": 42
+  },
+  "counts": {
+    "sat": 604,
+    "unsat": 396,
+    "unknown": 0
+  },
+  "spectral_gap": {
+    "sat_mean": 17.93813883341477,
+    "sat_std": 0.6721361475049262,
+    "unsat_mean": 17.98048788001095,
+    "unsat_std": 0.7152570878853736,
+    "cohens_d": -0.06101890325848145,
+    "welch_t": -0.937655970561289
+  },
+  "feature_comparison": {
+    "lambda1": {
+      "sat_mean": 27.469116428740822,
+      "sat_std": 0.36895729981882197,
+      "unsat_mean": 27.49115561523002,
+      "unsat_std": 0.40089445981669697,
+      "cohens_d": -0.05720645837587046
+    },
+    "lambda2": {
+      "sat_mean": 9.530977595326052,
+      "sat_std": 0.5699710860396194,
+      "unsat_mean": 9.51066773521907,
+      "unsat_std": 0.5853880986327475,
+      "cohens_d": 0.03515452584930223
+    },
+    "spectral_gap": {
+      "sat_mean": 17.93813883341477,
+      "sat_std": 0.6721361475049262,
+      "unsat_mean": 17.98048788001095,
+      "unsat_std": 0.7152570878853736,
+      "cohens_d": -0.06101890325848145
+    },
+    "spectral_radius": {
+      "sat_mean": 27.469116428740822,
+      "sat_std": 0.36895729981882197,
+      "unsat_mean": 27.49115561523002,
+      "unsat_std": 0.40089445981669697,
+      "cohens_d": -0.05720645837587046
+    },
+    "algebraic_connectivity": {
+      "sat_mean": -8.587353195325298,
+      "sat_std": 0.3150740781964343,
+      "unsat_mean": -8.579276520614048,
+      "unsat_std": 0.32369513970198477,
+      "cohens_d": -0.025285937377429978
+    },
+    "spectral_entropy": {
+      "sat_mean": 3.5971157968299257,
+      "sat_std": 0.01299288356155082,
+      "unsat_mean": 3.5951625627651143,
+      "unsat_std": 0.013203844309049848,
+      "cohens_d": 0.1491156257404807
+    },
+    "energy": {
+      "sat_mean": 231.2338529470091,
+      "sat_std": 4.12785364523145,
+      "unsat_mean": 230.75166223763412,
+      "unsat_std": 4.170079088394039,
+      "cohens_d": 0.11621797426316685
+    }
+  },
+  "svd": {
+    "singular_values": [
+      68.39595670706217,
+      57.030654787350564,
+      53.74717707552578,
+      38.25951807212437,
+      29.647647840530816,
+      29.364165510378527,
+      26.885425519225436,
+      24.719427919310586,
+      21.716360851664184,
+      20.150073545337225
+    ],
+    "cumulative_variance": [
+      0.2751768761102542,
+      0.46650014584401606,
+      0.6364271484080115,
+      0.7225324850616122,
+      0.7742373687366787,
+      0.8249582049790848,
+      0.8674773876467212,
+      0.9034215121560148,
+      0.9311627079583498,
+      0.9550465587749674
+    ],
+    "rank_90": 8,
+    "rank_95": 10,
+    "rank_99": 12,
+    "variance_at_rank3": 0.6364271484080115,
+    "low_rank_shortcut": false
+  },
+  "gap_classifier": {
+    "best_accuracy": 0.61,
+    "best_threshold": 19.34649884993167,
+    "chance_level": 0.604
+  },
+  "eigenvalue_distribution": {
+    "max_diff_index": 7,
+    "max_diff_value": 0.05578347467378375,
+    "mean_abs_diff": 0.014285620295451855,
+    "sat_mean_top5": [
+      27.469116428740804,
+      9.530977595326048,
+      8.531548611795683,
+      7.7867647903772435,
+      7.158827269902122
+    ],
+    "unsat_mean_top5": [
+      27.49115561523004,
+      9.510667735219071,
+      8.512360505061686,
+      7.780436378326295,
+      7.162496095219537
+    ]
+  },
+  "interpretation": [
+    "Spectral gap effect size is negligible (d=0.061). No measurable constant separates SAT/UNSAT.",
+    "SVD shows high-rank structure: rank 3 captures only 63.6% of variance. No low-rank shortcut -- this is a hard wall.",
+    "Spectral gap classification (61.0%) is at chance level (60.4%). Spectral gap alone cannot separate SAT/UNSAT."
+  ]
+}
