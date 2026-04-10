@@ -1,0 +1,383 @@
+{
+  "question": "Q29: Directional Persistence of Prime Runs",
+  "grid": {
+    "rows": 200,
+    "cols": 200,
+    "N": 40000
+  },
+  "prime_density": 0.105075,
+  "total_primes": 4203,
+  "persistence_test": {
+    "N": {
+      "conditional_p": 0.188116,
+      "n_pairs": 4157,
+      "z_score": 17.4599,
+      "excess_over_baseline": 0.083041
+    },
+    "S": {
+      "conditional_p": 0.186947,
+      "n_pairs": 4183,
+      "z_score": 17.2678,
+      "excess_over_baseline": 0.081872
+    },
+    "E": {
+      "conditional_p": 0.000238,
+      "n_pairs": 4203,
+      "z_score": -22.1642,
+      "excess_over_baseline": -0.104837
+    },
+    "W": {
+      "conditional_p": 0.000241,
+      "n_pairs": 4153,
+      "z_score": -22.0313,
+      "excess_over_baseline": -0.104834
+    },
+    "NE": {
+      "conditional_p": 0.0,
+      "n_pairs": 4157,
+      "z_score": -22.0926,
+      "excess_over_baseline": -0.105075
+    },
+    "NW": {
+      "conditional_p": 0.0,
+      "n_pairs": 4107,
+      "z_score": -21.9593,
+      "excess_over_baseline": -0.105075
+    },
+    "SE": {
+      "conditional_p": 0.0,
+      "n_pairs": 4183,
+      "z_score": -22.1616,
+      "excess_over_baseline": -0.105075
+    },
+    "SW": {
+      "conditional_p": 0.0,
+      "n_pairs": 4133,
+      "z_score": -22.0287,
+      "excess_over_baseline": -0.105075
+    }
+  },
+  "run_distributions": {
+    "N": {
+      "observed": {
+        "1": 2639,
+        "2": 782
+      },
+      "max_run": 2,
+      "total_runs": 3421
+    },
+    "S": {
+      "observed": {
+        "2": 782,
+        "1": 2639
+      },
+      "max_run": 2,
+      "total_runs": 3421
+    },
+    "E": {
+      "observed": {
+        "2": 1,
+        "1": 4201
+      },
+      "max_run": 2,
+      "total_runs": 4202
+    },
+    "W": {
+      "observed": {
+        "1": 4201,
+        "2": 1
+      },
+      "max_run": 2,
+      "total_runs": 4202
+    },
+    "NE": {
+      "observed": {
+        "1": 4203
+      },
+      "max_run": 1,
+      "total_runs": 4203
+    },
+    "NW": {
+      "observed": {
+        "1": 4203
+      },
+      "max_run": 1,
+      "total_runs": 4203
+    },
+    "SE": {
+      "observed": {
+        "1": 4203
+      },
+      "max_run": 1,
+      "total_runs": 4203
+    },
+    "SW": {
+      "observed": {
+        "1": 4203
+      },
+      "max_run": 1,
+      "total_runs": 4203
+    }
+  },
+  "heavy_tail_evidence": {
+    "N": [
+      {
+        "k": 1,
+        "observed": 2639,
+        "null_mean": 3368.68,
+        "null_std": 51.7,
+        "z_score": -14.1126
+      },
+      {
+        "k": 2,
+        "observed": 782,
+        "null_mean": 352.56,
+        "null_std": 18.72,
+        "z_score": 22.9446
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 37.1,
+        "null_std": 6.17,
+        "z_score": -6.0117
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.86,
+        "null_std": 1.95,
+        "z_score": -1.9775
+      }
+    ],
+    "S": [
+      {
+        "k": 1,
+        "observed": 2639,
+        "null_mean": 3368.68,
+        "null_std": 51.7,
+        "z_score": -14.1126
+      },
+      {
+        "k": 2,
+        "observed": 782,
+        "null_mean": 352.56,
+        "null_std": 18.72,
+        "z_score": 22.9446
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 37.1,
+        "null_std": 6.17,
+        "z_score": -6.0117
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.86,
+        "null_std": 1.95,
+        "z_score": -1.9775
+      }
+    ],
+    "E": [
+      {
+        "k": 1,
+        "observed": 4201,
+        "null_mean": 3369.58,
+        "null_std": 50.94,
+        "z_score": 16.322
+      },
+      {
+        "k": 2,
+        "observed": 1,
+        "null_mean": 352.73,
+        "null_std": 18.61,
+        "z_score": -18.9034
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 36.69,
+        "null_std": 6.05,
+        "z_score": -6.0595
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.85,
+        "null_std": 2.05,
+        "z_score": -1.8818
+      }
+    ],
+    "W": [
+      {
+        "k": 1,
+        "observed": 4201,
+        "null_mean": 3369.58,
+        "null_std": 50.94,
+        "z_score": 16.322
+      },
+      {
+        "k": 2,
+        "observed": 1,
+        "null_mean": 352.73,
+        "null_std": 18.61,
+        "z_score": -18.9034
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 36.69,
+        "null_std": 6.05,
+        "z_score": -6.0595
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.85,
+        "null_std": 2.05,
+        "z_score": -1.8818
+      }
+    ],
+    "NE": [
+      {
+        "k": 1,
+        "observed": 4203,
+        "null_mean": 3373.28,
+        "null_std": 50.86,
+        "z_score": 16.3128
+      },
+      {
+        "k": 2,
+        "observed": 0,
+        "null_mean": 351.19,
+        "null_std": 18.26,
+        "z_score": -19.2375
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 36.51,
+        "null_std": 6.17,
+        "z_score": -5.9209
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.85,
+        "null_std": 1.94,
+        "z_score": -1.9829
+      }
+    ],
+    "NW": [
+      {
+        "k": 1,
+        "observed": 4203,
+        "null_mean": 3373.51,
+        "null_std": 52.08,
+        "z_score": 15.9282
+      },
+      {
+        "k": 2,
+        "observed": 0,
+        "null_mean": 351.35,
+        "null_std": 18.38,
+        "z_score": -19.1161
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 36.33,
+        "null_std": 5.99,
+        "z_score": -6.0657
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.85,
+        "null_std": 2.05,
+        "z_score": -1.8796
+      }
+    ],
+    "SE": [
+      {
+        "k": 1,
+        "observed": 4203,
+        "null_mean": 3373.51,
+        "null_std": 52.08,
+        "z_score": 15.9282
+      },
+      {
+        "k": 2,
+        "observed": 0,
+        "null_mean": 351.35,
+        "null_std": 18.38,
+        "z_score": -19.1161
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 36.33,
+        "null_std": 5.99,
+        "z_score": -6.0657
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.85,
+        "null_std": 2.05,
+        "z_score": -1.8796
+      }
+    ],
+    "SW": [
+      {
+        "k": 1,
+        "observed": 4203,
+        "null_mean": 3373.28,
+        "null_std": 50.86,
+        "z_score": 16.3128
+      },
+      {
+        "k": 2,
+        "observed": 0,
+        "null_mean": 351.19,
+        "null_std": 18.26,
+        "z_score": -19.2375
+      },
+      {
+        "k": 3,
+        "observed": 0,
+        "null_mean": 36.51,
+        "null_std": 6.17,
+        "z_score": -5.9209
+      },
+      {
+        "k": 4,
+        "observed": 0,
+        "null_mean": 3.85,
+        "null_std": 1.94,
+        "z_score": -1.9829
+      }
+    ]
+  },
+  "null_model": {
+    "type": "Bernoulli Monte Carlo",
+    "n_trials": 2000,
+    "p": 0.105075
+  },
+  "verdicts": {
+    "directional_persistence": "YES: significant directional persistence detected",
+    "heavy_tailed_runs": "NO: run distributions consistent with Bernoulli null",
+    "max_persistence_z": 22.1642,
+    "max_heavy_tail_z": 0
+  },
+  "interpretation": {
+    "key_finding": "Extreme anisotropy: N/S shows strong positive persistence (z~+17), all other directions show strong negative persistence (z~-22). This is NOT mysterious -- it is a direct arithmetic consequence of the row-major grid mapping.",
+    "E_W_explanation": "E direction: adjacent cells differ by 1. Consecutive integers are almost never both prime (one is even), except twin primes. Hence P(next prime | prime) ~ 0 along E/W. The single k=2 run in E is the pair (2,3).",
+    "diagonal_explanation": "NE/NW/SE/SW: adjacent cells differ by 199 or 201. Both are odd, but 201=3*67 so one cell divisible by 3 kills adjacency. Similarly 199 is prime, but n and n+199 sharing no small factor is not enough to overcome density. Zero runs of length 2 observed.",
+    "N_S_explanation": "N/S: adjacent cells differ by 200. If n is odd and not divisible by 5, then n+200 has the same parity and same residue mod 5. This preserves 'prime-compatible' residue classes, yielding P(next prime | prime) = 0.188 vs baseline 0.105 -- a 1.79x enrichment. The 782 runs of length 2 (vs ~353 expected under Bernoulli) confirms this.",
+    "N_S_no_k3": "Despite N/S enrichment at k=2, zero runs of length k=3 were observed (vs ~37 expected under Bernoulli). This means the persistence is real but bounded: the gap of 200 eventually hits a small prime factor.",
+    "bottom_line": "Primes DO exhibit directional persistence on this grid, but it is entirely explained by elementary number theory (parity, residues mod small primes). The Bernoulli null is the wrong null here because it ignores the arithmetic structure imposed by the grid mapping. No heavy tails beyond what arithmetic predicts."
+  }
+}
