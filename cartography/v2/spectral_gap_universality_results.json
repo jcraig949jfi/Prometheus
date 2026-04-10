@@ -1,0 +1,208 @@
+{
+  "experiment": "F28_spectral_gap_universality",
+  "parameters": {
+    "n_sample": 500,
+    "k_nn": 10,
+    "k_nn_pdg": 5,
+    "mod_p": 5,
+    "fp_width": 8
+  },
+  "domain_results": {
+    "OEIS": {
+      "spectral_gap": 0.17617226,
+      "lambda_1": 0.0,
+      "lambda_2": 0.17617226,
+      "lambda_3": 0.21389349,
+      "eigenvalues_first_5": [
+        0.0,
+        0.17617226,
+        0.21389349,
+        0.26448283,
+        0.31088584
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "OEIS",
+      "unique_fingerprints": 478,
+      "fingerprint_diversity": 0.956,
+      "mean_pairwise_distance": 0.776077,
+      "std_pairwise_distance": 0.154776
+    },
+    "EC": {
+      "spectral_gap": 0.26478645,
+      "lambda_1": 0.0,
+      "lambda_2": 0.26478645,
+      "lambda_3": 0.28241551,
+      "eigenvalues_first_5": [
+        0.0,
+        0.26478645,
+        0.28241551,
+        0.30150381,
+        0.30912526
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "EC",
+      "unique_fingerprints": 493,
+      "fingerprint_diversity": 0.986,
+      "mean_pairwise_distance": 0.768176,
+      "std_pairwise_distance": 0.149083
+    },
+    "MF": {
+      "spectral_gap": 0.09601026,
+      "lambda_1": -0.0,
+      "lambda_2": 0.09601026,
+      "lambda_3": 0.18174532,
+      "eigenvalues_first_5": [
+        -0.0,
+        0.09601026,
+        0.18174532,
+        0.21361683,
+        0.22360689
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "MF",
+      "unique_fingerprints": 438,
+      "fingerprint_diversity": 0.876,
+      "mean_pairwise_distance": 0.701785,
+      "std_pairwise_distance": 0.21462
+    },
+    "Genus2": {
+      "spectral_gap": 0.01753144,
+      "lambda_1": -0.0,
+      "lambda_2": 0.01753144,
+      "lambda_3": 0.03559365,
+      "eigenvalues_first_5": [
+        -0.0,
+        0.01753144,
+        0.03559365,
+        0.05936547,
+        0.06598597
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "Genus2",
+      "unique_fingerprints": 184,
+      "fingerprint_diversity": 0.368,
+      "mean_pairwise_distance": 0.469646,
+      "std_pairwise_distance": 0.161329
+    },
+    "Knots": {
+      "spectral_gap": 0.1566905,
+      "lambda_1": 0.0,
+      "lambda_2": 0.1566905,
+      "lambda_3": 0.2294324,
+      "eigenvalues_first_5": [
+        0.0,
+        0.1566905,
+        0.2294324,
+        0.25205849,
+        0.25820155
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "Knots",
+      "unique_fingerprints": 471,
+      "fingerprint_diversity": 0.942,
+      "mean_pairwise_distance": 0.765261,
+      "std_pairwise_distance": 0.151407
+    },
+    "Lattices": {
+      "spectral_gap": 0.00845414,
+      "lambda_1": 0.0,
+      "lambda_2": 0.00845414,
+      "lambda_3": 0.01415143,
+      "eigenvalues_first_5": [
+        0.0,
+        0.00845414,
+        0.01415143,
+        0.01603921,
+        0.08494554
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "Lattices",
+      "unique_fingerprints": 32,
+      "fingerprint_diversity": 0.064,
+      "mean_pairwise_distance": 0.182632,
+      "std_pairwise_distance": 0.143434
+    },
+    "NF": {
+      "spectral_gap": 0.00589688,
+      "lambda_1": 0.0,
+      "lambda_2": 0.00589688,
+      "lambda_3": 0.0095337,
+      "eigenvalues_first_5": [
+        0.0,
+        0.00589688,
+        0.0095337,
+        0.02659612,
+        0.02912912
+      ],
+      "n_nodes": 500,
+      "k": 10,
+      "domain": "NF",
+      "unique_fingerprints": 126,
+      "fingerprint_diversity": 0.252,
+      "mean_pairwise_distance": 0.430665,
+      "std_pairwise_distance": 0.166429
+    },
+    "PDG": {
+      "spectral_gap": 0.00169758,
+      "lambda_1": 0.0,
+      "lambda_2": 0.00169758,
+      "lambda_3": 0.00580446,
+      "eigenvalues_first_5": [
+        0.0,
+        0.00169758,
+        0.00580446,
+        0.01151034,
+        0.0223128
+      ],
+      "n_nodes": 98,
+      "n_components_other": 127,
+      "k": 5,
+      "domain": "PDG",
+      "n_particles": 225,
+      "note": "k-NN on log10(mass_GeV), not mod-5 fingerprints"
+    }
+  },
+  "null_model": {
+    "mean_gap": 0.33064465,
+    "std_gap": 0.00180163,
+    "gaps": [
+      0.32884748,
+      0.32863989,
+      0.33096038,
+      0.33120372,
+      0.33357179
+    ]
+  },
+  "summary": {
+    "math_domains": [
+      "OEIS",
+      "EC",
+      "MF",
+      "Genus2",
+      "Knots",
+      "Lattices",
+      "NF"
+    ],
+    "gaps": {
+      "OEIS": 0.17617226,
+      "EC": 0.26478645,
+      "MF": 0.09601026,
+      "Genus2": 0.01753144,
+      "Knots": 0.1566905,
+      "Lattices": 0.00845414,
+      "NF": 0.00589688
+    },
+    "mean_gap": 0.10364885,
+    "std_gap": 0.09268258,
+    "cv": 0.894198,
+    "null_mean_gap": 0.33064465,
+    "null_std_gap": 0.00180163,
+    "verdict": "DOMAIN-SPECIFIC: each mathematical domain has its own geometric character"
+  }
+}
