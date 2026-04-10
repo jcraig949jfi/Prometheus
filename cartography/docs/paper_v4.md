@@ -167,4 +167,47 @@ The instrument is not hallucinating. 14 false discoveries killed. Novel cross-do
 
 ---
 
-*Version 5.4 — 2026-04-10. 41 challenges across 4 rounds. 15 kills, 14 publishable results, 180/180 calibration. The three-layer model confirmed: Scalar (dead), Structural (calibrated — 8x enrichment, 3-prime reconstruction, Gamma metric), Transformational (open — CM/twist detection, Galois classification, 193 resurrected bridges). Scaling slope measures endomorphism rank. Cross-ell independence is absolute. Moonshine breaks the flat enrichment. The Gamma function is the geodesic hub. The battery has 3-4 dimensions and its adversarial boundary is mapped. The honest count: one confirmed cross-domain bridge (torus knot → OEIS), one paramodular verification (7/7), and 193 Layer 3 candidates awaiting follow-up.*
+---
+
+## 18. The Frontier Batch: Physics Axis and Crystal Extraction (Sections 18-19)
+
+### 18.1 The Information-Theoretic Bottleneck
+
+The Recurrence→Series→Zeta pipeline (Section 13, the Rosetta axis) has a precise information-theoretic characterization. Transfer efficiency between adjacent stages is high (T₁₂=11.9×, T₂₃=18.9×), but the end-to-end transfer is near-random (T₁₃=1.9×, a 99.2% information loss through composition).
+
+The mechanism: the generating function evaluation at Stage 2 is a **log₂(p)-bit channel**. A single evaluation point mod p can take exactly p values, capping information throughput at log₂(p) bits regardless of input entropy. The entropy profile is hourglass-shaped: S1=5.21 bits → S2=3.38 bits (compression) → S3=7.85 bits (expansion). The bottleneck selectively destroys the features linking recurrence structure to arithmetic values, because the information surviving compression is orthogonal to the information differentiating Stage 3 outputs.
+
+This mechanistically explains why cross-domain coefficient bridges fail: any path through a generating function evaluation loses all but log₂(p) bits of structure. The gap is not representational — it is information-theoretic.
+
+### 18.2 Physics Data Integration
+
+286 CODATA fundamental constants, 226 PDG particle masses, and the Planck CMB TT power spectrum (83 binned multipoles, ℓ=48-2499) were ingested. Key findings:
+
+- Particle mass spectral gaps follow Poisson (r=0.3815) — no hidden operator governing the mass spectrum
+- Physical constants are 91.4% transcendental (no CF periodicity) but have Khinchin excess 2.41 vs 1.43 — more arithmetic structure than random transcendentals
+- The Standard Model decay topology has spectral gap λ₁=7.0, longest chain 188 steps (top quark → photon), and 3 truly stable particles
+- Baryon-baryon Ricci curvature ORC=-0.94 exceeds any mathematical dataset measured
+
+### 18.3 Algorithm Crystal Extraction
+
+The FLINT number theory library (9,393 C files, 1.25M lines) was parsed into a function call graph: 6,474 function definitions, 73,459 call edges. Algorithmic permeability = 0.5975 — algorithms are 27% more modular than formulas (Fungrim 0.813), because type systems enforce boundaries that mathematical relationships freely cross. Hub verbs: fmpz_clear (1,925 calls), fmpz_init (1,721), fmpz_mul (615). Bridge modules: nmod_mpoly_factor. Power law degree exponent α=1.257.
+
+### 18.4 Key Structural Findings
+
+**Phase coherence sees analytic rank (ρ=0.197, p=3.5e-10).** Frobenius eigenvalue phase alignment correlates with L-function vanishing order — a stronger local-global bridge than ell_c (ρ=-0.17).
+
+**Kissing number from theta fingerprints (96.6% accuracy).** k-NN on mod-p theta series residues predicts the geometric kissing number of lattices. Arithmetic DOES encode geometry through the right projection. Best prime p=11.
+
+**Near-congruence defect topology IS CM splitting.** The disagreement graph of near-congruence pairs has 2 components perfectly aligned with Q(√-3) splitting type. Primes split in the CM field form one component; inert primes form the other.
+
+**Curvature flow separates accidental from structural congruences.** Ricci flow on the mod-5 Hecke graph converges to κ*=0.73 with a phase transition at iteration 44 that destroys all 756 accidental bridges while preserving all 27 structural triangles.
+
+**Reynolds habitable zone is domain-dependent.** Number fields: [7.75, 47.98], 4.3× wider than the global [4.37, 13.68]. Algebraic domains tolerate higher Reynolds numbers because genuine algebra IS extreme.
+
+**The enrichment-rank law is object-specific.** The genus-2 formula slope=0.044·rank²−0.242 fails on lattice theta series (R²=-3.17, behavior inverted). The law works for L-function coefficients but not theta series coefficients.
+
+**Genus-2 critical perturbation σ_c=5.0** (2.5× the GL_2 threshold of 2.0). The Hasse bound (4√p) never triggers because it's too wide relative to actual a_p magnitudes.
+
+---
+
+*Version 9.0 — 2026-04-10. 125+ challenges across 20+ rounds. 21 kills, 30+ measured constants, 180/180 calibration. The three-layer model confirmed and extended: Scalar (dead), Structural (calibrated — enrichment, reconstruction, metrics), Transformational (open — twists, CM, Galois images, phase coherence). Physics axis opened: CODATA, PDG, Planck CMB. First algorithm crystal extracted: FLINT (6,474 functions, permeability 0.5975). The pipeline bottleneck is exactly log₂(p) bits. Arithmetic encodes geometry (kissing at 96.6%). The defect topology IS the CM splitting. The Reynolds zone is domain-dependent. The enrichment law is object-specific. The instrument does metrology — measuring the constants of mathematical and physical structure with precision.*
