@@ -1,0 +1,328 @@
+{
+  "description": "Q11: Cross-prime independence on grid diagonals",
+  "grid": "100x100",
+  "range": "1..10000",
+  "primes_tested": [
+    3,
+    5,
+    7
+  ],
+  "n_permutations": 2000,
+  "all_integers": {
+    "label": "all_integers",
+    "n": 10000,
+    "pairs": {
+      "mod3_mod5": {
+        "MI_observed": 3.5e-07,
+        "MI_null_perm_mean": 0.00058089,
+        "MI_null_perm_std": 0.00029211,
+        "z_score_perm": -1.9874,
+        "MI_null_rand_mean": 0.0005715,
+        "MI_null_rand_std": 0.00027667,
+        "z_score_rand": -2.0644
+      },
+      "mod3_mod7": {
+        "MI_observed": 3.9e-07,
+        "MI_null_perm_mean": 0.00087588,
+        "MI_null_perm_std": 0.00036484,
+        "z_score_perm": -2.3996,
+        "MI_null_rand_mean": 0.00085809,
+        "MI_null_rand_std": 0.00035028,
+        "z_score_rand": -2.4486
+      },
+      "mod5_mod7": {
+        "MI_observed": 1.72e-06,
+        "MI_null_perm_mean": 0.00172335,
+        "MI_null_perm_std": 0.00050939,
+        "z_score_perm": -3.3798,
+        "MI_null_rand_mean": 0.00175236,
+        "MI_null_rand_std": 0.00050058,
+        "z_score_rand": -3.4973
+      }
+    }
+  },
+  "diagonals": {
+    "main": {
+      "label": "diag_main",
+      "n": 9998,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 3.5e-07,
+          "MI_null_perm_mean": 0.00057288,
+          "MI_null_perm_std": 0.00029242,
+          "z_score_perm": -1.9579,
+          "MI_null_rand_mean": 0.00057832,
+          "MI_null_rand_std": 0.00028912,
+          "z_score_rand": -1.9991,
+          "MI_excess_vs_baseline": 0.0
+        },
+        "mod3_mod7": {
+          "MI_observed": 7.9e-07,
+          "MI_null_perm_mean": 0.00086233,
+          "MI_null_perm_std": 0.00035684,
+          "z_score_perm": -2.4144,
+          "MI_null_rand_mean": 0.00085319,
+          "MI_null_rand_std": 0.00034168,
+          "z_score_rand": -2.4947,
+          "MI_excess_vs_baseline": 4e-07
+        },
+        "mod5_mod7": {
+          "MI_observed": 2.89e-06,
+          "MI_null_perm_mean": 0.00174065,
+          "MI_null_perm_std": 0.00050517,
+          "z_score_perm": -3.4399,
+          "MI_null_rand_mean": 0.00172471,
+          "MI_null_rand_std": 0.00048197,
+          "z_score_rand": -3.5725,
+          "MI_excess_vs_baseline": 1.17e-06
+        }
+      }
+    },
+    "anti": {
+      "label": "diag_anti",
+      "n": 9998,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 3.5e-07,
+          "MI_null_perm_mean": 0.00057446,
+          "MI_null_perm_std": 0.00028316,
+          "z_score_perm": -2.0275,
+          "MI_null_rand_mean": 0.00057662,
+          "MI_null_rand_std": 0.00029094,
+          "z_score_rand": -1.9808,
+          "MI_excess_vs_baseline": 0.0
+        },
+        "mod3_mod7": {
+          "MI_observed": 1.9e-07,
+          "MI_null_perm_mean": 0.00087916,
+          "MI_null_perm_std": 0.00035136,
+          "z_score_perm": -2.5016,
+          "MI_null_rand_mean": 0.00086162,
+          "MI_null_rand_std": 0.00034901,
+          "z_score_rand": -2.4682,
+          "MI_excess_vs_baseline": -2e-07
+        },
+        "mod5_mod7": {
+          "MI_observed": 1.88e-06,
+          "MI_null_perm_mean": 0.0017323,
+          "MI_null_perm_std": 0.0004938,
+          "z_score_perm": -3.5043,
+          "MI_null_rand_mean": 0.0017356,
+          "MI_null_rand_std": 0.00049766,
+          "z_score_rand": -3.4838,
+          "MI_excess_vs_baseline": 1.6e-07
+        }
+      }
+    },
+    "slope2": {
+      "label": "diag_slope2",
+      "n": 9996,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 2.2e-07,
+          "MI_null_perm_mean": 0.00057713,
+          "MI_null_perm_std": 0.00029467,
+          "z_score_perm": -1.9578,
+          "MI_null_rand_mean": 0.00057636,
+          "MI_null_rand_std": 0.000281,
+          "z_score_rand": -2.0504,
+          "MI_excess_vs_baseline": -1.3e-07
+        },
+        "mod3_mod7": {
+          "MI_observed": 1.21e-06,
+          "MI_null_perm_mean": 0.00087451,
+          "MI_null_perm_std": 0.00036017,
+          "z_score_perm": -2.4247,
+          "MI_null_rand_mean": 0.00086051,
+          "MI_null_rand_std": 0.00034276,
+          "z_score_rand": -2.507,
+          "MI_excess_vs_baseline": 8.2e-07
+        },
+        "mod5_mod7": {
+          "MI_observed": 2.96e-06,
+          "MI_null_perm_mean": 0.00171091,
+          "MI_null_perm_std": 0.00048772,
+          "z_score_perm": -3.5019,
+          "MI_null_rand_mean": 0.00176031,
+          "MI_null_rand_std": 0.00051239,
+          "z_score_rand": -3.4297,
+          "MI_excess_vs_baseline": 1.24e-06
+        }
+      }
+    },
+    "slope_half": {
+      "label": "diag_slope_half",
+      "n": 9996,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 3.6e-07,
+          "MI_null_perm_mean": 0.00057459,
+          "MI_null_perm_std": 0.00028775,
+          "z_score_perm": -1.9956,
+          "MI_null_rand_mean": 0.00056812,
+          "MI_null_rand_std": 0.00029324,
+          "z_score_rand": -1.9362,
+          "MI_excess_vs_baseline": 1e-08
+        },
+        "mod3_mod7": {
+          "MI_observed": 1.21e-06,
+          "MI_null_perm_mean": 0.00086222,
+          "MI_null_perm_std": 0.00035826,
+          "z_score_perm": -2.4033,
+          "MI_null_rand_mean": 0.00086731,
+          "MI_null_rand_std": 0.00035255,
+          "z_score_rand": -2.4567,
+          "MI_excess_vs_baseline": 8.2e-07
+        },
+        "mod5_mod7": {
+          "MI_observed": 4.12e-06,
+          "MI_null_perm_mean": 0.00172804,
+          "MI_null_perm_std": 0.00050123,
+          "z_score_perm": -3.4394,
+          "MI_null_rand_mean": 0.00175908,
+          "MI_null_rand_std": 0.00048882,
+          "z_score_rand": -3.5902,
+          "MI_excess_vs_baseline": 2.4e-06
+        }
+      }
+    }
+  },
+  "primes_on_diagonals": {
+    "main": {
+      "label": "primes_on_main",
+      "n": 1228,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 0.00244812,
+          "MI_null_perm_mean": 0.00423868,
+          "MI_null_perm_std": 0.00150212,
+          "z_score_perm": -1.192,
+          "MI_null_rand_mean": 0.00339506,
+          "MI_null_rand_std": 0.00185403,
+          "z_score_rand": -0.5108
+        },
+        "mod3_mod7": {
+          "MI_observed": 0.00311058,
+          "MI_null_perm_mean": 0.00590006,
+          "MI_null_perm_std": 0.00186126,
+          "z_score_perm": -1.4987,
+          "MI_null_rand_mean": 0.00509923,
+          "MI_null_rand_std": 0.00231838,
+          "z_score_rand": -0.8578
+        },
+        "mod5_mod7": {
+          "MI_observed": 0.0054691,
+          "MI_null_perm_mean": 0.01271713,
+          "MI_null_perm_std": 0.00328211,
+          "z_score_perm": -2.2083,
+          "MI_null_rand_mean": 0.01162153,
+          "MI_null_rand_std": 0.00358693,
+          "z_score_rand": -1.7152
+        }
+      }
+    },
+    "anti": {
+      "label": "primes_on_anti",
+      "n": 1229,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 0.00244367,
+          "MI_null_perm_mean": 0.00425526,
+          "MI_null_perm_std": 0.00148546,
+          "z_score_perm": -1.2196,
+          "MI_null_rand_mean": 0.00336729,
+          "MI_null_rand_std": 0.00185407,
+          "z_score_rand": -0.4982
+        },
+        "mod3_mod7": {
+          "MI_observed": 0.00312922,
+          "MI_null_perm_mean": 0.00590954,
+          "MI_null_perm_std": 0.00192558,
+          "z_score_perm": -1.4439,
+          "MI_null_rand_mean": 0.00493965,
+          "MI_null_rand_std": 0.00226241,
+          "z_score_rand": -0.8002
+        },
+        "mod5_mod7": {
+          "MI_observed": 0.0054102,
+          "MI_null_perm_mean": 0.01268245,
+          "MI_null_perm_std": 0.00325381,
+          "z_score_perm": -2.235,
+          "MI_null_rand_mean": 0.01151184,
+          "MI_null_rand_std": 0.00353856,
+          "z_score_rand": -1.7243
+        }
+      }
+    },
+    "slope2": {
+      "label": "primes_on_slope2",
+      "n": 1228,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 0.00244812,
+          "MI_null_perm_mean": 0.00420224,
+          "MI_null_perm_std": 0.00148302,
+          "z_score_perm": -1.1828,
+          "MI_null_rand_mean": 0.00341326,
+          "MI_null_rand_std": 0.00181709,
+          "z_score_rand": -0.5311
+        },
+        "mod3_mod7": {
+          "MI_observed": 0.00311058,
+          "MI_null_perm_mean": 0.0058483,
+          "MI_null_perm_std": 0.00183424,
+          "z_score_perm": -1.4926,
+          "MI_null_rand_mean": 0.00500336,
+          "MI_null_rand_std": 0.00238296,
+          "z_score_rand": -0.7943
+        },
+        "mod5_mod7": {
+          "MI_observed": 0.0054691,
+          "MI_null_perm_mean": 0.01246369,
+          "MI_null_perm_std": 0.00319049,
+          "z_score_perm": -2.1923,
+          "MI_null_rand_mean": 0.01155638,
+          "MI_null_rand_std": 0.0035753,
+          "z_score_rand": -1.7026
+        }
+      }
+    },
+    "slope_half": {
+      "label": "primes_on_slope_half",
+      "n": 1228,
+      "pairs": {
+        "mod3_mod5": {
+          "MI_observed": 0.00244812,
+          "MI_null_perm_mean": 0.00417534,
+          "MI_null_perm_std": 0.00140224,
+          "z_score_perm": -1.2318,
+          "MI_null_rand_mean": 0.00341315,
+          "MI_null_rand_std": 0.00183341,
+          "z_score_rand": -0.5264
+        },
+        "mod3_mod7": {
+          "MI_observed": 0.00311058,
+          "MI_null_perm_mean": 0.00583814,
+          "MI_null_perm_std": 0.00185593,
+          "z_score_perm": -1.4696,
+          "MI_null_rand_mean": 0.00505242,
+          "MI_null_rand_std": 0.00237297,
+          "z_score_rand": -0.8183
+        },
+        "mod5_mod7": {
+          "MI_observed": 0.0054691,
+          "MI_null_perm_mean": 0.01260337,
+          "MI_null_perm_std": 0.00319749,
+          "z_score_perm": -2.2312,
+          "MI_null_rand_mean": 0.01158022,
+          "MI_null_rand_std": 0.0036001,
+          "z_score_rand": -1.6975
+        }
+      }
+    }
+  },
+  "any_diagonal_significant": false,
+  "any_prime_on_diagonal_significant": false,
+  "verdict": "NO: Geometric constraint does NOT create cross-prime dependence. Observed MI on all diagonal types is ~0 (order 1e-7 to 1e-6 bits), consistent with perfect CRT independence. Negative z-scores mean the data is MORE independent than shuffled nulls (which have upward finite-sample bias). The 2D grid structure does not couple prime fibers. Independence is absolute even on geometric subsets.",
+  "theoretical_note": "By CRT, for consecutive integers, mod-p and mod-q residues are independent when gcd(p,q)=1. A linear diagonal on a row-major grid selects integers in arithmetic progression (step = row_width \u00b1 k), which preserves uniform cycling through residue classes. Hence CRT independence should hold exactly on any single diagonal line, and approximately when aggregating multiple diagonals of the same slope."
+}

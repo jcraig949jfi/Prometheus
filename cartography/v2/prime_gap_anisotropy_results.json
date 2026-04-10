@@ -1,0 +1,84 @@
+{
+  "question": "Q22: Prime Gap Anisotropy in Grid Embeddings",
+  "parameters": {
+    "N": 40000,
+    "grid_size": 200,
+    "n_primes": 4203,
+    "n_permutations": 1000
+  },
+  "directional_gaps": {
+    "N": {
+      "mean": 3.799320553263771,
+      "median": 3.0,
+      "std": 2.801663374679481,
+      "count": 4121
+    },
+    "S": {
+      "mean": 3.799320553263771,
+      "median": 3.0,
+      "std": 2.801663374679481,
+      "count": 4121
+    },
+    "E": {
+      "mean": 9.248313764676492,
+      "median": 6.0,
+      "std": 6.955322540741268,
+      "count": 4003
+    },
+    "W": {
+      "mean": 9.248313764676492,
+      "median": 6.0,
+      "std": 6.955322540741268,
+      "count": 4003
+    },
+    "NE": {
+      "mean": 9.048243314105926,
+      "median": 6.0,
+      "std": 6.728324619406554,
+      "count": 3814
+    },
+    "NW": {
+      "mean": 6.066683569979716,
+      "median": 4.0,
+      "std": 4.512195054989718,
+      "count": 3944
+    },
+    "SE": {
+      "mean": 6.066683569979716,
+      "median": 4.0,
+      "std": 4.512195054989718,
+      "count": 3944
+    },
+    "SW": {
+      "mean": 9.048243314105926,
+      "median": 6.0,
+      "std": 6.728324619406554,
+      "count": 3814
+    }
+  },
+  "anisotropy": {
+    "ratio": 2.434202,
+    "max_direction": "E",
+    "min_direction": "N",
+    "null_mean": 1.049081,
+    "null_std": 0.005712,
+    "p_value": 0.0
+  },
+  "cardinal_vs_diagonal": {
+    "mean_cardinal": 6.5238,
+    "mean_diagonal": 7.5575,
+    "ratio": 0.863228,
+    "null_mean": 1.043786,
+    "p_value": 0.0
+  },
+  "horizontal_vs_vertical": {
+    "mean_horizontal": 9.2483,
+    "mean_vertical": 3.7993,
+    "ratio": 0.410812,
+    "null_mean": 1.000219,
+    "p_value": 0.0
+  },
+  "verdict": "ANISOTROPIC \u2014 genuine directional structure from row-major mapping",
+  "mechanism": "Row-major artifact: N/S steps change integer by +/-200, and with ~10% prime density a prime is found within a few rows. E/W steps change integer by +/-1 but are constrained to stay in-row (width 200), so the nearest prime along a row can be many cells away. Vertical gaps are 2.4x shorter than horizontal.",
+  "interpretation": "The 200x200 row-major embedding creates massive anisotropy (ratio 2.43, p<0.001). Vertical (N/S) gaps are 2.4x SHORTER than horizontal (E/W): mean 3.80 vs 9.25 steps. This is because each column spans integers differing by 200, and with ~10% prime density there is almost always a prime within 3-4 rows above or below. Horizontal search is constrained to a single row of 200 cells, so the nearest prime along a row averages 9+ cells. NW/SE diagonals (mean 6.07) are shorter than NE/SW (mean 9.05) because the NW diagonal step (-1,-1) maps to integer change of -201 while NE step (-1,+1) maps to -199, creating different modular arithmetic interactions with prime gaps. The permutation null (random placement, same count) gives ratio ~1.05 \u2014 confirming this is entirely an artifact of the row-major mapping, not intrinsic to primes."
+}
