@@ -1,0 +1,668 @@
+{
+  "experiment": "Enrichment Slope Inversion for Lattice Packings",
+  "timestamp": "2026-04-10T18:04:05.251374",
+  "data_source": "LMFDB lat_lattices (39,293 lattices)",
+  "method": {
+    "fingerprint": "mod-p on first 20 theta-series coefficients",
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11
+    ],
+    "enrichment": "within-group match rate / random baseline match rate",
+    "slope": "linear regression of enrichment vs prime",
+    "min_group_size": 50,
+    "max_pairs_sampled": 50000,
+    "bootstrap_iterations": 1000
+  },
+  "eligible_dimensions": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "results_by_dimension": {
+    "2": {
+      "dim": 2,
+      "n_lattices": 1609,
+      "enrichment_by_prime": {
+        "2": {
+          "within_rate": 1.0,
+          "within_pairs": 50000,
+          "random_rate": 1.0,
+          "random_pairs": 50000,
+          "enrichment": 1.0,
+          "n_valid_fps": 1609,
+          "n_distinct_fps": 1
+        },
+        "3": {
+          "within_rate": 0.2446,
+          "within_pairs": 50000,
+          "random_rate": 0.0135,
+          "random_pairs": 50000,
+          "enrichment": 18.118519,
+          "n_valid_fps": 1609,
+          "n_distinct_fps": 182
+        },
+        "5": {
+          "within_rate": 0.23998,
+          "within_pairs": 50000,
+          "random_rate": 0.01124,
+          "random_pairs": 50000,
+          "enrichment": 21.350534,
+          "n_valid_fps": 1609,
+          "n_distinct_fps": 183
+        },
+        "7": {
+          "within_rate": 0.24498,
+          "within_pairs": 50000,
+          "random_rate": 0.01066,
+          "random_pairs": 50000,
+          "enrichment": 22.981238,
+          "n_valid_fps": 1609,
+          "n_distinct_fps": 183
+        },
+        "11": {
+          "within_rate": 0.2414,
+          "within_pairs": 50000,
+          "random_rate": 0.01124,
+          "random_pairs": 50000,
+          "enrichment": 21.476868,
+          "n_valid_fps": 1609,
+          "n_distinct_fps": 183
+        }
+      },
+      "slope_fit": {
+        "dim": 2,
+        "enrichment_slope": 1.652937,
+        "enrichment_intercept": 7.728987,
+        "r_squared_linear": 0.421358,
+        "p_value_linear": 0.23592586845579838,
+        "std_err": 1.118343,
+        "power_law_alpha": 1.501245,
+        "power_law_A": 1.112383,
+        "r_squared_power": 0.551678,
+        "enrichments": {
+          "2": 1.0,
+          "3": 18.118519,
+          "5": 21.350534,
+          "7": 22.981238,
+          "11": 21.476868
+        }
+      }
+    },
+    "3": {
+      "dim": 3,
+      "n_lattices": 36585,
+      "enrichment_by_prime": {
+        "2": {
+          "within_rate": 1.0,
+          "within_pairs": 50000,
+          "random_rate": 1.0,
+          "random_pairs": 50000,
+          "enrichment": 1.0,
+          "n_valid_fps": 36585,
+          "n_distinct_fps": 1
+        },
+        "3": {
+          "within_rate": 0.01384,
+          "within_pairs": 50000,
+          "random_rate": 0.01314,
+          "random_pairs": 50000,
+          "enrichment": 1.053272,
+          "n_valid_fps": 36585,
+          "n_distinct_fps": 2354
+        },
+        "5": {
+          "within_rate": 0.0124,
+          "within_pairs": 50000,
+          "random_rate": 0.01104,
+          "random_pairs": 50000,
+          "enrichment": 1.123188,
+          "n_valid_fps": 36585,
+          "n_distinct_fps": 3438
+        },
+        "7": {
+          "within_rate": 0.0124,
+          "within_pairs": 50000,
+          "random_rate": 0.011,
+          "random_pairs": 50000,
+          "enrichment": 1.127273,
+          "n_valid_fps": 36585,
+          "n_distinct_fps": 3475
+        },
+        "11": {
+          "within_rate": 0.0119,
+          "within_pairs": 50000,
+          "random_rate": 0.01124,
+          "random_pairs": 50000,
+          "enrichment": 1.058719,
+          "n_valid_fps": 36585,
+          "n_distinct_fps": 3475
+        }
+      },
+      "slope_fit": {
+        "dim": 3,
+        "enrichment_slope": 0.005524,
+        "enrichment_intercept": 1.041554,
+        "r_squared_linear": 0.137241,
+        "p_value_linear": 0.53933762030869,
+        "std_err": 0.007997,
+        "power_law_alpha": 0.043823,
+        "power_law_A": 1.001105,
+        "r_squared_power": 0.348915,
+        "enrichments": {
+          "2": 1.0,
+          "3": 1.053272,
+          "5": 1.123188,
+          "7": 1.127273,
+          "11": 1.058719
+        }
+      }
+    },
+    "4": {
+      "dim": 4,
+      "n_lattices": 481,
+      "enrichment_by_prime": {
+        "2": {
+          "within_rate": 1.0,
+          "within_pairs": 50000,
+          "random_rate": 1.0,
+          "random_pairs": 50000,
+          "enrichment": 1.0,
+          "n_valid_fps": 481,
+          "n_distinct_fps": 1
+        },
+        "3": {
+          "within_rate": 0.00366,
+          "within_pairs": 50000,
+          "random_rate": 0.0138,
+          "random_pairs": 50000,
+          "enrichment": 0.265217,
+          "n_valid_fps": 481,
+          "n_distinct_fps": 354
+        },
+        "5": {
+          "within_rate": 0.00014,
+          "within_pairs": 50000,
+          "random_rate": 0.01142,
+          "random_pairs": 50000,
+          "enrichment": 0.012259,
+          "n_valid_fps": 481,
+          "n_distinct_fps": 469
+        },
+        "7": {
+          "within_rate": 6e-05,
+          "within_pairs": 50000,
+          "random_rate": 0.01102,
+          "random_pairs": 50000,
+          "enrichment": 0.005445,
+          "n_valid_fps": 481,
+          "n_distinct_fps": 473
+        },
+        "11": {
+          "within_rate": 0.00012,
+          "within_pairs": 50000,
+          "random_rate": 0.01136,
+          "random_pairs": 50000,
+          "enrichment": 0.010563,
+          "n_valid_fps": 481,
+          "n_distinct_fps": 472
+        }
+      },
+      "slope_fit": {
+        "dim": 4,
+        "enrichment_slope": -0.082661,
+        "enrichment_intercept": 0.7216,
+        "r_squared_linear": 0.475324,
+        "p_value_linear": 0.1977938246434939,
+        "std_err": 0.050141,
+        "power_law_alpha": -3.081852,
+        "power_law_A": 5.340713,
+        "r_squared_power": 0.821253,
+        "enrichments": {
+          "2": 1.0,
+          "3": 0.265217,
+          "5": 0.012259,
+          "7": 0.005445,
+          "11": 0.010563
+        }
+      }
+    },
+    "5": {
+      "dim": 5,
+      "n_lattices": 295,
+      "enrichment_by_prime": {
+        "2": {
+          "within_rate": 1.0,
+          "within_pairs": 43365,
+          "random_rate": 1.0,
+          "random_pairs": 50000,
+          "enrichment": 1.0,
+          "n_valid_fps": 295,
+          "n_distinct_fps": 1
+        },
+        "3": {
+          "within_rate": 0.00468119,
+          "within_pairs": 43365,
+          "random_rate": 0.01342,
+          "random_pairs": 50000,
+          "enrichment": 0.348822,
+          "n_valid_fps": 295,
+          "n_distinct_fps": 198
+        },
+        "5": {
+          "within_rate": 0.00110688,
+          "within_pairs": 43365,
+          "random_rate": 0.01198,
+          "random_pairs": 50000,
+          "enrichment": 0.092394,
+          "n_valid_fps": 295,
+          "n_distinct_fps": 279
+        },
+        "7": {
+          "within_rate": 0.0,
+          "within_pairs": 43365,
+          "random_rate": 0.01082,
+          "random_pairs": 50000,
+          "enrichment": 0.0,
+          "n_valid_fps": 295,
+          "n_distinct_fps": 295
+        },
+        "11": {
+          "within_rate": 0.0,
+          "within_pairs": 43365,
+          "random_rate": 0.0118,
+          "random_pairs": 50000,
+          "enrichment": 0.0,
+          "n_valid_fps": 295,
+          "n_distinct_fps": 295
+        }
+      },
+      "slope_fit": {
+        "dim": 5,
+        "enrichment_slope": -0.089109,
+        "enrichment_intercept": 0.787253,
+        "r_squared_linear": 0.568763,
+        "p_value_linear": 0.14079938411184476,
+        "std_err": 0.044797,
+        "power_law_alpha": 0.0,
+        "power_law_A": 0.0,
+        "r_squared_power": 0.0,
+        "enrichments": {
+          "2": 1.0,
+          "3": 0.348822,
+          "5": 0.092394,
+          "7": 0.0,
+          "11": 0.0
+        }
+      }
+    },
+    "6": {
+      "dim": 6,
+      "n_lattices": 186,
+      "enrichment_by_prime": {
+        "2": {
+          "within_rate": 1.0,
+          "within_pairs": 17205,
+          "random_rate": 1.0,
+          "random_pairs": 50000,
+          "enrichment": 1.0,
+          "n_valid_fps": 186,
+          "n_distinct_fps": 1
+        },
+        "3": {
+          "within_rate": 0.02092415,
+          "within_pairs": 17205,
+          "random_rate": 0.014,
+          "random_pairs": 50000,
+          "enrichment": 1.494582,
+          "n_valid_fps": 186,
+          "n_distinct_fps": 104
+        },
+        "5": {
+          "within_rate": 0.00244115,
+          "within_pairs": 17205,
+          "random_rate": 0.0122,
+          "random_pairs": 50000,
+          "enrichment": 0.200094,
+          "n_valid_fps": 186,
+          "n_distinct_fps": 158
+        },
+        "7": {
+          "within_rate": 0.00023249,
+          "within_pairs": 17205,
+          "random_rate": 0.01106,
+          "random_pairs": 50000,
+          "enrichment": 0.021021,
+          "n_valid_fps": 186,
+          "n_distinct_fps": 182
+        },
+        "11": {
+          "within_rate": 0.00011625,
+          "within_pairs": 17205,
+          "random_rate": 0.0111,
+          "random_pairs": 50000,
+          "enrichment": 0.010473,
+          "n_valid_fps": 186,
+          "n_distinct_fps": 184
+        }
+      },
+      "slope_fit": {
+        "dim": 6,
+        "enrichment_slope": -0.146875,
+        "enrichment_intercept": 1.367732,
+        "r_squared_linear": 0.617739,
+        "p_value_linear": 0.1149752991970625,
+        "std_err": 0.066706,
+        "power_law_alpha": -3.126472,
+        "power_law_A": 18.490282,
+        "r_squared_power": 0.892116,
+        "enrichments": {
+          "2": 1.0,
+          "3": 1.494582,
+          "5": 0.200094,
+          "7": 0.021021,
+          "11": 0.010473
+        }
+      }
+    },
+    "7": {
+      "dim": 7,
+      "n_lattices": 86,
+      "enrichment_by_prime": {
+        "2": {
+          "within_rate": 1.0,
+          "within_pairs": 3655,
+          "random_rate": 1.0,
+          "random_pairs": 50000,
+          "enrichment": 1.0,
+          "n_valid_fps": 86,
+          "n_distinct_fps": 1
+        },
+        "3": {
+          "within_rate": 0.02735978,
+          "within_pairs": 3655,
+          "random_rate": 0.014,
+          "random_pairs": 50000,
+          "enrichment": 1.95427,
+          "n_valid_fps": 86,
+          "n_distinct_fps": 45
+        },
+        "5": {
+          "within_rate": 0.00355677,
+          "within_pairs": 3655,
+          "random_rate": 0.01182,
+          "random_pairs": 50000,
+          "enrichment": 0.300911,
+          "n_valid_fps": 86,
+          "n_distinct_fps": 74
+        },
+        "7": {
+          "within_rate": 0.00601915,
+          "within_pairs": 3655,
+          "random_rate": 0.0117,
+          "random_pairs": 50000,
+          "enrichment": 0.514457,
+          "n_valid_fps": 86,
+          "n_distinct_fps": 73
+        },
+        "11": {
+          "within_rate": 0.00082079,
+          "within_pairs": 3655,
+          "random_rate": 0.01132,
+          "random_pairs": 50000,
+          "enrichment": 0.072508,
+          "n_valid_fps": 86,
+          "n_distinct_fps": 83
+        }
+      },
+      "slope_fit": {
+        "dim": 7,
+        "enrichment_slope": -0.151365,
+        "enrichment_intercept": 1.616071,
+        "r_squared_linear": 0.526689,
+        "p_value_linear": 0.16514503601489347,
+        "std_err": 0.082844,
+        "power_law_alpha": -1.577034,
+        "power_law_A": 5.359664,
+        "r_squared_power": 0.71727,
+        "enrichments": {
+          "2": 1.0,
+          "3": 1.95427,
+          "5": 0.300911,
+          "7": 0.514457,
+          "11": 0.072508
+        }
+      }
+    }
+  },
+  "slope_fits": [
+    {
+      "dim": 2,
+      "enrichment_slope": 1.652937,
+      "enrichment_intercept": 7.728987,
+      "r_squared_linear": 0.421358,
+      "p_value_linear": 0.23592586845579838,
+      "std_err": 1.118343,
+      "power_law_alpha": 1.501245,
+      "power_law_A": 1.112383,
+      "r_squared_power": 0.551678,
+      "enrichments": {
+        "2": 1.0,
+        "3": 18.118519,
+        "5": 21.350534,
+        "7": 22.981238,
+        "11": 21.476868
+      }
+    },
+    {
+      "dim": 3,
+      "enrichment_slope": 0.005524,
+      "enrichment_intercept": 1.041554,
+      "r_squared_linear": 0.137241,
+      "p_value_linear": 0.53933762030869,
+      "std_err": 0.007997,
+      "power_law_alpha": 0.043823,
+      "power_law_A": 1.001105,
+      "r_squared_power": 0.348915,
+      "enrichments": {
+        "2": 1.0,
+        "3": 1.053272,
+        "5": 1.123188,
+        "7": 1.127273,
+        "11": 1.058719
+      }
+    },
+    {
+      "dim": 4,
+      "enrichment_slope": -0.082661,
+      "enrichment_intercept": 0.7216,
+      "r_squared_linear": 0.475324,
+      "p_value_linear": 0.1977938246434939,
+      "std_err": 0.050141,
+      "power_law_alpha": -3.081852,
+      "power_law_A": 5.340713,
+      "r_squared_power": 0.821253,
+      "enrichments": {
+        "2": 1.0,
+        "3": 0.265217,
+        "5": 0.012259,
+        "7": 0.005445,
+        "11": 0.010563
+      }
+    },
+    {
+      "dim": 5,
+      "enrichment_slope": -0.089109,
+      "enrichment_intercept": 0.787253,
+      "r_squared_linear": 0.568763,
+      "p_value_linear": 0.14079938411184476,
+      "std_err": 0.044797,
+      "power_law_alpha": 0.0,
+      "power_law_A": 0.0,
+      "r_squared_power": 0.0,
+      "enrichments": {
+        "2": 1.0,
+        "3": 0.348822,
+        "5": 0.092394,
+        "7": 0.0,
+        "11": 0.0
+      }
+    },
+    {
+      "dim": 6,
+      "enrichment_slope": -0.146875,
+      "enrichment_intercept": 1.367732,
+      "r_squared_linear": 0.617739,
+      "p_value_linear": 0.1149752991970625,
+      "std_err": 0.066706,
+      "power_law_alpha": -3.126472,
+      "power_law_A": 18.490282,
+      "r_squared_power": 0.892116,
+      "enrichments": {
+        "2": 1.0,
+        "3": 1.494582,
+        "5": 0.200094,
+        "7": 0.021021,
+        "11": 0.010473
+      }
+    },
+    {
+      "dim": 7,
+      "enrichment_slope": -0.151365,
+      "enrichment_intercept": 1.616071,
+      "r_squared_linear": 0.526689,
+      "p_value_linear": 0.16514503601489347,
+      "std_err": 0.082844,
+      "power_law_alpha": -1.577034,
+      "power_law_A": 5.359664,
+      "r_squared_power": 0.71727,
+      "enrichments": {
+        "2": 1.0,
+        "3": 1.95427,
+        "5": 0.300911,
+        "7": 0.514457,
+        "11": 0.072508
+      }
+    }
+  ],
+  "slope_vs_dim_models": {
+    "linear": {
+      "formula": "slope = -0.271004 * dim + 1.417595",
+      "a": -0.271004,
+      "b": 1.417595,
+      "r_squared": 0.502823,
+      "p_value": 0.11462553628590445
+    },
+    "quadratic": {
+      "formula": "slope = 0.148862*dim\u00b2 + -1.610765*dim + 3.997876",
+      "a": 0.148862,
+      "b": -1.610765,
+      "c": 3.997876,
+      "r_squared": 0.826485
+    },
+    "power_law_abs": {
+      "formula": "|slope| = 0.290876 * dim^-0.7043 (mostly negative)",
+      "A": 0.290876,
+      "alpha": -0.7043,
+      "r_squared": 0.032376,
+      "dominant_sign": "negative"
+    }
+  },
+  "genus2_formula_test": {
+    "formula": "slope = 0.044*dim\u00b2 - 0.242",
+    "r_squared": -3.167678,
+    "rmse": 1.332475,
+    "mae": 1.152237,
+    "per_dim_comparison": [
+      {
+        "dim": 2,
+        "observed_slope": 1.652937,
+        "predicted_slope": -0.066,
+        "residual": 1.718937
+      },
+      {
+        "dim": 3,
+        "observed_slope": 0.005524,
+        "predicted_slope": 0.154,
+        "residual": -0.148476
+      },
+      {
+        "dim": 4,
+        "observed_slope": -0.082661,
+        "predicted_slope": 0.462,
+        "residual": -0.544661
+      },
+      {
+        "dim": 5,
+        "observed_slope": -0.089109,
+        "predicted_slope": 0.858,
+        "residual": -0.947109
+      },
+      {
+        "dim": 6,
+        "observed_slope": -0.146875,
+        "predicted_slope": 1.342,
+        "residual": -1.488875
+      },
+      {
+        "dim": 7,
+        "observed_slope": -0.151365,
+        "predicted_slope": 1.914,
+        "residual": -2.065365
+      }
+    ]
+  },
+  "bootstrap_confidence": {
+    "2": {
+      "mean": 2.074529,
+      "ci_2.5": 1.839758,
+      "ci_97.5": 2.325566,
+      "std": 0.12322
+    },
+    "3": {
+      "mean": 2.563709,
+      "ci_2.5": 2.469858,
+      "ci_97.5": 2.663392,
+      "std": 0.049818
+    },
+    "4": {
+      "mean": -0.008978,
+      "ci_2.5": -0.027258,
+      "ci_97.5": 0.004517,
+      "std": 0.008295
+    },
+    "5": {
+      "mean": -0.00012,
+      "ci_2.5": -0.014161,
+      "ci_97.5": 0.011309,
+      "std": 0.006161
+    },
+    "6": {
+      "mean": -0.038938,
+      "ci_2.5": -0.084792,
+      "ci_97.5": -0.004731,
+      "std": 0.02074
+    },
+    "7": {
+      "mean": 0.001947,
+      "ci_2.5": -0.022297,
+      "ci_97.5": 0.02163,
+      "std": 0.011269
+    }
+  },
+  "verdict": {
+    "genus2_formula_holds": false,
+    "genus2_r_squared": -3.167678,
+    "best_lattice_fit": "quadratic",
+    "best_lattice_r_squared": 0.826485,
+    "best_lattice_formula": "slope = 0.148862*dim\u00b2 + -1.610765*dim + 3.997876",
+    "slopes_monotonic_with_dim": false,
+    "summary": "REJECTED: genus-2 formula does NOT hold for lattices"
+  }
+}
