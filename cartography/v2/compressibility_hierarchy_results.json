@@ -1,0 +1,257 @@
+{
+  "experiment": "F29_compressibility_hierarchy",
+  "parameters": {
+    "n_sample": 500,
+    "seq_len_min": 8,
+    "seq_len_max": 30,
+    "bm_mod_p": 101
+  },
+  "domain_results": {
+    "NF": {
+      "domain": "NF",
+      "n_objects": 500,
+      "mean_seq_len": 30.0,
+      "min_seq_len": 30,
+      "max_seq_len": 30,
+      "bm_mod_p": 101,
+      "mean_compressibility": 0.840267,
+      "std_compressibility": 0.025576,
+      "median_compressibility": 0.833333,
+      "min_compressibility": 0.766667,
+      "max_compressibility": 0.866667,
+      "mean_bm_order": 4.79,
+      "median_bm_order": 5.0,
+      "frac_fully_compressible": 0.0,
+      "frac_incompressible": 0.0,
+      "quartiles": [
+        0.833333,
+        0.833333,
+        0.866667
+      ],
+      "z_vs_null": 161.7871,
+      "null_mean_at_length": 0.499867
+    },
+    "OEIS": {
+      "domain": "OEIS",
+      "n_objects": 500,
+      "mean_seq_len": 25.8,
+      "min_seq_len": 8,
+      "max_seq_len": 30,
+      "bm_mod_p": 101,
+      "mean_compressibility": 0.52995,
+      "std_compressibility": 0.105967,
+      "median_compressibility": 0.5,
+      "min_compressibility": 0.25,
+      "max_compressibility": 0.933333,
+      "mean_bm_order": 12.04,
+      "median_bm_order": 15.0,
+      "frac_fully_compressible": 0.026,
+      "frac_incompressible": 0.0,
+      "quartiles": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "z_vs_null": 6.3362,
+      "null_mean_at_length": 0.499923
+    },
+    "Lattices": {
+      "domain": "Lattices",
+      "n_objects": 500,
+      "mean_seq_len": 30.0,
+      "min_seq_len": 30,
+      "max_seq_len": 30,
+      "bm_mod_p": 101,
+      "mean_compressibility": 0.503067,
+      "std_compressibility": 0.078284,
+      "median_compressibility": 0.5,
+      "min_compressibility": 0.133333,
+      "max_compressibility": 0.966667,
+      "mean_bm_order": 14.91,
+      "median_bm_order": 15.0,
+      "frac_fully_compressible": 0.022,
+      "frac_incompressible": 0.0,
+      "quartiles": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "z_vs_null": 0.9025,
+      "null_mean_at_length": 0.499533
+    },
+    "MF": {
+      "domain": "MF",
+      "n_objects": 500,
+      "mean_seq_len": 30.0,
+      "min_seq_len": 30,
+      "max_seq_len": 30,
+      "bm_mod_p": 101,
+      "mean_compressibility": 0.497867,
+      "std_compressibility": 0.032862,
+      "median_compressibility": 0.5,
+      "min_compressibility": 0.2,
+      "max_compressibility": 0.966667,
+      "mean_bm_order": 15.06,
+      "median_bm_order": 15.0,
+      "frac_fully_compressible": 0.002,
+      "frac_incompressible": 0.0,
+      "quartiles": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "z_vs_null": -0.6285,
+      "null_mean_at_length": 0.499733
+    },
+    "EC": {
+      "domain": "EC",
+      "n_objects": 500,
+      "mean_seq_len": 25.0,
+      "min_seq_len": 25,
+      "max_seq_len": 25,
+      "bm_mod_p": 101,
+      "mean_compressibility": 0.48048,
+      "std_compressibility": 0.004355,
+      "median_compressibility": 0.48,
+      "min_compressibility": 0.48,
+      "max_compressibility": 0.52,
+      "mean_bm_order": 12.99,
+      "median_bm_order": 13.0,
+      "frac_fully_compressible": 0.0,
+      "frac_incompressible": 0.0,
+      "quartiles": [
+        0.48,
+        0.48,
+        0.48
+      ],
+      "z_vs_null": -0.017,
+      "null_mean_at_length": 0.48056
+    },
+    "Knots": {
+      "domain": "Knots",
+      "n_objects": 500,
+      "mean_seq_len": 11.8,
+      "min_seq_len": 8,
+      "max_seq_len": 13,
+      "bm_mod_p": 101,
+      "mean_compressibility": 0.471572,
+      "std_compressibility": 0.025858,
+      "median_compressibility": 0.461538,
+      "min_compressibility": 0.375,
+      "max_compressibility": 0.615385,
+      "mean_bm_order": 6.23,
+      "median_bm_order": 6.0,
+      "frac_fully_compressible": 0.0,
+      "frac_incompressible": 0.0,
+      "quartiles": [
+        0.454545,
+        0.461538,
+        0.5
+      ],
+      "z_vs_null": -2.7843,
+      "null_mean_at_length": 0.498833
+    }
+  },
+  "hierarchy": [
+    {
+      "rank": 1,
+      "domain": "NF",
+      "mean_compressibility": 0.840267
+    },
+    {
+      "rank": 2,
+      "domain": "OEIS",
+      "mean_compressibility": 0.52995
+    },
+    {
+      "rank": 3,
+      "domain": "Lattices",
+      "mean_compressibility": 0.503067
+    },
+    {
+      "rank": 4,
+      "domain": "MF",
+      "mean_compressibility": 0.497867
+    },
+    {
+      "rank": 5,
+      "domain": "EC",
+      "mean_compressibility": 0.48048
+    },
+    {
+      "rank": 6,
+      "domain": "Knots",
+      "mean_compressibility": 0.471572
+    }
+  ],
+  "null_model_per_domain": {
+    "NF": {
+      "mean": 0.499867,
+      "std": 0.002104,
+      "seq_len": 30
+    },
+    "OEIS": {
+      "mean": 0.499923,
+      "std": 0.001718,
+      "seq_len": 26
+    },
+    "Lattices": {
+      "mean": 0.499533,
+      "std": 0.003916,
+      "seq_len": 30
+    },
+    "MF": {
+      "mean": 0.499733,
+      "std": 0.002969,
+      "seq_len": 30
+    },
+    "EC": {
+      "mean": 0.48056,
+      "std": 0.0047,
+      "seq_len": 25
+    },
+    "Knots": {
+      "mean": 0.498833,
+      "std": 0.009791,
+      "seq_len": 12
+    }
+  },
+  "f28_correlation": {
+    "pearson_r": -0.565337,
+    "pearson_p": 0.242337,
+    "spearman_rho": -0.542857,
+    "spearman_p": 0.265703,
+    "n_domains_matched": 6,
+    "domains_matched": [
+      "OEIS",
+      "EC",
+      "MF",
+      "Knots",
+      "Lattices",
+      "NF"
+    ],
+    "compressibilities": [
+      0.52995,
+      0.48048,
+      0.497867,
+      0.471572,
+      0.503067,
+      0.840267
+    ],
+    "spectral_gaps": [
+      0.17617226,
+      0.26478645,
+      0.09601026,
+      0.1566905,
+      0.00845414,
+      0.00589688
+    ]
+  },
+  "summary": {
+    "hierarchy_exists": true,
+    "spread": 0.368695,
+    "verdict": "HIERARCHY EXISTS: domains differ significantly in compressibility",
+    "most_compressible": "NF",
+    "least_compressible": "Knots"
+  }
+}
