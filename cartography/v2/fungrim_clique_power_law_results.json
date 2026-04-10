@@ -1,0 +1,179 @@
+{
+  "task": "Fungrim Implication Graph - Clique Power Law",
+  "parameters": {
+    "symbol_overlap_threshold": 3,
+    "structural_frequency_cutoff": 0.2,
+    "n_formulas": 3133,
+    "n_structural_symbols_excluded": 6,
+    "structural_symbols": [
+      "And",
+      "CC",
+      "Equal",
+      "For",
+      "Infinity",
+      "Pi"
+    ]
+  },
+  "raw_graph": {
+    "n_edges": 972201,
+    "n_nodes_with_edges": 2956,
+    "mean_degree": 657.8,
+    "max_degree": 2033,
+    "note": "Clique enumeration intractable (~970K edges); structural filtering applied for clique analysis"
+  },
+  "filtered_graph": {
+    "n_nodes": 3133,
+    "n_edges": 64759,
+    "density": 0.013199,
+    "degree_stats": {
+      "mean_degree": 41.34,
+      "median_degree": 15.0,
+      "max_degree": 411,
+      "min_degree": 0
+    }
+  },
+  "connected_components": {
+    "n_components": 880,
+    "largest_component": 2219,
+    "top_10_sizes": [
+      2219,
+      5,
+      4,
+      4,
+      4,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "isolated_nodes": 858,
+    "size_distribution": {
+      "2219": 1,
+      "5": 1,
+      "4": 3,
+      "3": 5,
+      "2": 12,
+      "1": 858
+    }
+  },
+  "cliques": {
+    "n_maximal_cliques": 57003,
+    "largest_clique_size": 92,
+    "mean_clique_size": 16.07,
+    "median_clique_size": 16.0,
+    "size_distribution": {
+      "1": 858,
+      "2": 108,
+      "3": 181,
+      "4": 238,
+      "5": 398,
+      "6": 579,
+      "7": 911,
+      "8": 1403,
+      "9": 2028,
+      "10": 2666,
+      "11": 3244,
+      "12": 3716,
+      "13": 3867,
+      "14": 3901,
+      "15": 4058,
+      "16": 4018,
+      "17": 3651,
+      "18": 3411,
+      "19": 2895,
+      "20": 2550,
+      "21": 2305,
+      "22": 1959,
+      "23": 1613,
+      "24": 1310,
+      "25": 1089,
+      "26": 912,
+      "27": 674,
+      "28": 572,
+      "29": 463,
+      "30": 352,
+      "31": 329,
+      "32": 220,
+      "33": 159,
+      "34": 123,
+      "35": 68,
+      "36": 42,
+      "37": 12,
+      "38": 16,
+      "39": 9,
+      "40": 10,
+      "41": 13,
+      "42": 1,
+      "43": 9,
+      "44": 5,
+      "45": 8,
+      "46": 4,
+      "47": 1,
+      "48": 3,
+      "49": 3,
+      "50": 1,
+      "51": 5,
+      "52": 1,
+      "53": 4,
+      "54": 2,
+      "55": 2,
+      "56": 4,
+      "57": 2,
+      "58": 1,
+      "59": 1,
+      "62": 3,
+      "65": 1,
+      "67": 3,
+      "82": 1,
+      "83": 3,
+      "84": 1,
+      "88": 1,
+      "90": 1,
+      "92": 1
+    }
+  },
+  "power_law_fit": {
+    "mle": {
+      "alpha": 1.432,
+      "se": 0.0018,
+      "x_min": 2.0,
+      "n_data_points": 56145,
+      "xmin_scan": {
+        "1": {
+          "alpha": 1.2965,
+          "se": 0.0012,
+          "n": 57003
+        },
+        "2": {
+          "alpha": 1.432,
+          "se": 0.0018,
+          "n": 56145
+        },
+        "3": {
+          "alpha": 1.5532,
+          "se": 0.0023,
+          "n": 56037
+        },
+        "5": {
+          "alpha": 1.8124,
+          "se": 0.0034,
+          "n": 55618
+        }
+      }
+    },
+    "ols_binned": {
+      "alpha": 2.3334,
+      "r_squared": 0.4939
+    }
+  },
+  "comparison_to_hecke": {
+    "fungrim_alpha": 1.432,
+    "hecke_alpha": 3.19,
+    "delta": 1.758,
+    "z_score": 964.18,
+    "same_scale_free_regime": false,
+    "statistically_different": true
+  },
+  "verdict": "The Fungrim formula network and the mod-2 Hecke congruence network have substantially different clique exponents, suggesting different generative mechanisms despite both being mathematical networks."
+}
