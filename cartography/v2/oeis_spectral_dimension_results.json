@@ -1,0 +1,214 @@
+{
+  "problem": "F10: OEIS Spectral Clustering Dimension",
+  "method": {
+    "n_sequences": 5000,
+    "min_terms": 50,
+    "fft_dim": 32,
+    "k_nn": 250,
+    "n_eigenvalues_computed": 301,
+    "zero_signatures": 34,
+    "term_count_stats": {
+      "min": 50,
+      "median": 80,
+      "max": 347
+    }
+  },
+  "spectral_dimension": {
+    "d_effective": 10.7625,
+    "best_method": "weyl_law",
+    "weyl_law_fit": {
+      "d": 10.762547,
+      "beta": 0.18583,
+      "r_squared": 0.904816
+    },
+    "heat_kernel_fit": {
+      "d": 2.52469,
+      "gamma": 1.262345,
+      "r_squared": 0.897386
+    },
+    "interpretation": "Eigenvalue spectrum consistent with d ~ 10.8 effective dimensions (via weyl_law)"
+  },
+  "graph_stats": {
+    "n_edges": 942015,
+    "density": 0.075376,
+    "spectral_gap": 0.03047134,
+    "n_near_zero_eigenvalues": 1,
+    "eigenvalue_range": [
+      -0.0,
+      1.22812887
+    ]
+  },
+  "marchenko_pastur": {
+    "gamma": 0.0064,
+    "mp_lambda_minus": 0.8464,
+    "mp_lambda_plus": 1.1664,
+    "frac_in_mp_bulk": 0.7733,
+    "frac_above_mp_edge": 0.08,
+    "n_above_mp_edge": 24,
+    "tw_ratio_largest_to_edge": 1.1326,
+    "verdict": "RANDOM-LIKE"
+  },
+  "eigenvalue_structure": {
+    "spacing_variance_ratio": 12.1176,
+    "spacing_interpretation": "Poisson-like (uncorrelated)",
+    "n_eigenvalues_below_0.1": 3,
+    "n_eigenvalues_below_0.01": 1,
+    "percentiles": {
+      "p10": 0.687731,
+      "p25": 0.901355,
+      "p50": 0.940214,
+      "p75": 1.058156,
+      "p90": 1.076543
+    }
+  },
+  "comparison_to_battery": {
+    "battery_effective_dim": "3-4 (from R4-2 PCA/MDS analysis)",
+    "oeis_spectral_dim": 10.8,
+    "assessment": "OEIS spectral dimension d=10.8 vs battery d=3-4: HIGHER \u2014 OEIS sequence space is richer than battery feature space"
+  },
+  "local_spectral_dimension": [
+    {
+      "eigenvalue_index": 15,
+      "d_local": 2.75,
+      "beta_local": 0.7263
+    },
+    {
+      "eigenvalue_index": 30,
+      "d_local": 8.01,
+      "beta_local": 0.2498
+    },
+    {
+      "eigenvalue_index": 45,
+      "d_local": 4.67,
+      "beta_local": 0.4278
+    },
+    {
+      "eigenvalue_index": 60,
+      "d_local": 11.45,
+      "beta_local": 0.1746
+    },
+    {
+      "eigenvalue_index": 75,
+      "d_local": 21.86,
+      "beta_local": 0.0915
+    },
+    {
+      "eigenvalue_index": 90,
+      "d_local": 27.82,
+      "beta_local": 0.0719
+    },
+    {
+      "eigenvalue_index": 105,
+      "d_local": 34.82,
+      "beta_local": 0.0574
+    },
+    {
+      "eigenvalue_index": 120,
+      "d_local": 38.96,
+      "beta_local": 0.0513
+    },
+    {
+      "eigenvalue_index": 135,
+      "d_local": 39.85,
+      "beta_local": 0.0502
+    },
+    {
+      "eigenvalue_index": 150,
+      "d_local": 49.34,
+      "beta_local": 0.0405
+    },
+    {
+      "eigenvalue_index": 165,
+      "d_local": 56.4,
+      "beta_local": 0.0355
+    },
+    {
+      "eigenvalue_index": 180,
+      "d_local": 2.62,
+      "beta_local": 0.7634
+    },
+    {
+      "eigenvalue_index": 195,
+      "d_local": 2.61,
+      "beta_local": 0.7677
+    },
+    {
+      "eigenvalue_index": 210,
+      "d_local": 61.91,
+      "beta_local": 0.0323
+    },
+    {
+      "eigenvalue_index": 225,
+      "d_local": 43.12,
+      "beta_local": 0.0464
+    },
+    {
+      "eigenvalue_index": 240,
+      "d_local": 25.78,
+      "beta_local": 0.0776
+    },
+    {
+      "eigenvalue_index": 255,
+      "d_local": 17.28,
+      "beta_local": 0.1157
+    },
+    {
+      "eigenvalue_index": 270,
+      "d_local": 7.98,
+      "beta_local": 0.2507
+    }
+  ],
+  "eigenvalues_first_50": [
+    -0.0,
+    0.03047134,
+    0.07590227,
+    0.19666639,
+    0.32580542,
+    0.36287996,
+    0.37420866,
+    0.46822199,
+    0.4723146,
+    0.508012,
+    0.53094756,
+    0.54229111,
+    0.55032848,
+    0.55823657,
+    0.56638799,
+    0.59348967,
+    0.59532081,
+    0.61043337,
+    0.62068898,
+    0.62492786,
+    0.63093081,
+    0.635327,
+    0.64209341,
+    0.64311865,
+    0.65535904,
+    0.66172213,
+    0.66292911,
+    0.67149484,
+    0.67767728,
+    0.68267481,
+    0.68361745,
+    0.68818851,
+    0.6961135,
+    0.6966936,
+    0.70629355,
+    0.71248312,
+    0.71817316,
+    0.72450232,
+    0.73322816,
+    0.7418352,
+    0.74286841,
+    0.74511565,
+    0.75731654,
+    0.77037565,
+    0.78463532,
+    0.8025352,
+    0.81425749,
+    0.82518398,
+    0.83241744,
+    0.83878252
+  ],
+  "elapsed_seconds": 5.2
+}

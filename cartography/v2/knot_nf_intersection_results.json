@@ -1,0 +1,364 @@
+{
+  "experiment": "Arithmetic Intersection of Knot Invariants and Number Fields",
+  "description": "Evaluate Alexander polynomials at roots of unity zeta_n (n=3,4,5,6), compute |Delta_K(zeta_n)|^2, test collision with number field discriminants",
+  "n_knots_with_alexander": 2977,
+  "n_number_fields": 9116,
+  "n_unique_discriminants": 6292,
+  "roots_of_unity_tested": [
+    3,
+    4,
+    5,
+    6
+  ],
+  "collision_stats": {
+    "3": {
+      "n_knots_evaluated": 2977,
+      "n_unique_values": 87,
+      "value_range": [
+        1,
+        17689
+      ],
+      "n_collisions_unique": 41,
+      "collision_density_unique": 0.471264,
+      "hit_fraction_with_multiplicity": 0.585489,
+      "random_baseline_density_mean": 0.357537,
+      "random_baseline_density_std": 0.048689,
+      "random_baseline_hit_mean": 0.355655,
+      "random_baseline_hit_std": 0.00903,
+      "z_score_density": 2.336,
+      "z_score_hit": 25.451,
+      "enrichment_density": 1.318,
+      "enrichment_hit": 1.646,
+      "collision_examples": [
+        1,
+        4,
+        49,
+        169,
+        256,
+        361,
+        400,
+        484,
+        676,
+        784,
+        961,
+        1024,
+        1156,
+        1225,
+        1369,
+        1600,
+        1849,
+        1936,
+        2116,
+        2209
+      ]
+    },
+    "4": {
+      "n_knots_evaluated": 2977,
+      "n_unique_values": 25,
+      "value_range": [
+        1,
+        2601
+      ],
+      "n_collisions_unique": 14,
+      "collision_density_unique": 0.56,
+      "hit_fraction_with_multiplicity": 0.547195,
+      "random_baseline_density_mean": 0.625542,
+      "random_baseline_density_std": 0.09989,
+      "random_baseline_hit_mean": 0.628786,
+      "random_baseline_hit_std": 0.008581,
+      "z_score_density": -0.656,
+      "z_score_hit": -9.509,
+      "enrichment_density": 0.895,
+      "enrichment_hit": 0.87,
+      "collision_examples": [
+        1,
+        49,
+        81,
+        169,
+        225,
+        361,
+        441,
+        961,
+        1089,
+        1225,
+        1369,
+        1521,
+        1849,
+        2601
+      ]
+    },
+    "5": {
+      "n_knots_evaluated": 2479,
+      "n_unique_values": 225,
+      "value_range": [
+        1,
+        712
+      ],
+      "n_collisions_unique": 140,
+      "collision_density_unique": 0.622222,
+      "hit_fraction_with_multiplicity": 0.641388,
+      "random_baseline_density_mean": 0.626086,
+      "random_baseline_density_std": 0.030357,
+      "random_baseline_hit_mean": 0.625122,
+      "random_baseline_hit_std": 0.009591,
+      "z_score_density": -0.127,
+      "z_score_hit": 1.696,
+      "enrichment_density": 0.994,
+      "enrichment_hit": 1.026,
+      "collision_examples": [
+        1,
+        3,
+        4,
+        5,
+        7,
+        8,
+        11,
+        12,
+        13,
+        15,
+        17,
+        19,
+        20,
+        21,
+        23,
+        24,
+        28,
+        29,
+        31,
+        33
+      ]
+    },
+    "6": {
+      "n_knots_evaluated": 2451,
+      "n_unique_values": 14,
+      "value_range": [
+        1,
+        256
+      ],
+      "n_collisions_unique": 7,
+      "collision_density_unique": 0.5,
+      "hit_fraction_with_multiplicity": 0.650347,
+      "random_baseline_density_mean": 0.628139,
+      "random_baseline_density_std": 0.128997,
+      "random_baseline_hit_mean": 0.621727,
+      "random_baseline_hit_std": 0.010117,
+      "z_score_density": -0.993,
+      "z_score_hit": 2.829,
+      "enrichment_density": 0.796,
+      "enrichment_hit": 1.046,
+      "collision_examples": [
+        1,
+        4,
+        49,
+        81,
+        144,
+        169,
+        256
+      ]
+    }
+  },
+  "collision_structure": {
+    "3": {
+      "n_hitting_knot_evaluations": 1743,
+      "n_unique_hit_values": 41,
+      "top_hit_values": {
+        "49": 92,
+        "784": 86,
+        "1369": 80,
+        "361": 80,
+        "1": 80,
+        "169": 78,
+        "961": 77,
+        "400": 70,
+        "1849": 69,
+        "256": 67
+      },
+      "avg_disc_multiplicity_at_hits": 1.415,
+      "avg_disc_multiplicity_overall": 1.449
+    },
+    "4": {
+      "n_hitting_knot_evaluations": 1629,
+      "n_unique_hit_values": 14,
+      "top_hit_values": {
+        "1": 558,
+        "49": 302,
+        "81": 209,
+        "169": 161,
+        "225": 154,
+        "361": 108,
+        "441": 51,
+        "961": 27,
+        "1089": 18,
+        "1369": 17
+      },
+      "avg_disc_multiplicity_at_hits": 1.0,
+      "avg_disc_multiplicity_overall": 1.449
+    },
+    "5": {
+      "n_hitting_knot_evaluations": 1590,
+      "n_unique_hit_values": 140,
+      "top_hit_values": {
+        "1": 295,
+        "3": 144,
+        "4": 129,
+        "5": 100,
+        "8": 81,
+        "7": 68,
+        "12": 48,
+        "11": 46,
+        "17": 44,
+        "13": 42
+      },
+      "avg_disc_multiplicity_at_hits": 1.271,
+      "avg_disc_multiplicity_overall": 1.449
+    },
+    "6": {
+      "n_hitting_knot_evaluations": 1594,
+      "n_unique_hit_values": 7,
+      "top_hit_values": {
+        "1": 1068,
+        "4": 440,
+        "49": 39,
+        "81": 35,
+        "144": 6,
+        "169": 4,
+        "256": 2
+      },
+      "avg_disc_multiplicity_at_hits": 1.0,
+      "avg_disc_multiplicity_overall": 1.449
+    }
+  },
+  "collisions_by_nf_degree": {
+    "3": {
+      "1": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 1,
+        "collision_rate": 1.0
+      },
+      "2": {
+        "n_discs_in_degree": 5578,
+        "n_collisions": 1,
+        "collision_rate": 0.0002
+      },
+      "3": {
+        "n_discs_in_degree": 1759,
+        "n_collisions": 17,
+        "collision_rate": 0.0097
+      },
+      "4": {
+        "n_discs_in_degree": 860,
+        "n_collisions": 24,
+        "collision_rate": 0.0279
+      },
+      "5": {
+        "n_discs_in_degree": 82,
+        "n_collisions": 2,
+        "collision_rate": 0.0244
+      },
+      "6": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      }
+    },
+    "4": {
+      "1": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 1,
+        "collision_rate": 1.0
+      },
+      "2": {
+        "n_discs_in_degree": 5578,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      },
+      "3": {
+        "n_discs_in_degree": 1759,
+        "n_collisions": 7,
+        "collision_rate": 0.004
+      },
+      "4": {
+        "n_discs_in_degree": 860,
+        "n_collisions": 6,
+        "collision_rate": 0.007
+      },
+      "5": {
+        "n_discs_in_degree": 82,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      },
+      "6": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      }
+    },
+    "5": {
+      "1": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 1,
+        "collision_rate": 1.0
+      },
+      "2": {
+        "n_discs_in_degree": 5578,
+        "n_collisions": 128,
+        "collision_rate": 0.0229
+      },
+      "3": {
+        "n_discs_in_degree": 1759,
+        "n_collisions": 29,
+        "collision_rate": 0.0165
+      },
+      "4": {
+        "n_discs_in_degree": 860,
+        "n_collisions": 5,
+        "collision_rate": 0.0058
+      },
+      "5": {
+        "n_discs_in_degree": 82,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      },
+      "6": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      }
+    },
+    "6": {
+      "1": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 1,
+        "collision_rate": 1.0
+      },
+      "2": {
+        "n_discs_in_degree": 5578,
+        "n_collisions": 1,
+        "collision_rate": 0.0002
+      },
+      "3": {
+        "n_discs_in_degree": 1759,
+        "n_collisions": 3,
+        "collision_rate": 0.0017
+      },
+      "4": {
+        "n_discs_in_degree": 860,
+        "n_collisions": 2,
+        "collision_rate": 0.0023
+      },
+      "5": {
+        "n_discs_in_degree": 82,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      },
+      "6": {
+        "n_discs_in_degree": 1,
+        "n_collisions": 0,
+        "collision_rate": 0.0
+      }
+    }
+  },
+  "mu_KF_mean_enrichment": 1.0008,
+  "max_abs_z_score": 2.336,
+  "verdict": "MARGINAL: weak evidence of non-random collision"
+}
