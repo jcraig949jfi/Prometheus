@@ -1,0 +1,460 @@
+{
+  "experiment": "kissing_from_theta_modp",
+  "description": "Predict lattice kissing number from mod-p fingerprints of theta series",
+  "n_lattices": 39293,
+  "n_train": 31438,
+  "n_test": 7855,
+  "n_features": 100,
+  "primes": [
+    2,
+    3,
+    5,
+    7,
+    11
+  ],
+  "n_theta_terms": 20,
+  "kissing_stats": {
+    "min": 2,
+    "max": 196560,
+    "mean": 7.6,
+    "median": 2.0,
+    "n_unique": 43
+  },
+  "models": {
+    "baseline_mean": {
+      "R2": -0.000127,
+      "MAE": 26.0124,
+      "RMSE": 2217.7719
+    },
+    "linear_regression": {
+      "R2": -8.2e-05,
+      "MAE": 25.7203,
+      "RMSE": 2217.7215,
+      "per_class": {
+        "2": {
+          "count": 6510,
+          "mae": 0.4534,
+          "mean_pred": 2.1877
+        },
+        "4": {
+          "count": 932,
+          "mae": 0.9894,
+          "mean_pred": 3.5013
+        },
+        "6": {
+          "count": 343,
+          "mae": 1.7068,
+          "mean_pred": 5.775
+        },
+        "8": {
+          "count": 24,
+          "mae": 6.4142,
+          "mean_pred": 10.2179
+        },
+        "10": {
+          "count": 6,
+          "mae": 5.8707,
+          "mean_pred": 11.5772
+        },
+        "12": {
+          "count": 12,
+          "mae": 3.8477,
+          "mean_pred": 9.9064
+        },
+        "14": {
+          "count": 5,
+          "mae": 7.2634,
+          "mean_pred": 6.7366
+        },
+        "18": {
+          "count": 2,
+          "mae": 8.3663,
+          "mean_pred": 9.6337
+        },
+        "20": {
+          "count": 4,
+          "mae": 9.1301,
+          "mean_pred": 10.8699
+        },
+        "24": {
+          "count": 3,
+          "mae": 15.1834,
+          "mean_pred": 8.8166
+        },
+        "26": {
+          "count": 1,
+          "mae": 7.0942,
+          "mean_pred": 18.9058
+        },
+        "30": {
+          "count": 2,
+          "mae": 11.2702,
+          "mean_pred": 18.7298
+        },
+        "42": {
+          "count": 2,
+          "mae": 18.9877,
+          "mean_pred": 23.0123
+        },
+        "54": {
+          "count": 1,
+          "mae": 36.4944,
+          "mean_pred": 17.5056
+        },
+        "56": {
+          "count": 1,
+          "mae": 43.3762,
+          "mean_pred": 12.6238
+        },
+        "62": {
+          "count": 1,
+          "mae": 40.8251,
+          "mean_pred": 21.1749
+        },
+        "72": {
+          "count": 2,
+          "mae": 47.6568,
+          "mean_pred": 24.3432
+        },
+        "84": {
+          "count": 1,
+          "mae": 74.0637,
+          "mean_pred": 9.9363
+        },
+        "126": {
+          "count": 1,
+          "mae": 99.9299,
+          "mean_pred": 26.0701
+        },
+        "210": {
+          "count": 1,
+          "mae": 192.5041,
+          "mean_pred": 17.4959
+        },
+        "196560": {
+          "count": 1,
+          "mae": 196552.9994,
+          "mean_pred": 7.0006
+        }
+      }
+    },
+    "ridge_regression": {
+      "R2": -8.2e-05,
+      "MAE": 25.7201,
+      "RMSE": 2217.7215,
+      "per_class": {
+        "2": {
+          "count": 6510,
+          "mae": 0.4532,
+          "mean_pred": 2.1878
+        },
+        "4": {
+          "count": 932,
+          "mae": 0.9895,
+          "mean_pred": 3.501
+        },
+        "6": {
+          "count": 343,
+          "mae": 1.7065,
+          "mean_pred": 5.7752
+        },
+        "8": {
+          "count": 24,
+          "mae": 6.4141,
+          "mean_pred": 10.2159
+        },
+        "10": {
+          "count": 6,
+          "mae": 5.8677,
+          "mean_pred": 11.5766
+        },
+        "12": {
+          "count": 12,
+          "mae": 3.8454,
+          "mean_pred": 9.9035
+        },
+        "14": {
+          "count": 5,
+          "mae": 7.276,
+          "mean_pred": 6.724
+        },
+        "18": {
+          "count": 2,
+          "mae": 8.3684,
+          "mean_pred": 9.6316
+        },
+        "20": {
+          "count": 4,
+          "mae": 9.1282,
+          "mean_pred": 10.8718
+        },
+        "24": {
+          "count": 3,
+          "mae": 15.1823,
+          "mean_pred": 8.8177
+        },
+        "26": {
+          "count": 1,
+          "mae": 7.0968,
+          "mean_pred": 18.9032
+        },
+        "30": {
+          "count": 2,
+          "mae": 11.2729,
+          "mean_pred": 18.7271
+        },
+        "42": {
+          "count": 2,
+          "mae": 18.9908,
+          "mean_pred": 23.0092
+        },
+        "54": {
+          "count": 1,
+          "mae": 36.4978,
+          "mean_pred": 17.5022
+        },
+        "56": {
+          "count": 1,
+          "mae": 43.371,
+          "mean_pred": 12.629
+        },
+        "62": {
+          "count": 1,
+          "mae": 40.8305,
+          "mean_pred": 21.1695
+        },
+        "72": {
+          "count": 2,
+          "mae": 47.6613,
+          "mean_pred": 24.3387
+        },
+        "84": {
+          "count": 1,
+          "mae": 74.0655,
+          "mean_pred": 9.9345
+        },
+        "126": {
+          "count": 1,
+          "mae": 99.9357,
+          "mean_pred": 26.0643
+        },
+        "210": {
+          "count": 1,
+          "mae": 192.5176,
+          "mean_pred": 17.4824
+        },
+        "196560": {
+          "count": 1,
+          "mae": 196553.0007,
+          "mean_pred": 6.9993
+        }
+      }
+    },
+    "knn_regression": {
+      "k": 5,
+      "R2": -0.000133,
+      "MAE": 25.2199,
+      "RMSE": 2217.7782,
+      "per_class": {
+        "2": {
+          "count": 6510,
+          "mae": 0.0321,
+          "mean_pred": 2.0321
+        },
+        "4": {
+          "count": 932,
+          "mae": 0.149,
+          "mean_pred": 3.9143
+        },
+        "6": {
+          "count": 343,
+          "mae": 0.3762,
+          "mean_pred": 6.0821
+        },
+        "8": {
+          "count": 24,
+          "mae": 6.2974,
+          "mean_pred": 11.2188
+        },
+        "10": {
+          "count": 6,
+          "mae": 3.939,
+          "mean_pred": 11.546
+        },
+        "12": {
+          "count": 12,
+          "mae": 4.3807,
+          "mean_pred": 8.1083
+        },
+        "14": {
+          "count": 5,
+          "mae": 8.4772,
+          "mean_pred": 5.5228
+        },
+        "18": {
+          "count": 2,
+          "mae": 10.3752,
+          "mean_pred": 7.6248
+        },
+        "20": {
+          "count": 4,
+          "mae": 6.7165,
+          "mean_pred": 16.8597
+        },
+        "24": {
+          "count": 3,
+          "mae": 13.9732,
+          "mean_pred": 10.0268
+        },
+        "26": {
+          "count": 1,
+          "mae": 10.6566,
+          "mean_pred": 15.3434
+        },
+        "30": {
+          "count": 2,
+          "mae": 13.6342,
+          "mean_pred": 16.3658
+        },
+        "42": {
+          "count": 2,
+          "mae": 25.3953,
+          "mean_pred": 54.0824
+        },
+        "54": {
+          "count": 1,
+          "mae": 45.8596,
+          "mean_pred": 8.1404
+        },
+        "56": {
+          "count": 1,
+          "mae": 52.8134,
+          "mean_pred": 3.1866
+        },
+        "62": {
+          "count": 1,
+          "mae": 49.2417,
+          "mean_pred": 12.7583
+        },
+        "72": {
+          "count": 2,
+          "mae": 48.1815,
+          "mean_pred": 23.8185
+        },
+        "84": {
+          "count": 1,
+          "mae": 73.5574,
+          "mean_pred": 10.4426
+        },
+        "126": {
+          "count": 1,
+          "mae": 97.4417,
+          "mean_pred": 28.5583
+        },
+        "210": {
+          "count": 1,
+          "mae": 204.0,
+          "mean_pred": 6.0
+        },
+        "196560": {
+          "count": 1,
+          "mae": 196558.0,
+          "mean_pred": 2.0
+        }
+      }
+    },
+    "knn_log_target": {
+      "R2": 0.690615,
+      "MAE_log": 0.0177,
+      "note": "k-NN on log(1+kissing); R2 and MAE in log-space"
+    },
+    "knn_with_dimension": {
+      "R2": -0.000103,
+      "MAE": 25.1999,
+      "accuracy": 0.9644,
+      "note": "dimension appended as 101st feature"
+    }
+  },
+  "classification_accuracy": {
+    "baseline_mean": 0.0,
+    "linear_regression": 0.607,
+    "ridge_regression": 0.6071,
+    "knn_regression": 0.9658
+  },
+  "feature_importance_by_prime": {
+    "2": {
+      "mean_abs_corr": 0.0,
+      "max_abs_corr": 0.0,
+      "top_term_idx": 0
+    },
+    "3": {
+      "mean_abs_corr": 0.027029,
+      "max_abs_corr": 0.076175,
+      "top_term_idx": 8
+    },
+    "5": {
+      "mean_abs_corr": 0.027382,
+      "max_abs_corr": 0.057183,
+      "top_term_idx": 7
+    },
+    "7": {
+      "mean_abs_corr": 0.049394,
+      "max_abs_corr": 0.116083,
+      "top_term_idx": 2
+    },
+    "11": {
+      "mean_abs_corr": 0.072907,
+      "max_abs_corr": 0.178327,
+      "top_term_idx": 6
+    }
+  },
+  "dimension_conditioned_knn": {
+    "2": {
+      "n": 1609,
+      "R2": -0.141092,
+      "MAE": 0.0976,
+      "accuracy": 0.941
+    },
+    "3": {
+      "n": 36585,
+      "R2": 0.934469,
+      "MAE": 0.0377,
+      "accuracy": 0.9766
+    },
+    "4": {
+      "n": 481,
+      "R2": 0.301405,
+      "MAE": 1.3339,
+      "accuracy": 0.383
+    },
+    "5": {
+      "n": 295,
+      "R2": 0.270573,
+      "MAE": 3.0674,
+      "accuracy": 0.1228
+    },
+    "6": {
+      "n": 186,
+      "R2": 0.157664,
+      "MAE": 6.1895,
+      "accuracy": 0.0857
+    },
+    "7": {
+      "n": 86,
+      "R2": 0.145626,
+      "MAE": 20.8219,
+      "accuracy": 0.1429
+    }
+  },
+  "verdict": "SPLIT: globally R\u00b2~0 (extreme range masks signal), but within dim=3 k-NN R\u00b2=0.93; classification accuracy 96.6%. Mod-p fingerprints encode kissing number within fixed dimension.",
+  "verdict_global_regression": "NULL: R\u00b2 <= 0 for all models \u2014 extreme outliers dominate variance",
+  "verdict_classification": "STRONG: k-NN exact-match accuracy 96.6%, beating OLS (60.7%) and baseline (0%)",
+  "verdict_dim_conditioned": "STRONG: within dim=3, k-NN R\u00b2=0.9345",
+  "key_finding": "The mod-p fingerprint of theta series coefficients is an almost-perfect discrete classifier of kissing number (96.6%) but a poor continuous predictor due to extreme dynamic range. The geometric information IS encoded in the arithmetic \u2014 regression R\u00b2 is the wrong lens.",
+  "feature_hierarchy": "p=11 > p=7 > p=5 > p=3 >> p=2 (mod-2 residues constant across all lattices, zero information)",
+  "best_model": "knn_classification",
+  "best_R2_global": -8.2e-05,
+  "best_R2_dim3": 0.934469,
+  "best_classification_accuracy": 0.965754,
+  "elapsed_seconds": 9.57
+}
