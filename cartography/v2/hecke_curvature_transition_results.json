@@ -1,0 +1,180 @@
+{
+  "problem": "Frontier2 #2: Ollivier-Ricci Curvature Phase Transition on Mod-ell Hecke Graphs",
+  "parameters": {
+    "ells": [
+      3,
+      5,
+      7,
+      11
+    ],
+    "k_nn": 10,
+    "num_primes": 25,
+    "orc_alpha": 0.5,
+    "max_orc_edges": 5000
+  },
+  "per_ell_results": [
+    {
+      "ell": 3,
+      "curvature_stats": {
+        "ell": 3,
+        "n_edges_measured": 5000,
+        "mean_curvature": -0.34585356667613915,
+        "median_curvature": -0.4333333333333337,
+        "std_curvature": 0.3643781008982713,
+        "min_curvature": -0.8973684210526311,
+        "max_curvature": 0.55,
+        "frac_negative": 0.7774,
+        "frac_positive": 0.2218,
+        "frac_zero": 0.0008,
+        "q25": -0.6576923076923071,
+        "q75": -0.04999999999999999
+      },
+      "graph_stats": {
+        "n_nodes": 17314,
+        "n_edges": 121476,
+        "n_components": 1,
+        "largest_component": 17314,
+        "n_triangles": 173458
+      },
+      "fingerprint_diversity": {
+        "n_forms": 17314,
+        "n_unique_fingerprints": 12453,
+        "diversity_ratio": 0.7192445419891418,
+        "ell": 3,
+        "fingerprint_dim": 25
+      },
+      "elapsed_s": 16.67
+    },
+    {
+      "ell": 5,
+      "curvature_stats": {
+        "ell": 5,
+        "n_edges_measured": 5000,
+        "mean_curvature": -0.6202317398193409,
+        "median_curvature": -0.7027972027972027,
+        "std_curvature": 0.24436282928282715,
+        "min_curvature": -0.8944444444444433,
+        "max_curvature": 0.5416666666666666,
+        "frac_negative": 0.9642,
+        "frac_positive": 0.0358,
+        "frac_zero": 0.0,
+        "q25": -0.7840909090909092,
+        "q75": -0.5643939393939394
+      },
+      "graph_stats": {
+        "n_nodes": 17314,
+        "n_edges": 116459,
+        "n_components": 1,
+        "largest_component": 17314,
+        "n_triangles": 57598
+      },
+      "fingerprint_diversity": {
+        "n_forms": 17314,
+        "n_unique_fingerprints": 16296,
+        "diversity_ratio": 0.9412036502252512,
+        "ell": 5,
+        "fingerprint_dim": 25
+      },
+      "elapsed_s": 16.16
+    },
+    {
+      "ell": 7,
+      "curvature_stats": {
+        "ell": 7,
+        "n_edges_measured": 5000,
+        "mean_curvature": -0.6644629731162816,
+        "median_curvature": -0.7346153846153843,
+        "std_curvature": 0.20600739854584071,
+        "min_curvature": -0.9027777777777772,
+        "max_curvature": 0.4201388888888894,
+        "frac_negative": 0.9844,
+        "frac_positive": 0.0148,
+        "frac_zero": 0.0008,
+        "q25": -0.7999999999999994,
+        "q75": -0.6280680668016192
+      },
+      "graph_stats": {
+        "n_nodes": 17314,
+        "n_edges": 117286,
+        "n_components": 1,
+        "largest_component": 17314,
+        "n_triangles": 40949
+      },
+      "fingerprint_diversity": {
+        "n_forms": 17314,
+        "n_unique_fingerprints": 17126,
+        "diversity_ratio": 0.9891417350121289,
+        "ell": 7,
+        "fingerprint_dim": 25
+      },
+      "elapsed_s": 22.17
+    },
+    {
+      "ell": 11,
+      "curvature_stats": {
+        "ell": 11,
+        "n_edges_measured": 5000,
+        "mean_curvature": -0.6711583774042594,
+        "median_curvature": -0.7291666666666666,
+        "std_curvature": 0.1832509282769602,
+        "min_curvature": -0.8947368421052633,
+        "max_curvature": 0.1853146853146852,
+        "frac_negative": 0.9936,
+        "frac_positive": 0.006,
+        "frac_zero": 0.0004,
+        "q25": -0.7937062937062935,
+        "q75": -0.6247329059829057
+      },
+      "graph_stats": {
+        "n_nodes": 17314,
+        "n_edges": 122770,
+        "n_components": 1,
+        "largest_component": 17314,
+        "n_triangles": 40041
+      },
+      "fingerprint_diversity": {
+        "n_forms": 17314,
+        "n_unique_fingerprints": 17309,
+        "diversity_ratio": 0.9997112163567056,
+        "ell": 11,
+        "fingerprint_dim": 25
+      },
+      "elapsed_s": 16.68
+    }
+  ],
+  "phase_transition_analysis": {
+    "sign_changes": [],
+    "curvature_gradients": [
+      {
+        "ell_interval": [
+          3,
+          5
+        ],
+        "d_kappa_d_ell": -0.137189
+      },
+      {
+        "ell_interval": [
+          5,
+          7
+        ],
+        "d_kappa_d_ell": -0.022116
+      },
+      {
+        "ell_interval": [
+          7,
+          11
+        ],
+        "d_kappa_d_ell": -0.001674
+      }
+    ],
+    "has_phase_transition": false,
+    "critical_ell": null
+  },
+  "f4_comparison": {
+    "f4_kappa_star": 0.73,
+    "f4_ell": 5,
+    "our_kappa_at_ell5": -0.6202317398193409,
+    "ratio": -0.849632520300467
+  },
+  "total_elapsed_s": 72.15
+}

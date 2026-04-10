@@ -1,0 +1,538 @@
+{
+  "experiment": "recurrence_zeta_transfer",
+  "description": "Rosetta axis Recurrence->Series->Zeta transfer efficiency. Measures mod-p fingerprint enrichment at each pipeline stage: Stage 1 (characteristic polynomial), Stage 2 (generating function P/Q), Stage 3 (evaluate at zeta-related points x=1/2, 1/4, 1/10). T_ij = P(stage_j match | stage_i match) / P(stage_j match | random).",
+  "n_candidates": 500,
+  "order_distribution": {
+    "1": 184,
+    "2": 316
+  },
+  "primes": [
+    2,
+    3,
+    5,
+    7,
+    11,
+    13
+  ],
+  "eval_points": {
+    "x=1/2": "1/2",
+    "x=1/4": "1/4",
+    "x=1/10": "1/10"
+  },
+  "results_by_prime": {
+    "2": {
+      "n_sequences": 437,
+      "T_12": 3.9157,
+      "T_23": 1.1886,
+      "T_13": 1.1792,
+      "stage1_stats": {
+        "n_fingerprints": 6,
+        "n_colliding": 6,
+        "max_group": 176,
+        "mean_group": 72.833
+      },
+      "stage2_stats": {
+        "n_fingerprints": 18,
+        "n_colliding": 17,
+        "max_group": 86,
+        "mean_group": 24.278
+      },
+      "stage3_stats": {
+        "n_fingerprints": 4,
+        "n_colliding": 4,
+        "max_group": 391,
+        "mean_group": 109.25
+      }
+    },
+    "3": {
+      "n_sequences": 437,
+      "T_12": 7.8209,
+      "T_23": 6.3482,
+      "T_13": 2.3918,
+      "stage1_stats": {
+        "n_fingerprints": 12,
+        "n_colliding": 12,
+        "max_group": 103,
+        "mean_group": 36.417
+      },
+      "stage2_stats": {
+        "n_fingerprints": 58,
+        "n_colliding": 41,
+        "max_group": 50,
+        "mean_group": 7.534
+      },
+      "stage3_stats": {
+        "n_fingerprints": 20,
+        "n_colliding": 16,
+        "max_group": 67,
+        "mean_group": 21.85
+      }
+    },
+    "5": {
+      "n_sequences": 437,
+      "T_12": 11.3846,
+      "T_23": 9.4662,
+      "T_13": 1.8198,
+      "stage1_stats": {
+        "n_fingerprints": 29,
+        "n_colliding": 28,
+        "max_group": 93,
+        "mean_group": 15.069
+      },
+      "stage2_stats": {
+        "n_fingerprints": 129,
+        "n_colliding": 81,
+        "max_group": 27,
+        "mean_group": 3.388
+      },
+      "stage3_stats": {
+        "n_fingerprints": 35,
+        "n_colliding": 29,
+        "max_group": 58,
+        "mean_group": 12.486
+      }
+    },
+    "7": {
+      "n_sequences": 437,
+      "T_12": 14.2656,
+      "T_23": 25.4035,
+      "T_13": 2.765,
+      "stage1_stats": {
+        "n_fingerprints": 53,
+        "n_colliding": 43,
+        "max_group": 87,
+        "mean_group": 8.245
+      },
+      "stage2_stats": {
+        "n_fingerprints": 197,
+        "n_colliding": 97,
+        "max_group": 18,
+        "mean_group": 2.218
+      },
+      "stage3_stats": {
+        "n_fingerprints": 130,
+        "n_colliding": 66,
+        "max_group": 22,
+        "mean_group": 3.362
+      }
+    },
+    "11": {
+      "n_sequences": 437,
+      "T_12": 16.2155,
+      "T_23": 37.1166,
+      "T_13": 2.1522,
+      "stage1_stats": {
+        "n_fingerprints": 82,
+        "n_colliding": 48,
+        "max_group": 86,
+        "mean_group": 5.329
+      },
+      "stage2_stats": {
+        "n_fingerprints": 279,
+        "n_colliding": 87,
+        "max_group": 14,
+        "mean_group": 1.566
+      },
+      "stage3_stats": {
+        "n_fingerprints": 183,
+        "n_colliding": 76,
+        "max_group": 22,
+        "mean_group": 2.388
+      }
+    },
+    "13": {
+      "n_sequences": 437,
+      "T_12": 17.8937,
+      "T_23": 34.0583,
+      "T_13": 1.0235,
+      "stage1_stats": {
+        "n_fingerprints": 100,
+        "n_colliding": 49,
+        "max_group": 85,
+        "mean_group": 4.37
+      },
+      "stage2_stats": {
+        "n_fingerprints": 322,
+        "n_colliding": 81,
+        "max_group": 6,
+        "mean_group": 1.357
+      },
+      "stage3_stats": {
+        "n_fingerprints": 201,
+        "n_colliding": 75,
+        "max_group": 20,
+        "mean_group": 2.174
+      }
+    }
+  },
+  "summary": {
+    "mean_T_12": 11.916,
+    "mean_T_23": 18.9302,
+    "mean_T_13": 1.8886,
+    "interpretation": "Adjacent stages preserve structure (T_12=11.92, T_23=18.93) but the end-to-end transfer is weak (T_13=1.89). This is a 'leaky pipe': each joint is tight but the composition loses coherence. The generating function acts as a scrambler \u2014 it preserves recurrence structure AND predicts zeta evaluations, but via different features at each interface."
+  },
+  "examples": [
+    {
+      "seq_id": "A001020",
+      "order": 1,
+      "coeffs": {
+        "1": 11
+      },
+      "char_poly": [
+        1,
+        -11
+      ],
+      "P": [
+        1
+      ],
+      "Q": [
+        1,
+        -11
+      ],
+      "gf_evals": {
+        "x=1/2": "-0.22222222",
+        "x=1/4": "-0.57142857",
+        "x=1/10": "-10"
+      },
+      "first_terms": [
+        1,
+        11,
+        121,
+        1331,
+        14641,
+        161051,
+        1771561,
+        19487171,
+        214358881,
+        2357947691,
+        25937424601,
+        285311670611
+      ]
+    },
+    {
+      "seq_id": "A001021",
+      "order": 1,
+      "coeffs": {
+        "1": 12
+      },
+      "char_poly": [
+        1,
+        -12
+      ],
+      "P": [
+        1
+      ],
+      "Q": [
+        1,
+        -12
+      ],
+      "gf_evals": {
+        "x=1/2": "-0.2",
+        "x=1/4": "-0.5",
+        "x=1/10": "-5"
+      },
+      "first_terms": [
+        1,
+        12,
+        144,
+        1728,
+        20736,
+        248832,
+        2985984,
+        35831808,
+        429981696,
+        5159780352,
+        61917364224,
+        743008370688
+      ]
+    },
+    {
+      "seq_id": "A002042",
+      "order": 1,
+      "coeffs": {
+        "1": 4
+      },
+      "char_poly": [
+        1,
+        -4
+      ],
+      "P": [
+        7
+      ],
+      "Q": [
+        1,
+        -4
+      ],
+      "gf_evals": {
+        "x=1/2": "-7",
+        "x=1/10": "11.666667"
+      },
+      "first_terms": [
+        7,
+        28,
+        112,
+        448,
+        1792,
+        7168,
+        28672,
+        114688,
+        458752,
+        1835008,
+        7340032,
+        29360128
+      ]
+    },
+    {
+      "seq_id": "A002063",
+      "order": 1,
+      "coeffs": {
+        "1": 4
+      },
+      "char_poly": [
+        1,
+        -4
+      ],
+      "P": [
+        9
+      ],
+      "Q": [
+        1,
+        -4
+      ],
+      "gf_evals": {
+        "x=1/2": "-9",
+        "x=1/10": "15"
+      },
+      "first_terms": [
+        9,
+        36,
+        144,
+        576,
+        2304,
+        9216,
+        36864,
+        147456,
+        589824,
+        2359296,
+        9437184,
+        37748736
+      ]
+    },
+    {
+      "seq_id": "A002066",
+      "order": 1,
+      "coeffs": {
+        "1": 4
+      },
+      "char_poly": [
+        1,
+        -4
+      ],
+      "P": [
+        10
+      ],
+      "Q": [
+        1,
+        -4
+      ],
+      "gf_evals": {
+        "x=1/2": "-10",
+        "x=1/10": "16.666667"
+      },
+      "first_terms": [
+        10,
+        40,
+        160,
+        640,
+        2560,
+        10240,
+        40960,
+        163840,
+        655360,
+        2621440,
+        10485760,
+        41943040
+      ]
+    },
+    {
+      "seq_id": "A002089",
+      "order": 1,
+      "coeffs": {
+        "1": 4
+      },
+      "char_poly": [
+        1,
+        -4
+      ],
+      "P": [
+        11
+      ],
+      "Q": [
+        1,
+        -4
+      ],
+      "gf_evals": {
+        "x=1/2": "-11",
+        "x=1/10": "18.333333"
+      },
+      "first_terms": [
+        11,
+        44,
+        176,
+        704,
+        2816,
+        11264,
+        45056,
+        180224,
+        720896,
+        2883584,
+        11534336,
+        46137344
+      ]
+    },
+    {
+      "seq_id": "A004171",
+      "order": 1,
+      "coeffs": {
+        "1": 4
+      },
+      "char_poly": [
+        1,
+        -4
+      ],
+      "P": [
+        2
+      ],
+      "Q": [
+        1,
+        -4
+      ],
+      "gf_evals": {
+        "x=1/2": "-2",
+        "x=1/10": "3.3333333"
+      },
+      "first_terms": [
+        2,
+        8,
+        32,
+        128,
+        512,
+        2048,
+        8192,
+        32768,
+        131072,
+        524288,
+        2097152,
+        8388608
+      ]
+    },
+    {
+      "seq_id": "A005009",
+      "order": 1,
+      "coeffs": {
+        "1": 2
+      },
+      "char_poly": [
+        1,
+        -2
+      ],
+      "P": [
+        7
+      ],
+      "Q": [
+        1,
+        -2
+      ],
+      "gf_evals": {
+        "x=1/4": "14",
+        "x=1/10": "8.75"
+      },
+      "first_terms": [
+        7,
+        14,
+        28,
+        56,
+        112,
+        224,
+        448,
+        896,
+        1792,
+        3584,
+        7168,
+        14336
+      ]
+    },
+    {
+      "seq_id": "A005010",
+      "order": 1,
+      "coeffs": {
+        "1": 2
+      },
+      "char_poly": [
+        1,
+        -2
+      ],
+      "P": [
+        9
+      ],
+      "Q": [
+        1,
+        -2
+      ],
+      "gf_evals": {
+        "x=1/4": "18",
+        "x=1/10": "11.25"
+      },
+      "first_terms": [
+        9,
+        18,
+        36,
+        72,
+        144,
+        288,
+        576,
+        1152,
+        2304,
+        4608,
+        9216,
+        18432
+      ]
+    },
+    {
+      "seq_id": "A005015",
+      "order": 1,
+      "coeffs": {
+        "1": 2
+      },
+      "char_poly": [
+        1,
+        -2
+      ],
+      "P": [
+        11
+      ],
+      "Q": [
+        1,
+        -2
+      ],
+      "gf_evals": {
+        "x=1/4": "22",
+        "x=1/10": "13.75"
+      },
+      "first_terms": [
+        11,
+        22,
+        44,
+        88,
+        176,
+        352,
+        704,
+        1408,
+        2816,
+        5632,
+        11264,
+        22528
+      ]
+    }
+  ]
+}
