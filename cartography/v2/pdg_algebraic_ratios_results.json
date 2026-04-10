@@ -1,0 +1,775 @@
+{
+  "metadata": {
+    "n_particles": 225,
+    "n_ratios": 25200,
+    "tolerance": 0.001,
+    "max_degree": 4,
+    "max_coeff": 100,
+    "n_algebraic_targets": 32903,
+    "elapsed_seconds": 1.9
+  },
+  "real_data": {
+    "n_hits": 23609,
+    "hit_rate": 0.936865,
+    "degree_distribution": {
+      "1": 5951,
+      "2": 9812,
+      "3": 3993,
+      "4": 3853
+    }
+  },
+  "control": {
+    "n_trials": 5,
+    "hit_counts": [
+      12657,
+      12835,
+      12939,
+      13225,
+      12470
+    ],
+    "mean_hits": 12825.2,
+    "std_hits": 255.9,
+    "hit_rate": 0.508937
+  },
+  "comparison": {
+    "real_vs_control_ratio": 1.841,
+    "z_score": 42.15,
+    "verdict": "ABOVE_BASELINE"
+  },
+  "precision_stratified": {
+    "1e-04": {
+      "tolerance": 0.0001,
+      "real_hits": 17139,
+      "control_mean": 6643.6,
+      "control_std": 181.3,
+      "z_score": 57.88
+    },
+    "1e-05": {
+      "tolerance": 1e-05,
+      "real_hits": 4756,
+      "control_mean": 1188.8,
+      "control_std": 24.3,
+      "z_score": 146.74
+    },
+    "1e-06": {
+      "tolerance": 1e-06,
+      "real_hits": 1033,
+      "control_mean": 127.4,
+      "control_std": 8.3,
+      "z_score": 108.99
+    },
+    "1e-07": {
+      "tolerance": 1e-07,
+      "real_hits": 636,
+      "control_mean": 14.0,
+      "control_std": 1.9,
+      "z_score": 327.82
+    }
+  },
+  "ultra_precise_matches": [
+    {
+      "particle_i": "(b)               -(mc=5132)",
+      "particle_j": "-1/3(mc=3)",
+      "ratio": 62.0,
+      "algebraic_value": 62.0,
+      "polynomial": "1*x - 62",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "-1/3(mc=5)",
+      "particle_j": "lta(1905)  -,0,+,++(mc=1116)",
+      "ratio": 2.225,
+      "algebraic_value": 2.225,
+      "polynomial": "40*x - 89",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "ega(1420)         0(mc=100223)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.35,
+      "algebraic_value": 2.35,
+      "polynomial": "20*x - 47",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "i(1680)           0(mc=100333)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.8,
+      "algebraic_value": 2.8,
+      "polynomial": "5*x - 14",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1)(1650)        0,+(mc=9000313)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.75,
+      "algebraic_value": 2.75,
+      "polynomial": "4*x - 11",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1440)           0,+(mc=12112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.4,
+      "algebraic_value": 2.4,
+      "polynomial": "5*x - 12",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1650)           0,+(mc=32112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.75,
+      "algebraic_value": 2.75,
+      "polynomial": "4*x - 11",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1710)           0,+(mc=42112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.85,
+      "algebraic_value": 2.85,
+      "polynomial": "20*x - 57",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1700)  -,0,+,++(mc=11114)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.85,
+      "algebraic_value": 2.85,
+      "polynomial": "20*x - 57",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1900)  -,0,+,++(mc=11112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.1,
+      "algebraic_value": 3.1,
+      "polynomial": "10*x - 31",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1920)  -,0,+,++(mc=21114)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.2,
+      "algebraic_value": 3.2,
+      "polynomial": "5*x - 16",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1930)  -,0,+,++(mc=11116)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.25,
+      "algebraic_value": 3.25,
+      "polynomial": "4*x - 13",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1800)        0(mc=43122)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.0,
+      "algebraic_value": 3.0,
+      "polynomial": "1*x - 3",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1890)        0(mc=23124)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.15,
+      "algebraic_value": 3.15,
+      "polynomial": "20*x - 63",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(1950)          -,0(mc=103316)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.25,
+      "algebraic_value": 3.25,
+      "polynomial": "4*x - 13",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(2030)          -,0(mc=203316)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.375,
+      "algebraic_value": 3.375,
+      "polynomial": "8*x - 27",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "a(1475)           0(mc=100331)",
+      "particle_j": "1)(1260)        0,+(mc=20113)",
+      "ratio": 1.2,
+      "algebraic_value": 1.2,
+      "polynomial": "5*x - 6",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1930)  -,0,+,++(mc=11116)",
+      "particle_j": "(1300)          0,+(mc=100111)",
+      "ratio": 1.5,
+      "algebraic_value": 1.5,
+      "polynomial": "2*x - 3",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1820)        0(mc=3126)",
+      "particle_j": "(1300)          0,+(mc=100111)",
+      "ratio": 1.4,
+      "algebraic_value": 1.4,
+      "polynomial": "5*x - 7",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(1950)          -,0(mc=103316)",
+      "particle_j": "(1300)          0,+(mc=100111)",
+      "ratio": 1.5,
+      "algebraic_value": 1.5,
+      "polynomial": "2*x - 3",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    }
+  ],
+  "top_50_hits": [
+    {
+      "particle_i": "(b)               -(mc=5132)",
+      "particle_j": "-1/3(mc=3)",
+      "ratio": 62.0,
+      "algebraic_value": 62.0,
+      "polynomial": "1*x - 62",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "-1/3(mc=5)",
+      "particle_j": "lta(1905)  -,0,+,++(mc=1116)",
+      "ratio": 2.225,
+      "algebraic_value": 2.225,
+      "polynomial": "40*x - 89",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "ega(1420)         0(mc=100223)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.35,
+      "algebraic_value": 2.35,
+      "polynomial": "20*x - 47",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "i(1680)           0(mc=100333)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.8,
+      "algebraic_value": 2.8,
+      "polynomial": "5*x - 14",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1)(1650)        0,+(mc=9000313)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.75,
+      "algebraic_value": 2.75,
+      "polynomial": "4*x - 11",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1440)           0,+(mc=12112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.4,
+      "algebraic_value": 2.4,
+      "polynomial": "5*x - 12",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1650)           0,+(mc=32112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.75,
+      "algebraic_value": 2.75,
+      "polynomial": "4*x - 11",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1710)           0,+(mc=42112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.85,
+      "algebraic_value": 2.85,
+      "polynomial": "20*x - 57",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1700)  -,0,+,++(mc=11114)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 2.85,
+      "algebraic_value": 2.85,
+      "polynomial": "20*x - 57",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1900)  -,0,+,++(mc=11112)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.1,
+      "algebraic_value": 3.1,
+      "polynomial": "10*x - 31",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1920)  -,0,+,++(mc=21114)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.2,
+      "algebraic_value": 3.2,
+      "polynomial": "5*x - 16",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1930)  -,0,+,++(mc=11116)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.25,
+      "algebraic_value": 3.25,
+      "polynomial": "4*x - 13",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1800)        0(mc=43122)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.0,
+      "algebraic_value": 3.0,
+      "polynomial": "1*x - 3",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1890)        0(mc=23124)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.15,
+      "algebraic_value": 3.15,
+      "polynomial": "20*x - 63",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(1950)          -,0(mc=103316)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.25,
+      "algebraic_value": 3.25,
+      "polynomial": "4*x - 13",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(2030)          -,0(mc=203316)",
+      "particle_j": "0)(500)           0(mc=9000221)",
+      "ratio": 3.375,
+      "algebraic_value": 3.375,
+      "polynomial": "8*x - 27",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "a(1475)           0(mc=100331)",
+      "particle_j": "1)(1260)        0,+(mc=20113)",
+      "ratio": 1.2,
+      "algebraic_value": 1.2,
+      "polynomial": "5*x - 6",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1930)  -,0,+,++(mc=11116)",
+      "particle_j": "(1300)          0,+(mc=100111)",
+      "ratio": 1.5,
+      "algebraic_value": 1.5,
+      "polynomial": "2*x - 3",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1820)        0(mc=3126)",
+      "particle_j": "(1300)          0,+(mc=100111)",
+      "ratio": 1.4,
+      "algebraic_value": 1.4,
+      "polynomial": "5*x - 7",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(1950)          -,0(mc=103316)",
+      "particle_j": "(1300)          0,+(mc=100111)",
+      "ratio": 1.5,
+      "algebraic_value": 1.5,
+      "polynomial": "2*x - 3",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "2)(1320)        0,+(mc=115)",
+      "particle_j": "0)*(700)        0,+(mc=9000311)",
+      "ratio": 1.56,
+      "algebraic_value": 1.56,
+      "polynomial": "25*x - 39",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1890)        0(mc=23124)",
+      "particle_j": "0)(1370)          0(mc=10221)",
+      "ratio": 1.4,
+      "algebraic_value": 1.4,
+      "polynomial": "5*x - 7",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "a(2)(1645)        0(mc=10225)",
+      "particle_j": "lta(1232)  -,0,+,++(mc=1114)",
+      "ratio": 1.3125,
+      "algebraic_value": 1.3125,
+      "polynomial": "16*x - 21",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1890)        0(mc=23124)",
+      "particle_j": "i(1680)           0(mc=100333)",
+      "ratio": 1.125,
+      "algebraic_value": 1.125,
+      "polynomial": "8*x - 9",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(2100)        0(mc=3128)",
+      "particle_j": "i(1680)           0(mc=100333)",
+      "ratio": 1.25,
+      "algebraic_value": 1.25,
+      "polynomial": "4*x - 5",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "o(1700)         0,+(mc=30113)",
+      "particle_j": "1700)           0,+(mc=21214)",
+      "ratio": 1.0,
+      "algebraic_value": 1.0,
+      "polynomial": "1*x - 1",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "o(1700)         0,+(mc=30113)",
+      "particle_j": "1720)           0,+(mc=31214)",
+      "ratio": 1.0,
+      "algebraic_value": 1.0,
+      "polynomial": "1*x - 1",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "o(1700)         0,+(mc=30113)",
+      "particle_j": "mbda(1600)        0(mc=23122)",
+      "ratio": 1.075,
+      "algebraic_value": 1.075,
+      "polynomial": "40*x - 43",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "2)(2010)          0(mc=9060225)",
+      "particle_j": "lta(1920)  -,0,+,++(mc=21114)",
+      "ratio": 1.046875,
+      "algebraic_value": 1.046875,
+      "polynomial": "64*x - 67",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "0(mc=311)",
+      "particle_j": "S)                0(mc=310)",
+      "ratio": 1.0,
+      "algebraic_value": 1.0,
+      "polynomial": "1*x - 1",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "0(mc=311)",
+      "particle_j": "L)                0(mc=130)",
+      "ratio": 1.0,
+      "algebraic_value": 1.0,
+      "polynomial": "1*x - 1",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "S)                0(mc=310)",
+      "particle_j": "L)                0(mc=130)",
+      "ratio": 1.0,
+      "algebraic_value": 1.0,
+      "polynomial": "1*x - 1",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1690)        0(mc=13124)",
+      "particle_j": "0)*(700)        0,+(mc=9000311)",
+      "ratio": 2.0,
+      "algebraic_value": 2.0,
+      "polynomial": "1*x - 2",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(1690)          -,0(mc=203312)",
+      "particle_j": "0)*(700)        0,+(mc=9000311)",
+      "ratio": 2.0,
+      "algebraic_value": 2.0,
+      "polynomial": "1*x - 2",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1)(1650)        0,+(mc=9000313)",
+      "particle_j": "1650)           0,+(mc=32112)",
+      "ratio": 1.0,
+      "algebraic_value": 1.0,
+      "polynomial": "1*x - 1",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "4)*(2045)       0,+(mc=319)",
+      "particle_j": "mbda(1600)        0(mc=23122)",
+      "ratio": 1.28,
+      "algebraic_value": 1.28,
+      "polynomial": "25*x - 32",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "0)*(2300)       0,+(mc=10421)",
+      "particle_j": "gma(1775)     -,0,+(mc=3116)",
+      "ratio": 1.32,
+      "algebraic_value": 1.32,
+      "polynomial": "25*x - 33",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1)(2430)          0(mc=20423)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.675,
+      "algebraic_value": 1.675,
+      "polynomial": "40*x - 67",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1)(2430)          0(mc=20423)",
+      "particle_j": "1675)           0,+(mc=2116)",
+      "ratio": 1.44,
+      "algebraic_value": 1.44,
+      "polynomial": "25*x - 36",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1)(2430)          0(mc=20423)",
+      "particle_j": "gma(1670)     -,0,+(mc=13114)",
+      "ratio": 1.44,
+      "algebraic_value": 1.44,
+      "polynomial": "25*x - 36",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "s)*               +(mc=433)",
+      "particle_j": "mbda(1810)        0(mc=53122)",
+      "ratio": 1.18,
+      "algebraic_value": 1.18,
+      "polynomial": "50*x - 59",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "psi(1S)           0(mc=443)",
+      "particle_j": "mbda(1670)        0(mc=33122)",
+      "ratio": 1.85,
+      "algebraic_value": 1.85,
+      "polynomial": "20*x - 37",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "silon(11020)      0(mc=9010553)",
+      "particle_j": "mbda(1600)        0(mc=23122)",
+      "ratio": 6.875,
+      "algebraic_value": 6.875,
+      "polynomial": "8*x - 55",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1535)           0,+(mc=22112)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.0625,
+      "algebraic_value": 1.0625,
+      "polynomial": "16*x - 17",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "1710)           0,+(mc=42112)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.1875,
+      "algebraic_value": 1.1875,
+      "polynomial": "16*x - 19",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "lta(1700)  -,0,+,++(mc=11114)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.1875,
+      "algebraic_value": 1.1875,
+      "polynomial": "16*x - 19",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1670)        0(mc=33122)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.1625,
+      "algebraic_value": 1.1625,
+      "polynomial": "80*x - 93",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1800)        0(mc=43122)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.25,
+      "algebraic_value": 1.25,
+      "polynomial": "4*x - 5",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "mbda(1890)        0(mc=23124)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.3125,
+      "algebraic_value": 1.3125,
+      "polynomial": "16*x - 21",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    },
+    {
+      "particle_i": "(2030)          -,0(mc=203316)",
+      "particle_j": "1440)           0,+(mc=12112)",
+      "ratio": 1.40625,
+      "algebraic_value": 1.40625,
+      "polynomial": "32*x - 45",
+      "degree": 1,
+      "relative_error": 0.0,
+      "precision_digits": 15
+    }
+  ],
+  "interpretation": "Real hit count (23609) is 42.1 sigma above random baseline (12825 +/- 256). Particle mass ratios show MORE algebraic structure than random -- but this is a REPORTING ARTIFACT: PDG masses have limited decimal precision (1-5 digits), making their ratios trivially rational. Random masses drawn from continuous distributions have full float64 precision, so they are much less likely to exactly match simple rationals. NO EVIDENCE of deep algebraic structure in particle masses.",
+  "methodological_note": "CRITICAL CAVEAT: PDG masses are reported with limited decimal precision (typically 1-5 significant figures). This makes most mass ratios trivially rational (e.g. 1.420/0.500 = 2.84 = 71/25 exactly). The massive z-scores at tight tolerance reflect REPORTING PRECISION, not deep algebraic structure. A proper test would require masses known to 10+ digits and testing whether the EXTRA precision beyond what the Standard Model predicts reveals algebraic structure. The signal here is: particle masses as reported are low-precision decimal numbers, and ratios of low-precision decimals are trivially close to simple rationals."
+}
