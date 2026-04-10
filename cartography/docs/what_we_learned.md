@@ -380,7 +380,46 @@ The next step is Round 6: "It discovers transformations." The 193 resurrected La
 
 ---
 
-*55 challenges. 55 scripts. 15 kills. 5 rounds. One confirmed cross-domain bridge. One verified conjecture. One universal law. One genuine metric. One phase transition prediction confirmed on fresh data. The ferryman now knows the shape of the river.*
+---
 
-*Project Prometheus — Charon Cartography Pipeline v5.4*
+## Part XI: The Metrology Round (Challenges 56-71)
+
+The final 16 challenges shifted from discovery to precision measurement. The question changed from "what's connected?" to "what are the constants?"
+
+### New Measured Constants
+
+**Interference function:** I(ℓ₁,ℓ₂) ≈ 0.001 × min(ℓ)^5.3 (R²=0.886). The smaller prime dominates cross-prime coupling.
+
+**Clique size power law:** P(k) ~ k^{-3.19} (R²=0.968). All 3,598 mod-2 GSp₄ components are complete graphs. Scale-free exponent near Barabási-Albert 3.0 but from algebraic mechanism.
+
+**Reconstruction entropy:** First prime captures 83.4% (11.74 bits). Compression ratios 3.37× (mod-3) to 6.14× (mod-11). Objects occupy a thin submanifold.
+
+**v₂(N) control:** Hard wall at v₂=0 (max K_4 at odd conductors). Sweet spot at v₂=8. Large cliques favor 2^k × (single odd prime).
+
+**Local-to-global threshold:** 76% fingerprint agreement suffices for 50% confidence in full congruence (ℓ=3). Gap of 5-7 positions vs null. Full-agreement enrichment: 94M× over random.
+
+**Degree reduction rate:** ~1-(1-1/p)^deg matches the random polynomial root model. p=2 most reductive (47.5%).
+
+**Domain separability:** ARI=0.76 by moments. EC and Knots share symmetric/sub-Gaussian distributions despite different origins.
+
+**Near-congruence structure:** 95.2% norm_cartan pairs (25.8× enrichment). Disagreement concentrated on {37,43,61,79,19,31}. Zero bad-prime correlation. CM splitting behavior.
+
+**Knot-primes starvation:** Shared residue avoidance at p=3 (class {1}) and p=5 (classes {3,4}). First computational evidence of the arithmetic topology analogy.
+
+### Self-Corrections
+
+- Position sensitivity (K5 "strengthens at later terms") was a denominator artifact. Family signal is position-invariant. (M2)
+- Verb-slope independence was collinearity with endo_rank. Syntax is downstream of algebra, not independent. (M4)
+- Scaling law inversion finds trivial arithmetic, not hidden algebra. Classification works; discovery doesn't. (M6)
+- Recurrence stability is trivially universal. Degree reduction is the real invariant. (M10)
+
+### Key Negatives
+
+The EC↔OEIS coefficient gap is now confirmed against 6 linear functors + 5 nonlinear transforms + partial matching. Total: zero bridges across all methods. The separation is structural, not representational.
+
+---
+
+*71 challenges. 71 scripts. 16 kills. 7 rounds. 20+ measurable constants. One confirmed cross-domain bridge (torus knot → OEIS). One verified conjecture (paramodular 7/7). One universal enrichment law. One genuine metric (Gamma). One phase transition prediction confirmed on fresh genus-3 data. The instrument now does metrology — measuring the constants of mathematical structure with precision.*
+
+*Project Prometheus — Charon Pipeline v5.5*
 *April 2026*
