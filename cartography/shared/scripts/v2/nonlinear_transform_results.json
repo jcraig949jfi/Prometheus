@@ -1,0 +1,1145 @@
+{
+  "meta": {
+    "timestamp": "2026-04-10T03:23:07",
+    "elapsed_seconds": 94.24,
+    "challenge": "M7: Nonlinear Transformation Search",
+    "parameters": {
+      "n_oeis": 500,
+      "n_ec": 500,
+      "fingerprint_primes": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23,
+        29,
+        31
+      ],
+      "fingerprint_len": 12,
+      "match_threshold": 0.75,
+      "transforms": [
+        "quadratic (a_n^2)",
+        "product (a_n * a_{n-1})",
+        "convolution (sum a_k * a_{n-k})",
+        "logarithmic (round(log(a_n) * C))",
+        "modular (a_n mod m)"
+      ]
+    }
+  },
+  "cross_domain": {
+    "total_pairs_tested": 250000,
+    "avg_baseline_match": 0.125227,
+    "transform_avg_match": {
+      "quadratic": 0.124959,
+      "product": 0.123083,
+      "convolution": 0.135564,
+      "log_C=1.00": 0.138215,
+      "log_C=2.00": 0.123479,
+      "log_C=2.72": 0.117719,
+      "log_C=3.14": 0.117387,
+      "log_C=10.00": 0.122745,
+      "mod_3": 0.167351,
+      "mod_5": 0.146488,
+      "mod_7": 0.139227,
+      "mod_11": 0.129596
+    },
+    "matches_above_threshold": 1164,
+    "threshold": 0.75,
+    "top_matches": [
+      {
+        "oeis_id": "A158897",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3917,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3917,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3917,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3833,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.5333,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6083,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A286044",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A286044",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A286044",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A286044",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A260675",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A260675",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A260675",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A260675",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3583,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A245718",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A245718",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A245718",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A245718",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.3583,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A186747",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A186747",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A186747",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A186747",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6083,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "225.d2",
+        "transform": "ec_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "oeis_raw->ec_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "225.d2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "225.d1",
+        "transform": "ec_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "oeis_raw->ec_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "225.d1",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "225.c2",
+        "transform": "ec_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "oeis_raw->ec_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "225.c2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6167,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "243.a2",
+        "transform": "ec_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6083,
+        "direction": "oeis_raw->ec_transformed"
+      },
+      {
+        "oeis_id": "A034480",
+        "ec_label": "243.a2",
+        "transform": "both_product",
+        "match_rate": 0.9333,
+        "baseline_rate": 0.6083,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "36.a1",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "36.a4",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "144.a2",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "36.a2",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A158897",
+        "ec_label": "144.a3",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.3667,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "36.a1",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "36.a4",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "144.a2",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "36.a2",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A174479",
+        "ec_label": "144.a3",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.525,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "36.a1",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.5917,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "36.a4",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.5917,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "144.a2",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.5917,
+        "direction": "both_transformed"
+      },
+      {
+        "oeis_id": "A062977",
+        "ec_label": "36.a2",
+        "transform": "both_product",
+        "match_rate": 0.925,
+        "baseline_rate": 0.5917,
+        "direction": "both_transformed"
+      }
+    ]
+  },
+  "intra_oeis": {
+    "total_pairs_tested": 124750,
+    "matches_above_threshold": 1238,
+    "threshold": 0.75,
+    "top_matches": [
+      {
+        "oeis_a": "A004947",
+        "oeis_b": "A034480",
+        "transform": "mod_7",
+        "match_rate": 1.0,
+        "direction": "A004947_transformed->A034480_raw"
+      },
+      {
+        "oeis_a": "A016993",
+        "oeis_b": "A193179",
+        "transform": "mod_7",
+        "match_rate": 1.0,
+        "direction": "A016993_transformed->A193179_raw"
+      },
+      {
+        "oeis_a": "A017414",
+        "oeis_b": "A198890",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A017414_transformed->A198890_raw"
+      },
+      {
+        "oeis_a": "A027865",
+        "oeis_b": "A193179",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A027865_transformed->A193179_raw"
+      },
+      {
+        "oeis_a": "A031209",
+        "oeis_b": "A034480",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A031209_transformed->A034480_raw"
+      },
+      {
+        "oeis_a": "A031838",
+        "oeis_b": "A193179",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A031838_transformed->A193179_raw"
+      },
+      {
+        "oeis_a": "A033619",
+        "oeis_b": "A061647",
+        "transform": "log_C=1.00",
+        "match_rate": 1.0,
+        "direction": "A033619_raw->A061647_transformed"
+      },
+      {
+        "oeis_a": "A033619",
+        "oeis_b": "A193179",
+        "transform": "convolution",
+        "match_rate": 1.0,
+        "direction": "A033619_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A062977",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A062977_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A062977",
+        "transform": "convolution",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A062977_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A087705",
+        "transform": "mod_5",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A087705_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A129026",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A129026_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A154360",
+        "transform": "mod_5",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A154360_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A158897",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A158897_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A174479",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A174479_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A186747",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A186747_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A186747",
+        "transform": "convolution",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A186747_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A193179",
+        "transform": "log_C=1.00",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A193179",
+        "transform": "log_C=2.00",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A193179",
+        "transform": "log_C=2.72",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A193179",
+        "transform": "log_C=3.14",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A193179",
+        "transform": "log_C=10.00",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A245718",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A245718_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A258879",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A258879_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A258879",
+        "transform": "mod_5",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A258879_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A260675",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A260675_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A276905",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A276905_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A277984",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A277984_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A282377",
+        "transform": "convolution",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A282377_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A286044",
+        "transform": "product",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A286044_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A323990",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A323990_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A323990",
+        "transform": "mod_5",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A323990_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A330921",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A330921_transformed"
+      },
+      {
+        "oeis_a": "A034480",
+        "oeis_b": "A340687",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A034480_raw->A340687_transformed"
+      },
+      {
+        "oeis_a": "A043271",
+        "oeis_b": "A061647",
+        "transform": "log_C=1.00",
+        "match_rate": 1.0,
+        "direction": "A043271_raw->A061647_transformed"
+      },
+      {
+        "oeis_a": "A043271",
+        "oeis_b": "A193179",
+        "transform": "convolution",
+        "match_rate": 1.0,
+        "direction": "A043271_raw->A193179_transformed"
+      },
+      {
+        "oeis_a": "A045371",
+        "oeis_b": "A113473",
+        "transform": "log_C=1.00",
+        "match_rate": 1.0,
+        "direction": "A045371_transformed->A113473_raw"
+      },
+      {
+        "oeis_a": "A057845",
+        "oeis_b": "A193179",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A057845_transformed->A193179_raw"
+      },
+      {
+        "oeis_a": "A082858",
+        "oeis_b": "A174546",
+        "transform": "log_C=1.00",
+        "match_rate": 1.0,
+        "direction": "A082858_raw->A174546_transformed"
+      },
+      {
+        "oeis_a": "A082858",
+        "oeis_b": "A176388",
+        "transform": "log_C=1.00",
+        "match_rate": 1.0,
+        "direction": "A082858_raw->A176388_transformed"
+      },
+      {
+        "oeis_a": "A106976",
+        "oeis_b": "A193179",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A106976_transformed->A193179_raw"
+      },
+      {
+        "oeis_a": "A133694",
+        "oeis_b": "A193179",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A133694_transformed->A193179_raw"
+      },
+      {
+        "oeis_a": "A193179",
+        "oeis_b": "A258015",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A193179_raw->A258015_transformed"
+      },
+      {
+        "oeis_a": "A193179",
+        "oeis_b": "A269352",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A193179_raw->A269352_transformed"
+      },
+      {
+        "oeis_a": "A193179",
+        "oeis_b": "A336059",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A193179_raw->A336059_transformed"
+      },
+      {
+        "oeis_a": "A193179",
+        "oeis_b": "A336059",
+        "transform": "mod_5",
+        "match_rate": 1.0,
+        "direction": "A193179_raw->A336059_transformed"
+      },
+      {
+        "oeis_a": "A193179",
+        "oeis_b": "A361262",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A193179_raw->A361262_transformed"
+      },
+      {
+        "oeis_a": "A193179",
+        "oeis_b": "A381734",
+        "transform": "mod_3",
+        "match_rate": 1.0,
+        "direction": "A193179_raw->A381734_transformed"
+      },
+      {
+        "oeis_a": "A061647",
+        "oeis_b": "A366389",
+        "transform": "log_C=1.00",
+        "match_rate": 0.9333,
+        "direction": "A061647_transformed->A366389_raw"
+      },
+      {
+        "oeis_a": "A062977",
+        "oeis_b": "A355199",
+        "transform": "convolution",
+        "match_rate": 0.9333,
+        "direction": "A062977_raw->A355199_transformed"
+      }
+    ]
+  },
+  "near_miss_recovery": {
+    "total_near_misses": 26,
+    "transform_distribution": {
+      "modular": 7,
+      "quadratic": 6,
+      "logarithmic": 10,
+      "multiplicative": 3
+    },
+    "testable_count": 9,
+    "untestable_count": 17,
+    "recovery_rate": 0.3462,
+    "records": [
+      {
+        "claim_prefix": "the distribution of antedb exponent pair values (first coordinate) for theorems with topic 'zero_density' is statistical",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "the distribution of sleeping beauty oeis sequences (min_entropy=4.0, max_degree=2) by their first term modulo 3 is stati",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of modular form conductors in lmfdb that are perfect squares differs statistically from the distributio",
+        "best_transform": "quadratic",
+        "nonlinear_matches": {
+          "quadratic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "isogeny graph node counts for primes p \u2261 1 mod 4 correlate with the count of antedb theorems mentioning both 'zero_densi",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of antedb zero-density exponent bounds below 0.5 is statistically indistinguishable from the distributi",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the number of antedb theorems about zero density correlates positively (r > 0.8) with the number of modular forms in lmf",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "the distribution of isogeny graph diameters for primes between 100 and 200 correlates (spearman rho > 0.7) with the numb",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of antedb exponent values for zero density theorems is statistically indistinguishable from the distrib",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "the distribution of exponent values in antedb theorems with 'zero_density' topic is statistically indistinguishable from",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of exponent values in antedb theorems with 'zero_density' topic is statistically indistinguishable from",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "mizar articles that are hubs (top 10% by in-degree) reference at least 3 times more antedb theorems about zero density e",
+        "best_transform": "multiplicative",
+        "nonlinear_matches": {
+          "multiplicative": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "antedb theorems about zero density estimates are referenced in mizar articles that also reference topological spaces tha",
+        "best_transform": "multiplicative",
+        "nonlinear_matches": {
+          "multiplicative": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "topological spaces that are first-countable but not second-countable in pi-base are referenced in mizar articles that al",
+        "best_transform": "multiplicative",
+        "nonlinear_matches": {
+          "multiplicative": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of zero-density exponent bounds in antedb (topic: zero_density) follows the same pattern as the growth ",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of antedb theorem exponent values for 'zero_density' topics is statistically indistinguishable from the",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "sleeping beauty sequences (min_entropy=4.0) have growth patterns that match the asymptotic bounds in antedb theorems wit",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of zero-density exponent values in antedb (antedb_topic='zero_density') is statistically indistinguisha",
+        "best_transform": "quadratic",
+        "nonlinear_matches": {
+          "quadratic": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "the number of even maass forms with spectral parameter below 30.0 exceeds the number of quadratic number fields with cla",
+        "best_transform": "quadratic",
+        "nonlinear_matches": {
+          "quadratic": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "the distribution of first coordinates of exponent pairs in antedb theorems tagged 'zero_density' follows the same patter",
+        "best_transform": "modular",
+        "nonlinear_matches": {
+          "modular": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "antedb theorems with 'zero_density' topic have exponent bounds that, when applied to dirichlet l-functions of quadratic ",
+        "best_transform": "quadratic",
+        "nonlinear_matches": {
+          "quadratic": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "antedb theorems on zero-density estimates for dirichlet l-functions correspond to oeis sequences that contain regulator ",
+        "best_transform": "quadratic",
+        "nonlinear_matches": {
+          "quadratic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the growth rate distribution of oeis sequences cross-referenced by the prime numbers sequence (a000040) is dominated by ",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the distribution of dirichlet l-function zeros with real part > 0.75 (from antedb zero-density bounds) corresponds to se",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the exponent pairs in antedb with topic 'zero_density' have average exponent values that predict the asymptotic density ",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      },
+      {
+        "claim_prefix": "the ratio of quadratic fields with class number 1 to those with class number 2 in conductor ranges (0-1000, 1000-2000, e",
+        "best_transform": "quadratic",
+        "nonlinear_matches": {
+          "quadratic": 1
+        },
+        "testable": true,
+        "recovery_status": "potentially_recoverable"
+      },
+      {
+        "claim_prefix": "the exponent pairs in antedb with topic 'zero_density' will have their second exponent values correlated with the growth",
+        "best_transform": "logarithmic",
+        "nonlinear_matches": {
+          "logarithmic": 1
+        },
+        "testable": false,
+        "recovery_status": "untestable_distribution_claim"
+      }
+    ]
+  },
+  "permutation_null": {
+    "real_matches": 0,
+    "null_mean": 0.0,
+    "null_std": 0.0,
+    "z_score": 0,
+    "n_shuffles": 20,
+    "subsample_oeis": 50,
+    "significant": false
+  },
+  "hub_analysis": {
+    "cross_domain": {
+      "top_ec_hubs": {
+        "225.d2": 9,
+        "225.d1": 9,
+        "225.c2": 9,
+        "243.a2": 9,
+        "36.a1": 3,
+        "36.a4": 3,
+        "144.a2": 3,
+        "36.a2": 3,
+        "144.a3": 2
+      },
+      "top_oeis_hubs": {
+        "A158897": 9,
+        "A174479": 9,
+        "A062977": 8,
+        "A034480": 8,
+        "A286044": 4,
+        "A260675": 4,
+        "A245718": 4,
+        "A186747": 4
+      },
+      "transform_distribution": {
+        "both_product": 46,
+        "ec_product": 4
+      },
+      "unique_ec": 9,
+      "unique_oeis": 8,
+      "total_matches": 50
+    },
+    "intra_oeis": {
+      "top_ec_hubs": {
+        "": 50
+      },
+      "top_oeis_hubs": {
+        "A034480": 26,
+        "A193179": 6,
+        "A033619": 2,
+        "A043271": 2,
+        "A082858": 2,
+        "A004947": 1,
+        "A016993": 1,
+        "A017414": 1,
+        "A027865": 1,
+        "A031209": 1
+      },
+      "transform_distribution": {
+        "mod_3": 19,
+        "log_C=1.00": 7,
+        "product": 7,
+        "convolution": 6,
+        "mod_5": 5,
+        "mod_7": 2,
+        "log_C=2.00": 1,
+        "log_C=2.72": 1,
+        "log_C=3.14": 1,
+        "log_C=10.00": 1
+      },
+      "unique_ec": 1,
+      "unique_oeis": 17,
+      "total_matches": 50
+    }
+  },
+  "verdict": {
+    "cross_domain_raw_matches": 50,
+    "cross_domain_after_null": 0,
+    "cross_hub_dominated": false,
+    "intra_oeis_raw_matches": 50,
+    "intra_oeis_after_null": 0,
+    "intra_hub_dominated": true,
+    "null_test_significant": false,
+    "null_z_score": 0,
+    "near_miss_recovery_rate": 0.3462,
+    "linear_ceiling_broken": false,
+    "summary": "Tested 250000 OEIS x EC pairs and 124750 OEIS x OEIS pairs with 5 nonlinear transform families. Raw matches: 50 cross-domain, 50 intra-OEIS. Permutation null z=0.0. Hub analysis: cross=9 unique EC / 8 unique OEIS, intra=17 unique OEIS. After null correction: 0 cross-domain, 0 intra-OEIS survive. Near-miss recovery: 9/26 testable. Linear ceiling HOLDS."
+  }
+}
