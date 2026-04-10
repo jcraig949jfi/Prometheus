@@ -1,0 +1,6181 @@
+{
+  "metadata": {
+    "description": "Recurrence compressibility of CODATA physical constants via Berlekamp-Massey",
+    "date": "2026-04-10",
+    "n_constants_total": 286,
+    "n_constants_long_cf": 280,
+    "n_skipped": 0,
+    "cf_depth": 20,
+    "digit_depth": 15,
+    "compressibility_threshold": "BM order <= 6",
+    "cf_min_length": "8 partial quotients required for cf_compressible flag",
+    "mantissa_normalized": true
+  },
+  "codata_summary": {
+    "total_analyzed": 286,
+    "total_with_long_cf": 280,
+    "cf_compressible_count": 24,
+    "cf_compressible_fraction": 0.085714,
+    "digits_compressible_count": 20,
+    "digits_compressible_fraction": 0.06993,
+    "short_cf_count": 6,
+    "mean_bm_order_cf": 9.1536,
+    "mean_bm_order_digits": 7.7762,
+    "cf_bm_order_histogram": {
+      "1": 1,
+      "3": 3,
+      "4": 5,
+      "5": 9,
+      "6": 12,
+      "7": 20,
+      "8": 18,
+      "9": 30,
+      "10": 188
+    },
+    "digits_bm_order_histogram": {
+      "1": 1,
+      "3": 1,
+      "5": 3,
+      "6": 15,
+      "7": 14,
+      "8": 251,
+      "9": 1
+    }
+  },
+  "reference_constants": {
+    "pi": {
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_first10": [
+        3,
+        7,
+        15,
+        1,
+        292,
+        1,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    "e": {
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        1,
+        1,
+        4,
+        1,
+        1,
+        6,
+        1
+      ]
+    },
+    "sqrt(2)": {
+      "bm_order_cf": 2,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_first10": [
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "golden_ratio": {
+      "bm_order_cf": 1,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "1/137 (fine structure approx)": {
+      "bm_order_cf": 5,
+      "bm_order_digits": 5,
+      "cf_compressible": true,
+      "cf_first10": [
+        7,
+        3,
+        2,
+        1,
+        13,
+        197277569540,
+        3,
+        1,
+        2,
+        3
+      ]
+    },
+    "1836 (proton/electron approx)": {
+      "bm_order_cf": 3,
+      "bm_order_digits": 4,
+      "cf_compressible": false,
+      "cf_first10": [
+        1,
+        1,
+        5,
+        10,
+        4
+      ]
+    }
+  },
+  "reference_summary": {
+    "true_transcendentals_cf_compressible": "0/2",
+    "true_transcendentals_cf_fraction": 0.0,
+    "true_transcendentals_mean_bm_cf": 8.5,
+    "algebraic_irrationals_cf_compressible": "2/2",
+    "algebraic_irrationals_cf_fraction": 1.0,
+    "algebraic_irrationals_mean_bm_cf": 1.5,
+    "physics_ratios_cf_compressible": "1/2"
+  },
+  "comparison": {
+    "codata_cf_fraction": 0.085714,
+    "true_transcendental_cf_fraction": 0.0,
+    "algebraic_cf_fraction": 1.0,
+    "codata_mean_bm_cf": 9.1536,
+    "transcendental_mean_bm_cf": 8.5,
+    "algebraic_mean_bm_cf": 1.5,
+    "codata_above_true_transcendentals": true,
+    "interpretation": "CODATA constants: 0.0857 CF-compressible, mean BM order 9.15. True transcendentals (pi, e): 0.0000 CF-compressible, mean BM 8.50. Algebraic irrationals (sqrt2, phi): 1.0000, mean BM 1.50 (periodic by Lagrange). By fraction: CODATA (0.0857) > transcendentals (0.0000) \u2014 8.6% of physical constants have low-order CF recurrences vs 0% for pi/e. By mean BM: CODATA (9.15) > transcendentals (8.50) \u2014 the bulk of CODATA constants are LESS compressible (higher BM order) than pi and e. The dominant mode is BM=10 (= ceil(20/2)), meaning 188/280 = 67.1% show NO detectable CF recurrence at float64 precision. The compressible 8.6% cluster around tau-related constants and magnetic moment ratios."
+  },
+  "most_compressible": [
+    {
+      "name": "Newtonian constant of gravitation",
+      "value": 6.6743e-11,
+      "bm_order_cf": 4,
+      "cf_first10": [
+        6,
+        1,
+        2,
+        14,
+        4,
+        2,
+        24,
+        1
+      ]
+    },
+    {
+      "name": "shielding difference of t and p in HT",
+      "value": 2.3945e-08,
+      "bm_order_cf": 4,
+      "cf_first10": [
+        2,
+        2,
+        1,
+        1,
+        6,
+        1,
+        2,
+        18
+      ]
+    },
+    {
+      "name": "tau-muon mass ratio",
+      "value": 16.817,
+      "bm_order_cf": 4,
+      "cf_first10": [
+        1,
+        1,
+        2,
+        7,
+        17,
+        2,
+        1,
+        8
+      ]
+    },
+    {
+      "name": "conventional value of Josephson constant",
+      "value": 483597900000000.0,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        4,
+        1,
+        5,
+        10,
+        3,
+        170,
+        2,
+        1,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "electron-tau mass ratio",
+      "value": 0.000287585,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        2,
+        1,
+        7,
+        18,
+        3,
+        1,
+        7,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "muon mag. mom. anomaly",
+      "value": 0.00116592062,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        1,
+        6,
+        37,
+        15,
+        125,
+        3,
+        7,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "proton mag. shielding correction",
+      "value": 2.56715e-05,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        2,
+        1,
+        1,
+        3,
+        4,
+        2,
+        15,
+        3,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "reduced tau Compton wavelength",
+      "value": 1.110538e-16,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        1,
+        9,
+        21,
+        2,
+        3,
+        10,
+        1,
+        7,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "tau Compton wavelength",
+      "value": 6.97771e-16,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        6,
+        1,
+        43,
+        1,
+        6,
+        3,
+        4,
+        11,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "tau mass",
+      "value": 3.16754e-27,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        3,
+        5,
+        1,
+        30,
+        1,
+        36,
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "tau-neutron mass ratio",
+      "value": 1.89115,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        1,
+        1,
+        8,
+        5,
+        2,
+        1,
+        6,
+        2,
+        9
+      ]
+    },
+    {
+      "name": "tau-proton mass ratio",
+      "value": 1.89376,
+      "bm_order_cf": 5,
+      "cf_first10": [
+        1,
+        1,
+        8,
+        2,
+        2,
+        2,
+        1,
+        3,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "alpha particle molar mass",
+      "value": 0.0040015061833,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        4,
+        663,
+        1,
+        13,
+        4,
+        32,
+        1,
+        1,
+        3,
+        1149
+      ]
+    },
+    {
+      "name": "Angstrom star",
+      "value": 1.00001495e-10,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        1,
+        66889,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of velocity",
+      "value": 2187691.26216,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        2,
+        5,
+        3,
+        20,
+        9,
+        168,
+        1,
+        5,
+        5,
+        62
+      ]
+    },
+    {
+      "name": "deuteron rms charge radius",
+      "value": 2.12778e-15,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        2,
+        7,
+        1,
+        4,
+        1,
+        2,
+        1,
+        13,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "Molybdenum x unit",
+      "value": 1.00209952e-13,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        1,
+        476,
+        3,
+        2,
+        1,
+        14,
+        1,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "muon mag. mom. to Bohr magneton ratio",
+      "value": -0.00484197048,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        4,
+        1,
+        5,
+        3,
+        20,
+        4,
+        4,
+        3,
+        44,
+        2
+      ]
+    },
+    {
+      "name": "muon-tau mass ratio",
+      "value": 0.0594635,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        5,
+        1,
+        17,
+        1,
+        1,
+        1,
+        3,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "neutron mag. mom. to nuclear magneton ratio",
+      "value": -1.91304276,
+      "bm_order_cf": 6,
+      "cf_first10": [
+        1,
+        1,
+        10,
+        2,
+        2631,
+        2,
+        1,
+        1,
+        1,
+        5
+      ]
+    }
+  ],
+  "per_constant": [
+    {
+      "name": "alpha particle-electron mass ratio",
+      "value": 7294.29954171,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        7,
+        3,
+        2,
+        1,
+        1,
+        18,
+        2,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "alpha particle mass",
+      "value": 6.644657345e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        1,
+        4,
+        2,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "alpha particle mass energy equivalent",
+      "value": 5.9719201997e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        1,
+        34,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "alpha particle mass energy equivalent in MeV",
+      "value": 3727.3794118,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        2,
+        1,
+        2,
+        77,
+        9,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "alpha particle mass in u",
+      "value": 4.001506179129,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        663,
+        1,
+        13,
+        1,
+        1,
+        1,
+        2,
+        2,
+        13
+      ]
+    },
+    {
+      "name": "alpha particle molar mass",
+      "value": 0.0040015061833,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        4,
+        663,
+        1,
+        13,
+        4,
+        32,
+        1,
+        1,
+        3,
+        1149
+      ]
+    },
+    {
+      "name": "alpha particle-proton mass ratio",
+      "value": 3.972599690252,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        3,
+        1,
+        35,
+        2,
+        61,
+        23,
+        3,
+        61,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "alpha particle relative atomic mass",
+      "value": 4.001506179129,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        663,
+        1,
+        13,
+        1,
+        1,
+        1,
+        2,
+        2,
+        13
+      ]
+    },
+    {
+      "name": "alpha particle rms charge radius",
+      "value": 1.6785e-15,
+      "bm_order_cf": 8,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        1,
+        2,
+        9,
+        17,
+        1,
+        2,
+        1,
+        2499999999,
+        3
+      ]
+    },
+    {
+      "name": "Angstrom star",
+      "value": 1.00001495e-10,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 12,
+      "cf_first10": [
+        1,
+        66889,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "atomic mass constant",
+      "value": 1.66053906892e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        17,
+        2,
+        6,
+        1,
+        9,
+        2
+      ]
+    },
+    {
+      "name": "atomic mass constant energy equivalent",
+      "value": 1.49241808768e-10,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        2,
+        32,
+        2,
+        8,
+        1,
+        4,
+        1,
+        29,
+        1
+      ]
+    },
+    {
+      "name": "atomic mass constant energy equivalent in MeV",
+      "value": 931.49410372,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        3,
+        5,
+        1,
+        2,
+        2,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "atomic mass unit-electron volt relationship",
+      "value": 931494103.72,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        3,
+        5,
+        1,
+        2,
+        2,
+        2,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "atomic mass unit-hartree relationship",
+      "value": 34231776.922,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        2,
+        2,
+        1,
+        3,
+        14,
+        2,
+        2,
+        3,
+        3
+      ]
+    },
+    {
+      "name": "atomic mass unit-hertz relationship",
+      "value": 2.25234272185e+23,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        3,
+        1,
+        25,
+        1,
+        12,
+        1,
+        24,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "atomic mass unit-inverse meter relationship",
+      "value": 751300662090000.0,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        7,
+        1,
+        1,
+        18,
+        1,
+        2,
+        1,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "atomic mass unit-joule relationship",
+      "value": 1.49241808768e-10,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        2,
+        32,
+        2,
+        8,
+        1,
+        4,
+        1,
+        29,
+        1
+      ]
+    },
+    {
+      "name": "atomic mass unit-kelvin relationship",
+      "value": 10809540206700.0,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        12,
+        2,
+        1,
+        5,
+        13,
+        1,
+        1,
+        1,
+        7
+      ]
+    },
+    {
+      "name": "atomic mass unit-kilogram relationship",
+      "value": 1.66053906892e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        17,
+        2,
+        6,
+        1,
+        9,
+        2
+      ]
+    },
+    {
+      "name": "atomic unit of 1st hyperpolarizability",
+      "value": 3.2063612996e-53,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        4,
+        1,
+        5,
+        2,
+        20,
+        2,
+        1,
+        2,
+        13
+      ]
+    },
+    {
+      "name": "atomic unit of 2nd hyperpolarizability",
+      "value": 6.2353799735e-65,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        4,
+        4,
+        40,
+        14,
+        1,
+        6,
+        1,
+        19,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of charge",
+      "value": 1.602176634e-19,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        17,
+        1,
+        3,
+        2,
+        15
+      ]
+    },
+    {
+      "name": "atomic unit of charge density",
+      "value": 1081202386770.0,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        12,
+        3,
+        5,
+        1,
+        2,
+        3,
+        3,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "atomic unit of current",
+      "value": 0.0066236182375082,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        1,
+        1,
+        1,
+        10,
+        1,
+        2,
+        6
+      ]
+    },
+    {
+      "name": "atomic unit of electric dipole mom.",
+      "value": 8.4783536198e-30,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        8,
+        2,
+        11,
+        20,
+        3,
+        2,
+        1,
+        1,
+        32,
+        3
+      ]
+    },
+    {
+      "name": "atomic unit of electric field",
+      "value": 514220675112.0,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        5,
+        7,
+        31,
+        4,
+        4,
+        30,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of electric field gradient",
+      "value": 9.7173624424e+21,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        1,
+        2,
+        1,
+        1,
+        6,
+        16,
+        4,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of electric polarizability",
+      "value": 1.64877727212e-41,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        5,
+        1,
+        1,
+        5,
+        7,
+        4
+      ]
+    },
+    {
+      "name": "atomic unit of electric potential",
+      "value": 27.211386245981,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        1,
+        1,
+        2,
+        2,
+        2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of electric quadrupole mom.",
+      "value": 4.4865515185e-40,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        2,
+        18,
+        11,
+        5,
+        1,
+        1,
+        1,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "atomic unit of force",
+      "value": 8.2387235038e-08,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        8,
+        4,
+        5,
+        3,
+        2,
+        2,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of length",
+      "value": 5.29177210544e-11,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        3,
+        2,
+        2,
+        1,
+        15,
+        1,
+        3,
+        8,
+        2
+      ]
+    },
+    {
+      "name": "atomic unit of mag. dipole mom.",
+      "value": 1.85480201315e-23,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        5,
+        1,
+        7,
+        1,
+        6,
+        4,
+        1,
+        19
+      ]
+    },
+    {
+      "name": "atomic unit of mag. flux density",
+      "value": 235051.757077,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        2,
+        1,
+        5,
+        1,
+        3,
+        1,
+        49,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of magnetizability",
+      "value": 7.8910365794e-29,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        7,
+        1,
+        8,
+        5,
+        1,
+        1,
+        1,
+        3,
+        9,
+        6
+      ]
+    },
+    {
+      "name": "atomic unit of mass",
+      "value": 9.1093837139e-31,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        9,
+        7,
+        27,
+        1,
+        7,
+        8,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of momentum",
+      "value": 1.99285191545e-24,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        138,
+        1,
+        8,
+        1,
+        3,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "atomic unit of permittivity",
+      "value": 1.1126500562e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        8,
+        1,
+        7,
+        7,
+        1,
+        1,
+        84,
+        2,
+        5
+      ]
+    },
+    {
+      "name": "atomic unit of velocity",
+      "value": 2187691.26216,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 12,
+      "cf_first10": [
+        2,
+        5,
+        3,
+        20,
+        9,
+        168,
+        1,
+        5,
+        5,
+        62
+      ]
+    },
+    {
+      "name": "Avogadro constant",
+      "value": 6.02214076e+23,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        45,
+        6,
+        25,
+        8,
+        1,
+        2,
+        4,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "Bohr magneton",
+      "value": 9.2740100657e-24,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        3,
+        1,
+        1,
+        1,
+        5,
+        1,
+        4,
+        6,
+        3
+      ]
+    },
+    {
+      "name": "Bohr magneton in eV/T",
+      "value": 5.7883817982e-05,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        5,
+        1,
+        3,
+        1,
+        2,
+        1,
+        1,
+        1,
+        4,
+        310
+      ]
+    },
+    {
+      "name": "Bohr magneton in Hz/T",
+      "value": 13996244917.1,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        1,
+        105,
+        1,
+        11,
+        1,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "Bohr magneton in inverse meter per tesla",
+      "value": 46.686447719,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        1,
+        2,
+        55,
+        1,
+        5,
+        7,
+        7,
+        1,
+        8
+      ]
+    },
+    {
+      "name": "Bohr magneton in K/T",
+      "value": 0.67171381472,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        2,
+        1,
+        1,
+        6,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "Bohr radius",
+      "value": 5.29177210544e-11,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        3,
+        2,
+        2,
+        1,
+        15,
+        1,
+        3,
+        8,
+        2
+      ]
+    },
+    {
+      "name": "Boltzmann constant",
+      "value": 1.380649e-23,
+      "bm_order_cf": 10,
+      "bm_order_digits": 7,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        2,
+        7,
+        10,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "characteristic impedance of vacuum",
+      "value": 376.730313412,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        3,
+        3,
+        2,
+        1,
+        3,
+        4,
+        1,
+        44
+      ]
+    },
+    {
+      "name": "classical electron radius",
+      "value": 2.8179403205e-15,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        4,
+        2,
+        33,
+        1,
+        3,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "Compton wavelength",
+      "value": 2.42631023538e-12,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        2,
+        2,
+        2,
+        1,
+        8,
+        3,
+        4,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "conventional value of Josephson constant",
+      "value": 483597900000000.0,
+      "bm_order_cf": 5,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 10,
+      "cf_first10": [
+        4,
+        1,
+        5,
+        10,
+        3,
+        170,
+        2,
+        1,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "conventional value of von Klitzing constant",
+      "value": 25812.807,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        2,
+        1,
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "Copper x unit",
+      "value": 1.00207697e-13,
+      "bm_order_cf": 4,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 7,
+      "cf_first10": [
+        1,
+        481,
+        2,
+        8,
+        222,
+        54,
+        1
+      ]
+    },
+    {
+      "name": "deuteron-electron mag. mom. ratio",
+      "value": -0.000466434555,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        4,
+        1,
+        1,
+        1,
+        47,
+        4,
+        1,
+        12,
+        2,
+        9
+      ]
+    },
+    {
+      "name": "deuteron-electron mass ratio",
+      "value": 3670.482967655,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        2,
+        28,
+        1,
+        3,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "deuteron g factor",
+      "value": 0.8574382335,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        8,
+        1,
+        1,
+        2,
+        1,
+        6,
+        5,
+        7,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "deuteron mag. mom.",
+      "value": 4.330735087e-27,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        4,
+        3,
+        42,
+        2,
+        3,
+        10,
+        78,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "deuteron mag. mom. to Bohr magneton ratio",
+      "value": 0.0004669754568,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        1,
+        2,
+        35,
+        1,
+        1,
+        1,
+        5,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "deuteron mag. mom. to nuclear magneton ratio",
+      "value": 0.8574382335,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        8,
+        1,
+        1,
+        2,
+        1,
+        6,
+        5,
+        7,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "deuteron mass",
+      "value": 3.3435837768e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        3,
+        2,
+        1,
+        10,
+        5,
+        1,
+        3,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "deuteron mass energy equivalent",
+      "value": 3.00506323491e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        197,
+        1,
+        1,
+        113,
+        2,
+        13,
+        1,
+        10,
+        2
+      ]
+    },
+    {
+      "name": "deuteron mass energy equivalent in MeV",
+      "value": 1875.612945,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        1,
+        7,
+        25,
+        2,
+        1,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "deuteron mass in u",
+      "value": 2.013553212544,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        73,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "deuteron molar mass",
+      "value": 0.00201355321466,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        73,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "deuteron-neutron mag. mom. ratio",
+      "value": -0.44820652,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        4,
+        2,
+        13,
+        2,
+        3,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "deuteron-proton mag. mom. ratio",
+      "value": 0.3070122093,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        14,
+        3,
+        1,
+        5,
+        65,
+        2,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "deuteron-proton mass ratio",
+      "value": 1.9990075012699,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1006,
+        1,
+        1,
+        3,
+        1,
+        4,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "deuteron relative atomic mass",
+      "value": 2.013553212544,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        73,
+        1,
+        3,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "deuteron rms charge radius",
+      "value": 2.12778e-15,
+      "bm_order_cf": 6,
+      "bm_order_digits": 6,
+      "cf_compressible": true,
+      "cf_length": 12,
+      "cf_first10": [
+        2,
+        7,
+        1,
+        4,
+        1,
+        2,
+        1,
+        13,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "electron charge to mass quotient",
+      "value": -175882000838.0,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        3,
+        6,
+        1,
+        5,
+        9,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron-deuteron mag. mom. ratio",
+      "value": -2143.9234921,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        6,
+        1,
+        18,
+        3,
+        1,
+        1,
+        3,
+        1,
+        21
+      ]
+    },
+    {
+      "name": "electron-deuteron mass ratio",
+      "value": 0.0002724437107629,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        1,
+        1,
+        1,
+        2,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron g factor",
+      "value": -2.00231930436092,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        431,
+        6,
+        9,
+        2,
+        2,
+        6,
+        1,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "electron gyromag. ratio",
+      "value": 176085962784.0,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        1,
+        1,
+        3,
+        5,
+        1,
+        1,
+        47,
+        75,
+        9,
+        5
+      ]
+    },
+    {
+      "name": "electron gyromag. ratio in MHz/T",
+      "value": 28024.9513861,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        4,
+        15,
+        1,
+        4,
+        1,
+        12,
+        35,
+        1
+      ]
+    },
+    {
+      "name": "electron-helion mass ratio",
+      "value": 0.0001819543074649,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        4,
+        1,
+        1,
+        5,
+        1,
+        1,
+        9,
+        4
+      ]
+    },
+    {
+      "name": "electron mag. mom.",
+      "value": -9.2847646917e-24,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        3,
+        1,
+        1,
+        20,
+        1,
+        11,
+        1,
+        1,
+        47
+      ]
+    },
+    {
+      "name": "electron mag. mom. anomaly",
+      "value": 0.00115965218046,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        6,
+        3,
+        1,
+        3,
+        1,
+        5,
+        3,
+        1,
+        17
+      ]
+    },
+    {
+      "name": "electron mag. mom. to Bohr magneton ratio",
+      "value": -1.00115965218046,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        862,
+        3,
+        18,
+        1,
+        4,
+        3,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron mag. mom. to nuclear magneton ratio",
+      "value": -1838.281971877,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        5,
+        5,
+        2,
+        4,
+        5,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron mass",
+      "value": 9.1093837139e-31,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        9,
+        7,
+        27,
+        1,
+        7,
+        8,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "electron mass energy equivalent",
+      "value": 8.187105788e-14,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        8,
+        5,
+        2,
+        1,
+        9,
+        4,
+        1,
+        1,
+        16,
+        1
+      ]
+    },
+    {
+      "name": "electron mass energy equivalent in MeV",
+      "value": 0.51099895069,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        9,
+        10,
+        1,
+        8,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron mass in u",
+      "value": 0.0005485799090441,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        17,
+        9,
+        1,
+        1,
+        3,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron molar mass",
+      "value": 5.4857990962e-07,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        17,
+        9,
+        1,
+        1,
+        3,
+        5,
+        1,
+        21
+      ]
+    },
+    {
+      "name": "electron-muon mag. mom. ratio",
+      "value": 206.7669881,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        2,
+        14,
+        1,
+        3,
+        2,
+        79,
+        2,
+        1,
+        1,
+        11
+      ]
+    },
+    {
+      "name": "electron-muon mass ratio",
+      "value": 0.0048363317,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 16,
+      "cf_first10": [
+        4,
+        1,
+        5,
+        9,
+        10,
+        4,
+        7,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron-neutron mag. mom. ratio",
+      "value": 960.92048,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        9,
+        1,
+        1,
+        1,
+        1,
+        3,
+        1,
+        2,
+        1,
+        13
+      ]
+    },
+    {
+      "name": "electron-neutron mass ratio",
+      "value": 0.00054386734416,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        3,
+        1,
+        1,
+        2,
+        1,
+        3,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "electron-proton mag. mom. ratio",
+      "value": -658.21068789,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        2,
+        1,
+        1,
+        5,
+        12,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "electron-proton mass ratio",
+      "value": 0.0005446170214889,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        4,
+        6,
+        1,
+        13,
+        1,
+        1,
+        2,
+        20
+      ]
+    },
+    {
+      "name": "electron relative atomic mass",
+      "value": 0.0005485799090441,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        17,
+        9,
+        1,
+        1,
+        3,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "electron-tau mass ratio",
+      "value": 0.000287585,
+      "bm_order_cf": 5,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 9,
+      "cf_first10": [
+        2,
+        1,
+        7,
+        18,
+        3,
+        1,
+        7,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "electron to alpha particle mass ratio",
+      "value": 0.0001370933554733,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        2,
+        3,
+        2,
+        7,
+        5,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "electron to shielded helion mag. mom. ratio",
+      "value": 864.05823986,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        8,
+        1,
+        1,
+        1,
+        3,
+        1,
+        1,
+        2,
+        5,
+        2
+      ]
+    },
+    {
+      "name": "electron to shielded proton mag. mom. ratio",
+      "value": -658.2275856,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        2,
+        1,
+        1,
+        5,
+        1,
+        60,
+        5
+      ]
+    },
+    {
+      "name": "electron-triton mass ratio",
+      "value": 0.0001819200062327,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        4,
+        1,
+        1,
+        7,
+        1,
+        1,
+        3,
+        40
+      ]
+    },
+    {
+      "name": "electron volt",
+      "value": 1.602176634e-19,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        17,
+        1,
+        3,
+        2,
+        15
+      ]
+    },
+    {
+      "name": "electron volt-atomic mass unit relationship",
+      "value": 1.07354410083e-09,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        13,
+        1,
+        1,
+        2,
+        14,
+        3,
+        14,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "electron volt-hartree relationship",
+      "value": 0.036749322175665,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        2,
+        13,
+        9,
+        6,
+        1,
+        6,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "electron volt-joule relationship",
+      "value": 1.602176634e-19,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        17,
+        1,
+        3,
+        2,
+        15
+      ]
+    },
+    {
+      "name": "elementary charge",
+      "value": 1.602176634e-19,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        17,
+        1,
+        3,
+        2,
+        15
+      ]
+    },
+    {
+      "name": "Fermi coupling constant",
+      "value": 1.1663787e-05,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        6,
+        96,
+        3,
+        2,
+        1,
+        1,
+        2,
+        1,
+        7
+      ]
+    },
+    {
+      "name": "fine-structure constant",
+      "value": 0.0072973525643,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        7,
+        3,
+        2,
+        1,
+        3,
+        12,
+        1,
+        17,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "hartree-atomic mass unit relationship",
+      "value": 2.92126231797e-08,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        11,
+        1,
+        2,
+        2,
+        1,
+        24,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "hartree-electron volt relationship",
+      "value": 27.211386245981,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        1,
+        1,
+        2,
+        2,
+        2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "Hartree energy in eV",
+      "value": 27.211386245981,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        1,
+        1,
+        2,
+        2,
+        2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "hartree-hertz relationship",
+      "value": 6579683920499900.0,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        2,
+        1,
+        1,
+        1,
+        3,
+        7,
+        1
+      ]
+    },
+    {
+      "name": "hartree-inverse meter relationship",
+      "value": 21947463.136314,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        5,
+        7,
+        2,
+        2,
+        2,
+        1,
+        1,
+        12,
+        2
+      ]
+    },
+    {
+      "name": "hartree-kelvin relationship",
+      "value": 315775.02480398,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        6,
+        2,
+        1,
+        18,
+        2,
+        19,
+        2,
+        1,
+        12
+      ]
+    },
+    {
+      "name": "helion-electron mass ratio",
+      "value": 5495.88527984,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        60,
+        3,
+        1,
+        7,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "helion g factor",
+      "value": -4.2552506995,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        3,
+        1,
+        11,
+        6,
+        1,
+        1,
+        8,
+        3,
+        2
+      ]
+    },
+    {
+      "name": "helion mag. mom.",
+      "value": -1.07461755198e-26,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        13,
+        2,
+        2,
+        23,
+        1,
+        1,
+        15,
+        1,
+        12
+      ]
+    },
+    {
+      "name": "helion mag. mom. to Bohr magneton ratio",
+      "value": -0.00115874098083,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        6,
+        3,
+        2,
+        1,
+        22,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "helion mag. mom. to nuclear magneton ratio",
+      "value": -2.1276253498,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        2,
+        7,
+        1,
+        5,
+        13,
+        17,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "helion mass",
+      "value": 5.0064127862e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        155,
+        1,
+        15,
+        4,
+        106,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "helion mass energy equivalent",
+      "value": 4.4995394185e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        2,
+        542,
+        3,
+        2,
+        2,
+        1,
+        3,
+        3,
+        2
+      ]
+    },
+    {
+      "name": "helion mass energy equivalent in MeV",
+      "value": 2808.39161112,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        4,
+        4,
+        1,
+        1,
+        3,
+        3,
+        1,
+        716
+      ]
+    },
+    {
+      "name": "helion mass in u",
+      "value": 3.014932246932,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        66,
+        1,
+        31,
+        2,
+        2,
+        1,
+        2,
+        1,
+        31
+      ]
+    },
+    {
+      "name": "helion molar mass",
+      "value": 0.0030149322501,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        66,
+        1,
+        31,
+        2,
+        2,
+        4,
+        1,
+        1,
+        6
+      ]
+    },
+    {
+      "name": "helion-proton mass ratio",
+      "value": 2.993152671552,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        145,
+        23,
+        1,
+        1,
+        1,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "helion relative atomic mass",
+      "value": 3.014932246932,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        66,
+        1,
+        31,
+        2,
+        2,
+        1,
+        2,
+        1,
+        31
+      ]
+    },
+    {
+      "name": "helion shielding shift",
+      "value": 5.9967029e-05,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        5,
+        1,
+        302,
+        3,
+        2,
+        1,
+        2,
+        2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "hertz-atomic mass unit relationship",
+      "value": 4.439821659e-24,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        2,
+        3,
+        1,
+        1,
+        1,
+        8,
+        3,
+        62,
+        1
+      ]
+    },
+    {
+      "name": "hertz-joule relationship",
+      "value": 6.62607015e-34,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 16,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        1,
+        2,
+        14,
+        4,
+        2,
+        3,
+        20
+      ]
+    },
+    {
+      "name": "hyperfine transition frequency of Cs-133",
+      "value": 9192631770.0,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        9,
+        5,
+        5,
+        4,
+        2,
+        1,
+        2,
+        5,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "inverse fine-structure constant",
+      "value": 137.035999177,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        2,
+        2,
+        1,
+        131,
+        2,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "inverse meter-atomic mass unit relationship",
+      "value": 1.33102504824e-15,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        3,
+        47,
+        1,
+        4,
+        16,
+        7,
+        1,
+        9,
+        11
+      ]
+    },
+    {
+      "name": "inverse meter-hartree relationship",
+      "value": 4.5563352529132e-08,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        1,
+        1,
+        3,
+        1,
+        15,
+        17,
+        1,
+        4,
+        6
+      ]
+    },
+    {
+      "name": "inverse meter-hertz relationship",
+      "value": 299792458.0,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        2,
+        1,
+        480,
+        1,
+        4,
+        1,
+        7,
+        1,
+        71,
+        1
+      ]
+    },
+    {
+      "name": "joule-atomic mass unit relationship",
+      "value": 6700535247.1,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        2,
+        2,
+        1,
+        17,
+        1,
+        57,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "joule-hartree relationship",
+      "value": 2.2937122783969e+17,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        3,
+        2,
+        2,
+        8,
+        8,
+        19,
+        9,
+        71,
+        1
+      ]
+    },
+    {
+      "name": "kelvin-atomic mass unit relationship",
+      "value": 9.2510872884e-14,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        3,
+        1,
+        56,
+        1,
+        2,
+        1,
+        2,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "kelvin-hartree relationship",
+      "value": 3.1668115634564e-06,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        5,
+        1,
+        190,
+        1,
+        6,
+        1,
+        14,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "kelvin-joule relationship",
+      "value": 1.380649e-23,
+      "bm_order_cf": 10,
+      "bm_order_digits": 7,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        2,
+        7,
+        10,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "kilogram-atomic mass unit relationship",
+      "value": 6.0221407537e+26,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        6,
+        45,
+        6,
+        25,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "kilogram-hartree relationship",
+      "value": 2.0614857887415e+34,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        16,
+        3,
+        1,
+        3,
+        1,
+        2,
+        1,
+        5,
+        3
+      ]
+    },
+    {
+      "name": "lattice parameter of silicon",
+      "value": 5.431020511e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        3,
+        8,
+        21,
+        6,
+        2,
+        3,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "lattice spacing of ideal Si (220)",
+      "value": 1.920155716e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        11,
+        1,
+        1,
+        9,
+        1,
+        3,
+        11,
+        1
+      ]
+    },
+    {
+      "name": "luminous efficacy",
+      "value": 683.0,
+      "bm_order_cf": 3,
+      "bm_order_digits": 3,
+      "cf_compressible": false,
+      "cf_length": 6,
+      "cf_first10": [
+        6,
+        1,
+        4,
+        1,
+        7,
+        2
+      ]
+    },
+    {
+      "name": "molar mass constant",
+      "value": 0.00100000000105,
+      "bm_order_cf": 7,
+      "bm_order_digits": 9,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        1,
+        952381043,
+        11,
+        1,
+        11,
+        6,
+        1,
+        2,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "molar mass of carbon-12",
+      "value": 0.0120000000126,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        1,
+        4,
+        1,
+        31746035,
+        1,
+        66,
+        21,
+        21,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "molar volume of silicon",
+      "value": 1.205883199e-05,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        4,
+        1,
+        5,
+        1,
+        1021,
+        1,
+        1,
+        2,
+        9
+      ]
+    },
+    {
+      "name": "Molybdenum x unit",
+      "value": 1.00209952e-13,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        1,
+        476,
+        3,
+        2,
+        1,
+        14,
+        1,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "muon Compton wavelength",
+      "value": 1.17344411e-14,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        1,
+        5,
+        1,
+        3,
+        3,
+        1,
+        3,
+        2,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "muon-electron mass ratio",
+      "value": 206.7682827,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        2,
+        14,
+        1,
+        3,
+        2,
+        3,
+        1,
+        2,
+        3,
+        2
+      ]
+    },
+    {
+      "name": "muon g factor",
+      "value": -2.00233184123,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        428,
+        1,
+        5,
+        2,
+        11,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "muon mag. mom.",
+      "value": -4.4904483e-26,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        4,
+        2,
+        25,
+        1,
+        2,
+        16,
+        3,
+        2,
+        7,
+        14
+      ]
+    },
+    {
+      "name": "muon mag. mom. anomaly",
+      "value": 0.00116592062,
+      "bm_order_cf": 5,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 10,
+      "cf_first10": [
+        1,
+        6,
+        37,
+        15,
+        125,
+        3,
+        7,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "muon mag. mom. to Bohr magneton ratio",
+      "value": -0.00484197048,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 12,
+      "cf_first10": [
+        4,
+        1,
+        5,
+        3,
+        20,
+        4,
+        4,
+        3,
+        44,
+        2
+      ]
+    },
+    {
+      "name": "muon mag. mom. to nuclear magneton ratio",
+      "value": -8.89059704,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        8,
+        1,
+        8,
+        7,
+        8,
+        1,
+        1,
+        2,
+        4,
+        8
+      ]
+    },
+    {
+      "name": "muon mass",
+      "value": 1.883531627e-28,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        7,
+        1,
+        1,
+        2,
+        2,
+        2,
+        6,
+        75
+      ]
+    },
+    {
+      "name": "muon mass energy equivalent",
+      "value": 1.692833804e-11,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        2,
+        3,
+        1,
+        10,
+        2,
+        10,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "muon mass energy equivalent in MeV",
+      "value": 105.6583755,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        17,
+        1,
+        2,
+        17,
+        2,
+        3,
+        1,
+        17,
+        1
+      ]
+    },
+    {
+      "name": "muon mass in u",
+      "value": 0.1134289257,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        1,
+        7,
+        2,
+        4,
+        5,
+        2,
+        8,
+        1,
+        6,
+        2
+      ]
+    },
+    {
+      "name": "muon molar mass",
+      "value": 0.0001134289258,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        1,
+        7,
+        2,
+        4,
+        5,
+        2,
+        8,
+        1,
+        10,
+        1
+      ]
+    },
+    {
+      "name": "muon-neutron mass ratio",
+      "value": 0.1124545168,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        1,
+        8,
+        34,
+        4,
+        2,
+        1,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "muon-proton mag. mom. ratio",
+      "value": -3.183345146,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        5,
+        2,
+        4,
+        1,
+        22,
+        1,
+        2,
+        3,
+        6
+      ]
+    },
+    {
+      "name": "muon-proton mass ratio",
+      "value": 0.1126095262,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        1,
+        7,
+        1,
+        13,
+        2,
+        1,
+        1,
+        3,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "muon-tau mass ratio",
+      "value": 0.0594635,
+      "bm_order_cf": 6,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        5,
+        1,
+        17,
+        1,
+        1,
+        1,
+        3,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "natural unit of energy",
+      "value": 8.187105788e-14,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        8,
+        5,
+        2,
+        1,
+        9,
+        4,
+        1,
+        1,
+        16,
+        1
+      ]
+    },
+    {
+      "name": "natural unit of energy in MeV",
+      "value": 0.51099895069,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        9,
+        10,
+        1,
+        8,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "natural unit of length",
+      "value": 3.8615926744e-13,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        6,
+        4,
+        2,
+        3,
+        1,
+        11,
+        2,
+        5
+      ]
+    },
+    {
+      "name": "natural unit of mass",
+      "value": 9.1093837139e-31,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        9,
+        7,
+        27,
+        1,
+        7,
+        8,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "natural unit of momentum",
+      "value": 2.73092453446e-22,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        1,
+        2,
+        1,
+        1,
+        8,
+        1,
+        18
+      ]
+    },
+    {
+      "name": "natural unit of momentum in MeV/c",
+      "value": 0.51099895069,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        9,
+        10,
+        1,
+        8,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "natural unit of time",
+      "value": 1.28808866644e-21,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        3,
+        2,
+        8,
+        6,
+        322,
+        1,
+        1,
+        30,
+        1
+      ]
+    },
+    {
+      "name": "natural unit of velocity",
+      "value": 299792458.0,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        2,
+        1,
+        480,
+        1,
+        4,
+        1,
+        7,
+        1,
+        71,
+        1
+      ]
+    },
+    {
+      "name": "neutron Compton wavelength",
+      "value": 1.31959090382e-15,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        3,
+        7,
+        1,
+        3,
+        32,
+        5,
+        7,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "neutron-electron mag. mom. ratio",
+      "value": 0.00104066884,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        1,
+        24,
+        1,
+        1,
+        2,
+        3,
+        5,
+        2,
+        1,
+        35
+      ]
+    },
+    {
+      "name": "neutron-electron mass ratio",
+      "value": 1838.683662,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        1,
+        5,
+        5,
+        39,
+        1,
+        4,
+        7,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "neutron g factor",
+      "value": -3.82608552,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        3,
+        1,
+        4,
+        1,
+        2,
+        1,
+        1315,
+        5,
+        3,
+        2
+      ]
+    },
+    {
+      "name": "neutron gyromag. ratio",
+      "value": 183247174.0,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        1,
+        1,
+        4,
+        1,
+        31,
+        2,
+        2,
+        5,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "neutron gyromag. ratio in MHz/T",
+      "value": 29.1646935,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        2,
+        1,
+        10,
+        1,
+        34,
+        3,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "neutron mag. mom.",
+      "value": -9.6623653e-27,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 16,
+      "cf_first10": [
+        9,
+        1,
+        1,
+        1,
+        25,
+        6,
+        15,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "neutron mag. mom. to Bohr magneton ratio",
+      "value": -0.00104187565,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        1,
+        23,
+        1,
+        7,
+        2,
+        1,
+        6,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "neutron mag. mom. to nuclear magneton ratio",
+      "value": -1.91304276,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        1,
+        1,
+        10,
+        2,
+        2631,
+        2,
+        1,
+        1,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "neutron mass",
+      "value": 1.67492750056e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        2,
+        13,
+        8,
+        1,
+        1,
+        4,
+        1,
+        26
+      ]
+    },
+    {
+      "name": "neutron mass energy equivalent",
+      "value": 1.50534976514e-10,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        46,
+        4,
+        3,
+        22,
+        1,
+        34,
+        2
+      ]
+    },
+    {
+      "name": "neutron mass energy equivalent in MeV",
+      "value": 939.56542194,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        2,
+        1,
+        1,
+        8,
+        1,
+        1,
+        1,
+        1,
+        8
+      ]
+    },
+    {
+      "name": "neutron mass in u",
+      "value": 1.00866491606,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        115,
+        2,
+        2,
+        4,
+        1,
+        1,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "neutron molar mass",
+      "value": 0.00100866491712,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        115,
+        2,
+        2,
+        4,
+        1,
+        1,
+        1,
+        8,
+        1
+      ]
+    },
+    {
+      "name": "neutron-muon mass ratio",
+      "value": 8.89248408,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        8,
+        1,
+        8,
+        3,
+        3,
+        10,
+        4,
+        17,
+        1,
+        20
+      ]
+    },
+    {
+      "name": "neutron-proton mag. mom. ratio",
+      "value": -0.68497935,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        6,
+        1,
+        5,
+        1,
+        1,
+        1,
+        11,
+        2,
+        5,
+        3
+      ]
+    },
+    {
+      "name": "neutron-proton mass difference",
+      "value": 2.30557461e-30,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        2,
+        3,
+        3,
+        1,
+        2,
+        40,
+        7,
+        2,
+        14,
+        6
+      ]
+    },
+    {
+      "name": "neutron-proton mass difference energy equivalent",
+      "value": 2.07214712e-13,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        2,
+        13,
+        1,
+        6,
+        5,
+        1,
+        4,
+        2,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "neutron-proton mass difference energy equivalent in MeV",
+      "value": 1.29333251,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        1,
+        3,
+        2,
+        2,
+        3,
+        1,
+        215,
+        6,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "neutron-proton mass difference in u",
+      "value": 0.00138844948,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        6,
+        3,
+        3,
+        5
+      ]
+    },
+    {
+      "name": "neutron-proton mass ratio",
+      "value": 1.00137841946,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        1,
+        725,
+        2,
+        7,
+        2,
+        5,
+        12,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "neutron relative atomic mass",
+      "value": 1.00866491606,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        115,
+        2,
+        2,
+        4,
+        1,
+        1,
+        1,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "neutron-tau mass ratio",
+      "value": 0.528779,
+      "bm_order_cf": 10,
+      "bm_order_digits": 7,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        3,
+        2,
+        9,
+        2,
+        2,
+        11,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "neutron to shielded proton mag. mom. ratio",
+      "value": -0.68499694,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        6,
+        1,
+        5,
+        1,
+        1,
+        1,
+        81,
+        20,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "Newtonian constant of gravitation",
+      "value": 6.6743e-11,
+      "bm_order_cf": 4,
+      "bm_order_digits": 6,
+      "cf_compressible": true,
+      "cf_length": 8,
+      "cf_first10": [
+        6,
+        1,
+        2,
+        14,
+        4,
+        2,
+        24,
+        1
+      ]
+    },
+    {
+      "name": "Newtonian constant of gravitation over h-bar c",
+      "value": 6.70883e-39,
+      "bm_order_cf": 10,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        2,
+        2,
+        3,
+        3,
+        4,
+        1,
+        9,
+        1
+      ]
+    },
+    {
+      "name": "nuclear magneton",
+      "value": 5.0507837393e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        19,
+        1,
+        2,
+        4,
+        5,
+        1,
+        8,
+        1,
+        13
+      ]
+    },
+    {
+      "name": "nuclear magneton in eV/T",
+      "value": 3.15245125417e-08,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        6,
+        1,
+        1,
+        3,
+        1,
+        2,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "nuclear magneton in inverse meter per tesla",
+      "value": 0.0254262341009,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        1,
+        5,
+        2,
+        1,
+        2,
+        1,
+        4,
+        5
+      ]
+    },
+    {
+      "name": "nuclear magneton in K/T",
+      "value": 0.00036582677706,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        1,
+        1,
+        12,
+        1,
+        1,
+        3,
+        2,
+        45
+      ]
+    },
+    {
+      "name": "nuclear magneton in MHz/T",
+      "value": 7.6225932188,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        7,
+        1,
+        1,
+        1,
+        1,
+        1,
+        5,
+        1,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "Planck constant",
+      "value": 6.62607015e-34,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 16,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        1,
+        2,
+        14,
+        4,
+        2,
+        3,
+        20
+      ]
+    },
+    {
+      "name": "Planck length",
+      "value": 1.616255e-35,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        6,
+        5,
+        2
+      ]
+    },
+    {
+      "name": "Planck mass",
+      "value": 2.176434e-08,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        2,
+        5,
+        1,
+        2,
+        94,
+        4,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "Planck mass energy equivalent in GeV",
+      "value": 1.22089e+19,
+      "bm_order_cf": 7,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 13,
+      "cf_first10": [
+        1,
+        4,
+        1,
+        1,
+        8,
+        1,
+        2,
+        2,
+        6,
+        1
+      ]
+    },
+    {
+      "name": "Planck temperature",
+      "value": 1.416784e+32,
+      "bm_order_cf": 6,
+      "bm_order_digits": 8,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        1,
+        2,
+        2,
+        1,
+        1,
+        58,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Planck time",
+      "value": 5.391247e-44,
+      "bm_order_cf": 10,
+      "bm_order_digits": 7,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        1,
+        1,
+        3,
+        1,
+        32,
+        5,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "proton charge to mass quotient",
+      "value": 95788331.43,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        1,
+        1,
+        2,
+        1,
+        2,
+        23,
+        1,
+        7,
+        1
+      ]
+    },
+    {
+      "name": "proton Compton wavelength",
+      "value": 1.3214098536e-15,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        3,
+        8,
+        1,
+        67,
+        3,
+        1,
+        48,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "proton-electron mass ratio",
+      "value": 1836.152673426,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        5,
+        9,
+        1,
+        2,
+        5,
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "proton g factor",
+      "value": 5.5856946893,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        1,
+        1,
+        2,
+        2,
+        2,
+        1,
+        1,
+        9,
+        1
+      ]
+    },
+    {
+      "name": "proton gyromag. ratio",
+      "value": 267522187.08,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        12,
+        1,
+        1,
+        1,
+        8,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "proton gyromag. ratio in MHz/T",
+      "value": 42.577478461,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        3,
+        1,
+        7,
+        3,
+        6,
+        2,
+        1,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "proton mag. mom.",
+      "value": 1.41060679545e-26,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        2,
+        3,
+        2,
+        1,
+        2,
+        3,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "proton mag. mom. to Bohr magneton ratio",
+      "value": 0.0015210322023,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        11,
+        2,
+        1,
+        1,
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "proton mag. mom. to nuclear magneton ratio",
+      "value": 2.79284734463,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        3,
+        1,
+        4,
+        2
+      ]
+    },
+    {
+      "name": "proton mag. shielding correction",
+      "value": 2.56715e-05,
+      "bm_order_cf": 5,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 10,
+      "cf_first10": [
+        2,
+        1,
+        1,
+        3,
+        4,
+        2,
+        15,
+        3,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "proton mass",
+      "value": 1.67262192595e-27,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        1,
+        1,
+        2,
+        18,
+        3,
+        11,
+        1,
+        54,
+        1,
+        19
+      ]
+    },
+    {
+      "name": "proton mass energy equivalent",
+      "value": 1.50327761802e-10,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        75,
+        1,
+        3,
+        2,
+        3,
+        1,
+        5
+      ]
+    },
+    {
+      "name": "proton mass energy equivalent in MeV",
+      "value": 938.27208943,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        2,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1,
+        30
+      ]
+    },
+    {
+      "name": "proton mass in u",
+      "value": 1.0072764665789,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        137,
+        2,
+        3,
+        26,
+        3,
+        1,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "proton molar mass",
+      "value": 0.00100727646764,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 16,
+      "cf_first10": [
+        1,
+        137,
+        2,
+        3,
+        26,
+        1,
+        40,
+        1,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "proton-muon mass ratio",
+      "value": 8.88024338,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        8,
+        1,
+        7,
+        2,
+        1,
+        5,
+        1,
+        8,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "proton-neutron mag. mom. ratio",
+      "value": -1.45989802,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 16,
+      "cf_first10": [
+        1,
+        2,
+        5,
+        1,
+        2,
+        1,
+        3,
+        5,
+        2,
+        15
+      ]
+    },
+    {
+      "name": "proton-neutron mass ratio",
+      "value": 0.99862347797,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        9,
+        1,
+        71,
+        1,
+        1,
+        1,
+        4,
+        1,
+        16,
+        2
+      ]
+    },
+    {
+      "name": "proton relative atomic mass",
+      "value": 1.0072764665789,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        137,
+        2,
+        3,
+        26,
+        3,
+        1,
+        3,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "proton rms charge radius",
+      "value": 8.4075e-16,
+      "bm_order_cf": 3,
+      "bm_order_digits": 5,
+      "cf_compressible": false,
+      "cf_length": 6,
+      "cf_first10": [
+        8,
+        2,
+        2,
+        4,
+        1,
+        14
+      ]
+    },
+    {
+      "name": "proton-tau mass ratio",
+      "value": 0.528051,
+      "bm_order_cf": 10,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        3,
+        1,
+        1,
+        3,
+        2,
+        1,
+        6,
+        182,
+        199999
+      ]
+    },
+    {
+      "name": "quantum of circulation",
+      "value": 0.00036369475467,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        3,
+        1,
+        1,
+        1,
+        3,
+        13,
+        1,
+        7,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "quantum of circulation times 2",
+      "value": 0.00072738950934,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        7,
+        3,
+        1,
+        1,
+        1,
+        6,
+        2,
+        3,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "reduced Compton wavelength",
+      "value": 3.8615926744e-13,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        1,
+        6,
+        4,
+        2,
+        3,
+        1,
+        11,
+        2,
+        5
+      ]
+    },
+    {
+      "name": "reduced muon Compton wavelength",
+      "value": 1.867594306e-15,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        6,
+        1,
+        1,
+        4,
+        3,
+        1,
+        7,
+        3
+      ]
+    },
+    {
+      "name": "reduced neutron Compton wavelength",
+      "value": 2.100194152e-16,
+      "bm_order_cf": 8,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        2,
+        9,
+        1,
+        50,
+        1,
+        1,
+        1,
+        1,
+        6,
+        37
+      ]
+    },
+    {
+      "name": "reduced proton Compton wavelength",
+      "value": 2.10308910051e-16,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        9,
+        1,
+        2,
+        2,
+        1,
+        28,
+        6,
+        2,
+        2
+      ]
+    },
+    {
+      "name": "reduced tau Compton wavelength",
+      "value": 1.110538e-16,
+      "bm_order_cf": 5,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 10,
+      "cf_first10": [
+        1,
+        9,
+        21,
+        2,
+        3,
+        10,
+        1,
+        7,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "Rydberg constant",
+      "value": 10973731.568157,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        10,
+        3,
+        1,
+        2,
+        2,
+        2,
+        3,
+        6,
+        4
+      ]
+    },
+    {
+      "name": "Rydberg constant times c in Hz",
+      "value": 3289841960250000.0,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        3,
+        2,
+        4,
+        1,
+        1,
+        15,
+        2,
+        7,
+        3
+      ]
+    },
+    {
+      "name": "Rydberg constant times hc in eV",
+      "value": 13.60569312299,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        1,
+        3,
+        2,
+        2,
+        2,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "Sackur-Tetrode constant (1 K, 100 kPa)",
+      "value": -1.15170753496,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        6,
+        1,
+        1,
+        2,
+        4,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "Sackur-Tetrode constant (1 K, 101.325 kPa)",
+      "value": -1.16487052149,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        1,
+        6,
+        15,
+        3,
+        2,
+        1,
+        6,
+        4,
+        1,
+        6
+      ]
+    },
+    {
+      "name": "shielded helion gyromag. ratio",
+      "value": 203789460.78,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        26,
+        2,
+        1,
+        1,
+        3,
+        34,
+        14,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "shielded helion gyromag. ratio in MHz/T",
+      "value": 32.434100033,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        3,
+        4,
+        9,
+        4,
+        3,
+        1,
+        2,
+        15,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "shielded helion mag. mom.",
+      "value": -1.07455311035e-26,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        13,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "shielded helion mag. mom. to Bohr magneton ratio",
+      "value": -0.00115867149457,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        6,
+        3,
+        3,
+        3,
+        1,
+        147,
+        448,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "shielded helion mag. mom. to nuclear magneton ratio",
+      "value": -2.1274977624,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        2,
+        7,
+        1,
+        5,
+        2,
+        1,
+        1,
+        1,
+        2,
+        6
+      ]
+    },
+    {
+      "name": "shielded helion to proton mag. mom. ratio",
+      "value": -0.76176657721,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        7,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        45
+      ]
+    },
+    {
+      "name": "shielded helion to shielded proton mag. mom. ratio",
+      "value": -0.7617861334,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        7,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        3
+      ]
+    },
+    {
+      "name": "shielded proton gyromag. ratio",
+      "value": 267515319.4,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        2,
+        12,
+        1,
+        3,
+        6,
+        2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "shielded proton gyromag. ratio in MHz/T",
+      "value": 42.57638543,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        4,
+        3,
+        1,
+        7,
+        2,
+        3,
+        5,
+        2,
+        1,
+        4
+      ]
+    },
+    {
+      "name": "shielded proton mag. mom.",
+      "value": 1.410570583e-26,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        2,
+        2,
+        3,
+        2,
+        1,
+        1,
+        1,
+        1,
+        10
+      ]
+    },
+    {
+      "name": "shielded proton mag. mom. to Bohr magneton ratio",
+      "value": 0.0015209931551,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        11,
+        2,
+        2,
+        4,
+        4,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "shielded proton mag. mom. to nuclear magneton ratio",
+      "value": 2.792775648,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        2,
+        1,
+        3,
+        1,
+        4,
+        1,
+        2,
+        1,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "shielding difference of d and p in HD",
+      "value": 1.9877e-08,
+      "bm_order_cf": 4,
+      "bm_order_digits": 5,
+      "cf_compressible": false,
+      "cf_length": 7,
+      "cf_first10": [
+        1,
+        1,
+        80,
+        3,
+        3,
+        11,
+        1
+      ]
+    },
+    {
+      "name": "shielding difference of t and p in HT",
+      "value": 2.3945e-08,
+      "bm_order_cf": 4,
+      "bm_order_digits": 6,
+      "cf_compressible": true,
+      "cf_length": 8,
+      "cf_first10": [
+        2,
+        2,
+        1,
+        1,
+        6,
+        1,
+        2,
+        18
+      ]
+    },
+    {
+      "name": "speed of light in vacuum",
+      "value": 299792458.0,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        2,
+        1,
+        480,
+        1,
+        4,
+        1,
+        7,
+        1,
+        71,
+        1
+      ]
+    },
+    {
+      "name": "standard acceleration of gravity",
+      "value": 9.80665,
+      "bm_order_cf": 6,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 11,
+      "cf_first10": [
+        9,
+        1,
+        4,
+        5,
+        1,
+        4,
+        2,
+        2,
+        5,
+        1
+      ]
+    },
+    {
+      "name": "standard atmosphere",
+      "value": 101325.0,
+      "bm_order_cf": 3,
+      "bm_order_digits": 7,
+      "cf_compressible": false,
+      "cf_length": 5,
+      "cf_first10": [
+        1,
+        75,
+        2,
+        8,
+        3
+      ]
+    },
+    {
+      "name": "standard-state pressure",
+      "value": 100000.0,
+      "bm_order_cf": 1,
+      "bm_order_digits": 1,
+      "cf_compressible": false,
+      "cf_length": 1,
+      "cf_first10": [
+        1
+      ]
+    },
+    {
+      "name": "tau Compton wavelength",
+      "value": 6.97771e-16,
+      "bm_order_cf": 5,
+      "bm_order_digits": 6,
+      "cf_compressible": true,
+      "cf_length": 10,
+      "cf_first10": [
+        6,
+        1,
+        43,
+        1,
+        6,
+        3,
+        4,
+        11,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "tau-electron mass ratio",
+      "value": 3477.23,
+      "bm_order_cf": 7,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        3,
+        2,
+        10,
+        2,
+        11,
+        1,
+        1,
+        1,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "tau energy equivalent",
+      "value": 1776.86,
+      "bm_order_cf": 9,
+      "bm_order_digits": 7,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        1,
+        1,
+        3,
+        2,
+        13,
+        137,
+        1,
+        2,
+        3999999,
+        1
+      ]
+    },
+    {
+      "name": "tau mass",
+      "value": 3.16754e-27,
+      "bm_order_cf": 5,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 9,
+      "cf_first10": [
+        3,
+        5,
+        1,
+        30,
+        1,
+        36,
+        2,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "tau mass energy equivalent",
+      "value": 2.84684e-10,
+      "bm_order_cf": 6,
+      "bm_order_digits": 7,
+      "cf_compressible": true,
+      "cf_length": 12,
+      "cf_first10": [
+        2,
+        1,
+        5,
+        1,
+        1,
+        8,
+        11,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "tau mass in u",
+      "value": 1.90754,
+      "bm_order_cf": 8,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        1,
+        9,
+        1,
+        4,
+        2,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "tau molar mass",
+      "value": 0.00190754,
+      "bm_order_cf": 8,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 15,
+      "cf_first10": [
+        1,
+        1,
+        9,
+        1,
+        4,
+        2,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "tau-muon mass ratio",
+      "value": 16.817,
+      "bm_order_cf": 4,
+      "bm_order_digits": 5,
+      "cf_compressible": true,
+      "cf_length": 8,
+      "cf_first10": [
+        1,
+        1,
+        2,
+        7,
+        17,
+        2,
+        1,
+        8
+      ]
+    },
+    {
+      "name": "tau-neutron mass ratio",
+      "value": 1.89115,
+      "bm_order_cf": 5,
+      "bm_order_digits": 6,
+      "cf_compressible": true,
+      "cf_length": 9,
+      "cf_first10": [
+        1,
+        1,
+        8,
+        5,
+        2,
+        1,
+        6,
+        2,
+        9
+      ]
+    },
+    {
+      "name": "tau-proton mass ratio",
+      "value": 1.89376,
+      "bm_order_cf": 5,
+      "bm_order_digits": 6,
+      "cf_compressible": true,
+      "cf_length": 10,
+      "cf_first10": [
+        1,
+        1,
+        8,
+        2,
+        2,
+        2,
+        1,
+        3,
+        4,
+        1
+      ]
+    },
+    {
+      "name": "Thomson cross section",
+      "value": 6.6524587051e-29,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        6,
+        1,
+        1,
+        1,
+        7,
+        6,
+        1,
+        1,
+        33,
+        1
+      ]
+    },
+    {
+      "name": "triton-electron mass ratio",
+      "value": 5496.92153551,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        5,
+        2,
+        80,
+        1,
+        2,
+        2,
+        3,
+        1,
+        2,
+        8
+      ]
+    },
+    {
+      "name": "triton g factor",
+      "value": 5.95792493,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        5,
+        1,
+        22,
+        1,
+        3,
+        3,
+        2,
+        2,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "triton mag. mom.",
+      "value": 1.5046095178e-26,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        53,
+        1,
+        2,
+        1,
+        3,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "triton mag. mom. to Bohr magneton ratio",
+      "value": 0.0016223936648,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        5,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "triton mag. mom. to nuclear magneton ratio",
+      "value": 2.978962465,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        2,
+        1,
+        46,
+        1,
+        1,
+        6,
+        1,
+        5,
+        26,
+        1
+      ]
+    },
+    {
+      "name": "triton mass",
+      "value": 5.0073567512e-27,
+      "bm_order_cf": 7,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 14,
+      "cf_first10": [
+        5,
+        135,
+        1,
+        13,
+        5,
+        17,
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "triton mass energy equivalent",
+      "value": 4.5003878119e-10,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        4,
+        1,
+        1,
+        644,
+        7,
+        46,
+        13,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "name": "triton mass energy equivalent in MeV",
+      "value": 2808.92113668,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        4,
+        4,
+        3,
+        1,
+        1,
+        9,
+        1,
+        2
+      ]
+    },
+    {
+      "name": "triton mass in u",
+      "value": 3.01550071597,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        3,
+        64,
+        1,
+        1,
+        18,
+        1,
+        1,
+        19,
+        10,
+        2
+      ]
+    },
+    {
+      "name": "triton molar mass",
+      "value": 0.00301550071913,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        3,
+        64,
+        1,
+        1,
+        18,
+        1,
+        1,
+        7,
+        2,
+        1
+      ]
+    },
+    {
+      "name": "triton-proton mass ratio",
+      "value": 2.99371703403,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        1,
+        158,
+        6,
+        4,
+        2,
+        1,
+        27,
+        1,
+        7
+      ]
+    },
+    {
+      "name": "triton relative atomic mass",
+      "value": 3.01550071597,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 18,
+      "cf_first10": [
+        3,
+        64,
+        1,
+        1,
+        18,
+        1,
+        1,
+        19,
+        10,
+        2
+      ]
+    },
+    {
+      "name": "triton to proton mag. mom. ratio",
+      "value": 1.0666399189,
+      "bm_order_cf": 9,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 17,
+      "cf_first10": [
+        1,
+        15,
+        166,
+        10,
+        1,
+        1,
+        3,
+        2,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "unified atomic mass unit",
+      "value": 1.66053906892e-27,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        1,
+        1,
+        1,
+        17,
+        2,
+        6,
+        1,
+        9,
+        2
+      ]
+    },
+    {
+      "name": "vacuum electric permittivity",
+      "value": 8.8541878188e-12,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 19,
+      "cf_first10": [
+        8,
+        1,
+        5,
+        1,
+        6,
+        20,
+        2,
+        1,
+        2,
+        10
+      ]
+    },
+    {
+      "name": "vacuum mag. permeability",
+      "value": 1.25663706127e-06,
+      "bm_order_cf": 10,
+      "bm_order_digits": 8,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        1,
+        3,
+        1,
+        8,
+        1,
+        2,
+        732,
+        2,
+        4,
+        4
+      ]
+    },
+    {
+      "name": "weak mixing angle",
+      "value": 0.22305,
+      "bm_order_cf": 10,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        2,
+        4,
+        2,
+        1,
+        21,
+        3,
+        1,
+        1,
+        833333332,
+        1
+      ]
+    },
+    {
+      "name": "W to Z mass ratio",
+      "value": 0.88145,
+      "bm_order_cf": 10,
+      "bm_order_digits": 6,
+      "cf_compressible": false,
+      "cf_length": 20,
+      "cf_first10": [
+        8,
+        1,
+        4,
+        2,
+        1,
+        1,
+        3,
+        1,
+        3,
+        4
+      ]
+    }
+  ]
+}

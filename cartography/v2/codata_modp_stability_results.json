@@ -1,0 +1,1295 @@
+{
+  "description": "Mod-p fingerprint stability of CODATA dimensionless constants",
+  "n_constants": 93,
+  "n_domains": 17,
+  "primes": [
+    2,
+    3,
+    5,
+    7,
+    11
+  ],
+  "domain_sizes": {
+    "alpha particle": 3,
+    "deuteron": 9,
+    "electron": 19,
+    "fine-structure": 1,
+    "helion": 7,
+    "inverse fine-structure": 1,
+    "muon": 9,
+    "neutron": 11,
+    "proton": 10,
+    "sackur-tetrode": 2,
+    "shielded helion": 4,
+    "shielded proton": 2,
+    "shielding difference": 2,
+    "tau": 4,
+    "triton": 7,
+    "w to z": 1,
+    "weak mixing": 1
+  },
+  "per_prime": {
+    "2": {
+      "within_group_match_rate": 0.478908,
+      "between_group_match_rate": 0.496258,
+      "enrichment_ratio": 0.965039,
+      "null_mean_enrichment": 1.0008,
+      "null_std_enrichment": 0.0511,
+      "p_value": 0.7626,
+      "n_within_pairs": 403,
+      "n_between_pairs": 3875
+    },
+    "3": {
+      "within_group_match_rate": 0.344913,
+      "between_group_match_rate": 0.332129,
+      "enrichment_ratio": 1.038491,
+      "null_mean_enrichment": 0.9997,
+      "null_std_enrichment": 0.0741,
+      "p_value": 0.2754,
+      "n_within_pairs": 403,
+      "n_between_pairs": 3875
+    },
+    "5": {
+      "within_group_match_rate": 0.19603,
+      "between_group_match_rate": 0.193806,
+      "enrichment_ratio": 1.011472,
+      "null_mean_enrichment": 1.0003,
+      "null_std_enrichment": 0.1046,
+      "p_value": 0.4434,
+      "n_within_pairs": 403,
+      "n_between_pairs": 3875
+    },
+    "7": {
+      "within_group_match_rate": 0.133995,
+      "between_group_match_rate": 0.14271,
+      "enrichment_ratio": 0.938934,
+      "null_mean_enrichment": 1.002,
+      "null_std_enrichment": 0.1304,
+      "p_value": 0.689,
+      "n_within_pairs": 403,
+      "n_between_pairs": 3875
+    },
+    "11": {
+      "within_group_match_rate": 0.084367,
+      "between_group_match_rate": 0.087484,
+      "enrichment_ratio": 0.964375,
+      "null_mean_enrichment": 1.0033,
+      "null_std_enrichment": 0.1679,
+      "p_value": 0.5949,
+      "n_within_pairs": 403,
+      "n_between_pairs": 3875
+    }
+  },
+  "overall": {
+    "within_group_mean_similarity": 0.247643,
+    "between_group_mean_similarity": 0.250477,
+    "enrichment_ratio": 0.988683,
+    "null_mean_enrichment": 1.0001,
+    "null_std_enrichment": 0.0371,
+    "p_value": 0.6049
+  },
+  "null_permutations": 10000,
+  "domain_detail": {
+    "alpha particle": {
+      "n": 3,
+      "mean_internal_similarity": 0.2667,
+      "std_internal_similarity": 0.0943
+    },
+    "deuteron": {
+      "n": 9,
+      "mean_internal_similarity": 0.2556,
+      "std_internal_similarity": 0.2191
+    },
+    "electron": {
+      "n": 19,
+      "mean_internal_similarity": 0.2573,
+      "std_internal_similarity": 0.179
+    },
+    "fine-structure": {
+      "n": 1,
+      "note": "too few for pairwise comparison"
+    },
+    "helion": {
+      "n": 7,
+      "mean_internal_similarity": 0.2,
+      "std_internal_similarity": 0.1633
+    },
+    "inverse fine-structure": {
+      "n": 1,
+      "note": "too few for pairwise comparison"
+    },
+    "muon": {
+      "n": 9,
+      "mean_internal_similarity": 0.2444,
+      "std_internal_similarity": 0.1499
+    },
+    "neutron": {
+      "n": 11,
+      "mean_internal_similarity": 0.2655,
+      "std_internal_similarity": 0.1575
+    },
+    "proton": {
+      "n": 10,
+      "mean_internal_similarity": 0.2267,
+      "std_internal_similarity": 0.1818
+    },
+    "sackur-tetrode": {
+      "n": 2,
+      "mean_internal_similarity": 0.0,
+      "std_internal_similarity": 0.0
+    },
+    "shielded helion": {
+      "n": 4,
+      "mean_internal_similarity": 0.2667,
+      "std_internal_similarity": 0.1886
+    },
+    "shielded proton": {
+      "n": 2,
+      "mean_internal_similarity": 0.0,
+      "std_internal_similarity": 0.0
+    },
+    "shielding difference": {
+      "n": 2,
+      "mean_internal_similarity": 0.6,
+      "std_internal_similarity": 0.0
+    },
+    "tau": {
+      "n": 4,
+      "mean_internal_similarity": 0.2333,
+      "std_internal_similarity": 0.0745
+    },
+    "triton": {
+      "n": 7,
+      "mean_internal_similarity": 0.2095,
+      "std_internal_similarity": 0.19
+    },
+    "w to z": {
+      "n": 1,
+      "note": "too few for pairwise comparison"
+    },
+    "weak mixing": {
+      "n": 1,
+      "note": "too few for pairwise comparison"
+    }
+  },
+  "constants": [
+    {
+      "name": "alpha particle-electron mass ratio",
+      "domain": "alpha particle",
+      "sig_digits_int": 729429954171,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 1,
+        "7": 2,
+        "11": 6
+      }
+    },
+    {
+      "name": "alpha particle-proton mass ratio",
+      "domain": "alpha particle",
+      "sig_digits_int": 3972599690252,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 2,
+        "7": 4,
+        "11": 6
+      }
+    },
+    {
+      "name": "alpha particle relative atomic mass",
+      "domain": "alpha particle",
+      "sig_digits_int": 4001506179129,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 4,
+        "7": 4,
+        "11": 8
+      }
+    },
+    {
+      "name": "deuteron-electron mag. mom. ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 4664345550,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "7": 4,
+        "11": 7
+      }
+    },
+    {
+      "name": "deuteron-electron mass ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 3670482967655,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 0,
+        "7": 0,
+        "11": 9
+      }
+    },
+    {
+      "name": "deuteron g factor",
+      "domain": "deuteron",
+      "sig_digits_int": 8574382335,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 0,
+        "7": 1,
+        "11": 2
+      }
+    },
+    {
+      "name": "deuteron mag. mom. to Bohr magneton ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 4669754568,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 3,
+        "7": 3,
+        "11": 6
+      }
+    },
+    {
+      "name": "deuteron mag. mom. to nuclear magneton ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 8574382335,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 0,
+        "7": 1,
+        "11": 2
+      }
+    },
+    {
+      "name": "deuteron-neutron mag. mom. ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 44820652,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 2,
+        "7": 2,
+        "11": 8
+      }
+    },
+    {
+      "name": "deuteron-proton mag. mom. ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 30701220930,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "7": 2,
+        "11": 6
+      }
+    },
+    {
+      "name": "deuteron-proton mass ratio",
+      "domain": "deuteron",
+      "sig_digits_int": 19990075012699,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 4,
+        "7": 1,
+        "11": 0
+      }
+    },
+    {
+      "name": "deuteron relative atomic mass",
+      "domain": "deuteron",
+      "sig_digits_int": 2013553212544,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 4,
+        "7": 6,
+        "11": 5
+      }
+    },
+    {
+      "name": "electron-deuteron mag. mom. ratio",
+      "domain": "electron",
+      "sig_digits_int": 21439234921,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 1,
+        "7": 6,
+        "11": 5
+      }
+    },
+    {
+      "name": "electron-deuteron mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 2724437107629,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 4,
+        "7": 6,
+        "11": 6
+      }
+    },
+    {
+      "name": "electron g factor",
+      "domain": "electron",
+      "sig_digits_int": 200231930436092,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 2,
+        "7": 2,
+        "11": 5
+      }
+    },
+    {
+      "name": "electron-helion mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 1819543074649,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 4,
+        "7": 6,
+        "11": 3
+      }
+    },
+    {
+      "name": "electron mag. mom. anomaly",
+      "domain": "electron",
+      "sig_digits_int": 115965218046,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 1,
+        "7": 6,
+        "11": 7
+      }
+    },
+    {
+      "name": "electron mag. mom. to Bohr magneton ratio",
+      "domain": "electron",
+      "sig_digits_int": 100115965218046,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 1,
+        "7": 1,
+        "11": 8
+      }
+    },
+    {
+      "name": "electron mag. mom. to nuclear magneton ratio",
+      "domain": "electron",
+      "sig_digits_int": 1838281971877,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 2,
+        "7": 1,
+        "11": 10
+      }
+    },
+    {
+      "name": "electron-muon mag. mom. ratio",
+      "domain": "electron",
+      "sig_digits_int": 2067669881,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 1,
+        "7": 4,
+        "11": 2
+      }
+    },
+    {
+      "name": "electron-muon mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 483633170,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 0,
+        "7": 6,
+        "11": 9
+      }
+    },
+    {
+      "name": "electron-neutron mag. mom. ratio",
+      "domain": "electron",
+      "sig_digits_int": 96092048,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 3,
+        "7": 3,
+        "11": 8
+      }
+    },
+    {
+      "name": "electron-neutron mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 54386734416,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 1,
+        "7": 0,
+        "11": 3
+      }
+    },
+    {
+      "name": "electron-proton mag. mom. ratio",
+      "domain": "electron",
+      "sig_digits_int": 65821068789,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 4,
+        "7": 0,
+        "11": 3
+      }
+    },
+    {
+      "name": "electron-proton mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 5446170214889,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 4,
+        "7": 5,
+        "11": 8
+      }
+    },
+    {
+      "name": "electron relative atomic mass",
+      "domain": "electron",
+      "sig_digits_int": 5485799090441,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 1,
+        "7": 5,
+        "11": 10
+      }
+    },
+    {
+      "name": "electron-tau mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 287585,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 0,
+        "7": 4,
+        "11": 1
+      }
+    },
+    {
+      "name": "electron to alpha particle mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 1370933554733,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 3,
+        "7": 1,
+        "11": 6
+      }
+    },
+    {
+      "name": "electron to shielded helion mag. mom. ratio",
+      "domain": "electron",
+      "sig_digits_int": 86405823986,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 1,
+        "7": 6,
+        "11": 9
+      }
+    },
+    {
+      "name": "electron to shielded proton mag. mom. ratio",
+      "domain": "electron",
+      "sig_digits_int": 6582275856,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 1,
+        "7": 2,
+        "11": 2
+      }
+    },
+    {
+      "name": "electron-triton mass ratio",
+      "domain": "electron",
+      "sig_digits_int": 1819200062327,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 2,
+        "7": 4,
+        "11": 10
+      }
+    },
+    {
+      "name": "fine-structure constant",
+      "domain": "fine-structure",
+      "sig_digits_int": 72973525643,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 3,
+        "7": 4,
+        "11": 7
+      }
+    },
+    {
+      "name": "helion-electron mass ratio",
+      "domain": "helion",
+      "sig_digits_int": 549588527984,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 4,
+        "7": 6,
+        "11": 1
+      }
+    },
+    {
+      "name": "helion g factor",
+      "domain": "helion",
+      "sig_digits_int": 42552506995,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 0,
+        "7": 5,
+        "11": 9
+      }
+    },
+    {
+      "name": "helion mag. mom. to Bohr magneton ratio",
+      "domain": "helion",
+      "sig_digits_int": 115874098083,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 3,
+        "7": 2,
+        "11": 7
+      }
+    },
+    {
+      "name": "helion mag. mom. to nuclear magneton ratio",
+      "domain": "helion",
+      "sig_digits_int": 21276253498,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 3,
+        "7": 3,
+        "11": 5
+      }
+    },
+    {
+      "name": "helion-proton mass ratio",
+      "domain": "helion",
+      "sig_digits_int": 2993152671552,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 2,
+        "7": 1,
+        "11": 10
+      }
+    },
+    {
+      "name": "helion relative atomic mass",
+      "domain": "helion",
+      "sig_digits_int": 3014932246932,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 2,
+        "7": 4,
+        "11": 1
+      }
+    },
+    {
+      "name": "helion shielding shift",
+      "domain": "helion",
+      "sig_digits_int": 59967029,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 4,
+        "7": 3,
+        "11": 1
+      }
+    },
+    {
+      "name": "inverse fine-structure constant",
+      "domain": "inverse fine-structure",
+      "sig_digits_int": 137035999177,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 2,
+        "7": 0,
+        "11": 0
+      }
+    },
+    {
+      "name": "muon-electron mass ratio",
+      "domain": "muon",
+      "sig_digits_int": 2067682827,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 2,
+        "7": 0,
+        "11": 1
+      }
+    },
+    {
+      "name": "muon g factor",
+      "domain": "muon",
+      "sig_digits_int": 200233184123,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 3,
+        "7": 0,
+        "11": 5
+      }
+    },
+    {
+      "name": "muon mag. mom. anomaly",
+      "domain": "muon",
+      "sig_digits_int": 116592062,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 2,
+        "7": 6,
+        "11": 4
+      }
+    },
+    {
+      "name": "muon mag. mom. to Bohr magneton ratio",
+      "domain": "muon",
+      "sig_digits_int": 484197048,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 3,
+        "7": 6,
+        "11": 5
+      }
+    },
+    {
+      "name": "muon mag. mom. to nuclear magneton ratio",
+      "domain": "muon",
+      "sig_digits_int": 889059704,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 4,
+        "7": 1,
+        "11": 5
+      }
+    },
+    {
+      "name": "muon-neutron mass ratio",
+      "domain": "muon",
+      "sig_digits_int": 1124545168,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 3,
+        "7": 5,
+        "11": 10
+      }
+    },
+    {
+      "name": "muon-proton mag. mom. ratio",
+      "domain": "muon",
+      "sig_digits_int": 3183345146,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 1,
+        "7": 2,
+        "11": 3
+      }
+    },
+    {
+      "name": "muon-proton mass ratio",
+      "domain": "muon",
+      "sig_digits_int": 1126095262,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 2,
+        "7": 5,
+        "11": 6
+      }
+    },
+    {
+      "name": "muon-tau mass ratio",
+      "domain": "muon",
+      "sig_digits_int": 594635,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 0,
+        "7": 6,
+        "11": 8
+      }
+    },
+    {
+      "name": "neutron-electron mag. mom. ratio",
+      "domain": "neutron",
+      "sig_digits_int": 104066884,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 4,
+        "7": 5,
+        "11": 9
+      }
+    },
+    {
+      "name": "neutron-electron mass ratio",
+      "domain": "neutron",
+      "sig_digits_int": 183868366200,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "7": 1,
+        "11": 2
+      }
+    },
+    {
+      "name": "neutron g factor",
+      "domain": "neutron",
+      "sig_digits_int": 382608552,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 2,
+        "7": 4,
+        "11": 7
+      }
+    },
+    {
+      "name": "neutron mag. mom. to Bohr magneton ratio",
+      "domain": "neutron",
+      "sig_digits_int": 104187565,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 0,
+        "7": 6,
+        "11": 9
+      }
+    },
+    {
+      "name": "neutron mag. mom. to nuclear magneton ratio",
+      "domain": "neutron",
+      "sig_digits_int": 191304276,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 1,
+        "7": 2,
+        "11": 9
+      }
+    },
+    {
+      "name": "neutron-muon mass ratio",
+      "domain": "neutron",
+      "sig_digits_int": 889248408,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 3,
+        "7": 6,
+        "11": 4
+      }
+    },
+    {
+      "name": "neutron-proton mag. mom. ratio",
+      "domain": "neutron",
+      "sig_digits_int": 68497935,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 0,
+        "7": 2,
+        "11": 0
+      }
+    },
+    {
+      "name": "neutron-proton mass ratio",
+      "domain": "neutron",
+      "sig_digits_int": 100137841946,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 1,
+        "7": 2,
+        "11": 10
+      }
+    },
+    {
+      "name": "neutron relative atomic mass",
+      "domain": "neutron",
+      "sig_digits_int": 100866491606,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 1,
+        "7": 6,
+        "11": 1
+      }
+    },
+    {
+      "name": "neutron-tau mass ratio",
+      "domain": "neutron",
+      "sig_digits_int": 528779,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 4,
+        "7": 6,
+        "11": 9
+      }
+    },
+    {
+      "name": "neutron to shielded proton mag. mom. ratio",
+      "domain": "neutron",
+      "sig_digits_int": 68499694,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 4,
+        "7": 4,
+        "11": 10
+      }
+    },
+    {
+      "name": "proton-electron mass ratio",
+      "domain": "proton",
+      "sig_digits_int": 1836152673426,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 1,
+        "7": 1,
+        "11": 5
+      }
+    },
+    {
+      "name": "proton g factor",
+      "domain": "proton",
+      "sig_digits_int": 55856946893,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 3,
+        "7": 6,
+        "11": 0
+      }
+    },
+    {
+      "name": "proton mag. mom. to Bohr magneton ratio",
+      "domain": "proton",
+      "sig_digits_int": 152103220230,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "7": 3,
+        "11": 5
+      }
+    },
+    {
+      "name": "proton mag. mom. to nuclear magneton ratio",
+      "domain": "proton",
+      "sig_digits_int": 279284734463,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 3,
+        "7": 0,
+        "11": 9
+      }
+    },
+    {
+      "name": "proton mag. shielding correction",
+      "domain": "proton",
+      "sig_digits_int": 256715,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 0,
+        "7": 4,
+        "11": 8
+      }
+    },
+    {
+      "name": "proton-muon mass ratio",
+      "domain": "proton",
+      "sig_digits_int": 888024338,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 3,
+        "7": 5,
+        "11": 3
+      }
+    },
+    {
+      "name": "proton-neutron mag. mom. ratio",
+      "domain": "proton",
+      "sig_digits_int": 145989802,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 2,
+        "7": 0,
+        "11": 2
+      }
+    },
+    {
+      "name": "proton-neutron mass ratio",
+      "domain": "proton",
+      "sig_digits_int": 99862347797,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 2,
+        "7": 2,
+        "11": 3
+      }
+    },
+    {
+      "name": "proton relative atomic mass",
+      "domain": "proton",
+      "sig_digits_int": 10072764665789,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 4,
+        "7": 0,
+        "11": 1
+      }
+    },
+    {
+      "name": "proton-tau mass ratio",
+      "domain": "proton",
+      "sig_digits_int": 528051,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 1,
+        "7": 6,
+        "11": 7
+      }
+    },
+    {
+      "name": "Sackur-Tetrode constant (1 K, 100 kPa)",
+      "domain": "sackur-tetrode",
+      "sig_digits_int": 115170753496,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 1,
+        "7": 1,
+        "11": 7
+      }
+    },
+    {
+      "name": "Sackur-Tetrode constant (1 K, 101.325 kPa)",
+      "domain": "sackur-tetrode",
+      "sig_digits_int": 116487052149,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 4,
+        "7": 6,
+        "11": 6
+      }
+    },
+    {
+      "name": "shielded helion mag. mom. to Bohr magneton ratio",
+      "domain": "shielded helion",
+      "sig_digits_int": 115867149457,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 2,
+        "7": 3,
+        "11": 4
+      }
+    },
+    {
+      "name": "shielded helion mag. mom. to nuclear magneton ratio",
+      "domain": "shielded helion",
+      "sig_digits_int": 21274977624,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 4,
+        "7": 5,
+        "11": 10
+      }
+    },
+    {
+      "name": "shielded helion to proton mag. mom. ratio",
+      "domain": "shielded helion",
+      "sig_digits_int": 76176657721,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 1,
+        "7": 3,
+        "11": 10
+      }
+    },
+    {
+      "name": "shielded helion to shielded proton mag. mom. ratio",
+      "domain": "shielded helion",
+      "sig_digits_int": 7617861334,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 4,
+        "7": 6,
+        "11": 6
+      }
+    },
+    {
+      "name": "shielded proton mag. mom. to Bohr magneton ratio",
+      "domain": "shielded proton",
+      "sig_digits_int": 15209931551,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 1,
+        "7": 3,
+        "11": 1
+      }
+    },
+    {
+      "name": "shielded proton mag. mom. to nuclear magneton ratio",
+      "domain": "shielded proton",
+      "sig_digits_int": 2792775648,
+      "fingerprint": {
+        "2": 0,
+        "3": 0,
+        "5": 3,
+        "7": 5,
+        "11": 3
+      }
+    },
+    {
+      "name": "shielding difference of d and p in HD",
+      "domain": "shielding difference",
+      "sig_digits_int": 198770,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 0,
+        "7": 5,
+        "11": 0
+      }
+    },
+    {
+      "name": "shielding difference of t and p in HT",
+      "domain": "shielding difference",
+      "sig_digits_int": 239450,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 0,
+        "7": 1,
+        "11": 2
+      }
+    },
+    {
+      "name": "tau-electron mass ratio",
+      "domain": "tau",
+      "sig_digits_int": 347723,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 3,
+        "7": 5,
+        "11": 2
+      }
+    },
+    {
+      "name": "tau-muon mass ratio",
+      "domain": "tau",
+      "sig_digits_int": 168170,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 0,
+        "7": 2,
+        "11": 2
+      }
+    },
+    {
+      "name": "tau-neutron mass ratio",
+      "domain": "tau",
+      "sig_digits_int": 189115,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 0,
+        "7": 3,
+        "11": 3
+      }
+    },
+    {
+      "name": "tau-proton mass ratio",
+      "domain": "tau",
+      "sig_digits_int": 189376,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 1,
+        "7": 5,
+        "11": 0
+      }
+    },
+    {
+      "name": "triton-electron mass ratio",
+      "domain": "triton",
+      "sig_digits_int": 549692153551,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 1,
+        "7": 2,
+        "11": 2
+      }
+    },
+    {
+      "name": "triton g factor",
+      "domain": "triton",
+      "sig_digits_int": 5957924930,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 0,
+        "7": 6,
+        "11": 1
+      }
+    },
+    {
+      "name": "triton mag. mom. to Bohr magneton ratio",
+      "domain": "triton",
+      "sig_digits_int": 16223936648,
+      "fingerprint": {
+        "2": 0,
+        "3": 2,
+        "5": 3,
+        "7": 3,
+        "11": 7
+      }
+    },
+    {
+      "name": "triton mag. mom. to nuclear magneton ratio",
+      "domain": "triton",
+      "sig_digits_int": 29789624650,
+      "fingerprint": {
+        "2": 0,
+        "3": 1,
+        "5": 0,
+        "7": 2,
+        "11": 5
+      }
+    },
+    {
+      "name": "triton-proton mass ratio",
+      "domain": "triton",
+      "sig_digits_int": 299371703403,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 3,
+        "7": 3,
+        "11": 3
+      }
+    },
+    {
+      "name": "triton relative atomic mass",
+      "domain": "triton",
+      "sig_digits_int": 301550071597,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 2,
+        "7": 5,
+        "11": 5
+      }
+    },
+    {
+      "name": "triton to proton mag. mom. ratio",
+      "domain": "triton",
+      "sig_digits_int": 10666399189,
+      "fingerprint": {
+        "2": 1,
+        "3": 1,
+        "5": 4,
+        "7": 5,
+        "11": 6
+      }
+    },
+    {
+      "name": "weak mixing angle",
+      "domain": "weak mixing",
+      "sig_digits_int": 22305,
+      "fingerprint": {
+        "2": 1,
+        "3": 0,
+        "5": 0,
+        "7": 3,
+        "11": 8
+      }
+    },
+    {
+      "name": "W to Z mass ratio",
+      "domain": "w to z",
+      "sig_digits_int": 88145,
+      "fingerprint": {
+        "2": 1,
+        "3": 2,
+        "5": 0,
+        "7": 1,
+        "11": 2
+      }
+    }
+  ],
+  "verdict": "NO_SIGNAL",
+  "explanation": "No prime shows statistically significant within-domain enrichment over random grouping. Mod-p residues of significant digits do not cluster by physics domain."
+}

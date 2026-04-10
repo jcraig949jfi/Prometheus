@@ -1,0 +1,103 @@
+{
+  "problem": "F12",
+  "title": "Particle Mass Graph Curvature (Ollivier-Ricci)",
+  "n_particles": 225,
+  "n_excluded_zero_mass": 1,
+  "k_neighbors": 5,
+  "alpha": 0.5,
+  "graph_nodes": 225,
+  "graph_edges": 697,
+  "family_distribution": {
+    "gauge_higgs": 3,
+    "lepton": 3,
+    "quark": 6,
+    "meson": 154,
+    "baryon": 59
+  },
+  "overall": {
+    "mean_orc": -0.4153,
+    "std_orc": 3.1298,
+    "median_orc": 0.136,
+    "min_orc": -40.9867,
+    "max_orc": 0.6,
+    "n_edges": 697
+  },
+  "within_family": {
+    "mean_orc": -0.6653,
+    "std_orc": 3.8402,
+    "n_edges": 453
+  },
+  "between_family": {
+    "mean_orc": 0.0488,
+    "std_orc": 0.5208,
+    "n_edges": 244
+  },
+  "family_pair_stats": {
+    "baryon": {
+      "mean_orc": -0.9442,
+      "std_orc": 3.2506,
+      "n_edges": 92
+    },
+    "baryon-lepton": {
+      "mean_orc": 0.5833,
+      "std_orc": 0.0,
+      "n_edges": 1
+    },
+    "baryon-meson": {
+      "mean_orc": 0.0029,
+      "std_orc": 0.4942,
+      "n_edges": 200
+    },
+    "gauge_higgs": {
+      "mean_orc": 0.6,
+      "std_orc": 0.0,
+      "n_edges": 3
+    },
+    "gauge_higgs-meson": {
+      "mean_orc": 0.4049,
+      "std_orc": 0.0161,
+      "n_edges": 6
+    },
+    "gauge_higgs-quark": {
+      "mean_orc": 0.6,
+      "std_orc": 0.0,
+      "n_edges": 3
+    },
+    "lepton": {
+      "mean_orc": 0.4746,
+      "std_orc": 0.0,
+      "n_edges": 1
+    },
+    "lepton-meson": {
+      "mean_orc": -0.0493,
+      "std_orc": 0.9021,
+      "n_edges": 10
+    },
+    "lepton-quark": {
+      "mean_orc": 0.5081,
+      "std_orc": 0.0843,
+      "n_edges": 6
+    },
+    "meson": {
+      "mean_orc": -0.6163,
+      "std_orc": 4.0093,
+      "n_edges": 354
+    },
+    "meson-quark": {
+      "mean_orc": 0.2194,
+      "std_orc": 0.5204,
+      "n_edges": 18
+    },
+    "quark": {
+      "mean_orc": 0.4673,
+      "std_orc": 0.0957,
+      "n_edges": 3
+    }
+  },
+  "x9_comparison": {
+    "x9_ec_isogeny_orc": -0.632,
+    "pdg_mean_orc": -0.4153,
+    "delta": 0.2167,
+    "verdict": "PDG particle masses live in LESS negatively curved space than EC isogeny classes"
+  }
+}

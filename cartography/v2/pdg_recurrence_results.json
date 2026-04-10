@@ -1,0 +1,150 @@
+{
+  "all_masses_sorted": {
+    "min_order": 113,
+    "max_order_found": 113,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      113,
+      113,
+      113,
+      113,
+      113
+    ],
+    "seq_length": 225,
+    "ratio_order_to_length": 0.5022
+  },
+  "family_lepton": {
+    "skipped": true,
+    "count": 3
+  },
+  "family_quark": {
+    "min_order": 3,
+    "max_order_found": 3,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "seq_length": 6,
+    "ratio_order_to_length": 0.5
+  },
+  "family_meson": {
+    "min_order": 63,
+    "max_order_found": 63,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      63,
+      63,
+      63,
+      63,
+      63
+    ],
+    "seq_length": 125,
+    "ratio_order_to_length": 0.504
+  },
+  "family_baryon": {
+    "min_order": 44,
+    "max_order_found": 44,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      44,
+      44,
+      44,
+      44,
+      44
+    ],
+    "seq_length": 88,
+    "ratio_order_to_length": 0.5
+  },
+  "family_gauge_boson": {
+    "skipped": true,
+    "count": 3
+  },
+  "mass_ratios_ppm": {
+    "min_order": 112,
+    "max_order_found": 112,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      112,
+      112,
+      112,
+      112,
+      112
+    ],
+    "seq_length": 224,
+    "ratio_order_to_length": 0.5
+  },
+  "null_comparison": {
+    "all_masses": {
+      "n_trials": 20,
+      "null_mean_order": 113.0,
+      "null_std_order": 0.0,
+      "null_min": 113,
+      "null_max": 113,
+      "seq_length": 225
+    },
+    "ratios_ppm": {
+      "n_trials": 20,
+      "null_mean_order": 112.0,
+      "null_std_order": 0.0,
+      "null_min": 112,
+      "null_max": 112,
+      "seq_length": 224
+    }
+  },
+  "family_quark_ratios": {
+    "min_order": 3,
+    "max_order_found": 3,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "seq_length": 5,
+    "ratio_order_to_length": 0.6
+  },
+  "family_meson_ratios": {
+    "min_order": 62,
+    "max_order_found": 62,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      62,
+      62,
+      62,
+      62,
+      62
+    ],
+    "seq_length": 124,
+    "ratio_order_to_length": 0.5
+  },
+  "family_baryon_ratios": {
+    "min_order": 44,
+    "max_order_found": 44,
+    "consistent_across_primes": true,
+    "orders_per_prime": [
+      44,
+      44,
+      44,
+      44,
+      44
+    ],
+    "seq_length": 87,
+    "ratio_order_to_length": 0.5057
+  },
+  "all_masses_verified_order": "no low-order recurrence (BM=113)",
+  "family_quark_verified_order": 3,
+  "family_meson_verified_order": "no low-order recurrence (BM=63)",
+  "family_baryon_verified_order": "no low-order recurrence (BM=44)",
+  "summary": {
+    "any_low_order_recurrence": false,
+    "minimum_recurrence_order": 3,
+    "best_candidate": "family_quark",
+    "interpretation": "No particle mass ordering shows a low-order linear recurrence. Best ratio (order/length) = 0.5000 for 'family_quark', which is within or near the random baseline (~0.5). Particle masses do NOT satisfy an integer linear recurrence of order <= 12."
+  }
+}

@@ -1,0 +1,266 @@
+{
+  "problem": "F8: Number Field Discriminant Spectral Index",
+  "description": "FFT spectral analysis of discriminant sequences grouped by degree. Tests whether spectral index alpha (P(f)~f^-alpha) varies with degree, and compares to OEIS spectral signatures.",
+  "data": {
+    "total_fields": 9115,
+    "fields_per_degree": {
+      "2": 6086,
+      "3": 1902,
+      "4": 1044,
+      "5": 82,
+      "6": 1
+    }
+  },
+  "spectral_indices": {
+    "2": {
+      "alpha": 1.8028221864748657,
+      "r_squared": 0.9900815253380174,
+      "dominant_freq": 0.00016431153466973383,
+      "dominant_freq_idx": 0,
+      "n_points": 6086,
+      "n_spectral_bins": 3043,
+      "power_mean": 1.0000000812271106,
+      "power_max": 1850.7917670925153,
+      "top5_freqs": [
+        0.00016431153466973383,
+        0.00032862306933946765,
+        0.0004929346040092015,
+        0.0006572461386789353,
+        0.0008215576733486691
+      ],
+      "top5_powers": [
+        1850.7917670925153,
+        463.1806202474347,
+        204.5359281802868,
+        115.53013243438141,
+        74.13382809737442
+      ]
+    },
+    "3": {
+      "alpha": 1.7956582813193955,
+      "r_squared": 0.9898786395747646,
+      "dominant_freq": 0.0005257623554153522,
+      "dominant_freq_idx": 0,
+      "n_points": 1902,
+      "n_spectral_bins": 951,
+      "power_mean": 1.0000008842012786,
+      "power_max": 570.8113516250656,
+      "top5_freqs": [
+        0.0005257623554153522,
+        0.0010515247108307045,
+        0.0015772870662460567,
+        0.002103049421661409,
+        0.0026288117770767614
+      ],
+      "top5_powers": [
+        570.8113516250656,
+        148.25080219179924,
+        64.79802657150945,
+        36.17456612353713,
+        23.134891566469836
+      ]
+    },
+    "4": {
+      "alpha": 1.7895213006276443,
+      "r_squared": 0.9895175777063455,
+      "dominant_freq": 0.0009578544061302681,
+      "dominant_freq_idx": 0,
+      "n_points": 1044,
+      "n_spectral_bins": 522,
+      "power_mean": 1.000003063154058,
+      "power_max": 311.325677120594,
+      "top5_freqs": [
+        0.0009578544061302681,
+        0.0019157088122605363,
+        0.0028735632183908046,
+        0.0038314176245210726,
+        0.004789272030651341
+      ],
+      "top5_powers": [
+        311.325677120594,
+        79.0106798685045,
+        35.936980919472866,
+        19.641502498658753,
+        13.640205537739256
+      ]
+    },
+    "5": {
+      "alpha": 1.7615850748898716,
+      "r_squared": 0.980905950901682,
+      "dominant_freq": 0.012195121951219513,
+      "dominant_freq_idx": 0,
+      "n_points": 82,
+      "n_spectral_bins": 41,
+      "power_mean": 1.0004455153637593,
+      "power_max": 24.19424013305869,
+      "top5_freqs": [
+        0.012195121951219513,
+        0.024390243902439025,
+        0.03658536585365854,
+        0.04878048780487805,
+        0.06097560975609756
+      ],
+      "top5_powers": [
+        24.19424013305869,
+        5.5530212396816285,
+        3.555538373083853,
+        1.7573185299283958,
+        1.2907037588100874
+      ]
+    },
+    "6": null
+  },
+  "dominant_frequency_scaling": {
+    "beta": 4.2527013685036055,
+    "r_squared": 0.8549037883782146
+  },
+  "alpha_vs_degree": {
+    "slope": -0.012984831544673451,
+    "intercept": 1.8328436212343018,
+    "r_squared": 0.8629166518017239
+  },
+  "null_test_shuffled_alphas": {
+    "2": 0.03601223632707116,
+    "3": 0.01113316923512248,
+    "4": -0.05048371798428906,
+    "5": -0.20327965787163368
+  },
+  "oeis_comparison": {
+    "n_oeis_families": 19,
+    "oeis_spectral_indices": {
+      "abundant": {
+        "alpha": 1.7185407108016446,
+        "r_squared": 0.9818901106488697,
+        "n_points": 62
+      },
+      "bernoulli_num": {
+        "alpha": -0.005997384865159082,
+        "r_squared": 0.011080628656045977,
+        "n_points": 62
+      },
+      "catalan": {
+        "alpha": 0.4618510190709743,
+        "r_squared": 0.9196213165390548,
+        "n_points": 31
+      },
+      "collatz_steps": {
+        "alpha": 0.06324453254932762,
+        "r_squared": 0.0026035524524519182,
+        "n_points": 72
+      },
+      "cubes": {
+        "alpha": 1.7068369445301736,
+        "r_squared": 0.9871924032951671,
+        "n_points": 44
+      },
+      "euler_totient": {
+        "alpha": 0.9124629737245067,
+        "r_squared": 0.21969584698048894,
+        "n_points": 69
+      },
+      "fibonacci": {
+        "alpha": 1.0985655918629256,
+        "r_squared": 0.9718578616578172,
+        "n_points": 41
+      },
+      "highly_composite": {
+        "alpha": 1.2188742839643576,
+        "r_squared": 0.9761397641807004,
+        "n_points": 41
+      },
+      "mersenne_exp": {
+        "alpha": 1.6778019235192494,
+        "r_squared": 0.9682821097686731,
+        "n_points": 50
+      },
+      "moebius": {
+        "alpha": -0.33252684294489043,
+        "r_squared": 0.07086992164749362,
+        "n_points": 78
+      },
+      "partition": {
+        "alpha": 1.5361839367916847,
+        "r_squared": 0.9908613992393445,
+        "n_points": 50
+      },
+      "prime_gaps": {
+        "alpha": -0.15339718670813224,
+        "r_squared": 0.013057658296056984,
+        "n_points": 97
+      },
+      "primes": {
+        "alpha": 1.785966658212855,
+        "r_squared": 0.9841414144755647,
+        "n_points": 58
+      },
+      "semiprime": {
+        "alpha": 1.7635556757810997,
+        "r_squared": 0.9806598562440157,
+        "n_points": 61
+      },
+      "sigma": {
+        "alpha": 0.955554215922305,
+        "r_squared": 0.31004525296114793,
+        "n_points": 70
+      },
+      "squarefree": {
+        "alpha": 1.7630967206680108,
+        "r_squared": 0.9845391119966793,
+        "n_points": 71
+      },
+      "squares": {
+        "alpha": 1.7562527644941293,
+        "r_squared": 0.9870554782044045,
+        "n_points": 51
+      },
+      "triangular": {
+        "alpha": 1.7476451378689875,
+        "r_squared": 0.9860756185076162,
+        "n_points": 54
+      },
+      "twin_primes": {
+        "alpha": 1.714433094610104,
+        "r_squared": 0.9565159318371674,
+        "n_points": 51
+      }
+    },
+    "closest_matches": {
+      "2": {
+        "nf_alpha": 1.8028221864748657,
+        "closest_oeis": "primes",
+        "closest_oeis_alpha": 1.785966658212855,
+        "alpha_distance": 0.016855528262010644
+      },
+      "3": {
+        "nf_alpha": 1.7956582813193955,
+        "closest_oeis": "primes",
+        "closest_oeis_alpha": 1.785966658212855,
+        "alpha_distance": 0.009691623106540481
+      },
+      "4": {
+        "nf_alpha": 1.7895213006276443,
+        "closest_oeis": "primes",
+        "closest_oeis_alpha": 1.785966658212855,
+        "alpha_distance": 0.0035546424147891997
+      },
+      "5": {
+        "nf_alpha": 1.7615850748898716,
+        "closest_oeis": "squarefree",
+        "closest_oeis_alpha": 1.7630967206680108,
+        "alpha_distance": 0.0015116457781392256
+      }
+    }
+  },
+  "findings": [
+    "Alpha shows strong linear trend with degree: slope=-0.0130, R\u00b2=0.8629",
+    "Dominant frequency scales as degree^4.253 (R\u00b2=0.8549)",
+    "Degree 2: real alpha (1.803) differs from null (0.036) by 1.767 \u2014 sorted order carries spectral structure",
+    "Degree 3: real alpha (1.796) differs from null (0.011) by 1.785 \u2014 sorted order carries spectral structure",
+    "Degree 4: real alpha (1.790) differs from null (-0.050) by 1.840 \u2014 sorted order carries spectral structure",
+    "Degree 5: real alpha (1.762) differs from null (-0.203) by 1.965 \u2014 sorted order carries spectral structure",
+    "Degree 2 discriminants spectrally similar to OEIS primes (alpha distance=0.0169)",
+    "Degree 3 discriminants spectrally similar to OEIS primes (alpha distance=0.0097)",
+    "Degree 4 discriminants spectrally similar to OEIS primes (alpha distance=0.0036)",
+    "Degree 5 discriminants spectrally similar to OEIS squarefree (alpha distance=0.0015)"
+  ]
+}
