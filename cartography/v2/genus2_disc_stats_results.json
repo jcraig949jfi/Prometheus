@@ -1,0 +1,314 @@
+{
+  "analysis": "Genus-2 Discriminant Distribution",
+  "data_source": "F:\\Prometheus\\cartography\\genus2\\data\\genus2_curves_full.json",
+  "n_genus2_curves": 66158,
+  "timestamp": "2026-04-11T00:39:48",
+  "genus2_discriminant_distribution": {
+    "count": 66158,
+    "min": 169.0,
+    "max": 1000000.0,
+    "mean": 453424.8017019862,
+    "median": 431637.0,
+    "std": 293835.66308899835,
+    "p10": 66291.0,
+    "p25": 189784.0,
+    "p75": 704566.75,
+    "p90": 878521.9,
+    "skewness": 0.17752617281717695,
+    "kurtosis": -1.1974828747096131,
+    "log10_mean": 5.489284598099826,
+    "log10_median": 5.635118665405205,
+    "log10_std": 0.4845748621484695,
+    "log_shapiro_W": 0.8546560050250408,
+    "log_shapiro_p": 1.037874946411616e-55,
+    "log_normal_plausible": false
+  },
+  "genus2_sign_distribution": {
+    "-1": 30438,
+    "1": 35720
+  },
+  "genus2_disc_conductor_scaling": {
+    "slope": 0.5720582484720357,
+    "intercept": 2.5032253609633477,
+    "r_squared": 0.518405917165645,
+    "r": 0.7200041091310834,
+    "p_value": 0.0,
+    "std_err": 0.0021436862826104902,
+    "n_points": 66158
+  },
+  "genus2_disc_cond_ratio": {
+    "count": 66158,
+    "min": 1.0,
+    "max": 1024.0,
+    "mean": 4.753559660207382,
+    "median": 1.0,
+    "std": 21.456159701860162,
+    "p10": 1.0,
+    "p25": 1.0,
+    "p75": 3.0,
+    "p90": 8.0,
+    "skewness": 24.201811314494275,
+    "kurtosis": 884.5225433476587,
+    "log10_mean": 0.2694328695175959,
+    "log10_median": 0.0,
+    "log10_std": 0.4256822490926214,
+    "log_shapiro_W": 0.6787466758009177,
+    "log_shapiro_p": 7.089409657988343e-71,
+    "log_normal_plausible": false
+  },
+  "power_law_residuals": {
+    "residual_std": 0.3362803200034258,
+    "residual_iqr": 0.32719877257654695,
+    "residual_range": [
+      -1.5498196223851077,
+      1.7863849867537018
+    ],
+    "ec_residual_std": 3.8119992949755304,
+    "ec_residual_iqr": 5.128561198663257
+  },
+  "ec_discriminant_distribution": {
+    "count": 31073,
+    "min": 11.0,
+    "max": 4.582481219762015e+31,
+    "mean": 1.5944566147798443e+27,
+    "median": 639933696.0,
+    "std": 2.607658296131444e+29,
+    "p10": 49403.40000000004,
+    "p25": 2499584.0,
+    "p75": 514001953125.0,
+    "p90": 571095594812972.9,
+    "skewness": 174.71692250250024,
+    "kurtosis": 30685.33096340417,
+    "log10_mean": 9.355242172857116,
+    "log10_median": 8.806134978744769,
+    "log10_std": 3.956555672289714,
+    "log_shapiro_W": 0.963104145723018,
+    "log_shapiro_p": 6.5286695918917805e-34,
+    "log_normal_plausible": false
+  },
+  "ec_disc_conductor_scaling": {
+    "slope": 2.8702346714099085,
+    "intercept": -0.1550825002479801,
+    "r_squared": 0.0717369547618145,
+    "r": 0.2678375529342637,
+    "p_value": 0.0,
+    "std_err": 0.05857386109221201,
+    "n_points": 31073
+  },
+  "ec_disc_cond_ratio": {
+    "count": 31073,
+    "min": 0.4437400950871632,
+    "max": 1.148491533774941e+28,
+    "mean": 4.007417192262215e+23,
+    "median": 301056.0,
+    "std": 6.536761626445897e+25,
+    "p10": 32.0,
+    "p25": 1410.0,
+    "p75": 214358881.0,
+    "p90": 215618733889.5992,
+    "skewness": 174.62271584226443,
+    "kurtosis": 30661.496608107667,
+    "log10_mean": 6.041811125620319,
+    "log10_median": 5.478647287051969,
+    "log10_std": 3.8740337040428026,
+    "log_shapiro_W": 0.9572822308264229,
+    "log_shapiro_p": 5.64946621999147e-36,
+    "log_normal_plausible": false
+  },
+  "comparison": {
+    "g2_slope": 0.5720582484720357,
+    "ec_slope": 2.8702346714099085,
+    "slope_difference": -2.298176422937873,
+    "g2_r_squared": 0.518405917165645,
+    "ec_r_squared": 0.0717369547618145,
+    "g2_log10_disc_median": 5.635118665405205,
+    "ec_log10_disc_median": 8.806134978744769,
+    "g2_disc_cond_ratio_median": 1.0,
+    "ec_disc_cond_ratio_median": 301056.0,
+    "note": "Genus-2 discriminant is degree 10 in coefficients vs degree 12 for Weierstrass models; the disc-conductor exponent differs because genus-2 curves have richer bad reduction types."
+  },
+  "by_sato_tate_group": {
+    "D_{2,1}": {
+      "count": 3,
+      "note": "too few curves for statistics"
+    },
+    "D_{3,2}": {
+      "count": 1,
+      "note": "too few curves for statistics"
+    },
+    "D_{6,2}": {
+      "count": 1,
+      "note": "too few curves for statistics"
+    },
+    "E_1": {
+      "count": 8,
+      "disc_mean": 297869.0,
+      "disc_median": 278528.0,
+      "disc_std": 230656.16654882653,
+      "log10_disc_mean": 5.2157128977603175,
+      "log10_disc_median": 5.390511198351418,
+      "disc_cond_ratio_median": 64.0,
+      "frac_negative_disc": 0.75
+    },
+    "E_2": {
+      "count": 3,
+      "note": "too few curves for statistics"
+    },
+    "E_3": {
+      "count": 7,
+      "disc_mean": 271242.28571428574,
+      "disc_median": 222264.0,
+      "disc_std": 254918.48073660966,
+      "log10_disc_mean": 4.853801910588197,
+      "log10_disc_median": 5.346869125913364,
+      "disc_cond_ratio_median": 14.0,
+      "frac_negative_disc": 0.42857142857142855
+    },
+    "E_4": {
+      "count": 10,
+      "disc_mean": 314073.6,
+      "disc_median": 128000.0,
+      "disc_std": 357414.59871784755,
+      "log10_disc_mean": 5.005956215448714,
+      "log10_disc_median": 5.107209969647869,
+      "disc_cond_ratio_median": 5.0,
+      "frac_negative_disc": 1.0,
+      "disc_cond_slope": 0.9022362563632899,
+      "disc_cond_r_squared": 0.7002809090553846
+    },
+    "E_6": {
+      "count": 51,
+      "disc_mean": 280792.2745098039,
+      "disc_median": 186624.0,
+      "disc_std": 280910.4205556429,
+      "log10_disc_mean": 5.0657433727412675,
+      "log10_disc_median": 5.270967493629824,
+      "disc_cond_ratio_median": 1.0,
+      "frac_negative_disc": 0.23529411764705882,
+      "disc_cond_slope": 0.6909017965076804,
+      "disc_cond_r_squared": 0.5201936393920211
+    },
+    "F_{ac}": {
+      "count": 6,
+      "disc_mean": 404590.5,
+      "disc_median": 312209.0,
+      "disc_std": 299938.7956893595,
+      "log10_disc_mean": 5.262518632236815,
+      "log10_disc_median": 5.486525901046464,
+      "disc_cond_ratio_median": 5.0,
+      "frac_negative_disc": 0.0
+    },
+    "G_{3,3}": {
+      "count": 2440,
+      "disc_mean": 371630.25204918033,
+      "disc_median": 322624.0,
+      "disc_std": 286870.54555922525,
+      "log10_disc_mean": 5.330973560998719,
+      "log10_disc_median": 5.508696671422038,
+      "disc_cond_ratio_median": 2.0,
+      "frac_negative_disc": 0.47295081967213115,
+      "disc_cond_slope": 0.4726516296676483,
+      "disc_cond_r_squared": 0.383966702297186
+    },
+    "J(C_2)": {
+      "count": 2,
+      "note": "too few curves for statistics"
+    },
+    "J(C_4)": {
+      "count": 1,
+      "note": "too few curves for statistics"
+    },
+    "J(E_1)": {
+      "count": 24,
+      "disc_mean": 279599.625,
+      "disc_median": 152460.0,
+      "disc_std": 260012.18526555196,
+      "log10_disc_mean": 5.061865112814963,
+      "log10_disc_median": 5.182921864101983,
+      "disc_cond_ratio_median": 2.0,
+      "frac_negative_disc": 0.3333333333333333,
+      "disc_cond_slope": 0.451798910878516,
+      "disc_cond_r_squared": 0.33741014216256776
+    },
+    "J(E_2)": {
+      "count": 9,
+      "disc_mean": 421034.6666666667,
+      "disc_median": 524288.0,
+      "disc_std": 201379.1456222703,
+      "log10_disc_mean": 5.548797629123526,
+      "log10_disc_median": 5.719569917615643,
+      "disc_cond_ratio_median": 1.0,
+      "frac_negative_disc": 0.3333333333333333
+    },
+    "J(E_3)": {
+      "count": 4,
+      "note": "too few curves for statistics"
+    },
+    "J(E_4)": {
+      "count": 17,
+      "disc_mean": 544045.1764705882,
+      "disc_median": 524288.0,
+      "disc_std": 375933.45799117716,
+      "log10_disc_mean": 5.507635266473052,
+      "log10_disc_median": 5.719569917615643,
+      "disc_cond_ratio_median": 6.0,
+      "frac_negative_disc": 0.11764705882352941,
+      "disc_cond_slope": 0.4698055285117235,
+      "disc_cond_r_squared": 0.34233745556711154
+    },
+    "J(E_6)": {
+      "count": 17,
+      "disc_mean": 382767.8823529412,
+      "disc_median": 291600.0,
+      "disc_std": 294312.288321912,
+      "log10_disc_mean": 5.369350218217969,
+      "log10_disc_median": 5.464787519645937,
+      "disc_cond_ratio_median": 2.0,
+      "frac_negative_disc": 0.4117647058823529,
+      "disc_cond_slope": 0.641916693561741,
+      "disc_cond_r_squared": 0.3899997006705516
+    },
+    "N(G_{1,3})": {
+      "count": 303,
+      "disc_mean": 308931.7788778878,
+      "disc_median": 206496.0,
+      "disc_std": 284893.4080104276,
+      "log10_disc_mean": 5.172635891009575,
+      "log10_disc_median": 5.314911643427031,
+      "disc_cond_ratio_median": 3.0,
+      "frac_negative_disc": 0.49504950495049505,
+      "disc_cond_slope": 0.47097257460512254,
+      "disc_cond_r_squared": 0.2794335332470057
+    },
+    "N(G_{3,3})": {
+      "count": 144,
+      "disc_mean": 365667.15972222225,
+      "disc_median": 278528.0,
+      "disc_std": 299816.0955819571,
+      "log10_disc_mean": 5.299218740680384,
+      "log10_disc_median": 5.444868860674011,
+      "disc_cond_ratio_median": 1.0,
+      "frac_negative_disc": 0.24305555555555555,
+      "disc_cond_slope": 0.6231593442749055,
+      "disc_cond_r_squared": 0.47729224719289626
+    },
+    "USp(4)": {
+      "count": 63107,
+      "disc_mean": 457815.8863200596,
+      "disc_median": 437621.0,
+      "disc_std": 293371.66634536564,
+      "log10_disc_mean": 5.498241488069093,
+      "log10_disc_median": 5.641098154196701,
+      "disc_cond_ratio_median": 1.0,
+      "frac_negative_disc": 0.4601549748839273,
+      "disc_cond_slope": 0.5852687859890411,
+      "disc_cond_r_squared": 0.5287198476094379
+    }
+  },
+  "interpretation": {
+    "disc_shape": "Not log-normal (heavy-tailed)",
+    "disc_cond_power_law": "log|disc| ~ 0.572 * log(cond), R^2=0.518",
+    "ec_comparison": "EC slope 2.870 vs G2 slope 0.572",
+    "st_group_effect": "Different ST groups show different disc-conductor scaling and sign distributions; non-generic (non-USp(4)) groups have systematically different behavior."
+  }
+}

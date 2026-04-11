@@ -1,0 +1,592 @@
+{
+  "metadata": {
+    "dataset": "OEIS keyword co-occurrence",
+    "source": "F:\\Prometheus\\cartography\\oeis\\data\\oeis_keywords.json",
+    "n_sequences": 394454,
+    "n_unique_keywords": 30,
+    "n_unique_pairs": 299,
+    "n_pmi_pairs_min50": 141,
+    "timestamp": "2026-04-11T00:38:28",
+    "computation_time_s": 0.6
+  },
+  "keyword_frequencies": {
+    "top_30": [
+      [
+        "nonn",
+        370641
+      ],
+      [
+        "easy",
+        93587
+      ],
+      [
+        "base",
+        45363
+      ],
+      [
+        "more",
+        26219
+      ],
+      [
+        "tabl",
+        23087
+      ],
+      [
+        "sign",
+        21876
+      ],
+      [
+        "cons",
+        14757
+      ],
+      [
+        "hard",
+        9516
+      ],
+      [
+        "tabf",
+        8194
+      ],
+      [
+        "frac",
+        7973
+      ],
+      [
+        "fini",
+        7405
+      ],
+      [
+        "nice",
+        6975
+      ],
+      [
+        "full",
+        6271
+      ],
+      [
+        "walk",
+        4489
+      ],
+      [
+        "look",
+        4215
+      ],
+      [
+        "mult",
+        3350
+      ],
+      [
+        "less",
+        3325
+      ],
+      [
+        "cofr",
+        2849
+      ],
+      [
+        "changed",
+        2006
+      ],
+      [
+        "dead",
+        1937
+      ],
+      [
+        "uned",
+        908
+      ],
+      [
+        "word",
+        824
+      ],
+      [
+        "bref",
+        720
+      ],
+      [
+        "eigen",
+        438
+      ],
+      [
+        "new",
+        382
+      ],
+      [
+        "core",
+        183
+      ],
+      [
+        "hear",
+        172
+      ],
+      [
+        "obsc",
+        118
+      ],
+      [
+        "dumb",
+        105
+      ],
+      [
+        "unkn",
+        32
+      ]
+    ]
+  },
+  "top_10_by_pmi": [
+    {
+      "pair": "obsc+uned",
+      "pmi": 8.00959,
+      "count_ab": 70,
+      "count_a": 118,
+      "count_b": 908,
+      "p_a": 0.0003,
+      "p_b": 0.0023,
+      "p_ab": 0.00018,
+      "npmi": 0.64262
+    },
+    {
+      "pair": "core+nice",
+      "pmi": 5.74876,
+      "count_ab": 174,
+      "count_a": 183,
+      "count_b": 6975,
+      "p_a": 0.00046,
+      "p_b": 0.01768,
+      "p_ab": 0.00044,
+      "npmi": 0.51573
+    },
+    {
+      "pair": "fini+full",
+      "pmi": 5.73521,
+      "count_ab": 6271,
+      "count_a": 7405,
+      "count_b": 6271,
+      "p_a": 0.01877,
+      "p_b": 0.0159,
+      "p_ab": 0.0159,
+      "npmi": 0.95987
+    },
+    {
+      "pair": "hear+look",
+      "pmi": 5.46177,
+      "count_ab": 81,
+      "count_a": 172,
+      "count_b": 4215,
+      "p_a": 0.00044,
+      "p_b": 0.01069,
+      "p_ab": 0.0002,
+      "npmi": 0.44578
+    },
+    {
+      "pair": "bref+hard",
+      "pmi": 4.1436,
+      "count_ab": 307,
+      "count_a": 720,
+      "count_b": 9516,
+      "p_a": 0.00183,
+      "p_b": 0.02412,
+      "p_ab": 0.00078,
+      "npmi": 0.4012
+    },
+    {
+      "pair": "cofr+less",
+      "pmi": 4.07233,
+      "count_ab": 404,
+      "count_a": 2849,
+      "count_b": 3325,
+      "p_a": 0.00722,
+      "p_b": 0.00843,
+      "p_ab": 0.00102,
+      "npmi": 0.41004
+    },
+    {
+      "pair": "cofr+frac",
+      "pmi": 4.06972,
+      "count_ab": 967,
+      "count_a": 2849,
+      "count_b": 7973,
+      "p_a": 0.00722,
+      "p_b": 0.02021,
+      "p_ab": 0.00245,
+      "npmi": 0.46927
+    },
+    {
+      "pair": "hard+more",
+      "pmi": 3.49654,
+      "count_ab": 7139,
+      "count_a": 9516,
+      "count_b": 26219,
+      "p_a": 0.02412,
+      "p_b": 0.06647,
+      "p_ab": 0.0181,
+      "npmi": 0.6041
+    },
+    {
+      "pair": "fini+word",
+      "pmi": 3.40626,
+      "count_ab": 164,
+      "count_a": 7405,
+      "count_b": 824,
+      "p_a": 0.01877,
+      "p_b": 0.00209,
+      "p_ab": 0.00042,
+      "npmi": 0.30329
+    },
+    {
+      "pair": "full+word",
+      "pmi": 3.35461,
+      "count_ab": 134,
+      "count_a": 6271,
+      "count_b": 824,
+      "p_a": 0.0159,
+      "p_b": 0.00209,
+      "p_ab": 0.00034,
+      "npmi": 0.29114
+    }
+  ],
+  "top_10_by_npmi": [
+    {
+      "pair": "fini+full",
+      "pmi": 5.73521,
+      "count_ab": 6271,
+      "count_a": 7405,
+      "count_b": 6271,
+      "p_a": 0.01877,
+      "p_b": 0.0159,
+      "p_ab": 0.0159,
+      "npmi": 0.95987
+    },
+    {
+      "pair": "obsc+uned",
+      "pmi": 8.00959,
+      "count_ab": 70,
+      "count_a": 118,
+      "count_b": 908,
+      "p_a": 0.0003,
+      "p_b": 0.0023,
+      "p_ab": 0.00018,
+      "npmi": 0.64262
+    },
+    {
+      "pair": "hard+more",
+      "pmi": 3.49654,
+      "count_ab": 7139,
+      "count_a": 9516,
+      "count_b": 26219,
+      "p_a": 0.02412,
+      "p_b": 0.06647,
+      "p_ab": 0.0181,
+      "npmi": 0.6041
+    },
+    {
+      "pair": "core+nice",
+      "pmi": 5.74876,
+      "count_ab": 174,
+      "count_a": 183,
+      "count_b": 6975,
+      "p_a": 0.00046,
+      "p_b": 0.01768,
+      "p_ab": 0.00044,
+      "npmi": 0.51573
+    },
+    {
+      "pair": "cofr+frac",
+      "pmi": 4.06972,
+      "count_ab": 967,
+      "count_a": 2849,
+      "count_b": 7973,
+      "p_a": 0.00722,
+      "p_b": 0.02021,
+      "p_ab": 0.00245,
+      "npmi": 0.46927
+    },
+    {
+      "pair": "hear+look",
+      "pmi": 5.46177,
+      "count_ab": 81,
+      "count_a": 172,
+      "count_b": 4215,
+      "p_a": 0.00044,
+      "p_b": 0.01069,
+      "p_ab": 0.0002,
+      "npmi": 0.44578
+    },
+    {
+      "pair": "cofr+less",
+      "pmi": 4.07233,
+      "count_ab": 404,
+      "count_a": 2849,
+      "count_b": 3325,
+      "p_a": 0.00722,
+      "p_b": 0.00843,
+      "p_ab": 0.00102,
+      "npmi": 0.41004
+    },
+    {
+      "pair": "bref+hard",
+      "pmi": 4.1436,
+      "count_ab": 307,
+      "count_a": 720,
+      "count_b": 9516,
+      "p_a": 0.00183,
+      "p_b": 0.02412,
+      "p_ab": 0.00078,
+      "npmi": 0.4012
+    },
+    {
+      "pair": "bref+more",
+      "pmi": 3.26794,
+      "count_ab": 461,
+      "count_a": 720,
+      "count_b": 26219,
+      "p_a": 0.00183,
+      "p_b": 0.06647,
+      "p_ab": 0.00117,
+      "npmi": 0.3355
+    },
+    {
+      "pair": "fini+word",
+      "pmi": 3.40626,
+      "count_ab": 164,
+      "count_a": 7405,
+      "count_b": 824,
+      "p_a": 0.01877,
+      "p_b": 0.00209,
+      "p_ab": 0.00042,
+      "npmi": 0.30329
+    }
+  ],
+  "top_10_by_count": [
+    {
+      "pair": "easy+nonn",
+      "pmi": -0.00564,
+      "count_ab": 87594,
+      "count_a": 93587,
+      "count_b": 370641,
+      "p_a": 0.23726,
+      "p_b": 0.93963,
+      "p_ab": 0.22206,
+      "npmi": -0.0026
+    },
+    {
+      "pair": "base+nonn",
+      "pmi": 0.06963,
+      "count_ab": 44732,
+      "count_a": 45363,
+      "count_b": 370641,
+      "p_a": 0.115,
+      "p_b": 0.93963,
+      "p_ab": 0.1134,
+      "npmi": 0.02217
+    },
+    {
+      "pair": "more+nonn",
+      "pmi": 0.07429,
+      "count_ab": 25938,
+      "count_a": 26219,
+      "count_b": 370641,
+      "p_a": 0.06647,
+      "p_b": 0.93963,
+      "p_ab": 0.06576,
+      "npmi": 0.01892
+    },
+    {
+      "pair": "nonn+tabl",
+      "pmi": -0.07965,
+      "count_ab": 20528,
+      "count_a": 370641,
+      "count_b": 23087,
+      "p_a": 0.93963,
+      "p_b": 0.05853,
+      "p_ab": 0.05204,
+      "npmi": -0.01868
+    },
+    {
+      "pair": "cons+nonn",
+      "pmi": 0.08983,
+      "count_ab": 14757,
+      "count_a": 14757,
+      "count_b": 370641,
+      "p_a": 0.03741,
+      "p_b": 0.93963,
+      "p_ab": 0.03741,
+      "npmi": 0.01895
+    },
+    {
+      "pair": "base+easy",
+      "pmi": -0.07804,
+      "count_ab": 10196,
+      "count_a": 45363,
+      "count_b": 93587,
+      "p_a": 0.115,
+      "p_b": 0.23726,
+      "p_ab": 0.02585,
+      "npmi": -0.0148
+    },
+    {
+      "pair": "hard+nonn",
+      "pmi": 0.07582,
+      "count_ab": 9424,
+      "count_a": 9516,
+      "count_b": 370641,
+      "p_a": 0.02412,
+      "p_b": 0.93963,
+      "p_ab": 0.02389,
+      "npmi": 0.01407
+    },
+    {
+      "pair": "nonn+tabf",
+      "pmi": -0.04343,
+      "count_ab": 7471,
+      "count_a": 370641,
+      "count_b": 8194,
+      "p_a": 0.93963,
+      "p_b": 0.02077,
+      "p_ab": 0.01894,
+      "npmi": -0.00759
+    },
+    {
+      "pair": "fini+nonn",
+      "pmi": 0.0419,
+      "count_ab": 7163,
+      "count_a": 7405,
+      "count_b": 370641,
+      "p_a": 0.01877,
+      "p_b": 0.93963,
+      "p_ab": 0.01816,
+      "npmi": 0.00724
+    },
+    {
+      "pair": "hard+more",
+      "pmi": 3.49654,
+      "count_ab": 7139,
+      "count_a": 9516,
+      "count_b": 26219,
+      "p_a": 0.02412,
+      "p_b": 0.06647,
+      "p_ab": 0.0181,
+      "npmi": 0.6041
+    }
+  ],
+  "keyword_clusters": {
+    "nonn": {
+      "members": [
+        "nonn"
+      ],
+      "n_members": 1,
+      "total_tag_uses": 370641
+    },
+    "easy": {
+      "members": [
+        "easy",
+        "frac",
+        "less",
+        "cofr",
+        "uned",
+        "obsc"
+      ],
+      "n_members": 6,
+      "total_tag_uses": 108760
+    },
+    "base": {
+      "members": [
+        "base",
+        "tabf",
+        "look",
+        "hear"
+      ],
+      "n_members": 4,
+      "total_tag_uses": 57944
+    },
+    "more": {
+      "members": [
+        "more",
+        "hard",
+        "fini",
+        "full",
+        "word",
+        "bref"
+      ],
+      "n_members": 6,
+      "total_tag_uses": 50955
+    },
+    "sign": {
+      "members": [
+        "sign",
+        "mult"
+      ],
+      "n_members": 2,
+      "total_tag_uses": 25226
+    },
+    "cons": {
+      "members": [
+        "cons",
+        "nice",
+        "changed",
+        "eigen",
+        "new",
+        "core"
+      ],
+      "n_members": 6,
+      "total_tag_uses": 24741
+    },
+    "tabl": {
+      "members": [
+        "tabl"
+      ],
+      "n_members": 1,
+      "total_tag_uses": 23087
+    },
+    "walk": {
+      "members": [
+        "walk"
+      ],
+      "n_members": 1,
+      "total_tag_uses": 4489
+    },
+    "dumb": {
+      "members": [
+        "dumb"
+      ],
+      "n_members": 1,
+      "total_tag_uses": 105
+    }
+  },
+  "graph_comparison": {
+    "graph_alpha": 2.3125,
+    "graph_giant_fraction": 0.8964,
+    "graph_clustering_coeff": 0.49567,
+    "n_total_keywords": 30,
+    "n_keywords_100plus": 29,
+    "cluster_coverage_sums": {
+      "nonn": 370641,
+      "easy": 108760,
+      "base": 57944,
+      "more": 50955,
+      "sign": 25226,
+      "cons": 24741,
+      "tabl": 23087,
+      "walk": 4489,
+      "dumb": 105
+    },
+    "interpretation": "The cross-ref graph has alpha=2.31 (near-Lean hierarchical) with giant component covering 89.6% of nodes. Keyword clusters reveal the thematic domains that generate this connectivity."
+  },
+  "keyword_degree_correlation": {
+    "common_only": {
+      "n_sequences": 335029,
+      "mean_keywords": 1.507,
+      "median_keywords": 1.0
+    },
+    "has_rare": {
+      "n_sequences": 59393,
+      "mean_keywords": 2.742,
+      "median_keywords": 3.0
+    },
+    "has_very_rare": {
+      "n_sequences": 32,
+      "mean_keywords": 2.531,
+      "median_keywords": 2.0
+    }
+  }
+}

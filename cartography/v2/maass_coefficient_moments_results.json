@@ -1,0 +1,237 @@
+{
+  "timestamp": "2026-04-11T00:39:51.826105",
+  "source": "LMFDB maass_rigor table (35,416 forms)",
+  "data_inventory": {
+    "total_forms": 35416,
+    "fields_available": [
+      "label",
+      "level",
+      "weight",
+      "character",
+      "spectral_parameter",
+      "symmetry",
+      "fricke"
+    ],
+    "has_fourier_coefficients": false,
+    "note": "Fourier/Hecke coefficients NOT available in bulk LMFDB download. Only spectral parameters and metadata. Individual form pages on LMFDB do show coefficients, but the API/bulk export omits them."
+  },
+  "coefficient_moment_comparison": {
+    "holomorphic_reference": {
+      "M2": 0.984,
+      "M4": 1.957,
+      "M4_over_M2_sq": 2.0212,
+      "note": "Weight-2 newforms, non-CM, from moment_universality.py"
+    },
+    "maass_prediction": {
+      "M2_theory": 1.0,
+      "M4_theory": 2.0,
+      "M4_over_M2_sq_theory": 2.0,
+      "note": "For generic (non-CM, non-dihedral) Maass forms with trivial nebentypus, Hecke eigenvalues a(p)/sqrt(p) should follow Sato-Tate (semicircle on [-2,2]). Same universality class as holomorphic forms. Dihedral forms have different ST group."
+    },
+    "status": "CANNOT_VERIFY \u2014 coefficients not in bulk data"
+  },
+  "spectral_parameter_statistics": {
+    "all_forms": {
+      "count": 35416,
+      "min": 0.2709332800647927,
+      "max": 184.92395029187048,
+      "mean": 17.71396016676128,
+      "median": 11.26069060504443,
+      "std": 29.90704482351624,
+      "q25": 7.558579325759827,
+      "q75": 14.262808471954406,
+      "skewness": 4.053242971791695,
+      "kurtosis_excess": 15.73887313978586
+    },
+    "by_symmetry": {
+      "even": {
+        "label": "even (symmetry=0)",
+        "count": 18353,
+        "mean": 17.64821227352149,
+        "std": 30.14417464012619,
+        "median": 11.146835584195449,
+        "min": 0.2709332800647927,
+        "max": 184.92395029187048
+      },
+      "odd": {
+        "label": "odd (symmetry=1)",
+        "count": 17063,
+        "mean": 17.78467874407065,
+        "std": 29.649707833249813,
+        "median": 11.38490659064876,
+        "min": 0.4169316712558265,
+        "max": 177.9844765129886
+      }
+    }
+  },
+  "level_distribution": {
+    "unique_levels": 65,
+    "top_20": [
+      {
+        "level": 1,
+        "count": 2202
+      },
+      {
+        "level": 91,
+        "count": 1317
+      },
+      {
+        "level": 95,
+        "count": 1303
+      },
+      {
+        "level": 85,
+        "count": 1200
+      },
+      {
+        "level": 77,
+        "count": 1156
+      },
+      {
+        "level": 93,
+        "count": 1090
+      },
+      {
+        "level": 87,
+        "count": 1043
+      },
+      {
+        "level": 65,
+        "count": 969
+      },
+      {
+        "level": 69,
+        "count": 877
+      },
+      {
+        "level": 55,
+        "count": 854
+      },
+      {
+        "level": 94,
+        "count": 839
+      },
+      {
+        "level": 105,
+        "count": 831
+      },
+      {
+        "level": 86,
+        "count": 783
+      },
+      {
+        "level": 82,
+        "count": 764
+      },
+      {
+        "level": 57,
+        "count": 763
+      },
+      {
+        "level": 51,
+        "count": 705
+      },
+      {
+        "level": 74,
+        "count": 704
+      },
+      {
+        "level": 29,
+        "count": 659
+      },
+      {
+        "level": 31,
+        "count": 649
+      },
+      {
+        "level": 35,
+        "count": 638
+      }
+    ],
+    "level_range": [
+      1,
+      105
+    ]
+  },
+  "symmetry_breakdown": {
+    "even_count": 18353,
+    "odd_count": 17063,
+    "even_fraction": 0.5182,
+    "odd_fraction": 0.4818
+  },
+  "fricke_eigenvalue_distribution": {
+    "1": {
+      "count": 11260,
+      "fraction": 0.3179
+    },
+    "-1": {
+      "count": 8733,
+      "fraction": 0.2466
+    },
+    "0": {
+      "count": 15423,
+      "fraction": 0.4355
+    }
+  },
+  "spectral_spacing": {
+    "level_1_mixed": {
+      "label": "level_1_mixed",
+      "num_forms": 2202,
+      "num_gaps": 2201,
+      "mean_gap": 0.07968662200386957,
+      "normalized_gap_variance": 2.467110363115263,
+      "normalized_gap_skewness": 8.037190833223194,
+      "normalized_gap_kurtosis_excess": 115.61663732439247,
+      "goe_variance_reference": 0.286,
+      "gue_variance_reference": 0.178,
+      "poisson_variance_reference": 1.0,
+      "interpretation": "Poisson-like (no repulsion)"
+    },
+    "level_1_even_symmetry": {
+      "label": "level_1_even",
+      "num_forms": 1110,
+      "num_gaps": 1109,
+      "mean_gap": 0.1543229927321729,
+      "normalized_gap_variance": 2.0943639099639877,
+      "normalized_gap_skewness": 6.90934094111958,
+      "normalized_gap_kurtosis_excess": 86.7184340166055,
+      "goe_variance_reference": 0.286,
+      "gue_variance_reference": 0.178,
+      "poisson_variance_reference": 1.0,
+      "interpretation": "Poisson-like (no repulsion)"
+    },
+    "level_1_odd_symmetry": {
+      "label": "level_1_odd_symmetry",
+      "num_forms": 1092,
+      "num_gaps": 1091,
+      "mean_gap": 0.1544003494515445,
+      "normalized_gap_variance": 5.725615213959026,
+      "normalized_gap_skewness": 21.39366607678264,
+      "normalized_gap_kurtosis_excess": 584.3435364122118,
+      "goe_variance_reference": 0.286,
+      "gue_variance_reference": 0.178,
+      "poisson_variance_reference": 1.0,
+      "interpretation": "Poisson-like (no repulsion)"
+    },
+    "level_1_even_locally_unfolded": {
+      "label": "level_1_even_locally_unfolded (k=10)",
+      "num_gaps": 1109,
+      "normalized_gap_variance": 0.631881540855896,
+      "normalized_gap_mean": 0.9968315609036436,
+      "goe_variance_reference": 0.286,
+      "gue_variance_reference": 0.178,
+      "poisson_variance_reference": 1.0,
+      "interpretation": "Poisson-like (no repulsion)"
+    },
+    "level_1_odd_locally_unfolded": {
+      "label": "level_1_odd_locally_unfolded (k=10)",
+      "num_gaps": 1091,
+      "normalized_gap_variance": 0.813012668088108,
+      "normalized_gap_mean": 1.002160636230719,
+      "goe_variance_reference": 0.286,
+      "gue_variance_reference": 0.178,
+      "poisson_variance_reference": 1.0,
+      "interpretation": "Poisson-like (no repulsion)"
+    }
+  }
+}
