@@ -1,0 +1,794 @@
+{
+  "challenge": "Genus-2 Igusa Absolute Invariant Saturation \u2014 Extended Analysis",
+  "method": "Covariance eigenvalue spectrum of log|absolute Igusa invariants| vs log|IC| per ST group",
+  "data_source": "F:\\Prometheus\\cartography\\lmfdb_dump\\g2c_curves.json",
+  "invariant_definitions": {
+    "absolute_igusa": "g2_inv = [j1, j2, j3] = ratios of Igusa-Clebsch that remove discriminant scaling",
+    "igusa_clebsch": "igusa_clebsch_inv = [I2, I4, I6, I10] = weighted Igusa-Clebsch invariants"
+  },
+  "parsing_summary": {
+    "total_records": 66158,
+    "g2_parse_failures": 0,
+    "g2_zero_skips": 216,
+    "ic_parse_failures": 0,
+    "ic_zero_skips": 210
+  },
+  "absolute_invariant_analysis": {
+    "reference_group": "USp(4)",
+    "reference_entropy": 0.095308,
+    "reference_effective_rank": 2,
+    "min_group_size": 10,
+    "groups": {
+      "USp(4)": {
+        "n_curves": 62908,
+        "means": [
+          18.534496,
+          15.491064,
+          12.586456
+        ],
+        "eigenvalues": [
+          236.337881,
+          4.12768,
+          0.62963
+        ],
+        "normalized_entropy": 0.095308,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.980268,
+        "condition_number": 375.36,
+        "dim_variance_fractions": [
+          0.375008,
+          0.325707,
+          0.299285
+        ],
+        "most_constrained_dim": 2,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.612248,
+          0.574848,
+          0.542865
+        ],
+        "saturation_defect_entropy": 0.0,
+        "saturation_defect_rank": 0
+      },
+      "SU(2)xSU(2)": {
+        "n_curves": 2432,
+        "means": [
+          30.380284,
+          27.202599,
+          24.380129
+        ],
+        "eigenvalues": [
+          643.148336,
+          2.254039,
+          0.345618
+        ],
+        "normalized_entropy": 0.025303,
+        "effective_rank": 1,
+        "top_eigenvalue_fraction": 0.995974,
+        "condition_number": 1860.87,
+        "dim_variance_fractions": [
+          0.340494,
+          0.333266,
+          0.32624
+        ],
+        "most_constrained_dim": 2,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.583269,
+          0.578138,
+          0.570573
+        ],
+        "saturation_defect_entropy": 0.070005,
+        "saturation_defect_rank": 1
+      },
+      "N(U(1)xSU(2))": {
+        "n_curves": 303,
+        "means": [
+          35.128794,
+          31.941918,
+          28.940069
+        ],
+        "eigenvalues": [
+          635.029202,
+          1.519163,
+          0.151139
+        ],
+        "normalized_entropy": 0.017302,
+        "effective_rank": 1,
+        "top_eigenvalue_fraction": 0.997377,
+        "condition_number": 4201.63,
+        "dim_variance_fractions": [
+          0.335589,
+          0.331406,
+          0.333005
+        ],
+        "most_constrained_dim": 1,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.579282,
+          0.576227,
+          0.576537
+        ],
+        "saturation_defect_entropy": 0.078006,
+        "saturation_defect_rank": 1
+      },
+      "N(SU(2)xSU(2))": {
+        "n_curves": 141,
+        "means": [
+          24.336217,
+          21.093724,
+          18.014502
+        ],
+        "eigenvalues": [
+          263.814747,
+          2.206069,
+          0.30946
+        ],
+        "normalized_entropy": 0.051846,
+        "effective_rank": 1,
+        "top_eigenvalue_fraction": 0.990555,
+        "condition_number": 852.5,
+        "dim_variance_fractions": [
+          0.33685,
+          0.327343,
+          0.335807
+        ],
+        "most_constrained_dim": 1,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.580336,
+          0.57394,
+          0.577757
+        ],
+        "saturation_defect_entropy": 0.043462,
+        "saturation_defect_rank": 1
+      },
+      "E_6": {
+        "n_curves": 51,
+        "means": [
+          15.605901,
+          11.528964,
+          6.300807
+        ],
+        "eigenvalues": [
+          50.287607,
+          0.095686,
+          0.001823
+        ],
+        "normalized_entropy": 0.012929,
+        "effective_rank": 1,
+        "top_eigenvalue_fraction": 0.998065,
+        "condition_number": 27584.87,
+        "dim_variance_fractions": [
+          0.648316,
+          0.26634,
+          0.085344
+        ],
+        "most_constrained_dim": 2,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.805944,
+          0.516302,
+          0.289633
+        ],
+        "saturation_defect_entropy": 0.082379,
+        "saturation_defect_rank": 1
+      },
+      "J(E_1)": {
+        "n_curves": 23,
+        "means": [
+          17.939753,
+          14.903379,
+          11.594774
+        ],
+        "eigenvalues": [
+          130.252062,
+          2.870398,
+          0.129109
+        ],
+        "normalized_entropy": 0.101627,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.97749,
+        "condition_number": 1008.85,
+        "dim_variance_fractions": [
+          0.386372,
+          0.304657,
+          0.308971
+        ],
+        "most_constrained_dim": 1,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.621071,
+          0.557654,
+          0.55072
+        ],
+        "saturation_defect_entropy": -0.006319,
+        "saturation_defect_rank": 0
+      },
+      "J(E_6)": {
+        "n_curves": 17,
+        "means": [
+          17.435926,
+          12.719128,
+          6.915323
+        ],
+        "eigenvalues": [
+          8.915976,
+          0.000249,
+          0.0
+        ],
+        "normalized_entropy": 0.000292,
+        "effective_rank": 1,
+        "top_eigenvalue_fraction": 0.999972,
+        "condition_number": 1539768914.45,
+        "dim_variance_fractions": [
+          0.642405,
+          0.287636,
+          0.069958
+        ],
+        "most_constrained_dim": 2,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.801513,
+          0.536317,
+          0.264463
+        ],
+        "saturation_defect_entropy": 0.095016,
+        "saturation_defect_rank": 1
+      },
+      "J(E_4)": {
+        "n_curves": 17,
+        "means": [
+          17.714893,
+          14.578701,
+          8.342053
+        ],
+        "eigenvalues": [
+          109.570014,
+          8.397773,
+          0.182644
+        ],
+        "normalized_entropy": 0.243809,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.927377,
+        "condition_number": 599.91,
+        "dim_variance_fractions": [
+          0.372067,
+          0.294647,
+          0.333285
+        ],
+        "most_constrained_dim": 1,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.617724,
+          0.55784,
+          0.554286
+        ],
+        "saturation_defect_entropy": -0.148501,
+        "saturation_defect_rank": 0
+      },
+      "E_4": {
+        "n_curves": 10,
+        "means": [
+          14.656182,
+          11.309782,
+          5.806648
+        ],
+        "eigenvalues": [
+          8.414278,
+          1.400526,
+          0.044019
+        ],
+        "normalized_entropy": 0.397423,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.853477,
+        "condition_number": 191.15,
+        "dim_variance_fractions": [
+          0.446767,
+          0.369492,
+          0.183741
+        ],
+        "most_constrained_dim": 2,
+        "least_constrained_dim": 0,
+        "pc1_loadings": [
+          0.718554,
+          0.651957,
+          0.242141
+        ],
+        "saturation_defect_entropy": -0.302115,
+        "saturation_defect_rank": 0
+      }
+    }
+  },
+  "ic_invariant_analysis": {
+    "reference_group": "USp(4)",
+    "reference_entropy": 0.501859,
+    "reference_effective_rank": 3,
+    "groups": {
+      "USp(4)": {
+        "n_curves": 62905,
+        "means": [
+          7.03185,
+          10.080367,
+          15.943864,
+          14.54261
+        ],
+        "eigenvalues": [
+          29.88104,
+          7.489945,
+          1.732339,
+          0.261562
+        ],
+        "normalized_entropy": 0.501859,
+        "effective_rank": 3,
+        "top_eigenvalue_fraction": 0.759079,
+        "condition_number": 114.24,
+        "dim_variance_fractions": [
+          0.101545,
+          0.178797,
+          0.456706,
+          0.262952
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 2,
+        "pc1_loadings": [
+          0.301859,
+          0.45048,
+          0.7582,
+          0.362053
+        ],
+        "saturation_defect_entropy": 0.0,
+        "saturation_defect_rank": 0
+      },
+      "SU(2)xSU(2)": {
+        "n_curves": 2437,
+        "means": [
+          8.965133,
+          10.509224,
+          18.321203,
+          12.401086
+        ],
+        "eigenvalues": [
+          56.677293,
+          11.526109,
+          4.925039,
+          0.191242
+        ],
+        "normalized_entropy": 0.495416,
+        "effective_rank": 3,
+        "top_eigenvalue_fraction": 0.773016,
+        "condition_number": 296.36,
+        "dim_variance_fractions": [
+          0.129009,
+          0.190096,
+          0.486478,
+          0.194417
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 2,
+        "pc1_loadings": [
+          0.337111,
+          0.450851,
+          0.786641,
+          0.253546
+        ],
+        "saturation_defect_entropy": 0.006443,
+        "saturation_defect_rank": 0
+      },
+      "N(U(1)xSU(2))": {
+        "n_curves": 303,
+        "means": [
+          9.015972,
+          8.746543,
+          16.637308,
+          7.871626
+        ],
+        "eigenvalues": [
+          72.557679,
+          4.600182,
+          4.094002,
+          0.032626
+        ],
+        "normalized_entropy": 0.301209,
+        "effective_rank": 3,
+        "top_eigenvalue_fraction": 0.892639,
+        "condition_number": 2223.93,
+        "dim_variance_fractions": [
+          0.140475,
+          0.175061,
+          0.527722,
+          0.156742
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 2,
+        "pc1_loadings": [
+          0.356003,
+          0.409212,
+          0.765397,
+          0.346372
+        ],
+        "saturation_defect_entropy": 0.20065,
+        "saturation_defect_rank": 0
+      },
+      "N(SU(2)xSU(2))": {
+        "n_curves": 144,
+        "means": [
+          6.692393,
+          6.993797,
+          12.597043,
+          7.252706
+        ],
+        "eigenvalues": [
+          28.896534,
+          2.889882,
+          2.242859,
+          0.112391
+        ],
+        "normalized_entropy": 0.395202,
+        "effective_rank": 3,
+        "top_eigenvalue_fraction": 0.846372,
+        "condition_number": 257.11,
+        "dim_variance_fractions": [
+          0.135552,
+          0.198243,
+          0.510769,
+          0.155435
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 2,
+        "pc1_loadings": [
+          0.331451,
+          0.434549,
+          0.771613,
+          0.325454
+        ],
+        "saturation_defect_entropy": 0.106657,
+        "saturation_defect_rank": 0
+      },
+      "E_6": {
+        "n_curves": 51,
+        "means": [
+          6.281812,
+          9.957625,
+          14.968359,
+          13.723718
+        ],
+        "eigenvalues": [
+          44.628087,
+          3.579502,
+          0.418081,
+          0.020529
+        ],
+        "normalized_entropy": 0.227405,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.917401,
+        "condition_number": 2173.94,
+        "dim_variance_fractions": [
+          0.049915,
+          0.124122,
+          0.284956,
+          0.541007
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 3,
+        "pc1_loadings": [
+          0.18914,
+          0.354741,
+          0.532012,
+          0.745217
+        ],
+        "saturation_defect_entropy": 0.274454,
+        "saturation_defect_rank": 1
+      },
+      "J(E_1)": {
+        "n_curves": 24,
+        "means": [
+          5.315377,
+          6.30435,
+          10.218084,
+          6.750107
+        ],
+        "eigenvalues": [
+          19.062586,
+          4.639069,
+          0.500082,
+          0.101286
+        ],
+        "normalized_entropy": 0.439572,
+        "effective_rank": 3,
+        "top_eigenvalue_fraction": 0.784371,
+        "condition_number": 188.21,
+        "dim_variance_fractions": [
+          0.086708,
+          0.139435,
+          0.40924,
+          0.364617
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 2,
+        "pc1_loadings": [
+          0.223186,
+          0.410243,
+          0.670781,
+          0.576144
+        ],
+        "saturation_defect_entropy": 0.062287,
+        "saturation_defect_rank": 0
+      },
+      "J(E_6)": {
+        "n_curves": 17,
+        "means": [
+          5.309757,
+          7.593083,
+          11.624216,
+          7.033418
+        ],
+        "eigenvalues": [
+          23.261961,
+          3.312452,
+          0.059956,
+          0.001462
+        ],
+        "normalized_entropy": 0.282611,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.873333,
+        "condition_number": 15907.26,
+        "dim_variance_fractions": [
+          0.026406,
+          0.159272,
+          0.269661,
+          0.544662
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 3,
+        "pc1_loadings": [
+          0.166083,
+          0.375832,
+          0.518309,
+          0.750015
+        ],
+        "saturation_defect_entropy": 0.219248,
+        "saturation_defect_rank": 1
+      },
+      "J(E_4)": {
+        "n_curves": 17,
+        "means": [
+          4.662265,
+          5.154747,
+          8.791451,
+          3.516989
+        ],
+        "eigenvalues": [
+          16.824669,
+          2.945323,
+          0.563298,
+          0.032298
+        ],
+        "normalized_entropy": 0.394503,
+        "effective_rank": 3,
+        "top_eigenvalue_fraction": 0.826132,
+        "condition_number": 520.91,
+        "dim_variance_fractions": [
+          0.089261,
+          0.243889,
+          0.496433,
+          0.170417
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 2,
+        "pc1_loadings": [
+          0.284701,
+          0.524561,
+          0.766176,
+          0.238235
+        ],
+        "saturation_defect_entropy": 0.107356,
+        "saturation_defect_rank": 0
+      },
+      "E_4": {
+        "n_curves": 10,
+        "means": [
+          4.543417,
+          4.819282,
+          8.096619,
+          5.981463
+        ],
+        "eigenvalues": [
+          29.480293,
+          1.861756,
+          0.228526,
+          0.007531
+        ],
+        "normalized_entropy": 0.193852,
+        "effective_rank": 2,
+        "top_eigenvalue_fraction": 0.933568,
+        "condition_number": 3914.36,
+        "dim_variance_fractions": [
+          0.025704,
+          0.194064,
+          0.340882,
+          0.439351
+        ],
+        "most_constrained_dim": 0,
+        "least_constrained_dim": 3,
+        "pc1_loadings": [
+          0.161465,
+          0.448707,
+          0.577306,
+          0.662804
+        ],
+        "saturation_defect_entropy": 0.308007,
+        "saturation_defect_rank": 1
+      }
+    }
+  },
+  "comparison": {
+    "groups": {
+      "USp(4)": {
+        "abs_entropy": 0.095308,
+        "ic_entropy": 0.501859,
+        "abs_defect": 0.0,
+        "ic_defect": 0.0,
+        "abs_sharper": false,
+        "defect_ratio": 0.0,
+        "abs_effective_rank": 2,
+        "ic_effective_rank": 3
+      },
+      "SU(2)xSU(2)": {
+        "abs_entropy": 0.025303,
+        "ic_entropy": 0.495416,
+        "abs_defect": 0.070005,
+        "ic_defect": 0.006443,
+        "abs_sharper": true,
+        "defect_ratio": 10.8653,
+        "abs_effective_rank": 1,
+        "ic_effective_rank": 3
+      },
+      "N(U(1)xSU(2))": {
+        "abs_entropy": 0.017302,
+        "ic_entropy": 0.301209,
+        "abs_defect": 0.078006,
+        "ic_defect": 0.20065,
+        "abs_sharper": false,
+        "defect_ratio": 0.3888,
+        "abs_effective_rank": 1,
+        "ic_effective_rank": 3
+      },
+      "N(SU(2)xSU(2))": {
+        "abs_entropy": 0.051846,
+        "ic_entropy": 0.395202,
+        "abs_defect": 0.043462,
+        "ic_defect": 0.106657,
+        "abs_sharper": false,
+        "defect_ratio": 0.4075,
+        "abs_effective_rank": 1,
+        "ic_effective_rank": 3
+      },
+      "E_6": {
+        "abs_entropy": 0.012929,
+        "ic_entropy": 0.227405,
+        "abs_defect": 0.082379,
+        "ic_defect": 0.274454,
+        "abs_sharper": false,
+        "defect_ratio": 0.3002,
+        "abs_effective_rank": 1,
+        "ic_effective_rank": 2
+      },
+      "J(E_1)": {
+        "abs_entropy": 0.101627,
+        "ic_entropy": 0.439572,
+        "abs_defect": -0.006319,
+        "ic_defect": 0.062287,
+        "abs_sharper": false,
+        "defect_ratio": -0.1014,
+        "abs_effective_rank": 2,
+        "ic_effective_rank": 3
+      },
+      "J(E_6)": {
+        "abs_entropy": 0.000292,
+        "ic_entropy": 0.282611,
+        "abs_defect": 0.095016,
+        "ic_defect": 0.219248,
+        "abs_sharper": false,
+        "defect_ratio": 0.4334,
+        "abs_effective_rank": 1,
+        "ic_effective_rank": 2
+      },
+      "J(E_4)": {
+        "abs_entropy": 0.243809,
+        "ic_entropy": 0.394503,
+        "abs_defect": -0.148501,
+        "ic_defect": 0.107356,
+        "abs_sharper": false,
+        "defect_ratio": -1.3833,
+        "abs_effective_rank": 2,
+        "ic_effective_rank": 3
+      },
+      "E_4": {
+        "abs_entropy": 0.397423,
+        "ic_entropy": 0.193852,
+        "abs_defect": -0.302115,
+        "ic_defect": 0.308007,
+        "abs_sharper": false,
+        "defect_ratio": -0.9809,
+        "abs_effective_rank": 2,
+        "ic_effective_rank": 2
+      }
+    },
+    "n_abs_sharper": 1,
+    "n_ic_sharper": 7,
+    "mean_defect_absolute": -0.011008,
+    "mean_defect_ic": 0.160638
+  },
+  "sha_correlations": {
+    "absolute_invariants": {
+      "j1=I2^5/I10": {
+        "spearman_rho": 0.253466,
+        "p_value": 0.0,
+        "n": 65942
+      },
+      "j2=I2^3*I4/I10": {
+        "spearman_rho": 0.25449,
+        "p_value": 0.0,
+        "n": 65942
+      },
+      "j3=I2^2*I6/I10": {
+        "spearman_rho": 0.25116,
+        "p_value": 0.0,
+        "n": 65942
+      }
+    },
+    "ic_invariants": {
+      "log|I2|": {
+        "spearman_rho": 0.240753,
+        "p_value": 0.0,
+        "n": 65948
+      },
+      "log|I4|": {
+        "spearman_rho": 0.175928,
+        "p_value": 0.0,
+        "n": 65948
+      },
+      "log|I6|": {
+        "spearman_rho": 0.22828,
+        "p_value": 0.0,
+        "n": 65948
+      },
+      "log|I10|": {
+        "spearman_rho": -0.016261,
+        "p_value": 0.00013011783563703801,
+        "n": 65948
+      }
+    }
+  },
+  "selmer_excess_rank0_correlations": {
+    "absolute_invariants": {
+      "j1=I2^5/I10": {
+        "spearman_rho": 0.282097,
+        "p_value": 0.0,
+        "n": 12095
+      },
+      "j2=I2^3*I4/I10": {
+        "spearman_rho": 0.295037,
+        "p_value": 0.0,
+        "n": 12095
+      },
+      "j3=I2^2*I6/I10": {
+        "spearman_rho": 0.289095,
+        "p_value": 0.0,
+        "n": 12095
+      }
+    },
+    "n_rank0_curves": 12095
+  },
+  "summary": {
+    "most_rigid_group_absolute": "J(E_6)",
+    "most_rigid_defect_absolute": 0.095016,
+    "least_rigid_group_absolute": "E_4",
+    "mean_defect_absolute": -0.011008,
+    "mean_defect_ic": 0.160638,
+    "absolute_sharper_count": 1,
+    "ic_sharper_count": 7,
+    "finding": "Absolute Igusa invariants live in a 3D quotient of IC space where USp(4) itself is already near-degenerate (H=0.095, eff_rank=2), so saturation defects are compressed (mean -0.0110 vs IC 0.1606). The real finding: Sha-absolute correlations are STRONGER and UNIFORM (rho~0.25 across all j_i) vs IC (rho varies 0.18-0.24, I10 near zero). Selmer excess at rank 0 rises to rho=0.29 with absolute invariants (up from 0.22 with IC). Discriminant normalization concentrates the arithmetic signal. Most rigid group (absolute): J(E_6)."
+  }
+}
