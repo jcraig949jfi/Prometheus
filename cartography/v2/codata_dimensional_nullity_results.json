@@ -1,0 +1,838 @@
+{
+  "description": "NF4: Dimensional Basis Nullity \u2014 CODATA physical constants",
+  "matrix_shape": {
+    "M_rows_constants": 241,
+    "N_cols_dimensions": 7
+  },
+  "base_dimensions": [
+    "kg",
+    "m",
+    "s",
+    "A",
+    "K",
+    "mol",
+    "cd"
+  ],
+  "rank": 7,
+  "nullity": 234,
+  "dimensionless_constants_count": 93,
+  "non_trivial_dimensionless_combinations": 141,
+  "unique_dimension_signatures": 43,
+  "skipped_count": 45,
+  "skipped": [
+    {
+      "name": "alpha particle mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "alpha particle mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "atomic mass constant energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "atomic mass unit-hartree relationship",
+      "unit": "E_h",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "deuteron mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "deuteron mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "electron gyromag. ratio in MHz/T",
+      "unit": "MHz T^-1",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "electron mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "electron mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "electron volt-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "electron volt-hartree relationship",
+      "unit": "E_h",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "Fermi coupling constant",
+      "unit": "GeV^-2",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "hartree-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "helion mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "helion mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "hertz-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "inverse meter-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "inverse meter-hartree relationship",
+      "unit": "E_h",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "joule-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "joule-hartree relationship",
+      "unit": "E_h",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "kelvin-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "kelvin-hartree relationship",
+      "unit": "E_h",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "kilogram-atomic mass unit relationship",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "kilogram-hartree relationship",
+      "unit": "E_h",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "muon mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "muon mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "natural unit of energy in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "natural unit of momentum in MeV/c",
+      "unit": "MeV/c",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "neutron gyromag. ratio in MHz/T",
+      "unit": "MHz T^-1",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "neutron mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "neutron mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "neutron-proton mass difference energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "neutron-proton mass difference in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "Newtonian constant of gravitation over h-bar c",
+      "unit": "(GeV/c^2)^-2",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "nuclear magneton in MHz/T",
+      "unit": "MHz T^-1",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "Planck mass energy equivalent in GeV",
+      "unit": "GeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "proton gyromag. ratio in MHz/T",
+      "unit": "MHz T^-1",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "proton mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "proton mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "shielded helion gyromag. ratio in MHz/T",
+      "unit": "MHz T^-1",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "shielded proton gyromag. ratio in MHz/T",
+      "unit": "MHz T^-1",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "tau energy equivalent",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "tau mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "triton mass energy equivalent in MeV",
+      "unit": "MeV",
+      "reason": "non-SI or unparseable"
+    },
+    {
+      "name": "triton mass in u",
+      "unit": "u",
+      "reason": "non-SI or unparseable"
+    }
+  ],
+  "minimal_basis": [
+    {
+      "name": "alpha particle mass",
+      "unit": "kg",
+      "dimensions": {
+        "kg": 1,
+        "m": 0,
+        "s": 0,
+        "A": 0,
+        "K": 0,
+        "mol": 0,
+        "cd": 0
+      }
+    },
+    {
+      "name": "alpha particle mass energy equivalent",
+      "unit": "J",
+      "dimensions": {
+        "kg": 1,
+        "m": 2,
+        "s": -2,
+        "A": 0,
+        "K": 0,
+        "mol": 0,
+        "cd": 0
+      }
+    },
+    {
+      "name": "alpha particle molar mass",
+      "unit": "kg mol^-1",
+      "dimensions": {
+        "kg": 1,
+        "m": 0,
+        "s": 0,
+        "A": 0,
+        "K": 0,
+        "mol": -1,
+        "cd": 0
+      }
+    },
+    {
+      "name": "alpha particle rms charge radius",
+      "unit": "m",
+      "dimensions": {
+        "kg": 0,
+        "m": 1,
+        "s": 0,
+        "A": 0,
+        "K": 0,
+        "mol": 0,
+        "cd": 0
+      }
+    },
+    {
+      "name": "atomic mass unit-kelvin relationship",
+      "unit": "K",
+      "dimensions": {
+        "kg": 0,
+        "m": 0,
+        "s": 0,
+        "A": 0,
+        "K": 1,
+        "mol": 0,
+        "cd": 0
+      }
+    },
+    {
+      "name": "atomic unit of 1st hyperpolarizability",
+      "unit": "C^3 m^3 J^-2",
+      "dimensions": {
+        "kg": -2,
+        "m": -1,
+        "s": 7,
+        "A": 3,
+        "K": 0,
+        "mol": 0,
+        "cd": 0
+      }
+    },
+    {
+      "name": "luminous efficacy",
+      "unit": "lm W^-1",
+      "dimensions": {
+        "kg": -1,
+        "m": -2,
+        "s": 3,
+        "A": 0,
+        "K": 0,
+        "mol": 0,
+        "cd": 1
+      }
+    }
+  ],
+  "uncovered_dimensions": [],
+  "interpretation": {
+    "buckingham_pi": "Any formula involving these 241 constants can be rewritten using 234 dimensionless groups",
+    "basis_meaning": "Only 7 constants are needed to represent all dimensional signatures; the rest are dimensionally redundant",
+    "rank_vs_7": "All 7 SI base dimensions are represented"
+  },
+  "dimension_signature_census": [
+    {
+      "dimensions": {},
+      "count": 93,
+      "examples": [
+        "alpha particle-electron mass ratio",
+        "alpha particle-proton mass ratio",
+        "alpha particle relative atomic mass"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 1
+      },
+      "count": 23,
+      "examples": [
+        "alpha particle rms charge radius",
+        "Angstrom star",
+        "atomic unit of length"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 2,
+        "s": -2
+      },
+      "count": 21,
+      "examples": [
+        "alpha particle mass energy equivalent",
+        "atomic mass constant energy equivalent",
+        "atomic mass unit-electron volt relationship"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1
+      },
+      "count": 16,
+      "examples": [
+        "alpha particle mass",
+        "atomic mass constant",
+        "atomic mass unit-kilogram relationship"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 2,
+        "A": 1
+      },
+      "count": 14,
+      "examples": [
+        "atomic unit of mag. dipole mom.",
+        "Bohr magneton",
+        "Bohr magneton in eV/T"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "mol": -1
+      },
+      "count": 11,
+      "examples": [
+        "alpha particle molar mass",
+        "deuteron molar mass",
+        "electron molar mass"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "s": 1,
+        "A": 1
+      },
+      "count": 8,
+      "examples": [
+        "Bohr magneton in Hz/T",
+        "electron charge to mass quotient",
+        "electron gyromag. ratio"
+      ]
+    },
+    {
+      "dimensions": {
+        "s": -1
+      },
+      "count": 5,
+      "examples": [
+        "atomic mass unit-hertz relationship",
+        "hartree-hertz relationship",
+        "hyperfine transition frequency of Cs-133"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": -1
+      },
+      "count": 3,
+      "examples": [
+        "atomic mass unit-inverse meter relationship",
+        "hartree-inverse meter relationship",
+        "Rydberg constant"
+      ]
+    },
+    {
+      "dimensions": {
+        "K": 1
+      },
+      "count": 3,
+      "examples": [
+        "atomic mass unit-kelvin relationship",
+        "hartree-kelvin relationship",
+        "Planck temperature"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 1,
+        "s": -1
+      },
+      "count": 3,
+      "examples": [
+        "atomic unit of velocity",
+        "natural unit of velocity",
+        "speed of light in vacuum"
+      ]
+    },
+    {
+      "dimensions": {
+        "s": 1,
+        "A": 1
+      },
+      "count": 2,
+      "examples": [
+        "atomic unit of charge",
+        "elementary charge"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 1,
+        "s": -1
+      },
+      "count": 2,
+      "examples": [
+        "atomic unit of momentum",
+        "natural unit of momentum"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "m": -3,
+        "s": 4,
+        "A": 2
+      },
+      "count": 2,
+      "examples": [
+        "atomic unit of permittivity",
+        "vacuum electric permittivity"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "m": -1,
+        "s": 2,
+        "A": 1
+      },
+      "count": 2,
+      "examples": [
+        "Bohr magneton in inverse meter per tesla",
+        "nuclear magneton in inverse meter per tesla"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "s": 2,
+        "A": 1,
+        "K": 1
+      },
+      "count": 2,
+      "examples": [
+        "Bohr magneton in K/T",
+        "nuclear magneton in K/T"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 2,
+        "s": -3,
+        "A": -2
+      },
+      "count": 2,
+      "examples": [
+        "characteristic impedance of vacuum",
+        "conventional value of von Klitzing constant"
+      ]
+    },
+    {
+      "dimensions": {
+        "s": 1
+      },
+      "count": 2,
+      "examples": [
+        "natural unit of time",
+        "Planck time"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 2,
+        "s": -1
+      },
+      "count": 2,
+      "examples": [
+        "quantum of circulation",
+        "quantum of circulation times 2"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": -1,
+        "s": -2
+      },
+      "count": 2,
+      "examples": [
+        "standard atmosphere",
+        "standard-state pressure"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -2,
+        "m": -1,
+        "s": 7,
+        "A": 3
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of 1st hyperpolarizability"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -3,
+        "m": -2,
+        "s": 10,
+        "A": 4
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of 2nd hyperpolarizability"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": -3,
+        "s": 1,
+        "A": 1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of charge density"
+      ]
+    },
+    {
+      "dimensions": {
+        "A": 1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of current"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 1,
+        "s": 1,
+        "A": 1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of electric dipole mom."
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 1,
+        "s": -3,
+        "A": -1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of electric field"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "s": -3,
+        "A": -1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of electric field gradient"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "s": 4,
+        "A": 2
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of electric polarizability"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 2,
+        "s": -3,
+        "A": -1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of electric potential"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 2,
+        "s": 1,
+        "A": 1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of electric quadrupole mom."
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 1,
+        "s": -2
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of force"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "s": -2,
+        "A": -1
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of mag. flux density"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "m": 2,
+        "s": 2,
+        "A": 2
+      },
+      "count": 1,
+      "examples": [
+        "atomic unit of magnetizability"
+      ]
+    },
+    {
+      "dimensions": {
+        "mol": -1
+      },
+      "count": 1,
+      "examples": [
+        "Avogadro constant"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 2,
+        "s": -2,
+        "K": -1
+      },
+      "count": 1,
+      "examples": [
+        "Boltzmann constant"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "m": -2,
+        "s": 2,
+        "A": 1
+      },
+      "count": 1,
+      "examples": [
+        "conventional value of Josephson constant"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "m": -2,
+        "s": 3,
+        "cd": 1
+      },
+      "count": 1,
+      "examples": [
+        "luminous efficacy"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 3,
+        "mol": -1
+      },
+      "count": 1,
+      "examples": [
+        "molar volume of silicon"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": -1,
+        "m": 3,
+        "s": -2
+      },
+      "count": 1,
+      "examples": [
+        "Newtonian constant of gravitation"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 2,
+        "s": -1
+      },
+      "count": 1,
+      "examples": [
+        "Planck constant"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 1,
+        "s": -2
+      },
+      "count": 1,
+      "examples": [
+        "standard acceleration of gravity"
+      ]
+    },
+    {
+      "dimensions": {
+        "m": 2
+      },
+      "count": 1,
+      "examples": [
+        "Thomson cross section"
+      ]
+    },
+    {
+      "dimensions": {
+        "kg": 1,
+        "m": 1,
+        "s": -2,
+        "A": -2
+      },
+      "count": 1,
+      "examples": [
+        "vacuum mag. permeability"
+      ]
+    }
+  ]
+}
