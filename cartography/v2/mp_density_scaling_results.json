@@ -1,0 +1,490 @@
+{
+  "density_global": {
+    "mean": 6.951365099670814,
+    "median": 2.5610560546314396,
+    "std": 14.902532002410759,
+    "iqr": 5.6974,
+    "min": 0.0137,
+    "max": 307.1862,
+    "count": 10000
+  },
+  "density_by_crystal_system": {
+    "Cubic": {
+      "mean": 10.27232010056546,
+      "median": 2.5105,
+      "std": 23.271648117257758,
+      "iqr": 8.123000000000001,
+      "min": 0.0137,
+      "max": 307.1862,
+      "count": 1979
+    },
+    "Hexagonal": {
+      "mean": 8.122476264797402,
+      "median": 3.2881,
+      "std": 16.401550714920788,
+      "iqr": 7.294321922945276,
+      "min": 0.0256,
+      "max": 224.9057,
+      "count": 887
+    },
+    "Monoclinic": {
+      "mean": 5.702763327639257,
+      "median": 2.5660499999999997,
+      "std": 10.42042253785681,
+      "iqr": 5.3115000000000006,
+      "min": 0.0142,
+      "max": 183.1151,
+      "count": 1618
+    },
+    "Orthorhombic": {
+      "mean": 5.0781399179635525,
+      "median": 2.5607,
+      "std": 7.6731815981411815,
+      "iqr": 4.8187999999999995,
+      "min": 0.0208,
+      "max": 98.8371,
+      "count": 2189
+    },
+    "Tetragonal": {
+      "mean": 6.730460064476589,
+      "median": 2.33895,
+      "std": 14.512623365006029,
+      "iqr": 5.067475,
+      "min": 0.0194,
+      "max": 252.9594,
+      "count": 1426
+    },
+    "Triclinic": {
+      "mean": 4.6531403592586225,
+      "median": 2.349461031737045,
+      "std": 7.312796582233158,
+      "iqr": 3.1481749999999993,
+      "min": 0.0591,
+      "max": 93.1295,
+      "count": 756
+    },
+    "Trigonal": {
+      "mean": 7.4424135919023,
+      "median": 3.0513,
+      "std": 14.097272924269307,
+      "iqr": 6.6957,
+      "min": 0.0231,
+      "max": 215.2147,
+      "count": 1145
+    }
+  },
+  "crystal_system_kruskal_wallis": {
+    "H_statistic": 35.7076222157363,
+    "p_value": 3.1417867772361184e-06,
+    "significant": true
+  },
+  "density_vs_nsites": {
+    "label": "density_vs_nsites",
+    "n": 10000,
+    "pearson_r": 0.18402232893373482,
+    "pearson_p": 6.944960468771273e-77,
+    "spearman_rho": 0.4409544528719569,
+    "spearman_p": 0.0
+  },
+  "density_vs_nsites_loglog": {
+    "n": 10000,
+    "slope": 0.711649351609115,
+    "intercept": -0.5603553195091556,
+    "R2": 0.18462288620680656,
+    "p_value": 0.0,
+    "slope_se": 0.014957051275288276
+  },
+  "density_vs_band_gap": {
+    "label": "density_vs_band_gap",
+    "n": 10000,
+    "pearson_r": -0.007984902119116045,
+    "pearson_p": 0.42463659241529644,
+    "spearman_rho": -0.03465178563044205,
+    "spearman_p": 0.0005286836128472353
+  },
+  "density_by_electronic_class": {
+    "metals": {
+      "mean": 6.917899861110496,
+      "median": 2.7129000000000003,
+      "std": 15.034353915996688,
+      "iqr": 5.89745,
+      "min": 0.0142,
+      "max": 307.1862,
+      "count": 2840
+    },
+    "semiconductors": {
+      "mean": 7.241669560191538,
+      "median": 2.4526,
+      "std": 16.002250175368566,
+      "iqr": 5.413701663754651,
+      "min": 0.0256,
+      "max": 231.477,
+      "count": 1623
+    },
+    "insulators": {
+      "mean": 6.883436101673014,
+      "median": 2.5006,
+      "std": 14.493768851864804,
+      "iqr": 5.585999999999999,
+      "min": 0.0137,
+      "max": 252.9594,
+      "count": 5537
+    }
+  },
+  "metal_vs_insulator_mannwhitney": {
+    "U_statistic": 8281620.5,
+    "p_value": 6.343879677174393e-05,
+    "metal_median": 2.7129000000000003,
+    "insulator_median": 2.5006
+  },
+  "density_vs_formation_energy": {
+    "label": "density_vs_formation_energy",
+    "n": 10000,
+    "pearson_r": -0.022047105149511394,
+    "pearson_p": 0.02747495209324297,
+    "spearman_rho": 0.017274835960003888,
+    "spearman_p": 0.08409647289533857
+  },
+  "density_vs_formation_energy_stable_only": {
+    "label": "density_vs_fe_stable",
+    "n": 6814,
+    "pearson_r": -0.012680607156627933,
+    "pearson_p": 0.2952861491960762,
+    "spearman_rho": 0.013853121979508824,
+    "spearman_p": 0.25288163246178924
+  },
+  "density_vs_vol_per_atom": {
+    "label": "density_vs_vol_per_atom",
+    "n": 10000,
+    "pearson_r": -0.21745735512567788,
+    "pearson_p": 2.4752796322996635e-107,
+    "spearman_rho": -0.8839680958018422,
+    "spearman_p": 0.0
+  },
+  "density_vs_vol_per_atom_loglog": {
+    "n": 10000,
+    "slope": -0.9694274931342439,
+    "intercept": 4.7257362088828305,
+    "R2": 0.7969349785437364,
+    "p_value": 0.0,
+    "slope_se": 0.004894010335536356
+  },
+  "outliers_high_density": {
+    "count": 558,
+    "top_10": [
+      {
+        "material_id": "mp-synth-03897",
+        "formula": "Ir6Re6Te6",
+        "crystal_system": "Cubic",
+        "density": 307.1862,
+        "fence": 33.316250000000004,
+        "z_score": 12.758609893179397
+      },
+      {
+        "material_id": "mp-synth-07603",
+        "formula": "In8Os8Pb8",
+        "crystal_system": "Tetragonal",
+        "density": 252.9594,
+        "fence": 21.252825,
+        "z_score": 16.966535528597113
+      },
+      {
+        "material_id": "mp-synth-07255",
+        "formula": "Ba8Cu8Ir8Rb8",
+        "crystal_system": "Cubic",
+        "density": 236.7429,
+        "fence": 33.316250000000004,
+        "z_score": 9.731608984388552
+      },
+      {
+        "material_id": "mp-synth-05714",
+        "formula": "B7Ba7Fe7Re7",
+        "crystal_system": "Cubic",
+        "density": 231.477,
+        "fence": 33.316250000000004,
+        "z_score": 9.505329351185654
+      },
+      {
+        "material_id": "mp-synth-01032",
+        "formula": "Os6Re6Zr6",
+        "crystal_system": "Hexagonal",
+        "density": 224.9057,
+        "fence": 30.4464876917811,
+        "z_score": 13.217239485653693
+      },
+      {
+        "material_id": "mp-synth-03099",
+        "formula": "Cr6La6Ta6",
+        "crystal_system": "Cubic",
+        "density": 222.5068,
+        "fence": 33.316250000000004,
+        "z_score": 9.119873196348564
+      },
+      {
+        "material_id": "mp-synth-04220",
+        "formula": "Ce6Li6Os6Re6",
+        "crystal_system": "Trigonal",
+        "density": 215.2147,
+        "fence": 27.941,
+        "z_score": 14.738473712203241
+      },
+      {
+        "material_id": "mp-synth-07445",
+        "formula": "Bi8Ge8Os8",
+        "crystal_system": "Cubic",
+        "density": 203.3891,
+        "fence": 33.316250000000004,
+        "z_score": 8.298371431468288
+      },
+      {
+        "material_id": "mp-synth-07493",
+        "formula": "Ce8Cl8Mn8N8",
+        "crystal_system": "Cubic",
+        "density": 194.2973,
+        "fence": 33.316250000000004,
+        "z_score": 7.9076900343369125
+      },
+      {
+        "material_id": "mp-synth-02938",
+        "formula": "Au8Br8Se8",
+        "crystal_system": "Cubic",
+        "density": 189.4506,
+        "fence": 33.316250000000004,
+        "z_score": 7.6994237364116795
+      }
+    ]
+  },
+  "outliers_low_density": {
+    "count": 0,
+    "top_10": []
+  },
+  "element_density_ranking": {
+    "densest_20": {
+      "Pu": {
+        "mean_density": 21.392200035068726,
+        "median_density": 21.529319408154457,
+        "count": 9
+      },
+      "U": {
+        "mean_density": 18.88187047956325,
+        "median_density": 19.60453092344727,
+        "count": 14
+      },
+      "Hg": {
+        "mean_density": 11.051450333191537,
+        "median_density": 11.735021289633309,
+        "count": 26
+      },
+      "Tm": {
+        "mean_density": 9.253462967799086,
+        "median_density": 9.289111402575776,
+        "count": 5
+      },
+      "Er": {
+        "mean_density": 9.014415669680625,
+        "median_density": 8.99172708732831,
+        "count": 5
+      },
+      "Ho": {
+        "mean_density": 8.773625408634377,
+        "median_density": 8.809087656317923,
+        "count": 5
+      },
+      "Cd": {
+        "mean_density": 8.456349543586835,
+        "median_density": 8.508240468614689,
+        "count": 5
+      },
+      "Dy": {
+        "mean_density": 8.49130072988709,
+        "median_density": 8.498143845890551,
+        "count": 5
+      },
+      "Tb": {
+        "mean_density": 8.144963412451185,
+        "median_density": 8.11733338743234,
+        "count": 5
+      },
+      "Gd": {
+        "mean_density": 7.659051151235849,
+        "median_density": 7.661959613918624,
+        "count": 5
+      },
+      "Pr": {
+        "mean_density": 6.3762545792301735,
+        "median_density": 6.377836819489092,
+        "count": 10
+      },
+      "Eu": {
+        "mean_density": 5.7793839685070445,
+        "median_density": 5.740718889552291,
+        "count": 6
+      },
+      "Tl": {
+        "mean_density": 10.674390068211938,
+        "median_density": 5.0442,
+        "count": 369
+      },
+      "Bi": {
+        "mean_density": 11.864603282717901,
+        "median_density": 4.8134,
+        "count": 409
+      },
+      "Pb": {
+        "mean_density": 11.294421482790147,
+        "median_density": 4.79145,
+        "count": 386
+      },
+      "Hf": {
+        "mean_density": 9.529312643175809,
+        "median_density": 4.6497,
+        "count": 364
+      },
+      "Ir": {
+        "mean_density": 11.21041546505474,
+        "median_density": 4.5948,
+        "count": 383
+      },
+      "Re": {
+        "mean_density": 13.59343973129396,
+        "median_density": 4.4319500000000005,
+        "count": 392
+      },
+      "Au": {
+        "mean_density": 10.163676493400915,
+        "median_density": 4.2668,
+        "count": 383
+      },
+      "W": {
+        "mean_density": 10.58968818878348,
+        "median_density": 4.261150000000001,
+        "count": 380
+      }
+    },
+    "lightest_20": {
+      "Ga": {
+        "mean_density": 7.288402454498601,
+        "median_density": 2.5006,
+        "count": 399
+      },
+      "Br": {
+        "mean_density": 7.3920449259236465,
+        "median_density": 2.429,
+        "count": 392
+      },
+      "Fe": {
+        "mean_density": 6.581742448974185,
+        "median_density": 2.37085,
+        "count": 374
+      },
+      "Si": {
+        "mean_density": 4.798581431267998,
+        "median_density": 2.2595643190939194,
+        "count": 598
+      },
+      "Mg": {
+        "mean_density": 4.260506310084772,
+        "median_density": 2.237150183975236,
+        "count": 593
+      },
+      "P": {
+        "mean_density": 6.175407118731253,
+        "median_density": 2.2333071595037106,
+        "count": 418
+      },
+      "V": {
+        "mean_density": 4.783702581804159,
+        "median_density": 2.2191,
+        "count": 393
+      },
+      "K": {
+        "mean_density": 5.487398372439616,
+        "median_density": 2.1393,
+        "count": 419
+      },
+      "N": {
+        "mean_density": 5.316733349953424,
+        "median_density": 2.1258,
+        "count": 397
+      },
+      "Al": {
+        "mean_density": 6.597632509815739,
+        "median_density": 2.1168500000000003,
+        "count": 394
+      },
+      "Cl": {
+        "mean_density": 6.745281728631837,
+        "median_density": 2.090838758358268,
+        "count": 410
+      },
+      "B": {
+        "mean_density": 6.484616446949837,
+        "median_density": 2.06105,
+        "count": 350
+      },
+      "S": {
+        "mean_density": 5.854783755454449,
+        "median_density": 1.9507418223721364,
+        "count": 444
+      },
+      "Be": {
+        "mean_density": 5.759947395803325,
+        "median_density": 1.9181268810113474,
+        "count": 390
+      },
+      "C": {
+        "mean_density": 4.360384302515485,
+        "median_density": 1.905883864043942,
+        "count": 462
+      },
+      "Na": {
+        "mean_density": 4.68384753750086,
+        "median_density": 1.8941,
+        "count": 393
+      },
+      "O": {
+        "mean_density": 6.327653231476615,
+        "median_density": 1.8301,
+        "count": 414
+      },
+      "F": {
+        "mean_density": 5.189825087230658,
+        "median_density": 1.7814,
+        "count": 403
+      },
+      "Li": {
+        "mean_density": 5.313947271250852,
+        "median_density": 1.7126,
+        "count": 417
+      },
+      "H": {
+        "mean_density": 0.10795722097915764,
+        "median_density": 0.09686760211786001,
+        "count": 19
+      }
+    },
+    "total_elements": 76
+  },
+  "density_lognormal_test": {
+    "shapiro_W": 0.9970423924157721,
+    "shapiro_p": 2.3717035907071428e-08,
+    "log_density_mean": 0.9732262883116264,
+    "log_density_std": 1.4002348193940153,
+    "interpretation": "not_lognormal"
+  },
+  "summary": {
+    "total_materials": 10000,
+    "global_mean_density": 6.951365099670814,
+    "global_median_density": 2.5610560546314396,
+    "densest_crystal_system": "Hexagonal",
+    "lightest_crystal_system": "Tetragonal",
+    "density_nsites_correlation": 0.4409544528719569,
+    "density_bandgap_correlation": -0.03465178563044205,
+    "density_fe_correlation": 0.017274835960003888,
+    "density_vol_per_atom_loglog_slope": -0.9694274931342439,
+    "metals_denser_than_insulators": true,
+    "n_high_outliers": 558,
+    "n_low_outliers": 0,
+    "top_dense_element": "Pu"
+  }
+}
