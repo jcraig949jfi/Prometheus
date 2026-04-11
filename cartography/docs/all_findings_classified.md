@@ -600,7 +600,19 @@ PDG mean ORC=+0.470 (near-clique, 83% density). FLINT mean ORC=-0.251 (sparse bo
 7 matching strategies tested. Best: degree-2 exact conductor=|disc| gives r=+0.045 (z=1.7, not significant). 97% of EC have Sha=1, crushing dynamic range. The expected r~0.04-0.10 is in range but power insufficient.
 
 ### 154. OEIS 198× More Recurrent Than Hecke Eigenvalues (OEIS-EC-BM)
-OEIS: 19.8% truly recurrent (BM order < n/2). EC Hecke: 0.1%. Rate ratio = **198×**. Hecke eigenvalues behave as pseudorandom under BM — zero linear recurrence structure. Mann-Whitney p=1.2×10⁻⁵⁶. The median BM order metric (expected ratio 1.5-2.3) is uninformative; the recurrence RATE is the sharp discriminator.
+Rate ratio 198×. Hecke = pseudorandom under BM. Recurrence RATE is the sharp discriminator.
+
+### 155. Lean-OEIS Community Structure: Cosine 0.983 at Macro Level (Lean-OEIS-comm)
+Lean Q=0.350 (1,774 communities). OEIS Q=0.631 (35,328 communities). 4D structural fingerprint cosine=0.983. Both are scale-free knowledge graphs with high clustering (0.37, 0.49). Differences quantitative (size, sparsity), not qualitative — same organizational archetype.
+
+### 156. Fricke vs PDG Parity: Null Across All 5 Classifications (Fricke-PDG)
+Fricke 48.6%/51.4% vs P, C, baryon mod 2, spin class, CP parity. All p>0.16. Synthetic MI ~0.0001 bits. The Fricke sign does NOT match any fundamental physics symmetry split.
+
+### 157. Hecke-Theta Resonance: Null, Mean cos=-0.004 (Hecke-Theta)
+17,314 EC × 15,000 lattices. Mean cosine=-0.004 (null: -0.004±0.002). Max-per-EC = 0.412 = pure dimensional artifact. EC Hecke vectors and lattice theta at prime indices: zero structured correlation.
+
+### 158. Kissing vs Mass Ratios KL=0.029: Shared Heavy Tail, Not Deep (Kiss-Mass)
+Symmetric KL=0.029 (below expected 0.3-0.6) but driven by both distributions being extreme-heavy-tailed. KS=0.71 (shapes differ significantly). Both have outlier-dominated structure (Leech/top-quark), making them superficially similar. Null: random uniform KL=23.3 (unambiguously different from either).
 
 ---
 
@@ -966,7 +978,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*279 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*283 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

@@ -1,0 +1,191 @@
+{
+  "experiment": "ChatGPT #20: Fricke Sign vs PDG Parity Patterns",
+  "fricke": {
+    "counts": {
+      "-1": 27641,
+      "1": 26138
+    },
+    "n_total": 53779,
+    "distribution": {
+      "1": 0.4860261440339166,
+      "-1": 0.5139738559660835
+    },
+    "fraction_plus1": 0.4860261440339166,
+    "fraction_minus1": 0.5139738559660835
+  },
+  "pdg_particles_total": 226,
+  "classifications": {
+    "intrinsic_parity_P": {
+      "n_particles": 139,
+      "counts": {
+        "-1": 85,
+        "1": 54
+      },
+      "distribution": {
+        "-1": 0.6115107913669064,
+        "1": 0.38848920863309355
+      },
+      "distributional_comparison": {
+        "jsd_bits": 0.006984297798110904,
+        "H_fricke": 0.9994365004031449,
+        "H_pdg": 0.9638176576980978,
+        "fricke_dist": {
+          "1": 0.4860261440339166,
+          "-1": 0.5139738559660835
+        },
+        "pdg_dist": {
+          "-1": 0.6115107913669064,
+          "1": 0.38848920863309355
+        }
+      },
+      "synthetic_mi_test": {
+        "mi_observed_bits": 0.00013675950896064725,
+        "mi_null_mean": 7.350790406622489e-05,
+        "mi_null_std": 0.00010308093654552173,
+        "mi_null_p95": 0.0002811616323765481,
+        "p_value": 0.1765,
+        "n_permutations": 10000,
+        "n_synthetic_samples": 10000
+      }
+    },
+    "charge_parity_C": {
+      "n_particles": 83,
+      "counts": {
+        "-1": 31,
+        "1": 52
+      },
+      "distribution": {
+        "-1": 0.37349397590361444,
+        "1": 0.6265060240963856
+      },
+      "distributional_comparison": {
+        "jsd_bits": 0.014469030209535508,
+        "H_fricke": 0.9994365004031449,
+        "H_pdg": 0.9533171305598173,
+        "fricke_dist": {
+          "1": 0.4860261440339166,
+          "-1": 0.5139738559660835
+        },
+        "pdg_dist": {
+          "-1": 0.37349397590361444,
+          "1": 0.6265060240963856
+        }
+      },
+      "synthetic_mi_test": {
+        "mi_observed_bits": 0.00014689664133521376,
+        "mi_null_mean": 7.321869438128086e-05,
+        "mi_null_std": 0.00010183464278261345,
+        "mi_null_p95": 0.00027858901132027467,
+        "p_value": 0.1633,
+        "n_permutations": 10000,
+        "n_synthetic_samples": 10000
+      }
+    },
+    "baryon_number_mod2": {
+      "n_particles": 226,
+      "counts": {
+        "0": 138,
+        "1": 88
+      },
+      "distribution": {
+        "1": 0.6106194690265486,
+        "-1": 0.3893805309734513
+      },
+      "distributional_comparison": {
+        "jsd_bits": 0.011334255904264949,
+        "H_fricke": 0.9994365004031449,
+        "H_pdg": 0.9643986196033759,
+        "fricke_dist": {
+          "1": 0.4860261440339166,
+          "-1": 0.5139738559660835
+        },
+        "pdg_dist": {
+          "1": 0.6106194690265486,
+          "-1": 0.3893805309734513
+        }
+      },
+      "synthetic_mi_test": {
+        "mi_observed_bits": 0.00011477254681377131,
+        "mi_null_mean": 7.356364579854711e-05,
+        "mi_null_std": 0.00010296949149000722,
+        "mi_null_p95": 0.00028751679878165,
+        "p_value": 0.2177,
+        "n_permutations": 10000,
+        "n_synthetic_samples": 10000
+      }
+    },
+    "spin_class": {
+      "n_particles": 220,
+      "mapping": "integer->+1, half_integer->-1",
+      "counts": {
+        "integer": 129,
+        "half_integer": 91
+      },
+      "distribution": {
+        "1": 0.5863636363636363,
+        "-1": 0.41363636363636364
+      },
+      "distributional_comparison": {
+        "jsd_bits": 0.007313131022381354,
+        "H_fricke": 0.9994365004031449,
+        "H_pdg": 0.9783704943988363,
+        "fricke_dist": {
+          "1": 0.4860261440339166,
+          "-1": 0.5139738559660835
+        },
+        "pdg_dist": {
+          "1": 0.5863636363636363,
+          "-1": 0.41363636363636364
+        }
+      },
+      "synthetic_mi_test": {
+        "mi_observed_bits": 8.653708282213655e-05,
+        "mi_null_mean": 7.33092981224471e-05,
+        "mi_null_std": 0.00010265785157008973,
+        "mi_null_p95": 0.0002846581587158852,
+        "p_value": 0.2801,
+        "n_permutations": 10000,
+        "n_synthetic_samples": 10000
+      }
+    },
+    "CP_parity": {
+      "n_particles": 83,
+      "counts": {
+        "1": 61,
+        "-1": 22
+      },
+      "distribution": {
+        "1": 0.7349397590361446,
+        "-1": 0.26506024096385544
+      },
+      "distributional_comparison": {
+        "jsd_bits": 0.04762555430058163,
+        "H_fricke": 0.9994365004031449,
+        "H_pdg": 0.8342867421739537,
+        "fricke_dist": {
+          "1": 0.4860261440339166,
+          "-1": 0.5139738559660835
+        },
+        "pdg_dist": {
+          "1": 0.7349397590361446,
+          "-1": 0.26506024096385544
+        }
+      },
+      "synthetic_mi_test": {
+        "mi_observed_bits": 0.0001229129597080181,
+        "mi_null_mean": 7.260004634196499e-05,
+        "mi_null_std": 0.00010271680422995092,
+        "mi_null_p95": 0.00027380697076378243,
+        "p_value": 0.1967,
+        "n_permutations": 10000,
+        "n_synthetic_samples": 10000
+      }
+    }
+  },
+  "summary": {
+    "verdict": "NULL",
+    "max_jsd_bits": 0.04762555430058163,
+    "max_jsd_classification": "CP_parity",
+    "interpretation": "No PDG parity classification shows significant mutual information with the Fricke eigenvalue distribution. The Fricke +1/-1 split (48.6%/51.4%) does not match any fundamental physics symmetry split. All synthetic MI values are consistent with the permutation null."
+  }
+}

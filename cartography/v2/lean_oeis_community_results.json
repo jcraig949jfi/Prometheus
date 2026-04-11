@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "experiment": "ChatGPT #18: Lean Mathlib vs OEIS Community Structure Overlap",
+    "timestamp": "2026-04-11T05:40:56",
+    "computation_time_s": 34.8,
+    "lean_source": "F:\\Prometheus\\cartography\\mathlib\\mathlib4_source",
+    "oeis_source": "F:\\Prometheus\\cartography\\oeis\\data\\oeis_crossrefs.jsonl"
+  },
+  "graph_summaries": {
+    "lean": {
+      "n_nodes": 8592,
+      "n_directed_edges": 34320,
+      "mean_degree": 7.984,
+      "max_degree": 7941,
+      "global_power_law_alpha": 1.7174,
+      "clustering_coefficient": 0.37176
+    },
+    "oeis": {
+      "n_nodes": 347655,
+      "n_directed_edges": 1588669,
+      "mean_degree": 7.34,
+      "max_degree": 11547,
+      "global_power_law_alpha": 2.3125,
+      "clustering_coefficient": 0.48793
+    }
+  },
+  "community_detection": {
+    "lean": {
+      "method": "Louvain (simple)",
+      "n_communities": 1774,
+      "modularity_Q": 0.35023,
+      "top_10_sizes": [
+        665,
+        614,
+        377,
+        363,
+        336,
+        62,
+        55,
+        50,
+        37,
+        35
+      ],
+      "mean_community_size": 4.84,
+      "median_community_size": 3,
+      "gini_coefficient": 0.4682
+    },
+    "oeis": {
+      "method": "label propagation",
+      "n_communities": 35328,
+      "modularity_Q": 0.63112,
+      "modularity_note": "Estimated from 50K node subsample",
+      "top_10_sizes": [
+        9334,
+        5854,
+        2824,
+        2630,
+        2248,
+        2164,
+        2133,
+        1868,
+        1647,
+        1530
+      ],
+      "mean_community_size": 9.84,
+      "median_community_size": 4,
+      "gini_coefficient": 0.5997
+    }
+  },
+  "size_distribution_comparison": {
+    "ks_test_fractional_sizes": {
+      "D_statistic": 0.98877,
+      "p_value": 0.0,
+      "interpretation": "significant difference"
+    },
+    "ks_test_log_sizes": {
+      "D_statistic": 0.36328,
+      "p_value": 3.071228e-200,
+      "interpretation": "significant difference"
+    }
+  },
+  "within_community_degree_shape": {
+    "lean": {
+      "n_communities_fit": 16,
+      "mean_alpha": 1.6592,
+      "std_alpha": 0.1555
+    },
+    "oeis": {
+      "n_communities_fit": 2291,
+      "mean_alpha": 1.785,
+      "std_alpha": 0.3833
+    },
+    "ks_test_alphas": {
+      "D_statistic": 0.46173,
+      "p_value": 0.001277644
+    }
+  },
+  "structural_similarity": {
+    "lean_vector": {
+      "community_density": 0.206471,
+      "modularity": 0.35023,
+      "log10_mean_community_size": 0.6851,
+      "clustering_coefficient": 0.37176
+    },
+    "oeis_vector": {
+      "community_density": 0.101618,
+      "modularity": 0.63112,
+      "log10_mean_community_size": 0.993,
+      "clustering_coefficient": 0.48793
+    },
+    "cosine_similarity": 0.98253,
+    "euclidean_distance": 0.44517
+  },
+  "interpretation": "Both graphs are knowledge graphs with scale-free degree distributions (Lean alpha~1.72, OEIS alpha~2.31). Community size distributions differ significantly at the raw level (KS D=0.989) but share similar log-scale shape (log KS D=0.363). Structural similarity cosine=0.983 indicates high overlap in graph-level community structure. Both are knowledge graphs but Lean (formal proof imports) is much smaller and more hierarchical than OEIS (sequence cross-references). Gini coefficients (Lean=0.468, OEIS=0.600) measure community size inequality — different inequality structures."
+}
