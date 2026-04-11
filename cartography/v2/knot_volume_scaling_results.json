@@ -1,0 +1,124 @@
+{
+  "problem": "NF17",
+  "title": "Hyperbolic Volume Scaling Law (determinant proxy)",
+  "method": "log-log OLS regression: log|det| ~ alpha * log(crossing_number)",
+  "note": "No explicit volume field; |det| used as proxy for hyperbolic volume",
+  "global_fit": {
+    "alpha": 3.808131211722994,
+    "intercept": -4.828558474981468,
+    "R2": 0.1240333258251561,
+    "p_value": 1.1685511058959288e-87,
+    "std_err": 0.18554233436835985,
+    "n": 2977
+  },
+  "type_fits": {
+    "alternating": {
+      "alpha": 5.6058392628806475,
+      "intercept": -8.795094594765905,
+      "R2": 0.22373353349857059,
+      "p_value": 5.139420102442209e-93,
+      "std_err": 0.2568290150653369,
+      "n": 1655
+    },
+    "non-alternating": {
+      "alpha": 4.975760092772152,
+      "intercept": -8.41828571100681,
+      "R2": 0.030885817196829694,
+      "p_value": 6.8228406210469785e-09,
+      "std_err": 0.8516724984353977,
+      "n": 1073
+    },
+    "classic": {
+      "alpha": 2.8276722616452346,
+      "intercept": -2.6947189551609005,
+      "R2": 0.2529851964637444,
+      "p_value": 2.2633656870548475e-17,
+      "std_err": 0.30917021260778504,
+      "n": 249
+    }
+  },
+  "median_fit_by_crossing_number": {
+    "alpha": 2.745676073300594,
+    "intercept": -2.3095566326569377,
+    "R2": 0.9577582378381932,
+    "p_value": 8.857260851356014e-07,
+    "std_err": 0.20386720606349032,
+    "n": 10
+  },
+  "median_type_fits": {
+    "alternating+classic": {
+      "alpha": 2.9017632490794223,
+      "intercept": -2.554754434458589,
+      "R2": 0.9381386093557795,
+      "p_value": 4.107489587322064e-06,
+      "std_err": 0.263447036141814,
+      "n": 10
+    }
+  },
+  "median_table": {
+    "3": {
+      "median_det": 3.0,
+      "mean_det": 3.0,
+      "count": 1
+    },
+    "4": {
+      "median_det": 5.0,
+      "mean_det": 5.0,
+      "count": 1
+    },
+    "5": {
+      "median_det": 6.0,
+      "mean_det": 6.0,
+      "count": 2
+    },
+    "6": {
+      "median_det": 11.0,
+      "mean_det": 11.0,
+      "count": 3
+    },
+    "7": {
+      "median_det": 15.0,
+      "mean_det": 14.714285714285714,
+      "count": 7
+    },
+    "8": {
+      "median_det": 25.0,
+      "mean_det": 23.952380952380953,
+      "count": 21
+    },
+    "9": {
+      "median_det": 39.0,
+      "mean_det": 37.36734693877551,
+      "count": 49
+    },
+    "10": {
+      "median_det": 57.0,
+      "mean_det": 56.515151515151516,
+      "count": 165
+    },
+    "11": {
+      "median_det": 89.0,
+      "mean_det": 88.51086956521739,
+      "count": 552
+    },
+    "12": {
+      "median_det": 129.0,
+      "mean_det": 134.75551470588235,
+      "count": 2176
+    }
+  },
+  "slope_comparison_test": {
+    "alpha_alternating": 5.6058392628806475,
+    "alpha_non_alternating": 4.975760092772152,
+    "delta_alpha": 0.6300791701084956,
+    "t_stat": 0.7083086853353787,
+    "df": 2724,
+    "p_value": 0.4788141892661586,
+    "different_at_0.05": false
+  },
+  "summary": {
+    "scaling_exponent_alpha": 3.808131211722994,
+    "R2": 0.1240333258251561,
+    "alternating_vs_nonalternating_different": false
+  }
+}
