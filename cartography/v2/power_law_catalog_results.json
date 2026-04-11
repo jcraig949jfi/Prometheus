@@ -1,0 +1,964 @@
+{
+  "metadata": {
+    "title": "Cross-Domain Power Law Exponent Catalog",
+    "date": "2026-04-11T01:57:08",
+    "n_measurements": 28,
+    "n_domains": 10,
+    "domains": [
+      "Elliptic Curves",
+      "Genus-2 Curves",
+      "Knot Theory",
+      "Knowledge Graph",
+      "Lattices",
+      "Modular Forms",
+      "Number Fields",
+      "OEIS Sequences",
+      "Physics Graph",
+      "Software Graph"
+    ]
+  },
+  "catalog": [
+    {
+      "domain": "Knowledge Graph",
+      "measurement": "OEIS graph spectral dimension (walk)",
+      "exponent": 0.198,
+      "r_squared": null,
+      "n_datapoints": 347655,
+      "source_file": "oeis_graph_structure_results.json",
+      "notes": "From random walk return probability scaling"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "Faltings height vs conductor",
+      "exponent": 0.2396,
+      "r_squared": 0.066,
+      "n_datapoints": 31073,
+      "source_file": "ec_faltings_results.json",
+      "notes": "Logarithmic scaling: h_F ~ 0.24*log(N)"
+    },
+    {
+      "domain": "Lattices",
+      "measurement": "theta coeff growth (dim 3, measured)",
+      "exponent": 0.274,
+      "r_squared": 0.166,
+      "n_datapoints": 36585,
+      "source_file": "lattice_theta_growth_results.json",
+      "notes": "Theory: alpha=0.5; measured 0.274 \u2014 systematic deficit"
+    },
+    {
+      "domain": "Lattices",
+      "measurement": "class number vs det correlation (dim 3)",
+      "exponent": 0.44,
+      "r_squared": null,
+      "n_datapoints": 36585,
+      "source_file": "lattice_class_number_results.json",
+      "notes": "Pearson r = 0.44 for log(det) vs log(class_number)"
+    },
+    {
+      "domain": "Modular Forms",
+      "measurement": "Fourier coeff growth rate (mean alpha)",
+      "exponent": 0.456,
+      "r_squared": null,
+      "n_datapoints": 17314,
+      "source_file": "fourier_growth_rate_results.json",
+      "notes": "Ramanujan-Petersson bound is alpha=0.5; deficit = 0.044"
+    },
+    {
+      "domain": "Modular Forms",
+      "measurement": "Fourier coeff growth rate (CM)",
+      "exponent": 0.493,
+      "r_squared": null,
+      "n_datapoints": 116,
+      "source_file": "fourier_growth_rate_results.json",
+      "notes": "CM forms closer to Ramanujan bound"
+    },
+    {
+      "domain": "Genus-2 Curves",
+      "measurement": "disc-conductor scaling",
+      "exponent": 0.572,
+      "r_squared": 0.518,
+      "n_datapoints": 66158,
+      "source_file": "genus2_disc_stats_results.json",
+      "notes": "log|disc| ~ 0.572*log(cond); much flatter than EC"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "regulator tail exponent (rank 1)",
+      "exponent": 0.686,
+      "r_squared": 0.785,
+      "n_datapoints": 14783,
+      "source_file": "ec_regulator_results.json",
+      "notes": "CDF power law tail slope"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "regulator tail exponent (rank 2)",
+      "exponent": 1.046,
+      "r_squared": 0.785,
+      "n_datapoints": 691,
+      "source_file": "ec_regulator_results.json",
+      "notes": "Steeper tail for rank 2"
+    },
+    {
+      "domain": "Genus-2 Curves",
+      "measurement": "cumulative count vs conductor",
+      "exponent": 1.123,
+      "r_squared": 0.917,
+      "n_datapoints": 66158,
+      "source_file": "conductor_comparison_results.json",
+      "notes": "N(cond<=X) ~ X^1.123; sub-linear growth"
+    },
+    {
+      "domain": "Physics Graph",
+      "measurement": "PDG decay spectral dimension",
+      "exponent": 1.188,
+      "r_squared": null,
+      "n_datapoints": 226,
+      "source_file": "decay_spectral_dimension_results.json",
+      "notes": "Sub-diffusive; chain-like structure"
+    },
+    {
+      "domain": "Software Graph",
+      "measurement": "FLINT call graph degree",
+      "exponent": 1.257,
+      "r_squared": 0.835,
+      "n_datapoints": 6804,
+      "source_file": "flint_call_graph_results.json",
+      "notes": "Flat, dense hubs \u2014 algorithmic library"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "cumulative count vs conductor",
+      "exponent": 1.271,
+      "r_squared": 0.987,
+      "n_datapoints": 31073,
+      "source_file": "conductor_comparison_results.json",
+      "notes": "N(cond<=X) ~ X^1.271; denser than genus-2"
+    },
+    {
+      "domain": "Knowledge Graph",
+      "measurement": "Fungrim formula clique size (MLE)",
+      "exponent": 1.432,
+      "r_squared": null,
+      "n_datapoints": 57003,
+      "source_file": "fungrim_clique_power_law_results.json",
+      "notes": "Clique size distribution"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "naive height vs conductor",
+      "exponent": 1.4426,
+      "r_squared": 0.055,
+      "n_datapoints": 31073,
+      "source_file": "ec_height_scaling_results.json",
+      "notes": "Weak R\u00b2 \u2014 height has large scatter"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "Tamagawa product distribution",
+      "exponent": 1.4548,
+      "r_squared": null,
+      "n_datapoints": 31073,
+      "source_file": "ec_tamagawa_results.json",
+      "notes": "MLE power law alpha on product distribution"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "modular degree vs conductor",
+      "exponent": 1.4669,
+      "r_squared": 0.381,
+      "n_datapoints": 31073,
+      "source_file": "ec_modular_degree_results.json",
+      "notes": "log(deg) ~ 1.467*log(N); consistent with deg ~ N^{1+eps}"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "min(conductor) vs rank",
+      "exponent": 1.783,
+      "r_squared": 0.967,
+      "n_datapoints": 3,
+      "source_file": "ec_conductor_rank_results.json",
+      "notes": "log(min_N) ~ 1.783*rank; exponential barrier per rank step"
+    },
+    {
+      "domain": "Number Fields",
+      "measurement": "min|disc| vs degree",
+      "exponent": 2.042,
+      "r_squared": 0.996,
+      "n_datapoints": 5,
+      "source_file": "nf_disc_scaling_results.json",
+      "notes": "Minkowski-like: min|disc| ~ exp(2.042*degree)"
+    },
+    {
+      "domain": "Software Graph",
+      "measurement": "Lean/Mathlib import graph degree",
+      "exponent": 2.1746,
+      "r_squared": 0.895,
+      "n_datapoints": 8592,
+      "source_file": "lean_flint_mi_results.json",
+      "notes": "Hierarchical \u2014 formal proof library"
+    },
+    {
+      "domain": "OEIS Sequences",
+      "measurement": "polynomial growth median power",
+      "exponent": 2.184,
+      "r_squared": null,
+      "n_datapoints": 3051,
+      "source_file": "oeis_growth_taxonomy_results.json",
+      "notes": "Median power among sequences classified as polynomial growth"
+    },
+    {
+      "domain": "Knot Theory",
+      "measurement": "Jones max coeff vs crossing (median)",
+      "exponent": 2.31,
+      "r_squared": 0.929,
+      "n_datapoints": 10,
+      "source_file": "knot_jones_growth_results.json",
+      "notes": "Power law fit; exponential actually fits better (R\u00b2=0.99)"
+    },
+    {
+      "domain": "Knowledge Graph",
+      "measurement": "OEIS crossref degree (d_min=5)",
+      "exponent": 2.3125,
+      "r_squared": 0.9,
+      "n_datapoints": 347655,
+      "source_file": "oeis_graph_structure_results.json",
+      "notes": "Near-Lean hierarchical"
+    },
+    {
+      "domain": "Knowledge Graph",
+      "measurement": "Fungrim formula clique size (OLS)",
+      "exponent": 2.333,
+      "r_squared": 0.494,
+      "n_datapoints": 57003,
+      "source_file": "fungrim_clique_power_law_results.json",
+      "notes": "Binned OLS fit"
+    },
+    {
+      "domain": "Knowledge Graph",
+      "measurement": "OEIS crossref degree (d_min=10)",
+      "exponent": 2.6288,
+      "r_squared": null,
+      "n_datapoints": 347655,
+      "source_file": "oeis_graph_structure_results.json",
+      "notes": "Steeper tail"
+    },
+    {
+      "domain": "Knot Theory",
+      "measurement": "median |det| vs crossing number",
+      "exponent": 2.746,
+      "r_squared": 0.958,
+      "n_datapoints": 10,
+      "source_file": "knot_volume_scaling_results.json",
+      "notes": "log|det| ~ 2.746*log(c); volume proxy scaling"
+    },
+    {
+      "domain": "Elliptic Curves",
+      "measurement": "disc-conductor scaling",
+      "exponent": 2.87,
+      "r_squared": 0.072,
+      "n_datapoints": 31073,
+      "source_file": "genus2_disc_stats_results.json",
+      "notes": "EC discriminant ~ conductor^2.87; weak R\u00b2 due to spread"
+    },
+    {
+      "domain": "Knot Theory",
+      "measurement": "knot count exponential base",
+      "exponent": 4.512,
+      "r_squared": 0.9999,
+      "n_datapoints": 11,
+      "source_file": "knot_count_growth_results.json",
+      "notes": "N(c) ~ 4.512^c; exponential, not power law \u2014 included for completeness"
+    }
+  ],
+  "clustering": {
+    "n_exponents": 28,
+    "range": [
+      0.198,
+      4.512
+    ],
+    "mean": 1.5334,
+    "median": 1.4373,
+    "std": 0.9848,
+    "clusters_within_015": [
+      {
+        "center": 0.2372,
+        "members": [
+          0.198,
+          0.2396,
+          0.274
+        ],
+        "count": 3,
+        "spread": 0.0311
+      },
+      {
+        "center": 0.4902,
+        "members": [
+          0.44,
+          0.456,
+          0.493,
+          0.572
+        ],
+        "count": 4,
+        "spread": 0.051
+      },
+      {
+        "center": 1.119,
+        "members": [
+          1.046,
+          1.123,
+          1.188
+        ],
+        "count": 3,
+        "spread": 0.058
+      },
+      {
+        "center": 1.264,
+        "members": [
+          1.257,
+          1.271
+        ],
+        "count": 2,
+        "spread": 0.007
+      },
+      {
+        "center": 1.4491,
+        "members": [
+          1.432,
+          1.4426,
+          1.4548,
+          1.4669
+        ],
+        "count": 4,
+        "spread": 0.0131
+      },
+      {
+        "center": 2.1335,
+        "members": [
+          2.042,
+          2.1746,
+          2.184
+        ],
+        "count": 3,
+        "spread": 0.0648
+      },
+      {
+        "center": 2.3185,
+        "members": [
+          2.31,
+          2.3125,
+          2.333
+        ],
+        "count": 3,
+        "spread": 0.0103
+      },
+      {
+        "center": 2.6874,
+        "members": [
+          2.6288,
+          2.746
+        ],
+        "count": 2,
+        "spread": 0.0586
+      }
+    ],
+    "prominent_quarter_bins": [
+      {
+        "bin_center": 2.25,
+        "count": 5
+      },
+      {
+        "bin_center": 0.5,
+        "count": 4
+      },
+      {
+        "bin_center": 1.5,
+        "count": 4
+      },
+      {
+        "bin_center": 0.25,
+        "count": 3
+      },
+      {
+        "bin_center": 1.25,
+        "count": 3
+      },
+      {
+        "bin_center": 2.75,
+        "count": 3
+      },
+      {
+        "bin_center": 1.0,
+        "count": 2
+      },
+      {
+        "bin_center": 0.75,
+        "count": 1
+      }
+    ]
+  },
+  "universality": {
+    "proximity_to_known_universals": [
+      {
+        "measurement": "OEIS crossref degree (d_min=5)",
+        "domain": "Knowledge Graph",
+        "exponent": 2.3125,
+        "near_universal": "Random graph (ER)",
+        "universal_value": 2.5,
+        "gap": 0.1875
+      },
+      {
+        "measurement": "OEIS crossref degree (d_min=10)",
+        "domain": "Knowledge Graph",
+        "exponent": 2.6288,
+        "near_universal": "Random graph (ER)",
+        "universal_value": 2.5,
+        "gap": 0.1288
+      },
+      {
+        "measurement": "Lean/Mathlib import graph degree",
+        "domain": "Software Graph",
+        "exponent": 2.1746,
+        "near_universal": "Critical percolation (2D)",
+        "universal_value": 2.055,
+        "gap": 0.1196
+      },
+      {
+        "measurement": "Lean/Mathlib import graph degree",
+        "domain": "Software Graph",
+        "exponent": 2.1746,
+        "near_universal": "Configuration model",
+        "universal_value": 2.0,
+        "gap": 0.1746
+      },
+      {
+        "measurement": "Lean/Mathlib import graph degree",
+        "domain": "Software Graph",
+        "exponent": 2.1746,
+        "near_universal": "Price model (citation)",
+        "universal_value": 2.0,
+        "gap": 0.1746
+      },
+      {
+        "measurement": "Fungrim formula clique size (OLS)",
+        "domain": "Knowledge Graph",
+        "exponent": 2.333,
+        "near_universal": "Random graph (ER)",
+        "universal_value": 2.5,
+        "gap": 0.167
+      },
+      {
+        "measurement": "Faltings height vs conductor",
+        "domain": "Elliptic Curves",
+        "exponent": 0.2396,
+        "near_universal": "Ising (2D, magnetization)",
+        "universal_value": 0.125,
+        "gap": 0.1146
+      },
+      {
+        "measurement": "regulator tail exponent (rank 2)",
+        "domain": "Elliptic Curves",
+        "exponent": 1.046,
+        "near_universal": "Zipf",
+        "universal_value": 1.0,
+        "gap": 0.046
+      },
+      {
+        "measurement": "disc-conductor scaling",
+        "domain": "Elliptic Curves",
+        "exponent": 2.87,
+        "near_universal": "Barabasi-Albert",
+        "universal_value": 3.0,
+        "gap": 0.13
+      },
+      {
+        "measurement": "min|disc| vs degree",
+        "domain": "Number Fields",
+        "exponent": 2.042,
+        "near_universal": "Critical percolation (2D)",
+        "universal_value": 2.055,
+        "gap": 0.013
+      },
+      {
+        "measurement": "min|disc| vs degree",
+        "domain": "Number Fields",
+        "exponent": 2.042,
+        "near_universal": "Configuration model",
+        "universal_value": 2.0,
+        "gap": 0.042
+      },
+      {
+        "measurement": "min|disc| vs degree",
+        "domain": "Number Fields",
+        "exponent": 2.042,
+        "near_universal": "Price model (citation)",
+        "universal_value": 2.0,
+        "gap": 0.042
+      },
+      {
+        "measurement": "cumulative count vs conductor",
+        "domain": "Genus-2 Curves",
+        "exponent": 1.123,
+        "near_universal": "Zipf",
+        "universal_value": 1.0,
+        "gap": 0.123
+      },
+      {
+        "measurement": "Jones max coeff vs crossing (median)",
+        "domain": "Knot Theory",
+        "exponent": 2.31,
+        "near_universal": "Random graph (ER)",
+        "universal_value": 2.5,
+        "gap": 0.19
+      },
+      {
+        "measurement": "theta coeff growth (dim 3, measured)",
+        "domain": "Lattices",
+        "exponent": 0.274,
+        "near_universal": "Ising (2D, magnetization)",
+        "universal_value": 0.125,
+        "gap": 0.149
+      },
+      {
+        "measurement": "polynomial growth median power",
+        "domain": "OEIS Sequences",
+        "exponent": 2.184,
+        "near_universal": "Critical percolation (2D)",
+        "universal_value": 2.055,
+        "gap": 0.129
+      },
+      {
+        "measurement": "polynomial growth median power",
+        "domain": "OEIS Sequences",
+        "exponent": 2.184,
+        "near_universal": "Configuration model",
+        "universal_value": 2.0,
+        "gap": 0.184
+      },
+      {
+        "measurement": "polynomial growth median power",
+        "domain": "OEIS Sequences",
+        "exponent": 2.184,
+        "near_universal": "Price model (citation)",
+        "universal_value": 2.0,
+        "gap": 0.184
+      },
+      {
+        "measurement": "OEIS graph spectral dimension (walk)",
+        "domain": "Knowledge Graph",
+        "exponent": 0.198,
+        "near_universal": "Ising (2D, magnetization)",
+        "universal_value": 0.125,
+        "gap": 0.073
+      },
+      {
+        "measurement": "PDG decay spectral dimension",
+        "domain": "Physics Graph",
+        "exponent": 1.188,
+        "near_universal": "Zipf",
+        "universal_value": 1.0,
+        "gap": 0.188
+      }
+    ],
+    "cross_domain_matches": [
+      {
+        "pair": [
+          "Knowledge Graph: OEIS crossref degree (d_min=5)",
+          "Knot Theory: Jones max coeff vs crossing (median)"
+        ],
+        "exponents": [
+          2.3125,
+          2.31
+        ],
+        "gap": 0.0025
+      },
+      {
+        "pair": [
+          "Software Graph: FLINT call graph degree",
+          "Elliptic Curves: cumulative count vs conductor"
+        ],
+        "exponents": [
+          1.257,
+          1.271
+        ],
+        "gap": 0.014
+      },
+      {
+        "pair": [
+          "Software Graph: FLINT call graph degree",
+          "Physics Graph: PDG decay spectral dimension"
+        ],
+        "exponents": [
+          1.257,
+          1.188
+        ],
+        "gap": 0.069
+      },
+      {
+        "pair": [
+          "Software Graph: Lean/Mathlib import graph degree",
+          "OEIS Sequences: polynomial growth median power"
+        ],
+        "exponents": [
+          2.1746,
+          2.184
+        ],
+        "gap": 0.0094
+      },
+      {
+        "pair": [
+          "Knowledge Graph: Fungrim formula clique size (MLE)",
+          "Elliptic Curves: Tamagawa product distribution"
+        ],
+        "exponents": [
+          1.432,
+          1.4548
+        ],
+        "gap": 0.0228
+      },
+      {
+        "pair": [
+          "Knowledge Graph: Fungrim formula clique size (MLE)",
+          "Elliptic Curves: modular degree vs conductor"
+        ],
+        "exponents": [
+          1.432,
+          1.4669
+        ],
+        "gap": 0.0349
+      },
+      {
+        "pair": [
+          "Knowledge Graph: Fungrim formula clique size (MLE)",
+          "Elliptic Curves: naive height vs conductor"
+        ],
+        "exponents": [
+          1.432,
+          1.4426
+        ],
+        "gap": 0.0106
+      },
+      {
+        "pair": [
+          "Knowledge Graph: Fungrim formula clique size (OLS)",
+          "Knot Theory: Jones max coeff vs crossing (median)"
+        ],
+        "exponents": [
+          2.333,
+          2.31
+        ],
+        "gap": 0.023
+      },
+      {
+        "pair": [
+          "Elliptic Curves: Faltings height vs conductor",
+          "Lattices: theta coeff growth (dim 3, measured)"
+        ],
+        "exponents": [
+          0.2396,
+          0.274
+        ],
+        "gap": 0.0344
+      },
+      {
+        "pair": [
+          "Elliptic Curves: Faltings height vs conductor",
+          "Knowledge Graph: OEIS graph spectral dimension (walk)"
+        ],
+        "exponents": [
+          0.2396,
+          0.198
+        ],
+        "gap": 0.0416
+      },
+      {
+        "pair": [
+          "Elliptic Curves: regulator tail exponent (rank 2)",
+          "Genus-2 Curves: cumulative count vs conductor"
+        ],
+        "exponents": [
+          1.046,
+          1.123
+        ],
+        "gap": 0.077
+      },
+      {
+        "pair": [
+          "Genus-2 Curves: disc-conductor scaling",
+          "Modular Forms: Fourier coeff growth rate (CM)"
+        ],
+        "exponents": [
+          0.572,
+          0.493
+        ],
+        "gap": 0.079
+      },
+      {
+        "pair": [
+          "Genus-2 Curves: cumulative count vs conductor",
+          "Physics Graph: PDG decay spectral dimension"
+        ],
+        "exponents": [
+          1.123,
+          1.188
+        ],
+        "gap": 0.065
+      },
+      {
+        "pair": [
+          "Elliptic Curves: cumulative count vs conductor",
+          "Physics Graph: PDG decay spectral dimension"
+        ],
+        "exponents": [
+          1.271,
+          1.188
+        ],
+        "gap": 0.083
+      },
+      {
+        "pair": [
+          "Modular Forms: Fourier coeff growth rate (mean alpha)",
+          "Lattices: class number vs det correlation (dim 3)"
+        ],
+        "exponents": [
+          0.456,
+          0.44
+        ],
+        "gap": 0.016
+      },
+      {
+        "pair": [
+          "Modular Forms: Fourier coeff growth rate (CM)",
+          "Lattices: class number vs det correlation (dim 3)"
+        ],
+        "exponents": [
+          0.493,
+          0.44
+        ],
+        "gap": 0.053
+      },
+      {
+        "pair": [
+          "Lattices: theta coeff growth (dim 3, measured)",
+          "Knowledge Graph: OEIS graph spectral dimension (walk)"
+        ],
+        "exponents": [
+          0.274,
+          0.198
+        ],
+        "gap": 0.076
+      }
+    ],
+    "assessment": "No strong evidence for universal mathematical power law constants. The exponents span a wide range (0.2 to 2.9) and cluster weakly. The strongest pattern is a cluster near alpha~1.4-1.5 spanning EC Tamagawa products, modular degree scaling, naive height scaling, and Fungrim clique sizes \u2014 but these arise from different mechanisms. Graph degree exponents (1.3-2.6) reflect network topology, not intrinsic arithmetic. The ~0.5 cluster (Fourier growth, genus-2 scaling, lattice theta) likely reflects underlying Ramanujan-type bounds (theoretical alpha=0.5 for weight-2 forms). Cross-domain coincidences exist but lack explanatory power \u2014 same exponent does not imply same mechanism."
+  },
+  "summary_table": [
+    {
+      "exponent": 0.198,
+      "domain": "Knowledge Graph",
+      "measurement": "OEIS graph spectral dimension (walk)",
+      "R2": null,
+      "N": 347655
+    },
+    {
+      "exponent": 0.2396,
+      "domain": "Elliptic Curves",
+      "measurement": "Faltings height vs conductor",
+      "R2": 0.066,
+      "N": 31073
+    },
+    {
+      "exponent": 0.274,
+      "domain": "Lattices",
+      "measurement": "theta coeff growth (dim 3, measured)",
+      "R2": 0.166,
+      "N": 36585
+    },
+    {
+      "exponent": 0.44,
+      "domain": "Lattices",
+      "measurement": "class number vs det correlation (dim 3)",
+      "R2": null,
+      "N": 36585
+    },
+    {
+      "exponent": 0.456,
+      "domain": "Modular Forms",
+      "measurement": "Fourier coeff growth rate (mean alpha)",
+      "R2": null,
+      "N": 17314
+    },
+    {
+      "exponent": 0.493,
+      "domain": "Modular Forms",
+      "measurement": "Fourier coeff growth rate (CM)",
+      "R2": null,
+      "N": 116
+    },
+    {
+      "exponent": 0.572,
+      "domain": "Genus-2 Curves",
+      "measurement": "disc-conductor scaling",
+      "R2": 0.518,
+      "N": 66158
+    },
+    {
+      "exponent": 0.686,
+      "domain": "Elliptic Curves",
+      "measurement": "regulator tail exponent (rank 1)",
+      "R2": 0.785,
+      "N": 14783
+    },
+    {
+      "exponent": 1.046,
+      "domain": "Elliptic Curves",
+      "measurement": "regulator tail exponent (rank 2)",
+      "R2": 0.785,
+      "N": 691
+    },
+    {
+      "exponent": 1.123,
+      "domain": "Genus-2 Curves",
+      "measurement": "cumulative count vs conductor",
+      "R2": 0.917,
+      "N": 66158
+    },
+    {
+      "exponent": 1.188,
+      "domain": "Physics Graph",
+      "measurement": "PDG decay spectral dimension",
+      "R2": null,
+      "N": 226
+    },
+    {
+      "exponent": 1.257,
+      "domain": "Software Graph",
+      "measurement": "FLINT call graph degree",
+      "R2": 0.835,
+      "N": 6804
+    },
+    {
+      "exponent": 1.271,
+      "domain": "Elliptic Curves",
+      "measurement": "cumulative count vs conductor",
+      "R2": 0.987,
+      "N": 31073
+    },
+    {
+      "exponent": 1.432,
+      "domain": "Knowledge Graph",
+      "measurement": "Fungrim formula clique size (MLE)",
+      "R2": null,
+      "N": 57003
+    },
+    {
+      "exponent": 1.4426,
+      "domain": "Elliptic Curves",
+      "measurement": "naive height vs conductor",
+      "R2": 0.055,
+      "N": 31073
+    },
+    {
+      "exponent": 1.4548,
+      "domain": "Elliptic Curves",
+      "measurement": "Tamagawa product distribution",
+      "R2": null,
+      "N": 31073
+    },
+    {
+      "exponent": 1.4669,
+      "domain": "Elliptic Curves",
+      "measurement": "modular degree vs conductor",
+      "R2": 0.381,
+      "N": 31073
+    },
+    {
+      "exponent": 1.783,
+      "domain": "Elliptic Curves",
+      "measurement": "min(conductor) vs rank",
+      "R2": 0.967,
+      "N": 3
+    },
+    {
+      "exponent": 2.042,
+      "domain": "Number Fields",
+      "measurement": "min|disc| vs degree",
+      "R2": 0.996,
+      "N": 5
+    },
+    {
+      "exponent": 2.1746,
+      "domain": "Software Graph",
+      "measurement": "Lean/Mathlib import graph degree",
+      "R2": 0.895,
+      "N": 8592
+    },
+    {
+      "exponent": 2.184,
+      "domain": "OEIS Sequences",
+      "measurement": "polynomial growth median power",
+      "R2": null,
+      "N": 3051
+    },
+    {
+      "exponent": 2.31,
+      "domain": "Knot Theory",
+      "measurement": "Jones max coeff vs crossing (median)",
+      "R2": 0.929,
+      "N": 10
+    },
+    {
+      "exponent": 2.3125,
+      "domain": "Knowledge Graph",
+      "measurement": "OEIS crossref degree (d_min=5)",
+      "R2": 0.9,
+      "N": 347655
+    },
+    {
+      "exponent": 2.333,
+      "domain": "Knowledge Graph",
+      "measurement": "Fungrim formula clique size (OLS)",
+      "R2": 0.494,
+      "N": 57003
+    },
+    {
+      "exponent": 2.6288,
+      "domain": "Knowledge Graph",
+      "measurement": "OEIS crossref degree (d_min=10)",
+      "R2": null,
+      "N": 347655
+    },
+    {
+      "exponent": 2.746,
+      "domain": "Knot Theory",
+      "measurement": "median |det| vs crossing number",
+      "R2": 0.958,
+      "N": 10
+    },
+    {
+      "exponent": 2.87,
+      "domain": "Elliptic Curves",
+      "measurement": "disc-conductor scaling",
+      "R2": 0.072,
+      "N": 31073
+    },
+    {
+      "exponent": 4.512,
+      "domain": "Knot Theory",
+      "measurement": "knot count exponential base",
+      "R2": 0.9999,
+      "N": 11
+    }
+  ],
+  "key_findings": [
+    "30 power law exponents compiled across 9 mathematical domains",
+    "Exponents span range [0.198, 4.512] with median ~1.4",
+    "CLUSTER 1 (alpha ~ 0.2-0.5): spectral dimensions, Fourier growth, Faltings height \u2014 'half-integer attractor' from analytic number theory bounds",
+    "CLUSTER 2 (alpha ~ 1.1-1.3): conductor growth, FLINT graph, genus-2 count \u2014 near-linear scaling in size/complexity measures",
+    "CLUSTER 3 (alpha ~ 1.4-1.5): EC Tamagawa, modular degree, naive height, Fungrim cliques \u2014 the most populated cluster, mechanism unclear",
+    "CLUSTER 4 (alpha ~ 2.0-2.3): OEIS graph, Lean graph, NF discriminant, Jones coefficients \u2014 'scale-free network' universality class",
+    "CLUSTER 5 (alpha ~ 2.7-2.9): knot volume, EC disc-conductor \u2014 geometric/algebraic complexity scaling",
+    "No single exponent appears as a universal constant across all domains",
+    "The ~1.45 cluster is most intriguing: spans Tamagawa (arithmetic), modular degree (analytic), height (geometric), and Fungrim (combinatorial)",
+    "Half-integer exponents (0.5, 1.0, 1.5, 2.0) are NOT preferentially populated \u2014 exponents are continuously distributed"
+  ]
+}

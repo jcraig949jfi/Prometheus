@@ -438,7 +438,16 @@ Lag-1 ACF mean = -0.174 (alternation). 12.3% period-2. 30% strongly alternating.
 31,073 curves. h ~ N^{1.44} but R²=0.055 (weak). Rank-2 median log(h)=5.20 vs rank-0=10.27 (higher rank = lower height). Height-Faltings correlation r=0.970. a₄ dominates 84% of heights, a₆ in 16%.
 
 ### 100. OEIS Benford: 73.5% Per-Sequence Compliant, Exponential 93.6% (OEIS-benford)
-333,237 terms. Aggregate KL=0.001278 (near-Benford). Per-sequence: 73.5% comply at α=0.05. Exponential sequences 93.6% compliant, constant 0%. Compliance is a monotone function of growth rate, exactly as Benford theory predicts.
+Aggregate KL=0.001278. Exponential 93.6%, constant 0%. Compliance = f(growth rate).
+
+### 101. Rank Simplifies Arithmetic, Requires Geometry: 11/14 Invariants Decrease (Rank-synth)
+Cross-domain synthesis across EC (10 invariants) and genus-2 (4 invariants). 79% decrease with rank (Faltings height, Szpiro ratio, j-height, modular degree, Sha, etc.). Two exceptions: I10 INCREASES (geometric prerequisite for rational points) and Faltings-conductor slope INCREASES. The partition is clean: rank simplifies arithmetic complexity but requires geometric complexity. Holds across 31K EC and 66K genus-2 curves with p-values often below 10⁻²⁰.
+
+### 102. Information Landscape: EC Richest, OEIS Most Structured (Info-landscape)
+11 datasets ranked. Richest (H × log N): EC (14.69), Knots (8.51), Genus-2 (8.13). Most BM-compressible: OEIS (0.530). Moment universality confirmed: M₄/M₂² determined by ST group. Pipeline bottleneck: H₃/H₁=1.49 expansion.
+
+### 103. Power Law Catalog: 28 Exponents, ~1.45 Cluster Is Intriguing (PL-catalog)
+28 exponents across 10 domains, range 0.198-4.512. Five clusters: ~0.24 (3), ~0.49 (4, Ramanujan-Petersson), ~1.45 (4, EC arithmetic — unexplained convergence of Tamagawa/degree/height/Fungrim), ~2.1 (3, scale-free networks), ~2.3 (3). No universal constant. Exponents are continuously distributed, not quantized.
 
 ---
 
@@ -804,7 +813,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*225 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*228 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

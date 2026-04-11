@@ -1,0 +1,625 @@
+{
+  "timestamp": "2026-04-11T06:00:59.622380+00:00",
+  "description": "Cross-domain information landscape map across 11 datasets",
+  "methodology": {
+    "shannon_entropy": "Primary distribution entropy from existing v2 analyses",
+    "bm_recurrence": "Berlekamp-Massey compressibility from F29_compressibility_hierarchy",
+    "effective_dimensionality": "PCA, spectral dimension, or parameter counts from individual analyses",
+    "modp_fingerprint_diversity": "Mod-p residue distribution analysis from individual analyses",
+    "spectral_gap": "k-NN fingerprint graph lambda_1 from F28_spectral_gap_universality",
+    "information_richness_score": "shannon_entropy * log10(n_objects) -- higher = richer",
+    "structure_score": "BM compressibility -- higher = more compressible = more structured"
+  },
+  "datasets": {
+    "EC": {
+      "full_name": "LMFDB Elliptic Curves",
+      "n_objects": 31073,
+      "shannon_entropy": {
+        "description": "Hecke eigenvalue distribution entropy (non-CM, 20-bin)",
+        "value_bits": 3.2706,
+        "cm_entropy_bits": 2.1748,
+        "fingerprint_entropy_bits": 8.6726
+      },
+      "bm_recurrence": {
+        "compressibility": 0.48048,
+        "mean_bm_order": 12.99,
+        "description": "BM on a_p sequences mod 101"
+      },
+      "effective_dimensionality": {
+        "description": "Not directly measured via PCA; rank prediction uses 14 features, RF accuracy 97.2%",
+        "n_features_used": 14,
+        "prediction_accuracy": 0.9720657089420743
+      },
+      "modp_fingerprint_diversity": {
+        "n_unique_fingerprints": 951,
+        "n_curves": 31073,
+        "mi_vs_galois_bits": 0.049529,
+        "description": "10-prime fingerprint (p=2..29)"
+      },
+      "spectral_gap": 0.26478645
+    },
+    "Genus2": {
+      "full_name": "LMFDB Genus-2 Curves",
+      "n_objects": 66158,
+      "shannon_entropy": {
+        "description": "Rank distribution entropy (5 classes: 0-4)",
+        "rank_distribution": {
+          "0": {
+            "count": 12131,
+            "percent": 18.336
+          },
+          "1": {
+            "count": 30579,
+            "percent": 46.221
+          },
+          "2": {
+            "count": 20561,
+            "percent": 31.079
+          },
+          "3": {
+            "count": 2877,
+            "percent": 4.349
+          },
+          "4": {
+            "count": 10,
+            "percent": 0.015
+          }
+        },
+        "note": "Higher rank diversity than EC (avg rank 1.21 vs 0.52)"
+      },
+      "bm_recurrence": "N/A (no BM on genus-2 L-function coefficients in v2)",
+      "effective_dimensionality": {
+        "description": "Igusa-Clebsch invariants span 4D (I2, I4, I6, I10)",
+        "igusa_dimensions": 4
+      },
+      "modp_fingerprint_diversity": "N/A (genus-2 mod-p not computed in v2)",
+      "spectral_gap": 0.01753144
+    },
+    "Maass": {
+      "full_name": "LMFDB Maass Newforms",
+      "n_objects": 35416,
+      "shannon_entropy": {
+        "description": "Spectral parameter spacing -- Poisson distributed",
+        "spacing_model": "Poisson",
+        "poisson_ks": 0.01567820919833207,
+        "std_spacing_normalized": 1.1073160689833252,
+        "fricke_entropy": {
+          "+1_frac": 0.3179,
+          "-1_frac": 0.2466,
+          "0_frac": 0.4355
+        },
+        "note": "No Fourier coefficients available in bulk; spectral parameters only"
+      },
+      "bm_recurrence": "N/A (spectral parameters, not sequences)",
+      "effective_dimensionality": {
+        "description": "Parameterized by (level, spectral_parameter, symmetry)",
+        "unique_levels": 65,
+        "spectral_param_range": [
+          0.2709332800647927,
+          184.92395029187048
+        ]
+      },
+      "modp_fingerprint_diversity": "N/A (no coefficient-level mod-p in v2)",
+      "spectral_gap": 0.09601026,
+      "note": "MF spectral gap used (Maass subsumed under modular forms in spectral analysis)"
+    },
+    "Lattices": {
+      "full_name": "LMFDB Integral Lattices",
+      "n_objects": 39293,
+      "shannon_entropy": {
+        "description": "Theta series mod-p entropy (mean across p=3,5,7,11)",
+        "by_dimension": {
+          "2": {
+            "H_mean": 0.3559,
+            "H_std": 0.2155,
+            "n": 1609
+          },
+          "3": {
+            "H_mean": 1.3366,
+            "H_std": 0.2014,
+            "n": 36585
+          },
+          "4": {
+            "H_mean": 1.6467,
+            "H_std": 0.4313,
+            "n": 481
+          },
+          "5": {
+            "H_mean": 1.6553,
+            "H_std": 0.4599,
+            "n": 295
+          },
+          "6": {
+            "H_mean": 1.6009,
+            "H_std": 0.3948,
+            "n": 186
+          },
+          "7": {
+            "H_mean": 1.543,
+            "H_std": 0.378,
+            "n": 86
+          },
+          "8": {
+            "H_mean": 1.5028,
+            "H_std": 0.2809,
+            "n": 37
+          },
+          "9": {
+            "H_mean": 1.2959,
+            "H_std": 0.2633,
+            "n": 5
+          }
+        },
+        "overall_H_mean_vs_kissing_rho": -0.1146
+      },
+      "bm_recurrence": {
+        "compressibility": 0.503067,
+        "mean_bm_order": 14.91,
+        "description": "BM on theta coefficients mod 101"
+      },
+      "effective_dimensionality": {
+        "description": "Sparsity model: sparsity = f(dim, log(det))",
+        "best_model_R2": 0.5456569938720008
+      },
+      "modp_fingerprint_diversity": {
+        "description": "Theta mod-p entropy discriminates kissing number (z=-37.2)",
+        "null_z_score": -37.2039,
+        "knn_accuracy_entropy": 0.8593
+      },
+      "spectral_gap": 0.00845414
+    },
+    "Knots": {
+      "full_name": "KnotInfo Knot Invariants",
+      "n_objects": 2977,
+      "shannon_entropy": {
+        "description": "Jones polynomial coefficient entropy (BM analysis)",
+        "bm_frac_recurrent": 0.2874,
+        "mean_bm_order": 5.46
+      },
+      "bm_recurrence": {
+        "compressibility": 0.471572,
+        "mean_bm_order": 6.23,
+        "jones_bm_frac_recurrent": 0.2874,
+        "jones_enrichment_vs_oeis": 1.3062
+      },
+      "effective_dimensionality": {
+        "description": "PCA on 18 knot invariants",
+        "pca_90pct_dim": 4,
+        "pc1_variance": 0.553351
+      },
+      "modp_fingerprint_diversity": {
+        "description": "Determinant mod-p (always odd, so mod-2 trivial)",
+        "max_enrichment_mod7": 1.776
+      },
+      "spectral_gap": 0.1566905
+    },
+    "OEIS": {
+      "full_name": "Online Encyclopedia of Integer Sequences",
+      "n_objects": 10000,
+      "shannon_entropy": {
+        "description": "Sign pattern entropy + growth taxonomy",
+        "sign_entropy_mean": 1.0218,
+        "sign_entropy_std": 0.3594,
+        "growth_classes": {
+          "constant": {
+            "count": 583,
+            "fraction": 0.0583
+          },
+          "sub_linear": {
+            "count": 1374,
+            "fraction": 0.1374
+          },
+          "polynomial": {
+            "count": 3051,
+            "fraction": 0.3051
+          },
+          "exponential": {
+            "count": 2371,
+            "fraction": 0.2371
+          },
+          "super_exponential": {
+            "count": 785,
+            "fraction": 0.0785
+          },
+          "factorial": {
+            "count": 1783,
+            "fraction": 0.1783
+          },
+          "unclassifiable": {
+            "count": 53,
+            "fraction": 0.0053
+          }
+        },
+        "benford_compliance_rate": 0.7355
+      },
+      "bm_recurrence": {
+        "compressibility": 0.52995,
+        "mean_bm_order": 12.04,
+        "frac_with_recurrence": 0.2198,
+        "bm_mean_order": 8.490445859872612
+      },
+      "effective_dimensionality": {
+        "description": "Spectral dimension of FFT-based k-NN graph",
+        "spectral_dimension": 10.7625,
+        "battery_effective_dim": "3-4 (from R4-2 PCA/MDS analysis)"
+      },
+      "modp_fingerprint_diversity": {
+        "description": "Not directly computed; BM analysis uses GF(p)",
+        "bm_growth_correlation": -0.4280141419614257
+      },
+      "spectral_gap": 0.17617226
+    },
+    "CODATA": {
+      "full_name": "CODATA Fundamental Physical Constants",
+      "n_objects": 286,
+      "shannon_entropy": {
+        "description": "Continued fraction BM order distribution",
+        "mean_bm_cf": 9.1536,
+        "mean_bm_digits": 7.7762,
+        "cf_compressible_fraction": 0.085714
+      },
+      "bm_recurrence": {
+        "cf_compressible_fraction": 0.085714,
+        "mean_bm_order_cf": 9.1536,
+        "description": "BM on continued fraction partial quotients"
+      },
+      "effective_dimensionality": {
+        "description": "93 dimensionless constants across 17 physics domains",
+        "n_domains": 17
+      },
+      "modp_fingerprint_diversity": {
+        "verdict": "NO_SIGNAL",
+        "enrichment_ratio": 0.988683,
+        "description": "No within-domain enrichment -- mod-p residues random"
+      },
+      "spectral_gap": "N/A (not included in spectral gap universality test)"
+    },
+    "PDG": {
+      "full_name": "Particle Data Group - Particle Masses & Decays",
+      "n_objects": 225,
+      "shannon_entropy": {
+        "description": "Decay network spectral dimension",
+        "spectral_dimension_rw": 1.1878,
+        "spectral_dimension_eigenvalue": 2.382,
+        "graph_curvature_mean_orc": -0.4153
+      },
+      "bm_recurrence": {
+        "all_masses_bm_order": 113,
+        "quark_bm_order": 3,
+        "meson_bm_order": 63,
+        "ratio_order_to_length": 0.5022,
+        "description": "BM order ~0.50 * sequence length -- no recurrence (incompressible)"
+      },
+      "effective_dimensionality": {
+        "spectral_dimension": 1.1878,
+        "n_families": 5,
+        "description": "Decay DAG: d_s ~1.19 (fractal)"
+      },
+      "modp_fingerprint_diversity": "N/A (continuous masses, not integer sequences)",
+      "spectral_gap": {
+        "decay_graph_lambda1": 7.000000000000076,
+        "description": "Dense decay graph (density=0.42), very high spectral gap"
+      }
+    },
+    "FLINT": {
+      "full_name": "FLINT C Library Call Graph",
+      "n_objects": 6474,
+      "shannon_entropy": {
+        "description": "Call graph path entropy (topological + PageRank)",
+        "topological_entropy_bits": 1.40094125,
+        "pagerank_entropy_bits": 0.97694666,
+        "conditional_entropy_bits": 3.6883967,
+        "stationary_entropy_bits": 12.4596
+      },
+      "bm_recurrence": "N/A (graph structure, not sequences)",
+      "effective_dimensionality": {
+        "description": "127 modules, 4-tier mathematical complexity hierarchy",
+        "n_modules": 127,
+        "power_law_alpha": 1.257,
+        "spectral_gap": 0.04354424
+      },
+      "modp_fingerprint_diversity": "N/A (code structure, not number-theoretic)",
+      "spectral_gap": 0.04354424
+    },
+    "Lean": {
+      "full_name": "Lean 4 Mathlib Import Graph",
+      "n_objects": 8411,
+      "shannon_entropy": {
+        "description": "Import graph degree distribution",
+        "power_law_alpha": 2.1746,
+        "mean_in_degree": 3.9944,
+        "max_in_degree": 203
+      },
+      "bm_recurrence": "N/A (graph structure, not sequences)",
+      "effective_dimensionality": {
+        "description": "Not measured; graph-based"
+      },
+      "modp_fingerprint_diversity": "N/A (formal proof structure)",
+      "spectral_gap": "N/A (not computed)",
+      "lean_flint_mi": {
+        "mi_bits": 0.00646,
+        "z_score": -0.07,
+        "verdict": "No significant mutual information between Lean and FLINT degree distributions"
+      }
+    },
+    "Fungrim": {
+      "full_name": "Fungrim Formula Database",
+      "n_objects": 3133,
+      "shannon_entropy": {
+        "description": "Formula implication graph clique structure",
+        "clique_power_law_alpha": 1.432,
+        "n_maximal_cliques": 57003,
+        "largest_clique": 92,
+        "graph_density": 0.013199
+      },
+      "bm_recurrence": {
+        "description": "Fungrim-OEIS bridging: formula complexity vs OEIS recurrence order",
+        "correlation_rho": 0.032405,
+        "correlation_p": 0.1428469,
+        "verdict": "negligible correlation (rho=0.032, not significant)"
+      },
+      "effective_dimensionality": {
+        "description": "880 connected components, largest=2219 nodes",
+        "n_components": 880,
+        "largest_component": 2219
+      },
+      "modp_fingerprint_diversity": "N/A (symbolic formulas, not numeric)",
+      "spectral_gap": "N/A (not computed on fingerprint graph)"
+    }
+  },
+  "ranking_by_information_richness": [
+    {
+      "dataset": "EC",
+      "shannon_entropy_bits": 3.2706,
+      "n_objects": 31073,
+      "bm_compressibility": 0.4805,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.2648,
+      "information_richness_score": 14.6928
+    },
+    {
+      "dataset": "Knots",
+      "shannon_entropy_bits": 2.4489,
+      "n_objects": 2977,
+      "bm_compressibility": 0.4716,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.1567,
+      "information_richness_score": 8.5069
+    },
+    {
+      "dataset": "Genus2",
+      "shannon_entropy_bits": 1.686,
+      "n_objects": 66158,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": 0.0175,
+      "information_richness_score": 8.1273
+    },
+    {
+      "dataset": "CODATA",
+      "shannon_entropy_bits": 3.1943,
+      "n_objects": 286,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 7.8465
+    },
+    {
+      "dataset": "Lean",
+      "shannon_entropy_bits": 1.8514,
+      "n_objects": 8411,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 7.2663
+    },
+    {
+      "dataset": "Lattices",
+      "shannon_entropy_bits": 1.3671,
+      "n_objects": 39293,
+      "bm_compressibility": 0.5031,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.0085,
+      "information_richness_score": 6.2811
+    },
+    {
+      "dataset": "FLINT",
+      "shannon_entropy_bits": 1.4009,
+      "n_objects": 6474,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": 0.0435,
+      "information_richness_score": 5.3392
+    },
+    {
+      "dataset": "Maass",
+      "shannon_entropy_bits": 1.1073,
+      "n_objects": 35416,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": 0.096,
+      "information_richness_score": 5.0374
+    },
+    {
+      "dataset": "OEIS",
+      "shannon_entropy_bits": 1.0218,
+      "n_objects": 10000,
+      "bm_compressibility": 0.53,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.1762,
+      "information_richness_score": 4.0872
+    },
+    {
+      "dataset": "PDG",
+      "shannon_entropy_bits": 1.1878,
+      "n_objects": 225,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 2.7939
+    },
+    {
+      "dataset": "Fungrim",
+      "shannon_entropy_bits": 0.1013,
+      "n_objects": 3133,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 0.3542
+    }
+  ],
+  "ranking_by_structure": [
+    {
+      "dataset": "OEIS",
+      "shannon_entropy_bits": 1.0218,
+      "n_objects": 10000,
+      "bm_compressibility": 0.53,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.1762,
+      "information_richness_score": 4.0872
+    },
+    {
+      "dataset": "Lattices",
+      "shannon_entropy_bits": 1.3671,
+      "n_objects": 39293,
+      "bm_compressibility": 0.5031,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.0085,
+      "information_richness_score": 6.2811
+    },
+    {
+      "dataset": "EC",
+      "shannon_entropy_bits": 3.2706,
+      "n_objects": 31073,
+      "bm_compressibility": 0.4805,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.2648,
+      "information_richness_score": 14.6928
+    },
+    {
+      "dataset": "Knots",
+      "shannon_entropy_bits": 2.4489,
+      "n_objects": 2977,
+      "bm_compressibility": 0.4716,
+      "bm_compressibility_measured": true,
+      "spectral_gap": 0.1567,
+      "information_richness_score": 8.5069
+    },
+    {
+      "dataset": "Genus2",
+      "shannon_entropy_bits": 1.686,
+      "n_objects": 66158,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": 0.0175,
+      "information_richness_score": 8.1273
+    },
+    {
+      "dataset": "Maass",
+      "shannon_entropy_bits": 1.1073,
+      "n_objects": 35416,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": 0.096,
+      "information_richness_score": 5.0374
+    },
+    {
+      "dataset": "CODATA",
+      "shannon_entropy_bits": 3.1943,
+      "n_objects": 286,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 7.8465
+    },
+    {
+      "dataset": "PDG",
+      "shannon_entropy_bits": 1.1878,
+      "n_objects": 225,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 2.7939
+    },
+    {
+      "dataset": "FLINT",
+      "shannon_entropy_bits": 1.4009,
+      "n_objects": 6474,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": 0.0435,
+      "information_richness_score": 5.3392
+    },
+    {
+      "dataset": "Lean",
+      "shannon_entropy_bits": 1.8514,
+      "n_objects": 8411,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 7.2663
+    },
+    {
+      "dataset": "Fungrim",
+      "shannon_entropy_bits": 0.1013,
+      "n_objects": 3133,
+      "bm_compressibility": "N/A",
+      "bm_compressibility_measured": false,
+      "spectral_gap": "N/A",
+      "information_richness_score": 0.3542
+    }
+  ],
+  "richest_dataset": {
+    "name": "EC",
+    "score": 14.6928,
+    "reason": "Highest entropy * scale product"
+  },
+  "most_structured_dataset": {
+    "name": "OEIS",
+    "score": 0.53,
+    "reason": "Highest BM compressibility (most predictable sequences)"
+  },
+  "least_structured_dataset": {
+    "name": "Fungrim",
+    "score": "N/A",
+    "reason": "Lowest compressibility or N/A (least predictable / not sequence-based)"
+  },
+  "cross_domain_findings": {
+    "spectral_gap_verdict": "DOMAIN-SPECIFIC: each mathematical domain has its own geometric character",
+    "compressibility_hierarchy": [
+      {
+        "rank": 1,
+        "domain": "NF",
+        "compressibility": 0.840267
+      },
+      {
+        "rank": 2,
+        "domain": "OEIS",
+        "compressibility": 0.52995
+      },
+      {
+        "rank": 3,
+        "domain": "Lattices",
+        "compressibility": 0.503067
+      },
+      {
+        "rank": 4,
+        "domain": "MF",
+        "compressibility": 0.497867
+      },
+      {
+        "rank": 5,
+        "domain": "EC",
+        "compressibility": 0.48048
+      },
+      {
+        "rank": 6,
+        "domain": "Knots",
+        "compressibility": 0.471572
+      }
+    ],
+    "moment_universality": "M4/M2^2 determined by Sato-Tate group: U(1)->1.5, SU(2)->2.0, USp(4)->3.0",
+    "pipeline_bottleneck": "ENTROPY EXPANSION through a bottleneck. H3/H1=1.49 \u2014 Stage 3 has MORE entropy than Stage 1. The pipeline is: COMPRESSION (Stage 1->2, the GF evaluation collapses polynomial structure into a single value mod p) then EXPANSION (Stage 2->3, sequence values mod p are a much higher-dimensional fingerprint). The bottleneck at Stage 2 destroys the correlation between Stages 1 and 3: information that survives compression into a single GF value is NOT the same information that spreads into 8 sequence values. The 99.2% transfer loss is an information bottleneck effect \u2014 the GF evaluation is a lossy channel that preserves different features in each direction.",
+    "transport_matrix_note": "Fingerprint transport between domains shows domain-specific geometry"
+  }
+}
