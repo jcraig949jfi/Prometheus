@@ -1,0 +1,603 @@
+{
+  "metadata": {
+    "description": "COD vs Materials Project cross-validation",
+    "cod_entries": 9800,
+    "mp_entries": 10000,
+    "cod_path": "F:\\Prometheus\\cartography\\physics\\data\\cod\\cod_structures.json",
+    "mp_path": "F:\\Prometheus\\cartography\\physics\\data\\materials_project_10k.json"
+  },
+  "coverage": {
+    "cod_unique_formulas": 6748,
+    "mp_unique_formulas": 6043,
+    "in_both": 109,
+    "cod_only": 6639,
+    "mp_only": 5934,
+    "overlap_frac_of_cod": 0.0162,
+    "overlap_frac_of_mp": 0.018,
+    "jaccard_index": 0.0086,
+    "sample_shared": [
+      "Ag",
+      "AgF",
+      "AgI",
+      "AgSb",
+      "Al",
+      "AlN",
+      "AlP",
+      "AsFe",
+      "AsIn",
+      "AsNi",
+      "AsSb",
+      "Au",
+      "BCo",
+      "BFe",
+      "BMn",
+      "BN",
+      "BaO",
+      "BaTe",
+      "BeO",
+      "Br"
+    ],
+    "sample_cod_only": [
+      "Ag2As2H2O7",
+      "Ag2C19F4H16O4S2",
+      "Ag2C19H22O4S2",
+      "Ag2C40F6H52NO7PS4",
+      "Ag2C8H16N8Pt",
+      "Ag2CO3",
+      "Ag2Cr2O7",
+      "Ag2FeS4Sn",
+      "Ag2H10K3O20P5",
+      "Ag2H12N4O4S",
+      "Ag2H2LiO10P3",
+      "Ag2H2O7P2",
+      "Ag2HO4P",
+      "Ag2HgI4",
+      "Ag2MoO4",
+      "Ag2O",
+      "Ag2S",
+      "Ag2Se",
+      "Ag2Te",
+      "Ag3AsO4"
+    ],
+    "sample_mp_only": [
+      "Ac",
+      "AgAl",
+      "AgAlCIn",
+      "AgAlCe",
+      "AgAlClCo",
+      "AgAlFPd",
+      "AgAlS",
+      "AgAlY",
+      "AgAs",
+      "AgAsAu",
+      "AgAsBaPt",
+      "AgAsBaY",
+      "AgAsBiNa",
+      "AgAsCa",
+      "AgAsI",
+      "AgAsIr",
+      "AgAsNiV",
+      "AgAsRh",
+      "AgAsSi",
+      "AgAsY"
+    ]
+  },
+  "volume_agreement": {
+    "n_comparisons": 107,
+    "agreement_rates": {
+      "within_1pct": {
+        "count": 2,
+        "fraction": 0.0187
+      },
+      "within_2pct": {
+        "count": 4,
+        "fraction": 0.0374
+      },
+      "within_5pct": {
+        "count": 12,
+        "fraction": 0.1121
+      },
+      "within_10pct": {
+        "count": 17,
+        "fraction": 0.1589
+      },
+      "within_20pct": {
+        "count": 28,
+        "fraction": 0.2617
+      },
+      "within_50pct": {
+        "count": 40,
+        "fraction": 0.3738
+      }
+    },
+    "systematic_bias": {
+      "mean_relative_diff_cod_minus_mp": -0.5653,
+      "median_relative_diff": -0.5831,
+      "cod_larger_fraction": 0.2617
+    },
+    "z_ratio_matches": {
+      "exact_or_close": 0,
+      "Z_ratio_2": 12,
+      "Z_ratio_3": 13,
+      "Z_ratio_4": 13
+    },
+    "best_matches": [
+      {
+        "formula": "Fe",
+        "cod_volume": 23.59,
+        "mp_volume": 23.468,
+        "rel_diff": 0.0052,
+        "ratio": 1.005,
+        "n_cod_entries": 1,
+        "n_mp_entries": 24
+      },
+      {
+        "formula": "Pd",
+        "cod_volume": 59.68,
+        "mp_volume": 60.266,
+        "rel_diff": 0.0098,
+        "ratio": 0.99,
+        "n_cod_entries": 6,
+        "n_mp_entries": 21
+      },
+      {
+        "formula": "C",
+        "cod_volume": 175.31,
+        "mp_volume": 173.394,
+        "rel_diff": 0.011,
+        "ratio": 1.011,
+        "n_cod_entries": 9,
+        "n_mp_entries": 77
+      },
+      {
+        "formula": "Ag",
+        "cod_volume": 68.19,
+        "mp_volume": 69.457,
+        "rel_diff": 0.0184,
+        "ratio": 0.982,
+        "n_cod_entries": 1,
+        "n_mp_entries": 21
+      },
+      {
+        "formula": "Os",
+        "cod_volume": 27.6,
+        "mp_volume": 28.255,
+        "rel_diff": 0.0234,
+        "ratio": 0.977,
+        "n_cod_entries": 1,
+        "n_mp_entries": 17
+      },
+      {
+        "formula": "Pb",
+        "cod_volume": 119.82,
+        "mp_volume": 123.655,
+        "rel_diff": 0.0315,
+        "ratio": 0.969,
+        "n_cod_entries": 1,
+        "n_mp_entries": 18
+      },
+      {
+        "formula": "Al",
+        "cod_volume": 65.64,
+        "mp_volume": 63.582,
+        "rel_diff": 0.0319,
+        "ratio": 1.032,
+        "n_cod_entries": 1,
+        "n_mp_entries": 29
+      },
+      {
+        "formula": "BrNa",
+        "cod_volume": 211.92,
+        "mp_volume": 219.891,
+        "rel_diff": 0.0369,
+        "ratio": 0.964,
+        "n_cod_entries": 2,
+        "n_mp_entries": 7
+      },
+      {
+        "formula": "Te",
+        "cod_volume": 101.78,
+        "mp_volume": 98.089,
+        "rel_diff": 0.0369,
+        "ratio": 1.038,
+        "n_cod_entries": 1,
+        "n_mp_entries": 27
+      },
+      {
+        "formula": "AsSb",
+        "cod_volume": 152.19,
+        "mp_volume": 146.647,
+        "rel_diff": 0.0371,
+        "ratio": 1.038,
+        "n_cod_entries": 1,
+        "n_mp_entries": 5
+      },
+      {
+        "formula": "GaN",
+        "cod_volume": 45.24,
+        "mp_volume": 43.248,
+        "rel_diff": 0.045,
+        "ratio": 1.046,
+        "n_cod_entries": 1,
+        "n_mp_entries": 6
+      },
+      {
+        "formula": "CuO",
+        "cod_volume": 79.94,
+        "mp_volume": 76.16,
+        "rel_diff": 0.0484,
+        "ratio": 1.05,
+        "n_cod_entries": 3,
+        "n_mp_entries": 2
+      },
+      {
+        "formula": "O",
+        "cod_volume": 318.61,
+        "mp_volume": 335.459,
+        "rel_diff": 0.0515,
+        "ratio": 0.95,
+        "n_cod_entries": 1,
+        "n_mp_entries": 44
+      },
+      {
+        "formula": "BrCu",
+        "cod_volume": 197.14,
+        "mp_volume": 186.83,
+        "rel_diff": 0.0537,
+        "ratio": 1.055,
+        "n_cod_entries": 1,
+        "n_mp_entries": 4
+      },
+      {
+        "formula": "I",
+        "cod_volume": 340.22,
+        "mp_volume": 321.992,
+        "rel_diff": 0.0551,
+        "ratio": 1.057,
+        "n_cod_entries": 1,
+        "n_mp_entries": 33
+      }
+    ],
+    "worst_matches": [
+      {
+        "formula": "BN",
+        "cod_volume": 36.5,
+        "mp_volume": 849.523,
+        "rel_diff": 1.8352,
+        "ratio": 0.043,
+        "n_cod_entries": 3,
+        "n_mp_entries": 1
+      },
+      {
+        "formula": "NV",
+        "cod_volume": 78.4,
+        "mp_volume": 1655.032,
+        "rel_diff": 1.8191,
+        "ratio": 0.047,
+        "n_cod_entries": 1,
+        "n_mp_entries": 1
+      },
+      {
+        "formula": "OZn",
+        "cod_volume": 50.82,
+        "mp_volume": 906.879,
+        "rel_diff": 1.7877,
+        "ratio": 0.056,
+        "n_cod_entries": 2,
+        "n_mp_entries": 1
+      },
+      {
+        "formula": "NNb",
+        "cod_volume": 85.77,
+        "mp_volume": 1394.248,
+        "rel_diff": 1.7682,
+        "ratio": 0.062,
+        "n_cod_entries": 1,
+        "n_mp_entries": 2
+      },
+      {
+        "formula": "NTi",
+        "cod_volume": 85.18,
+        "mp_volume": 1324.744,
+        "rel_diff": 1.7583,
+        "ratio": 0.064,
+        "n_cod_entries": 11,
+        "n_mp_entries": 2
+      },
+      {
+        "formula": "CTi",
+        "cod_volume": 97.34,
+        "mp_volume": 1409.938,
+        "rel_diff": 1.7417,
+        "ratio": 0.069,
+        "n_cod_entries": 1,
+        "n_mp_entries": 1
+      },
+      {
+        "formula": "NiTi",
+        "cod_volume": 27.41,
+        "mp_volume": 395.949,
+        "rel_diff": 1.741,
+        "ratio": 0.069,
+        "n_cod_entries": 1,
+        "n_mp_entries": 2
+      },
+      {
+        "formula": "MnS",
+        "cod_volume": 174.68,
+        "mp_volume": 2009.395,
+        "rel_diff": 1.6801,
+        "ratio": 0.087,
+        "n_cod_entries": 2,
+        "n_mp_entries": 1
+      },
+      {
+        "formula": "CW",
+        "cod_volume": 20.76,
+        "mp_volume": 215.136,
+        "rel_diff": 1.648,
+        "ratio": 0.096,
+        "n_cod_entries": 56,
+        "n_mp_entries": 3
+      },
+      {
+        "formula": "NiSe",
+        "cod_volume": 61.83,
+        "mp_volume": 633.526,
+        "rel_diff": 1.6443,
+        "ratio": 0.098,
+        "n_cod_entries": 1,
+        "n_mp_entries": 1
+      }
+    ]
+  },
+  "crystal_systems": {
+    "crystal_systems": {
+      "Cubic": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 1979,
+        "mp_pct": 19.79
+      },
+      "Hexagonal": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 887,
+        "mp_pct": 8.87
+      },
+      "Monoclinic": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 1618,
+        "mp_pct": 16.18
+      },
+      "Orthorhombic": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 2189,
+        "mp_pct": 21.89
+      },
+      "Tetragonal": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 1426,
+        "mp_pct": 14.26
+      },
+      "Triclinic": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 756,
+        "mp_pct": 7.56
+      },
+      "Trigonal": {
+        "cod_count": 0,
+        "cod_pct": 0,
+        "mp_count": 1145,
+        "mp_pct": 11.45
+      }
+    },
+    "cod_entries_with_spacegroup": 0,
+    "cod_entries_without_spacegroup": 8352,
+    "mp_total": 10000
+  },
+  "element_coverage": {
+    "cod_element_count": 88,
+    "mp_element_count": 89,
+    "shared_elements": 83,
+    "cod_only_elements": [
+      "Am",
+      "Cm",
+      "D",
+      "Po",
+      "Ra"
+    ],
+    "mp_only_elements": [
+      "Ac",
+      "Ar",
+      "He",
+      "Kr",
+      "Pm",
+      "Pu"
+    ],
+    "top_cod": [
+      [
+        "O",
+        6064
+      ],
+      [
+        "H",
+        5496
+      ],
+      [
+        "C",
+        4867
+      ],
+      [
+        "N",
+        3644
+      ],
+      [
+        "S",
+        1210
+      ],
+      [
+        "Cl",
+        1066
+      ],
+      [
+        "P",
+        1025
+      ],
+      [
+        "F",
+        861
+      ],
+      [
+        "Si",
+        578
+      ],
+      [
+        "Br",
+        455
+      ],
+      [
+        "Fe",
+        422
+      ],
+      [
+        "K",
+        378
+      ],
+      [
+        "Cu",
+        360
+      ],
+      [
+        "B",
+        334
+      ],
+      [
+        "Na",
+        334
+      ]
+    ],
+    "top_mp": [
+      [
+        "Si",
+        598
+      ],
+      [
+        "Mg",
+        593
+      ],
+      [
+        "C",
+        462
+      ],
+      [
+        "Rb",
+        446
+      ],
+      [
+        "S",
+        444
+      ],
+      [
+        "I",
+        431
+      ],
+      [
+        "Sb",
+        423
+      ],
+      [
+        "K",
+        419
+      ],
+      [
+        "Ti",
+        418
+      ],
+      [
+        "P",
+        418
+      ],
+      [
+        "Li",
+        417
+      ],
+      [
+        "O",
+        414
+      ],
+      [
+        "Cl",
+        410
+      ],
+      [
+        "Bi",
+        409
+      ],
+      [
+        "Ge",
+        407
+      ]
+    ]
+  },
+  "nelements_overlap": {
+    "1": {
+      "cod": 18,
+      "mp": 89,
+      "shared": 17,
+      "jaccard_pct": 18.89
+    },
+    "2": {
+      "cod": 465,
+      "mp": 1548,
+      "shared": 90,
+      "jaccard_pct": 4.68
+    },
+    "3": {
+      "cod": 1465,
+      "mp": 3034,
+      "shared": 2,
+      "jaccard_pct": 0.04
+    },
+    "4": {
+      "cod": 2250,
+      "mp": 1372,
+      "shared": 0,
+      "jaccard_pct": 0.0
+    },
+    "5": {
+      "cod": 1663,
+      "mp": 0,
+      "shared": 0,
+      "jaccard_pct": 0.0
+    },
+    "6": {
+      "cod": 672,
+      "mp": 0,
+      "shared": 0,
+      "jaccard_pct": 0.0
+    },
+    "7": {
+      "cod": 184,
+      "mp": 0,
+      "shared": 0,
+      "jaccard_pct": 0.0
+    },
+    "8": {
+      "cod": 27,
+      "mp": 0,
+      "shared": 0,
+      "jaccard_pct": 0.0
+    },
+    "9": {
+      "cod": 4,
+      "mp": 0,
+      "shared": 0,
+      "jaccard_pct": 0.0
+    }
+  }
+}
