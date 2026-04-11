@@ -1,0 +1,65 @@
+{
+  "experiment": "mf_knot_lz_compression_gap",
+  "description": "Lempel-Ziv (zlib) complexity gap between modular form Hecke traces and knot Jones polynomial coefficients, both reduced to mod-2 parity strings. Three analyses: (A) raw zlib, (B) Shannon entropy, (C) length-matched zlib.",
+  "params": {
+    "n_mf": 2000,
+    "n_knot": 2000,
+    "n_ap_values": 25,
+    "median_jones_length": 12,
+    "compression": "zlib level 9",
+    "parity": "abs(coeff) mod 2",
+    "seed": 42
+  },
+  "analysis_A_raw_zlib": {
+    "note": "Length confound: MF strings are 25 chars, knot strings are 4-13 chars. zlib overhead inflates short-string ratios above 1.0.",
+    "MF_mean": 0.653,
+    "MF_std": 0.180721,
+    "MF_median": 0.68,
+    "Knot_mean": 1.382182,
+    "Knot_std": 0.170483,
+    "Knot_median": 1.384615,
+    "delta": -0.729182,
+    "cohens_d": -4.1507,
+    "ks_stat": 0.994,
+    "ks_p": 0.0,
+    "mw_stat": 1048.0,
+    "mw_p": 0.0
+  },
+  "analysis_B_shannon_entropy": {
+    "note": "Shannon entropy in bits/char is length-independent. This is the clean comparison.",
+    "MF_mean": 0.529997,
+    "MF_std": 0.426142,
+    "MF_median": 0.721928,
+    "Knot_mean": 0.921675,
+    "Knot_std": 0.119974,
+    "Knot_median": 0.961237,
+    "delta": -0.391678,
+    "cohens_d": -1.2512,
+    "ks_stat": 0.5285,
+    "ks_p": 9.537677e-256,
+    "mw_stat": 857541.0,
+    "mw_p": 1.127191e-216
+  },
+  "analysis_C_length_matched_zlib": {
+    "note": "Both truncated to 12 chars (median Jones length). Same zlib overhead affects both equally.",
+    "MF_mean": 1.145917,
+    "MF_std": 0.207316,
+    "MF_median": 1.166667,
+    "Knot_mean": 1.412871,
+    "Knot_std": 0.154815,
+    "Knot_median": 1.416667,
+    "delta": -0.266954,
+    "cohens_d": -1.4591,
+    "ks_stat": 0.526,
+    "ks_p": 3.350003e-253,
+    "mw_stat": 649493.5,
+    "mw_p": 4.200364e-305
+  },
+  "permutation_null_entropy": {
+    "n_permutations": 1000,
+    "p_value": 0.0,
+    "null_mean": -0.000395,
+    "null_std": 0.012017
+  },
+  "interpretation": "Knot Jones parity strings have HIGHER Shannon entropy than MF parity strings by 0.3917 bits/char. KS test confirms distributions are highly distinct (p=9.54e-256). Raw zlib Delta_LZ=-0.7292 is DOMINATED by length confound (MF@25 chars vs knot@12 chars median); length-matched Delta_LZ=-0.2670."
+}

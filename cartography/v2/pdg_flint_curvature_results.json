@@ -1,0 +1,257 @@
+{
+  "experiment": "ChatGPT #17: PDG Decay Graph vs FLINT Call Graph Curvature",
+  "date": "2026-04-10",
+  "parameters": {
+    "orc_alpha": 0.5,
+    "n_sample_edges": 2000,
+    "bfs_cutoff": 4,
+    "n_null_graphs": 5,
+    "rng_seed": 42
+  },
+  "graphs": {
+    "pdg_decay": {
+      "nodes": 226,
+      "edges": 21236
+    },
+    "flint_call": {
+      "nodes": 5170,
+      "edges": 15624
+    }
+  },
+  "orc_distributions": {
+    "pdg_decay": {
+      "n": 2000,
+      "mean": 0.4701,
+      "std": 0.066862,
+      "median": 0.486661,
+      "skew": -4.869358,
+      "kurt": 25.329353,
+      "min": 0.017778,
+      "max": 0.502475,
+      "q25": 0.467748,
+      "q75": 0.499598
+    },
+    "flint_call": {
+      "n": 2000,
+      "mean": -0.250731,
+      "std": 0.267537,
+      "median": -0.266667,
+      "skew": 0.747901,
+      "kurt": 1.602344,
+      "min": -0.868006,
+      "max": 1.0,
+      "q25": -0.430609,
+      "q75": -0.1
+    }
+  },
+  "comparison_pdg_vs_flint": {
+    "labels": [
+      "PDG_decay",
+      "FLINT_call"
+    ],
+    "wasserstein_1": 0.725309,
+    "ks_statistic": 0.9535,
+    "ks_p_value": 0.0,
+    "mann_whitney_U": 3933299.0,
+    "mann_whitney_p": 0.0,
+    "mean_diff": 0.720831
+  },
+  "null_models": {
+    "er_pdg_matched": {
+      "n": 2000,
+      "mean": 0.414414,
+      "std": 0.012129,
+      "median": 0.414948,
+      "skew": -0.271845,
+      "kurt": 0.11504,
+      "min": 0.365385,
+      "max": 0.447761,
+      "q25": 0.40625,
+      "q75": 0.422886
+    },
+    "er_flint_matched": {
+      "n": 2000,
+      "mean": -0.647319,
+      "std": 0.12452,
+      "median": -0.669643,
+      "skew": 2.645382,
+      "kurt": 12.488673,
+      "min": -0.837662,
+      "max": 0.25,
+      "q25": -0.722222,
+      "q75": -0.6
+    },
+    "comparisons": {
+      "pdg_vs_er_pdg": {
+        "labels": [
+          "PDG_decay",
+          "ER_pdg_matched"
+        ],
+        "wasserstein_1": 0.071491,
+        "ks_statistic": 0.89,
+        "ks_p_value": 0.0,
+        "mann_whitney_U": 3796318.0,
+        "mann_whitney_p": 0.0,
+        "mean_diff": 0.055686
+      },
+      "flint_vs_er_flint": {
+        "labels": [
+          "FLINT_call",
+          "ER_flint_matched"
+        ],
+        "wasserstein_1": 0.396619,
+        "ks_statistic": 0.7575,
+        "ks_p_value": 0.0,
+        "mann_whitney_U": 3710827.5,
+        "mann_whitney_p": 0.0,
+        "mean_diff": 0.396588
+      },
+      "er_pdg_vs_er_flint": {
+        "labels": [
+          "ER_pdg",
+          "ER_flint"
+        ],
+        "wasserstein_1": 1.061733,
+        "ks_statistic": 1.0,
+        "ks_p_value": 0.0,
+        "mann_whitney_U": 4000000.0,
+        "mann_whitney_p": 0.0,
+        "mean_diff": 1.061733
+      }
+    }
+  },
+  "histograms": {
+    "bin_edges": [
+      -1.0,
+      -0.95,
+      -0.9,
+      -0.85,
+      -0.8,
+      -0.75,
+      -0.7,
+      -0.65,
+      -0.6,
+      -0.55,
+      -0.5,
+      -0.45,
+      -0.4,
+      -0.35,
+      -0.3,
+      -0.25,
+      -0.2,
+      -0.15,
+      -0.1,
+      -0.05,
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6,
+      0.65,
+      0.7,
+      0.75,
+      0.8,
+      0.85,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "pdg_decay_counts": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      11,
+      9,
+      18,
+      19,
+      0,
+      0,
+      0,
+      4,
+      168,
+      1412,
+      359,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "flint_call_counts": [
+      0,
+      0,
+      1,
+      5,
+      19,
+      32,
+      37,
+      67,
+      72,
+      96,
+      128,
+      143,
+      169,
+      148,
+      149,
+      168,
+      144,
+      120,
+      94,
+      44,
+      112,
+      66,
+      53,
+      46,
+      3,
+      24,
+      22,
+      4,
+      1,
+      0,
+      24,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      9
+    ]
+  },
+  "interpretation": {
+    "w1_verdict": "W1 = 0.7253 between PDG decay and FLINT call ORC distributions. Outside expected range 0.2-0.4.",
+    "structural_note": "PDG decay graph is dense (mass-ordered DAG symmetrized), FLINT call graph is sparse (software dependency). Both are real-world heterogeneous networks. Curvature captures local clustering vs bottleneck geometry."
+  },
+  "runtime_seconds": 1075.2
+}

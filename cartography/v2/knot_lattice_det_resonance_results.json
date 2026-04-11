@@ -1,0 +1,512 @@
+{
+  "experiment": "Knot Determinant vs Lattice Determinant Resonance",
+  "challenge": "ChatGPT #13",
+  "n_knots": 2977,
+  "n_lattices": 39293,
+  "first_order_overlap": {
+    "unique_knot_dets": 167,
+    "unique_lat_dets": 1511,
+    "shared_values": 82,
+    "knots_with_lattice_match": 1793,
+    "lattices_with_knot_match": 311,
+    "null_mean_shared": 0.0,
+    "null_std_shared": 0.02,
+    "enrichment": 164000.0,
+    "z_score": 3668.05,
+    "sample_shared": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15,
+      17,
+      19,
+      21,
+      23,
+      25,
+      27,
+      29,
+      33,
+      35,
+      37,
+      39,
+      43,
+      45,
+      49,
+      51,
+      55,
+      57,
+      63,
+      65,
+      67,
+      69,
+      73
+    ]
+  },
+  "modp_distribution_overlap": {
+    "mod_2": {
+      "bhattacharyya": 0.15467,
+      "null_mean": 0.999954,
+      "null_std": 6.2e-05,
+      "z_score": -13558.08,
+      "knot_distribution": {
+        "0": 0.0,
+        "1": 1.0
+      },
+      "lattice_distribution": {
+        "0": 0.9761,
+        "1": 0.0239
+      }
+    },
+    "mod_3": {
+      "bhattacharyya": 0.998787,
+      "null_mean": 0.999911,
+      "null_std": 8.7e-05,
+      "z_score": -12.97,
+      "knot_distribution": {
+        "0": 0.3641,
+        "1": 0.3285,
+        "2": 0.3074
+      },
+      "lattice_distribution": {
+        "0": 0.4099,
+        "1": 0.316,
+        "2": 0.2741
+      }
+    },
+    "mod_5": {
+      "bhattacharyya": 0.999567,
+      "null_mean": 0.999822,
+      "null_std": 0.000124,
+      "z_score": -2.06,
+      "knot_distribution": {
+        "0": 0.2251,
+        "1": 0.1962,
+        "2": 0.1864,
+        "3": 0.1881,
+        "4": 0.2042
+      },
+      "lattice_distribution": {
+        "0": 0.2369,
+        "1": 0.1873,
+        "2": 0.1943,
+        "3": 0.196,
+        "4": 0.1855
+      }
+    },
+    "mod_7": {
+      "bhattacharyya": 0.999807,
+      "null_mean": 0.999728,
+      "null_std": 0.000158,
+      "z_score": 0.5,
+      "knot_distribution": {
+        "0": 0.1609,
+        "1": 0.1461,
+        "2": 0.1381,
+        "3": 0.134,
+        "4": 0.1438,
+        "5": 0.1411,
+        "6": 0.136
+      },
+      "lattice_distribution": {
+        "0": 0.1646,
+        "1": 0.1384,
+        "2": 0.1364,
+        "3": 0.1417,
+        "4": 0.1363,
+        "5": 0.1415,
+        "6": 0.1411
+      }
+    },
+    "mod_11": {
+      "bhattacharyya": 0.999871,
+      "null_mean": 0.999537,
+      "null_std": 0.000206,
+      "z_score": 1.62,
+      "knot_distribution": {
+        "0": 0.0957,
+        "1": 0.0944,
+        "2": 0.0897,
+        "3": 0.0941,
+        "4": 0.09,
+        "5": 0.0934,
+        "6": 0.0863,
+        "7": 0.0914,
+        "8": 0.087,
+        "9": 0.092,
+        "10": 0.086
+      },
+      "lattice_distribution": {
+        "0": 0.1001,
+        "1": 0.0948,
+        "2": 0.0867,
+        "3": 0.0933,
+        "4": 0.0943,
+        "5": 0.0946,
+        "6": 0.0842,
+        "7": 0.0862,
+        "8": 0.0851,
+        "9": 0.0953,
+        "10": 0.0855
+      }
+    },
+    "mod_13": {
+      "bhattacharyya": 0.999888,
+      "null_mean": 0.999463,
+      "null_std": 0.00022,
+      "z_score": 1.93,
+      "knot_distribution": {
+        "0": 0.0836,
+        "1": 0.0793,
+        "2": 0.0763,
+        "3": 0.0793,
+        "4": 0.0742,
+        "5": 0.0746,
+        "6": 0.0769,
+        "7": 0.0769,
+        "8": 0.0776,
+        "9": 0.0773,
+        "10": 0.0709,
+        "11": 0.0803,
+        "12": 0.0729
+      },
+      "lattice_distribution": {
+        "0": 0.0826,
+        "1": 0.0763,
+        "2": 0.0761,
+        "3": 0.0777,
+        "4": 0.0761,
+        "5": 0.0763,
+        "6": 0.076,
+        "7": 0.0771,
+        "8": 0.076,
+        "9": 0.0774,
+        "10": 0.0755,
+        "11": 0.0766,
+        "12": 0.0762
+      }
+    },
+    "mod_17": {
+      "bhattacharyya": 0.999639,
+      "null_mean": 0.999277,
+      "null_std": 0.000264,
+      "z_score": 1.37,
+      "knot_distribution": {
+        "0": 0.0645,
+        "1": 0.0628,
+        "2": 0.0554,
+        "3": 0.0564,
+        "4": 0.0608,
+        "5": 0.0595,
+        "6": 0.0561,
+        "7": 0.0584,
+        "8": 0.0574,
+        "9": 0.0615,
+        "10": 0.0551,
+        "11": 0.0605,
+        "12": 0.0584,
+        "13": 0.0652,
+        "14": 0.0558,
+        "15": 0.0578,
+        "16": 0.0544
+      },
+      "lattice_distribution": {
+        "0": 0.0615,
+        "1": 0.0589,
+        "2": 0.0583,
+        "3": 0.0598,
+        "4": 0.057,
+        "5": 0.0594,
+        "6": 0.059,
+        "7": 0.0597,
+        "8": 0.0593,
+        "9": 0.0592,
+        "10": 0.0587,
+        "11": 0.0595,
+        "12": 0.0603,
+        "13": 0.0574,
+        "14": 0.0588,
+        "15": 0.0564,
+        "16": 0.0568
+      }
+    },
+    "mod_19": {
+      "bhattacharyya": 0.999745,
+      "null_mean": 0.999181,
+      "null_std": 0.000276,
+      "z_score": 2.04,
+      "knot_distribution": {
+        "0": 0.0534,
+        "1": 0.0544,
+        "2": 0.0524,
+        "3": 0.0514,
+        "4": 0.0554,
+        "5": 0.0605,
+        "6": 0.0548,
+        "7": 0.0548,
+        "8": 0.0507,
+        "9": 0.0561,
+        "10": 0.0487,
+        "11": 0.0484,
+        "12": 0.0517,
+        "13": 0.0531,
+        "14": 0.0501,
+        "15": 0.0517,
+        "16": 0.0531,
+        "17": 0.0507,
+        "18": 0.0487
+      },
+      "lattice_distribution": {
+        "0": 0.0543,
+        "1": 0.0529,
+        "2": 0.0508,
+        "3": 0.0505,
+        "4": 0.0546,
+        "5": 0.0543,
+        "6": 0.0529,
+        "7": 0.0545,
+        "8": 0.0519,
+        "9": 0.054,
+        "10": 0.051,
+        "11": 0.0537,
+        "12": 0.0528,
+        "13": 0.0518,
+        "14": 0.0507,
+        "15": 0.0508,
+        "16": 0.0539,
+        "17": 0.0528,
+        "18": 0.052
+      }
+    },
+    "mod_23": {
+      "bhattacharyya": 0.999151,
+      "null_mean": 0.999009,
+      "null_std": 0.000303,
+      "z_score": 0.47,
+      "knot_distribution": {
+        "0": 0.043,
+        "1": 0.043,
+        "2": 0.0453,
+        "3": 0.0447,
+        "4": 0.0453,
+        "5": 0.0464,
+        "6": 0.0403,
+        "7": 0.0511,
+        "8": 0.0396,
+        "9": 0.0487,
+        "10": 0.0423,
+        "11": 0.0427,
+        "12": 0.0453,
+        "13": 0.0467,
+        "14": 0.039,
+        "15": 0.0423,
+        "16": 0.0417,
+        "17": 0.046,
+        "18": 0.0369,
+        "19": 0.042,
+        "20": 0.041,
+        "21": 0.0427,
+        "22": 0.044
+      },
+      "lattice_distribution": {
+        "0": 0.0452,
+        "1": 0.0435,
+        "2": 0.0451,
+        "3": 0.0437,
+        "4": 0.0426,
+        "5": 0.0423,
+        "6": 0.043,
+        "7": 0.042,
+        "8": 0.0447,
+        "9": 0.0448,
+        "10": 0.0437,
+        "11": 0.041,
+        "12": 0.0446,
+        "13": 0.043,
+        "14": 0.0433,
+        "15": 0.0417,
+        "16": 0.0452,
+        "17": 0.0435,
+        "18": 0.0454,
+        "19": 0.0418,
+        "20": 0.0437,
+        "21": 0.0425,
+        "22": 0.0436
+      }
+    }
+  },
+  "second_order_within": {
+    "knot_crossing_mod5": {
+      "domain": "knots_crossing",
+      "mod_p": 5,
+      "same_residue_mean_diff": 1.4424,
+      "diff_residue_mean_diff": 1.4421,
+      "ratio_same_over_diff": 1.000187,
+      "null_mean_ratio": 0.999064,
+      "null_std_ratio": 0.056155,
+      "z_score": 0.02,
+      "n_same_pairs": 100498,
+      "n_diff_pairs": 399349
+    },
+    "knot_span_mod5": {
+      "domain": "knots_span",
+      "mod_p": 5,
+      "same_residue_mean_diff": 1.4179,
+      "diff_residue_mean_diff": 1.4194,
+      "ratio_same_over_diff": 0.998965,
+      "null_mean_ratio": 1.001526,
+      "null_std_ratio": 0.02295,
+      "z_score": -0.11,
+      "n_same_pairs": 100039,
+      "n_diff_pairs": 399760
+    },
+    "lattice_dim_mod5": {
+      "domain": "lattices_dim",
+      "mod_p": 5,
+      "same_residue_mean_diff": 0.1921,
+      "diff_residue_mean_diff": 0.1922,
+      "ratio_same_over_diff": 0.999149,
+      "null_mean_ratio": 0.999854,
+      "null_std_ratio": 0.077933,
+      "z_score": -0.01,
+      "n_same_pairs": 101070,
+      "n_diff_pairs": 398916
+    },
+    "lattice_kissing_mod5": {
+      "domain": "lattices_kissing",
+      "mod_p": 5,
+      "same_residue_mean_diff": 2.9811,
+      "diff_residue_mean_diff": 13.395,
+      "ratio_same_over_diff": 0.222553,
+      "null_mean_ratio": 8.332408,
+      "null_std_ratio": 26.652452,
+      "z_score": -0.3,
+      "n_same_pairs": 101153,
+      "n_diff_pairs": 398839
+    }
+  },
+  "cross_domain_second_order": {
+    "conditioning": "det mod 3 AND det mod 5",
+    "target": "det mod 7 co-occurrence",
+    "n_shared_classes": 15,
+    "n_pairs_sampled": 15000,
+    "observed_mod7_match_rate": 0.138867,
+    "expected_uniform_rate": 0.142857,
+    "null_mean_rate": 0.141972,
+    "null_std_rate": 0.006325,
+    "enrichment_vs_null": 0.9781,
+    "z_score": -0.49
+  },
+  "multi_prime_scan": {
+    "cond_mod3_target_mod5": {
+      "observed_rate": 0.222667,
+      "expected_uniform": 0.2,
+      "enrichment": 1.1133
+    },
+    "cond_mod3_target_mod7": {
+      "observed_rate": 0.134667,
+      "expected_uniform": 0.142857,
+      "enrichment": 0.9427
+    },
+    "cond_mod3_target_mod11": {
+      "observed_rate": 0.103333,
+      "expected_uniform": 0.090909,
+      "enrichment": 1.1367
+    },
+    "cond_mod3_target_mod13": {
+      "observed_rate": 0.074667,
+      "expected_uniform": 0.076923,
+      "enrichment": 0.9707
+    },
+    "cond_mod5_target_mod3": {
+      "observed_rate": 0.3504,
+      "expected_uniform": 0.333333,
+      "enrichment": 1.0512
+    },
+    "cond_mod5_target_mod7": {
+      "observed_rate": 0.1412,
+      "expected_uniform": 0.142857,
+      "enrichment": 0.9884
+    },
+    "cond_mod5_target_mod11": {
+      "observed_rate": 0.0948,
+      "expected_uniform": 0.090909,
+      "enrichment": 1.0428
+    },
+    "cond_mod5_target_mod13": {
+      "observed_rate": 0.0776,
+      "expected_uniform": 0.076923,
+      "enrichment": 1.0088
+    },
+    "cond_mod7_target_mod3": {
+      "observed_rate": 0.337714,
+      "expected_uniform": 0.333333,
+      "enrichment": 1.0131
+    },
+    "cond_mod7_target_mod5": {
+      "observed_rate": 0.202571,
+      "expected_uniform": 0.2,
+      "enrichment": 1.0129
+    },
+    "cond_mod7_target_mod11": {
+      "observed_rate": 0.090571,
+      "expected_uniform": 0.090909,
+      "enrichment": 0.9963
+    },
+    "cond_mod7_target_mod13": {
+      "observed_rate": 0.074,
+      "expected_uniform": 0.076923,
+      "enrichment": 0.962
+    },
+    "cond_mod11_target_mod3": {
+      "observed_rate": 0.336182,
+      "expected_uniform": 0.333333,
+      "enrichment": 1.0085
+    },
+    "cond_mod11_target_mod5": {
+      "observed_rate": 0.205455,
+      "expected_uniform": 0.2,
+      "enrichment": 1.0273
+    },
+    "cond_mod11_target_mod7": {
+      "observed_rate": 0.149273,
+      "expected_uniform": 0.142857,
+      "enrichment": 1.0449
+    },
+    "cond_mod11_target_mod13": {
+      "observed_rate": 0.085091,
+      "expected_uniform": 0.076923,
+      "enrichment": 1.1062
+    },
+    "cond_mod13_target_mod3": {
+      "observed_rate": 0.332462,
+      "expected_uniform": 0.333333,
+      "enrichment": 0.9974
+    },
+    "cond_mod13_target_mod5": {
+      "observed_rate": 0.194308,
+      "expected_uniform": 0.2,
+      "enrichment": 0.9715
+    },
+    "cond_mod13_target_mod7": {
+      "observed_rate": 0.144,
+      "expected_uniform": 0.142857,
+      "enrichment": 1.008
+    },
+    "cond_mod13_target_mod11": {
+      "observed_rate": 0.093231,
+      "expected_uniform": 0.090909,
+      "enrichment": 1.0255
+    }
+  },
+  "verdict": "NEGATIVE. First-order overlap z=3668 is artifact of weak null (random integers vs concentrated small-odd knot dets). Mod-2 shows fundamental structural divergence: knot dets are ALL odd, lattice dets are 97.6% even (BC=0.15). For mod 3+, distributions converge toward uniform with no significant divergence. Cross-domain second-order (mod-3&5 conditioning on mod-7) shows no enrichment (z=-0.49). Within-domain second-order shows no structure. Multi-prime scan mean enrichment 1.02x +/- 0.05, consistent with noise.",
+  "summary": "Knot and lattice determinant overlap is tested at first order (exact value sharing), mod-p distribution level (Bhattacharyya coefficient), within-domain second order (do shared-residue pairs have more similar auxiliary invariants?), and cross-domain second order (conditioning on mod-3 and mod-5, is mod-7 co-occurrence elevated?). The dominant signal is the mod-2 parity divergence: knot determinants are always odd (a theorem), while lattice determinants are overwhelmingly even. Beyond this known number-theoretic fact, no cross-domain resonance is detected.",
+  "calibration_notes": {
+    "first_order_z_inflated": "The z=3668 is meaningless: null draws uniform random integers from [1, max_det] which is astronomically sparse compared to the concentrated small-value knot dets. A proper null would condition on marginal distributions.",
+    "mod2_is_theorem": "Knot determinants are always odd (they equal |Delta(-1)| for the Alexander polynomial, evaluated at -1). Lattice determinants being mostly even reflects that most lattice Gram matrices have even diagonal entries. This is number theory, not cross-domain resonance.",
+    "expected_enrichment_not_found": "The hypothesized 1.2-1.6x enrichment is not present. Multi-prime scan shows 1.02x mean, well within noise."
+  }
+}

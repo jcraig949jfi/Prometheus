@@ -585,7 +585,22 @@ Degree-5 discs match A023685, degree-3 match A023679 — these ARE the OEIS cata
 66,158 curves. Selmer excess vs log|I2|: ρ=0.22 (p~10⁻¹³³) within MW rank 0. SURVIVES conductor control (strengthens at large N: ρ=0.27 in Q4). Absolute invariant j1=I2⁵/I10: ρ=0.28 with excess. Non-generic ST groups have 3.5× higher Sha. Cohen's d for I10 = -0.52. Null battery: 5/5 passed (z=6.8-16.3). **Sha is NOT random in moduli space.**
 
 ### 149. FLINT-Lean Spectral GED = 5.30, 24× Random Distance (FLINT-Lean-GED)
-Top-500 eigenvalues. GED=5.30, normalized=0.131. 24× more distant than matched random graphs. FLINT: bipartite-like (λ→2.0). Lean: hierarchical DAG (λ_max≈1.98). 13% spectral energy difference — shared broad structure, divergent fine structure.
+GED=5.30, normalized=0.131. FLINT bipartite-like, Lean hierarchical. 13% spectral energy.
+
+### 150. PDG-FLINT Curvature W₁=0.725: Density Effect, Not Structure (PDG-FLINT-curv)
+PDG mean ORC=+0.470 (near-clique, 83% density). FLINT mean ORC=-0.251 (sparse bottlenecks). W₁=0.725 (above expected 0.2-0.4). Primarily density-driven. More informative: FLINT vs its own ER null W₁=0.397 — genuine non-random curvature structure.
+
+### 151. MF-Knot LZ Gap: Sign Flip, Knots MORE Complex (MF-Knot-LZ)
+ΔLZ = -0.267 (opposite sign from expected +0.12). MF parity entropy 0.53 bits/char (even-biased, highly compressible). Knot Jones parity entropy 0.92 bits/char (near-maximal). Cohen's d = -1.46. Hecke traces are arithmetically constrained; Jones coefficients are algebraically balanced.
+
+### 152. Knot-Lattice Determinant Resonance: Null (Knot-Lat-det)
+82 shared det values (small integers). All odd knot dets vs 97.6% even lattice dets (fundamental parity divergence). Second-order cross-domain mod-p enrichment = 0.978× (z=-0.49). No resonance.
+
+### 153. EC Sha vs NF Class Number: Null (Sha-NF-CN)
+7 matching strategies tested. Best: degree-2 exact conductor=|disc| gives r=+0.045 (z=1.7, not significant). 97% of EC have Sha=1, crushing dynamic range. The expected r~0.04-0.10 is in range but power insufficient.
+
+### 154. OEIS 198× More Recurrent Than Hecke Eigenvalues (OEIS-EC-BM)
+OEIS: 19.8% truly recurrent (BM order < n/2). EC Hecke: 0.1%. Rate ratio = **198×**. Hecke eigenvalues behave as pseudorandom under BM — zero linear recurrence structure. Mann-Whitney p=1.2×10⁻⁵⁶. The median BM order metric (expected ratio 1.5-2.3) is uninformative; the recurrence RATE is the sharp discriminator.
 
 ---
 
@@ -951,7 +966,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*274 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*279 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 
