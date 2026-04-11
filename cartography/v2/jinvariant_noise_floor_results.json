@@ -1,0 +1,263 @@
+{
+  "challenge": "ChatGPT Harder #16 \u2014 j-Invariant Arithmetic Noise Floor",
+  "question": "Are j-invariant digit streams pseudorandom or structured?",
+  "method": "zlib compression ratio of decimal digit strings",
+  "n_curves": 31073,
+  "n_analyzed_numerators": 30380,
+  "n_analyzed_denominators": 24196,
+  "skipped_small": 618,
+  "per_curve_stats": {
+    "jinv_numerator": {
+      "n": 30380,
+      "mean": 1.820675,
+      "median": 1.727273,
+      "std": 0.372452,
+      "p5": 1.363636,
+      "p25": 1.533333,
+      "p75": 2.0,
+      "p95": 2.6,
+      "min": 0.846154,
+      "max": 3.0
+    },
+    "jinv_denominator": {
+      "n": 24196,
+      "mean": 2.144095,
+      "median": 2.142857,
+      "std": 0.486387,
+      "p5": 1.454545,
+      "p25": 1.744318,
+      "p75": 2.6,
+      "p95": 3.0,
+      "min": 0.736842,
+      "max": 3.0
+    },
+    "jinv_combined": {
+      "n": 29572,
+      "mean": 1.447648,
+      "median": 1.421053,
+      "std": 0.232631,
+      "p5": 1.081081,
+      "p25": 1.307692,
+      "p75": 1.571429,
+      "p95": 1.888889,
+      "min": 0.790323,
+      "max": 2.0
+    },
+    "conductor": {
+      "n": 25514,
+      "mean": 3.0,
+      "median": 3.0,
+      "std": 0.0,
+      "p5": 3.0,
+      "p25": 3.0,
+      "p75": 3.0,
+      "p95": 3.0,
+      "min": 3.0,
+      "max": 3.0
+    },
+    "random_matched_numerator": {
+      "n": 30380,
+      "mean": 1.823291,
+      "median": 1.727273,
+      "std": 0.371047,
+      "p5": 1.375,
+      "p25": 1.545455,
+      "p75": 2.0,
+      "p95": 2.6,
+      "min": 1.0,
+      "max": 3.0
+    },
+    "random_matched_denominator": {
+      "n": 24196,
+      "mean": 2.155416,
+      "median": 2.142857,
+      "std": 0.472431,
+      "p5": 1.5,
+      "p25": 1.8,
+      "p75": 2.6,
+      "p95": 3.0,
+      "min": 1.125,
+      "max": 3.0
+    }
+  },
+  "bulk_stream_compression": {
+    "jinv_numerators_bulk": {
+      "uncompressed_bytes": 381818,
+      "ratio": 0.39132
+    },
+    "jinv_denominators_bulk": {
+      "uncompressed_bytes": 246674,
+      "ratio": 0.410242
+    },
+    "conductors_bulk": {
+      "uncompressed_bytes": 149949,
+      "ratio": 0.051878
+    },
+    "random_integers_bulk": {
+      "uncompressed_bytes": 381818,
+      "ratio": 0.485907
+    }
+  },
+  "size_binned_comparison": {
+    "4": {
+      "n": 734,
+      "jinv_mean_ratio": 3.0,
+      "random_mean_ratio": 3.0,
+      "delta": 0.0
+    },
+    "5": {
+      "n": 1426,
+      "jinv_mean_ratio": 2.6,
+      "random_mean_ratio": 2.599439,
+      "delta": 0.000561
+    },
+    "6": {
+      "n": 2040,
+      "jinv_mean_ratio": 2.331536,
+      "random_mean_ratio": 2.332843,
+      "delta": -0.001307
+    },
+    "7": {
+      "n": 2326,
+      "jinv_mean_ratio": 2.134873,
+      "random_mean_ratio": 2.140523,
+      "delta": -0.00565
+    },
+    "8": {
+      "n": 2663,
+      "jinv_mean_ratio": 1.993147,
+      "random_mean_ratio": 1.997465,
+      "delta": -0.004318
+    },
+    "9": {
+      "n": 2706,
+      "jinv_mean_ratio": 1.880184,
+      "random_mean_ratio": 1.885768,
+      "delta": -0.005584
+    },
+    "10": {
+      "n": 2758,
+      "jinv_mean_ratio": 1.793401,
+      "random_mean_ratio": 1.795468,
+      "delta": -0.002067
+    },
+    "11": {
+      "n": 2533,
+      "jinv_mean_ratio": 1.720561,
+      "random_mean_ratio": 1.722751,
+      "delta": -0.00219
+    },
+    "12": {
+      "n": 2184,
+      "jinv_mean_ratio": 1.660371,
+      "random_mean_ratio": 1.661058,
+      "delta": -0.000687
+    },
+    "13": {
+      "n": 2032,
+      "jinv_mean_ratio": 1.606526,
+      "random_mean_ratio": 1.608381,
+      "delta": -0.001855
+    },
+    "14": {
+      "n": 1687,
+      "jinv_mean_ratio": 1.559743,
+      "random_mean_ratio": 1.564188,
+      "delta": -0.004445
+    },
+    "15": {
+      "n": 1469,
+      "jinv_mean_ratio": 1.525618,
+      "random_mean_ratio": 1.524756,
+      "delta": 0.000862
+    },
+    "16": {
+      "n": 1196,
+      "jinv_mean_ratio": 1.488294,
+      "random_mean_ratio": 1.491168,
+      "delta": -0.002874
+    },
+    "17": {
+      "n": 1084,
+      "jinv_mean_ratio": 1.459898,
+      "random_mean_ratio": 1.461363,
+      "delta": -0.001465
+    },
+    "18": {
+      "n": 843,
+      "jinv_mean_ratio": 1.429946,
+      "random_mean_ratio": 1.433636,
+      "delta": -0.00369
+    },
+    "19": {
+      "n": 691,
+      "jinv_mean_ratio": 1.406809,
+      "random_mean_ratio": 1.410465,
+      "delta": -0.003656
+    },
+    "20": {
+      "n": 495,
+      "jinv_mean_ratio": 1.385758,
+      "random_mean_ratio": 1.387273,
+      "delta": -0.001515
+    },
+    "21": {
+      "n": 399,
+      "jinv_mean_ratio": 1.364125,
+      "random_mean_ratio": 1.365199,
+      "delta": -0.001074
+    },
+    "22": {
+      "n": 296,
+      "jinv_mean_ratio": 1.349355,
+      "random_mean_ratio": 1.351812,
+      "delta": -0.002457
+    },
+    "23": {
+      "n": 217,
+      "jinv_mean_ratio": 1.328191,
+      "random_mean_ratio": 1.336205,
+      "delta": -0.008014
+    },
+    "24": {
+      "n": 166,
+      "jinv_mean_ratio": 1.310743,
+      "random_mean_ratio": 1.31752,
+      "delta": -0.006777
+    },
+    "25": {
+      "n": 130,
+      "jinv_mean_ratio": 1.303385,
+      "random_mean_ratio": 1.295385,
+      "delta": 0.008
+    },
+    "26": {
+      "n": 94,
+      "jinv_mean_ratio": 1.270049,
+      "random_mean_ratio": 1.271686,
+      "delta": -0.001637
+    },
+    "27": {
+      "n": 69,
+      "jinv_mean_ratio": 1.241009,
+      "random_mean_ratio": 1.245303,
+      "delta": -0.004294
+    },
+    "28": {
+      "n": 46,
+      "jinv_mean_ratio": 1.22205,
+      "random_mean_ratio": 1.222826,
+      "delta": -0.000776
+    },
+    "29": {
+      "n": 38,
+      "jinv_mean_ratio": 1.194192,
+      "random_mean_ratio": 1.200544,
+      "delta": -0.006352
+    }
+  },
+  "delta_jinv_vs_random": -0.002616,
+  "delta_jinv_vs_conductor": -1.179325,
+  "verdict": "pseudorandom",
+  "explanation": "j-invariant numerator compression (1.8207) is within 0.02 of random integers (1.8233). Digit streams are arithmetically indistinguishable from pseudorandom at the zlib level."
+}

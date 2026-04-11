@@ -1,0 +1,224 @@
+{
+  "challenge": "Gemini #11: Sha-Fricke Obstruction Tensor Rank",
+  "description": "Trilinear map T[sha_bin, rank, fricke_sign] across EC isogeny classes",
+  "data": {
+    "n_curves": 31073,
+    "tensor_shape": [
+      4,
+      3,
+      2
+    ],
+    "sha_bins": [
+      "1",
+      "4",
+      "9",
+      "16+"
+    ],
+    "rank_bins": [
+      "0",
+      "1",
+      "2"
+    ],
+    "fricke_bins": [
+      "-1",
+      "+1"
+    ]
+  },
+  "tensor_raw": [
+    [
+      [
+        14576.0,
+        0.0
+      ],
+      [
+        0.0,
+        14770.0
+      ],
+      [
+        691.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        728.0,
+        0.0
+      ],
+      [
+        0.0,
+        13.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        175.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ],
+    [
+      [
+        120.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0
+      ]
+    ]
+  ],
+  "nonzero_entries": [
+    {
+      "sha_bin": "sha=1",
+      "rank": "rank=0",
+      "fricke": "fricke=-1",
+      "count": 14576
+    },
+    {
+      "sha_bin": "sha=1",
+      "rank": "rank=1",
+      "fricke": "fricke=+1",
+      "count": 14770
+    },
+    {
+      "sha_bin": "sha=1",
+      "rank": "rank=2",
+      "fricke": "fricke=-1",
+      "count": 691
+    },
+    {
+      "sha_bin": "sha=4",
+      "rank": "rank=0",
+      "fricke": "fricke=-1",
+      "count": 728
+    },
+    {
+      "sha_bin": "sha=4",
+      "rank": "rank=1",
+      "fricke": "fricke=+1",
+      "count": 13
+    },
+    {
+      "sha_bin": "sha=9",
+      "rank": "rank=0",
+      "fricke": "fricke=-1",
+      "count": 175
+    },
+    {
+      "sha_bin": "sha>=16",
+      "rank": "rank=0",
+      "fricke": "fricke=-1",
+      "count": 120
+    }
+  ],
+  "sparsity": 0.7083,
+  "mode_unfoldings": {
+    "sha_bin": {
+      "matrix_shape": [
+        4,
+        6
+      ],
+      "singular_values": [
+        20769.7683,
+        531.0921,
+        0.1728,
+        0.0
+      ],
+      "cumulative_variance": [
+        0.999347,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "effective_rank_95pct": 1
+    },
+    "rank": {
+      "matrix_shape": [
+        3,
+        8
+      ],
+      "singular_values": [
+        14770.0057,
+        14612.0149,
+        35.8596
+      ],
+      "cumulative_variance": [
+        0.505375,
+        0.999997,
+        1.0
+      ],
+      "effective_rank_95pct": 2
+    },
+    "fricke": {
+      "matrix_shape": [
+        2,
+        12
+      ],
+      "singular_values": [
+        14770.0057,
+        14612.0589
+      ],
+      "cumulative_variance": [
+        0.505375,
+        1.0
+      ],
+      "effective_rank_95pct": 2
+    }
+  },
+  "multilinear_rank": [
+    3,
+    3,
+    2
+  ],
+  "cp_decomposition": {
+    "estimated_rank": 3,
+    "components": [
+      {
+        "component": 1,
+        "weight": 14769.9539,
+        "residual_norm": 14612.1113,
+        "residual_fraction": 0.703298
+      },
+      {
+        "component": 2,
+        "weight": 14612.056,
+        "residual_norm": 40.2014,
+        "residual_fraction": 0.001935
+      },
+      {
+        "component": 3,
+        "weight": 38.0662,
+        "residual_norm": 12.9274,
+        "residual_fraction": 0.000622
+      }
+    ]
+  },
+  "parity_constraint_perfect": true,
+  "structural_note": "The functional equation forces fricke = (-1)^rank, making the fricke mode fully determined by rank. The tensor is supported on only 7/24 entries. Effective tensor rank reflects sha-rank interaction under this constraint.",
+  "effective_rank_summary": {
+    "mode_sha_95pct": 1,
+    "mode_rank_95pct": 2,
+    "mode_fricke_95pct": 2,
+    "multilinear_rank": [
+      3,
+      3,
+      2
+    ],
+    "cp_rank": 3
+  }
+}
