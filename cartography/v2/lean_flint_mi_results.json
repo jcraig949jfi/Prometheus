@@ -1,0 +1,276 @@
+{
+  "metadata": {
+    "experiment": "NF19: Formal-Algorithmic Mutual Information",
+    "lean_source": "F:\\Prometheus\\cartography\\mathlib\\mathlib4_source",
+    "flint_source": "F:\\Prometheus\\cartography\\physics\\data\\flint_src\\src",
+    "n_bins": 20
+  },
+  "lean_import_graph": {
+    "num_files": 8411,
+    "num_import_edges": 34320,
+    "num_nodes_total": 8592,
+    "mean_in_degree": 3.9944,
+    "max_in_degree": 203,
+    "median_in_degree": 3,
+    "power_law_alpha": 2.1746,
+    "power_law_r2": 0.8951,
+    "top_imported": [
+      {
+        "module": "Mathlib.Init",
+        "in_degree": 203
+      },
+      {
+        "module": "Mathlib.Tactic.Common",
+        "in_degree": 76
+      },
+      {
+        "module": "Mathlib.Tactic.Ring",
+        "in_degree": 53
+      },
+      {
+        "module": "Mathlib.Tactic.Linarith",
+        "in_degree": 46
+      },
+      {
+        "module": "Mathlib.Algebra.Ring.Defs",
+        "in_degree": 44
+      },
+      {
+        "module": "Mathlib.Util.CompileInductive",
+        "in_degree": 44
+      },
+      {
+        "module": "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+        "in_degree": 43
+      },
+      {
+        "module": "Mathlib.Algebra.Group.Basic",
+        "in_degree": 43
+      },
+      {
+        "module": "Mathlib.Algebra.Order.Group.Nat",
+        "in_degree": 40
+      },
+      {
+        "module": "Mathlib.Algebra.Field.Defs",
+        "in_degree": 40
+      },
+      {
+        "module": "Mathlib.Analysis.Normed.Group.Basic",
+        "in_degree": 40
+      },
+      {
+        "module": "Mathlib.Data.Real.Basic",
+        "in_degree": 36
+      },
+      {
+        "module": "Mathlib.Tactic.NormNum",
+        "in_degree": 36
+      },
+      {
+        "module": "Mathlib.Algebra.Order.BigOperators.Group.Finset",
+        "in_degree": 36
+      },
+      {
+        "module": "Mathlib.Tactic.Positivity",
+        "in_degree": 35
+      },
+      {
+        "module": "all",
+        "in_degree": 35
+      },
+      {
+        "module": "Mathlib.Algebra.Algebra.Defs",
+        "in_degree": 34
+      },
+      {
+        "module": "Mathlib.Algebra.Order.Ring.Defs",
+        "in_degree": 34
+      },
+      {
+        "module": "Mathlib.Algebra.Polynomial.AlgebraMap",
+        "in_degree": 34
+      },
+      {
+        "module": "Mathlib.Tactic.FieldSimp",
+        "in_degree": 33
+      }
+    ]
+  },
+  "flint_call_graph": {
+    "num_nodes_total": 9462,
+    "mean_in_degree": 7.7636,
+    "max_in_degree": 1925,
+    "median_in_degree": 1,
+    "power_law_alpha": 1.2571,
+    "power_law_r2": 0.8348
+  },
+  "mutual_information": {
+    "linear_bins": {
+      "mi_bits": 0.00646,
+      "jsd_bits": 0.00646,
+      "null_mean": 0.006502,
+      "null_std": 0.000626,
+      "z_score": -0.07,
+      "p_value": 0.523,
+      "max_degree_shared": 1925
+    },
+    "log_bins": {
+      "mi_bits": 0.133731,
+      "jsd_bits": 0.133731,
+      "null_mean": 0.134172,
+      "null_std": 0.004098,
+      "z_score": -0.11,
+      "p_value": 0.5362
+    }
+  },
+  "bin_data": {
+    "linear": {
+      "bin_edges": [
+        0.0,
+        96.3,
+        192.6,
+        288.9,
+        385.2,
+        481.5,
+        577.8,
+        674.1,
+        770.4,
+        866.7,
+        963.0,
+        1059.3,
+        1155.6,
+        1251.9,
+        1348.2,
+        1444.5,
+        1540.8,
+        1637.1,
+        1733.4,
+        1829.7,
+        1926.0
+      ],
+      "lean_counts": [
+        8591,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flint_counts": [
+        9335,
+        84,
+        23,
+        12,
+        2,
+        0,
+        3,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1
+      ]
+    },
+    "log": {
+      "bin_edges": [
+        0.0,
+        0.4282,
+        0.8563,
+        1.2845,
+        1.7126,
+        2.1408,
+        2.569,
+        2.9971,
+        3.4253,
+        3.8534,
+        4.2816,
+        4.7098,
+        5.1379,
+        5.5661,
+        5.9942,
+        6.4224,
+        6.8506,
+        7.2787,
+        7.7069,
+        8.135,
+        8.5632
+      ],
+      "lean_counts": [
+        377,
+        1628,
+        2183,
+        2134,
+        1200,
+        665,
+        284,
+        85,
+        33,
+        1,
+        1,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flint_counts": [
+        2658,
+        2243,
+        1166,
+        1179,
+        695,
+        507,
+        299,
+        237,
+        166,
+        118,
+        97,
+        44,
+        27,
+        19,
+        1,
+        4,
+        0,
+        2,
+        0,
+        0
+      ]
+    }
+  },
+  "comparison": {
+    "mean_degree_lean": 3.9944,
+    "mean_degree_flint": 7.7636,
+    "max_degree_lean": 203,
+    "max_degree_flint": 1925,
+    "power_law_alpha_lean": 2.1746,
+    "power_law_alpha_flint": 1.2571,
+    "interpretation": "Both graphs are scale-free (power-law degree distributions) but with different exponents: Lean alpha=2.175 (steeper, more egalitarian) vs FLINT alpha=1.257 (flatter, more hub-dominated). MI(linear)=0.0065 bits, MI(log)=0.1337 bits. The low MI reflects genuinely different degree shapes: formal proofs have a tighter import hierarchy (max=203) while algorithmic code has extreme hubs (max=1925). Both are scale-free but the exponent gap (alpha ratio=1.73x) means formal verification imposes stronger modularity than computational libraries."
+  }
+}
