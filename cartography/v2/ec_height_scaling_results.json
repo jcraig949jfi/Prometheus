@@ -1,0 +1,70 @@
+{
+  "description": "Naive height h(E)=max(|a1|^6,|a2|^3,|a3|^2,|a4|^{3/2},|a6|) scaling with conductor",
+  "n_curves": 31073,
+  "overall_fit": {
+    "model": "log(h) = slope * log(N) + intercept",
+    "slope": 1.442645,
+    "intercept": -0.8074,
+    "r_squared": 0.054828,
+    "p_value": 0.0,
+    "std_err": 0.033981
+  },
+  "log_height_distribution": {
+    "mean": 10.1992,
+    "median": 9.542,
+    "std": 5.2378,
+    "p25": 6.307,
+    "p75": 13.4078
+  },
+  "by_rank": {
+    "0": {
+      "count": 15599,
+      "slope": 1.474071,
+      "intercept": -0.2092,
+      "r_squared": 0.068711,
+      "mean_logH": 10.8875,
+      "median_logH": 10.2672
+    },
+    "1": {
+      "count": 14783,
+      "slope": 1.832725,
+      "intercept": -4.4624,
+      "r_squared": 0.069473,
+      "mean_logH": 9.6841,
+      "median_logH": 9.0604
+    },
+    "2": {
+      "count": 691,
+      "slope": 2.069004,
+      "intercept": -10.8892,
+      "r_squared": 0.09672,
+      "mean_logH": 5.6816,
+      "median_logH": 5.1986
+    }
+  },
+  "dominant_invariant_counts": {
+    "a1": 50,
+    "a2": 32,
+    "a3": 9,
+    "a4": 26095,
+    "a6": 4887
+  },
+  "faltings_vs_naive_correlation": 0.970143,
+  "conductor_bins": {
+    "[10^1, 10^2)": {
+      "count": 302,
+      "median_logH": 4.9133,
+      "mean_logH": 5.245
+    },
+    "[10^2, 10^3)": {
+      "count": 4811,
+      "median_logH": 7.5844,
+      "mean_logH": 8.1003
+    },
+    "[10^3, 10^4)": {
+      "count": 25960,
+      "median_logH": 9.998,
+      "mean_logH": 10.6458
+    }
+  }
+}

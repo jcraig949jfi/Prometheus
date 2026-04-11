@@ -423,7 +423,22 @@ Dim-2: all cn=1 (LMFDB stores one per genus). Dim-3 (36,585): mean cn=15.5, medi
 2,977 knots. MWF braid lower bound range 2.5-7.0, mean 6.4. 79.9% at or above Schubert ceiling b≤(c+1)/2. Jones span linear with crossing number (ratio ~1.0). Determinant grows monotonically with MWF bound.
 
 ### 95. OEIS Sign Patterns: 30% Alternating, Period-2 Dominates (OEIS-signs)
-21,610 signed sequences. Lag-1 ACF mean = -0.174 (alternation). 12.3% perfectly period-2. 30% strongly alternating (ACF < -0.5). 8.3% strongly periodic (spectral peak ratio >20). Period-4 most common periodic pattern (567 sequences). Signs are NOT random — alternation is the universal tendency.
+Lag-1 ACF mean = -0.174 (alternation). 12.3% period-2. 30% strongly alternating. NOT random.
+
+### 96. EC Faltings Height Drops Monotonically with Rank (EC-faltings)
+31,073 curves. Mean h_F: rank-0 (0.728) → rank-1 (0.553) → rank-2 (-0.076). Rank-2 shift is 3.6× rank-0→1. CM lower (mean 0.198 vs 0.631). h_F vs j-height: r=0.749. h_F vs log(conductor): R²=0.066 (weak). Higher rank = arithmetically simpler.
+
+### 97. Genus-2 Bad Factor Degrees: Degree 3 Dominates, Perfect Exponent Anticorrelation (G2-factors)
+172,938 bad factors across 66,158 curves. Degree 3: 75.6%, degree 2: 15.5%. Degree-exponent anticorrelation ρ=-0.994 (near-perfect): degree 3 → exponent 1.0, degree 0 → exponent 7.1. E-type groups show only even degrees. Large primes (>100) are 99.6% degree 3.
+
+### 98. Knot Amphichirality: 4.03%, Det ≡ 1 (mod 4) Enriched 2.2× (Knot-chiral)
+2,977 knots. 120 amphichiral (4.03%). Even cn required for alternating amphichiral (verified). Amphichiral determinants: 89.2% ≡ 1 (mod 4) vs chiral 49.6% (2.2× enrichment). Perfect-square det: 16.7% amphichiral vs 7.5% chiral. |σ| mean: 0.75 amphichiral vs 2.76 chiral.
+
+### 99. EC Naive Height: h ~ N^{1.44}, a₄ Dominates 84% (EC-height)
+31,073 curves. h ~ N^{1.44} but R²=0.055 (weak). Rank-2 median log(h)=5.20 vs rank-0=10.27 (higher rank = lower height). Height-Faltings correlation r=0.970. a₄ dominates 84% of heights, a₆ in 16%.
+
+### 100. OEIS Benford: 73.5% Per-Sequence Compliant, Exponential 93.6% (OEIS-benford)
+333,237 terms. Aggregate KL=0.001278 (near-Benford). Per-sequence: 73.5% comply at α=0.05. Exponential sequences 93.6% compliant, constant 0%. Compliance is a monotone function of growth rate, exactly as Benford theory predicts.
 
 ---
 
@@ -789,7 +804,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*220 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*225 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

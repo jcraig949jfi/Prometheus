@@ -1,0 +1,310 @@
+{
+  "experiment": "OEIS Benford's Law Compliance",
+  "n_sequences_loaded": 10000,
+  "n_sequences_tested": 6623,
+  "min_terms_for_test": 20,
+  "total_positive_terms": 333237,
+  "aggregate": {
+    "observed_distribution": {
+      "1": 0.320547,
+      "2": 0.176775,
+      "3": 0.120983,
+      "4": 0.098299,
+      "5": 0.074686,
+      "6": 0.065029,
+      "7": 0.053052,
+      "8": 0.048119,
+      "9": 0.04251
+    },
+    "benford_distribution": {
+      "1": 0.30103,
+      "2": 0.176091,
+      "3": 0.124939,
+      "4": 0.09691,
+      "5": 0.079181,
+      "6": 0.066947,
+      "7": 0.057992,
+      "8": 0.051153,
+      "9": 0.045757
+    },
+    "chi_squared": 851.23,
+    "chi_squared_df": 8,
+    "p_value": 0.0,
+    "kl_divergence": 0.001278,
+    "verdict": "NON-COMPLIANT"
+  },
+  "per_sequence": {
+    "n_tested": 6623,
+    "n_compliant": 4871,
+    "compliance_rate": 0.7355
+  },
+  "growth_class_compliance": {
+    "exponential": {
+      "n_sequences": 2703,
+      "compliant": 2530,
+      "compliance_rate": 0.936
+    },
+    "polynomial": {
+      "n_sequences": 2519,
+      "compliant": 1861,
+      "compliance_rate": 0.7388
+    },
+    "sublinear": {
+      "n_sequences": 218,
+      "compliant": 72,
+      "compliance_rate": 0.3303
+    },
+    "constant": {
+      "n_sequences": 21,
+      "compliant": 0,
+      "compliance_rate": 0.0
+    },
+    "unknown": {
+      "n_sequences": 1162,
+      "compliant": 408,
+      "compliance_rate": 0.3511
+    }
+  },
+  "growth_class_kl": {
+    "unknown": {
+      "n": 1162,
+      "median_kl": 0.218438,
+      "mean_kl": 0.329098
+    },
+    "polynomial": {
+      "n": 2519,
+      "median_kl": 0.093898,
+      "mean_kl": 0.134888
+    },
+    "exponential": {
+      "n": 2703,
+      "median_kl": 0.116335,
+      "mean_kl": 0.157149
+    },
+    "sublinear": {
+      "n": 218,
+      "median_kl": 0.271653,
+      "mean_kl": 0.424949
+    },
+    "constant": {
+      "n": 21,
+      "median_kl": 1.200545,
+      "mean_kl": 1.226079
+    }
+  },
+  "interpretation": [
+    "Aggregate: 333,237 positive terms across 10,000 sequences.",
+    "Aggregate Benford compliance: NO (chi2=851.2, p=0.00e+00).",
+    "KL divergence from Benford: 0.001278",
+    "Per-sequence: 4871/6623 (73.5%) comply at alpha=0.05.",
+    "  exponential: 2530/2703 (93.6%) comply",
+    "  polynomial: 1861/2519 (73.9%) comply",
+    "  sublinear: 72/218 (33.0%) comply",
+    "  constant: 0/21 (0.0%) comply",
+    "  unknown: 408/1162 (35.1%) comply"
+  ],
+  "most_benford_compliant": [
+    {
+      "seq_id": "A008952",
+      "n_terms": 96,
+      "chi2": 0.2724,
+      "p_value": 0.999987,
+      "compliant": true,
+      "kl_divergence": 0.001414,
+      "growth_class": "unknown",
+      "growth_exponent": 0.0
+    },
+    {
+      "seq_id": "A000792",
+      "n_terms": 44,
+      "chi2": 0.2501,
+      "p_value": 0.999991,
+      "compliant": true,
+      "kl_divergence": 0.002832,
+      "growth_class": "exponential",
+      "growth_exponent": 0.159455
+    },
+    {
+      "seq_id": "A007042",
+      "n_terms": 45,
+      "chi2": 0.3315,
+      "p_value": 0.999972,
+      "compliant": true,
+      "kl_divergence": 0.003702,
+      "growth_class": "exponential",
+      "growth_exponent": 0.103372
+    },
+    {
+      "seq_id": "A000071",
+      "n_terms": 38,
+      "chi2": 0.3125,
+      "p_value": 0.999978,
+      "compliant": true,
+      "kl_divergence": 0.004147,
+      "growth_class": "exponential",
+      "growth_exponent": 0.211612
+    },
+    {
+      "seq_id": "A005577",
+      "n_terms": 58,
+      "chi2": 0.4814,
+      "p_value": 0.999885,
+      "compliant": true,
+      "kl_divergence": 0.004181,
+      "growth_class": "exponential",
+      "growth_exponent": 0.090468
+    },
+    {
+      "seq_id": "A003413",
+      "n_terms": 48,
+      "chi2": 0.3842,
+      "p_value": 0.999951,
+      "compliant": true,
+      "kl_divergence": 0.004188,
+      "growth_class": "exponential",
+      "growth_exponent": 0.109439
+    },
+    {
+      "seq_id": "A005575",
+      "n_terms": 48,
+      "chi2": 0.3917,
+      "p_value": 0.999948,
+      "compliant": true,
+      "kl_divergence": 0.004231,
+      "growth_class": "exponential",
+      "growth_exponent": 0.139526
+    },
+    {
+      "seq_id": "A008963",
+      "n_terms": 98,
+      "chi2": 1.0206,
+      "p_value": 0.998115,
+      "compliant": true,
+      "kl_divergence": 0.004799,
+      "growth_class": "unknown",
+      "growth_exponent": 0.0
+    },
+    {
+      "seq_id": "A002371",
+      "n_terms": 65,
+      "chi2": 0.6919,
+      "p_value": 0.999547,
+      "compliant": true,
+      "kl_divergence": 0.005106,
+      "growth_class": "unknown",
+      "growth_exponent": 0.0
+    },
+    {
+      "seq_id": "A002100",
+      "n_terms": 70,
+      "chi2": 0.7516,
+      "p_value": 0.999383,
+      "compliant": true,
+      "kl_divergence": 0.005335,
+      "growth_class": "exponential",
+      "growth_exponent": 0.031248
+    }
+  ],
+  "least_benford_compliant": [
+    {
+      "seq_id": "A007350",
+      "n_terms": 33,
+      "chi2": 375.3101,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.263837,
+      "growth_class": "unknown",
+      "growth_exponent": 0.0
+    },
+    {
+      "seq_id": "A002278",
+      "n_terms": 21,
+      "chi2": 195.6959,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.333972,
+      "growth_class": "exponential",
+      "growth_exponent": 1.00065
+    },
+    {
+      "seq_id": "A002279",
+      "n_terms": 21,
+      "chi2": 244.2143,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.536016,
+      "growth_class": "exponential",
+      "growth_exponent": 1.00065
+    },
+    {
+      "seq_id": "A000873",
+      "n_terms": 43,
+      "chi2": 721.5533,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.702393,
+      "growth_class": "sublinear",
+      "growth_exponent": 1.274624
+    },
+    {
+      "seq_id": "A002280",
+      "n_terms": 21,
+      "chi2": 292.682,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.703857,
+      "growth_class": "exponential",
+      "growth_exponent": 1.00065
+    },
+    {
+      "seq_id": "A002281",
+      "n_terms": 21,
+      "chi2": 341.1192,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.847451,
+      "growth_class": "exponential",
+      "growth_exponent": 1.00065
+    },
+    {
+      "seq_id": "A003618",
+      "n_terms": 20,
+      "chi2": 375.3331,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.874037,
+      "growth_class": "exponential",
+      "growth_exponent": 1.000242
+    },
+    {
+      "seq_id": "A000981",
+      "n_terms": 43,
+      "chi2": 853.6137,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.930136,
+      "growth_class": "unknown",
+      "growth_exponent": 0.0
+    },
+    {
+      "seq_id": "A002282",
+      "n_terms": 21,
+      "chi2": 389.5369,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 2.972943,
+      "growth_class": "exponential",
+      "growth_exponent": 1.00065
+    },
+    {
+      "seq_id": "A002283",
+      "n_terms": 22,
+      "chi2": 458.7956,
+      "p_value": 0.0,
+      "compliant": false,
+      "kl_divergence": 3.0844,
+      "growth_class": "exponential",
+      "growth_exponent": 1.000594
+    }
+  ]
+}
