@@ -1,0 +1,639 @@
+{
+  "problem": "NF9: Hecke Eigenvalue Lyapunov Exponent",
+  "description": "Treat normalized Hecke eigenvalues x_n = a_{p_n}/(2*sqrt(p_n)) as a discrete dynamical system. Compute maximal Lyapunov exponent via difference method and Rosenstein nearest-neighbor divergence.",
+  "n_forms": 2000,
+  "n_primes": 168,
+  "normalization": "x_n = a_{p_n} / (2 * sqrt(p_n)), so x_n in [-1, 1]",
+  "overall_statistics": {
+    "name": "all_forms",
+    "count": 2000,
+    "mean": -1.1552611931313272,
+    "std": 0.9226186171989612,
+    "median": -1.0033852130809748,
+    "min": -9.691241655580983,
+    "max": -0.6564165405524331,
+    "pct_positive": 0.0,
+    "pct_negative": 100.0,
+    "q25": -1.1306869120789587,
+    "q75": -0.9168359917426225
+  },
+  "cm_statistics": {
+    "name": "CM_forms",
+    "count": 37,
+    "mean": -7.731421396827862,
+    "std": 0.7954630316690617,
+    "median": -7.936721472555689,
+    "min": -9.691241655580983,
+    "max": -6.89556718288948,
+    "pct_positive": 0.0,
+    "pct_negative": 100.0,
+    "q25": -8.125489789091123,
+    "q75": -6.951512495320191
+  },
+  "non_cm_statistics": {
+    "name": "non_CM_forms",
+    "count": 1963,
+    "mean": -1.0313091159348056,
+    "std": 0.15763893768805443,
+    "median": -0.9982751581155715,
+    "min": -1.7196055011097384,
+    "max": -0.6564165405524331,
+    "pct_positive": 0.0,
+    "pct_negative": 100.0,
+    "q25": -1.1228572067851377,
+    "q75": -0.9157838198269532
+  },
+  "null_model_statistics": {
+    "name": "null_sato_tate_iid",
+    "count": 2000,
+    "mean": -0.9451405922093766,
+    "std": 0.0915150230993917,
+    "median": -0.9450790692702637,
+    "min": -1.2558745553964346,
+    "max": -0.6344144080107524,
+    "pct_positive": 0.0,
+    "pct_negative": 100.0,
+    "q25": -1.0039166204799617,
+    "q75": -0.8838182544082634
+  },
+  "rosenstein_statistics": {
+    "name": "rosenstein_method",
+    "count": 2000,
+    "mean": 0.03803548230198585,
+    "std": 0.004882394328743136,
+    "median": 0.03771136080970221,
+    "min": 0.025005736836251718,
+    "max": 0.07287525550580617,
+    "pct_positive": 100.0,
+    "pct_negative": 0.0,
+    "q25": 0.03523419017903549,
+    "q75": 0.040264374507472216
+  },
+  "conductor_dependence": {
+    "1-100": {
+      "name": "1-100",
+      "count": 93,
+      "mean": -1.374298530852831,
+      "std": 1.546281198513223,
+      "median": -0.9817844857964405,
+      "min": -9.196363562193865,
+      "max": -0.7911975538354407,
+      "pct_positive": 0.0,
+      "pct_negative": 100.0,
+      "q25": -1.1147007778901343,
+      "q75": -0.9131184241532423
+    },
+    "1001-1000": {
+      "name": "1001-1000",
+      "count": 1029,
+      "mean": -1.1089289353579042,
+      "std": 0.7448420855698056,
+      "median": -1.0035889647387262,
+      "min": -9.393844627008981,
+      "max": -0.6564165405524331,
+      "pct_positive": 0.0,
+      "pct_negative": 100.0,
+      "q25": -1.1266264666352388,
+      "q75": -0.915746517711055
+    },
+    "101-500": {
+      "name": "101-500",
+      "count": 878,
+      "mean": -1.1863607612870817,
+      "std": 1.0134010502528052,
+      "median": -1.004338998043767,
+      "min": -9.691241655580983,
+      "max": -0.7030950284133306,
+      "pct_positive": 0.0,
+      "pct_negative": 100.0,
+      "q25": -1.1367355626388893,
+      "q75": -0.9212047114844446
+    }
+  },
+  "lambda_vs_log_conductor_correlation": 0.0728695805861128,
+  "cm_vs_nocm_test": {
+    "ks_statistic": 1.0,
+    "ks_pvalue": 2.800044794629171e-79,
+    "mannwhitney_statistic": 0.0,
+    "mannwhitney_pvalue": 1.7162843282022887e-25
+  },
+  "data_vs_null_ks": {
+    "ks_statistic": 0.273,
+    "ks_pvalue": 5.67148232102002e-66
+  },
+  "histogram": {
+    "counts": [
+      1,
+      1,
+      2,
+      0,
+      0,
+      1,
+      0,
+      3,
+      2,
+      10,
+      0,
+      0,
+      1,
+      1,
+      2,
+      13,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      9,
+      56,
+      226,
+      606,
+      944,
+      122
+    ],
+    "bin_edges": [
+      -9.691241655580983,
+      -9.510545153280413,
+      -9.32984865097984,
+      -9.14915214867927,
+      -8.968455646378699,
+      -8.787759144078128,
+      -8.607062641777556,
+      -8.426366139476986,
+      -8.245669637176416,
+      -8.064973134875844,
+      -7.884276632575273,
+      -7.703580130274702,
+      -7.522883627974132,
+      -7.34218712567356,
+      -7.161490623372989,
+      -6.980794121072418,
+      -6.800097618771847,
+      -6.619401116471276,
+      -6.438704614170705,
+      -6.258008111870135,
+      -6.077311609569563,
+      -5.8966151072689925,
+      -5.715918604968421,
+      -5.53522210266785,
+      -5.354525600367279,
+      -5.173829098066708,
+      -4.993132595766137,
+      -4.812436093465566,
+      -4.631739591164996,
+      -4.451043088864425,
+      -4.2703465865638535,
+      -4.089650084263282,
+      -3.9089535819627113,
+      -3.72825707966214,
+      -3.547560577361569,
+      -3.366864075060998,
+      -3.186167572760427,
+      -3.0054710704598566,
+      -2.8247745681592855,
+      -2.6440780658587144,
+      -2.4633815635581433,
+      -2.282685061257572,
+      -2.101988558957001,
+      -1.92129205665643,
+      -1.7405955543558598,
+      -1.5598990520552878,
+      -1.3792025497547176,
+      -1.1985060474541456,
+      -1.0178095451535754,
+      -0.8371130428530051,
+      -0.6564165405524331
+    ]
+  },
+  "interpretation": [
+    "Mean lambda = -1.1553 < 0: the system is CONTRACTING on average. Consecutive normalized eigenvalues tend to be close, not chaotic.",
+    "Correlation with log(conductor) = 0.0729: NO conductor dependence.",
+    "CM vs non-CM: KS p = 2.80e-79 \u2014 SIGNIFICANT difference. CM mean = -7.7314, non-CM mean = -1.0313.",
+    "Data vs Sato-Tate iid null: KS p = 5.67e-66 \u2014 Hecke eigenvalues are NOT behaving like iid Sato-Tate draws (serial dependence detected)."
+  ],
+  "per_form_results": [
+    {
+      "label": "11.2.a.a",
+      "level": 11,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.8298087199376945,
+      "lambda_rosenstein": 0.0388552236431622
+    },
+    {
+      "label": "14.2.a.a",
+      "level": 14,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9807132769503967,
+      "lambda_rosenstein": 0.04122290879090006
+    },
+    {
+      "label": "15.2.a.a",
+      "level": 15,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9647425746700492,
+      "lambda_rosenstein": 0.03911141018799239
+    },
+    {
+      "label": "17.2.a.a",
+      "level": 17,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.8473010749422518,
+      "lambda_rosenstein": 0.04209149017382375
+    },
+    {
+      "label": "19.2.a.a",
+      "level": 19,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1581776051589674,
+      "lambda_rosenstein": 0.03573142920110773
+    },
+    {
+      "label": "20.2.a.a",
+      "level": 20,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9918238014301013,
+      "lambda_rosenstein": 0.03905719322694724
+    },
+    {
+      "label": "21.2.a.a",
+      "level": 21,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9392377081599794,
+      "lambda_rosenstein": 0.04490547957444866
+    },
+    {
+      "label": "24.2.a.a",
+      "level": 24,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.890352584876816,
+      "lambda_rosenstein": 0.04106147287787477
+    },
+    {
+      "label": "26.2.a.a",
+      "level": 26,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0798633001920281,
+      "lambda_rosenstein": 0.03438113194746599
+    },
+    {
+      "label": "26.2.a.b",
+      "level": 26,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9499289584628001,
+      "lambda_rosenstein": 0.035629017400526625
+    },
+    {
+      "label": "27.2.a.a",
+      "level": 27,
+      "is_cm": true,
+      "sato_tate": "1.2.1.d1",
+      "lambda_diff": -6.923809772262741,
+      "lambda_rosenstein": 0.06624854045845563
+    },
+    {
+      "label": "30.2.a.a",
+      "level": 30,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.915365790592692,
+      "lambda_rosenstein": 0.03583952893441469
+    },
+    {
+      "label": "32.2.a.a",
+      "level": 32,
+      "is_cm": true,
+      "sato_tate": "1.2.1.d1",
+      "lambda_diff": -7.9704995072189,
+      "lambda_rosenstein": 0.0623952085061564
+    },
+    {
+      "label": "33.2.a.a",
+      "level": 33,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1385295152137602,
+      "lambda_rosenstein": 0.04145143995969816
+    },
+    {
+      "label": "34.2.a.a",
+      "level": 34,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0579579163090254,
+      "lambda_rosenstein": 0.04369010859060454
+    },
+    {
+      "label": "35.2.a.a",
+      "level": 35,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.189892407514853,
+      "lambda_rosenstein": 0.041146843027999584
+    },
+    {
+      "label": "36.2.a.a",
+      "level": 36,
+      "is_cm": true,
+      "sato_tate": "1.2.1.d1",
+      "lambda_diff": -6.951512495320191,
+      "lambda_rosenstein": 0.06069366844313767
+    },
+    {
+      "label": "37.2.a.a",
+      "level": 37,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.2061413390467166,
+      "lambda_rosenstein": 0.03684907791246633
+    },
+    {
+      "label": "37.2.a.b",
+      "level": 37,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9227389849645128,
+      "lambda_rosenstein": 0.04009566168077802
+    },
+    {
+      "label": "38.2.a.a",
+      "level": 38,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9982577253599865,
+      "lambda_rosenstein": 0.03584389246253343
+    },
+    {
+      "label": "38.2.a.b",
+      "level": 38,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.111367958570227,
+      "lambda_rosenstein": 0.03190747280108602
+    },
+    {
+      "label": "39.2.a.a",
+      "level": 39,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1507590309177833,
+      "lambda_rosenstein": 0.04334435650266479
+    },
+    {
+      "label": "40.2.a.a",
+      "level": 40,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1716794316433052,
+      "lambda_rosenstein": 0.03772832514580558
+    },
+    {
+      "label": "42.2.a.a",
+      "level": 42,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.8984509181097216,
+      "lambda_rosenstein": 0.02706100054247497
+    },
+    {
+      "label": "43.2.a.a",
+      "level": 43,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9369396326093545,
+      "lambda_rosenstein": 0.03454750502939739
+    },
+    {
+      "label": "44.2.a.a",
+      "level": 44,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9180125249834695,
+      "lambda_rosenstein": 0.0401221959562794
+    },
+    {
+      "label": "45.2.a.a",
+      "level": 45,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9817844857964405,
+      "lambda_rosenstein": 0.04727052218625709
+    },
+    {
+      "label": "46.2.a.a",
+      "level": 46,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0049552646823106,
+      "lambda_rosenstein": 0.045361953955179744
+    },
+    {
+      "label": "48.2.a.a",
+      "level": 48,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0441507781923762,
+      "lambda_rosenstein": 0.03766187062755694
+    },
+    {
+      "label": "49.2.a.a",
+      "level": 49,
+      "is_cm": true,
+      "sato_tate": "1.2.1.d1",
+      "lambda_diff": -9.196363562193865,
+      "lambda_rosenstein": 0.06114025081481046
+    },
+    {
+      "label": "50.2.a.a",
+      "level": 50,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0073105546239314,
+      "lambda_rosenstein": 0.03456304142800264
+    },
+    {
+      "label": "50.2.a.b",
+      "level": 50,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0312995079962886,
+      "lambda_rosenstein": 0.034749282177402474
+    },
+    {
+      "label": "51.2.a.a",
+      "level": 51,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1482619612917033,
+      "lambda_rosenstein": 0.04142126313978427
+    },
+    {
+      "label": "52.2.a.a",
+      "level": 52,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1796048460843331,
+      "lambda_rosenstein": 0.03417594437570422
+    },
+    {
+      "label": "53.2.a.a",
+      "level": 53,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.8913742319860763,
+      "lambda_rosenstein": 0.04090751842885319
+    },
+    {
+      "label": "54.2.a.a",
+      "level": 54,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.8939613416681393,
+      "lambda_rosenstein": 0.035982585241875295
+    },
+    {
+      "label": "54.2.a.b",
+      "level": 54,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.8042065377753705,
+      "lambda_rosenstein": 0.043204831115884794
+    },
+    {
+      "label": "55.2.a.a",
+      "level": 55,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9484720649153089,
+      "lambda_rosenstein": 0.03580198065219496
+    },
+    {
+      "label": "56.2.a.a",
+      "level": 56,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1186286750001577,
+      "lambda_rosenstein": 0.040036651209690674
+    },
+    {
+      "label": "56.2.a.b",
+      "level": 56,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1472550653436089,
+      "lambda_rosenstein": 0.03839778510416371
+    },
+    {
+      "label": "57.2.a.a",
+      "level": 57,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.4355867498488177,
+      "lambda_rosenstein": 0.03564622174001677
+    },
+    {
+      "label": "57.2.a.b",
+      "level": 57,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.887232416449062,
+      "lambda_rosenstein": 0.03505016763297236
+    },
+    {
+      "label": "57.2.a.c",
+      "level": 57,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.1812357950896688,
+      "lambda_rosenstein": 0.04161510921501384
+    },
+    {
+      "label": "58.2.a.a",
+      "level": 58,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9131184241532423,
+      "lambda_rosenstein": 0.03722774764733243
+    },
+    {
+      "label": "58.2.a.b",
+      "level": 58,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9251671590534744,
+      "lambda_rosenstein": 0.037928789890472686
+    },
+    {
+      "label": "61.2.a.a",
+      "level": 61,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0448040882312797,
+      "lambda_rosenstein": 0.043035696745260685
+    },
+    {
+      "label": "62.2.a.a",
+      "level": 62,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0441693827137732,
+      "lambda_rosenstein": 0.03231851708125079
+    },
+    {
+      "label": "63.2.a.a",
+      "level": 63,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -0.9022882790584674,
+      "lambda_rosenstein": 0.038986222739822066
+    },
+    {
+      "label": "64.2.a.a",
+      "level": 64,
+      "is_cm": true,
+      "sato_tate": "1.2.1.d1",
+      "lambda_diff": -7.88592170594535,
+      "lambda_rosenstein": 0.06984624929218194
+    },
+    {
+      "label": "65.2.a.a",
+      "level": 65,
+      "is_cm": false,
+      "sato_tate": "1.2.3.c1",
+      "lambda_diff": -1.0179783133587006,
+      "lambda_rosenstein": 0.03994830813047315
+    }
+  ]
+}
