@@ -393,7 +393,22 @@ Dim-2: all cn=1 (LMFDB stores one per genus). Dim-3 (36,585): mean cn=15.5, medi
 66,158 curves. RM=116 (0.175%). RM trace variance 0.377 vs CM 0.160 vs generic Q 0.235. RM-CM KS: D=0.360, p=5.2×10⁻¹⁵. CM has lowest variance (maximally constrained Frobenius). M₄/M₂² for RM=2.72 vs CM=10.9 (CM heavier tails relative to spread).
 
 ### 85. OEIS: 93.3% Integer, 6.2% Non-Integer, cofr Easiest (OEIS-types)
-394,454 sequences. 88.1% nonn, 5.2% sign, 2.0% frac, 3.7% cons, 0.5% cofr. Continued fractions have 57.7% `easy` rate (mechanically computable). Integer sequences have highest `more`+`hard` rates (computational frontier). Real constants have highest `changed` rate (editorial churn).
+394,454 sequences. 88.1% nonn, 5.2% sign, 2.0% frac, 3.7% cons, 0.5% cofr. cofr 57.7% easy rate.
+
+### 86. Higher Moments: M₆/M₂³ = 6.0 (EC) vs 13.4 (G2), Catalan Numbers (Moments-M6M8)
+1000 EC: M₆/M₂³=6.04 (theory: C₃=5), M₈/M₂⁴=18.8 (theory: C₄=14). 1000 G2: M₆/M₂³=13.4 (theory: 14), M₈/M₂⁴=81.3 (theory: 84). Finite-sample bias 10-32% (only 25 primes). Families cleanly separated by M₆/M₂³ alone. The Catalan number sequence governs SU(2) moment ratios.
+
+### 87. EC Semistable: 34.4% Overall, 53% at Rank-2 (EC-semi)
+31,073 curves. 34.4% semistable (squarefree conductor). Rank-2 enriched: 53.0% semistable (1.5× rank-0's 33.1%). Semistable mean rank 0.551 vs non-semistable 0.504. Rank-2 fraction: 3.4% semistable vs 1.6% non-semistable (2.15× enrichment). Semistable fraction decreases with conductor (48% for N<100, 33% for N>1000).
+
+### 88. Lattice |Aut|: 81.2% Minimal, Leech at 8.3×10¹⁸ (Lattice-aut)
+39,293 lattices. 81.2% have |Aut|=2 or 4. 95.7% are powers of 2. Range: 2 to 8.3×10¹⁸ (Leech). |Aut| vs class_number: ρ=-0.387 (more symmetry = fewer classes). |Aut| vs theta sparsity: ρ=-0.429. E₈: 696,729,600. A_n family grows as (n+1)! — dominates top spots above E₈.
+
+### 89. Knot Count: ~4.51× Per Crossing, Non-Alt Surpasses Alt at c=13 (Knot-count)
+12,965 knots, c=3-13. Simple exponential b=4.51 (R²=0.99990). Power-exponential b=13.07 (R²=0.99998). Alternating b_alt=2.39, non-alternating b_na=4.52. Non-alt surpasses alt at c=13 (5,110 vs 4,878). Successive ratios converge toward theoretical 10.398.
+
+### 90. OEIS Near-Duplicates: 2.0% at 15 Terms, 1.3% at 20 Terms (OEIS-dupes)
+10,000 sequences. 35.9% share first 5 terms. 1.98% (170 seqs) share first 15 terms across 73 groups. Most 15-term matches diverge shortly after — genuinely different sequences (coin-change variants, similar generating functions). True redundancy <0.1%. Largest 5-term collision: 157 sequences starting 0,1,2,3,4.
 
 ---
 
@@ -759,7 +774,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*210 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*215 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

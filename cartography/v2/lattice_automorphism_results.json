@@ -1,0 +1,551 @@
+{
+  "experiment": "lattice_automorphism_group_distribution",
+  "data_source": "LMFDB lat_lattices (39K records)",
+  "n_records": 39293,
+  "distribution": {
+    "min": 2,
+    "max": 8315553613086720000,
+    "median": 4.0,
+    "mean_log10": 0.594,
+    "std_log10": 0.46,
+    "ks_lognormal": {
+      "statistic": 0.305,
+      "p_value": 0.0
+    },
+    "power_of_2_fraction": 0.9574,
+    "even_fraction": 1.0,
+    "log10_histogram": {
+      "0.0-0.5": 15349,
+      "0.5-1.0": 21340,
+      "1.0-1.5": 1819,
+      "1.5-2.0": 311,
+      "2.0-2.5": 119,
+      "2.5-3.0": 116,
+      "3.0-3.5": 75,
+      "3.5-4.0": 53,
+      "4.0-4.5": 21,
+      "4.5-5.0": 34,
+      "5.0-5.5": 13,
+      "5.5-6.0": 12,
+      "6.0-6.5": 8,
+      "6.5-7.0": 7,
+      "7.0-7.5": 5,
+      "7.5-8.0": 1,
+      "8.5-9.0": 2,
+      "9.0-9.5": 2,
+      "9.5-10.0": 2,
+      "10.0-10.5": 1,
+      "11.0-11.5": 1,
+      "12.0-12.5": 1,
+      "18.5-19.0": 1
+    },
+    "top20_values": [
+      {
+        "aut": 4,
+        "count": 16542,
+        "frac": 0.421
+      },
+      {
+        "aut": 2,
+        "count": 15349,
+        "frac": 0.3906
+      },
+      {
+        "aut": 8,
+        "count": 4798,
+        "frac": 0.1221
+      },
+      {
+        "aut": 16,
+        "count": 796,
+        "frac": 0.0203
+      },
+      {
+        "aut": 24,
+        "count": 542,
+        "frac": 0.0138
+      },
+      {
+        "aut": 12,
+        "count": 481,
+        "frac": 0.0122
+      },
+      {
+        "aut": 96,
+        "count": 106,
+        "frac": 0.0027
+      },
+      {
+        "aut": 32,
+        "count": 94,
+        "frac": 0.0024
+      },
+      {
+        "aut": 192,
+        "count": 71,
+        "frac": 0.0018
+      },
+      {
+        "aut": 48,
+        "count": 70,
+        "frac": 0.0018
+      },
+      {
+        "aut": 768,
+        "count": 41,
+        "frac": 0.001
+      },
+      {
+        "aut": 64,
+        "count": 29,
+        "frac": 0.0007
+      },
+      {
+        "aut": 384,
+        "count": 29,
+        "frac": 0.0007
+      },
+      {
+        "aut": 2880,
+        "count": 22,
+        "frac": 0.0006
+      },
+      {
+        "aut": 576,
+        "count": 22,
+        "frac": 0.0006
+      },
+      {
+        "aut": 7680,
+        "count": 20,
+        "frac": 0.0005
+      },
+      {
+        "aut": 2304,
+        "count": 17,
+        "frac": 0.0004
+      },
+      {
+        "aut": 144,
+        "count": 16,
+        "frac": 0.0004
+      },
+      {
+        "aut": 480,
+        "count": 16,
+        "frac": 0.0004
+      },
+      {
+        "aut": 46080,
+        "count": 15,
+        "frac": 0.0004
+      }
+    ]
+  },
+  "correlations_spearman": {
+    "dim": {
+      "rho": 0.2971,
+      "p": 0.0
+    },
+    "det": {
+      "rho": -0.2228,
+      "p": 0.0
+    },
+    "kissing": {
+      "rho": 0.2481,
+      "p": 0.0
+    },
+    "class_number": {
+      "rho": -0.3871,
+      "p": 0.0
+    },
+    "theta_nonzero_frac": {
+      "rho": -0.4291,
+      "p": 0.0
+    }
+  },
+  "aut_by_dimension": {
+    "1": {
+      "count": 1,
+      "median_aut": 2.0,
+      "max_aut": 2,
+      "mean_log10_aut": 0.301
+    },
+    "2": {
+      "count": 1609,
+      "median_aut": 2.0,
+      "max_aut": 12,
+      "mean_log10_aut": 0.384
+    },
+    "3": {
+      "count": 36585,
+      "median_aut": 4.0,
+      "max_aut": 48,
+      "mean_log10_aut": 0.551
+    },
+    "4": {
+      "count": 481,
+      "median_aut": 24.0,
+      "max_aut": 1152,
+      "mean_log10_aut": 1.351
+    },
+    "5": {
+      "count": 295,
+      "median_aut": 128.0,
+      "max_aut": 3840,
+      "mean_log10_aut": 2.113
+    },
+    "6": {
+      "count": 186,
+      "median_aut": 1152.0,
+      "max_aut": 103680,
+      "mean_log10_aut": 3.121
+    },
+    "7": {
+      "count": 86,
+      "median_aut": 18432.0,
+      "max_aut": 2903040,
+      "mean_log10_aut": 4.274
+    },
+    "8": {
+      "count": 37,
+      "median_aut": 645120.0,
+      "max_aut": 696729600,
+      "mean_log10_aut": 5.82
+    },
+    "9": {
+      "count": 5,
+      "median_aut": 11612160.0,
+      "max_aut": 1393459200,
+      "mean_log10_aut": 7.856
+    },
+    "10": {
+      "count": 3,
+      "median_aut": 8360755200.0,
+      "max_aut": 8360755200,
+      "mean_log10_aut": 9.249
+    },
+    "11": {
+      "count": 1,
+      "median_aut": 958003200.0,
+      "max_aut": 958003200,
+      "mean_log10_aut": 8.981
+    },
+    "12": {
+      "count": 1,
+      "median_aut": 12454041600.0,
+      "max_aut": 12454041600,
+      "mean_log10_aut": 10.095
+    },
+    "13": {
+      "count": 1,
+      "median_aut": 174356582400.0,
+      "max_aut": 174356582400,
+      "mean_log10_aut": 11.241
+    },
+    "14": {
+      "count": 1,
+      "median_aut": 2615348736000.0,
+      "max_aut": 2615348736000,
+      "mean_log10_aut": 12.418
+    },
+    "24": {
+      "count": 1,
+      "median_aut": 8.31555361308672e+18,
+      "max_aut": 8315553613086720000,
+      "mean_log10_aut": 18.92
+    }
+  },
+  "theta_vs_aut": {
+    "quartile_analysis": {
+      "|Aut|=2": {
+        "n": 15349,
+        "mean_nonzero_frac": 0.3187,
+        "std_nonzero_frac": 0.0879
+      },
+      "|Aut|=4": {
+        "n": 16542,
+        "mean_nonzero_frac": 0.2772,
+        "std_nonzero_frac": 0.0605
+      },
+      "|Aut|=8": {
+        "n": 4798,
+        "mean_nonzero_frac": 0.2613,
+        "std_nonzero_frac": 0.0746
+      },
+      "|Aut|=12-48": {
+        "n": 1983,
+        "mean_nonzero_frac": 0.274,
+        "std_nonzero_frac": 0.1513
+      },
+      "|Aut|>48": {
+        "n": 621,
+        "mean_nonzero_frac": 0.528,
+        "std_nonzero_frac": 0.2197
+      }
+    },
+    "direction": "sparser"
+  },
+  "top20_most_symmetric": [
+    {
+      "label": "24.1.1.24.1",
+      "name": [
+        "Leech"
+      ],
+      "dim": 24,
+      "det": 1,
+      "aut": 8315553613086720000,
+      "log10_aut": 18.92,
+      "kissing": 196560,
+      "class_number": 24
+    },
+    {
+      "label": "14.15.15.9.1",
+      "name": [
+        "A14"
+      ],
+      "dim": 14,
+      "det": 15,
+      "aut": 2615348736000,
+      "log10_aut": 12.418,
+      "kissing": 210,
+      "class_number": 9
+    },
+    {
+      "label": "13.14.28.8.1",
+      "name": [
+        "A13"
+      ],
+      "dim": 13,
+      "det": 14,
+      "aut": 174356582400,
+      "log10_aut": 11.241,
+      "kissing": 182,
+      "class_number": 8
+    },
+    {
+      "label": "12.13.13.6.1",
+      "name": [
+        "A12"
+      ],
+      "dim": 12,
+      "det": 13,
+      "aut": 12454041600,
+      "log10_aut": 10.095,
+      "kissing": 156,
+      "class_number": 6
+    },
+    {
+      "label": "10.3.3.1.1",
+      "name": "",
+      "dim": 10,
+      "det": 3,
+      "aut": 8360755200,
+      "log10_aut": 9.922,
+      "kissing": 246,
+      "class_number": 1
+    },
+    {
+      "label": "10.19683.3.1.1",
+      "name": "",
+      "dim": 10,
+      "det": 19683,
+      "aut": 8360755200,
+      "log10_aut": 9.922,
+      "kissing": 6,
+      "class_number": 1
+    },
+    {
+      "label": "9.2.4.1.1",
+      "name": "",
+      "dim": 9,
+      "det": 2,
+      "aut": 1393459200,
+      "log10_aut": 9.144,
+      "kissing": 242,
+      "class_number": 1
+    },
+    {
+      "label": "9.256.2.1.1",
+      "name": "",
+      "dim": 9,
+      "det": 256,
+      "aut": 1393459200,
+      "log10_aut": 9.144,
+      "kissing": 2,
+      "class_number": 1
+    },
+    {
+      "label": "11.12.24.4.1",
+      "name": [
+        "A11"
+      ],
+      "dim": 11,
+      "det": 12,
+      "aut": 958003200,
+      "log10_aut": 8.981,
+      "kissing": 132,
+      "class_number": 4
+    },
+    {
+      "label": "8.1.1.1.1",
+      "name": [
+        "E8"
+      ],
+      "dim": 8,
+      "det": 1,
+      "aut": 696729600,
+      "log10_aut": 8.843,
+      "kissing": 240,
+      "class_number": 1
+    },
+    {
+      "label": "10.11.11.3.1",
+      "name": [
+        "A10"
+      ],
+      "dim": 10,
+      "det": 11,
+      "aut": 79833600,
+      "log10_aut": 7.902,
+      "kissing": 110,
+      "class_number": 3
+    },
+    {
+      "label": "9.16777216.8.1.1",
+      "name": "",
+      "dim": 9,
+      "det": 16777216,
+      "aut": 11612160,
+      "log10_aut": 7.065,
+      "kissing": 2,
+      "class_number": 1
+    },
+    {
+      "label": "9.8.16.1.1",
+      "name": "",
+      "dim": 9,
+      "det": 8,
+      "aut": 11612160,
+      "log10_aut": 7.065,
+      "kissing": 128,
+      "class_number": 1
+    },
+    {
+      "label": "8.1.2.1.1",
+      "name": "",
+      "dim": 8,
+      "det": 1,
+      "aut": 10321920,
+      "log10_aut": 7.014,
+      "kissing": 16,
+      "class_number": 1
+    },
+    {
+      "label": "8.4.2.1.1",
+      "name": "",
+      "dim": 8,
+      "det": 4,
+      "aut": 10321920,
+      "log10_aut": 7.014,
+      "kissing": 112,
+      "class_number": 1
+    },
+    {
+      "label": "8.64.2.1.1",
+      "name": "",
+      "dim": 8,
+      "det": 64,
+      "aut": 10321920,
+      "log10_aut": 7.014,
+      "kissing": 16,
+      "class_number": 1
+    },
+    {
+      "label": "9.10.20.3.1",
+      "name": [
+        "A9"
+      ],
+      "dim": 9,
+      "det": 10,
+      "aut": 7257600,
+      "log10_aut": 6.861,
+      "kissing": 90,
+      "class_number": 3
+    },
+    {
+      "label": "8.256.8.1.2",
+      "name": "",
+      "dim": 8,
+      "det": 256,
+      "aut": 5806080,
+      "log10_aut": 6.764,
+      "kissing": 56,
+      "class_number": 1
+    },
+    {
+      "label": "8.5.5.1.1",
+      "name": "",
+      "dim": 8,
+      "det": 5,
+      "aut": 5806080,
+      "log10_aut": 6.764,
+      "kissing": 126,
+      "class_number": 1
+    },
+    {
+      "label": "8.64.2.1.2",
+      "name": "",
+      "dim": 8,
+      "det": 64,
+      "aut": 5806080,
+      "log10_aut": 6.764,
+      "kissing": 2,
+      "class_number": 1
+    }
+  ],
+  "kissing_prediction_within_dim": {
+    "2": {
+      "rho": 0.3021,
+      "p": 2.59e-35,
+      "n": 1609
+    },
+    "3": {
+      "rho": 0.1962,
+      "p": 0.0,
+      "n": 36585
+    },
+    "4": {
+      "rho": 0.3812,
+      "p": 4.4e-18,
+      "n": 481
+    },
+    "5": {
+      "rho": 0.2808,
+      "p": 9.48e-07,
+      "n": 295
+    },
+    "6": {
+      "rho": 0.3023,
+      "p": 2.75e-05,
+      "n": 186
+    },
+    "7": {
+      "rho": 0.263,
+      "p": 0.0144,
+      "n": 86
+    },
+    "8": {
+      "rho": 0.2337,
+      "p": 0.164,
+      "n": 37
+    }
+  },
+  "findings": [
+    "log10|Aut| is NOT log-normal (KS p=0.00e+00); heavy right tail from famous lattices",
+    "96% of |Aut| values are powers of 2 \u2014 reflects hyperoctahedral/reflection group dominance",
+    "Strong correlation: log10|Aut| vs class_number (rho=-0.387)",
+    "Strong correlation: log10|Aut| vs theta_nonzero_frac (rho=-0.429)",
+    "Most symmetric lattice: ['Leech'] with |Aut|=8315553613086720000 (dim=24)"
+  ]
+}

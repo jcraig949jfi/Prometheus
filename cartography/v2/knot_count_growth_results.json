@@ -1,0 +1,108 @@
+{
+  "description": "Growth rate of prime knots with crossing number",
+  "data_source": "cartography/knots/data/knots.json (12965 prime knots, c=3..13)",
+  "counts_per_crossing": {
+    "3": 1,
+    "4": 1,
+    "5": 2,
+    "6": 3,
+    "7": 7,
+    "8": 21,
+    "9": 49,
+    "10": 165,
+    "11": 552,
+    "12": 2176,
+    "13": 9988
+  },
+  "alternating_counts": {
+    "3": 1,
+    "4": 1,
+    "5": 2,
+    "6": 3,
+    "7": 7,
+    "8": 18,
+    "9": 41,
+    "10": 123,
+    "11": 367,
+    "12": 1288,
+    "13": 4878
+  },
+  "nonalternating_counts": {
+    "3": 0,
+    "4": 0,
+    "5": 0,
+    "6": 0,
+    "7": 0,
+    "8": 3,
+    "9": 8,
+    "10": 42,
+    "11": 185,
+    "12": 888,
+    "13": 5110
+  },
+  "models": {
+    "exponential": {
+      "form": "N(c) = a * b^c",
+      "a": 3.1116648102368876e-05,
+      "b": 4.511595088074247,
+      "b_err": 0.06058284585136448,
+      "R2": 0.9998967791557631,
+      "AIC": 109.28801619452132
+    },
+    "power_exponential": {
+      "form": "N(c) = a * c^p * b^c",
+      "a": 14185.900334877286,
+      "p": -13.162790653266947,
+      "p_err": 1.2049227722052613,
+      "b": 13.066673182678429,
+      "b_err": 1.2829491382031806,
+      "R2": 0.9999805728418601,
+      "AIC": 92.9158291694956,
+      "note": "Best model by AIC and theoretical motivation"
+    }
+  },
+  "alternating_fit": {
+    "form": "N_alt(c) = a * c^p * b^c",
+    "b_measured": 8.513977108249712,
+    "b_theory": 10.398,
+    "b_ratio": 0.8188091083140712,
+    "p_measured": -10.148693053816265,
+    "p_theory": -3.5,
+    "R2": 0.9999925668230563,
+    "b_simple_exponential": 2.3920653373797705,
+    "reference": "Sundberg-Thistlethwaite asymptotic for prime alternating knots"
+  },
+  "nonalternating_fit": {
+    "b_simple_exponential": 4.521946472553697,
+    "crossing_range": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "note": "Non-alternating first appear at c=8 (3 knots); dominant by c=13"
+  },
+  "successive_ratios": {
+    "3": 1.0,
+    "4": 2.0,
+    "5": 1.5,
+    "6": 2.333,
+    "7": 3.0,
+    "8": 2.333,
+    "9": 3.367,
+    "10": 3.345,
+    "11": 3.942,
+    "12": 4.59
+  },
+  "key_findings": [
+    "Exponential growth rate (simple): b = 4.5116",
+    "Power-exponential (best fit): b = 13.0667, p = -13.1628",
+    "Alternating knots: b = 8.5140 (theory: 10.398), p = -10.1487 (theory: -3.5)",
+    "Non-alternating growth rate: b = 4.5219",
+    "Non-alternating surpass alternating at c=13: 5110 vs 4878",
+    "Successive ratios converge toward ~5 from above, consistent with exponential",
+    "Power-exponential is best model; polynomial and factorial are inferior"
+  ]
+}
