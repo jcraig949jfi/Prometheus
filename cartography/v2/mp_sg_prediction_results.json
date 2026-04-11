@@ -1,0 +1,693 @@
+{
+  "experiment": "mp_sg_prediction",
+  "description": "Random forest prediction of spacegroup_number and crystal_system from physical properties",
+  "n_records": 10000,
+  "features": [
+    "band_gap",
+    "density",
+    "volume",
+    "nsites",
+    "formation_energy_per_atom",
+    "crystal_system_enc"
+  ],
+  "n_spacegroups": 96,
+  "n_crystal_systems": 7,
+  "majority_sg": {
+    "sg": 1,
+    "count": 463,
+    "baseline_acc": 0.0463
+  },
+  "majority_cs": {
+    "cs": "Orthorhombic",
+    "count": 2189,
+    "baseline_acc": 0.2189
+  },
+  "sg_distribution_top20": [
+    {
+      "sg": 1,
+      "count": 463
+    },
+    {
+      "sg": 194,
+      "count": 374
+    },
+    {
+      "sg": 225,
+      "count": 340
+    },
+    {
+      "sg": 166,
+      "count": 332
+    },
+    {
+      "sg": 139,
+      "count": 324
+    },
+    {
+      "sg": 229,
+      "count": 318
+    },
+    {
+      "sg": 12,
+      "count": 300
+    },
+    {
+      "sg": 2,
+      "count": 293
+    },
+    {
+      "sg": 221,
+      "count": 291
+    },
+    {
+      "sg": 148,
+      "count": 287
+    },
+    {
+      "sg": 123,
+      "count": 286
+    },
+    {
+      "sg": 191,
+      "count": 285
+    },
+    {
+      "sg": 55,
+      "count": 285
+    },
+    {
+      "sg": 14,
+      "count": 276
+    },
+    {
+      "sg": 167,
+      "count": 273
+    },
+    {
+      "sg": 64,
+      "count": 272
+    },
+    {
+      "sg": 19,
+      "count": 270
+    },
+    {
+      "sg": 230,
+      "count": 268
+    },
+    {
+      "sg": 33,
+      "count": 267
+    },
+    {
+      "sg": 140,
+      "count": 265
+    }
+  ],
+  "cs_distribution": [
+    {
+      "cs": "Cubic",
+      "count": 1979
+    },
+    {
+      "cs": "Hexagonal",
+      "count": 887
+    },
+    {
+      "cs": "Monoclinic",
+      "count": 1618
+    },
+    {
+      "cs": "Orthorhombic",
+      "count": 2189
+    },
+    {
+      "cs": "Tetragonal",
+      "count": 1426
+    },
+    {
+      "cs": "Triclinic",
+      "count": 756
+    },
+    {
+      "cs": "Trigonal",
+      "count": 1145
+    }
+  ],
+  "crystal_system_prediction": {
+    "task": "predict crystal_system from [band_gap, density, volume, nsites, formation_energy]",
+    "n_folds": 5,
+    "fold_accuracies": [
+      0.2975,
+      0.2995,
+      0.287,
+      0.2945,
+      0.286
+    ],
+    "mean_accuracy": 0.2929,
+    "std_accuracy": 0.0055,
+    "majority_baseline": 0.2189,
+    "lift_over_baseline": 1.34,
+    "feature_importance": [
+      {
+        "feature": "volume",
+        "importance": 0.2717
+      },
+      {
+        "feature": "density",
+        "importance": 0.2216
+      },
+      {
+        "feature": "formation_energy_per_atom",
+        "importance": 0.2181
+      },
+      {
+        "feature": "band_gap",
+        "importance": 0.1565
+      },
+      {
+        "feature": "nsites",
+        "importance": 0.1321
+      }
+    ],
+    "per_class_accuracy": [
+      {
+        "class": "Cubic",
+        "total": 1979,
+        "correct": 903,
+        "accuracy": 0.4563
+      },
+      {
+        "class": "Hexagonal",
+        "total": 887,
+        "correct": 99,
+        "accuracy": 0.1116
+      },
+      {
+        "class": "Monoclinic",
+        "total": 1618,
+        "correct": 337,
+        "accuracy": 0.2083
+      },
+      {
+        "class": "Orthorhombic",
+        "total": 2189,
+        "correct": 1197,
+        "accuracy": 0.5468
+      },
+      {
+        "class": "Tetragonal",
+        "total": 1426,
+        "correct": 133,
+        "accuracy": 0.0933
+      },
+      {
+        "class": "Triclinic",
+        "total": 756,
+        "correct": 199,
+        "accuracy": 0.2632
+      },
+      {
+        "class": "Trigonal",
+        "total": 1145,
+        "correct": 61,
+        "accuracy": 0.0533
+      }
+    ],
+    "top_confused_pairs": [
+      {
+        "true": "Monoclinic",
+        "predicted": "Orthorhombic",
+        "count": 869,
+        "pct_of_true": 0.5371
+      },
+      {
+        "true": "Tetragonal",
+        "predicted": "Orthorhombic",
+        "count": 641,
+        "pct_of_true": 0.4495
+      },
+      {
+        "true": "Cubic",
+        "predicted": "Orthorhombic",
+        "count": 616,
+        "pct_of_true": 0.3113
+      },
+      {
+        "true": "Trigonal",
+        "predicted": "Orthorhombic",
+        "count": 517,
+        "pct_of_true": 0.4515
+      },
+      {
+        "true": "Orthorhombic",
+        "predicted": "Monoclinic",
+        "count": 403,
+        "pct_of_true": 0.1841
+      },
+      {
+        "true": "Hexagonal",
+        "predicted": "Orthorhombic",
+        "count": 382,
+        "pct_of_true": 0.4307
+      },
+      {
+        "true": "Tetragonal",
+        "predicted": "Cubic",
+        "count": 361,
+        "pct_of_true": 0.2532
+      },
+      {
+        "true": "Triclinic",
+        "predicted": "Orthorhombic",
+        "count": 319,
+        "pct_of_true": 0.422
+      },
+      {
+        "true": "Orthorhombic",
+        "predicted": "Cubic",
+        "count": 298,
+        "pct_of_true": 0.1361
+      },
+      {
+        "true": "Trigonal",
+        "predicted": "Cubic",
+        "count": 229,
+        "pct_of_true": 0.2
+      },
+      {
+        "true": "Cubic",
+        "predicted": "Monoclinic",
+        "count": 221,
+        "pct_of_true": 0.1117
+      },
+      {
+        "true": "Trigonal",
+        "predicted": "Monoclinic",
+        "count": 205,
+        "pct_of_true": 0.179
+      },
+      {
+        "true": "Tetragonal",
+        "predicted": "Monoclinic",
+        "count": 204,
+        "pct_of_true": 0.1431
+      },
+      {
+        "true": "Monoclinic",
+        "predicted": "Cubic",
+        "count": 200,
+        "pct_of_true": 0.1236
+      },
+      {
+        "true": "Orthorhombic",
+        "predicted": "Tetragonal",
+        "count": 160,
+        "pct_of_true": 0.0731
+      }
+    ],
+    "confusion_matrix": [
+      [
+        903,
+        22,
+        221,
+        616,
+        148,
+        6,
+        63
+      ],
+      [
+        158,
+        99,
+        132,
+        382,
+        65,
+        5,
+        46
+      ],
+      [
+        200,
+        16,
+        337,
+        869,
+        132,
+        7,
+        57
+      ],
+      [
+        298,
+        45,
+        403,
+        1197,
+        160,
+        16,
+        70
+      ],
+      [
+        361,
+        21,
+        204,
+        641,
+        133,
+        9,
+        57
+      ],
+      [
+        63,
+        7,
+        103,
+        319,
+        43,
+        199,
+        22
+      ],
+      [
+        229,
+        27,
+        205,
+        517,
+        94,
+        12,
+        61
+      ]
+    ],
+    "class_labels": [
+      "Cubic",
+      "Hexagonal",
+      "Monoclinic",
+      "Orthorhombic",
+      "Tetragonal",
+      "Triclinic",
+      "Trigonal"
+    ]
+  },
+  "spacegroup_prediction": {
+    "task": "predict spacegroup_number from [band_gap, density, volume, nsites, formation_energy, crystal_system_enc]",
+    "n_classes": 96,
+    "n_folds": 5,
+    "fold_accuracies": [
+      0.2475,
+      0.237,
+      0.244,
+      0.238,
+      0.2505
+    ],
+    "mean_accuracy": 0.2434,
+    "std_accuracy": 0.0052,
+    "top5_accuracy": 0.8374,
+    "majority_baseline": 0.0463,
+    "lift_over_baseline": 5.26,
+    "feature_importance": [
+      {
+        "feature": "crystal_system_enc",
+        "importance": 0.2557
+      },
+      {
+        "feature": "formation_energy_per_atom",
+        "importance": 0.1705
+      },
+      {
+        "feature": "volume",
+        "importance": 0.1695
+      },
+      {
+        "feature": "density",
+        "importance": 0.1632
+      },
+      {
+        "feature": "band_gap",
+        "importance": 0.1309
+      },
+      {
+        "feature": "nsites",
+        "importance": 0.1102
+      }
+    ],
+    "per_class_accuracy_top20": [
+      {
+        "spacegroup": 1,
+        "total": 463,
+        "correct": 327,
+        "accuracy": 0.7063
+      },
+      {
+        "spacegroup": 194,
+        "total": 374,
+        "correct": 200,
+        "accuracy": 0.5348
+      },
+      {
+        "spacegroup": 225,
+        "total": 340,
+        "correct": 94,
+        "accuracy": 0.2765
+      },
+      {
+        "spacegroup": 166,
+        "total": 332,
+        "correct": 128,
+        "accuracy": 0.3855
+      },
+      {
+        "spacegroup": 139,
+        "total": 324,
+        "correct": 114,
+        "accuracy": 0.3519
+      },
+      {
+        "spacegroup": 229,
+        "total": 318,
+        "correct": 57,
+        "accuracy": 0.1792
+      },
+      {
+        "spacegroup": 12,
+        "total": 300,
+        "correct": 77,
+        "accuracy": 0.2567
+      },
+      {
+        "spacegroup": 2,
+        "total": 293,
+        "correct": 157,
+        "accuracy": 0.5358
+      },
+      {
+        "spacegroup": 221,
+        "total": 291,
+        "correct": 56,
+        "accuracy": 0.1924
+      },
+      {
+        "spacegroup": 148,
+        "total": 287,
+        "correct": 68,
+        "accuracy": 0.2369
+      },
+      {
+        "spacegroup": 123,
+        "total": 286,
+        "correct": 68,
+        "accuracy": 0.2378
+      },
+      {
+        "spacegroup": 191,
+        "total": 285,
+        "correct": 90,
+        "accuracy": 0.3158
+      },
+      {
+        "spacegroup": 55,
+        "total": 285,
+        "correct": 49,
+        "accuracy": 0.1719
+      },
+      {
+        "spacegroup": 14,
+        "total": 276,
+        "correct": 64,
+        "accuracy": 0.2319
+      },
+      {
+        "spacegroup": 167,
+        "total": 273,
+        "correct": 64,
+        "accuracy": 0.2344
+      },
+      {
+        "spacegroup": 64,
+        "total": 272,
+        "correct": 44,
+        "accuracy": 0.1618
+      },
+      {
+        "spacegroup": 19,
+        "total": 270,
+        "correct": 43,
+        "accuracy": 0.1593
+      },
+      {
+        "spacegroup": 230,
+        "total": 268,
+        "correct": 53,
+        "accuracy": 0.1978
+      },
+      {
+        "spacegroup": 33,
+        "total": 267,
+        "correct": 32,
+        "accuracy": 0.1199
+      },
+      {
+        "spacegroup": 140,
+        "total": 265,
+        "correct": 54,
+        "accuracy": 0.2038
+      }
+    ],
+    "top_confused_pairs": [
+      {
+        "true_sg": 1,
+        "predicted_sg": 2,
+        "count": 136,
+        "pct_of_true": 0.2937
+      },
+      {
+        "true_sg": 2,
+        "predicted_sg": 1,
+        "count": 136,
+        "pct_of_true": 0.4642
+      },
+      {
+        "true_sg": 191,
+        "predicted_sg": 194,
+        "count": 125,
+        "pct_of_true": 0.4386
+      },
+      {
+        "true_sg": 194,
+        "predicted_sg": 191,
+        "count": 105,
+        "pct_of_true": 0.2807
+      },
+      {
+        "true_sg": 148,
+        "predicted_sg": 166,
+        "count": 93,
+        "pct_of_true": 0.324
+      },
+      {
+        "true_sg": 166,
+        "predicted_sg": 148,
+        "count": 93,
+        "pct_of_true": 0.2801
+      },
+      {
+        "true_sg": 167,
+        "predicted_sg": 166,
+        "count": 87,
+        "pct_of_true": 0.3187
+      },
+      {
+        "true_sg": 186,
+        "predicted_sg": 191,
+        "count": 86,
+        "pct_of_true": 0.3857
+      },
+      {
+        "true_sg": 186,
+        "predicted_sg": 194,
+        "count": 86,
+        "pct_of_true": 0.3857
+      },
+      {
+        "true_sg": 167,
+        "predicted_sg": 148,
+        "count": 78,
+        "pct_of_true": 0.2857
+      },
+      {
+        "true_sg": 148,
+        "predicted_sg": 167,
+        "count": 75,
+        "pct_of_true": 0.2613
+      },
+      {
+        "true_sg": 229,
+        "predicted_sg": 225,
+        "count": 75,
+        "pct_of_true": 0.2358
+      },
+      {
+        "true_sg": 160,
+        "predicted_sg": 166,
+        "count": 73,
+        "pct_of_true": 0.3093
+      },
+      {
+        "true_sg": 160,
+        "predicted_sg": 148,
+        "count": 69,
+        "pct_of_true": 0.2924
+      },
+      {
+        "true_sg": 191,
+        "predicted_sg": 186,
+        "count": 69,
+        "pct_of_true": 0.2421
+      },
+      {
+        "true_sg": 194,
+        "predicted_sg": 186,
+        "count": 68,
+        "pct_of_true": 0.1818
+      },
+      {
+        "true_sg": 87,
+        "predicted_sg": 139,
+        "count": 66,
+        "pct_of_true": 0.251
+      },
+      {
+        "true_sg": 140,
+        "predicted_sg": 123,
+        "count": 66,
+        "pct_of_true": 0.2491
+      },
+      {
+        "true_sg": 123,
+        "predicted_sg": 139,
+        "count": 65,
+        "pct_of_true": 0.2273
+      },
+      {
+        "true_sg": 166,
+        "predicted_sg": 167,
+        "count": 64,
+        "pct_of_true": 0.1928
+      }
+    ]
+  },
+  "spacegroup_pure_physics": {
+    "task": "predict spacegroup_number from [band_gap, density, volume, nsites, formation_energy] only",
+    "fold_accuracies": [
+      0.0715,
+      0.0725,
+      0.075,
+      0.078,
+      0.078
+    ],
+    "mean_accuracy": 0.075,
+    "std_accuracy": 0.0027,
+    "crystal_system_feature_lift": 0.1684
+  },
+  "summary": {
+    "crystal_system_accuracy": 0.2929,
+    "crystal_system_baseline": 0.2189,
+    "spacegroup_accuracy": 0.2434,
+    "spacegroup_top5_accuracy": 0.8374,
+    "spacegroup_baseline": 0.0463,
+    "spacegroup_pure_accuracy": 0.075,
+    "conclusion": "Crystal system: 29.3% vs 21.9% baseline (1.3x lift). Space group: 24.3% top-1 / 83.7% top-5 vs 4.6% baseline. Crystal system encoding adds +16.8% to SG prediction. Physical properties carry substantial but incomplete symmetry information."
+  }
+}

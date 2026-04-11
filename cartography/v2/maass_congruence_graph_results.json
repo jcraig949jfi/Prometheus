@@ -1,0 +1,782 @@
+{
+  "metadata": {
+    "sample_size": 3000,
+    "total_forms": 14995,
+    "primes_for_fingerprint": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ],
+    "n_primes": 10,
+    "ells_tested": [
+      3,
+      5,
+      7
+    ],
+    "seed": 42,
+    "timestamp": "2026-04-11T07:30:39",
+    "runtime_seconds": 3.12
+  },
+  "rounded_value_distribution": {
+    "2": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          -1,
+          780
+        ],
+        [
+          1,
+          763
+        ],
+        [
+          0,
+          747
+        ],
+        [
+          -2,
+          387
+        ],
+        [
+          2,
+          323
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "3": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          -1,
+          880
+        ],
+        [
+          1,
+          782
+        ],
+        [
+          0,
+          740
+        ],
+        [
+          -2,
+          312
+        ],
+        [
+          2,
+          286
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "5": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          1060
+        ],
+        [
+          1,
+          728
+        ],
+        [
+          -1,
+          710
+        ],
+        [
+          -2,
+          270
+        ],
+        [
+          2,
+          232
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "7": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          1013
+        ],
+        [
+          1,
+          752
+        ],
+        [
+          -1,
+          733
+        ],
+        [
+          -2,
+          257
+        ],
+        [
+          2,
+          245
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "11": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          1047
+        ],
+        [
+          1,
+          778
+        ],
+        [
+          -1,
+          764
+        ],
+        [
+          2,
+          219
+        ],
+        [
+          -2,
+          192
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "13": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          1076
+        ],
+        [
+          1,
+          777
+        ],
+        [
+          -1,
+          745
+        ],
+        [
+          2,
+          202
+        ],
+        [
+          -2,
+          200
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "17": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          983
+        ],
+        [
+          -1,
+          811
+        ],
+        [
+          1,
+          811
+        ],
+        [
+          2,
+          210
+        ],
+        [
+          -2,
+          184
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "19": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          1022
+        ],
+        [
+          -1,
+          779
+        ],
+        [
+          1,
+          767
+        ],
+        [
+          -2,
+          222
+        ],
+        [
+          2,
+          209
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "23": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          980
+        ],
+        [
+          1,
+          819
+        ],
+        [
+          -1,
+          801
+        ],
+        [
+          2,
+          219
+        ],
+        [
+          -2,
+          180
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    },
+    "29": {
+      "n_distinct": 5,
+      "top5": [
+        [
+          0,
+          977
+        ],
+        [
+          -1,
+          826
+        ],
+        [
+          1,
+          814
+        ],
+        [
+          2,
+          212
+        ],
+        [
+          -2,
+          170
+        ]
+      ],
+      "range": [
+        -2,
+        2
+      ]
+    }
+  },
+  "analyses": {
+    "round_mod_3": {
+      "method": "round_then_mod",
+      "ell": 3,
+      "n_edges": 83,
+      "n_components": 2918,
+      "largest_component_sizes": [
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "n_isolated_nodes": 2837,
+      "clustering": {
+        "nodes_with_edges": 163,
+        "nodes_deg2plus": 3,
+        "triangles": 1,
+        "connected_triples": 3,
+        "transitivity": 1.0
+      },
+      "cliques": {
+        "max_clique": 3,
+        "n_cliques": 81,
+        "clique_sizes": {
+          "2": 80,
+          "3": 1
+        },
+        "total_edges": 83
+      },
+      "within_vs_cross_level": {
+        "within_level_pairs": 65615,
+        "within_level_matches": 3,
+        "within_level_rate": 4.6e-05,
+        "cross_level_pairs": 98479,
+        "cross_level_matches": 2,
+        "cross_level_rate": 2e-05,
+        "enrichment": 2.251
+      },
+      "random_baseline": {
+        "n_possible_fingerprints": 59049,
+        "n_pairs": 4498500,
+        "expected_edges_random": 76.1825
+      },
+      "edge_enrichment_over_random": 1.089,
+      "entropy": {
+        "joint_entropy_bits": 11.4953,
+        "max_entropy_bits": 15.8496,
+        "entropy_ratio": 0.7253,
+        "n_distinct_fingerprints": 2917,
+        "marginal_entropies": [
+          1.5605,
+          1.5588,
+          1.5833,
+          1.5848,
+          1.5842,
+          1.5828,
+          1.5848,
+          1.5848,
+          1.5848,
+          1.5844
+        ]
+      }
+    },
+    "round_mod_5": {
+      "method": "round_then_mod",
+      "ell": 5,
+      "n_edges": 5,
+      "n_components": 2995,
+      "largest_component_sizes": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "n_isolated_nodes": 2990,
+      "clustering": {
+        "nodes_with_edges": 10,
+        "nodes_deg2plus": 0,
+        "triangles": 0,
+        "connected_triples": 0,
+        "transitivity": 0.0
+      },
+      "cliques": {
+        "max_clique": 2,
+        "n_cliques": 5,
+        "clique_sizes": {
+          "2": 5
+        },
+        "total_edges": 5
+      },
+      "within_vs_cross_level": {
+        "within_level_pairs": 65615,
+        "within_level_matches": 0,
+        "within_level_rate": 0.0,
+        "cross_level_pairs": 98479,
+        "cross_level_matches": 0,
+        "cross_level_rate": 0.0,
+        "enrichment": Infinity
+      },
+      "random_baseline": {
+        "n_possible_fingerprints": 9765625,
+        "n_pairs": 4498500,
+        "expected_edges_random": 0.4606
+      },
+      "edge_enrichment_over_random": 10.855,
+      "entropy": {
+        "joint_entropy_bits": 11.5469,
+        "max_entropy_bits": 23.2193,
+        "entropy_ratio": 0.4973,
+        "n_distinct_fingerprints": 2994,
+        "marginal_entropies": [
+          2.2345,
+          2.1852,
+          2.1166,
+          2.1249,
+          2.0672,
+          2.057,
+          2.0635,
+          2.0834,
+          2.0667,
+          2.0551
+        ]
+      }
+    },
+    "round_mod_7": {
+      "method": "round_then_mod",
+      "ell": 7,
+      "n_edges": 5,
+      "n_components": 2995,
+      "largest_component_sizes": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "n_isolated_nodes": 2990,
+      "clustering": {
+        "nodes_with_edges": 10,
+        "nodes_deg2plus": 0,
+        "triangles": 0,
+        "connected_triples": 0,
+        "transitivity": 0.0
+      },
+      "cliques": {
+        "max_clique": 2,
+        "n_cliques": 5,
+        "clique_sizes": {
+          "2": 5
+        },
+        "total_edges": 5
+      },
+      "within_vs_cross_level": {
+        "within_level_pairs": 65615,
+        "within_level_matches": 0,
+        "within_level_rate": 0.0,
+        "cross_level_pairs": 98479,
+        "cross_level_matches": 0,
+        "cross_level_rate": 0.0,
+        "enrichment": Infinity
+      },
+      "random_baseline": {
+        "n_possible_fingerprints": 282475249,
+        "n_pairs": 4498500,
+        "expected_edges_random": 0.0159
+      },
+      "edge_enrichment_over_random": 314.465,
+      "entropy": {
+        "joint_entropy_bits": 11.5469,
+        "max_entropy_bits": 28.0735,
+        "entropy_ratio": 0.4113,
+        "n_distinct_fingerprints": 2994,
+        "marginal_entropies": [
+          2.2345,
+          2.1852,
+          2.1166,
+          2.1249,
+          2.0672,
+          2.057,
+          2.0635,
+          2.0834,
+          2.0667,
+          2.0551
+        ]
+      }
+    },
+    "quantile_3": {
+      "method": "quantile_binned",
+      "ell": 3,
+      "n_edges": 83,
+      "n_components": 2919,
+      "largest_component_sizes": [
+        3,
+        3,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "n_isolated_nodes": 2840,
+      "clustering": {
+        "nodes_with_edges": 160,
+        "nodes_deg2plus": 6,
+        "triangles": 2,
+        "connected_triples": 6,
+        "transitivity": 1.0
+      },
+      "cliques": {
+        "max_clique": 3,
+        "n_cliques": 79,
+        "clique_sizes": {
+          "2": 77,
+          "3": 2
+        },
+        "total_edges": 83
+      },
+      "within_vs_cross_level": {
+        "within_level_pairs": 65615,
+        "within_level_matches": 1,
+        "within_level_rate": 1.5e-05,
+        "cross_level_pairs": 98479,
+        "cross_level_matches": 2,
+        "cross_level_rate": 2e-05,
+        "enrichment": 0.75
+      },
+      "random_baseline": {
+        "n_possible_fingerprints": 59049,
+        "n_pairs": 4498500,
+        "expected_edges_random": 76.1825
+      },
+      "edge_enrichment_over_random": 1.089,
+      "entropy": {
+        "joint_entropy_bits": 11.4957,
+        "max_entropy_bits": 15.8496,
+        "entropy_ratio": 0.7253,
+        "n_distinct_fingerprints": 2918,
+        "marginal_entropies": [
+          1.5843,
+          1.5786,
+          1.585,
+          1.585,
+          1.585,
+          1.585,
+          1.585,
+          1.585,
+          1.585,
+          1.585
+        ]
+      }
+    },
+    "quantile_5": {
+      "method": "quantile_binned",
+      "ell": 5,
+      "n_edges": 0,
+      "n_components": 3000,
+      "largest_component_sizes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "n_isolated_nodes": 3000,
+      "clustering": {
+        "nodes_with_edges": 0,
+        "nodes_deg2plus": 0,
+        "triangles": 0,
+        "connected_triples": 0,
+        "transitivity": 0.0
+      },
+      "cliques": {
+        "max_clique": 0,
+        "clique_sizes": {},
+        "n_cliques": 0
+      },
+      "within_vs_cross_level": {
+        "within_level_pairs": 65615,
+        "within_level_matches": 0,
+        "within_level_rate": 0.0,
+        "cross_level_pairs": 98479,
+        "cross_level_matches": 0,
+        "cross_level_rate": 0.0,
+        "enrichment": Infinity
+      },
+      "random_baseline": {
+        "n_possible_fingerprints": 9765625,
+        "n_pairs": 4498500,
+        "expected_edges_random": 0.4606
+      },
+      "edge_enrichment_over_random": 0.0,
+      "entropy": {
+        "joint_entropy_bits": 11.5503,
+        "max_entropy_bits": 23.2193,
+        "entropy_ratio": 0.4974,
+        "n_distinct_fingerprints": 2999,
+        "marginal_entropies": [
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219,
+          2.3219
+        ]
+      }
+    },
+    "quantile_7": {
+      "method": "quantile_binned",
+      "ell": 7,
+      "n_edges": 0,
+      "n_components": 3000,
+      "largest_component_sizes": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "n_isolated_nodes": 3000,
+      "clustering": {
+        "nodes_with_edges": 0,
+        "nodes_deg2plus": 0,
+        "triangles": 0,
+        "connected_triples": 0,
+        "transitivity": 0.0
+      },
+      "cliques": {
+        "max_clique": 0,
+        "clique_sizes": {},
+        "n_cliques": 0
+      },
+      "within_vs_cross_level": {
+        "within_level_pairs": 65615,
+        "within_level_matches": 0,
+        "within_level_rate": 0.0,
+        "cross_level_pairs": 98479,
+        "cross_level_matches": 0,
+        "cross_level_rate": 0.0,
+        "enrichment": Infinity
+      },
+      "random_baseline": {
+        "n_possible_fingerprints": 282475249,
+        "n_pairs": 4498500,
+        "expected_edges_random": 0.0159
+      },
+      "edge_enrichment_over_random": 0.0,
+      "entropy": {
+        "joint_entropy_bits": 11.5503,
+        "max_entropy_bits": 28.0735,
+        "entropy_ratio": 0.4114,
+        "n_distinct_fingerprints": 2999,
+        "marginal_entropies": [
+          2.8053,
+          2.8074,
+          2.8074,
+          2.8074,
+          2.8074,
+          2.8074,
+          2.8074,
+          2.8074,
+          2.8074,
+          2.8074
+        ]
+      }
+    }
+  },
+  "comparison_summary": {
+    "ec_mf_reference": {
+      "ell_7": "near-perfect matching (pure pairs, few triangles)",
+      "ell_11": "near-perfect matching (pure pairs)",
+      "ell_5": "27 triangles, significant clique structure"
+    },
+    "maass_findings": {
+      "round_mod_3": {
+        "edges": 83,
+        "max_clique": 3,
+        "triangles": 1,
+        "transitivity": 1.0,
+        "edge_enrichment": 1.089,
+        "within_level_enrichment": 2.251,
+        "entropy_ratio": 0.7253
+      },
+      "round_mod_5": {
+        "edges": 5,
+        "max_clique": 2,
+        "triangles": 0,
+        "transitivity": 0.0,
+        "edge_enrichment": 10.855,
+        "within_level_enrichment": Infinity,
+        "entropy_ratio": 0.4973
+      },
+      "round_mod_7": {
+        "edges": 5,
+        "max_clique": 2,
+        "triangles": 0,
+        "transitivity": 0.0,
+        "edge_enrichment": 314.465,
+        "within_level_enrichment": Infinity,
+        "entropy_ratio": 0.4113
+      },
+      "quantile_3": {
+        "edges": 83,
+        "max_clique": 3,
+        "triangles": 2,
+        "transitivity": 1.0,
+        "edge_enrichment": 1.089,
+        "within_level_enrichment": 0.75,
+        "entropy_ratio": 0.7253
+      },
+      "quantile_5": {
+        "edges": 0,
+        "max_clique": 0,
+        "triangles": 0,
+        "transitivity": 0.0,
+        "edge_enrichment": 0.0,
+        "within_level_enrichment": Infinity,
+        "entropy_ratio": 0.4974
+      },
+      "quantile_7": {
+        "edges": 0,
+        "max_clique": 0,
+        "triangles": 0,
+        "transitivity": 0.0,
+        "edge_enrichment": 0.0,
+        "within_level_enrichment": Infinity,
+        "entropy_ratio": 0.4114
+      }
+    }
+  }
+}
