@@ -1,0 +1,298 @@
+{
+  "analysis": "Genus-2 RM vs CM trace statistics",
+  "date": "2026-04-10",
+  "data_source": "F:\\Prometheus\\cartography\\genus2\\data\\genus2_curves_lmfdb.json",
+  "total_curves": 66158,
+  "endomorphism_distribution": {
+    "Q": 63107,
+    "Q x Q": 2468,
+    "CM x Q": 303,
+    "M_2(Q)": 147,
+    "RM": 116,
+    "M_2(CM)": 8,
+    "CM": 6,
+    "QM": 3
+  },
+  "rm_fraction": 0.001753,
+  "rm_count": 116,
+  "primes_used": [
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    61,
+    67,
+    71,
+    73,
+    79,
+    83,
+    89,
+    97
+  ],
+  "normalization": "a_p / (2*sqrt(p))",
+  "moment_statistics": {
+    "M_2(Q)": {
+      "n_traces": 3284,
+      "n_curves": 147,
+      "mean": -0.040498,
+      "variance": 0.375451,
+      "M2": 0.377091,
+      "M4": 0.514569,
+      "std": 0.61274,
+      "skewness": -0.0812,
+      "kurtosis": 3.6027
+    },
+    "Q": {
+      "n_traces": 44265,
+      "n_curves": 2000,
+      "mean": -0.088014,
+      "variance": 0.235195,
+      "M2": 0.242941,
+      "M4": 0.171855,
+      "std": 0.484969,
+      "skewness": 0.0097,
+      "kurtosis": 2.9151
+    },
+    "Q x Q": {
+      "n_traces": 42755,
+      "n_curves": 2000,
+      "mean": -0.099926,
+      "variance": 0.459477,
+      "M2": 0.469463,
+      "M4": 0.557396,
+      "std": 0.677848,
+      "skewness": 0.0336,
+      "kurtosis": 2.5291
+    },
+    "CM x Q": {
+      "n_traces": 6682,
+      "n_curves": 303,
+      "mean": -0.050488,
+      "variance": 0.436445,
+      "M2": 0.438994,
+      "M4": 0.505173,
+      "std": 0.66064,
+      "skewness": -0.0162,
+      "kurtosis": 2.612
+    },
+    "RM": {
+      "n_traces": 2557,
+      "n_curves": 116,
+      "mean": -0.083675,
+      "variance": 0.376927,
+      "M2": 0.383929,
+      "M4": 0.401099,
+      "std": 0.613944,
+      "skewness": 0.0325,
+      "kurtosis": 2.7291
+    },
+    "M_2(CM)": {
+      "n_traces": 183,
+      "n_curves": 8,
+      "mean": -0.03877,
+      "variance": 0.360218,
+      "M2": 0.361721,
+      "M4": 0.753307,
+      "std": 0.600182,
+      "skewness": -0.1694,
+      "kurtosis": 5.7367
+    },
+    "CM": {
+      "n_traces": 132,
+      "n_curves": 6,
+      "mean": -0.113253,
+      "variance": 0.159882,
+      "M2": 0.172708,
+      "M4": 0.324642,
+      "std": 0.399852,
+      "skewness": -2.156,
+      "kurtosis": 9.7697
+    },
+    "QM": {
+      "n_traces": 69,
+      "n_curves": 3,
+      "mean": -0.059322,
+      "variance": 0.180702,
+      "M2": 0.184221,
+      "M4": 0.202571,
+      "std": 0.42509,
+      "skewness": -0.625,
+      "kurtosis": 5.7376
+    }
+  },
+  "variance_ranking": [
+    {
+      "endo_type": "Q x Q",
+      "variance": 0.459477
+    },
+    {
+      "endo_type": "CM x Q",
+      "variance": 0.436445
+    },
+    {
+      "endo_type": "RM",
+      "variance": 0.376927
+    },
+    {
+      "endo_type": "M_2(Q)",
+      "variance": 0.375451
+    },
+    {
+      "endo_type": "M_2(CM)",
+      "variance": 0.360218
+    },
+    {
+      "endo_type": "Q",
+      "variance": 0.235195
+    },
+    {
+      "endo_type": "QM",
+      "variance": 0.180702
+    },
+    {
+      "endo_type": "CM",
+      "variance": 0.159882
+    }
+  ],
+  "ks_tests": {
+    "CM vs CM x Q": {
+      "KS_statistic": 0.387742,
+      "p_value": 5.09029537457894e-18
+    },
+    "CM vs M_2(CM)": {
+      "KS_statistic": 0.257203,
+      "p_value": 5.804514749659328e-05
+    },
+    "CM vs M_2(Q)": {
+      "KS_statistic": 0.329356,
+      "p_value": 9.36017661261496e-13
+    },
+    "CM vs Q": {
+      "KS_statistic": 0.349289,
+      "p_value": 6.71501062832153e-15
+    },
+    "CM vs Q x Q": {
+      "KS_statistic": 0.348696,
+      "p_value": 7.542191137391979e-15
+    },
+    "CM vs QM": {
+      "KS_statistic": 0.06357,
+      "p_value": 0.985359338782796
+    },
+    "CM vs RM": {
+      "KS_statistic": 0.359462,
+      "p_value": 5.181077495873076e-15
+    },
+    "CM x Q vs M_2(CM)": {
+      "KS_statistic": 0.270828,
+      "p_value": 4.992094524113514e-12
+    },
+    "CM x Q vs M_2(Q)": {
+      "KS_statistic": 0.138273,
+      "p_value": 3.6755857087832424e-37
+    },
+    "CM x Q vs Q": {
+      "KS_statistic": 0.116882,
+      "p_value": 1.4609650789963847e-69
+    },
+    "CM x Q vs Q x Q": {
+      "KS_statistic": 0.050907,
+      "p_value": 1.8663305183648859e-13
+    },
+    "CM x Q vs QM": {
+      "KS_statistic": 0.324172,
+      "p_value": 6.893145521045101e-07
+    },
+    "CM x Q vs RM": {
+      "KS_statistic": 0.084056,
+      "p_value": 8.113821475693243e-12
+    },
+    "M_2(CM) vs M_2(Q)": {
+      "KS_statistic": 0.144072,
+      "p_value": 0.0013246524431921771
+    },
+    "M_2(CM) vs Q": {
+      "KS_statistic": 0.314164,
+      "p_value": 1.8333332241300393e-16
+    },
+    "M_2(CM) vs Q x Q": {
+      "KS_statistic": 0.283201,
+      "p_value": 2.0809729055919746e-13
+    },
+    "M_2(CM) vs QM": {
+      "KS_statistic": 0.193633,
+      "p_value": 0.03970672959173466
+    },
+    "M_2(CM) vs RM": {
+      "KS_statistic": 0.269873,
+      "p_value": 1.8074344756680877e-11
+    },
+    "M_2(Q) vs Q": {
+      "KS_statistic": 0.170093,
+      "p_value": 8.595809038724334e-78
+    },
+    "M_2(Q) vs Q x Q": {
+      "KS_statistic": 0.148588,
+      "p_value": 3.0324026102786173e-59
+    },
+    "M_2(Q) vs QM": {
+      "KS_statistic": 0.265786,
+      "p_value": 0.00010529886182884271
+    },
+    "M_2(Q) vs RM": {
+      "KS_statistic": 0.126933,
+      "p_value": 1.2107620363724418e-20
+    },
+    "Q vs Q x Q": {
+      "KS_statistic": 0.099452,
+      "p_value": 1.0579473258327747e-187
+    },
+    "Q vs QM": {
+      "KS_statistic": 0.382351,
+      "p_value": 1.396592624891553e-09
+    },
+    "Q vs RM": {
+      "KS_statistic": 0.064123,
+      "p_value": 4.39606075929521e-09
+    },
+    "Q x Q vs QM": {
+      "KS_statistic": 0.351389,
+      "p_value": 4.0115291035313865e-08
+    },
+    "Q x Q vs RM": {
+      "KS_statistic": 0.039999,
+      "p_value": 0.0008614222532005679
+    },
+    "QM vs RM": {
+      "KS_statistic": 0.33806,
+      "p_value": 2.3781397529796385e-07
+    }
+  },
+  "rm_vs_cm_comparison": {
+    "RM_M2": 0.383929,
+    "CM_M2": 0.172708,
+    "RM_M4": 0.401099,
+    "CM_M4": 0.324642,
+    "RM_variance": 0.376927,
+    "CM_variance": 0.159882,
+    "KS_statistic": 0.359462,
+    "KS_p_value": 5.181077495873076e-15
+  },
+  "methodology": {
+    "trace_computation": "Point counting on y^2 + h(x)y = f(x) over F_p for good primes",
+    "normalization": "a_p / (2*sqrt(p)) \u2014 Sato-Tate normalization for genus 2",
+    "bad_primes": "Excluded primes dividing the conductor",
+    "sampling": "All non-Q classes fully counted; Q class sampled to 2000"
+  }
+}

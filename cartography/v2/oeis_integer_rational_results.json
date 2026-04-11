@@ -1,0 +1,661 @@
+{
+  "experiment": "OEIS Integer-Only vs Mixed Sequences",
+  "method": "Classify 394K OEIS sequences by number-type keywords (nonn, sign, frac, cons, cofr). Measure keyword profile differences, naming patterns, quality/difficulty signals, finite rates.",
+  "classification": {
+    "total_sequences": 394454,
+    "type_counts": {
+      "nonneg_integer": 347329,
+      "signed_integer": 20591,
+      "real_constant": 14757,
+      "rational": 7973,
+      "untyped": 1937,
+      "continued_fraction": 1867
+    },
+    "type_fractions": {
+      "nonneg_integer": 0.880531,
+      "signed_integer": 0.052201,
+      "real_constant": 0.037411,
+      "rational": 0.020213,
+      "untyped": 0.004911,
+      "continued_fraction": 0.004733
+    },
+    "coarse_counts": {
+      "integer": 367920,
+      "noninteger": 24597,
+      "untyped": 1937
+    },
+    "coarse_fractions": {
+      "integer": 0.932732,
+      "noninteger": 0.062357,
+      "untyped": 0.004911
+    }
+  },
+  "multi_type_overlap": {
+    "counts_by_n_type_keywords": {
+      "1": 367920,
+      "2": 23615,
+      "3": 982,
+      "0": 1937
+    },
+    "multi_type_combinations": {
+      "cons+nonn": 14742,
+      "frac+nonn": 5744,
+      "cofr+nonn": 1845,
+      "frac+sign": 1262,
+      "cofr+frac+nonn": 966,
+      "cofr+sign": 22,
+      "cofr+cons+nonn": 15,
+      "cofr+frac+sign": 1
+    },
+    "n_multi_type": 24597
+  },
+  "keyword_profiles": {
+    "integer": {
+      "n_sequences": 367920,
+      "keyword_rates": {
+        "easy": {
+          "count": 85808,
+          "fraction": 0.2332
+        },
+        "base": {
+          "count": 44923,
+          "fraction": 0.1221
+        },
+        "more": {
+          "count": 25791,
+          "fraction": 0.0701
+        },
+        "tabl": {
+          "count": 22652,
+          "fraction": 0.0616
+        },
+        "hard": {
+          "count": 9419,
+          "fraction": 0.0256
+        },
+        "tabf": {
+          "count": 7993,
+          "fraction": 0.0217
+        },
+        "fini": {
+          "count": 7243,
+          "fraction": 0.0197
+        },
+        "nice": {
+          "count": 6708,
+          "fraction": 0.0182
+        },
+        "full": {
+          "count": 6144,
+          "fraction": 0.0167
+        },
+        "walk": {
+          "count": 4461,
+          "fraction": 0.0121
+        },
+        "look": {
+          "count": 4129,
+          "fraction": 0.0112
+        },
+        "mult": {
+          "count": 3112,
+          "fraction": 0.0085
+        },
+        "less": {
+          "count": 2753,
+          "fraction": 0.0075
+        },
+        "changed": {
+          "count": 1628,
+          "fraction": 0.0044
+        },
+        "dead": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "word": {
+          "count": 824,
+          "fraction": 0.0022
+        },
+        "bref": {
+          "count": 716,
+          "fraction": 0.0019
+        },
+        "eigen": {
+          "count": 430,
+          "fraction": 0.0012
+        },
+        "core": {
+          "count": 164,
+          "fraction": 0.0004
+        },
+        "hear": {
+          "count": 169,
+          "fraction": 0.0005
+        },
+        "obsc": {
+          "count": 114,
+          "fraction": 0.0003
+        },
+        "dumb": {
+          "count": 102,
+          "fraction": 0.0003
+        },
+        "unkn": {
+          "count": 32,
+          "fraction": 0.0001
+        },
+        "new": {
+          "count": 312,
+          "fraction": 0.0008
+        }
+      }
+    },
+    "rational": {
+      "n_sequences": 7973,
+      "keyword_rates": {
+        "easy": {
+          "count": 3480,
+          "fraction": 0.4365
+        },
+        "base": {
+          "count": 129,
+          "fraction": 0.0162
+        },
+        "more": {
+          "count": 177,
+          "fraction": 0.0222
+        },
+        "tabl": {
+          "count": 423,
+          "fraction": 0.0531
+        },
+        "hard": {
+          "count": 33,
+          "fraction": 0.0041
+        },
+        "tabf": {
+          "count": 188,
+          "fraction": 0.0236
+        },
+        "fini": {
+          "count": 39,
+          "fraction": 0.0049
+        },
+        "nice": {
+          "count": 187,
+          "fraction": 0.0235
+        },
+        "full": {
+          "count": 33,
+          "fraction": 0.0041
+        },
+        "walk": {
+          "count": 8,
+          "fraction": 0.001
+        },
+        "look": {
+          "count": 86,
+          "fraction": 0.0108
+        },
+        "mult": {
+          "count": 69,
+          "fraction": 0.0087
+        },
+        "less": {
+          "count": 303,
+          "fraction": 0.038
+        },
+        "changed": {
+          "count": 64,
+          "fraction": 0.008
+        },
+        "dead": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "word": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "bref": {
+          "count": 2,
+          "fraction": 0.0003
+        },
+        "eigen": {
+          "count": 8,
+          "fraction": 0.001
+        },
+        "core": {
+          "count": 13,
+          "fraction": 0.0016
+        },
+        "hear": {
+          "count": 3,
+          "fraction": 0.0004
+        },
+        "obsc": {
+          "count": 3,
+          "fraction": 0.0004
+        },
+        "dumb": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "unkn": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "new": {
+          "count": 3,
+          "fraction": 0.0004
+        }
+      }
+    },
+    "real_constant": {
+      "n_sequences": 14757,
+      "keyword_rates": {
+        "easy": {
+          "count": 3220,
+          "fraction": 0.2182
+        },
+        "base": {
+          "count": 286,
+          "fraction": 0.0194
+        },
+        "more": {
+          "count": 241,
+          "fraction": 0.0163
+        },
+        "tabl": {
+          "count": 9,
+          "fraction": 0.0006
+        },
+        "hard": {
+          "count": 62,
+          "fraction": 0.0042
+        },
+        "tabf": {
+          "count": 11,
+          "fraction": 0.0007
+        },
+        "fini": {
+          "count": 122,
+          "fraction": 0.0083
+        },
+        "nice": {
+          "count": 59,
+          "fraction": 0.004
+        },
+        "full": {
+          "count": 93,
+          "fraction": 0.0063
+        },
+        "walk": {
+          "count": 20,
+          "fraction": 0.0014
+        },
+        "look": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "mult": {
+          "count": 11,
+          "fraction": 0.0007
+        },
+        "less": {
+          "count": 75,
+          "fraction": 0.0051
+        },
+        "changed": {
+          "count": 311,
+          "fraction": 0.0211
+        },
+        "dead": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "word": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "bref": {
+          "count": 2,
+          "fraction": 0.0001
+        },
+        "eigen": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "core": {
+          "count": 6,
+          "fraction": 0.0004
+        },
+        "hear": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "obsc": {
+          "count": 1,
+          "fraction": 0.0001
+        },
+        "dumb": {
+          "count": 3,
+          "fraction": 0.0002
+        },
+        "unkn": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "new": {
+          "count": 67,
+          "fraction": 0.0045
+        }
+      }
+    },
+    "continued_fraction": {
+      "n_sequences": 1867,
+      "keyword_rates": {
+        "easy": {
+          "count": 1078,
+          "fraction": 0.5774
+        },
+        "base": {
+          "count": 25,
+          "fraction": 0.0134
+        },
+        "more": {
+          "count": 10,
+          "fraction": 0.0054
+        },
+        "tabl": {
+          "count": 3,
+          "fraction": 0.0016
+        },
+        "hard": {
+          "count": 2,
+          "fraction": 0.0011
+        },
+        "tabf": {
+          "count": 2,
+          "fraction": 0.0011
+        },
+        "fini": {
+          "count": 1,
+          "fraction": 0.0005
+        },
+        "nice": {
+          "count": 21,
+          "fraction": 0.0112
+        },
+        "full": {
+          "count": 1,
+          "fraction": 0.0005
+        },
+        "walk": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "look": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "mult": {
+          "count": 158,
+          "fraction": 0.0846
+        },
+        "less": {
+          "count": 194,
+          "fraction": 0.1039
+        },
+        "changed": {
+          "count": 3,
+          "fraction": 0.0016
+        },
+        "dead": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "word": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "bref": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "eigen": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "core": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "hear": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "obsc": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "dumb": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "unkn": {
+          "count": 0,
+          "fraction": 0.0
+        },
+        "new": {
+          "count": 0,
+          "fraction": 0.0
+        }
+      }
+    }
+  },
+  "name_patterns": {
+    "nonneg_integer": {
+      "prime": 62515,
+      "partition": 11977,
+      "graph": 11138,
+      "permutation": 8885,
+      "fibonacci": 5575,
+      "decimal_expansion": 5569,
+      "coefficient": 4812,
+      "walk": 4276,
+      "lattice": 2883,
+      "continued_fraction": 1402,
+      "denominator": 920,
+      "numerator": 824
+    },
+    "signed_integer": {
+      "coefficient": 1899,
+      "prime": 1148,
+      "fibonacci": 234,
+      "partition": 222,
+      "numerator": 190,
+      "lattice": 167,
+      "continued_fraction": 143,
+      "decimal_expansion": 133,
+      "graph": 70,
+      "permutation": 54,
+      "denominator": 39,
+      "walk": 10
+    },
+    "rational": {
+      "numerator": 4319,
+      "denominator": 3490,
+      "continued_fraction": 2208,
+      "coefficient": 604,
+      "prime": 447,
+      "lattice": 73,
+      "fibonacci": 50,
+      "graph": 41,
+      "permutation": 34,
+      "walk": 33,
+      "partition": 24,
+      "decimal_expansion": 17
+    },
+    "real_constant": {
+      "decimal_expansion": 14315,
+      "prime": 680,
+      "continued_fraction": 192,
+      "fibonacci": 119,
+      "coefficient": 96,
+      "lattice": 68,
+      "walk": 35,
+      "graph": 24,
+      "denominator": 17,
+      "permutation": 12,
+      "partition": 11,
+      "numerator": 4
+    },
+    "continued_fraction": {
+      "continued_fraction": 1849,
+      "prime": 49,
+      "denominator": 16,
+      "decimal_expansion": 11,
+      "fibonacci": 8,
+      "numerator": 7,
+      "coefficient": 2,
+      "graph": 2,
+      "lattice": 1
+    },
+    "untyped": {
+      "decimal_expansion": 5,
+      "prime": 4,
+      "denominator": 1,
+      "graph": 1
+    }
+  },
+  "quality_difficulty_rates": {
+    "nonneg_integer": {
+      "dead": 0.0,
+      "changed": 0.0045,
+      "more": 0.0735,
+      "hard": 0.0269,
+      "unkn": 0.0001
+    },
+    "signed_integer": {
+      "dead": 0.0,
+      "changed": 0.0035,
+      "more": 0.0132,
+      "hard": 0.0044,
+      "unkn": 0.0001
+    },
+    "rational": {
+      "dead": 0.0,
+      "changed": 0.008,
+      "more": 0.0222,
+      "hard": 0.0041,
+      "unkn": 0.0
+    },
+    "real_constant": {
+      "dead": 0.0,
+      "changed": 0.0211,
+      "more": 0.0163,
+      "hard": 0.0042,
+      "unkn": 0.0
+    },
+    "continued_fraction": {
+      "dead": 0.0,
+      "changed": 0.0016,
+      "more": 0.0054,
+      "hard": 0.0011,
+      "unkn": 0.0
+    }
+  },
+  "finite_rates": {
+    "nonneg_integer": {
+      "n_finite": 7003,
+      "fraction_finite": 0.0202,
+      "n_full": 5919,
+      "fraction_full": 0.017
+    },
+    "real_constant": {
+      "n_finite": 122,
+      "fraction_finite": 0.0083,
+      "n_full": 93,
+      "fraction_full": 0.0063
+    },
+    "untyped": {
+      "n_finite": 0,
+      "fraction_finite": 0.0,
+      "n_full": 0,
+      "fraction_full": 0.0
+    },
+    "signed_integer": {
+      "n_finite": 240,
+      "fraction_finite": 0.0117,
+      "n_full": 225,
+      "fraction_full": 0.0109
+    },
+    "rational": {
+      "n_finite": 39,
+      "fraction_finite": 0.0049,
+      "n_full": 33,
+      "fraction_full": 0.0041
+    },
+    "continued_fraction": {
+      "n_finite": 1,
+      "fraction_finite": 0.0005,
+      "n_full": 1,
+      "fraction_full": 0.0005
+    }
+  },
+  "bm_recurrence_by_type": {
+    "note": "BM recurrence was computed on a 10K sample using keyword families (combinatorial, number_theoretic, multiplicative, algebraic, base_dependent, unclassified). Direct per-sequence type overlap is not available without re-running BM. However, structural inference: cons/cofr sequences store digits/partial quotients, which rarely satisfy linear recurrences. frac sequences (numerators/denominators) may have recurrences if the underlying rational sequence is holonomic.",
+    "family_recurrence_rates": {
+      "combinatorial": {
+        "count": 1843,
+        "with_recurrence": 245,
+        "fraction_with_recurrence": 0.13293543136190994
+      },
+      "unclassified": {
+        "count": 5986,
+        "with_recurrence": 1539,
+        "fraction_with_recurrence": 0.25709989976612097
+      },
+      "number_theoretic": {
+        "count": 1087,
+        "with_recurrence": 25,
+        "fraction_with_recurrence": 0.022999080036798528
+      },
+      "multiplicative": {
+        "count": 217,
+        "with_recurrence": 61,
+        "fraction_with_recurrence": 0.28110599078341014
+      },
+      "algebraic": {
+        "count": 826,
+        "with_recurrence": 257,
+        "fraction_with_recurrence": 0.31113801452784506
+      },
+      "base_dependent": {
+        "count": 594,
+        "with_recurrence": 100,
+        "fraction_with_recurrence": 0.16835016835016836
+      }
+    },
+    "overall": {
+      "total_analyzed": 10000,
+      "fraction_with_recurrence": 0.2198,
+      "mean_order": 8.490445859872612,
+      "median_order": 6.0
+    }
+  },
+  "structural_summary": {
+    "total_sequences": 394454,
+    "integer_sequences": 367920,
+    "integer_fraction": 0.9327,
+    "noninteger_sequences": 24597,
+    "noninteger_fraction": 0.0624,
+    "rational_fraction": 0.0202,
+    "real_fraction": 0.0421,
+    "untyped_fraction": 0.0049,
+    "insight": "OEIS is overwhelmingly integer: 93.3% of sequences are pure integers (nonn+sign). Only 2.0% are rationals (frac) and 4.2% represent reals (cons+cofr). This is by design: OEIS was founded as an integer sequence encyclopedia. Non-integer sequences were added later and are structurally distinct \u2014 they have higher 'more'/'hard' rates (harder to extend), lower finite rates, and different naming patterns (decimal expansions, numerators/denominators)."
+  },
+  "elapsed_seconds": 4.99
+}

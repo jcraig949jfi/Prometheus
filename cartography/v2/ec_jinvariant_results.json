@@ -1,0 +1,269 @@
+{
+  "metadata": {
+    "source": "charon/data/charon.duckdb, table elliptic_curves",
+    "total_curves": 31073,
+    "distinct_j_invariants": 16023,
+    "date": "2026-04-10"
+  },
+  "special_values": {
+    "j_zero": {
+      "count": 134,
+      "fraction": 0.004312,
+      "cm_discriminant": -3,
+      "note": "Extra automorphism group Z/6Z"
+    },
+    "j_1728": {
+      "count": 62,
+      "fraction": 0.001995,
+      "cm_discriminant": -4,
+      "note": "Extra automorphism group Z/4Z"
+    },
+    "total_cm_curves": 294,
+    "cm_minus3_from_field": 134,
+    "cm_minus4_from_field": 62
+  },
+  "abs_j_percentiles": {
+    "0": 0.0,
+    "1": 0.0226726226451474,
+    "5": 9.51023676307703,
+    "10": 67.49659110633505,
+    "25": 971.2582831575346,
+    "50": 4547.315973535247,
+    "75": 220752.84210526315,
+    "90": 59351808.53333333,
+    "95": 4005909101.9978085,
+    "99": 166472545075968.0,
+    "100": 1.3285879534179805e+26
+  },
+  "log_abs_j_percentiles": {
+    "0": 0.0,
+    "1": 0.009736627973121054,
+    "5": 1.0216077141683895,
+    "10": 1.8356687766162687,
+    "25": 2.987781651808478,
+    "50": 3.6578506276947023,
+    "75": 5.343908270983894,
+    "90": 7.773433964375049,
+    "95": 9.602701090610493,
+    "99": 14.221342619192626,
+    "100": 26.12339031028541
+  },
+  "top_20_j_invariants": [
+    {
+      "jinv_num": 0,
+      "jinv_den": 1,
+      "jinv_float": 0.0,
+      "count": 134
+    },
+    {
+      "jinv_num": 1728,
+      "jinv_den": 1,
+      "jinv_float": 1728.0,
+      "count": 62
+    },
+    {
+      "jinv_num": 2251439055699625,
+      "jinv_den": 25088,
+      "jinv_float": 89741671544.1496,
+      "count": 20
+    },
+    {
+      "jinv_num": -548347731625,
+      "jinv_den": 1835008,
+      "jinv_float": -298825.79892,
+      "count": 20
+    },
+    {
+      "jinv_num": 4956477625,
+      "jinv_den": 941192,
+      "jinv_float": 5266.170585,
+      "count": 20
+    },
+    {
+      "jinv_num": 128787625,
+      "jinv_den": 98,
+      "jinv_float": 1314159.438776,
+      "count": 20
+    },
+    {
+      "jinv_num": -15625,
+      "jinv_den": 28,
+      "jinv_float": -558.035714,
+      "count": 20
+    },
+    {
+      "jinv_num": 9938375,
+      "jinv_den": 21952,
+      "jinv_float": 452.732097,
+      "count": 20
+    },
+    {
+      "jinv_num": 1114544804970241,
+      "jinv_den": 405,
+      "jinv_float": 2751962481408.0024,
+      "count": 20
+    },
+    {
+      "jinv_num": 272223782641,
+      "jinv_den": 164025,
+      "jinv_float": 1659648.118525,
+      "count": 20
+    },
+    {
+      "jinv_num": -147281603041,
+      "jinv_den": 215233605,
+      "jinv_float": -684.28721,
+      "count": 20
+    },
+    {
+      "jinv_num": 56667352321,
+      "jinv_den": 15,
+      "jinv_float": 3777823488.066667,
+      "count": 20
+    },
+    {
+      "jinv_num": 111284641,
+      "jinv_den": 50625,
+      "jinv_float": 2198.215131,
+      "count": 20
+    },
+    {
+      "jinv_num": 13997521,
+      "jinv_den": 225,
+      "jinv_float": 62211.204444,
+      "count": 20
+    },
+    {
+      "jinv_num": -1,
+      "jinv_den": 15,
+      "jinv_float": -0.066667,
+      "count": 20
+    },
+    {
+      "jinv_num": 4733169839,
+      "jinv_den": 3515625,
+      "jinv_float": 1346.323865,
+      "count": 20
+    },
+    {
+      "jinv_num": 488095744,
+      "jinv_den": 125,
+      "jinv_float": 3904765.952,
+      "count": 19
+    },
+    {
+      "jinv_num": -20720464,
+      "jinv_den": 15625,
+      "jinv_float": -1326.109696,
+      "count": 19
+    },
+    {
+      "jinv_num": 16384,
+      "jinv_den": 5,
+      "jinv_float": 3276.8,
+      "count": 19
+    },
+    {
+      "jinv_num": 21296,
+      "jinv_den": 25,
+      "jinv_float": 851.84,
+      "count": 19
+    }
+  ],
+  "j_vs_conductor": {
+    "correlation_log_abs_j_vs_log_conductor": 0.003637908209446502,
+    "conductor_by_j_bucket": {
+      "j=0": {
+        "count": 134,
+        "mean_conductor": 2096.46,
+        "median_conductor": 1728.0
+      },
+      "j=1728": {
+        "count": 62,
+        "mean_conductor": 1611.35,
+        "median_conductor": 1568.0
+      },
+      "|j|<100": {
+        "count": 3470,
+        "mean_conductor": 2618.75,
+        "median_conductor": 2640.0
+      },
+      "100<=|j|<10K": {
+        "count": 14035,
+        "mean_conductor": 2615.98,
+        "median_conductor": 2640.0
+      },
+      "10K<=|j|<100M": {
+        "count": 10511,
+        "mean_conductor": 2648.37,
+        "median_conductor": 2686.0
+      },
+      "|j|>=100M": {
+        "count": 2861,
+        "mean_conductor": 2627.61,
+        "median_conductor": 2682.0
+      }
+    }
+  },
+  "j_by_rank": {
+    "0": {
+      "count": 15599,
+      "n_j_zero": 70,
+      "n_j_1728": 32,
+      "frac_j_zero": 0.004487,
+      "frac_j_1728": 0.002051,
+      "median_abs_j": 5554.62607521947,
+      "mean_log_abs_j": 4.552151096886256
+    },
+    "1": {
+      "count": 14783,
+      "n_j_zero": 62,
+      "n_j_1728": 30,
+      "frac_j_zero": 0.004194,
+      "frac_j_1728": 0.002029,
+      "median_abs_j": 3810.78125,
+      "mean_log_abs_j": 4.2385681550299275
+    },
+    "2": {
+      "count": 691,
+      "n_j_zero": 2,
+      "n_j_1728": 0,
+      "frac_j_zero": 0.002894,
+      "frac_j_1728": 0.0,
+      "median_abs_j": 3101.234681620788,
+      "mean_log_abs_j": 3.745769455201319
+    }
+  },
+  "j_height": {
+    "percentiles_ln": {
+      "0": 0.0,
+      "1": 4.1589,
+      "5": 9.5381,
+      "10": 11.7518,
+      "25": 16.6238,
+      "50": 23.2551,
+      "75": 31.5187,
+      "90": 40.3059,
+      "95": 45.8517,
+      "99": 57.4935,
+      "100": 86.596
+    },
+    "by_rank": {
+      "0": {
+        "mean": 25.8478,
+        "median": 24.2137,
+        "std": 11.9671
+      },
+      "1": {
+        "mean": 24.1202,
+        "median": 22.6059,
+        "std": 10.699
+      },
+      "2": {
+        "mean": 19.2769,
+        "median": 18.3741,
+        "std": 6.4602
+      }
+    }
+  }
+}

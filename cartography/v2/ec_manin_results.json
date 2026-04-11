@@ -1,0 +1,1476 @@
+{
+  "experiment": "ec_manin_constant_distribution",
+  "total_curves": 31073,
+  "distribution": {
+    "1": 30991,
+    "2": 61,
+    "3": 18,
+    "4": 2,
+    "5": 1
+  },
+  "fraction_c1": 0.9973610530042158,
+  "optimal_curves": {
+    "total": 17314,
+    "all_c1": true,
+    "manin_conjecture_holds": true
+  },
+  "non_optimal_curves": {
+    "total": 13759,
+    "c_gt_1": 82,
+    "fraction_c_gt_1": 0.005959735445889963
+  },
+  "c_divides_torsion": {
+    "holds_universally": true,
+    "violations": 0
+  },
+  "c_gt1_by_rank": {
+    "0": 82
+  },
+  "c_gt1_all_rank_zero": true,
+  "c_gt1_by_cm": {
+    "-27": 1,
+    "-16": 2,
+    "-4": 2,
+    "-3": 1,
+    "0": 76
+  },
+  "c_gt1_by_torsion": [
+    {
+      "manin_constant": 2,
+      "torsion": 2,
+      "count": 50
+    },
+    {
+      "manin_constant": 2,
+      "torsion": 4,
+      "count": 9
+    },
+    {
+      "manin_constant": 2,
+      "torsion": 6,
+      "count": 1
+    },
+    {
+      "manin_constant": 2,
+      "torsion": 8,
+      "count": 1
+    },
+    {
+      "manin_constant": 3,
+      "torsion": 3,
+      "count": 16
+    },
+    {
+      "manin_constant": 3,
+      "torsion": 6,
+      "count": 2
+    },
+    {
+      "manin_constant": 4,
+      "torsion": 4,
+      "count": 2
+    },
+    {
+      "manin_constant": 5,
+      "torsion": 5,
+      "count": 1
+    }
+  ],
+  "c_gt1_conductor_range": {
+    "min": 11,
+    "max": 4916,
+    "mean": 852
+  },
+  "key_findings": [
+    "Manin conjecture c=1 holds for ALL 17,314 optimal curves in the database",
+    "99.74% of all curves (optimal + non-optimal) have c=1",
+    "c>1 occurs only for non-optimal curves (82 out of 13,759 = 0.60%)",
+    "Observed non-trivial values: c in {2, 3, 4, 5}",
+    "c ALWAYS divides the torsion order \u2014 zero exceptions",
+    "ALL 82 curves with c>1 have rank 0",
+    "Only 4 CM curves among c>1 (cm=-4, -16, -3, -27); the rest are non-CM",
+    "The c=5 case is unique: 11.a3, torsion Z/5Z, isogeny class of size 3 with degrees [1,5,25]"
+  ],
+  "interpretation": "The data is fully consistent with the Manin conjecture: every optimal elliptic curve in the LMFDB (conductor <= ~5000) has Manin constant 1. Non-trivial Manin constants arise only for non-optimal curves in an isogeny class, where c divides the degree of the isogeny to the optimal curve. The universal divisibility c | #E_tors suggests the Manin constant is controlled by the rational torsion structure.",
+  "outlier_curves": [
+    {
+      "lmfdb_label": "11.a3",
+      "cremona_label": "11a3",
+      "manin_constant": 5,
+      "conductor": 11,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 5,
+      "class_size": 3,
+      "class_deg": 25,
+      "isogeny_degrees": [
+        1,
+        5,
+        25
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "15.a7",
+      "cremona_label": "15a8",
+      "manin_constant": 4,
+      "conductor": 15,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 8,
+      "class_deg": 16,
+      "isogeny_degrees": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "17.a4",
+      "cremona_label": "17a4",
+      "manin_constant": 4,
+      "conductor": 17,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "14.a4",
+      "cremona_label": "14a6",
+      "manin_constant": 3,
+      "conductor": 14,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 6,
+      "class_size": 6,
+      "class_deg": 18,
+      "isogeny_degrees": [
+        1,
+        2,
+        3,
+        6,
+        9,
+        18
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "14.a5",
+      "cremona_label": "14a4",
+      "manin_constant": 3,
+      "conductor": 14,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 6,
+      "class_size": 6,
+      "class_deg": 18,
+      "isogeny_degrees": [
+        1,
+        2,
+        3,
+        6,
+        9,
+        18
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "19.a3",
+      "cremona_label": "19a3",
+      "manin_constant": 3,
+      "conductor": 19,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "26.a3",
+      "cremona_label": "26a3",
+      "manin_constant": 3,
+      "conductor": 26,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "27.a4",
+      "cremona_label": "27a3",
+      "manin_constant": 3,
+      "conductor": 27,
+      "rank": 0,
+      "cm": -3,
+      "torsion": 3,
+      "class_size": 4,
+      "class_deg": 27,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "27.a2",
+      "cremona_label": "27a4",
+      "manin_constant": 3,
+      "conductor": 27,
+      "rank": 0,
+      "cm": -27,
+      "torsion": 3,
+      "class_size": 4,
+      "class_deg": 27,
+      "isogeny_degrees": [
+        1,
+        3,
+        9,
+        27
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "35.a2",
+      "cremona_label": "35a3",
+      "manin_constant": 3,
+      "conductor": 35,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "37.b3",
+      "cremona_label": "37b3",
+      "manin_constant": 3,
+      "conductor": 37,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "38.a2",
+      "cremona_label": "38a3",
+      "manin_constant": 3,
+      "conductor": 38,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "54.a2",
+      "cremona_label": "54a3",
+      "manin_constant": 3,
+      "conductor": 54,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "77.b1",
+      "cremona_label": "77b3",
+      "manin_constant": 3,
+      "conductor": 77,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "158.b3",
+      "cremona_label": "158d3",
+      "manin_constant": 3,
+      "conductor": 158,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "278.a1",
+      "cremona_label": "278b3",
+      "manin_constant": 3,
+      "conductor": 278,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "326.a3",
+      "cremona_label": "326c3",
+      "manin_constant": 3,
+      "conductor": 326,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "370.a1",
+      "cremona_label": "370c3",
+      "manin_constant": 3,
+      "conductor": 370,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "485.a3",
+      "cremona_label": "485a3",
+      "manin_constant": 3,
+      "conductor": 485,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "2771.a1",
+      "cremona_label": "2771a3",
+      "manin_constant": 3,
+      "conductor": 2771,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "4385.b3",
+      "cremona_label": "4385b3",
+      "manin_constant": 3,
+      "conductor": 4385,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 3,
+      "class_size": 3,
+      "class_deg": 9,
+      "isogeny_degrees": [
+        1,
+        3,
+        9
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "15.a6",
+      "cremona_label": "15a3",
+      "manin_constant": 2,
+      "conductor": 15,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 8,
+      "class_size": 8,
+      "class_deg": 16,
+      "isogeny_degrees": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "15.a4",
+      "cremona_label": "15a7",
+      "manin_constant": 2,
+      "conductor": 15,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 8,
+      "class_deg": 16,
+      "isogeny_degrees": [
+        1,
+        2,
+        4,
+        8,
+        16
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "17.a1",
+      "cremona_label": "17a3",
+      "manin_constant": 2,
+      "conductor": 17,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "17.a2",
+      "cremona_label": "17a2",
+      "manin_constant": 2,
+      "conductor": 17,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "20.a3",
+      "cremona_label": "20a2",
+      "manin_constant": 2,
+      "conductor": 20,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 6,
+      "class_size": 4,
+      "class_deg": 6,
+      "isogeny_degrees": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "20.a1",
+      "cremona_label": "20a4",
+      "manin_constant": 2,
+      "conductor": 20,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 6,
+      "isogeny_degrees": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "21.a6",
+      "cremona_label": "21a4",
+      "manin_constant": 2,
+      "conductor": 21,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 6,
+      "class_deg": 8,
+      "isogeny_degrees": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "24.a5",
+      "cremona_label": "24a4",
+      "manin_constant": 2,
+      "conductor": 24,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 6,
+      "class_deg": 8,
+      "isogeny_degrees": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "32.a3",
+      "cremona_label": "32a2",
+      "manin_constant": 2,
+      "conductor": 32,
+      "rank": 0,
+      "cm": -4,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "32.a2",
+      "cremona_label": "32a4",
+      "manin_constant": 2,
+      "conductor": 32,
+      "rank": 0,
+      "cm": -16,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "32.a1",
+      "cremona_label": "32a3",
+      "manin_constant": 2,
+      "conductor": 32,
+      "rank": 0,
+      "cm": -16,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "33.a3",
+      "cremona_label": "33a2",
+      "manin_constant": 2,
+      "conductor": 33,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "39.a4",
+      "cremona_label": "39a4",
+      "manin_constant": 2,
+      "conductor": 39,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "40.a3",
+      "cremona_label": "40a3",
+      "manin_constant": 2,
+      "conductor": 40,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "48.a5",
+      "cremona_label": "48a4",
+      "manin_constant": 2,
+      "conductor": 48,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 6,
+      "class_deg": 8,
+      "isogeny_degrees": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "52.a1",
+      "cremona_label": "52a2",
+      "manin_constant": 2,
+      "conductor": 52,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "55.a4",
+      "cremona_label": "55a4",
+      "manin_constant": 2,
+      "conductor": 55,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "57.c3",
+      "cremona_label": "57b2",
+      "manin_constant": 2,
+      "conductor": 57,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "64.a4",
+      "cremona_label": "64a4",
+      "manin_constant": 2,
+      "conductor": 64,
+      "rank": 0,
+      "cm": -4,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "73.a1",
+      "cremona_label": "73a2",
+      "manin_constant": 2,
+      "conductor": 73,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "80.a3",
+      "cremona_label": "80a2",
+      "manin_constant": 2,
+      "conductor": 80,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "80.b1",
+      "cremona_label": "80b4",
+      "manin_constant": 2,
+      "conductor": 80,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 6,
+      "isogeny_degrees": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "80.b3",
+      "cremona_label": "80b2",
+      "manin_constant": 2,
+      "conductor": 80,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 6,
+      "isogeny_degrees": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "89.b1",
+      "cremona_label": "89b2",
+      "manin_constant": 2,
+      "conductor": 89,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "113.a1",
+      "cremona_label": "113a2",
+      "manin_constant": 2,
+      "conductor": 113,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "116.c1",
+      "cremona_label": "116c2",
+      "manin_constant": 2,
+      "conductor": 116,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "128.d1",
+      "cremona_label": "128d2",
+      "manin_constant": 2,
+      "conductor": 128,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "128.b1",
+      "cremona_label": "128b2",
+      "manin_constant": 2,
+      "conductor": 128,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "129.b3",
+      "cremona_label": "129b2",
+      "manin_constant": 2,
+      "conductor": 129,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "161.a3",
+      "cremona_label": "161a2",
+      "manin_constant": 2,
+      "conductor": 161,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "208.c1",
+      "cremona_label": "208c2",
+      "manin_constant": 2,
+      "conductor": 208,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "212.b1",
+      "cremona_label": "212b2",
+      "manin_constant": 2,
+      "conductor": 212,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "233.a1",
+      "cremona_label": "233a2",
+      "manin_constant": 2,
+      "conductor": 233,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "291.b3",
+      "cremona_label": "291b3",
+      "manin_constant": 2,
+      "conductor": 291,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "353.a1",
+      "cremona_label": "353a2",
+      "manin_constant": 2,
+      "conductor": 353,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "464.a1",
+      "cremona_label": "464e2",
+      "manin_constant": 2,
+      "conductor": 464,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "593.a1",
+      "cremona_label": "593b2",
+      "manin_constant": 2,
+      "conductor": 593,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "681.e3",
+      "cremona_label": "681b2",
+      "manin_constant": 2,
+      "conductor": 681,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "692.a1",
+      "cremona_label": "692a2",
+      "manin_constant": 2,
+      "conductor": 692,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "848.b1",
+      "cremona_label": "848d2",
+      "manin_constant": 2,
+      "conductor": 848,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "916.c1",
+      "cremona_label": "916a2",
+      "manin_constant": 2,
+      "conductor": 916,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "1153.a1",
+      "cremona_label": "1153a2",
+      "manin_constant": 2,
+      "conductor": 1153,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "1172.a1",
+      "cremona_label": "1172a2",
+      "manin_constant": 2,
+      "conductor": 1172,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "1289.a1",
+      "cremona_label": "1289a2",
+      "manin_constant": 2,
+      "conductor": 1289,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "1433.a1",
+      "cremona_label": "1433a2",
+      "manin_constant": 2,
+      "conductor": 1433,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "1457.a3",
+      "cremona_label": "1457a2",
+      "manin_constant": 2,
+      "conductor": 1457,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "1507.a3",
+      "cremona_label": "1507b3",
+      "manin_constant": 2,
+      "conductor": 1507,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 4,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "1913.b1",
+      "cremona_label": "1913b2",
+      "manin_constant": 2,
+      "conductor": 1913,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "2089.c1",
+      "cremona_label": "2089b2",
+      "manin_constant": 2,
+      "conductor": 2089,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "2273.a1",
+      "cremona_label": "2273a2",
+      "manin_constant": 2,
+      "conductor": 2273,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "2513.a3",
+      "cremona_label": "2513a2",
+      "manin_constant": 2,
+      "conductor": 2513,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "2537.c3",
+      "cremona_label": "2537e2",
+      "manin_constant": 2,
+      "conductor": 2537,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 4,
+      "class_deg": 4,
+      "isogeny_degrees": [
+        1,
+        2,
+        4
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "2768.d1",
+      "cremona_label": "2768c2",
+      "manin_constant": 2,
+      "conductor": 2768,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "2932.a1",
+      "cremona_label": "2932a2",
+      "manin_constant": 2,
+      "conductor": 2932,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "3089.a1",
+      "cremona_label": "3089a2",
+      "manin_constant": 2,
+      "conductor": 3089,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "3313.a1",
+      "cremona_label": "3313b2",
+      "manin_constant": 2,
+      "conductor": 3313,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "3664.f1",
+      "cremona_label": "3664f2",
+      "manin_constant": 2,
+      "conductor": 3664,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "4289.a1",
+      "cremona_label": "4289a2",
+      "manin_constant": 2,
+      "conductor": 4289,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": true
+    },
+    {
+      "lmfdb_label": "4372.a1",
+      "cremona_label": "4372a2",
+      "manin_constant": 2,
+      "conductor": 4372,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "4688.a1",
+      "cremona_label": "4688b2",
+      "manin_constant": 2,
+      "conductor": 4688,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    },
+    {
+      "lmfdb_label": "4916.a1",
+      "cremona_label": "4916a2",
+      "manin_constant": 2,
+      "conductor": 4916,
+      "rank": 0,
+      "cm": 0,
+      "torsion": 2,
+      "class_size": 2,
+      "class_deg": 2,
+      "isogeny_degrees": [
+        1,
+        2
+      ],
+      "semistable": false
+    }
+  ]
+}

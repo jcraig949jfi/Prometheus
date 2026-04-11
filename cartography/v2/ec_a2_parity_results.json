@@ -1,0 +1,288 @@
+{
+  "distribution": {
+    "values": {
+      "-2": {
+        "count": 649,
+        "pct": 2.09
+      },
+      "-1": {
+        "count": 8449,
+        "pct": 27.19
+      },
+      "0": {
+        "count": 12979,
+        "pct": 41.77
+      },
+      "1": {
+        "count": 8411,
+        "pct": 27.07
+      },
+      "2": {
+        "count": 585,
+        "pct": 1.88
+      }
+    },
+    "parity": {
+      "even_count": 14213,
+      "odd_count": 16860,
+      "even_pct": 45.74,
+      "odd_pct": 54.26
+    },
+    "total": 31073
+  },
+  "a2_vs_rank": {
+    "contingency_a2_vals": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "contingency_rank_vals": [
+      0,
+      1,
+      2
+    ],
+    "contingency_table": [
+      [
+        165,
+        384,
+        100
+      ],
+      [
+        3886,
+        4288,
+        275
+      ],
+      [
+        6431,
+        6289,
+        259
+      ],
+      [
+        4785,
+        3569,
+        57
+      ],
+      [
+        332,
+        253,
+        0
+      ]
+    ],
+    "chi2": 931.8105,
+    "p_value": 7.752813e-196,
+    "dof": 8,
+    "mean_rank_by_a2": {
+      "-2": 0.8998,
+      "-1": 0.5726,
+      "0": 0.5245,
+      "1": 0.4379,
+      "2": 0.4325
+    },
+    "parity_mean_rank": {
+      "even": 0.5378,
+      "odd": 0.5054
+    },
+    "parity_chi2": 29.1695,
+    "parity_p_value": 4.633635e-07
+  },
+  "a2_vs_torsion": {
+    "a2_torsion_breakdown": {
+      "-2": {
+        "total": 649,
+        "top_torsion": {
+          "[1]": {
+            "count": 618,
+            "pct": 95.22
+          },
+          "[np.int32(5)]": {
+            "count": 31,
+            "pct": 4.78
+          }
+        }
+      },
+      "-1": {
+        "total": 8449,
+        "top_torsion": {
+          "[np.int32(2)]": {
+            "count": 4018,
+            "pct": 47.56
+          },
+          "[1]": {
+            "count": 2933,
+            "pct": 34.71
+          },
+          "[np.int32(2), np.int32(2)]": {
+            "count": 554,
+            "pct": 6.56
+          },
+          "[np.int32(3)]": {
+            "count": 442,
+            "pct": 5.23
+          },
+          "[np.int32(4)]": {
+            "count": 274,
+            "pct": 3.24
+          }
+        }
+      },
+      "0": {
+        "total": 12979,
+        "top_torsion": {
+          "[np.int32(2)]": {
+            "count": 6023,
+            "pct": 46.41
+          },
+          "[1]": {
+            "count": 5094,
+            "pct": 39.25
+          },
+          "[np.int32(2), np.int32(2)]": {
+            "count": 776,
+            "pct": 5.98
+          },
+          "[np.int32(3)]": {
+            "count": 491,
+            "pct": 3.78
+          },
+          "[np.int32(4)]": {
+            "count": 479,
+            "pct": 3.69
+          }
+        }
+      },
+      "1": {
+        "total": 8411,
+        "top_torsion": {
+          "[np.int32(2)]": {
+            "count": 3830,
+            "pct": 45.54
+          },
+          "[1]": {
+            "count": 2913,
+            "pct": 34.63
+          },
+          "[np.int32(2), np.int32(2)]": {
+            "count": 568,
+            "pct": 6.75
+          },
+          "[np.int32(3)]": {
+            "count": 397,
+            "pct": 4.72
+          },
+          "[np.int32(4)]": {
+            "count": 366,
+            "pct": 4.35
+          }
+        }
+      },
+      "2": {
+        "total": 585,
+        "top_torsion": {
+          "[1]": {
+            "count": 585,
+            "pct": 100.0
+          }
+        }
+      }
+    },
+    "torsion_order_chi2": 2748.1138,
+    "torsion_order_p_value": 0.0,
+    "torsion_order_dof": 44
+  },
+  "a2_vs_cm": {
+    "a2_cm_breakdown": {
+      "-2": {
+        "total": 649,
+        "cm_count": 0,
+        "cm_pct": 0.0
+      },
+      "-1": {
+        "total": 8449,
+        "cm_count": 8,
+        "cm_pct": 0.09
+      },
+      "0": {
+        "total": 12979,
+        "cm_count": 282,
+        "cm_pct": 2.17
+      },
+      "1": {
+        "total": 8411,
+        "cm_count": 4,
+        "cm_pct": 0.05
+      },
+      "2": {
+        "total": 585,
+        "cm_count": 0,
+        "cm_pct": 0.0
+      }
+    },
+    "chi2": 357.9677,
+    "p_value": 3.338361e-76,
+    "cm_discriminants_at_a2_0": {
+      "-3": 134,
+      "-4": 62,
+      "-16": 18,
+      "-27": 16,
+      "-12": 16,
+      "-11": 8,
+      "-8": 8,
+      "-28": 6,
+      "-7": 6,
+      "-19": 4,
+      "-43": 2,
+      "-67": 2
+    }
+  },
+  "reduction_type": {
+    "reduction_type_counts": {
+      "multiplicative": 12542,
+      "additive": 11542,
+      "good_ordinary": 5552,
+      "good_supersingular": 1437
+    },
+    "a2_by_reduction_type": {
+      "good_ordinary": {
+        "-2": 649,
+        "-1": 2218,
+        "1": 2100,
+        "2": 585
+      },
+      "multiplicative": {
+        "-1": 6231,
+        "1": 6311
+      },
+      "good_supersingular": {
+        "0": 1437
+      },
+      "additive": {
+        "0": 11542
+      }
+    },
+    "bad_at_2": 24084,
+    "good_at_2": 6989,
+    "bad_at_2_pct": 77.51
+  },
+  "summary": {
+    "total_curves": 31073,
+    "a2_values_observed": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "key_findings": [
+      "a_2=0 dominates: 41.77% of curves (supersingular/additive at 2)",
+      "Parity split: 45.74% even vs 54.26% odd",
+      "a_2 vs rank chi2=931.8105, p=7.752813e-196 (dof=8)",
+      "Mean rank by a_2: {-2: 0.8998, -1: 0.5726, 0: 0.5245, 1: 0.4379, 2: 0.4325}",
+      "Parity vs rank: {'even': 0.5378, 'odd': 0.5054} (chi2=29.1695, p=4.633635e-07)",
+      "a_2 vs torsion_order chi2=2748.1138, p=0.0",
+      "a_2 vs CM chi2=357.9677, p=3.338361e-76",
+      "Bad reduction at 2: 77.51% of curves"
+    ]
+  }
+}

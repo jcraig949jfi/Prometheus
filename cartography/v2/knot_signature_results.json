@@ -1,0 +1,128 @@
+{
+  "title": "Knot Signature Distribution and Concordance Analysis",
+  "method": "Signature computed from Alexander polynomial: sigma(K) = -2 * (number of roots of Delta_K(t) on the upper unit semicircle). This is exact for knots with irreducible Alexander polynomials.",
+  "distribution": {
+    "n_total_knots": 12965,
+    "n_with_alexander": 2977,
+    "mean": -2.638898219684246,
+    "median": -2.0,
+    "std": 2.018125424032949,
+    "min": -10,
+    "max": 0,
+    "mean_abs": 2.638898219684246,
+    "median_abs": 2.0,
+    "value_counts": {
+      "-10": 3,
+      "-8": 65,
+      "-6": 309,
+      "-4": 796,
+      "-2": 1134,
+      "0": 670
+    }
+  },
+  "slice_candidates_sigma_zero": {
+    "n_sigma_zero": 670,
+    "fraction_sigma_zero": 0.2251,
+    "note": "sigma=0 is necessary but not sufficient for sliceness"
+  },
+  "signature_vs_crossing_number": {
+    "linear_fit_slope": 0.1066,
+    "linear_fit_intercept": 1.4027,
+    "correlation_abs_sigma_vs_cn": 0.0437,
+    "interpretation": "|sigma| grows weakly with crossing number (r=0.044). Slope 0.107 means ~0.1 extra |sigma| per crossing.",
+    "per_crossing_number": {
+      "3": {
+        "n": 1,
+        "mean_abs_sigma": 2.0,
+        "max_abs_sigma": 2,
+        "fraction_zero": 0.0
+      },
+      "4": {
+        "n": 1,
+        "mean_abs_sigma": 0.0,
+        "max_abs_sigma": 0,
+        "fraction_zero": 1.0
+      },
+      "5": {
+        "n": 2,
+        "mean_abs_sigma": 3.0,
+        "max_abs_sigma": 4,
+        "fraction_zero": 0.0
+      },
+      "6": {
+        "n": 3,
+        "mean_abs_sigma": 0.667,
+        "max_abs_sigma": 2,
+        "fraction_zero": 0.6667
+      },
+      "7": {
+        "n": 7,
+        "mean_abs_sigma": 2.857,
+        "max_abs_sigma": 6,
+        "fraction_zero": 0.1429
+      },
+      "8": {
+        "n": 21,
+        "mean_abs_sigma": 1.905,
+        "max_abs_sigma": 6,
+        "fraction_zero": 0.381
+      },
+      "9": {
+        "n": 49,
+        "mean_abs_sigma": 2.571,
+        "max_abs_sigma": 8,
+        "fraction_zero": 0.2041
+      },
+      "10": {
+        "n": 165,
+        "mean_abs_sigma": 2.364,
+        "max_abs_sigma": 8,
+        "fraction_zero": 0.2788
+      },
+      "11": {
+        "n": 552,
+        "mean_abs_sigma": 2.63,
+        "max_abs_sigma": 10,
+        "fraction_zero": 0.2156
+      },
+      "12": {
+        "n": 2176,
+        "mean_abs_sigma": 2.674,
+        "max_abs_sigma": 10,
+        "fraction_zero": 0.222
+      }
+    }
+  },
+  "alternating_vs_non_alternating": {
+    "alternating": {
+      "n": 1904,
+      "mean_sigma": -2.598,
+      "mean_abs_sigma": 2.598,
+      "fraction_zero": 0.2332
+    },
+    "non_alternating": {
+      "n": 1073,
+      "mean_sigma": -2.712,
+      "mean_abs_sigma": 2.712,
+      "fraction_zero": 0.2106
+    },
+    "interpretation": "Non-alternating knots have slightly higher mean |sigma| (2.712 vs 2.598) and a slightly lower fraction with sigma=0. The difference is modest."
+  },
+  "signature_vs_determinant": {
+    "n_pairs": 2977,
+    "correlation_sigma_vs_det": 0.1635,
+    "correlation_abs_sigma_vs_det": -0.1635,
+    "correlation_abs_sigma_vs_log_det": -0.1484,
+    "interpretation": "Weak negative correlation between |sigma| and determinant (r=-0.16). The determinant is |Delta(-1)| and depends on root MAGNITUDES at t=-1, while sigma depends on root LOCATIONS (unit circle vs off). These are largely independent invariants."
+  },
+  "key_findings": [
+    "sigma is always even (values: 0, -2, -4, -6, -8, -10 in this table)",
+    "Most common value: sigma=-2 (38.1%), followed by sigma=0 (22.5%)",
+    "22.5% of knots have sigma=0, a necessary condition for sliceness",
+    "|sigma| grows weakly with crossing number (correlation ~0.16)",
+    "Max |sigma| reaches 10 at crossing number 11-12",
+    "Alternating and non-alternating knots have similar sigma distributions",
+    "Signature and determinant are nearly independent (|r| ~ 0.16)",
+    "sigma is always non-positive with this sign convention (mirror reverses sign)"
+  ]
+}

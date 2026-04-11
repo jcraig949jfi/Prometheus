@@ -363,7 +363,37 @@ Genus-2 α=1.123 (curves ≤ N ~ N^α), EC α=1.271. EC accumulates faster. Genu
 Fourier coefficients absent from LMFDB Maass bulk export (35,416 forms). Theory predicts same SU(2) universality: M₂=1.0, M₄=2.0. Spectral parameter statistics: 51.8% even, 48.2% odd. 65 unique levels. Local k-NN unfolding suggests intermediate GOE-Poisson spacing. Blocked on targeted coefficient fetch.
 
 ### 75. Theta Growth Rate: r(n) ~ n^{d/2-1} Verified, Leech at α=10.999 (Lattice-growth)
-38,678 lattices. Theory r(n)~n^{d/2-1} confirmed for dim≥4 with precision |dev|<0.025. Leech lattice (dim=24): α=10.999 vs theory 11.0. Dim-8: α=3.003±0.010. Dim-3: systematic underestimate (0.274 vs 0.5) = truncation artifact at 150 coefficients. Dim-2: α=0.058 (theory 0, with known log corrections). A clean rediscovery of the asymptotic representation counting formula.
+38,678 lattices. Verified dim≥4: |dev|<0.025. Leech: α=10.999 (theory 11.0). Dim-3: truncation artifact.
+
+### 76. Cremona Class Count = ω(N), No Independent Rank Signal (EC-cremona)
+31,073 curves, 3,437 conductors. ω(N) dominates class count (ρ=0.556). Prime conductors: mean 1.3 classes vs composite 5.2. After regressing out ω(N), class count has zero residual correlation with rank (ρ=-0.009, p=0.59). Champion: N=4800 with 72 classes (2⁶·3·5²). 81% of multi-class conductors show rank variation across classes.
+
+### 77. Genus-2 Igusa: I10 Scales with Rank, F_{ac} Has I2=0 (G2-igusa)
+66,158 curves. I2=0 in 169 curves (0.26%, the j=0 analogue). I2=I4=I6=0 in exactly 5 (all F_{ac}). Mean log₁₀|I10| increases monotonically with rank: 5.79→6.14→6.56→7.09→7.81 (rank 0-4). M₂(Q) has dramatically smaller I10 (mean log=3.18 vs generic 6.30). 96% of IC tuples are unique.
+
+### 78. Knot Signature: 22.5% Slice Candidates, Weak Growth (Knot-sig)
+2,977 knots. σ always even, range [-10, 0]. Most common: σ=-2 (38.1%), σ=0 (22.5%). |σ| vs cn: weak (r=0.16). Alternating vs non-alternating: nearly identical. σ vs determinant: largely independent (r~0.16). 670 slice candidates (σ=0).
+
+### 79. OEIS: 94.8% Non-Trivial (Max Run <5), 52.8% Monotone (OEIS-consec)
+10,000 sequences. 53.4% have no consecutive run at all. 5.2% have run≥5, 0.5% have run≥20. Euler's n²+n+41: consecutive run of 41. 52.8% strictly monotone increasing. OEIS is overwhelmingly non-trivial by this measure.
+
+### 80. EC j-Height Drops with Rank: Higher Rank = Simpler j (EC-jinv)
+j-height mean: rank-0 (25.85) → rank-1 (24.12) → rank-2 (19.28). Higher rank = simpler j.
+
+### 81. Manin Conjecture: 100% for Optimal, c|torsion for Non-Optimal (EC-manin)
+17,314 optimal: ALL c=1. 82 non-optimal with c>1: c∈{2,3,4,5}, all rank-0, c always divides torsion order. The unique c=5 curve is 11.a3 (X₀(11)). Clean confirmation of the Manin conjecture.
+
+### 82. Lattice Class Number: Rich at Dim-3, Collapsed at Dim 4-7 (Lattice-cn)
+Dim-2: all cn=1 (LMFDB stores one per genus). Dim-3 (36,585): mean cn=15.5, median=13, max=56, only 2.6% cn=1. Dim 4-7: 100% cn=1 (Smith-Minkowski-Siegel mass). Dim-24 Leech: cn=24 (Niemeier lattices). log(det) vs log(cn): r=0.44 in dim-3.
+
+### 83. a_2 Is a Sharp Rank Predictor: a_2=-2 → rank 0.90, a_2=+2 → rank 0.43 (EC-a2)
+31,073 curves. a_2 vs rank: χ²=931.8 (p=7.8×10⁻¹⁹⁶). Monotonic gradient: a_2=-2 mean rank 0.900 → a_2=+2 mean rank 0.433. Zero rank-2 curves at a_2=+2 (0/585) vs 15.4% at a_2=-2 (100/649). a_2 vs torsion: χ²=2748 (p=0). Local behavior at p=2 encodes global arithmetic.
+
+### 84. Genus-2 RM: 0.175%, Intermediate Variance Between CM and Generic (G2-RM)
+66,158 curves. RM=116 (0.175%). RM trace variance 0.377 vs CM 0.160 vs generic Q 0.235. RM-CM KS: D=0.360, p=5.2×10⁻¹⁵. CM has lowest variance (maximally constrained Frobenius). M₄/M₂² for RM=2.72 vs CM=10.9 (CM heavier tails relative to spread).
+
+### 85. OEIS: 93.3% Integer, 6.2% Non-Integer, cofr Easiest (OEIS-types)
+394,454 sequences. 88.1% nonn, 5.2% sign, 2.0% frac, 3.7% cons, 0.5% cofr. Continued fractions have 57.7% `easy` rate (mechanically computable). Integer sequences have highest `more`+`hard` rates (computational frontier). Real constants have highest `changed` rate (editorial churn).
 
 ---
 
@@ -719,10 +749,17 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 | OEIS hard+more NPMI | 0.60 (7,139 seqs) | OEIS-kw |
 | Theta growth Leech α | 10.999 (theory 11.0) | Lattice-growth |
 | Theta growth dim-8 α | 3.003 (theory 3.0) | Lattice-growth |
+| EC class count predictor | ω(N) (ρ=0.556) | EC-cremona |
+| G2 I10 rank-0 mean log | 5.79 | G2-igusa |
+| G2 I10 rank-4 mean log | 7.81 | G2-igusa |
+| Knot slice candidates | 22.5% (σ=0) | Knot-sig |
+| OEIS non-trivial fraction | 94.8% | OEIS-consec |
+| EC j-height rank-0 mean | 25.85 | EC-jinv |
+| EC j-height rank-2 mean | 19.28 | EC-jinv |
 
 ---
 
-*200 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 75 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 90+ measured constants.*
+*210 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

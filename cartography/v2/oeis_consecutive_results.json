@@ -1,0 +1,820 @@
+{
+  "summary": {
+    "total_sequences": 10000,
+    "mean_max_run": 2.05,
+    "median_max_run": 1.0,
+    "max_max_run": 90,
+    "strictly_monotone_count": 5285,
+    "strictly_monotone_fraction": 0.5285,
+    "thresholds": {
+      "run_ge_5": {
+        "count": 516,
+        "fraction": 0.0516
+      },
+      "run_ge_10": {
+        "count": 176,
+        "fraction": 0.0176
+      },
+      "run_ge_20": {
+        "count": 50,
+        "fraction": 0.005
+      },
+      "run_ge_50": {
+        "count": 7,
+        "fraction": 0.0007
+      },
+      "run_ge_100": {
+        "count": 0,
+        "fraction": 0.0
+      }
+    },
+    "distribution_top30": {
+      "1": 5335,
+      "2": 2943,
+      "3": 954,
+      "4": 252,
+      "5": 136,
+      "6": 64,
+      "7": 57,
+      "8": 36,
+      "9": 47,
+      "10": 45,
+      "11": 29,
+      "12": 14,
+      "13": 10,
+      "14": 4,
+      "15": 5,
+      "16": 5,
+      "17": 4,
+      "18": 8,
+      "19": 2,
+      "20": 3,
+      "21": 5,
+      "22": 1,
+      "23": 2,
+      "24": 4,
+      "25": 2,
+      "26": 2,
+      "27": 2,
+      "28": 3,
+      "29": 4,
+      "30": 1
+    }
+  },
+  "top50_longest_runs": [
+    {
+      "id": "A001637",
+      "name": "Numbers with an even number of digits.",
+      "seq_length": 92,
+      "max_consecutive_run": 90,
+      "run_start_index": 0,
+      "run_start_value": 10,
+      "run_fraction": 0.9783,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A001477",
+      "name": "The nonnegative integers.",
+      "seq_length": 78,
+      "max_consecutive_run": 78,
+      "run_start_index": 0,
+      "run_start_value": 0,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000027",
+      "name": "The positive integers. Also called the natural numbers, the whole numbers or the counting numbers, but these terms are ambiguous.",
+      "seq_length": 77,
+      "max_consecutive_run": 77,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A009056",
+      "name": "Numbers >= 3.",
+      "seq_length": 75,
+      "max_consecutive_run": 75,
+      "run_start_index": 0,
+      "run_start_value": 3,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A009005",
+      "name": "All natural numbers except 1, 2 and 4.",
+      "seq_length": 74,
+      "max_consecutive_run": 73,
+      "run_start_index": 1,
+      "run_start_value": 5,
+      "run_fraction": 0.9865,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008522",
+      "name": "Numbers whose American English name contains the letter 't'.",
+      "seq_length": 70,
+      "max_consecutive_run": 66,
+      "run_start_index": 4,
+      "run_start_value": 12,
+      "run_fraction": 0.9429,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008553",
+      "name": "Numbers whose American English name contains the letter 'y'.",
+      "seq_length": 66,
+      "max_consecutive_run": 66,
+      "run_start_index": 0,
+      "run_start_value": 20,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A001633",
+      "name": "Numbers with an odd number of digits.",
+      "seq_length": 56,
+      "max_consecutive_run": 46,
+      "run_start_index": 10,
+      "run_start_value": 100,
+      "run_fraction": 0.8214,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A002837",
+      "name": "Numbers k such that k^2 - k + 41 is prime.",
+      "seq_length": 67,
+      "max_consecutive_run": 41,
+      "run_start_index": 0,
+      "run_start_value": 0,
+      "run_fraction": 0.6119,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000865",
+      "name": "Numbers beginning with letter 'o' in English.",
+      "seq_length": 37,
+      "max_consecutive_run": 36,
+      "run_start_index": 1,
+      "run_start_value": 100,
+      "run_fraction": 0.973,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A007412",
+      "name": "The noncubes: a(n) = n + floor((n + floor(n^(1/3)))^(1/3)).",
+      "seq_length": 67,
+      "max_consecutive_run": 36,
+      "run_start_index": 24,
+      "run_start_value": 28,
+      "run_fraction": 0.5373,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004830",
+      "name": "Numbers that are the sum of at most 8 positive cubes.",
+      "seq_length": 58,
+      "max_consecutive_run": 35,
+      "run_start_index": 23,
+      "run_start_value": 24,
+      "run_fraction": 0.6034,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000852",
+      "name": "Numbers beginning with a vowel in English.",
+      "seq_length": 47,
+      "max_consecutive_run": 33,
+      "run_start_index": 14,
+      "run_start_value": 100,
+      "run_fraction": 0.7021,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000867",
+      "name": "Numbers beginning with letter 'f' in English.",
+      "seq_length": 57,
+      "max_consecutive_run": 33,
+      "run_start_index": 24,
+      "run_start_value": 400,
+      "run_fraction": 0.5789,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A003619",
+      "name": "Not of form [ e^m ], m >= 1.",
+      "seq_length": 50,
+      "max_consecutive_run": 33,
+      "run_start_index": 17,
+      "run_start_value": 21,
+      "run_fraction": 0.66,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004754",
+      "name": "Numbers whose binary expansion starts 10.",
+      "seq_length": 67,
+      "max_consecutive_run": 32,
+      "run_start_index": 31,
+      "run_start_value": 64,
+      "run_fraction": 0.4776,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004761",
+      "name": "Numbers n whose binary expansion does not begin with 11.",
+      "seq_length": 67,
+      "max_consecutive_run": 32,
+      "run_start_index": 33,
+      "run_start_value": 64,
+      "run_fraction": 0.4776,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004763",
+      "name": "Numbers whose binary expansion does not begin 101.",
+      "seq_length": 69,
+      "max_consecutive_run": 32,
+      "run_start_index": 33,
+      "run_start_value": 48,
+      "run_fraction": 0.4638,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000981",
+      "name": "Numbers beginning with letter 'n' in English.",
+      "seq_length": 43,
+      "max_consecutive_run": 31,
+      "run_start_index": 12,
+      "run_start_value": 900,
+      "run_fraction": 0.7209,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004764",
+      "name": "Numbers whose binary expansion does not begin 110.",
+      "seq_length": 72,
+      "max_consecutive_run": 31,
+      "run_start_index": 41,
+      "run_start_value": 56,
+      "run_fraction": 0.4306,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008684",
+      "name": "Dates of successive days in Gregorian calendar.",
+      "seq_length": 75,
+      "max_consecutive_run": 31,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 0.4133,
+      "strictly_monotone": false
+    },
+    {
+      "id": "A000873",
+      "name": "Numbers beginning with letter 'e' in English.",
+      "seq_length": 43,
+      "max_consecutive_run": 30,
+      "run_start_index": 13,
+      "run_start_value": 800,
+      "run_fraction": 0.6977,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004438",
+      "name": "Numbers that are not the sum of 5 distinct squares.",
+      "seq_length": 76,
+      "max_consecutive_run": 29,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 0.3816,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004441",
+      "name": "Numbers that are not the sum of 4 distinct nonzero squares.",
+      "seq_length": 57,
+      "max_consecutive_run": 29,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 0.5088,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004755",
+      "name": "Binary expansion starts 11.",
+      "seq_length": 60,
+      "max_consecutive_run": 29,
+      "run_start_index": 31,
+      "run_start_value": 96,
+      "run_fraction": 0.4833,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004756",
+      "name": "Binary expansion starts 100.",
+      "seq_length": 60,
+      "max_consecutive_run": 29,
+      "run_start_index": 31,
+      "run_start_value": 128,
+      "run_fraction": 0.4833,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A001746",
+      "name": "At least one digit contains a loop (version 1).",
+      "seq_length": 64,
+      "max_consecutive_run": 28,
+      "run_start_index": 36,
+      "run_start_value": 78,
+      "run_fraction": 0.4375,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A003605",
+      "name": "Unique monotonic sequence of nonnegative integers satisfying a(a(n)) = 3n.",
+      "seq_length": 68,
+      "max_consecutive_run": 28,
+      "run_start_index": 27,
+      "run_start_value": 54,
+      "run_fraction": 0.4118,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004757",
+      "name": "Binary expansion starts 101.",
+      "seq_length": 59,
+      "max_consecutive_run": 28,
+      "run_start_index": 31,
+      "run_start_value": 160,
+      "run_fraction": 0.4746,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A001476",
+      "name": "Numbers that are not the sum of distinct positive cubes.",
+      "seq_length": 69,
+      "max_consecutive_run": 27,
+      "run_start_index": 29,
+      "run_start_value": 37,
+      "run_fraction": 0.3913,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004760",
+      "name": "List of numbers whose binary expansion does not begin 10.",
+      "seq_length": 60,
+      "max_consecutive_run": 27,
+      "run_start_index": 33,
+      "run_start_value": 96,
+      "run_fraction": 0.45,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004758",
+      "name": "Binary expansion starts 110.",
+      "seq_length": 57,
+      "max_consecutive_run": 26,
+      "run_start_index": 31,
+      "run_start_value": 192,
+      "run_fraction": 0.4561,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004829",
+      "name": "Numbers that are the sum of at most 7 positive cubes.",
+      "seq_length": 66,
+      "max_consecutive_run": 26,
+      "run_start_index": 21,
+      "run_start_value": 24,
+      "run_fraction": 0.3939,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000414",
+      "name": "Numbers that are the sum of 4 nonzero squares.",
+      "seq_length": 66,
+      "max_consecutive_run": 25,
+      "run_start_index": 41,
+      "run_start_value": 57,
+      "run_fraction": 0.3788,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004759",
+      "name": "Binary expansion starts 111.",
+      "seq_length": 56,
+      "max_consecutive_run": 25,
+      "run_start_index": 31,
+      "run_start_value": 224,
+      "run_fraction": 0.4464,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004762",
+      "name": "Numbers whose binary expansion does not begin 100.",
+      "seq_length": 68,
+      "max_consecutive_run": 24,
+      "run_start_index": 25,
+      "run_start_value": 40,
+      "run_fraction": 0.3529,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004765",
+      "name": "Numbers whose binary expansion does not begin 111.",
+      "seq_length": 69,
+      "max_consecutive_run": 24,
+      "run_start_index": 25,
+      "run_start_value": 32,
+      "run_fraction": 0.3478,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008519",
+      "name": "Numbers whose American English name contains the letter 'o'.",
+      "seq_length": 60,
+      "max_consecutive_run": 24,
+      "run_start_index": 36,
+      "run_start_value": 100,
+      "run_fraction": 0.4,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008520",
+      "name": "Numbers whose American English name contains the letter 'e'.",
+      "seq_length": 72,
+      "max_consecutive_run": 24,
+      "run_start_index": 48,
+      "run_start_value": 67,
+      "run_fraction": 0.3333,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A001690",
+      "name": "Non-Fibonacci numbers.",
+      "seq_length": 69,
+      "max_consecutive_run": 23,
+      "run_start_index": 46,
+      "run_start_value": 56,
+      "run_fraction": 0.3333,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A005767",
+      "name": "Solutions k to k^2 = a^2 + b^2 + c^2 (a,b,c > 0).",
+      "seq_length": 73,
+      "max_consecutive_run": 23,
+      "run_start_index": 30,
+      "run_start_value": 41,
+      "run_fraction": 0.3151,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000398",
+      "name": "Numbers of form x^2 + 2y^2 + 2yz + 4z^2.",
+      "seq_length": 60,
+      "max_consecutive_run": 22,
+      "run_start_index": 38,
+      "run_start_value": 43,
+      "run_fraction": 0.3667,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000870",
+      "name": "Numbers beginning with letter 's' in English.",
+      "seq_length": 45,
+      "max_consecutive_run": 21,
+      "run_start_index": 24,
+      "run_start_value": 600,
+      "run_fraction": 0.4667,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004753",
+      "name": "Numbers whose binary expansion contains 100.",
+      "seq_length": 65,
+      "max_consecutive_run": 21,
+      "run_start_index": 31,
+      "run_start_value": 64,
+      "run_fraction": 0.3231,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004780",
+      "name": "Binary expansion contains 2 adjacent 1's.",
+      "seq_length": 67,
+      "max_consecutive_run": 21,
+      "run_start_index": 22,
+      "run_start_value": 43,
+      "run_fraction": 0.3134,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A006092",
+      "name": "Numbers beginning with letter 't' when spelled out in English.",
+      "seq_length": 46,
+      "max_consecutive_run": 21,
+      "run_start_index": 25,
+      "run_start_value": 200,
+      "run_fraction": 0.4565,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008321",
+      "name": "Smallest number that is not the sum of squares of distinct earlier terms.",
+      "seq_length": 71,
+      "max_consecutive_run": 21,
+      "run_start_index": 8,
+      "run_start_value": 15,
+      "run_fraction": 0.2958,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008538",
+      "name": "Numbers whose American English name contains the letter 's'.",
+      "seq_length": 62,
+      "max_consecutive_run": 20,
+      "run_start_index": 12,
+      "run_start_value": 60,
+      "run_fraction": 0.3226,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008540",
+      "name": "Numbers whose American English name contains the letter 'f'.",
+      "seq_length": 63,
+      "max_consecutive_run": 20,
+      "run_start_index": 8,
+      "run_start_value": 40,
+      "run_fraction": 0.3175,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008554",
+      "name": "Numbers that do not contain the letter `y'.",
+      "seq_length": 59,
+      "max_consecutive_run": 20,
+      "run_start_index": 0,
+      "run_start_value": 0,
+      "run_fraction": 0.339,
+      "strictly_monotone": true
+    }
+  ],
+  "surprising_long_runs": [
+    {
+      "id": "A001637",
+      "name": "Numbers with an even number of digits.",
+      "seq_length": 92,
+      "max_consecutive_run": 90,
+      "run_start_index": 0,
+      "run_start_value": 10,
+      "run_fraction": 0.9783,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A009056",
+      "name": "Numbers >= 3.",
+      "seq_length": 75,
+      "max_consecutive_run": 75,
+      "run_start_index": 0,
+      "run_start_value": 3,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008522",
+      "name": "Numbers whose American English name contains the letter 't'.",
+      "seq_length": 70,
+      "max_consecutive_run": 66,
+      "run_start_index": 4,
+      "run_start_value": 12,
+      "run_fraction": 0.9429,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008553",
+      "name": "Numbers whose American English name contains the letter 'y'.",
+      "seq_length": 66,
+      "max_consecutive_run": 66,
+      "run_start_index": 0,
+      "run_start_value": 20,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A001633",
+      "name": "Numbers with an odd number of digits.",
+      "seq_length": 56,
+      "max_consecutive_run": 46,
+      "run_start_index": 10,
+      "run_start_value": 100,
+      "run_fraction": 0.8214,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A002837",
+      "name": "Numbers k such that k^2 - k + 41 is prime.",
+      "seq_length": 67,
+      "max_consecutive_run": 41,
+      "run_start_index": 0,
+      "run_start_value": 0,
+      "run_fraction": 0.6119,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000865",
+      "name": "Numbers beginning with letter 'o' in English.",
+      "seq_length": 37,
+      "max_consecutive_run": 36,
+      "run_start_index": 1,
+      "run_start_value": 100,
+      "run_fraction": 0.973,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004830",
+      "name": "Numbers that are the sum of at most 8 positive cubes.",
+      "seq_length": 58,
+      "max_consecutive_run": 35,
+      "run_start_index": 23,
+      "run_start_value": 24,
+      "run_fraction": 0.6034,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000852",
+      "name": "Numbers beginning with a vowel in English.",
+      "seq_length": 47,
+      "max_consecutive_run": 33,
+      "run_start_index": 14,
+      "run_start_value": 100,
+      "run_fraction": 0.7021,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000867",
+      "name": "Numbers beginning with letter 'f' in English.",
+      "seq_length": 57,
+      "max_consecutive_run": 33,
+      "run_start_index": 24,
+      "run_start_value": 400,
+      "run_fraction": 0.5789,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A003619",
+      "name": "Not of form [ e^m ], m >= 1.",
+      "seq_length": 50,
+      "max_consecutive_run": 33,
+      "run_start_index": 17,
+      "run_start_value": 21,
+      "run_fraction": 0.66,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004754",
+      "name": "Numbers whose binary expansion starts 10.",
+      "seq_length": 67,
+      "max_consecutive_run": 32,
+      "run_start_index": 31,
+      "run_start_value": 64,
+      "run_fraction": 0.4776,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004761",
+      "name": "Numbers n whose binary expansion does not begin with 11.",
+      "seq_length": 67,
+      "max_consecutive_run": 32,
+      "run_start_index": 33,
+      "run_start_value": 64,
+      "run_fraction": 0.4776,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004763",
+      "name": "Numbers whose binary expansion does not begin 101.",
+      "seq_length": 69,
+      "max_consecutive_run": 32,
+      "run_start_index": 33,
+      "run_start_value": 48,
+      "run_fraction": 0.4638,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000981",
+      "name": "Numbers beginning with letter 'n' in English.",
+      "seq_length": 43,
+      "max_consecutive_run": 31,
+      "run_start_index": 12,
+      "run_start_value": 900,
+      "run_fraction": 0.7209,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004764",
+      "name": "Numbers whose binary expansion does not begin 110.",
+      "seq_length": 72,
+      "max_consecutive_run": 31,
+      "run_start_index": 41,
+      "run_start_value": 56,
+      "run_fraction": 0.4306,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A008684",
+      "name": "Dates of successive days in Gregorian calendar.",
+      "seq_length": 75,
+      "max_consecutive_run": 31,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 0.4133,
+      "strictly_monotone": false
+    },
+    {
+      "id": "A000873",
+      "name": "Numbers beginning with letter 'e' in English.",
+      "seq_length": 43,
+      "max_consecutive_run": 30,
+      "run_start_index": 13,
+      "run_start_value": 800,
+      "run_fraction": 0.6977,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004438",
+      "name": "Numbers that are not the sum of 5 distinct squares.",
+      "seq_length": 76,
+      "max_consecutive_run": 29,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 0.3816,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A004441",
+      "name": "Numbers that are not the sum of 4 distinct nonzero squares.",
+      "seq_length": 57,
+      "max_consecutive_run": 29,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 0.5088,
+      "strictly_monotone": true
+    }
+  ],
+  "trivial_long_runs": [
+    {
+      "id": "A001477",
+      "name": "The nonnegative integers.",
+      "seq_length": 78,
+      "max_consecutive_run": 78,
+      "run_start_index": 0,
+      "run_start_value": 0,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A000027",
+      "name": "The positive integers. Also called the natural numbers, the whole numbers or the counting numbers, but these terms are ambiguous.",
+      "seq_length": 77,
+      "max_consecutive_run": 77,
+      "run_start_index": 0,
+      "run_start_value": 1,
+      "run_fraction": 1.0,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A009005",
+      "name": "All natural numbers except 1, 2 and 4.",
+      "seq_length": 74,
+      "max_consecutive_run": 73,
+      "run_start_index": 1,
+      "run_start_value": 5,
+      "run_fraction": 0.9865,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A007412",
+      "name": "The noncubes: a(n) = n + floor((n + floor(n^(1/3)))^(1/3)).",
+      "seq_length": 67,
+      "max_consecutive_run": 36,
+      "run_start_index": 24,
+      "run_start_value": 28,
+      "run_fraction": 0.5373,
+      "strictly_monotone": true
+    },
+    {
+      "id": "A003605",
+      "name": "Unique monotonic sequence of nonnegative integers satisfying a(a(n)) = 3n.",
+      "seq_length": 68,
+      "max_consecutive_run": 28,
+      "run_start_index": 27,
+      "run_start_value": 54,
+      "run_fraction": 0.4118,
+      "strictly_monotone": true
+    }
+  ]
+}
