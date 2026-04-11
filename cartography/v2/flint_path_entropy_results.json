@@ -1,0 +1,309 @@
+{
+  "metadata": {
+    "problem": "NF6: Algorithmic Path Entropy of FLINT",
+    "num_nodes": 8904,
+    "num_directed_edges": 39770,
+    "num_non_sink_nodes": 5551,
+    "num_sink_nodes": 3353,
+    "max_out_degree": 551,
+    "mean_out_degree_nonsink": 7.1645,
+    "median_out_degree_nonsink": 4.0
+  },
+  "topological_entropy": {
+    "spectral_radius": 2.64073814,
+    "h_nats": 0.97105848,
+    "h_bits": 1.40094125,
+    "top_eigenvalue_magnitudes": [
+      2.640738,
+      1.935276,
+      1.772966,
+      1.772966,
+      1.70862,
+      1.621336
+    ],
+    "interpretation": "h = log(lambda_max) measures the exponential growth rate of valid paths of length N. Higher h = more branching possibilities = more complex algorithmic dependency structure."
+  },
+  "shannon_entropy_rate": {
+    "H_pagerank_intrinsic_bits": 0.97694666,
+    "H_pagerank_intrinsic_nats": 0.67716783,
+    "H_pagerank_full_bits": 8.73971571,
+    "H_pagerank_full_nats": 6.0579093,
+    "H_conditional_degweighted_bits": 3.6883967,
+    "H_conditional_degweighted_nats": 2.55660178,
+    "H_mean_nonsink_bits": 2.06083316,
+    "H_mean_nonsink_nats": 1.4284607,
+    "pagerank_alpha": 0.15,
+    "pagerank_mass_on_sinks": 0.505787,
+    "pagerank_mass_on_nonsinks": 0.494213,
+    "note": "The call graph is nearly a DAG; naive absorbing chains give H=0. We report: (1) PageRank-weighted intrinsic branching entropy (H_pr_intrinsic = SUM pi_pr * log2(out_deg)), (2) full PageRank entropy including teleport noise, (3) degree-weighted conditional entropy, (4) unweighted mean over non-sinks.",
+    "interpretation": "H measures the typical branching uncertainty per step. H < h means the typical path is simpler than the worst-case branching topology allows."
+  },
+  "comparison": {
+    "h_bits": 1.40094125,
+    "H_pagerank_intrinsic_bits": 0.97694666,
+    "H_conditional_bits": 3.6883967,
+    "ratio_H_pr_over_h": 0.6973502,
+    "ratio_H_cond_over_h": 2.63279898,
+    "interpretation": "h measures total branching complexity (how fast path count grows); H measures typical branching per step. Ratio H/h < 1 means the stationary walk is less complex than the worst-case topology allows."
+  },
+  "stationary_distribution_pagerank": {
+    "entropy_of_pi_bits": 12.4596,
+    "max_log2_N": 13.1202,
+    "effective_support": 8904,
+    "top_20_nodes": [
+      {
+        "function": "mpoly_words_per_exp",
+        "module": "external",
+        "pagerank": 0.01072932,
+        "out_degree": 0,
+        "in_degree": 536,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_clear",
+        "module": "external",
+        "pagerank": 0.01016051,
+        "out_degree": 0,
+        "in_degree": 788,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_init",
+        "module": "external",
+        "pagerank": 0.00792587,
+        "out_degree": 0,
+        "in_degree": 709,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fq_nmod_ctx_degree",
+        "module": "external",
+        "pagerank": 0.00540371,
+        "out_degree": 0,
+        "in_degree": 316,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "_fmpz_demote",
+        "module": "external",
+        "pagerank": 0.00520457,
+        "out_degree": 0,
+        "in_degree": 51,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_set",
+        "module": "external",
+        "pagerank": 0.00437664,
+        "out_degree": 0,
+        "in_degree": 361,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "umul_ppmm",
+        "module": "external",
+        "pagerank": 0.00323234,
+        "out_degree": 0,
+        "in_degree": 131,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_is_zero",
+        "module": "external",
+        "pagerank": 0.00309255,
+        "out_degree": 0,
+        "in_degree": 381,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_sgn",
+        "module": "external",
+        "pagerank": 0.00239227,
+        "out_degree": 0,
+        "in_degree": 192,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_one",
+        "module": "external",
+        "pagerank": 0.00219386,
+        "out_degree": 0,
+        "in_degree": 228,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "mpoly_words_per_exp_sp",
+        "module": "external",
+        "pagerank": 0.00212683,
+        "out_degree": 0,
+        "in_degree": 171,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "n_poly_fit_length",
+        "module": "external",
+        "pagerank": 0.00208746,
+        "out_degree": 0,
+        "in_degree": 142,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "n_poly_clear",
+        "module": "external",
+        "pagerank": 0.00191559,
+        "out_degree": 0,
+        "in_degree": 137,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_zero",
+        "module": "external",
+        "pagerank": 0.00190631,
+        "out_degree": 0,
+        "in_degree": 195,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_cmp",
+        "module": "external",
+        "pagerank": 0.00179411,
+        "out_degree": 0,
+        "in_degree": 110,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_set_ui",
+        "module": "external",
+        "pagerank": 0.00173504,
+        "out_degree": 0,
+        "in_degree": 150,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "fmpz_swap",
+        "module": "external",
+        "pagerank": 0.00171966,
+        "out_degree": 0,
+        "in_degree": 140,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "mpoly_repack_monomials",
+        "module": "mpoly",
+        "pagerank": 0.00170572,
+        "out_degree": 8,
+        "in_degree": 96,
+        "local_entropy_bits": 3.0
+      },
+      {
+        "function": "fmpq_numref",
+        "module": "external",
+        "pagerank": 0.00169246,
+        "out_degree": 0,
+        "in_degree": 125,
+        "local_entropy_bits": 0.0
+      },
+      {
+        "function": "mpoly_fix_bits",
+        "module": "external",
+        "pagerank": 0.00166632,
+        "out_degree": 0,
+        "in_degree": 137,
+        "local_entropy_bits": 0.0
+      }
+    ]
+  },
+  "path_counting_verification": [
+    {
+      "k": 1,
+      "trace_Ak": 0.0
+    },
+    {
+      "k": 2,
+      "trace_Ak": 8.0
+    },
+    {
+      "k": 3,
+      "trace_Ak": 21.0
+    },
+    {
+      "k": 4,
+      "trace_Ak": 108.0
+    },
+    {
+      "k": 5,
+      "trace_Ak": 170.0
+    },
+    {
+      "k": 6,
+      "trace_Ak": 383.0
+    },
+    {
+      "k": 7,
+      "trace_Ak": 1078.0
+    },
+    {
+      "k": 8,
+      "trace_Ak": 2860.0
+    }
+  ],
+  "module_level": {
+    "num_modules": 119,
+    "module_spectral_radius": 1933.980785,
+    "h_mod_nats": 7.567336,
+    "h_mod_bits": 10.917358,
+    "H_mod_bits": 0.002712,
+    "top_10_modules_by_stationary_prob": [
+      {
+        "module": "aprcl",
+        "stationary_prob": 0.680117,
+        "out_degree": 0
+      },
+      {
+        "module": "acb_theta",
+        "stationary_prob": 0.083038,
+        "out_degree": 0
+      },
+      {
+        "module": "fq_nmod_poly",
+        "stationary_prob": 0.077127,
+        "out_degree": 0
+      },
+      {
+        "module": "calcium",
+        "stationary_prob": 0.025704,
+        "out_degree": 0
+      },
+      {
+        "module": "arb_fmpz_poly",
+        "stationary_prob": 0.013841,
+        "out_degree": 0
+      },
+      {
+        "module": "fq_vec_templates",
+        "stationary_prob": 0.008403,
+        "out_degree": 0
+      },
+      {
+        "module": "gr_special",
+        "stationary_prob": 0.008403,
+        "out_degree": 0
+      },
+      {
+        "module": "bool_mat",
+        "stationary_prob": 0.008403,
+        "out_degree": 0
+      },
+      {
+        "module": "double_interval",
+        "stationary_prob": 0.008403,
+        "out_degree": 0
+      },
+      {
+        "module": "ca_poly",
+        "stationary_prob": 0.008403,
+        "out_degree": 0
+      }
+    ]
+  }
+}
