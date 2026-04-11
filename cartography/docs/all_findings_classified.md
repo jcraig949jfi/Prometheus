@@ -453,7 +453,22 @@ Cross-domain synthesis across EC (10 invariants) and genus-2 (4 invariants). 79%
 31,073 curves. Zero discrepancies (100.00% agreement). Expected: LMFDB only publishes rigorously proven ranks. No rank≥3 in conductor≤4998. A database consistency check, not a BSD verification.
 
 ### 105. Genus-2 Selmer-MW Gap: Sha[2] Concentrates at Low Rank (G2-selmer)
-66,158 curves. 68.6% have Selmer=MW (no Sha[2]). The fraction INCREASES with MW rank: 32% at rank-0, 66% at rank-1, 90% at rank-2, 98% at rank-3, 100% at rank-4. Mean gap (Selmer-MW) = 0.403. Sha[2] contributions are concentrated at low MW rank — high-rank curves have tight Selmer bounds.
+68.6% Selmer=MW. Fraction increases: 32% (rank-0) → 100% (rank-4). Sha[2] at low rank only.
+
+### 106. EC Torsion-Conductor: r=-0.92 at Group Level (EC-tors-cond)
+15 Mazur groups. Spearman r=-0.92 (p<2×10⁻⁵) at group level. Orders 1-6 span full conductor range. Z/10Z covers only 42% of range. Z/2Z×Z/8Z is a single curve at N=210. Mazur's theorem manifests as conductor landscape compression for large torsion.
+
+### 107. Lattice Theta Similarity: Mean cos=0.489, 95.8% Unique (Lattice-sim)
+1,000 dim-3 lattices sampled. Mean pairwise cosine=0.489 (moderate). Unimodal. 0.1% pairs >0.99. 95.8% have unique theta series. No natural large clusters — space is diffuse. Max cluster size 15 (likely same genus).
+
+### 108. Genus-2 Trace Zero Density: Three Tiers, Twist Matters (G2-zeros)
+USp(4) generic: 9.6% (NOT near-zero like EC non-CM). CM products: ~78-80% (J(E_2)=79.6%, F_{ac}=78.6%). CM squares: ~55-67%. Surprise: E_1=8.2% but E_2=56.8% — quadratic twist flips zero density dramatically. The EC 50% CM pattern generalizes to genus-2 with richer tiered structure.
+
+### 109. OEIS Base-10 Bias: Confirmed Human Artifact (OEIS-base10)
+333,237 terms. Last-digit bias 920× above null (digits 0,1 over-represented). Digital root: 44.4% of sequences biased (vs 5% expected). Round-number excess 1.27×. Palindrome/repdigit mild (~1.1×). The mandate "base 10 is human artifact" is confirmed — curation bias, not mathematical structure.
+
+### 110. Knot Determinant: Mixture Distribution, det_alt ~ 1.72^cn (Knot-det-dist)
+2,977 knots. Neither log-normal nor power-law. Alternating: det ~ 1.72^cn (R²=0.59). Non-alternating: no clean fit. Alt mean det=149.9 vs non-alt 63.9 (2.3× gap). Mod-3: 36.4% divisible (biased). Mod-5: 22.5% (biased). Mod-7+: uniform.
 
 ---
 
@@ -819,7 +834,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*230 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*235 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

@@ -1,0 +1,151 @@
+{
+  "description": "OEIS Base-10 Bias Analysis: testing whether OEIS shows base-10 artifacts",
+  "mandate": "base 10 is a human artifact",
+  "n_sequences_loaded": 10000,
+  "n_sequences_with_positive_terms": 9996,
+  "n_positive_terms": 333237,
+  "magnitude_distribution": {
+    "1": 77410,
+    "2": 73660,
+    "3": 55984,
+    "4": 36509,
+    "5": 18500,
+    "6": 13240,
+    "7": 9576,
+    "8": 7571,
+    "9": 6262,
+    "10": 5179,
+    "11": 4277,
+    "12": 3774,
+    "13": 3287,
+    "14": 2728,
+    "15": 2316
+  },
+  "digital_root_analysis": {
+    "observed_distribution": {
+      "1": 53348,
+      "2": 40628,
+      "3": 37427,
+      "4": 34884,
+      "5": 30145,
+      "6": 32892,
+      "7": 30101,
+      "8": 28977,
+      "9": 44835
+    },
+    "null_distribution": {
+      "1": 43961,
+      "2": 36358,
+      "3": 35920,
+      "4": 36037,
+      "5": 36049,
+      "6": 36063,
+      "7": 36460,
+      "8": 36476,
+      "9": 35913
+    },
+    "observed_chi2_vs_uniform": {
+      "chi2": 14105.951872091035,
+      "p": 0.0
+    },
+    "null_chi2_vs_uniform": {
+      "chi2": 1471.5291279179683,
+      "p": 0.0
+    },
+    "kl_observed_vs_null": 0.012997061451576288,
+    "interpretation": "Both observed and null deviate from uniform because small integers dominate. KL divergence measures the EXCESS base-10 structure beyond magnitude effects."
+  },
+  "last_digit_analysis": {
+    "observed_distribution": {
+      "0": 42259,
+      "1": 49923,
+      "2": 40738,
+      "3": 29544,
+      "4": 33989,
+      "5": 29338,
+      "6": 32274,
+      "7": 24273,
+      "8": 27350,
+      "9": 23549
+    },
+    "null_distribution": {
+      "0": 33288,
+      "1": 33462,
+      "2": 33152,
+      "3": 33267,
+      "4": 32970,
+      "5": 33099,
+      "6": 33913,
+      "7": 33655,
+      "8": 33197,
+      "9": 33234
+    },
+    "observed_chi2_vs_uniform": {
+      "chi2": 19661.971632801877,
+      "p": 0.0
+    },
+    "null_chi2_vs_uniform": {
+      "chi2": 21.300878954017712,
+      "p": 0.011379433608921229
+    },
+    "interpretation": "Last digit distribution reveals base-10 bias directly. Random integers have uniform last digits; OEIS excess in 0,1,2 reflects human selection of 'interesting' sequences dominated by small values."
+  },
+  "palindrome_analysis": {
+    "observed_fraction": 0.2763948781197766,
+    "null_fraction": 0.2497591804031365,
+    "excess_ratio": 1.1066455201912795
+  },
+  "repdigit_analysis": {
+    "observed_fraction": 0.25749541617527466,
+    "null_fraction": 0.2330983654276086,
+    "excess_ratio": 1.104664186309976
+  },
+  "round_number_analysis": {
+    "mult10_observed": 0.1268136491446028,
+    "mult10_null": 0.09989286903915232,
+    "mult10_excess_ratio": 1.2694965152607547,
+    "trailing_zeros_observed": {
+      "0": 290978,
+      "1": 33835,
+      "2": 5702,
+      "3": 1430,
+      "4": 665,
+      "5": 196,
+      "6": 145,
+      "7": 63,
+      "8": 41,
+      "9": 37,
+      "10": 24,
+      "11": 14,
+      "12": 17,
+      "13": 14,
+      "14": 12,
+      "15": 13,
+      "16": 9,
+      "17": 10,
+      "18": 4,
+      "19": 7,
+      "21": 7,
+      "22": 4,
+      "23": 4,
+      "24": 4,
+      "25": 1,
+      "33": 1
+    },
+    "trailing_zeros_null": {
+      "0": 299949,
+      "1": 31481,
+      "2": 1672,
+      "3": 122,
+      "4": 12,
+      "5": 1
+    }
+  },
+  "per_sequence_digital_root": {
+    "sequences_tested": 6623,
+    "sequences_biased_at_p05": 2941,
+    "fraction_biased": 0.4440585837233882,
+    "interpretation": "Under null (no bias), ~5% should appear biased. Excess above 5% indicates systematic digital-root structure in OEIS."
+  },
+  "verdict": "Digital root KL(obs||null) = 0.012997\n  -> Measurable base-10 digital root bias\nLast digit chi2: observed=19662.0, null=21.3\n  -> Strong last-digit bias (human selection of 'round' numbers)\nPalindrome excess: 1.11x null\nRepdigit excess: 1.10x null\nMultiple-of-10 excess: 1.27x null\nPer-sequence DR bias: 44.4% (expect ~5% under null)\n\nCONCLUSION: YES, significant base-10 bias in OEIS. The encyclopedia over-represents palindromes, repdigits, and round numbers. This is a HUMAN CURATION artifact, not mathematical structure."
+}
