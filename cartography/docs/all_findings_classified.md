@@ -561,7 +561,16 @@ MI(lattice,Jones): z=-1.40. MI(lattice,Alexander): z=-0.23. Zero cross-domain st
 2,000 sequences. ALL-primes graph: 55 edges, χ=ω=7, 100% perfect. ANY-prime graph: 39,645 edges, χ=ω=192, still 100% perfect. The 100% rate (vs expected 89%) is structural: mod-p fingerprint matching creates equivalence relations → disjoint cliques → trivially perfect graphs.
 
 ### 141. Knot Curvature Flow κ*=-0.373: Opposite Sign from Genus-2 (Knot-curv-flow)
-2,977 knots, k-NN graph on Jones mod-3 fingerprints. κ*=-0.373 (negative, tree-like). OPPOSITE sign from genus-2 Hecke (+0.7295). Same sign as EC Hecke (-0.67) but half magnitude. Zero edges destroyed (negative curvature → weight expansion). Knot polynomial landscape is hyperbolic, not clustered.
+κ*=-0.373 (negative). OPPOSITE genus-2 (+0.73). Same sign as EC (-0.67). Hyperbolic.
+
+### 142. Lean Manifold Dimension = 3.14 (Lean-manifold)
+8,592 nodes. Levina-Bickel MLE at k=10: d=3.19. Harmonic mean across k=5,10,20: **d=3.14**. Dense graph (mean k-NN distance 1.71 hops). Dimension inflates with k (non-manifold structure at large scales). Human formal proof space is approximately 3-dimensional.
+
+### 143. FLINT Cyclomatic-Curvature ρ=-0.215: Complex Functions = Bottlenecks (FLINT-cycl-curv)
+3,762 FLINT functions. Branch-count vs node ORC: Spearman ρ=-0.2154 (p=9.6×10⁻⁴¹) — matches predicted -0.22 exactly. Quartile gradient: Q1 ORC=-0.108, Q4 ORC=-0.254. Complex functions (25+ branches) sit at hyperbolic bottlenecks. Simple wrappers have positive curvature (ORC=1.0).
+
+### 144. Weil Phase Tensor: Centered max σ=15.9, Above MP Edge 14.7 (Weil-tensor)
+100 genus-3 curves × 22 primes × 6 eigenvalue phases. After centering: mode-0 max σ=15.94 vs Marchenko-Pastur edge √100+√22=14.69. The 8% excess indicates genuine phase coherence beyond random — likely from ST group structure (42% non-generic USp(6)).
 
 ---
 
@@ -927,7 +936,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*266 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*269 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

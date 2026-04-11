@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "experiment": "List2 #5: Formal Logic Manifold Dimension",
+    "method": "Levina-Bickel MLE on k-NN distances in undirected Lean mathlib import graph",
+    "source": "F:\\Prometheus\\cartography\\mathlib\\mathlib4_source",
+    "timestamp": "2026-04-11T04:36:38.452832",
+    "sample_size": 500,
+    "k_values": [
+      5,
+      10,
+      20
+    ],
+    "seed": 42
+  },
+  "graph": {
+    "num_nodes": 8592,
+    "num_directed_edges": 34320,
+    "mean_reachable_per_sample": 8582.0
+  },
+  "dimension_estimates": {
+    "5": {
+      "k": 5,
+      "num_valid": 200,
+      "num_samples": 500,
+      "mean_dimension": 2.1207,
+      "median_dimension": 1.9236,
+      "std_dimension": 1.1647,
+      "percentiles": {
+        "p5": 1.4427,
+        "p25": 1.4427,
+        "p75": 1.9236,
+        "p95": 5.7708
+      },
+      "histogram": {
+        "1.0-1.5": 90,
+        "1.5-2.0": 71,
+        "2.5-3.0": 23,
+        "5.5-6.0": 16
+      }
+    },
+    "10": {
+      "k": 10,
+      "num_valid": 422,
+      "num_samples": 500,
+      "mean_dimension": 3.1946,
+      "median_dimension": 2.5969,
+      "std_dimension": 1.8797,
+      "percentiles": {
+        "p5": 1.623,
+        "p25": 2.164,
+        "p75": 3.2461,
+        "p95": 6.4921
+      },
+      "histogram": {
+        "1.0-1.5": 21,
+        "1.5-2.0": 72,
+        "2.0-2.5": 50,
+        "2.5-3.0": 85,
+        "3.0-3.5": 92,
+        "3.5-4.0": 5,
+        "4.0-4.5": 66,
+        "6.0-6.5": 22,
+        "12.5-13.0": 9
+      }
+    },
+    "20": {
+      "k": 20,
+      "num_valid": 489,
+      "num_samples": 500,
+      "mean_dimension": 5.877,
+      "median_dimension": 5.4822,
+      "std_dimension": 3.5046,
+      "percentiles": {
+        "p5": 1.9579,
+        "p25": 3.4264,
+        "p75": 6.8528,
+        "p95": 13.7056
+      },
+      "histogram": {
+        "1.0-1.5": 1,
+        "1.5-2.0": 25,
+        "2.0-2.5": 24,
+        "2.5-3.0": 22,
+        "3.0-3.5": 60,
+        "3.5-4.0": 34,
+        "4.0-4.5": 1,
+        "4.5-5.0": 50,
+        "5.0-5.5": 84,
+        "6.0-6.5": 1,
+        "6.5-7.0": 92,
+        "8.0-8.5": 4,
+        "9.0-9.5": 65,
+        "13.5-14.0": 21,
+        "27.0-27.5": 5
+      }
+    }
+  },
+  "global_estimate": {
+    "primary_k": 10,
+    "dimension_mle": 3.1946,
+    "harmonic_mean_all_k": 3.1423,
+    "all_k_means": {
+      "5": 2.1207,
+      "10": 3.1946,
+      "20": 5.877
+    }
+  },
+  "distance_distribution": {
+    "mean_knn_distance_k20": 1.7105,
+    "distance_histogram_k20_neighborhood": {
+      "1": 3124,
+      "2": 6657,
+      "3": 210,
+      "4": 8,
+      "5": 1
+    }
+  },
+  "interpretation": {
+    "note": "Intrinsic dimension of formal logic dependency structure",
+    "expected": "~3.14 (low-dimensional manifold)"
+  }
+}

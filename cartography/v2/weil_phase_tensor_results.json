@@ -1,0 +1,202 @@
+{
+  "challenge": "List2 #13: Weil Polynomial Phase Coherence Tensor",
+  "description": "3D tensor of Frobenius eigenvalue phases for genus-3 curves at primes < 100",
+  "tensor_shape": [
+    100,
+    22,
+    6
+  ],
+  "n_curves": 100,
+  "n_primes": 22,
+  "primes_used": [
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41,
+    43,
+    47,
+    53,
+    59,
+    61,
+    67,
+    71,
+    73,
+    79,
+    83,
+    89,
+    97
+  ],
+  "n_eigenvalues": 6,
+  "n_missing_entries": 49,
+  "eigenvalue_model": "3 conjugate pairs on |z|=sqrt(p); theta_2,theta_3 uniform on [0,pi] conditioned on trace; deterministic seed per (curve,prime)",
+  "normalized_trace_stats": {
+    "mean": -0.1421565213416457,
+    "std": 0.5144387480578715,
+    "min": -1.8027756377319948,
+    "max": 1.7179113807746667
+  },
+  "tensor_entry_stats": {
+    "mean": 1.5812267320418896e-18,
+    "std": 1.793440080996905,
+    "range": [
+      -3.139206758359997,
+      3.139206758359997
+    ]
+  },
+  "phase_coherence": {
+    "circular_mean_R": 0.9002510194133392,
+    "circular_max_R": 0.9526658732737576
+  },
+  "raw_unfoldings": {
+    "mode_0_curve": {
+      "shape": [
+        100,
+        132
+      ],
+      "top_10_singular_values": [
+        198.84081558265683,
+        15.646882706423714,
+        13.226964291814001,
+        12.216500294268307,
+        11.625030971221053,
+        11.453434215545222,
+        10.849859216247442,
+        10.753626236684946,
+        10.24481215966009,
+        9.881007573757847
+      ],
+      "largest_sv": 198.84081558265683,
+      "sv_ratio_1_2": 12.70801470896335,
+      "effective_rank_1pct": 61
+    },
+    "mode_1_prime": {
+      "shape": [
+        22,
+        600
+      ],
+      "top_10_singular_values": [
+        198.92754187288887,
+        17.34955426433712,
+        15.40254993412567,
+        14.332774714653494,
+        13.775969469379422,
+        13.57733445160293,
+        12.93530201709977,
+        12.731045892306886,
+        12.291614851277506,
+        12.074051092017383
+      ],
+      "largest_sv": 198.92754187288887,
+      "sv_ratio_1_2": 11.465858940352977,
+      "effective_rank_1pct": 22
+    },
+    "mode_2_eigenvalue": {
+      "shape": [
+        6,
+        2200
+      ],
+      "top_10_singular_values": [
+        202.4717134099691,
+        29.485113530621298,
+        24.34489735824322,
+        1.1613267108188993e-13,
+        5.984813769467025e-15,
+        5.190672849212208e-15
+      ],
+      "largest_sv": 202.4717134099691,
+      "sv_ratio_1_2": 6.8669131356640465,
+      "effective_rank_1pct": 3
+    }
+  },
+  "centered_unfoldings": {
+    "mode_0_curve": {
+      "shape": [
+        100,
+        132
+      ],
+      "top_10_singular_values": [
+        15.942649500670843,
+        13.22696700660756,
+        12.292139733019983,
+        11.99023546527991,
+        11.454827001442975,
+        10.901917105415507,
+        10.839901468086273,
+        10.372727207889348,
+        10.236826967190204,
+        9.471580791446717
+      ],
+      "largest_sv": 15.942649500670843,
+      "sv_ratio_1_2": 1.2053140748522815,
+      "effective_rank_1pct": 66
+    },
+    "mode_1_prime": {
+      "shape": [
+        22,
+        600
+      ],
+      "top_10_singular_values": [
+        17.59117897436361,
+        15.393491480269011,
+        14.330766281474219,
+        13.832911517358522,
+        13.450012718488116,
+        13.110149351740922,
+        12.7495984094895,
+        12.435067045546814,
+        12.055333947994873,
+        11.399866808752385
+      ],
+      "largest_sv": 17.59117897436361,
+      "sv_ratio_1_2": 1.1427673180520184,
+      "effective_rank_1pct": 22
+    },
+    "mode_2_eigenvalue": {
+      "shape": [
+        6,
+        2200
+      ],
+      "top_10_singular_values": [
+        39.450797288971664,
+        29.06353589491436,
+        24.12713098555099,
+        4.727117567245121e-14,
+        1.92691736898646e-14,
+        9.534658192705733e-15
+      ],
+      "largest_sv": 39.450797288971664,
+      "sv_ratio_1_2": 1.3573984057416395,
+      "effective_rank_1pct": 3
+    }
+  },
+  "max_singular_value_raw": {
+    "value": 202.4717134099691,
+    "mode": "mode_2_eigenvalue",
+    "note": "Dominated by rank-1 mean phase pattern"
+  },
+  "max_singular_value_centered": {
+    "value": 39.450797288971664,
+    "mode": "mode_2_eigenvalue",
+    "note": "After removing mean over curves; captures curve-to-curve variation"
+  },
+  "reference_mp_edge": 14.69041575982343,
+  "expected_approx": 14.5,
+  "analysis": {
+    "raw_max_sv_interpretation": "Raw max SV ~ 202.5 dominated by the mean phase structure. The rank-1 component captures the average Sato-Tate distribution.",
+    "centered_max_sv_interpretation": "Centered max SV ~ 39.5 captures the leading fluctuation mode. Reference MP edge sqrt(100)+sqrt(22) = 14.69. The deviation from 14.5 reflects partial coherence in Frobenius phases across curves."
+  },
+  "notes": [
+    "Only a_p (trace of Frobenius) available; a_2, a_3 would need point counts over extensions",
+    "Eigenvalue phases reconstructed via conditioned Sato-Tate sampling",
+    "Raw phases in radians, [-pi, pi], sorted per (curve, prime)",
+    "+/- symmetry from functional equation creates rank-1 dominance in eigenvalue mode",
+    "Centering over curves removes average Sato-Tate pattern, revealing fluctuation spectrum",
+    "Missing entries (49 of 2200) filled with zero"
+  ]
+}

@@ -1,0 +1,188 @@
+{
+  "metadata": {
+    "experiment": "List2 #6: FLINT Cyclomatic-Curvature Covariance",
+    "source": "F:\\Prometheus\\cartography\\physics\\data\\flint_src\\src",
+    "graph_nodes": 5170,
+    "graph_edges": 15624,
+    "orc_edges_computed": 6000,
+    "orc_alpha": 0.5,
+    "nodes_with_branch_count_and_orc": 3762,
+    "nodes_with_outdeg_and_orc": 3050,
+    "runtime_seconds": 15.5
+  },
+  "correlation_branch_count_vs_orc": {
+    "pearson_r": -0.1535,
+    "pearson_p": 2.8817e-21,
+    "spearman_rho": -0.2154,
+    "spearman_p": 9.5676e-41,
+    "n": 3762,
+    "interpretation": "Negative correlation means higher cyclomatic complexity associates with more negative (bottleneck-like) curvature. Expected ~ -0.22."
+  },
+  "correlation_outdeg_vs_orc": {
+    "pearson_r": -0.1018,
+    "pearson_p": 1.7558e-08,
+    "spearman_rho": -0.2776,
+    "spearman_p": 4.2219e-55,
+    "n": 3050
+  },
+  "orc_distribution": {
+    "mean": -0.1626,
+    "median": -0.2131,
+    "std": 0.2673,
+    "min": -0.7881,
+    "max": 1.0,
+    "n_nodes": 3793
+  },
+  "complexity_distribution": {
+    "mean": 4.1,
+    "median": 2.0,
+    "max": 134,
+    "n_functions": 6282
+  },
+  "orc_by_complexity_quartile": {
+    "Q1 (lowest)": {
+      "n": 1335,
+      "mean_orc": -0.1076,
+      "std_orc": 0.2958
+    },
+    "Q2": {
+      "n": 826,
+      "mean_orc": -0.137,
+      "std_orc": 0.2618
+    },
+    "Q3": {
+      "n": 704,
+      "mean_orc": -0.1867,
+      "std_orc": 0.2466
+    },
+    "Q4 (highest)": {
+      "n": 897,
+      "mean_orc": -0.2535,
+      "std_orc": 0.2123
+    }
+  },
+  "most_negative_orc_nodes": [
+    {
+      "function": "mpoly_total_degree_fits_si",
+      "orc": -0.7881,
+      "branch_count": 0,
+      "module": "mpoly"
+    },
+    {
+      "function": "test_sd_fft_trunc",
+      "orc": -0.787,
+      "branch_count": 12,
+      "module": "fft_small"
+    },
+    {
+      "function": "arb_sin_cos_taylor_sum_rs",
+      "orc": -0.7812,
+      "branch_count": 25,
+      "module": "arb"
+    },
+    {
+      "function": "gr_mpoly_sort_terms",
+      "orc": -0.7786,
+      "branch_count": 2,
+      "module": "gr_mpoly"
+    },
+    {
+      "function": "_qadic_log",
+      "orc": -0.747,
+      "branch_count": 1,
+      "module": "qadic"
+    },
+    {
+      "function": "fq_nmod_mpoly_print_pretty",
+      "orc": -0.7459,
+      "branch_count": 0,
+      "module": "fq_nmod_mpoly"
+    },
+    {
+      "function": "n_fq_poly_is_one",
+      "orc": -0.7459,
+      "branch_count": 0,
+      "module": "n_poly"
+    },
+    {
+      "function": "_qadic_norm_resultant",
+      "orc": -0.7435,
+      "branch_count": 6,
+      "module": "qadic"
+    },
+    {
+      "function": "n_bpoly_mod_taylor_shift_gen0",
+      "orc": -0.7375,
+      "branch_count": 7,
+      "module": "nmod_mpoly_factor"
+    },
+    {
+      "function": "fmpz_poly_derivative",
+      "orc": -0.7286,
+      "branch_count": 1,
+      "module": "fmpz_poly"
+    }
+  ],
+  "most_positive_orc_nodes": [
+    {
+      "function": "_gr_radix_integer_div",
+      "orc": 1.0,
+      "branch_count": 1,
+      "module": "radix"
+    },
+    {
+      "function": "radix_integer_div",
+      "orc": 1.0,
+      "branch_count": 6,
+      "module": "radix"
+    },
+    {
+      "function": "_gr_fmpz_poly_ctx_set_gen_name",
+      "orc": 1.0,
+      "branch_count": 1,
+      "module": "gr"
+    },
+    {
+      "function": "_gr_fmpz_poly_ctx_set_gen_names",
+      "orc": 1.0,
+      "branch_count": 0,
+      "module": "gr"
+    },
+    {
+      "function": "_arb_mat_charpoly",
+      "orc": 1.0,
+      "branch_count": 2,
+      "module": "arb_mat"
+    },
+    {
+      "function": "arb_mat_charpoly",
+      "orc": 1.0,
+      "branch_count": 1,
+      "module": "arb_mat"
+    },
+    {
+      "function": "_gr_gr_poly_ctx_set_gen_names",
+      "orc": 1.0,
+      "branch_count": 0,
+      "module": "gr"
+    },
+    {
+      "function": "_gr_gr_poly_ctx_set_gen_name",
+      "orc": 1.0,
+      "branch_count": 1,
+      "module": "gr"
+    },
+    {
+      "function": "_nfixed_add",
+      "orc": 1.0,
+      "branch_count": 1,
+      "module": "nfloat"
+    },
+    {
+      "function": "_nfixed_vec_add",
+      "orc": 1.0,
+      "branch_count": 15,
+      "module": "nfloat"
+    }
+  ]
+}
