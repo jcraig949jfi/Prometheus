@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "experiment": "List1 #18: Lean Proof-Depth Entropy",
+    "source": "F:\\Prometheus\\cartography\\mathlib\\mathlib4_source",
+    "timestamp": "2026-04-11T04:00:34.439393",
+    "description": "Depth = shortest path from any root (zero-import node) in the mathlib import DAG"
+  },
+  "graph": {
+    "num_files": 8411,
+    "num_nodes_total": 8592,
+    "num_edges": 34320,
+    "num_roots": 191
+  },
+  "depth_stats": {
+    "max_depth": 10,
+    "mean_depth": 3.8667,
+    "std_depth": 1.4396,
+    "median_depth": 4.0,
+    "shannon_entropy_bits": 2.5441,
+    "num_distinct_depths": 11,
+    "num_nodes": 8592,
+    "depth_histogram": {
+      "0": 191,
+      "1": 301,
+      "2": 852,
+      "3": 1767,
+      "4": 2648,
+      "5": 1946,
+      "6": 679,
+      "7": 157,
+      "8": 38,
+      "9": 12,
+      "10": 1
+    }
+  },
+  "top_20_deepest": [
+    {
+      "module": "Mathlib.Geometry.Manifold.IntegralCurve.Transform",
+      "depth": 10
+    },
+    {
+      "module": "Mathlib.CategoryTheory.Sites.Descent.Precoverage",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Analysis.Calculus.IteratedDeriv.WithinZpow",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.Decomposition.Exhaustion",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.MeasureTheory.Measure.Trim",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Probability.Distributions.Gaussian.IsGaussianProcess.Def",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.CategoryTheory.Localization.DerivabilityStructure.OfFunctorialResolutions",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.AlgebraicTopology.DoldKan.HomotopyEquivalence",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Probability.Kernel.Composition.Lemmas",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Probability.Kernel.Invariance",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Probability.Kernel.Proper",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Geometry.Manifold.IntegralCurve.Basic",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Algebra.Homology.ShortComplex.QuasiIso",
+      "depth": 9
+    },
+    {
+      "module": "Mathlib.Probability.Decision.Risk.Basic",
+      "depth": 8
+    },
+    {
+      "module": "Mathlib.Probability.Kernel.Composition.KernelLemmas",
+      "depth": 8
+    },
+    {
+      "module": "Mathlib.Algebra.Category.HopfAlgCat.Monoidal",
+      "depth": 8
+    },
+    {
+      "module": "Mathlib.CategoryTheory.Sites.DenseSubsite.InducedTopology",
+      "depth": 8
+    },
+    {
+      "module": "Mathlib.CategoryTheory.Sites.Descent.IsStack",
+      "depth": 8
+    },
+    {
+      "module": "Mathlib.Analysis.Calculus.IteratedDeriv.Defs",
+      "depth": 8
+    },
+    {
+      "module": "Mathlib.Analysis.Calculus.Deriv.ZPow",
+      "depth": 8
+    }
+  ],
+  "sample_roots": [
+    "/-",
+    "A",
+    "Aesop",
+    "Aesop.BuiltinRules",
+    "Aesop.Frontend",
+    "Aesop.Frontend.Attribute",
+    "Aesop.Frontend.Command",
+    "Aesop.Frontend.Tactic",
+    "Aesop.Main",
+    "Archive.Examples.IfNormalization.Statement"
+  ]
+}

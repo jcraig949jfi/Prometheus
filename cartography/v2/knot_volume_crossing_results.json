@@ -1,0 +1,214 @@
+{
+  "problem": "List2_18",
+  "title": "Knot Volume-Crossing Non-linear Scaling",
+  "extends": "NF17",
+  "note": "No volume_hyperbolic field in dataset; |det| used as proxy",
+  "data_summary": {
+    "n_knots": 2977,
+    "crossing_numbers": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "n_crossing_groups": 10
+  },
+  "median_fits": {
+    "power_law": {
+      "a": 0.004988963029295884,
+      "b": 4.084090950091054,
+      "a_se": 0.0016803569651524445,
+      "b_se": 0.13949762807272828,
+      "R2": 0.9966489191905864,
+      "SS_res": 53.64711756982059,
+      "n": 10,
+      "n_params": 2,
+      "AIC": 49.17719714484295,
+      "BIC": 49.78236733083104
+    },
+    "log_log_ols": {
+      "alpha": 2.745676073300594,
+      "log_a": -2.3095566326569377,
+      "a": 0.09930527051458116,
+      "R2": 0.9577582378381932,
+      "p_value": 8.857260851356014e-07,
+      "std_err": 0.20386720606349032,
+      "n": 10,
+      "n_params": 2
+    },
+    "exponential": {
+      "a": 0.9533259585780226,
+      "b": 0.40982704647366536,
+      "a_se": 0.07019612836662206,
+      "b_se": 0.006529822657423096,
+      "R2": 0.9991071467158977,
+      "SS_res": 14.29359893986518,
+      "n": 10,
+      "n_params": 2,
+      "AIC": 35.951037838836214,
+      "BIC": 36.5562080248243
+    },
+    "c_log_c": {
+      "a": 4.330119288898382,
+      "c": -30.03622169831599,
+      "a_se": 0.6338955095110579,
+      "c_se": 11.322394070677001,
+      "R2": 0.8536463340127799,
+      "SS_res": 2342.9612034228076,
+      "n": 10,
+      "n_params": 2,
+      "AIC": 86.94462853281011,
+      "BIC": 87.5497987187982
+    },
+    "best_model_AIC": "exponential"
+  },
+  "all_knot_fits": {
+    "power_law": {
+      "a": 0.0009952322473953128,
+      "b": 4.7549025602473085,
+      "a_se": 0.0007343273402679452,
+      "b_se": 0.2982444163922473,
+      "R2": 0.14843169975758075,
+      "SS_res": 13628458.185782515,
+      "n": 2977,
+      "n_params": 2,
+      "AIC": 33545.49099368824,
+      "BIC": 33557.48833641027
+    },
+    "log_log_ols": {
+      "alpha": 3.808131211722994,
+      "log_a": -4.828558474981468,
+      "a": 0.007998042338133251,
+      "R2": 0.1240333258251561,
+      "p_value": 1.1685511058959288e-87,
+      "std_err": 0.18554233436835985,
+      "n": 2977,
+      "n_params": 2
+    },
+    "exponential": {
+      "a": 0.8139382417540887,
+      "b": 0.42580260688669314,
+      "a_se": 0.2540291246715598,
+      "b_se": 0.026272762558741912,
+      "R2": 0.1484955365578985,
+      "SS_res": 13627436.544695597,
+      "n": 2977,
+      "n_params": 2,
+      "AIC": 33545.267818074506,
+      "BIC": 33557.26516079654
+    },
+    "c_log_c": {
+      "a": 9.946793682116569,
+      "c": -164.1759624879365,
+      "a_se": 0.45495562356793884,
+      "c_se": 13.006589006718665,
+      "R2": 0.1384304350614468,
+      "SS_res": 13788517.945730604,
+      "n": 2977,
+      "n_params": 2,
+      "AIC": 33580.25072186002,
+      "BIC": 33592.248064582054
+    },
+    "best_model_AIC": "exponential"
+  },
+  "median_table": {
+    "3": {
+      "median_det": 3.0,
+      "mean_det": 3.0,
+      "std_det": 0.0,
+      "count": 1
+    },
+    "4": {
+      "median_det": 5.0,
+      "mean_det": 5.0,
+      "std_det": 0.0,
+      "count": 1
+    },
+    "5": {
+      "median_det": 6.0,
+      "mean_det": 6.0,
+      "std_det": 1.0,
+      "count": 2
+    },
+    "6": {
+      "median_det": 11.0,
+      "mean_det": 11.0,
+      "std_det": 1.632993161855452,
+      "count": 3
+    },
+    "7": {
+      "median_det": 15.0,
+      "mean_det": 14.714285714285714,
+      "std_det": 4.462999814803803,
+      "count": 7
+    },
+    "8": {
+      "median_det": 25.0,
+      "mean_det": 23.952380952380953,
+      "std_det": 9.594026864352784,
+      "count": 21
+    },
+    "9": {
+      "median_det": 39.0,
+      "mean_det": 37.36734693877551,
+      "std_det": 15.416256828229063,
+      "count": 49
+    },
+    "10": {
+      "median_det": 57.0,
+      "mean_det": 56.515151515151516,
+      "std_det": 26.93574983022446,
+      "count": 165
+    },
+    "11": {
+      "median_det": 89.0,
+      "mean_det": 88.51086956521739,
+      "std_det": 45.244263284016704,
+      "count": 552
+    },
+    "12": {
+      "median_det": 129.0,
+      "mean_det": 134.75551470588235,
+      "std_det": 75.37808480000955,
+      "count": 2176
+    }
+  },
+  "interpretation": {
+    "b_power_law_median": 4.084090950091054,
+    "b_power_law_all": 4.7549025602473085,
+    "alpha_loglog_median": 2.745676073300594,
+    "expected_b_for_volume": 1.33,
+    "proxy_note": "|det| is not hyperbolic volume. For actual volume, Lackenby proved V <= 10*(C-1)*v_tet (linear upper bound in C). The expected b~1.33 for volume-vs-C is sub-quadratic. Our |det| proxy has b~2.7 because det grows exponentially faster than volume with crossing number.",
+    "power_law_is_best": false,
+    "model_ranking_median": [
+      [
+        "exponential",
+        35.951037838836214
+      ],
+      [
+        "power_law",
+        49.17719714484295
+      ],
+      [
+        "c_log_c",
+        86.94462853281011
+      ]
+    ]
+  },
+  "summary": {
+    "b_nlls": 4.084090950091054,
+    "b_loglog": 2.745676073300594,
+    "best_model": "exponential",
+    "R2_power_median": 0.9966489191905864,
+    "R2_exp_median": 0.9991071467158977,
+    "R2_clogc_median": 0.8536463340127799,
+    "NF17_alpha": 2.746,
+    "conclusion": "Power law V=a*C^b fits |det| proxy with b~4.08 (median) and R^2~0.9966. This is the |det| scaling, not volume scaling. For true hyperbolic volume, theory predicts near-linear growth (Lackenby bound), so b~1.33 is plausible for volume but our data only has |det|."
+  }
+}

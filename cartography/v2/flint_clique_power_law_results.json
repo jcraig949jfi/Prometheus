@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "task": "FLINT Call-Graph Clique Power Law (List3 #5)",
+    "source": "FLINT C library undirected call graph",
+    "num_nodes": 9462,
+    "num_edges": 39766,
+    "enumeration_time_seconds": 0.1,
+    "timed_out": false
+  },
+  "clique_statistics": {
+    "total_maximal_cliques": 33743,
+    "max_clique_size": 5,
+    "mean_clique_size": 2.3602,
+    "median_clique_size": 2.0,
+    "size_distribution": {
+      "1": 558,
+      "2": 21779,
+      "3": 10116,
+      "4": 1273,
+      "5": 17
+    }
+  },
+  "power_law_fit": {
+    "mle": {
+      "alpha": 3.2813,
+      "sigma": 0.0125,
+      "ks_statistic": 0.6563,
+      "k_min": 2,
+      "n_samples": 33185
+    },
+    "ols_log_log": {
+      "alpha": 7.2731,
+      "r_squared": 0.8038
+    },
+    "k_min_scan": [
+      {
+        "k_min": 2,
+        "alpha_mle": 3.2813,
+        "sigma": 0.0125,
+        "ks_statistic": 0.6563,
+        "n_samples": 33185
+      },
+      {
+        "k_min": 3,
+        "alpha_mle": 5.647,
+        "sigma": 0.0435,
+        "ks_statistic": 0.8869,
+        "n_samples": 11406
+      },
+      {
+        "k_min": 4,
+        "alpha_mle": 8.3275,
+        "sigma": 0.204,
+        "ks_statistic": 0.9868,
+        "n_samples": 1290
+      },
+      {
+        "k_min": 5,
+        "alpha_mle": 10.4912,
+        "sigma": 2.302,
+        "ks_statistic": 1.0,
+        "n_samples": 17
+      }
+    ]
+  },
+  "comparison": {
+    "flint_clique_alpha_mle": 3.2813,
+    "flint_clique_alpha_ols": 7.2731,
+    "mod2_hecke_alpha": 3.19,
+    "expected_alpha": 2.8,
+    "delta_from_hecke": 0.0913,
+    "delta_from_expected": 0.4813
+  },
+  "interpretation": "Clique size distribution in the FLINT call graph measures the density of tightly-coupled function clusters. A power-law exponent alpha < 3.19 (mod-2 Hecke) would indicate heavier-tailed clique structure, meaning more large functional clusters than in the Hecke algebra graph. This reflects algorithmic coupling density."
+}
