@@ -1,0 +1,156 @@
+{
+  "problem": "NF16: Alexander-Salem Correlation",
+  "description": "Root distribution of Alexander polynomials relative to the unit circle",
+  "n_knots_analyzed": 2973,
+  "total_roots": 19372,
+  "unit_circle_tolerance": 0.001,
+  "overall": {
+    "unit_circle_roots": 7980,
+    "total_roots": 19372,
+    "percentage": 41.1935
+  },
+  "by_crossing_number": {
+    "3": {
+      "unit_circle_roots": 2,
+      "total_roots": 2,
+      "percentage": 100.0,
+      "n_knots": 1
+    },
+    "4": {
+      "unit_circle_roots": 0,
+      "total_roots": 2,
+      "percentage": 0.0,
+      "n_knots": 1
+    },
+    "5": {
+      "unit_circle_roots": 6,
+      "total_roots": 6,
+      "percentage": 100.0,
+      "n_knots": 2
+    },
+    "6": {
+      "unit_circle_roots": 2,
+      "total_roots": 10,
+      "percentage": 20.0,
+      "n_knots": 3
+    },
+    "7": {
+      "unit_circle_roots": 20,
+      "total_roots": 26,
+      "percentage": 76.9231,
+      "n_knots": 7
+    },
+    "8": {
+      "unit_circle_roots": 46,
+      "total_roots": 98,
+      "percentage": 46.9388,
+      "n_knots": 21
+    },
+    "9": {
+      "unit_circle_roots": 126,
+      "total_roots": 236,
+      "percentage": 53.3898,
+      "n_knots": 49
+    },
+    "10": {
+      "unit_circle_roots": 404,
+      "total_roots": 946,
+      "percentage": 42.7061,
+      "n_knots": 165
+    },
+    "11": {
+      "unit_circle_roots": 1470,
+      "total_roots": 3400,
+      "percentage": 43.2353,
+      "n_knots": 550
+    },
+    "12": {
+      "unit_circle_roots": 5904,
+      "total_roots": 14646,
+      "percentage": 40.3113,
+      "n_knots": 2174
+    }
+  },
+  "by_knot_type": {
+    "alternating": {
+      "unit_circle_roots": 4432,
+      "total_roots": 11520,
+      "percentage": 38.4722,
+      "n_knots": 1669
+    },
+    "low-crossing": {
+      "unit_circle_roots": 576,
+      "total_roots": 1280,
+      "percentage": 45.0,
+      "n_knots": 235
+    },
+    "non-alternating": {
+      "unit_circle_roots": 2972,
+      "total_roots": 6572,
+      "percentage": 45.2222,
+      "n_knots": 1069
+    }
+  },
+  "alternating_vs_nonalternating": {
+    "alternating": {
+      "unit_circle_roots": 4432,
+      "total_roots": 11520,
+      "percentage": 38.4722,
+      "n_knots": 1669
+    },
+    "non_alternating": {
+      "unit_circle_roots": 2972,
+      "total_roots": 6572,
+      "percentage": 45.2222,
+      "n_knots": 1069
+    },
+    "note": "Low-crossing knots (<=10 crossings, no a/n prefix) reported separately"
+  },
+  "torus_vs_nontorus": {
+    "torus": {
+      "unit_circle_roots": 34,
+      "total_roots": 34,
+      "percentage": 100.0,
+      "n_knots": 6
+    },
+    "non_torus": {
+      "unit_circle_roots": 7946,
+      "total_roots": 19338,
+      "percentage": 41.0901,
+      "n_knots": 2967
+    }
+  },
+  "off_unit_circle_distribution": {
+    "count": 11392,
+    "modulus_range": [
+      0.113706,
+      8.794621
+    ],
+    "modulus_mean": 1.284431,
+    "modulus_median": 1.001076,
+    "reciprocal_pairs": 5691,
+    "modulus_histogram": {
+      "[0.000,0.500)": 2199,
+      "[0.500,0.900)": 3457,
+      "[0.900,0.999)": 40,
+      "[0.999,1.001)": 7980,
+      "[1.001,1.100)": 32,
+      "[1.100,1.500)": 1211,
+      "[1.500,2.000)": 2241,
+      "[2.000,5.000)": 2153,
+      "[5.000,100.000)": 59
+    }
+  },
+  "salem_type_knots": {
+    "count": 2011,
+    "fraction": 0.6764,
+    "description": "Knots whose Alexander polynomial has both unit-circle and off-unit roots"
+  },
+  "findings": [
+    "Overall 41.2% of Alexander polynomial roots lie on the unit circle (tol=0.001)",
+    "Alternating (38.5%) vs non-alternating (45.2%): 6.8pp difference",
+    "Torus knots: 100.0% unit-circle vs 41.1% for non-torus",
+    "2011/2973 knots (67.6%) have Salem-type Alexander polynomials",
+    "11382/11392 off-unit roots form reciprocal (r, 1/r) pairs \u2014 consistent with palindromic polynomial structure"
+  ]
+}
