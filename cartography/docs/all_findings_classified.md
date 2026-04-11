@@ -543,7 +543,16 @@ S=2.24 (within 1.6-2.4). Genus-3 collapses in one prime step. Dimensional predic
 100 random 200-node BFS subgraphs. Binary ζ=0.029 (random: 0.088, 4.15σ separation). Mathlib's layered DAG structure creates highly compressible adjacency matrices. Below expected 0.11-0.19 because BFS samples inherit strong tree-like structure.
 
 ### 135. FLINT Clique α=3.28, Close to Hecke α=3.19 (FLINT-clique)
-9,462 nodes. 33,743 maximal cliques, max size 5 (sparse graph). MLE α=3.28±0.01 vs mod-2 Hecke α=3.19 (Δ=0.09). FLINT's algorithmic dependency structure has the same clique-size tail decay as number-theoretic congruence graphs — a potential cross-domain universal.
+MLE α=3.28±0.01 vs Hecke α=3.19 (Δ=0.09). Same tail decay — potential universal.
+
+### 136. MAP-Elites Hecke Hypervolume = 0.514 (MAP-Hecke)
+17,314 forms, 10 traces. 5000 evaluations, 50×50 archive. 1,284/2,500 cells occupied (51.4%). Theoretical maximum ~57% (convex body constraint from S⁹ → (mean,var) map). Best variance 0.254 (large primes dominant). Near-isotropy reflects Sato-Tate equidistribution.
+
+### 137. OEIS Spectral Masking: Bifurcation — Zero-Fill σ=4.3, Interp σ=-0.06 (OEIS-mask)
+1,000 sequences. Zero-fill masking: σ=4.30 (catastrophically destructive — 10% masking drops D to 40%). Interpolation: σ=-0.06 (nearly invariant). No intermediate degradation regime. PSD spectral dimension lives entirely in low-frequency modes: either fully preserved or fully destroyed.
+
+### 138. Lattice-Knot MI: Null, Zero Cross-Domain Structure (Lattice-Knot-MI)
+39,293 lattices vs 2,977 knots. MI(lattice,Jones): z=-1.40 (below null). MI(lattice,Alexander): z=-0.23 (null). Fingerprint overlap tiny (31/356 lattice × 2,284 Jones). Within-knot Jones-Alexander MI = 7.03 bits (sanity check passes). Theta series and knot polynomials share no mod-3 structure.
 
 ---
 
@@ -909,7 +918,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*260 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*263 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

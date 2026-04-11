@@ -1,0 +1,197 @@
+{
+  "test": "Lattice Theta-Series / Knot Polynomial Mutual Information",
+  "list_id": "List1_#9",
+  "description": "Cross-domain MI between lattice theta-series mod-3 fingerprints (first 10 coefficients) and knot Jones/Alexander polynomial mod-3 fingerprints. Tests whether these unrelated mathematical objects share mod-3 structure.",
+  "parameters": {
+    "mod_base": 3,
+    "fingerprint_length": 10,
+    "n_permutations": 10000,
+    "seed": 42
+  },
+  "data_sizes": {
+    "lattices_total": 39293,
+    "lattices_with_theta": 39293,
+    "knots_total": 12965,
+    "knots_valid": 2977,
+    "n_paired_samples": 2977
+  },
+  "entropy_bits": {
+    "H_lattice_fingerprints": 4.0188,
+    "H_jones_fingerprints": 11.02,
+    "H_alexander_fingerprints": 7.3869
+  },
+  "unique_fingerprints": {
+    "lattice": 356,
+    "jones": 2284,
+    "alexander": 265
+  },
+  "fingerprint_overlap": {
+    "lattice_and_jones": 31,
+    "lattice_and_alexander": 18
+  },
+  "mi_lattice_vs_jones": {
+    "observed_mi_bits": 3.520391,
+    "null_mean": 3.528701,
+    "null_std": 0.005923,
+    "z_score": -1.4,
+    "p_value": 0.9212,
+    "null_percentiles": {
+      "p50": 3.528706,
+      "p95": 3.538454,
+      "p99": 3.542904
+    }
+  },
+  "mi_lattice_vs_alexander": {
+    "observed_mi_bits": 1.103891,
+    "null_mean": 1.106794,
+    "null_std": 0.012792,
+    "z_score": -0.23,
+    "p_value": 0.5929,
+    "null_percentiles": {
+      "p50": 1.106693,
+      "p95": 1.127989,
+      "p99": 1.136751
+    }
+  },
+  "mi_jones_vs_alexander_sanity": {
+    "observed_mi_bits": 7.032517,
+    "note": "Within-knot sanity check (same pairing, not cross-domain)"
+  },
+  "normalized_mi": {
+    "NMI_lattice_jones": 0.875984,
+    "NMI_lattice_alexander": 0.274683
+  },
+  "top_fingerprints": {
+    "lattice_top10": [
+      {
+        "fingerprint_int": 13141,
+        "count": 7480
+      },
+      {
+        "fingerprint_int": 1,
+        "count": 6465
+      },
+      {
+        "fingerprint_int": 163,
+        "count": 4873
+      },
+      {
+        "fingerprint_int": 1459,
+        "count": 4424
+      },
+      {
+        "fingerprint_int": 13123,
+        "count": 3875
+      },
+      {
+        "fingerprint_int": 14581,
+        "count": 1204
+      },
+      {
+        "fingerprint_int": 6562,
+        "count": 866
+      },
+      {
+        "fingerprint_int": 13285,
+        "count": 786
+      },
+      {
+        "fingerprint_int": 6652,
+        "count": 731
+      },
+      {
+        "fingerprint_int": 14032,
+        "count": 718
+      }
+    ],
+    "jones_top10": [
+      {
+        "fingerprint_int": 20516,
+        "count": 7
+      },
+      {
+        "fingerprint_int": 17492,
+        "count": 6
+      },
+      {
+        "fingerprint_int": 32011,
+        "count": 6
+      },
+      {
+        "fingerprint_int": 21910,
+        "count": 6
+      },
+      {
+        "fingerprint_int": 22325,
+        "count": 5
+      },
+      {
+        "fingerprint_int": 53831,
+        "count": 4
+      },
+      {
+        "fingerprint_int": 48422,
+        "count": 4
+      },
+      {
+        "fingerprint_int": 10555,
+        "count": 4
+      },
+      {
+        "fingerprint_int": 4751,
+        "count": 4
+      },
+      {
+        "fingerprint_int": 36856,
+        "count": 4
+      }
+    ],
+    "alexander_top10": [
+      {
+        "fingerprint_int": 1886,
+        "count": 47
+      },
+      {
+        "fingerprint_int": 784,
+        "count": 45
+      },
+      {
+        "fingerprint_int": 1733,
+        "count": 40
+      },
+      {
+        "fingerprint_int": 1249,
+        "count": 40
+      },
+      {
+        "fingerprint_int": 1312,
+        "count": 40
+      },
+      {
+        "fingerprint_int": 937,
+        "count": 38
+      },
+      {
+        "fingerprint_int": 2006,
+        "count": 37
+      },
+      {
+        "fingerprint_int": 1487,
+        "count": 37
+      },
+      {
+        "fingerprint_int": 1093,
+        "count": 37
+      },
+      {
+        "fingerprint_int": 1120,
+        "count": 36
+      }
+    ]
+  },
+  "verdict": {
+    "lattice_vs_jones": "NULL",
+    "lattice_vs_alexander": "NULL",
+    "interpretation": "Lattice-Jones: NULL (z=-1.4, p=0.9212). Lattice-Alexander: NULL (z=-0.23, p=0.5929). Cross-domain mod-3 fingerprint MI is consistent with null \u2014 no shared structure detected."
+  }
+}

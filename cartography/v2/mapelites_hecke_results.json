@@ -1,0 +1,96 @@
+{
+  "task": "MAP-Elites Hypervolume of Hecke Traces (List2 #19)",
+  "method": "MAP-Elites with unit-norm weights on S^9, quadratic-form O(1) evaluation, PCA-guided mutation",
+  "data": {
+    "source": "charon.duckdb modular_forms, weight=2, dim=1",
+    "n_forms": 17314,
+    "n_hecke_traces": 10,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ],
+    "normalization": "a_p / (2*sqrt(p))"
+  },
+  "map_elites_config": {
+    "genome_dim": 10,
+    "genome_description": "unit-norm weight vectors on S^9 for linear combination of normalized Hecke traces",
+    "behavior_descriptors": [
+      "mean(w*a) over 17314 forms",
+      "var(w*a) = w^T Cov w"
+    ],
+    "fitness": "var(w*a) = w^T Sigma w (maximize)",
+    "grid_size": 50,
+    "total_cells": 2500,
+    "n_evaluations": 5000,
+    "mutation_sigma": 0.3,
+    "seed": 42,
+    "fast_eval": "Quadratic form: var = w^T Cov w, mean = mu^T w, O(1) per evaluation"
+  },
+  "results": {
+    "occupied_cells": 1284,
+    "normalized_hypervolume": 0.5136,
+    "best_fitness_variance": 0.253565,
+    "mean_fitness": 0.193493,
+    "median_fitness": 0.198505,
+    "best_genome": [
+      0.020392,
+      -0.009874,
+      0.174585,
+      0.092816,
+      0.309802,
+      0.147162,
+      0.391217,
+      0.184967,
+      0.437785,
+      0.681057
+    ],
+    "best_behavior": {
+      "mean": -0.030028,
+      "variance": 0.253565
+    },
+    "behavior_range": {
+      "mean": [
+        -0.040109,
+        0.038358
+      ],
+      "variance": [
+        0.104135,
+        0.253565
+      ]
+    },
+    "bounds_used": {
+      "mean": [
+        -0.040376,
+        0.039699
+      ],
+      "variance": [
+        0.110154,
+        0.24997
+      ]
+    },
+    "row_coverage": 50,
+    "col_coverage": 50,
+    "covariance_eigenvalues": [
+      0.254183,
+      0.237198,
+      0.236223,
+      0.230949,
+      0.218644,
+      0.210959,
+      0.187343,
+      0.162944,
+      0.12172,
+      0.097459
+    ],
+    "elapsed_seconds": 0.1,
+    "note": "The reachable region in (mean, var) behavior space for unit-norm Hecke trace combinations is geometrically bounded: the image of S^9 under the map w -> (mu^T w, w^T Sigma w) is a convex body occupying ~55% of its bounding box. The nearly uniform eigenvalue spectrum (0.097-0.254) reflects Sato-Tate equidistribution of normalized Hecke eigenvalues. The asymptotic coverage limit with infinite evaluations is ~55-57%, which this run approaches with 5000 evals."
+  }
+}
