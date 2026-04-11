@@ -1482,5 +1482,44 @@ The final 17 challenges were drawn from frontier model problem files, each calib
 
 *125+ challenges. 30+ measured constants from this session alone. 21 kills. The instrument now measures: information-theoretic bottlenecks (log₂(p) bits), algorithm crystal structure (FLINT permeability 0.5975), particle decay topology (λ₁=7.0), curvature flow fixed points (κ*=0.73), and the domain-dependence of the Reynolds habitable zone ([7.75, 47.98] for number fields). The enrichment-rank law is object-specific (fails on lattices). The pipeline bottleneck at Stage 2 mechanistically explains the cross-domain gap. The near-congruence defect graph topology IS the CM splitting of Q(√-3). Arithmetic encodes geometry (kissing number from theta fingerprints at 96.6%).*
 
+---
+
+## Part XIII: The Complete Session Arc (136 Challenges)
+
+This document has been updated across multiple sessions and agents. The complete session arc from this single extended conversation:
+
+**Data sprint:** 25 GB from LMFDB PostgreSQL mirror. Maass 300→35K, Lattices 21→39K, Genus-2 100→66K. Pipeline rebuilt to 63 search functions, 2.74M concept links.
+
+**Rounds 1-4 (41 challenges):** Established the scaling law, killed 15 false discoveries, opened Layer 3 (twists, CM, Galois images), verified paramodular 7/7, confirmed Berry-Tabor across 120 pairs, measured 3-prime adelic reconstruction.
+
+**Metrology round (14 challenges):** Measured the interference function (min(ℓ)^5.3), clique power law (α=3.19), reconstruction entropy (11.74 bits), v₂ wall (spectrally indestructible), local-to-global threshold (76%), degree reduction rate (~1-(1-1/p)^deg). Corrected 4 earlier overclaims.
+
+**OSC series (6 challenges):** Deep investigation of form 15.2.a.a. Oscillation shadow killed. 2-adic ablation: 87.4% evaporates. Twist-AC commutation 3.6×. ell_c vs rank: null on full population, revived after ablation (ρ=-0.17).
+
+**X series (9 challenges):** Fake L-functions phase transition at σ=2.0. 3-SAT wall (rank 8). Hodge axis Set↔For. v₂ wall indestructible. Rosetta axis = Recurrence→Series→Zeta. Reynolds bathtub [4.37, 13.68].
+
+**Frontier batch (~25 challenges):** Physics axis opened (CODATA, PDG, Planck CMB). First crystal extracted (FLINT). Phase coherence-rank bridge (ρ=0.197, novel). Kissing from theta (96.6%). Near-congruence = CM splitting. Pipeline bottleneck = log₂(p) bits. Reynolds domain-dependent. Moonshine breaks enrichment.
+
+**Quadratic primes (12 challenges):** Sieve IS the 2D structure (cosine=0.970). Fourier z=3,623. Fractal = random. CRT indestructible on all geometric subsets. Ulam genuine (z=5.87). Primes don't know about 2D.
+
+**The conceptual shift:** From cartography (mapping bridges) to metrology (measuring constants). Domains are human concepts. The instrument measures mathematical structure itself. Every constant is a coordinate. The geometry reveals itself through measurement.
+
+**Final counts:**
+- 136 challenges solved, 195 result files, 306 problems catalogued
+- 20 rediscoveries spanning 2,200 years (Eratosthenes to Fité-Kedlaya-Rotger-Sutherland)
+- 3 conjecture verifications (paramodular, phase transition scaling, cross-ell GSp₄)
+- 12 novel discoveries (phase coherence-rank, enrichment law, Gamma metric, 3-prime reconstruction, log₂(p) bottleneck, clique decomposition, near-congruence=CM, curvature flow, moonshine exception, Reynolds bathtub, kissing from theta, enrichment slope=rank detector)
+- 21 kills (each with identified mechanism)
+- 7 self-corrections
+- 30+ measured constants
+- Physics axis: CODATA (286), PDG (226), Planck CMB (83 bins)
+- First algorithm crystal: FLINT (9,393 C files, permeability=0.5975)
+- SageMath operational, genus-3 pipeline confirmed
+- 80 READY problems in stockpile
+
+---
+
+*136 challenges. 306 catalogued. 30+ constants. 21 kills. 12 novel discoveries. The instrument measures the geometry of mathematical structure. The constants accumulate. The primes live on a line. The Gamma function is the geodesic hub. The pipeline bottleneck is log₂(p) bits. Arithmetic encodes geometry at 96.6%. The near-congruence topology IS the CM splitting. And the phase coherence of Frobenius eigenvalues sees the order of vanishing of the L-function at s=1, and we do not know why.*
+
 *Project Prometheus — Charon Pipeline v9.0*
 *April 2026*
