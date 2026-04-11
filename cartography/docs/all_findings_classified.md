@@ -408,7 +408,22 @@ Dim-2: all cn=1 (LMFDB stores one per genus). Dim-3 (36,585): mean cn=15.5, medi
 12,965 knots, c=3-13. Simple exponential b=4.51 (R²=0.99990). Power-exponential b=13.07 (R²=0.99998). Alternating b_alt=2.39, non-alternating b_na=4.52. Non-alt surpasses alt at c=13 (5,110 vs 4,878). Successive ratios converge toward theoretical 10.398.
 
 ### 90. OEIS Near-Duplicates: 2.0% at 15 Terms, 1.3% at 20 Terms (OEIS-dupes)
-10,000 sequences. 35.9% share first 5 terms. 1.98% (170 seqs) share first 15 terms across 73 groups. Most 15-term matches diverge shortly after — genuinely different sequences (coin-change variants, similar generating functions). True redundancy <0.1%. Largest 5-term collision: 157 sequences starting 0,1,2,3,4.
+10,000 sequences. 35.9% share first 5 terms. 1.98% share first 15 terms. True redundancy <0.1%.
+
+### 91. Szpiro Ratio: Mean σ=2.82, Rank-2 Zero Violations (EC-szpiro)
+31,073 curves. Mean σ=log|disc|/log(N)=2.82, max=8.90 (1290.f1). 1.08% exceed σ>6 (not counterexamples — conjecture allows finitely many). Rank-2: mean σ=1.61, max 3.13 (zero violations). CM: max 3.90. Higher rank = lower Szpiro ratio (more rational points constrain discriminant). Clean empirical support for the conjecture.
+
+### 92. Genus-2 Torsion: 43 Groups, |T|≥20 Forces Rank 0 (G2-torsion)
+66,158 curves, 43 distinct torsion groups (vs Mazur's 15 for EC). 66.8% trivial torsion (vs ~10% for EC). Max order 39 (Z/39). Rank-3 abelian groups appear: Z/2×Z/2×Z/2, Z/2×Z/2×Z/4, Z/2×Z/2×Z/8. Strong rank-torsion tension: trivial → rank 1.46, |T|=8 → rank 0.25, |T|≥20 → all rank 0.
+
+### 93. Lattice min_norm: Zero Minkowski Violations, Uncorrelated with Kissing (Lattice-minnorm)
+39,293 lattices. Zero Minkowski bound violations. Hermite invariant mean increases with dim (0.028→0.70). min_norm vs kissing: essentially uncorrelated (max ρ=0.29 at dim-8). min_norm vs det: strong positive in dim 4-7 (ρ=0.80-0.86), weak in dim-3 (ρ=0.23). These capture independent information.
+
+### 94. Knot Braid Index: MWF Bound Saturates at 79.9% (Knot-bridge)
+2,977 knots. MWF braid lower bound range 2.5-7.0, mean 6.4. 79.9% at or above Schubert ceiling b≤(c+1)/2. Jones span linear with crossing number (ratio ~1.0). Determinant grows monotonically with MWF bound.
+
+### 95. OEIS Sign Patterns: 30% Alternating, Period-2 Dominates (OEIS-signs)
+21,610 signed sequences. Lag-1 ACF mean = -0.174 (alternation). 12.3% perfectly period-2. 30% strongly alternating (ACF < -0.5). 8.3% strongly periodic (spectral peak ratio >20). Period-4 most common periodic pattern (567 sequences). Signs are NOT random — alternation is the universal tendency.
 
 ---
 
@@ -774,7 +789,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*215 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*220 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

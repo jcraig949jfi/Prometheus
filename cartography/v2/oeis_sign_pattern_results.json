@@ -1,0 +1,1722 @@
+{
+  "metadata": {
+    "n_sign_sequences_total": 21876,
+    "n_loaded": 21610,
+    "min_terms": 10,
+    "elapsed_sec": 2.4
+  },
+  "sign_fraction_stats": {
+    "frac_positive": {
+      "mean": 0.506,
+      "median": 0.5,
+      "std": 0.2196
+    },
+    "frac_negative": {
+      "mean": 0.3814,
+      "median": 0.4359,
+      "std": 0.2032
+    },
+    "frac_zero": {
+      "mean": 0.1126,
+      "median": 0.0182,
+      "std": 0.202
+    }
+  },
+  "entropy_stats": {
+    "mean": 1.0218,
+    "median": 1.0,
+    "std": 0.3594,
+    "histogram_bins": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.2,
+      1.3,
+      1.4,
+      1.5,
+      1.6
+    ],
+    "histogram_counts": [
+      418,
+      462,
+      544,
+      458,
+      495,
+      469,
+      561,
+      552,
+      688,
+      6100,
+      2277,
+      1813,
+      2163,
+      1296,
+      1468,
+      1846
+    ]
+  },
+  "autocorrelation": {
+    "mean_acf_by_lag": [
+      -0.1738,
+      0.174,
+      -0.2131,
+      0.2486,
+      -0.1914,
+      0.1519,
+      -0.2051,
+      0.2133,
+      -0.174,
+      0.0964
+    ],
+    "std_acf_by_lag": [
+      0.5487,
+      0.5634,
+      0.4942,
+      0.5106,
+      0.4746,
+      0.5372,
+      0.4626,
+      0.5023,
+      0.4891,
+      0.5268
+    ],
+    "n_strongly_alternating_acf1_lt_neg05": 6501,
+    "n_positively_correlated_acf1_gt_05": 2818,
+    "acf1_histogram_bins": [
+      -1.0,
+      -0.9,
+      -0.8,
+      -0.7,
+      -0.6,
+      -0.5,
+      -0.4,
+      -0.3,
+      -0.2,
+      -0.1,
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "acf1_histogram_counts": [
+      3217,
+      1290,
+      635,
+      546,
+      692,
+      791,
+      777,
+      893,
+      1290,
+      3224,
+      2100,
+      881,
+      650,
+      765,
+      747,
+      727,
+      660,
+      563,
+      467,
+      402
+    ]
+  },
+  "periodicity": {
+    "n_strongly_periodic_peak_gt_20": 1802,
+    "spectral_peak_ratio_histogram_bins": [
+      "0",
+      "2",
+      "5",
+      "10",
+      "20",
+      "50",
+      "100",
+      "500",
+      "1000000.0"
+    ],
+    "spectral_peak_ratio_histogram_counts": [
+      1675,
+      5258,
+      8059,
+      4799,
+      1804,
+      15,
+      0,
+      0
+    ],
+    "top_periodic_sequences": [
+      {
+        "id": "A347411",
+        "name": "",
+        "spectral_peak_ratio": 68.16,
+        "dominant_period": 2.0,
+        "entropy": 1.5115,
+        "pattern": "mixed"
+      },
+      {
+        "id": "A061347",
+        "name": "",
+        "spectral_peak_ratio": 54.0,
+        "dominant_period": 3.0,
+        "entropy": 0.9183,
+        "pattern": "periodic_p3"
+      },
+      {
+        "id": "A094267",
+        "name": "",
+        "spectral_peak_ratio": 52.0,
+        "dominant_period": 2.0,
+        "entropy": 1.0,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A102283",
+        "name": "",
+        "spectral_peak_ratio": 52.0,
+        "dominant_period": 3.0,
+        "entropy": 1.585,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A112300",
+        "name": "",
+        "spectral_peak_ratio": 52.0,
+        "dominant_period": 3.0,
+        "entropy": 1.585,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A131756",
+        "name": "",
+        "spectral_peak_ratio": 52.0,
+        "dominant_period": 3.0,
+        "entropy": 0.9183,
+        "pattern": "periodic_p3"
+      },
+      {
+        "id": "A106510",
+        "name": "",
+        "spectral_peak_ratio": 51.29,
+        "dominant_period": 3.0,
+        "entropy": 1.5846,
+        "pattern": "mixed"
+      },
+      {
+        "id": "A131729",
+        "name": "",
+        "spectral_peak_ratio": 51.24,
+        "dominant_period": 2.0,
+        "entropy": 1.4999,
+        "pattern": "periodic_p4"
+      },
+      {
+        "id": "A010892",
+        "name": "",
+        "spectral_peak_ratio": 51.0,
+        "dominant_period": 6.0,
+        "entropy": 1.585,
+        "pattern": "periodic_p6"
+      },
+      {
+        "id": "A099838",
+        "name": "",
+        "spectral_peak_ratio": 51.0,
+        "dominant_period": 3.0,
+        "entropy": 1.585,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A118824",
+        "name": "",
+        "spectral_peak_ratio": 51.0,
+        "dominant_period": 2.0,
+        "entropy": 1.0,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A164116",
+        "name": "",
+        "spectral_peak_ratio": 50.92,
+        "dominant_period": 2.5,
+        "entropy": 1.5219,
+        "pattern": "periodic_p5"
+      },
+      {
+        "id": "A062157",
+        "name": "",
+        "spectral_peak_ratio": 50.75,
+        "dominant_period": 2.0,
+        "entropy": 1.0696,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A070990",
+        "name": "",
+        "spectral_peak_ratio": 50.0,
+        "dominant_period": 2.0,
+        "entropy": 1.0,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A110243",
+        "name": "",
+        "spectral_peak_ratio": 50.0,
+        "dominant_period": 4.0,
+        "entropy": 1.0,
+        "pattern": "periodic_p4"
+      },
+      {
+        "id": "A167373",
+        "name": "",
+        "spectral_peak_ratio": 49.86,
+        "dominant_period": 3.0,
+        "entropy": 0.9275,
+        "pattern": "mixed"
+      },
+      {
+        "id": "A246425",
+        "name": "",
+        "spectral_peak_ratio": 49.75,
+        "dominant_period": 2.0,
+        "entropy": 1.0707,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A230074",
+        "name": "",
+        "spectral_peak_ratio": 49.56,
+        "dominant_period": 2.0,
+        "entropy": 1.4999,
+        "pattern": "periodic_p4"
+      },
+      {
+        "id": "A156174",
+        "name": "",
+        "spectral_peak_ratio": 49.26,
+        "dominant_period": 2.5,
+        "entropy": 1.5219,
+        "pattern": "alternating"
+      },
+      {
+        "id": "A117946",
+        "name": "",
+        "spectral_peak_ratio": 49.0,
+        "dominant_period": 3.0,
+        "entropy": 1.585,
+        "pattern": "alternating"
+      }
+    ]
+  },
+  "pattern_classification": {
+    "counts": {
+      "mixed": 17194,
+      "alternating": 2668,
+      "periodic_p4": 567,
+      "all_positive": 272,
+      "nonneg_with_zeros": 218,
+      "periodic_p6": 145,
+      "periodic_p8": 99,
+      "all_negative": 86,
+      "periodic_p3": 82,
+      "nonpos_with_zeros": 81,
+      "periodic_p5": 46,
+      "periodic_p12": 41,
+      "periodic_p10": 29,
+      "periodic_p7": 23,
+      "periodic_p9": 18,
+      "periodic_p16": 12,
+      "periodic_p15": 7,
+      "periodic_p18": 7,
+      "periodic_p13": 5,
+      "periodic_p14": 4,
+      "periodic_p11": 3,
+      "periodic_p17": 2,
+      "periodic_p19": 1
+    },
+    "examples": {
+      "mixed": [
+        {
+          "id": "A016176",
+          "name": "",
+          "n_terms": 347,
+          "entropy": 0.4042,
+          "acf_lag1": 0.9117
+        },
+        {
+          "id": "A322212",
+          "name": "",
+          "n_terms": 253,
+          "entropy": 1.5618,
+          "acf_lag1": 0.4937
+        },
+        {
+          "id": "A275760",
+          "name": "",
+          "n_terms": 211,
+          "entropy": 1.4238,
+          "acf_lag1": -0.852
+        },
+        {
+          "id": "A292929",
+          "name": "",
+          "n_terms": 210,
+          "entropy": 0.999,
+          "acf_lag1": -0.8879
+        },
+        {
+          "id": "A335533",
+          "name": "",
+          "n_terms": 210,
+          "entropy": 1.1989,
+          "acf_lag1": 0.2634
+        }
+      ],
+      "alternating": [
+        {
+          "id": "A290531",
+          "name": "",
+          "n_terms": 127,
+          "entropy": 1.554,
+          "acf_lag1": -0.616
+        },
+        {
+          "id": "A106347",
+          "name": "",
+          "n_terms": 125,
+          "entropy": 0.5522,
+          "acf_lag1": -0.588
+        },
+        {
+          "id": "A258328",
+          "name": "",
+          "n_terms": 121,
+          "entropy": 1.0,
+          "acf_lag1": -1.0
+        },
+        {
+          "id": "A115713",
+          "name": "",
+          "n_terms": 120,
+          "entropy": 1.0393,
+          "acf_lag1": -0.3128
+        },
+        {
+          "id": "A112334",
+          "name": "",
+          "n_terms": 116,
+          "entropy": 1.0153,
+          "acf_lag1": -0.5232
+        }
+      ],
+      "periodic_p4": [
+        {
+          "id": "A323695",
+          "name": "",
+          "n_terms": 121,
+          "entropy": 1.4958,
+          "acf_lag1": -0.8194
+        },
+        {
+          "id": "A195679",
+          "name": "",
+          "n_terms": 120,
+          "entropy": 0.8113,
+          "acf_lag1": -0.3277
+        },
+        {
+          "id": "A131729",
+          "name": "",
+          "n_terms": 114,
+          "entropy": 1.4999,
+          "acf_lag1": -0.8212
+        },
+        {
+          "id": "A230074",
+          "name": "",
+          "n_terms": 110,
+          "entropy": 1.4999,
+          "acf_lag1": -0.8151
+        },
+        {
+          "id": "A319993",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.4952,
+          "acf_lag1": -0.8196
+        }
+      ],
+      "all_positive": [
+        {
+          "id": "A350238",
+          "name": "",
+          "n_terms": 109,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A317937",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A378646",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A033809",
+          "name": "",
+          "n_terms": 100,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A112632",
+          "name": "",
+          "n_terms": 100,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        }
+      ],
+      "nonneg_with_zeros": [
+        {
+          "id": "A304111",
+          "name": "",
+          "n_terms": 121,
+          "entropy": 0.1215,
+          "acf_lag1": -0.0086
+        },
+        {
+          "id": "A353419",
+          "name": "",
+          "n_terms": 120,
+          "entropy": 0.442,
+          "acf_lag1": -0.0841
+        },
+        {
+          "id": "A353349",
+          "name": "",
+          "n_terms": 112,
+          "entropy": 0.3373,
+          "acf_lag1": -0.0486
+        },
+        {
+          "id": "A348446",
+          "name": "",
+          "n_terms": 109,
+          "entropy": 0.3785,
+          "acf_lag1": 0.6101
+        },
+        {
+          "id": "A293229",
+          "name": "",
+          "n_terms": 106,
+          "entropy": 0.135,
+          "acf_lag1": 0.5046
+        }
+      ],
+      "periodic_p6": [
+        {
+          "id": "A131734",
+          "name": "",
+          "n_terms": 119,
+          "entropy": 1.4494,
+          "acf_lag1": -0.0682
+        },
+        {
+          "id": "A131017",
+          "name": "",
+          "n_terms": 117,
+          "entropy": 0.64,
+          "acf_lag1": -0.1972
+        },
+        {
+          "id": "A131736",
+          "name": "",
+          "n_terms": 111,
+          "entropy": 1.5846,
+          "acf_lag1": -0.2488
+        },
+        {
+          "id": "A132951",
+          "name": "",
+          "n_terms": 108,
+          "entropy": 1.0,
+          "acf_lag1": 0.3458
+        },
+        {
+          "id": "A101675",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.4568,
+          "acf_lag1": -0.029
+        }
+      ],
+      "periodic_p8": [
+        {
+          "id": "A071936",
+          "name": "",
+          "n_terms": 120,
+          "entropy": 0.5436,
+          "acf_lag1": -0.1453
+        },
+        {
+          "id": "A230075",
+          "name": "",
+          "n_terms": 110,
+          "entropy": 1.5585,
+          "acf_lag1": 0.012
+        },
+        {
+          "id": "A132401",
+          "name": "",
+          "n_terms": 109,
+          "entropy": 1.5644,
+          "acf_lag1": 0.5107
+        },
+        {
+          "id": "A118822",
+          "name": "",
+          "n_terms": 108,
+          "entropy": 1.5612,
+          "acf_lag1": -0.0126
+        },
+        {
+          "id": "A118828",
+          "name": "",
+          "n_terms": 108,
+          "entropy": 1.5612,
+          "acf_lag1": -0.0126
+        }
+      ],
+      "all_negative": [
+        {
+          "id": "A220862",
+          "name": "",
+          "n_terms": 100,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A220863",
+          "name": "",
+          "n_terms": 75,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A291497",
+          "name": "",
+          "n_terms": 70,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A291498",
+          "name": "",
+          "n_terms": 70,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A291499",
+          "name": "",
+          "n_terms": 70,
+          "entropy": 0.0,
+          "acf_lag1": 0.0
+        }
+      ],
+      "periodic_p3": [
+        {
+          "id": "A131561",
+          "name": "",
+          "n_terms": 110,
+          "entropy": 0.9121,
+          "acf_lag1": -0.4954
+        },
+        {
+          "id": "A061347",
+          "name": "",
+          "n_terms": 108,
+          "entropy": 0.9183,
+          "acf_lag1": -0.4953
+        },
+        {
+          "id": "A131756",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 0.9183,
+          "acf_lag1": -0.5096
+        },
+        {
+          "id": "A132677",
+          "name": "",
+          "n_terms": 99,
+          "entropy": 0.9183,
+          "acf_lag1": -0.4949
+        },
+        {
+          "id": "A195587",
+          "name": "",
+          "n_terms": 96,
+          "entropy": 0.9183,
+          "acf_lag1": -0.4947
+        }
+      ],
+      "nonpos_with_zeros": [
+        {
+          "id": "A142971",
+          "name": "",
+          "n_terms": 117,
+          "entropy": 0.64,
+          "acf_lag1": -0.1338
+        },
+        {
+          "id": "A133944",
+          "name": "",
+          "n_terms": 115,
+          "entropy": 0.739,
+          "acf_lag1": -0.2684
+        },
+        {
+          "id": "A159075",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 0.0776,
+          "acf_lag1": -0.0098
+        },
+        {
+          "id": "A126564",
+          "name": "",
+          "n_terms": 103,
+          "entropy": 0.9999,
+          "acf_lag1": -0.2552
+        },
+        {
+          "id": "A088194",
+          "name": "",
+          "n_terms": 99,
+          "entropy": 0.8153,
+          "acf_lag1": -0.1689
+        }
+      ],
+      "periodic_p5": [
+        {
+          "id": "A131670",
+          "name": "",
+          "n_terms": 117,
+          "entropy": 1.5185,
+          "acf_lag1": 0.2827
+        },
+        {
+          "id": "A140345",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 0.7219,
+          "acf_lag1": -0.2428
+        },
+        {
+          "id": "A164116",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.5219,
+          "acf_lag1": -0.7768
+        },
+        {
+          "id": "A080891",
+          "name": "",
+          "n_terms": 101,
+          "entropy": 1.5296,
+          "acf_lag1": -0.2525
+        },
+        {
+          "id": "A117452",
+          "name": "",
+          "n_terms": 99,
+          "entropy": 1.5238,
+          "acf_lag1": -0.7921
+        }
+      ],
+      "periodic_p12": [
+        {
+          "id": "A098554",
+          "name": "",
+          "n_terms": 106,
+          "entropy": 1.3286,
+          "acf_lag1": -0.1978
+        },
+        {
+          "id": "A110161",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.2514,
+          "acf_lag1": -0.0003
+        },
+        {
+          "id": "A131715",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.585,
+          "acf_lag1": 0.0144
+        },
+        {
+          "id": "A131289",
+          "name": "",
+          "n_terms": 102,
+          "entropy": 0.9997,
+          "acf_lag1": 0.0099
+        },
+        {
+          "id": "A112690",
+          "name": "",
+          "n_terms": 100,
+          "entropy": 1.4624,
+          "acf_lag1": -0.2288
+        }
+      ],
+      "periodic_p10": [
+        {
+          "id": "A131757",
+          "name": "",
+          "n_terms": 111,
+          "entropy": 0.878,
+          "acf_lag1": -0.4308
+        },
+        {
+          "id": "A099443",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.5206,
+          "acf_lag1": 0.7572
+        },
+        {
+          "id": "A164118",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.5708,
+          "acf_lag1": 0.657
+        },
+        {
+          "id": "A141035",
+          "name": "",
+          "n_terms": 97,
+          "entropy": 1.5271,
+          "acf_lag1": 0.1174
+        },
+        {
+          "id": "A329792",
+          "name": "",
+          "n_terms": 91,
+          "entropy": 0.4996,
+          "acf_lag1": -0.1012
+        }
+      ],
+      "periodic_p7": [
+        {
+          "id": "A234044",
+          "name": "",
+          "n_terms": 93,
+          "entropy": 1.5556,
+          "acf_lag1": -0.8504
+        },
+        {
+          "id": "A234045",
+          "name": "",
+          "n_terms": 91,
+          "entropy": 1.5567,
+          "acf_lag1": -0.2528
+        },
+        {
+          "id": "A234046",
+          "name": "",
+          "n_terms": 91,
+          "entropy": 1.5567,
+          "acf_lag1": -0.5056
+        },
+        {
+          "id": "A175629",
+          "name": "",
+          "n_terms": 87,
+          "entropy": 1.4585,
+          "acf_lag1": -0.1508
+        },
+        {
+          "id": "A131372",
+          "name": "",
+          "n_terms": 84,
+          "entropy": 1.5567,
+          "acf_lag1": -0.2509
+        }
+      ],
+      "periodic_p9": [
+        {
+          "id": "A133293",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.3978,
+          "acf_lag1": 0.1189
+        },
+        {
+          "id": "A099917",
+          "name": "",
+          "n_terms": 101,
+          "entropy": 1.5848,
+          "acf_lag1": -0.4975
+        },
+        {
+          "id": "A076452",
+          "name": "",
+          "n_terms": 100,
+          "entropy": 1.4426,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A076453",
+          "name": "",
+          "n_terms": 100,
+          "entropy": 1.4296,
+          "acf_lag1": 0.0001
+        },
+        {
+          "id": "A158137",
+          "name": "",
+          "n_terms": 84,
+          "entropy": 0.9898,
+          "acf_lag1": -0.3662
+        }
+      ],
+      "periodic_p16": [
+        {
+          "id": "A256357",
+          "name": "",
+          "n_terms": 121,
+          "entropy": 1.0,
+          "acf_lag1": -0.5
+        },
+        {
+          "id": "A344299",
+          "name": "",
+          "n_terms": 90,
+          "entropy": 0.9914,
+          "acf_lag1": -0.2866
+        },
+        {
+          "id": "A143622",
+          "name": "",
+          "n_terms": 86,
+          "entropy": 0.9965,
+          "acf_lag1": 0.7651
+        },
+        {
+          "id": "A155751",
+          "name": "",
+          "n_terms": 80,
+          "entropy": 1.0,
+          "acf_lag1": -0.2405
+        },
+        {
+          "id": "A318768",
+          "name": "",
+          "n_terms": 79,
+          "entropy": 0.6245,
+          "acf_lag1": -0.1163
+        }
+      ],
+      "periodic_p15": [
+        {
+          "id": "A188578",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.5301,
+          "acf_lag1": 0.1442
+        },
+        {
+          "id": "A328591",
+          "name": "",
+          "n_terms": 105,
+          "entropy": 1.2419,
+          "acf_lag1": -0.431
+        },
+        {
+          "id": "A014024",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.4,
+          "acf_lag1": 0.6546
+        },
+        {
+          "id": "A255642",
+          "name": "",
+          "n_terms": 76,
+          "entropy": 1.1262,
+          "acf_lag1": -0.0527
+        },
+        {
+          "id": "A316569",
+          "name": "",
+          "n_terms": 76,
+          "entropy": 1.5243,
+          "acf_lag1": 0.1267
+        }
+      ],
+      "periodic_p18": [
+        {
+          "id": "A099916",
+          "name": "",
+          "n_terms": 101,
+          "entropy": 1.5823,
+          "acf_lag1": 0.4963
+        },
+        {
+          "id": "A140500",
+          "name": "",
+          "n_terms": 94,
+          "entropy": 0.9997,
+          "acf_lag1": -0.5486
+        },
+        {
+          "id": "A133456",
+          "name": "",
+          "n_terms": 90,
+          "entropy": 1.542,
+          "acf_lag1": -0.13
+        },
+        {
+          "id": "A158678",
+          "name": "",
+          "n_terms": 90,
+          "entropy": 1.2516,
+          "acf_lag1": 0.0
+        },
+        {
+          "id": "A140318",
+          "name": "",
+          "n_terms": 86,
+          "entropy": 1.5848,
+          "acf_lag1": -0.6749
+        }
+      ],
+      "periodic_p13": [
+        {
+          "id": "A011583",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.338,
+          "acf_lag1": -0.0958
+        },
+        {
+          "id": "A140782",
+          "name": "",
+          "n_terms": 70,
+          "entropy": 1.2996,
+          "acf_lag1": -0.1095
+        },
+        {
+          "id": "A169998",
+          "name": "",
+          "n_terms": 46,
+          "entropy": 0.9945,
+          "acf_lag1": -0.2095
+        },
+        {
+          "id": "A293287",
+          "name": "",
+          "n_terms": 44,
+          "entropy": 0.9985,
+          "acf_lag1": -0.2585
+        },
+        {
+          "id": "A180735",
+          "name": "",
+          "n_terms": 41,
+          "entropy": 0.9892,
+          "acf_lag1": 0.3964
+        }
+      ],
+      "periodic_p14": [
+        {
+          "id": "A099859",
+          "name": "",
+          "n_terms": 82,
+          "entropy": 1.5642,
+          "acf_lag1": 0.7593
+        },
+        {
+          "id": "A014023",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.173,
+          "acf_lag1": 0.5062
+        },
+        {
+          "id": "A099860",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.4368,
+          "acf_lag1": 0.8388
+        },
+        {
+          "id": "A131041",
+          "name": "",
+          "n_terms": 42,
+          "entropy": 1.0,
+          "acf_lag1": 0.7073
+        }
+      ],
+      "periodic_p11": [
+        {
+          "id": "A044932",
+          "name": "",
+          "n_terms": 87,
+          "entropy": 0.4038,
+          "acf_lag1": -0.0895
+        },
+        {
+          "id": "A011582",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.3662,
+          "acf_lag1": -0.1249
+        },
+        {
+          "id": "A077941",
+          "name": "",
+          "n_terms": 44,
+          "entropy": 0.994,
+          "acf_lag1": 0.6287
+        }
+      ],
+      "periodic_p17": [
+        {
+          "id": "A011584",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.2721,
+          "acf_lag1": -0.0403
+        },
+        {
+          "id": "A117445",
+          "name": "",
+          "n_terms": 80,
+          "entropy": 1.2747,
+          "acf_lag1": -0.2971
+        }
+      ],
+      "periodic_p19": [
+        {
+          "id": "A011585",
+          "name": "",
+          "n_terms": 81,
+          "entropy": 1.2725,
+          "acf_lag1": -0.0666
+        }
+      ]
+    }
+  },
+  "mean_acf_by_pattern": {
+    "mixed": {
+      "mean_acf": [
+        -0.0806,
+        0.1211,
+        -0.1318,
+        0.1531,
+        -0.1062,
+        0.0789,
+        -0.1247,
+        0.101,
+        -0.0867,
+        0.0262
+      ],
+      "count": 17092
+    },
+    "nonpos_with_zeros": {
+      "mean_acf": [
+        0.0145,
+        0.0589,
+        -0.0053,
+        0.0518,
+        -0.0544,
+        0.0325,
+        -0.0499,
+        -0.0156,
+        -0.054,
+        -0.0761
+      ],
+      "count": 75
+    },
+    "alternating": {
+      "mean_acf": [
+        -0.9128,
+        0.839,
+        -0.8564,
+        0.8709,
+        -0.8621,
+        0.8411,
+        -0.8599,
+        0.8705,
+        -0.8409,
+        0.8132
+      ],
+      "count": 2610
+    },
+    "all_negative": {
+      "mean_acf": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "count": 82
+    },
+    "periodic_p6": {
+      "mean_acf": [
+        0.2226,
+        -0.298,
+        -0.8369,
+        -0.305,
+        0.2159,
+        0.9993,
+        0.222,
+        -0.2976,
+        -0.8372,
+        -0.3053
+      ],
+      "count": 145
+    },
+    "periodic_p4": {
+      "mean_acf": [
+        -0.0612,
+        -0.878,
+        -0.0613,
+        0.9983,
+        -0.0616,
+        -0.8784,
+        -0.0621,
+        0.9948,
+        -0.0615,
+        -0.8797
+      ],
+      "count": 567
+    },
+    "all_positive": {
+      "mean_acf": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "count": 271
+    },
+    "nonneg_with_zeros": {
+      "mean_acf": [
+        0.2983,
+        0.2929,
+        0.2042,
+        0.2405,
+        0.145,
+        0.2154,
+        0.0952,
+        0.124,
+        0.0497,
+        0.0989
+      ],
+      "count": 217
+    },
+    "periodic_p5": {
+      "mean_acf": [
+        -0.2105,
+        -0.2866,
+        -0.2924,
+        -0.2106,
+        0.9981,
+        -0.2114,
+        -0.2859,
+        -0.2903,
+        -0.2126,
+        0.9932
+      ],
+      "count": 46
+    },
+    "periodic_p3": {
+      "mean_acf": [
+        -0.4982,
+        -0.5019,
+        0.9998,
+        -0.4981,
+        -0.5022,
+        0.9994,
+        -0.4979,
+        -0.5025,
+        0.9981,
+        -0.4976
+      ],
+      "count": 82
+    },
+    "periodic_p8": {
+      "mean_acf": [
+        0.1404,
+        -0.021,
+        -0.2968,
+        -0.6359,
+        -0.299,
+        -0.0248,
+        0.136,
+        0.9992,
+        0.1404,
+        -0.0212
+      ],
+      "count": 99
+    },
+    "periodic_p10": {
+      "mean_acf": [
+        0.1986,
+        -0.0659,
+        -0.0271,
+        -0.2711,
+        -0.6769,
+        -0.2726,
+        -0.0205,
+        -0.0561,
+        0.1928,
+        0.9984
+      ],
+      "count": 29
+    },
+    "periodic_p12": {
+      "mean_acf": [
+        0.1321,
+        0.0802,
+        0.0058,
+        -0.1427,
+        -0.1907,
+        -0.732,
+        -0.191,
+        -0.1555,
+        -0.0039,
+        0.0686
+      ],
+      "count": 41
+    },
+    "periodic_p7": {
+      "mean_acf": [
+        -0.1356,
+        -0.0978,
+        -0.2463,
+        -0.2573,
+        -0.1154,
+        -0.1515,
+        0.9978,
+        -0.1333,
+        -0.0919,
+        -0.2465
+      ],
+      "count": 23
+    },
+    "periodic_p9": {
+      "mean_acf": [
+        -0.043,
+        -0.1207,
+        -0.2449,
+        -0.0639,
+        -0.0718,
+        -0.2538,
+        -0.1523,
+        -0.0545,
+        0.9991,
+        -0.0425
+      ],
+      "count": 18
+    },
+    "periodic_p16": {
+      "mean_acf": [
+        -0.2473,
+        0.1898,
+        -0.0753,
+        0.0302,
+        -0.0058,
+        -0.213,
+        -0.1698,
+        -0.0012,
+        -0.168,
+        -0.2065
+      ],
+      "count": 12
+    }
+  },
+  "top_high_entropy_sequences": [
+    {
+      "id": "A003326",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.9783,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A010892",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": 0.505,
+      "pattern": "periodic_p6"
+    },
+    {
+      "id": "A014722",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": 0.9706,
+      "pattern": "mixed"
+    },
+    {
+      "id": "A014860",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": 0.9706,
+      "pattern": "mixed"
+    },
+    {
+      "id": "A016004",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": 0.7875,
+      "pattern": "mixed"
+    },
+    {
+      "id": "A029883",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.4904,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A047655",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.2697,
+      "pattern": "mixed"
+    },
+    {
+      "id": "A049347",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5056,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A054354",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.4891,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A057078",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.4888,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A065675",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5047,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A065676",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5047,
+      "pattern": "mixed"
+    },
+    {
+      "id": "A078029",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5085,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A078030",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5085,
+      "pattern": "periodic_p6"
+    },
+    {
+      "id": "A079757",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5056,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A091338",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.0297,
+      "pattern": "mixed"
+    },
+    {
+      "id": "A099838",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.505,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A102283",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": -0.5048,
+      "pattern": "alternating"
+    },
+    {
+      "id": "A103368",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": 0.253,
+      "pattern": "periodic_p6"
+    },
+    {
+      "id": "A104555",
+      "name": "",
+      "entropy": 1.585,
+      "frac_pos": 0.3333,
+      "frac_neg": 0.3333,
+      "frac_zero": 0.3333,
+      "acf_lag1": 0.5094,
+      "pattern": "periodic_p6"
+    }
+  ],
+  "top_low_entropy_mixed_sequences": [
+    {
+      "id": "A097154",
+      "name": "",
+      "entropy": 0.0663,
+      "pattern": "mixed",
+      "acf_lag1": -0.0081
+    },
+    {
+      "id": "A185051",
+      "name": "",
+      "entropy": 0.0672,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A260951",
+      "name": "",
+      "entropy": 0.0705,
+      "pattern": "mixed",
+      "acf_lag1": -0.0087
+    },
+    {
+      "id": "A060296",
+      "name": "",
+      "entropy": 0.0731,
+      "pattern": "mixed",
+      "acf_lag1": -0.0091
+    },
+    {
+      "id": "A093478",
+      "name": "",
+      "entropy": 0.0731,
+      "pattern": "mixed",
+      "acf_lag1": -0.0091
+    },
+    {
+      "id": "A158388",
+      "name": "",
+      "entropy": 0.0776,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A318497",
+      "name": "",
+      "entropy": 0.0776,
+      "pattern": "mixed",
+      "acf_lag1": -0.0098
+    },
+    {
+      "id": "A074807",
+      "name": "",
+      "entropy": 0.0782,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A072139",
+      "name": "",
+      "entropy": 0.0789,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A134749",
+      "name": "",
+      "entropy": 0.0801,
+      "pattern": "mixed",
+      "acf_lag1": -0.0102
+    },
+    {
+      "id": "A241183",
+      "name": "",
+      "entropy": 0.0808,
+      "pattern": "mixed",
+      "acf_lag1": -0.0103
+    },
+    {
+      "id": "A192181",
+      "name": "",
+      "entropy": 0.0815,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A181942",
+      "name": "",
+      "entropy": 0.0821,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A275719",
+      "name": "",
+      "entropy": 0.085,
+      "pattern": "mixed",
+      "acf_lag1": -0.011
+    },
+    {
+      "id": "A123246",
+      "name": "",
+      "entropy": 0.0865,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A153881",
+      "name": "",
+      "entropy": 0.0873,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A097062",
+      "name": "",
+      "entropy": 0.0897,
+      "pattern": "mixed",
+      "acf_lag1": -0.0118
+    },
+    {
+      "id": "A062967",
+      "name": "",
+      "entropy": 0.0905,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A393610",
+      "name": "",
+      "entropy": 0.0905,
+      "pattern": "mixed",
+      "acf_lag1": -0.0001
+    },
+    {
+      "id": "A346244",
+      "name": "",
+      "entropy": 0.0914,
+      "pattern": "mixed",
+      "acf_lag1": -0.012
+    }
+  ]
+}
