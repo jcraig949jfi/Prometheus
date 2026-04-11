@@ -1,0 +1,74 @@
+{
+  "challenge": "Maass Frobenius Phase Coherence vs Level",
+  "challenge_number": 316,
+  "n_forms": 4999,
+  "n_primes_max": 669,
+  "phase_coherence_stats": {
+    "mean": 0.731953327849486,
+    "std": 0.016660371309686253,
+    "min": 0.599976199147908,
+    "max": 0.9575828161002499
+  },
+  "correlations": {
+    "spearman_R_vs_level": {
+      "rho": -0.13429315908396666,
+      "p": 1.486493910336628e-21
+    },
+    "spearman_R_vs_spectral": {
+      "rho": 0.04697176626991191,
+      "p": 0.0008935023078474579
+    },
+    "spearman_R_vs_symmetry": {
+      "rho": -0.02858791536721764,
+      "p": 0.0432615166567597
+    },
+    "pearson_R_vs_level": {
+      "r": -0.15095851044386643,
+      "p": 7.186685749090694e-27
+    },
+    "pearson_R_vs_spectral": {
+      "r": 0.029012292067520297,
+      "p": 0.04024820888390964
+    },
+    "spearman_R_vs_log_level": {
+      "rho": -0.13429315908396666,
+      "p": 1.486493910336628e-21
+    },
+    "partial_R_vs_level_given_spectral": {
+      "rho": -0.2247599735913868,
+      "p": 2.8244061545181636e-58
+    }
+  },
+  "null_distribution": {
+    "n_shuffles": 1000,
+    "null_mean": -5.0053367164884844e-05,
+    "null_std": 0.01435970163725506,
+    "z_score": -9.348599929717142
+  },
+  "ec_comparison": {
+    "ec_rho": 0.197,
+    "maass_rho_level": -0.13429315908396666,
+    "ratio": 0.6816911628627749
+  },
+  "controlled_test": {
+    "description": "Fixed 46 primes (up to p=199) for all forms with >= 200 coefficients",
+    "n_forms": 4746,
+    "n_primes": 46,
+    "spearman_R_vs_level": {
+      "rho": -0.19311606819814978,
+      "p": 4.1966051420143005e-41
+    },
+    "spearman_R_vs_spectral": {
+      "rho": 0.0780588994871596,
+      "p": 7.26976248286141e-08
+    },
+    "partial_R_vs_level_given_spectral": {
+      "rho": -0.29652621252822453,
+      "p": 6.027680014091912e-97
+    },
+    "z_score": -13.372319336167621
+  },
+  "verdict_raw": "SIGNAL",
+  "verdict_controlled": "SIGNAL",
+  "note": "Phase coherence R = |mean(exp(i * pi/2 * c_p/2))| over primes p; controlled test eliminates n_coefficients confound"
+}
