@@ -1,0 +1,266 @@
+{
+  "metadata": {
+    "description": "Cross-domain distribution comparison: PDG masses, knot determinants, EC conductors, OEIS terms",
+    "method": "Rank normalization + KS tests + moment ratios + gap statistics",
+    "date": "2026-04-10"
+  },
+  "dataset_sizes": {
+    "PDG_masses": 225,
+    "knot_determinants": 167,
+    "EC_conductors": 3437,
+    "OEIS_terms": 149648
+  },
+  "raw_summary": {
+    "PDG_masses": {
+      "n": 225,
+      "min": 0.00051099895,
+      "max": 172.57,
+      "median": 1.86966,
+      "mean": 4.839664480324934,
+      "std": 16.072962146005025,
+      "skewness": 8.063892318919917,
+      "kurtosis": 69.55571698459123
+    },
+    "knot_determinants": {
+      "n": 167,
+      "min": 1.0,
+      "max": 377.0,
+      "median": 167.0,
+      "mean": 167.874251497006,
+      "std": 97.97825615069885,
+      "skewness": 0.05844552074546755,
+      "kurtosis": -1.109700532474715
+    },
+    "EC_conductors": {
+      "n": 3437,
+      "min": 11.0,
+      "max": 4998.0,
+      "median": 2475.0,
+      "mean": 2473.681699156241,
+      "std": 1439.691156081503,
+      "skewness": 0.012583994916825903,
+      "kurtosis": -1.1977972275451068
+    },
+    "OEIS_terms": {
+      "n": 149648,
+      "min": 1.0,
+      "max": 1.672390093955882e+165,
+      "median": 230.0,
+      "mean": 1.1175492448652052e+160,
+      "std": Infinity,
+      "skewness": NaN,
+      "kurtosis": NaN
+    }
+  },
+  "moment_ratios_raw": {
+    "PDG_masses": {
+      "M4_over_M2sq": 72.55571698459123,
+      "M6_over_M2cu": 6678.387082748165
+    },
+    "knot_determinants": {
+      "M4_over_M2sq": 1.890299467525285,
+      "M6_over_M2cu": 4.504029935062109
+    },
+    "EC_conductors": {
+      "M4_over_M2sq": 1.8022027724548932,
+      "M6_over_M2cu": 3.8683129972569423
+    },
+    "OEIS_terms": {
+      "M4_over_M2sq": null,
+      "M6_over_M2cu": null
+    }
+  },
+  "moment_ratios_log": {
+    "PDG_masses": {
+      "M4_over_M2sq": 18.229109194234965,
+      "M6_over_M2cu": 601.9259521354917
+    },
+    "knot_determinants": {
+      "M4_over_M2sq": 7.136137381367852,
+      "M6_over_M2cu": 113.22615995052271
+    },
+    "EC_conductors": {
+      "M4_over_M2sq": 6.075932769472441,
+      "M6_over_M2cu": 78.79722328840897
+    },
+    "OEIS_terms": {
+      "M4_over_M2sq": 50.65849066549499,
+      "M6_over_M2cu": 13043.488305711766
+    }
+  },
+  "moment_ratios_rank": {
+    "PDG_masses": {
+      "M4_over_M2sq": 1.799941567888238,
+      "M6_over_M2cu": 3.856715429521098
+    },
+    "knot_determinants": {
+      "M4_over_M2sq": 1.7999139414802063,
+      "M6_over_M2cu": 3.8565896502515735
+    },
+    "EC_conductors": {
+      "M4_over_M2sq": 1.7999997968334458,
+      "M6_over_M2cu": 3.857141551072299
+    },
+    "OEIS_terms": {
+      "M4_over_M2sq": 1.796273032892008,
+      "M6_over_M2cu": 3.830264193293342
+    }
+  },
+  "gap_statistics": {
+    "PDG_masses": {
+      "mean_gap": 0.0044444444444444444,
+      "std_gap": 0.0011691206240203365,
+      "gap_ratio_std_over_mean": 0.2630521404045757,
+      "gap_skewness": -0.9197244451190142,
+      "gap_kurtosis": 9.70343392299687
+    },
+    "knot_determinants": {
+      "mean_gap": 0.005988023952095809,
+      "std_gap": 4.0288895641826914e-17,
+      "gap_ratio_std_over_mean": 6.728245572185094e-15,
+      "gap_skewness": -0.3628497734029166,
+      "gap_kurtosis": -1.0300614925979927
+    },
+    "EC_conductors": {
+      "mean_gap": 0.0002909514111143439,
+      "std_gap": 1.7863022765306776e-17,
+      "gap_ratio_std_over_mean": 6.139520924435939e-14,
+      "gap_skewness": -4.8839654529557555,
+      "gap_kurtosis": 24.474687879200165
+    },
+    "OEIS_terms": {
+      "mean_gap": 6.472808676990077e-06,
+      "std_gap": 0.00019959916273644274,
+      "gap_ratio_std_over_mean": 30.836561483114686,
+      "gap_skewness": 159.96906499941565,
+      "gap_kurtosis": 33200.427359876245
+    }
+  },
+  "pairwise_ks_rank": {
+    "PDG_masses_vs_knot_determinants": {
+      "ks_statistic": 0.009048569527611443,
+      "p_value": 1.0
+    },
+    "PDG_masses_vs_EC_conductors": {
+      "ks_statistic": 0.006743607150939126,
+      "p_value": 1.0
+    },
+    "PDG_masses_vs_OEIS_terms": {
+      "ks_statistic": 0.03160940636991102,
+      "p_value": 0.9729209998606972
+    },
+    "knot_determinants_vs_EC_conductors": {
+      "ks_statistic": 0.0031377454575864275,
+      "p_value": 1.0
+    },
+    "knot_determinants_vs_OEIS_terms": {
+      "ks_statistic": 0.032780397720543086,
+      "p_value": 0.9913611758935387
+    },
+    "EC_conductors_vs_OEIS_terms": {
+      "ks_statistic": 0.03142275240034914,
+      "p_value": 0.0025694039243636057
+    }
+  },
+  "pairwise_ks_log": {
+    "PDG_masses_vs_knot_determinants": {
+      "ks_statistic": 0.9478376580172987,
+      "p_value": 6.42480169478005e-96
+    },
+    "PDG_masses_vs_EC_conductors": {
+      "ks_statistic": 0.9819312708111079,
+      "p_value": 2.605309602051524e-302
+    },
+    "PDG_masses_vs_OEIS_terms": {
+      "ks_statistic": 0.7574808142366679,
+      "p_value": 9.160175694425697e-135
+    },
+    "knot_determinants_vs_EC_conductors": {
+      "ks_statistic": 0.9202793133546697,
+      "p_value": 7.290254551067786e-167
+    },
+    "knot_determinants_vs_OEIS_terms": {
+      "ks_statistic": 0.4670493424569657,
+      "p_value": 6.57362491319755e-34
+    },
+    "EC_conductors_vs_OEIS_terms": {
+      "ks_statistic": 0.45762468106321913,
+      "p_value": 0.0
+    }
+  },
+  "ks_distance_matrix": {
+    "PDG_masses": {
+      "PDG_masses": 0.0,
+      "knot_determinants": 0.009048569527611443,
+      "EC_conductors": 0.006743607150939126,
+      "OEIS_terms": 0.03160940636991102
+    },
+    "knot_determinants": {
+      "PDG_masses": 0.009048569527611443,
+      "knot_determinants": 0.0,
+      "EC_conductors": 0.0031377454575864275,
+      "OEIS_terms": 0.032780397720543086
+    },
+    "EC_conductors": {
+      "PDG_masses": 0.006743607150939126,
+      "knot_determinants": 0.0031377454575864275,
+      "EC_conductors": 0.0,
+      "OEIS_terms": 0.03142275240034914
+    },
+    "OEIS_terms": {
+      "PDG_masses": 0.03160940636991102,
+      "knot_determinants": 0.032780397720543086,
+      "EC_conductors": 0.03142275240034914,
+      "OEIS_terms": 0.0
+    }
+  },
+  "gap_feature_distances": {
+    "PDG_masses_vs_knot_determinants": 10.75115015545622,
+    "PDG_masses_vs_EC_conductors": 15.296220011343891,
+    "PDG_masses_vs_OEIS_terms": 33191.12795116924,
+    "knot_determinants_vs_EC_conductors": 25.902369148518773,
+    "knot_determinants_vs_OEIS_terms": 33201.85886542178,
+    "EC_conductors_vs_OEIS_terms": 33176.37658198618
+  },
+  "pdg_nearest_by_ks": {
+    "nearest": "EC_conductors",
+    "ks_statistic": 0.006743607150939126
+  },
+  "pdg_nearest_by_gap": {
+    "nearest": "knot_determinants",
+    "euclidean_distance": 10.75115015545622
+  },
+  "anderson_darling_rank": {
+    "PDG_masses_vs_knot_determinants": {
+      "ad_statistic": -1.3111837843671328,
+      "p_value": 0.25
+    },
+    "PDG_masses_vs_EC_conductors": {
+      "ad_statistic": -1.2696034086301506,
+      "p_value": 0.25
+    },
+    "PDG_masses_vs_OEIS_terms": {
+      "ad_statistic": -1.0609703911144075,
+      "p_value": 0.25
+    },
+    "knot_determinants_vs_EC_conductors": {
+      "ad_statistic": -1.2773100947757146,
+      "p_value": 0.25
+    },
+    "knot_determinants_vs_OEIS_terms": {
+      "ad_statistic": -1.118589324118137,
+      "p_value": 0.25
+    },
+    "EC_conductors_vs_OEIS_terms": {
+      "ad_statistic": -0.07434695692355327,
+      "p_value": 0.25
+    }
+  },
+  "interpretation": [
+    "METHODOLOGICAL NOTE: Rank normalization maps ANY distribution to ~Uniform[0,1], so rank-KS differences are trivially small and uninformative. The LOG-TRANSFORMED KS and GAP STATISTICS are the real tests.",
+    "LOG-KS: PDG masses nearest to OEIS_terms (D=0.7575), all others: knot_determinants=0.9478, EC_conductors=0.9819",
+    "ALL pairwise log-KS tests are highly significant (p < 1e-10): these four domains have genuinely DIFFERENT distribution shapes. No cross-domain distributional universality detected.",
+    "GAP STATISTICS: PDG masses nearest to knot_determinants (Euclidean distance in [std/mean, skew, kurtosis] space = 10.7512)",
+    "BOTTOM LINE: PDG masses and knot determinants share the most similar gap structure (nearest-neighbor spacing), but all four domains have completely different log-scale distribution shapes. The shared gap structure likely reflects both being small-N heavy-tailed sequences rather than a deep cross-domain connection."
+  ]
+}

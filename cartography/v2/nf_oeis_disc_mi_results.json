@@ -1,0 +1,1012 @@
+{
+  "experiment": "nf_oeis_disc_mi",
+  "description": "Cross-domain: Number field discriminant sequences vs OEIS",
+  "data": {
+    "nf_source": "F:\\Prometheus\\cartography\\number_fields\\data\\number_fields.json",
+    "oeis_source": "F:\\Prometheus\\cartography\\oeis\\data\\stripped_new.txt",
+    "n_nf_fields": 9116,
+    "n_oeis_sequences": 391886
+  },
+  "disc_sequences": {
+    "2": {
+      "n_unique_disc": 5578,
+      "first_15": [
+        3,
+        4,
+        5,
+        7,
+        8,
+        11,
+        12,
+        13,
+        15,
+        17,
+        19,
+        20,
+        21,
+        23,
+        24
+      ]
+    },
+    "3": {
+      "n_unique_disc": 1759,
+      "first_15": [
+        23,
+        31,
+        44,
+        49,
+        59,
+        76,
+        81,
+        83,
+        87,
+        104,
+        107,
+        108,
+        116,
+        135,
+        139
+      ]
+    },
+    "4": {
+      "n_unique_disc": 860,
+      "first_15": [
+        117,
+        125,
+        144,
+        189,
+        225,
+        229,
+        256,
+        257,
+        272,
+        275,
+        283,
+        320,
+        331,
+        333,
+        392
+      ]
+    },
+    "5": {
+      "n_unique_disc": 82,
+      "first_15": [
+        1609,
+        1649,
+        1777,
+        2209,
+        2297,
+        2617,
+        2665,
+        2869,
+        3017,
+        3089,
+        3233,
+        3369,
+        3857,
+        3889,
+        4169
+      ]
+    }
+  },
+  "exact_oeis_matches": {
+    "2": {
+      "exact": [],
+      "set_overlap": [
+        {
+          "id": "A000008",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            1,
+            2,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ]
+        },
+        {
+          "id": "A000026",
+          "type": "set_overlap",
+          "overlap": 8,
+          "oeis_first": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            6,
+            6,
+            10
+          ]
+        },
+        {
+          "id": "A000027",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "id": "A000028",
+          "type": "set_overlap",
+          "overlap": 10,
+          "oeis_first": [
+            2,
+            3,
+            4,
+            5,
+            7,
+            9,
+            11,
+            13,
+            16,
+            17
+          ]
+        },
+        {
+          "id": "A000037",
+          "type": "set_overlap",
+          "overlap": 10,
+          "oeis_first": [
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "A000040",
+          "type": "set_overlap",
+          "overlap": 8,
+          "oeis_first": [
+            2,
+            3,
+            5,
+            7,
+            11,
+            13,
+            17,
+            19,
+            23,
+            29
+          ]
+        },
+        {
+          "id": "A000062",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            2,
+            4,
+            5,
+            6,
+            8,
+            9,
+            11,
+            12,
+            13
+          ]
+        },
+        {
+          "id": "A000201",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            3,
+            4,
+            6,
+            8,
+            9,
+            11,
+            12,
+            14,
+            16
+          ]
+        },
+        {
+          "id": "A000202",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            3,
+            4,
+            6,
+            8,
+            9,
+            11,
+            12,
+            14,
+            16
+          ]
+        },
+        {
+          "id": "A000203",
+          "type": "set_overlap",
+          "overlap": 8,
+          "oeis_first": [
+            1,
+            3,
+            4,
+            7,
+            6,
+            12,
+            8,
+            15,
+            13,
+            18
+          ]
+        },
+        {
+          "id": "A000210",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            3,
+            5,
+            6,
+            8,
+            10,
+            12,
+            13,
+            15,
+            17
+          ]
+        },
+        {
+          "id": "A000394",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "A000398",
+          "type": "set_overlap",
+          "overlap": 8,
+          "oeis_first": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            8,
+            9,
+            11
+          ]
+        },
+        {
+          "id": "A000401",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "id": "A000414",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            4,
+            7,
+            10,
+            12,
+            13,
+            15,
+            16,
+            18,
+            19,
+            20
+          ]
+        },
+        {
+          "id": "A000430",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            2,
+            3,
+            4,
+            5,
+            7,
+            9,
+            11,
+            13,
+            17,
+            19
+          ]
+        },
+        {
+          "id": "A000433",
+          "type": "set_overlap",
+          "overlap": 8,
+          "oeis_first": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            10,
+            11
+          ]
+        },
+        {
+          "id": "A000452",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            2,
+            3,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11,
+            13
+          ]
+        },
+        {
+          "id": "A000592",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            1,
+            3,
+            4,
+            6,
+            8,
+            9,
+            11,
+            13,
+            15,
+            17
+          ]
+        },
+        {
+          "id": "A000788",
+          "type": "set_overlap",
+          "overlap": 8,
+          "oeis_first": [
+            0,
+            1,
+            2,
+            4,
+            5,
+            7,
+            9,
+            12,
+            13,
+            15
+          ]
+        }
+      ]
+    },
+    "3": {
+      "exact": [],
+      "set_overlap": [
+        {
+          "id": "A023679",
+          "type": "set_overlap",
+          "overlap": 13,
+          "oeis_first": [
+            23,
+            31,
+            44,
+            59,
+            76,
+            83,
+            87,
+            104,
+            107,
+            108
+          ]
+        },
+        {
+          "id": "A106312",
+          "type": "set_overlap",
+          "overlap": 13,
+          "oeis_first": [
+            23,
+            31,
+            44,
+            59,
+            76,
+            83,
+            87,
+            104,
+            107,
+            108
+          ]
+        },
+        {
+          "id": "A107662",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            23,
+            31,
+            44,
+            59,
+            76,
+            83,
+            107,
+            108,
+            139,
+            172
+          ]
+        },
+        {
+          "id": "A187773",
+          "type": "set_overlap",
+          "overlap": 13,
+          "oeis_first": [
+            23,
+            31,
+            44,
+            59,
+            76,
+            83,
+            87,
+            104,
+            107,
+            108
+          ]
+        },
+        {
+          "id": "A328825",
+          "type": "set_overlap",
+          "overlap": 9,
+          "oeis_first": [
+            23,
+            31,
+            44,
+            59,
+            76,
+            83,
+            92,
+            107,
+            108,
+            124
+          ]
+        }
+      ]
+    },
+    "4": {
+      "exact": [],
+      "set_overlap": [
+        {
+          "id": "A023682",
+          "type": "set_overlap",
+          "overlap": 12,
+          "oeis_first": [
+            117,
+            125,
+            144,
+            189,
+            225,
+            229,
+            256,
+            257,
+            272,
+            320
+          ]
+        }
+      ]
+    },
+    "5": {
+      "exact": [
+        {
+          "id": "A023685",
+          "type": "exact_substring",
+          "matched_terms": 15
+        }
+      ],
+      "set_overlap": []
+    }
+  },
+  "nearest_by_fingerprint": {
+    "2": [
+      {
+        "oeis_id": "A129128",
+        "distance": 0.176383,
+        "first_terms": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          11,
+          10,
+          13
+        ]
+      },
+      {
+        "oeis_id": "A358978",
+        "distance": 0.176383,
+        "first_terms": [
+          1,
+          2,
+          3,
+          5,
+          7,
+          8,
+          9,
+          11
+        ]
+      },
+      {
+        "oeis_id": "A111801",
+        "distance": 0.182574,
+        "first_terms": [
+          1,
+          3,
+          4,
+          5,
+          7,
+          8,
+          11,
+          13
+        ]
+      },
+      {
+        "oeis_id": "A065878",
+        "distance": 0.188562,
+        "first_terms": [
+          3,
+          5,
+          7,
+          9,
+          11,
+          13,
+          14,
+          15
+        ]
+      },
+      {
+        "oeis_id": "A167171",
+        "distance": 0.188562,
+        "first_terms": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          10,
+          11,
+          13
+        ]
+      }
+    ],
+    "3": [
+      {
+        "oeis_id": "A023679",
+        "distance": 0.2,
+        "first_terms": [
+          23,
+          31,
+          44,
+          59,
+          76,
+          83,
+          87,
+          104
+        ]
+      },
+      {
+        "oeis_id": "A106312",
+        "distance": 0.216025,
+        "first_terms": [
+          23,
+          31,
+          44,
+          59,
+          76,
+          83,
+          87,
+          104
+        ]
+      },
+      {
+        "oeis_id": "A187773",
+        "distance": 0.258199,
+        "first_terms": [
+          23,
+          31,
+          44,
+          59,
+          76,
+          83,
+          87,
+          104
+        ]
+      },
+      {
+        "oeis_id": "A283961",
+        "distance": 0.274874,
+        "first_terms": [
+          1,
+          2,
+          4,
+          3,
+          6,
+          10,
+          5,
+          8
+        ]
+      },
+      {
+        "oeis_id": "A188043",
+        "distance": 0.286744,
+        "first_terms": [
+          5,
+          10,
+          15,
+          17,
+          22,
+          27,
+          29,
+          34
+        ]
+      }
+    ],
+    "4": [
+      {
+        "oeis_id": "A047580",
+        "distance": 0.221108,
+        "first_terms": [
+          1,
+          2,
+          5,
+          6,
+          7,
+          9,
+          10,
+          13
+        ]
+      },
+      {
+        "oeis_id": "A065270",
+        "distance": 0.226078,
+        "first_terms": [
+          1,
+          5,
+          2,
+          9,
+          11,
+          3,
+          4,
+          17
+        ]
+      },
+      {
+        "oeis_id": "A348556",
+        "distance": 0.226078,
+        "first_terms": [
+          15,
+          30,
+          31,
+          47,
+          60,
+          61,
+          62,
+          63
+        ]
+      },
+      {
+        "oeis_id": "A309276",
+        "distance": 0.23094,
+        "first_terms": [
+          1,
+          5,
+          3,
+          2,
+          10,
+          15,
+          7,
+          4
+        ]
+      },
+      {
+        "oeis_id": "A047586",
+        "distance": 0.23094,
+        "first_terms": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          10,
+          11,
+          13
+        ]
+      }
+    ],
+    "5": [
+      {
+        "oeis_id": "A023685",
+        "distance": 0.11547,
+        "first_terms": [
+          1609,
+          1649,
+          1777,
+          2209,
+          2297,
+          2617,
+          2665,
+          2869
+        ]
+      },
+      {
+        "oeis_id": "A112847",
+        "distance": 0.413656,
+        "first_terms": [
+          229,
+          277,
+          317,
+          461,
+          643,
+          919,
+          1033,
+          1307
+        ]
+      },
+      {
+        "oeis_id": "A198163",
+        "distance": 0.424264,
+        "first_terms": [
+          421,
+          373,
+          887,
+          569,
+          967,
+          769,
+          317,
+          797
+        ]
+      },
+      {
+        "oeis_id": "A106572",
+        "distance": 0.432049,
+        "first_terms": [
+          1,
+          0,
+          119,
+          649,
+          13,
+          493,
+          989,
+          667
+        ]
+      },
+      {
+        "oeis_id": "A121565",
+        "distance": 0.438693,
+        "first_terms": [
+          0,
+          1,
+          3,
+          13,
+          11,
+          127,
+          427,
+          13789
+        ]
+      }
+    ]
+  },
+  "fingerprint_mi": {
+    "2": {
+      "mi_bits": 0.440542,
+      "null_mean": 3.1e-05,
+      "null_std": 1.1e-05,
+      "z_score": 41103.16,
+      "n_oeis_compared": 370848,
+      "significant": true,
+      "NOTE": "TAUTOLOGICAL: distance metric includes mod-2 balance, then tests MI against mod-2 labels. High z is circular, not meaningful."
+    },
+    "3": {
+      "mi_bits": 0.403624,
+      "null_mean": 3.1e-05,
+      "null_std": 1.1e-05,
+      "z_score": 35434.33,
+      "n_oeis_compared": 370848,
+      "significant": true,
+      "NOTE": "TAUTOLOGICAL: distance metric includes mod-2 balance, then tests MI against mod-2 labels. High z is circular, not meaningful."
+    },
+    "4": {
+      "mi_bits": 0.451719,
+      "null_mean": 3.1e-05,
+      "null_std": 1.1e-05,
+      "z_score": 42928.4,
+      "n_oeis_compared": 370848,
+      "significant": true,
+      "NOTE": "TAUTOLOGICAL: distance metric includes mod-2 balance, then tests MI against mod-2 labels. High z is circular, not meaningful."
+    },
+    "5": {
+      "mi_bits": 0.577786,
+      "null_mean": 3.1e-05,
+      "null_std": 1.1e-05,
+      "z_score": 52588.63,
+      "n_oeis_compared": 370848,
+      "significant": true,
+      "NOTE": "TAUTOLOGICAL: distance metric includes mod-2 balance, then tests MI against mod-2 labels. High z is circular, not meaningful."
+    }
+  },
+  "term_level_mi": {
+    "2": {
+      "real_median_mi": 0.433985,
+      "null_median_mi": 0.379383,
+      "null_std": 0.185026,
+      "z_score": 0.3,
+      "n_compared": 30286,
+      "top5_oeis": [
+        [
+          1.7753,
+          "A351723"
+        ],
+        [
+          1.1805,
+          "A209761"
+        ],
+        [
+          1.1432,
+          "A143031"
+        ],
+        [
+          1.1383,
+          "A159958"
+        ],
+        [
+          1.1283,
+          "A196029"
+        ]
+      ],
+      "significant": false
+    },
+    "3": {
+      "real_median_mi": 0.42421,
+      "null_median_mi": 0.360221,
+      "null_std": 0.17984,
+      "z_score": 0.36,
+      "n_compared": 30147,
+      "top5_oeis": [
+        [
+          1.1188,
+          "A249099"
+        ],
+        [
+          1.0427,
+          "A093609"
+        ],
+        [
+          1.0372,
+          "A136437"
+        ],
+        [
+          1.0107,
+          "A338642"
+        ],
+        [
+          1.0018,
+          "A045092"
+        ]
+      ],
+      "significant": false
+    },
+    "4": {
+      "real_median_mi": 0.429565,
+      "null_median_mi": 0.371933,
+      "null_std": 0.178675,
+      "z_score": 0.32,
+      "n_compared": 30152,
+      "top5_oeis": [
+        [
+          1.0812,
+          "A171889"
+        ],
+        [
+          1.0663,
+          "A073823"
+        ],
+        [
+          1.0474,
+          "A204840"
+        ],
+        [
+          1.0474,
+          "A152302"
+        ],
+        [
+          1.0337,
+          "A352714"
+        ]
+      ],
+      "significant": false
+    },
+    "5": {
+      "real_median_mi": 0.369786,
+      "null_median_mi": 0.368463,
+      "null_std": 0.184553,
+      "z_score": 0.01,
+      "n_compared": 30160,
+      "top5_oeis": [
+        [
+          1.0438,
+          "A023685"
+        ],
+        [
+          1.0138,
+          "A176445"
+        ],
+        [
+          0.929,
+          "A138114"
+        ],
+        [
+          0.9144,
+          "A198581"
+        ],
+        [
+          0.9139,
+          "A190121"
+        ]
+      ],
+      "significant": false
+    }
+  },
+  "verdict": "EXPECTED: Discriminant sequences found in OEIS (they are catalogued there), but NO unexpected combinatorial structure beyond known cataloguing"
+}

@@ -1,0 +1,94 @@
+{
+  "metadata": {
+    "experiment": "List2 #8: FLINT vs Lean GED via Spectral Bound",
+    "method": "L2 norm of top-k normalized Laplacian eigenvalues",
+    "top_k_eigenvalues": 500,
+    "date": "2026-04-10",
+    "runtime_seconds": 232.6
+  },
+  "graphs": {
+    "flint": {
+      "nodes": 9462,
+      "undirected_edges": 39766,
+      "density": 0.0008884273457517004,
+      "spectrum_range": [
+        1.623617,
+        2.0
+      ],
+      "spectrum_l2_norm": 40.3029
+    },
+    "lean": {
+      "nodes": 8592,
+      "undirected_edges": 34302,
+      "density": 0.0009294187954264207,
+      "spectrum_range": [
+        1.513405,
+        2.0
+      ],
+      "spectrum_l2_norm": 35.3158
+    }
+  },
+  "spectral_ged": {
+    "ged_spectral_l2": 5.2962,
+    "ged_normalized": 0.131411,
+    "interpretation": "Lower bound on graph edit distance between FLINT call graph and Lean import graph"
+  },
+  "random_baselines": {
+    "ged_random_vs_random": 0.2204,
+    "ged_random_normalized": 0.006181,
+    "ged_flint_vs_random": 5.2659,
+    "ged_lean_vs_random": 1.0094,
+    "similarity_ratio_real_vs_random": 24.0256,
+    "interpretation": "ratio < 1 means FLINT-Lean are structurally closer than random; ratio > 1 means further apart"
+  },
+  "spectra": {
+    "flint_top10": [
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0,
+      2.0
+    ],
+    "lean_top10": [
+      1.77587,
+      1.776893,
+      1.828895,
+      1.850104,
+      1.862191,
+      1.883306,
+      1.902908,
+      1.975448,
+      2.0,
+      2.0
+    ],
+    "flint_bottom10": [
+      1.623617,
+      1.624212,
+      1.624463,
+      1.625462,
+      1.626107,
+      1.626429,
+      1.626938,
+      1.627163,
+      1.627656,
+      1.628318
+    ],
+    "lean_bottom10": [
+      1.513405,
+      1.513726,
+      1.513817,
+      1.514096,
+      1.514252,
+      1.514326,
+      1.514498,
+      1.514616,
+      1.514846,
+      1.515019
+    ]
+  }
+}

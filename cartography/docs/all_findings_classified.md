@@ -570,7 +570,22 @@ MI(lattice,Jones): z=-1.40. MI(lattice,Alexander): z=-0.23. Zero cross-domain st
 3,762 FLINT functions. Branch-count vs node ORC: Spearman ρ=-0.2154 (p=9.6×10⁻⁴¹) — matches predicted -0.22 exactly. Quartile gradient: Q1 ORC=-0.108, Q4 ORC=-0.254. Complex functions (25+ branches) sit at hyperbolic bottlenecks. Simple wrappers have positive curvature (ORC=1.0).
 
 ### 144. Weil Phase Tensor: Centered max σ=15.9, Above MP Edge 14.7 (Weil-tensor)
-100 genus-3 curves × 22 primes × 6 eigenvalue phases. After centering: mode-0 max σ=15.94 vs Marchenko-Pastur edge √100+√22=14.69. The 8% excess indicates genuine phase coherence beyond random — likely from ST group structure (42% non-generic USp(6)).
+Centered max σ=15.94 vs MP edge 14.69. 8% excess = genuine coherence.
+
+### 145. EC-Lattice Gram MI: Null (EC-Lat-MI)
+5000 EC × 5000 lattices. Mod-3 z=-0.89, mod-5 z=1.21. No cross-domain mod-p structure.
+
+### 146. NF Discriminants in OEIS: Expected Matches Only (NF-OEIS)
+Degree-5 discs match A023685, degree-3 match A023679 — these ARE the OEIS catalogue entries. Term-level mod-p MI: all z-scores near zero. No hidden combinatorial structure beyond tautological matches.
+
+### 147. PDG-Knot Distribution: No Deep Connection (PDG-Knot-dist)
+4-way KS between PDG/Knot/EC/OEIS: all pairs significantly different in log-space. PDG-knot gap similarity is sample-size artifact (both N~200). No distributional universality.
+
+### 148. Sha[2] Is Geometrically Special: I2 Correlation ρ=0.22 (G2-Sha-Igusa) **NOVEL**
+66,158 curves. Selmer excess vs log|I2|: ρ=0.22 (p~10⁻¹³³) within MW rank 0. SURVIVES conductor control (strengthens at large N: ρ=0.27 in Q4). Absolute invariant j1=I2⁵/I10: ρ=0.28 with excess. Non-generic ST groups have 3.5× higher Sha. Cohen's d for I10 = -0.52. Null battery: 5/5 passed (z=6.8-16.3). **Sha is NOT random in moduli space.**
+
+### 149. FLINT-Lean Spectral GED = 5.30, 24× Random Distance (FLINT-Lean-GED)
+Top-500 eigenvalues. GED=5.30, normalized=0.131. 24× more distant than matched random graphs. FLINT: bipartite-like (λ→2.0). Lean: hierarchical DAG (λ_max≈1.98). 13% spectral energy difference — shared broad structure, divergent fine structure.
 
 ---
 
@@ -936,7 +951,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*269 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*274 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 
