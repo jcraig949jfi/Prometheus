@@ -1,0 +1,1194 @@
+{
+  "metadata": {
+    "source": "materials_project_full.json",
+    "n_structures": 210579,
+    "n_occupied_spacegroups": 228,
+    "n_point_groups": 32,
+    "n_unique_elements": 91
+  },
+  "crystal_system_distribution": {
+    "Monoclinic": {
+      "count": 47017,
+      "fraction": 0.2233
+    },
+    "Orthorhombic": {
+      "count": 46566,
+      "fraction": 0.2211
+    },
+    "Triclinic": {
+      "count": 28333,
+      "fraction": 0.1345
+    },
+    "Cubic": {
+      "count": 26148,
+      "fraction": 0.1242
+    },
+    "Tetragonal": {
+      "count": 24434,
+      "fraction": 0.116
+    },
+    "Trigonal": {
+      "count": 22128,
+      "fraction": 0.1051
+    },
+    "Hexagonal": {
+      "count": 15953,
+      "fraction": 0.0758
+    }
+  },
+  "spacegroup_distribution": {
+    "top_20": [
+      {
+        "sg_number": 1,
+        "count": 17134,
+        "fraction": 0.0814
+      },
+      {
+        "sg_number": 2,
+        "count": 11199,
+        "fraction": 0.0532
+      },
+      {
+        "sg_number": 14,
+        "count": 10797,
+        "fraction": 0.0513
+      },
+      {
+        "sg_number": 225,
+        "count": 10625,
+        "fraction": 0.0505
+      },
+      {
+        "sg_number": 12,
+        "count": 7935,
+        "fraction": 0.0377
+      },
+      {
+        "sg_number": 62,
+        "count": 7503,
+        "fraction": 0.0356
+      },
+      {
+        "sg_number": 15,
+        "count": 5720,
+        "fraction": 0.0272
+      },
+      {
+        "sg_number": 38,
+        "count": 5626,
+        "fraction": 0.0267
+      },
+      {
+        "sg_number": 166,
+        "count": 5247,
+        "fraction": 0.0249
+      },
+      {
+        "sg_number": 216,
+        "count": 5126,
+        "fraction": 0.0243
+      },
+      {
+        "sg_number": 8,
+        "count": 5095,
+        "fraction": 0.0242
+      },
+      {
+        "sg_number": 123,
+        "count": 5076,
+        "fraction": 0.0241
+      },
+      {
+        "sg_number": 194,
+        "count": 4896,
+        "fraction": 0.0233
+      },
+      {
+        "sg_number": 139,
+        "count": 4200,
+        "fraction": 0.0199
+      },
+      {
+        "sg_number": 71,
+        "count": 4023,
+        "fraction": 0.0191
+      },
+      {
+        "sg_number": 63,
+        "count": 3933,
+        "fraction": 0.0187
+      },
+      {
+        "sg_number": 6,
+        "count": 3698,
+        "fraction": 0.0176
+      },
+      {
+        "sg_number": 221,
+        "count": 3637,
+        "fraction": 0.0173
+      },
+      {
+        "sg_number": 160,
+        "count": 3301,
+        "fraction": 0.0157
+      },
+      {
+        "sg_number": 5,
+        "count": 3262,
+        "fraction": 0.0155
+      }
+    ],
+    "power_law_fit": {
+      "intercept": 13.575039542027548,
+      "exponent": -1.8951386497592384,
+      "R2": 0.8076529663370328
+    },
+    "n_occupied": 228,
+    "n_total": 230
+  },
+  "point_group_spacegroup_entropy": {
+    "-1": {
+      "n_spacegroups": 12,
+      "spacegroups": [
+        2,
+        12,
+        15,
+        70,
+        71,
+        87,
+        88,
+        139,
+        147,
+        148,
+        164,
+        166
+      ],
+      "entropy_bits": 0.162,
+      "max_entropy_bits": 3.585,
+      "total_structures": 11388
+    },
+    "-3": {
+      "n_spacegroups": 3,
+      "spacegroups": [
+        147,
+        148,
+        202
+      ],
+      "entropy_bits": 0.5941,
+      "max_entropy_bits": 1.585,
+      "total_structures": 2614
+    },
+    "-3m": {
+      "n_spacegroups": 10,
+      "spacegroups": [
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        221,
+        225,
+        227,
+        229
+      ],
+      "entropy_bits": 1.7923,
+      "max_entropy_bits": 3.3219,
+      "total_structures": 9771
+    },
+    "-4": {
+      "n_spacegroups": 2,
+      "spacegroups": [
+        81,
+        82
+      ],
+      "entropy_bits": 0.6421,
+      "max_entropy_bits": 1.0,
+      "total_structures": 735
+    },
+    "-42m": {
+      "n_spacegroups": 14,
+      "spacegroups": [
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        215,
+        216
+      ],
+      "entropy_bits": 2.6831,
+      "max_entropy_bits": 3.8074,
+      "total_structures": 3136
+    },
+    "-43m": {
+      "n_spacegroups": 6,
+      "spacegroups": [
+        215,
+        216,
+        217,
+        218,
+        219,
+        220
+      ],
+      "entropy_bits": 0.9365,
+      "max_entropy_bits": 2.585,
+      "total_structures": 6054
+    },
+    "-6": {
+      "n_spacegroups": 1,
+      "spacegroups": [
+        174
+      ],
+      "entropy_bits": -0.0,
+      "max_entropy_bits": 0.0,
+      "total_structures": 1027
+    },
+    "-6m2": {
+      "n_spacegroups": 4,
+      "spacegroups": [
+        187,
+        188,
+        189,
+        190
+      ],
+      "entropy_bits": 1.1925,
+      "max_entropy_bits": 2.0,
+      "total_structures": 4944
+    },
+    "1": {
+      "n_spacegroups": 10,
+      "spacegroups": [
+        1,
+        5,
+        8,
+        9,
+        43,
+        82,
+        144,
+        146,
+        156,
+        160
+      ],
+      "entropy_bits": 0.0588,
+      "max_entropy_bits": 3.3219,
+      "total_structures": 17223
+    },
+    "2": {
+      "n_spacegroups": 16,
+      "spacegroups": [
+        3,
+        4,
+        5,
+        20,
+        24,
+        36,
+        44,
+        46,
+        81,
+        82,
+        121,
+        149,
+        150,
+        152,
+        155,
+        173
+      ],
+      "entropy_bits": 1.3466,
+      "max_entropy_bits": 4.0,
+      "total_structures": 5730
+    },
+    "2/m": {
+      "n_spacegroups": 25,
+      "spacegroups": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        63,
+        64,
+        65,
+        71,
+        74,
+        83,
+        85,
+        87,
+        139,
+        141,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        176,
+        204,
+        225
+      ],
+      "entropy_bits": 2.2129,
+      "max_entropy_bits": 4.6439,
+      "total_structures": 29023
+    },
+    "222": {
+      "n_spacegroups": 13,
+      "spacegroups": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        111,
+        119,
+        180,
+        181
+      ],
+      "entropy_bits": 2.5732,
+      "max_entropy_bits": 3.7004,
+      "total_structures": 2879
+    },
+    "23": {
+      "n_spacegroups": 5,
+      "spacegroups": [
+        195,
+        196,
+        197,
+        198,
+        199
+      ],
+      "entropy_bits": 1.1519,
+      "max_entropy_bits": 2.3219,
+      "total_structures": 670
+    },
+    "3": {
+      "n_spacegroups": 4,
+      "spacegroups": [
+        143,
+        144,
+        145,
+        146
+      ],
+      "entropy_bits": 1.1252,
+      "max_entropy_bits": 2.0,
+      "total_structures": 1845
+    },
+    "32": {
+      "n_spacegroups": 7,
+      "spacegroups": [
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155
+      ],
+      "entropy_bits": 2.2509,
+      "max_entropy_bits": 2.8074,
+      "total_structures": 1088
+    },
+    "3m": {
+      "n_spacegroups": 7,
+      "spacegroups": [
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        216
+      ],
+      "entropy_bits": 1.545,
+      "max_entropy_bits": 2.8074,
+      "total_structures": 6617
+    },
+    "4": {
+      "n_spacegroups": 6,
+      "spacegroups": [
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "entropy_bits": 2.3073,
+      "max_entropy_bits": 2.585,
+      "total_structures": 259
+    },
+    "4/m": {
+      "n_spacegroups": 8,
+      "spacegroups": [
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        141,
+        227
+      ],
+      "entropy_bits": 2.2534,
+      "max_entropy_bits": 3.0,
+      "total_structures": 1691
+    },
+    "4/mmm": {
+      "n_spacegroups": 24,
+      "spacegroups": [
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        221,
+        225,
+        227,
+        229
+      ],
+      "entropy_bits": 2.9125,
+      "max_entropy_bits": 4.585,
+      "total_structures": 15657
+    },
+    "422": {
+      "n_spacegroups": 10,
+      "spacegroups": [
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "entropy_bits": 2.6131,
+      "max_entropy_bits": 3.3219,
+      "total_structures": 762
+    },
+    "432": {
+      "n_spacegroups": 7,
+      "spacegroups": [
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214
+      ],
+      "entropy_bits": 1.8414,
+      "max_entropy_bits": 2.8074,
+      "total_structures": 263
+    },
+    "4mm": {
+      "n_spacegroups": 12,
+      "spacegroups": [
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110
+      ],
+      "entropy_bits": 1.9589,
+      "max_entropy_bits": 3.585,
+      "total_structures": 2100
+    },
+    "6": {
+      "n_spacegroups": 5,
+      "spacegroups": [
+        169,
+        170,
+        171,
+        172,
+        173
+      ],
+      "entropy_bits": 0.5129,
+      "max_entropy_bits": 2.3219,
+      "total_structures": 493
+    },
+    "6/m": {
+      "n_spacegroups": 2,
+      "spacegroups": [
+        175,
+        176
+      ],
+      "entropy_bits": 0.1129,
+      "max_entropy_bits": 1.0,
+      "total_structures": 663
+    },
+    "6/mmm": {
+      "n_spacegroups": 4,
+      "spacegroups": [
+        191,
+        192,
+        193,
+        194
+      ],
+      "entropy_bits": 1.1801,
+      "max_entropy_bits": 2.0,
+      "total_structures": 6894
+    },
+    "622": {
+      "n_spacegroups": 6,
+      "spacegroups": [
+        177,
+        178,
+        179,
+        180,
+        181,
+        182
+      ],
+      "entropy_bits": 1.9628,
+      "max_entropy_bits": 2.585,
+      "total_structures": 233
+    },
+    "6mm": {
+      "n_spacegroups": 4,
+      "spacegroups": [
+        183,
+        184,
+        185,
+        186
+      ],
+      "entropy_bits": 0.6809,
+      "max_entropy_bits": 2.0,
+      "total_structures": 1642
+    },
+    "m": {
+      "n_spacegroups": 17,
+      "spacegroups": [
+        6,
+        7,
+        8,
+        9,
+        38,
+        41,
+        44,
+        46,
+        107,
+        109,
+        119,
+        121,
+        156,
+        159,
+        160,
+        161,
+        174
+      ],
+      "entropy_bits": 1.882,
+      "max_entropy_bits": 4.0875,
+      "total_structures": 12410
+    },
+    "m-3": {
+      "n_spacegroups": 7,
+      "spacegroups": [
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206
+      ],
+      "entropy_bits": 2.4487,
+      "max_entropy_bits": 2.8074,
+      "total_structures": 1612
+    },
+    "m-3m": {
+      "n_spacegroups": 10,
+      "spacegroups": [
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230
+      ],
+      "entropy_bits": 1.6991,
+      "max_entropy_bits": 3.3219,
+      "total_structures": 17437
+    },
+    "mm2": {
+      "n_spacegroups": 32,
+      "spacegroups": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        99,
+        102,
+        105,
+        107,
+        115,
+        119,
+        121,
+        186,
+        189,
+        216
+      ],
+      "entropy_bits": 3.1714,
+      "max_entropy_bits": 5.0,
+      "total_structures": 14331
+    },
+    "mmm": {
+      "n_spacegroups": 41,
+      "spacegroups": [
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        123,
+        129,
+        136,
+        137,
+        139,
+        141,
+        191,
+        193,
+        194,
+        221,
+        225,
+        227,
+        229
+      ],
+      "entropy_bits": 3.7128,
+      "max_entropy_bits": 5.3576,
+      "total_structures": 29388
+    }
+  },
+  "point_group_crystal_system": {
+    "perfect_mapping": false,
+    "violations": {
+      "2/m": [
+        "Cubic",
+        "Hexagonal",
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Trigonal"
+      ],
+      "4/mmm": [
+        "Cubic",
+        "Tetragonal"
+      ],
+      "1": [
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Triclinic",
+        "Trigonal"
+      ],
+      "mm2": [
+        "Cubic",
+        "Hexagonal",
+        "Orthorhombic",
+        "Tetragonal"
+      ],
+      "-3": [
+        "Cubic",
+        "Trigonal"
+      ],
+      "3m": [
+        "Cubic",
+        "Trigonal"
+      ],
+      "-3m": [
+        "Cubic",
+        "Trigonal"
+      ],
+      "mmm": [
+        "Cubic",
+        "Hexagonal",
+        "Orthorhombic",
+        "Tetragonal"
+      ],
+      "m": [
+        "Hexagonal",
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Trigonal"
+      ],
+      "-42m": [
+        "Cubic",
+        "Tetragonal"
+      ],
+      "2": [
+        "Hexagonal",
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Trigonal"
+      ],
+      "222": [
+        "Hexagonal",
+        "Orthorhombic",
+        "Tetragonal"
+      ],
+      "4/m": [
+        "Cubic",
+        "Tetragonal"
+      ],
+      "-1": [
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Triclinic",
+        "Trigonal"
+      ]
+    },
+    "full_map": {
+      "3": [
+        "Trigonal"
+      ],
+      "2/m": [
+        "Cubic",
+        "Hexagonal",
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Trigonal"
+      ],
+      "4/mmm": [
+        "Cubic",
+        "Tetragonal"
+      ],
+      "m-3m": [
+        "Cubic"
+      ],
+      "1": [
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Triclinic",
+        "Trigonal"
+      ],
+      "mm2": [
+        "Cubic",
+        "Hexagonal",
+        "Orthorhombic",
+        "Tetragonal"
+      ],
+      "-4": [
+        "Tetragonal"
+      ],
+      "-3": [
+        "Cubic",
+        "Trigonal"
+      ],
+      "3m": [
+        "Cubic",
+        "Trigonal"
+      ],
+      "-3m": [
+        "Cubic",
+        "Trigonal"
+      ],
+      "-43m": [
+        "Cubic"
+      ],
+      "4mm": [
+        "Tetragonal"
+      ],
+      "mmm": [
+        "Cubic",
+        "Hexagonal",
+        "Orthorhombic",
+        "Tetragonal"
+      ],
+      "6/mmm": [
+        "Hexagonal"
+      ],
+      "-6m2": [
+        "Hexagonal"
+      ],
+      "m": [
+        "Hexagonal",
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Trigonal"
+      ],
+      "-42m": [
+        "Cubic",
+        "Tetragonal"
+      ],
+      "2": [
+        "Hexagonal",
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Trigonal"
+      ],
+      "222": [
+        "Hexagonal",
+        "Orthorhombic",
+        "Tetragonal"
+      ],
+      "6mm": [
+        "Hexagonal"
+      ],
+      "-6": [
+        "Hexagonal"
+      ],
+      "32": [
+        "Trigonal"
+      ],
+      "4/m": [
+        "Cubic",
+        "Tetragonal"
+      ],
+      "-1": [
+        "Monoclinic",
+        "Orthorhombic",
+        "Tetragonal",
+        "Triclinic",
+        "Trigonal"
+      ],
+      "422": [
+        "Tetragonal"
+      ],
+      "622": [
+        "Hexagonal"
+      ],
+      "23": [
+        "Cubic"
+      ],
+      "m-3": [
+        "Cubic"
+      ],
+      "432": [
+        "Cubic"
+      ],
+      "6/m": [
+        "Hexagonal"
+      ],
+      "4": [
+        "Tetragonal"
+      ],
+      "6": [
+        "Hexagonal"
+      ]
+    }
+  },
+  "nsites_distribution": {
+    "count": 210579,
+    "mean": 28.63,
+    "median": 18.0,
+    "std": 32.23,
+    "min": 1,
+    "max": 1072,
+    "p25": 10.0,
+    "p75": 36.0,
+    "p95": 92.0,
+    "p99": 160.0,
+    "histogram": {
+      "1-1": 206,
+      "2-3": 3576,
+      "4-7": 30763,
+      "8-15": 52872,
+      "16-31": 61090,
+      "32-63": 40653,
+      "64-127": 17825,
+      "128-255": 3438,
+      "256-511": 151,
+      "512-1023": 4
+    }
+  },
+  "elements_distribution": {
+    "top_30": [
+      {
+        "element": "O",
+        "count": 95200,
+        "fraction": 0.4521
+      },
+      {
+        "element": "Li",
+        "count": 24957,
+        "fraction": 0.1185
+      },
+      {
+        "element": "Mg",
+        "count": 21006,
+        "fraction": 0.0998
+      },
+      {
+        "element": "P",
+        "count": 20403,
+        "fraction": 0.0969
+      },
+      {
+        "element": "S",
+        "count": 17854,
+        "fraction": 0.0848
+      },
+      {
+        "element": "Si",
+        "count": 17655,
+        "fraction": 0.0838
+      },
+      {
+        "element": "Mn",
+        "count": 16633,
+        "fraction": 0.079
+      },
+      {
+        "element": "Na",
+        "count": 16114,
+        "fraction": 0.0765
+      },
+      {
+        "element": "Fe",
+        "count": 15407,
+        "fraction": 0.0732
+      },
+      {
+        "element": "Co",
+        "count": 13736,
+        "fraction": 0.0652
+      },
+      {
+        "element": "F",
+        "count": 13720,
+        "fraction": 0.0652
+      },
+      {
+        "element": "N",
+        "count": 13718,
+        "fraction": 0.0651
+      },
+      {
+        "element": "Cu",
+        "count": 13045,
+        "fraction": 0.0619
+      },
+      {
+        "element": "Ca",
+        "count": 12153,
+        "fraction": 0.0577
+      },
+      {
+        "element": "H",
+        "count": 12101,
+        "fraction": 0.0575
+      },
+      {
+        "element": "Ni",
+        "count": 12053,
+        "fraction": 0.0572
+      },
+      {
+        "element": "Al",
+        "count": 11985,
+        "fraction": 0.0569
+      },
+      {
+        "element": "V",
+        "count": 11850,
+        "fraction": 0.0563
+      },
+      {
+        "element": "Ba",
+        "count": 11235,
+        "fraction": 0.0534
+      },
+      {
+        "element": "C",
+        "count": 11080,
+        "fraction": 0.0526
+      },
+      {
+        "element": "K",
+        "count": 10792,
+        "fraction": 0.0512
+      },
+      {
+        "element": "Sr",
+        "count": 10789,
+        "fraction": 0.0512
+      },
+      {
+        "element": "Ti",
+        "count": 10578,
+        "fraction": 0.0502
+      },
+      {
+        "element": "Zn",
+        "count": 10265,
+        "fraction": 0.0487
+      },
+      {
+        "element": "Sn",
+        "count": 9611,
+        "fraction": 0.0456
+      },
+      {
+        "element": "Se",
+        "count": 9360,
+        "fraction": 0.0444
+      },
+      {
+        "element": "B",
+        "count": 8971,
+        "fraction": 0.0426
+      },
+      {
+        "element": "Ga",
+        "count": 8786,
+        "fraction": 0.0417
+      },
+      {
+        "element": "Sb",
+        "count": 8664,
+        "fraction": 0.0411
+      },
+      {
+        "element": "Cr",
+        "count": 8322,
+        "fraction": 0.0395
+      }
+    ],
+    "n_unique": 91
+  },
+  "density_by_crystal_system": {
+    "Cubic": {
+      "count": 26148,
+      "mean": 7.108,
+      "median": 6.62,
+      "std": 3.347,
+      "p10": 3.187,
+      "p90": 11.57
+    },
+    "Hexagonal": {
+      "count": 15953,
+      "mean": 7.376,
+      "median": 7.304,
+      "std": 3.382,
+      "p10": 2.927,
+      "p90": 11.625
+    },
+    "Monoclinic": {
+      "count": 47017,
+      "mean": 4.876,
+      "median": 4.234,
+      "std": 2.527,
+      "p10": 2.41,
+      "p90": 8.327
+    },
+    "Orthorhombic": {
+      "count": 46566,
+      "mean": 5.779,
+      "median": 5.306,
+      "std": 3.211,
+      "p10": 2.173,
+      "p90": 10.116
+    },
+    "Tetragonal": {
+      "count": 24434,
+      "mean": 6.689,
+      "median": 6.268,
+      "std": 3.203,
+      "p10": 3.202,
+      "p90": 10.849
+    },
+    "Triclinic": {
+      "count": 28333,
+      "mean": 4.196,
+      "median": 3.812,
+      "std": 1.845,
+      "p10": 2.476,
+      "p90": 6.641
+    },
+    "Trigonal": {
+      "count": 22128,
+      "mean": 6.41,
+      "median": 5.682,
+      "std": 3.155,
+      "p10": 3.114,
+      "p90": 10.673
+    }
+  }
+}
