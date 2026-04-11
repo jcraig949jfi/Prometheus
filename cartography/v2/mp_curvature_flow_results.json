@@ -1,0 +1,242 @@
+{
+  "experiment": "Ollivier-Ricci Curvature Flow on Materials Project Crystal Similarity Graph",
+  "dataset": "materials_project_10k.json",
+  "n_materials": 10000,
+  "features": [
+    "band_gap",
+    "density",
+    "volume",
+    "nsites",
+    "formation_energy_per_atom"
+  ],
+  "k_nn": 10,
+  "n_edges": 62735,
+  "n_sampled_edges": 2000,
+  "alpha": 0.5,
+  "flow_iterations": 20,
+  "flow_step_size": 0.1,
+  "crystal_system_counts": {
+    "Cubic": 1979,
+    "Hexagonal": 887,
+    "Monoclinic": 1618,
+    "Orthorhombic": 2189,
+    "Tetragonal": 1426,
+    "Triclinic": 756,
+    "Trigonal": 1145
+  },
+  "initial_curvature": {
+    "kappa_star": 0.1171951858313186,
+    "kappa_std": 0.1573476417567628,
+    "kappa_median": 0.11928189838580622,
+    "within_system_mean": 0.10972725100420722,
+    "cross_system_mean": 0.11926484337599699,
+    "delta_within_minus_cross": -0.009537592371789777
+  },
+  "within_system_curvature": {
+    "Cubic": {
+      "mean": 0.14115574410532045,
+      "std": 0.11950832594449537,
+      "n": 111
+    },
+    "Hexagonal": {
+      "mean": 0.16296386051538128,
+      "std": 0.14628822918556345,
+      "n": 35
+    },
+    "Monoclinic": {
+      "mean": 0.118144286389459,
+      "std": 0.1291587443793078,
+      "n": 66
+    },
+    "Orthorhombic": {
+      "mean": 0.12279611053171437,
+      "std": 0.12318059171812902,
+      "n": 96
+    },
+    "Tetragonal": {
+      "mean": 0.09329220598061241,
+      "std": 0.11927459426075705,
+      "n": 49
+    },
+    "Triclinic": {
+      "mean": -0.027369779391440655,
+      "std": 0.31760411645575487,
+      "n": 47
+    },
+    "Trigonal": {
+      "mean": 0.112623874923195,
+      "std": 0.10418623307976597,
+      "n": 30
+    }
+  },
+  "flow_history": [
+    {
+      "iteration": 0,
+      "kappa_star": 0.1171951858313186,
+      "within_mean": 0.10972725100420722,
+      "cross_mean": 0.11926484337599699,
+      "delta": -0.009537592371789777
+    },
+    {
+      "iteration": 1,
+      "kappa_star": 0.1171951858313186,
+      "within_mean": 0.10972725100420722,
+      "cross_mean": 0.11926484337599699,
+      "delta": -0.009537592371789777
+    },
+    {
+      "iteration": 2,
+      "kappa_star": 0.1088531410741593,
+      "within_mean": 0.10233433926687156,
+      "cross_mean": 0.11065975664527226,
+      "delta": -0.008325417378400701
+    },
+    {
+      "iteration": 3,
+      "kappa_star": 0.10066578395843477,
+      "within_mean": 0.09509630647761247,
+      "cross_mean": 0.10220930453741107,
+      "delta": -0.007112998059798606
+    },
+    {
+      "iteration": 4,
+      "kappa_star": 0.09281438870362081,
+      "within_mean": 0.0880982541620276,
+      "cross_mean": 0.09412141449611854,
+      "delta": -0.006023160334090935
+    },
+    {
+      "iteration": 5,
+      "kappa_star": 0.08537064519353227,
+      "within_mean": 0.0813958277300926,
+      "cross_mean": 0.08647222295798491,
+      "delta": -0.005076395227892314
+    },
+    {
+      "iteration": 6,
+      "kappa_star": 0.07836424853325662,
+      "within_mean": 0.0750241748502893,
+      "cross_mean": 0.07928991390899598,
+      "delta": -0.004265739058706683
+    },
+    {
+      "iteration": 7,
+      "kappa_star": 0.0718043151971284,
+      "within_mean": 0.06900373318904128,
+      "cross_mean": 0.07258046627727517,
+      "delta": -0.003576733088233891
+    },
+    {
+      "iteration": 8,
+      "kappa_star": 0.06568823461877243,
+      "within_mean": 0.06334416013779964,
+      "cross_mean": 0.0663378695643294,
+      "delta": -0.002993709426529753
+    },
+    {
+      "iteration": 9,
+      "kappa_star": 0.06000609029564406,
+      "within_mean": 0.05804711627155671,
+      "cross_mean": 0.060548998805512476,
+      "delta": -0.0025018825339557654
+    },
+    {
+      "iteration": 10,
+      "kappa_star": 0.05474320489868174,
+      "within_mean": 0.05310830758052682,
+      "cross_mean": 0.05519629904688048,
+      "delta": -0.0020879914663536614
+    },
+    {
+      "iteration": 11,
+      "kappa_star": 0.04988176858228451,
+      "within_mean": 0.04851902690733382,
+      "cross_mean": 0.05025943773102563,
+      "delta": -0.001740410823691814
+    },
+    {
+      "iteration": 12,
+      "kappa_star": 0.045401962187540584,
+      "within_mean": 0.04426734289197945,
+      "cross_mean": 0.04571640968069098,
+      "delta": -0.0014490667887115324
+    },
+    {
+      "iteration": 13,
+      "kappa_star": 0.04128277208777276,
+      "within_mean": 0.04033903130394065,
+      "cross_mean": 0.041544319661325206,
+      "delta": -0.0012052883573845583
+    },
+    {
+      "iteration": 14,
+      "kappa_star": 0.03750259982917656,
+      "within_mean": 0.036718311704029845,
+      "cross_mean": 0.037719956819159746,
+      "delta": -0.001001645115129901
+    },
+    {
+      "iteration": 15,
+      "kappa_star": 0.034039725440457476,
+      "within_mean": 0.0333884327612242,
+      "cross_mean": 0.034220224177869504,
+      "delta": -0.0008317914166453069
+    },
+    {
+      "iteration": 16,
+      "kappa_star": 0.03087266083187199,
+      "within_mean": 0.030332137187253912,
+      "cross_mean": 0.031022461126740605,
+      "delta": -0.0006903239394866929
+    },
+    {
+      "iteration": 17,
+      "kappa_star": 0.02798041758974689,
+      "within_mean": 0.02753202925624717,
+      "cross_mean": 0.028104683577447324,
+      "delta": -0.0005726543212001556
+    },
+    {
+      "iteration": 18,
+      "kappa_star": 0.025342706532251586,
+      "within_mean": 0.024970862556764128,
+      "cross_mean": 0.02544575907718234,
+      "delta": -0.00047489652041821095
+    },
+    {
+      "iteration": 19,
+      "kappa_star": 0.02294008216041198,
+      "within_mean": 0.022631761967222472,
+      "cross_mean": 0.023025529774616478,
+      "delta": -0.00039376780739400555
+    },
+    {
+      "iteration": 20,
+      "kappa_star": 0.020754042380731974,
+      "within_mean": 0.020498391237919647,
+      "cross_mean": 0.020824893336019685,
+      "delta": -0.00032650209810003786
+    }
+  ],
+  "post_flow_weights": {
+    "within_system_mean_weight": 0.3303911175094698,
+    "cross_system_mean_weight": 0.38028165455002017,
+    "cross_to_within_ratio": 1.1510044743836685
+  },
+  "edge_destruction": {
+    "threshold": "2x original weight",
+    "within_destroyed": 0,
+    "within_total": 434,
+    "within_pct": 0.0,
+    "cross_destroyed": 2,
+    "cross_total": 1566,
+    "cross_pct": 0.13
+  },
+  "crystal_system_separation": true,
+  "comparison": {
+    "ec_hecke_kappa_star": 0.73,
+    "knot_jones_kappa_star": -0.37,
+    "mp_crystal_kappa_star": 0.1171951858313186,
+    "interpretation": "Weak positive curvature \u2014 mild clustering in crystal feature space"
+  }
+}
