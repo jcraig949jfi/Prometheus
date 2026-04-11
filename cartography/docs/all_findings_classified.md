@@ -612,7 +612,16 @@ Fricke 48.6%/51.4% vs P, C, baryon mod 2, spin class, CP parity. All p>0.16. Syn
 17,314 EC × 15,000 lattices. Mean cosine=-0.004 (null: -0.004±0.002). Max-per-EC = 0.412 = pure dimensional artifact. EC Hecke vectors and lattice theta at prime indices: zero structured correlation.
 
 ### 158. Kissing vs Mass Ratios KL=0.029: Shared Heavy Tail, Not Deep (Kiss-Mass)
-Symmetric KL=0.029 (below expected 0.3-0.6) but driven by both distributions being extreme-heavy-tailed. KS=0.71 (shapes differ significantly). Both have outlier-dominated structure (Leech/top-quark), making them superficially similar. Null: random uniform KL=23.3 (unambiguously different from either).
+KL=0.029 from shared heavy-tail structure. KS=0.71 (shapes differ). Not deep.
+
+### 159. CM-NF Class Number Bridge: Structurally Dead (CM-CN)
+294 CM curves across 12 discriminants. h(D) takes only 2 values (10 with h=1, 2 with h=2) — Heegner numbers by construction. Sha=1 for almost all CM curves. No bridge possible with 2-valued predictor.
+
+### 160. Maass-NF Regulator: Raw r=-0.85 Is Confound, Partial r=-0.18 (Maass-NF-reg)
+98 matched levels. Raw Spearman r=-0.85 (p~0, z=-69.5). BUT: log(level) correlates with both (r=0.79 with regulator, r=-0.83 with spectral gap). After residualizing: spectral gap partial r=-0.18 (p=0.075, marginal). Median R partial r=-0.07 (null). The signal is below confound resolution.
+
+### 161. Igusa-MF Level: Rank Correlations from Conductor Size, No Spectral Leakage (Igusa-MF)
+258 shared conductors/levels. Spearman I2 vs MF count: ρ=0.30 (p=1.2×10⁻⁶) — conductor-size effect. Cross-spectral density: I10 peak z=2.95 (marginal), others null. Mean coherence 0.09-0.15 (within expected band but not significant). Conductor-count coherence z=18.9 (genuine, arithmetically expected).
 
 ---
 
@@ -978,7 +987,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*283 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*286 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

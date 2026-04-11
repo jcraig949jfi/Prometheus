@@ -1,0 +1,203 @@
+{
+  "challenge": "Igusa Invariant <-> Modular Level Fourier Leakage (ChatGPT New#6)",
+  "data_sources": {
+    "genus2_igusa": "F:\\Prometheus\\cartography\\genus2\\data\\genus2_api_sample.json",
+    "genus2_full": "F:\\Prometheus\\cartography\\genus2\\data\\genus2_curves_full.json",
+    "modular_forms": "F:\\Prometheus\\charon\\data\\charon.duckdb"
+  },
+  "genus2_igusa_curves": 400,
+  "genus2_full_conductors": 55828,
+  "mf_levels": 4989,
+  "n_shared_igusa_mf": 258,
+  "correlations": {
+    "n_shared": 258,
+    "corr_I2_vs_mf_count": {
+      "r": 0.09108,
+      "p": 0.14459713687800171,
+      "n": 258
+    },
+    "corr_I4_vs_mf_count": {
+      "r": -0.050723,
+      "p": 0.4171943140826216,
+      "n": 258
+    },
+    "corr_I6_vs_mf_count": {
+      "r": -0.054317,
+      "p": 0.38492062035983715,
+      "n": 258
+    },
+    "corr_I10_vs_mf_count": {
+      "r": -0.004675,
+      "p": 0.9404275815800841,
+      "n": 258
+    },
+    "spearman_I2_vs_mf_count": {
+      "rho": 0.296887,
+      "p": 1.2009534420811723e-06,
+      "n": 258
+    },
+    "spearman_I4_vs_mf_count": {
+      "rho": 0.214594,
+      "p": 0.0005191489592159462,
+      "n": 258
+    },
+    "spearman_I6_vs_mf_count": {
+      "rho": 0.287965,
+      "p": 2.5644735387373283e-06,
+      "n": 258
+    },
+    "spearman_I10_vs_mf_count": {
+      "rho": 0.120755,
+      "p": 0.05270966859745465,
+      "n": 258
+    }
+  },
+  "log_normalized_correlations": {
+    "log_I2": {
+      "pearson_r": 0.29116,
+      "pearson_p": 1.9601747941977468e-06,
+      "spearman_rho": 0.296887,
+      "spearman_p": 1.2009534420811723e-06,
+      "n": 258
+    },
+    "log_I4": {
+      "pearson_r": 0.163549,
+      "pearson_p": 0.008489181631007555,
+      "spearman_rho": 0.214594,
+      "spearman_p": 0.0005191489592159462,
+      "n": 258
+    },
+    "log_I6": {
+      "pearson_r": 0.242457,
+      "pearson_p": 8.340922995536081e-05,
+      "spearman_rho": 0.287965,
+      "spearman_p": 2.5644735387373283e-06,
+      "n": 258
+    },
+    "log_I10": {
+      "pearson_r": 0.105431,
+      "pearson_p": 0.09103623081768294,
+      "spearman_rho": 0.120755,
+      "spearman_p": 0.05270966859745465,
+      "n": 258
+    }
+  },
+  "spectral_I2_vs_mf": {
+    "conductor_range": [
+      169,
+      1832
+    ],
+    "n_dense_points": 1664,
+    "n_nonzero": 257,
+    "nperseg": 256,
+    "peak_coherence": 0.313846,
+    "peak_coherence_freq": 0.246094,
+    "mean_coherence": 0.094376,
+    "coherence_percentiles": {
+      "p50": 0.07194929070418764,
+      "p75": 0.13847774412831812,
+      "p90": 0.19706801613339334,
+      "p95": 0.2391573273254394
+    },
+    "null_peak_coherence_mean": 0.371825,
+    "null_peak_coherence_std": 0.11531,
+    "z_score_vs_null": -0.5028,
+    "cross_spectral_magnitude_mean": 836441.264815,
+    "cross_spectral_phase_std": 1.07166
+  },
+  "spectral_I4_vs_mf": {
+    "conductor_range": [
+      169,
+      1832
+    ],
+    "n_dense_points": 1664,
+    "n_nonzero": 257,
+    "nperseg": 256,
+    "peak_coherence": 0.521328,
+    "peak_coherence_freq": 0.171875,
+    "mean_coherence": 0.091004,
+    "coherence_percentiles": {
+      "p50": 0.061399075707385196,
+      "p75": 0.12177785189276674,
+      "p90": 0.20078677424723781,
+      "p95": 0.2892035843854745
+    },
+    "null_peak_coherence_mean": 0.395968,
+    "null_peak_coherence_std": 0.09005,
+    "z_score_vs_null": 1.3921,
+    "cross_spectral_magnitude_mean": 1125738384.249801,
+    "cross_spectral_phase_std": 1.743256
+  },
+  "spectral_I6_vs_mf": {
+    "conductor_range": [
+      169,
+      1832
+    ],
+    "n_dense_points": 1664,
+    "n_nonzero": 258,
+    "nperseg": 256,
+    "peak_coherence": 0.59872,
+    "peak_coherence_freq": 0.171875,
+    "mean_coherence": 0.091258,
+    "coherence_percentiles": {
+      "p50": 0.06486366417677203,
+      "p75": 0.12367686920031414,
+      "p90": 0.2004108793184648,
+      "p95": 0.27187622029744585
+    },
+    "null_peak_coherence_mean": 0.397466,
+    "null_peak_coherence_std": 0.100894,
+    "z_score_vs_null": 1.9947,
+    "cross_spectral_magnitude_mean": 113237471122476.61,
+    "cross_spectral_phase_std": 1.813082
+  },
+  "spectral_I10_vs_mf": {
+    "conductor_range": [
+      169,
+      1832
+    ],
+    "n_dense_points": 1664,
+    "n_nonzero": 254,
+    "nperseg": 256,
+    "peak_coherence": 0.608254,
+    "peak_coherence_freq": 0.132812,
+    "mean_coherence": 0.152184,
+    "coherence_percentiles": {
+      "p50": 0.12029617327803087,
+      "p75": 0.23185408370487562,
+      "p90": 0.33504261789205786,
+      "p95": 0.37400473780375004
+    },
+    "null_peak_coherence_mean": 0.396303,
+    "null_peak_coherence_std": 0.071922,
+    "z_score_vs_null": 2.947,
+    "cross_spectral_magnitude_mean": 74522575.427711,
+    "cross_spectral_phase_std": 1.680343
+  },
+  "conductor_count_spectral": {
+    "n_shared": 962,
+    "pearson_r": 0.267825,
+    "pearson_p": 2.889615771913891e-17,
+    "spearman_rho": 0.256424,
+    "spearman_p": 6.562996050922218e-16,
+    "peak_coherence": 0.856741,
+    "mean_coherence": 0.400027,
+    "null_peak_mean": 0.156168,
+    "null_peak_std": 0.037055,
+    "z_score": 18.9064,
+    "conductor_range": [
+      169,
+      4998
+    ]
+  },
+  "interpretation": "Peak coherence (I2 vs MF count): 0.3138, z=-0.50\nPeak coherence (conductor-count): 0.8567, z=18.91\nNo significant spectral leakage from Igusa I2 to MF levels.\nI4: peak_coh=0.5213, z=1.39\nI6: peak_coh=0.5987, z=1.99\nI10: peak_coh=0.6083, z=2.95",
+  "prime_detrending": {
+    "fraction_prime_shared": 0.0873,
+    "n_prime_shared": 84,
+    "detrended_peak_coherence": 0.856948,
+    "detrended_mean_coherence": 0.402698,
+    "detrended_null_mean": 0.15469,
+    "detrended_null_std": 0.040827,
+    "detrended_z_score": 17.2008
+  }
+}

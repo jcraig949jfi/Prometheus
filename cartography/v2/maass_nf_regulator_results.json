@@ -1,0 +1,1123 @@
+{
+  "metadata": {
+    "question": "ChatGPT New#4: Maass Spectral Gap vs Number Field Regulator Scaling",
+    "theory": "For totally real fields of degree d, Maass forms on GL(d) at level=|disc| should have spectral parameters related to the regulator",
+    "n_maass_forms": 14995,
+    "n_maass_levels": 239,
+    "n_nf_degree2_totally_real": 3043,
+    "n_exact_disc_level_matches": 98,
+    "n_matched_pairs": 6306,
+    "expected_r_range": "0.05-0.12"
+  },
+  "exact_match_correlation": {
+    "n_pairs": 6306,
+    "n_unique_levels": 98,
+    "R_vs_log_reg": {
+      "pearson_r": -0.7501602623409487,
+      "pearson_p": 0.0,
+      "spearman_r": -0.8518884584771987,
+      "spearman_p": 0.0
+    },
+    "R_vs_reg_raw": {
+      "pearson_r": -0.5213758661987866,
+      "pearson_p": 0.0,
+      "spearman_r": -0.8518884584771987,
+      "spearman_p": 0.0
+    },
+    "R_stats": {
+      "mean": 7.643725751464173,
+      "std": 9.680758792844834,
+      "min": 0.059902499,
+      "max": 31.957280259
+    },
+    "log_reg_stats": {
+      "mean": 1.4087131467912124,
+      "std": 1.1781296917642095,
+      "min": -0.7314477210771511,
+      "max": 3.6383020492926064
+    }
+  },
+  "level_aggregated_correlation": {
+    "n_levels": 98,
+    "correlations": {
+      "median_R": {
+        "pearson_r": -0.6160082912830287,
+        "pearson_p": 1.4650582430659436e-11,
+        "spearman_r": -0.658945865131432,
+        "spearman_p": 1.6318919220926948e-13
+      },
+      "mean_R": {
+        "pearson_r": -0.6171580284115126,
+        "pearson_p": 1.3103910022259993e-11,
+        "spearman_r": -0.7105113835599843,
+        "spearman_p": 2.5247310237422187e-16
+      },
+      "min_R": {
+        "pearson_r": -0.7197220289317526,
+        "pearson_p": 6.835072695706156e-17,
+        "spearman_r": -0.7642700941670013,
+        "spearman_p": 5.42442434296603e-20
+      }
+    },
+    "pairs": [
+      {
+        "level": 5,
+        "median_R": 23.0276028811,
+        "mean_R": 21.7581947932296,
+        "min_R": 3.02837629307,
+        "n_forms": 301,
+        "regulator": 0.48121182506,
+        "log_regulator": -0.7314477210771511
+      },
+      {
+        "level": 8,
+        "median_R": 22.782434721,
+        "mean_R": 21.56304733515609,
+        "min_R": 2.42505682709,
+        "n_forms": 240,
+        "regulator": 0.88137358702,
+        "log_regulator": -0.12627369409837996
+      },
+      {
+        "level": 12,
+        "median_R": 21.1396366446,
+        "mean_R": 19.977069304253916,
+        "min_R": 1.69106559844,
+        "n_forms": 125,
+        "regulator": 1.31695789692,
+        "log_regulator": 0.2753244533207419
+      },
+      {
+        "level": 13,
+        "median_R": 22.8753435273,
+        "mean_R": 21.579025066461806,
+        "min_R": 0.970815416958,
+        "n_forms": 958,
+        "regulator": 1.19476321729,
+        "log_regulator": 0.177948021223057
+      },
+      {
+        "level": 17,
+        "median_R": 14.375538953,
+        "mean_R": 13.67186111896453,
+        "min_R": 1.44142854502,
+        "n_forms": 479,
+        "regulator": 2.09471254726,
+        "log_regulator": 0.7394163350149852
+      },
+      {
+        "level": 21,
+        "median_R": 7.015913305845,
+        "mean_R": 6.713923761706588,
+        "min_R": 0.924007217602,
+        "n_forms": 102,
+        "regulator": 1.56679923697,
+        "log_regulator": 0.44903483581044173
+      },
+      {
+        "level": 24,
+        "median_R": 7.05998367272,
+        "mean_R": 6.786240792413333,
+        "min_R": 1.30086635839,
+        "n_forms": 51,
+        "regulator": 2.29243166956,
+        "log_regulator": 0.8296131186235749
+      },
+      {
+        "level": 28,
+        "median_R": 7.0045762729100005,
+        "mean_R": 6.500197061016562,
+        "min_R": 0.816781268055,
+        "n_forms": 48,
+        "regulator": 2.76865938331,
+        "log_regulator": 1.018363225900103
+      },
+      {
+        "level": 29,
+        "median_R": 3.33879485232,
+        "mean_R": 3.188238363333846,
+        "min_R": 1.0172665508,
+        "n_forms": 26,
+        "regulator": 1.64723114637,
+        "log_regulator": 0.49909578522800374
+      },
+      {
+        "level": 33,
+        "median_R": 2.79169797103,
+        "mean_R": 2.63341894729692,
+        "min_R": 0.673141432593,
+        "n_forms": 25,
+        "regulator": 3.82816847133,
+        "log_regulator": 1.3423864828965788
+      },
+      {
+        "level": 37,
+        "median_R": 3.31527868391,
+        "mean_R": 3.3166561678369595,
+        "min_R": 0.6423059582,
+        "n_forms": 50,
+        "regulator": 2.49177985264,
+        "log_regulator": 0.9129972553856154
+      },
+      {
+        "level": 40,
+        "median_R": 4.1615604754549995,
+        "mean_R": 4.016056824322778,
+        "min_R": 0.86274827851,
+        "n_forms": 36,
+        "regulator": 1.81844645923,
+        "log_regulator": 0.597982542740372
+      },
+      {
+        "level": 41,
+        "median_R": 3.1353345742,
+        "mean_R": 2.880880328312553,
+        "min_R": 0.66572483212,
+        "n_forms": 47,
+        "regulator": 4.15912713463,
+        "log_regulator": 1.4253052288509114
+      },
+      {
+        "level": 44,
+        "median_R": 4.21402353877,
+        "mean_R": 3.9772874759741383,
+        "min_R": 1.05484372709,
+        "n_forms": 29,
+        "regulator": 2.99322284613,
+        "log_regulator": 1.0963506818723399
+      },
+      {
+        "level": 53,
+        "median_R": 2.906942277175,
+        "mean_R": 2.780275510749833,
+        "min_R": 0.8039894596,
+        "n_forms": 60,
+        "regulator": 1.96572047165,
+        "log_regulator": 0.6758588303599038
+      },
+      {
+        "level": 56,
+        "median_R": 2.808926813075,
+        "mean_R": 2.7293754038608333,
+        "min_R": 0.89568107961,
+        "n_forms": 24,
+        "regulator": 3.40008441411,
+        "log_regulator": 1.223800258993326
+      },
+      {
+        "level": 57,
+        "median_R": 2.7780945258200003,
+        "mean_R": 2.7250648131235415,
+        "min_R": 0.48946607452,
+        "n_forms": 48,
+        "regulator": 5.71041605276,
+        "log_regulator": 1.742291884894386
+      },
+      {
+        "level": 60,
+        "median_R": 4.165013280449999,
+        "mean_R": 3.920503317909583,
+        "min_R": 0.674711608,
+        "n_forms": 24,
+        "regulator": 2.0634370689,
+        "log_regulator": 0.7243730724835149
+      },
+      {
+        "level": 61,
+        "median_R": 2.9457718331500002,
+        "mean_R": 2.7732481388648744,
+        "min_R": 0.41806231115,
+        "n_forms": 72,
+        "regulator": 3.66421846089,
+        "log_regulator": 1.2986150686398166
+      },
+      {
+        "level": 65,
+        "median_R": 2.85408138931,
+        "mean_R": 2.7208283021697772,
+        "min_R": 0.77947156173,
+        "n_forms": 63,
+        "regulator": 2.77647228072,
+        "log_regulator": 1.0211811581164638
+      },
+      {
+        "level": 69,
+        "median_R": 2.8677275019,
+        "mean_R": 2.6823370958787756,
+        "min_R": 0.608726470249,
+        "n_forms": 58,
+        "regulator": 3.21727197116,
+        "log_regulator": 1.1685337865423024
+      },
+      {
+        "level": 73,
+        "median_R": 2.90203418542,
+        "mean_R": 2.7692562660512503,
+        "min_R": 0.5178875052,
+        "n_forms": 88,
+        "regulator": 7.66669041926,
+        "log_regulator": 2.0368850254205886
+      },
+      {
+        "level": 76,
+        "median_R": 2.7124309157,
+        "mean_R": 2.5726475168633915,
+        "min_R": 0.560821369568,
+        "n_forms": 23,
+        "regulator": 5.82893696698,
+        "log_regulator": 1.7628346453113433
+      },
+      {
+        "level": 77,
+        "median_R": 2.7776394993649998,
+        "mean_R": 2.6835340582648075,
+        "min_R": 0.647782733031,
+        "n_forms": 78,
+        "regulator": 2.18464379161,
+        "log_regulator": 0.7814527908228434
+      },
+      {
+        "level": 85,
+        "median_R": 2.8070611035699997,
+        "mean_R": 2.6685233788413334,
+        "min_R": 0.533892641761,
+        "n_forms": 84,
+        "regulator": 2.20934770862,
+        "log_regulator": 0.7926973174924198
+      },
+      {
+        "level": 88,
+        "median_R": 2.81068795068,
+        "mean_R": 2.6550233332307105,
+        "min_R": 0.376269031164,
+        "n_forms": 38,
+        "regulator": 5.97634446743,
+        "log_regulator": 1.7878090879748467
+      },
+      {
+        "level": 89,
+        "median_R": 1.514248982,
+        "mean_R": 1.3909464930704345,
+        "min_R": 0.48943598,
+        "n_forms": 23,
+        "regulator": 6.90775627898,
+        "log_regulator": 1.932644878680573
+      },
+      {
+        "level": 92,
+        "median_R": 2.87512145684,
+        "mean_R": 2.6952967327062063,
+        "min_R": 1.03813468608,
+        "n_forms": 29,
+        "regulator": 3.87076670029,
+        "log_regulator": 1.353452601189775
+      },
+      {
+        "level": 93,
+        "median_R": 2.83443562497,
+        "mean_R": 2.6989543538911143,
+        "min_R": 0.456322627452,
+        "n_forms": 79,
+        "regulator": 3.36610464293,
+        "log_regulator": 1.2137561834998836
+      },
+      {
+        "level": 97,
+        "median_R": 1.500577824395,
+        "mean_R": 1.417086698712107,
+        "min_R": 0.41693167099,
+        "n_forms": 28,
+        "regulator": 9.32438309598,
+        "log_regulator": 2.2326328074144017
+      },
+      {
+        "level": 101,
+        "median_R": 1.426929975585,
+        "mean_R": 1.3605174587005384,
+        "min_R": 0.453759246671,
+        "n_forms": 26,
+        "regulator": 2.9982229503,
+        "log_regulator": 1.098019763259596
+      },
+      {
+        "level": 109,
+        "median_R": 1.39579337665,
+        "mean_R": 1.3264678506353929,
+        "min_R": 0.423654573886,
+        "n_forms": 28,
+        "regulator": 5.56453508676,
+        "log_regulator": 1.7164134388764647
+      },
+      {
+        "level": 113,
+        "median_R": 1.47437812898,
+        "mean_R": 1.4348622203408485,
+        "min_R": 0.462002646377,
+        "n_forms": 33,
+        "regulator": 7.3473001159,
+        "log_regulator": 1.994332914572057
+      },
+      {
+        "level": 137,
+        "median_R": 1.48133313028,
+        "mean_R": 1.361261639648054,
+        "min_R": 0.392996762702,
+        "n_forms": 37,
+        "regulator": 8.15708386722,
+        "log_regulator": 2.0988867358911856
+      },
+      {
+        "level": 149,
+        "median_R": 1.47491521305,
+        "mean_R": 1.3760586014028333,
+        "min_R": 0.431849402694,
+        "n_forms": 42,
+        "regulator": 4.11114250086,
+        "log_regulator": 1.4137009706231802
+      },
+      {
+        "level": 157,
+        "median_R": 1.485656218545,
+        "mean_R": 1.3512933779174998,
+        "min_R": 0.433985036762,
+        "n_forms": 42,
+        "regulator": 5.36131420646,
+        "log_regulator": 1.6792091328014893
+      },
+      {
+        "level": 173,
+        "median_R": 1.451053065205,
+        "mean_R": 1.3572810798773123,
+        "min_R": 0.493192013608,
+        "n_forms": 48,
+        "regulator": 2.5708146781,
+        "log_regulator": 0.9442228440443614
+      },
+      {
+        "level": 181,
+        "median_R": 1.49607207449,
+        "mean_R": 1.3908426894041637,
+        "min_R": 0.158857173089,
+        "n_forms": 55,
+        "regulator": 7.17395890695,
+        "log_regulator": 1.9704576510409952
+      },
+      {
+        "level": 193,
+        "median_R": 1.4744575976549998,
+        "mean_R": 1.387218237659845,
+        "min_R": 0.309546539387,
+        "n_forms": 58,
+        "regulator": 15.0763165232,
+        "log_regulator": 2.7131250703556264
+      },
+      {
+        "level": 197,
+        "median_R": 1.4711560076,
+        "mean_R": 1.3945566785639834,
+        "min_R": 0.579838392085,
+        "n_forms": 59,
+        "regulator": 3.33347758688,
+        "log_regulator": 1.2040160794535542
+      },
+      {
+        "level": 229,
+        "median_R": 1.43994776265,
+        "mean_R": 1.3559961414278507,
+        "min_R": 0.368201529747,
+        "n_forms": 67,
+        "regulator": 2.71246530518,
+        "log_regulator": 0.9978579280677252
+      },
+      {
+        "level": 233,
+        "median_R": 1.45678536234,
+        "mean_R": 1.3946657598416337,
+        "min_R": 0.3891579596,
+        "n_forms": 71,
+        "regulator": 10.7431563862,
+        "log_regulator": 2.3742689366109393
+      },
+      {
+        "level": 241,
+        "median_R": 1.43702322875,
+        "mean_R": 1.360019879872597,
+        "min_R": 0.23560140488,
+        "n_forms": 72,
+        "regulator": 18.7714934907,
+        "log_regulator": 2.9323394153978923
+      },
+      {
+        "level": 257,
+        "median_R": 0.7402827818425,
+        "mean_R": 0.70688163306775,
+        "min_R": 0.34628800177,
+        "n_forms": 16,
+        "regulator": 3.46671103788,
+        "log_regulator": 1.2432063167857674
+      },
+      {
+        "level": 269,
+        "median_R": 0.70456589213,
+        "mean_R": 0.6882309521305,
+        "min_R": 0.270930479616,
+        "n_forms": 16,
+        "regulator": 5.099903606,
+        "log_regulator": 1.6292216387673442
+      },
+      {
+        "level": 277,
+        "median_R": 0.692761209033,
+        "mean_R": 0.7110441507837368,
+        "min_R": 0.2084878512,
+        "n_forms": 19,
+        "regulator": 7.86825441198,
+        "log_regulator": 2.0628362350294664
+      },
+      {
+        "level": 281,
+        "median_R": 0.7597274972320001,
+        "mean_R": 0.7108298730835556,
+        "min_R": 0.350314540361,
+        "n_forms": 18,
+        "regulator": 14.5702531831,
+        "log_regulator": 2.678981997070548
+      },
+      {
+        "level": 293,
+        "median_R": 0.7205299512685,
+        "mean_R": 0.72915164693825,
+        "min_R": 0.274912467168,
+        "n_forms": 20,
+        "regulator": 2.83665572897,
+        "log_regulator": 1.0426257980824774
+      },
+      {
+        "level": 313,
+        "median_R": 0.706295602762,
+        "mean_R": 0.7017865568039048,
+        "min_R": 0.30090503202,
+        "n_forms": 21,
+        "regulator": 19.3517605208,
+        "log_regulator": 2.96278339832417
+      },
+      {
+        "level": 317,
+        "median_R": 0.74141669457,
+        "mean_R": 0.7119545874648096,
+        "min_R": 0.29341584083,
+        "n_forms": 21,
+        "regulator": 4.48876259252,
+        "log_regulator": 1.501577071905376
+      },
+      {
+        "level": 337,
+        "median_R": 0.75410681276,
+        "mean_R": 0.7255858911077201,
+        "min_R": 0.24150145085,
+        "n_forms": 25,
+        "regulator": 21.4321164073,
+        "log_regulator": 3.0648905636991883
+      },
+      {
+        "level": 349,
+        "median_R": 0.69648389087,
+        "mean_R": 0.6942586036266087,
+        "min_R": 0.285086110183,
+        "n_forms": 23,
+        "regulator": 9.82119231276,
+        "log_regulator": 2.2845425317739583
+      },
+      {
+        "level": 353,
+        "median_R": 0.82332981247,
+        "mean_R": 0.7529142774197038,
+        "min_R": 0.22134014012,
+        "n_forms": 27,
+        "regulator": 11.8672937507,
+        "log_regulator": 2.473786191953784
+      },
+      {
+        "level": 373,
+        "median_R": 0.68137457805,
+        "mean_R": 0.69551188545904,
+        "min_R": 0.3504636471,
+        "n_forms": 25,
+        "regulator": 9.23366620682,
+        "log_regulator": 2.2228561751554956
+      },
+      {
+        "level": 389,
+        "median_R": 0.70040928889,
+        "mean_R": 0.6943258806704401,
+        "min_R": 0.30113874027,
+        "n_forms": 25,
+        "regulator": 7.84932397015,
+        "log_regulator": 2.060427409633681
+      },
+      {
+        "level": 397,
+        "median_R": 0.7692890907265,
+        "mean_R": 0.7189853767807858,
+        "min_R": 0.1607807849,
+        "n_forms": 28,
+        "regulator": 8.14525965068,
+        "log_regulator": 2.097436120082424
+      },
+      {
+        "level": 401,
+        "median_R": 0.715103670225,
+        "mean_R": 0.7166604890065554,
+        "min_R": 0.272996820382,
+        "n_forms": 27,
+        "regulator": 3.68950386899,
+        "log_regulator": 1.305491996164603
+      },
+      {
+        "level": 409,
+        "median_R": 0.8281945637,
+        "mean_R": 0.7183207183385808,
+        "min_R": 0.16652438994,
+        "n_forms": 31,
+        "regulator": 26.1342134036,
+        "log_regulator": 3.2632453142793865
+      },
+      {
+        "level": 421,
+        "median_R": 0.68163947281,
+        "mean_R": 0.6875593170081724,
+        "min_R": 0.202975032,
+        "n_forms": 29,
+        "regulator": 13.0056924731,
+        "log_regulator": 2.565387144165106
+      },
+      {
+        "level": 433,
+        "median_R": 0.71362648008,
+        "mean_R": 0.6822484095536897,
+        "min_R": 0.17334761104,
+        "n_forms": 29,
+        "regulator": 23.3947434304,
+        "log_regulator": 3.1525113574018775
+      },
+      {
+        "level": 449,
+        "median_R": 0.7978844627,
+        "mean_R": 0.7162054832152258,
+        "min_R": 0.14540590194,
+        "n_forms": 31,
+        "regulator": 19.7528954693,
+        "log_regulator": 2.983300086642022
+      },
+      {
+        "level": 457,
+        "median_R": 0.727059266375,
+        "mean_R": 0.6987163281800313,
+        "min_R": 0.1676895968,
+        "n_forms": 32,
+        "regulator": 25.4954739035,
+        "log_regulator": 3.2385009424300675
+      },
+      {
+        "level": 461,
+        "median_R": 0.819267882506,
+        "mean_R": 0.727161650519147,
+        "min_R": 0.3493607445,
+        "n_forms": 34,
+        "regulator": 5.8999048596,
+        "log_regulator": 1.7749362252901313
+      },
+      {
+        "level": 509,
+        "median_R": 0.7219964295,
+        "mean_R": 0.7019637696427999,
+        "min_R": 0.29078563519,
+        "n_forms": 35,
+        "regulator": 6.82979490625,
+        "log_regulator": 1.921294644764342
+      },
+      {
+        "level": 521,
+        "median_R": 0.717665624185,
+        "mean_R": 0.7043144775517779,
+        "min_R": 0.298110153,
+        "n_forms": 36,
+        "regulator": 19.3636308555,
+        "log_regulator": 2.9633966084532677
+      },
+      {
+        "level": 541,
+        "median_R": 0.73278665777,
+        "mean_R": 0.676357917368,
+        "min_R": 0.25916912214,
+        "n_forms": 35,
+        "regulator": 14.1494259572,
+        "log_regulator": 2.6496740548705673
+      },
+      {
+        "level": 557,
+        "median_R": 0.69230198425,
+        "mean_R": 0.7006487729099189,
+        "min_R": 0.35613936215,
+        "n_forms": 37,
+        "regulator": 5.46384975915,
+        "log_regulator": 1.6981536253952119
+      },
+      {
+        "level": 569,
+        "median_R": 0.7291874244150001,
+        "mean_R": 0.6818647363855278,
+        "min_R": 0.25819200717,
+        "n_forms": 36,
+        "regulator": 22.4793510918,
+        "log_regulator": 3.1125971585857273
+      },
+      {
+        "level": 577,
+        "median_R": 0.76426096685,
+        "mean_R": 0.7075674806264147,
+        "min_R": 0.17729530847,
+        "n_forms": 41,
+        "regulator": 3.87163475639,
+        "log_regulator": 1.3536768355202973
+      },
+      {
+        "level": 593,
+        "median_R": 0.770192036325,
+        "mean_R": 0.72147623910925,
+        "min_R": 0.17498156311,
+        "n_forms": 44,
+        "regulator": 13.9988848937,
+        "log_regulator": 2.6389776759929933
+      },
+      {
+        "level": 601,
+        "median_R": 0.7665855923,
+        "mean_R": 0.7124889192756957,
+        "min_R": 0.2391268966,
+        "n_forms": 46,
+        "regulator": 33.2620056582,
+        "log_regulator": 3.504415774357969
+      },
+      {
+        "level": 613,
+        "median_R": 0.77272625514,
+        "mean_R": 0.7272474669152343,
+        "min_R": 0.2582937738,
+        "n_forms": 47,
+        "regulator": 11.5004783198,
+        "log_regulator": 2.4423886275303253
+      },
+      {
+        "level": 617,
+        "median_R": 0.679618004678,
+        "mean_R": 0.684407982439625,
+        "min_R": 0.21924353298,
+        "n_forms": 40,
+        "regulator": 18.2224667528,
+        "log_regulator": 2.902655269758916
+      },
+      {
+        "level": 641,
+        "median_R": 0.71386443947,
+        "mean_R": 0.704061416075907,
+        "min_R": 0.2669531741,
+        "n_forms": 43,
+        "regulator": 25.0032828208,
+        "log_regulator": 3.2190071290794253
+      },
+      {
+        "level": 653,
+        "median_R": 0.764318095305,
+        "mean_R": 0.7094019964608695,
+        "min_R": 0.3301986107,
+        "n_forms": 46,
+        "regulator": 7.41517547207,
+        "log_regulator": 2.003528639783261
+      },
+      {
+        "level": 661,
+        "median_R": 0.75351152482,
+        "mean_R": 0.7095851576059183,
+        "min_R": 0.16405352592,
+        "n_forms": 49,
+        "regulator": 14.3974686027,
+        "log_regulator": 2.667052399649655
+      },
+      {
+        "level": 673,
+        "median_R": 0.7090511858,
+        "mean_R": 0.6820851093300221,
+        "min_R": 0.2199566594,
+        "n_forms": 45,
+        "regulator": 32.2121742946,
+        "log_regulator": 3.472344464777967
+      },
+      {
+        "level": 677,
+        "median_R": 0.7338909712849999,
+        "mean_R": 0.6962644588247607,
+        "min_R": 0.1515633288,
+        "n_forms": 46,
+        "regulator": 3.95161333608,
+        "log_regulator": 1.3741239350382417
+      },
+      {
+        "level": 701,
+        "median_R": 0.7088038708,
+        "mean_R": 0.6925758728804681,
+        "min_R": 0.27811405917,
+        "n_forms": 47,
+        "regulator": 10.0674754044,
+        "log_regulator": 2.3093099706712055
+      },
+      {
+        "level": 709,
+        "median_R": 0.6801863293499999,
+        "mean_R": 0.6743227885696667,
+        "min_R": 0.130608674,
+        "n_forms": 48,
+        "regulator": 17.4125657992,
+        "log_regulator": 2.8571921179473128
+      },
+      {
+        "level": 733,
+        "median_R": 0.705463062,
+        "mean_R": 0.6931646540785686,
+        "min_R": 0.3053515558,
+        "n_forms": 51,
+        "regulator": 3.29720579418,
+        "log_regulator": 1.1930753807585577
+      },
+      {
+        "level": 757,
+        "median_R": 0.7093988183,
+        "mean_R": 0.6919690569660577,
+        "min_R": 0.2445265199,
+        "n_forms": 52,
+        "regulator": 14.8229763865,
+        "log_regulator": 2.6961784354993537
+      },
+      {
+        "level": 761,
+        "median_R": 0.7561032238600001,
+        "mean_R": 0.7207618361187931,
+        "min_R": 0.1604579845,
+        "n_forms": 58,
+        "regulator": 7.37775929885,
+        "log_regulator": 1.9984699744690864
+      },
+      {
+        "level": 769,
+        "median_R": 0.7467982273,
+        "mean_R": 0.6987053227360713,
+        "min_R": 0.1816247968,
+        "n_forms": 56,
+        "regulator": 38.0272135433,
+        "log_regulator": 3.6383020492926064
+      },
+      {
+        "level": 773,
+        "median_R": 0.7523380228,
+        "mean_R": 0.7058168136805637,
+        "min_R": 0.2060767054,
+        "n_forms": 55,
+        "regulator": 4.93452568627,
+        "log_regulator": 1.5962565560617104
+      },
+      {
+        "level": 797,
+        "median_R": 0.7841583697000001,
+        "mean_R": 0.7277881965188226,
+        "min_R": 0.1952880255,
+        "n_forms": 62,
+        "regulator": 5.90536927248,
+        "log_regulator": 1.775861983253754
+      },
+      {
+        "level": 809,
+        "median_R": 0.7053081628,
+        "mean_R": 0.6877466581916365,
+        "min_R": 0.2565678363,
+        "n_forms": 55,
+        "regulator": 27.4891165396,
+        "log_regulator": 3.3137901641416354
+      },
+      {
+        "level": 821,
+        "median_R": 0.7565211096,
+        "mean_R": 0.7094133047213,
+        "min_R": 0.1172419788,
+        "n_forms": 60,
+        "regulator": 9.69208728206,
+        "log_regulator": 2.2713098084915253
+      },
+      {
+        "level": 829,
+        "median_R": 0.78797814,
+        "mean_R": 0.7214078895547776,
+        "min_R": 0.223599459,
+        "n_forms": 63,
+        "regulator": 17.2488060394,
+        "log_regulator": 2.8477429259746465
+      },
+      {
+        "level": 853,
+        "median_R": 0.7386487694499999,
+        "mean_R": 0.6944269491341498,
+        "min_R": 0.2475361824,
+        "n_forms": 60,
+        "regulator": 10.221322912,
+        "log_regulator": 2.3244760198427055
+      },
+      {
+        "level": 857,
+        "median_R": 0.72052619614,
+        "mean_R": 0.7065304866662098,
+        "min_R": 0.2483557169,
+        "n_forms": 62,
+        "regulator": 16.6028115225,
+        "log_regulator": 2.8095720498465186
+      },
+      {
+        "level": 877,
+        "median_R": 0.7364955556,
+        "mean_R": 0.712978548929846,
+        "min_R": 0.1684570377,
+        "n_forms": 65,
+        "regulator": 13.0870511761,
+        "log_regulator": 2.571623281518819
+      },
+      {
+        "level": 881,
+        "median_R": 0.754177349,
+        "mean_R": 0.6941666869309837,
+        "min_R": 0.2296128478,
+        "n_forms": 61,
+        "regulator": 26.0828304214,
+        "log_regulator": 3.2612772595975827
+      },
+      {
+        "level": 929,
+        "median_R": 0.7546100071449999,
+        "mean_R": 0.7209770672806944,
+        "min_R": 0.2034160612,
+        "n_forms": 72,
+        "regulator": 25.8147691776,
+        "log_regulator": 3.2509467768854785
+      },
+      {
+        "level": 937,
+        "median_R": 0.712008042,
+        "mean_R": 0.6855891708935384,
+        "min_R": 0.1551272944,
+        "n_forms": 65,
+        "regulator": 34.5190362235,
+        "log_regulator": 3.5415109464598893
+      },
+      {
+        "level": 953,
+        "median_R": 0.7253272075,
+        "mean_R": 0.7132297785260141,
+        "min_R": 0.059902499,
+        "n_forms": 71,
+        "regulator": 22.4268731857,
+        "log_regulator": 3.110259935591223
+      },
+      {
+        "level": 977,
+        "median_R": 0.7156806394499999,
+        "mean_R": 0.7110185060372639,
+        "min_R": 0.150024401,
+        "n_forms": 72,
+        "regulator": 23.4147460263,
+        "log_regulator": 3.153365995952721
+      },
+      {
+        "level": 997,
+        "median_R": 0.7267525258,
+        "mean_R": 0.7104782919920541,
+        "min_R": 0.1543483462,
+        "n_forms": 74,
+        "regulator": 12.0424472218,
+        "log_regulator": 2.4884376768512273
+      }
+    ]
+  },
+  "first_eigenvalue_correlation": {
+    "n_levels": 98,
+    "first_R_vs_log_reg": {
+      "pearson_r": -0.7197220289317526,
+      "pearson_p": 6.835072695706156e-17,
+      "spearman_r": -0.7642700941670013,
+      "spearman_p": 5.42442434296603e-20
+    },
+    "normalized_R_vs_log_reg": {
+      "pearson_r": -0.5891391211415038,
+      "pearson_p": 1.756306476366637e-10,
+      "spearman_r": -0.7684142072949142,
+      "spearman_p": 2.5778602469479618e-20
+    }
+  },
+  "extended_matching": {
+    "tol_0.00": {
+      "n_pairs": 6306,
+      "pearson_r": -0.7501602623409508,
+      "pearson_p": 0.0,
+      "spearman_r": -0.8518884584771987,
+      "spearman_p": 0.0
+    },
+    "tol_0.05": {
+      "n_pairs": 118592,
+      "pearson_r": -0.404278550300694,
+      "pearson_p": 0.0,
+      "spearman_r": -0.21543253703322032,
+      "spearman_p": 0.0
+    },
+    "tol_0.10": {
+      "n_pairs": 239221,
+      "pearson_r": -0.39825747902371217,
+      "pearson_p": 0.0,
+      "spearman_r": -0.21951202491699331,
+      "spearman_p": 0.0
+    },
+    "tol_0.20": {
+      "n_pairs": 492119,
+      "pearson_r": -0.3831650241857709,
+      "pearson_p": 0.0,
+      "spearman_r": -0.2086465635743964,
+      "spearman_p": 0.0
+    }
+  },
+  "null_distribution": {
+    "n_permutations": 1000,
+    "pearson": {
+      "observed": -0.7501602623409487,
+      "null_mean": 0.00011145984726055579,
+      "null_std": 0.012060223074131737,
+      "z_score": -62.21043487972334,
+      "empirical_p": 0.0
+    },
+    "spearman": {
+      "observed": -0.8518884584771987,
+      "null_mean": 0.00024700955301602075,
+      "null_std": 0.012258184202058837,
+      "z_score": -69.51563575681082,
+      "empirical_p": 0.0
+    }
+  },
+  "regulator_binned_analysis": {
+    "quartile_stats": [
+      {
+        "quartile": "Q1",
+        "log_reg_range": [
+          -0.7314477210771511,
+          0.2753244533207419
+        ],
+        "n": 1499,
+        "R_mean": 21.612444300780503,
+        "R_median": 22.8847080125,
+        "R_std": 7.313369177780485
+      },
+      {
+        "quartile": "Q2",
+        "log_reg_range": [
+          0.2753244533207419,
+          1.2137561834998836
+        ],
+        "n": 1584,
+        "R_mean": 7.728841803773324,
+        "R_median": 4.568070184130001,
+        "R_std": 7.029639727287898
+      },
+      {
+        "quartile": "Q3",
+        "log_reg_range": [
+          1.2137561834998836,
+          2.4423886275303253
+        ],
+        "n": 1613,
+        "R_mean": 1.4515465691291687,
+        "R_median": 0.964224911619,
+        "R_std": 1.0267022208142988
+      },
+      {
+        "quartile": "Q4",
+        "log_reg_range": [
+          2.4423886275303253,
+          3.6383020492926064
+        ],
+        "n": 1610,
+        "R_mean": 0.758043819056402,
+        "R_median": 0.75756991445,
+        "R_std": 0.2998257156442468
+      }
+    ],
+    "kruskal_wallis_H": 4539.719439940476,
+    "kruskal_wallis_p": 0.0
+  },
+  "higher_degree_fields": {
+    "degree_3": {
+      "n_fields": 382,
+      "n_overlap_levels": 6,
+      "n_pairs": 244,
+      "pearson_r": -0.8267829484664527,
+      "pearson_p": 2.113297492364379e-62,
+      "spearman_r": -0.7066619706342728,
+      "spearman_p": 3.1624747789158707e-38
+    },
+    "degree_4": {
+      "n_fields": 600,
+      "n_overlap_levels": 3,
+      "n_pairs": 141,
+      "pearson_r": -0.5987239407218079,
+      "pearson_p": 4.4528458975905456e-15,
+      "spearman_r": -0.6201839555864471,
+      "spearman_p": 2.384510216354637e-16
+    }
+  },
+  "confound_analysis": {
+    "confound_log_level_vs_log_reg": {
+      "pearson_r": 0.7916987138945412,
+      "pearson_p": 2.900318287174013e-22
+    },
+    "confound_log_level_vs_min_R": {
+      "pearson_r": -0.8315932892192859,
+      "pearson_p": 2.9434208802353857e-26
+    },
+    "partial_correlations_controlling_log_level": {
+      "min_R": {
+        "pearson_r": -0.18082012951091,
+        "pearson_p": 0.0747852797254834,
+        "spearman_r": -0.17714489732162778,
+        "spearman_p": 0.08098950077815867
+      },
+      "median_R": {
+        "pearson_r": -0.0721698206809647,
+        "pearson_p": 0.4800639681271078,
+        "spearman_r": -0.031603644269329094,
+        "spearman_p": 0.7573800112693679
+      }
+    },
+    "verdict": "Raw correlations are almost entirely driven by the shared dependence on level/discriminant. After residualizing on log(level), the signal drops to marginal (r ~ -0.18, p ~ 0.07) for spectral gap and vanishes for median R."
+  },
+  "interpretation": {
+    "signal_strength_raw": "moderate",
+    "signal_strength_after_confound_control": "marginal",
+    "observed_spearman_r_raw": 0.8518884584771987,
+    "observed_spearman_p_raw": 0.0,
+    "partial_r_after_level_control": -0.18082012951091,
+    "null_z_score": -69.51563575681082,
+    "null_empirical_p": 0.0,
+    "verdict": "The raw R-vs-log(regulator) correlation is very strong (r ~ -0.75 to -0.85) but is almost entirely a confound: both spectral parameters and regulators scale with level/discriminant. After residualizing on log(level), the partial correlation for the spectral gap drops to r ~ -0.18 (p ~ 0.07), marginal at best. For median R it vanishes entirely. The theoretical connection may exist but is not detectable above the level-scaling confound in this data.",
+    "notes": [
+      "CRITICAL: Raw correlations are confounded by shared level/disc dependence",
+      "Partial correlation controlling for log(level) is the honest test",
+      "Matching is disc=level (exact), theoretically motivated",
+      "Each level maps to one NF but many Maass forms, inflating pair count",
+      "Level-aggregated (one point per level) is the cleaner test",
+      "First eigenvalue (spectral gap) shows marginal partial signal (p~0.07)",
+      "Random pairing null controls for marginal distribution artifacts"
+    ]
+  }
+}

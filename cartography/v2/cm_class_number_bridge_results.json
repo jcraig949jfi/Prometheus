@@ -1,0 +1,541 @@
+{
+  "experiment": "CM Class Number Bridge",
+  "description": "For each CM elliptic curve with discriminant D, compute class number h(D) of the imaginary quadratic order of discriminant D. Correlate h(D) with EC arithmetic invariants (conductor, Sha, modular degree, Faltings height, etc.)",
+  "data_summary": {
+    "total_cm_curves": 294,
+    "n_discriminants": 12,
+    "discriminant_info": [
+      {
+        "cm_disc": -67,
+        "fund_disc": -67,
+        "conductor_of_order": 1,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -43,
+        "fund_disc": -43,
+        "conductor_of_order": 1,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -28,
+        "fund_disc": -7,
+        "conductor_of_order": 2,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -27,
+        "fund_disc": -3,
+        "conductor_of_order": 3,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -19,
+        "fund_disc": -19,
+        "conductor_of_order": 1,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -16,
+        "fund_disc": -4,
+        "conductor_of_order": 4,
+        "class_number": 2
+      },
+      {
+        "cm_disc": -12,
+        "fund_disc": -3,
+        "conductor_of_order": 2,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -11,
+        "fund_disc": -11,
+        "conductor_of_order": 1,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -8,
+        "fund_disc": -8,
+        "conductor_of_order": 2,
+        "class_number": 2
+      },
+      {
+        "cm_disc": -7,
+        "fund_disc": -7,
+        "conductor_of_order": 1,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -4,
+        "fund_disc": -4,
+        "conductor_of_order": 2,
+        "class_number": 1
+      },
+      {
+        "cm_disc": -3,
+        "fund_disc": -3,
+        "conductor_of_order": 1,
+        "class_number": 1
+      }
+    ]
+  },
+  "aggregated_per_discriminant": [
+    {
+      "cm_disc": -67,
+      "class_number": 1,
+      "n_curves": 2,
+      "mean_conductor": 4489.0,
+      "median_conductor": 4489.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 43928.0,
+      "mean_faltings_height": 1.7027900233010598,
+      "mean_rank": 1.0,
+      "mean_torsion": 1.0,
+      "mean_regulator": 23.374657463392726,
+      "mean_class_size": 2.0
+    },
+    {
+      "cm_disc": -43,
+      "class_number": 1,
+      "n_curves": 2,
+      "mean_conductor": 1849.0,
+      "median_conductor": 1849.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 5808.0,
+      "mean_faltings_height": 1.16572994172628,
+      "mean_rank": 1.0,
+      "mean_torsion": 1.0,
+      "mean_regulator": 9.359516757684641,
+      "mean_class_size": 2.0
+    },
+    {
+      "cm_disc": -28,
+      "class_number": 1,
+      "n_curves": 12,
+      "mean_conductor": 1461.8333333333333,
+      "median_conductor": 1004.5,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 1686.6666666666667,
+      "mean_faltings_height": 0.7216817089533262,
+      "mean_rank": 0.5,
+      "mean_torsion": 2.0,
+      "mean_regulator": 2.467870047601945,
+      "mean_class_size": 4.0
+    },
+    {
+      "cm_disc": -27,
+      "class_number": 1,
+      "n_curves": 16,
+      "mean_conductor": 1717.875,
+      "median_conductor": 1525.5,
+      "mean_sha": 1.5,
+      "median_sha": 1.0,
+      "mean_degree": 1094.25,
+      "mean_faltings_height": 0.4831686986143906,
+      "mean_rank": 0.5,
+      "mean_torsion": 1.125,
+      "mean_regulator": 1.907105744065385,
+      "mean_class_size": 4.0
+    },
+    {
+      "cm_disc": -19,
+      "class_number": 1,
+      "n_curves": 4,
+      "mean_conductor": 1805.0,
+      "median_conductor": 1805.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 3300.0,
+      "mean_faltings_height": 0.6606141570678628,
+      "mean_rank": 0.5,
+      "mean_torsion": 1.0,
+      "mean_regulator": 1.4064583701789966,
+      "mean_class_size": 2.0
+    },
+    {
+      "cm_disc": -12,
+      "class_number": 1,
+      "n_curves": 16,
+      "mean_conductor": 1494.0,
+      "median_conductor": 738.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 1258.5,
+      "mean_faltings_height": 0.36512234186274894,
+      "mean_rank": 0.375,
+      "mean_torsion": 2.25,
+      "mean_regulator": 1.2017492289122866,
+      "mean_class_size": 4.0
+    },
+    {
+      "cm_disc": -11,
+      "class_number": 1,
+      "n_curves": 8,
+      "mean_conductor": 1542.75,
+      "median_conductor": 1512.5,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 1266.0,
+      "mean_faltings_height": 0.4881940641478808,
+      "mean_rank": 0.5,
+      "mean_torsion": 1.0,
+      "mean_regulator": 1.7653450726333308,
+      "mean_class_size": 2.0
+    },
+    {
+      "cm_disc": -7,
+      "class_number": 1,
+      "n_curves": 12,
+      "mean_conductor": 1461.8333333333333,
+      "median_conductor": 1004.5,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 843.3333333333334,
+      "mean_faltings_height": 0.37510811867335364,
+      "mean_rank": 0.5,
+      "mean_torsion": 2.0,
+      "mean_regulator": 1.7031152906967268,
+      "mean_class_size": 4.0
+    },
+    {
+      "cm_disc": -4,
+      "class_number": 1,
+      "n_curves": 62,
+      "mean_conductor": 1611.3548387096773,
+      "median_conductor": 1568.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 474.7258064516129,
+      "mean_faltings_height": -0.07322559898205552,
+      "mean_rank": 0.4838709677419355,
+      "mean_torsion": 2.3225806451612905,
+      "mean_regulator": 1.539590383985186,
+      "mean_class_size": 2.5806451612903225
+    },
+    {
+      "cm_disc": -3,
+      "class_number": 1,
+      "n_curves": 134,
+      "mean_conductor": 2096.4626865671644,
+      "median_conductor": 1728.0,
+      "mean_sha": 1.044776119402985,
+      "median_sha": 1.0,
+      "mean_degree": 1223.8507462686566,
+      "mean_faltings_height": 0.1698093434026015,
+      "mean_rank": 0.4925373134328358,
+      "mean_torsion": 1.507462686567164,
+      "mean_regulator": 1.424199280820405,
+      "mean_class_size": 2.4776119402985075
+    },
+    {
+      "cm_disc": -16,
+      "class_number": 2,
+      "n_curves": 18,
+      "mean_conductor": 1326.2222222222222,
+      "median_conductor": 800.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 463.1111111111111,
+      "mean_faltings_height": 0.18697007105694677,
+      "mean_rank": 0.4444444444444444,
+      "mean_torsion": 2.2222222222222223,
+      "mean_regulator": 1.2274040263931463,
+      "mean_class_size": 4.0
+    },
+    {
+      "cm_disc": -8,
+      "class_number": 2,
+      "n_curves": 8,
+      "mean_conductor": 1280.0,
+      "median_conductor": 1280.0,
+      "mean_sha": 1.0,
+      "median_sha": 1.0,
+      "mean_degree": 150.0,
+      "mean_faltings_height": -0.302606373332853,
+      "mean_rank": 0.5,
+      "mean_torsion": 2.0,
+      "mean_regulator": 1.0762116820646832,
+      "mean_class_size": 2.0
+    }
+  ],
+  "correlations_h_vs_invariant": {
+    "mean_conductor": {
+      "pearson_r": -0.292545,
+      "pearson_p": 0.3561435793894508,
+      "spearman_r": -0.648886,
+      "spearman_p": 0.022436292098794452,
+      "n": 12
+    },
+    "median_conductor": {
+      "pearson_r": -0.26964,
+      "pearson_p": 0.3966937258065132,
+      "spearman_r": -0.389331,
+      "spearman_p": 0.21095472294288045,
+      "n": 12
+    },
+    "mean_sha": {
+      "pearson_r": -0.147526,
+      "pearson_p": 0.6472789083142947,
+      "spearman_r": -0.199172,
+      "spearman_p": 0.5348675660458024,
+      "n": 12
+    },
+    "mean_degree": {
+      "pearson_r": -0.182706,
+      "pearson_p": 0.5697931076820084,
+      "spearman_r": -0.64775,
+      "spearman_p": 0.022751806072576642,
+      "n": 12
+    },
+    "mean_faltings_height": {
+      "pearson_r": -0.480609,
+      "pearson_p": 0.11374379655229082,
+      "spearman_r": -0.5182,
+      "spearman_p": 0.08436211791688145,
+      "n": 12
+    },
+    "mean_rank": {
+      "pearson_r": -0.213492,
+      "pearson_p": 0.5052558931461888,
+      "spearman_r": -0.242487,
+      "spearman_p": 0.44763190425505794,
+      "n": 12
+    },
+    "mean_torsion": {
+      "pearson_r": 0.408629,
+      "pearson_p": 0.18721840357067188,
+      "spearman_r": 0.332106,
+      "spearman_p": 0.2915813418325252,
+      "n": 12
+    },
+    "mean_regulator": {
+      "pearson_r": -0.207431,
+      "pearson_p": 0.5176999345364939,
+      "spearman_r": -0.582975,
+      "spearman_p": 0.046650764054457394,
+      "n": 12
+    },
+    "mean_class_size": {
+      "pearson_r": 0.037746,
+      "pearson_p": 0.9072867387594419,
+      "spearman_r": 0.0,
+      "spearman_p": 1.0,
+      "n": 12
+    }
+  },
+  "log_correlations": {
+    "log_mean_conductor": {
+      "pearson_r": -0.400611,
+      "pearson_p": 0.19686912760142306,
+      "n": 12
+    },
+    "log_mean_degree": {
+      "pearson_r": -0.557471,
+      "pearson_p": 0.059676246181638616,
+      "n": 12
+    }
+  },
+  "within_discriminant_sha": {
+    "-67": {
+      "n_curves": 2,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-43": {
+      "n_curves": 2,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-28": {
+      "n_curves": 12,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-27": {
+      "n_curves": 16,
+      "unique_sha_values": [
+        1,
+        9
+      ],
+      "all_sha_one": false,
+      "max_sha": 9
+    },
+    "-19": {
+      "n_curves": 4,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-16": {
+      "n_curves": 18,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-12": {
+      "n_curves": 16,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-11": {
+      "n_curves": 8,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-8": {
+      "n_curves": 8,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-7": {
+      "n_curves": 12,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-4": {
+      "n_curves": 62,
+      "unique_sha_values": [
+        1
+      ],
+      "all_sha_one": true,
+      "max_sha": 1
+    },
+    "-3": {
+      "n_curves": 134,
+      "unique_sha_values": [
+        1,
+        4
+      ],
+      "all_sha_one": false,
+      "max_sha": 4
+    }
+  },
+  "sha_all_one_within_disc": false,
+  "permutation_test": {
+    "best_invariant": "mean_conductor",
+    "observed_abs_rho": 0.648886,
+    "p_permutation": 0.0,
+    "n_permutations": 10000
+  },
+  "mann_whitney_binary": {
+    "mean_conductor": {
+      "U": 20.0,
+      "p_value": 0.040903700737468074,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 1952.9109,
+      "mean_h_hi": 1303.1111
+    },
+    "median_conductor": {
+      "U": 16.0,
+      "p_value": 0.23654740531738194,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 1722.4,
+      "mean_h_hi": 1040.0
+    },
+    "mean_sha": {
+      "U": 12.0,
+      "p_value": 0.620294015349161,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 1.0545,
+      "mean_h_hi": 1.0
+    },
+    "mean_degree": {
+      "U": 20.0,
+      "p_value": 0.030303030303030304,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 6088.3327,
+      "mean_h_hi": 306.5556
+    },
+    "mean_faltings_height": {
+      "U": 18.0,
+      "p_value": 0.12121212121212122,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 0.6059,
+      "mean_h_hi": -0.0578
+    },
+    "mean_rank": {
+      "U": 13.5,
+      "p_value": 0.49060460195367084,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 0.5851,
+      "mean_h_hi": 0.4722
+    },
+    "mean_torsion": {
+      "U": 5.0,
+      "p_value": 0.3215280585028303,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 1.5205,
+      "mean_h_hi": 2.1111
+    },
+    "mean_regulator": {
+      "U": 19.0,
+      "p_value": 0.06060606060606061,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 4.615,
+      "mean_h_hi": 1.1518
+    },
+    "mean_class_size": {
+      "U": 10.0,
+      "p_value": 1.0,
+      "n_h_lo": 10,
+      "n_h_hi": 2,
+      "mean_h_lo": 2.9058,
+      "mean_h_hi": 3.0
+    }
+  },
+  "h_distribution": {
+    "1": 10,
+    "2": 2
+  },
+  "binary_h_warning": true,
+  "sanity_h_vs_sqrtD": {
+    "pearson_r": -0.175264,
+    "pearson_p": 0.5858691464403745
+  },
+  "verdict": "NO_BRIDGE \u2014 class number takes only 2 distinct values across 12 CM discriminants (h=1: 10, h=2: 2), with min group size 2. Statistical tests are unreliable at this sample size. Any apparent correlation is between 10 vs 2 discriminants \u2014 insufficient for inference.",
+  "notes": [
+    "CM discriminants include non-maximal orders (e.g. -16 = -4*4, -27 = -3*9)",
+    "Class numbers computed for actual order, not just maximal order",
+    "Sha is 1 for almost all CM curves \u2014 very little variation to explain",
+    "h(D) takes only 2 distinct values: {1: 10, 2: 2}",
+    "FATAL: 10 of 12 discriminants have h=1, only 2 have h=2 \u2014 any 'correlation' is really a 2-vs-10 group comparison with no statistical power",
+    "The 13 CM j-invariants all have class number 1 by definition (Heegner numbers); non-maximal orders -8 and -16 are the only ones with h>1",
+    "This bridge is structurally dead: CM discriminants in LMFDB are overwhelmingly h=1"
+  ]
+}
