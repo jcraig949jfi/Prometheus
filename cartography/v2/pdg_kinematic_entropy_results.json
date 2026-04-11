@@ -1,0 +1,738 @@
+{
+  "metadata": {
+    "description": "PDG Kinematic Phase Space Entropy (List2 #3)",
+    "date": "2026-04-10",
+    "source": "PDG 2024 Review of Particle Physics",
+    "n_particles_total": 39,
+    "n_particles_multi_channel": 31,
+    "n_hadronic_dominant": 29
+  },
+  "aggregate": {
+    "mean_normalized_entropy_all": 0.794077,
+    "std_normalized_entropy_all": 0.202763,
+    "median_normalized_entropy_all": 0.85135,
+    "mean_normalized_entropy_hadronic": 0.785002,
+    "channel_weighted_normalized_entropy": 0.775945,
+    "mean_normalized_entropy_rich_ge3ch": 0.742299,
+    "mean_Q_weighted_entropy": 1.130013,
+    "n_particles_rich_ge3ch": 19,
+    "correlation_H_vs_log_lifetime": {
+      "pearson_r": 0.013542,
+      "p_value": 0.9423586
+    },
+    "correlation_H_vs_mass": {
+      "pearson_r": 0.187956,
+      "p_value": 0.3112738
+    }
+  },
+  "per_particle": [
+    {
+      "particle": "pi0",
+      "mass_GeV": 0.13498,
+      "width_GeV": 7.81e-09,
+      "lifetime_s": 8.427809947503201e-17,
+      "n_channels": 2,
+      "BR_sum_raw": 0.99997,
+      "Q_values_GeV": [
+        0.13498,
+        0.133958
+      ],
+      "avg_Q_GeV": 0.134469,
+      "shannon_entropy_bits": 0.092122,
+      "normalized_entropy": 0.092122,
+      "Q_weighted_entropy": 0.091552
+    },
+    {
+      "particle": "f0(500)",
+      "mass_GeV": 0.475,
+      "width_GeV": 0.55,
+      "lifetime_s": 1.1967490125454543e-24,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.19586,
+        0.20504
+      ],
+      "avg_Q_GeV": 0.20045,
+      "shannon_entropy_bits": 0.917962,
+      "normalized_entropy": 0.917962,
+      "Q_weighted_entropy": 0.900515
+    },
+    {
+      "particle": "K+",
+      "mass_GeV": 0.49368,
+      "width_GeV": 5.317e-17,
+      "lifetime_s": 1.237938606168892e-08,
+      "n_channels": 6,
+      "BR_sum_raw": 0.99995,
+      "Q_values_GeV": [
+        0.38802,
+        0.21913,
+        0.07497,
+        0.358189,
+        0.25304,
+        0.08415
+      ],
+      "avg_Q_GeV": 0.229583,
+      "shannon_entropy_bits": 1.602987,
+      "normalized_entropy": 0.62012,
+      "Q_weighted_entropy": 1.05662
+    },
+    {
+      "particle": "KS0",
+      "mass_GeV": 0.49761,
+      "width_GeV": 7.3508e-15,
+      "lifetime_s": 8.954290103118029e-11,
+      "n_channels": 2,
+      "BR_sum_raw": 0.9989,
+      "Q_values_GeV": [
+        0.21847,
+        0.22765
+      ],
+      "avg_Q_GeV": 0.22306,
+      "shannon_entropy_bits": 0.889959,
+      "normalized_entropy": 0.889959,
+      "Q_weighted_entropy": 0.875166
+    },
+    {
+      "particle": "KL0",
+      "mass_GeV": 0.49761,
+      "width_GeV": 1.287e-17,
+      "lifetime_s": 5.1143120194250193e-08,
+      "n_channels": 6,
+      "BR_sum_raw": 0.9964,
+      "Q_values_GeV": [
+        0.09267,
+        0.08349,
+        0.357529,
+        0.357529,
+        0.25238,
+        0.25238
+      ],
+      "avg_Q_GeV": 0.232663,
+      "shannon_entropy_bits": 2.553779,
+      "normalized_entropy": 0.987937,
+      "Q_weighted_entropy": 1.694039
+    },
+    {
+      "particle": "eta",
+      "mass_GeV": 0.54786,
+      "width_GeV": 1.31e-06,
+      "lifetime_s": 5.024518754961832e-19,
+      "n_channels": 5,
+      "BR_sum_raw": 0.9992,
+      "Q_values_GeV": [
+        0.54786,
+        0.14292,
+        0.13374,
+        0.26872,
+        0.546838
+      ],
+      "avg_Q_GeV": 0.328016,
+      "shannon_entropy_bits": 1.786366,
+      "normalized_entropy": 0.769346,
+      "Q_weighted_entropy": 0.929951
+    },
+    {
+      "particle": "rho0",
+      "mass_GeV": 0.77526,
+      "width_GeV": 0.1474,
+      "lifetime_s": 4.465481390094979e-24,
+      "n_channels": 1,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.49612
+      ],
+      "avg_Q_GeV": 0.49612,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "rho+",
+      "mass_GeV": 0.77526,
+      "width_GeV": 0.1474,
+      "lifetime_s": 4.465481390094979e-24,
+      "n_channels": 1,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.50071
+      ],
+      "avg_Q_GeV": 0.50071,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "omega",
+      "mass_GeV": 0.78266,
+      "width_GeV": 0.00868,
+      "lifetime_s": 7.583087061059908e-23,
+      "n_channels": 3,
+      "BR_sum_raw": 0.9911,
+      "Q_values_GeV": [
+        0.36854,
+        0.64768,
+        0.50352
+      ],
+      "avg_Q_GeV": 0.50658,
+      "shannon_entropy_bits": 0.527577,
+      "normalized_entropy": 0.332864,
+      "Q_weighted_entropy": 0.448508
+    },
+    {
+      "particle": "K*+",
+      "mass_GeV": 0.89167,
+      "width_GeV": 0.0514,
+      "lifetime_s": 1.2805680095330738e-23,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.25449,
+        0.26301
+      ],
+      "avg_Q_GeV": 0.25875,
+      "shannon_entropy_bits": 0.917962,
+      "normalized_entropy": 0.917962,
+      "Q_weighted_entropy": 0.905338
+    },
+    {
+      "particle": "K*0",
+      "mass_GeV": 0.89555,
+      "width_GeV": 0.0473,
+      "lifetime_s": 1.3915686192389004e-23,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.2623,
+        0.26296
+      ],
+      "avg_Q_GeV": 0.26263,
+      "shannon_entropy_bits": 0.917962,
+      "normalized_entropy": 0.917962,
+      "Q_weighted_entropy": 0.916984
+    },
+    {
+      "particle": "n",
+      "mass_GeV": 0.93957,
+      "width_GeV": 7.485e-28,
+      "lifetime_s": 879.3746919171675,
+      "n_channels": 1,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.000789
+      ],
+      "avg_Q_GeV": 0.000789,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "eta'",
+      "mass_GeV": 0.95778,
+      "width_GeV": 0.000188,
+      "lifetime_s": 3.501127430319149e-21,
+      "n_channels": 5,
+      "BR_sum_raw": 0.9945,
+      "Q_values_GeV": [
+        0.13078,
+        0.18252,
+        0.13996,
+        0.17512,
+        0.95778
+      ],
+      "avg_Q_GeV": 0.317232,
+      "shannon_entropy_bits": 1.794651,
+      "normalized_entropy": 0.772914,
+      "Q_weighted_entropy": 0.389397
+    },
+    {
+      "particle": "f0(980)",
+      "mass_GeV": 0.99,
+      "width_GeV": 0.055,
+      "lifetime_s": 1.1967490125454544e-23,
+      "n_channels": 4,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.71086,
+        0.72004,
+        0.00264,
+        -0.00522
+      ],
+      "avg_Q_GeV": 0.35708,
+      "shannon_entropy_bits": 1.696438,
+      "normalized_entropy": 0.848219,
+      "Q_weighted_entropy": 0.990895
+    },
+    {
+      "particle": "phi",
+      "mass_GeV": 1.01946,
+      "width_GeV": 0.004249,
+      "lifetime_s": 1.5490985100023533e-22,
+      "n_channels": 4,
+      "BR_sum_raw": 0.99703,
+      "Q_values_GeV": [
+        0.0321,
+        0.02424,
+        0.60534,
+        0.4716
+      ],
+      "avg_Q_GeV": 0.28332,
+      "shannon_entropy_bits": 1.529283,
+      "normalized_entropy": 0.764641,
+      "Q_weighted_entropy": 0.526555
+    },
+    {
+      "particle": "Lambda",
+      "mass_GeV": 1.11568,
+      "width_GeV": 2.501e-15,
+      "lifetime_s": 2.631795109556178e-10,
+      "n_channels": 2,
+      "BR_sum_raw": 0.998,
+      "Q_values_GeV": [
+        0.03784,
+        0.04113
+      ],
+      "avg_Q_GeV": 0.039485,
+      "shannon_entropy_bits": 0.942116,
+      "normalized_entropy": 0.942116,
+      "Q_weighted_entropy": 0.909198
+    },
+    {
+      "particle": "Sigma+",
+      "mass_GeV": 1.18937,
+      "width_GeV": 8.209e-15,
+      "lifetime_s": 8.018174648556461e-11,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.11612,
+        0.11023
+      ],
+      "avg_Q_GeV": 0.113175,
+      "shannon_entropy_bits": 0.999289,
+      "normalized_entropy": 0.999289,
+      "Q_weighted_entropy": 0.973593
+    },
+    {
+      "particle": "Sigma0",
+      "mass_GeV": 1.19264,
+      "width_GeV": 8.9e-06,
+      "lifetime_s": 7.39563996516854e-20,
+      "n_channels": 1,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.07696
+      ],
+      "avg_Q_GeV": 0.07696,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "Sigma-",
+      "mass_GeV": 1.19745,
+      "width_GeV": 4.45e-15,
+      "lifetime_s": 1.4791279930337077e-10,
+      "n_channels": 1,
+      "BR_sum_raw": 0.99848,
+      "Q_values_GeV": [
+        0.11831
+      ],
+      "avg_Q_GeV": 0.11831,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "a1+",
+      "mass_GeV": 1.23,
+      "width_GeV": 0.42,
+      "lifetime_s": 1.567171325952381e-24,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.31517,
+        0.31976
+      ],
+      "avg_Q_GeV": 0.317465,
+      "shannon_entropy_bits": 1.0,
+      "normalized_entropy": 1.0,
+      "Q_weighted_entropy": 0.992823
+    },
+    {
+      "particle": "Delta++",
+      "mass_GeV": 1.232,
+      "width_GeV": 0.117,
+      "lifetime_s": 5.625743221367521e-24,
+      "n_channels": 1,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.15416
+      ],
+      "avg_Q_GeV": 0.15416,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "Delta+",
+      "mass_GeV": 1.232,
+      "width_GeV": 0.117,
+      "lifetime_s": 5.625743221367521e-24,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.15875,
+        0.15286
+      ],
+      "avg_Q_GeV": 0.155805,
+      "shannon_entropy_bits": 0.917962,
+      "normalized_entropy": 0.917962,
+      "Q_weighted_entropy": 0.898362
+    },
+    {
+      "particle": "Delta0",
+      "mass_GeV": 1.232,
+      "width_GeV": 0.117,
+      "lifetime_s": 5.625743221367521e-24,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.15745,
+        0.15416
+      ],
+      "avg_Q_GeV": 0.155805,
+      "shannon_entropy_bits": 0.917962,
+      "normalized_entropy": 0.917962,
+      "Q_weighted_entropy": 0.906924
+    },
+    {
+      "particle": "f2(1270)",
+      "mass_GeV": 1.2754,
+      "width_GeV": 0.1867,
+      "lifetime_s": 3.5255059287627205e-24,
+      "n_channels": 8,
+      "BR_sum_raw": 0.9954,
+      "Q_values_GeV": [
+        0.99626,
+        1.00544,
+        0.28804,
+        0.28018,
+        0.17968,
+        0.71712,
+        0.7263,
+        1.2754
+      ],
+      "avg_Q_GeV": 0.683553,
+      "shannon_entropy_bits": 1.690618,
+      "normalized_entropy": 0.563539,
+      "Q_weighted_entropy": 1.077766
+    },
+    {
+      "particle": "Xi0",
+      "mass_GeV": 1.31486,
+      "width_GeV": 2.27e-15,
+      "lifetime_s": 2.899612144933921e-10,
+      "n_channels": 1,
+      "BR_sum_raw": 0.99524,
+      "Q_values_GeV": [
+        0.0642
+      ],
+      "avg_Q_GeV": 0.0642,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "Xi-",
+      "mass_GeV": 1.32171,
+      "width_GeV": 4.02e-15,
+      "lifetime_s": 1.6373431763681592e-10,
+      "n_channels": 1,
+      "BR_sum_raw": 0.99887,
+      "Q_values_GeV": [
+        0.06646
+      ],
+      "avg_Q_GeV": 0.06646,
+      "shannon_entropy_bits": 0.0,
+      "normalized_entropy": 0.0,
+      "Q_weighted_entropy": 0.0
+    },
+    {
+      "particle": "Omega-",
+      "mass_GeV": 1.67245,
+      "width_GeV": 8.02e-15,
+      "lifetime_s": 8.207131632169575e-11,
+      "n_channels": 3,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.06309,
+        0.21802,
+        0.21576
+      ],
+      "avg_Q_GeV": 0.165623,
+      "shannon_entropy_bits": 1.176136,
+      "normalized_entropy": 0.742059,
+      "Q_weighted_entropy": 0.902861
+    },
+    {
+      "particle": "tau-",
+      "mass_GeV": 1.77693,
+      "width_GeV": 2.267e-12,
+      "lifetime_s": 2.9034493026025585e-13,
+      "n_channels": 8,
+      "BR_sum_raw": 0.9095,
+      "Q_values_GeV": [
+        1.63736,
+        1.50238,
+        1.3674,
+        1.35822,
+        1.28325,
+        1.14827,
+        1.776419,
+        1.67127
+      ],
+      "avg_Q_GeV": 1.468071,
+      "shannon_entropy_bits": 2.55405,
+      "normalized_entropy": 0.85135,
+      "Q_weighted_entropy": 2.23595
+    },
+    {
+      "particle": "D0",
+      "mass_GeV": 1.86484,
+      "width_GeV": 1.605e-12,
+      "lifetime_s": 4.101009077258567e-13,
+      "n_channels": 10,
+      "BR_sum_raw": 0.489195,
+      "Q_values_GeV": [
+        1.23159,
+        1.09661,
+        0.95245,
+        1.08809,
+        1.23225,
+        1.370649,
+        1.2655,
+        1.5857,
+        0.87748,
+        0.95311
+      ],
+      "avg_Q_GeV": 1.165343,
+      "shannon_entropy_bits": 2.782656,
+      "normalized_entropy": 0.837663,
+      "Q_weighted_entropy": 1.960854
+    },
+    {
+      "particle": "D+",
+      "mass_GeV": 1.86966,
+      "width_GeV": 6.33e-13,
+      "lifetime_s": 1.0398293157977882e-12,
+      "n_channels": 11,
+      "BR_sum_raw": 0.5993,
+      "Q_values_GeV": [
+        1.23248,
+        1.09684,
+        1.0975,
+        0.95334,
+        0.96186,
+        1.23248,
+        1.375469,
+        1.27032,
+        1.26639,
+        1.45095,
+        0.87837
+      ],
+      "avg_Q_GeV": 1.165091,
+      "shannon_entropy_bits": 2.992268,
+      "normalized_entropy": 0.864959,
+      "Q_weighted_entropy": 2.347479
+    },
+    {
+      "particle": "Ds+",
+      "mass_GeV": 1.96835,
+      "width_GeV": 1.305e-12,
+      "lifetime_s": 5.043769784674329e-13,
+      "n_channels": 9,
+      "BR_sum_raw": 0.28628,
+      "Q_values_GeV": [
+        0.97706,
+        0.84142,
+        0.69792,
+        1.28092,
+        0.871,
+        0.80932,
+        1.54964,
+        1.86269,
+        0.64523
+      ],
+      "avg_Q_GeV": 1.059467,
+      "shannon_entropy_bits": 2.786871,
+      "normalized_entropy": 0.87916,
+      "Q_weighted_entropy": 1.396075
+    },
+    {
+      "particle": "Lambda_c+",
+      "mass_GeV": 2.28646,
+      "width_GeV": 3.3e-12,
+      "lifetime_s": 1.9945816875757573e-13,
+      "n_channels": 7,
+      "BR_sum_raw": 0.294,
+      "Q_values_GeV": [
+        0.71494,
+        0.85058,
+        1.03121,
+        0.89623,
+        0.75207,
+        0.81795,
+        0.57996
+      ],
+      "avg_Q_GeV": 0.806134,
+      "shannon_entropy_bits": 2.650103,
+      "normalized_entropy": 0.943986,
+      "Q_weighted_entropy": 2.032227
+    },
+    {
+      "particle": "J/psi",
+      "mass_GeV": 3.0969,
+      "width_GeV": 9.26e-05,
+      "lifetime_s": 7.108120484881209e-21,
+      "n_channels": 10,
+      "BR_sum_raw": 0.236276,
+      "Q_values_GeV": [
+        3.095878,
+        2.88558,
+        2.68278,
+        2.18666,
+        2.0351,
+        1.97456,
+        2.40364,
+        2.10954,
+        1.22036,
+        2.2699
+      ],
+      "avg_Q_GeV": 2.2864,
+      "shannon_entropy_bits": 2.582624,
+      "normalized_entropy": 0.777447,
+      "Q_weighted_entropy": 2.141418
+    },
+    {
+      "particle": "psi(2S)",
+      "mass_GeV": 3.6861,
+      "width_GeV": 0.000294,
+      "lifetime_s": 2.2388161799319726e-21,
+      "n_channels": 7,
+      "BR_sum_raw": 0.58404,
+      "Q_values_GeV": [
+        0.31006,
+        0.31924,
+        0.04134,
+        3.685078,
+        3.47478,
+        3.27198,
+        3.13824
+      ],
+      "avg_Q_GeV": 2.034388,
+      "shannon_entropy_bits": 1.424782,
+      "normalized_entropy": 0.507518,
+      "Q_weighted_entropy": 0.289703
+    },
+    {
+      "particle": "B+",
+      "mass_GeV": 5.27934,
+      "width_GeV": 4.018e-13,
+      "lifetime_s": 1.6381581804380286e-12,
+      "n_channels": 10,
+      "BR_sum_raw": 0.136386,
+      "Q_values_GeV": [
+        3.27493,
+        3.13054,
+        2.63924,
+        2.98994,
+        1.68876,
+        3.413989,
+        3.30884,
+        5.278829,
+        3.13995,
+        2.92082
+      ],
+      "avg_Q_GeV": 3.178584,
+      "shannon_entropy_bits": 2.381043,
+      "normalized_entropy": 0.716765,
+      "Q_weighted_entropy": 1.621851
+    },
+    {
+      "particle": "B0",
+      "mass_GeV": 5.27965,
+      "width_GeV": 4.294e-13,
+      "lifetime_s": 1.5328643616674428e-12,
+      "n_channels": 10,
+      "BR_sum_raw": 0.101458,
+      "Q_values_GeV": [
+        3.27042,
+        2.63473,
+        3.12982,
+        2.49413,
+        1.68514,
+        3.409479,
+        3.268879,
+        2.99128,
+        2.91631,
+        5.00051
+      ],
+      "avg_Q_GeV": 3.08007,
+      "shannon_entropy_bits": 2.168209,
+      "normalized_entropy": 0.652696,
+      "Q_weighted_entropy": 1.314328
+    },
+    {
+      "particle": "Upsilon(1S)",
+      "mass_GeV": 9.4604,
+      "width_GeV": 5.402e-05,
+      "lifetime_s": 1.2184597499074416e-20,
+      "n_channels": 4,
+      "BR_sum_raw": 0.0526,
+      "Q_values_GeV": [
+        9.459378,
+        9.24908,
+        9.18126,
+        9.04628
+      ],
+      "avg_Q_GeV": 9.233999,
+      "shannon_entropy_bits": 1.340987,
+      "normalized_entropy": 0.670494,
+      "Q_weighted_entropy": 1.319841
+    },
+    {
+      "particle": "Upsilon(4S)",
+      "mass_GeV": 10.5794,
+      "width_GeV": 0.0205,
+      "lifetime_s": 3.210790033658536e-23,
+      "n_channels": 2,
+      "BR_sum_raw": 1.0,
+      "Q_values_GeV": [
+        0.02072,
+        0.0201
+      ],
+      "avg_Q_GeV": 0.02041,
+      "shannon_entropy_bits": 0.999434,
+      "normalized_entropy": 0.999434,
+      "Q_weighted_entropy": 0.984296
+    },
+    {
+      "particle": "W+",
+      "mass_GeV": 80.369,
+      "width_GeV": 2.08,
+      "lifetime_s": 3.1644805620192304e-25,
+      "n_channels": 2,
+      "BR_sum_raw": 0.2134,
+      "Q_values_GeV": [
+        80.368489,
+        80.26334
+      ],
+      "avg_Q_GeV": 80.315914,
+      "shannon_entropy_bits": 0.99999,
+      "normalized_entropy": 0.99999,
+      "Q_weighted_entropy": 0.999335
+    }
+  ]
+}

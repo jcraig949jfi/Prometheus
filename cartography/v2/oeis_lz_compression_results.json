@@ -1,0 +1,351 @@
+{
+  "n_sequences": 10000,
+  "min_terms": 20,
+  "global_fit": {
+    "asymptotic_limit_a": 0.26658,
+    "b": 11.0531,
+    "c": 1.089,
+    "r_squared": 0.4074
+  },
+  "global_stats": {
+    "mean_ratio": 0.483925,
+    "median_ratio": 0.464286,
+    "std_ratio": 0.181592,
+    "min_ratio": 0.088235,
+    "max_ratio": 1.1,
+    "mean_length": 49.1,
+    "max_length": 136
+  },
+  "length_quartile_means": {
+    "short_q25_mean_ratio": 0.638984,
+    "long_q75_mean_ratio": 0.351719
+  },
+  "bm_recurrent": {
+    "count": 6622,
+    "mean_ratio": 0.447779,
+    "median_ratio": 0.444444,
+    "fit": {
+      "asymptotic_limit_a": 0.241774,
+      "b": 25.0161,
+      "c": 1.3723,
+      "r_squared": 0.5025
+    }
+  },
+  "bm_non_recurrent": {
+    "count": 3378,
+    "mean_ratio": 0.554784,
+    "median_ratio": 0.510875,
+    "fit": {
+      "asymptotic_limit_a": 0.27784,
+      "b": 15.3211,
+      "c": 1.0572,
+      "r_squared": 0.7711
+    }
+  },
+  "binned_convergence": {
+    "bin_centers": [
+      22.9,
+      28.7,
+      34.5,
+      40.3,
+      46.1,
+      51.9,
+      57.7,
+      63.5,
+      69.3,
+      75.1,
+      80.9,
+      86.7,
+      92.5,
+      98.3,
+      104.1,
+      109.9,
+      115.7,
+      121.5,
+      127.3,
+      133.1
+    ],
+    "mean_ratios": [
+      0.642627,
+      0.585661,
+      0.521235,
+      0.452613,
+      0.456811,
+      0.401429,
+      0.376899,
+      0.364425,
+      0.330725,
+      0.322033,
+      0.273072,
+      0.385842,
+      0.337351,
+      0.422823,
+      0.314467,
+      0.34667,
+      0.323747,
+      0.276494,
+      0.287075,
+      0.16022
+    ],
+    "std_ratios": [
+      0.143045,
+      0.16362,
+      0.159436,
+      0.142634,
+      0.143231,
+      0.143001,
+      0.128781,
+      0.121098,
+      0.113691,
+      0.121718,
+      0.114302,
+      0.105073,
+      0.115274,
+      0.057224,
+      0.120771,
+      0.090988,
+      0.064999,
+      0.097434,
+      0.138091,
+      0.085721
+    ],
+    "counts": [
+      2476,
+      1116,
+      824,
+      715,
+      762,
+      580,
+      596,
+      390,
+      412,
+      237,
+      489,
+      199,
+      68,
+      837,
+      242,
+      33,
+      5,
+      12,
+      3,
+      4
+    ]
+  },
+  "most_compressible": [
+    {
+      "seq_id": "A005871",
+      "ratio": 0.088235,
+      "n_terms": 136
+    },
+    {
+      "seq_id": "A005888",
+      "ratio": 0.092308,
+      "n_terms": 130
+    },
+    {
+      "seq_id": "A006509",
+      "ratio": 0.099237,
+      "n_terms": 131
+    },
+    {
+      "seq_id": "A000007",
+      "ratio": 0.114286,
+      "n_terms": 105
+    },
+    {
+      "seq_id": "A000038",
+      "ratio": 0.114286,
+      "n_terms": 105
+    },
+    {
+      "seq_id": "A000091",
+      "ratio": 0.114286,
+      "n_terms": 105
+    },
+    {
+      "seq_id": "A000095",
+      "ratio": 0.114286,
+      "n_terms": 105
+    },
+    {
+      "seq_id": "A000122",
+      "ratio": 0.114286,
+      "n_terms": 105
+    },
+    {
+      "seq_id": "A002448",
+      "ratio": 0.114286,
+      "n_terms": 105
+    },
+    {
+      "seq_id": "A004531",
+      "ratio": 0.114286,
+      "n_terms": 105
+    }
+  ],
+  "least_compressible": [
+    {
+      "seq_id": "A007787",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A008946",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A010418",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A011545",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A011549",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A013568",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A013959",
+      "ratio": 1.05,
+      "n_terms": 20
+    },
+    {
+      "seq_id": "A006787",
+      "ratio": 1.095238,
+      "n_terms": 21
+    },
+    {
+      "seq_id": "A011543",
+      "ratio": 1.095238,
+      "n_terms": 21
+    },
+    {
+      "seq_id": "A002296",
+      "ratio": 1.1,
+      "n_terms": 20
+    }
+  ],
+  "keyword_compression": {
+    "base": {
+      "count": 594,
+      "mean_ratio": 0.417356,
+      "median_ratio": 0.406613
+    },
+    "changed": {
+      "count": 180,
+      "mean_ratio": 0.440525,
+      "median_ratio": 0.438048
+    },
+    "cofr": {
+      "count": 263,
+      "mean_ratio": 0.325019,
+      "median_ratio": 0.34375
+    },
+    "cons": {
+      "count": 831,
+      "mean_ratio": 0.431174,
+      "median_ratio": 0.434343
+    },
+    "core": {
+      "count": 144,
+      "mean_ratio": 0.421731,
+      "median_ratio": 0.412132
+    },
+    "easy": {
+      "count": 4719,
+      "mean_ratio": 0.442275,
+      "median_ratio": 0.438095
+    },
+    "eigen": {
+      "count": 73,
+      "mean_ratio": 0.625187,
+      "median_ratio": 0.62963
+    },
+    "fini": {
+      "count": 225,
+      "mean_ratio": 0.609236,
+      "median_ratio": 0.619048
+    },
+    "frac": {
+      "count": 127,
+      "mean_ratio": 0.494575,
+      "median_ratio": 0.478261
+    },
+    "full": {
+      "count": 216,
+      "mean_ratio": 0.614631,
+      "median_ratio": 0.629167
+    },
+    "hard": {
+      "count": 131,
+      "mean_ratio": 0.636685,
+      "median_ratio": 0.636364
+    },
+    "hear": {
+      "count": 23,
+      "mean_ratio": 0.299564,
+      "median_ratio": 0.341463
+    },
+    "look": {
+      "count": 107,
+      "mean_ratio": 0.356303,
+      "median_ratio": 0.352381
+    },
+    "more": {
+      "count": 200,
+      "mean_ratio": 0.684812,
+      "median_ratio": 0.714286
+    },
+    "mult": {
+      "count": 217,
+      "mean_ratio": 0.284125,
+      "median_ratio": 0.19697
+    },
+    "nice": {
+      "count": 1929,
+      "mean_ratio": 0.473618,
+      "median_ratio": 0.454545
+    },
+    "nonn": {
+      "count": 8608,
+      "mean_ratio": 0.475849,
+      "median_ratio": 0.454545
+    },
+    "sign": {
+      "count": 1373,
+      "mean_ratio": 0.53263,
+      "median_ratio": 0.571429
+    },
+    "tabf": {
+      "count": 68,
+      "mean_ratio": 0.408594,
+      "median_ratio": 0.426301
+    },
+    "tabl": {
+      "count": 139,
+      "mean_ratio": 0.44587,
+      "median_ratio": 0.461538
+    },
+    "walk": {
+      "count": 86,
+      "mean_ratio": 0.537399,
+      "median_ratio": 0.5
+    },
+    "word": {
+      "count": 56,
+      "mean_ratio": 0.359784,
+      "median_ratio": 0.325206
+    }
+  }
+}

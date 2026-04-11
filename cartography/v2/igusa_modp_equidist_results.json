@@ -1,0 +1,2837 @@
+{
+  "experiment": "Igusa Invariant Mod-p Equidistribution (List2 #12)",
+  "n_curves": 66158,
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23,
+    29,
+    31,
+    37,
+    41,
+    43,
+    47
+  ],
+  "overall_avg_ks": 0.017132,
+  "expected_avg_ks": 0.012,
+  "trend_p_vs_ks_correlation": -0.4588,
+  "equidist_improves_with_p": true,
+  "invariant_avg_ks": {
+    "I2": 0.006091,
+    "I4": 0.030007,
+    "I6": 0.023412,
+    "I10": 0.009016
+  },
+  "most_uniform_invariant": "I2",
+  "least_uniform_invariant": "I4",
+  "results_by_prime": {
+    "3": {
+      "p": 3,
+      "n_curves": 66158,
+      "joint_p4": 81,
+      "joint_feasible": true,
+      "joint_chi2_per_bin": 3605.533065,
+      "n_joint_occupied": 61,
+      "joint_occupancy_fraction": 0.753086,
+      "marginals": {
+        "I2": {
+          "chi2": 145.6595,
+          "chi2_normalized": 72.8298,
+          "ks": 0.022028,
+          "entropy_ratio": 0.999008,
+          "top3_bins": [
+            [
+              0,
+              23510
+            ],
+            [
+              1,
+              21439
+            ],
+            [
+              2,
+              21209
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              2,
+              21209
+            ],
+            [
+              1,
+              21439
+            ],
+            [
+              0,
+              23510
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 40111.7101,
+          "chi2_normalized": 20055.8551,
+          "ks": 0.332925,
+          "entropy_ratio": 0.600903,
+          "top3_bins": [
+            [
+              1,
+              41922
+            ],
+            [
+              0,
+              24209
+            ],
+            [
+              2,
+              27
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              2,
+              27
+            ],
+            [
+              0,
+              24209
+            ],
+            [
+              1,
+              41922
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 15213.1927,
+          "chi2_normalized": 7606.5963,
+          "ks": 0.226025,
+          "entropy_ratio": 0.902473,
+          "top3_bins": [
+            [
+              0,
+              37006
+            ],
+            [
+              1,
+              14786
+            ],
+            [
+              2,
+              14366
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              2,
+              14366
+            ],
+            [
+              1,
+              14786
+            ],
+            [
+              0,
+              37006
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 110.1517,
+          "chi2_normalized": 55.0758,
+          "ks": 0.019146,
+          "entropy_ratio": 0.999235,
+          "top3_bins": [
+            [
+              2,
+              22792
+            ],
+            [
+              1,
+              22580
+            ],
+            [
+              0,
+              20786
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              20786
+            ],
+            [
+              1,
+              22580
+            ],
+            [
+              2,
+              22792
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 128493.09,
+          "chi2_normalized": 16061.6368,
+          "n_occupied_bins": 9,
+          "n_total_bins": 9,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 50310.06,
+          "chi2_normalized": 6288.7569,
+          "n_occupied_bins": 9,
+          "n_total_bins": 9,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 1971.75,
+          "chi2_normalized": 246.4681,
+          "n_occupied_bins": 9,
+          "n_total_bins": 9,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 92194.48,
+          "chi2_normalized": 11524.3094,
+          "n_occupied_bins": 9,
+          "n_total_bins": 9,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 42601.74,
+          "chi2_normalized": 5325.2176,
+          "n_occupied_bins": 9,
+          "n_total_bins": 9,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 17162.44,
+          "chi2_normalized": 2145.3046,
+          "n_occupied_bins": 9,
+          "n_total_bins": 9,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.150031,
+      "max_marginal_ks": 0.332925,
+      "least_uniform_invariant": "I4",
+      "most_uniform_invariant": "I10"
+    },
+    "5": {
+      "p": 5,
+      "n_curves": 66158,
+      "joint_p4": 625,
+      "joint_feasible": true,
+      "joint_chi2_per_bin": 32.0738,
+      "n_joint_occupied": 625,
+      "joint_occupancy_fraction": 1.0,
+      "marginals": {
+        "I2": {
+          "chi2": 12.3484,
+          "chi2_normalized": 3.0871,
+          "ks": 0.004495,
+          "entropy_ratio": 0.999942,
+          "top3_bins": [
+            [
+              0,
+              13529
+            ],
+            [
+              3,
+              13350
+            ],
+            [
+              2,
+              13135
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              1,
+              13054
+            ],
+            [
+              4,
+              13090
+            ],
+            [
+              2,
+              13135
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 337.9243,
+          "chi2_normalized": 84.4811,
+          "ks": 0.026715,
+          "entropy_ratio": 0.998449,
+          "top3_bins": [
+            [
+              0,
+              14999
+            ],
+            [
+              2,
+              13145
+            ],
+            [
+              3,
+              13139
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              1,
+              12250
+            ],
+            [
+              4,
+              12625
+            ],
+            [
+              3,
+              13139
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 563.2763,
+          "chi2_normalized": 140.8191,
+          "ks": 0.036842,
+          "entropy_ratio": 0.997465,
+          "top3_bins": [
+            [
+              0,
+              15669
+            ],
+            [
+              4,
+              12713
+            ],
+            [
+              2,
+              12687
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              3,
+              12510
+            ],
+            [
+              1,
+              12579
+            ],
+            [
+              2,
+              12687
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 188.6384,
+          "chi2_normalized": 47.1596,
+          "ks": 0.011482,
+          "entropy_ratio": 0.999117,
+          "top3_bins": [
+            [
+              1,
+              14289
+            ],
+            [
+              3,
+              13715
+            ],
+            [
+              2,
+              13203
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              12472
+            ],
+            [
+              4,
+              12479
+            ],
+            [
+              2,
+              13203
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 616.03,
+          "chi2_normalized": 25.668,
+          "n_occupied_bins": 25,
+          "n_total_bins": 25,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 1033.42,
+          "chi2_normalized": 43.0593,
+          "n_occupied_bins": 25,
+          "n_total_bins": 25,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 473.81,
+          "chi2_normalized": 19.7422,
+          "n_occupied_bins": 25,
+          "n_total_bins": 25,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 2419.08,
+          "chi2_normalized": 100.795,
+          "n_occupied_bins": 25,
+          "n_total_bins": 25,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1023.48,
+          "chi2_normalized": 42.6448,
+          "n_occupied_bins": 25,
+          "n_total_bins": 25,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1566.93,
+          "chi2_normalized": 65.2888,
+          "n_occupied_bins": 25,
+          "n_total_bins": 25,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.019883,
+      "max_marginal_ks": 0.036842,
+      "least_uniform_invariant": "I6",
+      "most_uniform_invariant": "I2"
+    },
+    "7": {
+      "p": 7,
+      "n_curves": 66158,
+      "joint_p4": 2401,
+      "joint_feasible": true,
+      "joint_chi2_per_bin": 15.439662,
+      "n_joint_occupied": 2401,
+      "joint_occupancy_fraction": 1.0,
+      "marginals": {
+        "I2": {
+          "chi2": 6.3691,
+          "chi2_normalized": 1.0615,
+          "ks": 0.002572,
+          "entropy_ratio": 0.999975,
+          "top3_bins": [
+            [
+              1,
+              9603
+            ],
+            [
+              2,
+              9513
+            ],
+            [
+              3,
+              9474
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              9281
+            ],
+            [
+              6,
+              9403
+            ],
+            [
+              4,
+              9416
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 201.6809,
+          "chi2_normalized": 33.6135,
+          "ks": 0.017048,
+          "entropy_ratio": 0.999232,
+          "top3_bins": [
+            [
+              0,
+              10579
+            ],
+            [
+              5,
+              9585
+            ],
+            [
+              6,
+              9544
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              4,
+              8965
+            ],
+            [
+              2,
+              9010
+            ],
+            [
+              1,
+              9031
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 183.0525,
+          "chi2_normalized": 30.5087,
+          "ks": 0.016802,
+          "entropy_ratio": 0.999292,
+          "top3_bins": [
+            [
+              0,
+              10264
+            ],
+            [
+              2,
+              9869
+            ],
+            [
+              5,
+              9797
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              3,
+              8867
+            ],
+            [
+              6,
+              8876
+            ],
+            [
+              4,
+              9153
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 223.3206,
+          "chi2_normalized": 37.2201,
+          "ks": 0.016191,
+          "entropy_ratio": 0.999123,
+          "top3_bins": [
+            [
+              5,
+              10271
+            ],
+            [
+              1,
+              9956
+            ],
+            [
+              6,
+              9467
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              8380
+            ],
+            [
+              2,
+              9306
+            ],
+            [
+              3,
+              9329
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 625.87,
+          "chi2_normalized": 13.039,
+          "n_occupied_bins": 49,
+          "n_total_bins": 49,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 589.86,
+          "chi2_normalized": 12.2888,
+          "n_occupied_bins": 49,
+          "n_total_bins": 49,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 573.29,
+          "chi2_normalized": 11.9435,
+          "n_occupied_bins": 49,
+          "n_total_bins": 49,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 1345.6,
+          "chi2_normalized": 28.0333,
+          "n_occupied_bins": 49,
+          "n_total_bins": 49,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1284.83,
+          "chi2_normalized": 26.7672,
+          "n_occupied_bins": 49,
+          "n_total_bins": 49,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1981.09,
+          "chi2_normalized": 41.2726,
+          "n_occupied_bins": 49,
+          "n_total_bins": 49,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.013153,
+      "max_marginal_ks": 0.017048,
+      "least_uniform_invariant": "I4",
+      "most_uniform_invariant": "I2"
+    },
+    "11": {
+      "p": 11,
+      "n_curves": 66158,
+      "joint_p4": 14641,
+      "joint_feasible": true,
+      "joint_chi2_per_bin": 2.929126,
+      "n_joint_occupied": 14030,
+      "joint_occupancy_fraction": 0.958268,
+      "marginals": {
+        "I2": {
+          "chi2": 9.9789,
+          "chi2_normalized": 0.9979,
+          "ks": 0.002017,
+          "entropy_ratio": 0.999969,
+          "top3_bins": [
+            [
+              5,
+              6144
+            ],
+            [
+              2,
+              6105
+            ],
+            [
+              9,
+              6080
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              3,
+              5863
+            ],
+            [
+              0,
+              5954
+            ],
+            [
+              7,
+              5972
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 24.8892,
+          "chi2_normalized": 2.4889,
+          "ks": 0.004771,
+          "entropy_ratio": 0.999922,
+          "top3_bins": [
+            [
+              0,
+              6330
+            ],
+            [
+              9,
+              6071
+            ],
+            [
+              4,
+              6055
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              8,
+              5843
+            ],
+            [
+              5,
+              5918
+            ],
+            [
+              6,
+              5966
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 25.2483,
+          "chi2_normalized": 2.5248,
+          "ks": 0.004664,
+          "entropy_ratio": 0.999921,
+          "top3_bins": [
+            [
+              0,
+              6316
+            ],
+            [
+              3,
+              6124
+            ],
+            [
+              6,
+              6075
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              1,
+              5893
+            ],
+            [
+              4,
+              5905
+            ],
+            [
+              7,
+              5927
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 130.907,
+          "chi2_normalized": 13.0907,
+          "ks": 0.012874,
+          "entropy_ratio": 0.99957,
+          "top3_bins": [
+            [
+              3,
+              6201
+            ],
+            [
+              10,
+              6158
+            ],
+            [
+              9,
+              6150
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              5191
+            ],
+            [
+              1,
+              5986
+            ],
+            [
+              7,
+              6009
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 432.89,
+          "chi2_normalized": 3.6074,
+          "n_occupied_bins": 121,
+          "n_total_bins": 121,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 233.96,
+          "chi2_normalized": 1.9497,
+          "n_occupied_bins": 121,
+          "n_total_bins": 121,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 339.98,
+          "chi2_normalized": 2.8332,
+          "n_occupied_bins": 121,
+          "n_total_bins": 121,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 414.68,
+          "chi2_normalized": 3.4557,
+          "n_occupied_bins": 121,
+          "n_total_bins": 121,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 757.84,
+          "chi2_normalized": 6.3154,
+          "n_occupied_bins": 121,
+          "n_total_bins": 121,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 637.47,
+          "chi2_normalized": 5.3122,
+          "n_occupied_bins": 121,
+          "n_total_bins": 121,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.006082,
+      "max_marginal_ks": 0.012874,
+      "least_uniform_invariant": "I10",
+      "most_uniform_invariant": "I2"
+    },
+    "13": {
+      "p": 13,
+      "n_curves": 66158,
+      "joint_p4": 28561,
+      "joint_feasible": true,
+      "joint_chi2_per_bin": 2.620835,
+      "n_joint_occupied": 22668,
+      "joint_occupancy_fraction": 0.79367,
+      "marginals": {
+        "I2": {
+          "chi2": 20.5756,
+          "chi2_normalized": 1.7146,
+          "ks": 0.002927,
+          "entropy_ratio": 0.999939,
+          "top3_bins": [
+            [
+              4,
+              5246
+            ],
+            [
+              0,
+              5198
+            ],
+            [
+              8,
+              5183
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              5,
+              4923
+            ],
+            [
+              10,
+              4977
+            ],
+            [
+              9,
+              4983
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 37.7909,
+          "chi2_normalized": 3.1492,
+          "ks": 0.005976,
+          "entropy_ratio": 0.999889,
+          "top3_bins": [
+            [
+              0,
+              5371
+            ],
+            [
+              6,
+              5237
+            ],
+            [
+              7,
+              5220
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              8,
+              4888
+            ],
+            [
+              10,
+              4989
+            ],
+            [
+              2,
+              4996
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 77.8111,
+          "chi2_normalized": 6.4843,
+          "ks": 0.009502,
+          "entropy_ratio": 0.999772,
+          "top3_bins": [
+            [
+              0,
+              5394
+            ],
+            [
+              1,
+              5380
+            ],
+            [
+              12,
+              5280
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              7,
+              4831
+            ],
+            [
+              11,
+              4887
+            ],
+            [
+              6,
+              4930
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 630.4367,
+          "chi2_normalized": 52.5364,
+          "ks": 0.019986,
+          "entropy_ratio": 0.998152,
+          "top3_bins": [
+            [
+              8,
+              5853
+            ],
+            [
+              5,
+              5785
+            ],
+            [
+              4,
+              5657
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              1,
+              4349
+            ],
+            [
+              7,
+              4582
+            ],
+            [
+              12,
+              4643
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 313.5,
+          "chi2_normalized": 1.8661,
+          "n_occupied_bins": 169,
+          "n_total_bins": 169,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 392.66,
+          "chi2_normalized": 2.3372,
+          "n_occupied_bins": 169,
+          "n_total_bins": 169,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 945.94,
+          "chi2_normalized": 5.6306,
+          "n_occupied_bins": 169,
+          "n_total_bins": 169,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 674.55,
+          "chi2_normalized": 4.0152,
+          "n_occupied_bins": 169,
+          "n_total_bins": 169,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1319.06,
+          "chi2_normalized": 7.8516,
+          "n_occupied_bins": 169,
+          "n_total_bins": 169,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1509.34,
+          "chi2_normalized": 8.9841,
+          "n_occupied_bins": 169,
+          "n_total_bins": 169,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.009598,
+      "max_marginal_ks": 0.019986,
+      "least_uniform_invariant": "I10",
+      "most_uniform_invariant": "I2"
+    },
+    "17": {
+      "p": 17,
+      "n_curves": 66158,
+      "joint_p4": 83521,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 31269,
+      "joint_occupancy_fraction": 0.374385,
+      "marginals": {
+        "I2": {
+          "chi2": 31.5023,
+          "chi2_normalized": 1.9689,
+          "ks": 0.00422,
+          "entropy_ratio": 0.999917,
+          "top3_bins": [
+            [
+              7,
+              4182
+            ],
+            [
+              8,
+              3948
+            ],
+            [
+              2,
+              3930
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              5,
+              3805
+            ],
+            [
+              10,
+              3810
+            ],
+            [
+              9,
+              3819
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 31.4304,
+          "chi2_normalized": 1.9644,
+          "ks": 0.004688,
+          "entropy_ratio": 0.999917,
+          "top3_bins": [
+            [
+              0,
+              4124
+            ],
+            [
+              11,
+              4020
+            ],
+            [
+              5,
+              3977
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              15,
+              3774
+            ],
+            [
+              8,
+              3807
+            ],
+            [
+              14,
+              3818
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 42.1297,
+          "chi2_normalized": 2.6331,
+          "ks": 0.003095,
+          "entropy_ratio": 0.999887,
+          "top3_bins": [
+            [
+              1,
+              4029
+            ],
+            [
+              15,
+              4016
+            ],
+            [
+              7,
+              4005
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              10,
+              3676
+            ],
+            [
+              6,
+              3727
+            ],
+            [
+              4,
+              3821
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 27.2733,
+          "chi2_normalized": 1.7046,
+          "ks": 0.002912,
+          "entropy_ratio": 0.999927,
+          "top3_bins": [
+            [
+              2,
+              4033
+            ],
+            [
+              9,
+              3988
+            ],
+            [
+              4,
+              3984
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              3699
+            ],
+            [
+              7,
+              3790
+            ],
+            [
+              5,
+              3797
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 612.13,
+          "chi2_normalized": 2.1255,
+          "n_occupied_bins": 289,
+          "n_total_bins": 289,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 608.26,
+          "chi2_normalized": 2.112,
+          "n_occupied_bins": 289,
+          "n_total_bins": 289,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 609.45,
+          "chi2_normalized": 2.1161,
+          "n_occupied_bins": 289,
+          "n_total_bins": 289,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 823.11,
+          "chi2_normalized": 2.858,
+          "n_occupied_bins": 289,
+          "n_total_bins": 289,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 670.45,
+          "chi2_normalized": 2.3279,
+          "n_occupied_bins": 289,
+          "n_total_bins": 289,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1270.16,
+          "chi2_normalized": 4.4103,
+          "n_occupied_bins": 289,
+          "n_total_bins": 289,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.003729,
+      "max_marginal_ks": 0.004688,
+      "least_uniform_invariant": "I4",
+      "most_uniform_invariant": "I10"
+    },
+    "19": {
+      "p": 19,
+      "n_curves": 66158,
+      "joint_p4": 130321,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 46453,
+      "joint_occupancy_fraction": 0.356451,
+      "marginals": {
+        "I2": {
+          "chi2": 40.919,
+          "chi2_normalized": 2.2733,
+          "ks": 0.002222,
+          "entropy_ratio": 0.999895,
+          "top3_bins": [
+            [
+              5,
+              3589
+            ],
+            [
+              13,
+              3587
+            ],
+            [
+              9,
+              3587
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              10,
+              3311
+            ],
+            [
+              14,
+              3356
+            ],
+            [
+              11,
+              3368
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 19.6456,
+          "chi2_normalized": 1.0914,
+          "ks": 0.003099,
+          "entropy_ratio": 0.99995,
+          "top3_bins": [
+            [
+              0,
+              3657
+            ],
+            [
+              15,
+              3542
+            ],
+            [
+              8,
+              3529
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              2,
+              3350
+            ],
+            [
+              10,
+              3427
+            ],
+            [
+              16,
+              3443
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 38.8742,
+          "chi2_normalized": 2.1597,
+          "ks": 0.0039,
+          "entropy_ratio": 0.9999,
+          "top3_bins": [
+            [
+              15,
+              3638
+            ],
+            [
+              14,
+              3599
+            ],
+            [
+              13,
+              3593
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              17,
+              3349
+            ],
+            [
+              4,
+              3362
+            ],
+            [
+              1,
+              3386
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 149.8374,
+          "chi2_normalized": 8.3243,
+          "ks": 0.009976,
+          "entropy_ratio": 0.999607,
+          "top3_bins": [
+            [
+              11,
+              3701
+            ],
+            [
+              13,
+              3673
+            ],
+            [
+              7,
+              3635
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              3006
+            ],
+            [
+              4,
+              3183
+            ],
+            [
+              6,
+              3376
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 458.73,
+          "chi2_normalized": 1.2742,
+          "n_occupied_bins": 361,
+          "n_total_bins": 361,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 510.28,
+          "chi2_normalized": 1.4175,
+          "n_occupied_bins": 361,
+          "n_total_bins": 361,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 622.92,
+          "chi2_normalized": 1.7303,
+          "n_occupied_bins": 361,
+          "n_total_bins": 361,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 585.78,
+          "chi2_normalized": 1.6272,
+          "n_occupied_bins": 361,
+          "n_total_bins": 361,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 718.3,
+          "chi2_normalized": 1.9953,
+          "n_occupied_bins": 361,
+          "n_total_bins": 361,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 670.12,
+          "chi2_normalized": 1.8614,
+          "n_occupied_bins": 361,
+          "n_total_bins": 361,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.004799,
+      "max_marginal_ks": 0.009976,
+      "least_uniform_invariant": "I10",
+      "most_uniform_invariant": "I2"
+    },
+    "23": {
+      "p": 23,
+      "n_curves": 66158,
+      "joint_p4": 279841,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 53218,
+      "joint_occupancy_fraction": 0.190172,
+      "marginals": {
+        "I2": {
+          "chi2": 46.4574,
+          "chi2_normalized": 2.1117,
+          "ks": 0.003419,
+          "entropy_ratio": 0.999888,
+          "top3_bins": [
+            [
+              8,
+              3026
+            ],
+            [
+              16,
+              3000
+            ],
+            [
+              4,
+              2980
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              15,
+              2696
+            ],
+            [
+              7,
+              2736
+            ],
+            [
+              14,
+              2789
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 26.304,
+          "chi2_normalized": 1.1956,
+          "ks": 0.003178,
+          "entropy_ratio": 0.999937,
+          "top3_bins": [
+            [
+              0,
+              2975
+            ],
+            [
+              1,
+              2969
+            ],
+            [
+              18,
+              2958
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              3,
+              2783
+            ],
+            [
+              2,
+              2804
+            ],
+            [
+              9,
+              2805
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 19.6527,
+          "chi2_normalized": 0.8933,
+          "ks": 0.002009,
+          "entropy_ratio": 0.999953,
+          "top3_bins": [
+            [
+              7,
+              2992
+            ],
+            [
+              13,
+              2964
+            ],
+            [
+              3,
+              2959
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              4,
+              2766
+            ],
+            [
+              22,
+              2805
+            ],
+            [
+              0,
+              2810
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 30.2137,
+          "chi2_normalized": 1.3733,
+          "ks": 0.003174,
+          "entropy_ratio": 0.999927,
+          "top3_bins": [
+            [
+              16,
+              3031
+            ],
+            [
+              18,
+              2964
+            ],
+            [
+              17,
+              2962
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              19,
+              2762
+            ],
+            [
+              13,
+              2784
+            ],
+            [
+              12,
+              2813
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 710.55,
+          "chi2_normalized": 1.3457,
+          "n_occupied_bins": 529,
+          "n_total_bins": 529,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 647.36,
+          "chi2_normalized": 1.2261,
+          "n_occupied_bins": 529,
+          "n_total_bins": 529,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 637.71,
+          "chi2_normalized": 1.2078,
+          "n_occupied_bins": 529,
+          "n_total_bins": 529,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 736.82,
+          "chi2_normalized": 1.3955,
+          "n_occupied_bins": 529,
+          "n_total_bins": 529,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 732.73,
+          "chi2_normalized": 1.3877,
+          "n_occupied_bins": 529,
+          "n_total_bins": 529,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 733.83,
+          "chi2_normalized": 1.3898,
+          "n_occupied_bins": 529,
+          "n_total_bins": 529,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.002945,
+      "max_marginal_ks": 0.003419,
+      "least_uniform_invariant": "I2",
+      "most_uniform_invariant": "I6"
+    },
+    "29": {
+      "p": 29,
+      "n_curves": 66158,
+      "joint_p4": 707281,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 58855,
+      "joint_occupancy_fraction": 0.083213,
+      "marginals": {
+        "I2": {
+          "chi2": 117.3879,
+          "chi2_normalized": 4.1924,
+          "ks": 0.004432,
+          "entropy_ratio": 0.999738,
+          "top3_bins": [
+            [
+              24,
+              2533
+            ],
+            [
+              6,
+              2459
+            ],
+            [
+              3,
+              2402
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              26,
+              2110
+            ],
+            [
+              13,
+              2157
+            ],
+            [
+              18,
+              2165
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 41.0668,
+          "chi2_normalized": 1.4667,
+          "ks": 0.003832,
+          "entropy_ratio": 0.999908,
+          "top3_bins": [
+            [
+              21,
+              2394
+            ],
+            [
+              23,
+              2393
+            ],
+            [
+              22,
+              2383
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              9,
+              2186
+            ],
+            [
+              17,
+              2186
+            ],
+            [
+              10,
+              2204
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 31.2961,
+          "chi2_normalized": 1.1177,
+          "ks": 0.004685,
+          "entropy_ratio": 0.99993,
+          "top3_bins": [
+            [
+              0,
+              2406
+            ],
+            [
+              9,
+              2358
+            ],
+            [
+              12,
+              2342
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              26,
+              2205
+            ],
+            [
+              20,
+              2207
+            ],
+            [
+              14,
+              2217
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 89.0963,
+          "chi2_normalized": 3.182,
+          "ks": 0.00511,
+          "entropy_ratio": 0.999799,
+          "top3_bins": [
+            [
+              10,
+              2473
+            ],
+            [
+              28,
+              2397
+            ],
+            [
+              12,
+              2389
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              2094
+            ],
+            [
+              16,
+              2117
+            ],
+            [
+              20,
+              2145
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 1095.0,
+          "chi2_normalized": 1.3036,
+          "n_occupied_bins": 841,
+          "n_total_bins": 841,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 1143.38,
+          "chi2_normalized": 1.3612,
+          "n_occupied_bins": 841,
+          "n_total_bins": 841,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 1162.78,
+          "chi2_normalized": 1.3843,
+          "n_occupied_bins": 841,
+          "n_total_bins": 841,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 983.95,
+          "chi2_normalized": 1.1714,
+          "n_occupied_bins": 841,
+          "n_total_bins": 841,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1078.7,
+          "chi2_normalized": 1.2842,
+          "n_occupied_bins": 841,
+          "n_total_bins": 841,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1195.75,
+          "chi2_normalized": 1.4235,
+          "n_occupied_bins": 841,
+          "n_total_bins": 841,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.004515,
+      "max_marginal_ks": 0.00511,
+      "least_uniform_invariant": "I10",
+      "most_uniform_invariant": "I4"
+    },
+    "31": {
+      "p": 31,
+      "n_curves": 66158,
+      "joint_p4": 923521,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 59118,
+      "joint_occupancy_fraction": 0.064014,
+      "marginals": {
+        "I2": {
+          "chi2": 131.6,
+          "chi2_normalized": 4.3867,
+          "ks": 0.009905,
+          "entropy_ratio": 0.999712,
+          "top3_bins": [
+            [
+              8,
+              2339
+            ],
+            [
+              4,
+              2300
+            ],
+            [
+              12,
+              2288
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              23,
+              1960
+            ],
+            [
+              19,
+              1998
+            ],
+            [
+              7,
+              2007
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 32.9996,
+          "chi2_normalized": 1.1,
+          "ks": 0.001545,
+          "entropy_ratio": 0.999927,
+          "top3_bins": [
+            [
+              21,
+              2224
+            ],
+            [
+              16,
+              2204
+            ],
+            [
+              27,
+              2198
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              3,
+              2049
+            ],
+            [
+              24,
+              2056
+            ],
+            [
+              12,
+              2061
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 46.8976,
+          "chi2_normalized": 1.5633,
+          "ks": 0.005711,
+          "entropy_ratio": 0.999897,
+          "top3_bins": [
+            [
+              29,
+              2272
+            ],
+            [
+              23,
+              2212
+            ],
+            [
+              0,
+              2203
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              13,
+              2001
+            ],
+            [
+              21,
+              2036
+            ],
+            [
+              17,
+              2045
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 355.6718,
+          "chi2_normalized": 11.8557,
+          "ks": 0.007869,
+          "entropy_ratio": 0.999221,
+          "top3_bins": [
+            [
+              6,
+              2400
+            ],
+            [
+              5,
+              2369
+            ],
+            [
+              10,
+              2364
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              13,
+              1897
+            ],
+            [
+              7,
+              1921
+            ],
+            [
+              21,
+              1941
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 1202.55,
+          "chi2_normalized": 1.2527,
+          "n_occupied_bins": 961,
+          "n_total_bins": 961,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 1328.38,
+          "chi2_normalized": 1.3837,
+          "n_occupied_bins": 961,
+          "n_total_bins": 961,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 1495.05,
+          "chi2_normalized": 1.5573,
+          "n_occupied_bins": 961,
+          "n_total_bins": 961,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 1195.76,
+          "chi2_normalized": 1.2456,
+          "n_occupied_bins": 961,
+          "n_total_bins": 961,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1432.24,
+          "chi2_normalized": 1.4919,
+          "n_occupied_bins": 961,
+          "n_total_bins": 961,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1533.31,
+          "chi2_normalized": 1.5972,
+          "n_occupied_bins": 961,
+          "n_total_bins": 961,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.006258,
+      "max_marginal_ks": 0.009905,
+      "least_uniform_invariant": "I2",
+      "most_uniform_invariant": "I4"
+    },
+    "37": {
+      "p": 37,
+      "n_curves": 66158,
+      "joint_p4": 1874161,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 61416,
+      "joint_occupancy_fraction": 0.03277,
+      "marginals": {
+        "I2": {
+          "chi2": 194.7278,
+          "chi2_normalized": 5.4091,
+          "ks": 0.004662,
+          "entropy_ratio": 0.999594,
+          "top3_bins": [
+            [
+              24,
+              2057
+            ],
+            [
+              12,
+              2005
+            ],
+            [
+              27,
+              1943
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              29,
+              1545
+            ],
+            [
+              13,
+              1654
+            ],
+            [
+              10,
+              1657
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 29.0729,
+          "chi2_normalized": 0.8076,
+          "ks": 0.004184,
+          "entropy_ratio": 0.999939,
+          "top3_bins": [
+            [
+              2,
+              1844
+            ],
+            [
+              12,
+              1841
+            ],
+            [
+              3,
+              1836
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              11,
+              1708
+            ],
+            [
+              29,
+              1708
+            ],
+            [
+              30,
+              1730
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 56.8237,
+          "chi2_normalized": 1.5784,
+          "ks": 0.003074,
+          "entropy_ratio": 0.999882,
+          "top3_bins": [
+            [
+              0,
+              1913
+            ],
+            [
+              36,
+              1890
+            ],
+            [
+              11,
+              1887
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              21,
+              1690
+            ],
+            [
+              12,
+              1712
+            ],
+            [
+              34,
+              1717
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 157.3252,
+          "chi2_normalized": 4.3701,
+          "ks": 0.004694,
+          "entropy_ratio": 0.999669,
+          "top3_bins": [
+            [
+              10,
+              1961
+            ],
+            [
+              1,
+              1931
+            ],
+            [
+              15,
+              1904
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              25,
+              1580
+            ],
+            [
+              16,
+              1639
+            ],
+            [
+              5,
+              1662
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 1735.86,
+          "chi2_normalized": 1.2689,
+          "n_occupied_bins": 1369,
+          "n_total_bins": 1369,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 1732.84,
+          "chi2_normalized": 1.2667,
+          "n_occupied_bins": 1369,
+          "n_total_bins": 1369,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 1705.32,
+          "chi2_normalized": 1.2466,
+          "n_occupied_bins": 1369,
+          "n_total_bins": 1369,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 1576.23,
+          "chi2_normalized": 1.1522,
+          "n_occupied_bins": 1369,
+          "n_total_bins": 1369,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1702.46,
+          "chi2_normalized": 1.2445,
+          "n_occupied_bins": 1369,
+          "n_total_bins": 1369,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 1768.35,
+          "chi2_normalized": 1.2927,
+          "n_occupied_bins": 1369,
+          "n_total_bins": 1369,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.004154,
+      "max_marginal_ks": 0.004694,
+      "least_uniform_invariant": "I10",
+      "most_uniform_invariant": "I6"
+    },
+    "41": {
+      "p": 41,
+      "n_curves": 66158,
+      "joint_p4": 2825761,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 61192,
+      "joint_occupancy_fraction": 0.021655,
+      "marginals": {
+        "I2": {
+          "chi2": 153.1558,
+          "chi2_normalized": 3.8289,
+          "ks": 0.011801,
+          "entropy_ratio": 0.999687,
+          "top3_bins": [
+            [
+              24,
+              1769
+            ],
+            [
+              20,
+              1726
+            ],
+            [
+              12,
+              1714
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              25,
+              1479
+            ],
+            [
+              33,
+              1486
+            ],
+            [
+              1,
+              1490
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 55.1334,
+          "chi2_normalized": 1.3783,
+          "ks": 0.006445,
+          "entropy_ratio": 0.999888,
+          "top3_bins": [
+            [
+              15,
+              1712
+            ],
+            [
+              18,
+              1701
+            ],
+            [
+              0,
+              1698
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              17,
+              1537
+            ],
+            [
+              20,
+              1549
+            ],
+            [
+              37,
+              1550
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 43.9721,
+          "chi2_normalized": 1.0993,
+          "ks": 0.003746,
+          "entropy_ratio": 0.999911,
+          "top3_bins": [
+            [
+              14,
+              1704
+            ],
+            [
+              10,
+              1703
+            ],
+            [
+              35,
+              1694
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              30,
+              1549
+            ],
+            [
+              25,
+              1551
+            ],
+            [
+              24,
+              1552
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 75.0254,
+          "chi2_normalized": 1.8756,
+          "ks": 0.005328,
+          "entropy_ratio": 0.999848,
+          "top3_bins": [
+            [
+              9,
+              1749
+            ],
+            [
+              11,
+              1724
+            ],
+            [
+              30,
+              1724
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              38,
+              1492
+            ],
+            [
+              14,
+              1512
+            ],
+            [
+              10,
+              1529
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 2066.9,
+          "chi2_normalized": 1.2303,
+          "n_occupied_bins": 1681,
+          "n_total_bins": 1681,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 2010.08,
+          "chi2_normalized": 1.1965,
+          "n_occupied_bins": 1681,
+          "n_total_bins": 1681,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 2059.58,
+          "chi2_normalized": 1.2259,
+          "n_occupied_bins": 1681,
+          "n_total_bins": 1681,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 1917.8,
+          "chi2_normalized": 1.1415,
+          "n_occupied_bins": 1681,
+          "n_total_bins": 1681,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 1846.81,
+          "chi2_normalized": 1.0993,
+          "n_occupied_bins": 1681,
+          "n_total_bins": 1681,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 2070.0,
+          "chi2_normalized": 1.2321,
+          "n_occupied_bins": 1681,
+          "n_total_bins": 1681,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.00683,
+      "max_marginal_ks": 0.011801,
+      "least_uniform_invariant": "I2",
+      "most_uniform_invariant": "I6"
+    },
+    "43": {
+      "p": 43,
+      "n_curves": 66158,
+      "joint_p4": 3418801,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 62341,
+      "joint_occupancy_fraction": 0.018235,
+      "marginals": {
+        "I2": {
+          "chi2": 173.7098,
+          "chi2_normalized": 4.1359,
+          "ks": 0.004508,
+          "entropy_ratio": 0.99965,
+          "top3_bins": [
+            [
+              10,
+              1668
+            ],
+            [
+              29,
+              1666
+            ],
+            [
+              16,
+              1659
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              27,
+              1344
+            ],
+            [
+              39,
+              1393
+            ],
+            [
+              11,
+              1404
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 51.9841,
+          "chi2_normalized": 1.2377,
+          "ks": 0.002888,
+          "entropy_ratio": 0.999896,
+          "top3_bins": [
+            [
+              0,
+              1667
+            ],
+            [
+              11,
+              1617
+            ],
+            [
+              41,
+              1615
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              24,
+              1463
+            ],
+            [
+              15,
+              1463
+            ],
+            [
+              17,
+              1465
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 43.0563,
+          "chi2_normalized": 1.0251,
+          "ks": 0.002888,
+          "entropy_ratio": 0.999914,
+          "top3_bins": [
+            [
+              5,
+              1628
+            ],
+            [
+              32,
+              1603
+            ],
+            [
+              39,
+              1603
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              4,
+              1453
+            ],
+            [
+              10,
+              1470
+            ],
+            [
+              24,
+              1482
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 69.8801,
+          "chi2_normalized": 1.6638,
+          "ks": 0.003586,
+          "entropy_ratio": 0.999858,
+          "top3_bins": [
+            [
+              25,
+              1671
+            ],
+            [
+              37,
+              1635
+            ],
+            [
+              19,
+              1599
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              1361
+            ],
+            [
+              24,
+              1446
+            ],
+            [
+              23,
+              1472
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 2137.11,
+          "chi2_normalized": 1.1564,
+          "n_occupied_bins": 1849,
+          "n_total_bins": 1849,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 2067.08,
+          "chi2_normalized": 1.1185,
+          "n_occupied_bins": 1849,
+          "n_total_bins": 1849,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 2239.18,
+          "chi2_normalized": 1.2117,
+          "n_occupied_bins": 1849,
+          "n_total_bins": 1849,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 2075.57,
+          "chi2_normalized": 1.1231,
+          "n_occupied_bins": 1849,
+          "n_total_bins": 1849,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 2254.44,
+          "chi2_normalized": 1.2199,
+          "n_occupied_bins": 1849,
+          "n_total_bins": 1849,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 2098.27,
+          "chi2_normalized": 1.1354,
+          "n_occupied_bins": 1849,
+          "n_total_bins": 1849,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.003468,
+      "max_marginal_ks": 0.004508,
+      "least_uniform_invariant": "I2",
+      "most_uniform_invariant": "I6"
+    },
+    "47": {
+      "p": 47,
+      "n_curves": 66158,
+      "joint_p4": 4879681,
+      "joint_feasible": false,
+      "joint_chi2_per_bin": null,
+      "n_joint_occupied": 62656,
+      "joint_occupancy_fraction": 0.01284,
+      "marginals": {
+        "I2": {
+          "chi2": 232.0682,
+          "chi2_normalized": 5.045,
+          "ks": 0.006068,
+          "entropy_ratio": 0.999543,
+          "top3_bins": [
+            [
+              24,
+              1568
+            ],
+            [
+              17,
+              1561
+            ],
+            [
+              8,
+              1553
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              39,
+              1240
+            ],
+            [
+              37,
+              1245
+            ],
+            [
+              23,
+              1263
+            ]
+          ]
+        },
+        "I4": {
+          "chi2": 72.3273,
+          "chi2_normalized": 1.5723,
+          "ks": 0.002805,
+          "entropy_ratio": 0.999857,
+          "top3_bins": [
+            [
+              14,
+              1481
+            ],
+            [
+              39,
+              1475
+            ],
+            [
+              41,
+              1474
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              17,
+              1314
+            ],
+            [
+              42,
+              1317
+            ],
+            [
+              9,
+              1323
+            ]
+          ]
+        },
+        "I6": {
+          "chi2": 54.9859,
+          "chi2_normalized": 1.1953,
+          "ks": 0.004829,
+          "entropy_ratio": 0.999892,
+          "top3_bins": [
+            [
+              42,
+              1499
+            ],
+            [
+              38,
+              1482
+            ],
+            [
+              19,
+              1479
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              11,
+              1323
+            ],
+            [
+              40,
+              1327
+            ],
+            [
+              14,
+              1352
+            ]
+          ]
+        },
+        "I10": {
+          "chi2": 73.2039,
+          "chi2_normalized": 1.5914,
+          "ks": 0.003894,
+          "entropy_ratio": 0.999855,
+          "top3_bins": [
+            [
+              44,
+              1500
+            ],
+            [
+              38,
+              1486
+            ],
+            [
+              24,
+              1474
+            ]
+          ],
+          "bottom3_bins": [
+            [
+              0,
+              1236
+            ],
+            [
+              40,
+              1338
+            ],
+            [
+              34,
+              1341
+            ]
+          ]
+        }
+      },
+      "pairwise": {
+        "I2_I4": {
+          "chi2": 2745.05,
+          "chi2_normalized": 1.2432,
+          "n_occupied_bins": 2209,
+          "n_total_bins": 2209,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I6": {
+          "chi2": 2678.8,
+          "chi2_normalized": 1.2132,
+          "n_occupied_bins": 2209,
+          "n_total_bins": 2209,
+          "occupancy_fraction": 1.0
+        },
+        "I2_I10": {
+          "chi2": 2600.41,
+          "chi2_normalized": 1.1777,
+          "n_occupied_bins": 2209,
+          "n_total_bins": 2209,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I6": {
+          "chi2": 2447.41,
+          "chi2_normalized": 1.1084,
+          "n_occupied_bins": 2209,
+          "n_total_bins": 2209,
+          "occupancy_fraction": 1.0
+        },
+        "I4_I10": {
+          "chi2": 2483.81,
+          "chi2_normalized": 1.1249,
+          "n_occupied_bins": 2209,
+          "n_total_bins": 2209,
+          "occupancy_fraction": 1.0
+        },
+        "I6_I10": {
+          "chi2": 2542.04,
+          "chi2_normalized": 1.1513,
+          "n_occupied_bins": 2209,
+          "n_total_bins": 2209,
+          "occupancy_fraction": 1.0
+        }
+      },
+      "avg_marginal_ks": 0.004399,
+      "max_marginal_ks": 0.006068,
+      "least_uniform_invariant": "I2",
+      "most_uniform_invariant": "I4"
+    }
+  },
+  "trend_data": [
+    {
+      "p": 3,
+      "avg_ks": 0.150031,
+      "max_ks": 0.332925
+    },
+    {
+      "p": 5,
+      "avg_ks": 0.019883,
+      "max_ks": 0.036842
+    },
+    {
+      "p": 7,
+      "avg_ks": 0.013153,
+      "max_ks": 0.017048
+    },
+    {
+      "p": 11,
+      "avg_ks": 0.006082,
+      "max_ks": 0.012874
+    },
+    {
+      "p": 13,
+      "avg_ks": 0.009598,
+      "max_ks": 0.019986
+    },
+    {
+      "p": 17,
+      "avg_ks": 0.003729,
+      "max_ks": 0.004688
+    },
+    {
+      "p": 19,
+      "avg_ks": 0.004799,
+      "max_ks": 0.009976
+    },
+    {
+      "p": 23,
+      "avg_ks": 0.002945,
+      "max_ks": 0.003419
+    },
+    {
+      "p": 29,
+      "avg_ks": 0.004515,
+      "max_ks": 0.00511
+    },
+    {
+      "p": 31,
+      "avg_ks": 0.006258,
+      "max_ks": 0.009905
+    },
+    {
+      "p": 37,
+      "avg_ks": 0.004154,
+      "max_ks": 0.004694
+    },
+    {
+      "p": 41,
+      "avg_ks": 0.00683,
+      "max_ks": 0.011801
+    },
+    {
+      "p": 43,
+      "avg_ks": 0.003468,
+      "max_ks": 0.004508
+    },
+    {
+      "p": 47,
+      "avg_ks": 0.004399,
+      "max_ks": 0.006068
+    }
+  ],
+  "verdict": "PASS: avg KS = 0.0171 < 0.02, consistent with equidistribution"
+}

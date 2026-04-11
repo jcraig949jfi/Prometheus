@@ -1,0 +1,165 @@
+{
+  "problem": "List1_11",
+  "title": "Number-Field Discriminant Curvature (Ollivier-Ricci)",
+  "data_source": "F:\\Prometheus\\cartography\\number_fields\\data\\number_fields.json",
+  "n_fields_total": 9115,
+  "threshold": 0.05,
+  "alpha": 0.5,
+  "orc_sample_per_degree": 2000,
+  "max_support_cap": 50,
+  "overall": {
+    "mean_orc": -0.2211,
+    "std_orc": 0.1562,
+    "median_orc": -0.21,
+    "n_edges_total": 6279
+  },
+  "by_degree": {
+    "2": {
+      "n_fields": 6086,
+      "n_edges": 923482,
+      "n_edges_computed": 2000,
+      "sampled": true,
+      "n_components": 22,
+      "n_isolates": 15,
+      "mean_graph_degree": 304.23,
+      "max_graph_degree": 600,
+      "mean_orc": -0.2355,
+      "std_orc": 0.1486,
+      "median_orc": -0.23,
+      "min_orc": -0.59,
+      "max_orc": 0.02,
+      "q25_orc": -0.36,
+      "q75_orc": -0.11,
+      "frac_positive": 0.009,
+      "frac_negative": 0.991,
+      "class_number_stratification": {
+        "both_cn>1": {
+          "mean_orc": -0.232,
+          "std_orc": 0.1492,
+          "n_edges": 1252
+        },
+        "mixed": {
+          "mean_orc": -0.2391,
+          "std_orc": 0.1478,
+          "n_edges": 661
+        },
+        "both_cn1": {
+          "mean_orc": -0.2584,
+          "std_orc": 0.1448,
+          "n_edges": 87
+        }
+      }
+    },
+    "3": {
+      "n_fields": 1902,
+      "n_edges": 97054,
+      "n_edges_computed": 2000,
+      "sampled": true,
+      "n_components": 18,
+      "n_isolates": 8,
+      "mean_graph_degree": 102.49,
+      "max_graph_degree": 203,
+      "mean_orc": -0.235,
+      "std_orc": 0.1489,
+      "median_orc": -0.23,
+      "min_orc": -0.65,
+      "max_orc": 0.0769,
+      "q25_orc": -0.35,
+      "q75_orc": -0.11,
+      "frac_positive": 0.029,
+      "frac_negative": 0.9705,
+      "class_number_stratification": {
+        "both_cn1": {
+          "mean_orc": -0.2337,
+          "std_orc": 0.1507,
+          "n_edges": 1042
+        },
+        "mixed": {
+          "mean_orc": -0.2378,
+          "std_orc": 0.1466,
+          "n_edges": 812
+        },
+        "both_cn>1": {
+          "mean_orc": -0.2289,
+          "std_orc": 0.1478,
+          "n_edges": 146
+        }
+      }
+    },
+    "4": {
+      "n_fields": 1044,
+      "n_edges": 32702,
+      "n_edges_computed": 2000,
+      "sampled": true,
+      "n_components": 16,
+      "n_isolates": 4,
+      "mean_graph_degree": 62.89,
+      "max_graph_degree": 117,
+      "mean_orc": -0.2158,
+      "std_orc": 0.1476,
+      "median_orc": -0.2,
+      "min_orc": -0.62,
+      "max_orc": 0.1111,
+      "q25_orc": -0.34,
+      "q75_orc": -0.09,
+      "frac_positive": 0.037,
+      "frac_negative": 0.963,
+      "class_number_stratification": {
+        "both_cn1": {
+          "mean_orc": -0.2135,
+          "std_orc": 0.1475,
+          "n_edges": 1502
+        },
+        "mixed": {
+          "mean_orc": -0.2217,
+          "std_orc": 0.1471,
+          "n_edges": 455
+        },
+        "both_cn>1": {
+          "mean_orc": -0.2335,
+          "std_orc": 0.1545,
+          "n_edges": 43
+        }
+      }
+    },
+    "5": {
+      "n_fields": 82,
+      "n_edges": 279,
+      "n_edges_computed": 279,
+      "sampled": false,
+      "n_components": 9,
+      "n_isolates": 1,
+      "mean_graph_degree": 6.89,
+      "max_graph_degree": 14,
+      "mean_orc": -0.0565,
+      "std_orc": 0.213,
+      "median_orc": -0.0269,
+      "min_orc": -0.55,
+      "max_orc": 1.0,
+      "q25_orc": -0.1919,
+      "q75_orc": 0.05,
+      "frac_positive": 0.3763,
+      "frac_negative": 0.5556,
+      "class_number_stratification": {
+        "both_cn1": {
+          "mean_orc": -0.0565,
+          "std_orc": 0.213,
+          "n_edges": 279
+        }
+      }
+    },
+    "6": {
+      "n_fields": 1,
+      "skipped": true,
+      "reason": "too few fields"
+    }
+  },
+  "comparison": {
+    "ec_hecke_curvature": -0.67,
+    "lattice_isogeny_orc": -0.632,
+    "nf_mean_orc": -0.2211,
+    "nf_vs_ec_hecke": 0.4489,
+    "nf_vs_isogeny": 0.4109,
+    "interpretation": "NF discriminant graph is mildly negatively curved (ORC ~ -0.22), significantly less hyperbolic than EC Hecke (-0.67) or isogeny (-0.632) graphs. The discriminant proximity graph has high local clustering (mean degree ~300 for deg-2) which moderates curvature toward zero. Degree-5 fields with sparse graphs (mean deg ~7) show near-zero curvature with 38% positive edges, approaching the flat/clustered regime. The degree gradient (deg2: -0.24, deg3: -0.24, deg4: -0.22, deg5: -0.06) shows curvature rising toward zero as graph sparsity increases."
+  }
+}

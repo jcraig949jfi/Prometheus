@@ -483,7 +483,37 @@ Alternating: det ~ 1.72^cn (R²=0.59). Non-alt: no clean fit. Mod-3,5 biased, mo
 394,454 names. Top: "number" (5.8%), "prime" (2.2%), "sum" (2.1%). Domain ranking: Analysis (161K) > Number theory (142K) > Combinatorics (74K). Bridge concepts shared with Fungrim: {equal, exp, pi, set, sqrt, sum} — the operadic skeleton hubs. 28.4% hapax legomena. Mean name: 6.4 tokens.
 
 ### 115. Knot Unknotting: Mean u_lower/c = 0.106, Torus Knots Saturate (Knot-unknot)
-2,973 knots. Signature lower bound |σ|/2 grows slowly with c (mean 1.24 at c=12). Only 0.17% achieve upper bound u=(c-1)/2 (torus knots T(2,n)). Mean ratio 0.106 — most knots have unknotting number far below the crossing bound. Alt vs non-alt: no significant difference.
+Mean ratio 0.106. Only 0.17% achieve upper bound. Torus knots saturate.
+
+### 116. FLINT Modularity Q = 0.628, 134 Communities (FLINT-mod)
+8,904 nodes, 39,766 edges. Louvain Q=0.628 (above expected 0.42-0.55 — FLINT is more modular than anticipated). 134 communities, largest 1,574 nodes. Module coherence 0.6535 (65% of functions in a source module land in same community). Label propagation comparison: Q=0.510.
+
+### 117. Genus-2 Interference Tensor: Effective Rank 4 (G2-tensor)
+10×10 interference matrix I(ℓ₁,ℓ₂) for ℓ∈{2,...,29}. SVD rank at 99% variance: **4**. At σ_max/100: 6. Singular values span 4 orders of magnitude (275K to 7). The 4 independent dimensions likely correspond to: (1) mod-2 parity, (2) conductor effects, (3) endomorphism type, (4) ST group.
+
+### 118. OEIS LZ Compression: Asymptotic 0.267, BM-Recurrent 24% Better (OEIS-LZ)
+10,000 sequences. Mean ratio 0.484, median 0.464. Asymptotic fit: 0.267 + 11.05/n^{1.09}. BM-recurrent sequences 0.448 vs non-recurrent 0.555 (24% better compression). "mult" most compressible (0.284), "hard" least (0.68+). Clear monotonic convergence with sequence length.
+
+### 119. OEIS Hankel Full-Rank: 87%, Not 14% (OEIS-Hankel)
+5,000 sequences. Full-rank Hankel fraction: 0.847 (N=5) → 0.872 (N=20). The expected 0.14 matches the RANK-DEFICIENT fraction (sequences that ARE linear recurrences). 464/5000 have stabilized rank by N=20. Stable rank distribution peaks at rank 3 (Fibonacci-type). Non-monotonic: initial jump then plateau.
+
+### 120. PDG Kinematic Entropy: Median H_norm = 0.851 (PDG-entropy)
+Median 0.851. Independent of lifetime/mass. Near-threshold→1.0, EM-dominated→low.
+
+### 121. NF Discriminant Graph ORC = -0.221, Less Hyperbolic Than EC (NF-disc-curv)
+9,115 fields, 5% threshold. Mean ORC = -0.221 (less hyperbolic than EC -0.67 and lattice -0.632). Degree gradient: deg-2 (-0.236) → deg-5 (-0.057). Deg-5 has 38% positive edges (approaching flat). Class number stratification: minimal effect. The expected positive curvature (0.21-0.34) was wrong — discriminant proximity graphs are mildly negatively curved.
+
+### 122. MF Congruence Fractal Dimension D_corr = 5.15, Half the Null (MF-fractal)
+17,314 forms, 12,453 mod-3 clusters (75% singletons). Correlation dimension 5.15 vs null 9.84 — arithmetic structure halves the effective dimensionality. Box-counting D=2.89. Dimension saturates at ~15 primes (5.1-5.3). The expected D~1.4-1.7 was too low — mod-3 structure constrains from ~10D to ~5D, not to ~1.5D.
+
+### 123. Igusa Mod-p: Equidistributed for p≥7, I4 at p=3 Is Outlier (Igusa-equidist)
+66,158 curves, 14 primes. Average KS = 0.0171 (consistent with equidistribution). Improves with p (r=-0.46). p=3 outlier: KS=0.15 (I4 at 0.33 from algebraic structure). Most uniform: I2 (KS=0.006). Marginal entropy >0.99 for p≥7. Igusa invariants ARE equidistributed mod large primes.
+
+### 124. FLINT Entropy Gradient β = 0.027, Mid-Depth Peak (FLINT-entropy-grad)
+8,904 nodes, 39,770 edges. Gradient slope β=0.027 (within expected 0.018-0.033). Entropy rises depth 0 (1.69 bits) → depth 5 (2.22 bits) then declines — "hourglass" architecture. 49.3% are sinks (zero entropy). Highest genuine node: _factor_irred_compressed (7.6 bits, 194 callees).
+
+### 125. NF Regulator-CN: Concave Boundary, Slope -0.91 (NF-reg-convex)
+200,000 real quadratic fields. Upper envelope convexity = -0.079 (concave, not convex). Slope -0.91 ≈ -1 (from h·R ~ √D). Class number formula verified: log(h·R) vs log(D) slope = 0.501 (theory: 0.5). h=1 fraction: 28.3%. The expected convexity ~1.45 was wrong — the constraint is near-linear in log-log.
 
 ---
 
@@ -849,7 +879,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*240 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*250 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

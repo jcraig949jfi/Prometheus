@@ -1,0 +1,362 @@
+{
+  "metadata": {
+    "problem": "List1 #5: FLINT Call-Graph Entropy Gradient",
+    "description": "Compute local entropy of each node in the FLINT call graph, then measure the entropy gradient flow along topological depth.",
+    "num_nodes": 8904,
+    "num_directed_edges": 39770,
+    "num_non_sink": 5551,
+    "num_sink": 3353,
+    "num_roots": 2100,
+    "num_reachable": 8899,
+    "num_unreachable": 5,
+    "max_depth": 9
+  },
+  "entropy_gradient_fit": {
+    "all_nodes": {
+      "weighted": {
+        "alpha": 1.14307028,
+        "beta": 0.08110087,
+        "R_squared": 0.127001
+      },
+      "unweighted": {
+        "alpha": 1.41441616,
+        "beta": 0.02672569,
+        "R_squared": 0.030382,
+        "p_value": 0.63008469,
+        "std_err": 0.0533798
+      }
+    },
+    "nonsink_only": {
+      "weighted": {
+        "alpha": 2.36806263,
+        "beta": 0.09280566,
+        "R_squared": 0.552713
+      },
+      "unweighted": {
+        "alpha": 2.67550995,
+        "beta": -0.00708139,
+        "R_squared": 0.003997,
+        "p_value": 0.86225408
+      }
+    },
+    "interpretation": "beta > 0 means entropy increases with depth: deeper functions have more callees (more algorithmic branching). Expected range: beta ~ 0.018-0.033."
+  },
+  "depth_entropy_profile": [
+    {
+      "depth": 0,
+      "num_nodes": 2100,
+      "num_nonsink": 1561,
+      "mean_entropy": 1.687267,
+      "std_entropy": 1.314678,
+      "median_entropy": 1.584963,
+      "mean_entropy_nonsink": 2.269866
+    },
+    {
+      "depth": 1,
+      "num_nodes": 3248,
+      "num_nonsink": 1094,
+      "mean_entropy": 0.841582,
+      "std_entropy": 1.350026,
+      "median_entropy": 0.0,
+      "mean_entropy_nonsink": 2.498591
+    },
+    {
+      "depth": 2,
+      "num_nodes": 1526,
+      "num_nonsink": 646,
+      "mean_entropy": 1.145231,
+      "std_entropy": 1.549786,
+      "median_entropy": 0.0,
+      "mean_entropy_nonsink": 2.705297
+    },
+    {
+      "depth": 3,
+      "num_nodes": 761,
+      "num_nonsink": 392,
+      "mean_entropy": 1.337918,
+      "std_entropy": 1.56625,
+      "median_entropy": 1.0,
+      "mean_entropy_nonsink": 2.597336
+    },
+    {
+      "depth": 4,
+      "num_nodes": 398,
+      "num_nonsink": 222,
+      "mean_entropy": 1.744996,
+      "std_entropy": 1.86612,
+      "median_entropy": 1.0,
+      "mean_entropy_nonsink": 3.128417
+    },
+    {
+      "depth": 5,
+      "num_nodes": 252,
+      "num_nonsink": 179,
+      "mean_entropy": 2.223636,
+      "std_entropy": 1.837324,
+      "median_entropy": 2.321928,
+      "mean_entropy_nonsink": 3.130482
+    },
+    {
+      "depth": 6,
+      "num_nodes": 289,
+      "num_nonsink": 203,
+      "mean_entropy": 2.037993,
+      "std_entropy": 1.702155,
+      "median_entropy": 2.0,
+      "mean_entropy_nonsink": 2.901379
+    },
+    {
+      "depth": 7,
+      "num_nodes": 222,
+      "num_nonsink": 146,
+      "mean_entropy": 1.728414,
+      "std_entropy": 1.574903,
+      "median_entropy": 1.584963,
+      "mean_entropy_nonsink": 2.628136
+    },
+    {
+      "depth": 8,
+      "num_nodes": 89,
+      "num_nonsink": 61,
+      "mean_entropy": 1.703299,
+      "std_entropy": 1.447437,
+      "median_entropy": 2.0,
+      "mean_entropy_nonsink": 2.485142
+    },
+    {
+      "depth": 9,
+      "num_nodes": 14,
+      "num_nonsink": 6,
+      "mean_entropy": 0.896482,
+      "std_entropy": 1.049988,
+      "median_entropy": 0.0,
+      "mean_entropy_nonsink": 2.091791
+    }
+  ],
+  "entropy_distribution": {
+    "mean": 1.28478,
+    "std": 1.515651,
+    "median": 1.0,
+    "max": 9.105909,
+    "min": 0.0,
+    "q25": 0.0,
+    "q75": 2.321928,
+    "fraction_zero": 0.493149
+  },
+  "depth_distribution": {
+    "mean": 1.7486,
+    "std": 1.829,
+    "median": 1.0,
+    "max": 9,
+    "min": 0,
+    "num_roots": 2100,
+    "num_reachable": 8899,
+    "num_unreachable": 5
+  },
+  "top_20_highest_entropy_nodes": [
+    {
+      "function": "main",
+      "module": "ulong_extras",
+      "local_entropy_bits": 9.1059,
+      "out_degree": 551,
+      "in_degree": 1,
+      "depth": 1
+    },
+    {
+      "function": "FLINT_UNUSED",
+      "module": "padic_mat",
+      "local_entropy_bits": 8.4798,
+      "out_degree": 357,
+      "in_degree": 0,
+      "depth": 0
+    },
+    {
+      "function": "_factor_irred_compressed",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 7.5999,
+      "out_degree": 194,
+      "in_degree": 2,
+      "depth": 3
+    },
+    {
+      "function": "compute_gcd",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 7.0661,
+      "out_degree": 134,
+      "in_degree": 1,
+      "depth": 1
+    },
+    {
+      "function": "_hlift_quartic2",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 7.0334,
+      "out_degree": 131,
+      "in_degree": 5,
+      "depth": 2
+    },
+    {
+      "function": "_hlift_quartic",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 7.0224,
+      "out_degree": 130,
+      "in_degree": 5,
+      "depth": 2
+    },
+    {
+      "function": "sample",
+      "module": "ulong_extras",
+      "local_entropy_bits": 6.9542,
+      "out_degree": 124,
+      "in_degree": 1,
+      "depth": 2
+    },
+    {
+      "function": "fmpz_mpolyl_gcd_zippel2",
+      "module": "fmpz_mpoly_factor",
+      "local_entropy_bits": 6.7944,
+      "out_degree": 111,
+      "in_degree": 2,
+      "depth": 2
+    },
+    {
+      "function": "nmod_mpolyl_gcd_zippel_lgprime",
+      "module": "nmod_mpoly",
+      "local_entropy_bits": 6.5546,
+      "out_degree": 94,
+      "in_degree": 1,
+      "depth": 5
+    },
+    {
+      "function": "gcd_check",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 6.4263,
+      "out_degree": 86,
+      "in_degree": 0,
+      "depth": 0
+    },
+    {
+      "function": "fq_nmod_mpolyl_gcd_zippel_lgprime",
+      "module": "fq_nmod_mpoly",
+      "local_entropy_bits": 6.3923,
+      "out_degree": 84,
+      "in_degree": 1,
+      "depth": 5
+    },
+    {
+      "function": "_factor_irred",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 6.3038,
+      "out_degree": 79,
+      "in_degree": 5,
+      "depth": 3
+    },
+    {
+      "function": "fq_nmod_mpolyl_gcd_zippel_smprime",
+      "module": "fq_nmod_mpoly",
+      "local_entropy_bits": 6.3038,
+      "out_degree": 79,
+      "in_degree": 1,
+      "depth": 5
+    },
+    {
+      "function": "fmpz_mod_mpolyl_gcd_zippel2_smprime",
+      "module": "fmpz_mod_mpoly_factor",
+      "local_entropy_bits": 6.2668,
+      "out_degree": 77,
+      "in_degree": 2,
+      "depth": 2
+    },
+    {
+      "function": "_hlift_quintic",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 6.2288,
+      "out_degree": 75,
+      "in_degree": 5,
+      "depth": 2
+    },
+    {
+      "function": "fmpz_mpoly_factor_irred_zippel",
+      "module": "fmpz_mpoly_factor",
+      "local_entropy_bits": 6.1497,
+      "out_degree": 71,
+      "in_degree": 1,
+      "depth": 4
+    },
+    {
+      "function": "_hensel_lift_inv",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 6.0875,
+      "out_degree": 68,
+      "in_degree": 1,
+      "depth": 6
+    },
+    {
+      "function": "_hensel_lift_fac",
+      "module": "nmod_mpoly_factor",
+      "local_entropy_bits": 6.0661,
+      "out_degree": 67,
+      "in_degree": 1,
+      "depth": 6
+    },
+    {
+      "function": "fmpz_mod_mpolyn_gcd_brown_smprime",
+      "module": "fmpz_mod_mpoly_factor",
+      "local_entropy_bits": 6.0661,
+      "out_degree": 67,
+      "in_degree": 2,
+      "depth": 2
+    },
+    {
+      "function": "nmod_mpolyl_gcd_zippel_smprime",
+      "module": "nmod_mpoly",
+      "local_entropy_bits": 5.9307,
+      "out_degree": 61,
+      "in_degree": 1,
+      "depth": 5
+    }
+  ],
+  "gradient_bands": [
+    {
+      "depth_range": "0-3",
+      "center_depth": 1.5,
+      "mean_entropy": 1.184348,
+      "num_nodes": 7635
+    },
+    {
+      "depth_range": "1-4",
+      "center_depth": 2.5,
+      "mean_entropy": 1.043948,
+      "num_nodes": 5933
+    },
+    {
+      "depth_range": "2-5",
+      "center_depth": 3.5,
+      "mean_entropy": 1.368962,
+      "num_nodes": 2937
+    },
+    {
+      "depth_range": "3-6",
+      "center_depth": 4.5,
+      "mean_entropy": 1.68353,
+      "num_nodes": 1700
+    },
+    {
+      "depth_range": "4-7",
+      "center_depth": 5.5,
+      "mean_entropy": 1.91865,
+      "num_nodes": 1161
+    },
+    {
+      "depth_range": "5-8",
+      "center_depth": 6.5,
+      "mean_entropy": 1.977274,
+      "num_nodes": 852
+    },
+    {
+      "depth_range": "6-9",
+      "center_depth": 7.5,
+      "mean_entropy": 1.851518,
+      "num_nodes": 614
+    }
+  ]
+}
