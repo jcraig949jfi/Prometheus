@@ -36,7 +36,9 @@ class LLMMutator:
         self.model = None
         self.tokenizer = None
         self._loaded = False
-        self._client = None  # LLMClient for server mode
+        self._client = None  # LLMClient for server mode (Qwen)
+        self._alt_client = None  # Alternative LLM (e.g., DeepSeek API)
+        self._alt_ratio = 0.0  # Fraction of calls routed to alt client
 
     def set_client(self, client):
         """Switch to HTTP client mode.
@@ -52,6 +54,24 @@ class LLMMutator:
         self._client = client
         # Mark as loaded so mutation methods proceed
         self._loaded = True
+
+    def set_alt_client(self, alt_client, ratio=0.5):
+        """Add an alternative LLM client for A/B comparison.
+
+        Args:
+            alt_client: Client with generate(prompt, max_tokens, temperature)
+            ratio: Fraction of calls routed to alt client (0.0-1.0)
+        """
+        self._alt_client = alt_client
+        self._alt_ratio = ratio
+        log_debug(f"Alt LLM client set: ratio={ratio:.0%}", stage="llm")
+
+    def _pick_client(self):
+        """Randomly pick between primary and alt client."""
+        import random
+        if self._alt_client is not None and random.random() < self._alt_ratio:
+            return self._alt_client, "alt"
+        return self._client, "primary"
 
     def load(self):
         """Load model and tokenizer."""
@@ -105,28 +125,31 @@ class LLMMutator:
         prompt_chars = len(prompt)
         t0 = time.time()
 
-        # Server mode: route through HTTP client
+        # Server mode: route through HTTP client (or alt client)
         if self._client is not None:
+            client, client_tag = self._pick_client()
             try:
-                result = self._client.generate(
+                result = client.generate(
                     prompt, max_tokens=self.max_tokens,
                     temperature=self.temperature
                 )
                 elapsed = time.time() - t0
                 log_debug(
-                    f"LLM call: single | {prompt_chars}ch in | {len(result)}ch out | {elapsed:.1f}s | ok",
+                    f"LLM call: single({client_tag}) | {prompt_chars}ch in | {len(result)}ch out | {elapsed:.1f}s | ok",
                     stage="llm",
                     data={"prompt_chars": prompt_chars, "output_chars": len(result),
-                          "elapsed_s": round(elapsed, 2), "success": True, "mode": "single"}
+                          "elapsed_s": round(elapsed, 2), "success": True, "mode": "single",
+                          "client": client_tag}
                 )
                 return result
             except Exception:
                 elapsed = time.time() - t0
                 log_debug(
-                    f"LLM call: single | {prompt_chars}ch in | 0ch out | {elapsed:.1f}s | fail",
+                    f"LLM call: single({client_tag}) | {prompt_chars}ch in | 0ch out | {elapsed:.1f}s | fail",
                     stage="llm",
                     data={"prompt_chars": prompt_chars, "output_chars": 0,
-                          "elapsed_s": round(elapsed, 2), "success": False, "mode": "single"}
+                          "elapsed_s": round(elapsed, 2), "success": False, "mode": "single",
+                          "client": client_tag}
                 )
                 return ""
 
@@ -195,7 +218,7 @@ class LLMMutator:
 
         # Server mode: route through HTTP client in small chunks
         if self._client is not None:
-            CHUNK_SIZE = 4  # Keep batches small to avoid OOM
+            CHUNK_SIZE = 6  # Balance throughput vs OOM risk
             all_results = []
             for chunk_start in range(0, len(prompts), CHUNK_SIZE):
                 chunk = prompts[chunk_start:chunk_start + CHUNK_SIZE]

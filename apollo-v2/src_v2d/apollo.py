@@ -423,6 +423,24 @@ def run_apollo(smoke_test: bool = False, config_path: str = None,
                     temperature=config.get("llm_temperature", 0.7),
                 )
                 llm_mutator.set_client(client)
+
+                # Optional: DeepSeek API as alternative LLM (50/50 split)
+                deepseek_key = config.get("deepseek_api_key", None)
+                deepseek_ratio = config.get("deepseek_ratio", 0.0)
+                if deepseek_key and deepseek_ratio > 0:
+                    try:
+                        from deepseek_client import DeepSeekClient
+                        ds_client = DeepSeekClient(
+                            api_key=deepseek_key,
+                            model=config.get("deepseek_model", "deepseek-chat"),
+                        )
+                        llm_mutator.set_alt_client(ds_client, ratio=deepseek_ratio)
+                        log_info(
+                            f"DeepSeek alt LLM enabled: {deepseek_ratio:.0%} of calls",
+                            stage="bootstrap",
+                        )
+                    except Exception as e:
+                        log_warning(f"DeepSeek setup failed: {e}. Using Qwen only.", stage="bootstrap")
             else:
                 log_warning("Could not start LLM server. Running AST-only.", stage="bootstrap")
         except Exception as e:

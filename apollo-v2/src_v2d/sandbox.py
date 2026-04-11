@@ -73,11 +73,16 @@ def _eval_single_task(args):
                     "error": "no_tool", "gene_trace": ""}
         tool = tool_class()
 
+        # Shuffle candidates to prevent position/order exploitation
+        import random as _rng
+        shuffled_cands = list(task['candidates'])
+        _rng.shuffle(shuffled_cands)
+
         result = [None]
 
         def run():
             try:
-                r = tool.evaluate(task['prompt'], task['candidates'])
+                r = tool.evaluate(task['prompt'], shuffled_cands)
                 if r:
                     top = r[0]['candidate']
                     correct = (top == task['correct'])
@@ -206,15 +211,24 @@ def _get_tool(source_code: str):
 
 def safe_evaluate(source_code: str, prompt: str, candidates: list,
                   timeout: float = 0.5) -> dict:
-    """Execute organism evaluation with timeout."""
+    """Execute organism evaluation with timeout.
+
+    Candidates are shuffled before presentation to prevent the organism
+    from exploiting positional or ordering biases in the task battery.
+    """
+    import random as _rng
     try:
         tool = _get_tool(source_code)
     except Exception as e:
         return {'error': str(e)[:100], 'results': None, 'confidence': 0.0}
 
+    # Shuffle candidates to prevent position/order exploitation
+    shuffled = list(candidates)
+    _rng.shuffle(shuffled)
+
     def run_eval():
-        results = tool.evaluate(prompt, candidates)
-        conf = tool.confidence(prompt, candidates[0]) if candidates else 0.0
+        results = tool.evaluate(prompt, shuffled)
+        conf = tool.confidence(prompt, shuffled[0]) if shuffled else 0.0
         return {'results': results, 'confidence': conf, 'error': None}
 
     result, error = _exec_with_timeout(run_eval, (), timeout)

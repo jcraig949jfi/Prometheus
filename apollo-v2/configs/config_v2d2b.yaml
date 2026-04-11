@@ -1,18 +1,13 @@
 # ============================================================
-# APOLLO v2_d — Gradient Recovery (M2)
+# APOLLO v2_d2b — 50/50 Qwen+DeepSeek (Replica B)
 # ============================================================
-# Fixes the flat fitness landscape problem from v2_c:
-#   - Difficulty curriculum (easy tasks mixed in for gradient)
-#   - Post-mutation parameter annealing (structural mutations
-#     get 10 rounds of tuning before competing)
-#   - Accuracy-only AOS reward (bandit rewards real accuracy,
-#     not meaningless Pareto improvements)
-#   - Selection death logging (diagnose why organisms die)
+# Same config as v2_d2 but different island_id = different seed.
+# Tests reproducibility of v2_d2's results.
 # ============================================================
 
 apollo:
-  island_id: "beta-v2d"
-  instance_name: "Apollo-Beta v2d (Gradient Recovery)"
+  island_id: "beta-v2d2b"
+  instance_name: "Apollo-Beta v2d2b (50/50 Replica)"
 
   primitives_dir: "agents/hephaestus/src"
   trap_generator: "agents/hephaestus/src/trap_generator.py"
@@ -21,12 +16,11 @@ apollo:
     - "forge/candidates/*gem*.py"
     - "agents/hephaestus/forge_v7/*specialist*.py"
 
-  # Output directories — isolated under run_v2d/
-  log_dir: "run_v2d/logs"
-  checkpoint_dir: "run_v2d/checkpoints"
-  lineage_dir: "run_v2d/lineage"
-  graveyard_dir: "run_v2d/graveyard"
-  dashboard_dir: "run_v2d/dashboard"
+  log_dir: "run_v2d2b/logs"
+  checkpoint_dir: "run_v2d2b/checkpoints"
+  lineage_dir: "run_v2d2b/lineage"
+  graveyard_dir: "run_v2d2b/graveyard"
+  dashboard_dir: "run_v2d2b/dashboard"
 
   shared_pool: "\\\\SKULLPORT\\skullport_shared\\apollo_pool"
 
@@ -71,7 +65,7 @@ apollo:
   llm_model: "Qwen/Qwen2.5-Coder-7B-Instruct"
   llm_device: "cuda"
   llm_max_tokens: 512
-  llm_temperature: 0.8
+  llm_temperature: 0.9
   llm_load_in_8bit: true
 
   checkpoint_interval: 10
@@ -79,8 +73,9 @@ apollo:
   held_out_eval_interval: 10
   max_generations: 50000
 
-  # v2_d specific
   annealing_rounds: 10
   aos_accuracy_only_until: 300
-  deepseek_api_key: ""
-  deepseek_ratio: 0.0
+
+  deepseek_api_key: "sk-0c89bfe76fa241f38573b5386931147a"
+  deepseek_ratio: 0.5
+  deepseek_model: "deepseek-chat"

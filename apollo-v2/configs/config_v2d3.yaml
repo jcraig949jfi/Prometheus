@@ -1,18 +1,14 @@
 # ============================================================
-# APOLLO v2_d — Gradient Recovery (M2)
+# APOLLO v2_d3 — DeepSeek Only (M2, parallel run)
 # ============================================================
-# Fixes the flat fitness landscape problem from v2_c:
-#   - Difficulty curriculum (easy tasks mixed in for gradient)
-#   - Post-mutation parameter annealing (structural mutations
-#     get 10 rounds of tuning before competing)
-#   - Accuracy-only AOS reward (bandit rewards real accuracy,
-#     not meaningless Pareto improvements)
-#   - Selection death logging (diagnose why organisms die)
+# 100% DeepSeek API for mutations. No local Qwen mutations.
+# Baseline comparison: does a different LLM produce better
+# structural mutations than Qwen?
 # ============================================================
 
 apollo:
-  island_id: "beta-v2d"
-  instance_name: "Apollo-Beta v2d (Gradient Recovery)"
+  island_id: "beta-v2d3"
+  instance_name: "Apollo-Beta v2d3 (DeepSeek Only)"
 
   primitives_dir: "agents/hephaestus/src"
   trap_generator: "agents/hephaestus/src/trap_generator.py"
@@ -21,12 +17,11 @@ apollo:
     - "forge/candidates/*gem*.py"
     - "agents/hephaestus/forge_v7/*specialist*.py"
 
-  # Output directories — isolated under run_v2d/
-  log_dir: "run_v2d/logs"
-  checkpoint_dir: "run_v2d/checkpoints"
-  lineage_dir: "run_v2d/lineage"
-  graveyard_dir: "run_v2d/graveyard"
-  dashboard_dir: "run_v2d/dashboard"
+  log_dir: "run_v2d3/logs"
+  checkpoint_dir: "run_v2d3/checkpoints"
+  lineage_dir: "run_v2d3/lineage"
+  graveyard_dir: "run_v2d3/graveyard"
+  dashboard_dir: "run_v2d3/dashboard"
 
   shared_pool: "\\\\SKULLPORT\\skullport_shared\\apollo_pool"
 
@@ -82,5 +77,8 @@ apollo:
   # v2_d specific
   annealing_rounds: 10
   aos_accuracy_only_until: 300
-  deepseek_api_key: ""
-  deepseek_ratio: 0.0
+
+  # 100% DeepSeek — all mutations via API
+  deepseek_api_key: "sk-0c89bfe76fa241f38573b5386931147a"
+  deepseek_ratio: 1.0
+  deepseek_model: "deepseek-chat"

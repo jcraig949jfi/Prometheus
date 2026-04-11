@@ -28,6 +28,8 @@ def compute_health_report(population, compiled_sources, fitness_vectors,
     wiring_hashes = []
     for org in population:
         h = getattr(org, 'wiring_hash', None)
+        if callable(h):
+            h = h()  # wiring_hash is a method, not a property
         if h is None:
             # Compute a simple structural hash
             h = hash(tuple(pc.primitive_name for pc in org.primitive_sequence))
