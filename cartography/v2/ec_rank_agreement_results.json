@@ -1,0 +1,195 @@
+{
+  "title": "EC Analytic vs Algebraic Rank Agreement (BSD Check)",
+  "database": "charon.duckdb / elliptic_curves",
+  "total_curves": 31073,
+  "conductor_range": {
+    "min": 11,
+    "max": 4998
+  },
+  "null_rank_fields": 0,
+  "agreement": {
+    "matching": 31073,
+    "disagreeing": 0,
+    "agreement_rate": 1.0
+  },
+  "algebraic_rank_distribution": {
+    "0": 15599,
+    "1": 14783,
+    "2": 691
+  },
+  "analytic_rank_distribution": {
+    "0": 15599,
+    "1": 14783,
+    "2": 691
+  },
+  "distributions_identical": true,
+  "max_rank_in_dataset": 2,
+  "rank_2_plus": {
+    "count": 691,
+    "note": "LMFDB only lists curves with proven algebraic rank AND proven analytic rank. For rank 0-1 this is routine (2-descent + Gross-Zagier/Kolyvagin). For rank 2, algebraic rank is proven by exhibiting 2 independent points; analytic rank is proven by computing L''(E,1) != 0 and L(E,1) = L'(E,1) = 0. No rank >= 3 curves appear because conductor <= 4998.",
+    "sample": [
+      {
+        "lmfdb_label": "389.a1",
+        "conductor": 389,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.15246017794314376,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "433.a1",
+        "conductor": 433,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.22469416341816675,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "446.a1",
+        "conductor": 446,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.09734309756945705,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "563.a1",
+        "conductor": 563,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.21922900351799546,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "571.a1",
+        "conductor": 571,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.17725314026200492,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "643.a1",
+        "conductor": 643,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.22917962156884708,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "655.a1",
+        "conductor": 655,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.09895351989219377,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "664.a1",
+        "conductor": 664,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.0966760504530515,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "681.a1",
+        "conductor": 681,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.13607968895069428,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "707.a1",
+        "conductor": 707,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.11285745632048848,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "709.a1",
+        "conductor": 709,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.2586831727364067,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "718.a1",
+        "conductor": 718,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.16985835946964506,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "794.a1",
+        "conductor": 794,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.14904999108062275,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "817.a1",
+        "conductor": 817,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.2562563822576842,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "916.a1",
+        "conductor": 916,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.13646819915520184,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "944.a1",
+        "conductor": 944,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.11786068031358501,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "997.a1",
+        "conductor": 997,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.24970546652191905,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "997.c1",
+        "conductor": 997,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.571019259287367,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "1001.a1",
+        "conductor": 1001,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.03601074575615961,
+        "sha": 1
+      },
+      {
+        "lmfdb_label": "1028.a1",
+        "conductor": 1028,
+        "rank": 2,
+        "analytic_rank": 2,
+        "regulator": 0.13646823344949932,
+        "sha": 1
+      }
+    ]
+  },
+  "discrepancies": [],
+  "interpretation": "100% agreement is expected and unsurprising: LMFDB only publishes curves where both ranks are rigorously verified. A discrepancy would indicate a database error, not a BSD counterexample. The interesting question is what happens at higher conductor (>500,000) where analytic rank becomes hard to certify \u2014 those curves are simply absent from the database."
+}

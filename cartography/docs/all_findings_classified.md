@@ -447,7 +447,13 @@ Cross-domain synthesis across EC (10 invariants) and genus-2 (4 invariants). 79%
 11 datasets ranked. Richest (H × log N): EC (14.69), Knots (8.51), Genus-2 (8.13). Most BM-compressible: OEIS (0.530). Moment universality confirmed: M₄/M₂² determined by ST group. Pipeline bottleneck: H₃/H₁=1.49 expansion.
 
 ### 103. Power Law Catalog: 28 Exponents, ~1.45 Cluster Is Intriguing (PL-catalog)
-28 exponents across 10 domains, range 0.198-4.512. Five clusters: ~0.24 (3), ~0.49 (4, Ramanujan-Petersson), ~1.45 (4, EC arithmetic — unexplained convergence of Tamagawa/degree/height/Fungrim), ~2.1 (3, scale-free networks), ~2.3 (3). No universal constant. Exponents are continuously distributed, not quantized.
+28 exponents across 10 domains. Five clusters: ~0.49 (RP), ~1.45 (EC arithmetic), ~2.3 (networks). No universal constant.
+
+### 104. EC Analytic = Algebraic Rank: 100% Agreement (EC-rank-agree)
+31,073 curves. Zero discrepancies (100.00% agreement). Expected: LMFDB only publishes rigorously proven ranks. No rank≥3 in conductor≤4998. A database consistency check, not a BSD verification.
+
+### 105. Genus-2 Selmer-MW Gap: Sha[2] Concentrates at Low Rank (G2-selmer)
+66,158 curves. 68.6% have Selmer=MW (no Sha[2]). The fraction INCREASES with MW rank: 32% at rank-0, 66% at rank-1, 90% at rank-2, 98% at rank-3, 100% at rank-4. Mean gap (Selmer-MW) = 0.403. Sha[2] contributions are concentrated at low MW rank — high-rank curves have tight Selmer bounds.
 
 ---
 
@@ -813,7 +819,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*228 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*230 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 
