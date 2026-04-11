@@ -1,0 +1,204 @@
+{
+  "title": "Three-Family Enrichment Comparison: EC vs Genus-2 vs Maass",
+  "timestamp": "2026-04-11T12:21:53.935241+00:00",
+  "description": "Unified comparison of mod-p fingerprint enrichment across three automorphic families. EC enrichment is flat ~8-16x after prime detrending. Maass enrichment GROWS with p (1.3x at p=3 to 8.0x at p=11). Genus-2 enrichment is CONDITIONAL on endomorphism ring: M_2(Q) grows 1->2.3x, others ~1x.",
+  "unified_table": [
+    {
+      "prime": 3,
+      "ec_enrichment": 8.066,
+      "maass_enrichment_mean": 1.98,
+      "maass_enrichment_median": 1.245,
+      "maass_z_score": 25.38,
+      "g2_M2Q_enrichment": 0.997,
+      "g2_QxQ_enrichment": 1.003,
+      "g2_CMxQ_enrichment": 1.659,
+      "g2_Q_enrichment": 0.997,
+      "g2_RM_enrichment": 1.011
+    },
+    {
+      "prime": 5,
+      "ec_enrichment": 14.609,
+      "maass_enrichment_mean": 3.49,
+      "maass_enrichment_median": 1.209,
+      "maass_z_score": 37.6,
+      "g2_M2Q_enrichment": 1.118,
+      "g2_QxQ_enrichment": 1.01,
+      "g2_CMxQ_enrichment": 1.017,
+      "g2_Q_enrichment": 1.003,
+      "g2_RM_enrichment": 0.981
+    },
+    {
+      "prime": 7,
+      "ec_enrichment": 11.748,
+      "maass_enrichment_mean": 4.93,
+      "maass_enrichment_median": 1.152,
+      "maass_z_score": 41.01,
+      "g2_M2Q_enrichment": 1.437,
+      "g2_QxQ_enrichment": 1.068,
+      "g2_CMxQ_enrichment": 1.288,
+      "g2_Q_enrichment": 0.995,
+      "g2_RM_enrichment": 1.083
+    },
+    {
+      "prime": 11,
+      "ec_enrichment": 15.84,
+      "maass_enrichment_mean": 8.026,
+      "maass_enrichment_median": 1.177,
+      "maass_z_score": 56.42,
+      "g2_M2Q_enrichment": 2.333,
+      "g2_QxQ_enrichment": 1.183,
+      "g2_CMxQ_enrichment": 1.4,
+      "g2_Q_enrichment": 0.988,
+      "g2_RM_enrichment": 0.953
+    }
+  ],
+  "slope_analysis": {
+    "EC": {
+      "primes_used": [
+        3,
+        5,
+        7,
+        11,
+        13,
+        17,
+        19,
+        23
+      ],
+      "enrichments": [
+        8.066,
+        14.609,
+        11.748,
+        15.84,
+        11.514,
+        11.088,
+        14.748,
+        13.963
+      ],
+      "slope": 0.1393,
+      "intercept": 10.9908,
+      "rmse": 2.204,
+      "growth_pattern": "FLAT",
+      "note": "Detrended (K1). Raw (K0) goes to infinity at p>=5."
+    },
+    "Maass_fp3": {
+      "primes_used": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        1.98,
+        3.49,
+        4.93,
+        8.026
+      ],
+      "slope": 0.7548,
+      "intercept": -0.3002,
+      "rmse": 0.0313,
+      "growth_pattern": "GROWING",
+      "note": "Mean enrichment at fingerprint length 3. Grows 2x->8x with p."
+    },
+    "Genus-2_by_endo": {
+      "CM x Q": {
+        "slope": -0.1482,
+        "intercept": 1.6021,
+        "endo_rank": 3,
+        "enrichments": [
+          1.6589,
+          1.0166,
+          1.2879,
+          1.4001
+        ],
+        "growth_pattern": "DECREASING"
+      },
+      "M_2(Q)": {
+        "slope": 1.0097,
+        "intercept": -0.3089,
+        "endo_rank": 4,
+        "enrichments": [
+          0.997,
+          1.1177,
+          1.4365,
+          2.3332
+        ],
+        "growth_pattern": "GROWING"
+      },
+      "Q": {
+        "slope": -0.0073,
+        "intercept": 1.0085,
+        "endo_rank": 1,
+        "enrichments": [
+          0.9965,
+          1.0027,
+          0.995,
+          0.988
+        ],
+        "growth_pattern": "FLAT"
+      },
+      "Q x Q": {
+        "slope": 0.1385,
+        "intercept": 0.8218,
+        "endo_rank": 2,
+        "enrichments": [
+          1.0031,
+          1.0101,
+          1.0682,
+          1.1827
+        ],
+        "growth_pattern": "GROWING"
+      },
+      "RM": {
+        "slope": -0.021,
+        "intercept": 1.0441,
+        "endo_rank": 2,
+        "enrichments": [
+          1.011,
+          0.9806,
+          1.0834,
+          0.9529
+        ],
+        "growth_pattern": "FLAT"
+      }
+    }
+  },
+  "family_structure_normalization": {
+    "EC": {
+      "group": "GL_2",
+      "rep_dimension": 2,
+      "mean_enrichment_p3to11": 12.566,
+      "enrichment_per_dim": 6.283
+    },
+    "Maass": {
+      "group": "SL_2(R) spectral",
+      "rep_dimension": 1,
+      "mean_enrichment_p3to11": 4.606,
+      "enrichment_per_dim": 4.606
+    },
+    "Genus-2_M2Q": {
+      "group": "GSp_4",
+      "rep_dimension": 4,
+      "mean_enrichment_p3to11": 1.471,
+      "enrichment_per_dim": 0.368
+    },
+    "Genus-2_QxQ": {
+      "group": "GSp_4",
+      "rep_dimension": 4,
+      "mean_enrichment_p3to11": 1.066,
+      "enrichment_per_dim": 0.266
+    }
+  },
+  "key_findings": [
+    "EC enrichment is FLAT at ~12x (mean p=3..11), unaffected by prime choice after detrending.",
+    "Maass enrichment GROWS linearly: slope=0.7548/prime, from 2.0x to 8.0x.",
+    "Genus-2 enrichment is WEAK overall but CONDITIONAL: M_2(Q) (endo rank 4) grows 1->2.3x; generic Q curves show ~1x.",
+    "Enrichment per rep dimension: EC=6.283x, Maass=4.606x, G2-M2Q=0.368x.",
+    "The three families probe DIFFERENT enrichment regimes: EC has the strongest absolute signal, Maass has the steepest growth, Genus-2 is gate-controlled by endomorphism algebra.",
+    "Maass growth with p suggests spectral structure encodes finer information at higher resolution \u2014 unlike EC where all primes p>=3 extract roughly equal algebraic content."
+  ],
+  "sources": {
+    "EC": "cartography/shared/scripts/v2/scaling_law_battery_results.json (test K1_prime_detrended)",
+    "Genus-2": "cartography/v2/genus2_endo_enrichment_results.json",
+    "Maass": "cartography/v2/maass_modp_enrichment_results.json"
+  }
+}

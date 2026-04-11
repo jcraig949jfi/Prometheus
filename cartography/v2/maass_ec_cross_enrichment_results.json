@@ -1,0 +1,675 @@
+{
+  "metadata": {
+    "n_shared_levels": 105,
+    "shared_levels": [
+      11,
+      14,
+      15,
+      17,
+      19,
+      20,
+      21,
+      24,
+      26,
+      27,
+      30,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      42,
+      43,
+      44,
+      45,
+      46,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      61,
+      62,
+      63,
+      65,
+      66,
+      67,
+      69,
+      70,
+      72,
+      73,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      82,
+      83,
+      84,
+      85,
+      88,
+      89,
+      90,
+      91,
+      92,
+      94,
+      96,
+      98,
+      99,
+      100,
+      101,
+      109,
+      113,
+      131,
+      139,
+      163,
+      179,
+      197,
+      229,
+      233,
+      269,
+      277,
+      307,
+      331,
+      347,
+      353,
+      359,
+      373,
+      389,
+      431,
+      433,
+      443,
+      467,
+      503,
+      557,
+      563,
+      571,
+      593,
+      643,
+      659,
+      677,
+      701,
+      709,
+      733,
+      739,
+      797,
+      811,
+      827,
+      829,
+      997
+    ],
+    "total_maass": 6274,
+    "total_ec": 355,
+    "total_cross_pairs": 21214,
+    "fingerprint_primes": [
+      3,
+      5,
+      7
+    ],
+    "n_permutations": 1000
+  },
+  "tests": [
+    {
+      "test": "floor_mod_fingerprint",
+      "fp_length": 1,
+      "primes_used": [
+        3
+      ],
+      "observed_rate": 0.35484322,
+      "expected_uniform": 0.33333333,
+      "enrichment": 1.0645,
+      "n_agree": 5081,
+      "n_pairs": 14319,
+      "null_mean": 0.34322334,
+      "null_std": 0.00701239,
+      "z_score": 1.657,
+      "p_value": 0.048,
+      "per_level_top10": {
+        "389": {
+          "agree": 15,
+          "total": 25,
+          "rate": 0.6
+        },
+        "35": {
+          "agree": 63,
+          "total": 108,
+          "rate": 0.583333
+        },
+        "331": {
+          "agree": 13,
+          "total": 23,
+          "rate": 0.565217
+        },
+        "347": {
+          "agree": 13,
+          "total": 24,
+          "rate": 0.541667
+        },
+        "67": {
+          "agree": 40,
+          "total": 75,
+          "rate": 0.533333
+        },
+        "643": {
+          "agree": 24,
+          "total": 46,
+          "rate": 0.521739
+        },
+        "233": {
+          "agree": 74,
+          "total": 142,
+          "rate": 0.521127
+        },
+        "433": {
+          "agree": 15,
+          "total": 29,
+          "rate": 0.517241
+        },
+        "229": {
+          "agree": 34,
+          "total": 67,
+          "rate": 0.507463
+        },
+        "19": {
+          "agree": 840,
+          "total": 1668,
+          "rate": 0.503597
+        }
+      }
+    },
+    {
+      "test": "floor_mod_fingerprint",
+      "fp_length": 2,
+      "primes_used": [
+        3,
+        5
+      ],
+      "observed_rate": 0.12197814,
+      "expected_uniform": 0.06666667,
+      "enrichment": 1.8297,
+      "n_agree": 2210,
+      "n_pairs": 18118,
+      "null_mean": 0.1111243,
+      "null_std": 0.00411953,
+      "z_score": 2.635,
+      "p_value": 0.002,
+      "per_level_top10": {
+        "35": {
+          "agree": 63,
+          "total": 108,
+          "rate": 0.583333
+        },
+        "20": {
+          "agree": 256,
+          "total": 512,
+          "rate": 0.5
+        },
+        "65": {
+          "agree": 62,
+          "total": 126,
+          "rate": 0.492063
+        },
+        "100": {
+          "agree": 20,
+          "total": 48,
+          "rate": 0.416667
+        },
+        "50": {
+          "agree": 52,
+          "total": 128,
+          "rate": 0.40625
+        },
+        "27": {
+          "agree": 12,
+          "total": 32,
+          "rate": 0.375
+        },
+        "40": {
+          "agree": 48,
+          "total": 144,
+          "rate": 0.333333
+        },
+        "42": {
+          "agree": 66,
+          "total": 228,
+          "rate": 0.289474
+        },
+        "55": {
+          "agree": 60,
+          "total": 208,
+          "rate": 0.288462
+        },
+        "69": {
+          "agree": 32,
+          "total": 116,
+          "rate": 0.275862
+        }
+      }
+    },
+    {
+      "test": "floor_mod_fingerprint",
+      "fp_length": 3,
+      "primes_used": [
+        3,
+        5,
+        7
+      ],
+      "observed_rate": 0.06684265,
+      "expected_uniform": 0.00952381,
+      "enrichment": 7.0185,
+      "n_agree": 1418,
+      "n_pairs": 21214,
+      "null_mean": 0.06863156,
+      "null_std": 0.00385651,
+      "z_score": -0.464,
+      "p_value": 0.684,
+      "per_level_top10": {
+        "35": {
+          "agree": 63,
+          "total": 108,
+          "rate": 0.583333
+        },
+        "75": {
+          "agree": 56,
+          "total": 192,
+          "rate": 0.291667
+        },
+        "42": {
+          "agree": 66,
+          "total": 228,
+          "rate": 0.289474
+        },
+        "15": {
+          "agree": 576,
+          "total": 2128,
+          "rate": 0.270677
+        },
+        "70": {
+          "agree": 32,
+          "total": 128,
+          "rate": 0.25
+        },
+        "21": {
+          "agree": 144,
+          "total": 612,
+          "rate": 0.235294
+        },
+        "84": {
+          "agree": 48,
+          "total": 210,
+          "rate": 0.228571
+        },
+        "14": {
+          "agree": 180,
+          "total": 1200,
+          "rate": 0.15
+        },
+        "49": {
+          "agree": 8,
+          "total": 60,
+          "rate": 0.133333
+        },
+        "98": {
+          "agree": 18,
+          "total": 216,
+          "rate": 0.083333
+        }
+      }
+    },
+    {
+      "test": "sign_agreement",
+      "per_prime": [
+        {
+          "prime": 2,
+          "sign_agreement": 0.500043,
+          "enrichment_vs_50pct": 1.0001,
+          "n_agree": 5748,
+          "n_total": 11495
+        },
+        {
+          "prime": 3,
+          "sign_agreement": 0.496552,
+          "enrichment_vs_50pct": 0.9931,
+          "n_agree": 5329,
+          "n_total": 10732
+        },
+        {
+          "prime": 5,
+          "sign_agreement": 0.498029,
+          "enrichment_vs_50pct": 0.9961,
+          "n_agree": 6697,
+          "n_total": 13447
+        },
+        {
+          "prime": 7,
+          "sign_agreement": 0.497232,
+          "enrichment_vs_50pct": 0.9945,
+          "n_agree": 6826,
+          "n_total": 13728
+        },
+        {
+          "prime": 11,
+          "sign_agreement": 0.497532,
+          "enrichment_vs_50pct": 0.9951,
+          "n_agree": 5746,
+          "n_total": 11549
+        },
+        {
+          "prime": 13,
+          "sign_agreement": 0.4982,
+          "enrichment_vs_50pct": 0.9964,
+          "n_agree": 9823,
+          "n_total": 19717
+        }
+      ]
+    },
+    {
+      "test": "mutual_information",
+      "per_prime": [
+        {
+          "prime": 3,
+          "mi_bits": 2.96e-05,
+          "null_mean": 0.00020106,
+          "null_std": 0.0001438,
+          "z_score": -1.192,
+          "n_pairs": 14319,
+          "ec_residue_dist": {
+            "0": 0.2958,
+            "1": 0.4136,
+            "2": 0.2906
+          },
+          "maass_residue_dist": {
+            "0": 0.2571,
+            "1": 0.4983,
+            "2": 0.2446
+          }
+        },
+        {
+          "prime": 5,
+          "mi_bits": 0.00023837,
+          "null_mean": 0.0005189,
+          "null_std": 0.00020582,
+          "z_score": -1.363,
+          "n_pairs": 16540,
+          "ec_residue_dist": {
+            "0": 0.1837,
+            "1": 0.1999,
+            "2": 0.1853,
+            "3": 0.389,
+            "4": 0.0421
+          },
+          "maass_residue_dist": {
+            "0": 0.2701,
+            "1": 0.2297,
+            "3": 0.2281,
+            "4": 0.2721
+          }
+        },
+        {
+          "prime": 7,
+          "mi_bits": 0.00114692,
+          "null_mean": 0.00072684,
+          "null_std": 0.00023943,
+          "z_score": 1.755,
+          "n_pairs": 17652,
+          "ec_residue_dist": {
+            "0": 0.217,
+            "1": 0.0227,
+            "2": 0.1012,
+            "3": 0.1335,
+            "4": 0.1701,
+            "5": 0.2075,
+            "6": 0.148
+          },
+          "maass_residue_dist": {
+            "0": 0.285,
+            "1": 0.2187,
+            "5": 0.2164,
+            "6": 0.2799
+          }
+        }
+      ]
+    },
+    {
+      "test": "conditioned_distribution",
+      "per_prime": [
+        {
+          "prime": 3,
+          "f_statistic": 0.277623,
+          "class_stats": {
+            "0": {
+              "n": 4236,
+              "mean": -0.01055,
+              "std": 1.13233,
+              "median": 0.004706
+            },
+            "1": {
+              "n": 5922,
+              "mean": 0.00156,
+              "std": 1.138897,
+              "median": 0.009959
+            },
+            "2": {
+              "n": 4161,
+              "mean": -0.014449,
+              "std": 1.135435,
+              "median": 0.000623
+            }
+          }
+        },
+        {
+          "prime": 5,
+          "f_statistic": 0.038916,
+          "class_stats": {
+            "0": {
+              "n": 3039,
+              "mean": 0.002989,
+              "std": 1.074652,
+              "median": 0.030694
+            },
+            "1": {
+              "n": 3306,
+              "mean": 0.002927,
+              "std": 1.071883,
+              "median": -0.014699
+            },
+            "2": {
+              "n": 3065,
+              "mean": 0.001511,
+              "std": 1.072331,
+              "median": 0.026329
+            },
+            "3": {
+              "n": 6434,
+              "mean": 0.00696,
+              "std": 1.080416,
+              "median": 0.007092
+            },
+            "4": {
+              "n": 696,
+              "mean": -0.007899,
+              "std": 1.063863,
+              "median": -0.026581
+            }
+          }
+        },
+        {
+          "prime": 7,
+          "f_statistic": 0.146954,
+          "class_stats": {
+            "0": {
+              "n": 3831,
+              "mean": 0.008226,
+              "std": 1.061434,
+              "median": -0.010533
+            },
+            "1": {
+              "n": 401,
+              "mean": -0.012066,
+              "std": 1.047718,
+              "median": -0.059021
+            },
+            "2": {
+              "n": 1786,
+              "mean": -0.014433,
+              "std": 1.059976,
+              "median": 0.006747
+            },
+            "3": {
+              "n": 2357,
+              "mean": -0.002533,
+              "std": 1.051122,
+              "median": 0.029135
+            },
+            "4": {
+              "n": 3003,
+              "mean": 0.001888,
+              "std": 1.038318,
+              "median": 0.036491
+            },
+            "5": {
+              "n": 3662,
+              "mean": 0.009741,
+              "std": 1.049995,
+              "median": 0.022479
+            },
+            "6": {
+              "n": 2612,
+              "mean": 0.002345,
+              "std": 1.049902,
+              "median": 0.009412
+            }
+          }
+        }
+      ]
+    },
+    {
+      "test": "level_specific_enrichment",
+      "prime": 3,
+      "n_levels_tested": 80,
+      "top_10": {
+        "389": {
+          "n_maass": 25,
+          "n_ec": 1,
+          "n_pairs": 25,
+          "agreement_rate": 0.6,
+          "enrichment": 1.8
+        },
+        "35": {
+          "n_maass": 36,
+          "n_ec": 3,
+          "n_pairs": 108,
+          "agreement_rate": 0.583333,
+          "enrichment": 1.75
+        },
+        "331": {
+          "n_maass": 23,
+          "n_ec": 1,
+          "n_pairs": 23,
+          "agreement_rate": 0.565217,
+          "enrichment": 1.6957
+        },
+        "347": {
+          "n_maass": 24,
+          "n_ec": 1,
+          "n_pairs": 24,
+          "agreement_rate": 0.541667,
+          "enrichment": 1.625
+        },
+        "67": {
+          "n_maass": 75,
+          "n_ec": 1,
+          "n_pairs": 75,
+          "agreement_rate": 0.533333,
+          "enrichment": 1.6
+        },
+        "643": {
+          "n_maass": 46,
+          "n_ec": 1,
+          "n_pairs": 46,
+          "agreement_rate": 0.521739,
+          "enrichment": 1.5652
+        },
+        "233": {
+          "n_maass": 71,
+          "n_ec": 2,
+          "n_pairs": 142,
+          "agreement_rate": 0.521127,
+          "enrichment": 1.5634
+        },
+        "433": {
+          "n_maass": 29,
+          "n_ec": 1,
+          "n_pairs": 29,
+          "agreement_rate": 0.517241,
+          "enrichment": 1.5517
+        },
+        "229": {
+          "n_maass": 67,
+          "n_ec": 1,
+          "n_pairs": 67,
+          "agreement_rate": 0.507463,
+          "enrichment": 1.5224
+        },
+        "19": {
+          "n_maass": 556,
+          "n_ec": 3,
+          "n_pairs": 1668,
+          "agreement_rate": 0.503597,
+          "enrichment": 1.5108
+        }
+      },
+      "bottom_5": {
+        "89": {
+          "n_maass": 23,
+          "n_ec": 3,
+          "n_pairs": 69,
+          "agreement_rate": 0.217391,
+          "enrichment": 0.6522
+        },
+        "52": {
+          "n_maass": 36,
+          "n_ec": 2,
+          "n_pairs": 72,
+          "agreement_rate": 0.194444,
+          "enrichment": 0.5833
+        },
+        "163": {
+          "n_maass": 47,
+          "n_ec": 1,
+          "n_pairs": 47,
+          "agreement_rate": 0.191489,
+          "enrichment": 0.5745
+        },
+        "113": {
+          "n_maass": 33,
+          "n_ec": 2,
+          "n_pairs": 66,
+          "agreement_rate": 0.151515,
+          "enrichment": 0.4545
+        },
+        "269": {
+          "n_maass": 16,
+          "n_ec": 1,
+          "n_pairs": 16,
+          "agreement_rate": 0.125,
+          "enrichment": 0.375
+        }
+      },
+      "mean_enrichment": 1.0507,
+      "std_enrichment": 0.3496
+    }
+  ],
+  "verdict": "NULL (no cross-family enrichment detected)",
+  "elapsed_seconds": 148.69
+}

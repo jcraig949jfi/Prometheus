@@ -1,0 +1,154 @@
+{
+  "challenge": "DeepSeek #20: Knot Conway vs Lattice Theta PCA Alignment",
+  "method": "PCA on coefficient matrices (Conway zero-padded to ambient dim), principal angles via SVD",
+  "data": {
+    "n_knots": 2977,
+    "n_lattices": 2977,
+    "n_lattices_available": 39293,
+    "d_conway_native": 6,
+    "k_pcs": 5,
+    "ambient_dims_tested": [
+      20,
+      50,
+      100,
+      150
+    ]
+  },
+  "results_by_dimension": {
+    "d20": {
+      "ambient_dim": 20,
+      "effective_rank_K": 5,
+      "effective_rank_L": 11,
+      "cos_principal_angles": [
+        0.059065,
+        0.015593,
+        0.000912,
+        1.3e-05,
+        0.0
+      ],
+      "principal_angles_deg": [
+        86.61,
+        89.11,
+        89.95,
+        90.0,
+        90.0
+      ],
+      "max_cos_theta1": 0.059065,
+      "mean_cos_all": 0.015117,
+      "variance_explained_K": 1.0,
+      "variance_explained_L": 1.0,
+      "null": {
+        "n_trials": 1000,
+        "null_mean_max_cos": 0.7724,
+        "null_std_max_cos": 0.0763,
+        "z_score_max": -9.35,
+        "p_value_max": 1.0,
+        "z_score_mean": -7.87,
+        "p_value_mean": 1.0
+      }
+    },
+    "d50": {
+      "ambient_dim": 50,
+      "effective_rank_K": 5,
+      "effective_rank_L": 2,
+      "cos_principal_angles": [
+        0.000839,
+        0.000508,
+        4e-06,
+        0.0,
+        0.0
+      ],
+      "principal_angles_deg": [
+        89.95,
+        89.97,
+        90.0,
+        90.0,
+        90.0
+      ],
+      "max_cos_theta1": 0.000839,
+      "mean_cos_all": 0.00027,
+      "variance_explained_K": 1.0,
+      "variance_explained_L": 1.0,
+      "null": {
+        "n_trials": 1000,
+        "null_mean_max_cos": 0.505,
+        "null_std_max_cos": 0.0721,
+        "z_score_max": -6.99,
+        "p_value_max": 1.0,
+        "z_score_mean": -7.0,
+        "p_value_mean": 1.0
+      }
+    },
+    "d100": {
+      "ambient_dim": 100,
+      "effective_rank_K": 5,
+      "effective_rank_L": 1,
+      "cos_principal_angles": [
+        6e-05,
+        3e-05,
+        1e-06,
+        0.0,
+        0.0
+      ],
+      "principal_angles_deg": [
+        90.0,
+        90.0,
+        90.0,
+        90.0,
+        90.0
+      ],
+      "max_cos_theta1": 6e-05,
+      "mean_cos_all": 1.8e-05,
+      "variance_explained_K": 1.0,
+      "variance_explained_L": 1.0,
+      "null": {
+        "n_trials": 1000,
+        "null_mean_max_cos": 0.3588,
+        "null_std_max_cos": 0.055,
+        "z_score_max": -6.53,
+        "p_value_max": 1.0,
+        "z_score_mean": -6.94,
+        "p_value_mean": 1.0
+      }
+    },
+    "d150": {
+      "ambient_dim": 150,
+      "effective_rank_K": 5,
+      "effective_rank_L": 1,
+      "cos_principal_angles": [
+        0.098277,
+        0.022268,
+        0.000353,
+        0.0,
+        0.0
+      ],
+      "principal_angles_deg": [
+        84.36,
+        88.72,
+        89.98,
+        90.0,
+        90.0
+      ],
+      "max_cos_theta1": 0.098277,
+      "mean_cos_all": 0.02418,
+      "variance_explained_K": 1.0,
+      "variance_explained_L": 1.0,
+      "null": {
+        "n_trials": 1000,
+        "null_mean_max_cos": 0.2936,
+        "null_std_max_cos": 0.0464,
+        "z_score_max": -4.21,
+        "p_value_max": 1.0,
+        "z_score_mean": -5.6,
+        "p_value_mean": 1.0
+      }
+    }
+  },
+  "primary_result_d150": {
+    "max_cos_theta1": 0.098277,
+    "z_score": -4.21,
+    "p_value": 1.0
+  },
+  "interpretation": "No significant alignment -- subspaces essentially random relative to each other",
+  "note": "Conway polys have max 6 nonzero coefficients; at d=6 the test is degenerate (5+5>6 forces trivial overlap). Higher ambient dims give meaningful tests. Null matches Conway's zero-padding structure (random in first 6 dims, zeros elsewhere)."
+}

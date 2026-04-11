@@ -1,0 +1,201 @@
+{
+  "challenge": "OEIS-EC Transfer Entropy (ChatGPT Harder #8)",
+  "method": "binned_transfer_entropy_mod3",
+  "parameters": {
+    "n_oeis": 500,
+    "n_ec": 500,
+    "n_pairs": 250000,
+    "min_sequence_length": 25,
+    "mod": 3,
+    "n_null_permutations": 200,
+    "n_null_pairs_sampled": 5000,
+    "seed": 42
+  },
+  "results": {
+    "mean_te_real": 0.3436003,
+    "std_te_real": 0.16582768,
+    "median_te_real": 0.34273177,
+    "mean_te_null": 0.34216351,
+    "std_te_null": 0.16553549,
+    "median_te_null": 0.34031421,
+    "cohens_d": 0.008672,
+    "mann_whitney_U": 125750478310.0,
+    "mann_whitney_p": 1.6551128747209944e-06,
+    "percentile_of_real_in_null": 63.5,
+    "mean_te_reverse": 0.28984367
+  },
+  "verdict": "NULL",
+  "interpretation": "Transfer entropy from OEIS integer sequences to elliptic curve Hecke eigenvalues is indistinguishable from the permutation null. OEIS sequences carry no predictive information about a_p. This is expected: a_p values are determined by the arithmetic of the curve mod p, which has no causal connection to combinatorial integer sequences.",
+  "top_pairs_by_te": [
+    {
+      "oeis_id": "A121889",
+      "ec_label": "3630.w2",
+      "te": 1.106960849457815
+    },
+    {
+      "oeis_id": "A103391",
+      "ec_label": "1896.a1",
+      "te": 1.105502873984978
+    },
+    {
+      "oeis_id": "A047113",
+      "ec_label": "4284.g1",
+      "te": 1.1037593748197103
+    },
+    {
+      "oeis_id": "A387706",
+      "ec_label": "2704.c1",
+      "te": 1.0874943945879108
+    },
+    {
+      "oeis_id": "A044101",
+      "ec_label": "4770.i4",
+      "te": 1.0873163243740287
+    },
+    {
+      "oeis_id": "A267806",
+      "ec_label": "1773.a1",
+      "te": 1.080801439466578
+    },
+    {
+      "oeis_id": "A121889",
+      "ec_label": "3630.h2",
+      "te": 1.0686406603518153
+    },
+    {
+      "oeis_id": "A141581",
+      "ec_label": "2756.a2",
+      "te": 1.0603753979802
+    },
+    {
+      "oeis_id": "A121889",
+      "ec_label": "2010.j4",
+      "te": 1.0565367413745945
+    },
+    {
+      "oeis_id": "A366806",
+      "ec_label": "1896.a1",
+      "te": 1.0536231865751227
+    },
+    {
+      "oeis_id": "A102805",
+      "ec_label": "3933.e2",
+      "te": 1.0430915748481828
+    },
+    {
+      "oeis_id": "A369520",
+      "ec_label": "89.b1",
+      "te": 1.042186452223047
+    },
+    {
+      "oeis_id": "A121889",
+      "ec_label": "2310.l3",
+      "te": 1.0420152603080624
+    },
+    {
+      "oeis_id": "A121889",
+      "ec_label": "2766.e1",
+      "te": 1.0277885773790603
+    },
+    {
+      "oeis_id": "A175431",
+      "ec_label": "2880.b4",
+      "te": 1.022665533361805
+    },
+    {
+      "oeis_id": "A093040",
+      "ec_label": "4578.d1",
+      "te": 1.0226655333618049
+    },
+    {
+      "oeis_id": "A270835",
+      "ec_label": "2702.b2",
+      "te": 1.0169321648569456
+    },
+    {
+      "oeis_id": "A270100",
+      "ec_label": "3206.a1",
+      "te": 1.0151886656916775
+    },
+    {
+      "oeis_id": "A125940",
+      "ec_label": "986.b1",
+      "te": 1.0127711036023674
+    },
+    {
+      "oeis_id": "A216054",
+      "ec_label": "3660.e2",
+      "te": 1.0093984370492772
+    }
+  ],
+  "te_histogram": {
+    "bins": [
+      -0.0,
+      0.0582,
+      0.1163,
+      0.1745,
+      0.2326,
+      0.2908,
+      0.349,
+      0.4071,
+      0.4653,
+      0.5234,
+      0.5816,
+      0.6397,
+      0.6979,
+      0.7561,
+      0.8142,
+      0.8724,
+      0.9305,
+      0.9887,
+      1.0469,
+      1.105,
+      1.1632
+    ],
+    "real_counts": [
+      11392,
+      11587,
+      17141,
+      24694,
+      29910,
+      33803,
+      33464,
+      29895,
+      22810,
+      15996,
+      9606,
+      5192,
+      2556,
+      1221,
+      492,
+      155,
+      58,
+      18,
+      8,
+      2
+    ],
+    "null_counts": [
+      45022,
+      46775,
+      71404,
+      99721,
+      122066,
+      134849,
+      132315,
+      118242,
+      90049,
+      62804,
+      37980,
+      20851,
+      10447,
+      4596,
+      1853,
+      700,
+      238,
+      64,
+      19,
+      5
+    ]
+  },
+  "elapsed_seconds": 73.1
+}

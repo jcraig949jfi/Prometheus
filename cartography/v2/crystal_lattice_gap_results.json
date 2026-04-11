@@ -1,0 +1,201 @@
+{
+  "test_name": "Crystal Band Gaps vs LMFDB Lattice Spectral Gaps",
+  "hypothesis": "Materials band gaps correlate with mathematical lattice spectral gaps",
+  "date": "2026-04-11",
+  "data_sources": {
+    "materials_project": "F:\\Prometheus\\cartography\\physics\\data\\materials_project_10k.json",
+    "lmfdb_lattices": "F:\\Prometheus\\cartography\\lmfdb_dump\\lat_lattices.json"
+  },
+  "sample_sizes": {
+    "mp_total": 10000,
+    "mp_filtered_0_12eV": 9996,
+    "mp_nonzero": 7156,
+    "lattices_with_spectral_gap": 39184
+  },
+  "distribution_stats": {
+    "band_gap_nonzero": {
+      "mean": 2.3032294857462268,
+      "std": 1.548848884823254,
+      "median": 2.0782499999999997,
+      "skewness": 0.8600928589589517,
+      "kurtosis": 0.8129407826697284
+    },
+    "spectral_gap": {
+      "mean": 2.521348527557059,
+      "std": 1.080058492922632,
+      "median": 2.0,
+      "skewness": 0.31343918906377155,
+      "kurtosis": -1.51601613407268
+    }
+  },
+  "test_1_shape_comparison_nonzero": {
+    "KS_statistic": 0.26275620192451443,
+    "KS_p_value": 0.0,
+    "Jensen_Shannon_divergence": 0.573563742116971,
+    "Wasserstein_distance_normalized": 0.3078015721294732
+  },
+  "test_2_shape_comparison_full": {
+    "KS_statistic": 0.47068006459423295,
+    "KS_p_value": 0.0,
+    "Jensen_Shannon_divergence": 0.6194795234350694,
+    "Wasserstein_distance_normalized": 0.3637733276543036
+  },
+  "test_3_dimension_coupling": {
+    "crystal_system_band_gap_stats": {
+      "Triclinic": {
+        "count": 756,
+        "mean_band_gap": 1.259583201058201,
+        "std_band_gap": 1.5945523973202655,
+        "median_band_gap": 0.4396
+      },
+      "Monoclinic": {
+        "count": 1618,
+        "mean_band_gap": 1.7558364029666254,
+        "std_band_gap": 1.6486475529387092,
+        "median_band_gap": 1.54825
+      },
+      "Tetragonal": {
+        "count": 1426,
+        "mean_band_gap": 1.6606384992987375,
+        "std_band_gap": 1.6659480011164318,
+        "median_band_gap": 1.2635
+      },
+      "Trigonal": {
+        "count": 1145,
+        "mean_band_gap": 1.7091206113537118,
+        "std_band_gap": 1.6816884456622343,
+        "median_band_gap": 1.412
+      },
+      "Hexagonal": {
+        "count": 887,
+        "mean_band_gap": 1.568176662908681,
+        "std_band_gap": 1.852942946737297,
+        "median_band_gap": 1.0895
+      },
+      "Orthorhombic": {
+        "count": 2189,
+        "mean_band_gap": 1.7295833714024669,
+        "std_band_gap": 1.6758241803952478,
+        "median_band_gap": 1.4178
+      },
+      "Cubic": {
+        "count": 1979,
+        "mean_band_gap": 1.6455587165234966,
+        "std_band_gap": 1.7539781387913096,
+        "median_band_gap": 1.2767
+      }
+    },
+    "lattice_dim_spectral_gap_stats": {
+      "2": {
+        "count": 1500,
+        "mean_spectral_gap": 2.7809436324811716,
+        "std_spectral_gap": 1.1552907974847486,
+        "median_spectral_gap": 2.8461538461538463
+      },
+      "3": {
+        "count": 36585,
+        "mean_spectral_gap": 2.526948202196125,
+        "std_spectral_gap": 1.080993474098648,
+        "median_spectral_gap": 2.0
+      },
+      "6": {
+        "count": 186,
+        "mean_spectral_gap": 1.9366231438812083,
+        "std_spectral_gap": 0.5923313537631715,
+        "median_spectral_gap": 2.0
+      },
+      "4": {
+        "count": 481,
+        "mean_spectral_gap": 2.028322566784105,
+        "std_spectral_gap": 0.7715608937044207,
+        "median_spectral_gap": 2.0
+      },
+      "7": {
+        "count": 86,
+        "mean_spectral_gap": 1.9165974529346628,
+        "std_spectral_gap": 0.5977125299881406,
+        "median_spectral_gap": 2.0
+      },
+      "8": {
+        "count": 37,
+        "mean_spectral_gap": 2.171171171171171,
+        "std_spectral_gap": 0.5417778631346175,
+        "median_spectral_gap": 2.0
+      },
+      "10": {
+        "count": 3,
+        "mean_spectral_gap": 2.3333333333333335,
+        "std_spectral_gap": 0.4714045207910317,
+        "median_spectral_gap": 2.0
+      },
+      "9": {
+        "count": 5,
+        "mean_spectral_gap": 2.25,
+        "std_spectral_gap": 0.9219544457292888,
+        "median_spectral_gap": 2.0
+      },
+      "5": {
+        "count": 295,
+        "mean_spectral_gap": 1.9117271324001137,
+        "std_spectral_gap": 0.6498343702500459,
+        "median_spectral_gap": 1.75
+      },
+      "1": {
+        "count": 1,
+        "mean_spectral_gap": 4.0,
+        "std_spectral_gap": 0.0,
+        "median_spectral_gap": 4.0
+      },
+      "11": {
+        "count": 1,
+        "mean_spectral_gap": 2.0,
+        "std_spectral_gap": 0.0,
+        "median_spectral_gap": 2.0
+      },
+      "13": {
+        "count": 1,
+        "mean_spectral_gap": 2.0,
+        "std_spectral_gap": 0.0,
+        "median_spectral_gap": 2.0
+      },
+      "14": {
+        "count": 1,
+        "mean_spectral_gap": 2.0,
+        "std_spectral_gap": 0.0,
+        "median_spectral_gap": 2.0
+      },
+      "12": {
+        "count": 1,
+        "mean_spectral_gap": 2.0,
+        "std_spectral_gap": 0.0,
+        "median_spectral_gap": 2.0
+      },
+      "24": {
+        "count": 1,
+        "mean_spectral_gap": 1.5,
+        "std_spectral_gap": 0.0,
+        "median_spectral_gap": 1.5
+      }
+    },
+    "cross_spearman_r": -0.10714285714285716,
+    "cross_spearman_p": 0.8191508555699912,
+    "note": "Spearman on first min(n_cs, n_dim) ordered means \u2014 crude coupling test"
+  },
+  "test_4_null_battery": {
+    "observed_KS": 0.46790473108084635,
+    "null_KS_mean": 0.01010311976962797,
+    "null_KS_std": 0.003332277818134068,
+    "KS_z_score": 137.38398665918183,
+    "observed_JS": 0.573563742116971,
+    "null_JS_mean": 0.032792594904951344,
+    "null_JS_std": 0.00316164530886285,
+    "JS_z_score": 171.0410543827002,
+    "observed_W": 0.3078015721294732,
+    "null_W_mean": 0.004461077871315905,
+    "null_W_std": 0.002296742199202149,
+    "W_z_score": 132.0742460183528,
+    "n_shuffles": 1000
+  },
+  "verdict": "NULL \u2014 distributions are fundamentally different",
+  "interpretation": "Band gaps (eV, physics of electron states in crystals) and lattice spectral gaps (theta-series shell ratios, pure combinatorial/geometric property of lattices) measure gaps in fundamentally different spaces. Any correlation would be surprising and would suggest deep structure connecting material physics to lattice geometry."
+}

@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "n_materials": 10000,
+    "n_features": 6,
+    "features": [
+      "band_gap",
+      "formation_energy_per_atom",
+      "density",
+      "volume",
+      "nsites",
+      "spacegroup_number"
+    ],
+    "method": "spearman"
+  },
+  "correlation_matrix": {
+    "band_gap": {
+      "band_gap": 1.0,
+      "formation_energy_per_atom": -0.09715,
+      "density": -0.034652,
+      "volume": 0.083739,
+      "nsites": 0.055315,
+      "spacegroup_number": -0.002522
+    },
+    "formation_energy_per_atom": {
+      "band_gap": -0.09715,
+      "formation_energy_per_atom": 1.0,
+      "density": 0.017275,
+      "volume": -0.082653,
+      "nsites": -0.053942,
+      "spacegroup_number": -0.022719
+    },
+    "density": {
+      "band_gap": -0.034652,
+      "formation_energy_per_atom": 0.017275,
+      "density": 1.0,
+      "volume": -0.702039,
+      "nsites": 0.440954,
+      "spacegroup_number": 0.024772
+    },
+    "volume": {
+      "band_gap": 0.083739,
+      "formation_energy_per_atom": -0.082653,
+      "density": -0.702039,
+      "volume": 1.0,
+      "nsites": 0.117692,
+      "spacegroup_number": -0.029511
+    },
+    "nsites": {
+      "band_gap": 0.055315,
+      "formation_energy_per_atom": -0.053942,
+      "density": 0.440954,
+      "volume": 0.117692,
+      "nsites": 1.0,
+      "spacegroup_number": -0.09002
+    },
+    "spacegroup_number": {
+      "band_gap": -0.002522,
+      "formation_energy_per_atom": -0.022719,
+      "density": 0.024772,
+      "volume": -0.029511,
+      "nsites": -0.09002,
+      "spacegroup_number": 1.0
+    }
+  },
+  "all_pairs_ranked": [
+    {
+      "var1": "density",
+      "var2": "volume",
+      "rho": -0.702039,
+      "p_value": 0.0
+    },
+    {
+      "var1": "density",
+      "var2": "nsites",
+      "rho": 0.440954,
+      "p_value": 0.0
+    },
+    {
+      "var1": "volume",
+      "var2": "nsites",
+      "rho": 0.117692,
+      "p_value": 3.5168877542902707e-32
+    },
+    {
+      "var1": "band_gap",
+      "var2": "formation_energy_per_atom",
+      "rho": -0.09715,
+      "p_value": 2.1000249994731386e-22
+    },
+    {
+      "var1": "nsites",
+      "var2": "spacegroup_number",
+      "rho": -0.09002,
+      "p_value": 1.895525047123572e-19
+    },
+    {
+      "var1": "band_gap",
+      "var2": "volume",
+      "rho": 0.083739,
+      "p_value": 4.96191747130052e-17
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "volume",
+      "rho": -0.082653,
+      "p_value": 1.247616857601574e-16
+    },
+    {
+      "var1": "band_gap",
+      "var2": "nsites",
+      "rho": 0.055315,
+      "p_value": 3.112319434830558e-08
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "nsites",
+      "rho": -0.053942,
+      "p_value": 6.759892502720495e-08
+    },
+    {
+      "var1": "band_gap",
+      "var2": "density",
+      "rho": -0.034652,
+      "p_value": 0.0005286836128472353
+    },
+    {
+      "var1": "volume",
+      "var2": "spacegroup_number",
+      "rho": -0.029511,
+      "p_value": 0.0031639049540828565
+    },
+    {
+      "var1": "density",
+      "var2": "spacegroup_number",
+      "rho": 0.024772,
+      "p_value": 0.013240100247973844
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "spacegroup_number",
+      "rho": -0.022719,
+      "p_value": 0.02309330117913819
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "density",
+      "rho": 0.017275,
+      "p_value": 0.08409647289533857
+    },
+    {
+      "var1": "band_gap",
+      "var2": "spacegroup_number",
+      "rho": -0.002522,
+      "p_value": 0.8008988757507878
+    }
+  ],
+  "most_correlated_pair": {
+    "var1": "density",
+    "var2": "volume",
+    "rho": -0.702039,
+    "p_value": 0.0
+  },
+  "most_independent_pair": {
+    "var1": "band_gap",
+    "var2": "spacegroup_number",
+    "rho": -0.002522,
+    "p_value": 0.8008988757507878
+  },
+  "negative_correlations": [
+    {
+      "var1": "density",
+      "var2": "volume",
+      "rho": -0.702039,
+      "p_value": 0.0
+    },
+    {
+      "var1": "band_gap",
+      "var2": "formation_energy_per_atom",
+      "rho": -0.09715,
+      "p_value": 2.1000249994731386e-22
+    },
+    {
+      "var1": "nsites",
+      "var2": "spacegroup_number",
+      "rho": -0.09002,
+      "p_value": 1.895525047123572e-19
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "volume",
+      "rho": -0.082653,
+      "p_value": 1.247616857601574e-16
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "nsites",
+      "rho": -0.053942,
+      "p_value": 6.759892502720495e-08
+    },
+    {
+      "var1": "band_gap",
+      "var2": "density",
+      "rho": -0.034652,
+      "p_value": 0.0005286836128472353
+    },
+    {
+      "var1": "volume",
+      "var2": "spacegroup_number",
+      "rho": -0.029511,
+      "p_value": 0.0031639049540828565
+    },
+    {
+      "var1": "formation_energy_per_atom",
+      "var2": "spacegroup_number",
+      "rho": -0.022719,
+      "p_value": 0.02309330117913819
+    },
+    {
+      "var1": "band_gap",
+      "var2": "spacegroup_number",
+      "rho": -0.002522,
+      "p_value": 0.8008988757507878
+    }
+  ],
+  "pca": {
+    "explained_variance_ratio": [
+      0.22184,
+      0.185102,
+      0.180227,
+      0.172098,
+      0.156722,
+      0.084012
+    ],
+    "cumulative_variance": [
+      0.22184,
+      0.406942,
+      0.587169,
+      0.759267,
+      0.915988,
+      1.0
+    ],
+    "effective_dimensions_90pct": 5,
+    "effective_dimensions_95pct": 6,
+    "eigenvalues": [
+      1.331175,
+      1.110721,
+      1.081472,
+      1.032689,
+      0.940424,
+      0.50412
+    ],
+    "pc_loadings": {
+      "PC1": {
+        "band_gap": -0.1025,
+        "formation_energy_per_atom": 0.0786,
+        "density": 0.7251,
+        "volume": -0.6558,
+        "nsites": 0.1652,
+        "spacegroup_number": 0.0148
+      },
+      "PC2": {
+        "band_gap": 0.2185,
+        "formation_energy_per_atom": -0.345,
+        "density": 0.2745,
+        "volume": 0.419,
+        "nsites": 0.742,
+        "spacegroup_number": 0.1781
+      },
+      "PC3": {
+        "band_gap": 0.2759,
+        "formation_energy_per_atom": -0.3758,
+        "density": 0.1542,
+        "volume": -0.0211,
+        "nsites": -0.4761,
+        "spacegroup_number": 0.7292
+      },
+      "PC4": {
+        "band_gap": 0.6339,
+        "formation_energy_per_atom": -0.4667,
+        "density": -0.0494,
+        "volume": -0.2503,
+        "nsites": -0.1119,
+        "spacegroup_number": -0.5503
+      },
+      "PC5": {
+        "band_gap": 0.6804,
+        "formation_energy_per_atom": 0.7133,
+        "density": 0.0306,
+        "volume": 0.0329,
+        "nsites": 0.0659,
+        "spacegroup_number": 0.1477
+      },
+      "PC6": {
+        "band_gap": -0.0291,
+        "formation_energy_per_atom": 0.0833,
+        "density": 0.6097,
+        "volume": 0.5747,
+        "nsites": -0.4225,
+        "spacegroup_number": -0.3343
+      }
+    }
+  },
+  "crystal_invariant_profile": {
+    "invariant_uniqueness": {
+      "band_gap": 0.09715,
+      "formation_energy_per_atom": 0.09715,
+      "density": 0.702039,
+      "volume": 0.702039,
+      "nsites": 0.440954,
+      "spacegroup_number": 0.09002
+    },
+    "sorted_by_uniqueness": [
+      {
+        "name": "spacegroup_number",
+        "max_abs_rho": 0.09002
+      },
+      {
+        "name": "band_gap",
+        "max_abs_rho": 0.09715
+      },
+      {
+        "name": "formation_energy_per_atom",
+        "max_abs_rho": 0.09715
+      },
+      {
+        "name": "nsites",
+        "max_abs_rho": 0.440954
+      },
+      {
+        "name": "density",
+        "max_abs_rho": 0.702039
+      },
+      {
+        "name": "volume",
+        "max_abs_rho": 0.702039
+      }
+    ],
+    "most_unique_field": {
+      "name": "spacegroup_number",
+      "max_abs_rho": 0.09002
+    }
+  },
+  "cross_domain_comparison": {
+    "knot_invariants": {
+      "effective_dimensions_90pct": 4,
+      "n_features": 18,
+      "top_3_variance": [
+        0.553351,
+        0.206777,
+        0.088792
+      ],
+      "most_unique_invariant": "jones_writhe_proxy"
+    },
+    "crystal_invariants": {
+      "effective_dimensions_90pct": 5,
+      "n_features": 6,
+      "top_3_variance": [
+        0.22184,
+        0.185102,
+        0.180227
+      ],
+      "most_unique_invariant": "spacegroup_number"
+    },
+    "comparison": {
+      "effective_dim_ratio_crystal_vs_knot": 1.25,
+      "pc1_concentration_crystal": 0.2218,
+      "pc1_concentration_knot": 0.5534,
+      "interpretation": "Crystals have 5 effective dimensions vs knots' 4. Crystal PC1 captures 22.2% vs knot PC1 at 55.3%. Crystals are higher-dimensional (less redundant)."
+    }
+  },
+  "summary": {
+    "most_correlated_pair": "density vs volume (rho=-0.7020)",
+    "most_independent_pair": "band_gap vs spacegroup_number (rho=-0.0025)",
+    "n_negative_correlations": 9,
+    "most_negative": "density vs volume (rho=-0.7020)",
+    "pca_effective_dimensions_90pct": 5,
+    "most_unique_field": "spacegroup_number"
+  }
+}

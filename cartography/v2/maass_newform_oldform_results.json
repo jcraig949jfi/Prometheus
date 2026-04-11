@@ -1,0 +1,282 @@
+{
+  "challenge": "Maass Newform vs Oldform Coefficient Separation",
+  "dataset": "F:\\Prometheus\\cartography\\maass\\data\\maass_with_coefficients.json",
+  "n_forms": 14995,
+  "n_features_computed": 14992,
+  "n_prime_level": 11061,
+  "n_composite_level": 3931,
+  "heuristic_oldforms": 939,
+  "heuristic_oldform_fraction": 0.2389,
+  "classifier": {
+    "type": "RandomForest",
+    "n_estimators": 200,
+    "max_depth": 8,
+    "cv_f1_mean": 0.8822,
+    "cv_f1_std": 0.1498,
+    "feature_importances": {
+      "entropy": 0.3408,
+      "near_zero_frac": 0.4933,
+      "kurtosis": 0.0145,
+      "phase_coherence": 0.1514
+    }
+  },
+  "rf_predicted_oldforms": 917,
+  "rf_oldform_fraction_of_composite": 0.2333,
+  "m4_m2_squared": {
+    "all_forms": 796.1395,
+    "composite_level": 15.7502,
+    "composite_newforms_only": 17.0338,
+    "oldforms_only": 8.6725,
+    "all_minus_oldforms": 743.9371,
+    "delta_removing_oldforms": -52.2024
+  },
+  "feature_distributions_composite": {
+    "entropy": {
+      "newform_mean": 3.9629,
+      "oldform_mean": 2.8686,
+      "t_statistic": 85.08,
+      "p_value": 0.0
+    },
+    "near_zero_frac": {
+      "newform_mean": 0.1292,
+      "oldform_mean": 0.5331,
+      "t_statistic": -85.19,
+      "p_value": 0.0
+    },
+    "kurtosis": {
+      "newform_mean": 1.1356,
+      "oldform_mean": 3.4001,
+      "t_statistic": -35.95,
+      "p_value": 6.46e-245
+    },
+    "phase_coherence": {
+      "newform_mean": 0.438,
+      "oldform_mean": 0.03,
+      "t_statistic": 78.85,
+      "p_value": 0.0
+    }
+  },
+  "oldform_by_omega": {
+    "1": {
+      "n_forms": 431,
+      "n_oldform_like": 209,
+      "fraction": 0.4849,
+      "mean_prob": 0.5161
+    },
+    "2": {
+      "n_forms": 3220,
+      "n_oldform_like": 638,
+      "fraction": 0.1981,
+      "mean_prob": 0.2165
+    },
+    "3": {
+      "n_forms": 280,
+      "n_oldform_like": 70,
+      "fraction": 0.25,
+      "mean_prob": 0.253
+    }
+  },
+  "top_20_oldform_like": [
+    {
+      "maass_id": "5411a42eacf7560ce8a6f45a",
+      "level": 84,
+      "spectral_parameter": "0.755533735233",
+      "oldform_prob": 1.0,
+      "entropy": 2.7849,
+      "near_zero_frac": 0.5514,
+      "kurtosis": 4.3484,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411b437acf7560e67f3383c",
+      "level": 68,
+      "spectral_parameter": "0.901444248535",
+      "oldform_prob": 1.0,
+      "entropy": 2.6631,
+      "near_zero_frac": 0.5327,
+      "kurtosis": 4.6149,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f71f98c88aece0f31000004",
+      "level": 44,
+      "spectral_parameter": "1.25524213361",
+      "oldform_prob": 1.0,
+      "entropy": 2.7183,
+      "near_zero_frac": 0.551,
+      "kurtosis": 4.8137,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f6b6a8d88aece520c000001",
+      "level": 24,
+      "spectral_parameter": "1.30086635839",
+      "oldform_prob": 1.0,
+      "entropy": 2.6488,
+      "near_zero_frac": 0.537,
+      "kurtosis": 4.8739,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411a3edacf7560ce8a6f36a",
+      "level": 72,
+      "spectral_parameter": "1.30086635976",
+      "oldform_prob": 1.0,
+      "entropy": 2.3546,
+      "near_zero_frac": 0.6821,
+      "kurtosis": 4.4243,
+      "phase_coherence": 0.3381
+    },
+    {
+      "maass_id": "5411a42bacf7560ce8a6f455",
+      "level": 84,
+      "spectral_parameter": "1.40069909213",
+      "oldform_prob": 1.0,
+      "entropy": 2.5603,
+      "near_zero_frac": 0.5616,
+      "kurtosis": 5.7712,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411a3ecacf7560ce8a6f365",
+      "level": 88,
+      "spectral_parameter": "1.63503221012",
+      "oldform_prob": 1.0,
+      "entropy": 2.6334,
+      "near_zero_frac": 0.5316,
+      "kurtosis": 5.443,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411b2ecacf7560e67f336ef",
+      "level": 84,
+      "spectral_parameter": "1.68697213922",
+      "oldform_prob": 1.0,
+      "entropy": 2.5886,
+      "near_zero_frac": 0.5535,
+      "kurtosis": 4.9715,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f55960388aece23d8000003",
+      "level": 24,
+      "spectral_parameter": "1.91464670089",
+      "oldform_prob": 1.0,
+      "entropy": 2.7621,
+      "near_zero_frac": 0.5315,
+      "kurtosis": 4.4773,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411b263acf7560e67f33656",
+      "level": 72,
+      "spectral_parameter": "1.91464670123",
+      "oldform_prob": 1.0,
+      "entropy": 2.1405,
+      "near_zero_frac": 0.6799,
+      "kurtosis": 6.0831,
+      "phase_coherence": 0.3351
+    },
+    {
+      "maass_id": "4f59343088aece2afe0000db",
+      "level": 8,
+      "spectral_parameter": "10.2618142525",
+      "oldform_prob": 1.0,
+      "entropy": 2.6901,
+      "near_zero_frac": 0.5407,
+      "kurtosis": 4.551,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f5926fa88aece2afe0000d2",
+      "level": 8,
+      "spectral_parameter": "11.1062703875",
+      "oldform_prob": 1.0,
+      "entropy": 2.5743,
+      "near_zero_frac": 0.5967,
+      "kurtosis": 4.8883,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411b068acf7560e67f3336d",
+      "level": 12,
+      "spectral_parameter": "11.4559859145",
+      "oldform_prob": 1.0,
+      "entropy": 2.7874,
+      "near_zero_frac": 0.5513,
+      "kurtosis": 4.2934,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f5558b988aece264600000d",
+      "level": 4,
+      "spectral_parameter": "11.972776694",
+      "oldform_prob": 1.0,
+      "entropy": 2.6381,
+      "near_zero_frac": 0.5434,
+      "kurtosis": 4.3687,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411b2c2acf7560e67f336be",
+      "level": 20,
+      "spectral_parameter": "12.1096769286",
+      "oldform_prob": 1.0,
+      "entropy": 2.6019,
+      "near_zero_frac": 0.5817,
+      "kurtosis": 5.5309,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f5934df88aece2afe0000dd",
+      "level": 8,
+      "spectral_parameter": "12.9167943228",
+      "oldform_prob": 1.0,
+      "entropy": 2.6399,
+      "near_zero_frac": 0.5327,
+      "kurtosis": 5.5131,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "4f592b0488aece2afe0000d7",
+      "level": 8,
+      "spectral_parameter": "12.93885778",
+      "oldform_prob": 1.0,
+      "entropy": 2.5697,
+      "near_zero_frac": 0.5587,
+      "kurtosis": 5.5477,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411a413acf7560ce8a6f3ef",
+      "level": 20,
+      "spectral_parameter": "13.3338452282",
+      "oldform_prob": 1.0,
+      "entropy": 2.6609,
+      "near_zero_frac": 0.5606,
+      "kurtosis": 5.6719,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411a322acf7560ce8a6f04b",
+      "level": 12,
+      "spectral_parameter": "13.4630289211",
+      "oldform_prob": 1.0,
+      "entropy": 2.7011,
+      "near_zero_frac": 0.5465,
+      "kurtosis": 5.3399,
+      "phase_coherence": 0.0
+    },
+    {
+      "maass_id": "5411a414acf7560ce8a6f3f4",
+      "level": 20,
+      "spectral_parameter": "15.1230336104",
+      "oldform_prob": 1.0,
+      "entropy": 2.4506,
+      "near_zero_frac": 0.628,
+      "kurtosis": 4.796,
+      "phase_coherence": 0.0
+    }
+  ],
+  "verdict": "SIGNIFICANT: removing oldforms shifts M4/M2^2 by -52.2024"
+}

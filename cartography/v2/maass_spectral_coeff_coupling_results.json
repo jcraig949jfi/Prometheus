@@ -1,0 +1,143 @@
+{
+  "test": "maass_spectral_coefficient_coupling",
+  "description": "Test whether spectrally-adjacent Maass forms have more similar Fourier coefficients than random pairs at the same level, stratified by symmetry type",
+  "hypothesis": "NO coupling expected by equidistribution; actual finding is REPULSION within symmetry classes",
+  "data": {
+    "total_forms": 14995,
+    "forms_used": 14989,
+    "levels_used": 237,
+    "n_coefficients": 20,
+    "min_forms_per_level": 5,
+    "symmetry_alternation_rate": 0.5565
+  },
+  "unstratified": {
+    "adjacent": {
+      "n": 14752,
+      "mean": -0.04466346620367657,
+      "std": 0.19710757621546737,
+      "median": -0.05638894566899609,
+      "percentiles": {
+        "5": -0.3461897326794469,
+        "25": -0.1692569027040503,
+        "50": -0.05638894566899609,
+        "75": 0.06153712570512529,
+        "95": 0.30239215208248604
+      }
+    },
+    "random": {
+      "n": 44256,
+      "mean": -0.009536496038385765,
+      "std": 0.22194525443478447,
+      "median": -0.03228086743703398,
+      "percentiles": {
+        "5": -0.33182041586684685,
+        "25": -0.15248439922794704,
+        "50": -0.03228086743703398,
+        "75": 0.10471364057659424,
+        "95": 0.4153527711846532
+      }
+    },
+    "tests": {
+      "ks": {
+        "D": 0.06625090383224874,
+        "p": 1.1510427899214323e-42
+      },
+      "mann_whitney_u": {
+        "U": 299230423.0,
+        "p": 4.680744497879916e-52
+      },
+      "cohens_d": -0.16735565675788935
+    },
+    "coupling_detected": true
+  },
+  "same_symmetry": {
+    "adjacent": {
+      "n": 6543,
+      "mean": -0.09290665766770757,
+      "std": 0.15854750091725378,
+      "median": -0.0886365716818251,
+      "percentiles": {
+        "5": -0.3611450268291911,
+        "25": -0.1864115091658914,
+        "50": -0.0886365716818251,
+        "75": 0.007637588055544868,
+        "95": 0.15263970459565787
+      }
+    },
+    "random": {
+      "n": 21721,
+      "mean": -0.021316837571386676,
+      "std": 0.20515157077644705,
+      "median": -0.038919634353353855,
+      "percentiles": {
+        "5": -0.32226768925376675,
+        "25": -0.14905239355451466,
+        "50": -0.038919634353353855,
+        "75": 0.08375514189395303,
+        "95": 0.35442947960978133
+      }
+    },
+    "tests": {
+      "ks": {
+        "D": 0.14709122581700973,
+        "p": 2.057556087237894e-95
+      },
+      "mann_whitney_u": {
+        "U": 57142321.0,
+        "p": 7.331051342068955e-128
+      },
+      "cohens_d": -0.39048337891352985
+    },
+    "coupling_detected": true,
+    "interpretation": "Adjacent same-symmetry forms REPEL in coefficient space"
+  },
+  "cross_symmetry": {
+    "adjacent": {
+      "n": 8209,
+      "mean": -0.006211133185141449,
+      "std": 0.21551935356208424,
+      "median": -0.02099341160410961,
+      "percentiles": {
+        "5": -0.3346786544992195,
+        "25": -0.15069806924240076,
+        "50": -0.02099341160410961,
+        "75": 0.12108634918038144,
+        "95": 0.3884660639869521
+      }
+    },
+    "random": {
+      "n": 22535,
+      "mean": 0.001818320843722632,
+      "std": 0.23645389891424368,
+      "median": -0.023992268483871235,
+      "percentiles": {
+        "5": -0.3423287605904808,
+        "25": -0.1561080617170311,
+        "50": -0.023992268483871235,
+        "75": 0.1299519695904065,
+        "95": 0.4538979576143819
+      }
+    },
+    "tests": {
+      "ks": {
+        "D": 0.028667524209373352,
+        "p": 9.930882182935279e-05
+      },
+      "mann_whitney_u": {
+        "U": 92022228.0,
+        "p": 0.4923428262693106
+      },
+      "cohens_d": -0.035492608272391826
+    },
+    "coupling_detected": false,
+    "interpretation": "No effect across symmetry types (control)"
+  },
+  "gap_size_vs_similarity": {
+    "spearman_r": -0.06983232870671384,
+    "spearman_p": 2.0428552550665983e-17,
+    "pearson_r": -0.08613514873669109,
+    "pearson_p": 1.0631380290922093e-25,
+    "gap_correlated": true
+  },
+  "verdict": "COEFFICIENT-SPACE REPULSION within symmetry classes. Spectrally adjacent Maass forms of the SAME symmetry have anti-correlated coefficients (d=-0.390), while cross-symmetry pairs show no effect (d=-0.035). This is a spectral echo: Poisson spacing has a coefficient-space shadow, but only within symmetry sectors."
+}

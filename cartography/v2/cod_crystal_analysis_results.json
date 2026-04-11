@@ -1,0 +1,836 @@
+{
+  "cell_volume_distribution": {
+    "count": 9755,
+    "mean": 1724.7550220399796,
+    "median": 1098.06,
+    "std": 2727.671072888355,
+    "min": 12.8,
+    "max": 100078.63,
+    "q25": 430.91999999999996,
+    "q75": 2071.37,
+    "log_normal_test": {
+      "shapiro_wilk_stat": 0.98366884701768,
+      "shapiro_wilk_p": 1.338522483565953e-23,
+      "dagostino_k2_stat": 315.7293510954486,
+      "dagostino_k2_p": 2.755767171141605e-69,
+      "log_mean": 6.832699151634212,
+      "log_std": 1.1916543330293023,
+      "interpretation": "not log-normal (heavy tails likely)"
+    }
+  },
+  "volume_by_nelements": {
+    "0": {
+      "count": 1,
+      "mean": 491.12,
+      "median": 491.12,
+      "std": 0.0,
+      "min": 491.12,
+      "max": 491.12
+    },
+    "1": {
+      "count": 40,
+      "mean": 208.98475,
+      "median": 61.21,
+      "std": 522.1764673651404,
+      "min": 17.48,
+      "max": 3324.11
+    },
+    "2": {
+      "count": 797,
+      "mean": 485.91462986198246,
+      "median": 179.84,
+      "std": 958.388367841724,
+      "min": 12.8,
+      "max": 14827.4
+    },
+    "3": {
+      "count": 2406,
+      "mean": 1103.0118620116375,
+      "median": 697.0450000000001,
+      "std": 1440.352524648926,
+      "min": 34.37,
+      "max": 25041.19
+    },
+    "4": {
+      "count": 3246,
+      "mean": 1631.6015773259396,
+      "median": 1133.165,
+      "std": 2185.7733942029163,
+      "min": 23.47,
+      "max": 48857.77
+    },
+    "5": {
+      "count": 2109,
+      "mean": 2115.960459933618,
+      "median": 1427.89,
+      "std": 2408.594193084876,
+      "min": 55.96,
+      "max": 30957.34
+    },
+    "6": {
+      "count": 883,
+      "mean": 2850.9917893544734,
+      "median": 2200.89,
+      "std": 2636.693277836458,
+      "min": 57.24,
+      "max": 26089.19
+    },
+    "7": {
+      "count": 234,
+      "mean": 5186.931068376069,
+      "median": 3272.45,
+      "std": 8172.415219257488,
+      "min": 175.69,
+      "max": 75762.03
+    },
+    "8": {
+      "count": 32,
+      "mean": 7796.6025,
+      "median": 3737.965,
+      "std": 17011.358972568152,
+      "min": 739.61,
+      "max": 100078.63
+    },
+    "9": {
+      "count": 5,
+      "mean": 6873.082,
+      "median": 3544.61,
+      "std": 6879.763981941241,
+      "min": 1121.62,
+      "max": 20266.02
+    },
+    "10": {
+      "count": 1,
+      "mean": 738.08,
+      "median": 738.08,
+      "std": 0.0,
+      "min": 738.08,
+      "max": 738.08
+    },
+    "13": {
+      "count": 1,
+      "mean": 512.51,
+      "median": 512.51,
+      "std": 0.0,
+      "min": 512.51,
+      "max": 512.51
+    }
+  },
+  "nelements_volume_correlation": {
+    "pearson_r": 0.30252720803816485,
+    "pearson_p": 1.395530208781376e-205,
+    "spearman_rho": 0.454714984639324,
+    "spearman_p": 0.0
+  },
+  "cell_parameter_ratios": {
+    "a_over_b": {
+      "count": 9755,
+      "mean": 1.0946692627054548,
+      "median": 1.0,
+      "std": 0.739914997350074,
+      "fraction_within_1pct_of_1": 0.33900563813429013,
+      "fraction_within_5pct_of_1": 0.40369041517170684
+    },
+    "b_over_c": {
+      "count": 9755,
+      "mean": 0.9617524868254722,
+      "median": 0.8547949802619378,
+      "std": 0.7059734328078492,
+      "fraction_within_1pct_of_1": 0.1441312147616607,
+      "fraction_within_5pct_of_1": 0.19682214249103025
+    },
+    "a_over_c": {
+      "count": 9755,
+      "mean": 0.9118654527639843,
+      "median": 0.8074299334264815,
+      "std": 0.6284269954889159,
+      "fraction_within_1pct_of_1": 0.14126089185033316,
+      "fraction_within_5pct_of_1": 0.19261916965658638
+    },
+    "cubic_fraction": 0.13070220399794977,
+    "cubic_count": 1275,
+    "total_with_params": 9755
+  },
+  "angle_distribution": {
+    "alpha": {
+      "count": 9755,
+      "mean": 89.72153357252691,
+      "std": 6.252050874647898,
+      "min": 19.22,
+      "max": 121.52,
+      "fraction_exactly_90": 0.8512557662737058,
+      "fraction_within_0.1_of_90": 0.8528959507944643,
+      "unique_values_sample": [
+        19.22,
+        23.49,
+        24.13,
+        24.17,
+        24.19,
+        27.7,
+        29.43,
+        31.33,
+        33.43,
+        36.03,
+        38.37,
+        38.72,
+        39.49,
+        39.73,
+        40.03,
+        43.83,
+        44.28,
+        44.32,
+        46.1,
+        46.33
+      ]
+    },
+    "beta": {
+      "count": 9755,
+      "mean": 93.55090312660175,
+      "std": 9.523220751653357,
+      "min": 19.22,
+      "max": 151.55,
+      "fraction_exactly_90": 0.527011788826243,
+      "fraction_within_0.1_of_90": 0.5309072270630446,
+      "unique_values_sample": [
+        19.22,
+        23.49,
+        24.13,
+        24.17,
+        24.19,
+        27.7,
+        29.43,
+        31.33,
+        33.43,
+        36.03,
+        38.37,
+        38.72,
+        39.49,
+        39.73,
+        40.03,
+        43.83,
+        44.28,
+        44.32,
+        46.1,
+        46.33
+      ]
+    },
+    "gamma": {
+      "count": 9755,
+      "mean": 92.62675756022553,
+      "std": 11.112548581932746,
+      "min": 19.22,
+      "max": 123.23,
+      "fraction_exactly_90": 0.7503844182470528,
+      "fraction_within_0.1_of_90": 0.7514095335725269,
+      "unique_values_sample": [
+        19.22,
+        23.49,
+        24.13,
+        24.17,
+        24.19,
+        27.7,
+        29.43,
+        31.33,
+        33.43,
+        36.03,
+        38.37,
+        38.72,
+        39.49,
+        39.73,
+        40.03,
+        43.83,
+        44.28,
+        44.32,
+        46.1,
+        46.33
+      ]
+    },
+    "all_90_fraction": 0.4257303946694003,
+    "all_90_count": 4153,
+    "total_with_angles": 9755,
+    "monoclinic_count": 3165,
+    "monoclinic_fraction": 0.32444900051255765,
+    "triclinic_count": 1449,
+    "triclinic_fraction": 0.14853921066119938
+  },
+  "element_analysis": {
+    "total_structures_with_elements": 9791,
+    "unique_elements": 91,
+    "top_30_elements": {
+      "O": {
+        "count": 7199,
+        "fraction": 0.7353
+      },
+      "H": {
+        "count": 5911,
+        "fraction": 0.6037
+      },
+      "C": {
+        "count": 5192,
+        "fraction": 0.5303
+      },
+      "N": {
+        "count": 3933,
+        "fraction": 0.4017
+      },
+      "S": {
+        "count": 1291,
+        "fraction": 0.1319
+      },
+      "P": {
+        "count": 1189,
+        "fraction": 0.1214
+      },
+      "Cl": {
+        "count": 1154,
+        "fraction": 0.1179
+      },
+      "F": {
+        "count": 979,
+        "fraction": 0.1
+      },
+      "Cu": {
+        "count": 680,
+        "fraction": 0.0695
+      },
+      "Si": {
+        "count": 662,
+        "fraction": 0.0676
+      },
+      "Fe": {
+        "count": 625,
+        "fraction": 0.0638
+      },
+      "Ba": {
+        "count": 538,
+        "fraction": 0.0549
+      },
+      "Br": {
+        "count": 481,
+        "fraction": 0.0491
+      },
+      "K": {
+        "count": 451,
+        "fraction": 0.0461
+      },
+      "Na": {
+        "count": 390,
+        "fraction": 0.0398
+      },
+      "Ca": {
+        "count": 381,
+        "fraction": 0.0389
+      },
+      "B": {
+        "count": 359,
+        "fraction": 0.0367
+      },
+      "Al": {
+        "count": 343,
+        "fraction": 0.035
+      },
+      "Li": {
+        "count": 336,
+        "fraction": 0.0343
+      },
+      "Ti": {
+        "count": 321,
+        "fraction": 0.0328
+      },
+      "Ni": {
+        "count": 319,
+        "fraction": 0.0326
+      },
+      "Sr": {
+        "count": 309,
+        "fraction": 0.0316
+      },
+      "Mn": {
+        "count": 266,
+        "fraction": 0.0272
+      },
+      "I": {
+        "count": 259,
+        "fraction": 0.0265
+      },
+      "V": {
+        "count": 252,
+        "fraction": 0.0257
+      },
+      "W": {
+        "count": 250,
+        "fraction": 0.0255
+      },
+      "Nb": {
+        "count": 248,
+        "fraction": 0.0253
+      },
+      "Co": {
+        "count": 245,
+        "fraction": 0.025
+      },
+      "Pb": {
+        "count": 239,
+        "fraction": 0.0244
+      },
+      "Mg": {
+        "count": 236,
+        "fraction": 0.0241
+      }
+    },
+    "nelements_distribution": {
+      "0": 1,
+      "1": 40,
+      "2": 818,
+      "3": 2416,
+      "4": 3253,
+      "5": 2115,
+      "6": 884,
+      "7": 234,
+      "8": 32,
+      "9": 5,
+      "10": 1,
+      "13": 1
+    },
+    "top_20_formulas": {
+      "CW": 56,
+      "Ba2Cu3O7Y": 14,
+      "C11H11O3": 14,
+      "CaMgO6Si2": 12,
+      "Ge2N2O": 12,
+      "N4Si3": 12,
+      "NiO3Pr": 11,
+      "AsGaO4": 11,
+      "O2Si": 11,
+      "NTi": 11,
+      "C2ClH8N": 11,
+      "Fe17Th2": 10,
+      "Al3H2KO12Si3": 9,
+      "C": 9,
+      "Bi2CuO4": 9,
+      "Al2O3": 8,
+      "AlF4Tl": 8,
+      "FeHO2": 8,
+      "Ca2Fe2O5": 8,
+      "Pt": 8
+    }
+  },
+  "cross_reference_cod_mp": {
+    "cod_unique_formulas": 6714,
+    "mp_unique_formulas": 8125,
+    "shared_formulas": 43,
+    "comparisons": [
+      {
+        "formula": "Ne",
+        "cod_mean_volume": 92.35,
+        "mp_mean_volume": 18.46,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 5.0037,
+        "diff_pct": 400.37
+      },
+      {
+        "formula": "S",
+        "cod_mean_volume": 3324.11,
+        "mp_mean_volume": 1169.04,
+        "cod_count": 1,
+        "mp_count": 33,
+        "ratio_cod_mp": 2.8434,
+        "diff_pct": 184.34
+      },
+      {
+        "formula": "Pd",
+        "cod_mean_volume": 59.99,
+        "mp_mean_volume": 30.48,
+        "cod_count": 6,
+        "mp_count": 4,
+        "ratio_cod_mp": 1.9683,
+        "diff_pct": 96.83
+      },
+      {
+        "formula": "NiO",
+        "cod_mean_volume": 72.66,
+        "mp_mean_volume": 1615.27,
+        "cod_count": 3,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.045,
+        "diff_pct": -95.5
+      },
+      {
+        "formula": "AgI",
+        "cod_mean_volume": 136.82,
+        "mp_mean_volume": 2222.45,
+        "cod_count": 2,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.0616,
+        "diff_pct": -93.84
+      },
+      {
+        "formula": "Al",
+        "cod_mean_volume": 65.64,
+        "mp_mean_volume": 1030.23,
+        "cod_count": 1,
+        "mp_count": 13,
+        "ratio_cod_mp": 0.0637,
+        "diff_pct": -93.63
+      },
+      {
+        "formula": "Fe",
+        "cod_mean_volume": 23.59,
+        "mp_mean_volume": 366.96,
+        "cod_count": 1,
+        "mp_count": 11,
+        "ratio_cod_mp": 0.0643,
+        "diff_pct": -93.57
+      },
+      {
+        "formula": "MnS",
+        "cod_mean_volume": 159.28,
+        "mp_mean_volume": 2009.39,
+        "cod_count": 2,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.0793,
+        "diff_pct": -92.07
+      },
+      {
+        "formula": "SZn",
+        "cod_mean_volume": 105.64,
+        "mp_mean_volume": 1171.8,
+        "cod_count": 6,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.0902,
+        "diff_pct": -90.98
+      },
+      {
+        "formula": "LaN",
+        "cod_mean_volume": 146.78,
+        "mp_mean_volume": 1571.36,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.0934,
+        "diff_pct": -90.66
+      },
+      {
+        "formula": "NbO",
+        "cod_mean_volume": 74.09,
+        "mp_mean_volume": 714.83,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.1036,
+        "diff_pct": -89.64
+      },
+      {
+        "formula": "C",
+        "cod_mean_volume": 40.7,
+        "mp_mean_volume": 369.87,
+        "cod_count": 9,
+        "mp_count": 65,
+        "ratio_cod_mp": 0.11,
+        "diff_pct": -89.0
+      },
+      {
+        "formula": "Pt",
+        "cod_mean_volume": 60.82,
+        "mp_mean_volume": 484.92,
+        "cod_count": 8,
+        "mp_count": 6,
+        "ratio_cod_mp": 0.1254,
+        "diff_pct": -87.46
+      },
+      {
+        "formula": "BeO",
+        "cod_mean_volume": 34.31,
+        "mp_mean_volume": 262.06,
+        "cod_count": 4,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.1309,
+        "diff_pct": -86.91
+      },
+      {
+        "formula": "Os",
+        "cod_mean_volume": 27.6,
+        "mp_mean_volume": 180.11,
+        "cod_count": 1,
+        "mp_count": 5,
+        "ratio_cod_mp": 0.1532,
+        "diff_pct": -84.68
+      },
+      {
+        "formula": "FNa",
+        "cod_mean_volume": 103.72,
+        "mp_mean_volume": 665.51,
+        "cod_count": 2,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.1559,
+        "diff_pct": -84.41
+      },
+      {
+        "formula": "CaTe",
+        "cod_mean_volume": 255.44,
+        "mp_mean_volume": 1248.25,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.2046,
+        "diff_pct": -79.54
+      },
+      {
+        "formula": "Cl",
+        "cod_mean_volume": 448.43,
+        "mp_mean_volume": 250.42,
+        "cod_count": 3,
+        "mp_count": 1,
+        "ratio_cod_mp": 1.7907,
+        "diff_pct": 79.07
+      },
+      {
+        "formula": "OSr",
+        "cod_mean_volume": 134.83,
+        "mp_mean_volume": 639.65,
+        "cod_count": 3,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.2108,
+        "diff_pct": -78.92
+      },
+      {
+        "formula": "Ag",
+        "cod_mean_volume": 68.19,
+        "mp_mean_volume": 306.03,
+        "cod_count": 1,
+        "mp_count": 7,
+        "ratio_cod_mp": 0.2228,
+        "diff_pct": -77.72
+      },
+      {
+        "formula": "Te",
+        "cod_mean_volume": 101.78,
+        "mp_mean_volume": 410.82,
+        "cod_count": 1,
+        "mp_count": 11,
+        "ratio_cod_mp": 0.2477,
+        "diff_pct": -75.23
+      },
+      {
+        "formula": "CaO",
+        "cod_mean_volume": 110.49,
+        "mp_mean_volume": 398.29,
+        "cod_count": 4,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.2774,
+        "diff_pct": -72.26
+      },
+      {
+        "formula": "MnP",
+        "cod_mean_volume": 98.16,
+        "mp_mean_volume": 341.75,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.2872,
+        "diff_pct": -71.28
+      },
+      {
+        "formula": "BrNa",
+        "cod_mean_volume": 211.87,
+        "mp_mean_volume": 714.61,
+        "cod_count": 2,
+        "mp_count": 2,
+        "ratio_cod_mp": 0.2965,
+        "diff_pct": -70.35
+      },
+      {
+        "formula": "GeMnNb",
+        "cod_mean_volume": 134.5,
+        "mp_mean_volume": 449.92,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.2989,
+        "diff_pct": -70.11
+      },
+      {
+        "formula": "P",
+        "cod_mean_volume": 152.23,
+        "mp_mean_volume": 477.52,
+        "cod_count": 1,
+        "mp_count": 14,
+        "ratio_cod_mp": 0.3188,
+        "diff_pct": -68.12
+      },
+      {
+        "formula": "BrK",
+        "cod_mean_volume": 285.54,
+        "mp_mean_volume": 815.37,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.3502,
+        "diff_pct": -64.98
+      },
+      {
+        "formula": "AlP",
+        "cod_mean_volume": 159.22,
+        "mp_mean_volume": 443.8,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.3588,
+        "diff_pct": -64.12
+      },
+      {
+        "formula": "Br",
+        "cod_mean_volume": 651.22,
+        "mp_mean_volume": 405.38,
+        "cod_count": 1,
+        "mp_count": 9,
+        "ratio_cod_mp": 1.6064,
+        "diff_pct": 60.64
+      },
+      {
+        "formula": "O",
+        "cod_mean_volume": 318.61,
+        "mp_mean_volume": 764.43,
+        "cod_count": 1,
+        "mp_count": 3,
+        "ratio_cod_mp": 0.4168,
+        "diff_pct": -58.32
+      },
+      {
+        "formula": "CO",
+        "cod_mean_volume": 178.45,
+        "mp_mean_volume": 389.41,
+        "cod_count": 1,
+        "mp_count": 2,
+        "ratio_cod_mp": 0.4583,
+        "diff_pct": -54.17
+      },
+      {
+        "formula": "BrRb",
+        "cod_mean_volume": 322.12,
+        "mp_mean_volume": 680.37,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.4735,
+        "diff_pct": -52.65
+      },
+      {
+        "formula": "AsFe",
+        "cod_mean_volume": 109.92,
+        "mp_mean_volume": 211.86,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.5188,
+        "diff_pct": -48.12
+      },
+      {
+        "formula": "Pb",
+        "cod_mean_volume": 119.82,
+        "mp_mean_volume": 216.0,
+        "cod_count": 1,
+        "mp_count": 9,
+        "ratio_cod_mp": 0.5547,
+        "diff_pct": -44.53
+      },
+      {
+        "formula": "Au",
+        "cod_mean_volume": 67.42,
+        "mp_mean_volume": 119.48,
+        "cod_count": 1,
+        "mp_count": 5,
+        "ratio_cod_mp": 0.5643,
+        "diff_pct": -43.57
+      },
+      {
+        "formula": "CoSi",
+        "cod_mean_volume": 87.41,
+        "mp_mean_volume": 150.87,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.5794,
+        "diff_pct": -42.06
+      },
+      {
+        "formula": "I",
+        "cod_mean_volume": 340.22,
+        "mp_mean_volume": 241.78,
+        "cod_count": 1,
+        "mp_count": 8,
+        "ratio_cod_mp": 1.4072,
+        "diff_pct": 40.72
+      },
+      {
+        "formula": "BaTe",
+        "cod_mean_volume": 317.21,
+        "mp_mean_volume": 225.54,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 1.4064,
+        "diff_pct": 40.64
+      },
+      {
+        "formula": "GeS",
+        "cod_mean_volume": 162.71,
+        "mp_mean_volume": 244.43,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.6657,
+        "diff_pct": -33.43
+      },
+      {
+        "formula": "CaSe",
+        "cod_mean_volume": 206.63,
+        "mp_mean_volume": 247.54,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.8347,
+        "diff_pct": -16.53
+      },
+      {
+        "formula": "Mg2Si",
+        "cod_mean_volume": 261.04,
+        "mp_mean_volume": 237.71,
+        "cod_count": 2,
+        "mp_count": 1,
+        "ratio_cod_mp": 1.0981,
+        "diff_pct": 9.81
+      },
+      {
+        "formula": "AsIn",
+        "cod_mean_volume": 219.91,
+        "mp_mean_volume": 243.52,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 0.9031,
+        "diff_pct": -9.69
+      },
+      {
+        "formula": "BrCu",
+        "cod_mean_volume": 197.14,
+        "mp_mean_volume": 186.83,
+        "cod_count": 1,
+        "mp_count": 1,
+        "ratio_cod_mp": 1.0552,
+        "diff_pct": 5.52
+      }
+    ],
+    "volume_difference_stats": {
+      "mean_diff_pct": -33.7231131302735,
+      "median_diff_pct": -68.12089658110759,
+      "std_diff_pct": 90.2133447649285,
+      "within_5pct": 0.0,
+      "within_10pct": 0.06976744186046512,
+      "within_20pct": 0.09302325581395349
+    }
+  },
+  "summary": {
+    "dataset": "COD (Crystallography Open Database) via OPTIMADE",
+    "n_structures": 9800,
+    "n_with_volume": 9755,
+    "volume_median": 1098.06,
+    "volume_spans_orders_of_magnitude": 3.893131381918464,
+    "dominant_symmetry": "mixed",
+    "orthorhombic_plus_fraction": 0.4257303946694003,
+    "monoclinic_fraction": 0.32444900051255765,
+    "cubic_fraction": 0.13070220399794977,
+    "most_common_element": "O",
+    "most_common_formula": "CW",
+    "nelements_volume_correlation_spearman": 0.454714984639324,
+    "mp_shared_formulas": 43,
+    "mp_median_volume_diff_pct": -68.12089658110759
+  }
+}
