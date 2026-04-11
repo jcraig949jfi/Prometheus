@@ -1,0 +1,859 @@
+{
+  "experiment": "OEIS Recurrence-Graph Curvature Spectrum (List1 #20)",
+  "method": "BM over GF(p), 3-prime consensus, holdout verification, edges = identical characteristic polynomial, Ollivier-Ricci curvature (alpha=0.5)",
+  "parameters": {
+    "n_sequences_parsed": 5000,
+    "min_terms": 20,
+    "max_order": 12,
+    "primes": [
+      10007,
+      10009,
+      10037
+    ],
+    "holdout_terms": 5,
+    "ollivier_alpha": 0.5
+  },
+  "graph_statistics": {
+    "n_with_recurrence_le12": 841,
+    "n_unique_polynomials": 341,
+    "n_nodes_total": 841,
+    "n_nodes_connected": 638,
+    "n_isolated": 203,
+    "n_edges": 5427,
+    "n_connected_components": 138,
+    "largest_component_size": 59,
+    "component_sizes_top10": [
+      59,
+      43,
+      43,
+      36,
+      28,
+      23,
+      10,
+      10,
+      10,
+      9
+    ]
+  },
+  "order_distribution": {
+    "0": 1,
+    "1": 32,
+    "2": 143,
+    "3": 145,
+    "4": 168,
+    "5": 109,
+    "6": 91,
+    "7": 50,
+    "8": 35,
+    "9": 21,
+    "10": 26,
+    "11": 9,
+    "12": 11,
+    "none": 4159
+  },
+  "cluster_size_distribution": {
+    "1": 203,
+    "2": 78,
+    "3": 23,
+    "4": 11,
+    "5": 7,
+    "6": 4,
+    "7": 3,
+    "9": 3,
+    "10": 3,
+    "23": 1,
+    "28": 1,
+    "36": 1,
+    "43": 2,
+    "59": 1
+  },
+  "curvature_spectrum": {
+    "n_edges": 5427,
+    "mean": 0.52939,
+    "median": 0.511905,
+    "std": 0.067463,
+    "min": 0.508621,
+    "max": 1.0,
+    "fraction_positive": 1.0,
+    "fraction_negative": 0.0,
+    "fraction_zero": 0.0
+  },
+  "curvature_histogram": [
+    {
+      "bin_low": 0.4986,
+      "bin_high": 0.5242,
+      "count": 4778
+    },
+    {
+      "bin_low": 0.5242,
+      "bin_high": 0.5498,
+      "count": 0
+    },
+    {
+      "bin_low": 0.5498,
+      "bin_high": 0.5753,
+      "count": 243
+    },
+    {
+      "bin_low": 0.5753,
+      "bin_high": 0.6009,
+      "count": 123
+    },
+    {
+      "bin_low": 0.6009,
+      "bin_high": 0.6265,
+      "count": 70
+    },
+    {
+      "bin_low": 0.6265,
+      "bin_high": 0.652,
+      "count": 0
+    },
+    {
+      "bin_low": 0.652,
+      "bin_high": 0.6776,
+      "count": 66
+    },
+    {
+      "bin_low": 0.6776,
+      "bin_high": 0.7032,
+      "count": 0
+    },
+    {
+      "bin_low": 0.7032,
+      "bin_high": 0.7287,
+      "count": 0
+    },
+    {
+      "bin_low": 0.7287,
+      "bin_high": 0.7543,
+      "count": 69
+    },
+    {
+      "bin_low": 0.7543,
+      "bin_high": 0.7799,
+      "count": 0
+    },
+    {
+      "bin_low": 0.7799,
+      "bin_high": 0.8054,
+      "count": 0
+    },
+    {
+      "bin_low": 0.8054,
+      "bin_high": 0.831,
+      "count": 0
+    },
+    {
+      "bin_low": 0.831,
+      "bin_high": 0.8566,
+      "count": 0
+    },
+    {
+      "bin_low": 0.8566,
+      "bin_high": 0.8822,
+      "count": 0
+    },
+    {
+      "bin_low": 0.8822,
+      "bin_high": 0.9077,
+      "count": 0
+    },
+    {
+      "bin_low": 0.9077,
+      "bin_high": 0.9333,
+      "count": 0
+    },
+    {
+      "bin_low": 0.9333,
+      "bin_high": 0.9589,
+      "count": 0
+    },
+    {
+      "bin_low": 0.9589,
+      "bin_high": 0.9844,
+      "count": 0
+    },
+    {
+      "bin_low": 0.9844,
+      "bin_high": 1.01,
+      "count": 78
+    }
+  ],
+  "curvature_by_order": {
+    "1": {
+      "n_nodes": 19,
+      "mean_curvature": 0.649123,
+      "std_curvature": 0.121903
+    },
+    "2": {
+      "n_nodes": 125,
+      "mean_curvature": 0.705359,
+      "std_curvature": 0.195298
+    },
+    "3": {
+      "n_nodes": 124,
+      "mean_curvature": 0.705506,
+      "std_curvature": 0.206492
+    },
+    "4": {
+      "n_nodes": 124,
+      "mean_curvature": 0.636629,
+      "std_curvature": 0.168911
+    },
+    "5": {
+      "n_nodes": 80,
+      "mean_curvature": 0.67619,
+      "std_curvature": 0.203328
+    },
+    "6": {
+      "n_nodes": 62,
+      "mean_curvature": 0.711052,
+      "std_curvature": 0.20222
+    },
+    "7": {
+      "n_nodes": 39,
+      "mean_curvature": 0.600902,
+      "std_curvature": 0.152849
+    },
+    "8": {
+      "n_nodes": 23,
+      "mean_curvature": 0.770833,
+      "std_curvature": 0.204217
+    },
+    "9": {
+      "n_nodes": 15,
+      "mean_curvature": 0.653704,
+      "std_curvature": 0.155776
+    },
+    "10": {
+      "n_nodes": 20,
+      "mean_curvature": 0.711111,
+      "std_curvature": 0.193729
+    },
+    "11": {
+      "n_nodes": 2,
+      "mean_curvature": 1.0,
+      "std_curvature": 0.0
+    },
+    "12": {
+      "n_nodes": 5,
+      "mean_curvature": 0.85,
+      "std_curvature": 0.122474
+    }
+  },
+  "most_positive_edges": [
+    {
+      "u": "A006646",
+      "v": "A006668",
+      "curvature": 1.0,
+      "u_name": "Exponential self-convolution of Pell numbers.",
+      "v_name": "Exponential self-convolution of Pell numbers (divided by 2)."
+    },
+    {
+      "u": "A006495",
+      "v": "A006496",
+      "curvature": 1.0,
+      "u_name": "Real part of (1 + 2*i)^n, where i is sqrt(-1).",
+      "v_name": "Imaginary part of (1+2i)^n."
+    },
+    {
+      "u": "A006130",
+      "v": "A006138",
+      "curvature": 1.0,
+      "u_name": "a(n) = a(n-1) + 3*a(n-2) for n > 1, a(0) = a(1) = 1.",
+      "v_name": "a(n) = a(n-1) + 3*a(n-2)."
+    },
+    {
+      "u": "A006054",
+      "v": "A006356",
+      "curvature": 1.0,
+      "u_name": "a(n) = 2*a(n-1) + a(n-2) - a(n-3), with a(0) = a(1) = 0, a(2",
+      "v_name": "a(n) = 2*a(n-1) + a(n-2) - a(n-3) for n >= 3, starting with "
+    },
+    {
+      "u": "A005969",
+      "v": "A005972",
+      "curvature": 1.0,
+      "u_name": "Sum of fourth powers of Fibonacci numbers.",
+      "v_name": "Partial sums of fourth powers of Lucas numbers."
+    }
+  ],
+  "most_negative_edges": [
+    {
+      "u": "A000125",
+      "v": "A000292",
+      "curvature": 0.508621,
+      "u_name": "Cake numbers: maximal number of pieces resulting from n plan",
+      "v_name": "Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,"
+    },
+    {
+      "u": "A000125",
+      "v": "A000297",
+      "curvature": 0.508621,
+      "u_name": "Cake numbers: maximal number of pieces resulting from n plan",
+      "v_name": "a(n) = (n+1)*(n+3)*(n+8)/6."
+    },
+    {
+      "u": "A000125",
+      "v": "A000330",
+      "curvature": 0.508621,
+      "u_name": "Cake numbers: maximal number of pieces resulting from n plan",
+      "v_name": "Square pyramidal numbers: a(n) = 0^2 + 1^2 + 2^2 + ... + n^2"
+    },
+    {
+      "u": "A000125",
+      "v": "A000447",
+      "curvature": 0.508621,
+      "u_name": "Cake numbers: maximal number of pieces resulting from n plan",
+      "v_name": "a(n) = 1^2 + 3^2 + 5^2 + 7^2 + ... + (2*n-1)^2 = n*(4*n^2 - "
+    },
+    {
+      "u": "A000125",
+      "v": "A000561",
+      "curvature": 0.508621,
+      "u_name": "Cake numbers: maximal number of pieces resulting from n plan",
+      "v_name": "Number of discordant permutations."
+    }
+  ],
+  "notable_clusters": [
+    {
+      "order": 4,
+      "coefficients_mod_p": [
+        1,
+        10003,
+        6,
+        10003,
+        1
+      ],
+      "size": 59,
+      "members": [
+        [
+          "A000125",
+          "Cake numbers: maximal number of pieces resulting from n plan"
+        ],
+        [
+          "A000292",
+          "Tetrahedral (or triangular pyramidal) numbers: a(n) = C(n+2,"
+        ],
+        [
+          "A000297",
+          "a(n) = (n+1)*(n+3)*(n+8)/6."
+        ],
+        [
+          "A000330",
+          "Square pyramidal numbers: a(n) = 0^2 + 1^2 + 2^2 + ... + n^2"
+        ],
+        [
+          "A000447",
+          "a(n) = 1^2 + 3^2 + 5^2 + 7^2 + ... + (2*n-1)^2 = n*(4*n^2 - "
+        ],
+        [
+          "A000561",
+          "Number of discordant permutations."
+        ],
+        [
+          "A000578",
+          "The cubes: a(n) = n^3."
+        ],
+        [
+          "A001093",
+          "a(n) = n^3 + 1."
+        ],
+        [
+          "A001505",
+          "a(n) = (4*n+1)*(4*n+2)*(4*n+3)."
+        ],
+        [
+          "A001509",
+          "a(n) = (5*n + 1)*(5*n + 2)*(5*n + 3)."
+        ]
+      ]
+    },
+    {
+      "order": 3,
+      "coefficients_mod_p": [
+        1,
+        10004,
+        3,
+        10006
+      ],
+      "size": 43,
+      "members": [
+        [
+          "A000096",
+          "a(n) = n*(n+3)/2."
+        ],
+        [
+          "A000124",
+          "Central polygonal numbers (the Lazy Caterer's sequence): n(n"
+        ],
+        [
+          "A000217",
+          "Triangular numbers: a(n) = binomial(n+1,2) = n*(n+1)/2 = 0 +"
+        ],
+        [
+          "A000290",
+          "The squares: a(n) = n^2."
+        ],
+        [
+          "A000326",
+          "Pentagonal numbers: a(n) = n*(3*n-1)/2."
+        ],
+        [
+          "A000384",
+          "Hexagonal numbers: a(n) = n*(2*n-1)."
+        ],
+        [
+          "A000466",
+          "a(n) = 4*n^2 - 1."
+        ],
+        [
+          "A000566",
+          "Heptagonal numbers (or 7-gonal numbers): n*(5*n-3)/2."
+        ],
+        [
+          "A000567",
+          "Octagonal numbers: n*(3*n-2). Also called star numbers."
+        ],
+        [
+          "A001105",
+          "a(n) = 2*n^2."
+        ]
+      ]
+    },
+    {
+      "order": 5,
+      "coefficients_mod_p": [
+        1,
+        10002,
+        10,
+        9997,
+        5,
+        10006
+      ],
+      "size": 43,
+      "members": [
+        [
+          "A000127",
+          "Maximal number of regions obtained by joining n points aroun"
+        ],
+        [
+          "A000332",
+          "Binomial coefficient binomial(n,4) = n*(n-1)*(n-2)*(n-3)/24."
+        ],
+        [
+          "A000439",
+          "Powers of rooted tree enumerator."
+        ],
+        [
+          "A000537",
+          "Sum of first n cubes; or n-th triangular number squared."
+        ],
+        [
+          "A000583",
+          "Fourth powers: a(n) = n^4."
+        ],
+        [
+          "A000914",
+          "Stirling numbers of the first kind: s(n+2, n)."
+        ],
+        [
+          "A001094",
+          "a(n) = n + n*(n-1)*(n-2)*(n-3)."
+        ],
+        [
+          "A001296",
+          "4-dimensional pyramidal numbers: a(n) = (3*n+1)*binomial(n+2"
+        ],
+        [
+          "A001512",
+          "a(n) = (5*n+1)*(5*n+2)*(5*n+3)*(5*n+4)."
+        ],
+        [
+          "A001546",
+          "a(n) = (8*n+1)*(8*n+3)*(8*n+5)*(8*n+7)."
+        ]
+      ]
+    },
+    {
+      "order": 2,
+      "coefficients_mod_p": [
+        1,
+        10005,
+        1
+      ],
+      "size": 36,
+      "members": [
+        [
+          "A000027",
+          "The positive integers. Also called the natural numbers, the "
+        ],
+        [
+          "A001477",
+          "The nonnegative integers."
+        ],
+        [
+          "A001478",
+          "The negative integers."
+        ],
+        [
+          "A001489",
+          "a(n) = -n."
+        ],
+        [
+          "A004766",
+          "Numbers whose binary expansion ends 01."
+        ],
+        [
+          "A004767",
+          "a(n) = 4*n + 3."
+        ],
+        [
+          "A004768",
+          "Binary expansion ends 001."
+        ],
+        [
+          "A004769",
+          "Numbers whose binary expansion ends in 011."
+        ],
+        [
+          "A004770",
+          "Numbers of the form 8k+5; or, numbers whose binary expansion"
+        ],
+        [
+          "A004771",
+          "a(n) = 8*n + 7. Or, numbers whose binary expansion ends in 1"
+        ]
+      ]
+    },
+    {
+      "order": 7,
+      "coefficients_mod_p": [
+        1,
+        10000,
+        21,
+        9972,
+        35,
+        9986,
+        7,
+        10006
+      ],
+      "size": 28,
+      "members": [
+        [
+          "A000539",
+          "Sum of 5th powers: 0^5 + 1^5 + 2^5 + ... + n^5."
+        ],
+        [
+          "A000579",
+          "Figurate numbers or binomial coefficients C(n,6)."
+        ],
+        [
+          "A000596",
+          "Central factorial numbers: A008955(n,2)."
+        ],
+        [
+          "A000910",
+          "a(n) = 5*binomial(n, 6)."
+        ],
+        [
+          "A001014",
+          "Sixth powers: a(n) = n^6."
+        ],
+        [
+          "A001096",
+          "a(n) = n + n*(n-1)*(n-2)*(n-3)*(n-4)*(n-5)."
+        ],
+        [
+          "A001249",
+          "Squares of tetrahedral numbers: a(n) = binomial(n+3,n)^2."
+        ],
+        [
+          "A001297",
+          "Stirling numbers of the second kind S(n+3, n)."
+        ],
+        [
+          "A001303",
+          "Stirling numbers of first kind, s(n+3, n), negated."
+        ],
+        [
+          "A001823",
+          "Central factorial numbers: column 2 in triangle A008956."
+        ]
+      ]
+    },
+    {
+      "order": 6,
+      "coefficients_mod_p": [
+        1,
+        10001,
+        15,
+        9987,
+        15,
+        10001,
+        1
+      ],
+      "size": 23,
+      "members": [
+        [
+          "A000389",
+          "Binomial coefficients C(n,5)."
+        ],
+        [
+          "A000529",
+          "Powers of rooted tree enumerator."
+        ],
+        [
+          "A000538",
+          "Sum of fourth powers: 0^4 + 1^4 + ... + n^4."
+        ],
+        [
+          "A000563",
+          "Number of discordant permutations."
+        ],
+        [
+          "A000574",
+          "Coefficient of x^5 in expansion of (1 + x + x^2)^n."
+        ],
+        [
+          "A000584",
+          "Fifth powers: a(n) = n^5."
+        ],
+        [
+          "A001095",
+          "a(n) = n + n*(n-1)*(n-2)*(n-3)*(n-4)."
+        ],
+        [
+          "A001847",
+          "Crystal ball sequence for 5-dimensional cubic lattice."
+        ],
+        [
+          "A002299",
+          "Binomial coefficients C(2*n+5,5)."
+        ],
+        [
+          "A002309",
+          "Sum of fourth powers of first n odd numbers."
+        ]
+      ]
+    },
+    {
+      "order": 2,
+      "coefficients_mod_p": [
+        1,
+        9996,
+        10
+      ],
+      "size": 10,
+      "members": [
+        [
+          "A000042",
+          "Unary representation of natural numbers."
+        ],
+        [
+          "A002275",
+          "Repunits: (10^n - 1)/9. Often denoted by R_n."
+        ],
+        [
+          "A002276",
+          "a(n) = 2*(10^n - 1)/9."
+        ],
+        [
+          "A002277",
+          "a(n) = 3*(10^n - 1)/9."
+        ],
+        [
+          "A002278",
+          "a(n) = 4*(10^n - 1)/9."
+        ],
+        [
+          "A002279",
+          "a(n) = 5*(10^n - 1)/9."
+        ],
+        [
+          "A002280",
+          "a(n) = 6*(10^n - 1)/9."
+        ],
+        [
+          "A002281",
+          "a(n) = 7*(10^n - 1)/9."
+        ],
+        [
+          "A002282",
+          "a(n) = 8*(10^n - 1)/9."
+        ],
+        [
+          "A002283",
+          "a(n) = 10^n - 1."
+        ]
+      ]
+    },
+    {
+      "order": 9,
+      "coefficients_mod_p": [
+        1,
+        9998,
+        36,
+        9923,
+        126,
+        9881,
+        84,
+        9971,
+        9,
+        10006
+      ],
+      "size": 10,
+      "members": [
+        [
+          "A000541",
+          "Sum of 7th powers: 1^7 + 2^7 + ... + n^7."
+        ],
+        [
+          "A000543",
+          "Number of inequivalent ways to color vertices of a cube usin"
+        ],
+        [
+          "A000581",
+          "a(n) = binomial coefficient C(n,8)."
+        ],
+        [
+          "A000915",
+          "Stirling numbers of first kind s(n+4, n)."
+        ],
+        [
+          "A001016",
+          "Eighth powers: a(n) = n^8."
+        ],
+        [
+          "A001298",
+          "Stirling numbers of the second kind S(n+4, n)."
+        ],
+        [
+          "A001361",
+          "Number of points in interior of n-th crystal ball in E_8 lat"
+        ],
+        [
+          "A002721",
+          "Number of 3 X 3 X 3 arrays M_ijk (1 <= i,j,k <= 3) with entr"
+        ],
+        [
+          "A005716",
+          "Coefficient of x^8 in expansion of (1+x+x^2)^n."
+        ],
+        [
+          "A006857",
+          "a(n) = binomial(n+5,5) * binomial(n+5,4)/(n+5)."
+        ]
+      ]
+    },
+    {
+      "order": 10,
+      "coefficients_mod_p": [
+        1,
+        9997,
+        45,
+        9887,
+        210,
+        9755,
+        210,
+        9887,
+        45,
+        9997,
+        1
+      ],
+      "size": 10,
+      "members": [
+        [
+          "A000575",
+          "Tenth column of quintinomial coefficients."
+        ],
+        [
+          "A000582",
+          "a(n) = binomial coefficient C(n,9)."
+        ],
+        [
+          "A000597",
+          "Central factorial numbers: A008955(n,3)."
+        ],
+        [
+          "A006333",
+          "From the enumeration of corners."
+        ],
+        [
+          "A006409",
+          "Number of nonseparable rooted toroidal maps with n + 4 edges"
+        ],
+        [
+          "A006412",
+          "Number of nonseparable tree-rooted planar maps with n + 3 ed"
+        ],
+        [
+          "A006418",
+          "Number of loopless rooted planar maps with 5 faces and n ver"
+        ],
+        [
+          "A006423",
+          "Number of rooted toroidal maps with 3 faces and n vertices a"
+        ],
+        [
+          "A006471",
+          "Number of tree-rooted planar maps with 4 faces and n vertice"
+        ],
+        [
+          "A006859",
+          "From paths in the plane."
+        ]
+      ]
+    },
+    {
+      "order": 3,
+      "coefficients_mod_p": [
+        1,
+        10005,
+        0,
+        1
+      ],
+      "size": 9,
+      "members": [
+        [
+          "A000071",
+          "a(n) = Fibonacci(n) - 1."
+        ],
+        [
+          "A000211",
+          "a(n) = a(n-1) + a(n-2) - 2, a(0) = 4, a(1) = 3."
+        ],
+        [
+          "A001588",
+          "a(n) = a(n-1) + a(n-2) - 1."
+        ],
+        [
+          "A001595",
+          "a(n) = a(n-1) + a(n-2) + 1, with a(0) = a(1) = 1."
+        ],
+        [
+          "A001610",
+          "a(n) = a(n-1) + a(n-2) + 1, with a(0) = 0 and a(1) = 2."
+        ],
+        [
+          "A001611",
+          "a(n) = Fibonacci(n) + 1."
+        ],
+        [
+          "A001612",
+          "a(n) = a(n-1) + a(n-2) - 1 for n > 1, a(0)=3, a(1)=2."
+        ],
+        [
+          "A001911",
+          "a(n) = Fibonacci(n+3) - 2."
+        ],
+        [
+          "A006327",
+          "a(n) = Fibonacci(n) - 3. Number of total preorders."
+        ]
+      ]
+    }
+  ],
+  "elapsed_seconds": 3.6
+}

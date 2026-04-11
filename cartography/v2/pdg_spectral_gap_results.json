@@ -1,0 +1,151 @@
+{
+  "metadata": {
+    "description": "PDG Decay-Topology Spectral Gap (List1 #16)",
+    "method": "Normalized Laplacian L = I - D^{-1/2} A D^{-1/2} on symmetrized decay graph",
+    "n_particles": 226,
+    "n_directed_edges": 21236,
+    "n_graph_nodes": 226,
+    "n_connected": 226,
+    "weighting": "1/(mass_A - mass_B) for directed edge A->B; symmetrized via max",
+    "date": "2026-04-10"
+  },
+  "normalized_laplacian": {
+    "lambda_0": 0.0,
+    "lambda_1_spectral_gap": 0.0273637802,
+    "lambda_2": 0.0394425337,
+    "lambda_max": 1.9715687248,
+    "cheeger_lower": 0.013682,
+    "cheeger_upper": 0.233939,
+    "bipartiteness_ratio": 0.985784,
+    "eigenvalue_distribution": {
+      "[0, 0.5)": 25,
+      "[0.5, 1.0)": 64,
+      "[1.0, 1.5)": 121,
+      "[1.5, 2.0]": 16
+    },
+    "median_eigenvalue": 1.027101,
+    "mean_eigenvalue": 1.004444,
+    "first_20_eigenvalues": [
+      0.0,
+      0.0273637802,
+      0.0394425337,
+      0.1017217344,
+      0.1126446489,
+      0.1518104919,
+      0.1813587999,
+      0.2107758511,
+      0.2171413492,
+      0.2315356644,
+      0.2795891061,
+      0.3052097812,
+      0.3116168503,
+      0.323340688,
+      0.3280478855,
+      0.3298382667,
+      0.3431120545,
+      0.3936343342,
+      0.3952002443,
+      0.4004362155
+    ]
+  },
+  "unweighted_normalized_laplacian": {
+    "lambda_0": -0.0,
+    "lambda_1_spectral_gap": 0.7698144768,
+    "lambda_2": 0.8638413936,
+    "lambda_max": 1.2440764203,
+    "first_10_eigenvalues": [
+      -0.0,
+      0.7698144768,
+      0.8638413936,
+      0.9363259297,
+      0.9577980673,
+      0.9636665644,
+      0.9756442644,
+      0.9760193561,
+      0.9804406186,
+      0.9814083726
+    ]
+  },
+  "unnormalized_laplacian": {
+    "lambda_1": 1.357653,
+    "lambda_2": 1.895101
+  },
+  "transition_matrix": {
+    "spectral_gap": 0.027364,
+    "second_eigenvalue": 0.972636,
+    "mixing_time": 36.54
+  },
+  "fiedler_partition": {
+    "positive_side_count": 46,
+    "negative_side_count": 180,
+    "positive_mean_mass_GeV": 16.9092,
+    "negative_mean_mass_GeV": 1.7283,
+    "mass_ratio": 9.7836,
+    "extreme_negative": [
+      {
+        "name": "gma(c)(2520)     ++",
+        "mass_GeV": 2.51841,
+        "fiedler_value": -0.089698
+      },
+      {
+        "name": "gma(c)(2520)      0",
+        "mass_GeV": 2.51848,
+        "fiedler_value": -0.089532
+      },
+      {
+        "name": "gma(c)(2520)      +",
+        "mass_GeV": 2.5174,
+        "fiedler_value": -0.031095
+      },
+      {
+        "name": "gma(c)(2455)      0",
+        "mass_GeV": 2.45375,
+        "fiedler_value": -0.026889
+      },
+      {
+        "name": "gma(c)(2455)     ++",
+        "mass_GeV": 2.45397,
+        "fiedler_value": -0.026568
+      }
+    ],
+    "extreme_positive": [
+      {
+        "name": "2)*(5747)         +",
+        "mass_GeV": 5.7373,
+        "fiedler_value": 0.026425
+      },
+      {
+        "name": "2)*(5747)         0",
+        "mass_GeV": 5.7396,
+        "fiedler_value": 0.026479
+      },
+      {
+        "name": "s)                0",
+        "mass_GeV": 5.36693,
+        "fiedler_value": 0.029987
+      },
+      {
+        "name": "+",
+        "mass_GeV": 5.27941,
+        "fiedler_value": 0.693053
+      },
+      {
+        "name": "0",
+        "mass_GeV": 5.27972,
+        "fiedler_value": 0.693054
+      }
+    ]
+  },
+  "prior_comparison": {
+    "prior_lambda1_unnorm": 1.357653,
+    "prior_transition_gap": 0.027364,
+    "current_lambda1_unnorm": 1.357653,
+    "current_transition_gap": 0.027364,
+    "new_normalized_gap": 0.027364,
+    "consistency": "verified"
+  },
+  "interpretation": {
+    "spectral_gap_meaning": "lambda_1 = 0.027364 of the normalized Laplacian. This is the algebraic connectivity of the normalized graph. Small gap => bottleneck/near-disconnection; large gap => well-connected. Range [0, 2] for normalized Laplacian.",
+    "physics": "The decay graph connects unstable particles to all lighter particles. The spectral gap measures how tightly coupled the particle zoo is through decay topology. The Fiedler partition reveals the natural spectral cut in the decay network."
+  }
+}

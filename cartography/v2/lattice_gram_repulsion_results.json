@@ -1,0 +1,234 @@
+{
+  "summary": {
+    "test": "Lattice Gram Matrix Eigenvalue Repulsion",
+    "list": "List2 #15",
+    "description": "KL divergence of normalized NNS from Gram matrix eigenvalues vs GOE and Poisson",
+    "total_lattices": 39293,
+    "lattices_with_gram": 39293,
+    "skipped": 0,
+    "dimensions_analyzed": 10,
+    "mean_kl_from_goe": 1.410486,
+    "median_kl_from_goe": 1.321103,
+    "expected_mean_kl_goe": 0.055,
+    "global_pooled_kl_goe": 0.236154,
+    "global_pooled_kl_poisson": 0.246749,
+    "global_closer_to": "GOE",
+    "verdict": "MIXED: mean KL from GOE = 1.4105 (not strongly GOE-like)",
+    "theta_mean_kl_from_goe": 1.679514
+  },
+  "by_dimension": {
+    "1": {
+      "n_lattices": 1,
+      "n_spacings": 0,
+      "skipped": true,
+      "reason": "too few spacings"
+    },
+    "2": {
+      "n_lattices": 1609,
+      "n_spacings": 1608,
+      "mean_spacing": 1.0,
+      "std_spacing": 0.0,
+      "kl_from_goe": 2.85996,
+      "kl_from_poisson": 3.506977,
+      "closer_to": "GOE",
+      "p_near_zero": 0.0
+    },
+    "3": {
+      "n_lattices": 36585,
+      "n_spacings": 73166,
+      "mean_spacing": 1.0,
+      "std_spacing": 0.595532,
+      "kl_from_goe": 0.237881,
+      "kl_from_poisson": 0.280798,
+      "closer_to": "GOE",
+      "p_near_zero": 0.019449
+    },
+    "4": {
+      "n_lattices": 481,
+      "n_spacings": 1440,
+      "mean_spacing": 1.0,
+      "std_spacing": 0.77211,
+      "kl_from_goe": 0.544904,
+      "kl_from_poisson": 0.214365,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.136806
+    },
+    "5": {
+      "n_lattices": 295,
+      "n_spacings": 1176,
+      "mean_spacing": 1.0,
+      "std_spacing": 0.984009,
+      "kl_from_goe": 1.227457,
+      "kl_from_poisson": 0.312159,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.255102
+    },
+    "6": {
+      "n_lattices": 186,
+      "n_spacings": 925,
+      "mean_spacing": 1.0,
+      "std_spacing": 1.15001,
+      "kl_from_goe": 1.472289,
+      "kl_from_poisson": 0.368948,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.312432
+    },
+    "7": {
+      "n_lattices": 86,
+      "n_spacings": 510,
+      "mean_spacing": 1.0,
+      "std_spacing": 1.223666,
+      "kl_from_goe": 1.355398,
+      "kl_from_poisson": 0.352116,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.294118
+    },
+    "8": {
+      "n_lattices": 37,
+      "n_spacings": 252,
+      "mean_spacing": 1.0,
+      "std_spacing": 1.21045,
+      "kl_from_goe": 1.582124,
+      "kl_from_poisson": 0.453081,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.309524
+    },
+    "9": {
+      "n_lattices": 5,
+      "n_spacings": 40,
+      "mean_spacing": 1.0,
+      "std_spacing": 1.072216,
+      "kl_from_goe": 1.286809,
+      "kl_from_poisson": 0.833049,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.05
+    },
+    "10": {
+      "n_lattices": 3,
+      "n_spacings": 27,
+      "mean_spacing": 1.0,
+      "std_spacing": 1.051553,
+      "kl_from_goe": 0.797237,
+      "kl_from_poisson": 0.764304,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.074074
+    },
+    "11": {
+      "n_lattices": 1,
+      "n_spacings": 10,
+      "skipped": true,
+      "reason": "too few spacings"
+    },
+    "12": {
+      "n_lattices": 1,
+      "n_spacings": 11,
+      "skipped": true,
+      "reason": "too few spacings"
+    },
+    "13": {
+      "n_lattices": 1,
+      "n_spacings": 12,
+      "skipped": true,
+      "reason": "too few spacings"
+    },
+    "14": {
+      "n_lattices": 1,
+      "n_spacings": 13,
+      "skipped": true,
+      "reason": "too few spacings"
+    },
+    "24": {
+      "n_lattices": 1,
+      "n_spacings": 23,
+      "mean_spacing": 1.0,
+      "std_spacing": 3.033104,
+      "kl_from_goe": 2.740802,
+      "kl_from_poisson": 1.06066,
+      "closer_to": "Poisson",
+      "p_near_zero": 0.086957
+    }
+  },
+  "theta_hecke_approach": {
+    "description": "Theta series coefficients at prime indices as Hecke eigenvalue proxies",
+    "by_dimension": {
+      "2": {
+        "n_spacings": 228,
+        "kl_from_goe": 2.85996,
+        "kl_from_poisson": 3.506977,
+        "closer_to": "GOE",
+        "mean_spacing": 1.0
+      },
+      "3": {
+        "n_spacings": 2743,
+        "kl_from_goe": 0.46833,
+        "kl_from_poisson": 0.90349,
+        "closer_to": "GOE",
+        "mean_spacing": 1.0
+      },
+      "4": {
+        "n_spacings": 4550,
+        "kl_from_goe": 0.206173,
+        "kl_from_poisson": 0.181392,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "5": {
+        "n_spacings": 3304,
+        "kl_from_goe": 0.679315,
+        "kl_from_poisson": 0.050419,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "6": {
+        "n_spacings": 1838,
+        "kl_from_goe": 0.8904,
+        "kl_from_poisson": 0.120325,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "7": {
+        "n_spacings": 826,
+        "kl_from_goe": 1.240628,
+        "kl_from_poisson": 0.217389,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "8": {
+        "n_spacings": 170,
+        "kl_from_goe": 1.431606,
+        "kl_from_poisson": 0.449901,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "9": {
+        "n_spacings": 25,
+        "kl_from_goe": 2.633648,
+        "kl_from_poisson": 1.273177,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "12": {
+        "n_spacings": 34,
+        "kl_from_goe": 2.48528,
+        "kl_from_poisson": 1.003608,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "13": {
+        "n_spacings": 34,
+        "kl_from_goe": 2.669279,
+        "kl_from_poisson": 1.098468,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      },
+      "14": {
+        "n_spacings": 34,
+        "kl_from_goe": 2.91004,
+        "kl_from_poisson": 1.213611,
+        "closer_to": "Poisson",
+        "mean_spacing": 1.0
+      }
+    },
+    "mean_kl_from_goe": 1.679514
+  }
+}

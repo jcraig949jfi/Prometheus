@@ -513,7 +513,22 @@ Median 0.851. Independent of lifetime/mass. Near-threshold→1.0, EM-dominated�
 8,904 nodes, 39,770 edges. Gradient slope β=0.027 (within expected 0.018-0.033). Entropy rises depth 0 (1.69 bits) → depth 5 (2.22 bits) then declines — "hourglass" architecture. 49.3% are sinks (zero entropy). Highest genuine node: _factor_irred_compressed (7.6 bits, 194 callees).
 
 ### 125. NF Regulator-CN: Concave Boundary, Slope -0.91 (NF-reg-convex)
-200,000 real quadratic fields. Upper envelope convexity = -0.079 (concave, not convex). Slope -0.91 ≈ -1 (from h·R ~ √D). Class number formula verified: log(h·R) vs log(D) slope = 0.501 (theory: 0.5). h=1 fraction: 28.3%. The expected convexity ~1.45 was wrong — the constraint is near-linear in log-log.
+Upper envelope concave (-0.079). h·R ~ √D verified (slope 0.501). h=1: 28.3%.
+
+### 126. PDG Spectral Gap: Weighted 0.027, Unweighted 0.770 (PDG-gap)
+226 particles, 21,236 edges. Weighted (1/mass-diff): λ₂=0.027 (severe bottleneck between heavy/light). Unweighted: λ₂=0.770 (well-connected). Fiedler partition: 46 heavy (mean 16.9 GeV) vs 180 light (mean 1.7 GeV). λ_max=1.972 (near-bipartite).
+
+### 127. Jones Zero Density: 6.2% on Unit Circle vs Alexander 41.2% (Jones-zeros)
+2,977 knots, 32,044 roots. Jones: 6.2% on unit circle (tol=0.01). Alexander: 41.19%. Jones roots spread broadly (IQR [0.842, 1.173]). Median |root|=1.0 (reciprocity symmetry). Alexander's palindromic constraint forces unit-circle concentration; Jones lacks this.
+
+### 128. Gram Eigenvalue Repulsion: Dim-3 Mild GOE, Dim-4+ Poisson (Lattice-gram)
+39,293 lattices. Dim-3: KL(GOE)=0.238, KL(Poisson)=0.281 (marginally GOE). Dim-4+: Poisson wins. Global pooled: KL(GOE)=0.236, KL(Poi)=0.247. Gram matrices encode deterministic geometry, not random matrix structure. Expected KL~0.055 was too optimistic.
+
+### 129. OEIS Recurrence Graph: Disjoint Cliques, ORC=0.529 (OEIS-rec-graph)
+841 recurrent sequences (order≤12), 341 unique polynomials, 5,427 edges. Graph = disjoint union of cliques (identical polynomial). Mean κ=0.529 (100% positive). Largest clique: 59 nodes (C(n,3)-family). Expected 0.12-0.18 requires sparser graph — clique structure forces κ≥0.5.
+
+### 130. Phase Transition Sharpness S=2.24: Genus-2 Broader, Genus-3 Collapses (Phase-sharp)
+Genus-2 ℓ_c=3.07, genus-3 ℓ_c<2. Sharpness ratio S=2.24 (within expected 1.6-2.4). Genus-3 collapses to baseline in one prime step (2→3). Beta ratios grow with ℓ: 0.75 (ℓ=3) → 6.77 (ℓ=11). Consistent with dimensional prediction from GSp₄ (dim 4) vs GSp₆ (dim 6) representation spaces.
 
 ---
 
@@ -879,7 +894,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*250 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*255 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 
