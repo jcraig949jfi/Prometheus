@@ -1,0 +1,480 @@
+{
+  "problem": "NF18: Fourier Decay of Lattice Theta Series",
+  "method": "DFT of theta_series, exponential fit |FFT(k)|^2 ~ exp(-gamma*k) on upper-half spectrum",
+  "n_lattices_total": 39293,
+  "n_lattices_analyzed": 39293,
+  "n_terms_typical": 151,
+  "overall_statistics": {
+    "mean_gamma": -0.018953,
+    "median_gamma": -0.018508,
+    "std_gamma": 0.026527,
+    "min_gamma": -0.150055,
+    "max_gamma": 0.236968,
+    "mean_r_squared": 0.049075,
+    "median_r_squared": 0.023906
+  },
+  "gamma_vs_dimension": {
+    "1": {
+      "count": 1,
+      "mean": -0.017139,
+      "median": -0.017139,
+      "std": 0.0
+    },
+    "2": {
+      "count": 1609,
+      "mean": 0.005174,
+      "median": 0.002872,
+      "std": 0.016327
+    },
+    "3": {
+      "count": 36585,
+      "mean": -0.021275,
+      "median": -0.019922,
+      "std": 0.022102
+    },
+    "4": {
+      "count": 481,
+      "mean": 0.025756,
+      "median": 0.028599,
+      "std": 0.05387
+    },
+    "5": {
+      "count": 295,
+      "mean": 0.033062,
+      "median": 0.04143,
+      "std": 0.079118
+    },
+    "6": {
+      "count": 186,
+      "mean": 0.016311,
+      "median": -0.002477,
+      "std": 0.08921
+    },
+    "7": {
+      "count": 86,
+      "mean": 0.024888,
+      "median": 0.041365,
+      "std": 0.103256
+    },
+    "8": {
+      "count": 37,
+      "mean": -0.041088,
+      "median": -0.063071,
+      "std": 0.086136
+    },
+    "9": {
+      "count": 5,
+      "mean": -0.013833,
+      "median": -0.106939,
+      "std": 0.131743
+    },
+    "10": {
+      "count": 3,
+      "mean": -0.080387,
+      "median": -0.114985,
+      "std": 0.048999
+    },
+    "11": {
+      "count": 1,
+      "mean": -0.114643,
+      "median": -0.114643,
+      "std": 0.0
+    },
+    "12": {
+      "count": 1,
+      "mean": 0.006614,
+      "median": 0.006614,
+      "std": 0.0
+    },
+    "13": {
+      "count": 1,
+      "mean": 0.017968,
+      "median": 0.017968,
+      "std": 0.0
+    },
+    "14": {
+      "count": 1,
+      "mean": 0.023905,
+      "median": 0.023905,
+      "std": 0.0
+    },
+    "24": {
+      "count": 1,
+      "mean": -0.113963,
+      "median": -0.113963,
+      "std": 0.0
+    }
+  },
+  "correlation_gamma_dimension": 0.085647,
+  "gamma_vs_kissing": {
+    "2": {
+      "count": 32553,
+      "mean": -0.019705,
+      "std": 0.023989
+    },
+    "4": {
+      "count": 4662,
+      "mean": -0.020486,
+      "std": 0.029606
+    },
+    "6": {
+      "count": 1717,
+      "mean": -0.001104,
+      "std": 0.030242
+    },
+    "8": {
+      "count": 124,
+      "mean": 0.015196,
+      "std": 0.074003
+    },
+    "10": {
+      "count": 42,
+      "mean": -0.008899,
+      "std": 0.062812
+    },
+    "12": {
+      "count": 52,
+      "mean": 0.009054,
+      "std": 0.088283
+    },
+    "14": {
+      "count": 15,
+      "mean": -0.072034,
+      "std": 0.066601
+    },
+    "16": {
+      "count": 14,
+      "mean": 0.00217,
+      "std": 0.114864
+    },
+    "18": {
+      "count": 11,
+      "mean": -0.059892,
+      "std": 0.026362
+    },
+    "20": {
+      "count": 15,
+      "mean": 0.021175,
+      "std": 0.11616
+    },
+    "24": {
+      "count": 13,
+      "mean": -0.03655,
+      "std": 0.048755
+    },
+    "30": {
+      "count": 11,
+      "mean": -0.090211,
+      "std": 0.026557
+    },
+    "32": {
+      "count": 8,
+      "mean": -0.014434,
+      "std": 0.13619
+    },
+    "40": {
+      "count": 6,
+      "mean": -0.073189,
+      "std": 0.007123
+    },
+    "56": {
+      "count": 5,
+      "mean": -0.001559,
+      "std": 0.122726
+    }
+  },
+  "correlation_gamma_kissing": -0.018214,
+  "packing_quality_correlations": {
+    "r_gamma_density": 0.045259,
+    "r_gamma_hermite": 0.050833
+  },
+  "within_dimension_correlations": {
+    "2": {
+      "n": 1609,
+      "r_density": -0.037678,
+      "r_hermite": -0.037678,
+      "r_kissing": 0.052719
+    },
+    "3": {
+      "n": 36585,
+      "r_density": 0.013304,
+      "r_hermite": 0.017155,
+      "r_kissing": 0.117742
+    },
+    "4": {
+      "n": 481,
+      "r_density": -0.129494,
+      "r_hermite": -0.132813,
+      "r_kissing": -0.236144
+    },
+    "5": {
+      "n": 295,
+      "r_density": -0.295967,
+      "r_hermite": -0.296787,
+      "r_kissing": -0.41532
+    },
+    "6": {
+      "n": 186,
+      "r_density": -0.349586,
+      "r_hermite": -0.366587,
+      "r_kissing": -0.459199
+    },
+    "7": {
+      "n": 86,
+      "r_density": -0.420304,
+      "r_hermite": -0.427368,
+      "r_kissing": -0.521128
+    },
+    "8": {
+      "n": 37,
+      "r_density": -0.417884,
+      "r_hermite": -0.557384,
+      "r_kissing": -0.446771
+    }
+  },
+  "highest_gamma_lattices": [
+    {
+      "label": "6.64.4.1.2",
+      "dim": 6,
+      "kissing": 4,
+      "density": 0.010093189023535098,
+      "hermite": 0.5,
+      "det": 64,
+      "minimum": 1,
+      "gamma": 0.18959849,
+      "r_squared": 0.587504,
+      "n_terms": 151
+    },
+    {
+      "label": "6.64.8.1.1",
+      "dim": 6,
+      "kissing": 2,
+      "density": 0.010093189023535098,
+      "hermite": 0.5,
+      "det": 64,
+      "minimum": 1,
+      "gamma": 0.20038849,
+      "r_squared": 0.714946,
+      "n_terms": 151
+    },
+    {
+      "label": "7.16384.8.1.5",
+      "dim": 7,
+      "kissing": 6,
+      "density": 0.013486049639351455,
+      "hermite": 0.75,
+      "det": 16384,
+      "minimum": 3,
+      "gamma": 0.20085652,
+      "r_squared": 0.627575,
+      "n_terms": 151
+    },
+    {
+      "label": "5.48.24.1.2",
+      "dim": 5,
+      "kissing": 2,
+      "density": 0.023742578157350234,
+      "hermite": 0.4610539557408639,
+      "det": 48,
+      "minimum": 1,
+      "gamma": 0.20423895,
+      "r_squared": 0.595235,
+      "n_terms": 151
+    },
+    {
+      "label": "7.64.8.1.2",
+      "dim": 7,
+      "kissing": 2,
+      "density": 0.004614029267901759,
+      "hermite": 0.5520447568369061,
+      "det": 64,
+      "minimum": 1,
+      "gamma": 0.21028823,
+      "r_squared": 0.776206,
+      "n_terms": 151
+    },
+    {
+      "label": "6.48.6.1.3",
+      "dim": 6,
+      "kissing": 2,
+      "density": 0.01165461079943953,
+      "hermite": 0.5245575317108241,
+      "det": 48,
+      "minimum": 1,
+      "gamma": 0.21128043,
+      "r_squared": 0.758096,
+      "n_terms": 151
+    },
+    {
+      "label": "7.1024.8.1.3",
+      "dim": 7,
+      "kissing": 20,
+      "density": 0.05394419855740582,
+      "hermite": 1.1144957168527114,
+      "det": 1024,
+      "minimum": 3,
+      "gamma": 0.21191915,
+      "r_squared": 0.811948,
+      "n_terms": 151
+    },
+    {
+      "label": "5.512.64.1.1",
+      "dim": 5,
+      "kissing": 6,
+      "density": 0.1133226316209192,
+      "hermite": 0.8615237662477763,
+      "det": 512,
+      "minimum": 3,
+      "gamma": 0.22016427,
+      "r_squared": 0.589837,
+      "n_terms": 151
+    },
+    {
+      "label": "8.64.2.1.2",
+      "dim": 8,
+      "kissing": 2,
+      "density": 0.0019817930304769377,
+      "hermite": 0.5946035575013605,
+      "det": 64,
+      "minimum": 1,
+      "gamma": 0.23295126,
+      "r_squared": 0.884861,
+      "n_terms": 151
+    },
+    {
+      "label": "7.4096.8.1.4",
+      "dim": 7,
+      "kissing": 12,
+      "density": 0.02697209927870291,
+      "hermite": 0.9142602406533565,
+      "det": 4096,
+      "minimum": 3,
+      "gamma": 0.23696783,
+      "r_squared": 0.690496,
+      "n_terms": 151
+    }
+  ],
+  "lowest_gamma_lattices": [
+    {
+      "label": "4.12.12.1.4",
+      "dim": 4,
+      "kissing": 10,
+      "density": 0.35613867236025354,
+      "hermite": 1.074569931823542,
+      "det": 12,
+      "minimum": 2,
+      "gamma": -0.15005509,
+      "r_squared": 0.435957,
+      "n_terms": 151
+    },
+    {
+      "label": "5.18.12.1.1",
+      "dim": 5,
+      "kissing": 14,
+      "density": 0.2193245422464302,
+      "hermite": 1.1219551454461996,
+      "det": 18,
+      "minimum": 2,
+      "gamma": -0.14941294,
+      "r_squared": 0.605665,
+      "n_terms": 151
+    },
+    {
+      "label": "5.64.32.1.1",
+      "dim": 5,
+      "kissing": 10,
+      "density": 0.11631440332731466,
+      "hermite": 0.8705505632961241,
+      "det": 64,
+      "minimum": 2,
+      "gamma": -0.14795772,
+      "r_squared": 0.660424,
+      "n_terms": 151
+    },
+    {
+      "label": "5.54.36.1.1",
+      "dim": 5,
+      "kissing": 6,
+      "density": 0.12662708350586793,
+      "hermite": 0.9006400256804089,
+      "det": 54,
+      "minimum": 2,
+      "gamma": -0.14776605,
+      "r_squared": 0.488236,
+      "n_terms": 151
+    },
+    {
+      "label": "5.22.44.1.1",
+      "dim": 5,
+      "kissing": 14,
+      "density": 0.19838651289487105,
+      "hermite": 1.0778180677127258,
+      "det": 22,
+      "minimum": 2,
+      "gamma": -0.14473836,
+      "r_squared": 0.567508,
+      "n_terms": 151
+    },
+    {
+      "label": "6.12.12.1.1",
+      "dim": 6,
+      "kissing": 32,
+      "density": 0.18647377279103247,
+      "hermite": 1.3218021521667294,
+      "det": 12,
+      "minimum": 2,
+      "gamma": -0.14407425,
+      "r_squared": 0.657969,
+      "n_terms": 151
+    },
+    {
+      "label": "5.10.20.1.1",
+      "dim": 5,
+      "kissing": 22,
+      "density": 0.29425475135822543,
+      "hermite": 1.2619146889603865,
+      "det": 10,
+      "minimum": 2,
+      "gamma": -0.14004371,
+      "r_squared": 0.660155,
+      "n_terms": 151
+    },
+    {
+      "label": "4.8.8.1.2",
+      "dim": 4,
+      "kissing": 14,
+      "density": 0.43617901247742996,
+      "hermite": 1.189207115002721,
+      "det": 8,
+      "minimum": 2,
+      "gamma": -0.13931509,
+      "r_squared": 0.525148,
+      "n_terms": 151
+    },
+    {
+      "label": "6.48.12.1.1",
+      "dim": 6,
+      "kissing": 16,
+      "density": 0.09323688639551624,
+      "hermite": 1.0491150634216482,
+      "det": 48,
+      "minimum": 2,
+      "gamma": -0.13575976,
+      "r_squared": 0.638314,
+      "n_terms": 151
+    },
+    {
+      "label": "5.16.8.1.2",
+      "dim": 5,
+      "kissing": 16,
+      "density": 0.23262880665462932,
+      "hermite": 1.148698354997035,
+      "det": 16,
+      "minimum": 2,
+      "gamma": -0.13532226,
+      "r_squared": 0.618223,
+      "n_terms": 151
+    }
+  ],
+  "interpretation": "Mean gamma = -0.0190 across 39293 lattices. Gamma shows weak correlation with dimension (r=0.0856). Gamma shows weak correlation with kissing number (r=-0.0182). Gamma shows weak correlation with packing density (r=0.0453). CRITICAL: within-dimension analysis reveals strong negative gamma-kissing correlations in dims [4, 5, 6, 7, 8] (r up to -0.521). Higher kissing number (better packing) associates with LOWER gamma (slower spectral decay = rougher spectrum), meaning well-packed lattices concentrate theta-series weight on fewer shells, producing sharper spectral features. This effect is masked in the pooled correlation by Simpson's paradox (dim=3 dominates with 93% of data)."
+}
