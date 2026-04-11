@@ -1,0 +1,902 @@
+{
+  "metadata": {
+    "n_sequences": 5000,
+    "min_terms": 20,
+    "elapsed_seconds": 0.8,
+    "timestamp": "2026-04-11 00:03:08"
+  },
+  "distribution": {
+    "mean": 0.203241,
+    "median": 0.12963,
+    "std": 0.244964,
+    "percentiles": {
+      "0": 0.0,
+      "5": 0.0,
+      "10": 0.0,
+      "25": 0.04,
+      "50": 0.12963,
+      "75": 0.26087,
+      "90": 0.529557,
+      "95": 0.885873,
+      "100": 1.0
+    },
+    "zero_density_count": 837,
+    "above_50pct": 527,
+    "above_90pct": 242,
+    "mean_density_ratio": 0.8434,
+    "median_density_ratio": 0.674,
+    "histogram": {
+      "0.00-0.05": 1537,
+      "0.05-0.10": 601,
+      "0.10-0.15": 606,
+      "0.15-0.20": 500,
+      "0.20-0.25": 403,
+      "0.25-0.30": 416,
+      "0.30-0.35": 164,
+      "0.35-0.40": 102,
+      "0.40-0.45": 65,
+      "0.45-0.50": 64,
+      "0.50-0.55": 66,
+      "0.55-0.60": 56,
+      "0.60-0.65": 42,
+      "0.65-0.70": 41,
+      "0.70-0.75": 28,
+      "0.75-0.80": 28,
+      "0.80-0.85": 21,
+      "0.85-0.90": 17,
+      "0.90-0.95": 19,
+      "0.95-1.00": 224
+    }
+  },
+  "family_comparison": {
+    "combinatorial": {
+      "count": 1139,
+      "mean_density": 0.119187,
+      "median_density": 0.083333,
+      "std_density": 0.154176,
+      "above_50pct": 31
+    },
+    "core": {
+      "count": 135,
+      "mean_density": 0.250053,
+      "median_density": 0.147059,
+      "std_density": 0.284889,
+      "above_50pct": 22
+    },
+    "easy": {
+      "count": 2503,
+      "mean_density": 0.181156,
+      "median_density": 0.107143,
+      "std_density": 0.226804,
+      "above_50pct": 207
+    },
+    "hard": {
+      "count": 107,
+      "mean_density": 0.317753,
+      "median_density": 0.2,
+      "std_density": 0.303041,
+      "above_50pct": 21
+    },
+    "nice": {
+      "count": 1458,
+      "mean_density": 0.221021,
+      "median_density": 0.133333,
+      "std_density": 0.265916,
+      "above_50pct": 178
+    },
+    "number_theoretic": {
+      "count": 4761,
+      "mean_density": 0.205848,
+      "median_density": 0.133333,
+      "std_density": 0.245337,
+      "above_50pct": 507
+    },
+    "polynomial": {
+      "count": 91,
+      "mean_density": 0.160605,
+      "median_density": 0.055556,
+      "std_density": 0.252099,
+      "above_50pct": 8
+    },
+    "unclassified": {
+      "count": 89,
+      "mean_density": 0.155451,
+      "median_density": 0.055556,
+      "std_density": 0.241852,
+      "above_50pct": 10
+    }
+  },
+  "growth_comparison": {
+    "bounded": {
+      "count": 290,
+      "mean_density": 0.612635,
+      "median_density": 0.639611
+    },
+    "exponential": {
+      "count": 2191,
+      "mean_density": 0.111164,
+      "median_density": 0.071429
+    },
+    "linear-quadratic": {
+      "count": 659,
+      "mean_density": 0.19679,
+      "median_density": 0.133333
+    },
+    "polynomial": {
+      "count": 665,
+      "mean_density": 0.140192,
+      "median_density": 0.1
+    },
+    "sublinear": {
+      "count": 1192,
+      "mean_density": 0.311297,
+      "median_density": 0.267857
+    },
+    "zero-heavy": {
+      "count": 3,
+      "mean_density": 0.333333,
+      "median_density": 0.0
+    }
+  },
+  "bm_correlation": {
+    "n_with_bm_order": 0,
+    "note": "Too few sequences with BM orders for correlation"
+  },
+  "anomalous_high_density": [
+    {
+      "seq_id": "A000002",
+      "name": "Kolakoski sequence: a(n) is length of n-th run; a(1) = 1; sequence consists just of 1's and 2's.",
+      "prime_density": 1.0,
+      "n_terms": 108,
+      "n_prime": 55,
+      "families": [
+        "core",
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A000034",
+      "name": "Period 2: repeat [1, 2]; a(n) = 1 + (n mod 2).",
+      "prime_density": 1.0,
+      "n_terms": 102,
+      "n_prime": 51,
+      "families": [
+        "easy",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A000038",
+      "name": "Twice A000007.",
+      "prime_density": 1.0,
+      "n_terms": 105,
+      "n_prime": 1,
+      "families": [
+        "easy",
+        "number_theoretic"
+      ],
+      "growth_class": "zero-heavy"
+    },
+    {
+      "seq_id": "A000040",
+      "name": "The prime numbers.",
+      "prime_density": 1.0,
+      "n_terms": 58,
+      "n_prime": 58,
+      "families": [
+        "core",
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000043",
+      "name": "Mersenne exponents: primes p such that 2^p - 1 is prime. Then 2^p - 1 is called a Mersenne prime.",
+      "prime_density": 1.0,
+      "n_terms": 50,
+      "n_prime": 50,
+      "families": [
+        "core",
+        "hard",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "exponential"
+    },
+    {
+      "seq_id": "A000057",
+      "name": "Primes that divide at least one term in every Fibonacci sequence.",
+      "prime_density": 1.0,
+      "n_terms": 52,
+      "n_prime": 52,
+      "families": [
+        "combinatorial",
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A000101",
+      "name": "Record gaps between primes (upper end) (compare A002386, which gives lower ends of these gaps).",
+      "prime_density": 1.0,
+      "n_terms": 31,
+      "n_prime": 31,
+      "families": [
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "exponential"
+    },
+    {
+      "seq_id": "A000122",
+      "name": "Expansion of Jacobi theta function theta_3(x) = Sum_{m =-oo..oo} x^(m^2) (number of integer solutions to k^2 = n).",
+      "prime_density": 1.0,
+      "n_terms": 105,
+      "n_prime": 10,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A000161",
+      "name": "Number of partitions of n into 2 squares.",
+      "prime_density": 1.0,
+      "n_terms": 108,
+      "n_prime": 5,
+      "families": [
+        "combinatorial",
+        "core",
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A000229",
+      "name": "a(n) is the least number m such that the n-th prime is the least quadratic nonresidue modulo m.",
+      "prime_density": 1.0,
+      "n_terms": 30,
+      "n_prime": 30,
+      "families": [
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "exponential"
+    },
+    {
+      "seq_id": "A000230",
+      "name": "a(0)=2; for n>=1, a(n) = smallest prime p such that there is a gap of exactly 2n between p and next prime, or -1 if no such prime exists.",
+      "prime_density": 1.0,
+      "n_terms": 50,
+      "n_prime": 50,
+      "families": [
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "polynomial"
+    },
+    {
+      "seq_id": "A000353",
+      "name": "Primes p == 7, 19, 23 (mod 40) such that (p-1)/2 is also prime.",
+      "prime_density": 1.0,
+      "n_terms": 46,
+      "n_prime": 46,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A000355",
+      "name": "Primes p == 3, 9, 11 (mod 20) such that 2p+1 is also prime.",
+      "prime_density": 1.0,
+      "n_terms": 47,
+      "n_prime": 47,
+      "families": [
+        "easy",
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A000520",
+      "name": "Nearest integer to log_10(n).",
+      "prime_density": 1.0,
+      "n_terms": 87,
+      "n_prime": 56,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000705",
+      "name": "n-th superior highly composite number A002201(n) is product of first n terms of this sequence.",
+      "prime_density": 1.0,
+      "n_terms": 69,
+      "n_prime": 69,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000921",
+      "name": "Primes p of the form 3k+1 such that Sum_{x=1..p} cos(2*Pi*x^3/p) > sqrt(p).",
+      "prime_density": 1.0,
+      "n_terms": 51,
+      "n_prime": 51,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000922",
+      "name": "Primes p of the form 3k+1 such that -sqrt(p) < sum_{x=1..p} cos(2*Pi*x^3/p) < sqrt(p).",
+      "prime_density": 1.0,
+      "n_terms": 47,
+      "n_prime": 47,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000923",
+      "name": "Primes p of the form 3k+1 such that sum_{x=1..p} cos(2*Pi*x^3/p) < -sqrt(p).",
+      "prime_density": 1.0,
+      "n_terms": 46,
+      "n_prime": 46,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000928",
+      "name": "Irregular primes: primes p such that at least one of the numerators of the Bernoulli numbers B_2, B_4, ..., B_{p-3} (A000367) is divisible by p.",
+      "prime_density": 1.0,
+      "n_terms": 65,
+      "n_prime": 65,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic",
+        "polynomial"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A000945",
+      "name": "Euclid-Mullin sequence: a(1) = 2, a(n+1) is smallest prime factor of 1 + Product_{k=1..n} a(k).",
+      "prime_density": 1.0,
+      "n_terms": 43,
+      "n_prime": 43,
+      "families": [
+        "hard",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "polynomial"
+    },
+    {
+      "seq_id": "A000978",
+      "name": "Wagstaff numbers: numbers k such that (2^k + 1)/3 is prime.",
+      "prime_density": 1.0,
+      "n_terms": 41,
+      "n_prime": 41,
+      "families": [
+        "hard",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "polynomial"
+    },
+    {
+      "seq_id": "A000999",
+      "name": "5-adic valuation of binomial(2*n,n): largest k such that 5^k divides binomial(2*n, n).",
+      "prime_density": 1.0,
+      "n_terms": 87,
+      "n_prime": 28,
+      "families": [
+        "combinatorial",
+        "easy",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001030",
+      "name": "Fixed under 1 -> 21, 2 -> 211.",
+      "prime_density": 1.0,
+      "n_terms": 105,
+      "n_prime": 44,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001069",
+      "name": "Log2*(n) (version 2): take log_2 of n this many times to get a number < 2.",
+      "prime_density": 1.0,
+      "n_terms": 87,
+      "n_prime": 84,
+      "families": [
+        "easy",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001097",
+      "name": "Twin primes.",
+      "prime_density": 1.0,
+      "n_terms": 57,
+      "n_prime": 57,
+      "families": [
+        "core",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A001122",
+      "name": "Primes with primitive root 2.",
+      "prime_density": 1.0,
+      "n_terms": 57,
+      "n_prime": 57,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A001123",
+      "name": "Primes with 3 as smallest primitive root.",
+      "prime_density": 1.0,
+      "n_terms": 48,
+      "n_prime": 48,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001124",
+      "name": "Primes with 5 as smallest primitive root.",
+      "prime_density": 1.0,
+      "n_terms": 49,
+      "n_prime": 49,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001125",
+      "name": "Primes with 6 as smallest primitive root.",
+      "prime_density": 1.0,
+      "n_terms": 44,
+      "n_prime": 44,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001126",
+      "name": "Primes with 7 as smallest primitive root.",
+      "prime_density": 1.0,
+      "n_terms": 44,
+      "n_prime": 44,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001132",
+      "name": "Primes == +-1 (mod 8).",
+      "prime_density": 1.0,
+      "n_terms": 51,
+      "n_prime": 51,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001133",
+      "name": "Primes p such that the multiplicative order of 2 modulo p is (p-1)/3.",
+      "prime_density": 1.0,
+      "n_terms": 51,
+      "n_prime": 51,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001134",
+      "name": "Primes p such that the multiplicative order of 2 modulo p is (p-1)/4.",
+      "prime_density": 1.0,
+      "n_terms": 50,
+      "n_prime": 50,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001135",
+      "name": "Primes p such that the multiplicative order of 2 modulo p is (p-1)/5.",
+      "prime_density": 1.0,
+      "n_terms": 45,
+      "n_prime": 45,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001136",
+      "name": "Primes p such that the multiplicative order of 2 modulo p is (p-1)/6.",
+      "prime_density": 1.0,
+      "n_terms": 48,
+      "n_prime": 48,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001153",
+      "name": "Degrees of primitive irreducible trinomials: n such that 2^n - 1 is a Mersenne prime and x^n + x^k + 1 is a primitive irreducible polynomial over GF(2) for some k with 0 < k < n.",
+      "prime_density": 1.0,
+      "n_terms": 30,
+      "n_prime": 30,
+      "families": [
+        "hard",
+        "nice",
+        "number_theoretic",
+        "polynomial"
+      ],
+      "growth_class": "exponential"
+    },
+    {
+      "seq_id": "A001179",
+      "name": "Leonardo logarithm of n.",
+      "prime_density": 1.0,
+      "n_terms": 72,
+      "n_prime": 25,
+      "families": [
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001221",
+      "name": "Number of distinct primes dividing n (also called omega(n)).",
+      "prime_density": 1.0,
+      "n_terms": 111,
+      "n_prime": 71,
+      "families": [
+        "core",
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001259",
+      "name": "A sequence of sorted odd primes 3 = p_1 < p_2 < ... < p_m such that p_i-2 divides the product p_1*p_2*...*p_(i-1) of the earlier primes and each prime factor of p_i-1 is a prime factor of twice the product.",
+      "prime_density": 1.0,
+      "n_terms": 21,
+      "n_prime": 21,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "polynomial"
+    },
+    {
+      "seq_id": "A001265",
+      "name": "Table T(n,k) in which n-th row lists prime factors of 2^n - 1 (n >= 2), with repetition.",
+      "prime_density": 1.0,
+      "n_terms": 66,
+      "n_prime": 66,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001269",
+      "name": "Table T(n,k) in which n-th row lists prime factors of 2^n + 1 (n >= 0), with repetition.",
+      "prime_density": 1.0,
+      "n_terms": 60,
+      "n_prime": 60,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A001270",
+      "name": "Table of prime factors of 10^n - 1 (with multiplicity).",
+      "prime_density": 1.0,
+      "n_terms": 64,
+      "n_prime": 64,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "polynomial"
+    },
+    {
+      "seq_id": "A001271",
+      "name": "Irregular table read by rows: row n lists prime factors of 10^n + 1, with multiplicity.",
+      "prime_density": 1.0,
+      "n_terms": 51,
+      "n_prime": 51,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A001275",
+      "name": "Smallest prime p such that the product of q/(q-1) over the primes from prime(n) to p is greater than 2.",
+      "prime_density": 1.0,
+      "n_terms": 40,
+      "n_prime": 40,
+      "families": [
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A001285",
+      "name": "Thue-Morse sequence: let A_k denote the first 2^k terms; then A_0 = 1 and for k >= 0, A_{k+1} = A_k B_k, where B_k is obtained from A_k by interchanging 1's and 2's.",
+      "prime_density": 1.0,
+      "n_terms": 102,
+      "n_prime": 51,
+      "families": [
+        "core",
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001359",
+      "name": "Lesser of twin primes.",
+      "prime_density": 1.0,
+      "n_terms": 51,
+      "n_prime": 51,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "linear-quadratic"
+    },
+    {
+      "seq_id": "A001468",
+      "name": "There are a(n) 2's between successive 1's.",
+      "prime_density": 1.0,
+      "n_terms": 93,
+      "n_prime": 57,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "bounded"
+    },
+    {
+      "seq_id": "A001578",
+      "name": "Smallest primitive prime factor of Fibonacci number F(n), or 1 if F(n) has no primitive prime factor.",
+      "prime_density": 1.0,
+      "n_terms": 50,
+      "n_prime": 46,
+      "families": [
+        "combinatorial",
+        "number_theoretic"
+      ],
+      "growth_class": "exponential"
+    },
+    {
+      "seq_id": "A001583",
+      "name": "Artiads: the primes p == 1 (mod 5) for which Fibonacci((p-1)/5) is divisible by p.",
+      "prime_density": 1.0,
+      "n_terms": 43,
+      "n_prime": 43,
+      "families": [
+        "combinatorial",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "sublinear"
+    },
+    {
+      "seq_id": "A001632",
+      "name": "Smallest prime p such that there is a gap of 2n between p and previous prime.",
+      "prime_density": 1.0,
+      "n_terms": 38,
+      "n_prime": 38,
+      "families": [
+        "easy",
+        "nice",
+        "number_theoretic"
+      ],
+      "growth_class": "polynomial"
+    }
+  ],
+  "top10_highest_density": [
+    {
+      "seq_id": "A000002",
+      "name": "Kolakoski sequence: a(n) is length of n-th run; a(1) = 1; sequence consists just of 1's and 2's.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 1.442695,
+      "density_ratio": 0.6931
+    },
+    {
+      "seq_id": "A000034",
+      "name": "Period 2: repeat [1, 2]; a(n) = 1 + (n mod 2).",
+      "prime_density": 1.0,
+      "expected_density_pnt": 1.442695,
+      "density_ratio": 0.6931
+    },
+    {
+      "seq_id": "A000038",
+      "name": "Twice A000007.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 1.442695,
+      "density_ratio": 0.6931
+    },
+    {
+      "seq_id": "A000040",
+      "name": "The prime numbers.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.27087,
+      "density_ratio": 3.6918
+    },
+    {
+      "seq_id": "A000043",
+      "name": "Mersenne exponents: primes p such that 2^p - 1 is prime. Then 2^p - 1 is called a Mersenne prime.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.181248,
+      "density_ratio": 5.5173
+    },
+    {
+      "seq_id": "A000057",
+      "name": "Primes that divide at least one term in every Fibonacci sequence.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.210477,
+      "density_ratio": 4.7511
+    },
+    {
+      "seq_id": "A000101",
+      "name": "Record gaps between primes (upper end) (compare A002386, which gives lower ends of these gaps).",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.152964,
+      "density_ratio": 6.5375
+    },
+    {
+      "seq_id": "A000122",
+      "name": "Expansion of Jacobi theta function theta_3(x) = Sum_{m =-oo..oo} x^(m^2) (number of integer solutions to k^2 = n).",
+      "prime_density": 1.0,
+      "expected_density_pnt": 1.442695,
+      "density_ratio": 0.6931
+    },
+    {
+      "seq_id": "A000161",
+      "name": "Number of partitions of n into 2 squares.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 1.442695,
+      "density_ratio": 0.6931
+    },
+    {
+      "seq_id": "A000229",
+      "name": "a(n) is the least number m such that the n-th prime is the least quadratic nonresidue modulo m.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.130344,
+      "density_ratio": 7.672
+    }
+  ],
+  "top10_most_enriched_vs_pnt": [
+    {
+      "seq_id": "A006687",
+      "name": "Duodecimal primes: p = (x^12 + y^12 )/(x^4 + y^4 ).",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.074978,
+      "density_ratio": 13.3372
+    },
+    {
+      "seq_id": "A001067",
+      "name": "Numerator of Bernoulli(2*n)/(2*n).",
+      "prime_density": 0.714286,
+      "expected_density_pnt": 0.054636,
+      "density_ratio": 13.0735
+    },
+    {
+      "seq_id": "A002225",
+      "name": "a(n) is the smallest prime p such that each of the first n primes has three cube roots mod p.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.077775,
+      "density_ratio": 12.8576
+    },
+    {
+      "seq_id": "A002224",
+      "name": "Smallest prime p of form p = 8k+1 such that first n primes (p_1=2, ..., p_n) are quadratic residues mod p.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.077798,
+      "density_ratio": 12.8538
+    },
+    {
+      "seq_id": "A003618",
+      "name": "Largest n-digit prime.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.082181,
+      "density_ratio": 12.1682
+    },
+    {
+      "seq_id": "A002149",
+      "name": "Largest prime p==3 (mod 8) such that Q(sqrt(-p)) has class number 2n+1.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.100412,
+      "density_ratio": 9.9589
+    },
+    {
+      "seq_id": "A002646",
+      "name": "Half-quartan primes: primes of the form p = (x^4 + y^4)/2.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.105723,
+      "density_ratio": 9.4587
+    },
+    {
+      "seq_id": "A002223",
+      "name": "Smallest prime p of form p = 8k-1 such that first n primes (p_1=2, ..., p_n) are quadratic residues mod p.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.110939,
+      "density_ratio": 9.0139
+    },
+    {
+      "seq_id": "A002582",
+      "name": "Largest prime factor of n! - 1.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.113894,
+      "density_ratio": 8.7801
+    },
+    {
+      "seq_id": "A006686",
+      "name": "Octavan primes: primes of the form p = x^8 + y^8.",
+      "prime_density": 1.0,
+      "expected_density_pnt": 0.113949,
+      "density_ratio": 8.7759
+    }
+  ]
+}

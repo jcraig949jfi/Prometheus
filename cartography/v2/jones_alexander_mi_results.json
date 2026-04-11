@@ -1,0 +1,502 @@
+{
+  "metadata": {
+    "n_knots_total": 12965,
+    "n_knots_valid": 2977,
+    "jones_features": [
+      "j_degree",
+      "j_span",
+      "j_max_abs_coeff",
+      "j_sum_abs_coeffs",
+      "j_n_nonzero",
+      "j_l2_norm",
+      "j_min_power",
+      "j_max_power",
+      "j_leading",
+      "j_trailing"
+    ],
+    "alexander_features": [
+      "a_degree",
+      "a_span",
+      "a_max_abs_coeff",
+      "a_sum_abs_coeffs",
+      "a_n_nonzero",
+      "a_l2_norm",
+      "a_min_power",
+      "a_max_power",
+      "a_leading",
+      "a_trailing"
+    ],
+    "n_bins_mi": 30,
+    "n_permutations": 1000,
+    "knn_k": 5,
+    "train_test_split": "80/20"
+  },
+  "mutual_information": {
+    "degree": 0.0853,
+    "span": 0.0853,
+    "max_abs_coeff": 1.3378,
+    "sum_abs_coeffs": 2.7064,
+    "l2_norm": 1.8885,
+    "n_nonzero": 0.0956,
+    "leading_coeff": 0.0303,
+    "trailing_coeff": 0.0138
+  },
+  "mi_significance": {
+    "degree": {
+      "observed_mi": 0.0853,
+      "null_mean": 0.0063,
+      "null_std": 0.0014,
+      "z_score": 58.19,
+      "p_value": 0.0
+    },
+    "span": {
+      "observed_mi": 0.0853,
+      "null_mean": 0.0063,
+      "null_std": 0.0014,
+      "z_score": 58.19,
+      "p_value": 0.0
+    },
+    "max_abs_coeff": {
+      "observed_mi": 1.3378,
+      "null_mean": 0.1139,
+      "null_std": 0.0057,
+      "z_score": 215.28,
+      "p_value": 0.0
+    },
+    "sum_abs_coeffs": {
+      "observed_mi": 2.7064,
+      "null_mean": 0.117,
+      "null_std": 0.0055,
+      "z_score": 469.05,
+      "p_value": 0.0
+    },
+    "l2_norm": {
+      "observed_mi": 1.8885,
+      "null_mean": 0.1163,
+      "null_std": 0.0056,
+      "z_score": 317.51,
+      "p_value": 0.0
+    },
+    "n_nonzero": {
+      "observed_mi": 0.0956,
+      "null_mean": 0.0067,
+      "null_std": 0.0014,
+      "z_score": 64.66,
+      "p_value": 0.0
+    },
+    "leading_coeff": {
+      "observed_mi": 0.0303,
+      "null_mean": 0.0095,
+      "null_std": 0.0016,
+      "z_score": 12.79,
+      "p_value": 0.0
+    },
+    "trailing_coeff": {
+      "observed_mi": 0.0138,
+      "null_mean": 0.0091,
+      "null_std": 0.0016,
+      "z_score": 2.89,
+      "p_value": 0.008
+    }
+  },
+  "normalized_mi": {
+    "degree": {
+      "mi": 0.0853,
+      "h_jones": 1.4521,
+      "h_alexander": 1.1461,
+      "nmi": 0.0744
+    },
+    "span": {
+      "mi": 0.0853,
+      "h_jones": 1.4521,
+      "h_alexander": 1.1461,
+      "nmi": 0.0744
+    },
+    "max_abs_coeff": {
+      "mi": 1.3378,
+      "h_jones": 3.0699,
+      "h_alexander": 3.0225,
+      "nmi": 0.4426
+    },
+    "sum_abs_coeffs": {
+      "mi": 2.7064,
+      "h_jones": 3.0789,
+      "h_alexander": 3.0818,
+      "nmi": 0.879
+    },
+    "l2_norm": {
+      "mi": 1.8885,
+      "h_jones": 3.07,
+      "h_alexander": 3.0667,
+      "nmi": 0.6158
+    },
+    "n_nonzero": {
+      "mi": 0.0956,
+      "h_jones": 1.4979,
+      "h_alexander": 1.1494,
+      "nmi": 0.0832
+    },
+    "leading_coeff": {
+      "mi": 0.0303,
+      "h_jones": 0.9574,
+      "h_alexander": 1.5,
+      "nmi": 0.0316
+    },
+    "trailing_coeff": {
+      "mi": 0.0138,
+      "h_jones": 1.0003,
+      "h_alexander": 1.5,
+      "nmi": 0.0138
+    }
+  },
+  "average_nmi": 0.2769,
+  "correlation_pearson_top20": {
+    "j_degree_vs_a_min_power": {
+      "r": NaN,
+      "p": NaN
+    },
+    "j_span_vs_a_min_power": {
+      "r": NaN,
+      "p": NaN
+    },
+    "j_max_abs_coeff_vs_a_sum_abs_coeffs": {
+      "r": 0.9978,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_min_power": {
+      "r": NaN,
+      "p": NaN
+    },
+    "j_sum_abs_coeffs_vs_a_sum_abs_coeffs": {
+      "r": 0.9996,
+      "p": 0.0
+    },
+    "j_l2_norm_vs_a_sum_abs_coeffs": {
+      "r": 0.9991,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_l2_norm": {
+      "r": 0.9909,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_l2_norm": {
+      "r": 0.9906,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_max_abs_coeff": {
+      "r": 0.9632,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_max_abs_coeff": {
+      "r": 0.9616,
+      "p": 0.0
+    },
+    "j_degree_vs_a_sum_abs_coeffs": {
+      "r": 0.7275,
+      "p": 0.0
+    },
+    "j_span_vs_a_sum_abs_coeffs": {
+      "r": 0.7275,
+      "p": 0.0
+    },
+    "j_degree_vs_a_l2_norm": {
+      "r": 0.711,
+      "p": 0.0
+    },
+    "j_span_vs_a_l2_norm": {
+      "r": 0.711,
+      "p": 0.0
+    },
+    "j_degree_vs_a_max_abs_coeff": {
+      "r": 0.6766,
+      "p": 0.0
+    },
+    "j_span_vs_a_max_abs_coeff": {
+      "r": 0.6766,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_n_nonzero": {
+      "r": 0.432,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_degree": {
+      "r": 0.4094,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_span": {
+      "r": 0.4094,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_min_power": {
+      "r": NaN,
+      "p": NaN
+    }
+  },
+  "correlation_spearman_top20": {
+    "j_degree_vs_a_min_power": {
+      "rho": NaN,
+      "p": NaN
+    },
+    "j_span_vs_a_min_power": {
+      "rho": NaN,
+      "p": NaN
+    },
+    "j_max_abs_coeff_vs_a_sum_abs_coeffs": {
+      "rho": 0.9973,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_min_power": {
+      "rho": NaN,
+      "p": NaN
+    },
+    "j_sum_abs_coeffs_vs_a_sum_abs_coeffs": {
+      "rho": 0.9996,
+      "p": 0.0
+    },
+    "j_l2_norm_vs_a_sum_abs_coeffs": {
+      "rho": 0.999,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_l2_norm": {
+      "rho": 0.9913,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_l2_norm": {
+      "rho": 0.9909,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_max_abs_coeff": {
+      "rho": 0.9643,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_max_abs_coeff": {
+      "rho": 0.9621,
+      "p": 0.0
+    },
+    "j_degree_vs_a_sum_abs_coeffs": {
+      "rho": 0.7915,
+      "p": 0.0
+    },
+    "j_span_vs_a_sum_abs_coeffs": {
+      "rho": 0.7915,
+      "p": 0.0
+    },
+    "j_degree_vs_a_l2_norm": {
+      "rho": 0.7709,
+      "p": 0.0
+    },
+    "j_span_vs_a_l2_norm": {
+      "rho": 0.7709,
+      "p": 0.0
+    },
+    "j_degree_vs_a_max_abs_coeff": {
+      "rho": 0.7297,
+      "p": 0.0
+    },
+    "j_span_vs_a_max_abs_coeff": {
+      "rho": 0.7297,
+      "p": 0.0
+    },
+    "j_max_abs_coeff_vs_a_n_nonzero": {
+      "rho": 0.4335,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_degree": {
+      "rho": 0.4076,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_span": {
+      "rho": 0.4076,
+      "p": 0.0
+    },
+    "j_sum_abs_coeffs_vs_a_min_power": {
+      "rho": NaN,
+      "p": NaN
+    }
+  },
+  "mi_matrix": {
+    "jones_features": [
+      "j_degree",
+      "j_span",
+      "j_max_abs_coeff",
+      "j_sum_abs_coeffs",
+      "j_n_nonzero",
+      "j_l2_norm",
+      "j_min_power",
+      "j_max_power",
+      "j_leading",
+      "j_trailing"
+    ],
+    "alexander_features": [
+      "a_degree",
+      "a_span",
+      "a_max_abs_coeff",
+      "a_sum_abs_coeffs",
+      "a_n_nonzero",
+      "a_l2_norm",
+      "a_min_power",
+      "a_max_power",
+      "a_leading",
+      "a_trailing"
+    ],
+    "values": [
+      [
+        0.0853,
+        0.0853,
+        0.4213,
+        0.5264,
+        0.0941,
+        0.4932,
+        0.0,
+        0.0853,
+        0.0485,
+        0.0485
+      ],
+      [
+        0.0853,
+        0.0853,
+        0.4213,
+        0.5264,
+        0.0941,
+        0.4932,
+        0.0,
+        0.0853,
+        0.0485,
+        0.0485
+      ],
+      [
+        0.1514,
+        0.1514,
+        1.3378,
+        2.3183,
+        0.1624,
+        1.8778,
+        0.0,
+        0.1514,
+        0.099,
+        0.099
+      ],
+      [
+        0.1455,
+        0.1455,
+        1.3035,
+        2.7064,
+        0.1572,
+        1.8557,
+        0.0,
+        0.1455,
+        0.1038,
+        0.1038
+      ],
+      [
+        0.0845,
+        0.0845,
+        0.4684,
+        0.5799,
+        0.0956,
+        0.544,
+        0.0,
+        0.0845,
+        0.0555,
+        0.0555
+      ],
+      [
+        0.1514,
+        0.1514,
+        1.3316,
+        2.4485,
+        0.1622,
+        1.8885,
+        0.0,
+        0.1514,
+        0.1004,
+        0.1004
+      ],
+      [
+        0.2136,
+        0.2136,
+        0.1354,
+        0.1335,
+        0.187,
+        0.1263,
+        0.0,
+        0.2136,
+        0.1757,
+        0.1757
+      ],
+      [
+        0.1451,
+        0.1451,
+        0.1236,
+        0.1253,
+        0.148,
+        0.1208,
+        0.0,
+        0.1451,
+        0.1883,
+        0.1883
+      ],
+      [
+        0.0212,
+        0.0212,
+        0.0432,
+        0.0491,
+        0.0217,
+        0.0481,
+        0.0,
+        0.0212,
+        0.0303,
+        0.0303
+      ],
+      [
+        0.0104,
+        0.0104,
+        0.0432,
+        0.0527,
+        0.0101,
+        0.0529,
+        0.0,
+        0.0104,
+        0.0138,
+        0.0138
+      ]
+    ]
+  },
+  "knn_jones_to_alexander": {
+    "per_feature_r2": {
+      "a_degree": 0.3442,
+      "a_span": 0.3442,
+      "a_max_abs_coeff": 0.9301,
+      "a_sum_abs_coeffs": 0.9954,
+      "a_n_nonzero": 0.3647,
+      "a_l2_norm": 0.9794,
+      "a_min_power": 0.0,
+      "a_max_power": 0.3442,
+      "a_leading": 0.5506,
+      "a_trailing": 0.5506
+    },
+    "average_r2": 0.5403
+  },
+  "knn_alexander_to_jones": {
+    "per_feature_r2": {
+      "j_degree": 0.6181,
+      "j_span": 0.6181,
+      "j_max_abs_coeff": 0.9954,
+      "j_sum_abs_coeffs": 0.9986,
+      "j_n_nonzero": 0.6681,
+      "j_l2_norm": 0.9979,
+      "j_min_power": 0.1119,
+      "j_max_power": 0.1384,
+      "j_leading": 0.0477,
+      "j_trailing": -0.1194
+    },
+    "average_r2": 0.5075
+  },
+  "redundancy_assessment": {
+    "average_nmi": 0.2769,
+    "knn_j_to_a_avg_r2": 0.5403,
+    "knn_a_to_j_avg_r2": 0.5075,
+    "verdict": "PARTIALLY_REDUNDANT",
+    "interpretation": "Average NMI=0.277, k-NN R(JA)=0.540, R(AJ)=0.507. Low normalized MI indicates the polynomials encode largely independent topological information."
+  }
+}

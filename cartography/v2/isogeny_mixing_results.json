@@ -1,0 +1,575 @@
+{
+  "metadata": {
+    "description": "Isogeny graph random walk mixing time vs conductor",
+    "n_curves": 31073,
+    "n_classes": 17314,
+    "date": "2026-04-10"
+  },
+  "class_size_distribution": {
+    "n_classes": 17314,
+    "n_curves": 31073,
+    "mean_class_size": 1.7946748296176505,
+    "median_class_size": 1.0,
+    "max_class_size": 8,
+    "std_class_size": 1.1385245924528327,
+    "size_distribution": {
+      "1": 8905,
+      "2": 5990,
+      "3": 288,
+      "4": 1813,
+      "6": 236,
+      "8": 82
+    },
+    "size_distribution_pct": {
+      "1": 51.43,
+      "2": 34.6,
+      "3": 1.66,
+      "4": 10.47,
+      "6": 1.36,
+      "8": 0.47
+    }
+  },
+  "class_size_vs_rank": {
+    "spearman_r": -0.17207,
+    "spearman_p": 3.6324297908687842e-115,
+    "pearson_r": -0.16,
+    "pearson_p": 1.2391615779118763e-99,
+    "mean_class_size_by_rank": {
+      "0": 1.971,
+      "1": 1.678,
+      "2": 1.173
+    },
+    "count_by_rank": {
+      "0": 7914,
+      "1": 8811,
+      "2": 589
+    }
+  },
+  "conductor_graph": {
+    "n_conductors": 3437,
+    "max_classes_per_conductor": 72,
+    "mean_classes_per_conductor": 5.038,
+    "classes_per_conductor_distribution": {
+      "1": 890,
+      "2": 641,
+      "3": 386,
+      "4": 315,
+      "5": 218,
+      "6": 195,
+      "7": 129,
+      "8": 116,
+      "9": 66,
+      "10": 80,
+      "11": 44,
+      "12": 58,
+      "13": 34,
+      "14": 38,
+      "15": 25,
+      "16": 35,
+      "17": 15,
+      "18": 18,
+      "19": 9,
+      "20": 27,
+      "21": 6,
+      "22": 11,
+      "23": 4,
+      "24": 9,
+      "25": 4,
+      "26": 6,
+      "27": 4,
+      "28": 14,
+      "29": 4,
+      "30": 7,
+      "31": 1,
+      "32": 4,
+      "33": 1,
+      "34": 7,
+      "35": 1,
+      "36": 4,
+      "37": 1,
+      "38": 2,
+      "39": 1,
+      "40": 1,
+      "44": 3,
+      "47": 1,
+      "50": 1,
+      "72": 1
+    }
+  },
+  "mixing_time_scaling": {
+    "n_data_points": 2547,
+    "conductor_range": [
+      26.0,
+      4998.0
+    ],
+    "mixing_time_range": [
+      0.693147,
+      8.434536
+    ],
+    "fit_log_N": {
+      "model": "mixing_time = a * log(N) + b",
+      "slope": 0.298764,
+      "intercept": 0.243688,
+      "r_squared": 0.026645,
+      "p_value": 1.1361987998850187e-16
+    },
+    "fit_sqrt_N": {
+      "model": "mixing_time = a * sqrt(N) + b",
+      "slope": 0.013978,
+      "intercept": 1.838936,
+      "r_squared": 0.019809,
+      "p_value": 9.675791565590718e-13
+    },
+    "fit_power_law": {
+      "model": "log(mixing_time) = alpha * log(N) + b => mixing_time ~ N^alpha",
+      "alpha": 0.108726,
+      "intercept": -0.140727,
+      "r_squared": 0.017482,
+      "p_value": 2.0987552892058177e-11
+    },
+    "n_classes_vs_conductor": {
+      "model": "log(n_classes) ~ beta * log(N) => n_classes ~ N^beta",
+      "beta": 0.135828,
+      "r_squared": 0.02602,
+      "p_value": 2.601254051514753e-16
+    },
+    "binned_analysis": [
+      {
+        "log_conductor_center": 3.95,
+        "conductor_center": 51.9,
+        "mean_mixing_time": 0.8475,
+        "mean_n_classes": 2.2,
+        "count": 5
+      },
+      {
+        "log_conductor_center": 4.227,
+        "conductor_center": 68.5,
+        "mean_mixing_time": 1.4648,
+        "mean_n_classes": 3.0,
+        "count": 3
+      },
+      {
+        "log_conductor_center": 4.504,
+        "conductor_center": 90.3,
+        "mean_mixing_time": 1.0187,
+        "mean_n_classes": 2.444,
+        "count": 9
+      },
+      {
+        "log_conductor_center": 4.78,
+        "conductor_center": 119.1,
+        "mean_mixing_time": 1.2463,
+        "mean_n_classes": 2.765,
+        "count": 17
+      },
+      {
+        "log_conductor_center": 5.057,
+        "conductor_center": 157.1,
+        "mean_mixing_time": 1.5554,
+        "mean_n_classes": 3.273,
+        "count": 22
+      },
+      {
+        "log_conductor_center": 5.334,
+        "conductor_center": 207.2,
+        "mean_mixing_time": 1.6305,
+        "mean_n_classes": 3.394,
+        "count": 33
+      },
+      {
+        "log_conductor_center": 5.611,
+        "conductor_center": 273.3,
+        "mean_mixing_time": 1.6352,
+        "mean_n_classes": 3.5,
+        "count": 38
+      },
+      {
+        "log_conductor_center": 5.887,
+        "conductor_center": 360.5,
+        "mean_mixing_time": 2.0014,
+        "mean_n_classes": 4.208,
+        "count": 53
+      },
+      {
+        "log_conductor_center": 6.164,
+        "conductor_center": 475.4,
+        "mean_mixing_time": 2.0379,
+        "mean_n_classes": 4.42,
+        "count": 69
+      },
+      {
+        "log_conductor_center": 6.441,
+        "conductor_center": 627.0,
+        "mean_mixing_time": 2.253,
+        "mean_n_classes": 5.031,
+        "count": 98
+      },
+      {
+        "log_conductor_center": 6.718,
+        "conductor_center": 827.0,
+        "mean_mixing_time": 2.4049,
+        "mean_n_classes": 5.384,
+        "count": 125
+      },
+      {
+        "log_conductor_center": 6.995,
+        "conductor_center": 1090.7,
+        "mean_mixing_time": 2.4901,
+        "mean_n_classes": 6.013,
+        "count": 159
+      },
+      {
+        "log_conductor_center": 7.271,
+        "conductor_center": 1438.4,
+        "mean_mixing_time": 2.5899,
+        "mean_n_classes": 6.365,
+        "count": 192
+      },
+      {
+        "log_conductor_center": 7.548,
+        "conductor_center": 1897.1,
+        "mean_mixing_time": 2.5482,
+        "mean_n_classes": 6.529,
+        "count": 274
+      },
+      {
+        "log_conductor_center": 7.825,
+        "conductor_center": 2502.0,
+        "mean_mixing_time": 2.6728,
+        "mean_n_classes": 6.915,
+        "count": 352
+      },
+      {
+        "log_conductor_center": 8.102,
+        "conductor_center": 3299.9,
+        "mean_mixing_time": 2.5688,
+        "mean_n_classes": 6.931,
+        "count": 476
+      },
+      {
+        "log_conductor_center": 8.378,
+        "conductor_center": 4352.1,
+        "mean_mixing_time": 2.6778,
+        "mean_n_classes": 7.401,
+        "count": 618
+      }
+    ]
+  },
+  "prime_shared_graph": {
+    "n_components": 72,
+    "largest_5_component_sizes": [
+      17230,
+      3,
+      3,
+      3,
+      3
+    ],
+    "singleton_count": 63,
+    "spectral_info": {
+      "largest_component_size": 17230,
+      "note": "Too large for dense eigendecomposition; would need sparse methods"
+    }
+  },
+  "sample_per_conductor_results": [
+    {
+      "conductor": 26,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 37,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 38,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 50,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 54,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 56,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 57,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 58,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 66,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 75,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 77,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 80,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 84,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 89,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 90,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 91,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 92,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 96,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 99,
+      "n_classes": 4,
+      "spectral_gap": 0.666667,
+      "mixing_time": 2.079442
+    },
+    {
+      "conductor": 102,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 106,
+      "n_classes": 4,
+      "spectral_gap": 0.666667,
+      "mixing_time": 2.079442
+    },
+    {
+      "conductor": 110,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 112,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 114,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 116,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 118,
+      "n_classes": 4,
+      "spectral_gap": 0.666667,
+      "mixing_time": 2.079442
+    },
+    {
+      "conductor": 120,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 121,
+      "n_classes": 4,
+      "spectral_gap": 0.666667,
+      "mixing_time": 2.079442
+    },
+    {
+      "conductor": 123,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 124,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 126,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 128,
+      "n_classes": 4,
+      "spectral_gap": 0.666667,
+      "mixing_time": 2.079442
+    },
+    {
+      "conductor": 129,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 130,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 132,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 135,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 136,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 138,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 140,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 141,
+      "n_classes": 5,
+      "spectral_gap": 0.625,
+      "mixing_time": 2.575101
+    },
+    {
+      "conductor": 142,
+      "n_classes": 5,
+      "spectral_gap": 0.625,
+      "mixing_time": 2.575101
+    },
+    {
+      "conductor": 144,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 147,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 150,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 152,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 153,
+      "n_classes": 4,
+      "spectral_gap": 0.666667,
+      "mixing_time": 2.079442
+    },
+    {
+      "conductor": 154,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 155,
+      "n_classes": 3,
+      "spectral_gap": 0.75,
+      "mixing_time": 1.464816
+    },
+    {
+      "conductor": 156,
+      "n_classes": 2,
+      "spectral_gap": 1.0,
+      "mixing_time": 0.693147
+    },
+    {
+      "conductor": 158,
+      "n_classes": 5,
+      "spectral_gap": 0.625,
+      "mixing_time": 2.575101
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "description": "Berlekamp-Massey analysis of Jones polynomial coefficients",
+  "n_knots_total": 12965,
+  "n_knots_analyzed": 2958,
+  "min_jones_coeffs": 8,
+  "n_recurrent": 850,
+  "n_borderline": 2107,
+  "n_recurrent_plus_borderline": 2957,
+  "frac_recurrent": 0.2874,
+  "frac_recurrent_plus_borderline": 0.9997,
+  "oeis_baseline_frac_recurrent": 0.22,
+  "oeis_baseline_median_order": 6,
+  "enrichment_vs_oeis": 1.3062,
+  "bm_order_stats_recurrent": {
+    "mean": 5.46,
+    "median": 6.0,
+    "min": 3,
+    "max": 6,
+    "std": 0.6
+  },
+  "bm_order_stats_all": {
+    "mean": 6.23,
+    "median": 6.0,
+    "min": 3,
+    "max": 8,
+    "std": 0.77
+  },
+  "order_distribution_recurrent": {
+    "3": 4,
+    "4": 34,
+    "5": 379,
+    "6": 433
+  },
+  "order_distribution_all": {
+    "3": 4,
+    "4": 34,
+    "5": 498,
+    "6": 1167,
+    "7": 1254,
+    "8": 1
+  },
+  "by_crossing_number": {
+    "7": {
+      "n_knots": 7,
+      "n_recurrent": 6,
+      "n_borderline": 1,
+      "frac_recurrent": 0.8571,
+      "mean_jones_len": 8.0,
+      "mean_bm_order": 3.83,
+      "median_bm_order": 4.0,
+      "mean_raw_bm_order": 4.0
+    },
+    "8": {
+      "n_knots": 18,
+      "n_recurrent": 0,
+      "n_borderline": 18,
+      "frac_recurrent": 0.0,
+      "mean_jones_len": 9.0,
+      "mean_bm_order": null,
+      "median_bm_order": null,
+      "mean_raw_bm_order": 5.0
+    },
+    "9": {
+      "n_knots": 47,
+      "n_recurrent": 46,
+      "n_borderline": 1,
+      "frac_recurrent": 0.9787,
+      "mean_jones_len": 9.7,
+      "mean_bm_order": 4.85,
+      "median_bm_order": 5.0,
+      "mean_raw_bm_order": 4.85
+    },
+    "10": {
+      "n_knots": 163,
+      "n_recurrent": 16,
+      "n_borderline": 147,
+      "frac_recurrent": 0.0982,
+      "mean_jones_len": 10.5,
+      "mean_bm_order": 4.5,
+      "median_bm_order": 4.5,
+      "mean_raw_bm_order": 5.67
+    },
+    "11": {
+      "n_knots": 550,
+      "n_recurrent": 491,
+      "n_borderline": 59,
+      "frac_recurrent": 0.8927,
+      "mean_jones_len": 11.3,
+      "mean_bm_order": 5.71,
+      "median_bm_order": 6.0,
+      "mean_raw_bm_order": 5.7
+    },
+    "12": {
+      "n_knots": 2173,
+      "n_recurrent": 291,
+      "n_borderline": 1881,
+      "frac_recurrent": 0.1339,
+      "mean_jones_len": 12.1,
+      "mean_bm_order": 5.23,
+      "median_bm_order": 5.0,
+      "mean_raw_bm_order": 6.45
+    }
+  },
+  "torus_knots": [
+    {
+      "name": "7_1",
+      "crossing_number": 7,
+      "n_jones_coeffs": 8,
+      "bm_order": 3,
+      "is_recurrent": true,
+      "is_borderline": false,
+      "verified": true,
+      "torus_type": "T(2,7)",
+      "jones_coeffs": [
+        1,
+        0,
+        1,
+        -1,
+        1,
+        -1,
+        1,
+        -1
+      ]
+    },
+    {
+      "name": "9_1",
+      "crossing_number": 9,
+      "n_jones_coeffs": 10,
+      "bm_order": 3,
+      "is_recurrent": true,
+      "is_borderline": false,
+      "verified": true,
+      "torus_type": "T(2,9)",
+      "jones_coeffs": [
+        1,
+        0,
+        1,
+        -1,
+        1,
+        -1,
+        1,
+        -1,
+        1,
+        -1
+      ]
+    }
+  ],
+  "boundary_effect_note": "The odd/even crossing number alternation in recurrence fraction is a data-length artifact. Even-crossing knots (8,10,12) have Jones lengths that place their BM order exactly at n//2+1 (borderline). The raw BM order is remarkably stable across all crossing numbers.",
+  "conclusion": "Jones polynomial coefficients: 28.7% strictly recurrent (BM order <= n/2), but 100.0% recurrent or borderline (order <= n/2+1). Under strict threshold, comparable to OEIS sequences vs OEIS 22%. Median BM order: 6 (vs OEIS 6). KEY FINDING: BM order concentrates tightly near n/2 for nearly all knots, meaning Jones coefficients are maximally structured for their length. Mean raw BM order grows with crossing number (4.0 at 7-crossing to 6.5 at 12-crossing), tracking sequence length. Torus knots T(2,n) have minimal BM order 3 \u2014 the most compressible Jones polynomials."
+}

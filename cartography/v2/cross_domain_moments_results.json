@@ -39,20 +39,20 @@
     "EC": {
       "count": 1000,
       "moment_means": [
-        -0.007636,
-        0.21111,
-        0.018458,
-        2.248559,
-        0.109186,
-        6.86183
+        -0.003182,
+        0.210742,
+        -0.006693,
+        2.244131,
+        -0.057135,
+        6.798716
       ],
       "moment_stds": [
-        0.10557,
-        0.048214,
-        0.290273,
-        0.413516,
-        1.708948,
-        3.277213
+        0.102139,
+        0.04656,
+        0.302303,
+        0.405416,
+        1.858102,
+        4.006026
       ],
       "moment_labels": [
         "M1_mean",
@@ -121,127 +121,85 @@
   "clustering": {
     "k=10": {
       "k": 10,
-      "ARI": 0.764,
-      "n_mixed_clusters": 4,
-      "n_pure_clusters": 6,
-      "mixed_fraction": 0.4,
+      "ARI": 0.6455,
+      "n_mixed_clusters": 5,
+      "n_pure_clusters": 5,
+      "mixed_fraction": 0.5,
       "mixed_clusters_summary": [
         {
           "cluster": 0,
-          "size": 246,
+          "size": 584,
           "domains": {
-            "OEIS": 243,
-            "EC": 3
+            "OEIS": 519,
+            "Maass": 65
           }
         },
         {
-          "cluster": 2,
-          "size": 1030,
+          "cluster": 1,
+          "size": 1010,
           "domains": {
             "OEIS": 8,
-            "EC": 29,
+            "EC": 9,
             "Knot": 993
           }
         },
         {
           "cluster": 5,
-          "size": 592,
+          "size": 483,
           "domains": {
-            "OEIS": 527,
-            "Maass": 65
+            "OEIS": 12,
+            "EC": 464,
+            "Knot": 7
           }
         },
         {
-          "cluster": 9,
-          "size": 995,
+          "cluster": 6,
+          "size": 540,
           "domains": {
-            "OEIS": 20,
-            "EC": 968,
-            "Knot": 7
+            "OEIS": 14,
+            "EC": 526
+          }
+        },
+        {
+          "cluster": 8,
+          "size": 239,
+          "domains": {
+            "OEIS": 238,
+            "EC": 1
           }
         }
       ],
       "pure_clusters_summary": [
         {
-          "cluster": 1,
-          "size": 51,
+          "cluster": 2,
+          "size": 24,
           "domain": "OEIS"
         },
         {
           "cluster": 3,
-          "size": 114,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 4,
           "size": 4,
           "domain": "OEIS"
         },
         {
-          "cluster": 6,
-          "size": 2,
+          "cluster": 4,
+          "size": 108,
           "domain": "OEIS"
         },
         {
           "cluster": 7,
-          "size": 23,
+          "size": 58,
           "domain": "OEIS"
         },
         {
-          "cluster": 8,
-          "size": 8,
+          "cluster": 9,
+          "size": 15,
           "domain": "OEIS"
         }
       ],
       "distributional_twins": [
         {
           "cluster": 0,
-          "size": 246,
-          "domains": {
-            "OEIS": [
-              "A023154",
-              "A380827",
-              "A191878",
-              "A374959",
-              "A173254"
-            ],
-            "EC": [
-              "1840.f1",
-              "1360.f3",
-              "1189.a1"
-            ]
-          }
-        },
-        {
-          "cluster": 2,
-          "size": 1030,
-          "domains": {
-            "OEIS": [
-              "A079872",
-              "A131757",
-              "A186035",
-              "A015256",
-              "A176563"
-            ],
-            "EC": [
-              "2790.bb1",
-              "2880.bh3",
-              "4524.f1",
-              "4800.bi2",
-              "426.c1"
-            ],
-            "Knot": [
-              "12*a_119",
-              "12*a_270",
-              "11*a_244",
-              "11*a_101",
-              "11*a_297"
-            ]
-          }
-        },
-        {
-          "cluster": 5,
-          "size": 592,
+          "size": 584,
           "domains": {
             "OEIS": [
               "A284266",
@@ -260,203 +218,22 @@
           }
         },
         {
-          "cluster": 9,
-          "size": 995,
-          "domains": {
-            "OEIS": [
-              "A389217",
-              "A091917",
-              "A355824",
-              "A064992",
-              "A160706"
-            ],
-            "EC": [
-              "2322.b1",
-              "1792.a2",
-              "2142.g2",
-              "240.c4",
-              "2730.k3"
-            ],
-            "Knot": [
-              "12*n_473",
-              "12*n_56",
-              "12*n_582",
-              "12*n_386",
-              "12*n_221"
-            ]
-          }
-        }
-      ]
-    },
-    "k=20": {
-      "k": 20,
-      "ARI": 0.4445,
-      "n_mixed_clusters": 9,
-      "n_pure_clusters": 11,
-      "mixed_fraction": 0.45,
-      "mixed_clusters_summary": [
-        {
           "cluster": 1,
-          "size": 445,
-          "domains": {
-            "OEIS": 433,
-            "Maass": 12
-          }
-        },
-        {
-          "cluster": 3,
-          "size": 766,
-          "domains": {
-            "OEIS": 1,
-            "EC": 38,
-            "Knot": 727
-          }
-        },
-        {
-          "cluster": 4,
-          "size": 265,
-          "domains": {
-            "OEIS": 3,
-            "Knot": 262
-          }
-        },
-        {
-          "cluster": 8,
-          "size": 232,
-          "domains": {
-            "OEIS": 14,
-            "EC": 218
-          }
-        },
-        {
-          "cluster": 13,
-          "size": 13,
-          "domains": {
-            "OEIS": 4,
-            "Knot": 9
-          }
-        },
-        {
-          "cluster": 14,
-          "size": 173,
-          "domains": {
-            "OEIS": 172,
-            "Maass": 1
-          }
-        },
-        {
-          "cluster": 15,
-          "size": 328,
-          "domains": {
-            "OEIS": 2,
-            "EC": 325,
-            "Knot": 1
-          }
-        },
-        {
-          "cluster": 16,
-          "size": 97,
-          "domains": {
-            "OEIS": 45,
-            "Maass": 52
-          }
-        },
-        {
-          "cluster": 17,
-          "size": 425,
-          "domains": {
-            "OEIS": 5,
-            "EC": 419,
-            "Knot": 1
-          }
-        }
-      ],
-      "pure_clusters_summary": [
-        {
-          "cluster": 0,
-          "size": 75,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 2,
-          "size": 42,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 5,
-          "size": 9,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 6,
-          "size": 14,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 7,
-          "size": 19,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 9,
-          "size": 34,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 10,
-          "size": 2,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 11,
-          "size": 3,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 12,
-          "size": 1,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 18,
-          "size": 116,
-          "domain": "OEIS"
-        }
-      ],
-      "distributional_twins": [
-        {
-          "cluster": 1,
-          "size": 445,
+          "size": 1010,
           "domains": {
             "OEIS": [
-              "A284266",
-              "A248176",
-              "A158704",
-              "A394496",
-              "A228520"
-            ],
-            "Maass": [
-              "Maass_level_47",
-              "Maass_level_53",
-              "Maass_level_59",
-              "Maass_level_61",
-              "Maass_level_67"
-            ]
-          }
-        },
-        {
-          "cluster": 3,
-          "size": 766,
-          "domains": {
-            "OEIS": [
+              "A079872",
+              "A131757",
+              "A186035",
+              "A015256",
               "A176563"
             ],
             "EC": [
-              "2790.bb1",
-              "2880.bh3",
-              "4524.f1",
-              "996.a2",
-              "4800.bi2"
+              "4960.a1",
+              "3696.p2",
+              "2550.p1",
+              "862.c1",
+              "546.d2"
             ],
             "Knot": [
               "12*a_119",
@@ -468,26 +245,201 @@
           }
         },
         {
-          "cluster": 4,
-          "size": 265,
+          "cluster": 5,
+          "size": 483,
           "domains": {
             "OEIS": [
-              "A131757",
-              "A072786",
-              "A015343"
+              "A384900",
+              "A064992",
+              "A339141",
+              "A015352",
+              "A346246"
+            ],
+            "EC": [
+              "3686.a1",
+              "1264.c2",
+              "354.b3",
+              "2826.d1",
+              "1098.c1"
             ],
             "Knot": [
-              "11*n_163",
-              "10_102",
-              "12*n_529",
-              "12*n_31",
-              "12*n_641"
+              "12*n_473",
+              "12*n_56",
+              "12*n_582",
+              "12*n_386",
+              "12*n_221"
+            ]
+          }
+        },
+        {
+          "cluster": 6,
+          "size": 540,
+          "domains": {
+            "OEIS": [
+              "A389217",
+              "A091917",
+              "A355824",
+              "A160706",
+              "A263649"
+            ],
+            "EC": [
+              "3640.a1",
+              "1206.c2",
+              "1066.c1",
+              "1395.a2",
+              "690.k4"
             ]
           }
         },
         {
           "cluster": 8,
-          "size": 232,
+          "size": 239,
+          "domains": {
+            "OEIS": [
+              "A023154",
+              "A380827",
+              "A191878",
+              "A374959",
+              "A173254"
+            ],
+            "EC": [
+              "2275.e1"
+            ]
+          }
+        }
+      ]
+    },
+    "k=20": {
+      "k": 20,
+      "ARI": 0.4975,
+      "n_mixed_clusters": 8,
+      "n_pure_clusters": 12,
+      "mixed_fraction": 0.4,
+      "mixed_clusters_summary": [
+        {
+          "cluster": 0,
+          "size": 262,
+          "domains": {
+            "OEIS": 16,
+            "EC": 246
+          }
+        },
+        {
+          "cluster": 3,
+          "size": 97,
+          "domains": {
+            "OEIS": 45,
+            "Maass": 52
+          }
+        },
+        {
+          "cluster": 4,
+          "size": 899,
+          "domains": {
+            "OEIS": 3,
+            "EC": 6,
+            "Knot": 890
+          }
+        },
+        {
+          "cluster": 5,
+          "size": 453,
+          "domains": {
+            "OEIS": 441,
+            "Maass": 12
+          }
+        },
+        {
+          "cluster": 11,
+          "size": 102,
+          "domains": {
+            "OEIS": 5,
+            "Knot": 97
+          }
+        },
+        {
+          "cluster": 15,
+          "size": 174,
+          "domains": {
+            "OEIS": 172,
+            "EC": 1,
+            "Maass": 1
+          }
+        },
+        {
+          "cluster": 17,
+          "size": 265,
+          "domains": {
+            "OEIS": 2,
+            "EC": 250,
+            "Knot": 13
+          }
+        },
+        {
+          "cluster": 19,
+          "size": 231,
+          "domains": {
+            "OEIS": 3,
+            "EC": 228
+          }
+        }
+      ],
+      "pure_clusters_summary": [
+        {
+          "cluster": 1,
+          "size": 11,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 2,
+          "size": 55,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 6,
+          "size": 116,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 7,
+          "size": 3,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 8,
+          "size": 14,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 9,
+          "size": 269,
+          "domain": "EC"
+        },
+        {
+          "cluster": 10,
+          "size": 75,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 12,
+          "size": 6,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 13,
+          "size": 26,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 14,
+          "size": 1,
+          "domain": "OEIS"
+        }
+      ],
+      "distributional_twins": [
+        {
+          "cluster": 0,
+          "size": 262,
           "domains": {
             "OEIS": [
               "A389217",
@@ -497,71 +449,16 @@
               "A263649"
             ],
             "EC": [
-              "3243.a4",
-              "1936.c2",
-              "441.c3",
-              "4356.e1",
-              "1850.c1"
+              "1206.c2",
+              "1066.c1",
+              "897.c2",
+              "2790.h1",
+              "3900.b1"
             ]
           }
         },
         {
-          "cluster": 13,
-          "size": 13,
-          "domains": {
-            "OEIS": [
-              "A079872",
-              "A186035",
-              "A015256",
-              "A015082"
-            ],
-            "Knot": [
-              "12*n_318",
-              "3_1",
-              "12*n_25",
-              "9_43",
-              "4_1"
-            ]
-          }
-        },
-        {
-          "cluster": 14,
-          "size": 173,
-          "domains": {
-            "OEIS": [
-              "A023154",
-              "A191878",
-              "A173254",
-              "A159793",
-              "A262871"
-            ],
-            "Maass": [
-              "Maass_level_101"
-            ]
-          }
-        },
-        {
-          "cluster": 15,
-          "size": 328,
-          "domains": {
-            "OEIS": [
-              "A160706",
-              "A353707"
-            ],
-            "EC": [
-              "2322.b1",
-              "1792.a2",
-              "2189.a1",
-              "3186.b1",
-              "3150.v2"
-            ],
-            "Knot": [
-              "12*n_386"
-            ]
-          }
-        },
-        {
-          "cluster": 16,
+          "cluster": 3,
           "size": 97,
           "domains": {
             "OEIS": [
@@ -581,239 +478,83 @@
           }
         },
         {
-          "cluster": 17,
-          "size": 425,
-          "domains": {
-            "OEIS": [
-              "A339141",
-              "A015352",
-              "A297346",
-              "A211000",
-              "A117623"
-            ],
-            "EC": [
-              "2142.g2",
-              "240.c4",
-              "2730.k3",
-              "1785.k2",
-              "2070.r4"
-            ],
-            "Knot": [
-              "12*n_582"
-            ]
-          }
-        }
-      ]
-    },
-    "k=50": {
-      "k": 50,
-      "ARI": 0.2174,
-      "n_mixed_clusters": 15,
-      "n_pure_clusters": 35,
-      "mixed_fraction": 0.3,
-      "mixed_clusters_summary": [
-        {
-          "cluster": 2,
-          "size": 183,
-          "domains": {
-            "OEIS": 2,
-            "Knot": 181
-          }
-        },
-        {
-          "cluster": 3,
-          "size": 97,
-          "domains": {
-            "OEIS": 5,
-            "EC": 92
-          }
-        },
-        {
-          "cluster": 8,
-          "size": 57,
-          "domains": {
-            "OEIS": 7,
-            "EC": 50
-          }
-        },
-        {
-          "cluster": 11,
-          "size": 81,
-          "domains": {
-            "OEIS": 80,
-            "Maass": 1
-          }
-        },
-        {
-          "cluster": 12,
-          "size": 431,
-          "domains": {
-            "OEIS": 1,
-            "EC": 12,
-            "Knot": 418
-          }
-        },
-        {
-          "cluster": 17,
-          "size": 84,
-          "domains": {
-            "OEIS": 2,
-            "EC": 82
-          }
-        },
-        {
-          "cluster": 23,
-          "size": 9,
-          "domains": {
-            "OEIS": 2,
-            "Knot": 7
-          }
-        },
-        {
-          "cluster": 24,
-          "size": 29,
-          "domains": {
-            "OEIS": 19,
-            "Maass": 10
-          }
-        },
-        {
-          "cluster": 29,
-          "size": 131,
-          "domains": {
-            "OEIS": 1,
-            "EC": 130
-          }
-        },
-        {
-          "cluster": 30,
-          "size": 69,
-          "domains": {
-            "OEIS": 2,
-            "Knot": 67
-          }
-        }
-      ],
-      "pure_clusters_summary": [
-        {
-          "cluster": 0,
-          "size": 32,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 1,
-          "size": 3,
-          "domain": "OEIS"
-        },
-        {
           "cluster": 4,
-          "size": 270,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 5,
-          "size": 1,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 6,
-          "size": 8,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 7,
-          "size": 31,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 9,
-          "size": 4,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 10,
-          "size": 33,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 13,
-          "size": 42,
-          "domain": "OEIS"
-        },
-        {
-          "cluster": 14,
-          "size": 1,
-          "domain": "OEIS"
-        }
-      ],
-      "distributional_twins": [
-        {
-          "cluster": 2,
-          "size": 183,
+          "size": 899,
           "domains": {
             "OEIS": [
               "A131757",
+              "A176563",
               "A072786"
             ],
+            "EC": [
+              "3696.p2",
+              "2550.p1",
+              "862.c1",
+              "2880.bh2",
+              "3318.d1"
+            ],
             "Knot": [
-              "11*n_163",
-              "10_102",
-              "12*n_529",
-              "12*n_31",
-              "12*n_641"
+              "12*a_119",
+              "12*a_270",
+              "11*a_244",
+              "11*a_101",
+              "11*a_297"
             ]
           }
         },
         {
-          "cluster": 3,
-          "size": 97,
+          "cluster": 5,
+          "size": 453,
           "domains": {
             "OEIS": [
-              "A263649",
-              "A138746",
-              "A110854",
-              "A353707",
-              "A257656"
+              "A284266",
+              "A248176",
+              "A158704",
+              "A394496",
+              "A228520"
             ],
-            "EC": [
-              "1995.a4",
-              "1110.n1",
-              "1850.c1",
-              "858.k2",
-              "361.a2"
-            ]
-          }
-        },
-        {
-          "cluster": 8,
-          "size": 57,
-          "domains": {
-            "OEIS": [
-              "A355824",
-              "A064992",
-              "A264799",
-              "A346246",
-              "A165486"
-            ],
-            "EC": [
-              "441.c3",
-              "4356.e1",
-              "4428.d1",
-              "4446.p2",
-              "4312.j1"
+            "Maass": [
+              "Maass_level_47",
+              "Maass_level_53",
+              "Maass_level_59",
+              "Maass_level_61",
+              "Maass_level_67"
             ]
           }
         },
         {
           "cluster": 11,
-          "size": 81,
+          "size": 102,
           "domains": {
             "OEIS": [
+              "A079872",
+              "A186035",
+              "A015256",
+              "A015343",
+              "A015082"
+            ],
+            "Knot": [
+              "11*n_118",
+              "11*n_91",
+              "10_160",
+              "12*n_356",
+              "9_14"
+            ]
+          }
+        },
+        {
+          "cluster": 15,
+          "size": 174,
+          "domains": {
+            "OEIS": [
+              "A023154",
               "A191878",
               "A173254",
               "A159793",
-              "A262871",
-              "A357622"
+              "A262871"
+            ],
+            "EC": [
+              "2275.e1"
             ],
             "Maass": [
               "Maass_level_101"
@@ -821,100 +562,262 @@
           }
         },
         {
-          "cluster": 12,
-          "size": 431,
+          "cluster": 17,
+          "size": 265,
           "domains": {
             "OEIS": [
-              "A176563"
+              "A160706",
+              "A211000"
             ],
             "EC": [
-              "2880.bh3",
-              "4524.f1",
-              "4800.bi2",
-              "426.c1",
-              "1170.h2"
+              "3686.a1",
+              "690.k4",
+              "354.b3",
+              "1872.a2",
+              "1127.a4"
             ],
             "Knot": [
-              "12*a_119",
-              "12*a_270",
-              "11*a_297",
-              "12*a_1111",
-              "12*a_1275"
+              "12*n_835",
+              "12*n_473",
+              "12*n_56",
+              "12*n_582",
+              "11*n_80"
             ]
           }
         },
         {
-          "cluster": 17,
-          "size": 84,
+          "cluster": 19,
+          "size": 231,
           "domains": {
             "OEIS": [
-              "A297346",
+              "A339141",
+              "A015352",
               "A117623"
             ],
             "EC": [
-              "3130.e1",
-              "1085.h1",
-              "2651.b1",
-              "3201.f1",
-              "720.h1"
+              "1264.c2",
+              "2826.d1",
+              "1098.c1",
+              "735.a1",
+              "2944.c1"
             ]
+          }
+        }
+      ]
+    },
+    "k=50": {
+      "k": 50,
+      "ARI": 0.2203,
+      "n_mixed_clusters": 15,
+      "n_pure_clusters": 35,
+      "mixed_fraction": 0.3,
+      "mixed_clusters_summary": [
+        {
+          "cluster": 2,
+          "size": 129,
+          "domains": {
+            "OEIS": 128,
+            "Maass": 1
+          }
+        },
+        {
+          "cluster": 4,
+          "size": 107,
+          "domains": {
+            "OEIS": 1,
+            "EC": 106
+          }
+        },
+        {
+          "cluster": 7,
+          "size": 87,
+          "domains": {
+            "OEIS": 3,
+            "EC": 84
+          }
+        },
+        {
+          "cluster": 8,
+          "size": 74,
+          "domains": {
+            "OEIS": 24,
+            "Maass": 50
+          }
+        },
+        {
+          "cluster": 15,
+          "size": 69,
+          "domains": {
+            "OEIS": 2,
+            "Knot": 67
+          }
+        },
+        {
+          "cluster": 16,
+          "size": 112,
+          "domains": {
+            "EC": 101,
+            "Knot": 11
+          }
+        },
+        {
+          "cluster": 18,
+          "size": 58,
+          "domains": {
+            "OEIS": 52,
+            "Maass": 6
+          }
+        },
+        {
+          "cluster": 21,
+          "size": 94,
+          "domains": {
+            "OEIS": 2,
+            "EC": 92
           }
         },
         {
           "cluster": 23,
-          "size": 9,
+          "size": 291,
           "domains": {
-            "OEIS": [
-              "A015256",
-              "A015082"
-            ],
-            "Knot": [
-              "12*n_318",
-              "3_1",
-              "12*n_25",
-              "9_43",
-              "4_1"
-            ]
+            "OEIS": 283,
+            "Maass": 8
           }
         },
         {
-          "cluster": 24,
-          "size": 29,
+          "cluster": 25,
+          "size": 9,
+          "domains": {
+            "OEIS": 2,
+            "Knot": 7
+          }
+        }
+      ],
+      "pure_clusters_summary": [
+        {
+          "cluster": 0,
+          "size": 314,
+          "domain": "Knot"
+        },
+        {
+          "cluster": 1,
+          "size": 5,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 3,
+          "size": 10,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 5,
+          "size": 19,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 6,
+          "size": 2,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 9,
+          "size": 3,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 10,
+          "size": 45,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 11,
+          "size": 1,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 12,
+          "size": 2,
+          "domain": "OEIS"
+        },
+        {
+          "cluster": 13,
+          "size": 23,
+          "domain": "OEIS"
+        }
+      ],
+      "distributional_twins": [
+        {
+          "cluster": 2,
+          "size": 129,
           "domains": {
             "OEIS": [
               "A284266",
-              "A300655",
-              "A060978",
-              "A008935",
-              "A033922"
+              "A228520",
+              "A221221",
+              "A329401",
+              "A068609"
             ],
             "Maass": [
-              "Maass_level_53",
-              "Maass_level_59",
-              "Maass_level_61",
-              "Maass_level_67",
-              "Maass_level_71"
+              "Maass_level_101"
             ]
           }
         },
         {
-          "cluster": 29,
-          "size": 131,
+          "cluster": 4,
+          "size": 107,
           "domains": {
             "OEIS": [
               "A160706"
             ],
             "EC": [
-              "1792.a2",
-              "1936.c2",
-              "3969.d1",
-              "4800.d5",
-              "1200.f1"
+              "1395.a2",
+              "4680.c1",
+              "2457.e3",
+              "2010.i1",
+              "3597.a1"
             ]
           }
         },
         {
-          "cluster": 30,
+          "cluster": 7,
+          "size": 87,
+          "domains": {
+            "OEIS": [
+              "A339141",
+              "A015352",
+              "A354876"
+            ],
+            "EC": [
+              "2826.d1",
+              "1098.c1",
+              "735.f1",
+              "4410.z4",
+              "4080.bf2"
+            ]
+          }
+        },
+        {
+          "cluster": 8,
+          "size": 74,
+          "domains": {
+            "OEIS": [
+              "A043733",
+              "A386369",
+              "A290752",
+              "A073458",
+              "A225179"
+            ],
+            "Maass": [
+              "Maass_level_1",
+              "Maass_level_2",
+              "Maass_level_3",
+              "Maass_level_5",
+              "Maass_level_6"
+            ]
+          }
+        },
+        {
+          "cluster": 15,
           "size": 69,
           "domains": {
             "OEIS": [
@@ -927,6 +830,100 @@
               "9_47",
               "10_134",
               "10_164"
+            ]
+          }
+        },
+        {
+          "cluster": 16,
+          "size": 112,
+          "domains": {
+            "EC": [
+              "3640.a1",
+              "1872.a2",
+              "2312.a1",
+              "4046.h1",
+              "4422.j1"
+            ],
+            "Knot": [
+              "12*n_835",
+              "12*n_473",
+              "12*n_56",
+              "12*n_582",
+              "11*n_80"
+            ]
+          }
+        },
+        {
+          "cluster": 18,
+          "size": 58,
+          "domains": {
+            "OEIS": [
+              "A065571",
+              "A363020",
+              "A007692",
+              "A280011",
+              "A273817"
+            ],
+            "Maass": [
+              "Maass_level_41",
+              "Maass_level_43",
+              "Maass_level_47",
+              "Maass_level_61",
+              "Maass_level_73"
+            ]
+          }
+        },
+        {
+          "cluster": 21,
+          "size": 94,
+          "domains": {
+            "OEIS": [
+              "A297346",
+              "A211000"
+            ],
+            "EC": [
+              "354.b3",
+              "735.a1",
+              "576.f1",
+              "4920.c3",
+              "784.i1"
+            ]
+          }
+        },
+        {
+          "cluster": 23,
+          "size": 291,
+          "domains": {
+            "OEIS": [
+              "A248176",
+              "A158704",
+              "A394496",
+              "A389356",
+              "A310392"
+            ],
+            "Maass": [
+              "Maass_level_53",
+              "Maass_level_59",
+              "Maass_level_67",
+              "Maass_level_71",
+              "Maass_level_83"
+            ]
+          }
+        },
+        {
+          "cluster": 25,
+          "size": 9,
+          "domains": {
+            "OEIS": [
+              "A015256",
+              "A015082"
+            ],
+            "Knot": [
+              "12*n_318",
+              "3_1",
+              "12*n_25",
+              "9_43",
+              "4_1"
             ]
           }
         }
@@ -948,60 +945,57 @@
       "left_skew_heavy_tail": 12,
       "symmetric_normal_tail": 52
     },
-    "ARI_moment_vs_shape": 0.455,
+    "ARI_moment_vs_shape": 0.4997,
     "cluster_family_composition": {
       "cluster_0": {
-        "right_skew_normal_tail": 154,
-        "right_skew_heavy_tail": 58,
-        "symmetric_heavy_tail": 1,
-        "left_skew_heavy_tail": 6,
-        "symmetric_normal_tail": 3,
-        "left_skew_normal_tail": 4
+        "right_skew_normal_tail": 24,
+        "symmetric_light_tail": 363,
+        "left_skew_normal_tail": 20,
+        "left_skew_light_tail": 10,
+        "right_skew_light_tail": 39,
+        "symmetric_normal_tail": 43,
+        "left_skew_heavy_tail": 5
       },
       "cluster_1": {
-        "right_skew_heavy_tail": 2
+        "right_skew_heavy_tail": 111
       },
       "cluster_2": {
-        "right_skew_heavy_tail": 6
+        "right_skew_heavy_tail": 4
       },
       "cluster_3": {
+        "right_skew_heavy_tail": 25
+      },
+      "cluster_4": {
+        "right_skew_heavy_tail": 64
+      },
+      "cluster_5": {
         "symmetric_light_tail": 4,
         "left_skew_normal_tail": 1
       },
-      "cluster_4": {
-        "right_skew_heavy_tail": 55
-      },
-      "cluster_5": {
-        "symmetric_light_tail": 10,
-        "right_skew_light_tail": 4,
-        "symmetric_normal_tail": 5,
-        "left_skew_light_tail": 2,
-        "right_skew_normal_tail": 1,
-        "left_skew_normal_tail": 3
-      },
       "cluster_6": {
-        "right_skew_heavy_tail": 112,
-        "left_skew_normal_tail": 1,
-        "left_skew_heavy_tail": 1,
-        "symmetric_heavy_tail": 2
+        "right_skew_heavy_tail": 13
       },
       "cluster_7": {
-        "right_skew_normal_tail": 50,
-        "symmetric_light_tail": 356,
-        "right_skew_light_tail": 48,
-        "symmetric_normal_tail": 37,
-        "left_skew_light_tail": 8,
-        "left_skew_normal_tail": 2
+        "left_skew_normal_tail": 6,
+        "symmetric_heavy_tail": 3,
+        "left_skew_heavy_tail": 7,
+        "symmetric_normal_tail": 4,
+        "right_skew_heavy_tail": 3,
+        "right_skew_normal_tail": 1
       },
       "cluster_8": {
-        "right_skew_heavy_tail": 25
+        "right_skew_normal_tail": 179,
+        "right_skew_heavy_tail": 38,
+        "right_skew_light_tail": 9,
+        "symmetric_normal_tail": 2
       },
       "cluster_9": {
-        "left_skew_normal_tail": 18,
+        "symmetric_light_tail": 10,
+        "right_skew_light_tail": 4,
+        "symmetric_normal_tail": 3,
         "left_skew_light_tail": 2,
-        "symmetric_light_tail": 7,
-        "symmetric_normal_tail": 7,
-        "left_skew_heavy_tail": 5
+        "right_skew_normal_tail": 1,
+        "left_skew_normal_tail": 2
       }
     },
     "interpretation": "ARI near 1 means moment clusters recover shape families; ARI near 0 means moment structure is orthogonal to simple shape classification."
@@ -1009,15 +1003,15 @@
   "interpretation": {
     "verdict": "DOMAIN-SPECIFIC: Distributions are largely unique to each domain.",
     "ARI_summary": {
-      "k=10": 0.764,
-      "k=20": 0.4445,
-      "k=50": 0.2174,
+      "k=10": 0.6455,
+      "k=20": 0.4975,
+      "k=50": 0.2203,
       "note": "ARI near 0 = universal structure, near 1 = domain-specific"
     },
     "mixed_fraction": {
-      "k=10": 0.4,
+      "k=10": 0.5,
       "k=50": 0.3
     },
-    "key_finding": "At k=10, 4/10 clusters are mixed. ARI=0.7640. Cross-domain distributional twins exist."
+    "key_finding": "At k=10, 5/10 clusters are mixed. ARI=0.6455. Cross-domain distributional twins exist."
   }
 }

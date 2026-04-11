@@ -1,0 +1,183 @@
+{
+  "experiment": "OEIS Sequence Growth Rate Taxonomy",
+  "method": {
+    "description": "Fit log|a_n| against 4 models (polynomial, exponential, factorial, super-exponential) using AIC model selection",
+    "models": [
+      "polynomial: log|a_n| ~ alpha * log(n)",
+      "exponential: log|a_n| ~ lambda * n",
+      "factorial: log|a_n| ~ gamma * n*log(n)",
+      "super_exponential: log|a_n| ~ delta * n^2"
+    ],
+    "n_sequences": 10000,
+    "min_terms": 20
+  },
+  "distribution": {
+    "constant": {
+      "count": 583,
+      "fraction": 0.0583
+    },
+    "sub_linear": {
+      "count": 1374,
+      "fraction": 0.1374
+    },
+    "polynomial": {
+      "count": 3051,
+      "fraction": 0.3051
+    },
+    "exponential": {
+      "count": 2371,
+      "fraction": 0.2371
+    },
+    "super_exponential": {
+      "count": 785,
+      "fraction": 0.0785
+    },
+    "factorial": {
+      "count": 1783,
+      "fraction": 0.1783
+    },
+    "unclassifiable": {
+      "count": 53,
+      "fraction": 0.0053
+    }
+  },
+  "fit_quality": {
+    "mean": 0.7764805587620364,
+    "median": 0.9910960223661894,
+    "fraction_above_0.9": 0.7274555142253946,
+    "fraction_above_0.95": 0.6968935357394189
+  },
+  "exponential_growth_rates": {
+    "count": 2371,
+    "mean_base": 3.284864552594318,
+    "median_base": 2.069658536724854,
+    "std_base": 4.222429036217913,
+    "min_base": 0.9187550961347458,
+    "max_base": 120.50151391081573,
+    "percentiles": {
+      "p10": 1.1058036432903877,
+      "p25": 1.4372885604128118,
+      "p50": 2.069658536724854,
+      "p75": 3.857242232210554,
+      "p90": 6.392827491081531
+    }
+  },
+  "polynomial_growth_powers": {
+    "count": 3051,
+    "mean_power": 2.7177519146223954,
+    "median_power": 2.1841341833904333,
+    "std_power": 1.95394966138959,
+    "min_power": 1.0003317489300316,
+    "max_power": 14.545748492491876
+  },
+  "keyword_family_cross_tabulation": {
+    "algebraic": {
+      "total": 1167,
+      "breakdown": {
+        "constant": 137,
+        "sub_linear": 447,
+        "polynomial": 14,
+        "exponential": 142,
+        "super_exponential": 292,
+        "factorial": 134,
+        "unclassifiable": 1
+      },
+      "dominant_class": "sub_linear"
+    },
+    "base_dependent": {
+      "total": 594,
+      "breakdown": {
+        "constant": 29,
+        "sub_linear": 150,
+        "polynomial": 229,
+        "exponential": 100,
+        "super_exponential": 44,
+        "factorial": 42,
+        "unclassifiable": 0
+      },
+      "dominant_class": "polynomial"
+    },
+    "combinatorial": {
+      "total": 272,
+      "breakdown": {
+        "constant": 4,
+        "sub_linear": 33,
+        "polynomial": 26,
+        "exponential": 176,
+        "super_exponential": 8,
+        "factorial": 24,
+        "unclassifiable": 1
+      },
+      "dominant_class": "exponential"
+    },
+    "multiplicative": {
+      "total": 217,
+      "breakdown": {
+        "constant": 70,
+        "sub_linear": 63,
+        "polynomial": 57,
+        "exponential": 1,
+        "super_exponential": 22,
+        "factorial": 0,
+        "unclassifiable": 4
+      },
+      "dominant_class": "constant"
+    },
+    "unclassified": {
+      "total": 7750,
+      "breakdown": {
+        "constant": 343,
+        "sub_linear": 681,
+        "polynomial": 2725,
+        "exponential": 1952,
+        "super_exponential": 419,
+        "factorial": 1583,
+        "unclassifiable": 47
+      },
+      "dominant_class": "polynomial"
+    }
+  },
+  "bm_recurrence_cross_tabulation": {
+    "note": "From BM order results (summary level, not per-sequence join)",
+    "growth_rate_correlation_with_bm": {
+      "spearman_r": -0.4280141419614257,
+      "spearman_p": 1.2708193772098351e-98,
+      "pearson_r": -0.3918833537728759,
+      "pearson_p": 1.35008707205735e-81,
+      "n_pairs": 2198
+    },
+    "family_recurrence_rates": {
+      "combinatorial": {
+        "count": 1843,
+        "with_recurrence": 245,
+        "fraction_with_recurrence": 0.13293543136190994
+      },
+      "unclassified": {
+        "count": 5986,
+        "with_recurrence": 1539,
+        "fraction_with_recurrence": 0.25709989976612097
+      },
+      "number_theoretic": {
+        "count": 1087,
+        "with_recurrence": 25,
+        "fraction_with_recurrence": 0.022999080036798528
+      },
+      "multiplicative": {
+        "count": 217,
+        "with_recurrence": 61,
+        "fraction_with_recurrence": 0.28110599078341014
+      },
+      "algebraic": {
+        "count": 826,
+        "with_recurrence": 257,
+        "fraction_with_recurrence": 0.31113801452784506
+      },
+      "base_dependent": {
+        "count": 594,
+        "with_recurrence": 100,
+        "fraction_with_recurrence": 0.16835016835016836
+      }
+    }
+  },
+  "elapsed_seconds": 1.8
+}

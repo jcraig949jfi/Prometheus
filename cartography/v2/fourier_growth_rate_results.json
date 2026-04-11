@@ -1,0 +1,446 @@
+{
+  "description": "Fourier coefficient growth rate classification for weight-2 modular forms",
+  "theoretical_bound": "Ramanujan-Petersson: |a_p| <= 2*p^0.5 for weight 2",
+  "n_forms_analyzed": 17314,
+  "n_cm": 116,
+  "n_non_cm": 17198,
+  "overall": {
+    "alpha_mean": 0.45640607175189607,
+    "alpha_std": 0.03825477227855739,
+    "alpha_median": 0.45589545668550835,
+    "alpha_q25": 0.4322861536175307,
+    "alpha_q75": 0.4814296473965267,
+    "ramanujan_deficit_mean": 0.04359392824810394,
+    "ramanujan_deficit_std": 0.03825477227855739,
+    "rp_ratio_mean": 0.42346648258904634,
+    "rp_ratio_std": 0.014979792088037944,
+    "tightness_045_mean": 0.5608096568553588,
+    "tightness_045_std": 0.0326958395583656,
+    "mean_serial_correlation_lags_1_5": [
+      -0.0036881751320263795,
+      -0.00328239352450069,
+      -0.0027752699333625963,
+      -0.0026401802887727256,
+      -0.0024827530863995822
+    ]
+  },
+  "cm_forms": {
+    "count": 116,
+    "alpha_mean": 0.4931775448291375,
+    "alpha_std": 0.03766528557252511,
+    "alpha_median": 0.49344149257611786,
+    "rp_ratio_mean": 0.3060450035707718,
+    "tightness_045_mean": 0.36991318812091284,
+    "serial_corr_lags_1_5": [
+      -0.18487156693170276,
+      -0.009567921954361876,
+      -0.06912925562689436,
+      -0.0022489095398791036,
+      -0.043643589063031105
+    ]
+  },
+  "non_cm_forms": {
+    "count": 17198,
+    "alpha_mean": 0.45615804925643383,
+    "alpha_std": 0.03813853429148358,
+    "alpha_median": 0.455655243786816,
+    "rp_ratio_mean": 0.4242584869829364,
+    "tightness_045_mean": 0.5620972478760121,
+    "serial_corr_lags_1_5": [
+      -0.0024660985272605507,
+      -0.0032399978216361785,
+      -0.002327714267561353,
+      -0.0026428193983710326,
+      -0.0022051244683457816
+    ]
+  },
+  "by_conductor_bin": {
+    "1-100": {
+      "count": 93,
+      "alpha_mean": 0.4469983184019932,
+      "alpha_std": 0.04532519139020719,
+      "alpha_median": 0.4508593793173463
+    },
+    "101-500": {
+      "count": 878,
+      "alpha_mean": 0.4405962574333451,
+      "alpha_std": 0.0526179910763642,
+      "alpha_median": 0.4411502077151973
+    },
+    "501-1000": {
+      "count": 1492,
+      "alpha_mean": 0.44666491460081587,
+      "alpha_std": 0.054257520119531305,
+      "alpha_median": 0.4480727863236681
+    },
+    "1001-2500": {
+      "count": 5213,
+      "alpha_mean": 0.4570349472099536,
+      "alpha_std": 0.03458973744790984,
+      "alpha_median": 0.455973822769234
+    },
+    "2501+": {
+      "count": 9638,
+      "alpha_mean": 0.45910491142193,
+      "alpha_std": 0.034759669837975814,
+      "alpha_median": 0.45779459077256174
+    }
+  },
+  "alpha_histogram": {
+    "bin_edges": [
+      0.25336192815314784,
+      0.2658370364581057,
+      0.2783121447630635,
+      0.29078725306802133,
+      0.3032623613729792,
+      0.315737469677937,
+      0.3282125779828948,
+      0.3406876862878526,
+      0.35316279459281047,
+      0.3656379028977683,
+      0.3781130112027261,
+      0.39058811950768396,
+      0.4030632278126418,
+      0.4155383361175996,
+      0.42801344442255745,
+      0.4404885527275153,
+      0.4529636610324731,
+      0.46543876933743095,
+      0.4779138776423888,
+      0.4903889859473466,
+      0.5028640942523044,
+      0.5153392025572623,
+      0.5278143108622201,
+      0.5402894191671779,
+      0.5527645274721358,
+      0.5652396357770936,
+      0.5777147440820514,
+      0.5901898523870093,
+      0.6026649606919671,
+      0.6151400689969249,
+      0.6276151773018828
+    ],
+    "counts": [
+      3,
+      0,
+      5,
+      6,
+      11,
+      29,
+      23,
+      52,
+      116,
+      201,
+      419,
+      614,
+      921,
+      1400,
+      1932,
+      2225,
+      2172,
+      2018,
+      1743,
+      1259,
+      896,
+      576,
+      336,
+      186,
+      91,
+      38,
+      18,
+      15,
+      5,
+      4
+    ]
+  },
+  "interpretation": {
+    "ramanujan_deficit_explanation": "Mean alpha = 0.4564 vs theoretical max 0.5. Ramanujan deficit = 0.0436. Typical forms sit well below the bound.",
+    "cm_vs_noncm": "CM forms: alpha = 0.4932 vs non-CM: alpha = 0.4562. CM alpha is higher because OLS fits only nonzero |a_p|: at split primes, CM a_p grows as p^0.5 (tight to bound), while ~50% of primes are inert (a_p=0, excluded from fit). Non-CM alpha of 0.4562 reflects the true typical deficit from the RP bound.",
+    "tightness": "Fraction with |a_p| > p^0.45 for large primes: 0.5608. Most coefficients stay far from the bound.",
+    "serial_correlation": "Mean serial correlation at lag 1: -0.0037. Negligible serial correlation (consistent with pseudorandom)."
+  },
+  "top_20_highest_alpha": [
+    {
+      "label": "678.2.a.e",
+      "level": 678,
+      "is_cm": false,
+      "alpha": 0.617615,
+      "rp_ratio": 0.4395
+    },
+    {
+      "label": "356.2.a.a",
+      "level": 356,
+      "is_cm": false,
+      "alpha": 0.616313,
+      "rp_ratio": 0.4083
+    },
+    {
+      "label": "404.2.a.b",
+      "level": 404,
+      "is_cm": false,
+      "alpha": 0.613991,
+      "rp_ratio": 0.3773
+    },
+    {
+      "label": "930.2.a.a",
+      "level": 930,
+      "is_cm": false,
+      "alpha": 0.610265,
+      "rp_ratio": 0.4523
+    },
+    {
+      "label": "711.2.a.a",
+      "level": 711,
+      "is_cm": false,
+      "alpha": 0.602444,
+      "rp_ratio": 0.4002
+    },
+    {
+      "label": "711.2.a.b",
+      "level": 711,
+      "is_cm": false,
+      "alpha": 0.602444,
+      "rp_ratio": 0.4002
+    },
+    {
+      "label": "840.2.a.i",
+      "level": 840,
+      "is_cm": false,
+      "alpha": 0.601588,
+      "rp_ratio": 0.4272
+    },
+    {
+      "label": "874.2.a.d",
+      "level": 874,
+      "is_cm": false,
+      "alpha": 0.597061,
+      "rp_ratio": 0.4326
+    },
+    {
+      "label": "854.2.a.c",
+      "level": 854,
+      "is_cm": false,
+      "alpha": 0.596756,
+      "rp_ratio": 0.4052
+    },
+    {
+      "label": "366.2.a.e",
+      "level": 366,
+      "is_cm": false,
+      "alpha": 0.592611,
+      "rp_ratio": 0.416
+    },
+    {
+      "label": "693.2.a.c",
+      "level": 693,
+      "is_cm": false,
+      "alpha": 0.592244,
+      "rp_ratio": 0.4245
+    },
+    {
+      "label": "1806.2.a.f",
+      "level": 1806,
+      "is_cm": false,
+      "alpha": 0.592018,
+      "rp_ratio": 0.4395
+    },
+    {
+      "label": "965.2.a.a",
+      "level": 965,
+      "is_cm": false,
+      "alpha": 0.591883,
+      "rp_ratio": 0.4369
+    },
+    {
+      "label": "558.2.a.b",
+      "level": 558,
+      "is_cm": false,
+      "alpha": 0.590977,
+      "rp_ratio": 0.4099
+    },
+    {
+      "label": "558.2.a.g",
+      "level": 558,
+      "is_cm": false,
+      "alpha": 0.590977,
+      "rp_ratio": 0.4099
+    },
+    {
+      "label": "357.2.a.d",
+      "level": 357,
+      "is_cm": false,
+      "alpha": 0.588136,
+      "rp_ratio": 0.435
+    },
+    {
+      "label": "243.2.a.a",
+      "level": 243,
+      "is_cm": true,
+      "alpha": 0.586631,
+      "rp_ratio": 0.3086
+    },
+    {
+      "label": "3667.2.a.a",
+      "level": 3667,
+      "is_cm": false,
+      "alpha": 0.585797,
+      "rp_ratio": 0.4236
+    },
+    {
+      "label": "999.2.a.a",
+      "level": 999,
+      "is_cm": false,
+      "alpha": 0.585723,
+      "rp_ratio": 0.399
+    },
+    {
+      "label": "999.2.a.b",
+      "level": 999,
+      "is_cm": false,
+      "alpha": 0.585723,
+      "rp_ratio": 0.399
+    }
+  ],
+  "bottom_20_lowest_alpha": [
+    {
+      "label": "342.2.a.c",
+      "level": 342,
+      "is_cm": false,
+      "alpha": 0.314696,
+      "rp_ratio": 0.4081
+    },
+    {
+      "label": "912.2.a.c",
+      "level": 912,
+      "is_cm": false,
+      "alpha": 0.314696,
+      "rp_ratio": 0.4081
+    },
+    {
+      "label": "102.2.a.b",
+      "level": 102,
+      "is_cm": false,
+      "alpha": 0.31365,
+      "rp_ratio": 0.4173
+    },
+    {
+      "label": "306.2.a.c",
+      "level": 306,
+      "is_cm": false,
+      "alpha": 0.31365,
+      "rp_ratio": 0.4173
+    },
+    {
+      "label": "816.2.a.d",
+      "level": 816,
+      "is_cm": false,
+      "alpha": 0.31365,
+      "rp_ratio": 0.4173
+    },
+    {
+      "label": "966.2.a.b",
+      "level": 966,
+      "is_cm": false,
+      "alpha": 0.311251,
+      "rp_ratio": 0.4272
+    },
+    {
+      "label": "700.2.a.f",
+      "level": 700,
+      "is_cm": false,
+      "alpha": 0.310074,
+      "rp_ratio": 0.4089
+    },
+    {
+      "label": "700.2.a.h",
+      "level": 700,
+      "is_cm": false,
+      "alpha": 0.310074,
+      "rp_ratio": 0.4089
+    },
+    {
+      "label": "650.2.a.f",
+      "level": 650,
+      "is_cm": false,
+      "alpha": 0.307736,
+      "rp_ratio": 0.3964
+    },
+    {
+      "label": "650.2.a.h",
+      "level": 650,
+      "is_cm": false,
+      "alpha": 0.307736,
+      "rp_ratio": 0.3964
+    },
+    {
+      "label": "442.2.a.e",
+      "level": 442,
+      "is_cm": false,
+      "alpha": 0.30754,
+      "rp_ratio": 0.4067
+    },
+    {
+      "label": "610.2.a.c",
+      "level": 610,
+      "is_cm": false,
+      "alpha": 0.301419,
+      "rp_ratio": 0.3862
+    },
+    {
+      "label": "786.2.a.g",
+      "level": 786,
+      "is_cm": false,
+      "alpha": 0.297682,
+      "rp_ratio": 0.4126
+    },
+    {
+      "label": "930.2.a.h",
+      "level": 930,
+      "is_cm": false,
+      "alpha": 0.296214,
+      "rp_ratio": 0.4043
+    },
+    {
+      "label": "645.2.a.c",
+      "level": 645,
+      "is_cm": false,
+      "alpha": 0.295006,
+      "rp_ratio": 0.4133
+    },
+    {
+      "label": "670.2.a.d",
+      "level": 670,
+      "is_cm": false,
+      "alpha": 0.29496,
+      "rp_ratio": 0.4071
+    },
+    {
+      "label": "438.2.a.c",
+      "level": 438,
+      "is_cm": false,
+      "alpha": 0.29269,
+      "rp_ratio": 0.4
+    },
+    {
+      "label": "690.2.a.e",
+      "level": 690,
+      "is_cm": false,
+      "alpha": 0.270281,
+      "rp_ratio": 0.4051
+    },
+    {
+      "label": "138.2.a.a",
+      "level": 138,
+      "is_cm": false,
+      "alpha": 0.263362,
+      "rp_ratio": 0.3977
+    },
+    {
+      "label": "414.2.a.d",
+      "level": 414,
+      "is_cm": false,
+      "alpha": 0.263362,
+      "rp_ratio": 0.3977
+    }
+  ]
+}

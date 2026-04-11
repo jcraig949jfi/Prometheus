@@ -1,0 +1,157 @@
+{
+  "challenge": "DS6",
+  "title": "Knot Polynomial Reynolds Number",
+  "formula": "Re_knot = log(max|coeff| + 1) * crossing_number / log(determinant + 1)",
+  "n_knots_total": 12965,
+  "n_knots_computed": 2977,
+  "global_stats": {
+    "mean_re": 7.180592,
+    "median_re": 7.34375,
+    "std_re": 1.223705,
+    "min_re": 1.5,
+    "max_re": 24.0
+  },
+  "binned_by_crossing_number": {
+    "3": {
+      "n_knots": 1,
+      "mean_re": 1.5,
+      "median_re": 1.5,
+      "std_re": 0.0,
+      "min_re": 1.5,
+      "max_re": 1.5
+    },
+    "4": {
+      "n_knots": 1,
+      "mean_re": 1.547411,
+      "median_re": 1.547411,
+      "std_re": 0.0,
+      "min_re": 1.547411,
+      "max_re": 1.547411
+    },
+    "5": {
+      "n_knots": 2,
+      "mean_re": 2.287934,
+      "median_re": 2.287934,
+      "std_re": 0.35367,
+      "min_re": 1.934264,
+      "max_re": 2.641604
+    },
+    "6": {
+      "n_knots": 3,
+      "mean_re": 2.889069,
+      "median_re": 2.862728,
+      "std_re": 0.20461,
+      "min_re": 2.652685,
+      "max_re": 3.151794
+    },
+    "7": {
+      "n_knots": 7,
+      "mean_re": 3.338293,
+      "median_re": 3.5,
+      "std_re": 0.46026,
+      "min_re": 2.333333,
+      "max_re": 3.760705
+    },
+    "8": {
+      "n_knots": 21,
+      "mean_re": 4.15513,
+      "median_re": 4.21442,
+      "std_re": 0.32829,
+      "min_re": 3.330317,
+      "max_re": 4.811284
+    },
+    "9": {
+      "n_knots": 49,
+      "mean_re": 4.852447,
+      "median_re": 5.007124,
+      "std_re": 0.57097,
+      "min_re": 2.70927,
+      "max_re": 5.48441
+    },
+    "10": {
+      "n_knots": 165,
+      "mean_re": 5.752407,
+      "median_re": 5.827494,
+      "std_re": 0.685814,
+      "min_re": 3.800938,
+      "max_re": 10.0
+    },
+    "11": {
+      "n_knots": 552,
+      "mean_re": 6.632646,
+      "median_re": 6.687095,
+      "std_re": 0.898323,
+      "min_re": 3.068372,
+      "max_re": 17.434588
+    },
+    "12": {
+      "n_knots": 2176,
+      "mean_re": 7.537485,
+      "median_re": 7.577968,
+      "std_re": 1.051746,
+      "min_re": 4.0,
+      "max_re": 24.0
+    }
+  },
+  "phase_transition": {
+    "critical_crossing_number": 4,
+    "second_derivative_at_critical": 0.6931,
+    "first_derivatives": [
+      0.0474,
+      0.7405,
+      0.6011,
+      0.4492,
+      0.8168,
+      0.6973,
+      0.9,
+      0.8802,
+      0.9048
+    ],
+    "second_derivatives": [
+      0.6931,
+      -0.1394,
+      -0.1519,
+      0.3676,
+      -0.1195,
+      0.2026,
+      -0.0197,
+      0.0246
+    ],
+    "cv_by_cn": {
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.1546,
+      "6": 0.0708,
+      "7": 0.1379,
+      "8": 0.079,
+      "9": 0.1177,
+      "10": 0.1192,
+      "11": 0.1354,
+      "12": 0.1395
+    }
+  },
+  "habitable_zone_comparison": {
+    "habitable_zone": [
+      4.37,
+      13.68
+    ],
+    "n_in_zone": 2920,
+    "n_below": 46,
+    "n_above": 11,
+    "frac_in_zone": 0.9809,
+    "frac_below": 0.0155,
+    "frac_above": 0.0037
+  },
+  "zone_fraction_by_cn": {
+    "3": 0.0,
+    "4": 0.0,
+    "5": 0.0,
+    "6": 0.0,
+    "7": 0.0,
+    "8": 0.2857,
+    "9": 0.8571,
+    "10": 0.9758,
+    "11": 0.9891,
+    "12": 0.9949
+  }
+}

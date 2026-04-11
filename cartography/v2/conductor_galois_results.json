@@ -1,0 +1,5627 @@
+{
+  "metadata": {
+    "timestamp": "2026-04-10 22:40:56",
+    "n_curves": 31073,
+    "n_unique_fingerprints": 951,
+    "primes_used": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ],
+    "n_permutations": 1000,
+    "elapsed_seconds": 183.5
+  },
+  "levels": {
+    "level1": {
+      "n_classes": 2,
+      "class_distribution": {
+        "non-CM": 30779,
+        "CM": 294
+      },
+      "mi_bits": 0.049529,
+      "nmi": 0.641555,
+      "h_fingerprint": 8.6726,
+      "h_galois": 0.0772,
+      "ari": 0.000172,
+      "null_mi_mean": 0.013617,
+      "null_mi_std": 0.000594,
+      "mi_z_score": 60.49,
+      "null_ari_mean": -1e-06,
+      "null_ari_std": 1.6e-05,
+      "ari_z_score": 10.86,
+      "per_prime": {
+        "2": {
+          "mi_bits": 0.011757,
+          "nmi": 0.152284,
+          "h_exponent": 2.4596,
+          "exponent_distribution": {
+            "1": 12542,
+            "0": 6989,
+            "4": 3206,
+            "3": 2503,
+            "2": 2285,
+            "6": 1862,
+            "5": 1098,
+            "7": 392,
+            "8": 196
+          },
+          "null_mean": 0.000191,
+          "null_std": 9.6e-05,
+          "z_score": 120.84
+        },
+        "3": {
+          "mi_bits": 0.011397,
+          "nmi": 0.147626,
+          "h_exponent": 1.8392,
+          "exponent_distribution": {
+            "1": 12176,
+            "0": 10892,
+            "2": 6053,
+            "3": 1414,
+            "4": 368,
+            "5": 170
+          },
+          "null_mean": 0.000119,
+          "null_std": 7.5e-05,
+          "z_score": 150.76
+        },
+        "5": {
+          "mi_bits": 0.005012,
+          "nmi": 0.064922,
+          "h_exponent": 1.3406,
+          "exponent_distribution": {
+            "0": 18116,
+            "1": 9239,
+            "2": 3718
+          },
+          "null_mean": 4.8e-05,
+          "null_std": 5.1e-05,
+          "z_score": 97.82
+        },
+        "7": {
+          "mi_bits": 0.004617,
+          "nmi": 0.059802,
+          "h_exponent": 1.0635,
+          "exponent_distribution": {
+            "0": 22355,
+            "1": 6900,
+            "2": 1818
+          },
+          "null_mean": 4.6e-05,
+          "null_std": 4.8e-05,
+          "z_score": 95.1
+        },
+        "11": {
+          "mi_bits": 0.003728,
+          "nmi": 0.048284,
+          "h_exponent": 0.7146,
+          "exponent_distribution": {
+            "0": 26127,
+            "1": 4374,
+            "2": 572
+          },
+          "null_mean": 4.9e-05,
+          "null_std": 5e-05,
+          "z_score": 73.98
+        },
+        "13": {
+          "mi_bits": 0.001862,
+          "nmi": 0.024119,
+          "h_exponent": 0.6016,
+          "exponent_distribution": {
+            "0": 27200,
+            "1": 3480,
+            "2": 393
+          },
+          "null_mean": 4.7e-05,
+          "null_std": 4.9e-05,
+          "z_score": 37.25
+        },
+        "17": {
+          "mi_bits": 0.00126,
+          "nmi": 0.016315,
+          "h_exponent": 0.4635,
+          "exponent_distribution": {
+            "0": 28347,
+            "1": 2513,
+            "2": 213
+          },
+          "null_mean": 4.7e-05,
+          "null_std": 4.7e-05,
+          "z_score": 25.92
+        },
+        "19": {
+          "mi_bits": 0.001147,
+          "nmi": 0.014853,
+          "h_exponent": 0.4026,
+          "exponent_distribution": {
+            "0": 28745,
+            "1": 2232,
+            "2": 96
+          },
+          "null_mean": 5e-05,
+          "null_std": 4.2e-05,
+          "z_score": 26.33
+        },
+        "23": {
+          "mi_bits": 0.00104,
+          "nmi": 0.013472,
+          "h_exponent": 0.3504,
+          "exponent_distribution": {
+            "0": 29132,
+            "1": 1876,
+            "2": 65
+          },
+          "null_mean": 4.6e-05,
+          "null_std": 3.9e-05,
+          "z_score": 25.37
+        },
+        "29": {
+          "mi_bits": 0.000601,
+          "nmi": 0.007784,
+          "h_exponent": 0.2605,
+          "exponent_distribution": {
+            "0": 29741,
+            "1": 1310,
+            "2": 22
+          },
+          "null_mean": 4.1e-05,
+          "null_std": 4.1e-05,
+          "z_score": 13.7
+        }
+      },
+      "most_discriminative_primes": [
+        {
+          "prime": 3,
+          "z_score": 150.76,
+          "mi_bits": 0.011397,
+          "nmi": 0.147626
+        },
+        {
+          "prime": 2,
+          "z_score": 120.84,
+          "mi_bits": 0.011757,
+          "nmi": 0.152284
+        },
+        {
+          "prime": 5,
+          "z_score": 97.82,
+          "mi_bits": 0.005012,
+          "nmi": 0.064922
+        },
+        {
+          "prime": 7,
+          "z_score": 95.1,
+          "mi_bits": 0.004617,
+          "nmi": 0.059802
+        },
+        {
+          "prime": 11,
+          "z_score": 73.98,
+          "mi_bits": 0.003728,
+          "nmi": 0.048284
+        },
+        {
+          "prime": 13,
+          "z_score": 37.25,
+          "mi_bits": 0.001862,
+          "nmi": 0.024119
+        },
+        {
+          "prime": 19,
+          "z_score": 26.33,
+          "mi_bits": 0.001147,
+          "nmi": 0.014853
+        },
+        {
+          "prime": 17,
+          "z_score": 25.92,
+          "mi_bits": 0.00126,
+          "nmi": 0.016315
+        },
+        {
+          "prime": 23,
+          "z_score": 25.37,
+          "mi_bits": 0.00104,
+          "nmi": 0.013472
+        },
+        {
+          "prime": 29,
+          "z_score": 13.7,
+          "mi_bits": 0.000601,
+          "nmi": 0.007784
+        }
+      ],
+      "enrichment_by_class": {
+        "non-CM": {
+          "n_curves": 30779,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 898,
+              "expected": 889.5,
+              "enrichment": 1.01
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 746,
+              "expected": 738.94,
+              "enrichment": 1.01
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 704,
+              "expected": 697.34,
+              "enrichment": 1.01
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 650,
+              "expected": 643.85,
+              "enrichment": 1.01
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 473,
+              "expected": 468.52,
+              "enrichment": 1.01
+            }
+          ]
+        },
+        "CM": {
+          "n_curves": 294,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.08,
+              "enrichment": 105.69
+            },
+            {
+              "fingerprint": [
+                5,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.15,
+              "enrichment": 52.845
+            },
+            {
+              "fingerprint": [
+                6,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.34,
+              "enrichment": 46.974
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.17,
+              "enrichment": 46.974
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.38,
+              "enrichment": 42.276
+            }
+          ]
+        }
+      }
+    },
+    "level2": {
+      "n_classes": 31,
+      "class_distribution": {
+        "non-CM_isog_2": 9615,
+        "non-CM_trivial_isog": 8905,
+        "non-CM_isog_4": 4662,
+        "non-CM_isog_3": 3123,
+        "non-CM_isog_6+": 1404,
+        "non-CM_isog_8+": 973,
+        "non-CM_isog_5+": 529,
+        "non-CM_isog_9+": 526,
+        "non-CM_isog_12+": 234,
+        "non-CM_isog_10+": 176,
+        "non-CM_isog_16+": 172,
+        "non-CM_isog_7+": 170,
+        "CM_-3": 134,
+        "non-CM_isog_18+": 100,
+        "CM_-4": 62,
+        "non-CM_isog_15+": 56,
+        "non-CM_isog_25+": 50,
+        "non-CM_isog_13+": 36,
+        "non-CM_isog_21+": 24,
+        "CM_-16": 18,
+        "CM_-27": 16,
+        "CM_-12": 16,
+        "non-CM_isog_11+": 16,
+        "CM_-28": 12,
+        "CM_-7": 12,
+        "CM_-11": 8,
+        "CM_-8": 8,
+        "non-CM_isog_37+": 8,
+        "CM_-19": 4,
+        "CM_-43": 2,
+        "CM_-67": 2
+      },
+      "mi_bits": 0.88598,
+      "nmi": 0.328909,
+      "h_fingerprint": 8.6726,
+      "h_galois": 2.6937,
+      "ari": 0.005122,
+      "null_mi_mean": 0.254863,
+      "null_mi_std": 0.002801,
+      "mi_z_score": 225.3,
+      "null_ari_mean": -2e-06,
+      "null_ari_std": 8.2e-05,
+      "ari_z_score": 62.66,
+      "per_prime": {
+        "2": {
+          "mi_bits": 0.180038,
+          "nmi": 0.073198,
+          "h_exponent": 2.4596,
+          "exponent_distribution": {
+            "1": 12542,
+            "0": 6989,
+            "4": 3206,
+            "3": 2503,
+            "2": 2285,
+            "6": 1862,
+            "5": 1098,
+            "7": 392,
+            "8": 196
+          },
+          "null_mean": 0.005414,
+          "null_std": 0.000475,
+          "z_score": 367.57
+        },
+        "3": {
+          "mi_bits": 0.210201,
+          "nmi": 0.114287,
+          "h_exponent": 1.8392,
+          "exponent_distribution": {
+            "1": 12176,
+            "0": 10892,
+            "2": 6053,
+            "3": 1414,
+            "4": 368,
+            "5": 170
+          },
+          "null_mean": 0.003269,
+          "null_std": 0.000375,
+          "z_score": 552.13
+        },
+        "5": {
+          "mi_bits": 0.079845,
+          "nmi": 0.059558,
+          "h_exponent": 1.3406,
+          "exponent_distribution": {
+            "0": 18116,
+            "1": 9239,
+            "2": 3718
+          },
+          "null_mean": 0.001469,
+          "null_std": 0.00024,
+          "z_score": 326.96
+        },
+        "7": {
+          "mi_bits": 0.047018,
+          "nmi": 0.044212,
+          "h_exponent": 1.0635,
+          "exponent_distribution": {
+            "0": 22355,
+            "1": 6900,
+            "2": 1818
+          },
+          "null_mean": 0.001439,
+          "null_std": 0.000242,
+          "z_score": 188.2
+        },
+        "11": {
+          "mi_bits": 0.023771,
+          "nmi": 0.033265,
+          "h_exponent": 0.7146,
+          "exponent_distribution": {
+            "0": 26127,
+            "1": 4374,
+            "2": 572
+          },
+          "null_mean": 0.001352,
+          "null_std": 0.000229,
+          "z_score": 97.73
+        },
+        "13": {
+          "mi_bits": 0.015949,
+          "nmi": 0.026511,
+          "h_exponent": 0.6016,
+          "exponent_distribution": {
+            "0": 27200,
+            "1": 3480,
+            "2": 393
+          },
+          "null_mean": 0.001314,
+          "null_std": 0.000234,
+          "z_score": 62.45
+        },
+        "17": {
+          "mi_bits": 0.00871,
+          "nmi": 0.01879,
+          "h_exponent": 0.4635,
+          "exponent_distribution": {
+            "0": 28347,
+            "1": 2513,
+            "2": 213
+          },
+          "null_mean": 0.001235,
+          "null_std": 0.000229,
+          "z_score": 32.58
+        },
+        "19": {
+          "mi_bits": 0.009661,
+          "nmi": 0.023997,
+          "h_exponent": 0.4026,
+          "exponent_distribution": {
+            "0": 28745,
+            "1": 2232,
+            "2": 96
+          },
+          "null_mean": 0.001142,
+          "null_std": 0.00021,
+          "z_score": 40.56
+        },
+        "23": {
+          "mi_bits": 0.00665,
+          "nmi": 0.018979,
+          "h_exponent": 0.3504,
+          "exponent_distribution": {
+            "0": 29132,
+            "1": 1876,
+            "2": 65
+          },
+          "null_mean": 0.00111,
+          "null_std": 0.000208,
+          "z_score": 26.7
+        },
+        "29": {
+          "mi_bits": 0.003931,
+          "nmi": 0.01509,
+          "h_exponent": 0.2605,
+          "exponent_distribution": {
+            "0": 29741,
+            "1": 1310,
+            "2": 22
+          },
+          "null_mean": 0.000972,
+          "null_std": 0.000202,
+          "z_score": 14.62
+        }
+      },
+      "most_discriminative_primes": [
+        {
+          "prime": 3,
+          "z_score": 552.13,
+          "mi_bits": 0.210201,
+          "nmi": 0.114287
+        },
+        {
+          "prime": 2,
+          "z_score": 367.57,
+          "mi_bits": 0.180038,
+          "nmi": 0.073198
+        },
+        {
+          "prime": 5,
+          "z_score": 326.96,
+          "mi_bits": 0.079845,
+          "nmi": 0.059558
+        },
+        {
+          "prime": 7,
+          "z_score": 188.2,
+          "mi_bits": 0.047018,
+          "nmi": 0.044212
+        },
+        {
+          "prime": 11,
+          "z_score": 97.73,
+          "mi_bits": 0.023771,
+          "nmi": 0.033265
+        },
+        {
+          "prime": 13,
+          "z_score": 62.45,
+          "mi_bits": 0.015949,
+          "nmi": 0.026511
+        },
+        {
+          "prime": 19,
+          "z_score": 40.56,
+          "mi_bits": 0.009661,
+          "nmi": 0.023997
+        },
+        {
+          "prime": 17,
+          "z_score": 32.58,
+          "mi_bits": 0.00871,
+          "nmi": 0.01879
+        },
+        {
+          "prime": 23,
+          "z_score": 26.7,
+          "mi_bits": 0.00665,
+          "nmi": 0.018979
+        },
+        {
+          "prime": 29,
+          "z_score": 14.62,
+          "mi_bits": 0.003931,
+          "nmi": 0.01509
+        }
+      ],
+      "enrichment_by_class": {
+        "non-CM_isog_25+": {
+          "n_curves": 50,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 207.153
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 177.56
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.03,
+              "enrichment": 138.102
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 138.102
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 103.577
+            }
+          ]
+        },
+        "non-CM_isog_5+": {
+          "n_curves": 529,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.51,
+              "enrichment": 23.496
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 1.97,
+              "enrichment": 6.076
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 10,
+              "expected": 1.7,
+              "enrichment": 5.874
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 2.66,
+              "enrichment": 4.518
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 5.09,
+              "enrichment": 3.143
+            }
+          ]
+        },
+        "non-CM_isog_18+": {
+          "n_curves": 100,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.09,
+              "enrichment": 88.78
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.05,
+              "enrichment": 77.683
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.08,
+              "enrichment": 51.788
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.09,
+              "enrichment": 44.39
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.22,
+              "enrichment": 36.556
+            }
+          ]
+        },
+        "non-CM_isog_6+": {
+          "n_curves": 1404,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 20,
+              "expected": 2.17,
+              "enrichment": 9.222
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "count": 18,
+              "expected": 2.17,
+              "enrichment": 8.299
+            },
+            {
+              "fingerprint": [
+                6,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 28,
+              "expected": 6.15,
+              "enrichment": 4.557
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 22,
+              "expected": 5.06,
+              "enrichment": 4.347
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 20,
+              "expected": 5.24,
+              "enrichment": 3.816
+            }
+          ]
+        },
+        "non-CM_isog_16+": {
+          "n_curves": 172,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.06,
+              "enrichment": 65.693
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.17,
+              "enrichment": 46.621
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.09,
+              "enrichment": 45.164
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.19,
+              "enrichment": 21.254
+            },
+            {
+              "fingerprint": [
+                6,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.46,
+              "enrichment": 17.205
+            }
+          ]
+        },
+        "non-CM_isog_8+": {
+          "n_curves": 973,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                6,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 2.38,
+              "enrichment": 6.723
+            },
+            {
+              "fingerprint": [
+                4,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 19,
+              "expected": 2.94,
+              "enrichment": 6.455
+            },
+            {
+              "fingerprint": [
+                4,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 2.57,
+              "enrichment": 6.231
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 23,
+              "expected": 4.32,
+              "enrichment": 5.323
+            },
+            {
+              "fingerprint": [
+                6,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 14,
+              "expected": 2.63,
+              "enrichment": 5.323
+            }
+          ]
+        },
+        "non-CM_isog_4": {
+          "n_curves": 4662,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                5,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 60,
+              "expected": 13.8,
+              "enrichment": 4.347
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 50,
+              "expected": 20.7,
+              "enrichment": 2.415
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 74,
+              "expected": 39.01,
+              "enrichment": 1.897
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 85,
+              "expected": 48.76,
+              "enrichment": 1.743
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 163,
+              "expected": 105.62,
+              "enrichment": 1.543
+            }
+          ]
+        },
+        "non-CM_isog_2": {
+          "n_curves": 9615,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 105,
+              "expected": 64.36,
+              "enrichment": 1.631
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 163,
+              "expected": 121.92,
+              "enrichment": 1.337
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 155,
+              "expected": 116.66,
+              "enrichment": 1.329
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 169,
+              "expected": 128.41,
+              "enrichment": 1.316
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 266,
+              "expected": 217.84,
+              "enrichment": 1.221
+            }
+          ]
+        },
+        "non-CM_isog_9+": {
+          "n_curves": 526,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                3,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.68,
+              "enrichment": 17.722
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.71,
+              "enrichment": 16.878
+            },
+            {
+              "fingerprint": [
+                4,
+                3,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.78,
+              "enrichment": 15.411
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.85,
+              "enrichment": 14.178
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 20,
+              "expected": 3.08,
+              "enrichment": 6.492
+            }
+          ]
+        },
+        "non-CM_isog_3": {
+          "n_curves": 3123,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 52,
+              "expected": 7.24,
+              "enrichment": 7.186
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 50,
+              "expected": 18.29,
+              "enrichment": 2.733
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 82,
+              "expected": 47.54,
+              "enrichment": 1.725
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 51,
+              "expected": 30.05,
+              "enrichment": 1.697
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 87,
+              "expected": 65.33,
+              "enrichment": 1.332
+            }
+          ]
+        },
+        "non-CM_isog_7+": {
+          "n_curves": 170,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                4,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.05,
+              "enrichment": 146.226
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 91.391
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.07,
+              "enrichment": 84.361
+            },
+            {
+              "fingerprint": [
+                0,
+                4,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.05,
+              "enrichment": 73.113
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.13,
+              "enrichment": 45.696
+            }
+          ]
+        },
+        "CM_-27": {
+          "n_curves": 16,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                3,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 323.677
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 277.438
+            },
+            {
+              "fingerprint": [
+                4,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 242.758
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 242.758
+            },
+            {
+              "fingerprint": [
+                6,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 176.551
+            }
+          ]
+        },
+        "CM_-3": {
+          "n_curves": 134,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                2,
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.03,
+              "enrichment": 231.888
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.06,
+              "enrichment": 99.381
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.07,
+              "enrichment": 86.958
+            },
+            {
+              "fingerprint": [
+                2,
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 14,
+              "expected": 0.16,
+              "enrichment": 85.432
+            },
+            {
+              "fingerprint": [
+                4,
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.15,
+              "enrichment": 81.843
+            }
+          ]
+        },
+        "non-CM_isog_12+": {
+          "n_curves": 234,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.26,
+              "enrichment": 46.867
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 18,
+              "expected": 0.45,
+              "enrichment": 39.837
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.38,
+              "enrichment": 31.87
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.45,
+              "enrichment": 26.558
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 18,
+              "expected": 0.74,
+              "enrichment": 24.39
+            }
+          ]
+        },
+        "CM_-16": {
+          "n_curves": 18,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                5,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 191.809
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 172.628
+            },
+            {
+              "fingerprint": [
+                6,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.02,
+              "enrichment": 95.904
+            }
+          ]
+        },
+        "CM_-4": {
+          "n_curves": 62,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 250.589
+            },
+            {
+              "fingerprint": [
+                5,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.03,
+              "enrichment": 187.942
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.03,
+              "enrichment": 187.942
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.04,
+              "enrichment": 167.059
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.08,
+              "enrichment": 150.353
+            }
+          ]
+        },
+        "CM_-12": {
+          "n_curves": 16,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                6,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                2,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 194.206
+            },
+            {
+              "fingerprint": [
+                2,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 176.551
+            },
+            {
+              "fingerprint": [
+                2,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 161.839
+            },
+            {
+              "fingerprint": [
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.03,
+              "enrichment": 76.159
+            }
+          ]
+        },
+        "non-CM_trivial_isog": {
+          "n_curves": 8905,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 283,
+              "expected": 105.18,
+              "enrichment": 2.691
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 226,
+              "expected": 105.75,
+              "enrichment": 2.137
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 144,
+              "expected": 76.23,
+              "enrichment": 1.889
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 158,
+              "expected": 85.69,
+              "enrichment": 1.844
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 394,
+              "expected": 213.79,
+              "enrichment": 1.843
+            }
+          ]
+        },
+        "CM_-28": {
+          "n_curves": 12,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 287.713
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 246.611
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.03,
+              "enrichment": 152.319
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.02,
+              "enrichment": 90.857
+            }
+          ]
+        },
+        "CM_-7": {
+          "n_curves": 12,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 287.713
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 246.611
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.03,
+              "enrichment": 152.319
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.02,
+              "enrichment": 90.857
+            }
+          ]
+        },
+        "non-CM_isog_15+": {
+          "n_curves": 56,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                4,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.04,
+              "enrichment": 201.773
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.11,
+              "enrichment": 147.967
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.06,
+              "enrichment": 138.719
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.12,
+              "enrichment": 65.279
+            },
+            {
+              "fingerprint": [
+                4,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.21,
+              "enrichment": 37.619
+            }
+          ]
+        },
+        "non-CM_isog_10+": {
+          "n_curves": 176,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.14,
+              "enrichment": 117.701
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.1,
+              "enrichment": 78.467
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.23,
+              "enrichment": 70.62
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.18,
+              "enrichment": 44.138
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.18,
+              "enrichment": 44.138
+            }
+          ]
+        },
+        "non-CM_isog_11+": {
+          "n_curves": 16,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 517.883
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 485.516
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 388.412
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 337.75
+            }
+          ]
+        },
+        "CM_-11": {
+          "n_curves": 8,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.0,
+              "enrichment": 517.883
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.0,
+              "enrichment": 485.516
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 388.412
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 337.75
+            }
+          ]
+        },
+        "non-CM_isog_13+": {
+          "n_curves": 36,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 191.809
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 111.373
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.08,
+              "enrichment": 101.546
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 98.644
+            },
+            {
+              "fingerprint": [
+                1,
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.08,
+              "enrichment": 95.904
+            }
+          ]
+        },
+        "non-CM_isog_21+": {
+          "n_curves": 24,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.01,
+              "enrichment": 863.139
+            },
+            {
+              "fingerprint": [
+                4,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.02,
+              "enrichment": 431.569
+            },
+            {
+              "fingerprint": [
+                1,
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.06,
+              "enrichment": 143.856
+            }
+          ]
+        },
+        "CM_-8": {
+          "n_curves": 8,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.0,
+              "enrichment": 1942.062
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 388.412
+            }
+          ]
+        },
+        "non-CM_isog_37+": {
+          "n_curves": 8,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.01,
+              "enrichment": 1479.667
+            }
+          ]
+        }
+      }
+    },
+    "level3": {
+      "n_classes": 31,
+      "class_distribution": {
+        "non-CM_isog_2": 9615,
+        "non-CM_trivial_isog": 8905,
+        "non-CM_isog_4": 4662,
+        "non-CM_isog_3": 3123,
+        "non-CM_isog_6+": 1404,
+        "non-CM_isog_8+": 973,
+        "non-CM_isog_5+": 529,
+        "non-CM_isog_9+": 526,
+        "non-CM_isog_12+": 234,
+        "non-CM_isog_10+": 176,
+        "non-CM_isog_16+": 172,
+        "non-CM_isog_7+": 170,
+        "CM_-3": 134,
+        "non-CM_isog_18+": 100,
+        "CM_-4": 62,
+        "non-CM_isog_15+": 56,
+        "non-CM_isog_25+": 50,
+        "non-CM_isog_13+": 36,
+        "non-CM_isog_21+": 24,
+        "CM_-16": 18,
+        "CM_-27": 16,
+        "CM_-12": 16,
+        "non-CM_isog_11+": 16,
+        "CM_-28": 12,
+        "CM_-7": 12,
+        "CM_-11": 8,
+        "CM_-8": 8,
+        "non-CM_isog_37+": 8,
+        "CM_-19": 4,
+        "CM_-43": 2,
+        "CM_-67": 2
+      },
+      "mi_bits": 0.88598,
+      "nmi": 0.328909,
+      "h_fingerprint": 8.6726,
+      "h_galois": 2.6937,
+      "ari": 0.005122,
+      "null_mi_mean": 0.254863,
+      "null_mi_std": 0.002801,
+      "mi_z_score": 225.3,
+      "null_ari_mean": -2e-06,
+      "null_ari_std": 8.2e-05,
+      "ari_z_score": 62.66,
+      "per_prime": {
+        "2": {
+          "mi_bits": 0.180038,
+          "nmi": 0.073198,
+          "h_exponent": 2.4596,
+          "exponent_distribution": {
+            "1": 12542,
+            "0": 6989,
+            "4": 3206,
+            "3": 2503,
+            "2": 2285,
+            "6": 1862,
+            "5": 1098,
+            "7": 392,
+            "8": 196
+          },
+          "null_mean": 0.005414,
+          "null_std": 0.000475,
+          "z_score": 367.57
+        },
+        "3": {
+          "mi_bits": 0.210201,
+          "nmi": 0.114287,
+          "h_exponent": 1.8392,
+          "exponent_distribution": {
+            "1": 12176,
+            "0": 10892,
+            "2": 6053,
+            "3": 1414,
+            "4": 368,
+            "5": 170
+          },
+          "null_mean": 0.003269,
+          "null_std": 0.000375,
+          "z_score": 552.13
+        },
+        "5": {
+          "mi_bits": 0.079845,
+          "nmi": 0.059558,
+          "h_exponent": 1.3406,
+          "exponent_distribution": {
+            "0": 18116,
+            "1": 9239,
+            "2": 3718
+          },
+          "null_mean": 0.001469,
+          "null_std": 0.00024,
+          "z_score": 326.96
+        },
+        "7": {
+          "mi_bits": 0.047018,
+          "nmi": 0.044212,
+          "h_exponent": 1.0635,
+          "exponent_distribution": {
+            "0": 22355,
+            "1": 6900,
+            "2": 1818
+          },
+          "null_mean": 0.001439,
+          "null_std": 0.000242,
+          "z_score": 188.2
+        },
+        "11": {
+          "mi_bits": 0.023771,
+          "nmi": 0.033265,
+          "h_exponent": 0.7146,
+          "exponent_distribution": {
+            "0": 26127,
+            "1": 4374,
+            "2": 572
+          },
+          "null_mean": 0.001352,
+          "null_std": 0.000229,
+          "z_score": 97.73
+        },
+        "13": {
+          "mi_bits": 0.015949,
+          "nmi": 0.026511,
+          "h_exponent": 0.6016,
+          "exponent_distribution": {
+            "0": 27200,
+            "1": 3480,
+            "2": 393
+          },
+          "null_mean": 0.001314,
+          "null_std": 0.000234,
+          "z_score": 62.45
+        },
+        "17": {
+          "mi_bits": 0.00871,
+          "nmi": 0.01879,
+          "h_exponent": 0.4635,
+          "exponent_distribution": {
+            "0": 28347,
+            "1": 2513,
+            "2": 213
+          },
+          "null_mean": 0.001235,
+          "null_std": 0.000229,
+          "z_score": 32.58
+        },
+        "19": {
+          "mi_bits": 0.009661,
+          "nmi": 0.023997,
+          "h_exponent": 0.4026,
+          "exponent_distribution": {
+            "0": 28745,
+            "1": 2232,
+            "2": 96
+          },
+          "null_mean": 0.001142,
+          "null_std": 0.00021,
+          "z_score": 40.56
+        },
+        "23": {
+          "mi_bits": 0.00665,
+          "nmi": 0.018979,
+          "h_exponent": 0.3504,
+          "exponent_distribution": {
+            "0": 29132,
+            "1": 1876,
+            "2": 65
+          },
+          "null_mean": 0.00111,
+          "null_std": 0.000208,
+          "z_score": 26.7
+        },
+        "29": {
+          "mi_bits": 0.003931,
+          "nmi": 0.01509,
+          "h_exponent": 0.2605,
+          "exponent_distribution": {
+            "0": 29741,
+            "1": 1310,
+            "2": 22
+          },
+          "null_mean": 0.000972,
+          "null_std": 0.000202,
+          "z_score": 14.62
+        }
+      },
+      "most_discriminative_primes": [
+        {
+          "prime": 3,
+          "z_score": 552.13,
+          "mi_bits": 0.210201,
+          "nmi": 0.114287
+        },
+        {
+          "prime": 2,
+          "z_score": 367.57,
+          "mi_bits": 0.180038,
+          "nmi": 0.073198
+        },
+        {
+          "prime": 5,
+          "z_score": 326.96,
+          "mi_bits": 0.079845,
+          "nmi": 0.059558
+        },
+        {
+          "prime": 7,
+          "z_score": 188.2,
+          "mi_bits": 0.047018,
+          "nmi": 0.044212
+        },
+        {
+          "prime": 11,
+          "z_score": 97.73,
+          "mi_bits": 0.023771,
+          "nmi": 0.033265
+        },
+        {
+          "prime": 13,
+          "z_score": 62.45,
+          "mi_bits": 0.015949,
+          "nmi": 0.026511
+        },
+        {
+          "prime": 19,
+          "z_score": 40.56,
+          "mi_bits": 0.009661,
+          "nmi": 0.023997
+        },
+        {
+          "prime": 17,
+          "z_score": 32.58,
+          "mi_bits": 0.00871,
+          "nmi": 0.01879
+        },
+        {
+          "prime": 23,
+          "z_score": 26.7,
+          "mi_bits": 0.00665,
+          "nmi": 0.018979
+        },
+        {
+          "prime": 29,
+          "z_score": 14.62,
+          "mi_bits": 0.003931,
+          "nmi": 0.01509
+        }
+      ],
+      "enrichment_by_class": {
+        "non-CM_isog_25+": {
+          "n_curves": 50,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 207.153
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 177.56
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.03,
+              "enrichment": 138.102
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 138.102
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 103.577
+            }
+          ]
+        },
+        "non-CM_isog_5+": {
+          "n_curves": 529,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.51,
+              "enrichment": 23.496
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 1.97,
+              "enrichment": 6.076
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 10,
+              "expected": 1.7,
+              "enrichment": 5.874
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 2.66,
+              "enrichment": 4.518
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 5.09,
+              "enrichment": 3.143
+            }
+          ]
+        },
+        "non-CM_isog_18+": {
+          "n_curves": 100,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.09,
+              "enrichment": 88.78
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.05,
+              "enrichment": 77.683
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.08,
+              "enrichment": 51.788
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.09,
+              "enrichment": 44.39
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.22,
+              "enrichment": 36.556
+            }
+          ]
+        },
+        "non-CM_isog_6+": {
+          "n_curves": 1404,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 20,
+              "expected": 2.17,
+              "enrichment": 9.222
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0
+              ],
+              "count": 18,
+              "expected": 2.17,
+              "enrichment": 8.299
+            },
+            {
+              "fingerprint": [
+                6,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 28,
+              "expected": 6.15,
+              "enrichment": 4.557
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 22,
+              "expected": 5.06,
+              "enrichment": 4.347
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 20,
+              "expected": 5.24,
+              "enrichment": 3.816
+            }
+          ]
+        },
+        "non-CM_isog_16+": {
+          "n_curves": 172,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.06,
+              "enrichment": 65.693
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.17,
+              "enrichment": 46.621
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.09,
+              "enrichment": 45.164
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.19,
+              "enrichment": 21.254
+            },
+            {
+              "fingerprint": [
+                6,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.46,
+              "enrichment": 17.205
+            }
+          ]
+        },
+        "non-CM_isog_8+": {
+          "n_curves": 973,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                6,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 2.38,
+              "enrichment": 6.723
+            },
+            {
+              "fingerprint": [
+                4,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 19,
+              "expected": 2.94,
+              "enrichment": 6.455
+            },
+            {
+              "fingerprint": [
+                4,
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 2.57,
+              "enrichment": 6.231
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 23,
+              "expected": 4.32,
+              "enrichment": 5.323
+            },
+            {
+              "fingerprint": [
+                6,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 14,
+              "expected": 2.63,
+              "enrichment": 5.323
+            }
+          ]
+        },
+        "non-CM_isog_4": {
+          "n_curves": 4662,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                5,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 60,
+              "expected": 13.8,
+              "enrichment": 4.347
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 50,
+              "expected": 20.7,
+              "enrichment": 2.415
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 74,
+              "expected": 39.01,
+              "enrichment": 1.897
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 85,
+              "expected": 48.76,
+              "enrichment": 1.743
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 163,
+              "expected": 105.62,
+              "enrichment": 1.543
+            }
+          ]
+        },
+        "non-CM_isog_2": {
+          "n_curves": 9615,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 105,
+              "expected": 64.36,
+              "enrichment": 1.631
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 163,
+              "expected": 121.92,
+              "enrichment": 1.337
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 155,
+              "expected": 116.66,
+              "enrichment": 1.329
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 169,
+              "expected": 128.41,
+              "enrichment": 1.316
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 266,
+              "expected": 217.84,
+              "enrichment": 1.221
+            }
+          ]
+        },
+        "non-CM_isog_9+": {
+          "n_curves": 526,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                3,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.68,
+              "enrichment": 17.722
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.71,
+              "enrichment": 16.878
+            },
+            {
+              "fingerprint": [
+                4,
+                3,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.78,
+              "enrichment": 15.411
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.85,
+              "enrichment": 14.178
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 20,
+              "expected": 3.08,
+              "enrichment": 6.492
+            }
+          ]
+        },
+        "non-CM_isog_3": {
+          "n_curves": 3123,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 52,
+              "expected": 7.24,
+              "enrichment": 7.186
+            },
+            {
+              "fingerprint": [
+                1,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 50,
+              "expected": 18.29,
+              "enrichment": 2.733
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 82,
+              "expected": 47.54,
+              "enrichment": 1.725
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 51,
+              "expected": 30.05,
+              "enrichment": 1.697
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 87,
+              "expected": 65.33,
+              "enrichment": 1.332
+            }
+          ]
+        },
+        "non-CM_isog_7+": {
+          "n_curves": 170,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                4,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.05,
+              "enrichment": 146.226
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 91.391
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.07,
+              "enrichment": 84.361
+            },
+            {
+              "fingerprint": [
+                0,
+                4,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.05,
+              "enrichment": 73.113
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.13,
+              "enrichment": 45.696
+            }
+          ]
+        },
+        "CM_-27": {
+          "n_curves": 16,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                3,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 323.677
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 277.438
+            },
+            {
+              "fingerprint": [
+                4,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 242.758
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 242.758
+            },
+            {
+              "fingerprint": [
+                6,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 176.551
+            }
+          ]
+        },
+        "CM_-3": {
+          "n_curves": 134,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                2,
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.03,
+              "enrichment": 231.888
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.06,
+              "enrichment": 99.381
+            },
+            {
+              "fingerprint": [
+                0,
+                3,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.07,
+              "enrichment": 86.958
+            },
+            {
+              "fingerprint": [
+                2,
+                3,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 14,
+              "expected": 0.16,
+              "enrichment": 85.432
+            },
+            {
+              "fingerprint": [
+                4,
+                5,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.15,
+              "enrichment": 81.843
+            }
+          ]
+        },
+        "non-CM_isog_12+": {
+          "n_curves": 234,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.26,
+              "enrichment": 46.867
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 18,
+              "expected": 0.45,
+              "enrichment": 39.837
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.38,
+              "enrichment": 31.87
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                2,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.45,
+              "enrichment": 26.558
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 18,
+              "expected": 0.74,
+              "enrichment": 24.39
+            }
+          ]
+        },
+        "CM_-16": {
+          "n_curves": 18,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                5,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 191.809
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 172.628
+            },
+            {
+              "fingerprint": [
+                6,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.02,
+              "enrichment": 95.904
+            }
+          ]
+        },
+        "CM_-4": {
+          "n_curves": 62,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 250.589
+            },
+            {
+              "fingerprint": [
+                5,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.03,
+              "enrichment": 187.942
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.03,
+              "enrichment": 187.942
+            },
+            {
+              "fingerprint": [
+                5,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 6,
+              "expected": 0.04,
+              "enrichment": 167.059
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 12,
+              "expected": 0.08,
+              "enrichment": 150.353
+            }
+          ]
+        },
+        "CM_-12": {
+          "n_curves": 16,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                6,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                2,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 194.206
+            },
+            {
+              "fingerprint": [
+                2,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 176.551
+            },
+            {
+              "fingerprint": [
+                2,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 161.839
+            },
+            {
+              "fingerprint": [
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.03,
+              "enrichment": 76.159
+            }
+          ]
+        },
+        "non-CM_trivial_isog": {
+          "n_curves": 8905,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 283,
+              "expected": 105.18,
+              "enrichment": 2.691
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 226,
+              "expected": 105.75,
+              "enrichment": 2.137
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 144,
+              "expected": 76.23,
+              "enrichment": 1.889
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 158,
+              "expected": 85.69,
+              "enrichment": 1.844
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 394,
+              "expected": 213.79,
+              "enrichment": 1.843
+            }
+          ]
+        },
+        "CM_-28": {
+          "n_curves": 12,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 287.713
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 246.611
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.03,
+              "enrichment": 152.319
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.02,
+              "enrichment": 90.857
+            }
+          ]
+        },
+        "CM_-7": {
+          "n_curves": 12,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 287.713
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 246.611
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 215.785
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.03,
+              "enrichment": 152.319
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.02,
+              "enrichment": 90.857
+            }
+          ]
+        },
+        "non-CM_isog_15+": {
+          "n_curves": 56,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                4,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.04,
+              "enrichment": 201.773
+            },
+            {
+              "fingerprint": [
+                6,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.11,
+              "enrichment": 147.967
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.06,
+              "enrichment": 138.719
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.12,
+              "enrichment": 65.279
+            },
+            {
+              "fingerprint": [
+                4,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.21,
+              "enrichment": 37.619
+            }
+          ]
+        },
+        "non-CM_isog_10+": {
+          "n_curves": 176,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.14,
+              "enrichment": 117.701
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.1,
+              "enrichment": 78.467
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 16,
+              "expected": 0.23,
+              "enrichment": 70.62
+            },
+            {
+              "fingerprint": [
+                1,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.18,
+              "enrichment": 44.138
+            },
+            {
+              "fingerprint": [
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.18,
+              "enrichment": 44.138
+            }
+          ]
+        },
+        "non-CM_isog_11+": {
+          "n_curves": 16,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 517.883
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 485.516
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 388.412
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 337.75
+            }
+          ]
+        },
+        "CM_-11": {
+          "n_curves": 8,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.0,
+              "enrichment": 517.883
+            },
+            {
+              "fingerprint": [
+                0,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.0,
+              "enrichment": 485.516
+            },
+            {
+              "fingerprint": [
+                4,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 388.412
+            },
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 2,
+              "expected": 0.01,
+              "enrichment": 337.75
+            }
+          ]
+        },
+        "non-CM_isog_13+": {
+          "n_curves": 36,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                2,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.02,
+              "enrichment": 191.809
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                2,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 111.373
+            },
+            {
+              "fingerprint": [
+                1,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.08,
+              "enrichment": 101.546
+            },
+            {
+              "fingerprint": [
+                0,
+                1,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.04,
+              "enrichment": 98.644
+            },
+            {
+              "fingerprint": [
+                1,
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.08,
+              "enrichment": 95.904
+            }
+          ]
+        },
+        "non-CM_isog_21+": {
+          "n_curves": 24,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                1,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.01,
+              "enrichment": 863.139
+            },
+            {
+              "fingerprint": [
+                4,
+                4,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.02,
+              "enrichment": 431.569
+            },
+            {
+              "fingerprint": [
+                1,
+                4,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.06,
+              "enrichment": 143.856
+            }
+          ]
+        },
+        "CM_-8": {
+          "n_curves": 8,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                8,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.0,
+              "enrichment": 1942.062
+            },
+            {
+              "fingerprint": [
+                8,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 4,
+              "expected": 0.01,
+              "enrichment": 388.412
+            }
+          ]
+        },
+        "non-CM_isog_37+": {
+          "n_curves": 8,
+          "top_enriched": [
+            {
+              "fingerprint": [
+                0,
+                0,
+                2,
+                2,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "count": 8,
+              "expected": 0.01,
+              "enrichment": 1479.667
+            }
+          ]
+        }
+      }
+    }
+  },
+  "summary": {
+    "level1_CM_vs_nonCM": {
+      "mi_bits": 0.049529,
+      "mi_z": 60.49,
+      "ari": 0.000172,
+      "ari_z": 10.86,
+      "verdict": "significant"
+    },
+    "level2_fine_classification": {
+      "mi_bits": 0.88598,
+      "mi_z": 225.3,
+      "ari": 0.005122,
+      "ari_z": 62.66,
+      "verdict": "significant"
+    },
+    "level3_portrait_enhanced": {
+      "mi_bits": 0.88598,
+      "mi_z": 225.3,
+      "ari": 0.005122,
+      "ari_z": 62.66,
+      "verdict": "significant"
+    },
+    "top_discriminative_primes_level2": [
+      3,
+      2,
+      5,
+      7,
+      11
+    ],
+    "interpretation": "Conductor factorization fingerprints encode bad reduction type. CM curves have specific conductor constraints (e.g., CM by -3 forces 3|N with specific exponent). Non-CM isogeny structure correlates with conductor via rational isogenies requiring specific bad primes. The question is whether this is structurally informative beyond the tautological constraint."
+  }
+}

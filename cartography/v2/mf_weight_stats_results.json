@@ -1,0 +1,554 @@
+{
+  "metadata": {
+    "challenge": "Weight Distribution and Fourier Statistics by Weight",
+    "date": "2026-04-10",
+    "database": "charon.duckdb",
+    "total_forms": 17314,
+    "weight_distribution": {
+      "2": 102150
+    },
+    "note": "Database contains only weight-2 forms. Analysis partitions by CM status, level, Fricke sign, and character order as structural analogues to weight variation. Theoretical predictions for all weights included.",
+    "elapsed_seconds": 16.53
+  },
+  "theoretical_predictions": {
+    "sato_tate_moments": {
+      "M_2": 1.0,
+      "M_4": 2.0,
+      "M_6": 5.0,
+      "M_8": 14.0
+    },
+    "cm_moments": {
+      "M_2": 1.0,
+      "M_4": 1.5,
+      "M_6": 2.5
+    },
+    "sato_tate_entropy_continuous": 1.2893766562896352,
+    "cm_entropy_continuous": 1.1939708164459875,
+    "note": "All moments are weight-independent for non-CM forms (Sato-Tate theorem). The normalization a_p / p^{(k-1)/2} absorbs all weight dependence."
+  },
+  "analyses": {
+    "all_weight2": {
+      "label": "All weight-2 forms",
+      "n_forms": 17314,
+      "n_ap_values": 2908752,
+      "moments": {
+        "M_2": 0.9837121513575806,
+        "M_4": 1.9622919194017137,
+        "M_6": 4.903067566131687
+      },
+      "entropy": 3.84074224452607,
+      "ks_vs_sato_tate": {
+        "D": 0.027839999999999976,
+        "p_value": 8.48078772395083e-68
+      },
+      "per_form_M2": {
+        "mean": 0.9837121513575805,
+        "std": 0.0658550776809058,
+        "median": 0.9872128100000945,
+        "min": 0.7224193265883707,
+        "max": 1.2169722111543293
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1637786599734006,
+        "std": 0.5333348121412095,
+        "median": 1.20867321347809,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.03695639917050336
+      },
+      "normalized_ap_stats": {
+        "mean": -0.014552083138807887,
+        "std": 0.991715880801503,
+        "skew": 0.01369600328784899,
+        "kurtosis": -0.9718034055194216
+      }
+    },
+    "non_cm": {
+      "label": "Non-CM weight-2 forms",
+      "n_forms": 17198,
+      "n_ap_values": 2889264,
+      "moments": {
+        "M_2": 0.9840630282692828,
+        "M_4": 1.9570288989842097,
+        "M_6": 4.875473602260972
+      },
+      "entropy": 3.842676536662842,
+      "ks_vs_sato_tate": {
+        "D": 0.026089999999999947,
+        "p_value": 1.3558211123170773e-59
+      },
+      "per_form_M2": {
+        "mean": 0.9840630282692829,
+        "std": 0.06586940268921884,
+        "median": 0.9878000057072878,
+        "min": 0.7224193265883707,
+        "max": 1.2169722111543293
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1621897292314147,
+        "std": 0.531165678921326,
+        "median": 1.2068409466694772,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.0363455883574502
+      },
+      "normalized_ap_stats": {
+        "mean": -0.014613708583590117,
+        "std": 0.9918918629521652,
+        "skew": 0.01377473878163773,
+        "kurtosis": -0.9786825779202921
+      }
+    },
+    "cm": {
+      "label": "CM weight-2 forms",
+      "n_forms": 116,
+      "n_ap_values": 19488,
+      "moments": {
+        "M_2": 0.9316916243967097,
+        "M_4": 2.742580067162314,
+        "M_6": 8.994110588964217
+      },
+      "entropy": 2.454849871539671,
+      "ks_vs_sato_tate": {
+        "D": 0.26431650246305416,
+        "p_value": 0.0
+      },
+      "per_form_M2": {
+        "mean": 0.93169162439671,
+        "std": 0.036506793763803794,
+        "median": 0.9208310078132674,
+        "min": 0.8687697662663741,
+        "max": 1.032494193826753
+      },
+      "ramanujan_deficit": {
+        "mean": 1.3993513401516076,
+        "std": 0.755587726090783,
+        "median": 2.0,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.12751436781609196
+      },
+      "normalized_ap_stats": {
+        "mean": -0.005415579696009063,
+        "std": 0.9652265515894525,
+        "skew": 0.00260436044932526,
+        "kurtosis": 0.15954355936402242
+      }
+    },
+    "level_N=1001-5000": {
+      "label": "Non-CM, N=1001-5000",
+      "n_forms": 14851,
+      "n_ap_values": 2494968,
+      "moments": {
+        "M_2": 0.9839699890091141,
+        "M_4": 1.9623844190242237,
+        "M_6": 4.902336169843731
+      },
+      "entropy": 3.841344603167453,
+      "ks_vs_sato_tate": {
+        "D": 0.029360000000000053,
+        "p_value": 2.3486977913560984e-75
+      },
+      "per_form_M2": {
+        "mean": 0.9839699890091139,
+        "std": 0.06750771595580773,
+        "median": 0.9886214893805152,
+        "min": 0.7224193265883707,
+        "max": 1.2169722111543293
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1634429823959256,
+        "std": 0.5330500401524145,
+        "median": 1.20867321347809,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.036944762417794534
+      },
+      "normalized_ap_stats": {
+        "mean": -0.01479857815242687,
+        "std": 0.991842220866696,
+        "skew": 0.013973787240518978,
+        "kurtosis": -0.9727549850738084
+      }
+    },
+    "level_N=201-500": {
+      "label": "Non-CM, N=201-500",
+      "n_forms": 690,
+      "n_ap_values": 115920,
+      "moments": {
+        "M_2": 0.9826726985153852,
+        "M_4": 1.9649820188302503,
+        "M_6": 4.918554063318358
+      },
+      "entropy": 3.834204294734751,
+      "ks_vs_sato_tate": {
+        "D": 0.03202000000000005,
+        "p_value": 1.5083751495117614e-89
+      },
+      "per_form_M2": {
+        "mean": 0.9826726985153854,
+        "std": 0.051954727974099536,
+        "median": 0.9797964430918176,
+        "min": 0.8202359679679567,
+        "max": 1.130036352975451
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1664385017196481,
+        "std": 0.5365146103322821,
+        "median": 1.2083302790461108,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.037146307798481715
+      },
+      "normalized_ap_stats": {
+        "mean": -0.013180572563099778,
+        "std": 0.9912108610292234,
+        "skew": 0.01121834991755858,
+        "kurtosis": -0.9648552159876238
+      }
+    },
+    "level_N=501-1000": {
+      "label": "Non-CM, N=501-1000",
+      "n_forms": 1492,
+      "n_ap_values": 250656,
+      "moments": {
+        "M_2": 0.9858868798622383,
+        "M_4": 1.971917393615067,
+        "M_6": 4.9361988081395065
+      },
+      "entropy": 3.8398490825784957,
+      "ks_vs_sato_tate": {
+        "D": 0.03022999999999998,
+        "p_value": 7.317238010076775e-80
+      },
+      "per_form_M2": {
+        "mean": 0.9858868798622382,
+        "std": 0.05736453177716735,
+        "median": 0.9859739356391932,
+        "min": 0.7454712807600797,
+        "max": 1.1541533266230763
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1634001551374402,
+        "std": 0.5347780655918671,
+        "median": 1.20867321347809,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.03733403549087195
+      },
+      "normalized_ap_stats": {
+        "mean": -0.015456653629706739,
+        "std": 0.9927980518316952,
+        "skew": 0.014860023062251211,
+        "kurtosis": -0.9707672740093916
+      }
+    },
+    "level_N=51-200": {
+      "label": "Non-CM, N=51-200",
+      "n_forms": 249,
+      "n_ap_values": 41832,
+      "moments": {
+        "M_2": 0.9621061131310381,
+        "M_4": 1.8930330898037102,
+        "M_6": 4.691991175870931
+      },
+      "entropy": 3.830114406404578,
+      "ks_vs_sato_tate": {
+        "D": 0.024980875884490383,
+        "p_value": 3.97894308674939e-23
+      },
+      "per_form_M2": {
+        "mean": 0.962106113131038,
+        "std": 0.041811866136300446,
+        "median": 0.9530498845004901,
+        "min": 0.8571071295231898,
+        "max": 1.085570945706751
+      },
+      "ramanujan_deficit": {
+        "mean": 1.174008075155822,
+        "std": 0.5290023187314475,
+        "median": 1.2237845271762189,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.03423216676228724
+      },
+      "normalized_ap_stats": {
+        "mean": -0.002081435620543322,
+        "std": 0.9808678712022306,
+        "skew": -0.00041940325152483644,
+        "kurtosis": -0.9549229508896087
+      }
+    },
+    "fricke_fricke=-1": {
+      "label": "fricke=-1",
+      "n_forms": 8503,
+      "n_ap_values": 1428504,
+      "moments": {
+        "M_2": 0.9881190499925745,
+        "M_4": 1.9756250069339498,
+        "M_6": 4.9433556143724084
+      },
+      "entropy": 3.8415049364901224,
+      "ks_vs_sato_tate": {
+        "D": 0.027390000000000025,
+        "p_value": 1.2269509753180168e-65
+      },
+      "per_form_M2": {
+        "mean": 0.9881190499925748,
+        "std": 0.062965819305494,
+        "median": 0.990949824708762,
+        "min": 0.7224193265883707,
+        "max": 1.2169722111543293
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1615619426103727,
+        "std": 0.5339856495387151,
+        "median": 1.2048445256929141,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.03739296494794554
+      },
+      "normalized_ap_stats": {
+        "mean": 0.014418424100727873,
+        "std": 0.9939372007521532,
+        "skew": -0.013771848555489291,
+        "kurtosis": -0.9761921661324062
+      }
+    },
+    "fricke_fricke=1": {
+      "label": "fricke=1",
+      "n_forms": 8811,
+      "n_ap_values": 1480248,
+      "moments": {
+        "M_2": 0.9794593016136975,
+        "M_4": 1.949424907338768,
+        "M_6": 4.864187839177789
+      },
+      "entropy": 3.8391405369084874,
+      "ks_vs_sato_tate": {
+        "D": 0.04127999999999998,
+        "p_value": 1.5047201927143343e-148
+      },
+      "per_form_M2": {
+        "mean": 0.9794593016136971,
+        "std": 0.06825869085009004,
+        "median": 0.9838590279869115,
+        "min": 0.7224193265883707,
+        "max": 1.185180352407436
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1659178890890314,
+        "std": 0.5326972253278597,
+        "median": 1.2117365774685656,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.03653509411936378
+      },
+      "normalized_ap_stats": {
+        "mean": -0.04250988850230492,
+        "std": 0.988762970075851,
+        "skew": 0.039763478302547076,
+        "kurtosis": -0.9646897251862385
+      }
+    },
+    "char_char_order=1": {
+      "label": "char_order=1",
+      "n_forms": 17314,
+      "n_ap_values": 2908752,
+      "moments": {
+        "M_2": 0.9837121513575806,
+        "M_4": 1.9622919194017137,
+        "M_6": 4.903067566131687
+      },
+      "entropy": 3.84074224452607,
+      "ks_vs_sato_tate": {
+        "D": 0.027839999999999976,
+        "p_value": 8.48078772395083e-68
+      },
+      "per_form_M2": {
+        "mean": 0.9837121513575805,
+        "std": 0.0658550776809058,
+        "median": 0.9872128100000945,
+        "min": 0.7224193265883707,
+        "max": 1.2169722111543293
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1637786599734006,
+        "std": 0.5333348121412095,
+        "median": 1.20867321347809,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.03695639917050336
+      },
+      "normalized_ap_stats": {
+        "mean": -0.014552083138807887,
+        "std": 0.991715880801503,
+        "skew": 0.01369600328784899,
+        "kurtosis": -0.9718034055194216
+      }
+    },
+    "st_1.2.3.c1": {
+      "label": "ST=1.2.3.c1",
+      "n_forms": 17198,
+      "n_ap_values": 2889264,
+      "moments": {
+        "M_2": 0.9840630282692828,
+        "M_4": 1.9570288989842097,
+        "M_6": 4.875473602260972
+      },
+      "entropy": 3.842676536662842,
+      "ks_vs_sato_tate": {
+        "D": 0.026089999999999947,
+        "p_value": 1.3558211123170773e-59
+      },
+      "per_form_M2": {
+        "mean": 0.9840630282692829,
+        "std": 0.06586940268921884,
+        "median": 0.9878000057072878,
+        "min": 0.7224193265883707,
+        "max": 1.2169722111543293
+      },
+      "ramanujan_deficit": {
+        "mean": 1.1621897292314147,
+        "std": 0.531165678921326,
+        "median": 1.2068409466694772,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.0363455883574502
+      },
+      "normalized_ap_stats": {
+        "mean": -0.014613708583590117,
+        "std": 0.9918918629521652,
+        "skew": 0.01377473878163773,
+        "kurtosis": -0.9786825779202921
+      }
+    },
+    "st_1.2.1.d1": {
+      "label": "ST=1.2.1.d1",
+      "n_forms": 116,
+      "n_ap_values": 19488,
+      "moments": {
+        "M_2": 0.9316916243967097,
+        "M_4": 2.742580067162314,
+        "M_6": 8.994110588964217
+      },
+      "entropy": 2.454849871539671,
+      "ks_vs_sato_tate": {
+        "D": 0.26431650246305416,
+        "p_value": 0.0
+      },
+      "per_form_M2": {
+        "mean": 0.93169162439671,
+        "std": 0.036506793763803794,
+        "median": 0.9208310078132674,
+        "min": 0.8687697662663741,
+        "max": 1.032494193826753
+      },
+      "ramanujan_deficit": {
+        "mean": 1.3993513401516076,
+        "std": 0.755587726090783,
+        "median": 2.0,
+        "min_deficit": 0.000990998491761541,
+        "frac_within_10pct": 0.12751436781609196
+      },
+      "normalized_ap_stats": {
+        "mean": -0.005415579696009063,
+        "std": 0.9652265515894525,
+        "skew": 0.00260436044932526,
+        "kurtosis": 0.15954355936402242
+      }
+    }
+  },
+  "anomalies": [
+    {
+      "group": "all_weight2",
+      "type": "KS_rejection",
+      "D": 0.027839999999999976,
+      "p_value": 8.48078772395083e-68
+    },
+    {
+      "group": "non_cm",
+      "type": "KS_rejection",
+      "D": 0.026089999999999947,
+      "p_value": 1.3558211123170773e-59
+    },
+    {
+      "group": "cm",
+      "type": "M_2_deviation",
+      "value": 0.9316916243967097,
+      "expected": 1.0,
+      "deviation": 0.06830837560329028
+    },
+    {
+      "group": "cm",
+      "type": "KS_rejection",
+      "D": 0.26431650246305416,
+      "p_value": 0.0
+    },
+    {
+      "group": "level_N=1001-5000",
+      "type": "KS_rejection",
+      "D": 0.029360000000000053,
+      "p_value": 2.3486977913560984e-75
+    },
+    {
+      "group": "level_N=201-500",
+      "type": "KS_rejection",
+      "D": 0.03202000000000005,
+      "p_value": 1.5083751495117614e-89
+    },
+    {
+      "group": "level_N=501-1000",
+      "type": "KS_rejection",
+      "D": 0.03022999999999998,
+      "p_value": 7.317238010076775e-80
+    },
+    {
+      "group": "level_N=51-200",
+      "type": "KS_rejection",
+      "D": 0.024980875884490383,
+      "p_value": 3.97894308674939e-23
+    },
+    {
+      "group": "fricke_fricke=-1",
+      "type": "KS_rejection",
+      "D": 0.027390000000000025,
+      "p_value": 1.2269509753180168e-65
+    },
+    {
+      "group": "fricke_fricke=1",
+      "type": "KS_rejection",
+      "D": 0.04127999999999998,
+      "p_value": 1.5047201927143343e-148
+    },
+    {
+      "group": "char_char_order=1",
+      "type": "KS_rejection",
+      "D": 0.027839999999999976,
+      "p_value": 8.48078772395083e-68
+    },
+    {
+      "group": "st_1.2.3.c1",
+      "type": "KS_rejection",
+      "D": 0.026089999999999947,
+      "p_value": 1.3558211123170773e-59
+    },
+    {
+      "group": "st_1.2.1.d1",
+      "type": "M_2_deviation",
+      "value": 0.9316916243967097,
+      "expected": 1.0,
+      "deviation": 0.06830837560329028
+    },
+    {
+      "group": "st_1.2.1.d1",
+      "type": "KS_rejection",
+      "D": 0.26431650246305416,
+      "p_value": 0.0
+    }
+  ],
+  "synthesis": {
+    "m2_independence": {
+      "non_cm_m2_mean": 0.9797397417574117,
+      "non_cm_m2_std": 0.008876037390987928,
+      "deviation_from_theory": 0.020260258242588258,
+      "verdict": "M_2 is weight/level-independent within noise"
+    },
+    "cm_vs_non_cm": {
+      "cm_M4": 2.742580067162314,
+      "non_cm_M4": 1.9570288989842097,
+      "cm_M4_theory": 1.5,
+      "non_cm_M4_theory": 2.0
+    },
+    "key_finding": "Within weight 2, M_2 is remarkably stable across all structural subgroups (level bands, Fricke sign, character order), confirming the theoretical prediction that the second moment of normalized Fourier coefficients is weight-independent. CM forms show the expected M_4 deviation (arcsine vs semicircle distribution). The Sato-Tate conjecture, proved in full generality for weight >= 2, guarantees these same statistics hold at all weights."
+  }
+}

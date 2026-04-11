@@ -1,0 +1,288 @@
+{
+  "challenge": "Lattice Theta Series Sparsity vs Dimension and Determinant",
+  "data_source": "LMFDB lat_lattices (39,293 lattices)",
+  "n_analyzed": 39293,
+  "dimensions_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    24
+  ],
+  "sparsity_by_dimension": {
+    "1": {
+      "count": 1,
+      "mean": 0.9466666666666667,
+      "std": 0.0,
+      "median": 0.9466666666666667,
+      "min": 0.9466666666666667,
+      "max": 0.9466666666666667
+    },
+    "2": {
+      "count": 1609,
+      "mean": 0.9464553552931428,
+      "std": 0.04932284600873958,
+      "median": 0.96,
+      "min": 0.5266666666666666,
+      "max": 1.0
+    },
+    "3": {
+      "count": 36585,
+      "mean": 0.7049601384902738,
+      "std": 0.06368256198480182,
+      "median": 0.7066666666666667,
+      "min": 0.05333333333333334,
+      "max": 0.96
+    },
+    "4": {
+      "count": 481,
+      "mean": 0.5387248787248787,
+      "std": 0.2187869290773103,
+      "median": 0.5866666666666667,
+      "min": 0.0,
+      "max": 0.88
+    },
+    "5": {
+      "count": 295,
+      "mean": 0.4997966101694915,
+      "std": 0.23226542561427077,
+      "median": 0.5066666666666667,
+      "min": 0.0,
+      "max": 0.8733333333333333
+    },
+    "6": {
+      "count": 186,
+      "mean": 0.4749820788530466,
+      "std": 0.21270664204231168,
+      "median": 0.5,
+      "min": 0.0,
+      "max": 0.8
+    },
+    "7": {
+      "count": 86,
+      "mean": 0.5037209302325582,
+      "std": 0.19412456282674462,
+      "median": 0.5,
+      "min": 0.0,
+      "max": 0.84
+    },
+    "8": {
+      "count": 37,
+      "mean": 0.4783783783783784,
+      "std": 0.1630446458167286,
+      "median": 0.5,
+      "min": 0.0,
+      "max": 0.78
+    },
+    "9": {
+      "count": 5,
+      "mean": 0.5493333333333333,
+      "std": 0.09866666666666668,
+      "median": 0.5,
+      "min": 0.5,
+      "max": 0.7466666666666667
+    },
+    "10": {
+      "count": 3,
+      "mean": 0.5555555555555555,
+      "std": 0.0785674201318386,
+      "median": 0.5,
+      "min": 0.5,
+      "max": 0.6666666666666666
+    },
+    "11": {
+      "count": 1,
+      "mean": 0.5,
+      "std": 0.0,
+      "median": 0.5,
+      "min": 0.5,
+      "max": 0.5
+    },
+    "12": {
+      "count": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "13": {
+      "count": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "14": {
+      "count": 1,
+      "mean": 0.0,
+      "std": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "24": {
+      "count": 1,
+      "mean": 0.5066666666666667,
+      "std": 0.0,
+      "median": 0.5066666666666667,
+      "min": 0.5066666666666667,
+      "max": 0.5066666666666667
+    }
+  },
+  "global_regressions": {
+    "sparsity_vs_dim": {
+      "slope": -0.10358680065070593,
+      "intercept": 1.021934653380129,
+      "R2": 0.2644306432619219,
+      "p_value": 0.0
+    },
+    "sparsity_vs_log_det": {
+      "slope": 0.053274392139201925,
+      "intercept": 0.3357681229591527,
+      "R2": 0.24759546879040656,
+      "p_value": 0.0
+    },
+    "sparsity_vs_kissing": {
+      "slope": -1.0694140098631825e-06,
+      "intercept": 0.7094503552270331,
+      "R2": 0.00013005852762180866,
+      "p_value": 0.02378287867215709
+    },
+    "sparsity_vs_log_kissing": {
+      "slope": -0.014744170382326541,
+      "intercept": 0.7218581325133532,
+      "R2": 0.0033480639157127522,
+      "p_value": 1.6818329148058198e-30
+    }
+  },
+  "within_dimension_regressions": {
+    "2": {
+      "n": 1609,
+      "log_det_R2": 0.8016225253198589,
+      "log_det_slope": 0.025862018020138645,
+      "log_det_p": 0.0,
+      "kissing_R2": 0.006257889145457715,
+      "kissing_slope": -0.010723416505224456,
+      "kissing_p": 0.0014949015858768148,
+      "minimum_R2": 0.28781390508208826,
+      "minimum_slope": 0.0010122350022699603,
+      "minimum_p": 1.3412587395686387e-120
+    },
+    "3": {
+      "n": 36585,
+      "log_det_R2": 0.28461691784550397,
+      "log_det_slope": 0.05395693554153711,
+      "log_det_p": 0.0,
+      "kissing_R2": 0.039838169543888455,
+      "kissing_slope": 0.012376554105125597,
+      "kissing_p": 0.0,
+      "minimum_R2": 0.011648899843926273,
+      "minimum_slope": -0.0023383341702448573,
+      "minimum_p": 3.2009834756504145e-95
+    },
+    "4": {
+      "n": 481,
+      "log_det_R2": 0.669276339828374,
+      "log_det_slope": 0.07422468008265175,
+      "log_det_p": 3.632695588910896e-117,
+      "kissing_R2": 0.00031555614986256787,
+      "kissing_slope": -0.0014064676909793814,
+      "kissing_p": 0.6975648579235412,
+      "minimum_R2": 0.4192299526585379,
+      "minimum_slope": 0.05424998943516138,
+      "minimum_p": 1.6907749174776385e-58
+    },
+    "5": {
+      "n": 295,
+      "log_det_R2": 0.6199652623488645,
+      "log_det_slope": 0.05941980820629263,
+      "log_det_p": 1.6412207947002265e-63,
+      "kissing_R2": 0.0014711006266137127,
+      "kissing_slope": 0.001621174020786778,
+      "kissing_p": 0.5116875918646036,
+      "minimum_R2": 0.4485677909438892,
+      "minimum_slope": 0.06349954174931785,
+      "minimum_p": 9.311661593645945e-40
+    },
+    "6": {
+      "n": 186,
+      "log_det_R2": 0.4955149048922651,
+      "log_det_slope": 0.047456134401471166,
+      "log_det_p": 3.811659320022853e-29,
+      "kissing_R2": 0.01367481122773529,
+      "kissing_slope": 0.0021835776512924036,
+      "kissing_p": 0.11193689482219268,
+      "minimum_R2": 0.4619672256695445,
+      "minimum_slope": 0.09295620030909917,
+      "minimum_p": 1.473534255361263e-26
+    },
+    "7": {
+      "n": 86,
+      "log_det_R2": 0.5096701762953828,
+      "log_det_slope": 0.03300747528647507,
+      "log_det_p": 1.2040365980839553e-14,
+      "kissing_R2": 4.939247391654126e-05,
+      "kissing_slope": -6.0357529977643956e-05,
+      "kissing_p": 0.9487935705314454,
+      "minimum_R2": 0.4475251764174418,
+      "minimum_slope": 0.07149781420765026,
+      "minimum_p": 1.9239503005777884e-12
+    },
+    "8": {
+      "n": 37,
+      "log_det_R2": 0.3506916628239393,
+      "log_det_slope": 0.03164335766580576,
+      "log_det_p": 0.00011287995048872691,
+      "kissing_R2": 0.010356121347295863,
+      "kissing_slope": 0.00034064458921907894,
+      "kissing_p": 0.5489556975031264,
+      "minimum_R2": 0.5086928721466603,
+      "minimum_slope": 0.18904761904761905,
+      "minimum_p": 7.270157043153031e-07
+    }
+  },
+  "universal_formula_search": {
+    "linear_dim_logdet": {
+      "formula": "sparsity = -0.092737*dim + 0.047260*log(det) + 0.657714",
+      "R2": 0.456375696567901
+    },
+    "interaction_dim_logdet": {
+      "formula": "sparsity = -0.060102*dim + 0.067145*log(det) + -0.005424*dim*log(det) + 0.534281",
+      "R2": 0.4636260335947725
+    },
+    "ratio_logdet_dim": {
+      "formula": "sparsity = 0.168753*log(det)/dim + 0.310543",
+      "R2": 0.5456569938720008
+    },
+    "power_law": {
+      "formula": "1-sparsity = 0.056055 * dim^2.4712 * det^-0.161683",
+      "R2_log": 0.4918875737928484,
+      "R2_orig": -82.26971778342335
+    }
+  },
+  "best_universal_model": {
+    "name": "ratio_logdet_dim",
+    "formula": "sparsity = 0.168753*log(det)/dim + 0.310543",
+    "R2": 0.5456569938720008
+  },
+  "findings": [
+    "Sparsity DECREASES with dimension (slope=-0.103587, R\u00b2=0.2644): higher-dim lattices represent more integers.",
+    "Best single global predictor: dim (R\u00b2=0.2644)",
+    "Within fixed dimension, best predictor frequencies: {'log_det': 6, 'minimum': 1}",
+    "Best universal model: ratio_logdet_dim with R\u00b2=0.5457",
+    "Overall sparsity range: [0.0000, 1.0000], median=0.7067",
+    "PARTIAL: moderate universal trend (ratio_logdet_dim, R\u00b2=0.5457), but significant residual variance"
+  ]
+}

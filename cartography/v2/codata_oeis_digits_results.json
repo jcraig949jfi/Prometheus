@@ -1,0 +1,1385 @@
+{
+  "challenge": "C1",
+  "description": "CODATA physical constants as OEIS digit subsequences",
+  "parameters": {
+    "n_oeis_sequences": 9994,
+    "n_codata_constants": 286,
+    "n_random_baseline": 286,
+    "subsequence_lengths": [
+      6,
+      7,
+      8
+    ],
+    "significant_digits": 15
+  },
+  "codata_match_rates": {
+    "6": 0.9371,
+    "7": 0.3916,
+    "8": 0.1154
+  },
+  "random_match_rates": {
+    "6": 1.0,
+    "7": 0.5874,
+    "8": 0.0944
+  },
+  "statistics": {
+    "6": {
+      "codata_rate": 0.9370629370629371,
+      "random_rate": 1.0,
+      "z_score": 0.0
+    },
+    "7": {
+      "codata_rate": 0.3916083916083916,
+      "random_rate": 0.5874125874125874,
+      "z_score": -6.726
+    },
+    "8": {
+      "codata_rate": 0.11538461538461539,
+      "random_rate": 0.0944055944055944,
+      "z_score": 1.213
+    }
+  },
+  "interpretation": "At length 6, both CODATA and random saturate near 100% \u2014 too easy. At length 7: CODATA=39.2% vs Random=58.7% (z=-6.73), CODATA matches LESS than random. At length 8: CODATA=11.5% vs Random=9.4% (z=1.21), not significant. Conclusion: physical constants do NOT preferentially appear in OEIS digit strings. The slight CODATA deficit at length 7 likely reflects that many CODATA constants share digit prefixes (related measurements), reducing effective diversity vs independent random numbers. No evidence of physics-mathematics digit overlap beyond chance.",
+  "notable_codata_matches": {
+    "6": [
+      {
+        "constant": "alpha particle-electron mass ratio",
+        "digits": "729429954171",
+        "n_matches": 5,
+        "sample_matches": [
+          {
+            "oeis_id": "A000299",
+            "matched_substring": "954171"
+          },
+          {
+            "oeis_id": "A004237",
+            "matched_substring": "294299"
+          },
+          {
+            "oeis_id": "A006246",
+            "matched_substring": "299541"
+          },
+          {
+            "oeis_id": "A007121",
+            "matched_substring": "995417"
+          },
+          {
+            "oeis_id": "A009805",
+            "matched_substring": "995417"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle mass",
+        "digits": "66446573450",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A001352",
+            "matched_substring": "446573"
+          },
+          {
+            "oeis_id": "A004244",
+            "matched_substring": "465734"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle mass energy equivalent",
+        "digits": "59719201997",
+        "n_matches": 17,
+        "sample_matches": [
+          {
+            "oeis_id": "A000021",
+            "matched_substring": "719201"
+          },
+          {
+            "oeis_id": "A000853",
+            "matched_substring": "971920"
+          },
+          {
+            "oeis_id": "A001703",
+            "matched_substring": "192019"
+          },
+          {
+            "oeis_id": "A002093",
+            "matched_substring": "192019"
+          },
+          {
+            "oeis_id": "A002672",
+            "matched_substring": "192019"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle mass energy equivalent in MeV",
+        "digits": "37273794118",
+        "n_matches": 4,
+        "sample_matches": [
+          {
+            "oeis_id": "A002924",
+            "matched_substring": "727379"
+          },
+          {
+            "oeis_id": "A005365",
+            "matched_substring": "727379"
+          },
+          {
+            "oeis_id": "A007520",
+            "matched_substring": "737941"
+          },
+          {
+            "oeis_id": "A008313",
+            "matched_substring": "372737"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle mass in u",
+        "digits": "4001506179129",
+        "n_matches": 17,
+        "sample_matches": [
+          {
+            "oeis_id": "A000184",
+            "matched_substring": "015061"
+          },
+          {
+            "oeis_id": "A000827",
+            "matched_substring": "061791"
+          },
+          {
+            "oeis_id": "A000982",
+            "matched_substring": "150617"
+          },
+          {
+            "oeis_id": "A001365",
+            "matched_substring": "179129"
+          },
+          {
+            "oeis_id": "A002455",
+            "matched_substring": "001506"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle molar mass",
+        "digits": "40015061833",
+        "n_matches": 12,
+        "sample_matches": [
+          {
+            "oeis_id": "A000184",
+            "matched_substring": "015061"
+          },
+          {
+            "oeis_id": "A002455",
+            "matched_substring": "001506"
+          },
+          {
+            "oeis_id": "A002613",
+            "matched_substring": "015061"
+          },
+          {
+            "oeis_id": "A003466",
+            "matched_substring": "015061"
+          },
+          {
+            "oeis_id": "A004109",
+            "matched_substring": "061833"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle-proton mass ratio",
+        "digits": "3972599690252",
+        "n_matches": 6,
+        "sample_matches": [
+          {
+            "oeis_id": "A000680",
+            "matched_substring": "690252"
+          },
+          {
+            "oeis_id": "A002110",
+            "matched_substring": "996902"
+          },
+          {
+            "oeis_id": "A002737",
+            "matched_substring": "969025"
+          },
+          {
+            "oeis_id": "A005199",
+            "matched_substring": "397259"
+          },
+          {
+            "oeis_id": "A006323",
+            "matched_substring": "690252"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle relative atomic mass",
+        "digits": "4001506179129",
+        "n_matches": 17,
+        "sample_matches": [
+          {
+            "oeis_id": "A000184",
+            "matched_substring": "015061"
+          },
+          {
+            "oeis_id": "A000827",
+            "matched_substring": "061791"
+          },
+          {
+            "oeis_id": "A000982",
+            "matched_substring": "150617"
+          },
+          {
+            "oeis_id": "A001365",
+            "matched_substring": "179129"
+          },
+          {
+            "oeis_id": "A002455",
+            "matched_substring": "001506"
+          }
+        ]
+      },
+      {
+        "constant": "Angstrom star",
+        "digits": "100001495",
+        "n_matches": 107,
+        "sample_matches": [
+          {
+            "oeis_id": "A000161",
+            "matched_substring": "100001"
+          },
+          {
+            "oeis_id": "A000299",
+            "matched_substring": "000014"
+          },
+          {
+            "oeis_id": "A000462",
+            "matched_substring": "100001"
+          },
+          {
+            "oeis_id": "A000480",
+            "matched_substring": "100001"
+          },
+          {
+            "oeis_id": "A000493",
+            "matched_substring": "100001"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass constant",
+        "digits": "166053906892",
+        "n_matches": 5,
+        "sample_matches": [
+          {
+            "oeis_id": "A002712",
+            "matched_substring": "660539"
+          },
+          {
+            "oeis_id": "A005348",
+            "matched_substring": "390689"
+          },
+          {
+            "oeis_id": "A006693",
+            "matched_substring": "166053"
+          },
+          {
+            "oeis_id": "A006912",
+            "matched_substring": "906892"
+          },
+          {
+            "oeis_id": "A008532",
+            "matched_substring": "053906"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass constant energy equivalent",
+        "digits": "149241808768",
+        "n_matches": 8,
+        "sample_matches": [
+          {
+            "oeis_id": "A002914",
+            "matched_substring": "180876"
+          },
+          {
+            "oeis_id": "A003682",
+            "matched_substring": "241808"
+          },
+          {
+            "oeis_id": "A005804",
+            "matched_substring": "808768"
+          },
+          {
+            "oeis_id": "A005944",
+            "matched_substring": "808768"
+          },
+          {
+            "oeis_id": "A006359",
+            "matched_substring": "149241"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass constant energy equivalent in MeV",
+        "digits": "93149410372",
+        "n_matches": 8,
+        "sample_matches": [
+          {
+            "oeis_id": "A000546",
+            "matched_substring": "314941"
+          },
+          {
+            "oeis_id": "A000963",
+            "matched_substring": "314941"
+          },
+          {
+            "oeis_id": "A002872",
+            "matched_substring": "314941"
+          },
+          {
+            "oeis_id": "A005411",
+            "matched_substring": "410372"
+          },
+          {
+            "oeis_id": "A006374",
+            "matched_substring": "149410"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-electron volt relationship",
+        "digits": "93149410372",
+        "n_matches": 8,
+        "sample_matches": [
+          {
+            "oeis_id": "A000546",
+            "matched_substring": "314941"
+          },
+          {
+            "oeis_id": "A000963",
+            "matched_substring": "314941"
+          },
+          {
+            "oeis_id": "A002872",
+            "matched_substring": "314941"
+          },
+          {
+            "oeis_id": "A005411",
+            "matched_substring": "410372"
+          },
+          {
+            "oeis_id": "A006374",
+            "matched_substring": "149410"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-hartree relationship",
+        "digits": "34231776922",
+        "n_matches": 4,
+        "sample_matches": [
+          {
+            "oeis_id": "A002136",
+            "matched_substring": "177692"
+          },
+          {
+            "oeis_id": "A003086",
+            "matched_substring": "317769"
+          },
+          {
+            "oeis_id": "A008048",
+            "matched_substring": "776922"
+          },
+          {
+            "oeis_id": "A008608",
+            "matched_substring": "423177"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-hertz relationship",
+        "digits": "225234272185",
+        "n_matches": 22,
+        "sample_matches": [
+          {
+            "oeis_id": "A000093",
+            "matched_substring": "225234"
+          },
+          {
+            "oeis_id": "A000447",
+            "matched_substring": "252342"
+          },
+          {
+            "oeis_id": "A000478",
+            "matched_substring": "225234"
+          },
+          {
+            "oeis_id": "A001091",
+            "matched_substring": "272185"
+          },
+          {
+            "oeis_id": "A001360",
+            "matched_substring": "427218"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-inverse meter relationship",
+        "digits": "75130066209",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A001508",
+            "matched_substring": "513006"
+          },
+          {
+            "oeis_id": "A002351",
+            "matched_substring": "513006"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-joule relationship",
+        "digits": "149241808768",
+        "n_matches": 8,
+        "sample_matches": [
+          {
+            "oeis_id": "A002914",
+            "matched_substring": "180876"
+          },
+          {
+            "oeis_id": "A003682",
+            "matched_substring": "241808"
+          },
+          {
+            "oeis_id": "A005804",
+            "matched_substring": "808768"
+          },
+          {
+            "oeis_id": "A005944",
+            "matched_substring": "808768"
+          },
+          {
+            "oeis_id": "A006359",
+            "matched_substring": "149241"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-kelvin relationship",
+        "digits": "108095402067",
+        "n_matches": 4,
+        "sample_matches": [
+          {
+            "oeis_id": "A002528",
+            "matched_substring": "095402"
+          },
+          {
+            "oeis_id": "A009069",
+            "matched_substring": "108095"
+          },
+          {
+            "oeis_id": "A009260",
+            "matched_substring": "108095"
+          },
+          {
+            "oeis_id": "A009791",
+            "matched_substring": "809540"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-kilogram relationship",
+        "digits": "166053906892",
+        "n_matches": 5,
+        "sample_matches": [
+          {
+            "oeis_id": "A002712",
+            "matched_substring": "660539"
+          },
+          {
+            "oeis_id": "A005348",
+            "matched_substring": "390689"
+          },
+          {
+            "oeis_id": "A006693",
+            "matched_substring": "166053"
+          },
+          {
+            "oeis_id": "A006912",
+            "matched_substring": "906892"
+          },
+          {
+            "oeis_id": "A008532",
+            "matched_substring": "053906"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of 1st hyperpolarizability",
+        "digits": "32063612996",
+        "n_matches": 5,
+        "sample_matches": [
+          {
+            "oeis_id": "A002205",
+            "matched_substring": "206361"
+          },
+          {
+            "oeis_id": "A009045",
+            "matched_substring": "063612"
+          },
+          {
+            "oeis_id": "A009542",
+            "matched_substring": "063612"
+          },
+          {
+            "oeis_id": "A009619",
+            "matched_substring": "063612"
+          },
+          {
+            "oeis_id": "A009791",
+            "matched_substring": "206361"
+          }
+        ]
+      }
+    ],
+    "7": [
+      {
+        "constant": "alpha particle mass energy equivalent",
+        "digits": "59719201997",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A000853",
+            "matched_substring": "5971920"
+          },
+          {
+            "oeis_id": "A008048",
+            "matched_substring": "1920199"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle mass energy equivalent in MeV",
+        "digits": "37273794118",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005365",
+            "matched_substring": "7273794"
+          }
+        ]
+      },
+      {
+        "constant": "alpha particle molar mass",
+        "digits": "40015061833",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A004109",
+            "matched_substring": "5061833"
+          }
+        ]
+      },
+      {
+        "constant": "Angstrom star",
+        "digits": "100001495",
+        "n_matches": 7,
+        "sample_matches": [
+          {
+            "oeis_id": "A000583",
+            "matched_substring": "1000014"
+          },
+          {
+            "oeis_id": "A000775",
+            "matched_substring": "0000149"
+          },
+          {
+            "oeis_id": "A002397",
+            "matched_substring": "0000149"
+          },
+          {
+            "oeis_id": "A002690",
+            "matched_substring": "0000149"
+          },
+          {
+            "oeis_id": "A005558",
+            "matched_substring": "0000149"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass constant",
+        "digits": "166053906892",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A008532",
+            "matched_substring": "6053906"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass constant energy equivalent",
+        "digits": "149241808768",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A005804",
+            "matched_substring": "1808768"
+          },
+          {
+            "oeis_id": "A007781",
+            "matched_substring": "2418087"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass constant energy equivalent in MeV",
+        "digits": "93149410372",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A005411",
+            "matched_substring": "9410372"
+          },
+          {
+            "oeis_id": "A009931",
+            "matched_substring": "9410372"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-electron volt relationship",
+        "digits": "93149410372",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A005411",
+            "matched_substring": "9410372"
+          },
+          {
+            "oeis_id": "A009931",
+            "matched_substring": "9410372"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-hertz relationship",
+        "digits": "225234272185",
+        "n_matches": 8,
+        "sample_matches": [
+          {
+            "oeis_id": "A000093",
+            "matched_substring": "2252342"
+          },
+          {
+            "oeis_id": "A001399",
+            "matched_substring": "2252342"
+          },
+          {
+            "oeis_id": "A002821",
+            "matched_substring": "2252342"
+          },
+          {
+            "oeis_id": "A004152",
+            "matched_substring": "2252342"
+          },
+          {
+            "oeis_id": "A007936",
+            "matched_substring": "2252342"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-inverse meter relationship",
+        "digits": "75130066209",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A002351",
+            "matched_substring": "7513006"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-joule relationship",
+        "digits": "149241808768",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A005804",
+            "matched_substring": "1808768"
+          },
+          {
+            "oeis_id": "A007781",
+            "matched_substring": "2418087"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-kelvin relationship",
+        "digits": "108095402067",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A009069",
+            "matched_substring": "1080954"
+          }
+        ]
+      },
+      {
+        "constant": "atomic mass unit-kilogram relationship",
+        "digits": "166053906892",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A008532",
+            "matched_substring": "6053906"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of charge",
+        "digits": "1602176634",
+        "n_matches": 3,
+        "sample_matches": [
+          {
+            "oeis_id": "A001752",
+            "matched_substring": "1602176"
+          },
+          {
+            "oeis_id": "A003923",
+            "matched_substring": "2176634"
+          },
+          {
+            "oeis_id": "A005899",
+            "matched_substring": "6021766"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of electric field gradient",
+        "digits": "97173624424",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A002154",
+            "matched_substring": "3624424"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of electric potential",
+        "digits": "27211386245981",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A000684",
+            "matched_substring": "7211386"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of electric quadrupole mom.",
+        "digits": "44865515185",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A006690",
+            "matched_substring": "8655151"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of length",
+        "digits": "529177210544",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A003671",
+            "matched_substring": "9177210"
+          },
+          {
+            "oeis_id": "A008021",
+            "matched_substring": "9177210"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of magnetizability",
+        "digits": "78910365794",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A007272",
+            "matched_substring": "8910365"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of permittivity",
+        "digits": "111265005620",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A001881",
+            "matched_substring": "1126500"
+          },
+          {
+            "oeis_id": "A007584",
+            "matched_substring": "1112650"
+          }
+        ]
+      }
+    ],
+    "8": [
+      {
+        "constant": "atomic unit of charge",
+        "digits": "1602176634",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005899",
+            "matched_substring": "16021766"
+          }
+        ]
+      },
+      {
+        "constant": "atomic unit of length",
+        "digits": "529177210544",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003671",
+            "matched_substring": "29177210"
+          }
+        ]
+      },
+      {
+        "constant": "Bohr radius",
+        "digits": "529177210544",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003671",
+            "matched_substring": "29177210"
+          }
+        ]
+      },
+      {
+        "constant": "classical electron radius",
+        "digits": "28179403205",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A001080",
+            "matched_substring": "81794032"
+          }
+        ]
+      },
+      {
+        "constant": "electron mass in u",
+        "digits": "5485799090441",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003672",
+            "matched_substring": "85799090"
+          }
+        ]
+      },
+      {
+        "constant": "electron molar mass",
+        "digits": "54857990962",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003672",
+            "matched_substring": "48579909"
+          }
+        ]
+      },
+      {
+        "constant": "electron-muon mag. mom. ratio",
+        "digits": "2067669881",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A007111",
+            "matched_substring": "06766988"
+          }
+        ]
+      },
+      {
+        "constant": "electron relative atomic mass",
+        "digits": "5485799090441",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003672",
+            "matched_substring": "85799090"
+          }
+        ]
+      },
+      {
+        "constant": "electron volt",
+        "digits": "1602176634",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005899",
+            "matched_substring": "16021766"
+          }
+        ]
+      },
+      {
+        "constant": "electron volt-joule relationship",
+        "digits": "1602176634",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005899",
+            "matched_substring": "16021766"
+          }
+        ]
+      },
+      {
+        "constant": "elementary charge",
+        "digits": "1602176634",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005899",
+            "matched_substring": "16021766"
+          }
+        ]
+      },
+      {
+        "constant": "fine-structure constant",
+        "digits": "72973525643",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003673",
+            "matched_substring": "29735256"
+          }
+        ]
+      },
+      {
+        "constant": "hartree-inverse meter relationship",
+        "digits": "21947463136314",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A007548",
+            "matched_substring": "21947463"
+          }
+        ]
+      },
+      {
+        "constant": "hertz-joule relationship",
+        "digits": "662607015",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003676",
+            "matched_substring": "66260701"
+          }
+        ]
+      },
+      {
+        "constant": "inverse fine-structure constant",
+        "digits": "137035999177",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005600",
+            "matched_substring": "37035999"
+          }
+        ]
+      },
+      {
+        "constant": "inverse meter-hertz relationship",
+        "digits": "299792458",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003678",
+            "matched_substring": "29979245"
+          }
+        ]
+      },
+      {
+        "constant": "joule-hartree relationship",
+        "digits": "22937122783969",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003878",
+            "matched_substring": "12278396"
+          }
+        ]
+      },
+      {
+        "constant": "molar mass constant",
+        "digits": "100000000105",
+        "n_matches": 210,
+        "sample_matches": [
+          {
+            "oeis_id": "A000004",
+            "matched_substring": "00000000"
+          },
+          {
+            "oeis_id": "A000007",
+            "matched_substring": "10000000"
+          },
+          {
+            "oeis_id": "A000038",
+            "matched_substring": "00000000"
+          },
+          {
+            "oeis_id": "A000086",
+            "matched_substring": "00000000"
+          },
+          {
+            "oeis_id": "A000089",
+            "matched_substring": "00000000"
+          }
+        ]
+      },
+      {
+        "constant": "molar mass of carbon-12",
+        "digits": "120000000126",
+        "n_matches": 139,
+        "sample_matches": [
+          {
+            "oeis_id": "A000038",
+            "matched_substring": "20000000"
+          },
+          {
+            "oeis_id": "A000086",
+            "matched_substring": "20000000"
+          },
+          {
+            "oeis_id": "A000089",
+            "matched_substring": "20000000"
+          },
+          {
+            "oeis_id": "A000095",
+            "matched_substring": "20000000"
+          },
+          {
+            "oeis_id": "A000122",
+            "matched_substring": "20000000"
+          }
+        ]
+      },
+      {
+        "constant": "natural unit of velocity",
+        "digits": "299792458",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003678",
+            "matched_substring": "29979245"
+          }
+        ]
+      }
+    ]
+  },
+  "ratio_matches": {
+    "6": [
+      {
+        "ratio": "m_p/m_e",
+        "digits": "183615267343",
+        "n_matches": 13,
+        "sample_matches": [
+          {
+            "oeis_id": "A000702",
+            "matched_substring": "361526"
+          },
+          {
+            "oeis_id": "A000958",
+            "matched_substring": "267343"
+          },
+          {
+            "oeis_id": "A002140",
+            "matched_substring": "836152"
+          },
+          {
+            "oeis_id": "A003549",
+            "matched_substring": "526734"
+          },
+          {
+            "oeis_id": "A003701",
+            "matched_substring": "361526"
+          }
+        ]
+      },
+      {
+        "ratio": "c/alpha",
+        "digits": "410823589997869",
+        "n_matches": 11,
+        "sample_matches": [
+          {
+            "oeis_id": "A000116",
+            "matched_substring": "589997"
+          },
+          {
+            "oeis_id": "A000845",
+            "matched_substring": "410823"
+          },
+          {
+            "oeis_id": "A002894",
+            "matched_substring": "082358"
+          },
+          {
+            "oeis_id": "A003227",
+            "matched_substring": "108235"
+          },
+          {
+            "oeis_id": "A003313",
+            "matched_substring": "899978"
+          }
+        ]
+      },
+      {
+        "ratio": "h/k_B",
+        "digits": "479924307336622",
+        "n_matches": 7,
+        "sample_matches": [
+          {
+            "oeis_id": "A003349",
+            "matched_substring": "430733"
+          },
+          {
+            "oeis_id": "A004412",
+            "matched_substring": "307336"
+          },
+          {
+            "oeis_id": "A005703",
+            "matched_substring": "243073"
+          },
+          {
+            "oeis_id": "A006697",
+            "matched_substring": "430733"
+          },
+          {
+            "oeis_id": "A007562",
+            "matched_substring": "924307"
+          }
+        ]
+      },
+      {
+        "ratio": "e^2/(4pi*eps0*hbar*c)",
+        "digits": "72973525693",
+        "n_matches": 8,
+        "sample_matches": [
+          {
+            "oeis_id": "A000364",
+            "matched_substring": "525693"
+          },
+          {
+            "oeis_id": "A000826",
+            "matched_substring": "352569"
+          },
+          {
+            "oeis_id": "A001425",
+            "matched_substring": "973525"
+          },
+          {
+            "oeis_id": "A001591",
+            "matched_substring": "525693"
+          },
+          {
+            "oeis_id": "A003084",
+            "matched_substring": "735256"
+          }
+        ]
+      },
+      {
+        "ratio": "m_e*c^2_in_eV",
+        "digits": "51099895",
+        "n_matches": 3,
+        "sample_matches": [
+          {
+            "oeis_id": "A001232",
+            "matched_substring": "109989"
+          },
+          {
+            "oeis_id": "A005351",
+            "matched_substring": "109989"
+          },
+          {
+            "oeis_id": "A008919",
+            "matched_substring": "109989"
+          }
+        ]
+      },
+      {
+        "ratio": "R_inf*hc_in_eV",
+        "digits": "13605693122994",
+        "n_matches": 13,
+        "sample_matches": [
+          {
+            "oeis_id": "A000022",
+            "matched_substring": "693122"
+          },
+          {
+            "oeis_id": "A000636",
+            "matched_substring": "693122"
+          },
+          {
+            "oeis_id": "A001800",
+            "matched_substring": "569312"
+          },
+          {
+            "oeis_id": "A002386",
+            "matched_substring": "693122"
+          },
+          {
+            "oeis_id": "A002540",
+            "matched_substring": "693122"
+          }
+        ]
+      },
+      {
+        "ratio": "mu_B/mu_N",
+        "digits": "183615267343",
+        "n_matches": 13,
+        "sample_matches": [
+          {
+            "oeis_id": "A000702",
+            "matched_substring": "361526"
+          },
+          {
+            "oeis_id": "A000958",
+            "matched_substring": "267343"
+          },
+          {
+            "oeis_id": "A002140",
+            "matched_substring": "836152"
+          },
+          {
+            "oeis_id": "A003549",
+            "matched_substring": "526734"
+          },
+          {
+            "oeis_id": "A003701",
+            "matched_substring": "361526"
+          }
+        ]
+      }
+    ],
+    "7": [
+      {
+        "ratio": "m_p/m_e",
+        "digits": "183615267343",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A003549",
+            "matched_substring": "1526734"
+          },
+          {
+            "oeis_id": "A005601",
+            "matched_substring": "1836152"
+          }
+        ]
+      },
+      {
+        "ratio": "c/alpha",
+        "digits": "410823589997869",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003436",
+            "matched_substring": "3589997"
+          }
+        ]
+      },
+      {
+        "ratio": "e^2/(4pi*eps0*hbar*c)",
+        "digits": "72973525693",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A001591",
+            "matched_substring": "3525693"
+          },
+          {
+            "oeis_id": "A003673",
+            "matched_substring": "2973525"
+          }
+        ]
+      },
+      {
+        "ratio": "R_inf*hc_in_eV",
+        "digits": "13605693122994",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A009797",
+            "matched_substring": "6931229"
+          }
+        ]
+      },
+      {
+        "ratio": "mu_B/mu_N",
+        "digits": "183615267343",
+        "n_matches": 2,
+        "sample_matches": [
+          {
+            "oeis_id": "A003549",
+            "matched_substring": "1526734"
+          },
+          {
+            "oeis_id": "A005601",
+            "matched_substring": "1836152"
+          }
+        ]
+      }
+    ],
+    "8": [
+      {
+        "ratio": "m_p/m_e",
+        "digits": "183615267343",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005601",
+            "matched_substring": "83615267"
+          }
+        ]
+      },
+      {
+        "ratio": "e^2/(4pi*eps0*hbar*c)",
+        "digits": "72973525693",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A003673",
+            "matched_substring": "29735256"
+          }
+        ]
+      },
+      {
+        "ratio": "mu_B/mu_N",
+        "digits": "183615267343",
+        "n_matches": 1,
+        "sample_matches": [
+          {
+            "oeis_id": "A005601",
+            "matched_substring": "83615267"
+          }
+        ]
+      }
+    ]
+  },
+  "elapsed_seconds": 15.8
+}

@@ -1,0 +1,445 @@
+{
+  "analysis": "Number Field Discriminant Scaling with Degree",
+  "data_source": "F:\\Prometheus\\cartography\\number_fields\\data\\number_fields.json",
+  "n_fields": 9116,
+  "timestamp": "2026-04-10T22:42:10",
+  "elapsed_seconds": 0.04,
+  "degree_statistics": {
+    "2": {
+      "count": 6086,
+      "min_disc": 3,
+      "median_disc": 5006,
+      "max_disc": 9997,
+      "mean_disc": 5004.11,
+      "log_min_disc": 1.098612,
+      "log_median_disc": 8.518392,
+      "log_max_disc": 9.21004
+    },
+    "3": {
+      "count": 1902,
+      "min_disc": 23,
+      "median_disc": 5259,
+      "max_disc": 9996,
+      "mean_disc": 5173.76,
+      "log_min_disc": 3.135494,
+      "log_median_disc": 8.567791,
+      "log_max_disc": 9.20994
+    },
+    "4": {
+      "count": 1044,
+      "min_disc": 117,
+      "median_disc": 5620,
+      "max_disc": 9972,
+      "mean_disc": 5450.66,
+      "log_min_disc": 4.762174,
+      "log_median_disc": 8.634176,
+      "log_max_disc": 9.207536
+    },
+    "5": {
+      "count": 82,
+      "min_disc": 1609,
+      "median_disc": 6515,
+      "max_disc": 9829,
+      "mean_disc": 6320.79,
+      "log_min_disc": 7.383368,
+      "log_median_disc": 8.781811,
+      "log_max_disc": 9.193092
+    },
+    "6": {
+      "count": 1,
+      "min_disc": 9747,
+      "median_disc": 9747,
+      "max_disc": 9747,
+      "mean_disc": 9747.0,
+      "log_min_disc": 9.184715,
+      "log_median_disc": 9.184715,
+      "log_max_disc": 9.184715
+    }
+  },
+  "scaling_law_fit": {
+    "min_disc_fit": {
+      "alpha": 2.042008,
+      "intercept": -3.055159,
+      "r_squared": 0.995598,
+      "p_value": 0.000124,
+      "std_err": 0.078398,
+      "interpretation": "min|disc| ~ exp(2.042 * degree + -3.055)",
+      "data_points": {
+        "2": 1.0986,
+        "3": 3.1355,
+        "4": 4.7622,
+        "5": 7.3834,
+        "6": 9.1847
+      }
+    },
+    "median_disc_fit": {
+      "alpha": 0.154667,
+      "intercept": 8.118711,
+      "r_squared": 0.826456,
+      "interpretation": "median|disc| ~ exp(0.155 * degree + 8.119)"
+    }
+  },
+  "minkowski_comparison": {
+    "2": {
+      "empirical_log_min_disc": 1.098612,
+      "minkowski_log_bound_real": 0.693147,
+      "minkowski_log_bound_complex": 0.451583,
+      "log_gap_vs_real_bound": 0.405465,
+      "log_gap_vs_complex_bound": 0.647029,
+      "ratio_empirical_over_real_bound": 1.5,
+      "ratio_empirical_over_complex_bound": 1.9099,
+      "minkowski_tight": true
+    },
+    "3": {
+      "empirical_log_min_disc": 3.135494,
+      "minkowski_log_bound_real": 1.504077,
+      "minkowski_log_bound_complex": 1.141731,
+      "log_gap_vs_real_bound": 1.631417,
+      "log_gap_vs_complex_bound": 1.993763,
+      "ratio_empirical_over_real_bound": 5.1111,
+      "ratio_empirical_over_complex_bound": 7.3431,
+      "minkowski_tight": true
+    },
+    "4": {
+      "empirical_log_min_disc": 4.762174,
+      "minkowski_log_bound_real": 2.367124,
+      "minkowski_log_bound_complex": 1.883995,
+      "log_gap_vs_real_bound": 2.39505,
+      "log_gap_vs_complex_bound": 2.878179,
+      "ratio_empirical_over_real_bound": 10.9687,
+      "ratio_empirical_over_complex_bound": 17.7819,
+      "minkowski_tight": false
+    },
+    "5": {
+      "empirical_log_min_disc": 7.383368,
+      "minkowski_log_bound_real": 3.259698,
+      "minkowski_log_bound_complex": 2.655787,
+      "log_gap_vs_real_bound": 4.12367,
+      "log_gap_vs_complex_bound": 4.727581,
+      "ratio_empirical_over_real_bound": 61.7856,
+      "ratio_empirical_over_complex_bound": 113.0218,
+      "minkowski_tight": false
+    },
+    "6": {
+      "empirical_log_min_disc": 9.184715,
+      "minkowski_log_bound_real": 4.171306,
+      "minkowski_log_bound_complex": 3.446612,
+      "log_gap_vs_real_bound": 5.013409,
+      "log_gap_vs_complex_bound": 5.738103,
+      "ratio_empirical_over_real_bound": 150.4166,
+      "ratio_empirical_over_complex_bound": 310.4749,
+      "minkowski_tight": false
+    }
+  },
+  "odlyzko_bounds": {
+    "grh_asymptotic_root_disc": 22.381616,
+    "unconditional_asymptotic_root_disc": 60.83954,
+    "note": "Odlyzko: rd = |disc|^{1/n} -> constant as n -> infinity. GRH bound ~ 22.38, unconditional ~ 60.84"
+  },
+  "root_discriminant": {
+    "2": {
+      "min_root_disc": 1.732051,
+      "median_root_disc": 70.753091,
+      "mean_root_disc": 66.689542,
+      "max_root_disc": 99.984999
+    },
+    "3": {
+      "min_root_disc": 2.843867,
+      "median_root_disc": 17.39061,
+      "mean_root_disc": 16.466601,
+      "max_root_disc": 21.541474
+    },
+    "4": {
+      "min_root_disc": 3.288868,
+      "median_root_disc": 8.658521,
+      "mean_root_disc": 8.299834,
+      "max_root_disc": 9.992993
+    },
+    "5": {
+      "min_root_disc": 4.378357,
+      "median_root_disc": 5.791343,
+      "mean_root_disc": 5.67866,
+      "max_root_disc": 6.287846
+    },
+    "6": {
+      "min_root_disc": 4.621807,
+      "median_root_disc": 4.621807,
+      "mean_root_disc": 4.621807,
+      "max_root_disc": 4.621807
+    },
+    "trend": {
+      "degrees": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "min_root_discs": [
+        1.732051,
+        2.843867,
+        3.288868,
+        4.378357,
+        4.621807
+      ],
+      "increasing": true,
+      "note": "Root discriminant should increase toward Odlyzko bound as degree grows"
+    }
+  },
+  "distribution_shape": {
+    "2": {
+      "n": 6086,
+      "log_normal_test": "dagostino_pearson",
+      "log_normal_statistic": 2459.916681,
+      "log_normal_p_value": 0.0,
+      "log_normal_rejected_at_005": true,
+      "log_disc_skewness": -1.9521,
+      "log_disc_kurtosis": 5.344,
+      "pareto_alpha_mle": 0.1406,
+      "shape_verdict": "not_log_normal"
+    },
+    "3": {
+      "n": 1902,
+      "log_normal_test": "shapiro_wilk",
+      "log_normal_statistic": 0.834491,
+      "log_normal_p_value": 1.3361e-40,
+      "log_normal_rejected_at_005": true,
+      "log_disc_skewness": -1.7487,
+      "log_disc_kurtosis": 3.8536,
+      "pareto_alpha_mle": 0.1939,
+      "shape_verdict": "not_log_normal"
+    },
+    "4": {
+      "n": 1044,
+      "log_normal_test": "shapiro_wilk",
+      "log_normal_statistic": 0.848356,
+      "log_normal_p_value": 1.8415e-30,
+      "log_normal_rejected_at_005": true,
+      "log_disc_skewness": -1.5857,
+      "log_disc_kurtosis": 2.8499,
+      "pareto_alpha_mle": 0.2749,
+      "shape_verdict": "not_log_normal"
+    },
+    "5": {
+      "n": 82,
+      "log_normal_test": "shapiro_wilk",
+      "log_normal_statistic": 0.903053,
+      "log_normal_p_value": 1.3169e-05,
+      "log_normal_rejected_at_005": true,
+      "log_disc_skewness": -0.9837,
+      "log_disc_kurtosis": 0.3758,
+      "pareto_alpha_mle": 0.781,
+      "shape_verdict": "not_log_normal"
+    },
+    "6": {
+      "n": 1,
+      "test": "insufficient_data",
+      "note": "Only 1 fields at degree 6; need >= 30 for distribution test"
+    }
+  },
+  "class_number_correlation": {
+    "2": {
+      "n": 6086,
+      "spearman_rho": 0.18368,
+      "spearman_p_value": 2.5241e-47,
+      "significant_at_005": true,
+      "log_log_spearman_rho": 0.18368,
+      "fraction_class_number_1": 0.2121,
+      "median_class_number": 6,
+      "max_class_number": 139,
+      "cohen_lenstra_note": "Positive correlation expected: h grows with |disc|^(1/2) on average"
+    },
+    "3": {
+      "n": 1902,
+      "spearman_rho": 0.11322,
+      "spearman_p_value": 7.4049e-07,
+      "significant_at_005": true,
+      "log_log_spearman_rho": 0.11322,
+      "fraction_class_number_1": 0.7581,
+      "median_class_number": 1,
+      "max_class_number": 13,
+      "cohen_lenstra_note": "Cohen-Lenstra predicts class group distribution depends on degree parity"
+    },
+    "4": {
+      "n": 1044,
+      "spearman_rho": 0.114884,
+      "spearman_p_value": 0.00019931,
+      "significant_at_005": true,
+      "log_log_spearman_rho": 0.114884,
+      "fraction_class_number_1": 0.8803,
+      "median_class_number": 1,
+      "max_class_number": 4,
+      "cohen_lenstra_note": "Cohen-Lenstra predicts class group distribution depends on degree parity"
+    },
+    "5": {
+      "n": 82,
+      "spearman_rho": null,
+      "spearman_p_value": null,
+      "significant_at_005": false,
+      "log_log_spearman_rho": null,
+      "fraction_class_number_1": 1.0,
+      "median_class_number": 1,
+      "max_class_number": 1,
+      "cohen_lenstra_note": "All class numbers identical (=1)"
+    },
+    "6": {
+      "n": 1,
+      "test": "insufficient_data"
+    }
+  },
+  "discriminant_gaps": {
+    "2": {
+      "n_unique_discs": 5578,
+      "n_gaps": 5577,
+      "min_gap": 1,
+      "median_gap": 2,
+      "max_gap": 8,
+      "mean_gap": 1.79,
+      "std_gap": 0.89,
+      "cv_gap": 0.4994,
+      "ks_vs_exponential_stat": 0.427667,
+      "ks_vs_exponential_p": 0.0,
+      "gap_distribution": "structured_gaps",
+      "smallest_5_gaps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "largest_5_gaps": [
+        6,
+        6,
+        6,
+        7,
+        8
+      ]
+    },
+    "3": {
+      "n_unique_discs": 1759,
+      "n_gaps": 1758,
+      "min_gap": 1,
+      "median_gap": 4,
+      "max_gap": 35,
+      "mean_gap": 5.67,
+      "std_gap": 4.9,
+      "cv_gap": 0.8643,
+      "ks_vs_exponential_stat": 0.161613,
+      "ks_vs_exponential_p": 1.3842e-40,
+      "gap_distribution": "structured_gaps",
+      "smallest_5_gaps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "largest_5_gaps": [
+        29,
+        29,
+        30,
+        32,
+        35
+      ]
+    },
+    "4": {
+      "n_unique_discs": 860,
+      "n_gaps": 859,
+      "min_gap": 1,
+      "median_gap": 8,
+      "max_gap": 99,
+      "mean_gap": 11.47,
+      "std_gap": 10.55,
+      "cv_gap": 0.9196,
+      "ks_vs_exponential_stat": 0.098549,
+      "ks_vs_exponential_p": 1.0287e-07,
+      "gap_distribution": "structured_gaps",
+      "smallest_5_gaps": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "largest_5_gaps": [
+        55,
+        59,
+        59,
+        84,
+        99
+      ]
+    },
+    "5": {
+      "n_unique_discs": 82,
+      "n_gaps": 81,
+      "min_gap": 2,
+      "median_gap": 69,
+      "max_gap": 488,
+      "mean_gap": 101.48,
+      "std_gap": 95.98,
+      "cv_gap": 0.9458,
+      "ks_vs_exponential_stat": 0.085266,
+      "ks_vs_exponential_p": 0.56856,
+      "gap_distribution": "consistent_with_poisson",
+      "smallest_5_gaps": [
+        2,
+        3,
+        3,
+        6,
+        6
+      ],
+      "largest_5_gaps": [
+        280,
+        320,
+        328,
+        432,
+        488
+      ]
+    },
+    "6": {
+      "n_unique_discs": 1,
+      "test": "insufficient_data"
+    }
+  },
+  "summary": {
+    "scaling_exponent_alpha": 2.042008,
+    "scaling_exponent_std_err": 0.078398,
+    "scaling_r_squared": 0.995598,
+    "interpretation": "Minimum discriminant scales as exp(2.042 * degree). Root discriminant increases with degree toward Odlyzko bound (22.38 GRH). ",
+    "minkowski_tightness": {
+      "2": 1.5,
+      "3": 5.1111,
+      "4": 10.9687,
+      "5": 61.7856,
+      "6": 150.4166
+    },
+    "distribution_verdicts": {
+      "2": "not_log_normal",
+      "3": "not_log_normal",
+      "4": "not_log_normal",
+      "5": "not_log_normal",
+      "6": "insufficient_data"
+    },
+    "class_number_correlations": {
+      "2": {
+        "rho": 0.18368,
+        "significant": true
+      },
+      "3": {
+        "rho": 0.11322,
+        "significant": true
+      },
+      "4": {
+        "rho": 0.114884,
+        "significant": true
+      }
+    },
+    "gap_structure": {
+      "2": "structured_gaps",
+      "3": "structured_gaps",
+      "4": "structured_gaps",
+      "5": "consistent_with_poisson",
+      "6": "insufficient_data"
+    }
+  }
+}

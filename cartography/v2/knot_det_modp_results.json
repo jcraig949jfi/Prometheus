@@ -1,0 +1,616 @@
+{
+  "metadata": {
+    "n_knots": 2977,
+    "n_with_determinant": 2977,
+    "det_range": [
+      1,
+      377
+    ],
+    "crossing_numbers_present": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "primes_tested": [
+      2,
+      3,
+      5,
+      7,
+      11
+    ],
+    "n_permutations": 2000,
+    "date": "2026-04-10"
+  },
+  "parity_analysis": {
+    "n_even_det": 0,
+    "n_odd_det": 2977,
+    "note": "Knot determinants are always odd (det = |Delta(-1)| where Delta is Alexander polynomial; Delta(1)=1 forces odd determinant). mod-2 residue is constant=1, so MI=0 with everything."
+  },
+  "modp_distributions": {
+    "2": {
+      "distribution": {
+        "0": 0,
+        "1": 2977
+      },
+      "chi2_vs_uniform": 2977.0,
+      "df": 1,
+      "note": "det always odd"
+    },
+    "3": {
+      "distribution": {
+        "0": 1084,
+        "1": 978,
+        "2": 915
+      },
+      "chi2_vs_uniform": 14.7,
+      "df": 2,
+      "note": ""
+    },
+    "5": {
+      "distribution": {
+        "0": 670,
+        "1": 584,
+        "2": 555,
+        "3": 560,
+        "4": 608
+      },
+      "chi2_vs_uniform": 14.68,
+      "df": 4,
+      "note": ""
+    },
+    "7": {
+      "distribution": {
+        "0": 479,
+        "1": 435,
+        "2": 411,
+        "3": 399,
+        "4": 428,
+        "5": 420,
+        "6": 405
+      },
+      "chi2_vs_uniform": 10.16,
+      "df": 6,
+      "note": ""
+    },
+    "11": {
+      "distribution": {
+        "0": 285,
+        "1": 281,
+        "2": 267,
+        "3": 280,
+        "4": 268,
+        "5": 278,
+        "6": 257,
+        "7": 272,
+        "8": 259,
+        "9": 274,
+        "10": 256
+      },
+      "chi2_vs_uniform": 3.79,
+      "df": 10,
+      "note": ""
+    }
+  },
+  "mi_vs_invariants": {
+    "det_mod_2": {
+      "vs_crossing_number": {
+        "mi_observed": 0.0,
+        "mi_null_mean": 0.0,
+        "mi_null_std": 0.0,
+        "z_score": 0.0,
+        "p_value": 1.0
+      },
+      "vs_alternating": {
+        "mi_observed": 0.0,
+        "mi_null_mean": 0.0,
+        "mi_null_std": 0.0,
+        "z_score": 0.0,
+        "p_value": 1.0
+      },
+      "vs_jones_span": {
+        "mi_observed": 0.0,
+        "mi_null_mean": 0.0,
+        "mi_null_std": 0.0,
+        "z_score": 0.0,
+        "p_value": 1.0
+      }
+    },
+    "det_mod_3": {
+      "vs_crossing_number": {
+        "mi_observed": 0.002314,
+        "mi_null_mean": 0.00485,
+        "mi_null_std": 0.001238,
+        "z_score": -2.05,
+        "p_value": 0.9965
+      },
+      "vs_alternating": {
+        "mi_observed": 0.000307,
+        "mi_null_mean": 0.000526,
+        "mi_null_std": 0.000525,
+        "z_score": -0.42,
+        "p_value": 0.5595
+      },
+      "vs_jones_span": {
+        "mi_observed": 0.003082,
+        "mi_null_mean": 0.004701,
+        "mi_null_std": 0.001368,
+        "z_score": -1.18,
+        "p_value": 0.8975
+      }
+    },
+    "det_mod_5": {
+      "vs_crossing_number": {
+        "mi_observed": 0.00532,
+        "mi_null_mean": 0.008882,
+        "mi_null_std": 0.001683,
+        "z_score": -2.12,
+        "p_value": 0.9935
+      },
+      "vs_alternating": {
+        "mi_observed": 0.000973,
+        "mi_null_mean": 0.001053,
+        "mi_null_std": 0.000756,
+        "z_score": -0.11,
+        "p_value": 0.452
+      },
+      "vs_jones_span": {
+        "mi_observed": 0.006794,
+        "mi_null_mean": 0.008976,
+        "mi_null_std": 0.00188,
+        "z_score": -1.16,
+        "p_value": 0.887
+      }
+    },
+    "det_mod_7": {
+      "vs_crossing_number": {
+        "mi_observed": 0.00905,
+        "mi_null_mean": 0.012516,
+        "mi_null_std": 0.001962,
+        "z_score": -1.77,
+        "p_value": 0.978
+      },
+      "vs_alternating": {
+        "mi_observed": 0.001341,
+        "mi_null_mean": 0.001571,
+        "mi_null_std": 0.000895,
+        "z_score": -0.26,
+        "p_value": 0.5315
+      },
+      "vs_jones_span": {
+        "mi_observed": 0.010164,
+        "mi_null_mean": 0.013136,
+        "mi_null_std": 0.002223,
+        "z_score": -1.34,
+        "p_value": 0.9145
+      }
+    },
+    "det_mod_11": {
+      "vs_crossing_number": {
+        "mi_observed": 0.009707,
+        "mi_null_mean": 0.019053,
+        "mi_null_std": 0.002321,
+        "z_score": -4.03,
+        "p_value": 1.0
+      },
+      "vs_alternating": {
+        "mi_observed": 0.002562,
+        "mi_null_mean": 0.002616,
+        "mi_null_std": 0.001167,
+        "z_score": -0.05,
+        "p_value": 0.458
+      },
+      "vs_jones_span": {
+        "mi_observed": 0.018434,
+        "mi_null_mean": 0.020806,
+        "mi_null_std": 0.002674,
+        "z_score": -0.89,
+        "p_value": 0.812
+      }
+    }
+  },
+  "enrichment_by_crossing_number": {
+    "mod_3": {
+      "8": {
+        "n": 21,
+        "distribution": {
+          "0": 0.381,
+          "1": 0.2857,
+          "2": 0.3333
+        },
+        "kl_divergence": 0.0063,
+        "max_enrichment_ratio": 1.085
+      },
+      "9": {
+        "n": 49,
+        "distribution": {
+          "0": 0.4286,
+          "1": 0.3265,
+          "2": 0.2449
+        },
+        "kl_divergence": 0.01764,
+        "max_enrichment_ratio": 1.177
+      },
+      "10": {
+        "n": 165,
+        "distribution": {
+          "0": 0.3758,
+          "1": 0.3152,
+          "2": 0.3091
+        },
+        "kl_divergence": 0.00067,
+        "max_enrichment_ratio": 1.032
+      },
+      "11": {
+        "n": 552,
+        "distribution": {
+          "0": 0.3804,
+          "1": 0.3098,
+          "2": 0.3098
+        },
+        "kl_divergence": 0.00132,
+        "max_enrichment_ratio": 1.045
+      },
+      "12": {
+        "n": 2176,
+        "distribution": {
+          "0": 0.358,
+          "1": 0.3346,
+          "2": 0.3074
+        },
+        "kl_divergence": 0.00015,
+        "max_enrichment_ratio": 1.018
+      }
+    },
+    "mod_5": {
+      "8": {
+        "n": 21,
+        "distribution": {
+          "0": 0.2381,
+          "1": 0.0952,
+          "2": 0.2381,
+          "3": 0.2381,
+          "4": 0.1905
+        },
+        "kl_divergence": 0.06587,
+        "max_enrichment_ratio": 1.277
+      },
+      "9": {
+        "n": 49,
+        "distribution": {
+          "0": 0.1837,
+          "1": 0.1837,
+          "2": 0.2449,
+          "3": 0.1633,
+          "4": 0.2245
+        },
+        "kl_divergence": 0.02236,
+        "max_enrichment_ratio": 1.314
+      },
+      "10": {
+        "n": 165,
+        "distribution": {
+          "0": 0.2303,
+          "1": 0.2182,
+          "2": 0.1818,
+          "3": 0.2121,
+          "4": 0.1576
+        },
+        "kl_divergence": 0.01236,
+        "max_enrichment_ratio": 1.128
+      },
+      "11": {
+        "n": 552,
+        "distribution": {
+          "0": 0.2391,
+          "1": 0.1866,
+          "2": 0.1884,
+          "3": 0.1902,
+          "4": 0.1957
+        },
+        "kl_divergence": 0.00126,
+        "max_enrichment_ratio": 1.063
+      },
+      "12": {
+        "n": 2176,
+        "distribution": {
+          "0": 0.222,
+          "1": 0.1981,
+          "2": 0.1843,
+          "3": 0.1857,
+          "4": 0.21
+        },
+        "kl_divergence": 0.0002,
+        "max_enrichment_ratio": 1.028
+      }
+    },
+    "mod_7": {
+      "8": {
+        "n": 21,
+        "distribution": {
+          "0": 0.0952,
+          "1": 0.1429,
+          "2": 0.1905,
+          "3": 0.2381,
+          "4": 0.0952,
+          "5": 0.0952,
+          "6": 0.1429
+        },
+        "kl_divergence": 0.10862,
+        "max_enrichment_ratio": 1.776
+      },
+      "9": {
+        "n": 49,
+        "distribution": {
+          "0": 0.102,
+          "1": 0.102,
+          "2": 0.1837,
+          "3": 0.1429,
+          "4": 0.102,
+          "5": 0.1429,
+          "6": 0.2245
+        },
+        "kl_divergence": 0.08322,
+        "max_enrichment_ratio": 1.65
+      },
+      "10": {
+        "n": 165,
+        "distribution": {
+          "0": 0.1515,
+          "1": 0.1636,
+          "2": 0.1273,
+          "3": 0.1697,
+          "4": 0.1576,
+          "5": 0.1333,
+          "6": 0.097
+        },
+        "kl_divergence": 0.01904,
+        "max_enrichment_ratio": 1.266
+      },
+      "11": {
+        "n": 552,
+        "distribution": {
+          "0": 0.1449,
+          "1": 0.1413,
+          "2": 0.154,
+          "3": 0.1395,
+          "4": 0.1395,
+          "5": 0.1467,
+          "6": 0.1341
+        },
+        "kl_divergence": 0.00301,
+        "max_enrichment_ratio": 1.115
+      },
+      "12": {
+        "n": 2176,
+        "distribution": {
+          "0": 0.1673,
+          "1": 0.1475,
+          "2": 0.1337,
+          "3": 0.1287,
+          "4": 0.1452,
+          "5": 0.1402,
+          "6": 0.1374
+        },
+        "kl_divergence": 0.00047,
+        "max_enrichment_ratio": 1.04
+      }
+    },
+    "mod_11": {
+      "8": {
+        "n": 21,
+        "distribution": {
+          "0": 0.0476,
+          "1": 0.1429,
+          "2": 0.0952,
+          "3": 0.1429,
+          "4": 0.0952,
+          "5": 0.0952,
+          "6": 0.0952,
+          "7": 0.0952,
+          "8": 0.0476,
+          "9": 0.0952,
+          "10": 0.0476
+        },
+        "kl_divergence": 0.08415,
+        "max_enrichment_ratio": 1.519
+      },
+      "9": {
+        "n": 49,
+        "distribution": {
+          "0": 0.0816,
+          "1": 0.102,
+          "2": 0.0612,
+          "3": 0.0816,
+          "4": 0.102,
+          "5": 0.1224,
+          "6": 0.102,
+          "7": 0.0816,
+          "8": 0.0816,
+          "9": 0.1224,
+          "10": 0.0612
+        },
+        "kl_divergence": 0.0329,
+        "max_enrichment_ratio": 1.33
+      },
+      "10": {
+        "n": 165,
+        "distribution": {
+          "0": 0.0848,
+          "1": 0.097,
+          "2": 0.0909,
+          "3": 0.0788,
+          "4": 0.0909,
+          "5": 0.103,
+          "6": 0.0909,
+          "7": 0.0788,
+          "8": 0.103,
+          "9": 0.0848,
+          "10": 0.097
+        },
+        "kl_divergence": 0.00847,
+        "max_enrichment_ratio": 1.184
+      },
+      "11": {
+        "n": 552,
+        "distribution": {
+          "0": 0.0942,
+          "1": 0.1033,
+          "2": 0.096,
+          "3": 0.0996,
+          "4": 0.0851,
+          "5": 0.0888,
+          "6": 0.0761,
+          "7": 0.0906,
+          "8": 0.0797,
+          "9": 0.0978,
+          "10": 0.0888
+        },
+        "kl_divergence": 0.0032,
+        "max_enrichment_ratio": 1.094
+      },
+      "12": {
+        "n": 2176,
+        "distribution": {
+          "0": 0.0974,
+          "1": 0.0919,
+          "2": 0.0882,
+          "3": 0.0938,
+          "4": 0.091,
+          "5": 0.0928,
+          "6": 0.0882,
+          "7": 0.0924,
+          "8": 0.0882,
+          "9": 0.0905,
+          "10": 0.0855
+        },
+        "kl_divergence": 0.00017,
+        "max_enrichment_ratio": 1.022
+      }
+    }
+  },
+  "alternating_profiles": {
+    "mod_3_alternating": {
+      "n": 1655,
+      "distribution": {
+        "0": 0.3553,
+        "1": 0.3305,
+        "2": 0.3142
+      }
+    },
+    "mod_3_non_alternating": {
+      "n": 1073,
+      "distribution": {
+        "0": 0.3737,
+        "1": 0.3281,
+        "2": 0.2982
+      }
+    },
+    "mod_5_alternating": {
+      "n": 1655,
+      "distribution": {
+        "0": 0.2163,
+        "1": 0.1958,
+        "2": 0.1927,
+        "3": 0.1915,
+        "4": 0.2036
+      }
+    },
+    "mod_5_non_alternating": {
+      "n": 1073,
+      "distribution": {
+        "0": 0.2395,
+        "1": 0.1957,
+        "2": 0.1733,
+        "3": 0.1789,
+        "4": 0.2125
+      }
+    },
+    "mod_7_alternating": {
+      "n": 1655,
+      "distribution": {
+        "0": 0.1559,
+        "1": 0.1468,
+        "2": 0.1341,
+        "3": 0.1372,
+        "4": 0.1396,
+        "5": 0.1486,
+        "6": 0.1378
+      }
+    },
+    "mod_7_non_alternating": {
+      "n": 1073,
+      "distribution": {
+        "0": 0.1733,
+        "1": 0.1454,
+        "2": 0.1435,
+        "3": 0.1212,
+        "4": 0.151,
+        "5": 0.1305,
+        "6": 0.1351
+      }
+    },
+    "mod_11_alternating": {
+      "n": 1655,
+      "distribution": {
+        "0": 0.09,
+        "1": 0.0918,
+        "2": 0.0949,
+        "3": 0.0924,
+        "4": 0.0882,
+        "5": 0.0918,
+        "6": 0.0943,
+        "7": 0.0912,
+        "8": 0.0846,
+        "9": 0.0888,
+        "10": 0.0918
+      }
+    },
+    "mod_11_non_alternating": {
+      "n": 1073,
+      "distribution": {
+        "0": 0.1072,
+        "1": 0.0979,
+        "2": 0.082,
+        "3": 0.0988,
+        "4": 0.0923,
+        "5": 0.0923,
+        "6": 0.0727,
+        "7": 0.0932,
+        "8": 0.0895,
+        "9": 0.0969,
+        "10": 0.0774
+      }
+    }
+  },
+  "ec_comparison": {
+    "knot_max_enrichment_per_prime": {
+      "mod_3": {
+        "max_enrichment_ratio": 1.177,
+        "max_kl": 0.01764
+      },
+      "mod_5": {
+        "max_enrichment_ratio": 1.314,
+        "max_kl": 0.06587
+      },
+      "mod_7": {
+        "max_enrichment_ratio": 1.776,
+        "max_kl": 0.10862
+      },
+      "mod_11": {
+        "max_enrichment_ratio": 1.519,
+        "max_kl": 0.08415
+      }
+    },
+    "ec_reference": "EC mod-p enrichment 8-16x after prime detrending (C11 result)",
+    "assessment": "NULL: knot det mod-p shows no predictive structure for invariants. All MI z-scores negative (observed < null). Max enrichment ratio 1.78x in small samples only. EC enrichment (8-16x) is far stronger.",
+    "max_z_score_signed": -4.03,
+    "max_enrichment_ratio": 1.776
+  }
+}

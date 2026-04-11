@@ -1,0 +1,464 @@
+{
+  "description": "Kissing number prediction from simpler invariants (det, class_number)",
+  "baselines": {
+    "theta_series_knn": 0.966,
+    "mod_p_entropy": 0.859
+  },
+  "dimension_counts": {
+    "1": 1,
+    "2": 1609,
+    "3": 36585,
+    "4": 481,
+    "5": 295,
+    "6": 186,
+    "7": 86,
+    "8": 37,
+    "9": 5,
+    "10": 3,
+    "11": 1,
+    "12": 1,
+    "13": 1,
+    "14": 1,
+    "24": 1
+  },
+  "by_dimension": {
+    "2": {
+      "dim": 2,
+      "n_lattices": 1609,
+      "kissing_stats": {
+        "mean": 2.0658794282162836,
+        "std": 0.3638554516407201,
+        "min": 2,
+        "max": 6,
+        "n_unique": 3
+      },
+      "det_linear": {
+        "r2": 0.006847172965639525,
+        "n": 1609
+      },
+      "log_det_linear": {
+        "r2": 0.023997652614859533,
+        "n": 1609
+      },
+      "det_quadratic": {
+        "r2": 0.012289150384327874,
+        "n": 1609
+      },
+      "log_det_quadratic": {
+        "r2": 0.026982188012226516,
+        "n": 1609
+      },
+      "class_number_linear": {
+        "r2": -2.220446049250313e-16,
+        "n": 1609
+      },
+      "log_class_number_linear": {
+        "r2": 0.0,
+        "n": 1609
+      },
+      "det_plus_class": {
+        "r2": 0.006847172965639525,
+        "n": 1609
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.023997652614859755,
+        "n": 1609
+      },
+      "full_quadratic": {
+        "r2": 0.026982188012226516,
+        "n": 1609
+      },
+      "full_interaction": {
+        "r2": 0.012289150384327763,
+        "n": 1609
+      },
+      "n_with_class_number": 1609,
+      "pearson_det_kissing": -0.08274764628459046,
+      "pearson_logdet_kissing": -0.15491175751007313,
+      "spearman_det_kissing": -0.13912299552517313,
+      "spearman_class_kissing": NaN
+    },
+    "3": {
+      "dim": 3,
+      "n_lattices": 36585,
+      "kissing_stats": {
+        "mean": 2.4233429000956677,
+        "std": 1.0270000625228728,
+        "min": 2,
+        "max": 12,
+        "n_unique": 6
+      },
+      "det_linear": {
+        "r2": 0.0009193364031246931,
+        "n": 36585
+      },
+      "log_det_linear": {
+        "r2": 0.01750407200353088,
+        "n": 36585
+      },
+      "det_quadratic": {
+        "r2": 0.0024495364074020864,
+        "n": 36585
+      },
+      "log_det_quadratic": {
+        "r2": 0.018243194376361016,
+        "n": 36585
+      },
+      "class_number_linear": {
+        "r2": 0.014145768586629526,
+        "n": 36585
+      },
+      "log_class_number_linear": {
+        "r2": 0.018720177998744703,
+        "n": 36585
+      },
+      "det_plus_class": {
+        "r2": 0.014814851219517644,
+        "n": 36585
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.025190280262041287,
+        "n": 36585
+      },
+      "full_quadratic": {
+        "r2": 0.025466242619665236,
+        "n": 36585
+      },
+      "full_interaction": {
+        "r2": 0.01968685929500591,
+        "n": 36585
+      },
+      "n_with_class_number": 36585,
+      "pearson_det_kissing": -0.030320560732361473,
+      "pearson_logdet_kissing": -0.1323029553847194,
+      "spearman_det_kissing": -0.09396131319557577,
+      "spearman_class_kissing": -0.12527480928319515
+    },
+    "4": {
+      "dim": 4,
+      "n_lattices": 481,
+      "kissing_stats": {
+        "mean": 3.72972972972973,
+        "std": 2.7633120869615406,
+        "min": 2,
+        "max": 24,
+        "n_unique": 10
+      },
+      "det_linear": {
+        "r2": 0.01152206125997235,
+        "n": 481
+      },
+      "log_det_linear": {
+        "r2": 0.12957966322424364,
+        "n": 481
+      },
+      "det_quadratic": {
+        "r2": 0.01986579584282755,
+        "n": 481
+      },
+      "log_det_quadratic": {
+        "r2": 0.14895566287643425,
+        "n": 481
+      },
+      "class_number_linear": {
+        "r2": -2.220446049250313e-16,
+        "n": 481
+      },
+      "log_class_number_linear": {
+        "r2": 0.0,
+        "n": 481
+      },
+      "det_plus_class": {
+        "r2": 0.01152206125997235,
+        "n": 481
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.12957966322424364,
+        "n": 481
+      },
+      "full_quadratic": {
+        "r2": 0.14895566287643425,
+        "n": 481
+      },
+      "full_interaction": {
+        "r2": 0.01986579584282755,
+        "n": 481
+      },
+      "n_with_class_number": 481,
+      "pearson_det_kissing": -0.10734086481844858,
+      "pearson_logdet_kissing": -0.3599717533699612,
+      "spearman_det_kissing": -0.35024662554130387,
+      "spearman_class_kissing": NaN
+    },
+    "5": {
+      "dim": 5,
+      "n_lattices": 295,
+      "kissing_stats": {
+        "mean": 6.020338983050848,
+        "std": 5.495106595441073,
+        "min": 2,
+        "max": 40,
+        "n_unique": 15
+      },
+      "det_linear": {
+        "r2": 0.008702140907056788,
+        "n": 295
+      },
+      "log_det_linear": {
+        "r2": 0.16210695865184843,
+        "n": 295
+      },
+      "det_quadratic": {
+        "r2": 0.016734212427121253,
+        "n": 295
+      },
+      "log_det_quadratic": {
+        "r2": 0.17457390373944837,
+        "n": 295
+      },
+      "class_number_linear": {
+        "r2": -2.220446049250313e-16,
+        "n": 295
+      },
+      "log_class_number_linear": {
+        "r2": -2.220446049250313e-16,
+        "n": 295
+      },
+      "det_plus_class": {
+        "r2": 0.00870214090705701,
+        "n": 295
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.16210695865184843,
+        "n": 295
+      },
+      "full_quadratic": {
+        "r2": 0.17457390373944848,
+        "n": 295
+      },
+      "full_interaction": {
+        "r2": 0.01673421242711781,
+        "n": 295
+      },
+      "n_with_class_number": 295,
+      "pearson_det_kissing": -0.09328526629139793,
+      "pearson_logdet_kissing": -0.40262508447915635,
+      "spearman_det_kissing": -0.40748208636840916,
+      "spearman_class_kissing": NaN
+    },
+    "6": {
+      "dim": 6,
+      "n_lattices": 186,
+      "kissing_stats": {
+        "mean": 10.623655913978494,
+        "std": 11.391294524125353,
+        "min": 2,
+        "max": 72,
+        "n_unique": 21
+      },
+      "det_linear": {
+        "r2": 0.010078978330111621,
+        "n": 186
+      },
+      "log_det_linear": {
+        "r2": 0.1972697603074961,
+        "n": 186
+      },
+      "det_quadratic": {
+        "r2": 0.025035438807482824,
+        "n": 186
+      },
+      "log_det_quadratic": {
+        "r2": 0.22067945218279172,
+        "n": 186
+      },
+      "class_number_linear": {
+        "r2": 0.0,
+        "n": 186
+      },
+      "log_class_number_linear": {
+        "r2": 0.0,
+        "n": 186
+      },
+      "det_plus_class": {
+        "r2": 0.010078978330111732,
+        "n": 186
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.197269760307496,
+        "n": 186
+      },
+      "full_quadratic": {
+        "r2": 0.22067945218279195,
+        "n": 186
+      },
+      "full_interaction": {
+        "r2": 0.025035438807482824,
+        "n": 186
+      },
+      "n_with_class_number": 186,
+      "pearson_det_kissing": -0.10039411501732413,
+      "pearson_logdet_kissing": -0.44415060543412144,
+      "spearman_det_kissing": -0.4808866328188745,
+      "spearman_class_kissing": NaN
+    },
+    "7": {
+      "dim": 7,
+      "n_lattices": 86,
+      "kissing_stats": {
+        "mean": 19.162790697674417,
+        "std": 22.603694113149817,
+        "min": 2,
+        "max": 126,
+        "n_unique": 25
+      },
+      "det_linear": {
+        "r2": 0.011463720666219146,
+        "n": 86
+      },
+      "log_det_linear": {
+        "r2": 0.2854479643701351,
+        "n": 86
+      },
+      "det_quadratic": {
+        "r2": -0.7181951195666703,
+        "n": 86
+      },
+      "log_det_quadratic": {
+        "r2": 0.36123060123026685,
+        "n": 86
+      },
+      "class_number_linear": {
+        "r2": -2.220446049250313e-16,
+        "n": 86
+      },
+      "log_class_number_linear": {
+        "r2": -2.220446049250313e-16,
+        "n": 86
+      },
+      "det_plus_class": {
+        "r2": 0.011463720666219146,
+        "n": 86
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.285447964370135,
+        "n": 86
+      },
+      "full_quadratic": {
+        "r2": 0.36123060123026685,
+        "n": 86
+      },
+      "full_interaction": {
+        "r2": -0.7181951195666703,
+        "n": 86
+      },
+      "n_with_class_number": 86,
+      "pearson_det_kissing": -0.1070687660628396,
+      "pearson_logdet_kissing": -0.5342733049387132,
+      "spearman_det_kissing": -0.635765908423031,
+      "spearman_class_kissing": NaN
+    },
+    "8": {
+      "dim": 8,
+      "n_lattices": 37,
+      "kissing_stats": {
+        "mean": 40.37837837837838,
+        "std": 48.70837174912978,
+        "min": 2,
+        "max": 240,
+        "n_unique": 21
+      },
+      "det_linear": {
+        "r2": 0.017944786068015528,
+        "n": 37
+      },
+      "log_det_linear": {
+        "r2": 0.30895574256751024,
+        "n": 37
+      },
+      "det_quadratic": {
+        "r2": 0.04387378801061814,
+        "n": 37
+      },
+      "log_det_quadratic": {
+        "r2": 0.4461215760645697,
+        "n": 37
+      },
+      "class_number_linear": {
+        "r2": 0.011707348612667534,
+        "n": 37
+      },
+      "log_class_number_linear": {
+        "r2": 0.011707348612667534,
+        "n": 37
+      },
+      "det_plus_class": {
+        "r2": 0.02885206079679825,
+        "n": 37
+      },
+      "log_det_plus_log_class": {
+        "r2": 0.3098381951169821,
+        "n": 37
+      },
+      "full_quadratic": {
+        "r2": 0.4461218699285673,
+        "n": 37
+      },
+      "full_interaction": {
+        "r2": 0.053547419765312965,
+        "n": 37
+      },
+      "n_with_class_number": 37,
+      "pearson_det_kissing": -0.13395815043518597,
+      "pearson_logdet_kissing": -0.5558378743550229,
+      "spearman_det_kissing": -0.6830954216681823,
+      "spearman_class_kissing": 0.1799179585407091
+    }
+  },
+  "diminishing_returns_chain": [
+    {
+      "predictor": "det (linear)",
+      "r2": 0.0009193364031246931
+    },
+    {
+      "predictor": "det (quadratic)",
+      "r2": 0.0024495364074020864
+    },
+    {
+      "predictor": "class_number (linear)",
+      "r2": 0.014145768586629526
+    },
+    {
+      "predictor": "det + class_number",
+      "r2": 0.014814851219517644
+    },
+    {
+      "predictor": "log(det) (linear)",
+      "r2": 0.01750407200353088
+    },
+    {
+      "predictor": "full interaction (det+cn+cross)",
+      "r2": 0.01968685929500591
+    },
+    {
+      "predictor": "log(det) + log(class) quadratic",
+      "r2": 0.025466242619665236
+    },
+    {
+      "predictor": "mod-p entropy (baseline)",
+      "r2": 0.859
+    },
+    {
+      "predictor": "theta-series k-NN (baseline)",
+      "r2": 0.966
+    }
+  ],
+  "summary": {
+    "best_det_only_r2": 0.01750407200353088,
+    "best_det_plus_class_r2": 0.01968685929500591,
+    "mod_p_entropy_r2": 0.859,
+    "theta_knn_r2": 0.966,
+    "gap_simple_to_entropy": 0.8393131407049941,
+    "gap_simple_to_theta": 0.9463131407049941
+  }
+}

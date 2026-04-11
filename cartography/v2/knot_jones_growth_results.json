@@ -1,0 +1,344 @@
+{
+  "problem": "C10",
+  "title": "Phase Transition in Knot Polynomial Coefficient Growth",
+  "n_knots_jones": 2977,
+  "n_knots_alexander": 2977,
+  "crossing_numbers_available": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "jones_analysis": {
+    "growth_by_crossing_number": {
+      "3": {
+        "median_max_coeff": 1.0,
+        "mean_max_coeff": 1.0,
+        "p90_max_coeff": 1.0,
+        "count": 1
+      },
+      "4": {
+        "median_max_coeff": 1.0,
+        "mean_max_coeff": 1.0,
+        "p90_max_coeff": 1.0,
+        "count": 1
+      },
+      "5": {
+        "median_max_coeff": 1.5,
+        "mean_max_coeff": 1.5,
+        "p90_max_coeff": 1.9,
+        "count": 2
+      },
+      "6": {
+        "median_max_coeff": 2.0,
+        "mean_max_coeff": 2.3333333333333335,
+        "p90_max_coeff": 2.8,
+        "count": 3
+      },
+      "7": {
+        "median_max_coeff": 3.0,
+        "mean_max_coeff": 2.857142857142857,
+        "p90_max_coeff": 4.0,
+        "count": 7
+      },
+      "8": {
+        "median_max_coeff": 5.0,
+        "mean_max_coeff": 4.428571428571429,
+        "p90_max_coeff": 6.0,
+        "count": 21
+      },
+      "9": {
+        "median_max_coeff": 7.0,
+        "mean_max_coeff": 6.551020408163265,
+        "p90_max_coeff": 10.0,
+        "count": 49
+      },
+      "10": {
+        "median_max_coeff": 10.0,
+        "mean_max_coeff": 9.581818181818182,
+        "p90_max_coeff": 15.0,
+        "count": 165
+      },
+      "11": {
+        "median_max_coeff": 14.0,
+        "mean_max_coeff": 14.451086956521738,
+        "p90_max_coeff": 24.0,
+        "count": 552
+      },
+      "12": {
+        "median_max_coeff": 20.0,
+        "mean_max_coeff": 21.512408088235293,
+        "p90_max_coeff": 38.0,
+        "count": 2176
+      }
+    },
+    "loglog_fit_median": {
+      "alpha": 2.309726534965983,
+      "intercept": -3.0874071910121907,
+      "R2": 0.9290850168076745,
+      "p_value": 7.120603936384809e-06,
+      "std_err": 0.2256092200778693,
+      "n": 10
+    },
+    "semilog_fit_median": {
+      "exp_rate": 0.3587254922604499,
+      "intercept": -1.3214464584544816,
+      "R2": 0.9895881064390946,
+      "p_value": 3.2269611574059645e-09,
+      "std_err": 0.013009328285891415,
+      "n": 10
+    },
+    "loglog_fit_mean": {
+      "alpha": 2.2997844469456314,
+      "intercept": -3.0702646070160573,
+      "R2": 0.9232982424388558,
+      "p_value": 9.769195652971335e-06,
+      "std_err": 0.2343547672947303,
+      "n": 10
+    },
+    "semilog_fit_mean": {
+      "exp_rate": 0.35830479719812225,
+      "intercept": -1.3203309930426244,
+      "R2": 0.9896204174406187,
+      "p_value": 3.1870490420615052e-09,
+      "std_err": 0.012973682030111918,
+      "n": 10
+    },
+    "loglog_fit_p90": {
+      "alpha": 2.7197401225976536,
+      "intercept": -3.579904658711065,
+      "R2": 0.9360994253411027,
+      "p_value": 4.680487618230887e-06,
+      "std_err": 0.2512313356634506,
+      "n": 10
+    },
+    "semilog_fit_p90": {
+      "exp_rate": 0.42145452097072117,
+      "intercept": -1.4933286654932,
+      "R2": 0.9925771055813636,
+      "p_value": 8.326160580930259e-10,
+      "std_err": 0.012885765932615532,
+      "n": 10
+    },
+    "dominant_growth_regime": "exponential",
+    "l2_norm_loglog": {
+      "alpha": 2.4045800608065964,
+      "intercept": -2.5787989541524463,
+      "R2": 0.9314458890945913,
+      "p_value": 6.212448382074235e-06,
+      "std_err": 0.23063870148205243,
+      "n": 10
+    },
+    "span_loglog": {
+      "alpha": 1.0,
+      "intercept": 0.0,
+      "R2": 1.0,
+      "p_value": 4.375000000000076e-80,
+      "std_err": 0.0,
+      "n": 10
+    },
+    "breakpoint_analysis": {
+      "breakpoint_crossing_number": 6.0,
+      "left_slope_loglog": 1.037287096168426,
+      "right_slope_loglog": 3.317693204205813,
+      "slope_ratio": 3.1984329280300945,
+      "rss_single": 0.7607850438670556,
+      "rss_piecewise": 0.06655393163328412,
+      "rss_improvement_frac": 0.9125194006246603,
+      "f_stat": 31.293317849005092,
+      "p_value": 0.0006694763656959202,
+      "significant_at_0.05": true,
+      "right_segment_semilog_R2": 0.995334618144101,
+      "right_segment_loglog_R2": 0.9971458607572815,
+      "right_segment_exponential_rate": 0.38149259076558495
+    }
+  },
+  "jones_entropy": {
+    "entropy_by_crossing_number": {
+      "3": {
+        "median": 1.584962500721156,
+        "mean": 1.584962500721156,
+        "std": 0.0,
+        "n": 1
+      },
+      "4": {
+        "median": 2.321928094887362,
+        "mean": 2.321928094887362,
+        "std": 0.0,
+        "n": 1
+      },
+      "5": {
+        "median": 2.4217843656153404,
+        "mean": 2.4217843656153404,
+        "std": 0.0998562707279782,
+        "n": 2
+      },
+      "6": {
+        "median": 2.725480556997868,
+        "mean": 2.7256446580098057,
+        "std": 0.005253137034631617,
+        "n": 3
+      },
+      "7": {
+        "median": 2.8655768552072485,
+        "mean": 2.8628398244063886,
+        "std": 0.029511118001272485,
+        "n": 7
+      },
+      "8": {
+        "median": 2.9780664484213544,
+        "mean": 2.9018005541118272,
+        "std": 0.3061018161808395,
+        "n": 21
+      },
+      "9": {
+        "median": 3.0718612730008523,
+        "mean": 3.0527315004603355,
+        "std": 0.09798202064304155,
+        "n": 49
+      },
+      "10": {
+        "median": 3.1427260888380997,
+        "mean": 3.1056920829237544,
+        "std": 0.1752675200250048,
+        "n": 165
+      },
+      "11": {
+        "median": 3.200910279509528,
+        "mean": 3.1760797022961396,
+        "std": 0.11161156987935006,
+        "n": 552
+      },
+      "12": {
+        "median": 3.254985344290845,
+        "mean": 3.2304797497043074,
+        "std": 0.10500045346331299,
+        "n": 2176
+      }
+    },
+    "linear_fit": {
+      "slope": 0.15720861358678315,
+      "intercept": 1.577763578848092,
+      "R2": 0.8390916225788707,
+      "p_value": 0.0001964445706793866
+    }
+  },
+  "alexander_analysis": {
+    "growth_by_crossing_number": {
+      "3": {
+        "median_max_coeff": 1.0,
+        "mean_max_coeff": 1.0,
+        "count": 1
+      },
+      "4": {
+        "median_max_coeff": 3.0,
+        "mean_max_coeff": 3.0,
+        "count": 1
+      },
+      "5": {
+        "median_max_coeff": 2.0,
+        "mean_max_coeff": 2.0,
+        "count": 2
+      },
+      "6": {
+        "median_max_coeff": 5.0,
+        "mean_max_coeff": 4.333333333333333,
+        "count": 3
+      },
+      "7": {
+        "median_max_coeff": 5.0,
+        "mean_max_coeff": 5.285714285714286,
+        "count": 7
+      },
+      "8": {
+        "median_max_coeff": 7.0,
+        "mean_max_coeff": 7.666666666666667,
+        "count": 21
+      },
+      "9": {
+        "median_max_coeff": 11.0,
+        "mean_max_coeff": 11.938775510204081,
+        "count": 49
+      },
+      "10": {
+        "median_max_coeff": 17.0,
+        "mean_max_coeff": 16.612121212121213,
+        "count": 165
+      },
+      "11": {
+        "median_max_coeff": 25.0,
+        "mean_max_coeff": 25.009057971014492,
+        "count": 552
+      },
+      "12": {
+        "median_max_coeff": 35.0,
+        "mean_max_coeff": 36.721507352941174,
+        "count": 2176
+      }
+    },
+    "loglog_fit_median": {
+      "alpha": 2.3876788883681046,
+      "intercept": -2.7106159252658215,
+      "R2": 0.9279970866541075,
+      "p_value": 7.5712281639316696e-06,
+      "std_err": 0.2351433245036251,
+      "n": 10
+    },
+    "semilog_fit_median": {
+      "exp_rate": 0.3651039541939438,
+      "intercept": -0.8420918618182016,
+      "R2": 0.958127939456494,
+      "p_value": 8.549920017992575e-07,
+      "std_err": 0.026984971104809626,
+      "n": 10
+    },
+    "dominant_growth_regime": "exponential",
+    "entropy_linear_slope": 0.11488018950537152,
+    "entropy_linear_R2": 0.8706751892334971,
+    "breakpoint_analysis": {
+      "breakpoint_crossing_number": 8.0,
+      "left_slope_loglog": 1.8117807979754363,
+      "right_slope_loglog": 3.9930675865383054,
+      "slope_ratio": 2.2039463002369466,
+      "rss_single": 0.8264442949281003,
+      "rss_piecewise": 0.39887157613206436,
+      "rss_improvement_frac": 0.5173642330403337,
+      "f_stat": 3.215867545205594,
+      "p_value": 0.11242386449904995,
+      "significant_at_0.05": false,
+      "right_segment_semilog_R2": 0.9964897569102021,
+      "right_segment_loglog_R2": 0.9998410102672154,
+      "right_segment_exponential_rate": 0.4039856376938031
+    }
+  },
+  "comparison": {
+    "jones_alpha": 2.309726534965983,
+    "alexander_alpha": 2.3876788883681046,
+    "jones_exp_rate": 0.3587254922604499,
+    "alexander_exp_rate": 0.3651039541939438,
+    "jones_loglog_R2": 0.9290850168076745,
+    "jones_semilog_R2": 0.9895881064390946,
+    "alexander_loglog_R2": 0.9279970866541075,
+    "alexander_semilog_R2": 0.958127939456494,
+    "jones_grows_faster": false,
+    "note": "Compare Jones alpha to Alexander volume-proxy alpha=2.75 from NF17"
+  },
+  "summary": {
+    "jones_power_law_exponent": 2.309726534965983,
+    "jones_exponential_rate": 0.3587254922604499,
+    "jones_better_fit": "exponential",
+    "jones_loglog_R2": 0.9290850168076745,
+    "jones_semilog_R2": 0.9895881064390946,
+    "critical_crossing_number": 6.0,
+    "breakpoint_significant": true,
+    "jones_entropy_slope": 0.15720861358678315,
+    "alexander_power_law_exponent": 2.3876788883681046,
+    "alexander_better_fit": "exponential"
+  }
+}

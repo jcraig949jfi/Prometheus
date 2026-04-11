@@ -1,0 +1,102 @@
+{
+  "title": "Jones Polynomial Span and Breadth as Knot Complexity Measures",
+  "n_knots": 2977,
+  "n_alternating": 1851,
+  "n_non_alternating": 1126,
+  "alternating_fraction": 0.6217668794088008,
+  "kmt_verification": {
+    "alt_deficit_zero_count": 1851,
+    "alt_total": 1851,
+    "alt_deficit_zero_fraction": 1.0,
+    "alt_deficit_mean": 0.0,
+    "alt_deficit_max": 0
+  },
+  "non_alternating_deficit": {
+    "mean": 2.205150976909414,
+    "median": 2.0,
+    "std": 0.7382051371081514,
+    "distribution": {
+      "1": 96,
+      "2": 788,
+      "3": 180,
+      "4": 47,
+      "5": 10,
+      "6": 2,
+      "7": 3
+    }
+  },
+  "deficit_growth_with_cn": {
+    "slope": -0.029909909909909917,
+    "intercept": 2.5313963963963966,
+    "R2": 0.5508803670403363,
+    "p_value": 0.15089487801286638
+  },
+  "deficit_by_crossing_number": {
+    "8": {
+      "mean": 2.3333333333333335,
+      "median": 2.0,
+      "std": 0.4714045207910317,
+      "n": 3
+    },
+    "9": {
+      "mean": 2.25,
+      "median": 2.0,
+      "std": 0.4330127018922193,
+      "n": 8
+    },
+    "10": {
+      "mean": 2.1666666666666665,
+      "median": 2.0,
+      "std": 0.6871842709362768,
+      "n": 42
+    },
+    "11": {
+      "mean": 2.2054054054054055,
+      "median": 2.0,
+      "std": 0.7504758655917233,
+      "n": 185
+    },
+    "12": {
+      "mean": 2.206081081081081,
+      "median": 2.0,
+      "std": 0.7407744624625427,
+      "n": 888
+    }
+  },
+  "non_alternating_penalty_constant": {
+    "mean_deficit_over_cn": 0.18855764572904893,
+    "std": 0.0640111942364022
+  },
+  "breadth_span_ratio": {
+    "alternating_mean": 1.0872002419814413,
+    "alternating_std": 0.010595743187008769,
+    "non_alternating_mean": 1.0852844609505354,
+    "non_alternating_std": 0.06418356055460488,
+    "ttest": {
+      "t_stat": 1.2559219351468855,
+      "p_value": 0.20924289674726587
+    }
+  },
+  "full_breadth_fraction": {
+    "alternating": 0.9972987574284171,
+    "non_alternating": 0.8650088809946714
+  },
+  "correlations": {
+    "span_vs_determinant": {
+      "spearman_rho": 0.7888132497538376,
+      "p_value": 0.0
+    },
+    "span_vs_alexander_degree": {
+      "spearman_rho": 0.3614126242169925,
+      "p_value": 1.5178125620555634e-92
+    },
+    "deficit_vs_log_determinant": {
+      "spearman_rho": -0.12778768710506247,
+      "p_value": 1.7009430531540526e-05
+    },
+    "breadth_vs_crossing_number": {
+      "spearman_rho": 0.435817131259555,
+      "p_value": 2.800827135321379e-138
+    }
+  }
+}

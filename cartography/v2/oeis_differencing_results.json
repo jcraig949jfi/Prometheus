@@ -1,0 +1,226 @@
+{
+  "experiment": "OEIS First Differences \u2014 Hidden Recurrence Recovery",
+  "method": "BM over GF(p) with 3-prime consensus + holdout verification, differencing cascade up to depth 5",
+  "parameters": {
+    "min_terms": 25,
+    "n_sequences": 5000,
+    "holdout_terms": 5,
+    "primes": [
+      10007,
+      10009,
+      10037
+    ],
+    "max_differencing_depth": 5
+  },
+  "raw_classification": {
+    "total": 5000,
+    "raw_recurrent": 1141,
+    "raw_non_recurrent": 3859,
+    "raw_recurrence_rate": 0.2282,
+    "mean_raw_order": 7.6,
+    "median_raw_order": 5.0
+  },
+  "differencing_recovery": {
+    "non_recurrent_tested": 3859,
+    "total_recovered": 24,
+    "recovery_rate": 0.0062,
+    "never_recurrent": 3835,
+    "cumulative_recurrent_after_diff": 1165,
+    "cumulative_recurrence_rate": 0.233
+  },
+  "depth_distribution": {
+    "depth_0_raw": {
+      "count": 1141,
+      "fraction_of_total": 0.2282
+    },
+    "depth_1": {
+      "count": 14,
+      "fraction_of_total": 0.0028,
+      "fraction_of_nonrec": 0.0036,
+      "mean_order": 24.14,
+      "median_order": 21.0
+    },
+    "depth_2": {
+      "count": 9,
+      "fraction_of_total": 0.0018,
+      "fraction_of_nonrec": 0.0023,
+      "mean_order": 24.67,
+      "median_order": 26.0
+    },
+    "depth_3": {
+      "count": 1,
+      "fraction_of_total": 0.0002,
+      "fraction_of_nonrec": 0.0003,
+      "mean_order": 24.0,
+      "median_order": 24.0
+    },
+    "depth_4": {
+      "count": 0,
+      "fraction_of_total": 0.0,
+      "fraction_of_nonrec": 0.0,
+      "mean_order": null,
+      "median_order": null
+    },
+    "depth_5": {
+      "count": 0,
+      "fraction_of_total": 0.0,
+      "fraction_of_nonrec": 0.0,
+      "mean_order": null,
+      "median_order": null
+    },
+    "never_recurrent": {
+      "count": 3835,
+      "fraction_of_total": 0.767
+    }
+  },
+  "recovered_order_stats": {
+    "mean_order": 24.33,
+    "median_order": 24.0,
+    "order_distribution": {
+      "10": 1,
+      "12": 2,
+      "19": 1,
+      "20": 1,
+      "21": 6,
+      "24": 2,
+      "25": 1,
+      "26": 2,
+      "28": 2,
+      "30": 1,
+      "31": 2,
+      "32": 1,
+      "40": 2
+    }
+  },
+  "family_recovery": {
+    "unclassified": {
+      "total_nonrec": 1696,
+      "recovered": 20,
+      "recovery_rate": 0.0118,
+      "mean_depth": 1.4
+    },
+    "combinatorial": {
+      "total_nonrec": 1028,
+      "recovered": 2,
+      "recovery_rate": 0.0019,
+      "mean_depth": 2.0
+    },
+    "number_theoretic": {
+      "total_nonrec": 848,
+      "recovered": 1,
+      "recovery_rate": 0.0012,
+      "mean_depth": 3.0
+    },
+    "base_dependent": {
+      "total_nonrec": 383,
+      "recovered": 2,
+      "recovery_rate": 0.0052,
+      "mean_depth": 1.5
+    },
+    "algebraic": {
+      "total_nonrec": 236,
+      "recovered": 0,
+      "recovery_rate": 0.0,
+      "mean_depth": null
+    },
+    "multiplicative": {
+      "total_nonrec": 90,
+      "recovered": 0,
+      "recovery_rate": 0.0,
+      "mean_depth": null
+    }
+  },
+  "null_model": {
+    "n_sequences": 1000,
+    "recovered": 0,
+    "recovery_rate": 0.0,
+    "depth_distribution": {}
+  },
+  "notable_examples": [
+    {
+      "id": "A001343",
+      "name": "Number of (unordered) ways of making change for n cents using coins of 5, 10, 20, 50, 100 cents.",
+      "depth": 1,
+      "order_after_diff": 40,
+      "n_terms": 85
+    },
+    {
+      "id": "A001808",
+      "name": "Expansion of 1/((1+x)*(1-x)^12).",
+      "depth": 1,
+      "order_after_diff": 12,
+      "n_terms": 30
+    },
+    {
+      "id": "A001958",
+      "name": "v-pile numbers of the 3-Wythoff game with i=1.",
+      "depth": 1,
+      "order_after_diff": 26,
+      "n_terms": 58
+    },
+    {
+      "id": "A001967",
+      "name": "u-pile positions for the 4-Wythoff game with i=3.",
+      "depth": 1,
+      "order_after_diff": 31,
+      "n_terms": 68
+    },
+    {
+      "id": "A002889",
+      "name": "Arrays of dumbbells.",
+      "depth": 1,
+      "order_after_diff": 10,
+      "n_terms": 26
+    },
+    {
+      "id": "A000210",
+      "name": "A Beatty sequence: floor(n*(e-1)).",
+      "depth": 2,
+      "order_after_diff": 31,
+      "n_terms": 68
+    },
+    {
+      "id": "A001959",
+      "name": "u-pile numbers for the 3-Wythoff game with i=2.",
+      "depth": 2,
+      "order_after_diff": 32,
+      "n_terms": 68
+    },
+    {
+      "id": "A003151",
+      "name": "Beatty sequence for 1+sqrt(2); a(n) = floor(n*(1+sqrt(2))).",
+      "depth": 2,
+      "order_after_diff": 28,
+      "n_terms": 60
+    },
+    {
+      "id": "A003153",
+      "name": "a(n) = integer nearest n*(1+sqrt(2)).",
+      "depth": 2,
+      "order_after_diff": 28,
+      "n_terms": 60
+    },
+    {
+      "id": "A003342",
+      "name": "Numbers that are the sum of 8 positive 4th powers.",
+      "depth": 2,
+      "order_after_diff": 24,
+      "n_terms": 55
+    },
+    {
+      "id": "A001996",
+      "name": "Number of partitions of n into parts 2, 3, 4, 5, 6, 7.",
+      "depth": 3,
+      "order_after_diff": 24,
+      "n_terms": 56
+    }
+  ],
+  "comparison_to_baseline": {
+    "baseline_raw_rate_22pct": 0.22,
+    "this_experiment_raw_rate": 0.2282,
+    "recovery_rate_via_differencing": 0.0062,
+    "new_cumulative_rate": 0.233,
+    "net_gain_pct_points": 0.48
+  },
+  "elapsed_seconds": 11.7
+}

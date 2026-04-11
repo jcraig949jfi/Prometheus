@@ -1,0 +1,338 @@
+{
+  "metadata": {
+    "dataset": "OEIS cross-reference graph",
+    "source": "F:\\Prometheus\\cartography\\oeis\\data\\oeis_crossrefs.jsonl",
+    "timestamp": "2026-04-10T22:53:30",
+    "computation_time_s": 86.1
+  },
+  "graph_summary": {
+    "n_nodes": 347655,
+    "n_directed_edges": 1588669,
+    "n_undirected_edges": 1275878,
+    "density": 2.111e-05
+  },
+  "degree_distribution": {
+    "min": 1,
+    "median": 4.0,
+    "mean": 7.34,
+    "max": 11547,
+    "std": 39.43,
+    "p95": 21,
+    "p99": 50
+  },
+  "power_law_fit": {
+    "alpha_dmin5": 2.3125,
+    "n_tail_dmin5": 153947,
+    "alpha_dmin10": 2.6288,
+    "n_tail_dmin10": 61987,
+    "interpretation": "near-Lean hierarchical"
+  },
+  "clustering_coefficient": {
+    "mean_sampled": 0.49567,
+    "sample_size": 10000,
+    "note": "Estimated from 10K random node sample"
+  },
+  "connected_components": {
+    "n_components": 8546,
+    "giant_component_size": 311645,
+    "giant_component_fraction": 0.8964,
+    "top_10_sizes": [
+      311645,
+      97,
+      88,
+      75,
+      72,
+      63,
+      60,
+      57,
+      57,
+      57
+    ]
+  },
+  "spectral_dimension": {
+    "estimate": 0.198,
+    "method": "random walk return probability scaling"
+  },
+  "communities": {
+    "n_communities": 35432,
+    "method": "label propagation",
+    "top_10_sizes": [
+      9271,
+      4248,
+      2684,
+      2165,
+      1825,
+      1795,
+      1788,
+      1757,
+      1456,
+      1447
+    ],
+    "modularity_note": "Label propagation used for scalability on 380K+ nodes"
+  },
+  "hub_sequences": [
+    {
+      "sequence": "A000040",
+      "degree": 11547,
+      "out_degree": 49,
+      "in_degree": 11537,
+      "name": "The prime numbers."
+    },
+    {
+      "sequence": "A000045",
+      "degree": 5959,
+      "out_degree": 139,
+      "in_degree": 5925,
+      "name": "Fibonacci numbers: F(n) = F(n-1) + F(n-2) with F(0) = 0 and F(1) = 1."
+    },
+    {
+      "sequence": "A000203",
+      "degree": 5671,
+      "out_degree": 116,
+      "in_degree": 5645,
+      "name": "a(n) = sigma(n), the sum of the divisors of n. Also called sigma_1(n)."
+    },
+    {
+      "sequence": "A000005",
+      "degree": 5220,
+      "out_degree": 87,
+      "in_degree": 5211,
+      "name": "d(n) (also called tau(n) or sigma_0(n)), the number of divisors of n."
+    },
+    {
+      "sequence": "A000217",
+      "degree": 4840,
+      "out_degree": 153,
+      "in_degree": 4809,
+      "name": "Triangular numbers: a(n) = binomial(n+1,2) = n*(n+1)/2 = 0 + 1 + 2 + ... + n."
+    },
+    {
+      "sequence": "A000010",
+      "degree": 4278,
+      "out_degree": 70,
+      "in_degree": 4270,
+      "name": "Euler totient function phi(n): count numbers <= n and prime to n."
+    },
+    {
+      "sequence": "A000108",
+      "degree": 4180,
+      "out_degree": 143,
+      "in_degree": 4160,
+      "name": "Catalan numbers: C(n) = binomial(2n,n)/(n+1) = (2n)!/(n!(n+1)!)."
+    },
+    {
+      "sequence": "A000041",
+      "degree": 3943,
+      "out_degree": 68,
+      "in_degree": 3936,
+      "name": "a(n) is the number of partitions of n (the partition numbers)."
+    },
+    {
+      "sequence": "A000079",
+      "degree": 3446,
+      "out_degree": 136,
+      "in_degree": 3395,
+      "name": "Powers of 2: a(n) = 2^n."
+    },
+    {
+      "sequence": "A000290",
+      "degree": 3421,
+      "out_degree": 80,
+      "in_degree": 3399,
+      "name": "The squares: a(n) = n^2."
+    },
+    {
+      "sequence": "A001222",
+      "degree": 3403,
+      "out_degree": 54,
+      "in_degree": 3396,
+      "name": "Number of prime divisors of n counted with multiplicity (also called big omega of n, bigomega(n) or Omega(n))."
+    },
+    {
+      "sequence": "A000142",
+      "degree": 3016,
+      "out_degree": 84,
+      "in_degree": 2999,
+      "name": "Factorial numbers: n! = 1*2*3*4*...*n (order of symmetric group S_n, number of permutations of n letters)."
+    },
+    {
+      "sequence": "A000012",
+      "degree": 2615,
+      "out_degree": 45,
+      "in_degree": 2592,
+      "name": "The simplest sequence of positive numbers: the all 1's sequence."
+    },
+    {
+      "sequence": "A001221",
+      "degree": 2517,
+      "out_degree": 55,
+      "in_degree": 2509,
+      "name": "Number of distinct primes dividing n (also called omega(n))."
+    },
+    {
+      "sequence": "A154638",
+      "degree": 2314,
+      "out_degree": 1,
+      "in_degree": 2314,
+      "name": "a(n) is the number of distinct reduced words of length n in the Coxeter group of \"Apollonian reflections\" in three dimensions."
+    },
+    {
+      "sequence": "A000720",
+      "degree": 2279,
+      "out_degree": 68,
+      "in_degree": 2264,
+      "name": "pi(n), the number of primes <= n. Sometimes called PrimePi(n) to distinguish it from the number 3.14159..."
+    },
+    {
+      "sequence": "A000027",
+      "degree": 2173,
+      "out_degree": 70,
+      "in_degree": 2121,
+      "name": "The positive integers. Also called the natural numbers, the whole numbers or the counting numbers, but these terms are ambiguous."
+    },
+    {
+      "sequence": "A005117",
+      "degree": 2153,
+      "out_degree": 83,
+      "in_degree": 2131,
+      "name": "Squarefree numbers: numbers that are not divisible by a square greater than 1."
+    },
+    {
+      "sequence": "A007318",
+      "degree": 2146,
+      "out_degree": 155,
+      "in_degree": 2066,
+      "name": "Pascal's triangle read by rows: C(n,k) = binomial(n,k) = n!/(k!*(n-k)!), 0 <= k <= n."
+    },
+    {
+      "sequence": "A000120",
+      "degree": 2094,
+      "out_degree": 70,
+      "in_degree": 2076,
+      "name": "1's-counting sequence: number of 1's in binary expansion of n (or the binary weight of n)."
+    },
+    {
+      "sequence": "A002110",
+      "degree": 1950,
+      "out_degree": 59,
+      "in_degree": 1939,
+      "name": "Primorial numbers (first definition): product of first n primes. Sometimes written prime(n)#."
+    },
+    {
+      "sequence": "A001622",
+      "degree": 1895,
+      "out_degree": 41,
+      "in_degree": 1881,
+      "name": "Decimal expansion of golden ratio phi (or tau) = (1 + sqrt(5))/2."
+    },
+    {
+      "sequence": "A056239",
+      "degree": 1878,
+      "out_degree": 51,
+      "in_degree": 1864,
+      "name": "If n = Product_{k >= 1} (p_k)^(c_k) where p_k is k-th prime and c_k >= 0 then a(n) = Sum_{k >= 1} k*c_k."
+    },
+    {
+      "sequence": "A112798",
+      "degree": 1774,
+      "out_degree": 13,
+      "in_degree": 1770,
+      "name": "Table where n-th row is factorization of n, with each prime p_i replaced by i."
+    },
+    {
+      "sequence": "A001358",
+      "degree": 1770,
+      "out_degree": 96,
+      "in_degree": 1758,
+      "name": "Semiprimes (or biprimes): products of two primes."
+    },
+    {
+      "sequence": "A000009",
+      "degree": 1728,
+      "out_degree": 72,
+      "in_degree": 1715,
+      "name": "Expansion of Product_{m >= 1} (1 + x^m); number of partitions of n into distinct parts; number of partitions of n into odd parts."
+    },
+    {
+      "sequence": "A000700",
+      "degree": 1662,
+      "out_degree": 26,
+      "in_degree": 1657,
+      "name": "Expansion of Product_{k>=0} (1 + x^(2k+1)); number of partitions of n into distinct odd parts; number of self-conjugate partitions; number of symmetric Ferrers graphs with n nodes."
+    },
+    {
+      "sequence": "A010054",
+      "degree": 1601,
+      "out_degree": 40,
+      "in_degree": 1592,
+      "name": "a(n) = 1 if n is a triangular number, otherwise 0."
+    },
+    {
+      "sequence": "A008683",
+      "degree": 1598,
+      "out_degree": 49,
+      "in_degree": 1589,
+      "name": "Möbius (or Moebius) function mu(n). mu(1) = 1; mu(n) = (-1)^k if n is the product of k different primes; otherwise mu(n) = 0."
+    },
+    {
+      "sequence": "A000122",
+      "degree": 1516,
+      "out_degree": 22,
+      "in_degree": 1509,
+      "name": "Expansion of Jacobi theta function theta_3(x) = Sum_{m =-oo..oo} x^(m^2) (number of integer solutions to k^2 = n)."
+    }
+  ],
+  "reference_comparison": {
+    "FLINT_call_graph_alpha": 1.26,
+    "Lean_import_graph_alpha": 2.17,
+    "OEIS_crossref_alpha_dmin5": 2.3125,
+    "OEIS_crossref_alpha_dmin10": 2.6288,
+    "position": "near-Lean hierarchical",
+    "analysis": "OEIS alpha=2.31 (d_min=5). FLINT=1.26 (flat, dense hubs), Lean=2.17 (hierarchical). OEIS is steeper than Lean."
+  },
+  "degree_histogram_logbinned": {
+    "1-1": 71546,
+    "2-2": 46832,
+    "3-3": 42191,
+    "4-5": 33139,
+    "5-6": 27518,
+    "6-7": 21295,
+    "7-8": 31700,
+    "8-10": 11447,
+    "10-12": 15433,
+    "12-14": 14598,
+    "14-18": 8674,
+    "18-21": 6958,
+    "21-26": 4051,
+    "26-31": 3569,
+    "31-38": 2409,
+    "38-46": 1908,
+    "46-55": 1512,
+    "55-67": 814,
+    "67-81": 532,
+    "81-98": 421,
+    "98-118": 290,
+    "118-143": 202,
+    "143-173": 122,
+    "173-210": 87,
+    "210-254": 109,
+    "254-307": 69,
+    "307-372": 47,
+    "372-450": 42,
+    "450-544": 42,
+    "544-659": 19,
+    "659-798": 16,
+    "798-965": 11,
+    "965-1168": 11,
+    "1168-1414": 10,
+    "1414-1712": 5,
+    "1712-2072": 6,
+    "2072-2507": 6,
+    "2507-3035": 3,
+    "3035-3673": 3,
+    "3673-4446": 3,
+    "4446-5381": 2,
+    "5381-6513": 2,
+    "9541-11548": 1
+  }
+}

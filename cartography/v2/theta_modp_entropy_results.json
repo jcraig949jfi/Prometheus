@@ -1,0 +1,938 @@
+{
+  "metadata": {
+    "task": "Lattice theta series mod-p phase coherence vs arithmetic invariants",
+    "data_source": "LMFDB lat_lattices",
+    "n_lattices": 39293,
+    "primes": [
+      3,
+      5,
+      7,
+      11
+    ],
+    "reference_bridge": "EC phase coherence rho=0.197",
+    "date": "2026-04-10"
+  },
+  "overall_correlations": {
+    "kissing": {
+      "H_mod3": {
+        "rho": -0.182963,
+        "p_value": 6.952171845805091e-293,
+        "n": 39293
+      },
+      "H_mod5": {
+        "rho": -0.126276,
+        "p_value": 2.2839323268898937e-139,
+        "n": 39293
+      },
+      "H_mod7": {
+        "rho": -0.092351,
+        "p_value": 3.62608445948592e-75,
+        "n": 39293
+      },
+      "H_mod11": {
+        "rho": -0.067104,
+        "p_value": 1.862039942074555e-40,
+        "n": 39293
+      },
+      "H_mean": {
+        "rho": -0.1146,
+        "p_value": 5.64253422311102e-115,
+        "n": 39293
+      }
+    },
+    "det": {
+      "H_mod3": {
+        "rho": -0.268399,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod5": {
+        "rho": -0.421746,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod7": {
+        "rho": -0.48132,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod11": {
+        "rho": -0.534023,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mean": {
+        "rho": -0.463998,
+        "p_value": 0.0,
+        "n": 39293
+      }
+    },
+    "class_number": {
+      "H_mod3": {
+        "rho": 0.325513,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod5": {
+        "rho": 0.196749,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod7": {
+        "rho": 0.122591,
+        "p_value": 2.086689140179154e-131,
+        "n": 39293
+      },
+      "H_mod11": {
+        "rho": 0.046878,
+        "p_value": 1.441330450406834e-20,
+        "n": 39293
+      },
+      "H_mean": {
+        "rho": 0.154629,
+        "p_value": 8.673113816451867e-209,
+        "n": 39293
+      }
+    },
+    "dim": {
+      "H_mod3": {
+        "rho": 0.203271,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod5": {
+        "rho": 0.293851,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod7": {
+        "rho": 0.348821,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mod11": {
+        "rho": 0.397963,
+        "p_value": 0.0,
+        "n": 39293
+      },
+      "H_mean": {
+        "rho": 0.336222,
+        "p_value": 0.0,
+        "n": 39293
+      }
+    }
+  },
+  "within_dimension_correlations": {
+    "2": {
+      "n": 1609,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": 0.06872,
+            "p_value": 0.005822221549009828,
+            "n": 1609
+          },
+          "H_mod5": {
+            "rho": 0.094422,
+            "p_value": 0.0001488366414757072,
+            "n": 1609
+          },
+          "H_mod7": {
+            "rho": 0.094438,
+            "p_value": 0.00014843498301325957,
+            "n": 1609
+          },
+          "H_mod11": {
+            "rho": 0.094504,
+            "p_value": 0.00014685069504667816,
+            "n": 1609
+          },
+          "H_mean": {
+            "rho": 0.090106,
+            "p_value": 0.00029584843804243173,
+            "n": 1609
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.96816,
+            "p_value": 0.0,
+            "n": 1609
+          },
+          "H_mod5": {
+            "rho": -0.974914,
+            "p_value": 0.0,
+            "n": 1609
+          },
+          "H_mod7": {
+            "rho": -0.974917,
+            "p_value": 0.0,
+            "n": 1609
+          },
+          "H_mod11": {
+            "rho": -0.974924,
+            "p_value": 0.0,
+            "n": 1609
+          },
+          "H_mean": {
+            "rho": -0.974219,
+            "p_value": 0.0,
+            "n": 1609
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": null,
+            "p_value": null,
+            "n": 1609
+          },
+          "H_mod5": {
+            "rho": null,
+            "p_value": null,
+            "n": 1609
+          },
+          "H_mod7": {
+            "rho": null,
+            "p_value": null,
+            "n": 1609
+          },
+          "H_mod11": {
+            "rho": null,
+            "p_value": null,
+            "n": 1609
+          },
+          "H_mean": {
+            "rho": null,
+            "p_value": null,
+            "n": 1609
+          }
+        }
+      },
+      "kissing_unique_values": 3,
+      "kissing_range": [
+        2,
+        6
+      ]
+    },
+    "3": {
+      "n": 36585,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": -0.205008,
+            "p_value": 0.0,
+            "n": 36585
+          },
+          "H_mod5": {
+            "rho": -0.189005,
+            "p_value": 2.347817076193921e-291,
+            "n": 36585
+          },
+          "H_mod7": {
+            "rho": -0.17502,
+            "p_value": 1.7164700003806432e-249,
+            "n": 36585
+          },
+          "H_mod11": {
+            "rho": -0.167971,
+            "p_value": 1.1000530699705084e-229,
+            "n": 36585
+          },
+          "H_mean": {
+            "rho": -0.193887,
+            "p_value": 8.841174804467319e-307,
+            "n": 36585
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.293869,
+            "p_value": 0.0,
+            "n": 36585
+          },
+          "H_mod5": {
+            "rho": -0.449442,
+            "p_value": 0.0,
+            "n": 36585
+          },
+          "H_mod7": {
+            "rho": -0.518161,
+            "p_value": 0.0,
+            "n": 36585
+          },
+          "H_mod11": {
+            "rho": -0.587935,
+            "p_value": 0.0,
+            "n": 36585
+          },
+          "H_mean": {
+            "rho": -0.493572,
+            "p_value": 0.0,
+            "n": 36585
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": 0.240495,
+            "p_value": 0.0,
+            "n": 36585
+          },
+          "H_mod5": {
+            "rho": 0.121035,
+            "p_value": 2.0035774766697242e-119,
+            "n": 36585
+          },
+          "H_mod7": {
+            "rho": 0.060618,
+            "p_value": 3.8939023296231865e-31,
+            "n": 36585
+          },
+          "H_mod11": {
+            "rho": -0.005229,
+            "p_value": 0.3172279909182373,
+            "n": 36585
+          },
+          "H_mean": {
+            "rho": 0.092846,
+            "p_value": 7.498673266794123e-71,
+            "n": 36585
+          }
+        }
+      },
+      "kissing_unique_values": 6,
+      "kissing_range": [
+        2,
+        12
+      ]
+    },
+    "4": {
+      "n": 481,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": -0.331186,
+            "p_value": 8.916978472917896e-14,
+            "n": 481
+          },
+          "H_mod5": {
+            "rho": 0.041033,
+            "p_value": 0.36921052715592495,
+            "n": 481
+          },
+          "H_mod7": {
+            "rho": 0.042894,
+            "p_value": 0.347876845599172,
+            "n": 481
+          },
+          "H_mod11": {
+            "rho": 0.065482,
+            "p_value": 0.15158968394306596,
+            "n": 481
+          },
+          "H_mean": {
+            "rho": -0.023054,
+            "p_value": 0.6139983103634076,
+            "n": 481
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.282851,
+            "p_value": 2.6720286133359624e-10,
+            "n": 481
+          },
+          "H_mod5": {
+            "rho": -0.797262,
+            "p_value": 4.467083990797497e-107,
+            "n": 481
+          },
+          "H_mod7": {
+            "rho": -0.819117,
+            "p_value": 1.0741067581866175e-117,
+            "n": 481
+          },
+          "H_mod11": {
+            "rho": -0.853025,
+            "p_value": 2.2001695610423225e-137,
+            "n": 481
+          },
+          "H_mean": {
+            "rho": -0.78901,
+            "p_value": 2.115298640369419e-103,
+            "n": 481
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": null,
+            "p_value": null,
+            "n": 481
+          },
+          "H_mod5": {
+            "rho": null,
+            "p_value": null,
+            "n": 481
+          },
+          "H_mod7": {
+            "rho": null,
+            "p_value": null,
+            "n": 481
+          },
+          "H_mod11": {
+            "rho": null,
+            "p_value": null,
+            "n": 481
+          },
+          "H_mean": {
+            "rho": null,
+            "p_value": null,
+            "n": 481
+          }
+        }
+      },
+      "kissing_unique_values": 10,
+      "kissing_range": [
+        2,
+        24
+      ]
+    },
+    "5": {
+      "n": 295,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": -0.135283,
+            "p_value": 0.020104314968735743,
+            "n": 295
+          },
+          "H_mod5": {
+            "rho": -0.066079,
+            "p_value": 0.2578997926153875,
+            "n": 295
+          },
+          "H_mod7": {
+            "rho": 0.032786,
+            "p_value": 0.574878352844167,
+            "n": 295
+          },
+          "H_mod11": {
+            "rho": 0.038882,
+            "p_value": 0.5058989436960453,
+            "n": 295
+          },
+          "H_mean": {
+            "rho": -0.032291,
+            "p_value": 0.5806746439803654,
+            "n": 295
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.468112,
+            "p_value": 1.801310657209251e-17,
+            "n": 295
+          },
+          "H_mod5": {
+            "rho": -0.640819,
+            "p_value": 1.6563827284311504e-35,
+            "n": 295
+          },
+          "H_mod7": {
+            "rho": -0.794041,
+            "p_value": 2.647407299532687e-65,
+            "n": 295
+          },
+          "H_mod11": {
+            "rho": -0.80415,
+            "p_value": 3.738103672715582e-68,
+            "n": 295
+          },
+          "H_mean": {
+            "rho": -0.740172,
+            "p_value": 1.97614900633704e-52,
+            "n": 295
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": null,
+            "p_value": null,
+            "n": 295
+          },
+          "H_mod5": {
+            "rho": null,
+            "p_value": null,
+            "n": 295
+          },
+          "H_mod7": {
+            "rho": null,
+            "p_value": null,
+            "n": 295
+          },
+          "H_mod11": {
+            "rho": null,
+            "p_value": null,
+            "n": 295
+          },
+          "H_mean": {
+            "rho": null,
+            "p_value": null,
+            "n": 295
+          }
+        }
+      },
+      "kissing_unique_values": 15,
+      "kissing_range": [
+        2,
+        40
+      ]
+    },
+    "6": {
+      "n": 186,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": -0.284608,
+            "p_value": 8.24699255050759e-05,
+            "n": 186
+          },
+          "H_mod5": {
+            "rho": -0.273217,
+            "p_value": 0.00016122658792936176,
+            "n": 186
+          },
+          "H_mod7": {
+            "rho": -0.093408,
+            "p_value": 0.20476177462300435,
+            "n": 186
+          },
+          "H_mod11": {
+            "rho": -0.018103,
+            "p_value": 0.8062678877780691,
+            "n": 186
+          },
+          "H_mean": {
+            "rho": -0.206288,
+            "p_value": 0.004729994250099149,
+            "n": 186
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.243113,
+            "p_value": 0.0008270535153777037,
+            "n": 186
+          },
+          "H_mod5": {
+            "rho": -0.278056,
+            "p_value": 0.00012170290128998162,
+            "n": 186
+          },
+          "H_mod7": {
+            "rho": -0.634581,
+            "p_value": 2.3619518262085436e-22,
+            "n": 186
+          },
+          "H_mod11": {
+            "rho": -0.700294,
+            "p_value": 9.670824830149195e-29,
+            "n": 186
+          },
+          "H_mean": {
+            "rho": -0.543058,
+            "p_value": 1.166975439373531e-15,
+            "n": 186
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": null,
+            "p_value": null,
+            "n": 186
+          },
+          "H_mod5": {
+            "rho": null,
+            "p_value": null,
+            "n": 186
+          },
+          "H_mod7": {
+            "rho": null,
+            "p_value": null,
+            "n": 186
+          },
+          "H_mod11": {
+            "rho": null,
+            "p_value": null,
+            "n": 186
+          },
+          "H_mean": {
+            "rho": null,
+            "p_value": null,
+            "n": 186
+          }
+        }
+      },
+      "kissing_unique_values": 21,
+      "kissing_range": [
+        2,
+        72
+      ]
+    },
+    "7": {
+      "n": 86,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": -0.026228,
+            "p_value": 0.8105581561957768,
+            "n": 86
+          },
+          "H_mod5": {
+            "rho": -0.000546,
+            "p_value": 0.9960168079360741,
+            "n": 86
+          },
+          "H_mod7": {
+            "rho": -0.008922,
+            "p_value": 0.9350182730382213,
+            "n": 86
+          },
+          "H_mod11": {
+            "rho": 0.157822,
+            "p_value": 0.1467039506304753,
+            "n": 86
+          },
+          "H_mean": {
+            "rho": 0.023438,
+            "p_value": 0.8303864894851207,
+            "n": 86
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.305588,
+            "p_value": 0.0042201244320087565,
+            "n": 86
+          },
+          "H_mod5": {
+            "rho": -0.535858,
+            "p_value": 1.056299462827853e-07,
+            "n": 86
+          },
+          "H_mod7": {
+            "rho": -0.426886,
+            "p_value": 4.1528196570454575e-05,
+            "n": 86
+          },
+          "H_mod11": {
+            "rho": -0.591019,
+            "p_value": 2.088597808915843e-09,
+            "n": 86
+          },
+          "H_mean": {
+            "rho": -0.561803,
+            "p_value": 1.823807617190667e-08,
+            "n": 86
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": null,
+            "p_value": null,
+            "n": 86
+          },
+          "H_mod5": {
+            "rho": null,
+            "p_value": null,
+            "n": 86
+          },
+          "H_mod7": {
+            "rho": null,
+            "p_value": null,
+            "n": 86
+          },
+          "H_mod11": {
+            "rho": null,
+            "p_value": null,
+            "n": 86
+          },
+          "H_mean": {
+            "rho": null,
+            "p_value": null,
+            "n": 86
+          }
+        }
+      },
+      "kissing_unique_values": 25,
+      "kissing_range": [
+        2,
+        126
+      ]
+    },
+    "8": {
+      "n": 37,
+      "correlations": {
+        "kissing": {
+          "H_mod3": {
+            "rho": -0.258546,
+            "p_value": 0.12232256751169693,
+            "n": 37
+          },
+          "H_mod5": {
+            "rho": -0.021817,
+            "p_value": 0.8980175415089935,
+            "n": 37
+          },
+          "H_mod7": {
+            "rho": -0.27269,
+            "p_value": 0.10249208016555032,
+            "n": 37
+          },
+          "H_mod11": {
+            "rho": 0.134565,
+            "p_value": 0.4271622906315592,
+            "n": 37
+          },
+          "H_mean": {
+            "rho": -0.225748,
+            "p_value": 0.17912429690950832,
+            "n": 37
+          }
+        },
+        "det": {
+          "H_mod3": {
+            "rho": -0.097779,
+            "p_value": 0.5647957161373603,
+            "n": 37
+          },
+          "H_mod5": {
+            "rho": -0.294318,
+            "p_value": 0.0770244446702543,
+            "n": 37
+          },
+          "H_mod7": {
+            "rho": -0.022107,
+            "p_value": 0.8966665774658236,
+            "n": 37
+          },
+          "H_mod11": {
+            "rho": -0.568577,
+            "p_value": 0.00024112747089996198,
+            "n": 37
+          },
+          "H_mean": {
+            "rho": -0.239242,
+            "p_value": 0.1538360456408501,
+            "n": 37
+          }
+        },
+        "class_number": {
+          "H_mod3": {
+            "rho": -0.198932,
+            "p_value": 0.23785567369600685,
+            "n": 37
+          },
+          "H_mod5": {
+            "rho": 0.0,
+            "p_value": 1.0,
+            "n": 37
+          },
+          "H_mod7": {
+            "rho": -0.265508,
+            "p_value": 0.11223121864717749,
+            "n": 37
+          },
+          "H_mod11": {
+            "rho": -0.078058,
+            "p_value": 0.6460805970181862,
+            "n": 37
+          },
+          "H_mean": {
+            "rho": -0.171718,
+            "p_value": 0.3095148912346766,
+            "n": 37
+          }
+        }
+      },
+      "kissing_unique_values": 21,
+      "kissing_range": [
+        2,
+        240
+      ]
+    }
+  },
+  "entropy_distribution_by_dim": {
+    "2": {
+      "n": 1609,
+      "H_mean_mean": 0.3559,
+      "H_mean_std": 0.2155,
+      "H_mean_min": 0.0575,
+      "H_mean_max": 1.7451
+    },
+    "3": {
+      "n": 36585,
+      "H_mean_mean": 1.3366,
+      "H_mean_std": 0.2014,
+      "H_mean_min": 0.2981,
+      "H_mean_max": 2.5107
+    },
+    "4": {
+      "n": 481,
+      "H_mean_mean": 1.6467,
+      "H_mean_std": 0.4313,
+      "H_mean_min": 0.7485,
+      "H_mean_max": 2.5111
+    },
+    "5": {
+      "n": 295,
+      "H_mean_mean": 1.6553,
+      "H_mean_std": 0.4599,
+      "H_mean_min": 0.6925,
+      "H_mean_max": 2.5317
+    },
+    "6": {
+      "n": 186,
+      "H_mean_mean": 1.6009,
+      "H_mean_std": 0.3948,
+      "H_mean_min": 0.7339,
+      "H_mean_max": 2.4822
+    },
+    "7": {
+      "n": 86,
+      "H_mean_mean": 1.543,
+      "H_mean_std": 0.378,
+      "H_mean_min": 0.8127,
+      "H_mean_max": 2.4891
+    },
+    "8": {
+      "n": 37,
+      "H_mean_mean": 1.5028,
+      "H_mean_std": 0.2809,
+      "H_mean_min": 0.9599,
+      "H_mean_max": 2.2224
+    },
+    "9": {
+      "n": 5,
+      "H_mean_mean": 1.2959,
+      "H_mean_std": 0.2633,
+      "H_mean_min": 1.0427,
+      "H_mean_max": 1.7863
+    }
+  },
+  "predictive_test": {
+    "2": {
+      "n": 1609,
+      "median_kissing": 2.0,
+      "ks_stat": 0.277407,
+      "ks_pval": 0.0006471943759162993,
+      "R2_log_kissing": 0.008396,
+      "linreg_p": 0.0002329595589818213,
+      "slope": 0.039064
+    },
+    "3": {
+      "n": 36585,
+      "median_kissing": 2.0,
+      "ks_stat": 0.275093,
+      "ks_pval": 0.0,
+      "R2_log_kissing": 0.089389,
+      "linreg_p": 0.0,
+      "slope": -0.346043
+    },
+    "4": {
+      "n": 481,
+      "median_kissing": 2.0,
+      "ks_stat": 0.105928,
+      "ks_pval": 0.12928900135849344,
+      "R2_log_kissing": 0.001851,
+      "linreg_p": 0.3464695762193518,
+      "slope": -0.044426
+    },
+    "5": {
+      "n": 295,
+      "median_kissing": 4.0,
+      "ks_stat": 0.206126,
+      "ks_pval": 0.0033316500598470234,
+      "R2_log_kissing": 0.006501,
+      "linreg_p": 0.1672033460537108,
+      "slope": -0.109637
+    },
+    "6": {
+      "n": 186,
+      "median_kissing": 6.0,
+      "ks_stat": 0.250698,
+      "ks_pval": 0.004673840748091652,
+      "R2_log_kissing": 0.048837,
+      "linreg_p": 0.0024360758274133633,
+      "slope": -0.462117
+    },
+    "7": {
+      "n": 86,
+      "median_kissing": 10.0,
+      "ks_stat": 0.158009,
+      "ks_pval": 0.5731764994591484,
+      "R2_log_kissing": 0.001466,
+      "linreg_p": 0.7263725846506173,
+      "slope": -0.105554
+    },
+    "8": {
+      "n": 37,
+      "median_kissing": 20.0,
+      "ks_stat": 0.467836,
+      "ks_pval": 0.01875284959678247,
+      "R2_log_kissing": 0.046687,
+      "linreg_p": 0.198988656985811,
+      "slope": -0.958097
+    }
+  },
+  "per_prime_discriminative_power_dim3": {
+    "3": {
+      "ks_stat": 0.275824,
+      "ks_pval": 0.0,
+      "mean_above": 0.8809,
+      "mean_below": 1.0578
+    },
+    "5": {
+      "ks_stat": 0.26192,
+      "ks_pval": 2.3896769682446376e-306,
+      "mean_above": 1.2694,
+      "mean_below": 1.373
+    },
+    "7": {
+      "ks_stat": 0.256749,
+      "ks_pval": 3.335520955964183e-294,
+      "mean_above": 1.3577,
+      "mean_below": 1.4719
+    },
+    "11": {
+      "ks_stat": 0.258747,
+      "ks_pval": 7.250171978468641e-299,
+      "mean_above": 1.4066,
+      "mean_below": 1.5295
+    }
+  },
+  "null_test_dim3": {
+    "real_rho": -0.193887,
+    "null_mean": 8.1e-05,
+    "null_std": 0.005214,
+    "z_score": -37.2039,
+    "p_empirical": 0.0
+  },
+  "g10_comparison": {
+    "entropy_knn_accuracy_mean": 0.8593,
+    "entropy_knn_accuracy_std": 0.0146,
+    "full_theta_knn_accuracy_mean": 0.9267,
+    "full_theta_knn_accuracy_std": 0.0166,
+    "note": "G10 achieves 96.6% kissing accuracy using full theta_series as feature vector in k-NN. This analysis tests whether the predictive power comes from mod-p residue structure (information-theoretic fingerprint) rather than the full coefficient vector.",
+    "entropy_explains_fraction": 0.9273
+  },
+  "summary": {
+    "overall_H_mean_vs_kissing_rho": -0.1146,
+    "within_dim3_H_mean_vs_kissing_rho": -0.193887,
+    "within_dim3_pvalue": 8.841174804467319e-307,
+    "null_test_z_score": -37.2039,
+    "null_test_p_empirical": 0.0,
+    "entropy_knn_accuracy": 0.8593,
+    "full_theta_knn_accuracy": 0.9267,
+    "verdict": "SIGNAL: Within dim=3, mod-p entropy correlates with kissing (rho=-0.194, p=8.84e-307). Mod-p entropy captures ~93% of full-theta predictive power \u2014 G10 success IS largely explained by residue structure."
+  }
+}

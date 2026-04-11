@@ -1,0 +1,262 @@
+{
+  "description": "Genus-2 endomorphism ring -> mod-p fingerprint enrichment analysis",
+  "hypothesis": "GL_2 enrichment slope law (0.044*rank^2 - 0.242) extends to genus-2 with endo algebra rank",
+  "primes": [
+    3,
+    5,
+    7,
+    11
+  ],
+  "n_curves_total": 66158,
+  "n_curves_analyzed": 8051,
+  "endo_distribution": {
+    "Q": 63107,
+    "Q x Q": 2468,
+    "CM x Q": 303,
+    "M_2(Q)": 147,
+    "RM": 116,
+    "M_2(CM)": 8,
+    "CM": 6,
+    "QM": 3
+  },
+  "enrichment_by_prime": {
+    "3": {
+      "M_2(Q)": {
+        "n_curves": 75,
+        "enrichment": 0.997,
+        "p_same_group": 0.335495,
+        "p_random": 0.336507
+      },
+      "Q": {
+        "n_curves": 3444,
+        "enrichment": 0.9965,
+        "p_same_group": 0.335313,
+        "p_random": 0.336507
+      },
+      "Q x Q": {
+        "n_curves": 1156,
+        "enrichment": 1.0031,
+        "p_same_group": 0.337559,
+        "p_random": 0.336507
+      },
+      "CM x Q": {
+        "n_curves": 101,
+        "enrichment": 1.6589,
+        "p_same_group": 0.558218,
+        "p_random": 0.336507
+      },
+      "RM": {
+        "n_curves": 84,
+        "enrichment": 1.011,
+        "p_same_group": 0.340218,
+        "p_random": 0.336507
+      }
+    },
+    "5": {
+      "M_2(Q)": {
+        "n_curves": 123,
+        "enrichment": 1.1177,
+        "p_same_group": 0.223644,
+        "p_random": 0.200085
+      },
+      "Q": {
+        "n_curves": 4107,
+        "enrichment": 1.0027,
+        "p_same_group": 0.200619,
+        "p_random": 0.200085
+      },
+      "Q x Q": {
+        "n_curves": 1540,
+        "enrichment": 1.0101,
+        "p_same_group": 0.202106,
+        "p_random": 0.200085
+      },
+      "CM x Q": {
+        "n_curves": 234,
+        "enrichment": 1.0166,
+        "p_same_group": 0.203404,
+        "p_random": 0.200085
+      },
+      "RM": {
+        "n_curves": 87,
+        "enrichment": 0.9806,
+        "p_same_group": 0.196204,
+        "p_random": 0.200085
+      }
+    },
+    "7": {
+      "M_2(Q)": {
+        "n_curves": 121,
+        "enrichment": 1.4365,
+        "p_same_group": 0.208953,
+        "p_random": 0.145462
+      },
+      "Q": {
+        "n_curves": 4401,
+        "enrichment": 0.995,
+        "p_same_group": 0.144741,
+        "p_random": 0.145462
+      },
+      "Q x Q": {
+        "n_curves": 1801,
+        "enrichment": 1.0682,
+        "p_same_group": 0.15538,
+        "p_random": 0.145462
+      },
+      "CM x Q": {
+        "n_curves": 218,
+        "enrichment": 1.2879,
+        "p_same_group": 0.187334,
+        "p_random": 0.145462
+      },
+      "RM": {
+        "n_curves": 106,
+        "enrichment": 1.0834,
+        "p_same_group": 0.157592,
+        "p_random": 0.145462
+      }
+    },
+    "11": {
+      "M_2(Q)": {
+        "n_curves": 142,
+        "enrichment": 2.3332,
+        "p_same_group": 0.22715,
+        "p_random": 0.097356
+      },
+      "Q": {
+        "n_curves": 4606,
+        "enrichment": 0.988,
+        "p_same_group": 0.096191,
+        "p_random": 0.097356
+      },
+      "Q x Q": {
+        "n_curves": 2043,
+        "enrichment": 1.1827,
+        "p_same_group": 0.115145,
+        "p_random": 0.097356
+      },
+      "CM x Q": {
+        "n_curves": 274,
+        "enrichment": 1.4001,
+        "p_same_group": 0.136307,
+        "p_random": 0.097356
+      },
+      "RM": {
+        "n_curves": 108,
+        "enrichment": 0.9529,
+        "p_same_group": 0.092766,
+        "p_random": 0.097356
+      }
+    }
+  },
+  "enrichment_slopes": {
+    "CM x Q": {
+      "endo_rank": 3,
+      "enrichment_slope": -0.148173,
+      "enrichment_intercept": 1.602098,
+      "gl2_predicted_slope": 0.154,
+      "slope_ratio": -0.9622,
+      "primes_used": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        1.6589,
+        1.0166,
+        1.2879,
+        1.4001
+      ]
+    },
+    "M_2(Q)": {
+      "endo_rank": 4,
+      "enrichment_slope": 1.009682,
+      "enrichment_intercept": -0.308934,
+      "gl2_predicted_slope": 0.462,
+      "slope_ratio": 2.1855,
+      "primes_used": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        0.997,
+        1.1177,
+        1.4365,
+        2.3332
+      ]
+    },
+    "Q": {
+      "endo_rank": 1,
+      "enrichment_slope": -0.007347,
+      "enrichment_intercept": 1.008502,
+      "gl2_predicted_slope": -0.198,
+      "slope_ratio": 0.0371,
+      "primes_used": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        0.9965,
+        1.0027,
+        0.995,
+        0.988
+      ]
+    },
+    "Q x Q": {
+      "endo_rank": 2,
+      "enrichment_slope": 0.138506,
+      "enrichment_intercept": 0.821844,
+      "gl2_predicted_slope": -0.066,
+      "slope_ratio": -2.0986,
+      "primes_used": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        1.0031,
+        1.0101,
+        1.0682,
+        1.1827
+      ]
+    },
+    "RM": {
+      "endo_rank": 2,
+      "enrichment_slope": -0.02105,
+      "enrichment_intercept": 1.044085,
+      "gl2_predicted_slope": -0.066,
+      "slope_ratio": 0.3189,
+      "primes_used": [
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        1.011,
+        0.9806,
+        1.0834,
+        0.9529
+      ]
+    }
+  },
+  "gl2_law_comparison": {
+    "gl2_law": {
+      "a": 0.044,
+      "b": -0.242
+    },
+    "genus2_fit": {
+      "a": 0.062513,
+      "b": -0.230766
+    },
+    "coefficient_ratio": 1.4208,
+    "intercept_shift": 0.0112,
+    "rmse": 0.256854
+  }
+}
