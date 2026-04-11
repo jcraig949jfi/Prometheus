@@ -1,0 +1,195 @@
+{
+  "title": "EC Analytic Sha Distribution by Rank",
+  "n_curves": 31073,
+  "sha_by_rank": {
+    "0": {
+      "1": 14576,
+      "4": 728,
+      "9": 175,
+      "16": 77,
+      "25": 33,
+      "36": 2,
+      "49": 5,
+      "64": 3
+    },
+    "1": {
+      "1": 14770,
+      "4": 13
+    },
+    "2": {
+      "1": 691
+    }
+  },
+  "frac_sha_gt_1": {
+    "count": 1036,
+    "total": 31073,
+    "fraction": 0.033341
+  },
+  "frac_sha_gt_4": {
+    "count": 295,
+    "total": 31073,
+    "fraction": 0.009494
+  },
+  "frac_sha_gt_9": {
+    "count": 120,
+    "total": 31073,
+    "fraction": 0.003862
+  },
+  "frac_sha_gt_1_by_rank": {
+    "0": {
+      "count": 1023,
+      "total": 15599,
+      "fraction": 0.065581
+    },
+    "1": {
+      "count": 13,
+      "total": 14783,
+      "fraction": 0.000879
+    },
+    "2": {
+      "count": 0,
+      "total": 691,
+      "fraction": 0.0
+    }
+  },
+  "frac_sha_gt_4_by_rank": {
+    "0": {
+      "count": 295,
+      "total": 15599,
+      "fraction": 0.018911
+    },
+    "1": {
+      "count": 0,
+      "total": 14783,
+      "fraction": 0.0
+    },
+    "2": {
+      "count": 0,
+      "total": 691,
+      "fraction": 0.0
+    }
+  },
+  "frac_sha_gt_9_by_rank": {
+    "0": {
+      "count": 120,
+      "total": 15599,
+      "fraction": 0.007693
+    },
+    "1": {
+      "count": 0,
+      "total": 14783,
+      "fraction": 0.0
+    },
+    "2": {
+      "count": 0,
+      "total": 691,
+      "fraction": 0.0
+    }
+  },
+  "sha_by_conductor_bin": {
+    "<1K": {
+      "mean_sha": 1.1385,
+      "median_sha": 1.0,
+      "max_sha": 49,
+      "n_curves": 5113,
+      "n_nontrivial": 106,
+      "frac_nontrivial": 0.020731
+    },
+    "1K-10K": {
+      "mean_sha": 1.2065,
+      "median_sha": 1.0,
+      "max_sha": 64,
+      "n_curves": 25960,
+      "n_nontrivial": 930,
+      "frac_nontrivial": 0.035824
+    }
+  },
+  "correlations": {
+    "sha_vs_conductor": {
+      "spearman_rho": 0.024134,
+      "p_value": 2.0940304073930104e-05
+    },
+    "sha_vs_regulator": {
+      "spearman_rho": 0.014547,
+      "p_value": 0.01033708843249863
+    }
+  },
+  "sha_stats_by_rank": {
+    "0": {
+      "mean": 1.3866,
+      "std": 2.2309,
+      "min": 1,
+      "max": 64,
+      "n": 15599
+    },
+    "1": {
+      "mean": 1.0026,
+      "std": 0.0889,
+      "min": 1,
+      "max": 4,
+      "n": 14783
+    },
+    "2": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1,
+      "max": 1,
+      "n": 691
+    }
+  },
+  "all_sha_perfect_squares": true,
+  "distinct_sha_values": [
+    1,
+    4,
+    9,
+    16,
+    25,
+    36,
+    49,
+    64
+  ],
+  "sha_dist_rank_0": {
+    "1": {
+      "count": 14576,
+      "fraction": 0.934419
+    },
+    "4": {
+      "count": 728,
+      "fraction": 0.04667
+    },
+    "9": {
+      "count": 175,
+      "fraction": 0.011219
+    },
+    "16": {
+      "count": 77,
+      "fraction": 0.004936
+    },
+    "25": {
+      "count": 33,
+      "fraction": 0.002116
+    },
+    "36": {
+      "count": 2,
+      "fraction": 0.000128
+    },
+    "49": {
+      "count": 5,
+      "fraction": 0.000321
+    },
+    "64": {
+      "count": 3,
+      "fraction": 0.000192
+    }
+  },
+  "sha_dist_rank_ge1": {
+    "1": {
+      "count": 15461,
+      "fraction": 0.99916
+    },
+    "4": {
+      "count": 13,
+      "fraction": 0.00084
+    }
+  }
+}

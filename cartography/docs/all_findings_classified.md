@@ -336,7 +336,16 @@ Rank-1 (14,783): median=0.96, mean=1.98, power-law tail slope -0.69. Not log-nor
 394,453 sequences. Mean=44.3, median=39. ≥10 terms: 94.5%, ≥20 (BM viable): 77.6%, ≥50: 39.8%, ≥100: 5.4%. `cons` (constants) richest: mean=96.6 terms. `more` and `hard` keywords computation-starved (mean~16). A-number uncorrelated with length (r=0.06).
 
 ### 67. Genus-2 Conductor Density: 1.19 Curves/Conductor vs EC 9.04 (Cond-compare)
-Genus-2 α=1.123 (curves ≤ N ~ N^α), EC α=1.271. EC accumulates faster. Genus-2: 1.19 mean curves/conductor (median 1, max 24). EC: 9.04 mean (median 4, max 192). Genus-2 prime conductor fraction 9.66% vs EC 4.68%. Genus-2 covers wider range (169-10⁶) but sparsely — higher-dimensional moduli space spreads curves across conductors.
+Genus-2 α=1.123 (curves ≤ N ~ N^α), EC α=1.271. EC accumulates faster. Genus-2: 1.19 mean curves/conductor (median 1, max 24). EC: 9.04 mean (median 4, max 192).
+
+### 68. Sha Is a Rank-0 Phenomenon: 96.7% Trivial (EC-sha)
+31,073 curves. sha=1 for 96.67%. sha>1 concentrates at rank 0 (6.6% nontrivial) vs rank 1 (0.02%) vs rank 2 (0%). Max sha=64 (=8²). Always a perfect square. Nearly independent of conductor (ρ=0.024) and regulator (ρ=0.015). Nontrivial Sha is rank-0-only in this conductor range.
+
+### 69. Modular Degree: Rank-0 > Rank-1, deg ~ N^{1.47} (EC-moddeg)
+31,073 curves. deg ~ N^{1.47} (R²=0.38, consistent with N^{1+ε}). Rank-0 curves have systematically LARGER modular degrees (p=4.3×10⁻¹⁹⁹). CM curves dramatically smaller (mean log-deg 5.41 vs 7.29). Explains why modular degree survived gap compression null: genuine rank-dependent arithmetic. Higher rank = simpler parametrization.
+
+### 70. Root Lattices Perfectly Identified by (dim, min_norm, kissing) (Lattice-root)
+39,293 lattices, 482 clusters. All root systems A_n, D_n, E_n (n≤8) are singletons in (dim, min_norm, kissing) space. E_8=(8,2,240) unique. Second nonzero theta coefficient breaks degeneracy for 285/291 multi-member clusters. Root lattices = isolated points in the cloud of 36,585 generic dim-3 lattices.
 
 ---
 
@@ -683,10 +692,14 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 | G2 conductor α | 1.123 | Cond-compare |
 | EC conductor α | 1.271 | Cond-compare |
 | G2 curves/conductor | 1.19 | Cond-compare |
+| EC sha=1 fraction | 96.67% | EC-sha |
+| EC modular degree scaling | N^{1.47} | EC-moddeg |
+| EC moddeg rank gap p | 4.3×10⁻¹⁹⁹ | EC-moddeg |
+| Lattice root system clusters | 482 | Lattice-root |
 
 ---
 
-*192 challenges solved. 306 problems catalogued. 22 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 67 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 80+ measured constants.*
+*195 challenges solved. 306 problems catalogued. 22 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 67 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 80+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

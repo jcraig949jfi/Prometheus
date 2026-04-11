@@ -1,0 +1,206 @@
+{
+  "n_curves": 31073,
+  "distribution": {
+    "log_degree_mean": 7.274650208339868,
+    "log_degree_std": 2.020253489706682,
+    "median_degree": 1344.0,
+    "shapiro_stat": 0.9944673312677583,
+    "shapiro_p": 6.061144894984172e-13,
+    "ks_lognormal_stat": 0.028332234624183106,
+    "ks_lognormal_p": 4.2081456206810666e-22,
+    "hill_tail_exponent": 0.8711329769153562,
+    "hill_x_min": 18432.0,
+    "verdict": "heavy-tailed (not log-normal)"
+  },
+  "scaling": {
+    "alpha": 1.4669316400836876,
+    "intercept": -3.9172415677800965,
+    "r_squared": 0.3810501039463633,
+    "p_value": 0.0,
+    "std_err": 0.010606423536144776,
+    "theoretical_expectation": "deg ~ N^{1+epsilon}, so alpha ~ 1",
+    "verdict": "alpha=1.4669, consistent with deg ~ N^{1+eps}"
+  },
+  "scaling_by_bin": [
+    {
+      "conductor_range": [
+        11.0,
+        663.0
+      ],
+      "n": 3105,
+      "mean_log_deg": 4.402081878494717,
+      "local_slope": 1.3653630428058308,
+      "local_r_squared": 0.39342539075872546
+    },
+    {
+      "conductor_range": [
+        663.0,
+        1173.0
+      ],
+      "n": 3107,
+      "mean_log_deg": 6.094239154895372,
+      "local_slope": 1.6758951958921897,
+      "local_r_squared": 0.03166518230482705
+    },
+    {
+      "conductor_range": [
+        1173.0,
+        1680.0
+      ],
+      "n": 3018,
+      "mean_log_deg": 6.721625884431581,
+      "local_slope": 1.4697247860176148,
+      "local_r_squared": 0.01003743355304561
+    },
+    {
+      "conductor_range": [
+        1680.0,
+        2175.0
+      ],
+      "n": 3181,
+      "mean_log_deg": 7.163555990092023,
+      "local_slope": 1.349919219920396,
+      "local_r_squared": 0.0042041606507971655
+    },
+    {
+      "conductor_range": [
+        2175.0,
+        2650.0
+      ],
+      "n": 3124,
+      "mean_log_deg": 7.517647398145312,
+      "local_slope": 1.5667776804657867,
+      "local_r_squared": 0.0031064967433132155
+    },
+    {
+      "conductor_range": [
+        2650.0,
+        3136.0
+      ],
+      "n": 3073,
+      "mean_log_deg": 7.80253447659936,
+      "local_slope": 0.5069482629762009,
+      "local_r_squared": 0.0002270624456233777
+    },
+    {
+      "conductor_range": [
+        3136.0,
+        3600.0
+      ],
+      "n": 3079,
+      "mean_log_deg": 7.947793249939387,
+      "local_slope": 0.5305193026774846,
+      "local_r_squared": 0.00017371272710428774
+    },
+    {
+      "conductor_range": [
+        3600.0,
+        4056.0
+      ],
+      "n": 3136,
+      "mean_log_deg": 8.140075943469942,
+      "local_slope": 0.0554774893524348,
+      "local_r_squared": 1.5188730768434599e-06
+    },
+    {
+      "conductor_range": [
+        4056.0,
+        4554.0
+      ],
+      "n": 3108,
+      "mean_log_deg": 8.334486729597407,
+      "local_slope": 2.477383213358947,
+      "local_r_squared": 0.0023378500244995246
+    },
+    {
+      "conductor_range": [
+        4554.0,
+        4998.0
+      ],
+      "n": 3069,
+      "mean_log_deg": 8.552917202871685,
+      "local_slope": -1.4209375843855594,
+      "local_r_squared": 0.0004962251457908109
+    }
+  ],
+  "rank_dependence": {
+    "by_rank": [
+      {
+        "rank": 0,
+        "n": 15599,
+        "mean_degree": 23193.592217449837,
+        "median_degree": 1584.0,
+        "mean_log_degree": 7.4230293486669385,
+        "std_log_degree": 2.1520026279420326,
+        "scaling_alpha": 1.4836175682905122,
+        "scaling_r2": 0.4369996693487893
+      },
+      {
+        "rank": 1,
+        "n": 14783,
+        "mean_degree": 9829.784076303862,
+        "median_degree": 1152.0,
+        "mean_log_degree": 7.151691839071879,
+        "std_log_degree": 1.8886889845064512,
+        "scaling_alpha": 1.5850660837685255,
+        "scaling_r2": 0.3620777929427875
+      },
+      {
+        "rank": 2,
+        "n": 691,
+        "mean_degree": 1415.5947901591896,
+        "median_degree": 648.0,
+        "mean_log_degree": 6.555587057727326,
+        "std_log_degree": 1.1563628706002924,
+        "scaling_alpha": 1.4946600806824744,
+        "scaling_r2": 0.33140302346529726
+      }
+    ],
+    "rank0_vs_rank1_raw": {
+      "U": 125377691.0,
+      "p": 1.0068641154140881e-39
+    },
+    "rank0_vs_rank1_residual": {
+      "U": 138302667.0,
+      "p": 4.300060637157355e-199,
+      "mean_resid_r0": 0.2972623589716987,
+      "mean_resid_r1": -0.2540279342486232,
+      "note": "residuals from log(deg) ~ alpha*log(N) fit, controlling for conductor"
+    },
+    "verdict": "rank 0 has larger modular degree at fixed conductor"
+  },
+  "cm_effect": {
+    "n_cm": 294,
+    "n_non_cm": 30779,
+    "mean_log_deg_cm": 5.408649686189432,
+    "mean_log_deg_non_cm": 7.292474184216676,
+    "residual_U": 2981699.5,
+    "residual_p": 6.862973375987416e-24
+  },
+  "semistable_effect": {
+    "n_semistable": 10680,
+    "mean_resid_semistable": -0.020495012898409597,
+    "mean_resid_non_semistable": 0.010733425084835211,
+    "U": 105705050.0,
+    "p": 2.1141656156362435e-05
+  },
+  "percentiles": {
+    "p1": 8.720000000000027,
+    "p5": 60.0,
+    "p10": 128.0,
+    "p25": 384.0,
+    "p50": 1344.0,
+    "p75": 5120.0,
+    "p90": 18432.0,
+    "p95": 43200.0,
+    "p99": 228480.0
+  },
+  "degree_over_conductor": {
+    "mean": 4.90456651313567,
+    "median": 0.5732198835647111,
+    "mean_log_ratio": -0.354806727691229,
+    "std_log_ratio": 1.6382214899805319,
+    "note": "if deg~N^alpha, log(deg/N) ~ (alpha-1)*log(N) + const"
+  },
+  "summary": "31K curves. Modular degree spans 1 to ~15M. Log-normal fit: mu=7.27, sigma=2.02. Scaling: log(deg) ~ 1.467*log(N), R\u00b2=0.381. Rank 0 curves have larger modular degree than rank 1 at fixed conductor (p=4.30e-199)."
+}
