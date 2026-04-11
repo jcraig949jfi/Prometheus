@@ -552,7 +552,16 @@ MLE α=3.28±0.01 vs Hecke α=3.19 (Δ=0.09). Same tail decay — potential univ
 1,000 sequences. Zero-fill masking: σ=4.30 (catastrophically destructive — 10% masking drops D to 40%). Interpolation: σ=-0.06 (nearly invariant). No intermediate degradation regime. PSD spectral dimension lives entirely in low-frequency modes: either fully preserved or fully destroyed.
 
 ### 138. Lattice-Knot MI: Null, Zero Cross-Domain Structure (Lattice-Knot-MI)
-39,293 lattices vs 2,977 knots. MI(lattice,Jones): z=-1.40 (below null). MI(lattice,Alexander): z=-0.23 (null). Fingerprint overlap tiny (31/356 lattice × 2,284 Jones). Within-knot Jones-Alexander MI = 7.03 bits (sanity check passes). Theta series and knot polynomials share no mod-3 structure.
+MI(lattice,Jones): z=-1.40. MI(lattice,Alexander): z=-0.23. Zero cross-domain structure.
+
+### 139. Hecke IPR = 0.087: Nearly Maximally Delocalized (Hecke-IPR)
+17,314 forms, 25 primes. Mean IPR=0.0866, Sato-Tate baseline=0.0799 (only 8% above). CM: 0.139 (1.61× non-CM = 0.086). CM localization from a_p=0 at inert primes. Conductor-independent (0.085-0.087 across all ranges). Hecke eigenvalues ARE delocalized — they sample the semicircle nearly uniformly.
+
+### 140. OEIS Chromatic: χ=ω for 100% (Perfect Graphs) (OEIS-chromatic)
+2,000 sequences. ALL-primes graph: 55 edges, χ=ω=7, 100% perfect. ANY-prime graph: 39,645 edges, χ=ω=192, still 100% perfect. The 100% rate (vs expected 89%) is structural: mod-p fingerprint matching creates equivalence relations → disjoint cliques → trivially perfect graphs.
+
+### 141. Knot Curvature Flow κ*=-0.373: Opposite Sign from Genus-2 (Knot-curv-flow)
+2,977 knots, k-NN graph on Jones mod-3 fingerprints. κ*=-0.373 (negative, tree-like). OPPOSITE sign from genus-2 Hecke (+0.7295). Same sign as EC Hecke (-0.67) but half magnitude. Zero edges destroyed (negative curvature → weight expansion). Knot polynomial landscape is hyperbolic, not clustered.
 
 ---
 
@@ -918,7 +927,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*263 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*266 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 
