@@ -1,0 +1,262 @@
+{
+  "problem": "NF13: Continued Fraction Khinchin Variance",
+  "khinchin_constant": 2.6854520010653062,
+  "total_sequences_parsed": 394453,
+  "cf_candidates_found": 103418,
+  "sequences_analyzed": 872,
+  "partial_quotients_used": 50,
+  "measure_1_mse_vs_K": 297397.310351,
+  "measure_2_fraction_khinchin_compliant_10pct": 0.029817,
+  "measure_3_famous_vs_arbitrary": {
+    "famous_constants": {
+      "label": "famous_CF_sequences",
+      "n": 8,
+      "mean": 2.463642,
+      "median": 2.532911,
+      "std": 0.492868,
+      "min": 1.414214,
+      "max": 3.096921,
+      "mse_vs_K": 0.292118,
+      "fraction_within_10pct_K": 0.375
+    },
+    "arbitrary_sequences": {
+      "label": "arbitrary_OEIS_sequences",
+      "n": 864,
+      "mean": 148.704152,
+      "median": 44.953617,
+      "std": 528.04311,
+      "min": 1.0805,
+      "max": 10483.415155,
+      "mse_vs_K": 300150.986446,
+      "fraction_within_10pct_K": 0.02662
+    },
+    "famous_details": [
+      {
+        "seq_id": "A001203",
+        "name": "pi",
+        "geometric_mean": 3.096921,
+        "deviation_from_K": 0.411469,
+        "within_10pct": false
+      },
+      {
+        "seq_id": "A002945",
+        "name": "cbrt(2)",
+        "geometric_mean": 2.8866,
+        "deviation_from_K": 0.201148,
+        "within_10pct": true
+      },
+      {
+        "seq_id": "A003417",
+        "name": "e",
+        "geometric_mean": 2.337559,
+        "deviation_from_K": -0.347893,
+        "within_10pct": false
+      },
+      {
+        "seq_id": "A010121",
+        "name": "sqrt(7)",
+        "geometric_mean": 1.414214,
+        "deviation_from_K": -1.271238,
+        "within_10pct": false
+      },
+      {
+        "seq_id": "A013631",
+        "name": "zeta(3)",
+        "geometric_mean": 2.137847,
+        "deviation_from_K": -0.547605,
+        "within_10pct": false
+      },
+      {
+        "seq_id": "A053300",
+        "name": "pi/2",
+        "geometric_mean": 2.39779,
+        "deviation_from_K": -0.287662,
+        "within_10pct": false
+      },
+      {
+        "seq_id": "A058282",
+        "name": "e^2",
+        "geometric_mean": 2.668033,
+        "deviation_from_K": -0.017419,
+        "within_10pct": true
+      },
+      {
+        "seq_id": "A058284",
+        "name": "pi^2",
+        "geometric_mean": 2.770174,
+        "deviation_from_K": 0.084722,
+        "within_10pct": true
+      }
+    ]
+  },
+  "geometric_mean_distribution": [
+    {
+      "bin": "[0.0, 1.0)",
+      "count": 0
+    },
+    {
+      "bin": "[1.0, 1.5)",
+      "count": 16
+    },
+    {
+      "bin": "[1.5, 2.0)",
+      "count": 24
+    },
+    {
+      "bin": "[2.0, 2.4)",
+      "count": 15
+    },
+    {
+      "bin": "[2.4, 2.6)",
+      "count": 13
+    },
+    {
+      "bin": "[2.6, 2.8)",
+      "count": 9
+    },
+    {
+      "bin": "[2.8, 3.0)",
+      "count": 6
+    },
+    {
+      "bin": "[3.0, 3.5)",
+      "count": 21
+    },
+    {
+      "bin": "[3.5, 4.0)",
+      "count": 8
+    },
+    {
+      "bin": "[4.0, 5.0)",
+      "count": 26
+    },
+    {
+      "bin": "[5.0, 10.0)",
+      "count": 64
+    },
+    {
+      "bin": "[10.0, 50.0)",
+      "count": 268
+    },
+    {
+      "bin": "[50.0, 500.0)",
+      "count": 363
+    },
+    {
+      "bin": "[500.0, 10000.0)",
+      "count": 38
+    },
+    {
+      "bin": "[10000.0, 100000000.0)",
+      "count": 1
+    }
+  ],
+  "closest_to_K": [
+    {
+      "seq_id": "A058282",
+      "geometric_mean": 2.668033,
+      "deviation": -0.017419
+    },
+    {
+      "seq_id": "A073130",
+      "geometric_mean": 2.642484,
+      "deviation": -0.042968
+    },
+    {
+      "seq_id": "A051120",
+      "geometric_mean": 2.641729,
+      "deviation": -0.043723
+    },
+    {
+      "seq_id": "A104763",
+      "geometric_mean": 2.639006,
+      "deviation": -0.046446
+    },
+    {
+      "seq_id": "A040635",
+      "geometric_mean": 2.631023,
+      "deviation": -0.054429
+    },
+    {
+      "seq_id": "A005794",
+      "geometric_mean": 2.769613,
+      "deviation": 0.084161
+    },
+    {
+      "seq_id": "A058284",
+      "geometric_mean": 2.770174,
+      "deviation": 0.084722
+    },
+    {
+      "seq_id": "A328027",
+      "geometric_mean": 2.772748,
+      "deviation": 0.087296
+    },
+    {
+      "seq_id": "A188886",
+      "geometric_mean": 2.587289,
+      "deviation": -0.098163
+    },
+    {
+      "seq_id": "A271319",
+      "geometric_mean": 2.796887,
+      "deviation": 0.111435
+    }
+  ],
+  "farthest_from_K": [
+    {
+      "seq_id": "A384094",
+      "geometric_mean": 1504.277006,
+      "deviation": 1501.591554
+    },
+    {
+      "seq_id": "A330684",
+      "geometric_mean": 2366.883045,
+      "deviation": 2364.197593
+    },
+    {
+      "seq_id": "A364689",
+      "geometric_mean": 2639.236295,
+      "deviation": 2636.550843
+    },
+    {
+      "seq_id": "A216132",
+      "geometric_mean": 2787.653092,
+      "deviation": 2784.96764
+    },
+    {
+      "seq_id": "A146348",
+      "geometric_mean": 3195.036452,
+      "deviation": 3192.351
+    },
+    {
+      "seq_id": "A255569",
+      "geometric_mean": 3274.81089,
+      "deviation": 3272.125438
+    },
+    {
+      "seq_id": "A324315",
+      "geometric_mean": 3836.792827,
+      "deviation": 3834.107375
+    },
+    {
+      "seq_id": "A190879",
+      "geometric_mean": 4380.880407,
+      "deviation": 4378.194955
+    },
+    {
+      "seq_id": "A324601",
+      "geometric_mean": 6380.643175,
+      "deviation": 6377.957723
+    },
+    {
+      "seq_id": "A325376",
+      "geometric_mean": 10483.415155,
+      "deviation": 10480.729703
+    }
+  ],
+  "interpretation": {
+    "khinchin_theorem": "Khinchin's theorem states that for almost all real numbers, the geometric mean of CF partial quotients converges to K \u2248 2.685452. However, specific algebraic numbers (quadratic irrationals have periodic CFs) and many mathematically interesting constants may not satisfy this.",
+    "expectation": "We expect most OEIS sequences to NOT be Khinchin-compliant, because OEIS sequences are curated for mathematical interest \u2014 they are not 'almost all' reals. Famous transcendental constants (pi, e, gamma) are conjectured to be Khinchin-compliant but this is unproven."
+  }
+}
