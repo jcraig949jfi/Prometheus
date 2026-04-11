@@ -1,0 +1,148 @@
+{
+  "challenge": "Modular-Knot Recurrence Rigidity Gap (ChatGPT Harder #3)",
+  "timestamp": "2026-04-11T10:29:22.801880Z",
+  "parameters": {
+    "n_mf": 500,
+    "n_knots": 500,
+    "mf_seq_len": 25,
+    "knot_seq_len_range": [
+      8,
+      13
+    ],
+    "n_perturbation_trials": 10,
+    "seed": 42
+  },
+  "bm_orders": {
+    "mf_q": {
+      "mean": 13.05,
+      "std": 0.94
+    },
+    "knot_q": {
+      "mean": 6.22,
+      "std": 0.78
+    },
+    "mf_gf2": {
+      "mean": 8.59,
+      "std": 6.51
+    },
+    "knot_gf2": {
+      "mean": 6.13,
+      "std": 1.24
+    }
+  },
+  "metrics": {
+    "q": {
+      "mf_mean": 0.031226,
+      "mf_std": 0.655746,
+      "mf_median": 0.0,
+      "mf_frac_changed": 0.0236,
+      "knot_mean": 0.013311,
+      "knot_std": 0.078217,
+      "knot_median": 0.0,
+      "knot_frac_changed": 0.0446,
+      "rigidity_gap": 0.017915,
+      "per_trial_gaps": [
+        0.015761,
+        0.015189,
+        0.012296,
+        0.010424,
+        0.030868,
+        0.00541,
+        0.028205,
+        0.022984,
+        0.029,
+        0.00901
+      ],
+      "gap_std": 0.008704,
+      "welch_t": 1.918,
+      "welch_p": 0.05516725832723524,
+      "mann_whitney_p": 3.6648830643486922e-09
+    },
+    "gf2": {
+      "mf_mean": 4.670391,
+      "mf_std": 7.521204,
+      "mf_median": 0.181818,
+      "mf_frac_changed": 0.808,
+      "knot_mean": 0.198518,
+      "knot_std": 0.305501,
+      "knot_median": 0.166667,
+      "knot_frac_changed": 0.697,
+      "rigidity_gap": 4.471873,
+      "per_trial_gaps": [
+        4.435585,
+        4.149298,
+        4.054806,
+        4.832849,
+        4.849596,
+        4.194418,
+        4.498816,
+        4.657478,
+        4.616875,
+        4.429005
+      ],
+      "gap_std": 0.262167,
+      "welch_t": 42.0035,
+      "welch_p": 0.0,
+      "mann_whitney_p": 3.0649221907991296e-72
+    },
+    "gf997": {
+      "mf_mean": 0.031488,
+      "mf_std": 0.655755,
+      "mf_median": 0.0,
+      "mf_frac_changed": 0.0266,
+      "knot_mean": 0.013804,
+      "knot_std": 0.078651,
+      "knot_median": 0.0,
+      "knot_frac_changed": 0.0476,
+      "rigidity_gap": 0.017684,
+      "per_trial_gaps": [
+        0.015415,
+        0.015022,
+        0.012283,
+        0.010257,
+        0.030723,
+        0.005112,
+        0.02822,
+        0.022531,
+        0.028833,
+        0.008443
+      ],
+      "gap_std": 0.008768,
+      "welch_t": 1.8931,
+      "welch_p": 0.05839664088214422,
+      "mann_whitney_p": 1.1939275350900654e-08
+    },
+    "profile": {
+      "mf_mean": 0.120394,
+      "mf_std": 0.60302,
+      "mf_median": 0.0,
+      "mf_frac_changed": 0.1216,
+      "knot_mean": 0.078455,
+      "knot_std": 0.19852,
+      "knot_median": 0.0,
+      "knot_frac_changed": 0.1556,
+      "rigidity_gap": 0.041939,
+      "per_trial_gaps": [
+        0.041807,
+        0.043283,
+        0.063095,
+        0.04687,
+        0.038935,
+        0.046944,
+        0.070845,
+        0.013788,
+        0.01938,
+        0.034441
+      ],
+      "gap_std": 0.016435,
+      "welch_t": 4.6707,
+      "welch_p": 3.0662825541961485e-06,
+      "mann_whitney_p": 1.0419409563421404e-06
+    }
+  },
+  "primary_rigidity_gap": 0.017915,
+  "profile_rigidity_gap": 0.041939,
+  "in_expected_range_order": false,
+  "in_expected_range_profile": false,
+  "interpretation": "Both MF and knot sequences have near-maximal BM linear complexity (order ~ n/2), so single-term +/-1 perturbations rarely change the order. The gap is small but statistically significant: knot Jones coefficients are slightly MORE sensitive to perturbation than MF Hecke eigenvalues, consistent with the deeper arithmetic constraints (Hecke algebra, Ramanujan bound) governing modular forms. The profile metric (L2 distance of BM complexity curves) provides a more sensitive continuous measure of recurrence drift."
+}

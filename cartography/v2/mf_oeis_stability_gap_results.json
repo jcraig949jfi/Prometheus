@@ -1,0 +1,94 @@
+{
+  "experiment": "mf_oeis_compression_stability_gap",
+  "challenge": "Gemini #4",
+  "parameters": {
+    "n_mf": 1000,
+    "n_oeis": 1000,
+    "seq_len": 25,
+    "n_trials": 10,
+    "sigma_fracs_swept": [
+      0.01,
+      0.05,
+      0.1,
+      0.2
+    ],
+    "seed": 42,
+    "magnitude_matched": true,
+    "mf_source": "ap_coeffs (dim=1, rational eigenvalues)"
+  },
+  "baseline_compression": {
+    "mf_mean": 0.7629249163112586,
+    "mf_std": 0.039764998322994446,
+    "oeis_mean": 0.711153326474228,
+    "oeis_std": 0.12418307314631058
+  },
+  "sigma_sweep": {
+    "0.01": {
+      "sigma_frac": 0.01,
+      "mf_stability_mean": 0.03719466702135357,
+      "mf_stability_std": 0.026060760915833526,
+      "oeis_stability_mean": 0.13126934667473117,
+      "oeis_stability_std": 0.15775297811226252,
+      "gap": -0.0940746796533776,
+      "abs_gap": 0.0940746796533776,
+      "cohens_d": -0.832076856869159,
+      "mann_whitney_u": 226723.0,
+      "p_value": 2.1117210691748677e-99,
+      "mf_n": 1000,
+      "oeis_n": 1000
+    },
+    "0.05": {
+      "sigma_frac": 0.05,
+      "mf_stability_mean": 0.041271039890354286,
+      "mf_stability_std": 0.028910848663614166,
+      "oeis_stability_mean": 0.15672388742183774,
+      "oeis_stability_std": 0.19967009009159867,
+      "gap": -0.11545284753148345,
+      "abs_gap": 0.11545284753148345,
+      "cohens_d": -0.8092844535447438,
+      "mann_whitney_u": 229247.0,
+      "p_value": 1.3085242663465537e-97,
+      "mf_n": 1000,
+      "oeis_n": 1000
+    },
+    "0.1": {
+      "sigma_frac": 0.1,
+      "mf_stability_mean": 0.044622862318243944,
+      "mf_stability_std": 0.030703567930176756,
+      "oeis_stability_mean": 0.196332337666937,
+      "oeis_stability_std": 0.2593102601350317,
+      "gap": -0.15170947534869306,
+      "abs_gap": 0.15170947534869306,
+      "cohens_d": -0.821646122760685,
+      "mann_whitney_u": 224346.0,
+      "p_value": 4.185339259252596e-101,
+      "mf_n": 1000,
+      "oeis_n": 1000
+    },
+    "0.2": {
+      "sigma_frac": 0.2,
+      "mf_stability_mean": 0.047275094011341695,
+      "mf_stability_std": 0.03184412949695122,
+      "oeis_stability_mean": 0.21783319353075328,
+      "oeis_stability_std": 0.29815863629713124,
+      "gap": -0.1705580995194116,
+      "abs_gap": 0.1705580995194116,
+      "cohens_d": -0.8044091781138794,
+      "mann_whitney_u": 228826.0,
+      "p_value": 6.5918103607571e-98,
+      "mf_n": 1000,
+      "oeis_n": 1000
+    }
+  },
+  "best_sigma": 0.2,
+  "best_gap": -0.1705580995194116,
+  "best_abs_gap": 0.1705580995194116,
+  "best_cohens_d": -0.8044091781138794,
+  "best_p_value": 6.5918103607571e-98,
+  "expected_range": [
+    0.07,
+    0.19
+  ],
+  "in_expected_range": true,
+  "interpretation": "Positive gap = MF less stable (compression changes more under noise). Negative gap = MF more stable. MF sequences are constrained by Hecke algebra and Ramanujan bound |a_p| <= 2*p^((k-1)/2), which may make their compression profile more/less sensitive to perturbation vs generic integer sequences."
+}

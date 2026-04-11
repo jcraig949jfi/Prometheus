@@ -1,0 +1,133 @@
+{
+  "challenge": "DeepSeek #19: Sha Group Order Digital Root Entropy Anomaly",
+  "question": "Does Sha impose a base-10 bias via digital root distribution?",
+  "data_source": "charon.duckdb elliptic_curves (31K curves)",
+  "all_curves": {
+    "label": "all_curves",
+    "n_curves": 31073,
+    "digital_root_distribution": {
+      "1": {
+        "count": 30040,
+        "fraction": 0.966756
+      },
+      "2": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "3": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "4": {
+        "count": 746,
+        "fraction": 0.024008
+      },
+      "5": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "6": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "7": {
+        "count": 110,
+        "fraction": 0.00354
+      },
+      "8": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "9": {
+        "count": 177,
+        "fraction": 0.005696
+      }
+    },
+    "shannon_entropy_bits": 0.247619,
+    "max_entropy_bits": 3.169925,
+    "entropy_deficit_bits": 2.922306,
+    "entropy_ratio": 0.078115,
+    "dominant_root": 1,
+    "dominant_fraction": 0.966756
+  },
+  "sha_gt_1": {
+    "label": "sha_gt_1",
+    "n_curves": 1036,
+    "digital_root_distribution": {
+      "1": {
+        "count": 3,
+        "fraction": 0.002896
+      },
+      "2": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "3": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "4": {
+        "count": 746,
+        "fraction": 0.720077
+      },
+      "5": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "6": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "7": {
+        "count": 110,
+        "fraction": 0.106178
+      },
+      "8": {
+        "count": 0,
+        "fraction": 0.0
+      },
+      "9": {
+        "count": 177,
+        "fraction": 0.170849
+      }
+    },
+    "shannon_entropy_bits": 1.144634,
+    "max_entropy_bits": 3.169925,
+    "entropy_deficit_bits": 2.025291,
+    "entropy_ratio": 0.361092,
+    "dominant_root": 4,
+    "dominant_fraction": 0.720077
+  },
+  "perfect_square_constraint": {
+    "allowed_digital_roots": [
+      1,
+      4,
+      7,
+      9
+    ],
+    "n_allowed": 4,
+    "constrained_H_max_bits": 2.0
+  },
+  "random_square_null": {
+    "n_simulated": 100000,
+    "entropy_bits": 1.949186,
+    "distribution": {
+      "1": 14184,
+      "4": 28689,
+      "7": 28556,
+      "9": 28571
+    }
+  },
+  "entropy_deficit_vs_random_squares": -0.804552,
+  "verdict": "NO base-10 bias. Digital roots of Sha are deterministic given Sha values. Entropy H=1.1446 bits (constrained max=2.0000) reflects BSD arithmetic: sha=4 dominates at 71.5%. The 0.80-bit deficit vs random squares is entirely from small-value concentration.",
+  "reasoning": [
+    "All curves (n=31073): H=0.2476 bits, dominated by sha=1 (digital root 1, 96.7%)",
+    "sha>1 (n=1036): H=1.1446 bits vs H_max(9)=3.1699, deficit=2.0253",
+    "Perfect squares allow digital roots [1, 4, 7, 9] (4 values), so constrained H_max=2.0000 bits",
+    "Random perfect squares: H=1.9492 bits (constrained H_max=2.0000)",
+    "Sha value distribution (sha>1): {4: 741, 9: 175, 16: 77, 25: 33, 36: 2, 49: 5, 64: 3}",
+    "Digital root distribution is fully determined by sha value frequencies: sha=4 (DR=4, 71.5%), sha=9 (DR=9, 16.9%), sha=16 (DR=7, 7.4%), sha=25 (DR=7, 3.2%), etc. No base-10 bias; entropy deficit is from BSD arithmetic (small Sha dominance), not base-10 numerology.",
+    "NO base-10 bias. Digital roots of Sha are deterministic given Sha values. Entropy H=1.1446 bits (constrained max=2.0000) reflects BSD arithmetic: sha=4 dominates at 71.5%. The 0.80-bit deficit vs random squares is entirely from small-value concentration."
+  ],
+  "base_10_bias": "No \u2014 entropy deficit is BSD arithmetic, not base-10 numerology"
+}
