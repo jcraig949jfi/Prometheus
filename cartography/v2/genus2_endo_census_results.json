@@ -1,0 +1,5547 @@
+{
+  "total_curves": 66158,
+  "endomorphism_ring_counts": {
+    "Q": 63107,
+    "Q x Q": 2468,
+    "CM x Q": 303,
+    "M_2(Q)": 147,
+    "RM": 116,
+    "M_2(CM)": 8,
+    "CM": 6,
+    "QM": 3
+  },
+  "st_group_counts": {
+    "USp(4)": 63107,
+    "G_{3,3}": 2440,
+    "N(G_{1,3})": 303,
+    "N(G_{3,3})": 144,
+    "E_6": 51,
+    "J(E_1)": 24,
+    "J(E_4)": 17,
+    "J(E_6)": 17,
+    "E_4": 10,
+    "J(E_2)": 9,
+    "E_1": 8,
+    "E_3": 7,
+    "F_{ac}": 6,
+    "J(E_3)": 4,
+    "E_2": 3,
+    "D_{2,1}": 3,
+    "J(C_2)": 2,
+    "D_{3,2}": 1,
+    "D_{6,2}": 1,
+    "J(C_4)": 1
+  },
+  "rank_counts": {
+    "0": 12131,
+    "1": 30579,
+    "2": 20561,
+    "3": 2877,
+    "4": 10
+  },
+  "cross_tab_endo_st": {
+    "Q": {
+      "USp(4)": 63084,
+      "G_{3,3}": 16,
+      "N(G_{1,3})": 7
+    },
+    "Q x Q": {
+      "G_{3,3}": 2326,
+      "N(G_{3,3})": 125,
+      "USp(4)": 16,
+      "E_3": 1
+    },
+    "CM x Q": {
+      "N(G_{1,3})": 296,
+      "USp(4)": 7
+    },
+    "M_2(Q)": {
+      "E_6": 51,
+      "J(E_1)": 24,
+      "J(E_6)": 17,
+      "J(E_4)": 16,
+      "E_4": 10,
+      "E_1": 8,
+      "J(E_2)": 7,
+      "E_3": 6,
+      "J(E_3)": 4,
+      "E_2": 3,
+      "G_{3,3}": 1
+    },
+    "RM": {
+      "G_{3,3}": 97,
+      "N(G_{3,3})": 19
+    },
+    "M_2(CM)": {
+      "D_{2,1}": 3,
+      "J(C_2)": 2,
+      "D_{3,2}": 1,
+      "D_{6,2}": 1,
+      "J(C_4)": 1
+    },
+    "CM": {
+      "F_{ac}": 6
+    },
+    "QM": {
+      "J(E_2)": 2,
+      "J(E_4)": 1
+    }
+  },
+  "cross_tab_endo_rank": {
+    "Q": {
+      "0": 10981,
+      "1": 29288,
+      "2": 20018,
+      "3": 2811,
+      "4": 9
+    },
+    "Q x Q": {
+      "0": 876,
+      "1": 1103,
+      "2": 423,
+      "3": 65,
+      "4": 1
+    },
+    "CM x Q": {
+      "0": 130,
+      "1": 145,
+      "2": 27,
+      "3": 1
+    },
+    "M_2(Q)": {
+      "0": 94,
+      "1": 26,
+      "2": 27
+    },
+    "RM": {
+      "0": 43,
+      "1": 8,
+      "2": 65
+    },
+    "M_2(CM)": {
+      "0": 4,
+      "1": 3,
+      "2": 1
+    },
+    "CM": {
+      "0": 2,
+      "1": 4
+    },
+    "QM": {
+      "0": 1,
+      "1": 2
+    }
+  },
+  "triple_cross_tab": [
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 1,
+      "count": 29276,
+      "fraction": 0.442516,
+      "mean_conductor": 296782.61,
+      "median_conductor": 197642.5,
+      "min_conductor": 587,
+      "max_conductor": 1000000,
+      "mean_abs_disc": 438532.56,
+      "median_abs_disc": 410524.0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 2,
+      "count": 20015,
+      "fraction": 0.302533,
+      "mean_conductor": 356320.31,
+      "median_conductor": 278896,
+      "min_conductor": 3319,
+      "max_conductor": 999893,
+      "mean_abs_disc": 485240.46,
+      "median_abs_disc": 469877
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 0,
+      "count": 10973,
+      "fraction": 0.165861,
+      "mean_conductor": 289313.41,
+      "median_conductor": 186917,
+      "min_conductor": 249,
+      "max_conductor": 999605,
+      "mean_abs_disc": 428652.39,
+      "median_abs_disc": 394912
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 3,
+      "count": 2811,
+      "fraction": 0.042489,
+      "mean_conductor": 502717.7,
+      "median_conductor": 471769,
+      "min_conductor": 25913,
+      "max_conductor": 999111,
+      "mean_abs_disc": 576663.07,
+      "median_abs_disc": 580864
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 1,
+      "count": 1019,
+      "fraction": 0.015403,
+      "mean_conductor": 186074.61,
+      "median_conductor": 87120,
+      "min_conductor": 847,
+      "max_conductor": 998560,
+      "mean_abs_disc": 386167.42,
+      "median_abs_disc": 342000
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 0,
+      "count": 822,
+      "fraction": 0.012425,
+      "mean_conductor": 124004.05,
+      "median_conductor": 33984.0,
+      "min_conductor": 294,
+      "max_conductor": 987696,
+      "mean_abs_disc": 315292.86,
+      "median_abs_disc": 241245.0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 2,
+      "count": 420,
+      "fraction": 0.006348,
+      "mean_conductor": 247755.66,
+      "median_conductor": 148231.0,
+      "min_conductor": 5476,
+      "max_conductor": 988768,
+      "mean_abs_disc": 435850.41,
+      "median_abs_disc": 423752.0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 1,
+      "count": 143,
+      "fraction": 0.002161,
+      "mean_conductor": 98328.07,
+      "median_conductor": 33696,
+      "min_conductor": 1331,
+      "max_conductor": 958635,
+      "mean_abs_disc": 344308.63,
+      "median_abs_disc": 276864
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 0,
+      "count": 125,
+      "fraction": 0.001889,
+      "mean_conductor": 67117.18,
+      "median_conductor": 15360,
+      "min_conductor": 448,
+      "max_conductor": 839680,
+      "mean_abs_disc": 247549.22,
+      "median_abs_disc": 145152
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 1,
+      "count": 77,
+      "fraction": 0.001164,
+      "mean_conductor": 229678.55,
+      "median_conductor": 140800,
+      "min_conductor": 3264,
+      "max_conductor": 737280,
+      "mean_abs_disc": 346986.39,
+      "median_abs_disc": 262656
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 3,
+      "count": 64,
+      "fraction": 0.000967,
+      "mean_conductor": 391155.3,
+      "median_conductor": 289672.5,
+      "min_conductor": 35131,
+      "max_conductor": 994009,
+      "mean_abs_disc": 544719.36,
+      "median_abs_disc": 515524.0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "G_{3,3}",
+      "rank": 2,
+      "count": 61,
+      "fraction": 0.000922,
+      "mean_conductor": 207817.77,
+      "median_conductor": 89401,
+      "min_conductor": 4489,
+      "max_conductor": 863041,
+      "mean_abs_disc": 339636.26,
+      "median_abs_disc": 275427
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 0,
+      "count": 47,
+      "fraction": 0.00071,
+      "mean_conductor": 179299.11,
+      "median_conductor": 57344,
+      "min_conductor": 1088,
+      "max_conductor": 999936,
+      "mean_abs_disc": 355440.72,
+      "median_abs_disc": 256000
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "G_{3,3}",
+      "rank": 0,
+      "count": 36,
+      "fraction": 0.000544,
+      "mean_conductor": 112199.67,
+      "median_conductor": 15885.0,
+      "min_conductor": 529,
+      "max_conductor": 700569,
+      "mean_abs_disc": 318347.72,
+      "median_abs_disc": 279357.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_6",
+      "rank": 0,
+      "count": 33,
+      "fraction": 0.000499,
+      "mean_conductor": 163415.82,
+      "median_conductor": 48841,
+      "min_conductor": 169,
+      "max_conductor": 900601,
+      "mean_abs_disc": 275152.42,
+      "median_abs_disc": 186624
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 2,
+      "count": 27,
+      "fraction": 0.000408,
+      "mean_conductor": 321280.3,
+      "median_conductor": 207552,
+      "min_conductor": 10648,
+      "max_conductor": 944784,
+      "mean_abs_disc": 418068.15,
+      "median_abs_disc": 426944
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_6",
+      "rank": 2,
+      "count": 18,
+      "fraction": 0.000272,
+      "mean_conductor": 160606.89,
+      "median_conductor": 74262.5,
+      "min_conductor": 3721,
+      "max_conductor": 727609,
+      "mean_abs_disc": 291132,
+      "median_abs_disc": 273422.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_1)",
+      "rank": 0,
+      "count": 16,
+      "fraction": 0.000242,
+      "mean_conductor": 66577.31,
+      "median_conductor": 4608.0,
+      "min_conductor": 1152,
+      "max_conductor": 589824,
+      "mean_abs_disc": 211314.94,
+      "median_abs_disc": 143712.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_4)",
+      "rank": 0,
+      "count": 10,
+      "fraction": 0.000151,
+      "mean_conductor": 61235.2,
+      "median_conductor": 10496.0,
+      "min_conductor": 4608,
+      "max_conductor": 331776,
+      "mean_abs_disc": 488652.8,
+      "median_abs_disc": 507904.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_6)",
+      "rank": 0,
+      "count": 9,
+      "fraction": 0.000136,
+      "mean_conductor": 122013,
+      "median_conductor": 104976,
+      "min_conductor": 6075,
+      "max_conductor": 321489,
+      "mean_abs_disc": 376083,
+      "median_abs_disc": 291600
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 4,
+      "count": 9,
+      "fraction": 0.000136,
+      "mean_conductor": 699274.78,
+      "median_conductor": 766561,
+      "min_conductor": 440509,
+      "max_conductor": 864569,
+      "mean_abs_disc": 699274.78,
+      "median_abs_disc": 766561
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_6)",
+      "rank": 1,
+      "count": 8,
+      "fraction": 0.000121,
+      "mean_conductor": 190360.12,
+      "median_conductor": 106069.5,
+      "min_conductor": 18225,
+      "max_conductor": 613089,
+      "mean_abs_disc": 390288.38,
+      "median_abs_disc": 306544.5
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{3,3})",
+      "rank": 1,
+      "count": 8,
+      "fraction": 0.000121,
+      "mean_conductor": 236926.88,
+      "median_conductor": 146562.5,
+      "min_conductor": 36864,
+      "max_conductor": 703125,
+      "mean_abs_disc": 546120.88,
+      "median_abs_disc": 576562.5
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_4",
+      "rank": 0,
+      "count": 7,
+      "fraction": 0.000106,
+      "mean_conductor": 55853.71,
+      "median_conductor": 25600,
+      "min_conductor": 256,
+      "max_conductor": 193600,
+      "mean_abs_disc": 297664,
+      "median_abs_disc": 128000
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "USp(4)",
+      "rank": 1,
+      "count": 7,
+      "fraction": 0.000106,
+      "mean_conductor": 63267.29,
+      "median_conductor": 53920,
+      "min_conductor": 9583,
+      "max_conductor": 135936,
+      "mean_abs_disc": 572152.14,
+      "median_abs_disc": 552960
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{3,3})",
+      "rank": 0,
+      "count": 7,
+      "fraction": 0.000106,
+      "mean_conductor": 155416,
+      "median_conductor": 102400,
+      "min_conductor": 12500,
+      "max_conductor": 331776,
+      "mean_abs_disc": 255566.29,
+      "median_abs_disc": 102400
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "G_{3,3}",
+      "rank": 1,
+      "count": 7,
+      "fraction": 0.000106,
+      "mean_conductor": 98859.43,
+      "median_conductor": 89856,
+      "min_conductor": 29440,
+      "max_conductor": 220416,
+      "mean_abs_disc": 137149.71,
+      "median_abs_disc": 123136
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_1",
+      "rank": 0,
+      "count": 6,
+      "fraction": 9.1e-05,
+      "mean_conductor": 1758.67,
+      "median_conductor": 626.0,
+      "min_conductor": 196,
+      "max_conductor": 6400,
+      "mean_abs_disc": 192273.33,
+      "median_abs_disc": 147456.0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "G_{3,3}",
+      "rank": 0,
+      "count": 6,
+      "fraction": 9.1e-05,
+      "mean_conductor": 37745.17,
+      "median_conductor": 31860.0,
+      "min_conductor": 9583,
+      "max_conductor": 96000,
+      "mean_abs_disc": 234807.17,
+      "median_abs_disc": 184320.0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "USp(4)",
+      "rank": 0,
+      "count": 6,
+      "fraction": 9.1e-05,
+      "mean_conductor": 64762.67,
+      "median_conductor": 42696.0,
+      "min_conductor": 11088,
+      "max_conductor": 139520,
+      "mean_abs_disc": 492770.67,
+      "median_abs_disc": 521640.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_4)",
+      "rank": 1,
+      "count": 6,
+      "fraction": 9.1e-05,
+      "mean_conductor": 181632,
+      "median_conductor": 204800.0,
+      "min_conductor": 12544,
+      "max_conductor": 331776,
+      "mean_abs_disc": 664832,
+      "median_abs_disc": 704512.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_3",
+      "rank": 0,
+      "count": 5,
+      "fraction": 7.6e-05,
+      "mean_conductor": 10155.2,
+      "median_conductor": 12544,
+      "min_conductor": 324,
+      "max_conductor": 20736,
+      "mean_abs_disc": 175808,
+      "median_abs_disc": 20736
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_1)",
+      "rank": 1,
+      "count": 5,
+      "fraction": 7.6e-05,
+      "mean_conductor": 116768.8,
+      "median_conductor": 36864,
+      "min_conductor": 6400,
+      "max_conductor": 278784,
+      "mean_abs_disc": 236404.8,
+      "median_abs_disc": 102400
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "USp(4)",
+      "rank": 0,
+      "count": 5,
+      "fraction": 7.6e-05,
+      "mean_conductor": 67914.2,
+      "median_conductor": 16464,
+      "min_conductor": 8019,
+      "max_conductor": 217296,
+      "mean_abs_disc": 273386.2,
+      "median_abs_disc": 164864
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 1,
+      "count": 5,
+      "fraction": 7.6e-05,
+      "mean_conductor": 81107.8,
+      "median_conductor": 82432,
+      "min_conductor": 8019,
+      "max_conductor": 217296,
+      "mean_abs_disc": 364769.8,
+      "median_abs_disc": 82432
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_2)",
+      "rank": 1,
+      "count": 5,
+      "fraction": 7.6e-05,
+      "mean_conductor": 346163.2,
+      "median_conductor": 262144,
+      "min_conductor": 102400,
+      "max_conductor": 589824,
+      "mean_abs_disc": 383488,
+      "median_abs_disc": 373248
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "F_{ac}",
+      "rank": 1,
+      "count": 4,
+      "fraction": 6e-05,
+      "mean_conductor": 72296.5,
+      "median_conductor": 50312.5,
+      "min_conductor": 28561,
+      "max_conductor": 160000,
+      "mean_abs_disc": 406104.5,
+      "median_abs_disc": 312209.0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{3,3})",
+      "rank": 2,
+      "count": 4,
+      "fraction": 6e-05,
+      "mean_conductor": 622010.5,
+      "median_conductor": 572010.5,
+      "min_conductor": 440896,
+      "max_conductor": 903125,
+      "mean_abs_disc": 622010.5,
+      "median_abs_disc": 572010.5
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_2",
+      "rank": 0,
+      "count": 3,
+      "fraction": 4.5e-05,
+      "mean_conductor": 49557.33,
+      "median_conductor": 69696,
+      "min_conductor": 576,
+      "max_conductor": 78400,
+      "mean_abs_disc": 235413.33,
+      "median_abs_disc": 78400
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_4",
+      "rank": 2,
+      "count": 3,
+      "fraction": 4.5e-05,
+      "mean_conductor": 70848,
+      "median_conductor": 12544,
+      "min_conductor": 6400,
+      "max_conductor": 193600,
+      "mean_abs_disc": 352362.67,
+      "median_abs_disc": 64000
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "G_{3,3}",
+      "rank": 2,
+      "count": 3,
+      "fraction": 4.5e-05,
+      "mean_conductor": 149930.67,
+      "median_conductor": 139520,
+      "min_conductor": 89856,
+      "max_conductor": 220416,
+      "mean_abs_disc": 209834.67,
+      "median_abs_disc": 220416
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_1)",
+      "rank": 2,
+      "count": 3,
+      "fraction": 4.5e-05,
+      "mean_conductor": 715776,
+      "median_conductor": 778752,
+      "min_conductor": 589824,
+      "max_conductor": 778752,
+      "mean_abs_disc": 715776,
+      "median_abs_disc": 778752
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_3)",
+      "rank": 0,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 14215.5,
+      "median_conductor": 14215.5,
+      "min_conductor": 2187,
+      "max_conductor": 26244,
+      "mean_abs_disc": 239476.5,
+      "median_abs_disc": 239476.5
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "F_{ac}",
+      "rank": 0,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 6562.5,
+      "median_conductor": 6562.5,
+      "min_conductor": 3125,
+      "max_conductor": 10000,
+      "mean_abs_disc": 401562.5,
+      "median_abs_disc": 401562.5
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_2)",
+      "rank": 0,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 4640,
+      "median_conductor": 4640.0,
+      "min_conductor": 4096,
+      "max_conductor": 5184,
+      "mean_abs_disc": 56096,
+      "median_abs_disc": 56096.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_2)",
+      "rank": 0,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 350208,
+      "median_conductor": 350208.0,
+      "min_conductor": 8192,
+      "max_conductor": 692224,
+      "mean_abs_disc": 411648,
+      "median_abs_disc": 411648.0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 0,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 13384,
+      "median_conductor": 13384.0,
+      "min_conductor": 10304,
+      "max_conductor": 16464,
+      "mean_abs_disc": 78232,
+      "median_abs_disc": 78232.0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "USp(4)",
+      "rank": 1,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 46368,
+      "median_conductor": 46368.0,
+      "min_conductor": 10304,
+      "max_conductor": 82432,
+      "mean_abs_disc": 164864,
+      "median_abs_disc": 164864.0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{2,1}",
+      "rank": 1,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 43136,
+      "median_conductor": 43136.0,
+      "min_conductor": 20736,
+      "max_conductor": 65536,
+      "mean_abs_disc": 219392,
+      "median_abs_disc": 219392.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_3)",
+      "rank": 1,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 42646.5,
+      "median_conductor": 42646.5,
+      "min_conductor": 26244,
+      "max_conductor": 59049,
+      "mean_abs_disc": 246037.5,
+      "median_abs_disc": 246037.5
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_1",
+      "rank": 2,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 326536,
+      "median_conductor": 326536.0,
+      "min_conductor": 38416,
+      "max_conductor": 614656,
+      "mean_abs_disc": 614656,
+      "median_abs_disc": 614656.0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "USp(4)",
+      "rank": 2,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 158208,
+      "median_conductor": 158208.0,
+      "min_conductor": 96000,
+      "max_conductor": 220416,
+      "mean_abs_disc": 412416,
+      "median_abs_disc": 412416.0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_2)",
+      "rank": 1,
+      "count": 2,
+      "fraction": 3e-05,
+      "mean_conductor": 262144,
+      "median_conductor": 262144.0,
+      "min_conductor": 262144,
+      "max_conductor": 262144,
+      "mean_abs_disc": 524288,
+      "median_abs_disc": 524288.0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "G_{3,3}",
+      "rank": 0,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 784,
+      "median_conductor": 784,
+      "min_conductor": 784,
+      "max_conductor": 784,
+      "mean_abs_disc": 12544,
+      "median_abs_disc": 12544
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_3",
+      "rank": 0,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 784,
+      "median_conductor": 784,
+      "min_conductor": 784,
+      "max_conductor": 784,
+      "mean_abs_disc": 614656,
+      "median_abs_disc": 614656
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{3,2}",
+      "rank": 0,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 2916,
+      "median_conductor": 2916,
+      "min_conductor": 2916,
+      "max_conductor": 2916,
+      "mean_abs_disc": 11664,
+      "median_abs_disc": 11664
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{6,2}",
+      "rank": 1,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 11664,
+      "median_conductor": 11664,
+      "min_conductor": 11664,
+      "max_conductor": 11664,
+      "mean_abs_disc": 11664,
+      "median_abs_disc": 11664
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_4)",
+      "rank": 0,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 20736,
+      "median_conductor": 20736,
+      "min_conductor": 20736,
+      "max_conductor": 20736,
+      "mean_abs_disc": 373248,
+      "median_abs_disc": 373248
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{2,1}",
+      "rank": 0,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 20736,
+      "median_conductor": 20736,
+      "min_conductor": 20736,
+      "max_conductor": 20736,
+      "mean_abs_disc": 373248,
+      "median_abs_disc": 373248
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_4)",
+      "rank": 2,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 40000,
+      "median_conductor": 40000,
+      "min_conductor": 40000,
+      "max_conductor": 40000,
+      "mean_abs_disc": 200000,
+      "median_abs_disc": 200000
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 3,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 158389,
+      "median_conductor": 158389,
+      "min_conductor": 158389,
+      "max_conductor": 158389,
+      "mean_abs_disc": 158389,
+      "median_abs_disc": 158389
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_3",
+      "rank": 2,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 202500,
+      "median_conductor": 202500,
+      "min_conductor": 202500,
+      "max_conductor": 202500,
+      "mean_abs_disc": 405000,
+      "median_abs_disc": 405000
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "USp(4)",
+      "rank": 3,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 220416,
+      "median_conductor": 220416,
+      "min_conductor": 220416,
+      "max_conductor": 220416,
+      "mean_abs_disc": 440832,
+      "median_abs_disc": 440832
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 2,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 586432,
+      "median_conductor": 586432,
+      "min_conductor": 586432,
+      "max_conductor": 586432,
+      "mean_abs_disc": 586432,
+      "median_abs_disc": 586432
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 4,
+      "count": 1,
+      "fraction": 1.5e-05,
+      "mean_conductor": 994009,
+      "median_conductor": 994009,
+      "min_conductor": 994009,
+      "max_conductor": 994009,
+      "mean_abs_disc": 994009,
+      "median_abs_disc": 994009
+    }
+  ],
+  "combinatorial_space": {
+    "total_possible_triples": 800,
+    "occupied_triples": 65,
+    "empty_triples": 735,
+    "occupancy_rate": 0.0813
+  },
+  "empty_combinations": [
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_3",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "G_{3,3}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "G_{3,3}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "G_{3,3}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{1,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{1,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{3,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{3,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{3,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "USp(4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "USp(4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "USp(4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "USp(4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM",
+      "st_group": "USp(4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_3",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "G_{3,3}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "G_{3,3}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "G_{3,3}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "USp(4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "USp(4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "CM x Q",
+      "st_group": "USp(4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_3",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "G_{3,3}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "G_{3,3}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "G_{3,3}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{1,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{1,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{3,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{3,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{3,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "USp(4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "USp(4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "USp(4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "USp(4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(CM)",
+      "st_group": "USp(4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "G_{3,3}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "G_{3,3}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{1,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{1,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{3,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{3,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{3,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "USp(4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "USp(4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "USp(4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "USp(4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "M_2(Q)",
+      "st_group": "USp(4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_3",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "USp(4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_3",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "G_{3,3}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "G_{3,3}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "G_{3,3}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{1,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{1,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{3,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{3,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{3,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "USp(4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "USp(4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "USp(4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "USp(4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "QM",
+      "st_group": "USp(4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{2,1}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{2,1}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{2,1}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{2,1}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{2,1}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{3,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{3,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{3,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{3,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{3,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{6,2}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{6,2}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{6,2}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{6,2}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "D_{6,2}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_1",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_1",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_1",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_1",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_1",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_2",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_2",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_2",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_2",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_2",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_3",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_3",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_3",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_3",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_3",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_4",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_4",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_4",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_4",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_4",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_6",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_6",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_6",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_6",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "E_6",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "F_{ac}",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "F_{ac}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "F_{ac}",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "F_{ac}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "F_{ac}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "G_{3,3}",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "G_{3,3}",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "G_{3,3}",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(C_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_1)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_1)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_1)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_1)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_1)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_2)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_2)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_2)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_2)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_2)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_3)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_3)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_3)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_3)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_3)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_4)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_6)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_6)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_6)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_6)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "J(E_6)",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{1,3})",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{1,3})",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{1,3})",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{1,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{1,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{3,3})",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "N(G_{3,3})",
+      "rank": 4
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "USp(4)",
+      "rank": 0
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "USp(4)",
+      "rank": 1
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "USp(4)",
+      "rank": 2
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "USp(4)",
+      "rank": 3
+    },
+    {
+      "endomorphism_ring": "RM",
+      "st_group": "USp(4)",
+      "rank": 4
+    }
+  ],
+  "universal_combinations": [
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 1,
+      "count": 29276,
+      "fraction": 0.442516,
+      "mean_conductor": 296782.61,
+      "median_conductor": 197642.5,
+      "min_conductor": 587,
+      "max_conductor": 1000000,
+      "mean_abs_disc": 438532.56,
+      "median_abs_disc": 410524.0
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 2,
+      "count": 20015,
+      "fraction": 0.302533,
+      "mean_conductor": 356320.31,
+      "median_conductor": 278896,
+      "min_conductor": 3319,
+      "max_conductor": 999893,
+      "mean_abs_disc": 485240.46,
+      "median_abs_disc": 469877
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 0,
+      "count": 10973,
+      "fraction": 0.165861,
+      "mean_conductor": 289313.41,
+      "median_conductor": 186917,
+      "min_conductor": 249,
+      "max_conductor": 999605,
+      "mean_abs_disc": 428652.39,
+      "median_abs_disc": 394912
+    },
+    {
+      "endomorphism_ring": "Q",
+      "st_group": "USp(4)",
+      "rank": 3,
+      "count": 2811,
+      "fraction": 0.042489,
+      "mean_conductor": 502717.7,
+      "median_conductor": 471769,
+      "min_conductor": 25913,
+      "max_conductor": 999111,
+      "mean_abs_disc": 576663.07,
+      "median_abs_disc": 580864
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 1,
+      "count": 1019,
+      "fraction": 0.015403,
+      "mean_conductor": 186074.61,
+      "median_conductor": 87120,
+      "min_conductor": 847,
+      "max_conductor": 998560,
+      "mean_abs_disc": 386167.42,
+      "median_abs_disc": 342000
+    },
+    {
+      "endomorphism_ring": "Q x Q",
+      "st_group": "G_{3,3}",
+      "rank": 0,
+      "count": 822,
+      "fraction": 0.012425,
+      "mean_conductor": 124004.05,
+      "median_conductor": 33984.0,
+      "min_conductor": 294,
+      "max_conductor": 987696,
+      "mean_abs_disc": 315292.86,
+      "median_abs_disc": 241245.0
+    }
+  ],
+  "endo_determines_st": {
+    "CM": {
+      "st_groups": [
+        "F_{ac}"
+      ],
+      "is_unique": true,
+      "count": 6
+    },
+    "CM x Q": {
+      "st_groups": [
+        "N(G_{1,3})",
+        "USp(4)"
+      ],
+      "is_unique": false,
+      "count": 303
+    },
+    "M_2(CM)": {
+      "st_groups": [
+        "D_{2,1}",
+        "D_{3,2}",
+        "D_{6,2}",
+        "J(C_2)",
+        "J(C_4)"
+      ],
+      "is_unique": false,
+      "count": 8
+    },
+    "M_2(Q)": {
+      "st_groups": [
+        "E_1",
+        "E_2",
+        "E_3",
+        "E_4",
+        "E_6",
+        "G_{3,3}",
+        "J(E_1)",
+        "J(E_2)",
+        "J(E_3)",
+        "J(E_4)",
+        "J(E_6)"
+      ],
+      "is_unique": false,
+      "count": 147
+    },
+    "Q": {
+      "st_groups": [
+        "G_{3,3}",
+        "N(G_{1,3})",
+        "USp(4)"
+      ],
+      "is_unique": false,
+      "count": 63107
+    },
+    "Q x Q": {
+      "st_groups": [
+        "E_3",
+        "G_{3,3}",
+        "N(G_{3,3})",
+        "USp(4)"
+      ],
+      "is_unique": false,
+      "count": 2468
+    },
+    "QM": {
+      "st_groups": [
+        "J(E_2)",
+        "J(E_4)"
+      ],
+      "is_unique": false,
+      "count": 3
+    },
+    "RM": {
+      "st_groups": [
+        "G_{3,3}",
+        "N(G_{3,3})"
+      ],
+      "is_unique": false,
+      "count": 116
+    }
+  },
+  "st_determines_endo": {
+    "D_{2,1}": {
+      "endomorphism_rings": [
+        "M_2(CM)"
+      ],
+      "is_unique": true,
+      "count": 3
+    },
+    "D_{3,2}": {
+      "endomorphism_rings": [
+        "M_2(CM)"
+      ],
+      "is_unique": true,
+      "count": 1
+    },
+    "D_{6,2}": {
+      "endomorphism_rings": [
+        "M_2(CM)"
+      ],
+      "is_unique": true,
+      "count": 1
+    },
+    "E_1": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 8
+    },
+    "E_2": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 3
+    },
+    "E_3": {
+      "endomorphism_rings": [
+        "M_2(Q)",
+        "Q x Q"
+      ],
+      "is_unique": false,
+      "count": 7
+    },
+    "E_4": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 10
+    },
+    "E_6": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 51
+    },
+    "F_{ac}": {
+      "endomorphism_rings": [
+        "CM"
+      ],
+      "is_unique": true,
+      "count": 6
+    },
+    "G_{3,3}": {
+      "endomorphism_rings": [
+        "M_2(Q)",
+        "Q",
+        "Q x Q",
+        "RM"
+      ],
+      "is_unique": false,
+      "count": 2440
+    },
+    "J(C_2)": {
+      "endomorphism_rings": [
+        "M_2(CM)"
+      ],
+      "is_unique": true,
+      "count": 2
+    },
+    "J(C_4)": {
+      "endomorphism_rings": [
+        "M_2(CM)"
+      ],
+      "is_unique": true,
+      "count": 1
+    },
+    "J(E_1)": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 24
+    },
+    "J(E_2)": {
+      "endomorphism_rings": [
+        "M_2(Q)",
+        "QM"
+      ],
+      "is_unique": false,
+      "count": 9
+    },
+    "J(E_3)": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 4
+    },
+    "J(E_4)": {
+      "endomorphism_rings": [
+        "M_2(Q)",
+        "QM"
+      ],
+      "is_unique": false,
+      "count": 17
+    },
+    "J(E_6)": {
+      "endomorphism_rings": [
+        "M_2(Q)"
+      ],
+      "is_unique": true,
+      "count": 17
+    },
+    "N(G_{1,3})": {
+      "endomorphism_rings": [
+        "CM x Q",
+        "Q"
+      ],
+      "is_unique": false,
+      "count": 303
+    },
+    "N(G_{3,3})": {
+      "endomorphism_rings": [
+        "Q x Q",
+        "RM"
+      ],
+      "is_unique": false,
+      "count": 144
+    },
+    "USp(4)": {
+      "endomorphism_rings": [
+        "CM x Q",
+        "Q",
+        "Q x Q"
+      ],
+      "is_unique": false,
+      "count": 63107
+    }
+  },
+  "endo_by_aut_group": {
+    "Q": {
+      "[2,1]": 63085,
+      "[4,2]": 22
+    },
+    "Q x Q": {
+      "[4,2]": 2258,
+      "[2,1]": 209,
+      "[6,2]": 1
+    },
+    "CM x Q": {
+      "[4,2]": 289,
+      "[2,1]": 14
+    },
+    "M_2(Q)": {
+      "[6,2]": 57,
+      "[2,1]": 46,
+      "[4,2]": 23,
+      "[4,1]": 13,
+      "[12,4]": 4,
+      "[8,3]": 4
+    },
+    "RM": {
+      "[2,1]": 116
+    },
+    "M_2(CM)": {
+      "[4,2]": 5,
+      "[4,1]": 2,
+      "[2,1]": 1
+    },
+    "CM": {
+      "[2,1]": 6
+    },
+    "QM": {
+      "[2,1]": 3
+    }
+  },
+  "endo_by_geom_aut_group": {
+    "Q": {
+      "[2,1]": 63085,
+      "[4,2]": 22
+    },
+    "Q x Q": {
+      "[4,2]": 2382,
+      "[2,1]": 85,
+      "[12,4]": 1
+    },
+    "CM x Q": {
+      "[4,2]": 289,
+      "[2,1]": 14
+    },
+    "M_2(Q)": {
+      "[12,4]": 86,
+      "[8,3]": 50,
+      "[2,1]": 6,
+      "[4,2]": 5
+    },
+    "RM": {
+      "[2,1]": 116
+    },
+    "M_2(CM)": {
+      "[24,8]": 4,
+      "[48,29]": 3,
+      "[12,4]": 1
+    },
+    "CM": {
+      "[10,2]": 5,
+      "[2,1]": 1
+    },
+    "QM": {
+      "[2,1]": 3
+    }
+  },
+  "torsion_by_endo": {
+    "Q": {
+      "unique_torsion_structures": 36,
+      "top_5": {
+        "[]": 43588,
+        "[2]": 13720,
+        "[3]": 2004,
+        "[2, 2]": 1082,
+        "[4]": 1062
+      }
+    },
+    "Q x Q": {
+      "unique_torsion_structures": 28,
+      "top_5": {
+        "[2]": 815,
+        "[]": 474,
+        "[4]": 293,
+        "[3]": 240,
+        "[2, 2]": 185
+      }
+    },
+    "CM x Q": {
+      "unique_torsion_structures": 14,
+      "top_5": {
+        "[2]": 100,
+        "[4]": 44,
+        "[2, 2]": 41,
+        "[3]": 35,
+        "[6]": 31
+      }
+    },
+    "M_2(Q)": {
+      "unique_torsion_structures": 21,
+      "top_5": {
+        "[2, 2]": 41,
+        "[]": 30,
+        "[2]": 27,
+        "[3]": 13,
+        "[6]": 6
+      }
+    },
+    "RM": {
+      "unique_torsion_structures": 12,
+      "top_5": {
+        "[]": 74,
+        "[2]": 14,
+        "[5]": 13,
+        "[2, 2]": 3,
+        "[11]": 2
+      }
+    },
+    "M_2(CM)": {
+      "unique_torsion_structures": 5,
+      "top_5": {
+        "[6]": 3,
+        "[2]": 2,
+        "[3, 3]": 1,
+        "[2, 2, 2]": 1,
+        "[3]": 1
+      }
+    },
+    "CM": {
+      "unique_torsion_structures": 4,
+      "top_5": {
+        "[5]": 2,
+        "[]": 2,
+        "[10]": 1,
+        "[2]": 1
+      }
+    },
+    "QM": {
+      "unique_torsion_structures": 2,
+      "top_5": {
+        "[2]": 2,
+        "[2, 6]": 1
+      }
+    }
+  },
+  "root_number_by_endo": {
+    "Q": {
+      "-1": 32094,
+      "1": 31013
+    },
+    "Q x Q": {
+      "-1": 1171,
+      "1": 1297
+    },
+    "CM x Q": {
+      "-1": 148,
+      "1": 155
+    },
+    "M_2(Q)": {
+      "-1": 26,
+      "1": 121
+    },
+    "RM": {
+      "-1": 8,
+      "1": 108
+    },
+    "M_2(CM)": {
+      "-1": 3,
+      "1": 5
+    },
+    "CM": {
+      "-1": 4,
+      "1": 2
+    },
+    "QM": {
+      "-1": 2,
+      "1": 1
+    }
+  },
+  "selmer_rank_by_endo": {
+    "Q": {
+      "mean": 1.5942,
+      "median": 2,
+      "max": 5,
+      "count": 63107
+    },
+    "Q x Q": {
+      "mean": 2.1568,
+      "median": 2.0,
+      "max": 6,
+      "count": 2468
+    },
+    "CM x Q": {
+      "mean": 2.0396,
+      "median": 2,
+      "max": 5,
+      "count": 303
+    },
+    "M_2(Q)": {
+      "mean": 1.6735,
+      "median": 2,
+      "max": 4,
+      "count": 147
+    },
+    "RM": {
+      "mean": 1.6293,
+      "median": 2.0,
+      "max": 4,
+      "count": 116
+    },
+    "M_2(CM)": {
+      "mean": 1.625,
+      "median": 1.5,
+      "max": 3,
+      "count": 8
+    },
+    "CM": {
+      "mean": 1,
+      "median": 1.0,
+      "max": 2,
+      "count": 6
+    },
+    "QM": {
+      "mean": 2,
+      "median": 2,
+      "max": 2,
+      "count": 3
+    }
+  },
+  "periodic_table": {
+    "CM": {
+      "F_{ac}": {
+        "count": 6,
+        "mean_rank": 0.6667,
+        "mean_conductor": 50385.17,
+        "rank_distribution": {
+          "0": 2,
+          "1": 4
+        }
+      }
+    },
+    "CM x Q": {
+      "N(G_{1,3})": {
+        "count": 296,
+        "mean_rank": 0.6757,
+        "mean_conductor": 105687.56,
+        "rank_distribution": {
+          "0": 125,
+          "1": 143,
+          "2": 27,
+          "3": 1
+        }
+      },
+      "USp(4)": {
+        "count": 7,
+        "mean_rank": 0.2857,
+        "mean_conductor": 61758.14,
+        "rank_distribution": {
+          "0": 5,
+          "1": 2
+        }
+      }
+    },
+    "M_2(CM)": {
+      "D_{2,1}": {
+        "count": 3,
+        "mean_rank": 0.6667,
+        "mean_conductor": 35669.33,
+        "rank_distribution": {
+          "0": 1,
+          "1": 2
+        }
+      },
+      "D_{3,2}": {
+        "count": 1,
+        "mean_rank": 0,
+        "mean_conductor": 2916,
+        "rank_distribution": {
+          "0": 1
+        }
+      },
+      "D_{6,2}": {
+        "count": 1,
+        "mean_rank": 1,
+        "mean_conductor": 11664,
+        "rank_distribution": {
+          "1": 1
+        }
+      },
+      "J(C_2)": {
+        "count": 2,
+        "mean_rank": 0,
+        "mean_conductor": 4640,
+        "rank_distribution": {
+          "0": 2
+        }
+      },
+      "J(C_4)": {
+        "count": 1,
+        "mean_rank": 2,
+        "mean_conductor": 40000,
+        "rank_distribution": {
+          "2": 1
+        }
+      }
+    },
+    "M_2(Q)": {
+      "E_1": {
+        "count": 8,
+        "mean_rank": 0.5,
+        "mean_conductor": 82953,
+        "rank_distribution": {
+          "0": 6,
+          "2": 2
+        }
+      },
+      "E_2": {
+        "count": 3,
+        "mean_rank": 0,
+        "mean_conductor": 49557.33,
+        "rank_distribution": {
+          "0": 3
+        }
+      },
+      "E_3": {
+        "count": 6,
+        "mean_rank": 0.3333,
+        "mean_conductor": 42212.67,
+        "rank_distribution": {
+          "0": 5,
+          "2": 1
+        }
+      },
+      "E_4": {
+        "count": 10,
+        "mean_rank": 0.6,
+        "mean_conductor": 60352,
+        "rank_distribution": {
+          "0": 7,
+          "2": 3
+        }
+      },
+      "E_6": {
+        "count": 51,
+        "mean_rank": 0.7059,
+        "mean_conductor": 162424.43,
+        "rank_distribution": {
+          "0": 33,
+          "2": 18
+        }
+      },
+      "G_{3,3}": {
+        "count": 1,
+        "mean_rank": 0,
+        "mean_conductor": 784,
+        "rank_distribution": {
+          "0": 1
+        }
+      },
+      "J(E_1)": {
+        "count": 24,
+        "mean_rank": 0.4583,
+        "mean_conductor": 158183.71,
+        "rank_distribution": {
+          "0": 16,
+          "1": 5,
+          "2": 3
+        }
+      },
+      "J(E_2)": {
+        "count": 7,
+        "mean_rank": 0.7143,
+        "mean_conductor": 347318.86,
+        "rank_distribution": {
+          "0": 2,
+          "1": 5
+        }
+      },
+      "J(E_3)": {
+        "count": 4,
+        "mean_rank": 0.5,
+        "mean_conductor": 28431,
+        "rank_distribution": {
+          "0": 2,
+          "1": 2
+        }
+      },
+      "J(E_4)": {
+        "count": 16,
+        "mean_rank": 0.375,
+        "mean_conductor": 106384,
+        "rank_distribution": {
+          "0": 10,
+          "1": 6
+        }
+      },
+      "J(E_6)": {
+        "count": 17,
+        "mean_rank": 0.4706,
+        "mean_conductor": 154176.35,
+        "rank_distribution": {
+          "0": 9,
+          "1": 8
+        }
+      }
+    },
+    "Q": {
+      "G_{3,3}": {
+        "count": 16,
+        "mean_rank": 0.8125,
+        "mean_conductor": 85517.44,
+        "rank_distribution": {
+          "0": 6,
+          "1": 7,
+          "2": 3
+        }
+      },
+      "N(G_{1,3})": {
+        "count": 7,
+        "mean_rank": 0.7143,
+        "mean_conductor": 61758.14,
+        "rank_distribution": {
+          "1": 5,
+          "0": 2
+        }
+      },
+      "USp(4)": {
+        "count": 63084,
+        "mean_rank": 1.2329,
+        "mean_conductor": 323607.06,
+        "rank_distribution": {
+          "0": 10973,
+          "1": 29276,
+          "2": 20015,
+          "3": 2811,
+          "4": 9
+        }
+      }
+    },
+    "Q x Q": {
+      "E_3": {
+        "count": 1,
+        "mean_rank": 0,
+        "mean_conductor": 784,
+        "rank_distribution": {
+          "0": 1
+        }
+      },
+      "G_{3,3}": {
+        "count": 2326,
+        "mean_rank": 0.8835,
+        "mean_conductor": 181266.84,
+        "rank_distribution": {
+          "0": 822,
+          "1": 1019,
+          "2": 420,
+          "3": 64,
+          "4": 1
+        }
+      },
+      "N(G_{3,3})": {
+        "count": 125,
+        "mean_rank": 0.632,
+        "mean_conductor": 213589.9,
+        "rank_distribution": {
+          "0": 47,
+          "1": 77,
+          "2": 1
+        }
+      },
+      "USp(4)": {
+        "count": 16,
+        "mean_rank": 0.875,
+        "mean_conductor": 85517.44,
+        "rank_distribution": {
+          "1": 7,
+          "0": 6,
+          "2": 2,
+          "3": 1
+        }
+      }
+    },
+    "QM": {
+      "J(E_2)": {
+        "count": 2,
+        "mean_rank": 1,
+        "mean_conductor": 262144,
+        "rank_distribution": {
+          "1": 2
+        }
+      },
+      "J(E_4)": {
+        "count": 1,
+        "mean_rank": 0,
+        "mean_conductor": 20736,
+        "rank_distribution": {
+          "0": 1
+        }
+      }
+    },
+    "RM": {
+      "G_{3,3}": {
+        "count": 97,
+        "mean_rank": 1.2577,
+        "mean_conductor": 172330.64,
+        "rank_distribution": {
+          "0": 36,
+          "2": 61
+        }
+      },
+      "N(G_{3,3})": {
+        "count": 19,
+        "mean_rank": 0.8421,
+        "mean_conductor": 287966.79,
+        "rank_distribution": {
+          "0": 7,
+          "1": 8,
+          "2": 4
+        }
+      }
+    }
+  },
+  "sha_square_by_endo": {
+    "Q": {
+      "square": 61322,
+      "non_square": 1785,
+      "unknown": 0
+    },
+    "Q x Q": {
+      "square": 2033,
+      "non_square": 435,
+      "unknown": 0
+    },
+    "CM x Q": {
+      "square": 250,
+      "non_square": 53,
+      "unknown": 0
+    },
+    "M_2(Q)": {
+      "square": 142,
+      "non_square": 5,
+      "unknown": 0
+    },
+    "RM": {
+      "square": 110,
+      "non_square": 6,
+      "unknown": 0
+    },
+    "M_2(CM)": {
+      "square": 8,
+      "non_square": 0,
+      "unknown": 0
+    },
+    "CM": {
+      "square": 6,
+      "non_square": 0,
+      "unknown": 0
+    },
+    "QM": {
+      "square": 3,
+      "non_square": 0,
+      "unknown": 0
+    }
+  }
+}

@@ -468,7 +468,22 @@ USp(4) generic: 9.6% (NOT near-zero like EC non-CM). CM products: ~78-80% (J(E_2
 333,237 terms. Last-digit bias 920× above null (digits 0,1 over-represented). Digital root: 44.4% of sequences biased (vs 5% expected). Round-number excess 1.27×. Palindrome/repdigit mild (~1.1×). The mandate "base 10 is human artifact" is confirmed — curation bias, not mathematical structure.
 
 ### 110. Knot Determinant: Mixture Distribution, det_alt ~ 1.72^cn (Knot-det-dist)
-2,977 knots. Neither log-normal nor power-law. Alternating: det ~ 1.72^cn (R²=0.59). Non-alternating: no clean fit. Alt mean det=149.9 vs non-alt 63.9 (2.3× gap). Mod-3: 36.4% divisible (biased). Mod-5: 22.5% (biased). Mod-7+: uniform.
+Alternating: det ~ 1.72^cn (R²=0.59). Non-alt: no clean fit. Mod-3,5 biased, mod-7+ uniform.
+
+### 111. EC abc Quality: CM Never Squarefree, Rank-2 Prefers Simple Conductors (EC-abc)
+31,073 curves. rad(N)/N mean=0.447, bimodal (0 or 1). 34.4% squarefree (=semistable). Rank-2: 53% squarefree vs ~34% for rank 0-1. CM curves: 0% squarefree (conductors dominated by high prime powers). Most abc-extreme: N=3888, rad/N=0.0015.
+
+### 112. Genus-2 Endomorphism Periodic Table: 8.1% Occupied (G2-endo-census)
+66,158 curves. 65/800 possible (endo×ST×rank) triples occupied. Q accounts for 95.4%. M₂(Q) maps to 11 ST groups (most diverse). 27 singletons at the frontier. Endo ring does NOT uniquely determine ST group (ST is strictly finer). 6 universal triples cover 98.1%.
+
+### 113. Lattice Kissing Growth: Exponential, All Records Present (Lattice-kiss-dim)
+39,293 lattices, dims 1-14 + 24. All known record kissing numbers present (A₂=6, E₈=240, Leech=196,560). Max kissing grows as exp(0.41·dim) (R²=0.88). Mean kissing exp(0.49·dim) (R²=0.97). Coverage gap at dims 15-23.
+
+### 114. OEIS Vocabulary: "number" Dominates, Analysis > NT > Combinatorics (OEIS-vocab)
+394,454 names. Top: "number" (5.8%), "prime" (2.2%), "sum" (2.1%). Domain ranking: Analysis (161K) > Number theory (142K) > Combinatorics (74K). Bridge concepts shared with Fungrim: {equal, exp, pi, set, sqrt, sum} — the operadic skeleton hubs. 28.4% hapax legomena. Mean name: 6.4 tokens.
+
+### 115. Knot Unknotting: Mean u_lower/c = 0.106, Torus Knots Saturate (Knot-unknot)
+2,973 knots. Signature lower bound |σ|/2 grows slowly with c (mean 1.24 at c=12). Only 0.17% achieve upper bound u=(c-1)/2 (torus knots T(2,n)). Mean ratio 0.106 — most knots have unknotting number far below the crossing bound. Alt vs non-alt: no significant difference.
 
 ---
 
@@ -834,7 +849,7 @@ Median-fit log|det| ~ (crossing_number)^α gives α = 2.75, R² = 0.958. Raw fit
 
 ---
 
-*235 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
+*240 challenges solved. 306 problems catalogued. 23 rediscoveries spanning 2,200+ years. 3 conjecture verifications. 12 novel discoveries. 85 structural findings. 21 kills. 8 self-corrections. 11 physics findings. 5 information-theoretic measurements. 8 curvature/geometry results. 12 prime geometry results. 100+ measured constants.*
 
 *The instrument measures. The constants accumulate. The geometry reveals itself.*
 

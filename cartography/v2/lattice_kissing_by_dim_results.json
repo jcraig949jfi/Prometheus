@@ -1,0 +1,809 @@
+{
+  "title": "Lattice Kissing Number Distribution by Dimension",
+  "source": "LMFDB lat_lattices",
+  "date": "2026-04-10",
+  "summary": {
+    "total_lattices": 39293,
+    "dimensions_covered": 15,
+    "dim_range": [
+      1,
+      24
+    ],
+    "overall_max_kissing": 196560,
+    "overall_max_records": [
+      {
+        "label": "24.1.1.24.1",
+        "name": [
+          "Leech"
+        ],
+        "dim": 24
+      }
+    ],
+    "elapsed_seconds": 0.01
+  },
+  "dim_stats": {
+    "1": {
+      "count": 1,
+      "min": 2,
+      "max": 2,
+      "mean": 2.0,
+      "median": 2.0,
+      "std": 0.0,
+      "max_labels": [
+        "1.2.4.1.1"
+      ],
+      "max_names": [
+        [
+          "A1"
+        ]
+      ]
+    },
+    "2": {
+      "count": 1609,
+      "min": 2,
+      "max": 6,
+      "mean": 2.0659,
+      "median": 2.0,
+      "std": 0.3639,
+      "max_labels": [
+        "2.3.3.1.1"
+      ],
+      "max_names": [
+        [
+          "A2"
+        ]
+      ]
+    },
+    "3": {
+      "count": 36585,
+      "min": 2,
+      "max": 12,
+      "mean": 2.4233,
+      "median": 2.0,
+      "std": 1.027,
+      "max_labels": [
+        "3.4.8.1.2"
+      ],
+      "max_names": [
+        [
+          "A3",
+          "D3"
+        ]
+      ]
+    },
+    "4": {
+      "count": 481,
+      "min": 2,
+      "max": 24,
+      "mean": 3.7297,
+      "median": 2.0,
+      "std": 2.7633,
+      "max_labels": [
+        "4.4.2.1.1"
+      ],
+      "max_names": null
+    },
+    "5": {
+      "count": 295,
+      "min": 2,
+      "max": 40,
+      "mean": 6.0203,
+      "median": 4.0,
+      "std": 5.4951,
+      "max_labels": [
+        "5.4.8.1.3"
+      ],
+      "max_names": null
+    },
+    "6": {
+      "count": 186,
+      "min": 2,
+      "max": 72,
+      "mean": 10.6237,
+      "median": 6.0,
+      "std": 11.3913,
+      "max_labels": [
+        "6.3.3.1.1"
+      ],
+      "max_names": null
+    },
+    "7": {
+      "count": 86,
+      "min": 2,
+      "max": 126,
+      "mean": 19.1628,
+      "median": 10.0,
+      "std": 22.6037,
+      "max_labels": [
+        "7.2.4.1.2"
+      ],
+      "max_names": null
+    },
+    "8": {
+      "count": 37,
+      "min": 2,
+      "max": 240,
+      "mean": 40.3784,
+      "median": 20.0,
+      "std": 48.7084,
+      "max_labels": [
+        "8.1.1.1.1"
+      ],
+      "max_names": [
+        [
+          "E8"
+        ]
+      ]
+    },
+    "9": {
+      "count": 5,
+      "min": 2,
+      "max": 242,
+      "mean": 92.8,
+      "median": 90.0,
+      "std": 89.4391,
+      "max_labels": [
+        "9.2.4.1.1"
+      ],
+      "max_names": null
+    },
+    "10": {
+      "count": 3,
+      "min": 6,
+      "max": 246,
+      "mean": 120.6667,
+      "median": 110.0,
+      "std": 98.2695,
+      "max_labels": [
+        "10.3.3.1.1"
+      ],
+      "max_names": null
+    },
+    "11": {
+      "count": 1,
+      "min": 132,
+      "max": 132,
+      "mean": 132.0,
+      "median": 132.0,
+      "std": 0.0,
+      "max_labels": [
+        "11.12.24.4.1"
+      ],
+      "max_names": [
+        [
+          "A11"
+        ]
+      ]
+    },
+    "12": {
+      "count": 1,
+      "min": 156,
+      "max": 156,
+      "mean": 156.0,
+      "median": 156.0,
+      "std": 0.0,
+      "max_labels": [
+        "12.13.13.6.1"
+      ],
+      "max_names": [
+        [
+          "A12"
+        ]
+      ]
+    },
+    "13": {
+      "count": 1,
+      "min": 182,
+      "max": 182,
+      "mean": 182.0,
+      "median": 182.0,
+      "std": 0.0,
+      "max_labels": [
+        "13.14.28.8.1"
+      ],
+      "max_names": [
+        [
+          "A13"
+        ]
+      ]
+    },
+    "14": {
+      "count": 1,
+      "min": 210,
+      "max": 210,
+      "mean": 210.0,
+      "median": 210.0,
+      "std": 0.0,
+      "max_labels": [
+        "14.15.15.9.1"
+      ],
+      "max_names": [
+        [
+          "A14"
+        ]
+      ]
+    },
+    "24": {
+      "count": 1,
+      "min": 196560,
+      "max": 196560,
+      "mean": 196560.0,
+      "median": 196560.0,
+      "std": 0.0,
+      "max_labels": [
+        "24.1.1.24.1"
+      ],
+      "max_names": [
+        [
+          "Leech"
+        ]
+      ]
+    }
+  },
+  "distributions_top15_per_dim": {
+    "1": [
+      {
+        "kissing": 2,
+        "count": 1
+      }
+    ],
+    "2": [
+      {
+        "kissing": 2,
+        "count": 1557
+      },
+      {
+        "kissing": 4,
+        "count": 51
+      },
+      {
+        "kissing": 6,
+        "count": 1
+      }
+    ],
+    "3": [
+      {
+        "kissing": 2,
+        "count": 30530
+      },
+      {
+        "kissing": 4,
+        "count": 4436
+      },
+      {
+        "kissing": 6,
+        "count": 1560
+      },
+      {
+        "kissing": 8,
+        "count": 49
+      },
+      {
+        "kissing": 10,
+        "count": 9
+      },
+      {
+        "kissing": 12,
+        "count": 1
+      }
+    ],
+    "4": [
+      {
+        "kissing": 2,
+        "count": 274
+      },
+      {
+        "kissing": 4,
+        "count": 96
+      },
+      {
+        "kissing": 6,
+        "count": 67
+      },
+      {
+        "kissing": 8,
+        "count": 21
+      },
+      {
+        "kissing": 12,
+        "count": 11
+      },
+      {
+        "kissing": 10,
+        "count": 7
+      },
+      {
+        "kissing": 14,
+        "count": 2
+      },
+      {
+        "kissing": 20,
+        "count": 1
+      },
+      {
+        "kissing": 24,
+        "count": 1
+      },
+      {
+        "kissing": 18,
+        "count": 1
+      }
+    ],
+    "5": [
+      {
+        "kissing": 2,
+        "count": 115
+      },
+      {
+        "kissing": 6,
+        "count": 49
+      },
+      {
+        "kissing": 4,
+        "count": 48
+      },
+      {
+        "kissing": 8,
+        "count": 28
+      },
+      {
+        "kissing": 12,
+        "count": 17
+      },
+      {
+        "kissing": 10,
+        "count": 13
+      },
+      {
+        "kissing": 14,
+        "count": 7
+      },
+      {
+        "kissing": 20,
+        "count": 4
+      },
+      {
+        "kissing": 18,
+        "count": 4
+      },
+      {
+        "kissing": 24,
+        "count": 3
+      },
+      {
+        "kissing": 30,
+        "count": 2
+      },
+      {
+        "kissing": 16,
+        "count": 2
+      },
+      {
+        "kissing": 22,
+        "count": 1
+      },
+      {
+        "kissing": 26,
+        "count": 1
+      },
+      {
+        "kissing": 40,
+        "count": 1
+      }
+    ],
+    "6": [
+      {
+        "kissing": 2,
+        "count": 50
+      },
+      {
+        "kissing": 6,
+        "count": 27
+      },
+      {
+        "kissing": 4,
+        "count": 23
+      },
+      {
+        "kissing": 8,
+        "count": 15
+      },
+      {
+        "kissing": 12,
+        "count": 14
+      },
+      {
+        "kissing": 10,
+        "count": 11
+      },
+      {
+        "kissing": 30,
+        "count": 6
+      },
+      {
+        "kissing": 16,
+        "count": 6
+      },
+      {
+        "kissing": 20,
+        "count": 6
+      },
+      {
+        "kissing": 18,
+        "count": 5
+      },
+      {
+        "kissing": 24,
+        "count": 4
+      },
+      {
+        "kissing": 40,
+        "count": 3
+      },
+      {
+        "kissing": 22,
+        "count": 3
+      },
+      {
+        "kissing": 14,
+        "count": 3
+      },
+      {
+        "kissing": 26,
+        "count": 2
+      }
+    ],
+    "7": [
+      {
+        "kissing": 2,
+        "count": 19
+      },
+      {
+        "kissing": 6,
+        "count": 9
+      },
+      {
+        "kissing": 8,
+        "count": 8
+      },
+      {
+        "kissing": 12,
+        "count": 7
+      },
+      {
+        "kissing": 4,
+        "count": 6
+      },
+      {
+        "kissing": 32,
+        "count": 4
+      },
+      {
+        "kissing": 56,
+        "count": 3
+      },
+      {
+        "kissing": 14,
+        "count": 3
+      },
+      {
+        "kissing": 20,
+        "count": 3
+      },
+      {
+        "kissing": 30,
+        "count": 3
+      },
+      {
+        "kissing": 16,
+        "count": 3
+      },
+      {
+        "kissing": 24,
+        "count": 3
+      },
+      {
+        "kissing": 42,
+        "count": 2
+      },
+      {
+        "kissing": 10,
+        "count": 2
+      },
+      {
+        "kissing": 126,
+        "count": 1
+      }
+    ],
+    "8": [
+      {
+        "kissing": 2,
+        "count": 5
+      },
+      {
+        "kissing": 16,
+        "count": 3
+      },
+      {
+        "kissing": 6,
+        "count": 3
+      },
+      {
+        "kissing": 8,
+        "count": 3
+      },
+      {
+        "kissing": 32,
+        "count": 2
+      },
+      {
+        "kissing": 24,
+        "count": 2
+      },
+      {
+        "kissing": 4,
+        "count": 2
+      },
+      {
+        "kissing": 56,
+        "count": 2
+      },
+      {
+        "kissing": 12,
+        "count": 2
+      },
+      {
+        "kissing": 72,
+        "count": 2
+      },
+      {
+        "kissing": 126,
+        "count": 1
+      },
+      {
+        "kissing": 240,
+        "count": 1
+      },
+      {
+        "kissing": 112,
+        "count": 1
+      },
+      {
+        "kissing": 128,
+        "count": 1
+      },
+      {
+        "kissing": 84,
+        "count": 1
+      }
+    ],
+    "9": [
+      {
+        "kissing": 2,
+        "count": 2
+      },
+      {
+        "kissing": 242,
+        "count": 1
+      },
+      {
+        "kissing": 128,
+        "count": 1
+      },
+      {
+        "kissing": 90,
+        "count": 1
+      }
+    ],
+    "10": [
+      {
+        "kissing": 246,
+        "count": 1
+      },
+      {
+        "kissing": 6,
+        "count": 1
+      },
+      {
+        "kissing": 110,
+        "count": 1
+      }
+    ],
+    "11": [
+      {
+        "kissing": 132,
+        "count": 1
+      }
+    ],
+    "12": [
+      {
+        "kissing": 156,
+        "count": 1
+      }
+    ],
+    "13": [
+      {
+        "kissing": 182,
+        "count": 1
+      }
+    ],
+    "14": [
+      {
+        "kissing": 210,
+        "count": 1
+      }
+    ],
+    "24": [
+      {
+        "kissing": 196560,
+        "count": 1
+      }
+    ]
+  },
+  "record_comparison": {
+    "1": {
+      "known_record": 2,
+      "lmfdb_max": 2,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 1,
+      "max_labels": [
+        "1.2.4.1.1"
+      ],
+      "max_names": [
+        [
+          "A1"
+        ]
+      ]
+    },
+    "2": {
+      "known_record": 6,
+      "lmfdb_max": 6,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 1609,
+      "max_labels": [
+        "2.3.3.1.1"
+      ],
+      "max_names": [
+        [
+          "A2"
+        ]
+      ]
+    },
+    "3": {
+      "known_record": 12,
+      "lmfdb_max": 12,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 36585,
+      "max_labels": [
+        "3.4.8.1.2"
+      ],
+      "max_names": [
+        [
+          "A3",
+          "D3"
+        ]
+      ]
+    },
+    "4": {
+      "known_record": 24,
+      "lmfdb_max": 24,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 481,
+      "max_labels": [
+        "4.4.2.1.1"
+      ],
+      "max_names": null
+    },
+    "5": {
+      "known_record": 40,
+      "lmfdb_max": 40,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 295,
+      "max_labels": [
+        "5.4.8.1.3"
+      ],
+      "max_names": null
+    },
+    "6": {
+      "known_record": 72,
+      "lmfdb_max": 72,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 186,
+      "max_labels": [
+        "6.3.3.1.1"
+      ],
+      "max_names": null
+    },
+    "7": {
+      "known_record": 126,
+      "lmfdb_max": 126,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 86,
+      "max_labels": [
+        "7.2.4.1.2"
+      ],
+      "max_names": null
+    },
+    "8": {
+      "known_record": 240,
+      "lmfdb_max": 240,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 37,
+      "max_labels": [
+        "8.1.1.1.1"
+      ],
+      "max_names": [
+        [
+          "E8"
+        ]
+      ]
+    },
+    "24": {
+      "known_record": 196560,
+      "lmfdb_max": 196560,
+      "has_record_holder": true,
+      "ratio_to_record": 1.0,
+      "lmfdb_count": 1,
+      "max_labels": [
+        "24.1.1.24.1"
+      ],
+      "max_names": [
+        [
+          "Leech"
+        ]
+      ]
+    }
+  },
+  "growth_rate": {
+    "dims_used": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      24
+    ],
+    "power_law_max": {
+      "alpha": 2.6559,
+      "log_prefactor": -0.3498,
+      "interpretation": "max_kissing ~ dim^2.66",
+      "R2": 0.735395
+    },
+    "power_law_mean": {
+      "alpha": 2.9889,
+      "log_prefactor": -1.8912,
+      "interpretation": "mean_kissing ~ dim^2.99",
+      "R2": 0.714705
+    },
+    "exponential_max": {
+      "beta": 0.409501,
+      "log_prefactor": 1.1514,
+      "interpretation": "max_kissing ~ exp(0.4095 * dim)",
+      "R2": 0.880364
+    },
+    "exponential_mean": {
+      "beta": 0.490594,
+      "log_prefactor": -0.4574,
+      "interpretation": "mean_kissing ~ exp(0.4906 * dim)",
+      "R2": 0.969581
+    },
+    "note": "Power law fits log(kissing) vs log(dim); exponential fits log(kissing) vs dim. Higher R2 = better fit."
+  }
+}

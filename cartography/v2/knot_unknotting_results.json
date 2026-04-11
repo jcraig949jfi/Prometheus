@@ -1,0 +1,455 @@
+{
+  "metadata": {
+    "task": "Knot Unknotting Number: Distribution and Bounds",
+    "n_knots": 12965,
+    "crossing_range": [
+      3,
+      13
+    ],
+    "note": "Dataset lacks direct unknotting numbers. We compute the signature-based lower bound |sigma(K)|/2 and crossing-number upper bound (c-1)/2.",
+    "method": "Levine-Tristram signature from Alexander polynomial roots on unit circle",
+    "n_with_alexander_poly": 2973,
+    "n_without_alexander_poly": 9992,
+    "caveat": "9988 knots at c=13 have empty Alexander polynomials; filtered stats exclude these."
+  },
+  "distribution_by_crossing_number_all": {
+    "3": {
+      "count": 1,
+      "u_upper_bound": 1.0,
+      "sig_lower_mean": 1.0,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 1.0,
+      "sig_lower_min": 1.0,
+      "sig_lower_std": 0.0,
+      "det_mean": 3.0,
+      "det_median": 3.0,
+      "n_alternating": 1
+    },
+    "4": {
+      "count": 1,
+      "u_upper_bound": 1.5,
+      "sig_lower_mean": 0.0,
+      "sig_lower_median": 0.0,
+      "sig_lower_max": 0.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.0,
+      "det_mean": 5.0,
+      "det_median": 5.0,
+      "n_alternating": 1
+    },
+    "5": {
+      "count": 2,
+      "u_upper_bound": 2.0,
+      "sig_lower_mean": 1.5,
+      "sig_lower_median": 1.5,
+      "sig_lower_max": 2.0,
+      "sig_lower_min": 1.0,
+      "sig_lower_std": 0.5,
+      "det_mean": 6.0,
+      "det_median": 6.0,
+      "n_alternating": 2
+    },
+    "6": {
+      "count": 3,
+      "u_upper_bound": 2.5,
+      "sig_lower_mean": 0.3333333333333333,
+      "sig_lower_median": 0.0,
+      "sig_lower_max": 1.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.4714045207910317,
+      "det_mean": 11.0,
+      "det_median": 11.0,
+      "n_alternating": 3
+    },
+    "7": {
+      "count": 7,
+      "u_upper_bound": 3.0,
+      "sig_lower_mean": 1.4285714285714286,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 3.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9035079029052512,
+      "det_mean": 14.714285714285714,
+      "det_median": 15.0,
+      "n_alternating": 7
+    },
+    "8": {
+      "count": 21,
+      "u_upper_bound": 3.5,
+      "sig_lower_mean": 0.8095238095238095,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 3.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.8518354199999199,
+      "det_mean": 23.952380952380953,
+      "det_median": 25.0,
+      "n_alternating": 21
+    },
+    "9": {
+      "count": 49,
+      "u_upper_bound": 4.0,
+      "sig_lower_mean": 1.2448979591836735,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 4.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9589665407731208,
+      "det_mean": 37.36734693877551,
+      "det_median": 39.0,
+      "n_alternating": 49
+    },
+    "10": {
+      "count": 165,
+      "u_upper_bound": 4.5,
+      "sig_lower_mean": 1.0909090909090908,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 4.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9264999750980835,
+      "det_mean": 56.515151515151516,
+      "det_median": 57.0,
+      "n_alternating": 165
+    },
+    "11": {
+      "count": 552,
+      "u_upper_bound": 5.0,
+      "sig_lower_mean": 1.2264492753623188,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 5.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9504898056346617,
+      "det_mean": 88.51086956521739,
+      "det_median": 89.0,
+      "n_alternating": 0
+    },
+    "12": {
+      "count": 2176,
+      "u_upper_bound": 5.5,
+      "sig_lower_mean": 1.2389705882352942,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 4.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9696059534766177,
+      "det_mean": 134.75551470588235,
+      "det_median": 129.0,
+      "n_alternating": 0
+    },
+    "13": {
+      "count": 9988,
+      "u_upper_bound": 6.0,
+      "sig_lower_mean": 0.0,
+      "sig_lower_median": 0.0,
+      "sig_lower_max": 0.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.0,
+      "det_mean": null,
+      "det_median": null,
+      "n_alternating": 0
+    }
+  },
+  "distribution_by_crossing_number_valid": {
+    "3": {
+      "count": 1,
+      "u_upper_bound": 1.0,
+      "sig_lower_mean": 1.0,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 1.0,
+      "sig_lower_min": 1.0,
+      "sig_lower_std": 0.0,
+      "det_mean": 3.0,
+      "n_alternating": 1
+    },
+    "4": {
+      "count": 1,
+      "u_upper_bound": 1.5,
+      "sig_lower_mean": 0.0,
+      "sig_lower_median": 0.0,
+      "sig_lower_max": 0.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.0,
+      "det_mean": 5.0,
+      "n_alternating": 1
+    },
+    "5": {
+      "count": 2,
+      "u_upper_bound": 2.0,
+      "sig_lower_mean": 1.5,
+      "sig_lower_median": 1.5,
+      "sig_lower_max": 2.0,
+      "sig_lower_min": 1.0,
+      "sig_lower_std": 0.5,
+      "det_mean": 6.0,
+      "n_alternating": 2
+    },
+    "6": {
+      "count": 3,
+      "u_upper_bound": 2.5,
+      "sig_lower_mean": 0.3333333333333333,
+      "sig_lower_median": 0.0,
+      "sig_lower_max": 1.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.4714045207910317,
+      "det_mean": 11.0,
+      "n_alternating": 3
+    },
+    "7": {
+      "count": 7,
+      "u_upper_bound": 3.0,
+      "sig_lower_mean": 1.4285714285714286,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 3.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9035079029052512,
+      "det_mean": 14.714285714285714,
+      "n_alternating": 7
+    },
+    "8": {
+      "count": 21,
+      "u_upper_bound": 3.5,
+      "sig_lower_mean": 0.8095238095238095,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 3.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.8518354199999199,
+      "det_mean": 23.952380952380953,
+      "n_alternating": 21
+    },
+    "9": {
+      "count": 49,
+      "u_upper_bound": 4.0,
+      "sig_lower_mean": 1.2448979591836735,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 4.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9589665407731208,
+      "det_mean": 37.36734693877551,
+      "n_alternating": 49
+    },
+    "10": {
+      "count": 165,
+      "u_upper_bound": 4.5,
+      "sig_lower_mean": 1.0909090909090908,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 4.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9264999750980835,
+      "det_mean": 56.515151515151516,
+      "n_alternating": 165
+    },
+    "11": {
+      "count": 550,
+      "u_upper_bound": 5.0,
+      "sig_lower_mean": 1.230909090909091,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 5.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9493294719332124,
+      "det_mean": 88.82909090909091,
+      "n_alternating": 0
+    },
+    "12": {
+      "count": 2174,
+      "u_upper_bound": 5.5,
+      "sig_lower_mean": 1.2401103955841766,
+      "sig_lower_median": 1.0,
+      "sig_lower_max": 4.0,
+      "sig_lower_min": 0.0,
+      "sig_lower_std": 0.9693230154741991,
+      "det_mean": 134.8785648574057,
+      "n_alternating": 0
+    }
+  },
+  "upper_bound_analysis": {
+    "bound": "u <= (c-1)/2",
+    "all_knots": {
+      "n_at_upper_bound_by_sig": 5,
+      "frac_at_upper_bound": 0.000386,
+      "n_within_1_of_upper": 20,
+      "frac_within_1_of_upper": 0.001543
+    },
+    "valid_alex_only": {
+      "n_at_upper_bound_by_sig": 5,
+      "frac_at_upper_bound": 0.001682,
+      "n_within_1_of_upper": 20,
+      "frac_within_1_of_upper": 0.006727
+    }
+  },
+  "signature_bound_verification": {
+    "theorem": "|sigma(K)|/2 <= u(K)",
+    "small_knots": {
+      "3_1": {
+        "abs_signature": 2,
+        "u_lower_signature": 1.0,
+        "u_upper_bound": 1.0,
+        "determinant": 3,
+        "det_from_alex": 3
+      },
+      "4_1": {
+        "abs_signature": 0,
+        "u_lower_signature": 0.0,
+        "u_upper_bound": 1.5,
+        "determinant": 5,
+        "det_from_alex": 5
+      },
+      "5_1": {
+        "abs_signature": 4,
+        "u_lower_signature": 2.0,
+        "u_upper_bound": 2.0,
+        "determinant": 5,
+        "det_from_alex": 5
+      },
+      "5_2": {
+        "abs_signature": 2,
+        "u_lower_signature": 1.0,
+        "u_upper_bound": 2.0,
+        "determinant": 7,
+        "det_from_alex": 7
+      },
+      "6_1": {
+        "abs_signature": 0,
+        "u_lower_signature": 0.0,
+        "u_upper_bound": 2.5,
+        "determinant": 9,
+        "det_from_alex": 9
+      },
+      "6_2": {
+        "abs_signature": 2,
+        "u_lower_signature": 1.0,
+        "u_upper_bound": 2.5,
+        "determinant": 11,
+        "det_from_alex": 11
+      },
+      "6_3": {
+        "abs_signature": 0,
+        "u_lower_signature": 0.0,
+        "u_upper_bound": 2.5,
+        "determinant": 13,
+        "det_from_alex": 13
+      },
+      "7_1": {
+        "abs_signature": 6,
+        "u_lower_signature": 3.0,
+        "u_upper_bound": 3.0,
+        "determinant": 7,
+        "det_from_alex": 7
+      },
+      "7_2": {
+        "abs_signature": 2,
+        "u_lower_signature": 1.0,
+        "u_upper_bound": 3.0,
+        "determinant": 11,
+        "det_from_alex": 11
+      },
+      "7_3": {
+        "abs_signature": 4,
+        "u_lower_signature": 2.0,
+        "u_upper_bound": 3.0,
+        "determinant": 13,
+        "det_from_alex": 13
+      },
+      "7_4": {
+        "abs_signature": 2,
+        "u_lower_signature": 1.0,
+        "u_upper_bound": 3.0,
+        "determinant": 15,
+        "det_from_alex": 15
+      },
+      "7_5": {
+        "abs_signature": 4,
+        "u_lower_signature": 2.0,
+        "u_upper_bound": 3.0,
+        "determinant": 17,
+        "det_from_alex": 17
+      },
+      "7_6": {
+        "abs_signature": 2,
+        "u_lower_signature": 1.0,
+        "u_upper_bound": 3.0,
+        "determinant": 19,
+        "det_from_alex": 19
+      },
+      "7_7": {
+        "abs_signature": 0,
+        "u_lower_signature": 0.0,
+        "u_upper_bound": 3.0,
+        "determinant": 21,
+        "det_from_alex": 21
+      }
+    },
+    "note": "For 3_1 (trefoil): known u=1, sigma=-2 => |sigma|/2=1 <= 1 (tight). For 4_1 (figure-eight): known u=1, sigma=0 => 0 <= 1."
+  },
+  "determinant_vs_signature": {
+    "overall_corr_log_det_vs_sig": -0.1604,
+    "by_crossing_number": {
+      "7": -0.7538919729737782,
+      "8": -0.4169655013218821,
+      "9": -0.29744036371073135,
+      "10": -0.28881883192329905,
+      "11": -0.12781596271647921,
+      "12": -0.19266116424546859
+    }
+  },
+  "unknotting_ratio": {
+    "description": "u_lower/c ratio where u_lower = |sigma|/2",
+    "mean_ratio": 0.10617,
+    "median_ratio": 0.083333,
+    "theoretical_max_ratio": 0.5,
+    "by_crossing_number": {
+      "3": {
+        "mean": 0.3333333333333333,
+        "std": 0.0
+      },
+      "4": {
+        "mean": 0.0,
+        "std": 0.0
+      },
+      "5": {
+        "mean": 0.30000000000000004,
+        "std": 0.1
+      },
+      "6": {
+        "mean": 0.05555555555555555,
+        "std": 0.07856742013183861
+      },
+      "7": {
+        "mean": 0.2040816326530612,
+        "std": 0.12907255755789304
+      },
+      "8": {
+        "mean": 0.10119047619047619,
+        "std": 0.10647942749998998
+      },
+      "9": {
+        "mean": 0.1383219954648526,
+        "std": 0.1065518378636801
+      },
+      "10": {
+        "mean": 0.10909090909090909,
+        "std": 0.09264999750980835
+      },
+      "11": {
+        "mean": 0.111900826446281,
+        "std": 0.08630267926665566
+      },
+      "12": {
+        "mean": 0.10334253296534807,
+        "std": 0.08077691795618325
+      }
+    }
+  },
+  "alternating_comparison": {
+    "n_alternating": 249,
+    "n_nonalternating": 2724,
+    "alt_mean_sig_lower": 1.0963855421686748,
+    "nonalt_mean_sig_lower": 1.238252569750367,
+    "alt_mean_ratio": 0.11819818958373174,
+    "nonalt_mean_ratio": 0.10507052907933964
+  },
+  "signature_distribution": {
+    "0": 727,
+    "2": 1193,
+    "4": 750,
+    "6": 260,
+    "8": 42,
+    "10": 1
+  }
+}
