@@ -1,0 +1,40 @@
+{
+  "finding": "The irreducible kernel is driven by TORSION/CLASS-NUMBER/SELMER-RANK",
+  "correlations": {
+    "elliptic_curves": {
+      "torsion": -0.926,
+      "rank": -0.062,
+      "conductor": -0.149
+    },
+    "ec_zeros": {
+      "torsion": -0.885,
+      "rank": -0.106,
+      "root_number": 0.105
+    },
+    "genus2": {
+      "two_selmer_rank": -0.815,
+      "has_square_sha": -0.272,
+      "locally_solvable": -0.236
+    },
+    "number_fields": {
+      "class_number": -0.853,
+      "regulator": 0.814,
+      "disc_sign": 0.764,
+      "n_class_group": -0.693
+    }
+  },
+  "interpretation": {
+    "what_it_is": "After removing complexity (Megethos), the dominant residual axis is the ARITHMOS phoneme \u2014 torsion for EC, class number for NF, Selmer rank for genus2. These are all measures of ARITHMETIC COMPLEXITY independent of size.",
+    "why_MF_dirichlet_zero": "Modular forms and Dirichlet zeros have no independent torsion/class-number invariant. Their arithmetic is ENCODED in the L-function, not separate from it. So they contribute zero to the residual.",
+    "the_kernel_equation": "Residual PC1 ~ -log(|torsion|) for EC, -log(class_number) for NF, -log(Selmer_rank) for genus2. This IS Arithmos \u2014 the phoneme we already named.",
+    "regulator_connection": "In NF, regulator correlates at +0.814 \u2014 POSITIVE, while class number is -0.853. The residual kernel captures the class-number-regulator TENSION. These are the two sides of the analytic class number formula: h*R = (stuff involving L-values). The kernel is measuring h vs R.",
+    "BSD_connection": "For EC: BSD says L(E,1) ~ Omega * |Sha| * prod(c_p) * R / |torsion|^2. Torsion appears in the DENOMINATOR. Higher torsion = lower L-value = more constrained curve. The residual axis picks this up at rho=-0.926."
+  },
+  "precision": {
+    "EC_torsion_rho": -0.926,
+    "NF_class_number_rho": -0.853,
+    "genus2_selmer_rho": -0.815,
+    "NF_regulator_rho": 0.814
+  },
+  "verdict": "The irreducible kernel IS Arithmos. The second axis of the Kosmos is the torsion/class-number/Selmer structure that measures arithmetic complexity independent of size. This was already named in the Decaphony. The surgical cuts confirmed it is genuinely independent of Megethos."
+}
