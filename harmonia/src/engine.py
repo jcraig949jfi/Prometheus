@@ -129,16 +129,20 @@ class HarmoniaEngine:
         Returns:
             (tntorch.Tensor, ExplorationReport)
         """
-        # Build domain grids — integer indices for each domain
+        # Domain grids stay on CPU (tntorch internals require it).
+        # Scorer runs on self.device (GPU if available) — we bridge in value_fn.
         domain_grids = [
-            torch.arange(dom.n_objects, dtype=torch.float32, device=self.device)
+            torch.arange(dom.n_objects, dtype=torch.float32)
             for dom in self._domain_list
         ]
 
+        scorer_device = self.device
+
         # Wrap scorer for tntorch (expects float indices, returns float)
         def value_fn(*indices):
-            int_indices = [idx.long() for idx in indices]
-            return self._scorer(*int_indices)
+            int_indices = [idx.long().to(scorer_device) for idx in indices]
+            result = self._scorer(*int_indices)
+            return result.cpu()
 
         print(f"Harmonia: exploring {len(self._domain_list)} domains "
               f"({' x '.join(str(dom.n_objects) for dom in self._domain_list)})")
