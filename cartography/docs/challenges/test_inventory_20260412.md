@@ -77,6 +77,120 @@
 
 ---
 
+## ROUND 3: Full remaining queue (56 tests, split across machines)
+
+Goal: clear the backlog. Run everything runnable. Meta-analyze as a batch for council.
+
+Organized by data domain to minimize loading overhead per machine.
+Each machine loads a domain dataset ONCE, runs all tests that use it.
+
+### M1 — Skullport (28 tests)
+
+**Knot batch (load knots.json once):**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 1 | G.R1.3 | det ~ max Alexander coeff | SURVIVED z=83 |
+| 2 | G.R1.8 | crossing: det-is-conductor vs not | SURVIVED z=3.4 |
+| 3 | G.R4.6 | Alexander(-1) ~ Jones(-1) | SURVIVED z=24.8 |
+| 4 | G.R4.5 | max Jones coeff ~ determinant (F24 only) | SURVIVED z=23.9 |
+| 5 | C67 | Alexander polynomial recurrence (BM) | 0% success |
+| 6 | C84 | Knot det → Alexander enrichment | ANALYZED |
+| 7 | C94 | Knot Jones mod-p fingerprint | In progress |
+| 8 | C17 | Knot → crystal enrichment | PARKED |
+| 9 | G.alex | Alexander entropy by crossing (7,8,9,10) | SURVIVED z=6.8 |
+
+**Number field batch (load NF once):**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 10 | C72 | NF hR/sqrt(D) moment ratio | ANALYZED |
+| 11 | C91 | Galois → disc within degree 4 | ANALYZED |
+| 12 | G.R5.3 | NF regulator ~ discriminant | SURVIVED z=4.8 |
+| 13 | G.R5.nf | NF disc: class# in knot_dets vs not | SURVIVED z=3.5 |
+| 14 | G.R5.sg | NF disc: class# in SG point_group_orders vs not | SURVIVED z=35.7 |
+
+**EC/MF batch (load DuckDB once):**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 15 | G.R2.d7 | Div by 7: rank-0 vs rank-1 | Untested |
+| 16 | G.R2.d11 | Div by 11: rank-0 vs rank-1 | Untested |
+| 17 | G.R2.d13 | Div by 13: rank-0 vs rank-1 | Untested |
+| 18 | G.R3.ec | EC per conductor is NOT Poisson | SURVIVED z=0 |
+| 19 | G.R4.mod | Rank-2 conductor mod 12 differs from rank-0 | SURVIVED z=0 |
+| 20 | C89 | Torsion → root number (EC) | Potential rediscovery |
+| 21 | C51-f24 | EC conductor M4/M² = 1.71 (F24 classify) | WON |
+
+**Fungrim/mathlib/formal batch:**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 22 | G.R1.6 | Symbol count: equations vs definitions | SURVIVED z=3.9 |
+| 23 | G.R2.pi | Pi formulas have more symbols | SURVIVED z=18.9 |
+| 24 | G.R2.zeta | Zeta concentrated in fewer modules | SURVIVED z=-12.3 |
+| 25 | G.R4.fung | Later formulas have more symbols (within module) | SURVIVED z=13.7 |
+| 26 | C75 | Fungrim symbol analysis | ANALYZED |
+| 27 | C23 | FindStat combinatorial statistics | PARKED |
+| 28 | C76 | FindStat enriched data | PARKED |
+
+### M2 — SpectreX5 (28 tests)
+
+**Superconductor/crystal batch (load SC data once):**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 1 | C88 | MP density/volume/nsites distribution | ANALYZED |
+| 2 | C93 | Crystal nsites distribution | ANALYZED |
+| 3 | C10 | Basis set exponent recurrence | R²=0.93 |
+| 4 | C55 | Enrichment meta-analysis (all 30+ values) | WON |
+| 5 | C9 | Gamma pseudometric on CODATA constants | Weak enrichment |
+| 6 | C8 | Logistic map phase coherence | Exact |
+| 7 | C26 | PDG particle mass F24 classification | M4/M²=69.6 |
+
+**Genus-2 batch (load g2 once):**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 8 | C78 | G2 root number vs conductor | ANALYZED |
+| 9 | C71-f24 | G2 adelic obstruction (F24 classify) | COMPLETE |
+| 10 | G.R5.iso | Isogeny nodes: prime-is-knot-det vs not | SURVIVED z=19.5 |
+| 11 | G.R5.cross | Crossing: det in polytope_verts vs not | SURVIVED z=5.5 |
+| 12 | G.R6.iso | Isogeny nodes ~ MF count at level p (F24) | SURVIVED z=24.7 |
+| 13 | C09-f27 | Moonshine class structure (F27 check) | LAW eta²=0.60 |
+| 14 | C86-f27 | Isogeny diameter scaling (F27 check) | LAW R²=0.94 |
+| 15 | C05-f27 | Maass spectral level→R (F27 check) | LAW eta²=0.82 |
+
+**Maass batch (load maass_with_coefficients.json once — 342MB):**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 16 | C53-f24 | Maass coefficient moments by symmetry/level | WON |
+| 17 | C05-deep | Maass per-level spacing statistics (GUE vs Poisson) | New |
+| 18 | Maass.coeff | Maass coefficient autocorrelation structure | New |
+| 19 | Maass.fricke | Fricke → coefficient structure (not spectral) | New |
+
+**Lattice/polytope batch:**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 20 | C66 | Lattice theta series analysis | UNBLOCKED |
+| 21 | C70 | Lattice theta analysis | ANALYZED |
+| 22 | C73 | Dim-2 lattice theta coefficients | ANALYZED |
+| 23 | C92 | Lattice theta recurrence | ANALYZED |
+| 24 | C27-f24 | Polytope f-vector M4/M² F24 classify | WON |
+| 25 | G.R5.poly | Polytope Euler characteristic non-uniform (F24) | SURVIVED z=63.1 |
+
+**Cross-domain overlap batch:**
+
+| # | ID | Test | Prior |
+|---|---|---|---|
+| 26 | G.R5.sg | SG number ~ Wyckoff position count | SURVIVED z=4.8 |
+| 27 | G.R5.nfsg | SG point group order ~ NF degree (KS) | SURVIVED z=0 |
+| 28 | C54-f24 | Conway polynomial moments F24 classify | M4/M²=9.43 |
+
+---
+
 ## PART 1: THE CLEAN LIST — What to rerun with the frozen battery
 
 ### Tier A: Rerun immediately (high eta², strong prior, frozen battery ready)
