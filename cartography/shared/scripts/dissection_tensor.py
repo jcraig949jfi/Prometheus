@@ -2000,6 +2000,406 @@ class DataLoaders:
 
         return objects
 
+    # ----------------------------------------------------------
+    # Physical science domain loaders
+    # ----------------------------------------------------------
+
+    @staticmethod
+    def load_superconductors(max_n=None):
+        """Load superconductors from 3DSC Materials Project dataset.
+
+        Source: ~41K rows, 92 columns.  First line is a comment, second
+        line is the CSV header.
+        """
+        import pandas as pd
+        path = (ROOT / "cartography/physics/data/superconductors/3DSC/"
+                "superconductors_3D/data/final/MP/3DSC_MP.csv")
+        if not path.exists():
+            print("  WARNING: 3DSC_MP.csv not found, skipping superconductors")
+            return []
+        try:
+            df = pd.read_csv(path, comment="#")
+        except Exception as e:
+            print(f"  WARNING: Failed to load superconductors: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        # Crystal system -> ADE type mapping
+        crystal_ade_map = {
+            "cubic": "A", "hexagonal": "D", "tetragonal": "E",
+            "orthorhombic": "A", "monoclinic": "D", "triclinic": "A",
+            "trigonal": "D", "rhombohedral": "D",
+        }
+
+        for idx, row in df.iterrows():
+            if max_n is not None and len(objects) >= max_n:
+                break
+            tc = row.get("tc")
+            if tc is None or pd.isna(tc) or tc <= 0:
+                continue
+
+            obj = MathObject(
+                obj_id=f"sc_{idx}",
+                domain="SC",
+                label=f"SC_{idx}_Tc{tc:.1f}",
+                signatures={},
+                raw={"tc": float(tc),
+                     "spacegroup": str(row.get("spacegroup_2", "")),
+                     "crystal_system": str(row.get("crystal_system_2", ""))},
+            )
+
+            # S13: Tc as the "conductor" of superconductivity
+            obj.signatures["s13"] = ext.s13_discriminant(tc)
+
+            # S7: p-adic structure of Tc (discretized)
+            obj.signatures["s7_cond"] = ext.s7_padic(int(tc * 100))
+
+            # S19: ADE from crystal system
+            cs = str(row.get("crystal_system_2", "")).lower()
+            ade_type = crystal_ade_map.get(cs, "A")
+            ade_sig = np.zeros(8, dtype=np.float32)
+            if ade_type == "A":
+                ade_sig[0] = 1.0
+            elif ade_type == "D":
+                ade_sig[1] = 1.0
+            elif ade_type == "E":
+                ade_sig[2] = 0.8  # E6
+                ade_sig[3] = 0.1  # E7
+                ade_sig[4] = 0.1  # E8
+            ade_sig[5] = 1.0    # rank placeholder
+            ade_sig[6] = 0.5    # confidence
+            ade_sig[7] = 5.0    # method code: crystal
+            obj.signatures["s19_ade"] = ade_sig
+
+            # S3: mod-p fingerprint of integer invariants
+            sg_hash = abs(hash(str(row.get("spacegroup_2", "")))) % 10000
+            nsites = int(row["nsites_2"]) if pd.notna(row.get("nsites_2")) else 0
+            num_el = int(row["num_elements_sc"]) if pd.notna(row.get("num_elements_sc")) else 0
+            obj.signatures["s3_ap"] = ext.s3_mod_p([sg_hash, int(tc), nsites, num_el])
+
+            # S24: entropy of physical properties
+            props = []
+            for col in ["tc", "band_gap_2", "density_2", "formation_energy_per_atom_2"]:
+                v = row.get(col)
+                if v is not None and pd.notna(v):
+                    props.append(float(v))
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            # S11: monodromy proxy on property sequence
+            mono_props = []
+            for col in ["tc", "band_gap_2", "density_2",
+                        "formation_energy_per_atom_2", "cell_volume_2"]:
+                v = row.get(col)
+                if v is not None and pd.notna(v):
+                    mono_props.append(float(v))
+            if len(mono_props) >= 4:
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(mono_props)
+            else:
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
+
+            objects.append(obj)
+
+        return objects
+
+    @staticmethod
+    def load_materials(max_n=10000):
+        """Load materials from Materials Project JSON dataset.
+
+        Source: ~10K materials with band gap, formation energy, spacegroup,
+        density, volume, nsites, crystal system.
+        """
+        path = ROOT / "cartography/physics/data/materials_project_10k.json"
+        if not path.exists():
+            print("  WARNING: materials_project_10k.json not found, skipping materials")
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  WARNING: Failed to load materials: {e}")
+            return []
+
+        # Crystal system -> ADE type mapping
+        crystal_ade_map = {
+            "cubic": "A", "hexagonal": "D", "tetragonal": "E",
+            "orthorhombic": "A", "monoclinic": "D", "triclinic": "A",
+            "trigonal": "D", "rhombohedral": "D",
+        }
+
+        objects = []
+        ext = StrategyExtractors
+
+        for m in data[:max_n]:
+            sg = m.get("spacegroup_number")
+            if sg is None:
+                continue
+            sg = int(sg)
+            mid = m.get("material_id", "")
+            vol = float(m.get("volume", 0))
+            bg = float(m.get("band_gap", 0))
+            fe = float(m.get("formation_energy_per_atom", 0))
+            dens = float(m.get("density", 0))
+            nsites = int(m.get("nsites", 0))
+            cs = str(m.get("crystal_system", "")).lower()
+
+            obj = MathObject(
+                obj_id=f"mat_{mid}",
+                domain="material",
+                label=mid,
+                signatures={},
+                raw={"spacegroup": sg, "band_gap": bg,
+                     "crystal_system": cs, "volume": vol},
+            )
+
+            # S13: discriminant from spacegroup + conductor from volume
+            obj.signatures["s13"] = ext.s13_discriminant(sg, conductor=int(vol))
+
+            # S7: p-adic valuation of spacegroup number
+            obj.signatures["s7_cond"] = ext.s7_padic(sg)
+
+            # S3: mod-p fingerprint
+            obj.signatures["s3_ap"] = ext.s3_mod_p(
+                [sg, nsites, int(bg * 1000)])
+
+            # S24: entropy of physical properties
+            props = [bg, fe, dens, vol]
+            obj.signatures["s24_ap"] = ext.s24_entropy(props)
+
+            # S19: ADE from crystal system via spacegroup
+            ade_type = crystal_ade_map.get(cs, "A")
+            ade_sig = np.zeros(8, dtype=np.float32)
+            if ade_type == "A":
+                ade_sig[0] = 1.0
+            elif ade_type == "D":
+                ade_sig[1] = 1.0
+            elif ade_type == "E":
+                ade_sig[2] = 0.8
+                ade_sig[3] = 0.1
+                ade_sig[4] = 0.1
+            ade_sig[5] = 1.0
+            ade_sig[6] = 0.5
+            ade_sig[7] = 5.0
+            obj.signatures["s19_ade"] = ade_sig
+
+            objects.append(obj)
+
+        return objects
+
+    @staticmethod
+    def load_atomic_spectra(max_n=None):
+        """Load atomic energy levels from NIST Atomic Spectra Database.
+
+        Source: dict keyed by element symbol, each with Z (atomic number)
+        and ions dict.  Each ion has a levels array with Level (eV) field.
+        """
+        path = ROOT / "cartography/physics/data/nist_asd/all_elements.json"
+        if not path.exists():
+            print("  WARNING: all_elements.json not found, skipping atomic spectra")
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  WARNING: Failed to load atomic spectra: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        elements = list(data.keys())
+        if max_n is not None:
+            elements = elements[:max_n]
+
+        for symbol in elements:
+            el = data[symbol]
+            Z = int(el.get("Z", 0))
+            if Z == 0:
+                continue
+
+            ions = el.get("ions", {})
+            n_ions = len(ions)
+
+            # Collect all energy levels across all ions
+            energy_levels = []
+            for ion_key, ion_data in ions.items():
+                levels = ion_data.get("levels", [])
+                for lev in levels:
+                    lev_val = lev.get("Level (eV)", "")
+                    try:
+                        ev = float(str(lev_val).strip())
+                        if np.isfinite(ev):
+                            energy_levels.append(ev)
+                    except (ValueError, TypeError):
+                        continue
+
+            n_levels = len(energy_levels)
+            if n_levels < 4:
+                continue
+
+            obj = MathObject(
+                obj_id=f"atom_{symbol}",
+                domain="atom",
+                label=f"{symbol} (Z={Z})",
+                signatures={},
+                raw={"Z": Z, "n_levels": n_levels, "n_ions": n_ions},
+            )
+
+            # S5: FFT of energy level sequence
+            obj.signatures["s5_ap"] = ext.s5_spectral(energy_levels[:100])
+
+            # S13: atomic number as magnitude
+            obj.signatures["s13"] = ext.s13_discriminant(Z)
+
+            # S7: p-adic valuation of atomic number
+            obj.signatures["s7_cond"] = ext.s7_padic(Z)
+
+            # S3: mod-p fingerprint of integer invariants
+            obj.signatures["s3_ap"] = ext.s3_mod_p([Z, n_levels, n_ions])
+
+            # S24: entropy of energy levels
+            obj.signatures["s24_ap"] = ext.s24_entropy(energy_levels[:100])
+
+            # S11: monodromy proxy — sign changes, growth in level sequence
+            obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(
+                energy_levels[:50])
+
+            objects.append(obj)
+
+        return objects
+
+    @staticmethod
+    def load_particles(max_n=None):
+        """Load particle data from PDG (Particle Data Group).
+
+        Source: 226 particles with mass, width, mass errors.
+        """
+        path = ROOT / "cartography/physics/data/pdg/particles.json"
+        if not path.exists():
+            print("  WARNING: particles.json not found, skipping particles")
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  WARNING: Failed to load particles: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for p in data[:max_n]:
+            name = p.get("name", "")
+            mass = p.get("mass_GeV")
+            if mass is None or mass <= 0:
+                continue
+            mass = float(mass)
+            width = float(p.get("width_GeV") or 0)
+            err_plus = float(p.get("mass_err_plus") or 0)
+            err_minus = float(p.get("mass_err_minus") or 0)
+
+            obj = MathObject(
+                obj_id=f"part_{name}",
+                domain="particle",
+                label=name,
+                signatures={},
+                raw={"mass_GeV": mass, "width_GeV": width},
+            )
+
+            # S13: mass as magnitude (discretized to MeV)
+            obj.signatures["s13"] = ext.s13_discriminant(int(mass * 1000))
+
+            # S24: entropy of physical observables
+            props = [mass, width, err_plus]
+            props = [v for v in props if v > 0]
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            # S7: p-adic structure of mass (discretized to MeV)
+            mass_mev = int(mass * 1000)
+            if mass_mev > 0:
+                obj.signatures["s7_cond"] = ext.s7_padic(mass_mev)
+            else:
+                obj.signatures["s7_cond"] = np.full(5, np.nan)
+
+            objects.append(obj)
+
+        return objects
+
+    @staticmethod
+    def load_metabolism(max_n=5000):
+        """Load metabolic reactions from Recon3D (human metabolic network).
+
+        Source: JSON with "reactions" and "metabolites" lists.
+        Each reaction has stoichiometric coefficients in its 'metabolites' dict.
+        """
+        path = ROOT / "cartography/metabolism/data/Recon3D.json"
+        if not path.exists():
+            print("  WARNING: Recon3D.json not found, skipping metabolism")
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except Exception as e:
+            print(f"  WARNING: Failed to load metabolism: {e}")
+            return []
+
+        reactions = data.get("reactions", [])
+        if not isinstance(reactions, list) or not reactions:
+            print("  WARNING: Recon3D.json has no reaction list, skipping metabolism")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for rxn in reactions[:max_n]:
+            rxn_id = rxn.get("id", "")
+            stoich = rxn.get("metabolites", {})
+            if not isinstance(stoich, dict) or not stoich:
+                continue
+
+            coeffs = list(stoich.values())
+            n_metabolites = len(coeffs)
+            if n_metabolites < 2:
+                continue
+
+            reactants = [v for v in coeffs if v < 0]
+            products = [v for v in coeffs if v > 0]
+            n_reactants = len(reactants)
+            n_products = len(products)
+            stoich_balance = int(round(sum(coeffs)))
+
+            obj = MathObject(
+                obj_id=f"metab_{rxn_id}",
+                domain="metabolism",
+                label=rxn_id,
+                signatures={},
+                raw={"n_metabolites": n_metabolites,
+                     "n_reactants": n_reactants,
+                     "n_products": n_products,
+                     "subsystem": rxn.get("subsystem", "")},
+            )
+
+            # S13: discriminant from number of metabolites in reaction
+            obj.signatures["s13"] = ext.s13_discriminant(n_metabolites)
+
+            # S3: mod-p fingerprint
+            obj.signatures["s3_ap"] = ext.s3_mod_p(
+                [n_reactants, n_products, stoich_balance])
+
+            # S24: entropy of stoichiometric coefficients
+            abs_coeffs = [abs(c) for c in coeffs]
+            if len(abs_coeffs) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(abs_coeffs)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            objects.append(obj)
+
+        return objects
+
 
 # ============================================================
 # The Dissection Tensor
@@ -2657,6 +3057,22 @@ def main():
 
     print("Loading Belyi maps...")
     dt.add_objects(DataLoaders.load_belyi(max_n=50000))
+
+    # Physical science domain loaders
+    print("Loading superconductors...")
+    dt.add_objects(DataLoaders.load_superconductors())
+
+    print("Loading materials...")
+    dt.add_objects(DataLoaders.load_materials(max_n=10000))
+
+    print("Loading atomic spectra...")
+    dt.add_objects(DataLoaders.load_atomic_spectra())
+
+    print("Loading particles...")
+    dt.add_objects(DataLoaders.load_particles())
+
+    print("Loading metabolism...")
+    dt.add_objects(DataLoaders.load_metabolism(max_n=5000))
 
     n_total = len(dt.objects)
     print(f"\nTotal objects loaded: {n_total}")
