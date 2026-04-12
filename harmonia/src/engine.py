@@ -14,6 +14,7 @@ from typing import Optional
 
 from harmonia.src.domain_index import DomainIndex, load_domains, DOMAIN_LOADERS
 from harmonia.src.coupling import CouplingScorer, DistributionalCoupling, AlignmentCoupling
+from harmonia.src.phonemes import PhonemeCoupling
 
 
 @dataclass
@@ -121,6 +122,8 @@ class HarmoniaEngine:
             self._scorer = DistributionalCoupling(self._domain_list, device=device)
         elif scorer == "alignment":
             self._scorer = AlignmentCoupling(self._domain_list, device=device)
+        elif scorer == "phoneme":
+            self._scorer = PhonemeCoupling(self._domain_list, device=device)
         else:
             raise ValueError(f"Unknown scorer: {scorer}")
 

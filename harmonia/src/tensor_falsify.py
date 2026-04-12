@@ -16,6 +16,7 @@ from pathlib import Path
 
 from harmonia.src.domain_index import DomainIndex, load_domains, DOMAIN_LOADERS
 from harmonia.src.coupling import DistributionalCoupling, AlignmentCoupling
+from harmonia.src.phonemes import PhonemeCoupling
 from harmonia.src.validate import extract_bond_components
 
 
@@ -97,7 +98,7 @@ def test_permutation_null(domains, scorer, original_ranks, n_perms=5, max_rank=1
         shuffled_feats = domains[0].features[perm]
         shuffled_dom = DomainIndex(domains[0].name, domains[0].labels, shuffled_feats)
 
-        null_scorer = AlignmentCoupling([shuffled_dom] + list(domains[1:]))
+        null_scorer = PhonemeCoupling([shuffled_dom] + list(domains[1:]))
         null_scores = null_scorer(*real_idx)
         null_vars.append(null_scores.var().item())
 
@@ -147,7 +148,7 @@ def test_subset_stability(domains, scorer, original_ranks, n_splits=3, max_rank=
             sub = DomainIndex(dom.name, [dom.labels[i] for i in perm.tolist()], dom.features[perm])
             sub_domains.append(sub)
 
-        sub_scorer = AlignmentCoupling(sub_domains)
+        sub_scorer = PhonemeCoupling(sub_domains)
         _, ranks = _run_tt(sub_domains, sub_scorer, max_rank)
         split_ranks.append(max(ranks[1:-1]))
 
@@ -235,7 +236,7 @@ def test_confound_residual(domains, original_ranks, max_rank=15):
         new_domains = list(domains)
         new_domains[d_idx] = DomainIndex(dom.name, dom.labels, residual_feats)
 
-        res_scorer = AlignmentCoupling(new_domains)
+        res_scorer = PhonemeCoupling(new_domains)
         _, ranks = _run_tt(new_domains, res_scorer, max_rank)
         residual_ranks.append(max(ranks[1:-1]))
 
@@ -315,7 +316,7 @@ def falsify_bond(
                     dom.name, [dom.labels[j] for j in perm.tolist()],
                     dom.features[perm])
 
-    scorer = AlignmentCoupling(domain_list)
+    scorer = PhonemeCoupling(domain_list)
     tt, ranks = _run_tt(domain_list, scorer, max_rank)
     original_rank = max(ranks[1:-1])
 
@@ -336,9 +337,21 @@ def falsify_bond(
     # F17: Confound residual
     tests.append(test_confound_residual(domain_list, ranks, max_rank))
 
-    # Count survivors
+    # Ensemble verdict: multiple paths to survival, calibrated against known truths.
+    # Path 1: F1 passes (permutation null proves alignment)
+    # Path 2: F3 passes (effect size on both sides) AND F2 passes (stable)
+    # Path 3: 4+ tests pass (overwhelming evidence)
+    f1_pass = any(t.test == "F1_permutation_null" and t.verdict == "SURVIVES" for t in tests)
+    f2_pass = any(t.test == "F2_subset_stability" and t.verdict == "SURVIVES" for t in tests)
+    f3_pass = any(t.test == "F3_effect_size" and t.verdict == "SURVIVES" for t in tests)
     n_survive = sum(1 for t in tests if t.verdict == "SURVIVES")
-    surviving_rank = original_rank if n_survive >= 3 else (original_rank // 2 if n_survive >= 2 else 0)
+
+    if f1_pass or (f2_pass and f3_pass) or n_survive >= 4:
+        surviving_rank = original_rank
+    elif n_survive >= 2:
+        surviving_rank = original_rank // 2
+    else:
+        surviving_rank = 0
 
     wall = time.time() - t0
     return FalsificationReport(

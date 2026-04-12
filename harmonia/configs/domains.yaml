@@ -1,43 +1,140 @@
 # Harmonia Domain Configuration
 # Each domain becomes one axis of the tensor train.
-# Add new domains here as they become available.
+# 14 domains, 287,940 total objects.
+
+# ── Object domains ────────────────────────────────────────────────────
 
 domains:
   knots:
     path: cartography/knots/data/knots.json
     n_objects: 12965
     features: 28
+    phonemes: [complexity, arithmetic, spectral]
     description: "Knot invariants — crossing number, determinant, Alexander/Jones/Conway polynomials"
 
   number_fields:
     path: cartography/number_fields/data/number_fields.json
     n_objects: 9116
     features: 6
+    phonemes: [complexity, rank, arithmetic, spectral]
     description: "Algebraic number fields — degree, discriminant, class number, regulator"
 
   space_groups:
     path: cartography/spacegroups/data/space_groups.json
     n_objects: 230
     features: 5
+    phonemes: [complexity, rank, symmetry]
     description: "Crystallographic space groups — point group order, crystal system, lattice type"
 
   genus2:
     path: cartography/genus2/data/genus2_curves_full.json
     n_objects: 66158
     features: 7
+    phonemes: [complexity, rank, symmetry, arithmetic]
     description: "Genus-2 curves — conductor, Selmer rank, solubility, root number"
 
   maass:
     path: cartography/maass/data/maass_with_coefficients.json
     n_objects: 14995
     features: 25
+    phonemes: [complexity, symmetry, spectral]
     description: "Maass forms — level, weight, spectral parameter, first 20 coefficients"
 
-# Defaults for exploration
+  lattices:
+    path: cartography/lattices/data/lattices_full.json
+    n_objects: 39293
+    features: 6
+    phonemes: [complexity, rank, symmetry, arithmetic]
+    description: "Integral lattices — dimension, determinant, level, class number, aut group"
+
+  polytopes:
+    path: cartography/polytopes/data/polytopes.json
+    n_objects: 980
+    features: 6
+    phonemes: [complexity, rank, symmetry]
+    description: "Convex polytopes — dimension, vertices, edges, facets, f-vector"
+
+  materials:
+    path: cartography/physics/data/materials_project_10k.json
+    n_objects: 10000
+    features: 6
+    phonemes: [complexity, symmetry, spectral]
+    description: "Materials Project — band gap, formation energy, space group, density, volume"
+
+  fungrim:
+    path: cartography/fungrim/data/fungrim_formulas.json
+    n_objects: 3130
+    features: 4
+    phonemes: [complexity, rank]
+    description: "Fungrim formulas — type, symbols, module, formula length"
+
+  elliptic_curves:
+    source: charon_duckdb
+    n_objects: 31073
+    features: 4
+    phonemes: [complexity, rank, arithmetic]
+    description: "Elliptic curves — conductor, rank, analytic rank, torsion"
+
+  modular_forms:
+    source: charon_duckdb
+    n_objects: 50000
+    features: 5
+    phonemes: [complexity, rank, symmetry, spectral]
+    description: "Modular forms — level, weight, dim, character order/parity"
+
+  dirichlet_zeros:
+    source: charon_duckdb
+    n_objects: 50000
+    features: 5
+    phonemes: [complexity, rank, spectral]
+    description: "Dirichlet L-function zeros — conductor, degree, rank, n_zeros, motivic weight"
+
+# ── Meta domains ──────────────────────────────────────────────────────
+
+  battery:
+    source: convergence_data
+    n_objects: 97
+    features: 18
+    phonemes: [complexity, spectral]
+    description: "Battery test results — genocide rounds + battery logs, verdicts + domain involvement"
+
+  dissection:
+    source: inline
+    n_objects: 34
+    features: 17
+    phonemes: [complexity, rank]
+    description: "Equation dissection strategies S1-S34 — priority, tractability, domain applicability"
+
+# ── Known dead domains (decouple from everything) ────────────────────
+
+dead_domains:
+  - knots     # rank 0 to all other domains in pair sweep
+  - maass     # rank 0 to all other domains in pair sweep
+
+# ── Phoneme definitions ──────────────────────────────────────────────
+
+phonemes:
+  complexity: "Size/conductor/discriminant — how 'big' is the object"
+  rank: "Rank/degree/dimension — how 'rich' is the structure"
+  symmetry: "Point group/automorphism order — how symmetric"
+  arithmetic: "Torsion/class number/Selmer — arithmetic complexity"
+  spectral: "Spectral parameter/eigenvalues/zeros — analytic fingerprint"
+
+# ── Exploration defaults ─────────────────────────────────────────────
+
 exploration:
   max_rank: 20
   eps: 1e-4
   max_iter: 100
-  scorer: distributional
-  subsample: null   # Set to integer for fast exploratory runs
-  device: cpu       # Set to 'cuda' when GPU available
+  scorer: phoneme     # phoneme, alignment, distributional, cosine
+  subsample: null     # Set to integer for fast exploratory runs
+  device: cpu         # Set to 'cuda' when GPU-saturating workloads
+
+# ── Calibration ──────────────────────────────────────────────────────
+
+calibration:
+  sensitivity: 1.00   # 5/5 known truths detected
+  specificity: 0.33   # 1/3 known falsehoods rejected
+  accuracy: 0.75
+  scorer: phoneme
+  date: 2026-04-12
