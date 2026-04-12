@@ -18,6 +18,9 @@ import os
 import sys
 import time
 import argparse
+
+# LMFDB tables (e.g. mf_hecke_charpolys) contain integers with 4000+ digits
+sys.set_int_max_str_digits(100000)
 from pathlib import Path
 
 try:
