@@ -360,6 +360,179 @@ def load_dirichlet_zeros(db_path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("dirichlet_zeros", labels, features)
 
 
+def load_battery() -> DomainIndex:
+    """
+    Load battery test results as a dimension.
+
+    Each object = one hypothesis that was tested. Features encode
+    the test outcome (z-score, p-value, verdict) and which domains
+    were involved. This lets the tensor discover which domain combinations
+    produce surviving vs killed hypotheses.
+    """
+    data_dir = CARTOGRAPHY / "convergence" / "data"
+
+    # Collect all genocide round results + battery logs
+    all_tests = []
+
+    # Genocide rounds
+    for r in range(1, 8):
+        fname = "genocide_results.json" if r == 1 else f"genocide_r{r}_results.json"
+        path = data_dir / fname
+        if path.exists():
+            try:
+                with open(path) as f:
+                    raw = json.load(f)
+                for t in raw.get("tests", []):
+                    t["source_round"] = r
+                    all_tests.append(t)
+            except (json.JSONDecodeError, KeyError):
+                pass
+
+    # Battery log entries (full F15-F24b results)
+    blog = data_dir / "battery_logs" / "battery_runs.jsonl"
+    if blog.exists():
+        with open(blog) as f:
+            for line in f:
+                entry = json.loads(line)
+                tests_run = entry.get("tests_run", {})
+                # Each test within is a sub-observation
+                for test_name, result in tests_run.items():
+                    all_tests.append({
+                        "name": f"{entry.get('finding_id', '')}_{test_name}",
+                        "tag": result.get("verdict", "UNKNOWN"),
+                        "p": 0.0,  # Not always present
+                        "z": result.get("observed", 0),
+                        "source_round": 0,  # battery log
+                    })
+
+    # Encode domain mentions in test names as features
+    domain_keywords = {
+        "knot": 0, "jones": 0, "alexander": 0, "crossing": 0, "conway": 0,
+        "field": 1, "degree": 1, "discriminant": 1, "class": 1, "galois": 1,
+        "space": 2, "crystal": 2, "symmetr": 2, "sg": 2,
+        "genus": 3, "curve": 3, "conductor": 3, "sato": 3, "selmer": 3,
+        "maass": 4, "spectral": 4, "fricke": 4, "level": 4,
+        "lattice": 5, "det": 5,
+        "polytope": 6, "vertex": 6, "facet": 6,
+        "material": 7, "band": 7, "density": 7,
+        "fungrim": 8, "formula": 8, "symbol": 8,
+        "elliptic": 9, "rank": 9, "torsion": 9,
+        "modular": 10, "hecke": 10, "weight": 10,
+        "isogen": 11, "prime": 11,
+    }
+
+    labels, feats = [], []
+    for t in all_tests:
+        name = t.get("name", "")
+        labels.append(name[:60])
+
+        # Domain involvement vector (12 dims)
+        domain_vec = [0.0] * 12
+        name_lower = name.lower()
+        for kw, idx in domain_keywords.items():
+            if kw in name_lower:
+                domain_vec[idx] = 1.0
+
+        verdict_score = 1.0 if t.get("tag") == "SURVIVES" else -1.0 if t.get("tag") == "KILLED" else 0.0
+        p_val = float(t.get("p") or 0.5)
+        z_score = float(t.get("z") or 0)
+        real_val = float(t.get("real", 0) or 0)
+        null_mean = float(t.get("null_mean", 0) or 0)
+        source_round = float(t.get("source_round", 0))
+
+        feat = [
+            verdict_score,
+            -np.log10(max(p_val, 1e-20)),  # log p-value (higher = more significant)
+            z_score,
+            real_val,
+            null_mean,
+            source_round,
+        ] + domain_vec
+
+        feats.append(feat)
+
+    if not feats:
+        # Return minimal if no data
+        return DomainIndex("battery", ["empty"], torch.zeros(1, 18))
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("battery", labels, features)
+
+
+def load_dissection_strategies() -> DomainIndex:
+    """
+    Load equation dissection strategies (S1-S34) as a dimension.
+
+    Each object = one analytical lens. Features encode the strategy's
+    properties: priority, tractability, GPU-ability, execution cost,
+    and which domains it applies to. This lets the tensor discover
+    which analytical methods are entangled with which mathematical domains.
+    """
+    # Strategies with their metadata from the doc
+    strategies = [
+        {"id": "S01", "name": "Complex plane extension", "priority": 9, "tract": 3, "gpu": 1, "time_min": 120, "domains": [8, 4]},
+        {"id": "S02", "name": "Fractional derivative", "priority": 7, "tract": 3, "gpu": 1, "time_min": 30, "domains": []},
+        {"id": "S03", "name": "Modular arithmetic projection", "priority": 10, "tract": 5, "gpu": 1, "time_min": 10, "domains": [9, 10, 1]},
+        {"id": "S04", "name": "Topological signatures", "priority": 8, "tract": 3, "gpu": 1, "time_min": 60, "domains": [3, 0, 7]},
+        {"id": "S05", "name": "Fourier spectral decomposition", "priority": 8, "tract": 5, "gpu": 1, "time_min": 5, "domains": [4, 8]},
+        {"id": "S06", "name": "Phase space attractors", "priority": 7, "tract": 3, "gpu": 1, "time_min": 30, "domains": []},
+        {"id": "S07", "name": "p-adic evaluation", "priority": 9, "tract": 3, "gpu": 0.5, "time_min": 20, "domains": [9, 1, 11]},
+        {"id": "S08", "name": "Level set topology Morse", "priority": 7, "tract": 3, "gpu": 1, "time_min": 120, "domains": []},
+        {"id": "S09", "name": "Symmetry group detection", "priority": 8, "tract": 2, "gpu": 0, "time_min": 60, "domains": [3, 7, 2]},
+        {"id": "S10", "name": "Galois group of roots", "priority": 9, "tract": 3, "gpu": 0, "time_min": 30, "domains": [1, 0]},
+        {"id": "S11", "name": "Monodromy representation", "priority": 7, "tract": 2, "gpu": 0, "time_min": 120, "domains": []},
+        {"id": "S12", "name": "Zeta function of variety", "priority": 10, "tract": 3, "gpu": 1, "time_min": 15, "domains": [9, 3, 11]},
+        {"id": "S13", "name": "Discriminant and resultant", "priority": 8, "tract": 5, "gpu": 0, "time_min": 5, "domains": [1, 0]},
+        {"id": "S14", "name": "Newton polytope", "priority": 7, "tract": 5, "gpu": 0, "time_min": 5, "domains": [6]},
+        {"id": "S15", "name": "Grobner basis signature", "priority": 6, "tract": 1, "gpu": 0, "time_min": 60, "domains": []},
+        {"id": "S16", "name": "Hodge diamond", "priority": 6, "tract": 1, "gpu": 0, "time_min": 60, "domains": []},
+        {"id": "S17", "name": "Motivic integration", "priority": 3, "tract": 0, "gpu": 0, "time_min": 999, "domains": []},
+        {"id": "S18", "name": "Tropical geometry skeleton", "priority": 8, "tract": 3, "gpu": 0, "time_min": 30, "domains": []},
+        {"id": "S19", "name": "Singularity classification ADE", "priority": 9, "tract": 2, "gpu": 0, "time_min": 60, "domains": []},
+        {"id": "S20", "name": "Differential Galois group", "priority": 7, "tract": 2, "gpu": 0, "time_min": 60, "domains": []},
+        {"id": "S21", "name": "Automorphic form association", "priority": 10, "tract": 2, "gpu": 0, "time_min": 120, "domains": [9, 10]},
+        {"id": "S22", "name": "Operadic structure", "priority": 8, "tract": 3, "gpu": 0, "time_min": 10, "domains": [8]},
+        {"id": "S23", "name": "Convexity profile Hessian", "priority": 7, "tract": 5, "gpu": 0, "time_min": 10, "domains": []},
+        {"id": "S24", "name": "Information theoretic", "priority": 6, "tract": 5, "gpu": 0, "time_min": 5, "domains": []},
+        {"id": "S25", "name": "Renormalization group flow", "priority": 7, "tract": 2, "gpu": 0, "time_min": 30, "domains": []},
+        {"id": "S26", "name": "Spectral curve", "priority": 8, "tract": 2, "gpu": 0, "time_min": 60, "domains": [4, 11]},
+        {"id": "S27", "name": "Arithmetic dynamics orbits", "priority": 7, "tract": 3, "gpu": 0, "time_min": 20, "domains": []},
+        {"id": "S28", "name": "Resurgence Borel summation", "priority": 6, "tract": 2, "gpu": 0, "time_min": 60, "domains": []},
+        {"id": "S29", "name": "Differential Galois Picard-Vessiot", "priority": 8, "tract": 2, "gpu": 0, "time_min": 60, "domains": []},
+        {"id": "S30", "name": "Tropicalization skeleton", "priority": 8, "tract": 3, "gpu": 0, "time_min": 30, "domains": []},
+        {"id": "S31", "name": "Functional equation symmetry", "priority": 9, "tract": 2, "gpu": 0, "time_min": 60, "domains": [9, 10]},
+        {"id": "S32", "name": "Coefficient field", "priority": 8, "tract": 3, "gpu": 0, "time_min": 10, "domains": [1]},
+        {"id": "S33", "name": "Recursion operator extraction", "priority": 9, "tract": 3, "gpu": 0, "time_min": 20, "domains": []},
+        {"id": "S34", "name": "Categorical equivalence functoriality", "priority": 9, "tract": 3, "gpu": 0, "time_min": 30, "domains": []},
+    ]
+
+    # Domain index: 0=knots, 1=NF, 2=SG, 3=genus2, 4=maass, 5=lattices,
+    #               6=polytopes, 7=materials, 8=fungrim, 9=EC, 10=MF, 11=isogenies
+
+    labels, feats = [], []
+    for s in strategies:
+        labels.append(f"{s['id']}_{s['name'][:30]}")
+
+        # Domain applicability vector (12 dims)
+        domain_vec = [0.0] * 12
+        for d in s["domains"]:
+            if d < 12:
+                domain_vec[d] = 1.0
+
+        feat = [
+            float(s["priority"]),
+            float(s["tract"]),
+            float(s["gpu"]),
+            np.log1p(float(s["time_min"])),
+            float(len(s["domains"])),  # domain coverage
+        ] + domain_vec
+
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("dissection", labels, features)
+
+
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
@@ -374,6 +547,8 @@ DOMAIN_LOADERS = {
     "elliptic_curves": load_elliptic_curves,
     "modular_forms": load_modular_forms,
     "dirichlet_zeros": load_dirichlet_zeros,
+    "battery": load_battery,
+    "dissection": load_dissection_strategies,
 }
 
 
