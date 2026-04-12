@@ -1,0 +1,248 @@
+{
+  "test": "C89",
+  "claim": "EC torsion group predicts root number sign",
+  "n": 31073,
+  "per_torsion": {
+    "Z/10Z": {
+      "n": 8,
+      "rn_plus1_rate": 1.0
+    },
+    "Z/12Z": {
+      "n": 18,
+      "rn_plus1_rate": 0.8333333333333334
+    },
+    "Z/16Z": {
+      "n": 1,
+      "rn_plus1_rate": 1.0
+    },
+    "Z/2Z": {
+      "n": 13871,
+      "rn_plus1_rate": 0.5502126739240142
+    },
+    "Z/3Z": {
+      "n": 1330,
+      "rn_plus1_rate": 0.5556390977443609
+    },
+    "Z/4Z": {
+      "n": 3017,
+      "rn_plus1_rate": 0.6072257209148161
+    },
+    "Z/5Z": {
+      "n": 102,
+      "rn_plus1_rate": 0.6372549019607843
+    },
+    "Z/6Z": {
+      "n": 416,
+      "rn_plus1_rate": 0.6850961538461539
+    },
+    "Z/7Z": {
+      "n": 13,
+      "rn_plus1_rate": 0.8461538461538461
+    },
+    "Z/8Z": {
+      "n": 149,
+      "rn_plus1_rate": 0.6510067114093959
+    },
+    "Z/9Z": {
+      "n": 5,
+      "rn_plus1_rate": 0.6
+    },
+    "trivial": {
+      "n": 12143,
+      "rn_plus1_rate": 0.46133574899118834
+    }
+  },
+  "root_number_computed_as": "(-1)^analytic_rank",
+  "f24": {
+    "verdict": "SMALL_EFFECT",
+    "eta_squared": 0.01275678189303932,
+    "f_statistic": 40.13584445173314,
+    "ss_between": 395.44757222454575,
+    "ss_within": 30603.559508105012,
+    "ss_total": 30999.007080329557,
+    "n_groups": 11,
+    "n_total": 31072,
+    "group_stats": {
+      "trivial": {
+        "n": 12143,
+        "mean": -0.07732850201762333,
+        "std": 0.9970056683769207,
+        "cv": 12.893120160916878
+      },
+      "Z/5Z": {
+        "n": 102,
+        "mean": 0.27450980392156865,
+        "std": 0.9615843008030767,
+        "cv": 3.502914238639779
+      },
+      "Z/2Z": {
+        "n": 13871,
+        "mean": 0.10042534784802826,
+        "std": 0.9949445962010157,
+        "cv": 9.907305451474723
+      },
+      "Z/6Z": {
+        "n": 416,
+        "mean": 0.3701923076923077,
+        "std": 0.9289551417186106,
+        "cv": 2.5093853178892336
+      },
+      "Z/4Z": {
+        "n": 3017,
+        "mean": 0.21445144182963208,
+        "std": 0.9767346513240902,
+        "cv": 4.554572554937836
+      },
+      "Z/8Z": {
+        "n": 149,
+        "mean": 0.30201342281879195,
+        "std": 0.9533036727283063,
+        "cv": 3.156494383033725
+      },
+      "Z/3Z": {
+        "n": 1330,
+        "mean": 0.11127819548872181,
+        "std": 0.9937892951771888,
+        "cv": 8.930674071524738
+      },
+      "Z/7Z": {
+        "n": 13,
+        "mean": 0.6923076923076923,
+        "std": 0.72160242458822,
+        "cv": 1.0423146132940955
+      },
+      "Z/12Z": {
+        "n": 18,
+        "mean": 0.6666666666666666,
+        "std": 0.7453559924999298,
+        "cv": 1.1180339887498947
+      },
+      "Z/9Z": {
+        "n": 5,
+        "mean": 0.2,
+        "std": 0.9797958971132713,
+        "cv": 4.898979485566357
+      },
+      "Z/10Z": {
+        "n": 8,
+        "mean": 1.0,
+        "std": 0.0,
+        "cv": 0.0
+      }
+    }
+  },
+  "f24b": {
+    "verdict": "CONSISTENT",
+    "m4m2_by_group": {
+      "trivial": 1.0,
+      "Z/5Z": 1.0,
+      "Z/2Z": 1.0,
+      "Z/6Z": 1.0,
+      "Z/4Z": 1.0,
+      "Z/8Z": 1.0,
+      "Z/3Z": 1.0
+    },
+    "m4m2_ratio": 1.0,
+    "eta_squared": 0.01275678189303932,
+    "medians": {
+      "trivial": -1.0,
+      "Z/5Z": 1.0,
+      "Z/2Z": 1.0,
+      "Z/6Z": 1.0,
+      "Z/4Z": 1.0,
+      "Z/8Z": 1.0,
+      "Z/3Z": 1.0
+    },
+    "median_range_ratio": Infinity,
+    "iqrs": {
+      "trivial": [
+        -1.0,
+        1.0
+      ],
+      "Z/5Z": [
+        -1.0,
+        1.0
+      ],
+      "Z/2Z": [
+        -1.0,
+        1.0
+      ],
+      "Z/6Z": [
+        -1.0,
+        1.0
+      ],
+      "Z/4Z": [
+        -1.0,
+        1.0
+      ],
+      "Z/8Z": [
+        -1.0,
+        1.0
+      ],
+      "Z/3Z": [
+        -1.0,
+        1.0
+      ]
+    },
+    "tail_frac_by_group": {
+      "trivial": 0.46133574899118834,
+      "Z/5Z": 0.6372549019607843,
+      "Z/2Z": 0.5502126739240142,
+      "Z/6Z": 0.6850961538461539,
+      "Z/4Z": 0.6072257209148161,
+      "Z/8Z": 0.6510067114093959,
+      "Z/3Z": 0.5556390977443609
+    },
+    "tail_contribution": 0.4762150315843755
+  },
+  "f25": {
+    "verdict": "CONTEXT_DEPENDENT",
+    "per_group": [
+      {
+        "held_out": "rank-0",
+        "n_test": 15599,
+        "r2_oos": 0
+      },
+      {
+        "held_out": "rank-1",
+        "n_test": 14783,
+        "r2_oos": 0
+      },
+      {
+        "held_out": "rank-2",
+        "n_test": 691,
+        "r2_oos": 0
+      }
+    ],
+    "weighted_oos_r2": 0.0,
+    "mean_oos_r2": 0.0,
+    "n_groups_tested": 3
+  },
+  "f27": {
+    "verdict": "PARTIAL_MATCH",
+    "partial_matches": [
+      {
+        "match": [
+          "E_6",
+          "root_number"
+        ],
+        "explanation": "CM by Q(sqrt(-3)) forces root number +1 via parity conjecture"
+      },
+      {
+        "match": [
+          "E_4",
+          "root_number"
+        ],
+        "explanation": "CM structure likely forces root number +1"
+      },
+      {
+        "match": [
+          "cm_flag",
+          "root_number"
+        ],
+        "explanation": "CM curves have constrained functional equation signs"
+      }
+    ]
+  },
+  "verdict": "SMALL_EFFECT"
+}
