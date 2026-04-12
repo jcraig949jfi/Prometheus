@@ -19,8 +19,8 @@ I am not proving theorems. I am building the **terrain** that makes unknown conn
 ## Standing Orders
 
 1. **Explore the unpopular.** The sleeping beauties, the bizarre sequences, the forgotten theorems. The popular stuff has been beaten down — use it ONLY for verification.
-2. **Trust nothing.** All assumptions 100% wrong until proven. The battery overrides everything. Every z-score needs the right null.
-3. **Kill everything.** Each kill makes us stronger. A hypothesis killed by proper testing is more valuable than ten that survive weak testing.
+2. **Trust nothing.** All assumptions 100% wrong until proven. The battery overrides everything. Every z-score needs the right null. The battery is **FROZEN at 25 tests across 4 tiers** (A: Detection F1-F14, B: Robustness F15-F18, C: Representation F19-F23, D: Magnitude F24-F24b) + interaction analysis + tautology detection. Don't add F25 — further tweaks risk overfitting the instrument to test cases.
+3. **Kill everything.** Each kill makes us stronger. A hypothesis killed by proper testing is more valuable than ten that survive weak testing. Kill count: 23 genocide + 10 challenge + multiple F24 re-audit downgrades.
 4. **Base 10 is a human artifact.** Respect all bases, all normalizations, all constants fixed at one. Never privilege the familiar.
 5. **Verbs over nouns.** Mathematical operations are deeper bridges than object labels. Build the concept layer around behavior, not identity.
 6. **Mean-spacing first.** For ANY gap comparison, test normalization FIRST. If the sign flips, it's scale not structure.
@@ -166,10 +166,31 @@ Strongest structural connections between dataset pairs:
 - Isogeny nodes differ for knot-determinant primes (z=19.5, size-bias check needed)
 - NF discriminants when class number matches knot determinant (z=3.5, borderline)
 
-### Findings Status
-- **Metabolism z=3.8** — Survives constrained stoichiometric null (p=0.005). Modest but real.
-- **Cross-domain novel discoveries** — Zero confirmed yet. Pipeline validates known math at 97.4%.
-- **The right answer is zero.** We haven't found what we're looking for yet. That's honest.
+### Findings Status (v10 — 2026-04-12, empirical hierarchy)
+
+The old tier system (Conjecture→Possible→Probable→Working theory→Validated) is replaced by classification by **mechanism type**, not confidence level:
+
+| Level | Type | Count | Examples |
+|-------|------|-------|---------|
+| 1 | IDENTITIES | 4+ | Modularity theorem, KMT, max Jones~det, 23 genocide rediscoveries |
+| 2 | UNIVERSAL LAWS | **0** | None found across 21 datasets |
+| 3 | CONDITIONAL LAWS | **3** | SC_class→Tc (eta²=0.57), (SG×SC_class)→Tc (14%+9%), N_elements→Tc |
+| 4 | CONSTRAINTS | **2** | ST→conductor (eta²=0.013), endomorphism→uniformity (eta²=0.11) |
+| 5 | MARGINAL | **1** | ST→discriminant (eta²=0.005) |
+| - | EXACT IDENTITY | **1** | E_6 root number = +1 (51/51) |
+
+**Key meta-finding:** Most real-world "laws" are conditional mappings. M4/M2² is a contrast amplifier, not a magnitude measure — use eta² as the primary discovery metric. All non-superconductor "laws" turned out to be identities or rediscoveries.
+
+### Key Numbers
+| Metric | Value |
+|--------|-------|
+| SC_class → Tc eta² | 0.570 |
+| SG → Tc eta² (global) | 0.457 |
+| SG → Tc (incremental after SC_class) | 0.141 |
+| SC_class × SG interaction | 0.085 |
+| SG rank correlation across classes | -0.041 |
+| Total model R² (SC+SG+NE+Vol+Den+FE → Tc) | 0.730 |
+| Leave-one-class-out OOS R² | -15.7 weighted |
 
 ---
 
@@ -276,12 +297,12 @@ All 20 datasets in random pool. Topics steer the LLM. Tags prevent log collision
 1. **The fare is tokens. The cargo is structure.** Every API call advances the loop.
 2. **The battery is the toll collector.** 14 tests (3-4 effective dimensions), no LLM, no mercy. Battery overrides narrative.
 3. **Known bridges calibrate.** 100% recovery on 180 known truths. If this drops, the pipeline is broken.
-4. **Kills are the most valuable output.** 15 kills and counting. Each kill teaches more than a survivor. The battery's job is murder.
+4. **Kills are the most valuable output.** 33+ kills and counting. Each kill teaches more than a survivor. The battery's job is murder.
 5. **Schema emerges from data.** Don't design the type system a priori. Let the data tell you.
 6. **Three layers, not one.** Scalar (dead), Structural (sweet spot), Transformational (frontier). Know which layer you're probing.
 7. **The landscape is not the territory.** But the Gamma metric IS a genuine pseudometric (0 triangle inequality violations / 13,800 triples). Geometric proximity is now measurable.
 8. **Three primes reconstruct.** Mod-3 ∩ mod-5 ∩ mod-7 = complete singleton rigidity. Independence is absolute across fibers.
-9. **The scaling slope measures endomorphism rank.** slope = 0.044·(endo_rank)² − 0.242. The instrument now measures, not just detects.
+9. **Endomorphism constrains uniformity, not magnitude.** More endomorphisms → more uniform conductor factorization (eta²=0.11, within/between CV ratio 1.28). Downgraded from PROBABLE to CONSTRAINT — the M4/M2² ratio that made it look dramatic was a contrast amplifier, not a magnitude measure.
 10. **Moonshine is different.** Generic families: flat ~8x enrichment. Moonshine: increases with prime. Different mechanism. Treat accordingly.
 11. **Read the inventory before proposing.** Challenges grounded in existing data go 10/10. Challenges requiring unbuilt infrastructure block. James proved this twice.
 
@@ -302,6 +323,36 @@ All 20 datasets in random pool. Topics steer the LLM. Tags prevent log collision
 *Pipeline v6.0: April 11, 2026 (unified F1-F23 battery, structured JSONL logging, 3 micro-refinements [F19 variance ratio, F22 complexity penalty, F23 multi-method], P4/S8 killed [degree confound], isogeny single-slope killed [F23 heterogeneity], 1 Probable survivor [P2 SG→Tc])*
 *Pipeline v7.0: April 12, 2026 (F24 variance decomposition + F24b metric consistency, LAW/CONSTRAINT/TENDENCY ontology, council stress tests [Q2 variance decomp, Q3 label permutation, Q5 factorization null, Q7 scaling], M4/M2² identified as contrast amplifier not magnitude measure, endomorphism finding downgraded from PROBABLE to CONSTRAINT [eta²=0.05 tail-driven], SG→Tc confirmed as only LAW [eta²=0.457])*
 *Pipeline v7.1: April 12, 2026 (20-finding re-audit: 7 LAWS / 3 CONSTRAINTS / 6 TENDENCIES / 4 NEGLIGIBLE. SC_class→Tc eta²=0.570 is strongest finding — was hidden by M4/M2² detection bias. SG decomposition: full SG → 22% after all controls, but NO component reproduces it [point group 2.3%, lattice 2.8%, inversion 0.1%]. Signal is irreducible. Battery FROZEN at 25 tests. Next: full re-audit of all prior results.)*
+*Pipeline v7.2: April 12, 2026 session 2 (Independence analysis: 3 axes control Tc [SC_class 57%, SG 14%, N_elements 1.8%]. SG dimensionality: 27 PCs globally but locally 1-11 by class. Stanev replication: OOS R² all negative → interaction discovery. Interaction analysis: SC_class×SG = 8.5%, rank correlation rho=-0.04 across classes, SG rankings INDEPENDENT. Tautology removal: max Jones~det, Jones length~crossing, EC~MF all identities/rediscoveries. Stress tests: ST→conductor confirmed real [z=24.9 vs log-normal], endomorphism upgraded to eta²=0.11. Final: 3 conditional laws, 2 constraints, 1 exact identity, 0 universal laws. Battery FROZEN + interaction analysis + tautology detection = model-complete.)*
+
+---
+
+## Two-Machine Research Coordination
+
+**Skullport (M1)** — this machine (F:\Prometheus). Memory-constrained — crashed under load, now fixed.
+**SpectreX5 (M2)** — second research machine. Has additional data files not yet on M1. Assistant auditing what's been pulled down; will commit when ready.
+
+### Sync Protocol
+- **Git is primary**: commit often, push often, pull before starting work. Consider impact to co-researcher on the other machine with every push.
+- **Network share**: Z:\ drive (\\SPECTREX5 or prometheus_share) available for large data files that shouldn't go through git.
+- **Before any push**: think about whether uncommitted work on the other machine will conflict.
+- **Before any research session**: `git pull origin main` to pick up the other machine's work.
+- **Data files**: large datasets may live on M2 only until the audit completes and they're committed. Check Z:\ if a dataset is missing locally.
+
+### v7.2 New Tools (from M2 sessions)
+| File | Purpose | Location |
+|------|---------|----------|
+| law_independence.py | Partial eta², sequential decomposition, independence axis counting | shared/scripts/ |
+| sg_dimensionality.py | PCA on SG encoding, participation ratio, effective dimensionality | shared/scripts/ |
+| law_deep_analysis.py | Within-class SG→Tc, knot triviality check, cross-validation | shared/scripts/ |
+| stanev_replication.py | 5-strategy replication (Stanev, leave-one-class-out, permutation, incremental, subsample) | shared/scripts/ |
+| interaction_analysis.py | Interaction surface, rank correlation, variance decomposition, within-class PCA, distribution bias | shared/scripts/ |
+| reaudit_genocide_f24.py | All genocide survivors through F24+F24b | shared/scripts/ |
+| stress_test_constraints.py | F24+F22+F19 simultaneous stress on CONSTRAINT findings | shared/scripts/ |
+| stress_test_tautology.py | Tautology/identity detection (functional dependence, known theorems) | shared/scripts/ |
+| stress_test_interaction.py | Interaction classification for all categorical findings | shared/scripts/ |
+| final_classification.py | Complete finding hierarchy, instrument summary, empirical law taxonomy | shared/scripts/ |
+| reaudit_20_findings.py | 20-finding re-audit with F24+F24b | shared/scripts/ |
 
 ### v5.1 New Tools
 | File | Purpose | Location |
