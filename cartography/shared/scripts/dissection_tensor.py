@@ -689,6 +689,332 @@ class DataLoaders:
             objects.append(obj)
         return objects
 
+    @staticmethod
+    def load_modular_forms(max_n=None):
+        """Load modular forms from DuckDB with Hecke eigenvalue signatures."""
+        import duckdb
+        db_path = ROOT / "charon/data/charon.duckdb"
+        if not db_path.exists():
+            print("  WARNING: charon.duckdb not found, skipping modular_forms")
+            return []
+        try:
+            con = duckdb.connect(str(db_path), read_only=True)
+            query = """
+                SELECT lmfdb_label, level, weight, traces
+                FROM modular_forms WHERE traces IS NOT NULL
+            """
+            if max_n:
+                query += f" LIMIT {int(max_n)}"
+            rows = con.execute(query).fetchall()
+            con.close()
+        except Exception as e:
+            print(f"  WARNING: Failed to load modular_forms: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        for label, level, weight, traces in rows:
+            if traces is None or len(traces) < 4:
+                continue
+            traces_list = [float(t) for t in traces[:50] if t is not None]
+            if len(traces_list) < 4:
+                continue
+            obj = MathObject(
+                obj_id=f"mf_{label}",
+                domain="MF",
+                label=label,
+                signatures={},
+                raw={"level": int(level), "weight": int(weight)},
+            )
+            obj.signatures["s7_cond"] = ext.s7_padic(level)
+            obj.signatures["s13"] = ext.s13_discriminant(level)
+            obj.signatures["s5_ap"] = ext.s5_spectral(traces_list)
+            obj.signatures["s3_ap"] = ext.s3_mod_p(traces_list)
+            obj.signatures["s1_ap"] = ext.s1_complex(traces_list)
+            obj.signatures["s24_ap"] = ext.s24_entropy(traces_list)
+            objects.append(obj)
+        return objects
+
+    @staticmethod
+    def load_abstract_groups(max_n=50000):
+        """Load abstract groups with group-theoretic signatures."""
+        path = ROOT / "cartography/groups/data/abstract_groups.json"
+        if not path.exists():
+            print("  WARNING: abstract_groups.json not found, skipping")
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            records = data.get("records", []) if isinstance(data, dict) else data
+        except Exception as e:
+            print(f"  WARNING: Failed to load abstract_groups: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        for g in records[:max_n]:
+            order = g.get("order")
+            if order is None or order == 0:
+                continue
+            order = int(order)
+            exponent = int(g.get("exponent", 0))
+            num_conj = int(g.get("num_conjugacy_classes", 0))
+
+            obj = MathObject(
+                obj_id=f"grp_{g.get('label', str(order))}",
+                domain="group",
+                label=str(g.get("label", g.get("name", ""))),
+                signatures={},
+                raw={"order": order, "exponent": exponent,
+                     "num_conjugacy_classes": num_conj,
+                     "name": g.get("name", "")},
+            )
+            obj.signatures["s13"] = ext.s13_discriminant(order)
+            obj.signatures["s7_cond"] = ext.s7_padic(order)
+            invariants = [order, exponent, num_conj]
+            obj.signatures["s3_ap"] = ext.s3_mod_p(invariants)
+            obj.signatures["s24_ap"] = ext.s24_entropy(invariants)
+            objects.append(obj)
+        return objects
+
+    @staticmethod
+    def load_maass_forms(max_n=15000):
+        """Load Maass forms with spectral and coefficient signatures.
+
+        WARNING: Source file is ~335 MB. Uses streaming parse to limit memory.
+        """
+        path = ROOT / "cartography/maass/data/maass_with_coefficients.json"
+        if not path.exists():
+            print("  WARNING: maass_with_coefficients.json not found, skipping")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        count = 0
+
+        try:
+            # Stream-parse: read the JSON array incrementally
+            import io
+            with open(path, "r", encoding="utf-8") as f:
+                # Skip opening bracket
+                ch = f.read(1)
+                while ch and ch != '[':
+                    ch = f.read(1)
+
+                buffer = ""
+                brace_depth = 0
+                while count < max_n:
+                    ch = f.read(1)
+                    if not ch:
+                        break
+                    if ch == '{':
+                        if brace_depth == 0:
+                            buffer = ch
+                        else:
+                            buffer += ch
+                        brace_depth += 1
+                    elif ch == '}':
+                        brace_depth -= 1
+                        buffer += ch
+                        if brace_depth == 0 and buffer:
+                            entry = json.loads(buffer)
+                            buffer = ""
+                            # Process entry
+                            level = entry.get("level")
+                            coeffs = entry.get("coefficients", [])
+                            if level is None or not coeffs or len(coeffs) < 4:
+                                continue
+                            coeffs_50 = [float(c) for c in coeffs[:50]]
+                            sp = entry.get("spectral_parameter")
+                            try:
+                                sp_val = float(sp) if sp is not None else 0.0
+                            except (ValueError, TypeError):
+                                sp_val = 0.0
+
+                            obj = MathObject(
+                                obj_id=f"maass_{entry.get('maass_id', count)}",
+                                domain="maass",
+                                label=str(entry.get("maass_id", "")),
+                                signatures={},
+                                raw={"level": int(level),
+                                     "weight": int(entry.get("weight", 0)),
+                                     "spectral_parameter": sp_val,
+                                     "symmetry": entry.get("symmetry"),
+                                     "fricke_eigenvalue": entry.get("fricke_eigenvalue")},
+                            )
+                            obj.signatures["s5_ap"] = ext.s5_spectral(coeffs_50)
+                            obj.signatures["s3_ap"] = ext.s3_mod_p(coeffs_50)
+                            obj.signatures["s1_ap"] = ext.s1_complex(coeffs_50)
+                            obj.signatures["s7_cond"] = ext.s7_padic(level)
+                            obj.signatures["s13"] = ext.s13_discriminant(level)
+                            obj.signatures["s24_ap"] = ext.s24_entropy(coeffs_50)
+                            objects.append(obj)
+                            count += 1
+                    elif brace_depth > 0:
+                        buffer += ch
+        except Exception as e:
+            print(f"  WARNING: Failed to load maass_forms: {e}")
+            if objects:
+                print(f"  (loaded {len(objects)} before error)")
+
+        return objects
+
+    @staticmethod
+    def load_lattices(max_n=None):
+        """Load integral lattices with geometric signatures."""
+        path = ROOT / "cartography/lattices/data/lattices_full.json"
+        if not path.exists():
+            print("  WARNING: lattices_full.json not found, skipping")
+            return []
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+            records = data.get("records", []) if isinstance(data, dict) else data
+        except Exception as e:
+            print(f"  WARNING: Failed to load lattices: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        for rec in records[:max_n]:
+            det = rec.get("determinant")
+            if det is None:
+                continue
+            det = int(det)
+            level = int(rec.get("level", 0))
+            dim = int(rec.get("dimension", 0))
+            cn = int(rec.get("class_number", 0))
+            mv = int(rec.get("minimal_vector", 0))
+
+            obj = MathObject(
+                obj_id=f"lat_{rec.get('label', str(det))}",
+                domain="lattice",
+                label=str(rec.get("label", "")),
+                signatures={},
+                raw={"dimension": dim, "determinant": det,
+                     "level": level, "class_number": cn,
+                     "minimal_vector": mv,
+                     "aut_group_order": int(rec.get("aut_group_order", 0))},
+            )
+            obj.signatures["s13"] = ext.s13_discriminant(det, conductor=level)
+            obj.signatures["s7_cond"] = ext.s7_padic(det)
+            obj.signatures["s3_ap"] = ext.s3_mod_p([dim, det, level, cn, mv])
+            obj.signatures["s24_ap"] = ext.s24_entropy([dim, det, level, cn])
+            objects.append(obj)
+        return objects
+
+    @staticmethod
+    def load_dirichlet_zeros(max_n=None):
+        """Load Dirichlet L-function zeros from DuckDB."""
+        import duckdb
+        db_path = ROOT / "charon/data/charon.duckdb"
+        if not db_path.exists():
+            print("  WARNING: charon.duckdb not found, skipping dirichlet_zeros")
+            return []
+        try:
+            con = duckdb.connect(str(db_path), read_only=True)
+            query = """
+                SELECT lmfdb_url, conductor, degree, rank, zeros_vector
+                FROM dirichlet_zeros WHERE conductor IS NOT NULL
+            """
+            if max_n:
+                query += f" LIMIT {int(max_n)}"
+            rows = con.execute(query).fetchall()
+            con.close()
+        except Exception as e:
+            print(f"  WARNING: Failed to load dirichlet_zeros: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        for lmfdb_url, conductor, degree, rank, zeros_vec in rows:
+            if conductor is None:
+                continue
+            conductor = int(conductor)
+            degree = int(degree) if degree is not None else 0
+            rank = int(rank) if rank is not None else 0
+
+            obj = MathObject(
+                obj_id=f"lz_{lmfdb_url or conductor}",
+                domain="Lzeros",
+                label=str(lmfdb_url or ""),
+                signatures={},
+                raw={"conductor": conductor, "degree": degree, "rank": rank},
+            )
+            obj.signatures["s7_cond"] = ext.s7_padic(conductor)
+            obj.signatures["s13"] = ext.s13_discriminant(conductor)
+
+            # Extract valid (non-None) zero heights
+            if zeros_vec is not None and len(zeros_vec) > 0:
+                zv = [float(z) for z in zeros_vec[:50] if z is not None]
+                if len(zv) >= 4:
+                    obj.signatures["s5_ap"] = ext.s5_spectral(zv)
+                    obj.signatures["s24_ap"] = ext.s24_entropy(zv)
+                else:
+                    obj.signatures["s5_ap"] = np.full(8, np.nan)
+                    obj.signatures["s24_ap"] = np.full(4, np.nan)
+            else:
+                obj.signatures["s5_ap"] = np.full(8, np.nan)
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            obj.signatures["s3_ap"] = ext.s3_mod_p([conductor, degree, rank])
+            objects.append(obj)
+        return objects
+
+    @staticmethod
+    def load_object_zeros(max_n=None):
+        """Load object zeros (L-function zeros attached to objects) from DuckDB."""
+        import duckdb
+        db_path = ROOT / "charon/data/charon.duckdb"
+        if not db_path.exists():
+            print("  WARNING: charon.duckdb not found, skipping object_zeros")
+            return []
+        try:
+            con = duckdb.connect(str(db_path), read_only=True)
+            query = """
+                SELECT object_id, zeros_vector, root_number, analytic_rank
+                FROM object_zeros WHERE zeros_vector IS NOT NULL
+            """
+            if max_n:
+                query += f" LIMIT {int(max_n)}"
+            rows = con.execute(query).fetchall()
+            con.close()
+        except Exception as e:
+            print(f"  WARNING: Failed to load object_zeros: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        for object_id, zeros_vec, root_number, analytic_rank in rows:
+            if zeros_vec is None or len(zeros_vec) < 2:
+                continue
+            obj_id_int = int(object_id)
+            a_rank = int(analytic_rank) if analytic_rank is not None else 0
+
+            obj = MathObject(
+                obj_id=f"oz_{obj_id_int}",
+                domain="obj_zeros",
+                label=str(obj_id_int),
+                signatures={},
+                raw={"object_id": obj_id_int,
+                     "root_number": float(root_number) if root_number is not None else 0.0,
+                     "analytic_rank": a_rank},
+            )
+
+            # Extract valid (non-None) zero heights
+            zv = [float(z) for z in zeros_vec[:50] if z is not None]
+            if len(zv) >= 4:
+                obj.signatures["s5_ap"] = ext.s5_spectral(zv)
+                obj.signatures["s3_ap"] = ext.s3_mod_p(zv)
+                obj.signatures["s1_ap"] = ext.s1_complex(zv)
+                obj.signatures["s24_ap"] = ext.s24_entropy(zv)
+            else:
+                obj.signatures["s5_ap"] = np.full(8, np.nan)
+                obj.signatures["s3_ap"] = np.full(6, np.nan)
+                obj.signatures["s1_ap"] = np.full(8, np.nan)
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            objects.append(obj)
+        return objects
+
 
 # ============================================================
 # The Dissection Tensor
@@ -1308,6 +1634,30 @@ def main():
 
     print("Loading genus-2 curves...")
     dt.add_objects(DataLoaders.load_genus2(max_n=10000))
+
+    # Tier 1 additions — cap totals to stay under ~500K objects
+    print("Loading modular forms...")
+    dt.add_objects(DataLoaders.load_modular_forms(max_n=100000))
+
+    print("Loading abstract groups...")
+    dt.add_objects(DataLoaders.load_abstract_groups(max_n=50000))
+
+    print("Loading Maass forms...")
+    dt.add_objects(DataLoaders.load_maass_forms(max_n=15000))
+
+    print("Loading lattices...")
+    dt.add_objects(DataLoaders.load_lattices())
+
+    print("Loading Dirichlet zeros...")
+    dt.add_objects(DataLoaders.load_dirichlet_zeros(max_n=150000))
+
+    print("Loading object zeros...")
+    dt.add_objects(DataLoaders.load_object_zeros(max_n=120000))
+
+    n_total = len(dt.objects)
+    print(f"\nTotal objects loaded: {n_total}")
+    if n_total > 500000:
+        print(f"  WARNING: {n_total} objects exceeds 500K target — consider reducing max_n caps")
 
     # Load battery results as truth-boundary index (NOT tensor dims)
     print("\nLoading battery results (truth-boundary index)...")
