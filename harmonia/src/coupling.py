@@ -236,9 +236,21 @@ class AlignmentCoupling:
                 # (d_i, d_j) matrix: which feature pairs co-deviate?
                 cross = dev_i.T @ dev_j / n_sample  # (d_i, d_j)
 
-                # Baseline: expected cross-correlation under independence
-                baseline = dev_i.mean(dim=0, keepdim=True).T @ dev_j.mean(dim=0, keepdim=True)
-                interaction = (cross - baseline).clamp(min=0)
+                # NULL MODEL: shuffle domain j indices and compute expected
+                # cross-correlation. This is the key — the interaction
+                # matrix should only retain structure that BREAKS under
+                # permutation.
+                null_crosses = []
+                for _ in range(5):
+                    perm = torch.randperm(n_sample)
+                    null_cross = dev_i.T @ dev_j[perm] / n_sample
+                    null_crosses.append(null_cross)
+                null_mean = torch.stack(null_crosses).mean(dim=0)
+                null_std = torch.stack(null_crosses).std(dim=0).clamp(min=1e-8)
+
+                # Only keep interactions that are > 2 sigma above null
+                z_scores = (cross - null_mean) / null_std
+                interaction = torch.where(z_scores > 2.0, cross - null_mean, torch.zeros_like(cross))
 
                 # Normalize
                 interaction = interaction / interaction.sum().clamp(min=1e-8)

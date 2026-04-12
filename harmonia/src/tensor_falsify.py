@@ -195,10 +195,14 @@ def test_effect_size(domains, tt, bond_idx=0):
         results.append(max_d)
 
     avg_d = np.mean(results)
+    min_d = min(results)
+    # Both sides must show moderate effect (prevents one-sided outlier-driven FPs)
+    survives = min_d > 0.2 and avg_d > 0.5
     return TensorTestResult(
         test="F3_effect_size",
-        verdict="SURVIVES" if avg_d > 0.5 else "KILLED",
-        detail=f"Cohen's d: left={results[0]:.2f}, right={results[1]:.2f}, avg={avg_d:.2f}",
+        verdict="SURVIVES" if survives else "KILLED",
+        detail=f"Cohen's d: left={results[0]:.2f}, right={results[1]:.2f}, "
+               f"avg={avg_d:.2f}, min={min_d:.2f}",
         value=avg_d,
         threshold=0.5,
     )

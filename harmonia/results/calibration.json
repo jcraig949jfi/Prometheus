@@ -1,0 +1,75 @@
+{
+  "sensitivity": 0.6,
+  "specificity": 0.3333333333333333,
+  "accuracy": 0.5,
+  "tp": 3,
+  "fn": 2,
+  "tn": 1,
+  "fp": 2,
+  "results": [
+    {
+      "claim": "Level of modular form ~ conductor of L-function (modularity theorem)",
+      "expected": "SURVIVES",
+      "actual": "KILLED",
+      "correct": false,
+      "score": 1,
+      "details": "rank 1->0, 0.3s"
+    },
+    {
+      "claim": "Modular forms of weight 2 correspond to elliptic curves (Wiles/Taylor)",
+      "expected": "SURVIVES",
+      "actual": "SURVIVES",
+      "correct": true,
+      "score": 3,
+      "details": "rank 10->10, 0.4s"
+    },
+    {
+      "claim": "EC conductor = L-function conductor (by definition)",
+      "expected": "SURVIVES",
+      "actual": "KILLED",
+      "correct": false,
+      "score": 1,
+      "details": "rank 1->0, 0.3s"
+    },
+    {
+      "claim": "Number field discriminant ~ lattice determinant for ring of integers",
+      "expected": "SURVIVES",
+      "actual": "SURVIVES",
+      "correct": true,
+      "score": 3,
+      "details": "rank 15->15, 1.8s"
+    },
+    {
+      "claim": "Space group constrains material properties (crystal physics)",
+      "expected": "SURVIVES",
+      "actual": "SURVIVES",
+      "correct": true,
+      "score": 3,
+      "details": "rank 15->15, 0.7s"
+    },
+    {
+      "claim": "Knot invariants predict material band gaps (no known relationship)",
+      "expected": "KILLED",
+      "actual": "SURVIVES",
+      "correct": false,
+      "score": 4,
+      "details": "rank 15->15, 1.6s"
+    },
+    {
+      "claim": "Knot polynomials ~ modular form coefficients (no known relationship)",
+      "expected": "KILLED",
+      "actual": "SURVIVES",
+      "correct": false,
+      "score": 4,
+      "details": "rank 15->15, 0.8s"
+    },
+    {
+      "claim": "Formula syntax predicts polytope geometry (no known relationship)",
+      "expected": "KILLED",
+      "actual": "KILLED",
+      "correct": true,
+      "score": 1,
+      "details": "rank 1->0, 0.2s"
+    }
+  ]
+}
