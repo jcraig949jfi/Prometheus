@@ -1,0 +1,30 @@
+{
+  "attack_1_degeneracy": {
+    "original_rho": 0.511,
+    "alt_invariants_rho": 0.436,
+    "verdict": "PARTIALLY DEGENERATE. Alt invariants (rank->regulator) get 85% of the signal. The geometry is not unique to torsion/class_number \u2014 rank/regulator also work, just weaker. The structure is in the SPACE, not in the specific invariants."
+  },
+  "attack_2_basis_rotation": {
+    "mean_rho_across_rotations": 0.511,
+    "std": 0.0,
+    "verdict": "ROTATION INVARIANT. Every rotation of the M-A plane gives IDENTICAL transfer (std=0.0). The geometry has NO preferred basis in the Megethos-Arithmos plane. This is gauge freedom \u2014 the structure is rotationally symmetric."
+  },
+  "attack_3_adversarial_injection": {
+    "real_rho": 0.511,
+    "fake_rho": -0.102,
+    "verdict": "BORDERLINE REJECTION. Fake domain gets rho=-0.10 (near zero but not exactly zero). System mostly rejects random structure but not perfectly."
+  },
+  "attack_4_causality": {
+    "forward": 0.511,
+    "reverse": 0.217,
+    "ratio": 2.36,
+    "verdict": "CONFIRMED DIRECTIONAL. 2.36x forward/reverse asymmetry. Information flows from EC to NF, not the reverse. This is consistent with EC being a richer projection."
+  },
+  "attack_5_compression": {
+    "Z1_only": -0.01,
+    "Z2_only": 0.612,
+    "Z1_Z2": 0.514,
+    "all_5": 0.511,
+    "verdict": "Z2 ALONE (Arithmos) is the BEST single predictor (rho=0.61, BETTER than the full 5D space!). Adding Z1 (Megethos) slightly hurts. The transfer is PURELY Arithmos-driven. Megethos contributes nothing to cross-domain prediction of arithmetic structure."
+  }
+}
