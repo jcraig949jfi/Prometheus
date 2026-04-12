@@ -687,16 +687,62 @@ class BatteryV2:
         else:
             return "NO_CONFOUND", best_result
 
-    def F24_variance_decomposition(self, values, group_labels):
+    def F24_permutation_null(self, values, group_labels, n_perms=500):
+        """Compute permutation-null distribution of eta² for calibration.
+
+        Returns: dict with real_eta, null_mean, null_p99, p_value, z_score.
+        """
+        values = np.array(values, dtype=float)
+        labels = np.array(group_labels)
+
+        # Real eta²
+        def _eta(vals, labs):
+            groups = {}
+            for v, l in zip(vals, labs):
+                groups.setdefault(l, []).append(v)
+            valid = {k: np.array(v) for k, v in groups.items() if len(v) >= 5}
+            if len(valid) < 2:
+                return float("nan")
+            all_v = np.concatenate(list(valid.values()))
+            gm = np.mean(all_v)
+            ss_t = np.sum((all_v - gm) ** 2)
+            ss_b = sum(len(v) * (np.mean(v) - gm) ** 2 for v in valid.values())
+            return ss_b / ss_t if ss_t > 0 else 0
+
+        real_eta = _eta(values, labels)
+        null_etas = []
+        for _ in range(n_perms):
+            shuffled = labels.copy()
+            self.rng.shuffle(shuffled)
+            null_etas.append(_eta(values, shuffled))
+
+        null_etas = np.array([e for e in null_etas if not np.isnan(e)])
+        if len(null_etas) == 0:
+            return {"real_eta": real_eta, "null_mean": 0, "null_p99": 0,
+                    "p_value": 1.0, "z_score": 0}
+
+        null_mean = np.mean(null_etas)
+        null_std = np.std(null_etas)
+        null_p99 = np.percentile(null_etas, 99)
+        p_value = (np.sum(null_etas >= real_eta) + 1) / (len(null_etas) + 1)
+        z_score = (real_eta - null_mean) / null_std if null_std > 0 else 0
+
+        return {"real_eta": real_eta, "null_mean": null_mean,
+                "null_p99": null_p99, "p_value": p_value, "z_score": z_score}
+
+    def F24_variance_decomposition(self, values, group_labels,
+                                     permutation_calibrate=False, n_perms=500):
         """Classify effect size via eta-squared (ANOVA variance decomposition).
 
-        This is NOT a kill gate — it is a mandatory annotation.
-        A finding can be statistically real (p < 0.001) but substantively
-        tiny (eta² < 0.01). Both facts must be reported.
+        When permutation_calibrate=True, verdicts are based on the permutation
+        null distribution instead of fixed Cohen thresholds. This corrects for
+        the group-count inflation that makes random data look significant with
+        many groups.
 
         Returns: (verdict, result_dict)
         Verdicts: STRONG_EFFECT, MODERATE_EFFECT, SMALL_EFFECT,
                   WEAK_EFFECT, NEGLIGIBLE_EFFECT, INSUFFICIENT_DATA
+                  (with permutation: adds PERM_SIGNIFICANT / PERM_NOT_SIGNIFICANT)
         """
         from collections import Counter
 
@@ -759,6 +805,7 @@ class BatteryV2:
             "group_stats": group_stats,
         }
 
+        # Fixed-threshold verdict (Cohen's conventions)
         if eta_sq < 0.01:
             verdict = "NEGLIGIBLE_EFFECT"
         elif eta_sq < 0.06:
@@ -767,6 +814,18 @@ class BatteryV2:
             verdict = "MODERATE_EFFECT"
         else:
             verdict = "STRONG_EFFECT"
+
+        # Permutation-calibrated verdict (overrides if requested)
+        if permutation_calibrate:
+            perm = self.F24_permutation_null(values, group_labels, n_perms)
+            result["permutation_null"] = perm
+            if perm["p_value"] < 0.001 and perm["z_score"] > 3:
+                result["perm_verdict"] = "PERM_SIGNIFICANT"
+                # Excess eta² over null
+                result["excess_eta"] = eta_sq - perm["null_mean"]
+            else:
+                result["perm_verdict"] = "PERM_NOT_SIGNIFICANT"
+                verdict = "PERM_NOT_SIGNIFICANT"
 
         return verdict, result
 
@@ -1075,6 +1134,111 @@ class BatteryV2:
         }
 
         # Decision table
+        a_transfers = w_r2_a > 0.05
+        b_transfers = w_r2_b > 0.05
+
+        if a_transfers:
+            verdict = "UNIVERSAL"
+        elif not a_transfers and b_transfers:
+            verdict = "CONDITIONAL"
+        else:
+            verdict = "WEAK_NOISY"
+
+        return verdict, result
+
+    def F25c_shrinkage_transportability(self, values, primary_labels, secondary_labels,
+                                          min_test_n=10, shrinkage_k=10):
+        """Shrinkage-based transportability: fixes F25b's small-group noise problem.
+
+        Instead of raw group means (noisy for small groups) or one-hot OLS (breaks
+        with many groups), uses James-Stein-style shrinkage:
+            cell_estimate = (n * cell_mean + k * grand_mean) / (n + k)
+
+        Small cells (n << k) → pulled toward grand mean (conservative)
+        Large cells (n >> k) → keep their specific estimate (precise)
+
+        Decision table same as F25b:
+            Main transfers → UNIVERSAL
+            Main fails, interaction transfers → CONDITIONAL
+            Both fail → WEAK_NOISY
+        """
+        from collections import defaultdict
+
+        values = np.array(values, dtype=float)
+        n = len(values)
+        sec_groups = sorted(set(secondary_labels))
+        k = shrinkage_k
+
+        if len(sec_groups) < 2:
+            return "INSUFFICIENT_DATA", {}
+
+        oos_results = []
+        for held_out in sec_groups:
+            test_mask = np.array([s == held_out for s in secondary_labels])
+            train_mask = ~test_mask
+            n_test = int(np.sum(test_mask))
+            n_train = int(np.sum(train_mask))
+            if n_test < min_test_n or n_train < 30:
+                continue
+
+            y_train = values[train_mask]
+            y_test = values[test_mask]
+            pri_train = [primary_labels[i] for i in range(n) if train_mask[i]]
+            pri_test = [primary_labels[i] for i in range(n) if test_mask[i]]
+            sec_train = [secondary_labels[i] for i in range(n) if train_mask[i]]
+
+            grand_mean = np.mean(y_train)
+            ss_total = np.sum((y_test - np.mean(y_test))**2)
+            if ss_total == 0:
+                continue
+
+            # Model A: shrinkage on primary group means
+            pri_groups = defaultdict(list)
+            for i in range(n_train):
+                pri_groups[pri_train[i]].append(y_train[i])
+            pri_means = {g: (len(v) * np.mean(v) + k * grand_mean) / (len(v) + k)
+                         for g, v in pri_groups.items()}
+
+            pred_a = np.array([pri_means.get(p, grand_mean) for p in pri_test])
+            r2_a = 1 - np.sum((y_test - pred_a)**2) / ss_total
+
+            # Model B: shrinkage on (primary, secondary) cell means toward primary means
+            cell_groups = defaultdict(list)
+            for i in range(n_train):
+                cell_groups[(pri_train[i], sec_train[i])].append(y_train[i])
+
+            pred_b = []
+            for i in range(n_test):
+                p = pri_test[i]
+                cell = (p, held_out)
+                pri_mean = pri_means.get(p, grand_mean)
+                if cell in cell_groups and len(cell_groups[cell]) >= 2:
+                    cell_n = len(cell_groups[cell])
+                    cell_mean = np.mean(cell_groups[cell])
+                    pred_b.append((cell_n * cell_mean + k * pri_mean) / (cell_n + k))
+                else:
+                    pred_b.append(pri_mean)
+            pred_b = np.array(pred_b)
+            r2_b = 1 - np.sum((y_test - pred_b)**2) / ss_total
+
+            oos_results.append({"held_out": str(held_out), "n": n_test,
+                                "r2_main": r2_a, "r2_interaction": r2_b})
+
+        if not oos_results:
+            return "INSUFFICIENT_DATA", {}
+
+        total_n = sum(r["n"] for r in oos_results)
+        w_r2_a = sum(r["r2_main"] * r["n"] for r in oos_results) / total_n
+        w_r2_b = sum(r["r2_interaction"] * r["n"] for r in oos_results) / total_n
+
+        result = {
+            "per_group": oos_results,
+            "weighted_r2_main": w_r2_a,
+            "weighted_r2_interaction": w_r2_b,
+            "n_groups_tested": len(oos_results),
+            "shrinkage_k": k,
+        }
+
         a_transfers = w_r2_a > 0.05
         b_transfers = w_r2_b > 0.05
 
