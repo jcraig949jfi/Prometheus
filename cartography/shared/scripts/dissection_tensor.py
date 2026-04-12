@@ -753,6 +753,40 @@ class StrategyExtractors:
 
         return sig
 
+    @staticmethod
+    def s33_recurrence(values, max_order=5, residual_threshold=0.01):
+        """S33: Linear recurrence detection.
+        Test whether a sequence satisfies a linear recurrence of order 1-5.
+        Returns: vector of length 3 [is_recurrent, best_order, residual].
+        """
+        sig = np.full(3, np.nan, dtype=np.float32)
+        if not values or len(values) < max_order + 10:
+            return sig
+        seq = np.array(values, dtype=np.float64)
+        best_order, best_residual = 0, 1.0
+        for k in range(1, max_order + 1):
+            n = len(seq) - k
+            if n < k + 5:
+                continue
+            X = np.column_stack([seq[k - j - 1: k - j - 1 + n] for j in range(k)])
+            y = seq[k: k + n]
+            try:
+                coeffs, _, _, _ = np.linalg.lstsq(X, y, rcond=None)
+            except np.linalg.LinAlgError:
+                continue
+            predicted = X @ coeffs
+            ss_res = np.sum((y - predicted) ** 2)
+            ss_tot = np.sum((y - np.mean(y)) ** 2)
+            if ss_tot == 0:
+                return np.array([1.0, 1.0, 0.0], dtype=np.float32)
+            relative_residual = ss_res / ss_tot
+            if relative_residual < best_residual:
+                best_residual = relative_residual
+                best_order = k
+        is_rec = 1.0 if best_residual < residual_threshold else 0.0
+        sig[:] = [is_rec, float(best_order), float(best_residual)]
+        return sig
+
 
 # ============================================================
 # Battery encoder — F1-F27 results as tensor dimensions
@@ -1114,6 +1148,9 @@ class DataLoaders:
 
                 # S11: monodromy proxy on sequence terms
                 obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(terms[:50])
+
+                # S33: linear recurrence detection
+                obj.signatures["s33_recurrence"] = ext.s33_recurrence(terms)
 
                 objects.append(obj)
                 count += 1
@@ -1777,6 +1814,192 @@ class DataLoaders:
             objects.append(obj)
         return objects
 
+    @staticmethod
+    def load_hmf(max_n=50000):
+        """Load Hilbert Modular Forms from lmfdb_dump/hmf_forms.json.
+
+        Fields available: label, level_norm, weight, dimension, disc, deg,
+        level_bad_primes, field_bad_primes.  No hecke_eigenvalues in this
+        dump, so we use level_bad_primes + field_bad_primes as arithmetic
+        coefficient proxies for spectral/mod-p/entropy signatures.
+        """
+        path = ROOT / "cartography/lmfdb_dump/hmf_forms.json"
+        if not path.exists():
+            print("  WARNING: hmf_forms.json not found, skipping HMF")
+            return []
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        recs = raw.get("records", []) if isinstance(raw, dict) else raw
+        if not recs:
+            print("  WARNING: hmf_forms.json has no records")
+            return []
+        print(f"    HMF raw records: {len(recs)}")
+
+        objects = []
+        ext = StrategyExtractors
+        count = 0
+        for r in recs:
+            label = r.get("label", "")
+            level_norm = r.get("level_norm")
+            if level_norm is None or not label:
+                continue
+            try:
+                level_norm = int(level_norm)
+            except (ValueError, TypeError):
+                continue
+
+            dimension = r.get("dimension", 1)
+            disc = r.get("disc")
+            # weight is stored as string like "[2, 2, 2]"; parse to list
+            weight_raw = r.get("weight", "2")
+            if isinstance(weight_raw, str):
+                try:
+                    weight_list = json.loads(weight_raw.replace("'", '"'))
+                    if isinstance(weight_list, list):
+                        weight_val = int(weight_list[0]) if weight_list else 2
+                    else:
+                        weight_val = int(weight_list)
+                except (json.JSONDecodeError, ValueError):
+                    weight_val = 2
+            elif isinstance(weight_raw, (int, float)):
+                weight_val = int(weight_raw)
+            else:
+                weight_val = 2
+
+            # Build coefficient proxy from bad primes
+            level_bp = r.get("level_bad_primes", [])
+            field_bp = r.get("field_bad_primes", [])
+            if not isinstance(level_bp, list):
+                level_bp = []
+            if not isinstance(field_bp, list):
+                field_bp = []
+            coeff_proxy = [int(x) for x in level_bp + field_bp if x is not None]
+
+            obj = MathObject(
+                obj_id=f"hmf_{label}",
+                domain="HMF",
+                label=label,
+                signatures={},
+                raw={"level_norm": level_norm, "weight": weight_val,
+                     "dimension": int(dimension) if dimension else 1},
+            )
+
+            # S7: p-adic valuation of level_norm (conductor proxy)
+            obj.signatures["s7_cond"] = ext.s7_padic(level_norm)
+
+            # S13: discriminant from level_norm
+            obj.signatures["s13"] = ext.s13_discriminant(
+                disc if disc is not None else level_norm,
+                conductor=level_norm)
+
+            # Coefficient-proxy signatures (from bad primes)
+            if len(coeff_proxy) >= 2:
+                obj.signatures["s5_ap"] = ext.s5_spectral(coeff_proxy)
+                obj.signatures["s3_ap"] = ext.s3_mod_p(coeff_proxy)
+                obj.signatures["s1_ap"] = ext.s1_complex(coeff_proxy)
+                obj.signatures["s24_ap"] = ext.s24_entropy(coeff_proxy)
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(coeff_proxy)
+            else:
+                obj.signatures["s5_ap"] = np.full(8, np.nan)
+                obj.signatures["s3_ap"] = np.full(6, np.nan)
+                obj.signatures["s1_ap"] = np.full(8, np.nan)
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
+
+            # S21: automorphic signature — HMF with level and weight
+            obj.signatures["s21_auto"] = ext.s21_automorphic_signature(
+                coeff_proxy if len(coeff_proxy) >= 4 else [0] * 4,
+                level=level_norm, weight=weight_val)
+
+            # S19: ADE classification via McKay correspondence
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(
+                [level_norm, weight_val], method="mckay")
+
+            objects.append(obj)
+            count += 1
+            if count >= max_n:
+                break
+
+        return objects
+
+    @staticmethod
+    def load_belyi(max_n=50000):
+        """Load Belyi maps (dessins d'enfants) from lmfdb_dump/belyi_galmaps.json.
+
+        Fields: label, deg (degree), g (genus), triples_cyc (ramification data).
+        """
+        path = ROOT / "cartography/lmfdb_dump/belyi_galmaps.json"
+        if not path.exists():
+            print("  WARNING: belyi_galmaps.json not found, skipping Belyi")
+            return []
+        raw = json.loads(path.read_text(encoding="utf-8"))
+        recs = raw.get("records", []) if isinstance(raw, dict) else raw
+        if not recs:
+            print("  WARNING: belyi_galmaps.json has no records")
+            return []
+        print(f"    Belyi raw records: {len(recs)}")
+
+        objects = []
+        ext = StrategyExtractors
+        count = 0
+        for r in recs:
+            label = r.get("label", "")
+            deg = r.get("deg")
+            if deg is None or not label:
+                continue
+            try:
+                deg = int(deg)
+            except (ValueError, TypeError):
+                continue
+
+            genus = r.get("g", 0)
+            triples_cyc = r.get("triples_cyc", [])
+
+            obj = MathObject(
+                obj_id=f"belyi_{label}",
+                domain="belyi",
+                label=label,
+                signatures={},
+                raw={"deg": deg, "genus": int(genus) if genus is not None else 0},
+            )
+
+            # S13: discriminant-like from degree
+            obj.signatures["s13"] = ext.s13_discriminant(deg)
+
+            # S19: ADE classification from degree
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(deg, method="lattice_det")
+
+            # S11: monodromy proxy from triples_cyc flattened
+            # triples_cyc is a list of triples of cycle-type strings or lists
+            mono_coeffs = []
+            if isinstance(triples_cyc, list):
+                for triple in triples_cyc:
+                    if isinstance(triple, list):
+                        for item in triple:
+                            if isinstance(item, (int, float)):
+                                mono_coeffs.append(int(item))
+                            elif isinstance(item, str):
+                                # Parse cycle notation "(1,2)(3)" -> extract lengths
+                                cycles = item.replace("(", " ").replace(")", " ").split()
+                                for c in cycles:
+                                    try:
+                                        mono_coeffs.append(int(c))
+                                    except ValueError:
+                                        pass
+                            elif isinstance(item, list):
+                                mono_coeffs.extend([int(x) for x in item
+                                                    if isinstance(x, (int, float))])
+            if len(mono_coeffs) >= 4:
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(mono_coeffs[:50])
+            else:
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
+
+            objects.append(obj)
+            count += 1
+            if count >= max_n:
+                break
+
+        return objects
+
 
 # ============================================================
 # The Dissection Tensor
@@ -1826,6 +2049,7 @@ class DissectionTensor:
         "s19_ade": 8,
         "s24_alex": 4, "s24_arith": 4, "s24_ap": 4, "s24_sym": 4,
         "s24_oeis": 4,
+        "s33_recurrence": 3,
     }
 
     TOTAL_DIMS = sum(STRATEGY_DIMS.values())
@@ -1847,6 +2071,7 @@ class DissectionTensor:
         "automorphic": ["s21_auto"],
         "monodromy":   ["s11_mono"],
         "ade":         ["s19_ade"],
+        "recurrence":  ["s33_recurrence"],
     }
 
     def __init__(self):
@@ -2422,10 +2647,16 @@ def main():
     dt.add_objects(DataLoaders.load_lattices())
 
     print("Loading Dirichlet zeros...")
-    dt.add_objects(DataLoaders.load_dirichlet_zeros(max_n=150000))
+    dt.add_objects(DataLoaders.load_dirichlet_zeros(max_n=185000))
 
     print("Loading object zeros...")
     dt.add_objects(DataLoaders.load_object_zeros(max_n=120000))
+
+    print("Loading Hilbert modular forms...")
+    dt.add_objects(DataLoaders.load_hmf(max_n=50000))
+
+    print("Loading Belyi maps...")
+    dt.add_objects(DataLoaders.load_belyi(max_n=50000))
 
     n_total = len(dt.objects)
     print(f"\nTotal objects loaded: {n_total}")
