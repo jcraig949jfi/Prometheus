@@ -177,3 +177,122 @@ class DistributionalCoupling(CouplingScorer):
         # Weighted combination: cosine alignment + distributional signal
         score = 0.6 * cosine_score + 0.4 * kurtosis_score
         return score
+
+
+class AlignmentCoupling:
+    """
+    Alignment-sensitive coupling scorer.
+
+    Measures whether objects that are extreme (high or low) on specific
+    features in domain A are paired with objects that are extreme on
+    specific features in domain B. This breaks under permutation —
+    shuffling domain A's indices destroys the feature-rank correspondence.
+
+    Uses quantile ranks instead of raw features so the score depends
+    on WHERE each object sits in its domain's distribution, not just
+    its projected direction.
+    """
+
+    def __init__(self, domains: list[DomainIndex], device: str = "cpu",
+                 n_quantile_bins: int = 20):
+        self.domains = domains
+        self.n_domains = len(domains)
+        self.device = device
+
+        # Precompute quantile ranks for each feature in each domain
+        # Shape per domain: (n_objects, n_features), values in [0, 1]
+        self._qranks = []
+        for dom in domains:
+            f = dom.features.to(device)
+            # Rank each column, normalize to [0, 1]
+            ranks = torch.zeros_like(f)
+            for col in range(f.shape[1]):
+                order = f[:, col].argsort()
+                r = torch.zeros(f.shape[0], device=device)
+                r[order] = torch.linspace(0, 1, f.shape[0], device=device)
+                ranks[:, col] = r
+            self._qranks.append(ranks)
+
+        # Precompute cross-domain feature interaction matrices
+        # For each domain pair, learn which feature axes co-vary
+        # using the full population (not individual pairs)
+        self._interactions = {}
+        for i in range(self.n_domains):
+            for j in range(i + 1, self.n_domains):
+                # Sample random pairings and compute rank products
+                n_sample = min(5000, domains[i].n_objects, domains[j].n_objects)
+                idx_i = torch.randint(0, domains[i].n_objects, (n_sample,), device=device)
+                idx_j = torch.randint(0, domains[j].n_objects, (n_sample,), device=device)
+
+                qi = self._qranks[i][idx_i]  # (n_sample, d_i)
+                qj = self._qranks[j][idx_j]  # (n_sample, d_j)
+
+                # Deviation from uniform: features that are extreme
+                # (near 0 or 1) get high weight
+                dev_i = (qi - 0.5).abs()  # (n_sample, d_i)
+                dev_j = (qj - 0.5).abs()  # (n_sample, d_j)
+
+                # Cross-correlation of extremity
+                # (d_i, d_j) matrix: which feature pairs co-deviate?
+                cross = dev_i.T @ dev_j / n_sample  # (d_i, d_j)
+
+                # NULL MODEL: shuffle domain j indices and compute expected
+                # cross-correlation. This is the key — the interaction
+                # matrix should only retain structure that BREAKS under
+                # permutation.
+                null_crosses = []
+                for _ in range(5):
+                    perm = torch.randperm(n_sample)
+                    null_cross = dev_i.T @ dev_j[perm] / n_sample
+                    null_crosses.append(null_cross)
+                null_mean = torch.stack(null_crosses).mean(dim=0)
+                null_std = torch.stack(null_crosses).std(dim=0).clamp(min=1e-8)
+
+                # Only keep interactions that are > 2 sigma above null
+                z_scores = (cross - null_mean) / null_std
+                interaction = torch.where(z_scores > 2.0, cross - null_mean, torch.zeros_like(cross))
+
+                # Normalize
+                interaction = interaction / interaction.sum().clamp(min=1e-8)
+                self._interactions[(i, j)] = interaction
+
+    def __call__(self, *grid_indices) -> torch.Tensor:
+        indices = torch.stack(grid_indices, dim=-1)
+        return self.score_batch(indices)
+
+    def score_batch(self, indices: torch.Tensor) -> torch.Tensor:
+        batch_size = indices.shape[0]
+        total_score = torch.zeros(batch_size, device=self.device)
+        n_pairs = 0
+
+        for i in range(self.n_domains):
+            for j in range(i + 1, self.n_domains):
+                qi = self._qranks[i][indices[:, i]]  # (batch, d_i)
+                qj = self._qranks[j][indices[:, j]]  # (batch, d_j)
+
+                # Extremity: how far from median on each feature
+                ext_i = (qi - 0.5).abs() * 2  # [0, 1]
+                ext_j = (qj - 0.5).abs() * 2  # [0, 1]
+
+                # Co-extremity weighted by learned interactions
+                W = self._interactions[(i, j)]  # (d_i, d_j)
+
+                # Score = sum over feature pairs of (extremity_i * W * extremity_j)
+                # Efficient: (batch, d_i) @ (d_i, d_j) -> (batch, d_j), then dot with ext_j
+                weighted = ext_i @ W  # (batch, d_j)
+                pair_score = (weighted * ext_j).sum(dim=1)
+
+                # Co-direction bonus: if both are on the same side of median
+                # (both high or both low), add bonus. If opposite, subtract.
+                sign_i = (qi - 0.5).sign()  # +1 if above median, -1 if below
+                sign_j = (qj - 0.5).sign()
+                # Agreement via interaction weights
+                sign_agreement = (sign_i @ W * sign_j).sum(dim=1)
+
+                total_score += pair_score + 0.3 * sign_agreement
+                n_pairs += 1
+
+        score = total_score / max(n_pairs, 1)
+        # Normalize to [0, 1]
+        score = torch.sigmoid(score * 5)
+        return score

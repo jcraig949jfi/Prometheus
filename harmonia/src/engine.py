@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import Optional
 
 from harmonia.src.domain_index import DomainIndex, load_domains, DOMAIN_LOADERS
-from harmonia.src.coupling import CouplingScorer, DistributionalCoupling
+from harmonia.src.coupling import CouplingScorer, DistributionalCoupling, AlignmentCoupling
 
 
 @dataclass
@@ -119,6 +119,8 @@ class HarmoniaEngine:
             self._scorer = CouplingScorer(self._domain_list, device=device)
         elif scorer == "distributional":
             self._scorer = DistributionalCoupling(self._domain_list, device=device)
+        elif scorer == "alignment":
+            self._scorer = AlignmentCoupling(self._domain_list, device=device)
         else:
             raise ValueError(f"Unknown scorer: {scorer}")
 

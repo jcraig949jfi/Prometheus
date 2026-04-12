@@ -1,0 +1,227 @@
+[
+  {
+    "domain_a": "space_groups",
+    "domain_b": "elliptic_curves",
+    "original_rank": 15,
+    "tests": [
+      {
+        "test": "F1_permutation_null",
+        "verdict": "SURVIVES",
+        "detail": "var_z=4.67 (real_var=0.031937 vs null=0.020750), rho_z=-1.44 (real_rho=0.0063 vs null=0.0101)",
+        "value": 4.666109281149861,
+        "threshold": 2.0
+      },
+      {
+        "test": "F2_subset_stability",
+        "verdict": "SURVIVES",
+        "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+        "value": 0.0,
+        "threshold": 0.5
+      },
+      {
+        "test": "F3_effect_size",
+        "verdict": "SURVIVES",
+        "detail": "Cohen's d: left=2.90, right=0.23, avg=1.56",
+        "value": 1.5648384392261505,
+        "threshold": 0.5
+      },
+      {
+        "test": "F8_direction_consistency",
+        "verdict": "SURVIVES",
+        "detail": "deviation magnitudes: space_groups=1.45, elliptic_curves=0.60",
+        "value": 0.6000622510910034,
+        "threshold": 0.3
+      },
+      {
+        "test": "F17_confound_residual",
+        "verdict": "SURVIVES",
+        "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+        "value": 15.0,
+        "threshold": 1.0
+      }
+    ],
+    "surviving_rank": 15,
+    "wall_time": 1.9016458988189697,
+    "inference": "High point-group order SGs couple to high-rank, high-torsion ECs"
+  },
+  {
+    "domain_a": "modular_forms",
+    "domain_b": "dirichlet_zeros",
+    "original_rank": 15,
+    "tests": [
+      {
+        "test": "F1_permutation_null",
+        "verdict": "KILLED",
+        "detail": "var_z=-0.34 (real_var=0.041687 vs null=0.044205), rho_z=0.52 (real_rho=-0.0171 vs null=0.0121)",
+        "value": 0.5150489555727834,
+        "threshold": 2.0
+      },
+      {
+        "test": "F2_subset_stability",
+        "verdict": "SURVIVES",
+        "detail": "split ranks [15, 10, 10] (CV=0.20, mean=11.7 vs real 15)",
+        "value": 0.20203050891044214,
+        "threshold": 0.5
+      },
+      {
+        "test": "F3_effect_size",
+        "verdict": "SURVIVES",
+        "detail": "Cohen's d: left=0.64, right=0.44, avg=0.54",
+        "value": 0.5386285483837128,
+        "threshold": 0.5
+      },
+      {
+        "test": "F8_direction_consistency",
+        "verdict": "SURVIVES",
+        "detail": "deviation magnitudes: modular_forms=0.66, dirichlet_zeros=0.61",
+        "value": 0.6064369082450867,
+        "threshold": 0.3
+      },
+      {
+        "test": "F17_confound_residual",
+        "verdict": "SURVIVES",
+        "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+        "value": 15.0,
+        "threshold": 1.0
+      }
+    ],
+    "surviving_rank": 15,
+    "wall_time": 2.190117359161377,
+    "inference": "High-level MFs couple to high-conductor L-functions (modularity)"
+  },
+  {
+    "domain_a": "lattices",
+    "domain_b": "dirichlet_zeros",
+    "original_rank": 15,
+    "tests": [
+      {
+        "test": "F1_permutation_null",
+        "verdict": "KILLED",
+        "detail": "var_z=-2.14 (real_var=0.034947 vs null=0.039982), rho_z=0.91 (real_rho=0.0263 vs null=0.0141)",
+        "value": 0.9091834564711084,
+        "threshold": 2.0
+      },
+      {
+        "test": "F2_subset_stability",
+        "verdict": "SURVIVES",
+        "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+        "value": 0.0,
+        "threshold": 0.5
+      },
+      {
+        "test": "F3_effect_size",
+        "verdict": "KILLED",
+        "detail": "Cohen's d: left=0.45, right=0.20, avg=0.32",
+        "value": 0.3232508823275566,
+        "threshold": 0.5
+      },
+      {
+        "test": "F8_direction_consistency",
+        "verdict": "SURVIVES",
+        "detail": "deviation magnitudes: lattices=4.16, dirichlet_zeros=0.65",
+        "value": 0.6485190987586975,
+        "threshold": 0.3
+      },
+      {
+        "test": "F17_confound_residual",
+        "verdict": "SURVIVES",
+        "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+        "value": 15.0,
+        "threshold": 1.0
+      }
+    ],
+    "surviving_rank": 15,
+    "wall_time": 2.7854654788970947,
+    "inference": "High-level lattices + high class number couple to high-conductor L-functions"
+  },
+  {
+    "domain_a": "materials",
+    "domain_b": "elliptic_curves",
+    "original_rank": 15,
+    "tests": [
+      {
+        "test": "F1_permutation_null",
+        "verdict": "KILLED",
+        "detail": "var_z=0.94 (real_var=0.026332 vs null=0.022365), rho_z=0.56 (real_rho=-0.0414 vs null=-0.0129)",
+        "value": 0.9376773506214043,
+        "threshold": 2.0
+      },
+      {
+        "test": "F2_subset_stability",
+        "verdict": "SURVIVES",
+        "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+        "value": 0.0,
+        "threshold": 0.5
+      },
+      {
+        "test": "F3_effect_size",
+        "verdict": "KILLED",
+        "detail": "Cohen's d: left=0.35, right=0.17, avg=0.26",
+        "value": 0.26388927549123764,
+        "threshold": 0.5
+      },
+      {
+        "test": "F8_direction_consistency",
+        "verdict": "SURVIVES",
+        "detail": "deviation magnitudes: materials=1.40, elliptic_curves=1.10",
+        "value": 1.1046816110610962,
+        "threshold": 0.3
+      },
+      {
+        "test": "F17_confound_residual",
+        "verdict": "SURVIVES",
+        "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+        "value": 15.0,
+        "threshold": 1.0
+      }
+    ],
+    "surviving_rank": 15,
+    "wall_time": 2.673452138900757,
+    "inference": "Low band-gap metals couple to high-rank ECs; inverts for insulators"
+  },
+  {
+    "domain_a": "number_fields",
+    "domain_b": "genus2",
+    "original_rank": 15,
+    "tests": [
+      {
+        "test": "F1_permutation_null",
+        "verdict": "KILLED",
+        "detail": "var_z=0.29 (real_var=0.017864 vs null=0.016474), rho_z=-0.95 (real_rho=-0.0513 vs null=-0.0905)",
+        "value": 0.2901453331647884,
+        "threshold": 2.0
+      },
+      {
+        "test": "F2_subset_stability",
+        "verdict": "SURVIVES",
+        "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+        "value": 0.0,
+        "threshold": 0.5
+      },
+      {
+        "test": "F3_effect_size",
+        "verdict": "SURVIVES",
+        "detail": "Cohen's d: left=0.61, right=0.61, avg=0.61",
+        "value": 0.6099869310855865,
+        "threshold": 0.5
+      },
+      {
+        "test": "F8_direction_consistency",
+        "verdict": "SURVIVES",
+        "detail": "deviation magnitudes: number_fields=1.30, genus2=1.86",
+        "value": 1.3010895252227783,
+        "threshold": 0.3
+      },
+      {
+        "test": "F17_confound_residual",
+        "verdict": "SURVIVES",
+        "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+        "value": 15.0,
+        "threshold": 1.0
+      }
+    ],
+    "surviving_rank": 15,
+    "wall_time": 2.83894681930542,
+    "inference": "Positive-disc NFs + high regulator couple to genus-2 curves failing local solvability"
+  }
+]
