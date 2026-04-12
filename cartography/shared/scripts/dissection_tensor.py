@@ -12,11 +12,13 @@ Architecture:
      where objects from different domains converge.
 
 Dissection strategies mapped to existing data:
+  S1  (complex plane eval)  -> knot poly / EC a_p on unit circle grid
   S3  (mod-p fingerprint)  -> EC a_p, knot poly coeffs mod p
   S5  (spectral/FFT)       -> OEIS sequences, knot poly coefficients
   S7  (p-adic valuation)   -> EC conductor factorization, NF discriminant
   S9  (symmetry group)     -> Genus-2 ST groups, crystal space groups
   S10 (Galois group)       -> NF galois_label
+  S12 (zeta-like density)  -> point count / divisibility density across domains
   S13 (discriminant)       -> NF disc_abs, EC conductor
   S22 (operadic structure) -> Fungrim formula type/module
   S24 (info-theoretic)     -> Shannon entropy of coefficients
@@ -70,6 +72,67 @@ class MathObject:
 # ============================================================
 class StrategyExtractors:
     """Compute dissection signatures from raw mathematical objects."""
+
+    @staticmethod
+    def s1_complex(coefficients, n_points=8):
+        """S1: Complex plane evaluation.
+        Evaluate polynomial with given coefficients on n_points equally spaced
+        points on the unit circle: e^{i*pi*k/4} for k=0..n_points-1.
+        Returns: vector of magnitudes at each point (length n_points).
+        """
+        if not coefficients or len(coefficients) < 2:
+            return np.full(n_points, np.nan)
+        coeffs = np.array(coefficients, dtype=np.complex128)
+        grid = np.exp(1j * np.pi * np.arange(n_points) / (n_points / 2))
+        mags = np.zeros(n_points, dtype=np.float32)
+        for i, z in enumerate(grid):
+            # Evaluate polynomial: c0 + c1*z + c2*z^2 + ...
+            val = np.polyval(coeffs[::-1], z)
+            mags[i] = np.abs(val)
+        # Log-scale to tame large magnitudes
+        mags = np.log1p(mags).astype(np.float32)
+        return mags
+
+    @staticmethod
+    def s12_zeta(values, mode="divisibility", primes=(2, 3, 5, 7)):
+        """S12: Point count / zeta-like arithmetic density.
+        Modes:
+          'divisibility' — fraction of values divisible by each prime (OEIS, EC a_p)
+          'conductor_mod' — conductor mod each prime (EC)
+          'disc_mod' — discriminant mod each prime (NF)
+        Returns: vector of length len(primes).
+        """
+        n_primes = len(primes)
+        if values is None:
+            return np.full(n_primes, np.nan)
+
+        if mode == "divisibility":
+            if not values or len(values) < 2:
+                return np.full(n_primes, np.nan)
+            n = len(values)
+            sig = []
+            for p in primes:
+                count = sum(1 for v in values if int(v) % p == 0)
+                sig.append(count / n)
+            return np.array(sig, dtype=np.float32)
+
+        elif mode == "conductor_mod":
+            # values is a single integer (conductor)
+            cond = abs(int(values))
+            if cond == 0:
+                return np.full(n_primes, np.nan)
+            sig = [float((cond % p) / p) for p in primes]
+            return np.array(sig, dtype=np.float32)
+
+        elif mode == "disc_mod":
+            # values is a single integer (discriminant)
+            disc = abs(int(values))
+            if disc == 0:
+                return np.full(n_primes, np.nan)
+            sig = [float((disc % p) / p) for p in primes]
+            return np.array(sig, dtype=np.float32)
+
+        return np.full(n_primes, np.nan)
 
     @staticmethod
     def s3_mod_p(coefficients, primes=(2, 3, 5, 7, 11, 13)):
@@ -301,12 +364,18 @@ class DataLoaders:
                      "determinant": k.get("determinant", 0)},
             )
 
-            # S3: mod-p on Alexander coefficients
+            # S1: complex plane evaluation on Alexander polynomial
             ac = k.get("alex_coeffs", [])
+            obj.signatures["s1_alex"] = ext.s1_complex(ac)
+
+            # S1: complex plane evaluation on Jones polynomial
+            jc = k.get("jones_coeffs", [])
+            obj.signatures["s1_jones"] = ext.s1_complex(jc)
+
+            # S3: mod-p on Alexander coefficients
             obj.signatures["s3_alex"] = ext.s3_mod_p(ac)
 
             # S3: mod-p on Jones coefficients
-            jc = k.get("jones_coeffs", [])
             obj.signatures["s3_jones"] = ext.s3_mod_p(jc)
 
             # S5: spectral on Alexander
@@ -353,6 +422,9 @@ class DataLoaders:
 
                 # S10: Galois group
                 obj.signatures["s10"] = ext.s10_galois_hash(f.get("galois_label"))
+
+                # S12: zeta-like density from discriminant mod p
+                obj.signatures["s12_nf"] = ext.s12_zeta(disc, mode="disc_mod")
 
                 # S13: discriminant
                 obj.signatures["s13"] = ext.s13_discriminant(
@@ -405,17 +477,22 @@ class DataLoaders:
                      "analytic_rank": int(row["analytic_rank"])},
             )
 
-            # S3: mod-p from aplist (a_p values = mod-p evaluation)
+            # S1: complex plane evaluation on a_p sequence (treated as polynomial coeffs)
             ap = row.get("aplist")
             if ap is not None and hasattr(ap, '__len__') and len(ap) >= 3:
                 ap_list = [int(x) for x in ap[:50] if x is not None]
+                obj.signatures["s1_ap"] = ext.s1_complex(ap_list)
                 obj.signatures["s3_ap"] = ext.s3_mod_p(ap_list)
                 obj.signatures["s5_ap"] = ext.s5_spectral(ap_list)
                 obj.signatures["s24_ap"] = ext.s24_entropy(ap_list)
+                # S12: divisibility density from a_p values
+                obj.signatures["s12_ec"] = ext.s12_zeta(ap_list, mode="divisibility")
             else:
+                obj.signatures["s1_ap"] = np.full(8, np.nan)
                 obj.signatures["s3_ap"] = np.full(6, np.nan)
                 obj.signatures["s5_ap"] = np.full(8, np.nan)
                 obj.signatures["s24_ap"] = np.full(4, np.nan)
+                obj.signatures["s12_ec"] = np.full(4, np.nan)
 
             # S7: p-adic valuation of conductor
             obj.signatures["s7_cond"] = ext.s7_padic(cond)
@@ -495,6 +572,9 @@ class DataLoaders:
 
                 # S3: mod-p on terms
                 obj.signatures["s3_ap"] = ext.s3_mod_p(terms)
+
+                # S12: zeta-like divisibility density
+                obj.signatures["s12_oeis"] = ext.s12_zeta(terms, mode="divisibility")
 
                 # S24: entropy
                 obj.signatures["s24_oeis"] = ext.s24_entropy(terms)
@@ -621,27 +701,31 @@ class DissectionTensor:
     strategy dimensions. NaN = strategy not applicable to this object.
 
     Dimensions:
-      s3_alex[6], s3_jones[6], s3_ap[6] = 18  (mod-p fingerprints)
-      s5_alex[8], s5_jones[8], s5_ap[8] = 24  (spectral)
-      s7_det[5], s7_disc[5], s7_cond[5] = 15  (p-adic)
+      s1_alex[8], s1_jones[8], s1_ap[8]  = 24  (complex plane eval)
+      s3_alex[6], s3_jones[6], s3_ap[6]  = 18  (mod-p fingerprints)
+      s5_alex[8], s5_jones[8], s5_ap[8]  = 24  (spectral)
+      s7_det[5], s7_disc[5], s7_cond[5]  = 15  (p-adic)
       s10[8]                              =  8  (Galois)
+      s12_ec[4], s12_oeis[4], s12_nf[4]  = 12  (zeta-like density)
       s13[4]                              =  4  (discriminant)
       s22[4]                              =  4  (operadic)
       s24_alex[4], s24_arith[4],
         s24_ap[4], s24_sym[4]             = 16  (entropy)
       battery[8]                          =  8  (falsification)
       ---
-      Total: ~97 dimensions
+      Total: ~145 dimensions
     """
 
     # Strategy name -> dimensionality
     STRATEGY_DIMS = {
+        "s1_alex": 8, "s1_jones": 8, "s1_ap": 8,
         "s3_alex": 6, "s3_jones": 6, "s3_ap": 6,
         "s5_alex": 8, "s5_jones": 8, "s5_ap": 8, "s5_oeis": 8,
         "s6_oeis": 4,
         "s7_det": 5, "s7_disc": 5, "s7_cond": 5,
         "s9_st": 4,
         "s10": 8,
+        "s12_ec": 4, "s12_oeis": 4, "s12_nf": 4,
         "s13": 4,
         "s22": 4,
         "s24_alex": 4, "s24_arith": 4, "s24_ap": 4, "s24_sym": 4,
@@ -653,11 +737,13 @@ class DissectionTensor:
     # Strategy groups — which strategies are "the same lens" across domains.
     # Cross-domain distance requires matches within at least 2 groups.
     STRATEGY_GROUPS = {
+        "complex":   ["s1_alex", "s1_jones", "s1_ap"],
         "mod_p":     ["s3_alex", "s3_jones", "s3_ap"],
         "spectral":  ["s5_alex", "s5_jones", "s5_ap", "s5_oeis"],
         "padic":     ["s7_det", "s7_disc", "s7_cond"],
         "symmetry":  ["s9_st"],
         "galois":    ["s10"],
+        "zeta":      ["s12_ec", "s12_oeis", "s12_nf"],
         "disc_cond": ["s13"],
         "operadic":  ["s22"],
         "entropy":   ["s24_alex", "s24_arith", "s24_ap", "s24_sym", "s24_oeis"],
@@ -974,6 +1060,199 @@ class DissectionTensor:
             print(f"  TT decomposition failed: {e}")
             return None, None, None
 
+    def tt_decompose_grouped(self, rank=5):
+        """Strategy-grouped TT decomposition.
+
+        Reshapes [N, D] into [N, G1, G2, ..., Gk] where Gi is a
+        low-dimensional summary of strategy group i (mean + std across
+        dims in that group). Then runs TT decomposition on the resulting
+        higher-order tensor.
+
+        Bond dimensions between adjacent strategy-group cores reveal
+        which strategy pairs are ENTANGLED (high bond dim = strong
+        coupling between those mathematical lenses).
+
+        Returns: (tt_factors, bond_dims, group_names, entanglement_pairs)
+        """
+        if self.tensor is None:
+            raise ValueError("Call build() first")
+
+        group_names = list(self.STRATEGY_GROUPS.keys())
+        n_groups = len(group_names)
+        N = self.tensor.shape[0]
+
+        print(f"\nStrategy-grouped TT decomposition (rank={rank})...")
+        print(f"  Groups: {group_names}")
+
+        # Build [N, n_groups, 2] features tensor on GPU:
+        # For each group, compute (masked mean, masked std) across all dims
+        group_features = torch.zeros(N, n_groups, 2, device=DEVICE)
+
+        for gi, gname in enumerate(group_names):
+            strat_list = self.STRATEGY_GROUPS[gname]
+            cols = []
+            for sname in strat_list:
+                if sname in self._strategy_slices:
+                    start, end = self._strategy_slices[sname]
+                    cols.extend(range(start, end))
+            if not cols:
+                continue
+            col_idx = torch.tensor(cols, device=DEVICE)
+            group_vals = self.tensor[:, col_idx]       # [N, group_dim]
+            group_mask = self.mask[:, col_idx].float()  # [N, group_dim]
+            denom = group_mask.sum(dim=1).clamp(min=1)
+            mean = (group_vals * group_mask).sum(dim=1) / denom
+            sq_diff = ((group_vals - mean.unsqueeze(1)) ** 2) * group_mask
+            std = (sq_diff.sum(dim=1) / denom).sqrt()
+            group_features[:, gi, 0] = mean
+            group_features[:, gi, 1] = std
+
+        # Reshape into higher-order tensor: [N, 2, 2, ..., 2] (n_groups modes of size 2)
+        # Build via successive outer products
+        ho_tensor = group_features[:, 0, :]  # [N, 2]
+        for gi in range(1, n_groups):
+            # [N, 2, ..., 2] x [N, 2] -> [N, 2, ..., 2, 2]
+            ho_tensor = ho_tensor.unsqueeze(-1) * group_features[:, gi, :].unsqueeze(1)
+            target_shape = [N] + [2] * (gi + 1)
+            ho_tensor = ho_tensor.reshape(target_shape)
+
+        print(f"  Higher-order tensor shape: {list(ho_tensor.shape)}")
+        print(f"  Modes: N={N}, " +
+              ", ".join(f"{gname}=2" for gname in group_names))
+
+        # TT decomposition via TensorLy (CPU)
+        t_cpu = ho_tensor.cpu()
+        tl_tensor = tl.tensor(t_cpu)
+
+        try:
+            tt = tensor_train(tl_tensor, rank=rank)
+
+            # Reconstruction error
+            reconstructed = tl.tt_to_tensor(tt)
+            error = torch.norm(t_cpu - torch.tensor(reconstructed)) / torch.norm(t_cpu)
+
+            # Bond dimensions between cores
+            bond_dims = [core.shape[-1] for core in tt[:-1]]
+
+            print(f"  Cores: {len(tt)}")
+            print(f"  Core shapes: {[list(c.shape) for c in tt]}")
+            print(f"  Bond dimensions: {bond_dims}")
+            print(f"  Reconstruction error: {error:.4f}")
+
+            # Identify entangled strategy pairs (high bond dim between adjacent cores)
+            # Core 0 is N-mode, cores 1..k are strategy groups
+            # Bond between core i and core i+1 connects group_names[i-1] to group_names[i]
+            entanglement_pairs = []
+            print(f"\n  Strategy entanglement (bond dimensions):")
+            for bi in range(len(bond_dims)):
+                if bi == 0:
+                    left = "objects"
+                else:
+                    left = group_names[bi - 1]
+                if bi < len(group_names):
+                    right = group_names[bi]
+                else:
+                    right = "terminal"
+                bd = bond_dims[bi]
+                entanglement_pairs.append((left, right, bd))
+                marker = " ***" if bd == rank else ""
+                print(f"    {left:12s} <-> {right:12s}: bond_dim={bd}{marker}")
+
+            # Sort by bond dim to show strongest couplings
+            entanglement_pairs.sort(key=lambda x: x[2], reverse=True)
+            print(f"\n  Strongest couplings (saturated bond = max entanglement):")
+            for left, right, bd in entanglement_pairs[:5]:
+                print(f"    {left} <-> {right}: {bd}")
+
+            return tt, bond_dims, group_names, entanglement_pairs
+
+        except Exception as e:
+            print(f"  Grouped TT decomposition failed: {e}")
+            return None, None, group_names, []
+
+    def strategy_group_correlation(self):
+        """Compute strategy-group correlation matrix on GPU.
+
+        For each pair of strategy groups, compute the mean Pearson
+        correlation across objects (using only objects that have data
+        in both groups). This reveals which mathematical lenses
+        co-vary across the entire object population.
+
+        Returns: (corr_matrix, group_names)  -- corr_matrix is [G, G] numpy
+        """
+        if self.tensor is None:
+            raise ValueError("Call build() first")
+
+        group_names = list(self.STRATEGY_GROUPS.keys())
+        n_groups = len(group_names)
+        N = self.tensor.shape[0]
+
+        print(f"\nStrategy-group correlation matrix ({n_groups}x{n_groups})...")
+
+        # Compute group-level summary: masked mean per group per object
+        group_means = torch.zeros(N, n_groups, device=DEVICE)
+        group_valid = torch.zeros(N, n_groups, device=DEVICE, dtype=torch.bool)
+
+        for gi, gname in enumerate(group_names):
+            strat_list = self.STRATEGY_GROUPS[gname]
+            cols = []
+            for sname in strat_list:
+                if sname in self._strategy_slices:
+                    start, end = self._strategy_slices[sname]
+                    cols.extend(range(start, end))
+            if not cols:
+                continue
+            col_idx = torch.tensor(cols, device=DEVICE)
+            group_vals = self.tensor[:, col_idx]
+            group_mask = self.mask[:, col_idx].float()
+            has_data = group_mask.sum(dim=1) > 0
+            denom = group_mask.sum(dim=1).clamp(min=1)
+            group_means[:, gi] = (group_vals * group_mask).sum(dim=1) / denom
+            group_valid[:, gi] = has_data
+
+        # Pearson correlation between all group pairs (GPU)
+        corr_matrix = torch.zeros(n_groups, n_groups, device=DEVICE)
+
+        for i in range(n_groups):
+            for j in range(i, n_groups):
+                # Mask: both groups have data
+                shared = group_valid[:, i] & group_valid[:, j]
+                n_shared = shared.sum().item()
+                if n_shared < 10:
+                    corr_matrix[i, j] = 0.0
+                    corr_matrix[j, i] = 0.0
+                    continue
+                x = group_means[shared, i]
+                y = group_means[shared, j]
+                # Pearson r on GPU
+                mx = x - x.mean()
+                my = y - y.mean()
+                num = (mx * my).sum()
+                den = (mx.norm() * my.norm()).clamp(min=1e-12)
+                r = (num / den).item()
+                corr_matrix[i, j] = r
+                corr_matrix[j, i] = r
+
+        # Print correlation matrix
+        print(f"\n  {'':14s} " + " ".join(f"{g:>10s}" for g in group_names))
+        corr_np = corr_matrix.cpu().numpy()
+        for i, gname in enumerate(group_names):
+            row = " ".join(f"{corr_np[i, j]:10.3f}" for j in range(n_groups))
+            print(f"  {gname:14s} {row}")
+
+        # Highlight strongest off-diagonal correlations
+        print(f"\n  Strongest cross-group correlations:")
+        pairs = []
+        for i in range(n_groups):
+            for j in range(i + 1, n_groups):
+                pairs.append((group_names[i], group_names[j], corr_np[i, j]))
+        pairs.sort(key=lambda x: abs(x[2]), reverse=True)
+        for left, right, r in pairs[:10]:
+            marker = " (strong)" if abs(r) > 0.3 else ""
+            print(f"    {left:12s} <-> {right:12s}: r={r:+.3f}{marker}")
+
+        return corr_np, group_names
+
     def summary(self):
         """Print tensor summary."""
         if self.tensor is None:
@@ -1071,6 +1350,14 @@ def main():
     # TT decomposition
     print(f"\n--- Tensor Train decomposition ---")
     tt, bonds, error = dt.tt_decompose(rank=5)
+
+    # Strategy-grouped TT decomposition
+    print(f"\n--- Strategy-grouped TT decomposition ---")
+    gtt, gbonds, gnames, entanglement = dt.tt_decompose_grouped(rank=5)
+
+    # Strategy-group correlation matrix
+    print(f"\n--- Strategy-group correlation matrix ---")
+    corr, corr_names = dt.strategy_group_correlation()
 
     # Save tensor for later use
     out_dir = ROOT / "cartography/convergence/data"
