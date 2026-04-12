@@ -510,6 +510,162 @@ def load_battery() -> DomainIndex:
     return DomainIndex("battery", labels, features)
 
 
+def load_bianchi_forms(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """Load Bianchi modular forms — automorphic forms over imaginary quadratic fields."""
+    path = path or CARTOGRAPHY / "convergence" / "data" / "bianchi_forms.json"
+    with open(path) as f:
+        raw = json.load(f)
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
+
+    labels, feats = [], []
+    for form in data[:limit]:
+        labels.append(form.get("label", str(len(labels))))
+        # Parse level "N.M" into two numbers
+        level_parts = str(form.get("level", "0.0")).split(".")
+        level_norm = float(level_parts[0]) if level_parts[0].isdigit() else 0
+        level_idx = float(level_parts[1]) if len(level_parts) > 1 and level_parts[1].isdigit() else 0
+        feat = [
+            np.log1p(level_norm),
+            level_idx,
+            float(form.get("sign", 0)),
+            float(form.get("cm", 0)),
+            float(form.get("base_change") not in (None, "-1", "0")),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("bianchi", labels, features)
+
+
+def load_groups(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """Load abstract groups from GAP SmallGrp library."""
+    path = path or CARTOGRAPHY / "groups" / "data" / "abstract_groups.json"
+    with open(path) as f:
+        raw = json.load(f)
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
+
+    labels, feats = [], []
+    for g in data[:limit]:
+        labels.append(g.get("label", str(len(labels))))
+        feat = [
+            np.log1p(float(g.get("order", 0))),
+            np.log1p(float(g.get("exponent", 0))),
+            float(g.get("num_conjugacy_classes", 0)),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("groups", labels, features)
+
+
+def load_belyi(path: Optional[Path] = None) -> DomainIndex:
+    """Load Belyi maps — dessins d'enfants connecting algebra, geometry, topology."""
+    path = path or CARTOGRAPHY / "convergence" / "data" / "belyi_maps.json"
+    with open(path) as f:
+        raw = json.load(f)
+    data = raw.get("records", raw) if isinstance(raw, dict) else raw
+
+    labels, feats = [], []
+    for b in data:
+        labels.append(b.get("label", str(len(labels))))
+        feat = [
+            float(b.get("degree", 0)),
+            float(b.get("genus", 0)),
+            float(b.get("orbit_size", 0)),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("belyi", labels, features)
+
+
+def load_oeis(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load OEIS sequences with statistical features computed from terms.
+    Each sequence becomes an object with features: growth rate, entropy,
+    periodicity, term statistics.
+    """
+    import gzip
+    path = path or CARTOGRAPHY / "oeis" / "data" / "stripped_full.gz"
+
+    labels, feats = [], []
+    with gzip.open(path, "rt") as f:
+        for line in f:
+            if not line.startswith("A") or "," not in line:
+                continue
+            parts = line.strip().split(",")
+            seq_id = parts[0].strip()
+            terms = []
+            for t in parts[1:]:
+                t = t.strip()
+                if t and t.lstrip("-").isdigit():
+                    terms.append(int(t))
+            if len(terms) < 5:
+                continue
+
+            labels.append(seq_id)
+            abs_terms = [abs(t) for t in terms if t != 0]
+
+            # Statistical features of the sequence
+            mean_val = float(np.mean(abs_terms)) if abs_terms else 0.0
+            max_val = float(max(abs_terms)) if abs_terms else 0.0
+            n_zeros = sum(1 for t in terms if t == 0)
+            n_neg = sum(1 for t in terms if t < 0)
+            # Growth rate: ratio of last to first nonzero
+            growth = float(np.log1p(max_val) - np.log1p(float(abs_terms[0]))) if abs_terms else 0.0
+            # Monotonicity: fraction of increasing consecutive pairs
+            mono = sum(1 for i in range(len(terms) - 1) if terms[i + 1] >= terms[i]) / max(len(terms) - 1, 1)
+
+            feat = [
+                np.log1p(mean_val),
+                np.log1p(max_val),
+                growth,
+                mono,
+                float(n_zeros) / len(terms),
+                float(n_neg) / len(terms),
+                float(len(terms)),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("oeis", labels, features)
+
+
+def load_charon_landscape(db_path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load the Charon embedding landscape — 119K objects with 16D coordinates,
+    local curvature, and cluster assignments. This is a pre-computed
+    embedding of the entire LMFDB object space.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql(f"""
+        SELECT object_id, coordinates, local_curvature, cluster_id
+        FROM landscape
+        WHERE coordinates IS NOT NULL
+        LIMIT {limit}
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        obj_id, coords, curvature, cluster = row
+        if not isinstance(coords, list) or len(coords) < 5:
+            continue
+        labels.append(str(obj_id))
+        # Use first 8 embedding dimensions + curvature + cluster
+        coord_feats = [float(c) for c in coords[:8]]
+        feat = coord_feats + [float(curvature or 0), float(cluster or 0)]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("charon_landscape", labels, features)
+
+
 def load_dissection_strategies() -> DomainIndex:
     """
     Load equation dissection strategies (S1-S34) as a dimension.
@@ -599,6 +755,11 @@ DOMAIN_LOADERS = {
     "modular_forms": load_modular_forms,
     "dirichlet_zeros": load_dirichlet_zeros,
     "ec_zeros": load_ec_zeros,
+    "bianchi": load_bianchi_forms,
+    "groups": load_groups,
+    "belyi": load_belyi,
+    "oeis": load_oeis,
+    "charon_landscape": load_charon_landscape,
     "battery": load_battery,
     "dissection": load_dissection_strategies,
 }
