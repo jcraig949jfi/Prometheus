@@ -178,15 +178,16 @@ class StrategyExtractors:
         """
         if not coefficients or len(coefficients) < 2:
             return np.full(4, np.nan)
-        arr = np.abs(np.array(coefficients, dtype=np.float64)) + 0.01
+        coefficients = np.array(coefficients, dtype=np.float64)
+        arr = np.abs(coefficients) + 0.01
         p = arr / arr.sum()
         entropy = -np.sum(p * np.log2(p))
         # Additional features
         sig = np.array([
             entropy,
-            np.log1p(len(coefficients)),   # length
-            np.log1p(np.max(np.abs(coefficients))),  # max magnitude
-            np.std(coefficients) / (np.mean(np.abs(coefficients)) + 1e-8),  # CV
+            np.log1p(float(len(coefficients))),   # length
+            np.log1p(float(np.max(np.abs(coefficients)))),  # max magnitude
+            float(np.std(coefficients) / (np.mean(np.abs(coefficients)) + 1e-8)),  # CV
         ], dtype=np.float32)
         return sig
 
@@ -426,6 +427,142 @@ class DataLoaders:
         return objects
 
     @staticmethod
+    def load_oeis(max_n=20000):
+        """Load OEIS sequences with spectral and attractor signatures."""
+        path = ROOT / "cartography/oeis/data/stripped_new.txt"
+        if not path.exists():
+            print("  OEIS stripped_new.txt not found, skipping")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        count = 0
+
+        with open(path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                # Format: A-number ,term1,term2,...
+                idx = line.find(",")
+                if idx < 0:
+                    continue
+                a_num = line[:idx].strip()
+                terms_str = line[idx:].strip().strip(",")
+                if not terms_str:
+                    continue
+                try:
+                    terms = [int(t.strip()) for t in terms_str.split(",") if t.strip()]
+                except ValueError:
+                    continue
+
+                if len(terms) < 10:
+                    continue
+
+                terms = terms[:100]  # cap
+
+                obj = MathObject(
+                    obj_id=f"oeis_{a_num}",
+                    domain="OEIS",
+                    label=a_num,
+                    signatures={},
+                    raw={"n_terms": len(terms), "first_term": terms[0]},
+                )
+
+                # S5: spectral
+                obj.signatures["s5_oeis"] = ext.s5_spectral(terms)
+
+                # S6: attractor (phase space) — (a(n), a(n+1)) statistics
+                if len(terms) >= 20:
+                    diffs = np.diff(terms[:50])
+                    arr = np.array(terms[:50], dtype=float)
+                    # Lyapunov-like: mean |log(|diff|)|
+                    abs_diffs = np.abs(diffs).astype(float) + 1
+                    lyap = np.mean(np.log(abs_diffs))
+                    # Autocorrelation at lag 1
+                    if np.std(arr) > 0:
+                        ac1 = np.corrcoef(arr[:-1], arr[1:])[0, 1]
+                    else:
+                        ac1 = 0.0
+                    obj.signatures["s6_oeis"] = np.array([
+                        lyap,
+                        ac1 if np.isfinite(ac1) else 0.0,
+                        np.log1p(float(np.max(np.abs(np.array(terms[:50], dtype=float))))),
+                        float(np.std(diffs) / (np.mean(np.abs(diffs)) + 1e-8)),
+                    ], dtype=np.float32)
+                else:
+                    obj.signatures["s6_oeis"] = np.full(4, np.nan)
+
+                # S3: mod-p on terms
+                obj.signatures["s3_ap"] = ext.s3_mod_p(terms)
+
+                # S24: entropy
+                obj.signatures["s24_oeis"] = ext.s24_entropy(terms)
+
+                objects.append(obj)
+                count += 1
+                if count >= max_n:
+                    break
+
+        return objects
+
+    @staticmethod
+    def load_genus2(max_n=None):
+        """Load genus-2 curves with symmetry and conductor signatures."""
+        path = ROOT / "cartography/genus2/data/genus2_curves_full.json"
+        if not path.exists():
+            path = ROOT / "cartography/genus2/data/genus2_curves.json"
+        if not path.exists():
+            print("  genus-2 data not found, skipping")
+            return []
+
+        data = json.loads(path.read_text(encoding="utf-8"))
+        curves = data if isinstance(data, list) else data.get("curves", data.get("data", []))
+        objects = []
+        ext = StrategyExtractors
+
+        for c in curves[:max_n]:
+            cond = c.get("conductor") or c.get("cond")
+            if not cond:
+                continue
+            try:
+                cond = int(cond)
+            except (ValueError, TypeError):
+                continue
+
+            obj = MathObject(
+                obj_id=f"g2_{c.get('label', c.get('lmfdb_label', str(cond)))}",
+                domain="genus2",
+                label=str(c.get("label", c.get("lmfdb_label", ""))),
+                signatures={},
+                raw={"conductor": cond,
+                     "st_group": c.get("st_group", c.get("st_group_label", ""))},
+            )
+
+            # S7: p-adic valuation of conductor
+            obj.signatures["s7_cond"] = ext.s7_padic(cond)
+
+            # S13: conductor as discriminant
+            disc = c.get("disc", c.get("abs_disc", cond))
+            obj.signatures["s13"] = ext.s13_discriminant(disc, conductor=cond)
+
+            # S9: Sato-Tate group as symmetry encoding
+            st = c.get("st_group", c.get("st_group_label", ""))
+            st_map = {"USp(4)": 0, "N(G_{3,3})": 1, "G_{3,3}": 2,
+                      "N(U(1))": 3, "SU(2)": 4, "U(1)": 5,
+                      "E_6": 6, "J(E_6)": 7, "E_4": 8, "J(E_4)": 9}
+            obj.signatures["s9_st"] = np.array([
+                st_map.get(st, -1),
+                float(len(st)) / 10.0,  # name length as proxy
+                1.0 if "N(" in st else 0.0,  # normalizer flag
+                1.0 if "J(" in st else 0.0,  # J-flag
+            ], dtype=np.float32)
+
+            objects.append(obj)
+
+        return objects
+
+    @staticmethod
     def load_fungrim(max_n=None):
         """Load Fungrim formulas with operadic/symbolic signatures."""
         import ast
@@ -500,16 +637,32 @@ class DissectionTensor:
     # Strategy name -> dimensionality
     STRATEGY_DIMS = {
         "s3_alex": 6, "s3_jones": 6, "s3_ap": 6,
-        "s5_alex": 8, "s5_jones": 8, "s5_ap": 8,
+        "s5_alex": 8, "s5_jones": 8, "s5_ap": 8, "s5_oeis": 8,
+        "s6_oeis": 4,
         "s7_det": 5, "s7_disc": 5, "s7_cond": 5,
+        "s9_st": 4,
         "s10": 8,
         "s13": 4,
         "s22": 4,
         "s24_alex": 4, "s24_arith": 4, "s24_ap": 4, "s24_sym": 4,
-        "battery": 8,
+        "s24_oeis": 4,
     }
 
     TOTAL_DIMS = sum(STRATEGY_DIMS.values())
+
+    # Strategy groups — which strategies are "the same lens" across domains.
+    # Cross-domain distance requires matches within at least 2 groups.
+    STRATEGY_GROUPS = {
+        "mod_p":     ["s3_alex", "s3_jones", "s3_ap"],
+        "spectral":  ["s5_alex", "s5_jones", "s5_ap", "s5_oeis"],
+        "padic":     ["s7_det", "s7_disc", "s7_cond"],
+        "symmetry":  ["s9_st"],
+        "galois":    ["s10"],
+        "disc_cond": ["s13"],
+        "operadic":  ["s22"],
+        "entropy":   ["s24_alex", "s24_arith", "s24_ap", "s24_sym", "s24_oeis"],
+        "attractor": ["s6_oeis"],
+    }
 
     def __init__(self):
         self.objects = []
@@ -519,12 +672,22 @@ class DissectionTensor:
         self.labels = []         # obj_id list
         self.domains = []        # domain list
         self._strategy_slices = {}  # strategy_name -> (start, end) in dim axis
+        self._group_slices = {}    # group_name -> (start, end) covering all strategies in group
+        self.battery_index = {}    # test_id -> BatteryEncoder.encode() result
+        self.battery_domains = {}  # test_id -> (domain_a, domain_b) the hypothesis spans
 
         # Build slice map
         offset = 0
         for name, dim in self.STRATEGY_DIMS.items():
             self._strategy_slices[name] = (offset, offset + dim)
             offset += dim
+
+        # Build group slice map
+        for group_name, strat_list in self.STRATEGY_GROUPS.items():
+            starts = [self._strategy_slices[s][0] for s in strat_list if s in self._strategy_slices]
+            ends = [self._strategy_slices[s][1] for s in strat_list if s in self._strategy_slices]
+            if starts:
+                self._group_slices[group_name] = (min(starts), max(ends))
 
     def add_objects(self, objects):
         """Add a list of MathObjects."""
@@ -535,19 +698,19 @@ class DissectionTensor:
             self.labels.append(obj.obj_id)
             self.domains.append(obj.domain)
 
-    def add_battery_results(self, test_id, result_dict):
-        """Attach battery results to the tensor.
+    def add_battery_results(self, test_id, result_dict, domain_a=None, domain_b=None):
+        """Register battery results as truth-boundary constraints.
 
-        Finds objects whose domain/label match the test and encodes
-        the battery result as additional dimensions.
+        Battery results are NOT per-object dimensions. They are properties
+        of hypotheses about relationships between domain pairs. Stored in
+        a separate index and used as post-filters on intersections.
         """
         encoded = BatteryEncoder.encode(result_dict)
-        # Store on all objects of matching domain for now
-        # (battery results apply to hypotheses about object sets,
-        #  not individual objects — this is a coarse encoding)
-        for obj in self.objects:
-            if test_id not in obj.battery:
-                obj.battery[test_id] = encoded
+        self.battery_index[test_id] = {
+            "encoded": encoded,
+            "result": result_dict,
+            "domains": (domain_a, domain_b),
+        }
 
     def build(self):
         """Pack all objects into a GPU tensor."""
@@ -570,15 +733,6 @@ class DissectionTensor:
                         data[i, start:end] = sig[:dim]
                     else:
                         data[i, start:start + len(sig)] = sig
-
-            # Battery dimensions (average across all battery results)
-            if obj.battery:
-                bat_sigs = [v for v in obj.battery.values()
-                            if isinstance(v, np.ndarray)]
-                if bat_sigs:
-                    avg_bat = np.nanmean(bat_sigs, axis=0)
-                    start, end = self._strategy_slices["battery"]
-                    data[i, start:end] = avg_bat
 
         # Create mask (True where we have data)
         mask = ~np.isnan(data)
@@ -637,16 +791,22 @@ class DissectionTensor:
     # GPU-accelerated exploration
     # ============================================================
     def cross_domain_distances(self, domain_a, domain_b,
-                               strategies=None, top_k=50):
+                               strategies=None, min_shared_groups=1,
+                               top_k=50):
         """Find closest pairs between two domains in signature space.
+
+        Uses strategy-group-aware distance: only compares dimensions
+        where both objects have data, and requires matches in at least
+        min_shared_groups distinct strategy groups.
 
         Args:
             domain_a, domain_b: domain names (e.g., 'knot', 'EC')
-            strategies: list of strategy names to use (None = all)
+            strategies: list of strategy names to use (None = all math strategies)
+            min_shared_groups: minimum distinct strategy groups with shared data
             top_k: number of closest pairs to return
 
         Returns:
-            list of (obj_a_id, obj_b_id, distance, shared_strategies)
+            list of (obj_a_id, obj_b_id, distance, n_shared_dims)
         """
         idx_a = torch.tensor(self.domain_indices[domain_a], device=DEVICE)
         idx_b = torch.tensor(self.domain_indices[domain_b], device=DEVICE)
@@ -654,12 +814,13 @@ class DissectionTensor:
         if len(idx_a) == 0 or len(idx_b) == 0:
             return []
 
-        # Select strategy columns
+        # Select strategy columns (exclude battery — it's a post-filter)
         if strategies:
             cols = []
             for s in strategies:
-                start, end = self._strategy_slices[s]
-                cols.extend(range(start, end))
+                if s in self._strategy_slices:
+                    start, end = self._strategy_slices[s]
+                    cols.extend(range(start, end))
             cols = torch.tensor(cols, device=DEVICE)
         else:
             cols = torch.arange(self.TOTAL_DIMS, device=DEVICE)
@@ -690,7 +851,9 @@ class DissectionTensor:
             sq_diff = (diff ** 2) * shared_mask.float()
             n_shared = shared_mask.float().sum(dim=2).clamp(min=1)
             dists = (sq_diff.sum(dim=2) / n_shared).sqrt()
-            dists[n_shared < 5] = float('inf')
+            # Require minimum shared dimensions (at least 2 strategy groups)
+            min_dims = max(5, min_shared_groups * 4)
+            dists[n_shared < min_dims] = float('inf')
 
             # Find top-k in this chunk
             chunk_flat = dists.flatten()
@@ -743,7 +906,8 @@ class DissectionTensor:
 
         return results
 
-    def find_intersections(self, threshold=1.0, strategies=None, top_k=100):
+    def find_intersections(self, threshold=1.0, strategies=None,
+                           min_shared_groups=2, top_k=100):
         """Find cross-domain intersections — object pairs from different
         domains that are close in signature space.
 
@@ -754,7 +918,8 @@ class DissectionTensor:
 
         for i, da in enumerate(domains):
             for db in domains[i + 1:]:
-                pairs = self.cross_domain_distances(da, db, strategies, top_k)
+                pairs = self.cross_domain_distances(
+                    da, db, strategies, min_shared_groups, top_k)
                 all_pairs.extend(pairs)
 
         # Sort by distance, filter by threshold
@@ -859,8 +1024,14 @@ def main():
     print("Loading Fungrim...")
     dt.add_objects(DataLoaders.load_fungrim())
 
-    # Load battery results from Round 3
-    print("\nLoading battery results...")
+    print("Loading OEIS sequences...")
+    dt.add_objects(DataLoaders.load_oeis(max_n=20000))
+
+    print("Loading genus-2 curves...")
+    dt.add_objects(DataLoaders.load_genus2(max_n=10000))
+
+    # Load battery results as truth-boundary index (NOT tensor dims)
+    print("\nLoading battery results (truth-boundary index)...")
     v2_dir = ROOT / "cartography/shared/scripts/v2"
     for result_file in v2_dir.glob("r3_*_results.json"):
         data = json.loads(result_file.read_text(encoding="utf-8"))
@@ -868,6 +1039,7 @@ def main():
             for test_id, result in data.items():
                 if isinstance(result, dict):
                     dt.add_battery_results(test_id, result)
+    print(f"  {len(dt.battery_index)} battery results indexed")
 
     # Build tensor
     print("\n--- Building tensor ---")
@@ -875,12 +1047,12 @@ def main():
     dt.normalize()
     dt.summary()
 
-    # Explore cross-domain distances
-    print(f"\n--- Cross-domain exploration ---")
+    # Explore cross-domain distances (require at least 2 shared strategy groups)
+    print(f"\n--- Cross-domain exploration (min 2 shared strategy groups) ---")
     domains = list(dt.domain_indices.keys())
     for i, da in enumerate(domains):
         for db in domains[i + 1:]:
-            pairs = dt.cross_domain_distances(da, db, top_k=5)
+            pairs = dt.cross_domain_distances(da, db, min_shared_groups=2, top_k=5)
             if pairs:
                 print(f"\n{da} <-> {db} (top 5 closest):")
                 for obj_a, obj_b, dist, n_shared in pairs:
@@ -888,8 +1060,8 @@ def main():
                           f"d={dist:.3f} ({n_shared} shared dims)")
 
     # Find intersections
-    print(f"\n--- Intersections (threshold=2.0) ---")
-    intersections = dt.find_intersections(threshold=2.0, top_k=20)
+    print(f"\n--- Intersections (threshold=1.5, min 2 groups) ---")
+    intersections = dt.find_intersections(threshold=1.5, top_k=20)
     for obj_a, obj_b, dist, n_shared in intersections:
         da = obj_a.split("_")[0]
         db = obj_b.split("_")[0]
