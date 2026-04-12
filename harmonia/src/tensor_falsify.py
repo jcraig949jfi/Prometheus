@@ -16,7 +16,7 @@ from pathlib import Path
 
 from harmonia.src.domain_index import DomainIndex, load_domains, DOMAIN_LOADERS
 from harmonia.src.coupling import DistributionalCoupling, AlignmentCoupling
-from harmonia.src.phonemes import PhonemeCoupling, PHONEMES, DOMAIN_PHONEME_MAP, PhonemeProjector
+from harmonia.src.phonemes import PhonemeCoupling, KosmosCoupling, PHONEMES, DOMAIN_PHONEME_MAP, PhonemeProjector
 from harmonia.src.validate import extract_bond_components
 
 
@@ -98,7 +98,7 @@ def test_permutation_null(domains, scorer, original_ranks, n_perms=5, max_rank=1
         shuffled_feats = domains[0].features[perm]
         shuffled_dom = DomainIndex(domains[0].name, domains[0].labels, shuffled_feats)
 
-        null_scorer = PhonemeCoupling([shuffled_dom] + list(domains[1:]))
+        null_scorer = KosmosCoupling([shuffled_dom] + list(domains[1:]))
         null_scores = null_scorer(*real_idx)
         null_vars.append(null_scores.var().item())
 
@@ -148,7 +148,7 @@ def test_subset_stability(domains, scorer, original_ranks, n_splits=3, max_rank=
             sub = DomainIndex(dom.name, [dom.labels[i] for i in perm.tolist()], dom.features[perm])
             sub_domains.append(sub)
 
-        sub_scorer = PhonemeCoupling(sub_domains)
+        sub_scorer = KosmosCoupling(sub_domains)
         _, ranks = _run_tt(sub_domains, sub_scorer, max_rank)
         split_ranks.append(max(ranks[1:-1]))
 
@@ -236,7 +236,7 @@ def test_confound_residual(domains, original_ranks, max_rank=15):
         new_domains = list(domains)
         new_domains[d_idx] = DomainIndex(dom.name, dom.labels, residual_feats)
 
-        res_scorer = PhonemeCoupling(new_domains)
+        res_scorer = KosmosCoupling(new_domains)
         _, ranks = _run_tt(new_domains, res_scorer, max_rank)
         residual_ranks.append(max(ranks[1:-1]))
 
@@ -406,7 +406,7 @@ def falsify_bond(
                     dom.name, [dom.labels[j] for j in perm.tolist()],
                     dom.features[perm])
 
-    scorer = PhonemeCoupling(domain_list)
+    scorer = KosmosCoupling(domain_list)
     tt, ranks = _run_tt(domain_list, scorer, max_rank)
     original_rank = max(ranks[1:-1])
 
