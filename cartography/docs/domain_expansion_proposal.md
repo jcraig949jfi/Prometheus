@@ -17,7 +17,7 @@ The battery was built on mathematical/physics data. To validate it as a general 
 
 ## Recommended Domains (split M1/M2)
 
-### M1: Chemistry + Biology (molecular structure → properties)
+### M2: Chemistry + Biology + Source Code (SpectreX5)
 
 **Why:** Chemistry has the closest analogy to our SC_class→Tc finding. Molecular structure (functional groups, topology) predicts properties (solubility, toxicity, activity) — but the mapping changes across chemical families. This is BREAK_SYMMETRY in a new domain. If we find the same non-stationarity pattern, it's universal. If we don't, it's physics-specific.
 
@@ -40,9 +40,31 @@ The battery was built on mathematical/physics data. To validate it as a general 
 
 **Start with:** QM9 (small, clean, DFT ground truths). Then ChEMBL for cross-domain (molecule→biology bridge).
 
+#### Source Code (algorithmic structure → mathematical proximity)
+
+**Why:** This is where COMPOSE should live. Algorithms that share subroutines (modular arithmetic, polynomial multiplication, FFT) bridge mathematical domains even when the theory doesn't. If cross-domain structure exists anywhere detectable, it's in implementation dependency graphs.
+
+**Datasets:**
+
+| Dataset | Size | What it has | Ground truths |
+|---------|------|-------------|---------------|
+| **FLINT** | ~9K files | C library for number theory (fast arithmetic) | Call graph = algorithmic dependency |
+| **SageMath** | ~500K lines | Python/Cython math system, wraps FLINT/PARI/GAP | Import graph, module taxonomy |
+| **SciPy** | ~300K lines | Scientific computing (linalg, optimize, stats) | Function call graph |
+| **SymPy** | ~500K lines | Symbolic math (algebra, calculus, NT, combinatorics) | Module dependency graph |
+| **mathlib** | 8.5K modules | Lean 4 formal math library | Import graph (already in our data) |
+
+**Key tests:**
+- Do algorithms for number theory and algorithms for topology share subroutines? (COMPOSE test)
+- Call graph communities vs mathematical domain classification: do they align?
+- Subroutine reuse across domains: which low-level operations bridge the most domains?
+- mathlib import distance vs concept distance: is implementation proximity a proxy for mathematical proximity?
+
+**Start with:** mathlib (already have 8.5K modules). Then SciPy (clean, well-structured, public).
+
 ---
 
-### M2: Finance + Economics (time series → regime detection)
+### M1: Finance + Economics (Skullport, time series → regime detection)
 
 **Why:** Finance is the ultimate adversarial domain for our battery. Markets are noisy, non-stationary BY DESIGN, and full of distributional artifacts (fat tails, volatility clustering). If the battery can separate real structure from noise here, it works anywhere. Also: finance has well-known "laws" (power-law tails, volatility clustering, mean reversion) that serve as calibration targets, plus massive public data.
 
@@ -68,33 +90,42 @@ The battery was built on mathematical/physics data. To validate it as a general 
 
 ---
 
-## Why These Two Specifically
+## Why These Three Specifically
 
-| Property | Chemistry/Bio (M1) | Finance/Econ (M2) |
-|----------|-------------------|-------------------|
-| **Data type** | Molecular graphs, sequences | Time series, cross-sections |
-| **Noise level** | Low (DFT) to moderate (bioassay) | Very high (markets) |
-| **Non-stationarity** | Expected (across chemical families) | Guaranteed (market regimes) |
-| **Known laws** | Periodic table, Lipinski's Rule of 5, VSEPR | Fama-French, CAPM, power-law tails |
-| **Cross-domain bridge** | Molecule→biology (drug activity) | Markets→economy (macro-finance) |
-| **Battery stress** | New data types (graphs, sequences) | Extreme noise, regime changes |
-| **BREAK_SYMMETRY test** | Functional group × scaffold → property | Sector × regime → return |
+| Property | Chemistry/Bio (M2) | Source Code (M2) | Finance/Econ (M1) |
+|----------|-------------------|-----------------|-------------------|
+| **Data type** | Molecular graphs, sequences | Dependency graphs, call trees | Time series, cross-sections |
+| **Noise level** | Low (DFT) to moderate (bioassay) | Zero (deterministic) | Very high (markets) |
+| **Non-stationarity** | Expected (across chemical families) | Unknown (new question) | Guaranteed (market regimes) |
+| **Known laws** | Periodic table, Lipinski's Rule of 5 | Shared subroutines (FFT, GCD) | Fama-French, CAPM, power-law tails |
+| **Cross-domain bridge** | Molecule→biology (drug activity) | Algorithm→algorithm (COMPOSE) | Markets→economy (macro-finance) |
+| **Battery stress** | New data types (graphs, sequences) | Graph topology, zero noise | Extreme noise, regime changes |
+| **Key primitive** | BREAK_SYMMETRY | COMPOSE | BREAK_SYMMETRY |
 
-Chemistry tests whether our findings generalize to another physical science. Finance tests whether they generalize to a fundamentally different kind of data.
+Chemistry tests physical science generalization. Source code is where COMPOSE should live (the missing primitive). Finance tests extreme-noise generalization.
 
 ---
 
 ## Quick Start Plan
 
-### M1 Chemistry Sprint (first 2 days)
+### M2 Chemistry + Source Code Sprint (first 2 days)
 
+**Day 1 — Chemistry:**
 1. Download QM9 dataset (~134K molecules with 19 properties)
 2. Parse SMILES → molecular descriptors (MW, n_atoms, n_rings, functional groups)
 3. Run the battery: functional_group → HOMO-LUMO gap (our SC_class→Tc analog)
 4. Test for BREAK_SYMMETRY: does the mapping change across MW bins?
 5. Calibrate: Lipinski's Rule of 5 should be a known-truth rediscovery
 
-### M2 Finance Sprint (first 2 days)
+**Day 2 — Source Code:**
+1. Parse SciPy call graph (already public, well-structured)
+2. Build module→function dependency matrix
+3. Cluster by call graph proximity vs mathematical domain label
+4. Test: do linalg and optimize share more subroutines than linalg and stats?
+5. Cross-reference with mathlib import graph (already have 8.5K modules)
+6. Look for COMPOSE: shared algorithmic primitives across mathematical domains
+
+### M1 Finance Sprint (first 2 days)
 
 1. Download Fama-French 5-factor daily returns (1963-present)
 2. Download sector ETF returns (1999-present) or build from CRSP
@@ -108,7 +139,8 @@ Chemistry tests whether our findings generalize to another physical science. Fin
 Cross-domain bridge tests:
 - Chemistry→Biology: do molecular descriptors predict biological activity? (the drug discovery question)
 - Finance→Economy: do market factors predict GDP? (the macro-finance question)
-- Apply the full 7-layer cross-domain falsification protocol
+- Source Code→Mathematics: does algorithmic proximity predict mathematical proximity?
+- Apply the full 7-layer cross-domain falsification protocol to ALL new findings
 
 ---
 
