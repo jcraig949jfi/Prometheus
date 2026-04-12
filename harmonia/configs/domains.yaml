@@ -1,0 +1,43 @@
+# Harmonia Domain Configuration
+# Each domain becomes one axis of the tensor train.
+# Add new domains here as they become available.
+
+domains:
+  knots:
+    path: cartography/knots/data/knots.json
+    n_objects: 12965
+    features: 28
+    description: "Knot invariants — crossing number, determinant, Alexander/Jones/Conway polynomials"
+
+  number_fields:
+    path: cartography/number_fields/data/number_fields.json
+    n_objects: 9116
+    features: 6
+    description: "Algebraic number fields — degree, discriminant, class number, regulator"
+
+  space_groups:
+    path: cartography/spacegroups/data/space_groups.json
+    n_objects: 230
+    features: 5
+    description: "Crystallographic space groups — point group order, crystal system, lattice type"
+
+  genus2:
+    path: cartography/genus2/data/genus2_curves_full.json
+    n_objects: 66158
+    features: 7
+    description: "Genus-2 curves — conductor, Selmer rank, solubility, root number"
+
+  maass:
+    path: cartography/maass/data/maass_with_coefficients.json
+    n_objects: 14995
+    features: 25
+    description: "Maass forms — level, weight, spectral parameter, first 20 coefficients"
+
+# Defaults for exploration
+exploration:
+  max_rank: 20
+  eps: 1e-4
+  max_iter: 100
+  scorer: distributional
+  subsample: null   # Set to integer for fast exploratory runs
+  device: cpu       # Set to 'cuda' when GPU available
