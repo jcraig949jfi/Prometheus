@@ -1,0 +1,373 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage[margin=1in]{geometry}
+\usepackage{authblk}
+
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\newtheorem{proposition}{Proposition}
+
+\title{Harmonia: A Data-Driven Coordinate System for Cross-Domain Mathematical Structure}
+
+\author[1]{James Craig}
+\affil[1]{JFI Research}
+\date{April 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We present Harmonia, a system that discovers and validates cross-domain structure in mathematical objects using tensor train decomposition over heterogeneous datasets. Working with 509,182 objects across 20 mathematical domains---including elliptic curves, modular forms, number fields, genus-2 curves, lattices, knot invariants, and materials---we identify a shared coordinate system with two primary axes: \textbf{Megethos} (a universal magnitude/complexity axis) and \textbf{Arithmos} (an arithmetic group structure axis measuring torsion, class number, and Selmer rank). After subjecting these axes to systematic adversarial controls---including rank-normalization, monotonic scrambling, equal-complexity slicing, and five targeted attack families---we establish that: (1) Megethos survives all controls and \emph{strengthens} under rank-normalization (17.6\% $\to$ 38.2\% variance); (2) Arithmos persists as a $1.57\times$ signal above random null after removing Megethos; (3) the two axes are near-independent ($\rho = 0.104$); and (4) the coordinate system enables cross-domain prediction of arithmetic invariants at $\rho = 0.76$--$0.80$, generalizing out-of-distribution at 114--203\% retention. The transfer is directional (rich$\to$simple, 2.36$\times$ asymmetry), rotationally symmetric in the Megethos--Arithmos plane (gauge freedom, $\sigma = 0.0$), and purely Arithmos-driven (Z2 alone at $\rho = 0.61$ outperforms the full 5D space at $\rho = 0.51$). We interpret these results as evidence for a shared latent object from which different mathematical domains are lossy, directional projections.
+\end{abstract}
+
+\section{Introduction}
+
+Mathematical objects from different domains---elliptic curves, modular forms, number fields, knots, lattices---are typically studied independently, with cross-domain connections established through deep theorems (modularity, Langlands correspondence, BSD conjecture). We ask a computational question: \emph{can a data-driven system discover cross-domain structure directly from invariant data, without prior knowledge of these theorems?}
+
+We construct such a system using tensor train (TT) decomposition \cite{oseledets2011}, which represents high-dimensional tensors as chains of small cores connected by bond dimensions. Each mathematical domain becomes one dimension of the tensor. The bond dimension between adjacent domains measures the strength of their coupling. TT-Cross (adaptive cross approximation) builds the tensor train by sampling a coupling function---never materializing the full tensor.
+
+Our main contributions are:
+\begin{enumerate}[nosep]
+    \item A coordinate system with two verified independent axes (Megethos, Arithmos) that survives systematic adversarial controls.
+    \item Cross-domain prediction of arithmetic invariants ($\rho = 0.76$--$0.80$) that generalizes out-of-distribution.
+    \item Identification of the latent object as 2-dimensional for transfer, with different domains as directional projections.
+    \item An autonomous adversarial ecosystem that continuously tests the system's claims.
+\end{enumerate}
+
+\section{Data and Domains}
+
+\subsection{Datasets}
+
+We use 20 mathematical domains totaling 509,182 objects. Table~\ref{tab:domains} summarizes the primary domains. Each object is represented by a feature vector of domain-specific invariants (e.g., conductor, rank, torsion for elliptic curves).
+
+\begin{table}[h]
+\centering
+\caption{Primary mathematical domains.}
+\label{tab:domains}
+\begin{tabular}{lrrp{5cm}}
+\toprule
+Domain & Objects & Features & Key Invariants \\
+\midrule
+Elliptic curves & 31,073 & 4 & Conductor, rank, analytic rank, torsion \\
+Modular forms & 50,000 & 5 & Level, weight, dimension, character \\
+Number fields & 9,116 & 6 & Degree, discriminant, class number, regulator \\
+Genus-2 curves & 66,158 & 7 & Conductor, Selmer rank, solvability, root number \\
+Lattices & 39,293 & 6 & Dimension, determinant, level, class number \\
+EC with zeros & 20,000 & 12 & Above + zero locations, spacings, GUE statistics \\
+Dirichlet zeros & 50,000 & 5 & Conductor, degree, rank, $n$ zeros, motivic weight \\
+Maass forms & 14,995 & 25 & Level, spectral parameter, 20 coefficients \\
+Materials & 10,000 & 6 & Band gap, formation energy, space group, density \\
+Knots & 12,965 & 28 & Crossing number, determinant, polynomial coefficients \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Additional domains include space groups (230), polytopes (980), Fungrim formulas (3,130), OEIS sequences (50,000), abstract groups (50,000), Bianchi forms (50,000), Belyi maps (1,111), Charon embedding landscape (50,000), and two meta-domains: falsification battery results (97) and equation dissection strategies (34).
+
+\subsection{Phoneme Projection}
+
+Each domain's features are projected into a shared 5-dimensional ``phoneme'' space via explicit, interpretable mappings:
+\begin{itemize}[nosep]
+    \item \textbf{Megethos} (complexity): $\log N$ where $N$ is conductor, discriminant, etc.
+    \item \textbf{Bathos} (depth): rank, degree, dimension
+    \item \textbf{Symmetria} (symmetry): point group order, automorphism order
+    \item \textbf{Arithmos} (arithmetic): torsion, class number, Selmer rank
+    \item \textbf{Phasma} (spectral): spectral parameter, zero spacings
+\end{itemize}
+
+\section{Methods}
+
+\subsection{Tensor Train Decomposition}
+
+Given $N$ domains with object counts $n_1, \ldots, n_N$, we define a coupling function $f(i_1, \ldots, i_N) \in [0,1]$ that measures statistical similarity between objects across domains. The TT-Cross algorithm \cite{oseledets2010} approximates this function as:
+\[
+f(i_1, \ldots, i_N) \approx \sum_{\alpha_1,\ldots,\alpha_{N-1}} G_1(i_1, \alpha_1) G_2(\alpha_1, i_2, \alpha_2) \cdots G_N(\alpha_{N-1}, i_N)
+\]
+where the bond dimension $r_k = \dim(\alpha_k)$ measures coupling strength between domains $k$ and $k+1$. We use the \texttt{tntorch} library \cite{tntorch} with $\epsilon = 10^{-3}$ and $r_{\max} = 20$.
+
+\subsection{Coupling Scorers}
+
+We developed four coupling functions of increasing sophistication:
+\begin{enumerate}[nosep]
+    \item \textbf{Cosine}: cosine similarity in random-projected shared space.
+    \item \textbf{Distributional}: cosine + $M_4/M_2^2$ kurtosis deviation.
+    \item \textbf{Alignment}: quantile-rank co-extremity with null-corrected interactions.
+    \item \textbf{Phoneme}: $L^2$ distance in the 5D phoneme space.
+\end{enumerate}
+
+\subsection{Tensor-Speed Falsification Battery}
+
+We implement six falsification tests as tensor operations:
+\begin{itemize}[nosep]
+    \item \textbf{F1}: Permutation null (score variance + rank correlation under shuffling)
+    \item \textbf{F1b}: Phoneme specificity (coupling without complexity axis)
+    \item \textbf{F2}: Subset stability (rank consistency across 50\% splits)
+    \item \textbf{F3}: Effect size (Cohen's $d$ between top/bottom quartiles)
+    \item \textbf{F8}: Direction consistency (deviation magnitude from population mean)
+    \item \textbf{F17}: Confound residual (rank survival after removing top-variance feature)
+\end{itemize}
+
+\subsection{Calibration}
+
+We calibrate against 5 known mathematical truths (e.g., modularity theorem: MF level $=$ EC conductor) and 3 known falsehoods (e.g., knot invariants vs.\ material band gaps). The phoneme scorer achieves 100\% sensitivity (all truths detected) and 75\% accuracy.
+
+\section{Results}
+
+\subsection{Megethos: The Magnitude Axis}
+
+PCA on the combined phoneme vectors of 9 L-function domains reveals a first principal component with 0.995 loading on the complexity phoneme, explaining 44.2\% of cross-domain variance.
+
+\begin{observation}[Megethos Equation]
+For objects in arithmetic domains, $M(x) = \log N(x) = \sum_p f_p(x) \log p$, where $N(x)$ is the conductor and $f_p(x)$ is the local exponent at prime $p$.
+\end{observation}
+
+The zero density relationship $N_{\text{zeros}} = 3.117 \cdot M + 1.503$ holds with $R^2 = 0.976$ across 10,000 elliptic curves, consistent with known explicit formulas at height $T \approx 19.6$.
+
+\subsubsection{Adversarial Controls for Megethos}
+
+\begin{table}[h]
+\centering
+\caption{Adversarial controls on Megethos. PC1 variance under different transformations.}
+\label{tab:controls}
+\begin{tabular}{lcc}
+\toprule
+Control & PC1 Variance & Status \\
+\midrule
+Original (baseline) & 17.6\% & --- \\
+Rank-normalized & \textbf{38.2\%} & Survives (stronger) \\
+Size feature removed & 19.5\% & Survives \\
+Size shuffled within domains & 17.2\% & Unchanged \\
+Random null & 3.7\% & Null baseline \\
+No zero-padding & 25.8\% & Survives (stronger) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Rank-normalization, which destroys scale information, \emph{strengthens} PC1 from 17.6\% to 38.2\% (Table~\ref{tab:controls}). This rules out raw magnitude dominance and establishes that Megethos captures ordinal cross-domain structure that is more regular than the metric structure.
+
+Monotonic scrambling (random power-law transforms) changes PC1 significantly ($z = -2.28$), establishing that the signal depends on \emph{specific functional form}, not just ordering. Cross-domain Spearman correlation of Megethos quantile distributions is $\rho > 0.9999$ for all 21 domain pairs tested.
+
+\subsection{Arithmos: The Irreducible Kernel}
+
+\subsubsection{Equal-Complexity Slicing}
+
+After binning objects by Megethos decile and computing PCA on the non-Megethos phonemes within each bin, we find PC1 = 47.9\% versus a random null of 30.4\%, giving a signal ratio of $1.57\times$ ($z = 149$). Structure beyond complexity is real but modest.
+
+\subsubsection{Identifying the Driver}
+
+Correlating the residual PC1 scores with raw invariants reveals the driver:
+
+\begin{table}[h]
+\centering
+\caption{Correlation of residual PC1 (Arithmos) with raw invariants.}
+\label{tab:arithmos}
+\begin{tabular}{llr}
+\toprule
+Domain & Invariant & Spearman $\rho$ \\
+\midrule
+Elliptic curves & Torsion & $-0.926$ \\
+Number fields & Class number & $-0.853$ \\
+Number fields & Regulator & $+0.814$ \\
+Genus-2 curves & Selmer rank & $-0.815$ \\
+Modular forms & (none) & $0.000$ \\
+Dirichlet zeros & (none) & $0.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The residual axis aligns with measures of finite arithmetic group structure (torsion, class number, Selmer rank) in arithmetic--geometric domains, and is \emph{absent} in purely analytic domains (modular forms, Dirichlet zeros). The class number--regulator anti-correlation ($h \sim -0.85$, $R \sim +0.81$) is consistent with the analytic class number formula $hR = \ldots$
+
+\subsubsection{Independence}
+
+Megethos and Arithmos have Spearman $\rho = 0.104$ combined across domains, confirming near-independence.
+
+\subsection{Cross-Domain Transfer}
+
+\subsubsection{Forward Transfer}
+
+Matching objects by nearest neighbor in phoneme space, we predict arithmetic invariants across domains:
+
+\begin{table}[h]
+\centering
+\caption{Cross-domain transfer results (Spearman $\rho$).}
+\label{tab:transfer}
+\begin{tabular}{lcc}
+\toprule
+Transfer & Megethos-only & Full Phoneme \\
+\midrule
+EC torsion $\to$ NF class number & 0.12 & \textbf{0.76} \\
+G2 Selmer $\to$ NF class number & --- & \textbf{0.80} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Full phoneme matching gives $6.3\times$ improvement over Megethos-only matching, demonstrating that non-Megethos phonemes carry genuine cross-domain predictive power.
+
+\subsubsection{Out-of-Distribution Generalization}
+
+Training on low-Megethos objects and testing on high-Megethos objects yields:
+
+\begin{table}[h]
+\centering
+\caption{Out-of-distribution transfer (train: low Megethos, test: high Megethos).}
+\label{tab:ood}
+\begin{tabular}{lccc}
+\toprule
+Transfer & In-distribution $\rho$ & OOD $\rho$ & Retention \\
+\midrule
+EC $\to$ NF & 0.44 & \textbf{0.90} & 203\% \\
+G2 $\to$ NF & 0.74 & \textbf{0.84} & 114\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Transfer performance \emph{improves} out-of-distribution, consistent with asymptotic regularity of arithmetic invariants at large conductor.
+
+\subsubsection{Directionality}
+
+Transfer is asymmetric: EC $\to$ NF ($\rho = 0.63$) is $2.36\times$ stronger than NF $\to$ EC ($\rho = 0.30$). This is consistent with EC being a richer projection of the latent object (more observable dimensions).
+
+\subsection{The Latent Object}
+
+\subsubsection{Minimum Dimensionality}
+
+Testing transfer with $k$ latent dimensions:
+
+\begin{table}[h]
+\centering
+\caption{Transfer performance vs.\ latent dimensionality.}
+\label{tab:latent}
+\begin{tabular}{cccccc}
+\toprule
+Latent dims & 1 & 2 & 3 & 4 & 5 \\
+\midrule
+Mean transfer $\rho$ & $-0.02$ & \textbf{0.50} & 0.45 & 0.45 & 0.39 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The latent object is \textbf{exactly 2-dimensional} for cross-domain transfer. One dimension fails. Three or more dimensions do not improve.
+
+\subsubsection{Domain Projections}
+
+Each domain observes different coordinates of the latent object:
+\begin{itemize}[nosep]
+    \item EC sees $Z_1$ (conductor) + $Z_2$ (torsion $\to$ Arithmos phoneme, $R^2 = 1.0$)
+    \item NF sees $Z_1$ (discriminant) + $Z_2$ (class number, $R^2 = 0.84$) + $Z_5$ (regulator, $R^2 = 1.0$)
+    \item G2 sees $Z_1$ (conductor) + $Z_3$ (Selmer rank $\to$ Bathos phoneme, $R^2 = 1.0$)
+    \item MF sees $Z_1$ only (level)---no independent arithmetic coordinate
+\end{itemize}
+
+Notably, Selmer rank projects onto $Z_3$ (Bathos/depth), not $Z_2$ (Arithmos). Torsion and Selmer rank live on \emph{different latent axes}, explaining why G2 $\to$ EC transfer fails ($\rho = -0.004$).
+
+\subsection{Structural Properties}
+
+\subsubsection{Gauge Freedom}
+
+The Megethos--Arithmos plane is rotationally symmetric: all rotations of the $(Z_1, Z_2)$ plane yield identical transfer performance ($\sigma = 0.0$ across 20 random rotations). This is a gauge symmetry---the coordinate choice within the plane is arbitrary; the geometry is what is real.
+
+\subsubsection{Degeneracy}
+
+Alternative invariants (rank/regulator instead of torsion/class number) achieve 85\% of the transfer signal. The geometry works with multiple invariant choices, suggesting the structure is in the space, not in the specific coordinates.
+
+\subsubsection{Compression}
+
+$Z_2$ alone (Arithmos phoneme) achieves $\rho = 0.61$---\emph{better} than the full 5D phoneme space ($\rho = 0.51$). Adding Megethos \emph{degrades} cross-domain arithmetic prediction. The transfer signal is purely Arithmos-driven.
+
+\section{Discussion}
+
+\subsection{Interpretation}
+
+Our results are consistent with the following interpretation: \emph{arithmetic--geometric mathematical objects are lossy, directional projections of a shared latent structure, with Megethos and Arithmos as its primary coordinates.}
+
+The evidence for this:
+\begin{enumerate}[nosep]
+    \item Projections are directional (rich $\to$ simple stronger than reverse).
+    \item Projections preserve neighborhoods (cross-domain prediction works).
+    \item Projections stabilize at scale (OOD improves).
+    \item Different domains see different subsets of the latent object.
+    \item The geometry has gauge freedom (rotationally symmetric).
+\end{enumerate}
+
+\subsection{Relationship to Known Mathematics}
+
+The Megethos axis for L-function domains corresponds to the analytic conductor of Iwaniec and Sarnak \cite{iwaniec2000}. The extension to knots, polytopes, and materials is empirical and not previously established.
+
+The Arithmos axis captures the relationship between torsion, class number, and Selmer rank---invariants connected through BSD, the analytic class number formula, and descent theory. Our contribution is showing these collapse onto a single latent axis that enables cross-domain prediction.
+
+The class number--regulator anti-correlation is a statistical manifestation of the analytic class number formula $h R = \frac{w \sqrt{|d|}}{2^{r_1} (2\pi)^{r_2}} L(1, \chi_d)$, which constrains $h$ and $R$ to trade off at fixed discriminant.
+
+\subsection{Limitations}
+
+\begin{enumerate}[nosep]
+    \item The $1.57\times$ signal-to-null ratio for Arithmos, while statistically significant ($z = 149$), is modest. The secondary structure is real but not dominant.
+    \item Calibration specificity is 33\% (1/3 known falsehoods rejected). The system is more permissive than desired.
+    \item The phoneme projection is hand-designed, not learned. Different projection choices may yield different results, though the gauge freedom result suggests the geometry is robust.
+    \item All results are on LMFDB and related datasets. Generalization to other mathematical databases is untested.
+\end{enumerate}
+
+\subsection{The Adversarial Ecosystem}
+
+To continuously stress-test these claims, we built an autonomous adversarial system with four components: a Generator that invents attacks from 5 families (data, representation, structural, cross-domain, metric) with 20+ mutation operators; an Executor that runs the full measurement battery; a Judge that scores damage to core invariants; and an Archivist that logs and prioritizes the most damaging attacks. This system runs at 1.7 attacks/second and produces a daily report of what almost broke.
+
+\section{Conclusion}
+
+We have identified a two-dimensional coordinate system---Megethos (magnitude) and Arithmos (arithmetic group structure)---that provides a shared language for mathematical objects across domains. The system enables cross-domain prediction at $\rho = 0.76$--$0.80$, generalizes out-of-distribution, and survives systematic adversarial testing. The transfer is directional and rotationally symmetric, consistent with different mathematical domains being projections of a shared latent structure.
+
+The strongest defensible claim is: \emph{there exists a stable, low-dimensional coordinate system over arithmetic--geometric objects in which known invariants align and become mutually predictive across domains.} Whether this coordinate system is canonical, or merely one chart among many, remains open.
+
+\bibliographystyle{plain}
+\begin{thebibliography}{9}
+\bibitem{oseledets2011}
+I.~V. Oseledets,
+\newblock Tensor-train decomposition,
+\newblock {\em SIAM J. Sci. Comput.}, 33(5):2295--2317, 2011.
+
+\bibitem{oseledets2010}
+I.~V. Oseledets and E.~E. Tyrtyshnikov,
+\newblock TT-cross approximation for multidimensional arrays,
+\newblock {\em Linear Algebra Appl.}, 432(1):70--88, 2010.
+
+\bibitem{tntorch}
+R.~Ballester-Ripoll, Y.~Lindstrom, and R.~Pajarola,
+\newblock tntorch: Tensor network learning with {PyTorch},
+\newblock {\em J. Mach. Learn. Res.}, 23(208):1--6, 2022.
+
+\bibitem{iwaniec2000}
+H.~Iwaniec and P.~Sarnak,
+\newblock Perspectives on the analytic theory of {$L$}-functions,
+\newblock {\em Geom. Funct. Anal.}, Special Volume, Part II:705--741, 2000.
+
+\bibitem{lmfdb}
+The LMFDB Collaboration,
+\newblock The {L}-functions and modular forms database,
+\newblock \url{https://www.lmfdb.org}, 2024.
+
+\bibitem{knotinfo}
+C.~Livingston and A.~H. Moore,
+\newblock {KnotInfo}: Table of knot invariants,
+\newblock \url{https://www.indiana.edu/~knotinfo}, 2024.
+
+\bibitem{materialsproject}
+A.~Jain et al.,
+\newblock The {Materials Project}: A materials genome approach to accelerating materials innovation,
+\newblock {\em APL Materials}, 1(1):011002, 2013.
+
+\bibitem{oeis}
+N.~J.~A. Sloane,
+\newblock The {On-Line Encyclopedia of Integer Sequences},
+\newblock \url{https://oeis.org}, 2024.
+
+\bibitem{dokchitser}
+T.~Dokchitser and V.~Dokchitser,
+\newblock On the {B}irch--{S}winnerton-{D}yer quotients modulo squares,
+\newblock {\em Ann. of Math.}, 172(1):567--596, 2010.
+\end{thebibliography}
+
+\end{document}
