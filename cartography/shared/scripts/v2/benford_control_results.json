@@ -1,0 +1,43 @@
+{
+  "test": "benford_control",
+  "real_cosines": {
+    "NF_CN_vs_Knot_det": 0.9865328086076409,
+    "NF_CN_vs_EC_cond": 0.9657875862139436,
+    "NF_CN_vs_Mkt_abs": 0.8944455013703503,
+    "Knot_det_vs_EC_cond": 0.9949278332475205,
+    "Knot_det_vs_Mkt_abs": 0.8379198805974664,
+    "EC_cond_vs_Mkt_abs": 0.790594831537069
+  },
+  "null_z_scores": {
+    "NF_CN_vs_Knot_det": {
+      "z_uniform": -262.54553159017115,
+      "z_lognorm": 1.380173099083135,
+      "z_benford": -30.205900924546853
+    },
+    "NF_CN_vs_EC_cond": {
+      "z_uniform": -1990.2161398506603,
+      "z_lognorm": 0.34295096153777527,
+      "z_benford": -35.67557676529
+    },
+    "NF_CN_vs_Mkt_abs": {
+      "z_uniform": -267.5583950771433,
+      "z_lognorm": -3.4186400318022483,
+      "z_benford": -205.40138713426927
+    },
+    "Knot_det_vs_EC_cond": {
+      "z_uniform": -113.28560251205563,
+      "z_lognorm": 0.6512393672104928,
+      "z_benford": -1.532255091296719
+    },
+    "Knot_det_vs_Mkt_abs": {
+      "z_uniform": -413.23536581402675,
+      "z_lognorm": -1.628702404805436,
+      "z_benford": -123.76330703541781
+    },
+    "EC_cond_vs_Mkt_abs": {
+      "z_uniform": -533.7041861809714,
+      "z_lognorm": -5.991077264156097,
+      "z_benford": -198.59326208415402
+    }
+  }
+}
