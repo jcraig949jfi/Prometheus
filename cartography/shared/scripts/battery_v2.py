@@ -1168,3 +1168,277 @@ class BatteryV2:
             return "PARTIAL_MATCH", {"partial_matches": partial}
 
         return "NOT_TAUTOLOGY", {}
+
+    # ================================================================
+    # F29-F32: Cross-domain falsification (2026-04-12 council protocol)
+    # ================================================================
+
+    def F29_distributional_baseline(self, set_a, set_b, n_random=1000):
+        """Test cross-domain integer overlap against distributional null.
+
+        Computes enrichment = observed_overlap / expected_overlap_under_uniform.
+        Also tests against Benford-like power-law distributed nulls.
+
+        Verdicts: REAL (>2x), MARGINAL (1.5-2x), ARTIFACT (<1.5x)
+        """
+        set_a = set(int(x) for x in set_a if x > 0)
+        set_b = set(int(x) for x in set_b if x > 0)
+        if not set_a or not set_b:
+            return "INSUFFICIENT_DATA", {}
+
+        overlap = len(set_a & set_b)
+        max_val = max(max(set_a), max(set_b))
+        expected_uniform = len(set_a) * len(set_b) / max_val if max_val > 0 else 1
+
+        # Power-law null: generate random sets with same size but log-uniform distribution
+        null_overlaps = []
+        for _ in range(n_random):
+            fake_a = set(int(x) for x in np.exp(self.rng.uniform(0, np.log(max_val + 1), len(set_a))))
+            fake_b = set(int(x) for x in np.exp(self.rng.uniform(0, np.log(max_val + 1), len(set_b))))
+            null_overlaps.append(len(fake_a & fake_b))
+
+        null_mean = np.mean(null_overlaps)
+        null_std = np.std(null_overlaps)
+        z = (overlap - null_mean) / null_std if null_std > 0 else 0
+
+        enrichment_uniform = overlap / expected_uniform if expected_uniform > 0 else 0
+        enrichment_powerlaw = overlap / null_mean if null_mean > 0 else 0
+
+        result = {
+            "overlap": overlap, "set_a_size": len(set_a), "set_b_size": len(set_b),
+            "expected_uniform": expected_uniform, "enrichment_uniform": enrichment_uniform,
+            "null_mean_powerlaw": null_mean, "enrichment_powerlaw": enrichment_powerlaw,
+            "z_powerlaw": z,
+        }
+
+        if enrichment_powerlaw > 2.0 and z > 3:
+            return "REAL", result
+        elif enrichment_powerlaw > 1.5:
+            return "MARGINAL", result
+        else:
+            return "ARTIFACT", result
+
+    def F30_range_conditioned_enrichment(self, set_a, set_b, values_a=None, values_b=None):
+        """Test overlap after restricting both sets to the same numeric range.
+
+        If enrichment vanishes after range-matching, it was a range artifact.
+        """
+        set_a = set(int(x) for x in set_a if x > 0)
+        set_b = set(int(x) for x in set_b if x > 0)
+        if not set_a or not set_b:
+            return "INSUFFICIENT_DATA", {}
+
+        # Full overlap
+        full_overlap = len(set_a & set_b)
+
+        # Restrict both to shared range
+        lo = max(min(set_a), min(set_b))
+        hi = min(max(set_a), max(set_b))
+        a_restricted = set(x for x in set_a if lo <= x <= hi)
+        b_restricted = set(x for x in set_b if lo <= x <= hi)
+
+        if not a_restricted or not b_restricted:
+            return "INSUFFICIENT_DATA", {}
+
+        restricted_overlap = len(a_restricted & b_restricted)
+        range_size = hi - lo + 1
+        expected = len(a_restricted) * len(b_restricted) / range_size if range_size > 0 else 1
+        enrichment = restricted_overlap / expected if expected > 0 else 0
+
+        result = {
+            "full_overlap": full_overlap,
+            "restricted_overlap": restricted_overlap,
+            "range": (lo, hi),
+            "a_restricted": len(a_restricted),
+            "b_restricted": len(b_restricted),
+            "expected_in_range": expected,
+            "enrichment_in_range": enrichment,
+        }
+
+        if enrichment > 2.0:
+            return "SURVIVES_RANGE", result
+        elif enrichment > 1.5:
+            return "MARGINAL", result
+        else:
+            return "RANGE_ARTIFACT", result
+
+    def F31_prime_mediated_null(self, values_a, values_b, labels_a, labels_b,
+                                  shared_primes):
+        """Test if cross-domain correlation survives after conditioning on prime properties.
+
+        For each shared prime, compare domain A's feature against domain B's feature.
+        Then partial-correlate after removing: log(p), p mod 6, gap to nearest prime.
+        """
+        if len(shared_primes) < 10:
+            return "INSUFFICIENT_DATA", {}
+
+        shared = sorted(shared_primes)
+        va = np.array([values_a.get(p, float("nan")) for p in shared])
+        vb = np.array([values_b.get(p, float("nan")) for p in shared])
+        primes = np.array(shared, dtype=float)
+
+        mask = np.isfinite(va) & np.isfinite(vb)
+        va, vb, primes = va[mask], vb[mask], primes[mask]
+        if len(va) < 10:
+            return "INSUFFICIENT_DATA", {}
+
+        # Raw correlation
+        r_raw = np.corrcoef(va, vb)[0, 1]
+
+        # Partial after log(p) — removes size confound
+        log_p = np.log(primes)
+        X = np.column_stack([np.ones(len(primes)), log_p])
+        beta_a = np.linalg.lstsq(X, va, rcond=None)[0]
+        beta_b = np.linalg.lstsq(X, vb, rcond=None)[0]
+        resid_a = va - X @ beta_a
+        resid_b = vb - X @ beta_b
+        r_partial = np.corrcoef(resid_a, resid_b)[0, 1]
+
+        # Partial after log(p) + p mod 6
+        p_mod6 = primes % 6
+        X2 = np.column_stack([np.ones(len(primes)), log_p, p_mod6])
+        beta_a2 = np.linalg.lstsq(X2, va, rcond=None)[0]
+        beta_b2 = np.linalg.lstsq(X2, vb, rcond=None)[0]
+        resid_a2 = va - X2 @ beta_a2
+        resid_b2 = vb - X2 @ beta_b2
+        r_partial2 = np.corrcoef(resid_a2, resid_b2)[0, 1]
+
+        result = {
+            "n_shared": len(va),
+            "r_raw": r_raw,
+            "r_partial_logp": r_partial,
+            "r_partial_logp_mod6": r_partial2,
+        }
+
+        if abs(r_partial) < abs(r_raw) * 0.3:
+            return "PRIME_MEDIATED", result
+        elif abs(r_partial) > abs(r_raw) * 0.7:
+            return "SURVIVES_CONDITIONING", result
+        else:
+            return "PARTIALLY_MEDIATED", result
+
+    def F32_scaling_degeneracy(self, x_a, y_a, x_b, y_b, label_a="A", label_b="B"):
+        """Test if two domain relationships share the same functional form trivially.
+
+        Fits log, sqrt, linear, power to each. If both match the same generic
+        class (e.g., both ~log), the match is a scaling degeneracy, not structure.
+        """
+        from scipy.stats import pearsonr
+
+        forms = {
+            "linear": lambda x: x,
+            "log": lambda x: np.log(x[x > 0]),
+            "sqrt": lambda x: np.sqrt(x[x >= 0]),
+            "quadratic": lambda x: x**2,
+        }
+
+        def best_fit(x, y):
+            x, y = np.array(x, dtype=float), np.array(y, dtype=float)
+            mask = np.isfinite(x) & np.isfinite(y) & (x > 0)
+            x, y = x[mask], y[mask]
+            if len(x) < 10:
+                return "unknown", 0
+
+            best_r2 = -1
+            best_form = "unknown"
+            for name, fn in forms.items():
+                try:
+                    xt = fn(x)
+                    if len(xt) < len(x):
+                        xt = fn(x[:len(xt)])
+                        y_t = y[:len(xt)]
+                    else:
+                        y_t = y
+                    r, _ = pearsonr(xt, y_t)
+                    if r**2 > best_r2:
+                        best_r2 = r**2
+                        best_form = name
+                except:
+                    pass
+            return best_form, best_r2
+
+        form_a, r2_a = best_fit(x_a, y_a)
+        form_b, r2_b = best_fit(x_b, y_b)
+
+        result = {
+            "domain_a": {"form": form_a, "r2": r2_a, "label": label_a},
+            "domain_b": {"form": form_b, "r2": r2_b, "label": label_b},
+            "same_form": form_a == form_b,
+        }
+
+        if form_a == form_b and r2_a > 0.5 and r2_b > 0.5:
+            return "SCALING_DEGENERACY", result
+        else:
+            return "DIFFERENT_FORMS", result
+
+    # ================================================================
+    # Primitive Tagging System (council recommendation)
+    # ================================================================
+
+    PRIMITIVE_TAGS = {
+        # Maps finding patterns to operation primitives
+        "BREAK_SYMMETRY": "Universal mapping fractures along context lines. The mapping exists but changes across strata.",
+        "REDUCE": "Complex structure collapses to a simple invariant via closed-form formula.",
+        "COMPOSE": "Two domains share structure through a common mathematical object.",
+        "SYMMETRIZE": "A symmetry group constrains or organizes observables.",
+        "LINEARIZE": "A nonlinear relationship is well-approximated by a log/power law.",
+        "PARTITION": "A categorical variable creates meaningful subgroups in a continuous outcome.",
+        "IDENTITY": "Deterministic mathematical relationship (tautology or theorem).",
+        "SPECTRAL": "Structure visible in eigenvalue/spacing statistics.",
+    }
+
+    def tag_primitive(self, finding_dict):
+        """Tag a finding with its structural primitive(s).
+
+        finding_dict should contain:
+            - eta2: float
+            - has_interaction: bool (ANOVA interaction significant?)
+            - rank_stable: bool (rank correlation > 0.3 across contexts?)
+            - is_identity: bool (R² > 0.99 or known theorem?)
+            - functional_form: str (linear/log/sqrt/power)
+            - is_cross_domain: bool
+            - involves_eigenvalues: bool
+
+        Returns: list of (primitive, confidence) tuples
+        """
+        tags = []
+
+        # Identity detection
+        if finding_dict.get("is_identity"):
+            tags.append(("IDENTITY", 1.0))
+            return tags
+
+        # Break symmetry: strong within-context + interaction detected
+        if finding_dict.get("has_interaction") and not finding_dict.get("rank_stable", True):
+            tags.append(("BREAK_SYMMETRY", 0.9))
+
+        # Symmetrize: categorical grouping explains large variance
+        eta = finding_dict.get("eta2", 0)
+        if eta >= 0.14 and not finding_dict.get("has_interaction"):
+            tags.append(("SYMMETRIZE", 0.8))
+
+        # Partition: categorical grouping with moderate effect
+        if 0.01 <= eta < 0.14:
+            tags.append(("PARTITION", 0.6))
+
+        # Linearize: best-fit is log or power
+        form = finding_dict.get("functional_form", "")
+        if form in ("log", "sqrt", "power"):
+            tags.append(("LINEARIZE", 0.7))
+
+        # Reduce: very high R² on a simple formula
+        if eta >= 0.9 or finding_dict.get("r_squared", 0) >= 0.9:
+            tags.append(("REDUCE", 0.8))
+
+        # Spectral
+        if finding_dict.get("involves_eigenvalues"):
+            tags.append(("SPECTRAL", 0.7))
+
+        # Compose: cross-domain with surviving enrichment
+        if finding_dict.get("is_cross_domain") and eta >= 0.01:
+            tags.append(("COMPOSE", 0.5))
+
+        if not tags:
+            tags.append(("PARTITION", 0.3))  # default
+
+        return tags
