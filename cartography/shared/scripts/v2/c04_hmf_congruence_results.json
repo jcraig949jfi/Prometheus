@@ -1,0 +1,107 @@
+{
+  "test": "C04/R2",
+  "claim": "Hilbert modular form congruences reveal structural patterns by weight/level",
+  "n_forms": 10000,
+  "congruence_by_prime": {
+    "2": {
+      "n_pairs_checked": 5000,
+      "mean_match_density": 0.6057720000000001,
+      "expected_random": 0.5,
+      "enrichment": 1.2115440000000002,
+      "n_strong_congruences": 735,
+      "median_density": 0.6,
+      "std_density": 0.16153230022506335
+    },
+    "3": {
+      "n_pairs_checked": 5000,
+      "mean_match_density": 0.433516,
+      "expected_random": 0.3333333333333333,
+      "enrichment": 1.300548,
+      "n_strong_congruences": 87,
+      "median_density": 0.4,
+      "std_density": 0.16402621053965735
+    },
+    "5": {
+      "n_pairs_checked": 5000,
+      "mean_match_density": 0.32022799999999996,
+      "expected_random": 0.2,
+      "enrichment": 1.6011399999999998,
+      "n_strong_congruences": 7,
+      "median_density": 0.28,
+      "std_density": 0.16729575014327172
+    },
+    "7": {
+      "n_pairs_checked": 5000,
+      "mean_match_density": 0.278756,
+      "expected_random": 0.14285714285714285,
+      "enrichment": 1.951292,
+      "n_strong_congruences": 2,
+      "median_density": 0.22,
+      "std_density": 0.17087484444469878
+    },
+    "11": {
+      "n_pairs_checked": 5000,
+      "mean_match_density": 0.25744000000000006,
+      "expected_random": 0.09090909090909091,
+      "enrichment": 2.8318400000000006,
+      "n_strong_congruences": 1,
+      "median_density": 0.2,
+      "std_density": 0.17316537298201393
+    }
+  },
+  "f24_by_weight": {
+    "verdict": "INSUFFICIENT_DATA",
+    "result": {}
+  },
+  "f24_by_level": {
+    "verdict": "NEGLIGIBLE_EFFECT",
+    "result": {
+      "eta_squared": 0.0013273288214992326,
+      "f_statistic": 4.428537759040115,
+      "ss_between": 0.07981591393564066,
+      "ss_within": 60.05292033260175,
+      "ss_total": 60.13273624653739,
+      "n_groups": 4,
+      "n_total": 10000,
+      "group_stats": {
+        "<=100": {
+          "n": 93,
+          "mean": 0.42096774193548375,
+          "std": 0.07398611488635158,
+          "cv": 0.17575245681815324
+        },
+        "101-500": {
+          "n": 878,
+          "mean": 0.42840822443352117,
+          "std": 0.0801939365509572,
+          "cv": 0.1871904692235931
+        },
+        "501-1000": {
+          "n": 1492,
+          "mean": 0.4252679906871737,
+          "std": 0.0767858122629954,
+          "cv": 0.18055864524136944
+        },
+        ">1000": {
+          "n": 7537,
+          "mean": 0.43243959274596205,
+          "std": 0.07735549105819124,
+          "cv": 0.17888161111009546
+        }
+      }
+    }
+  },
+  "f24b": {
+    "verdict": "INSUFFICIENT_DATA",
+    "result": {}
+  },
+  "f25": {
+    "verdict": "INSUFFICIENT_DATA",
+    "result": {}
+  },
+  "f27": {
+    "verdict": "NOT_TAUTOLOGY",
+    "result": {}
+  },
+  "classification": "CONGRUENCE_ENRICHED"
+}

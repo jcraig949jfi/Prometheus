@@ -1,0 +1,138 @@
+{
+  "test": "C01/R2",
+  "claim": "Paramodular conjecture: weight-2 Siegel newform at level N <--> abelian surface of conductor N",
+  "match_rate": 1.0,
+  "matched_levels": [
+    277,
+    349,
+    353,
+    389,
+    461,
+    523,
+    587
+  ],
+  "unmatched_levels": [],
+  "match_details": {
+    "277": {
+      "level": 277,
+      "n_eigenvalues": 9984,
+      "n_curves_at_conductor": 2,
+      "has_match": true,
+      "mean_coeff": 0.044771634615384616,
+      "std_coeff": 14.012660924100418,
+      "max_abs_coeff": 60
+    },
+    "349": {
+      "level": 349,
+      "n_eigenvalues": 665,
+      "n_curves_at_conductor": 1,
+      "has_match": true,
+      "mean_coeff": -0.21203007518796993,
+      "std_coeff": 9.645841658058075,
+      "max_abs_coeff": 28
+    },
+    "353": {
+      "level": 353,
+      "n_eigenvalues": 648,
+      "n_curves_at_conductor": 1,
+      "has_match": true,
+      "mean_coeff": 0.12191358024691358,
+      "std_coeff": 5.953960299816491,
+      "max_abs_coeff": 20
+    },
+    "389": {
+      "level": 389,
+      "n_eigenvalues": 786,
+      "n_curves_at_conductor": 2,
+      "has_match": true,
+      "mean_coeff": -0.04961832061068702,
+      "std_coeff": 5.468282927476552,
+      "max_abs_coeff": 18
+    },
+    "461": {
+      "level": 461,
+      "n_eigenvalues": 569,
+      "n_curves_at_conductor": 2,
+      "has_match": true,
+      "mean_coeff": 0.10193321616871705,
+      "std_coeff": 4.405637839045147,
+      "max_abs_coeff": 14
+    },
+    "523": {
+      "level": 523,
+      "n_eigenvalues": 411,
+      "n_curves_at_conductor": 2,
+      "has_match": true,
+      "mean_coeff": -0.17761557177615572,
+      "std_coeff": 5.613252060442688,
+      "max_abs_coeff": 21
+    },
+    "587": {
+      "level": 587,
+      "n_eigenvalues": 3821,
+      "n_curves_at_conductor": 1,
+      "has_match": true,
+      "mean_coeff": -0.05993195498560586,
+      "std_coeff": 3.51239162741516,
+      "max_abs_coeff": 24
+    }
+  },
+  "f24": {
+    "verdict": "INSUFFICIENT_DATA",
+    "result": {}
+  },
+  "f24b": {
+    "verdict": "INSUFFICIENT_DATA",
+    "result": {}
+  },
+  "f25": {
+    "verdict": "CONDITIONAL",
+    "result": {
+      "per_group": [
+        {
+          "held_out": "277",
+          "n_test": 9984,
+          "r2_oos": -0.7587697200956582
+        },
+        {
+          "held_out": "349",
+          "n_test": 665,
+          "r2_oos": -0.0010894530597804764
+        },
+        {
+          "held_out": "353",
+          "n_test": 648,
+          "r2_oos": -0.8717254621691699
+        },
+        {
+          "held_out": "389",
+          "n_test": 786,
+          "r2_oos": -1.312718549226989
+        },
+        {
+          "held_out": "461",
+          "n_test": 569,
+          "r2_oos": -2.9326292651988366
+        },
+        {
+          "held_out": "523",
+          "n_test": 411,
+          "r2_oos": -1.0889079830001038
+        },
+        {
+          "held_out": "587",
+          "n_test": 3821,
+          "r2_oos": -7.4842732899337
+        }
+      ],
+      "weighted_oos_r2": -2.362388754124952,
+      "mean_oos_r2": -2.0643019603834625,
+      "n_groups_tested": 7
+    }
+  },
+  "f27": {
+    "verdict": "NOT_TAUTOLOGY",
+    "result": {}
+  },
+  "classification": "FULL_MATCH"
+}
