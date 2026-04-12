@@ -1,0 +1,65 @@
+{
+  "test": "Two Voices Independence Test",
+  "megethos_vs_arithmos": {
+    "r2": 0.0012,
+    "n": 40189,
+    "verdict": "INDEPENDENT"
+  },
+  "island_phonemes": {
+    "Topos": {
+      "r2_vs_megethos": 0.0191,
+      "r2_vs_arithmos": null,
+      "verdict": "NEW_VOICE"
+    },
+    "Taxis": {
+      "r2_vs_megethos": 0.0903,
+      "r2_vs_arithmos": 0.0602,
+      "verdict": "WEAK_COUPLING"
+    },
+    "Klados": {
+      "r2_vs_megethos": 0.079,
+      "r2_vs_arithmos": 0.0361,
+      "verdict": "WEAK_COUPLING"
+    },
+    "Auxesis": {
+      "r2_vs_megethos": null,
+      "r2_vs_arithmos": 0.0036,
+      "verdict": "NEW_VOICE"
+    },
+    "Kampyle": {
+      "verdict": "NO_DATA"
+    }
+  },
+  "original_phonemes": {
+    "Bathos": {
+      "r2_vs_megethos": 0.0071,
+      "verdict": "NEW_VOICE_SURPRISE"
+    },
+    "Symmetria": {
+      "r2_vs_megethos": 0.0191,
+      "verdict": "NEW_VOICE_SURPRISE"
+    },
+    "Phasma": {
+      "r2_vs_megethos": 0.0847,
+      "verdict": "WEAK_COUPLING"
+    }
+  },
+  "strategy_groups": {
+    "automorphic": {
+      "r2_vs_megethos": 0.0102,
+      "r2_vs_arithmos": 0.0121,
+      "verdict": "INDEPENDENT"
+    },
+    "padic": {
+      "r2_vs_megethos": 0.001,
+      "r2_vs_arithmos": 0.0042,
+      "verdict": "INDEPENDENT"
+    },
+    "monodromy": {
+      "r2_vs_megethos": 0.079,
+      "r2_vs_arithmos": 0.0361,
+      "verdict": "WEAK_COUPLING"
+    }
+  },
+  "conclusion": "Islands carry 3-4 genuinely independent voices. Decaphony needs all 10."
+}
