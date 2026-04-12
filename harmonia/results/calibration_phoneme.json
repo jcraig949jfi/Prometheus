@@ -1,18 +1,18 @@
 {
   "sensitivity": 1.0,
-  "specificity": 0.3333333333333333,
-  "accuracy": 0.75,
+  "specificity": 0.0,
+  "accuracy": 0.625,
   "tp": 5,
   "fn": 0,
-  "tn": 1,
-  "fp": 2,
+  "tn": 0,
+  "fp": 3,
   "results": [
     {
       "claim": "Level of modular form ~ conductor of L-function (modularity theorem)",
       "expected": "SURVIVES",
       "actual": "SURVIVES",
       "correct": true,
-      "score": 4,
+      "score": 5,
       "details": "rank 13->13, 0.4s"
     },
     {
@@ -21,14 +21,14 @@
       "actual": "SURVIVES",
       "correct": true,
       "score": 4,
-      "details": "rank 15->15, 0.5s"
+      "details": "rank 13->13, 0.4s"
     },
     {
       "claim": "EC conductor = L-function conductor (by definition)",
       "expected": "SURVIVES",
       "actual": "SURVIVES",
       "correct": true,
-      "score": 4,
+      "score": 5,
       "details": "rank 13->13, 0.5s"
     },
     {
@@ -36,15 +36,15 @@
       "expected": "SURVIVES",
       "actual": "SURVIVES",
       "correct": true,
-      "score": 4,
-      "details": "rank 15->15, 2.9s"
+      "score": 5,
+      "details": "rank 15->15, 3.0s"
     },
     {
       "claim": "Space group constrains material properties (crystal physics)",
       "expected": "SURVIVES",
       "actual": "SURVIVES",
       "correct": true,
-      "score": 4,
+      "score": 5,
       "details": "rank 15->15, 0.6s"
     },
     {
@@ -52,23 +52,23 @@
       "expected": "KILLED",
       "actual": "SURVIVES",
       "correct": false,
-      "score": 4,
-      "details": "rank 10->10, 0.3s"
+      "score": 6,
+      "details": "rank 10->10, 0.9s"
     },
     {
       "claim": "Knot polynomials ~ modular form coefficients (no known relationship)",
       "expected": "KILLED",
-      "actual": "KILLED",
-      "correct": true,
-      "score": 2,
-      "details": "rank 1->0, 0.3s"
+      "actual": "SURVIVES",
+      "correct": false,
+      "score": 4,
+      "details": "rank 1->1, 0.3s"
     },
     {
       "claim": "Formula syntax predicts polytope geometry (no known relationship)",
       "expected": "KILLED",
       "actual": "SURVIVES",
       "correct": false,
-      "score": 4,
+      "score": 5,
       "details": "rank 15->15, 2.5s"
     }
   ]
