@@ -360,6 +360,57 @@ def load_dirichlet_zeros(db_path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("dirichlet_zeros", labels, features)
 
 
+def load_ec_zeros(db_path: Optional[Path] = None, limit: int = 20000) -> DomainIndex:
+    """
+    Load elliptic curves with high-precision L-function zero statistics.
+
+    12 features per object: standard EC invariants + zero locations,
+    spacings, spacing ratios, and GUE statistics. The spectral features
+    (first zero, mean spacing, spacing variance) have 6-digit precision
+    from LMFDB data.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql(f"""
+        SELECT ec.lmfdb_label, ec.conductor, ec.rank, ec.torsion,
+               oz.zeros_vector, oz.n_zeros_stored, oz.root_number, oz.analytic_rank
+        FROM object_zeros oz
+        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
+        WHERE oz.n_zeros_stored >= 5 AND oz.zeros_vector IS NOT NULL
+              AND ec.conductor IS NOT NULL
+        LIMIT {limit}
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        label, conductor, rank, torsion, zeros_vec, n_zeros, root_num, ana_rank = row
+        zeros = sorted([z for z in (zeros_vec or []) if z is not None and z > 0])
+        if len(zeros) < 3:
+            continue
+        spacings = [zeros[i + 1] - zeros[i] for i in range(len(zeros) - 1)]
+
+        labels.append(label or str(len(labels)))
+        feats.append([
+            np.log1p(float(conductor or 0)),
+            float(rank or 0),
+            float(ana_rank or 0),
+            float(torsion or 0),
+            float(root_num or 0),
+            zeros[0],                                  # first zero
+            np.mean(spacings),                         # mean zero spacing
+            np.std(spacings) if len(spacings) > 1 else 0,
+            spacings[0] / spacings[1] if len(spacings) > 1 else 1,
+            float(len(zeros)),
+            np.mean(zeros[:3]),                        # low zero average
+            np.mean(zeros[-3:]),                       # high zero average
+        ])
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("ec_zeros", labels, features)
+
+
 def load_battery() -> DomainIndex:
     """
     Load battery test results as a dimension.
@@ -547,6 +598,7 @@ DOMAIN_LOADERS = {
     "elliptic_curves": load_elliptic_curves,
     "modular_forms": load_modular_forms,
     "dirichlet_zeros": load_dirichlet_zeros,
+    "ec_zeros": load_ec_zeros,
     "battery": load_battery,
     "dissection": load_dissection_strategies,
 }

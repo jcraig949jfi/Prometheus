@@ -106,6 +106,17 @@ DOMAIN_PHONEME_MAP = {
         "spectral":   [(2, +1, 1.0), (4, +1, 0.7)],  # spectral_parameter + Fricke
         "symmetry":   [(3, +1, 0.8)],           # symmetry type
     },
+    "ec_zeros": {
+        # features: [log_conductor, rank, analytic_rank, torsion, root_number,
+        #            first_zero, mean_spacing, spacing_std, spacing_ratio,
+        #            n_zeros, low_zero_avg, high_zero_avg]
+        "complexity": [(0, +1, 1.0)],           # conductor
+        "rank":       [(1, +1, 1.0), (2, +1, 0.8)],  # rank + analytic
+        "arithmetic": [(3, +1, 1.0)],           # torsion
+        "symmetry":   [(4, +1, 0.7)],           # root_number
+        "spectral":   [(5, +1, 1.0), (6, +1, 1.0), (7, +1, 0.8),
+                       (8, +1, 0.7), (10, +1, 0.6), (11, +1, 0.6)],  # all zero stats
+    },
     "battery": {
         # features: [verdict_score, neg_log_p, z_score, real_val, null_mean,
         #            source_round, + 12 domain_involvement dims]
