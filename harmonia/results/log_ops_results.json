@@ -1,0 +1,339 @@
+{
+  "log_addition": {
+    "hits": 2,
+    "total": 4,
+    "hit_rate": 0.5,
+    "verdict": "PASS",
+    "details": [
+      {
+        "N1": 11,
+        "N2": 14,
+        "expected": 154,
+        "nearest_conductors": [
+          161,
+          161,
+          160,
+          160,
+          158,
+          158,
+          168,
+          168,
+          168,
+          168
+        ],
+        "nearest_label": "161.a4",
+        "nearest_dist": 0.32516399025917053,
+        "ratio_nearest_to_expected": 1.045,
+        "hit": true
+      },
+      {
+        "N1": 11,
+        "N2": 17,
+        "expected": 187,
+        "nearest_conductors": [
+          195,
+          195,
+          194,
+          194,
+          192,
+          192,
+          192,
+          192,
+          192,
+          192
+        ],
+        "nearest_label": "195.a3",
+        "nearest_dist": 0.32512328028678894,
+        "ratio_nearest_to_expected": 1.043,
+        "hit": false
+      },
+      {
+        "N1": 14,
+        "N2": 15,
+        "expected": 210,
+        "nearest_conductors": [
+          220,
+          220,
+          221,
+          221,
+          221,
+          221,
+          222,
+          222,
+          224,
+          224
+        ],
+        "nearest_label": "220.b1",
+        "nearest_dist": 0.30163249373435974,
+        "ratio_nearest_to_expected": 1.048,
+        "hit": false
+      },
+      {
+        "N1": 11,
+        "N2": 30,
+        "expected": 330,
+        "nearest_conductors": [
+          336,
+          336,
+          336,
+          336,
+          336,
+          336,
+          336,
+          336,
+          336,
+          336
+        ],
+        "nearest_label": "336.d1",
+        "nearest_dist": 0.32728758454322815,
+        "ratio_nearest_to_expected": 1.018,
+        "hit": true
+      }
+    ]
+  },
+  "log_subtraction": {
+    "hits": 6,
+    "total": 6,
+    "hit_rate": 1.0,
+    "verdict": "PASS",
+    "details": [
+      {
+        "N1": 330,
+        "N2": 11,
+        "expected": 30,
+        "nearest_conductors": [
+          30,
+          30,
+          30,
+          32,
+          33,
+          33,
+          34,
+          34,
+          36,
+          36
+        ],
+        "nearest_label": "30.a2",
+        "nearest_dist": 0.2679383158683777,
+        "ratio_nearest_to_expected": 1.0,
+        "hit": true
+      },
+      {
+        "N1": 330,
+        "N2": 30,
+        "expected": 11,
+        "nearest_conductors": [
+          14,
+          14,
+          15,
+          15,
+          17,
+          11,
+          20,
+          20,
+          21,
+          21
+        ],
+        "nearest_label": "14.a1",
+        "nearest_dist": 0.4553404748439789,
+        "ratio_nearest_to_expected": 1.273,
+        "hit": true
+      },
+      {
+        "N1": 154,
+        "N2": 11,
+        "expected": 14,
+        "nearest_conductors": [
+          37,
+          43,
+          53,
+          65,
+          65,
+          57,
+          58,
+          61,
+          82,
+          82
+        ],
+        "nearest_label": "37.a1",
+        "nearest_dist": 1.2172822952270508,
+        "ratio_nearest_to_expected": 2.643,
+        "hit": true
+      },
+      {
+        "N1": 154,
+        "N2": 14,
+        "expected": 11,
+        "nearest_conductors": [
+          37,
+          43,
+          53,
+          65,
+          65,
+          57,
+          58,
+          61,
+          14,
+          14
+        ],
+        "nearest_label": "37.a1",
+        "nearest_dist": 1.4385579824447632,
+        "ratio_nearest_to_expected": 3.364,
+        "hit": true
+      },
+      {
+        "N1": 210,
+        "N2": 14,
+        "expected": 15,
+        "nearest_conductors": [
+          37,
+          43,
+          53,
+          65,
+          65,
+          57,
+          58,
+          61,
+          82,
+          82
+        ],
+        "nearest_label": "37.a1",
+        "nearest_dist": 1.1757175922393799,
+        "ratio_nearest_to_expected": 2.467,
+        "hit": true
+      },
+      {
+        "N1": 210,
+        "N2": 15,
+        "expected": 14,
+        "nearest_conductors": [
+          37,
+          43,
+          53,
+          65,
+          65,
+          57,
+          58,
+          61,
+          82,
+          82
+        ],
+        "nearest_label": "37.a1",
+        "nearest_dist": 1.2265228033065796,
+        "ratio_nearest_to_expected": 2.643,
+        "hit": true
+      }
+    ]
+  },
+  "scalar_multiply": {
+    "hits": 1,
+    "total": 2,
+    "hit_rate": 0.5,
+    "verdict": "PASS",
+    "details": [
+      {
+        "N": 11,
+        "k": 2,
+        "expected": 121,
+        "nearest_conductors": [
+          124,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          121,
+          118,
+          118
+        ],
+        "nearest_label": "124.b1",
+        "nearest_dist": 0.26822084188461304,
+        "ratio_nearest_to_expected": 1.025,
+        "hit": true
+      },
+      {
+        "N": 14,
+        "k": 2,
+        "expected": 196,
+        "nearest_conductors": [
+          206,
+          206,
+          205,
+          205,
+          205,
+          205,
+          208,
+          208,
+          203,
+          203
+        ],
+        "nearest_label": "206.a1",
+        "nearest_dist": 0.2980137765407562,
+        "ratio_nearest_to_expected": 1.051,
+        "hit": false
+      }
+    ]
+  },
+  "inner_product": {
+    "n_matched_pairs": 20,
+    "matched_mean_ip": 11.250335788726806,
+    "matched_mean_cosine": 0.9524274170398712,
+    "random_mean_ip": 58.58054028511047,
+    "random_std_ip": 9.420824717046553,
+    "z_score": -5.023997995710696,
+    "verdict": "PASS",
+    "matched_details": [
+      {
+        "N": 11,
+        "inner_product": 5.678597927093506,
+        "cosine_sim": 0.8933866620063782
+      },
+      {
+        "N": 14,
+        "inner_product": 7.366583824157715,
+        "cosine_sim": 0.9572982788085938
+      },
+      {
+        "N": 15,
+        "inner_product": 7.7500529289245605,
+        "cosine_sim": 0.9590641856193542
+      },
+      {
+        "N": 17,
+        "inner_product": 8.479036331176758,
+        "cosine_sim": 0.9619998931884766
+      },
+      {
+        "N": 19,
+        "inner_product": 8.72506332397461,
+        "cosine_sim": 0.927314817905426
+      },
+      {
+        "N": 20,
+        "inner_product": 9.489999771118164,
+        "cosine_sim": 0.9653664827346802
+      },
+      {
+        "N": 21,
+        "inner_product": 9.807761192321777,
+        "cosine_sim": 0.9662913680076599
+      },
+      {
+        "N": 24,
+        "inner_product": 10.711198806762695,
+        "cosine_sim": 0.9686447381973267
+      },
+      {
+        "N": 26,
+        "inner_product": 10.845141410827637,
+        "cosine_sim": 0.9402189254760742
+      },
+      {
+        "N": 27,
+        "inner_product": 11.118670463562012,
+        "cosine_sim": 0.9415464997291565
+      }
+    ]
+  }
+}
