@@ -1,0 +1,69 @@
+{
+  "surgical_cut_1_residual_extraction": {
+    "residual_PC1": 38.1,
+    "null_PC1": 25.3,
+    "z_score": 148.9,
+    "signal_ratio": 1.5,
+    "verdict": "SURVIVES at z=149. Residual structure is 1.5x above random and HIGHLY significant.",
+    "domain_contributions": {
+      "elliptic_curves": 27.2,
+      "ec_zeros": 26.0,
+      "genus2": 21.3,
+      "number_fields": 21.1,
+      "lattices": 4.5,
+      "modular_forms": 0.0,
+      "dirichlet_zeros": 0.0
+    },
+    "key_finding": "EC, ec_zeros, genus2, NF drive the residual. MF and Dirichlet contribute ZERO \u2014 their structure is entirely Megethos."
+  },
+  "surgical_cut_2_within_bin_ranking": {
+    "n_pairs": 183,
+    "mean_rho": 0.9412,
+    "median_rho": 0.9984,
+    "frac_above_0.5": 1.0,
+    "frac_above_0.8": 0.847,
+    "verdict": "SURVIVES STRONGLY. Even within tight complexity bins, residual orderings agree at median rho=0.998.",
+    "key_finding": "Cross-domain alignment persists AFTER removing complexity. 84.7% of pairs have rho > 0.8. This is NOT complexity leakage."
+  },
+  "surgical_cut_3_functional_sensitivity": {
+    "original_log": {
+      "PC1": 38.1,
+      "ratio": 1.5
+    },
+    "sqrt": {
+      "PC1": 36.8,
+      "ratio": 1.45
+    },
+    "linear": {
+      "PC1": 40.4,
+      "ratio": 1.59
+    },
+    "cubic": {
+      "PC1": 41.5,
+      "ratio": 1.64
+    },
+    "piecewise": {
+      "PC1": 36.4,
+      "ratio": 1.44
+    },
+    "verdict": "STABLE across transforms (1.44x to 1.64x). The residual signal does NOT depend on the specific functional form of Megethos removal.",
+    "key_finding": "Whether we regress out log, sqrt, linear, or cubic Megethos, the residual signal ratio stays in [1.44, 1.64]. The secondary structure is robust to the FORM of complexity removal."
+  },
+  "combined_verdict": {
+    "signal": "REAL, ROBUST, MODEST",
+    "z_score": 149,
+    "signal_ratio_range": "1.44x - 1.64x",
+    "cross_domain_agreement": "median rho = 0.998 within complexity bins",
+    "domains_with_secondary_structure": [
+      "elliptic_curves",
+      "ec_zeros",
+      "genus2",
+      "number_fields"
+    ],
+    "domains_without": [
+      "modular_forms",
+      "dirichlet_zeros"
+    ],
+    "interpretation": "After removing complexity, 4 arithmetic-geometric domains (EC, ec_zeros, genus2, NF) share a secondary structure at 1.5x above null with z=149 significance and rho=0.998 cross-domain agreement. Modular forms and Dirichlet zeros are pure complexity \u2014 no residual structure. The secondary signal is functional-form-independent (survives log/sqrt/linear/cubic removal). This is the irreducible kernel."
+  }
+}
