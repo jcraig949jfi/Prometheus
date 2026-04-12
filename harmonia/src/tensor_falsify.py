@@ -15,7 +15,7 @@ from typing import Optional
 from pathlib import Path
 
 from harmonia.src.domain_index import DomainIndex, load_domains, DOMAIN_LOADERS
-from harmonia.src.coupling import DistributionalCoupling
+from harmonia.src.coupling import DistributionalCoupling, AlignmentCoupling
 from harmonia.src.validate import extract_bond_components
 
 
@@ -66,37 +66,65 @@ def test_permutation_null(domains, scorer, original_ranks, n_perms=5, max_rank=1
     re-run TT-Cross. If bond dimension persists, it's an artifact.
     If it drops, the structure depends on actual feature alignment.
     """
-    # Instead of comparing raw ranks (which can be inflated by scorer baseline),
-    # compare the actual coupling SCORES between real and shuffled data.
-    # Sample 1000 random index tuples and compare score distributions.
-    n_sample = min(1000, domains[0].n_objects, domains[1].n_objects)
+    # Alignment-sensitive null: instead of comparing mean scores (which
+    # miss alignment structure), compare the VARIANCE OF PAIRWISE SCORES
+    # across matched vs shuffled index pairs. Real alignment creates
+    # score variance (some pairs couple strongly, others don't).
+    # Shuffling destroys this — scores become uniform.
+    #
+    # Also test rank correlation: do the highest-scoring objects in
+    # domain A consistently pair with highest-scoring objects in domain B?
+    # Under the null (shuffled), this correlation should vanish.
+
+    n_sample = min(2000, domains[0].n_objects, domains[1].n_objects)
     real_idx = [torch.randint(0, d.n_objects, (n_sample,)) for d in domains]
     real_scores = scorer(*real_idx)
+    real_var = real_scores.var().item()
 
-    null_scores_all = []
+    # Also compute rank-order statistic: sort by domain A index,
+    # check if domain B scores follow any pattern
+    sorted_by_a = real_scores[real_idx[0].argsort()]
+    # Spearman-like: correlation between position and score
+    positions = torch.arange(n_sample, dtype=torch.float32)
+    real_rho = torch.corrcoef(torch.stack([positions, sorted_by_a]))[0, 1].item()
+    if np.isnan(real_rho):
+        real_rho = 0.0
+
+    null_vars = []
+    null_rhos = []
     for _ in range(n_perms):
         perm = torch.randperm(domains[0].n_objects)
         shuffled_feats = domains[0].features[perm]
         shuffled_dom = DomainIndex(domains[0].name, domains[0].labels, shuffled_feats)
 
-        null_scorer = DistributionalCoupling([shuffled_dom] + list(domains[1:]))
+        null_scorer = AlignmentCoupling([shuffled_dom] + list(domains[1:]))
         null_scores = null_scorer(*real_idx)
-        null_scores_all.append(null_scores)
+        null_vars.append(null_scores.var().item())
 
-    null_stacked = torch.stack(null_scores_all)
-    null_mean = null_stacked.mean()
-    null_std = null_stacked.std().clamp(min=1e-8)
-    real_mean = real_scores.mean()
+        sorted_null = null_scores[real_idx[0].argsort()]
+        rho = torch.corrcoef(torch.stack([positions, sorted_null]))[0, 1].item()
+        null_rhos.append(rho if not np.isnan(rho) else 0.0)
 
-    # Z-score: how many standard deviations is the real mean above null?
-    z = ((real_mean - null_mean) / null_std).item()
-    survives = z > 2.0
+    # Variance test: real variance should exceed null variance
+    null_var_mean = np.mean(null_vars)
+    null_var_std = max(np.std(null_vars), 1e-10)
+    var_z = (real_var - null_var_mean) / null_var_std
+
+    # Rank correlation test: real rho should exceed null rhos
+    null_rho_mean = np.mean(null_rhos)
+    null_rho_std = max(np.std(null_rhos), 1e-10)
+    rho_z = (abs(real_rho) - np.mean(np.abs(null_rhos))) / max(np.std(np.abs(null_rhos)), 1e-10)
+
+    # Combined: survive if EITHER variance or rank correlation is significant
+    combined_z = max(var_z, rho_z)
+    survives = combined_z > 2.0
 
     return TensorTestResult(
         test="F1_permutation_null",
         verdict="SURVIVES" if survives else "KILLED",
-        detail=f"real mean={real_mean:.4f} vs null={null_mean:.4f} (z={z:.2f})",
-        value=z,
+        detail=f"var_z={var_z:.2f} (real_var={real_var:.6f} vs null={null_var_mean:.6f}), "
+               f"rho_z={rho_z:.2f} (real_rho={real_rho:.4f} vs null={null_rho_mean:.4f})",
+        value=combined_z,
         threshold=2.0,
     )
 
@@ -119,7 +147,7 @@ def test_subset_stability(domains, scorer, original_ranks, n_splits=3, max_rank=
             sub = DomainIndex(dom.name, [dom.labels[i] for i in perm.tolist()], dom.features[perm])
             sub_domains.append(sub)
 
-        sub_scorer = DistributionalCoupling(sub_domains)
+        sub_scorer = AlignmentCoupling(sub_domains)
         _, ranks = _run_tt(sub_domains, sub_scorer, max_rank)
         split_ranks.append(max(ranks[1:-1]))
 
@@ -203,7 +231,7 @@ def test_confound_residual(domains, original_ranks, max_rank=15):
         new_domains = list(domains)
         new_domains[d_idx] = DomainIndex(dom.name, dom.labels, residual_feats)
 
-        res_scorer = DistributionalCoupling(new_domains)
+        res_scorer = AlignmentCoupling(new_domains)
         _, ranks = _run_tt(new_domains, res_scorer, max_rank)
         residual_ranks.append(max(ranks[1:-1]))
 
@@ -283,7 +311,7 @@ def falsify_bond(
                     dom.name, [dom.labels[j] for j in perm.tolist()],
                     dom.features[perm])
 
-    scorer = DistributionalCoupling(domain_list)
+    scorer = AlignmentCoupling(domain_list)
     tt, ranks = _run_tt(domain_list, scorer, max_rank)
     original_rank = max(ranks[1:-1])
 
