@@ -28,7 +28,7 @@ class SweepResult:
     error: Optional[str] = None
 
 
-def _run_single_exploration(domain_names, max_rank, eps, subsample, scorer):
+def _run_single_exploration(domain_names, max_rank, eps, subsample, scorer, device='cpu'):
     """Worker function for parallel execution. Must be top-level for pickling."""
     try:
         from harmonia.src.engine import HarmoniaEngine
@@ -36,7 +36,7 @@ def _run_single_exploration(domain_names, max_rank, eps, subsample, scorer):
 
         engine = HarmoniaEngine(
             domains=list(domain_names),
-            device='cpu',
+            device=device,
             max_rank=max_rank,
             eps=eps,
             subsample=subsample,
@@ -93,6 +93,7 @@ def sweep_pairs(
     subsample: Optional[int] = 2000,
     scorer: str = "distributional",
     max_workers: int = 4,
+    device: str = "cpu",
 ) -> list[SweepResult]:
     """
     Run TT-Cross on all pairs of domains in parallel.
@@ -120,7 +121,7 @@ def sweep_pairs(
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         futures = {
             executor.submit(
-                _run_single_exploration, pair, max_rank, eps, subsample, scorer
+                _run_single_exploration, pair, max_rank, eps, subsample, scorer, device
             ): pair
             for pair in pairs
         }
@@ -150,6 +151,7 @@ def sweep_triples(
     subsample: Optional[int] = 2000,
     scorer: str = "distributional",
     max_workers: int = 4,
+    device: str = "cpu",
 ) -> list[SweepResult]:
     """Run TT-Cross on all triples of domains in parallel."""
     if domains is None:
@@ -164,7 +166,7 @@ def sweep_triples(
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         futures = {
             executor.submit(
-                _run_single_exploration, triple, max_rank, eps, subsample, scorer
+                _run_single_exploration, triple, max_rank, eps, subsample, scorer, device
             ): triple
             for triple in triples
         }
@@ -194,6 +196,7 @@ def sweep_all(
     subsample: Optional[int] = 2000,
     scorer: str = "distributional",
     max_workers: int = 4,
+    device: str = "cpu",
 ) -> list[SweepResult]:
     """Run pairs + triples + the full N-domain tensor."""
     if domains is None:
@@ -213,7 +216,7 @@ def sweep_all(
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         futures = {
             executor.submit(
-                _run_single_exploration, combo, max_rank, eps, subsample, scorer
+                _run_single_exploration, combo, max_rank, eps, subsample, scorer, device
             ): combo
             for combo in combos
         }
