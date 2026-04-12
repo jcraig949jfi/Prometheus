@@ -1,0 +1,44 @@
+{
+  "megethos_sieve": {
+    "M_only_delta001": {
+      "median_candidates": 6,
+      "sieve_ratio": "35x"
+    },
+    "M_plus_M2": {
+      "median_candidates": 1,
+      "sieve_ratio": "414x",
+      "cost": "O(log N)"
+    },
+    "M_plus_M2_M3": {
+      "median_candidates": 1,
+      "sieve_ratio": "414x"
+    },
+    "M_plus_M2_M3_M5": {
+      "median_candidates": 1,
+      "sieve_ratio": "414x"
+    }
+  },
+  "conductor_recovery": {
+    "from_zero_count": {
+      "median_error_pct": 9.1,
+      "mean_error_pct": 11.0
+    },
+    "from_first_zero": {
+      "median_error_pct": 86.2,
+      "note": "too noisy"
+    }
+  },
+  "rank_vs_megethos": {
+    "R2": 0.0195,
+    "note": "Megethos does not predict rank directly",
+    "but": "Rank DISTRIBUTION changes monotonically with M: P(rank>=1) goes 0% to 51%"
+  },
+  "scaling": {
+    "trial_division": "O(sqrt(N))",
+    "megethos_computation": "O(1) for log(N)",
+    "M2_extraction": "O(log_2(N))",
+    "crossover": "N ~ 10^10 to 10^20",
+    "for_N_10_100": "trial=10^50 ops, megethos=332 ops"
+  },
+  "key_finding": "M + M_2 narrows conductor to MEDIAN 1 CANDIDATE. The first sub-phoneme is a perfect sieve for our data."
+}
