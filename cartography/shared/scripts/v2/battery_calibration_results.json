@@ -1,0 +1,100 @@
+{
+  "synthetic": [
+    {
+      "true_eta2": 0.001,
+      "measured_eta2": 0.004233912100700519,
+      "verdict": "NEGLIGIBLE_EFFECT",
+      "f24b": "TAIL_DRIVEN",
+      "detected": "CORRECT_NULL"
+    },
+    {
+      "true_eta2": 0.005,
+      "measured_eta2": 0.00404115311222824,
+      "verdict": "NEGLIGIBLE_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "CORRECT_NULL"
+    },
+    {
+      "true_eta2": 0.01,
+      "measured_eta2": 0.006225282231057724,
+      "verdict": "NEGLIGIBLE_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "MISS"
+    },
+    {
+      "true_eta2": 0.02,
+      "measured_eta2": 0.02254800064222726,
+      "verdict": "SMALL_EFFECT",
+      "f24b": "TAIL_DRIVEN",
+      "detected": "YES"
+    },
+    {
+      "true_eta2": 0.05,
+      "measured_eta2": 0.09150833182470981,
+      "verdict": "MODERATE_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "YES"
+    },
+    {
+      "true_eta2": 0.1,
+      "measured_eta2": 0.07476173589006616,
+      "verdict": "MODERATE_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "YES"
+    },
+    {
+      "true_eta2": 0.14,
+      "measured_eta2": 0.06635143036823275,
+      "verdict": "MODERATE_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "YES"
+    },
+    {
+      "true_eta2": 0.2,
+      "measured_eta2": 0.229451909322821,
+      "verdict": "STRONG_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "YES"
+    },
+    {
+      "true_eta2": 0.3,
+      "measured_eta2": 0.2505283062124536,
+      "verdict": "STRONG_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "YES"
+    },
+    {
+      "true_eta2": 0.5,
+      "measured_eta2": 0.5047878900528276,
+      "verdict": "STRONG_EFFECT",
+      "f24b": "CONSISTENT",
+      "detected": "YES"
+    }
+  ],
+  "random": {
+    "fpr_random_groups": 0.0,
+    "fpr_cross_domain": 0.02,
+    "fpr_shuffled_labels": 0.0
+  },
+  "noisy_truths": [
+    {
+      "test": "Z->radius",
+      "truth": "REAL",
+      "eta2": 0.8627818477024513,
+      "verdict": "STRONG_EFFECT"
+    },
+    {
+      "test": "gap_autocorr",
+      "truth": "WEAK_REAL",
+      "eta2": 0.003788781754046869,
+      "verdict": "NEGLIGIBLE_EFFECT"
+    },
+    {
+      "test": "simpsons_paradox",
+      "truth": "PARADOX",
+      "eta2": 0.8044042589237385,
+      "f25": "CONDITIONAL",
+      "global_rho": -0.734877254877255
+    }
+  ]
+}
