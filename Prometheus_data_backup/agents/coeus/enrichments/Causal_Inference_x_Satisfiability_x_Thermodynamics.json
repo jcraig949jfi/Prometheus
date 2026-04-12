@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Thermodynamics",
+    "Causal Inference",
+    "Satisfiability"
+  ],
+  "concept_strengths": {
+    "Thermodynamics": {
+      "influence": {
+        "forge_effect": 0.22,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.22,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2203,
+        "drop": 0.0655
+      },
+      "summary": "Thermodynamics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Causal Inference": {
+      "influence": {
+        "forge_effect": -0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1692,
+      "forge_effect": -0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1692,
+        "rate_without": 0.2267,
+        "drop": -0.0575
+      },
+      "summary": "Causal Inference: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Satisfiability": {
+      "influence": {
+        "forge_effect": 0.0426,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": 0.0426,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2257,
+        "drop": -0.1145
+      },
+      "summary": "Satisfiability: removing it increases forge probability by 11%; forge rate: 11%",
+      "directive": "**Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Causal Inference + Satisfiability": 0.4812
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Causal Inference",
+        "Satisfiability"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Causal Inference",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Causal Inference + Satisfiability: strong positive synergy (+0.481). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Ergodic Theory + Causal Inference + Satisfiability (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Symbiosis",
+    "Pragmatics",
+    "Satisfiability"
+  ],
+  "concept_strengths": {
+    "Symbiosis": {
+      "influence": {
+        "forge_effect": -0.0854,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1212,
+      "forge_effect": -0.0854,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1212,
+        "rate_without": 0.2266,
+        "drop": -0.1054
+      },
+      "summary": "Symbiosis: removing it increases forge probability by 11%; forge rate: 12%",
+      "directive": "**Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Pragmatics": {
+      "influence": {
+        "forge_effect": 0.2426,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.2426,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2187,
+        "drop": 0.0671
+      },
+      "summary": "Pragmatics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Satisfiability": {
+      "influence": {
+        "forge_effect": 0.0426,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": 0.0426,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2257,
+        "drop": -0.1145
+      },
+      "summary": "Satisfiability: removing it increases forge probability by 11%; forge rate: 11%",
+      "directive": "**Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Pragmatics + Symbiosis": -0.0346
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Pragmatics",
+        "Hoare Logic",
+        "Satisfiability"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Pragmatics",
+        "Property-Based Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Embodied Cognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Pragmatics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Pragmatics + Hoare Logic + Satisfiability (accuracy: 0%, calibration: 0%)\n- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)\n- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

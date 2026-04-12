@@ -299,6 +299,9 @@ All 20 datasets in random pool. Topics steer the LLM. Tags prevent log collision
 *Pipeline v5.0: April 9, 2026 (34 signature extractors, Rosetta Stone, algebraic DNA, 12.5M formula dissection, GL_2 fiber map complete)*
 *Pipeline v5.1: April 9, 2026 evening (GSp_4 37/37 at 10^{-88}, 733 mod-2, Lehmer tau mod-23 S_4 image rediscovery, umbral moonshine functor from OEIS, 10 new scripts, 5 frontier roadmaps)*
 *Pipeline v5.4: April 10, 2026 (41 challenges across 4 rounds, 15 kills, 14 publishable results, Layer 3 open, scaling law = endomorphism rank detector, Gamma = genuine metric, 3-prime adelic reconstruction, moonshine breaks flat enrichment, cross-ell absolute independence, 193 resurrected Layer 3 candidates, battery has 3-4 dimensions)*
+*Pipeline v6.0: April 11, 2026 (unified F1-F23 battery, structured JSONL logging, 3 micro-refinements [F19 variance ratio, F22 complexity penalty, F23 multi-method], P4/S8 killed [degree confound], isogeny single-slope killed [F23 heterogeneity], 1 Probable survivor [P2 SG→Tc])*
+*Pipeline v7.0: April 12, 2026 (F24 variance decomposition + F24b metric consistency, LAW/CONSTRAINT/TENDENCY ontology, council stress tests [Q2 variance decomp, Q3 label permutation, Q5 factorization null, Q7 scaling], M4/M2² identified as contrast amplifier not magnitude measure, endomorphism finding downgraded from PROBABLE to CONSTRAINT [eta²=0.05 tail-driven], SG→Tc confirmed as only LAW [eta²=0.457])*
+*Pipeline v7.1: April 12, 2026 (20-finding re-audit: 7 LAWS / 3 CONSTRAINTS / 6 TENDENCIES / 4 NEGLIGIBLE. SC_class→Tc eta²=0.570 is strongest finding — was hidden by M4/M2² detection bias. SG decomposition: full SG → 22% after all controls, but NO component reproduces it [point group 2.3%, lattice 2.8%, inversion 0.1%]. Signal is irreducible. Battery FROZEN at 25 tests. Next: full re-audit of all prior results.)*
 
 ### v5.1 New Tools
 | File | Purpose | Location |

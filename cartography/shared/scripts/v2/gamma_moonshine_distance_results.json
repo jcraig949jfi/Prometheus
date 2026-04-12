@@ -1,0 +1,181 @@
+{
+  "challenge": "ALL-054",
+  "title": "Gamma Moonshine\u2192NT Distance",
+  "timestamp": "2026-04-10T06:25:11",
+  "elapsed_seconds": 0.0,
+  "modules_in_matrix": 25,
+  "moonshine_modules": [
+    "dedekind_eta",
+    "eisenstein",
+    "jacobi_theta"
+  ],
+  "nt_modules": [
+    "dirichlet",
+    "hurwitz_zeta",
+    "riemann_zeta"
+  ],
+  "direct_distances": [
+    {
+      "from": "dedekind_eta",
+      "to": "dirichlet",
+      "distance": 0.835714
+    },
+    {
+      "from": "dedekind_eta",
+      "to": "hurwitz_zeta",
+      "distance": 0.79689
+    },
+    {
+      "from": "dedekind_eta",
+      "to": "riemann_zeta",
+      "distance": 0.789828
+    },
+    {
+      "from": "eisenstein",
+      "to": "dirichlet",
+      "distance": 0.837719
+    },
+    {
+      "from": "eisenstein",
+      "to": "hurwitz_zeta",
+      "distance": 0.776842
+    },
+    {
+      "from": "eisenstein",
+      "to": "riemann_zeta",
+      "distance": 0.758333
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "dirichlet",
+      "distance": 0.789465
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "hurwitz_zeta",
+      "distance": 0.751532
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "riemann_zeta",
+      "distance": 0.735412
+    }
+  ],
+  "geodesic_paths": [
+    {
+      "from": "dedekind_eta",
+      "to": "dirichlet",
+      "direct_distance": 0.835714,
+      "geodesic_distance": 0.835714,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "dedekind_eta",
+      "to": "hurwitz_zeta",
+      "direct_distance": 0.79689,
+      "geodesic_distance": 0.79689,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "dedekind_eta",
+      "to": "riemann_zeta",
+      "direct_distance": 0.789828,
+      "geodesic_distance": 0.789828,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "eisenstein",
+      "to": "dirichlet",
+      "direct_distance": 0.837719,
+      "geodesic_distance": 0.837719,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "eisenstein",
+      "to": "hurwitz_zeta",
+      "direct_distance": 0.776842,
+      "geodesic_distance": 0.776842,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "eisenstein",
+      "to": "riemann_zeta",
+      "direct_distance": 0.758333,
+      "geodesic_distance": 0.758333,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "dirichlet",
+      "direct_distance": 0.789465,
+      "geodesic_distance": 0.789465,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "hurwitz_zeta",
+      "direct_distance": 0.751532,
+      "geodesic_distance": 0.751532,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "riemann_zeta",
+      "direct_distance": 0.735412,
+      "geodesic_distance": 0.735412,
+      "shortcut_ratio": 1.0,
+      "best_relay": null,
+      "relay_distance": null
+    }
+  ],
+  "module_centrality": {
+    "agm": 0.735555,
+    "airy": 0.893435,
+    "barnes_g": 0.804023,
+    "bessel": 0.827401,
+    "beta_function": 0.763472,
+    "carlson_elliptic": 0.716013,
+    "confluent_hypergeometric": 0.770825,
+    "const_catalan": 0.754252,
+    "const_gamma": 0.821199,
+    "coulomb_wave": 0.785744,
+    "dedekind_eta": 0.737638,
+    "digamma_function": 0.804554,
+    "dirichlet": 0.794456,
+    "eisenstein": 0.718019,
+    "factorials": 0.772046,
+    "gamma": 0.813426,
+    "gauss_hypergeometric": 0.750371,
+    "hurwitz_zeta": 0.773251,
+    "imaginary_unit": 0.759046,
+    "integrals": 0.868559,
+    "jacobi_theta": 0.733159,
+    "legendre_elliptic": 0.737096,
+    "pi": 0.692078,
+    "riemann_zeta": 0.751732,
+    "sine": 0.747757
+  },
+  "cluster_coherence": {
+    "moonshine_intra_mean": 0.5544,
+    "nt_intra_mean": 0.7028,
+    "cross_mean": 0.7857,
+    "separation_ratio": 1.25
+  },
+  "assessment": "MODERATE: cross-distance=0.786, below Gamma random baseline (0.88)"
+}

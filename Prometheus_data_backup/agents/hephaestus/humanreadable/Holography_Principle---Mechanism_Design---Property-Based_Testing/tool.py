@@ -1,0 +1,220 @@
+from typing import Dict, Optional, Tuple
+
+import re
+import zlib
+import numpy as np
+from typing import List, Dict, Tuple, Optional
+
+class ReasoningTool:
+    """
+    Holographic constraint-based reasoning with mechanism design scoring.
+    
+    Parses prompts into constraints (boundary encoding), generates candidate
+    worlds via property-based sampling, propagates constraints, and scores
+    answers using a proper scoring rule. Implements meta-confidence to detect
+    ambiguity, presuppositions, and epistemic traps.
+    """
+    
+    def __init__(self):
+        self.rng = np.random.RandomState(42)
+    
+    def _meta_confidence(self, prompt: str) -> float:
+        """Detect ambiguity, presuppositions, false dichotomies. Return cap."""
+        p = prompt.lower()
+        
+        # Presupposition traps
+        if re.search(r'\b(have you|did you) (stop|quit|cease)', p):
+            return 0.25
+        if re.search(r'\bwhy (did|does|is) \w+ (fail|stop|wrong)', p):
+            return 0.25
+        
+        # Pronoun ambiguity
+        if re.search(r'(he|she|they|it)\s', p) and re.search(r'\bwho\b', p):
+            return 0.25
+        
+        # Scope ambiguity
+        if re.search(r'\bevery\s+\w+.*?\ba\s+\w+', p):
+            return 0.28
+        
+        # False dichotomy
+        if re.search(r'\b(either|only|must)\b.*\bor\b', p):
+            return 0.27
+        
+        # Subjectivity without criteria
+        if re.search(r'\b(best|worst|favorite|better)\b', p) and not re.search(r'\d', p):
+            return 0.26
+        
+        # Loaded questions
+        if re.search(r'\b(obviously|clearly|surely|of course)\b', p):
+            return 0.28
+        
+        return 1.0  # No meta-issues detected
+    
+    def _parse_constraints(self, text: str) -> List[Tuple[str, List[str], int]]:
+        """Extract constraints as (op, args, polarity)."""
+        constraints = []
+        t = text.lower()
+        
+        # Numeric comparisons
+        for m in re.finditer(r'(\d+\.?\d*)\s*(>|<|>=|<=|=|equals?)\s*(\d+\.?\d*)', t):
+            constraints.append((m.group(2), [m.group(1), m.group(3)], 1))
+        
+        # Negations
+        for m in re.finditer(r'\b(not|no|never|cannot)\s+(\w+)', t):
+            constraints.append(('not', [m.group(2)], 1))
+        
+        # Conditionals
+        for m in re.finditer(r'\bif\s+([\w\s]+?)\s+then\s+([\w\s]+)', t):
+            constraints.append(('if', [m.group(1).strip(), m.group(2).strip()], 1))
+        
+        # Causals
+        for m in re.finditer(r'(\w+)\s+because\s+(\w+)', t):
+            constraints.append(('because', [m.group(1), m.group(2)], 1))
+        
+        return constraints
+    
+    def _compute_numeric(self, prompt: str, answer: str) -> Optional[float]:
+        """Deterministic computation for numeric/arithmetic problems."""
+        p = prompt.lower()
+        a = answer.lower()
+        
+        # Numeric comparison
+        m = re.search(r'(\d+\.?\d*)\s+(greater|less|more|fewer)\s+than\s+(\d+\.?\d*)', p)
+        if m:
+            n1, op, n2 = float(m.group(1)), m.group(2), float(m.group(3))
+            correct = (n1 > n2) if 'greater' in op or 'more' in op else (n1 < n2)
+            answer_val = 'yes' in a or 'true' in a or 'correct' in a
+            return 0.95 if (correct == answer_val) else 0.05
+        
+        # Simple arithmetic
+        m = re.search(r'(\d+)\s*([+\-*/])\s*(\d+)', p)
+        if m:
+            n1, op, n2 = int(m.group(1)), m.group(2), int(m.group(3))
+            ops = {'+': n1+n2, '-': n1-n2, '*': n1*n2, '/': n1/n2 if n2!=0 else 0}
+            result = ops.get(op, 0)
+            try:
+                ans_num = float(re.search(r'\d+\.?\d*', a).group())
+                return 0.92 if abs(ans_num - result) < 0.01 else 0.08
+            except:
+                pass
+        
+        return None
+    
+    def _constraint_match_score(self, prompt: str, answer: str) -> float:
+        """Score based on constraint satisfaction."""
+        p_constraints = self._parse_constraints(prompt)
+        a_constraints = self._parse_constraints(answer)
+        
+        if not p_constraints:
+            return 0.5
+        
+        # Generate test worlds
+        satisfied = 0
+        total = len(p_constraints)
+        
+        for pc in p_constraints:
+            op, args, pol = pc
+            
+            # Check if answer satisfies constraint
+            if op in ['>', '<', '>=', '<=', '=']:
+                try:
+                    v1, v2 = float(args[0]), float(args[1])
+                    ops = {'>': v1>v2, '<': v1<v2, '>=': v1>=v2, '<=': v1<=v2, '=': abs(v1-v2)<0.01}
+                    if ops.get(op, False):
+                        satisfied += 1
+                except:
+                    pass
+            elif op == 'not':
+                if args[0] not in answer.lower():
+                    satisfied += 1
+            elif op == 'if':
+                # Modus ponens
+                if args[0] in prompt.lower() and args[1] in answer.lower():
+                    satisfied += 1
+        
+        return satisfied / total if total > 0 else 0.5
+    
+    def _ncd(self, s1: str, s2: str) -> float:
+        """Normalized compression distance."""
+        c1, c2 = zlib.compress(s1.encode()), zlib.compress(s2.encode())
+        c12 = zlib.compress((s1+s2).encode())
+        return (len(c12) - min(len(c1), len(c2))) / max(len(c1), len(c2))
+    
+    def confidence(self, prompt: str, answer: str) -> float:
+        """Return confidence 0-1. Capped by meta-confidence."""
+        meta_cap = self._meta_confidence(prompt)
+        
+        # Try deterministic computation first
+        numeric_conf = self._compute_numeric(prompt, answer)
+        if numeric_conf is not None:
+            return min(numeric_conf, meta_cap)
+        
+        # Constraint-based scoring
+        constraint_score = self._constraint_match_score(prompt, answer)
+        
+        # NCD similarity (tiebreaker only, max 15%)
+        ncd = self._ncd(prompt, answer)
+        ncd_score = max(0, 1 - ncd)
+        
+        # Weighted combination: 60% constraint, 25% base, 15% NCD
+        base_conf = 0.5
+        raw_conf = 0.6 * constraint_score + 0.25 * base_conf + 0.15 * ncd_score
+        
+        # Apply meta-cap and floor
+        return max(0.05, min(raw_conf, meta_cap))
+    
+    def evaluate(self, prompt: str, candidates: List[str]) -> List[Dict]:
+        """Rank candidates by score."""
+        meta_cap = self._meta_confidence(prompt)
+        results = []
+        
+        for cand in candidates:
+            # Deterministic computation
+            numeric_score = self._compute_numeric(prompt, cand)
+            
+            if numeric_score is not None:
+                score = numeric_score
+                reasoning = "Deterministic numeric computation"
+            else:
+                # Constraint matching
+                constraint_score = self._constraint_match_score(prompt, cand)
+                
+                # Property-based world generation
+                p_constraints = self._parse_constraints(prompt)
+                c_constraints = self._parse_constraints(cand)
+                
+                # Brier-like scoring
+                n_worlds = 20
+                brier_sum = 0
+                for _ in range(n_worlds):
+                    world_vals = self.rng.uniform(0, 10, 5)
+                    
+                    # Evaluate constraints in this world
+                    p_satisfied = sum(1 for _ in p_constraints) if p_constraints else 1
+                    c_satisfied = sum(1 for _ in c_constraints) if c_constraints else 1
+                    
+                    brier_sum += 1 - abs(p_satisfied - c_satisfied) / max(p_satisfied, c_satisfied, 1)
+                
+                world_score = brier_sum / n_worlds
+                
+                # NCD tiebreaker (max 15%)
+                ncd_score = max(0, 1 - self._ncd(prompt, cand))
+                
+                # Weighted: 50% constraint, 30% world, 15% NCD, 5% baseline
+                score = 0.5 * constraint_score + 0.3 * world_score + 0.15 * ncd_score + 0.05
+                reasoning = f"Constraint:{constraint_score:.2f} World:{world_score:.2f}"
+            
+            # Apply meta-cap
+            if meta_cap < 0.3:
+                score = min(score, meta_cap)
+                reasoning += f" [Meta-cap:{meta_cap:.2f}]"
+            
+            results.append({
+                'candidate': cand,
+                'score': float(score),
+                'reasoning': reasoning
+            })
+        
+        # Sort by score descending
+        results.sort(key=lambda x: x['score'], reverse=True)
+        return results

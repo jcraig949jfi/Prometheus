@@ -1,0 +1,234 @@
+{
+  "probe": "M30",
+  "title": "Moonshine gradient decomposition",
+  "timestamp": "2026-04-10T07:04:04",
+  "elapsed_seconds": 0.0,
+  "partition_gradients": {
+    "mock_theta": {
+      "slope": 1.7728,
+      "R2": 0.5965,
+      "pointwise_gradients": [
+        6.3218,
+        -1.1801,
+        2.4705
+      ],
+      "primes": [
+        2,
+        3,
+        5,
+        7
+      ],
+      "enrichments": [
+        15.14,
+        196.49,
+        107.53,
+        246.91
+      ],
+      "mean_gradient": 2.5374,
+      "gradient_trend": "decreasing"
+    },
+    "modular": {
+      "gradient": null,
+      "reason": "only 1 primes"
+    },
+    "monstrous": {
+      "slope": 0.2663,
+      "R2": 0.2143,
+      "pointwise_gradients": [
+        1.7057,
+        -0.0849,
+        -0.7944
+      ],
+      "primes": [
+        2,
+        3,
+        5,
+        7
+      ],
+      "enrichments": [
+        32.44,
+        64.78,
+        62.03,
+        47.48
+      ],
+      "mean_gradient": 0.2754,
+      "gradient_trend": "decreasing"
+    },
+    "theta_lattice": {
+      "slope": 1.6912,
+      "R2": 0.9485,
+      "pointwise_gradients": [
+        2.9241,
+        1.2736,
+        2.4685,
+        0.4533
+      ],
+      "primes": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        0.33,
+        1.08,
+        2.07,
+        4.75,
+        5.83
+      ],
+      "mean_gradient": 1.7799,
+      "gradient_trend": "decreasing"
+    },
+    "umbral_M24": {
+      "slope": 2.1629,
+      "R2": 0.9411,
+      "pointwise_gradients": [
+        3.4639,
+        2.3498,
+        2.3536,
+        0.4526
+      ],
+      "primes": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "enrichments": [
+        0.68,
+        2.77,
+        9.2,
+        20.31,
+        24.92
+      ],
+      "mean_gradient": 2.155,
+      "gradient_trend": "decreasing"
+    }
+  },
+  "dominance_by_prime": {
+    "2": {
+      "dominant": "modular",
+      "enrichment": 32.44
+    },
+    "3": {
+      "dominant": "mock_theta",
+      "enrichment": 196.49
+    },
+    "5": {
+      "dominant": "mock_theta",
+      "enrichment": 107.53
+    },
+    "7": {
+      "dominant": "mock_theta",
+      "enrichment": 246.91
+    },
+    "11": {
+      "dominant": "umbral_M24",
+      "enrichment": 24.92
+    },
+    "13": {
+      "dominant": null,
+      "enrichment": 0
+    },
+    "17": {
+      "dominant": null,
+      "enrichment": 0
+    }
+  },
+  "crossovers": [
+    {
+      "between": [
+        "mock_theta",
+        "modular"
+      ],
+      "at_prime": 3,
+      "before": "modular",
+      "after": "mock_theta"
+    },
+    {
+      "between": [
+        "mock_theta",
+        "modular"
+      ],
+      "at_prime": 11,
+      "before": "mock_theta",
+      "after": "modular"
+    },
+    {
+      "between": [
+        "mock_theta",
+        "monstrous"
+      ],
+      "at_prime": 3,
+      "before": "monstrous",
+      "after": "mock_theta"
+    },
+    {
+      "between": [
+        "mock_theta",
+        "monstrous"
+      ],
+      "at_prime": 11,
+      "before": "mock_theta",
+      "after": "monstrous"
+    },
+    {
+      "between": [
+        "mock_theta",
+        "theta_lattice"
+      ],
+      "at_prime": 11,
+      "before": "mock_theta",
+      "after": "theta_lattice"
+    },
+    {
+      "between": [
+        "mock_theta",
+        "umbral_M24"
+      ],
+      "at_prime": 11,
+      "before": "mock_theta",
+      "after": "umbral_M24"
+    },
+    {
+      "between": [
+        "modular",
+        "theta_lattice"
+      ],
+      "at_prime": 3,
+      "before": "modular",
+      "after": "theta_lattice"
+    },
+    {
+      "between": [
+        "modular",
+        "umbral_M24"
+      ],
+      "at_prime": 3,
+      "before": "modular",
+      "after": "umbral_M24"
+    },
+    {
+      "between": [
+        "monstrous",
+        "theta_lattice"
+      ],
+      "at_prime": 11,
+      "before": "monstrous",
+      "after": "theta_lattice"
+    },
+    {
+      "between": [
+        "monstrous",
+        "umbral_M24"
+      ],
+      "at_prime": 11,
+      "before": "monstrous",
+      "after": "umbral_M24"
+    }
+  ],
+  "n_oeis_matches": 0,
+  "assessment": "GRADIENT HIERARCHY: umbral_M24 has steepest enrichment growth (\u03b3=2.163). 10 crossovers detected. Moonshine enrichment is PARTITION-DEPENDENT with different scaling laws per component."
+}

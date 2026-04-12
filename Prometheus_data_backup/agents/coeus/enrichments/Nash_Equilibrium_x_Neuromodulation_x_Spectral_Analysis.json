@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Spectral Analysis",
+    "Neuromodulation",
+    "Nash Equilibrium"
+  ],
+  "concept_strengths": {
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": 0.025,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
+      },
+      "summary": "Spectral Analysis: forge rate: 26%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neuromodulation": {
+      "influence": {
+        "forge_effect": 0.057,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
+      },
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0042,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
+      },
+      "summary": "Nash Equilibrium: forge rate: 21%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Spectral Analysis",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Neuromodulation",
+        "Nash Equilibrium",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Cognitive Load Theory",
+        "Neuromodulation"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Measure Theory + Spectral Analysis + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Neuromodulation + Nash Equilibrium + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Neuromodulation (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

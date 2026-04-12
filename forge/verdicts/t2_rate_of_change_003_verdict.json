@@ -1,0 +1,151 @@
+{
+  "tool_id": "t2_rate_of_change_003",
+  "tier": 2,
+  "timestamp": "2026-04-05T21:36:31.021875",
+  "overall_score": 0.0,
+  "seed_scores": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "seed_stability": 0.0,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "format_error"
+    }
+  },
+  "ablation": {
+    "solve_sat": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "dag_traverse": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "counterfactual_intervention": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "build_bn": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "conditional_query": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.1818,
+    "most_similar_tool": "t2_simpson_paradox_003",
+    "passes_diversity_check": true
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "B",
+    "cluster_name": "Temporal / Scheduling / Simulation",
+    "cluster_score": 0.0,
+    "seed_scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "seed_stability": 0.0,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "temporal_scheduling": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "rate_of_change": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "temporal_complex": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "stateful_register_machine": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "temporal_interval_algebra": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "process_simulation": {
+        "pass": false,
+        "failure_type": "format_error"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.0,
+      "C": 0.0,
+      "D": 0.0,
+      "E": 0.0,
+      "F": 0.0
+    },
+    "generalist_tag": null
+  }
+}

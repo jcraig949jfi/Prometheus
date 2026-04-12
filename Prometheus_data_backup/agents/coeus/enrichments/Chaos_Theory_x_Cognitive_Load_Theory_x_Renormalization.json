@@ -1,0 +1,90 @@
+{
+  "concept_names": [
+    "Chaos Theory",
+    "Renormalization",
+    "Cognitive Load Theory"
+  ],
+  "concept_strengths": {
+    "Chaos Theory": {
+      "influence": {
+        "forge_effect": 0.2384,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3441,
+      "forge_effect": 0.2384,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3441,
+        "rate_without": 0.2168,
+        "drop": 0.1273
+      },
+      "summary": "Chaos Theory: removing it drops forge probability by 13% (from 34%); forge rate: 34%",
+      "directive": "**Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Cognitive Load Theory": {
+      "influence": {
+        "forge_effect": 0.0202,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2333,
+      "forge_effect": 0.0202,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Cognitive Load Theory: forge rate: 23%",
+      "directive": "**Cognitive Load Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Chaos Theory + Renormalization": 0.4235,
+    "Chaos Theory + Cognitive Load Theory": 0.6697,
+    "Cognitive Load Theory + Renormalization": 0.4481
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Renormalization",
+        "Cognitive Load Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Cognitive Load Theory",
+        "Kalman Filtering"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Cognitive Load Theory",
+        "Neuromodulation"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Chaos Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Cognitive Load Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Chaos Theory + Renormalization: strong positive synergy (+0.423). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Chaos Theory + Cognitive Load Theory: strong positive synergy (+0.670). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Cognitive Load Theory + Renormalization: strong positive synergy (+0.448). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Chaos Theory + Renormalization + Cognitive Load Theory (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Neuromodulation (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

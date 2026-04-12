@@ -1,0 +1,33 @@
+agent:
+  name: coeus
+  display_name: "Coeus — Causal Intelligence Layer"
+  version: "0.1.0"
+  description: >
+    Titan of rational inquiry. Sits between Nous (theory) and Hephaestus (forge),
+    using causal discovery (NOTEARS, LiNGAM) to learn which concepts and score
+    dimensions actually drive forge success. Enriches each triplet with causal
+    context that improves Hephaestus's code generation.
+
+runtime:
+  python: ">=3.10"
+  dependencies:
+    - numpy
+    - scikit-learn
+    - scipy
+    - causal-learn    # NOTEARS, GES, FCI (optional, degrades gracefully)
+    - lingam          # LiNGAM (optional, degrades gracefully)
+    - dagma           # Non-linear DAG learning (optional, needs 200+ forges)
+    - dowhy           # do-calculus (future, not yet integrated)
+    - tigramite       # PCMCI temporal causal (future, not yet integrated)
+
+input:
+  nous_runs: "../nous/runs/*/responses.jsonl"
+  hephaestus_ledger: "../hephaestus/ledger.jsonl"
+  hephaestus_forge: "../hephaestus/forge/"
+  hephaestus_scrap: "../hephaestus/scrap/"
+
+output:
+  enrichments_dir: "enrichments/"
+  graphs_dir: "graphs/"
+  causal_graph: "graphs/causal_graph.json"
+  concept_scores: "graphs/concept_scores.json"

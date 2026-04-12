@@ -1,0 +1,40 @@
+{
+  "challenge": "ALL-065",
+  "title": "Complexity Entropy of Rosetta Stone",
+  "timestamp": "2026-04-10T07:56:31",
+  "elapsed_seconds": 0.7,
+  "n_bridges": 4410,
+  "n_concepts": 24451,
+  "n_datasets": 13,
+  "n_links_sampled": 500000,
+  "entropy": {
+    "H_degree": 0.8424,
+    "H_degree_max": 2.8074,
+    "H_normalized": 0.3001,
+    "H_specificity": 3.1353
+  },
+  "svd": {
+    "rank_90": 3,
+    "rank_95": 3,
+    "spectral_gap": 2.91,
+    "top_10_sv": [
+      34.19,
+      11.77,
+      9.64,
+      6.34,
+      3.94,
+      3.01,
+      1.62,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "bridge_stats": {
+    "specificity_mean": 0.2587,
+    "specificity_std": 0.1753,
+    "gini_coefficient": 0.3845,
+    "multi_dataset_fraction": 0.0158
+  },
+  "assessment": "LOW COMPLEXITY: rank-3 explains 90%. Rosetta Stone is highly compressible \u2014 few latent factors govern cross-domain structure"
+}

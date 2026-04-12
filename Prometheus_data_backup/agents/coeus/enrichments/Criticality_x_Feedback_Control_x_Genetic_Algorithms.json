@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Genetic Algorithms",
+    "Criticality",
+    "Feedback Control"
+  ],
+  "concept_strengths": {
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": 0.0377,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
+      },
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Criticality": {
+      "influence": {
+        "forge_effect": 0.3514,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3827,
+      "forge_effect": 0.3514,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3827,
+        "rate_without": 0.2157,
+        "drop": 0.167
+      },
+      "summary": "Criticality: removing it drops forge probability by 17% (from 38%); forge rate: 38%",
+      "directive": "**Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0252,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
+      },
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Criticality + Genetic Algorithms": 0.5556,
+    "Criticality + Feedback Control": -0.0622
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Information Theory",
+        "Genetic Algorithms",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Renormalization",
+        "Genetic Algorithms",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Criticality",
+        "Optimal Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Criticality + Genetic Algorithms: strong positive synergy (+0.556). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Criticality + Feedback Control: negative interaction (-0.062). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Information Theory + Genetic Algorithms + Criticality (accuracy: 0%, calibration: 0%)\n- Renormalization + Genetic Algorithms + Criticality (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

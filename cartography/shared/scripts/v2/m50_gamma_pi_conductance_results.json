@@ -1,0 +1,61 @@
+{
+  "probe": "M50",
+  "title": "Gamma-Pi wormhole conductance",
+  "timestamp": "2026-04-10T07:36:31",
+  "elapsed_seconds": 0.0,
+  "n_modules": 25,
+  "fiedler_eigenvalue": 28.050598,
+  "graph_bisection": {
+    "partition_A": [
+      "barnes_g",
+      "bessel",
+      "beta_function",
+      "confluent_hypergeometric",
+      "const_catalan",
+      "const_gamma",
+      "coulomb_wave",
+      "digamma_function",
+      "dirichlet",
+      "factorials",
+      "gamma",
+      "gauss_hypergeometric",
+      "hurwitz_zeta",
+      "imaginary_unit",
+      "integrals",
+      "jacobi_theta",
+      "riemann_zeta",
+      "sine"
+    ],
+    "partition_B": [
+      "agm",
+      "airy",
+      "carlson_elliptic",
+      "dedekind_eta",
+      "eisenstein",
+      "legendre_elliptic",
+      "pi"
+    ],
+    "moonshine_separated": false,
+    "moon_A": [
+      "jacobi_theta"
+    ],
+    "moon_B": [
+      "dedekind_eta",
+      "eisenstein"
+    ],
+    "nt_A": [
+      "dirichlet",
+      "hurwitz_zeta",
+      "riemann_zeta"
+    ],
+    "nt_B": []
+  },
+  "gamma_pi_edge": {
+    "distance": 0.744317,
+    "effective_resistance": 0.058398,
+    "effective_conductance": 17.12,
+    "conductance_ratio_vs_mean": 1.0398
+  },
+  "cheeger_constant": 0.6711,
+  "assessment": "Fiedler does NOT separate moonshine from NT \u2014 domains are interleaved. Gamma\u2194Pi is AVERAGE (1.04x)"
+}

@@ -1,0 +1,93 @@
+{
+  "concept_names": [
+    "Renormalization",
+    "Embodied Cognition",
+    "Global Workspace Theory"
+  ],
+  "concept_strengths": {
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Embodied Cognition": {
+      "influence": {
+        "forge_effect": -0.0168,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2069,
+      "forge_effect": -0.0168,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2069,
+        "rate_without": 0.2247,
+        "drop": -0.0178
+      },
+      "summary": "Embodied Cognition: forge rate: 21%",
+      "directive": "**Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Global Workspace Theory": {
+      "influence": {
+        "forge_effect": -0.0142,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2143,
+      "forge_effect": -0.0142,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2143,
+        "rate_without": 0.2246,
+        "drop": -0.0103
+      },
+      "summary": "Global Workspace Theory: forge rate: 21%",
+      "directive": "**Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Global Workspace Theory + Renormalization": 0.619
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Category Theory",
+        "Renormalization",
+        "Global Workspace Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Renormalization",
+        "Global Workspace Theory",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Embodied Cognition",
+        "Pragmatics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Embodied Cognition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Global Workspace Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Global Workspace Theory + Renormalization: strong positive synergy (+0.619). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Category Theory + Renormalization + Global Workspace Theory (accuracy: 0%, calibration: 0%)\n- Renormalization + Global Workspace Theory + Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Embodied Cognition + Pragmatics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

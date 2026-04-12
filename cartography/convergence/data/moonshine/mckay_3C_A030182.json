@@ -1,0 +1,54 @@
+{
+  "class": "3C",
+  "oeis_id": "A030182",
+  "name": "McKay-Thompson series of class 3B for the Monster group with a(0) = -12.",
+  "data": "1,-12,54,-76,-243,1188,-1384,-2916,11934,-11580,-21870,79704,-71022,-123444,421308,-352544,-581013,1885572,-1510236,-2388204,7469928,-5777672,-8852004,26869968,-20218587,-30177684,89408826",
+  "offset": "-1,2",
+  "formula": [
+    "Expansion of (eta(q) / eta(q^3))^12 in powers of q.",
+    "Expansion of (3 * b(q) / c(q))^3 in powers of q where b(), c() are cubic AGM theta functions. - _Michael Somos_, Jun 16 2012",
+    "Euler transform of period 3 sequence [ -12, -12, 0, ...]. - _Michael Somos_, Nov 08 2011",
+    "G.f. A(q) satisfies 0 = f(A(q), A(q^2)) where f(u, v) = (u + v)^3 - u * (27 + u) * v * (27 + v). - _Michael Somos_, Nov 08 2011",
+    "G.f. is a period 1 Fourier series which satisfies f(-1 / (3 t)) = 729 g(t) where q = exp(2 Pi i t) and g() is the g.f. for A121590. - _Michael Somos_, Nov 08 2011",
+    "G.f.: x^-1 * (Product_{k>0} (1 - x^k) / (1 - x^(3*k)))^12.",
+    "Convolution inverse of A121590. Convolution square of A007262. Convolution cube of A058095. Convolution fourth power of A199659. Convolution sixth power of A112157. Convolution twelfth power of A137569.",
+    "a(-1) = 1, a(n) = -(12/(n+1))*Sum_{k=1..n+1} A046913(k)*a(n-k) for n > -1. - _Seiichi Manyama_, Mar 29 2017"
+  ],
+  "program": [
+    "(PARI) {a(n) = my(A); if( n<-1, 0, n++; A = x * O(x^n); polcoeff( (eta(x + A) / eta(x^3 + A))^12, n))}; /* _Michael Somos_, Nov 08 2011 */"
+  ],
+  "xref": [
+    "Cf. A007244, A007262, A045481, A058095, A112157, A121590, A137569, A198955, A199659."
+  ],
+  "fetched": "2026-04-11T09:50:38+00:00",
+  "coefficients": [
+    1,
+    -12,
+    54,
+    -76,
+    -243,
+    1188,
+    -1384,
+    -2916,
+    11934,
+    -11580,
+    -21870,
+    79704,
+    -71022,
+    -123444,
+    421308,
+    -352544,
+    -581013,
+    1885572,
+    -1510236,
+    -2388204,
+    7469928,
+    -5777672,
+    -8852004,
+    26869968,
+    -20218587,
+    -30177684,
+    89408826
+  ],
+  "n_coefficients": 27
+}

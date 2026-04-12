@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Wavelet Transforms",
+    "Spectral Analysis",
+    "Sparse Coding"
+  ],
+  "concept_strengths": {
+    "Wavelet Transforms": {
+      "influence": {
+        "forge_effect": -0.0685,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
+      },
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
+      "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": 0.025,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
+      },
+      "summary": "Spectral Analysis: forge rate: 26%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Sparse Coding": {
+      "influence": {
+        "forge_effect": -0.0229,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1875,
+      "forge_effect": -0.0229,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1875,
+        "rate_without": 0.2255,
+        "drop": -0.038
+      },
+      "summary": "Sparse Coding: forge rate: 19%",
+      "directive": "**Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Sparse Coding + Wavelet Transforms": -0.0362,
+    "Sparse Coding + Spectral Analysis": 0.2846
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Spectral Analysis",
+        "Sparse Coding",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Wavelet Transforms",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Sparse Coding + Spectral Analysis: strong positive synergy (+0.285). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Spectral Analysis + Sparse Coding + Compositionality (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

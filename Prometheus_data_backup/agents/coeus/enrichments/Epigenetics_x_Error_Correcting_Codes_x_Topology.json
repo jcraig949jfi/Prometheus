@@ -1,0 +1,91 @@
+{
+  "concept_names": [
+    "Topology",
+    "Epigenetics",
+    "Error Correcting Codes"
+  ],
+  "concept_strengths": {
+    "Topology": {
+      "influence": {
+        "forge_effect": -0.0563,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": -0.0563,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2284,
+        "drop": -0.1173
+      },
+      "summary": "Topology: removing it increases forge probability by 12%; forge rate: 11%",
+      "directive": "**Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Epigenetics": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2143,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2143,
+        "rate_without": 0.2245,
+        "drop": -0.0102
+      },
+      "summary": "Epigenetics: forge rate: 21%",
+      "directive": "**Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Error Correcting Codes": {
+      "influence": {
+        "forge_effect": -0.0526,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2286,
+      "forge_effect": -0.0526,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Error Correcting Codes: negative forge driver (-0.05); forge rate: 23%",
+      "directive": "**Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Epigenetics",
+        "Error Correcting Codes",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Wavelet Transforms",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Emergence",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Epigenetics + Error Correcting Codes + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,275 @@
+{
+  "challenge": "C4",
+  "title": "Knot-OEIS Verb Distribution",
+  "timestamp": "2026-04-10T08:44:57",
+  "elapsed_seconds": 17.6,
+  "torus_determinants": [
+    3,
+    5,
+    7,
+    9,
+    11,
+    12,
+    13,
+    15
+  ],
+  "n_strong_bridges": 4296,
+  "bridge_verb_distribution": {
+    "Equal": 650,
+    "And": 3210,
+    "Map": 436
+  },
+  "baseline_verb_distribution": {
+    "And": 2261,
+    "Equal": 93,
+    "Map": 646
+  },
+  "verb_enrichment": {
+    "Equal": 4.8808,
+    "Map": 0.4713,
+    "And": 0.9914
+  },
+  "bridge_sequences": {
+    "A000027": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.0,
+      "growth": 3.5789,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A000401": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.2259,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A000916": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 3.035,
+      "growth": 3.0331,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A000929": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.8074,
+      "growth": 4.4981,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A001477": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.0,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A002036": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.717,
+      "growth": 2.337,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A002244": {
+      "verb": "And",
+      "is_monotone": true,
+      "gap_cv": 2.2051,
+      "growth": 4.7468,
+      "n_terms": 28,
+      "n_matching_dets": 8
+    },
+    "A002377": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 2.0024,
+      "growth": 1.6309,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A002837": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.3146,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003004": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.7289,
+      "growth": 3.2098,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003005": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.6009,
+      "growth": 3.3111,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003100": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.6388,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003159": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.331,
+      "growth": 3.942,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003188": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.8765,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003796": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.5745,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A003833": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.1193,
+      "growth": 0.9351,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004151": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 2.1935,
+      "growth": 1.6309,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004179": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 2.1687,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004181": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 2.1554,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004183": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 2.1431,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004185": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.8029,
+      "growth": 1,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004437": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.6527,
+      "growth": 4.1257,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004438": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.4016,
+      "growth": 3.7115,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004440": {
+      "verb": "Map",
+      "is_monotone": true,
+      "gap_cv": 0.5163,
+      "growth": 3.9177,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004441": {
+      "verb": "Equal",
+      "is_monotone": true,
+      "gap_cv": 0.3431,
+      "growth": 3.6801,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004442": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.0101,
+      "growth": 3.5425,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004443": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.1336,
+      "growth": 2.8502,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004444": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.3931,
+      "growth": 2.443,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004445": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.4586,
+      "growth": 2.2263,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    },
+    "A004446": {
+      "verb": "And",
+      "is_monotone": false,
+      "gap_cv": 1.3843,
+      "growth": 2.0403,
+      "n_terms": 50,
+      "n_matching_dets": 8
+    }
+  },
+  "assessment": "EQUATIONAL TIGHTNESS: bridge sequences are 4.9x enriched for 'Equal' verb. Knot-OEIS bridges are governed by single-relation equational structure, not cross-constraint webs."
+}

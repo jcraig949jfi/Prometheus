@@ -1,0 +1,100 @@
+{
+  "concept_names": [
+    "Fourier Transforms",
+    "Epistemology",
+    "Mechanism Design"
+  ],
+  "concept_strengths": {
+    "Fourier Transforms": {
+      "influence": {
+        "forge_effect": -0.0632,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": -0.0632,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.227,
+        "drop": -0.1159
+      },
+      "summary": "Fourier Transforms: removing it increases forge probability by 12%; forge rate: 11%",
+      "directive": "**Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Epistemology": {
+      "influence": {
+        "forge_effect": 0.0401,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0401,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2229,
+        "drop": 0.0628
+      },
+      "summary": "Epistemology: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
+      "directive": "**Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Mechanism Design": {
+      "influence": {
+        "forge_effect": 0.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
+      },
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Epistemology + Fourier Transforms": -0.0317,
+    "Fourier Transforms + Mechanism Design": -0.0294,
+    "Epistemology + Mechanism Design": 0.2577
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Epistemology",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Epistemology",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fourier Transforms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Epistemology + Mechanism Design: strong positive synergy (+0.258). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Chaos Theory + Epistemology + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

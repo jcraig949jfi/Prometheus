@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Holography Principle",
+    "Phenomenology",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Holography Principle": {
+      "influence": {
+        "forge_effect": -0.1293,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1333,
+      "forge_effect": -0.1293,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1333,
+        "rate_without": 0.2261,
+        "drop": -0.0928
+      },
+      "summary": "Holography Principle: removing it increases forge probability by 9%; forge rate: 13%",
+      "directive": "**Holography Principle**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Phenomenology": {
+      "influence": {
+        "forge_effect": -0.0562,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.175,
+      "forge_effect": -0.0562,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.175,
+        "rate_without": 0.2256,
+        "drop": -0.0506
+      },
+      "summary": "Phenomenology: removing it increases forge probability by 5%; forge rate: 18%",
+      "directive": "**Phenomenology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Multi-Armed Bandits + Phenomenology": -0.0418
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Cellular Automata",
+        "Cognitive Load Theory",
+        "Phenomenology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Cognitive Load Theory",
+        "Pragmatics",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Constraint Satisfaction",
+        "Optimal Control",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Holography Principle**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Phenomenology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Cellular Automata + Cognitive Load Theory + Phenomenology (accuracy: 0%, calibration: 0%)\n- Cognitive Load Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Constraint Satisfaction + Optimal Control + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

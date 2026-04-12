@@ -1,0 +1,189 @@
+{
+  "probe": "M37",
+  "title": "Gamma curvature (Ollivier-Ricci)",
+  "timestamp": "2026-04-10T07:36:28",
+  "elapsed_seconds": 0.0,
+  "n_modules": 25,
+  "n_edges_computed": 300,
+  "global_curvature": {
+    "mean": 0.891421,
+    "std": 0.035744,
+    "n_positive": 300,
+    "n_negative": 0
+  },
+  "most_negative": [
+    {
+      "from": "digamma_function",
+      "to": "pi",
+      "curvature": 0.80901,
+      "distance": 0.894118,
+      "weight": 1.1184
+    },
+    {
+      "from": "beta_function",
+      "to": "pi",
+      "curvature": 0.8101,
+      "distance": 0.79899,
+      "weight": 1.2516
+    },
+    {
+      "from": "gauss_hypergeometric",
+      "to": "pi",
+      "curvature": 0.815079,
+      "distance": 0.77693,
+      "weight": 1.2871
+    },
+    {
+      "from": "factorials",
+      "to": "pi",
+      "curvature": 0.815814,
+      "distance": 0.782053,
+      "weight": 1.2787
+    },
+    {
+      "from": "agm",
+      "to": "digamma_function",
+      "curvature": 0.81671,
+      "distance": 0.914679,
+      "weight": 1.0933
+    },
+    {
+      "from": "agm",
+      "to": "beta_function",
+      "curvature": 0.817357,
+      "distance": 0.849817,
+      "weight": 1.1767
+    },
+    {
+      "from": "confluent_hypergeometric",
+      "to": "pi",
+      "curvature": 0.821507,
+      "distance": 0.799767,
+      "weight": 1.2504
+    },
+    {
+      "from": "agm",
+      "to": "gauss_hypergeometric",
+      "curvature": 0.822133,
+      "distance": 0.827959,
+      "weight": 1.2078
+    },
+    {
+      "from": "digamma_function",
+      "to": "legendre_elliptic",
+      "curvature": 0.822232,
+      "distance": 0.911884,
+      "weight": 1.0966
+    },
+    {
+      "from": "carlson_elliptic",
+      "to": "digamma_function",
+      "curvature": 0.822806,
+      "distance": 0.895088,
+      "weight": 1.1172
+    }
+  ],
+  "most_positive": [
+    {
+      "from": "hurwitz_zeta",
+      "to": "riemann_zeta",
+      "curvature": 0.937523,
+      "distance": 0.705156,
+      "weight": 1.4181
+    },
+    {
+      "from": "dirichlet",
+      "to": "hurwitz_zeta",
+      "curvature": 0.93846,
+      "distance": 0.730331,
+      "weight": 1.3692
+    },
+    {
+      "from": "confluent_hypergeometric",
+      "to": "dirichlet",
+      "curvature": 0.939207,
+      "distance": 0.74152,
+      "weight": 1.3486
+    },
+    {
+      "from": "coulomb_wave",
+      "to": "hurwitz_zeta",
+      "curvature": 0.939541,
+      "distance": 0.71853,
+      "weight": 1.3917
+    },
+    {
+      "from": "barnes_g",
+      "to": "confluent_hypergeometric",
+      "curvature": 0.940338,
+      "distance": 0.760056,
+      "weight": 1.3157
+    },
+    {
+      "from": "const_gamma",
+      "to": "gamma",
+      "curvature": 0.941098,
+      "distance": 0.841788,
+      "weight": 1.1879
+    },
+    {
+      "from": "barnes_g",
+      "to": "bessel",
+      "curvature": 0.942283,
+      "distance": 0.823386,
+      "weight": 1.2145
+    },
+    {
+      "from": "barnes_g",
+      "to": "hurwitz_zeta",
+      "curvature": 0.942987,
+      "distance": 0.76028,
+      "weight": 1.3153
+    },
+    {
+      "from": "bessel",
+      "to": "hurwitz_zeta",
+      "curvature": 0.943224,
+      "distance": 0.778102,
+      "weight": 1.2852
+    },
+    {
+      "from": "barnes_g",
+      "to": "dirichlet",
+      "curvature": 0.944753,
+      "distance": 0.771824,
+      "weight": 1.2956
+    }
+  ],
+  "per_module_curvature": {
+    "pi": 0.850821,
+    "agm": 0.859452,
+    "legendre_elliptic": 0.864683,
+    "carlson_elliptic": 0.86493,
+    "eisenstein": 0.877509,
+    "dedekind_eta": 0.879981,
+    "digamma_function": 0.886883,
+    "beta_function": 0.887638,
+    "imaginary_unit": 0.889633,
+    "gauss_hypergeometric": 0.892172,
+    "factorials": 0.89471,
+    "const_catalan": 0.895371,
+    "jacobi_theta": 0.897566,
+    "confluent_hypergeometric": 0.899408,
+    "riemann_zeta": 0.90012,
+    "integrals": 0.902346,
+    "sine": 0.902867,
+    "bessel": 0.903,
+    "dirichlet": 0.903191,
+    "coulomb_wave": 0.903727,
+    "barnes_g": 0.904935,
+    "airy": 0.905402,
+    "const_gamma": 0.905568,
+    "hurwitz_zeta": 0.905647,
+    "gamma": 0.907972
+  },
+  "gamma_curvature": 0.907972,
+  "gamma_rank": 25,
+  "pi_curvature": 0.850821,
+  "assessment": "GAMMA IS AVERAGE: \u03ba_gamma=0.9080 \u2248 mean (0.8914). No special geometric role. Rank 25/25"
+}

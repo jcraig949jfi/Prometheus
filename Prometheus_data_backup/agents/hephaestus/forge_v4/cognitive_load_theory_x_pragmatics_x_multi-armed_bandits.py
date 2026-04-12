@@ -1,0 +1,140 @@
+"""CAITL v4 — Cognitive-Load Pragmatic Bandit Reasoner (CLPBR).
+Constructive computation + structural parsing + epistemic calibration.
+struct>=52% comp>=23% ncd<=10%."""
+import re, math, zlib
+from typing import List, Dict
+_N=re.compile(r"\b(not|no|never|neither|nor|cannot|can't|won't|doesn't|don't|isn't|aren't|wasn't|weren't)\b",re.I);_NUM=re.compile(r'[-+]?\d+(?:\.\d+)?(?:/\d+)?');_CMP=re.compile(r'\b(more|less|greater|fewer|larger|smaller|higher|lower|bigger|longest|shortest|tallest|biggest|fastest|slowest|older|younger|taller|heavier|lighter|better|worse)\b',re.I);_CND=re.compile(r'\b(if|then|unless|provided|given that|suppose|when)\b',re.I);_TMP=re.compile(r'\b(before|after|first|last|next|previous|earlier|later|during|while|since|until|finally|originally|initially|subsequently)\b',re.I);_QNT=re.compile(r'\b(all|every|each|some|any|most|few|none|nobody|everyone|both|many|several)\b',re.I);_CAU=re.compile(r'\b(because|therefore|thus|hence|causes?|leads?\s+to|results?\s+in|due to|implies)\b',re.I);_BOL=re.compile(r'\b(true|false|yes|no|correct|incorrect)\b',re.I);_SO=re.compile(r'(\b[A-Z]\w+)\s+\w+ed\s+(\b[A-Z]\w+)',re.I);_LR=re.compile(r'\b(left|right|east|west|north|south|above|below|up|down)\b',re.I);_ABN=re.compile(r'\b(?:all|every(?:one|thing|body)?)\s+(?:but|except)\s+(\d+)\b',re.I);_RATE=re.compile(r'(\w+)\s+takes?\s+(\d+\.?\d*)\s+(?:hours?|minutes?|days?).*?(\w+)\s+takes?\s+(\d+\.?\d*)\s+(?:hours?|minutes?|days?).*?together',re.I);_LIAR=re.compile(r'\b(?:always\s+lies?|never\s+tells?\s+the\s+truth|is\s+a\s+liar)\b',re.I)
+def _pn(t):
+    o=[]
+    for m in _NUM.findall(t):
+        try:o.append(float(m.split('/')[0])/float(m.split('/')[1])if'/'in m else float(m))
+        except:pass
+    return o
+def _ncd(a,b):
+    if not a or not b:return 1.0
+    x,y=a.encode(),b.encode();ca,cb,cc=len(zlib.compress(x)),len(zlib.compress(y)),len(zlib.compress(x+y));d=max(ca,cb);return(cc-min(ca,cb))/d if d else 1.0
+def _compute(p,c):
+    pl,cl=p.lower(),c.lower();pn,cn=_pn(p),_pn(c)
+    m=_ABN.search(pl)
+    if m and re.search(r'how\s+many',pl):n=int(m.group(1));return(1.0,f"all-but-{n}")if cn and n in[int(x)for x in cn]else(-0.5,f"all-but-{n} nm")
+    m=_RATE.search(pl)
+    if m:
+        try:t1,t2=float(m.group(2)),float(m.group(4));ans=1.0/(1.0/t1+1.0/t2);return(1.0,f"rate={ans:.2f}")if cn and min(cn,key=lambda x:abs(x-ans))<abs(ans)*0.15+0.5 else(-0.5,f"rate nm")
+        except:pass
+    m=re.search(r'(?:what\s+is\s+|calculate\s+|compute\s+|evaluate\s+)([\d\s\+\-\*/\(\)\.]+)',p,re.I)
+    if m:
+        expr=m.group(1).strip()
+        if re.match(r'^[\d\s\+\-\*/\(\)\.]+$',expr)and len(expr)>2:
+            try:r=eval(expr,{"__builtins__":{}},{});return(1.0,f"PEMDAS={r}")if cn and abs(cn[0]-r)<0.01 else(-0.5,f"PEMDAS={r} nm")
+            except:pass
+    m=re.search(r'(?:remainder|mod).*?(\d+).*?(?:divided\s+by|mod)\s*(\d+)',pl)
+    if m:
+        try:a,b=int(m.group(1)),int(m.group(2));r=a%b;return(1.0,f"mod={r}")if cn and r in[int(x)for x in cn]else(-0.5,f"mod={r} nm")
+        except:pass
+    if re.search(r'how\s+many.*?between|fence\s*post|poles?.*?spaces?',pl)and len(pn)>=2:fp=abs(pn[0]-pn[1])+1;return(1.0,f"fp={fp}")if cn and fp in cn else(-0.3,f"fp={fp} nm")
+    if re.search(r'(?:at\s+least\s+one|either.*or.*how|union|overlap)',pl)and len(pn)>=2:ie=pn[0]+pn[1]-pn[2]if len(pn)>=3 else pn[0]+pn[1];return(0.8,f"IE={ie}")if cn and abs(cn[0]-ie)<1 else(-0.3,f"IE nm")
+    m=re.search(r'(?:is\s+)([\d.,]+)\s+(?:larger|greater|bigger|more|higher)\s+than\s+([\d.,]+)',pl)
+    if m:
+        try:a,b=float(m.group(1).replace(',','')),float(m.group(2).replace(',',''));return(1.0,f"{a}>{b}")if cl.startswith('yes'if a>b else'no')else(-1.0,"cmp wrong")
+        except:pass
+    m=re.search(r'(?:is\s+)([\d.,]+)\s+(?:smaller|less|fewer|lower)\s+than\s+([\d.,]+)',pl)
+    if m:
+        try:a,b=float(m.group(1).replace(',','')),float(m.group(2).replace(',',''));return(1.0,f"{a}<{b}")if cl.startswith('yes'if a<b else'no')else(-1.0,"cmp wrong")
+        except:pass
+    comps=[]
+    for m2 in re.finditer(r'(\w+)\s+(?:is\s+)?(?:taller|larger|greater|bigger|older|heavier|faster|better|more\s+\w+|higher)\s+than\s+(\w+)',pl):comps.append((m2.group(1).strip('.,'),m2.group(2).strip('.,')))
+    for m2 in re.finditer(r'(\w+)\s+(?:is\s+)?(?:shorter|smaller|less|younger|lighter|slower|worse|lower)\s+than\s+(\w+)',pl):comps.append((m2.group(2).strip('.,'),m2.group(1).strip('.,')))
+    if len(comps)>=2:
+        gt={}
+        for a,b in comps:gt.setdefault(a,set()).add(b)
+        for _ in range(len(gt)):
+            for a in list(gt):
+                for b in list(gt.get(a,[])):
+                    for cc2 in list(gt.get(b,[])):gt.setdefault(a,set()).add(cc2)
+        if re.search(r'(?:who|which|what)\s+(?:is\s+)?(?:the\s+)?(?:tallest|largest|biggest|oldest|heaviest|fastest|best|greatest|most)',pl):top=max(gt,key=lambda x:len(gt.get(x,set())));return(1.0,f"trans={top}")if top in cl else(-0.5,f"trans={top} nm")
+        if re.search(r'(?:who|which|what)\s+(?:is\s+)?(?:the\s+)?(?:shortest|smallest|youngest|lightest|slowest|worst|least)',pl):
+            all_e=set();[all_e.update([a]+list(gt[a]))for a in gt];btm=all_e-set(gt.keys())
+            if not btm:btm={min(gt,key=lambda x:len(gt.get(x,set())))}
+            for b in btm:
+                if b in cl:return(1.0,f"trans-min={b}")
+            return(-0.5,"trans-min nm")
+    if _LIAR.search(pl):
+        m2=re.search(r'(?:says?|claims?|states?)\s+"?(.+?)"?\s*(?:\.|$)',pl)
+        if m2:
+            claim=m2.group(1).lower()
+            if'yes'in claim or'true'in claim:return(0.8,"liar->neg")if cl.startswith('no')or'false'in cl[:20]else(-0.5,"liar fail")
+            if'no'in claim or'false'in claim:return(0.8,"liar->aff")if cl.startswith('yes')or'true'in cl[:20]else(-0.5,"liar fail")
+    if re.search(r'\b(?:test|accura|sensitiv|specific|positive|prevalence)\b',pl)and len(pn)>=2:return(0.0,"bayes")
+    if pn and not cn:return(0.0,"nums missing")
+    if len(pn)>=2:
+        if re.search(r'\b(sum|total|add|combined|altogether)\b',pl):e=sum(pn);return(1.0,f"sum={e}")if cn and abs(cn[0]-e)<0.01 else(-0.3,f"sum={e} nm")
+        if re.search(r'\b(differ|subtract|minus|how many more|how much more)\b',pl):e=abs(pn[0]-pn[1]);return(1.0,f"diff={e}")if cn and abs(cn[0]-e)<0.01 else(-0.3,f"diff={e} nm")
+        if re.search(r'\b(product|multiply|times)\b',pl):
+            e=1.0
+            for n in pn:e*=n
+            return(1.0,f"prod={e}")if cn and abs(cn[0]-e)<0.01 else(-0.3,f"prod={e} nm")
+        if re.search(r'\b(percent|%)\b',pl):base=pn[0]if pn[0]!=0 else 1;e=abs(pn[1]-pn[0])/abs(base)*100;return(0.8,f"pct={e:.1f}")if cn and abs(cn[0]-e)<1 else(-0.3,"pct nm")
+    return(None,"")
+def _negation(p,c):
+    np_,nc_=len(_N.findall(p)),len(_N.findall(c))
+    if np_>=2 and np_%2==0:return 0.8 if nc_%2==0 else 0.3
+    if np_==1:return 0.65 if(_BOL.search(c.lower())or nc_>=1)else 0.35
+    return 0.5
+def _temporal(p,c):
+    if not _TMP.search(p):return 0.5
+    cl=c.lower();s=0.35
+    if any(w in cl for w in['before','after','first','last','then','earlier','later','next','finally']):s+=0.3
+    ep=re.findall(r'\b[A-Z][a-z]+\b',p);ec=re.findall(r'\b[A-Z][a-z]+\b',c)
+    if ep and ec and ec[0]in ep:s+=0.2
+    return min(1.0,s)
+def _conditional(p,c):
+    if not _CND.search(p):return 0.5
+    pl,cl=p.lower(),c.lower();s=0.3
+    if'if'in pl and'then'in pl:
+        s+=0.2;m=re.search(r'if\s+(.+?)\s*,?\s*then\s+(.+?)(?:\.|$)',pl)
+        if m and any(n in pl for n in['not','no','never']):
+            if any(n in cl[:30]for n in['not','no','false']):s+=0.3
+    if _BOL.search(cl):s+=0.15
+    if _N.search(pl)and _N.search(cl):s+=0.15
+    return min(1.0,s)
+def _struct(p,c):
+    sc,wt,R=0.0,0.0,[];pl,cl=p.lower(),c.lower()
+    def _a(s,w,n):nonlocal sc,wt;sc+=s*w;wt+=w;R.append(f"{n}={s:.2f}")
+    if _N.search(pl):_a(_negation(p,c),0.12,'neg')
+    pn=_pn(p)
+    if pn:_a(0.5,0.12,'num')
+    if _TMP.search(pl):_a(_temporal(p,c),0.10,'tmp')
+    if _CND.search(pl):_a(_conditional(p,c),0.10,'cnd')
+    if _CMP.search(pl):cn_=_pn(c);s=1.0 if(pn and cn_ and re.search(r'\b(larg|great|bigg|more|higher|tall|fast|old)\w*',pl)and max(pn)in cn_)else(1.0 if(pn and cn_ and re.search(r'\b(small|less|fewer|lower|short|slow|young)\w*',pl)and min(pn)in cn_)else 0.4);_a(s,0.08,'cmp')
+    if _QNT.search(pl):_a(0.6 if _QNT.search(cl)else 0.3,0.06,'qnt')
+    if _CAU.search(pl):_a(0.6 if _CAU.search(cl)else 0.3,0.06,'cau')
+    if _SO.search(p):_a(0.6 if _SO.search(c)else 0.3,0.06,'s_o')
+    if re.search(r'\?',pl)and re.search(r'\b(is|are|does|do|was|were|can|will)\b',pl):_a(0.65 if _BOL.search(cl)else 0.3,0.05,'bol')
+    if _LR.search(pl):_a(0.6 if _LR.search(cl)else 0.3,0.04,'lr')
+    if re.search(r'not\s+(?:\w+\s+){0,3}not\b|never\s+(?:\w+\s+){0,3}not\b',pl):_a(0.7 if _N.findall(c)and len(_N.findall(c))%2==0 else 0.3,0.06,'dblneg')
+    if re.search(r'\bnot\s+(?:both|all)\b|\bneither\b.*\bnor\b',pl):_a(0.6 if _N.search(cl)else 0.3,0.05,'dmg')
+    if re.search(r'\bif\b',pl)and re.search(r'\bno\s+\w+\s+(?:is|are|exist|has|have)\b|\bnone\b|\bnobody\b|\bnothing\b',pl):_a(0.7 if'true'in cl or'yes'in cl else 0.3,0.05,'vac')
+    if re.search(r'\bcorrelat\b|\bassociat\b|\bwhenever\b.*\balso\b',pl):_a(0.7 if'not'in cl or'cause'not in cl else 0.3,0.05,'corr')
+    if wt<0.01:pt=set(re.findall(r'\b\w{3,}\b',pl));ct=set(re.findall(r'\b\w{3,}\b',cl));ov=len(pt&ct)/max(len(pt),1);sc=ov*0.4;wt=0.5;R.append(f"base={ov:.2f}")
+    return(sc/wt if wt else 0.3),wt,R
+class ReasoningTool:
+    """Cognitive-Load Pragmatic Bandit Reasoner v4. struct>=52% comp>=23% ncd<=10%."""
+    TAG="CLPBR-v4"
+    def evaluate(self,prompt:str,candidates:List[str])->List[Dict]:
+        if not candidates:return[]
+        res=[]
+        for c in candidates:
+            st,w,R=_struct(prompt,c);cr=_compute(prompt,c);cs=(cr[0]+1)/2 if cr[0]is not None else 0.5;nc=max(0,1-_ncd(prompt,c));lr=min(len(c)+1,len(prompt)+1)/max(len(c)+1,len(prompt)+1);f=0.52*st+0.23*cs+0.1*nc+0.15*lr
+            rp=[f"st={st:.3f}(w={w:.2f})",f"cp={cs:.3f}",f"nc={nc:.3f}"]
+            if cr[0]is not None:rp.append(cr[1])
+            elif w<0.05:rp.append("low_confidence")
+            res.append({"candidate":c,"score":float(max(0,min(1,f))),"reasoning":f"[{self.TAG}] "+"; ".join(rp)})
+        res.sort(key=lambda x:x["score"],reverse=True);return res
+    def confidence(self,prompt:str,answer:str)->float:
+        r=self.evaluate(prompt,[answer])
+        if not r:return 0.0
+        s=r[0]["score"];_,w,_=_struct(prompt,answer)
+        if w<0.05:return min(s,0.25)
+        cr=_compute(prompt,answer)
+        if cr[0]is not None and cr[0]>0.5:return min(0.9,0.6+cr[0]*0.3)
+        return max(0.05,min(0.85,s))

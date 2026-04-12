@@ -1,0 +1,42 @@
+{
+  "class": "2B",
+  "oeis_id": "A007267",
+  "name": "Expansion of 16 * (1 + k^2)^4 /(k * k'^2)^2 in powers of q where k is the Jacobian elliptic modulus, k' the complementary modulus and q is the nome.",
+  "data": "1,104,4372,96256,1240002,10698752,74428120,431529984,2206741887,10117578752,42616961892,166564106240,611800208702,2125795885056,7040425608760,22327393665024,68134255043715,200740384538624",
+  "offset": "-1,2",
+  "formula": [
+    "Expansion of 16 * (1 + k'^2)^4 /(k' * k^2)^2 in powers of q^2. - _Michael Somos_, Nov 11 2006",
+    "a(n) ~ exp(2*Pi*sqrt(2*n)) / (2^(3/4)*n^(3/4)). - _Vaclav Kotesovec_, Apr 01 2017",
+    "Empirical: Sum_{n>=0} a(n) / exp(n*Pi) = 648 * exp(-Pi) = A388184. - _Simon Plouffe_, Sep 15 2025"
+  ],
+  "program": [
+    "(PARI) {a(n) = my(A); if( n<-1, 0, A = prod(k=1, n\\2 + 1, 1 - x^(2*k - 1),1 + x^2 * O(x^n))^12; polcoeff( (64 * x / A + A)^2, n+1))};",
+    "(PARI) {a(n) = my(A); if( n<-1, 0, n++; A = x * O(x^n); A = (eta(x + A) / eta(x^2 + A))^12; polcoeff( (A + 64 * x / A)^2, n))}; /* _Michael Somos_, Nov 11 2006 */"
+  ],
+  "xref": [
+    "Cf. A007241, A045478. Convolution square of A007247.",
+    "A045478, A007241, A106207, A007267, and A101558 are all essentially the same sequence."
+  ],
+  "fetched": "2026-04-11T09:50:32+00:00",
+  "coefficients": [
+    1,
+    104,
+    4372,
+    96256,
+    1240002,
+    10698752,
+    74428120,
+    431529984,
+    2206741887,
+    10117578752,
+    42616961892,
+    166564106240,
+    611800208702,
+    2125795885056,
+    7040425608760,
+    22327393665024,
+    68134255043715,
+    200740384538624
+  ],
+  "n_coefficients": 18
+}

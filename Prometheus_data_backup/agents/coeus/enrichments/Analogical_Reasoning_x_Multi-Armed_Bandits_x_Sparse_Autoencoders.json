@@ -1,0 +1,93 @@
+{
+  "concept_names": [
+    "Sparse Autoencoders",
+    "Analogical Reasoning",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Sparse Autoencoders": {
+      "influence": {
+        "forge_effect": 0.2753,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3621,
+      "forge_effect": 0.2753,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3621,
+        "rate_without": 0.2191,
+        "drop": 0.143
+      },
+      "summary": "Sparse Autoencoders: removing it drops forge probability by 14% (from 36%); forge rate: 36%",
+      "directive": "**Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Analogical Reasoning": {
+      "influence": {
+        "forge_effect": 0.0935,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.234,
+      "forge_effect": 0.0935,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Analogical Reasoning: positive forge driver (+0.09); forge rate: 23%",
+      "directive": "**Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Multi-Armed Bandits + Sparse Autoencoders": 0.3136
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Information Theory",
+        "Sparse Autoencoders",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Sparse Autoencoders",
+        "Pragmatics",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Dialectics",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Sparse Autoencoders**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Multi-Armed Bandits + Sparse Autoencoders: strong positive synergy (+0.314). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Sparse Autoencoders + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

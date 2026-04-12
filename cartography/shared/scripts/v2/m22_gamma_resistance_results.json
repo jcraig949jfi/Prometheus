@@ -1,0 +1,109 @@
+{
+  "probe": "M22",
+  "title": "Network resistance of \u0393 hub",
+  "timestamp": "2026-04-10T06:56:58",
+  "elapsed_seconds": 0.0,
+  "n_modules": 25,
+  "key_pair_resistances": [
+    {
+      "from": "dedekind_eta",
+      "to": "dirichlet",
+      "resistance": 0.060407,
+      "distance": 0.835714,
+      "R_over_D": 0.0723
+    },
+    {
+      "from": "dedekind_eta",
+      "to": "hurwitz_zeta",
+      "resistance": 0.059516,
+      "distance": 0.79689,
+      "R_over_D": 0.0747
+    },
+    {
+      "from": "dedekind_eta",
+      "to": "riemann_zeta",
+      "resistance": 0.058536,
+      "distance": 0.789828,
+      "R_over_D": 0.0741
+    },
+    {
+      "from": "eisenstein",
+      "to": "dirichlet",
+      "resistance": 0.059563,
+      "distance": 0.837719,
+      "R_over_D": 0.0711
+    },
+    {
+      "from": "eisenstein",
+      "to": "hurwitz_zeta",
+      "resistance": 0.058614,
+      "distance": 0.776842,
+      "R_over_D": 0.0755
+    },
+    {
+      "from": "eisenstein",
+      "to": "riemann_zeta",
+      "resistance": 0.057601,
+      "distance": 0.758333,
+      "R_over_D": 0.076
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "dirichlet",
+      "resistance": 0.060645,
+      "distance": 0.789465,
+      "R_over_D": 0.0768
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "hurwitz_zeta",
+      "resistance": 0.05975,
+      "distance": 0.751532,
+      "R_over_D": 0.0795
+    },
+    {
+      "from": "jacobi_theta",
+      "to": "riemann_zeta",
+      "resistance": 0.058745,
+      "distance": 0.735412,
+      "R_over_D": 0.0799
+    }
+  ],
+  "resistance_centrality": {
+    "agm": 0.058064,
+    "airy": 0.065909,
+    "barnes_g": 0.062382,
+    "bessel": 0.063312,
+    "beta_function": 0.060442,
+    "carlson_elliptic": 0.057464,
+    "confluent_hypergeometric": 0.060986,
+    "const_catalan": 0.0601,
+    "const_gamma": 0.063101,
+    "coulomb_wave": 0.061615,
+    "dedekind_eta": 0.058908,
+    "digamma_function": 0.062132,
+    "dirichlet": 0.061957,
+    "eisenstein": 0.05803,
+    "factorials": 0.060899,
+    "gamma": 0.062843,
+    "gauss_hypergeometric": 0.059979,
+    "hurwitz_zeta": 0.061156,
+    "imaginary_unit": 0.05993,
+    "integrals": 0.064946,
+    "jacobi_theta": 0.059298,
+    "legendre_elliptic": 0.058247,
+    "pi": 0.056216,
+    "riemann_zeta": 0.060162,
+    "sine": 0.059973
+  },
+  "bottleneck": {
+    "pair": [
+      "airy",
+      "integrals"
+    ],
+    "resistance": 0.070485
+  },
+  "kirchhoff_index": 18.22,
+  "gamma_centrality_ratio": 1.0349,
+  "assessment": "BOTTLENECK: Gamma centrality ratio 1.035 \u2014 Gamma is NOT a special hub"
+}

@@ -1,0 +1,180 @@
+{
+  "tool_id": "t2_liar_detection_036",
+  "tier": 2,
+  "timestamp": "2026-04-06T08:00:31.448528",
+  "overall_score": 0.14166666666666666,
+  "seed_scores": [
+    0.16666666666666666,
+    0.20833333333333334,
+    0.125,
+    0.08333333333333333,
+    0.125
+  ],
+  "seed_stability": 0.125,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    }
+  },
+  "ablation": {
+    "bayesian_update": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "entropy": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "confidence_from_agreement": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_sat": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "modus_ponens": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "track_beliefs": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "detect_paradox": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "check_entailment": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_first": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "is_uniquely_solvable": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.6364,
+    "most_similar_tool": "t2_liar_detection_000",
+    "passes_diversity_check": false
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "C",
+    "cluster_name": "Logic / Constraint / Formal",
+    "cluster_score": 0.0714,
+    "seed_scores": [
+      0.0714,
+      0.0,
+      0.0714,
+      0.2143,
+      0.0
+    ],
+    "seed_stability": 0.2143,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "argument_strength": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "liar_detection": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "constraint_satisfaction": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "logical_consistency_checking": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "stable_model_finding": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "rule_application_order": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "truth_table_evaluation": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": false,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.1,
+      "B": 0.1333,
+      "D": 0.0833,
+      "E": 0.2429,
+      "F": 0.025
+    },
+    "generalist_tag": null
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "tool_id": "t2_rate_of_change_005",
+  "tier": 2,
+  "timestamp": "2026-04-05T21:57:51.093439",
+  "overall_score": 0.39166666666666666,
+  "seed_scores": [
+    0.375,
+    0.4166666666666667,
+    0.375,
+    0.3333333333333333,
+    0.4583333333333333
+  ],
+  "seed_stability": 0.125,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    }
+  },
+  "ablation": {
+    "bayesian_update": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "entropy": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "confidence_from_agreement": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_linear_system": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "expected_value": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "information_sufficiency": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "build_bn": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "conditional_query": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "detect_confounders": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_first": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "is_uniquely_solvable": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.5833,
+    "most_similar_tool": "t2_simpson_paradox_003",
+    "passes_diversity_check": false
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "B",
+    "cluster_name": "Temporal / Scheduling / Simulation",
+    "cluster_score": 0.2167,
+    "seed_scores": [
+      0.1667,
+      0.25,
+      0.1667,
+      0.1667,
+      0.3333
+    ],
+    "seed_stability": 0.1667,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "temporal_scheduling": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "rate_of_change": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "temporal_complex": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "stateful_register_machine": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "temporal_interval_algebra": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "process_simulation": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.5,
+      "C": 0.2857,
+      "D": 0.35,
+      "E": 0.3429,
+      "F": 0.55
+    },
+    "generalist_tag": "generalist_2"
+  }
+}

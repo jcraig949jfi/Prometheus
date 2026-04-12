@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Quantum Mechanics",
+    "Genetic Algorithms",
+    "Neural Architecture Search"
+  ],
+  "concept_strengths": {
+    "Quantum Mechanics": {
+      "influence": {
+        "forge_effect": -0.0439,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3,
+      "forge_effect": -0.0439,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3,
+        "rate_without": 0.2234,
+        "drop": 0.0766
+      },
+      "summary": "Quantum Mechanics: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": 0.0377,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
+      },
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neural Architecture Search": {
+      "influence": {
+        "forge_effect": -0.047,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1667,
+      "forge_effect": -0.047,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.2257,
+        "drop": -0.059
+      },
+      "summary": "Neural Architecture Search: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Category Theory",
+        "Phase Transitions",
+        "Neural Architecture Search"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Architecture Search",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Genetic Algorithms",
+        "Analogical Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Architecture Search + Falsificationism (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Genetic Algorithms + Analogical Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

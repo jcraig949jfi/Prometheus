@@ -1,0 +1,94 @@
+{
+  "concept_names": [
+    "Renormalization",
+    "Compressed Sensing",
+    "Causal Inference"
+  ],
+  "concept_strengths": {
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compressed Sensing": {
+      "influence": {
+        "forge_effect": 0.0339,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2368,
+      "forge_effect": 0.0339,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2368,
+        "rate_without": 0.224,
+        "drop": 0.0128
+      },
+      "summary": "Compressed Sensing: forge rate: 24%",
+      "directive": "**Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Causal Inference": {
+      "influence": {
+        "forge_effect": -0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1692,
+      "forge_effect": -0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1692,
+        "rate_without": 0.2267,
+        "drop": -0.0575
+      },
+      "summary": "Causal Inference: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Causal Inference + Renormalization": -0.0376,
+    "Causal Inference + Compressed Sensing": 0.4599
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Genetic Algorithms",
+        "Compressed Sensing",
+        "Causal Inference"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Causal Inference",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Causal Inference + Compressed Sensing: strong positive synergy (+0.460). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Genetic Algorithms + Compressed Sensing + Causal Inference (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,467 @@
+# Charon Spectral Survey — Agent Prompts
+# Deploy one prompt per Claude Code window
+
+---
+
+## AGENT 1: DIRICHLET CHARACTERS
+
+```
+# Charon Spectral Survey — Agent 1: Dirichlet L-functions
+
+You are running a spectral analysis experiment. This is exploration — speed over polish.
+
+## What We Found
+In elliptic curve L-functions and genus-2 curve L-functions, higher arithmetic rank
+produces TIGHTER zero spacing — the opposite of what random matrix theory predicts.
+The effect is consistent (every comparison negative), scales with rank (dose-response),
+and survives conductor controls. We need to know if this is universal.
+
+## Your Assignment: Dirichlet Characters
+Dirichlet L-functions are the simplest non-trivial L-functions. If the phenomenon
+appears here, it's as universal as possible.
+
+## Step 1: Get the data
+Use the LMFDB API to download Dirichlet character L-function zeros.
+- API: https://www.lmfdb.org/api/lfunc/lfunctions/?degree=1&limit=200
+- Or scrape from: https://www.lmfdb.org/L/degree1/
+- You need: the first 20+ zeros (imaginary parts on critical line) for each L-function
+- Group by ORDER of the character (order 1, 2, 3, 4, 5+)
+- Also record the conductor (modulus) for each
+
+If the API is difficult, try downloading from:
+https://www.lmfdb.org/api/lfunc/lfunctions/?degree=1&order=2&limit=50
+Vary the order parameter to get different structural levels.
+
+Alternative approach if API is slow: LMFDB has a download feature. Go to
+https://www.lmfdb.org/L/degree1/ and look for bulk download or API documentation.
+
+Target: at least 50 objects per order level, ideally 200+.
+
+## Step 2: Compute normalized gaps
+For each L-function with 20+ zeros:
+- Compute gaps: gap_i = zero_{i+1} - zero_i for i = 1..19
+- Normalize each gap by the mean gap for that object (so gaps are scale-free)
+- Store as a 19-dimensional vector per object
+
+## Step 3: Compare by order
+- Reference group: order-1 characters (trivial/quadratic)
+- Comparison groups: order 2, 3, 4, 5+
+- For each gap position (1-19), compute Cohen's d between reference and comparison
+- Cohen's d = (mean_ref - mean_comp) / pooled_std
+- RECORD THE SIGN. Negative = tighter (our phenomenon). Positive = wider (RMT prediction).
+
+## Step 4: Dose-response
+- If you have 3+ order levels with sufficient data, check:
+  does the effect get stronger with higher order?
+- Compute Spearman correlation between order and mean Cohen's d
+
+## Step 5: Conductor control
+- Split objects into 3 bins by conductor (low/medium/high)
+- Within each bin, repeat the order comparison
+- Does the sign inversion persist in all bins?
+
+## Output
+Save results to: F:\Prometheus\charon\spectral_survey\results\dirichlet.json
+
+Format:
+{
+  "family": "dirichlet",
+  "structural_parameter": "character_order",
+  "levels": [...],
+  "n_per_level": [...],
+  "cohens_d_matrix": {"order_2": [...19 values...], "order_3": [...], ...},
+  "fraction_negative": 0.XX,
+  "dose_response_spearman": X.XX,
+  "conductor_independent": true/false,
+  "verdict": "SIGN_INVERSION_CONFIRMED/PARTIAL/NO_EFFECT/OPPOSITE/INSUFFICIENT_DATA"
+}
+
+Verdict thresholds (LOCKED BEFORE SEEING DATA):
+- CONFIRMED: ≥85% of gap comparisons negative
+- PARTIAL: 65-85% negative
+- NO_EFFECT: 35-65%
+- OPPOSITE: ≤35%
+- INSUFFICIENT_DATA: fewer than 30 objects in any comparison group
+
+## Important
+- Work fast. Cache LMFDB responses to disk so you don't re-download.
+- If the API is slow or rate-limited, work with whatever you get first, note the N.
+- Do NOT try to explain the results. Just measure and report.
+- Do NOT strip mechanisms. Just get the sign, magnitude, and dose-response.
+- Print progress as you go so I can monitor.
+```
+
+---
+
+## AGENT 2: NUMBER FIELDS
+
+```
+# Charon Spectral Survey — Agent 2: Number Field L-functions (Dedekind Zeta)
+
+You are running a spectral analysis experiment. This is exploration — speed over polish.
+
+## What We Found
+In elliptic curve and genus-2 L-functions, higher arithmetic rank produces TIGHTER
+zero spacing — opposite to random matrix theory predictions. Consistent sign, dose-
+response scaling, conductor-independent. We're testing universality.
+
+## Your Assignment: Number Fields (Dedekind Zeta Functions)
+Every number field has a Dedekind zeta function. The structural parameter is the
+DEGREE of the number field (linear, quadratic, cubic, quartic, quintic, sextic).
+
+## Step 1: Get the data
+LMFDB has ~500,000 number fields. We need their Dedekind zeta zeros.
+
+Approach A — via L-function database:
+- https://www.lmfdb.org/api/lfunc/lfunctions/?degree=2&limit=200 (quadratic fields)
+- Vary degree for higher fields
+- Need first 20+ zeros per L-function
+
+Approach B — via number field database then link to L-functions:
+- https://www.lmfdb.org/api/nf/fields/?degree=2&limit=200
+- Each number field has a linked Dedekind zeta function
+- Follow the link to get zeros
+
+Group by DEGREE: 2 (quadratic), 3 (cubic), 4 (quartic), 5 (quintic), 6 (sextic).
+Degree-1 is just Riemann zeta — only one object, can't be a group.
+
+Also record: discriminant (absolute value) as the conductor analog.
+
+Target: at least 50 objects per degree, ideally 200+.
+
+## Step 2: Compute normalized gaps
+For each Dedekind zeta with 20+ zeros:
+- gaps: gap_i = zero_{i+1} - zero_i for i = 1..19
+- Normalize by mean gap
+- 19-dimensional vector per object
+
+## Step 3: Compare by degree
+- Reference group: degree-2 (quadratic fields — largest, best-studied)
+- Comparison: degree 3, 4, 5, 6
+- Cohen's d per gap position. RECORD THE SIGN.
+- Negative = tighter gaps with higher degree = our phenomenon
+
+## Step 4: Dose-response
+- Spearman correlation: degree vs mean Cohen's d across gaps
+- Monotonic negative correlation = dose-response confirmed
+
+## Step 5: Discriminant control
+- Split into 3 bins by |discriminant|
+- Repeat degree comparison within each bin
+- Persistence across bins = discriminant-independent
+
+## Output
+Save to: F:\Prometheus\charon\spectral_survey\results\number_fields.json
+
+Same JSON format as protocol. Include:
+- family, structural_parameter, levels, n_per_level
+- cohens_d_matrix, fraction_negative
+- dose_response_spearman
+- conductor_independent (here: discriminant_independent)
+- verdict
+
+Verdict thresholds LOCKED: ≥85% negative = CONFIRMED, 65-85% = PARTIAL,
+35-65% = NO_EFFECT, ≤35% = OPPOSITE.
+
+## Important
+- Dedekind zeta zeros may not be precomputed for all fields in LMFDB.
+  If zeros aren't available via API, check if LMFDB stores them elsewhere.
+- If only some degrees have zeros available, analyze what you can and
+  note which degrees had insufficient data.
+- Cache everything. Work fast. Report what you find.
+```
+
+---
+
+## AGENT 3: ARTIN REPRESENTATIONS
+
+```
+# Charon Spectral Survey — Agent 3: Artin L-functions
+
+You are running a spectral analysis experiment. Speed over polish.
+
+## What We Found
+Higher arithmetic structure produces tighter L-function zero spacing across
+elliptic curves (rank), genus-2 curves (rank), and modular forms (dimension).
+All negative, dose-response, conductor-independent. Testing universality.
+
+## Your Assignment: Artin Representations
+Artin L-functions come from Galois representations. The structural parameter
+is the DIMENSION of the representation (1, 2, 3, 4+). This is the Galois
+side of Langlands — if tail signatures detect representation dimension,
+we're seeing Langlands structure through spectral geometry.
+
+## Step 1: Get the data
+- LMFDB Artin reps: https://www.lmfdb.org/api/artin/reps/?limit=200
+- Or browse: https://www.lmfdb.org/ArtinRepresentation/
+- Each Artin representation has a linked L-function
+- Need: first 20+ zeros, dimension of representation, conductor
+
+Alternative: go through the L-function database directly:
+- https://www.lmfdb.org/api/lfunc/lfunctions/?origin=ArtinRepresentation&limit=200
+- Filter/group by degree (which equals representation dimension for Artin)
+
+Group by DIMENSION: 1, 2, 3, 4+
+Record conductor for each.
+
+Target: at least 30 objects per dimension level. Artin reps are fewer
+in LMFDB (~10,000 total), so accept smaller groups.
+
+## Step 2: Compute normalized gaps
+Same as other agents: gap_i = zero_{i+1} - zero_i, normalize by mean gap.
+19-dimensional vector per object.
+
+## Step 3: Compare by dimension
+- Reference group: dimension-1 (abelian representations = Dirichlet characters)
+- Comparison: dimension 2, 3, 4+
+- Cohen's d per gap. SIGN is what matters.
+- Negative = tighter = our phenomenon
+
+## Step 4: Dose-response
+- Spearman: dimension vs mean Cohen's d
+- Look for monotonic negative correlation
+
+## Step 5: Conductor control
+- 3 bins by conductor
+- Repeat within each bin
+
+## Output
+Save to: F:\Prometheus\charon\spectral_survey\results\artin.json
+
+Same JSON format. Include all fields from protocol.
+
+Verdict thresholds LOCKED: ≥85% = CONFIRMED, 65-85% = PARTIAL,
+35-65% = NO_EFFECT, ≤35% = OPPOSITE.
+
+## Important
+- Artin L-functions may have fewer precomputed zeros than other families.
+  If most objects have <20 zeros, use whatever is available (even 5-10
+  zeros gives gaps 1-4 or 1-9). Note how many gaps you analyzed.
+- The dimension-1 Artin reps ARE Dirichlet characters. Agent 1 is
+  analyzing those separately. Your dimension-1 group overlaps with
+  Agent 1's work — that's fine, it's a consistency check.
+- If LMFDB doesn't have zeros for Artin reps directly, check if
+  the linked L-function page has them.
+- Work fast. Cache. Report.
+```
+
+---
+
+## AGENT 4: MAASS FORMS
+
+```
+# Charon Spectral Survey — Agent 4: Maass Form L-functions
+
+You are running a spectral analysis experiment. Speed over polish.
+
+## What We Found
+Higher arithmetic structure → tighter zero spacing. Confirmed in 3 families.
+Testing universality across all L-function types.
+
+## Your Assignment: Maass Forms
+Maass forms are NON-HOLOMORPHIC automorphic forms. They have a continuous
+spectral parameter R (the eigenvalue of the hyperbolic Laplacian) instead
+of a discrete weight like classical modular forms.
+
+This is a critical test: if the phenomenon appears for Maass forms, it
+extends beyond algebraic/holomorphic objects into the analytic world.
+
+## Step 1: Get the data
+- LMFDB Maass forms: https://www.lmfdb.org/api/mf/maass/
+- Or browse: https://www.lmfdb.org/ModularForm/GL2/Q/Maass/
+- Each Maass form has an associated L-function with zeros
+- Need: first 20+ zeros, spectral parameter R, level (conductor analog)
+
+The structural parameter here is different from other families. R is
+CONTINUOUS, not discrete. So instead of grouping by rank=0,1,2,3 you'll
+need to bin R into ranges.
+
+Approach: 
+- Download Maass forms with their R values and levels
+- Bin R into quartiles or quintiles
+- Compare gap statistics across R bins
+
+Alternative structural parameter: the LEVEL of the Maass form (analogous
+to conductor). Group by level and check if higher level → tighter gaps.
+Try BOTH R and level as structural parameters.
+
+Target: at least 50 objects per bin.
+
+## Step 2: Compute normalized gaps
+Same protocol: gap_i = zero_{i+1} - zero_i, normalize by mean gap.
+
+## Step 3: Compare by R (and by level)
+- Reference group: lowest R bin (or lowest level bin)
+- Compare to higher bins
+- Cohen's d per gap. SIGN matters.
+
+## Step 4: Dose-response
+- Spearman: R (or level) vs mean Cohen's d
+- Check both structural parameters independently
+
+## Step 5: Level control (if using R as primary parameter)
+- Bin by level, repeat R analysis within bins
+- Or vice versa: bin by R, repeat level analysis within bins
+
+## Output
+Save to: F:\Prometheus\charon\spectral_survey\results\maass.json
+
+Include BOTH analyses if you run both R and level as structural parameters:
+{
+  "family": "maass",
+  "analysis_by_R": { ...standard format... },
+  "analysis_by_level": { ...standard format... },
+  "verdict_R": "...",
+  "verdict_level": "..."
+}
+
+Verdict thresholds LOCKED: ≥85% = CONFIRMED, 65-85% = PARTIAL,
+35-65% = NO_EFFECT, ≤35% = OPPOSITE.
+
+## Important
+- Maass forms are the most different family from our confirmed cases.
+  EC and genus-2 are algebraic. Modular forms are holomorphic. Maass
+  forms are neither. A positive result here would be the strongest
+  evidence for universality.
+- A NEGATIVE result is also valuable — it would mean the phenomenon
+  requires algebraic structure specifically.
+- R is continuous, so your binning choices affect the result. Try
+  quartiles first, then quintiles, and check if the sign is robust
+  to different bin boundaries.
+- Work fast. Cache. Report.
+```
+
+---
+
+## AGENT 5: HILBERT MODULAR FORMS + CROSS-FAMILY BRIDGES
+
+```
+# Charon Spectral Survey — Agent 5: Hilbert Modular Forms + Cross-Family
+
+You have TWO missions. Complete Mission A first, then Mission B.
+
+## What We Found
+Higher arithmetic structure → tighter zero spacing, opposite to RMT.
+Confirmed in EC (rank), genus-2 (rank), modular forms (dimension).
+Testing universality.
+
+## MISSION A: Hilbert Modular Forms
+
+Hilbert modular forms are modular forms over totally real number fields
+(not just Q). They generalize classical modular forms to higher base fields.
+
+### Step 1: Get the data
+- LMFDB: https://www.lmfdb.org/api/hmf/forms/?limit=200
+- Or browse: https://www.lmfdb.org/ModularForm/GL2/TotallyReal/
+- Need: L-function zeros, parallel weight, level norm, base field degree
+
+Structural parameters to test:
+1. PARALLEL WEIGHT — analogous to weight for classical modular forms
+2. LEVEL NORM — analogous to conductor/level
+3. BASE FIELD DEGREE — degree of the totally real field (2, 3, 4+)
+
+Try all three. Any one of them might show the sign inversion.
+
+Target: at least 30 objects per group. Hilbert modular forms may have
+fewer precomputed zeros — work with what's available.
+
+### Steps 2-5: Same protocol as other agents
+- Normalize gaps, compare by structural parameter, dose-response, conductor control
+- Run for each of the three structural parameters independently
+
+### Output
+Save to: F:\Prometheus\charon\spectral_survey\results\hilbert.json
+
+Include all three analyses:
+{
+  "family": "hilbert_modular_forms",
+  "analysis_by_weight": { ...standard format... },
+  "analysis_by_level_norm": { ...standard format... },
+  "analysis_by_base_field_degree": { ...standard format... },
+  "verdict_weight": "...",
+  "verdict_level_norm": "...",
+  "verdict_base_field_degree": "..."
+}
+
+---
+
+## MISSION B: Cross-Family Landscape (AFTER Mission A)
+
+This is the bridge-building mission. Take the results from ALL five agents
+and look for cross-family structure.
+
+### What you need
+Wait for (or check for) results from the other 4 agents:
+- F:\Prometheus\charon\spectral_survey\results\dirichlet.json
+- F:\Prometheus\charon\spectral_survey\results\number_fields.json
+- F:\Prometheus\charon\spectral_survey\results\artin.json
+- F:\Prometheus\charon\spectral_survey\results\maass.json
+
+Plus the existing EC and genus-2 data from earlier Charon work.
+
+### What to compute
+1. For each family that showed CONFIRMED or PARTIAL:
+   - Extract the "signature" = the 19-dimensional Cohen's d vector
+     (how much each gap compresses relative to reference)
+   - This signature characterizes HOW the family's zeros respond
+     to structural complexity
+
+2. Compare signatures across families:
+   - Cosine similarity between each pair of family signatures
+   - Do EC and genus-2 have similar signatures? (Same rank parameter,
+     different degree — should be most similar)
+   - Do modular forms and Hilbert modular forms have similar signatures?
+     (Same type, different base field)
+   - Do any unexpected pairs cluster together?
+
+3. If you have per-object gap vectors (not just family-level summaries):
+   - Build a k-NN graph across ALL objects from ALL families
+   - Look for cross-family nearest neighbors
+   - An EC object whose gap signature is closest to a Maass form
+     would be a candidate Langlands bridge
+
+### Output
+Save to: F:\Prometheus\charon\spectral_survey\results\cross_family.json
+
+{
+  "families_included": ["ec", "genus2", "modular_forms", "dirichlet", ...],
+  "signature_similarity_matrix": { ... },
+  "unexpected_clusters": [ ... ],
+  "candidate_bridges": [ ... ],
+  "notes": "..."
+}
+
+---
+
+## Verdict thresholds LOCKED for Mission A:
+≥85% negative = CONFIRMED, 65-85% = PARTIAL, 35-65% = NO_EFFECT, ≤35% = OPPOSITE.
+
+## Important
+- Mission A first. Get the Hilbert data before attempting cross-family.
+- If other agents' results aren't available yet when you finish Mission A,
+  do the cross-family analysis with whatever IS available (EC + genus-2 +
+  modular forms from prior work + your Hilbert results).
+- Work fast. Cache. Report. This is exploration.
+```
+
+---
+
+## Deployment Checklist
+
+Before launching all 5:
+
+```bat
+REM Create shared directory structure
+mkdir F:\Prometheus\charon\spectral_survey
+mkdir F:\Prometheus\charon\spectral_survey\results
+mkdir F:\Prometheus\charon\spectral_survey\raw_data
+mkdir F:\Prometheus\charon\spectral_survey\scripts
+```
+
+Copy `spacing_analysis.py` from the Sprint Plan document to:
+`F:\Prometheus\charon\spectral_survey\scripts\spacing_analysis.py`
+
+Then launch each agent in its own Claude Code window with its prompt.
+
+Monitor: `dir F:\Prometheus\charon\spectral_survey\results\` — when
+JSON files appear, results are landing.

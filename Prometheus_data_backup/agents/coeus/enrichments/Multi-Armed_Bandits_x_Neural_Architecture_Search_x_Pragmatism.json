@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Neural Architecture Search",
+    "Pragmatism",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Neural Architecture Search": {
+      "influence": {
+        "forge_effect": -0.047,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1667,
+      "forge_effect": -0.047,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.2257,
+        "drop": -0.059
+      },
+      "summary": "Neural Architecture Search: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Pragmatism": {
+      "influence": {
+        "forge_effect": -0.2295,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
+      },
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
+      "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Multi-Armed Bandits + Neural Architecture Search": -0.0398,
+    "Multi-Armed Bandits + Pragmatism": -0.0143
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Pragmatism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Phase Transitions",
+        "Neural Architecture Search"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Architecture Search",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Architecture Search + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

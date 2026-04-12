@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Bayesian Inference",
+    "Kalman Filtering",
+    "Property-Based Testing"
+  ],
+  "concept_strengths": {
+    "Bayesian Inference": {
+      "influence": {
+        "forge_effect": 0.0166,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1739,
+      "forge_effect": 0.0166,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1739,
+        "rate_without": 0.2259,
+        "drop": -0.052
+      },
+      "summary": "Bayesian Inference: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Bayesian Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Kalman Filtering": {
+      "influence": {
+        "forge_effect": -0.0301,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0301,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.226,
+        "drop": -0.0475
+      },
+      "summary": "Kalman Filtering: forge rate: 18%",
+      "directive": "**Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Property-Based Testing": {
+      "influence": {
+        "forge_effect": -0.082,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0714,
+      "forge_effect": -0.082,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.0714,
+        "rate_without": 0.2271,
+        "drop": -0.1557
+      },
+      "summary": "Property-Based Testing: removing it increases forge probability by 16%; forge rate: 7%",
+      "directive": "**Property-Based Testing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Pragmatics",
+        "Property-Based Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Constraint Satisfaction",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Differentiable Programming",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Bayesian Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Property-Based Testing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\nSimilar combinations that forged successfully:\n- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Differentiable Programming + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

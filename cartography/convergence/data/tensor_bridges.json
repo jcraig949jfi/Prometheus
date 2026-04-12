@@ -1,155 +1,15 @@
 {
   "meta": {
-    "generated": "2026-04-07T04:28:15",
-    "n_links": 855549,
-    "n_datasets": 5,
-    "n_objects": 111333,
-    "n_concepts": 26135,
-    "top_k": 20,
+    "generated": "2026-04-09T18:53:21",
+    "n_links": 2736643,
+    "n_datasets": 17,
+    "n_objects": 279843,
+    "n_concepts": 39426,
+    "top_k": 50,
     "min_shared": 2,
-    "elapsed_seconds": 4.3
+    "elapsed_seconds": 187.82
   },
   "bridges": [
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Grosswald \\cite{grosswald_sur_1965}",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Heath-Brown \\cite{heathbrown_gaps_1982}",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Korobov--Vinogradov estimate",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Littlewood \\cite{littlewood_sur_1914}",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Prime number theorem",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Prime number theorem, alternative formulations",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Relation to zero free regions",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/Schmidt \\cite{schmidt_uber_1903}",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/\\cite{koch_sur_1901}",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
-    {
-      "dataset1": "ANTEDB",
-      "object1": "prime_counting_function/\\cite{turan_new_1984} Theorem 40.1",
-      "dataset2": "mathlib",
-      "object2": "Mathlib.NumberTheory.PrimeCounting",
-      "n_shared_concepts": 2,
-      "shared_concepts": [
-        "verb_involves_counting",
-        "verb_involves_prime"
-      ],
-      "specificity": 0.021505,
-      "uniqueness": 0.0,
-      "score": 0.043011
-    },
     {
       "dataset1": "Fungrim",
       "object1": "792f7b",
@@ -299,459 +159,604 @@
       "specificity": 0.008451,
       "uniqueness": 0.0,
       "score": 0.025352
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "3e84e3",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_series"
+      ],
+      "specificity": 0.008451,
+      "uniqueness": 0.0,
+      "score": 0.025352
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "3e84e3",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_series"
+      ],
+      "specificity": 0.008451,
+      "uniqueness": 0.0,
+      "score": 0.025352
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "3e84e3",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_series"
+      ],
+      "specificity": 0.008451,
+      "uniqueness": 0.0,
+      "score": 0.025352
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "792f7b",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_functions",
+        "verb_involves_integral",
+        "verb_involves_special"
+      ],
+      "specificity": 0.005181,
+      "uniqueness": 0.0,
+      "score": 0.015544
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "792f7b",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.Analysis.SpecialFunctions.Pow.Integral",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_functions",
+        "verb_involves_integral",
+        "verb_involves_special"
+      ],
+      "specificity": 0.005181,
+      "uniqueness": 0.0,
+      "score": 0.015544
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "792f7b",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_functions",
+        "verb_involves_integral",
+        "verb_involves_special"
+      ],
+      "specificity": 0.005181,
+      "uniqueness": 0.0,
+      "score": 0.015544
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "792f7b",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.Analysis.SpecialFunctions.MulExpNegMulSqIntegral",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_functions",
+        "verb_involves_integral",
+        "verb_involves_special"
+      ],
+      "specificity": 0.005181,
+      "uniqueness": 0.0,
+      "score": 0.015544
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f0bcb5",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt",
+      "n_shared_concepts": 2,
+      "shared_concepts": [
+        "verb_involves_functional",
+        "verb_involves_sqrt"
+      ],
+      "specificity": 0.003868,
+      "uniqueness": 0.0,
+      "score": 0.007737
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.NumberField.Units.DirichletTheorem",
+      "n_shared_concepts": 4,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theorem",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001343,
+      "uniqueness": 0.0,
+      "score": 0.005373
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "100d3c",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.TwoVariable",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_number",
+        "verb_involves_theory",
+        "verb_involves_theta"
+      ],
+      "specificity": 0.001019,
+      "uniqueness": 0.0,
+      "score": 0.003058
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "100d3c",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_number",
+        "verb_involves_theory",
+        "verb_involves_theta"
+      ],
+      "specificity": 0.001019,
+      "uniqueness": 0.0,
+      "score": 0.003058
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "100d3c",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.Manifold",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_number",
+        "verb_involves_theory",
+        "verb_involves_theta"
+      ],
+      "specificity": 0.001019,
+      "uniqueness": 0.0,
+      "score": 0.003058
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "100d3c",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.Bounds",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_number",
+        "verb_involves_theory",
+        "verb_involves_theta"
+      ],
+      "specificity": 0.001019,
+      "uniqueness": 0.0,
+      "score": 0.003058
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.LSeries.MellinEqDirichlet",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.LSeries.DirichletContinuation",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.LSeries.Dirichlet",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.EulerProduct.DirichletLSeries",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.DirichletCharacter.Orthogonality",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.DirichletCharacter.GaussSum",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.DirichletCharacter.Bounds",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "5540a1",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.DirichletCharacter.Basic",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_dirichlet",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.003051
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "03356b",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.LSeries.HurwitzZetaEven",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_even",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001017,
+      "uniqueness": 0.0,
+      "score": 0.00305
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.MDifferentiable",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.IsBoundedAtImInfty",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Transform",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Summable",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.MDifferentiable",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.LegendreSymbol.GaussEisensteinLemmas",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Summable",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.UniformConvergence",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_eisenstein",
+        "verb_involves_number",
+        "verb_involves_theory"
+      ],
+      "specificity": 0.001015,
+      "uniqueness": 0.0,
+      "score": 0.003046
+    },
+    {
+      "dataset1": "Fungrim",
+      "object1": "f33f09",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.LSeries.ZetaZeros",
+      "n_shared_concepts": 3,
+      "shared_concepts": [
+        "verb_involves_number",
+        "verb_involves_theory",
+        "verb_involves_zeros"
+      ],
+      "specificity": 0.001002,
+      "uniqueness": 0.0,
+      "score": 0.003005
+    },
+    {
+      "dataset1": "ANTEDB",
+      "object1": "prime_counting_function/Grosswald \\cite{grosswald_sur_1965}",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.PrimeCounting",
+      "n_shared_concepts": 2,
+      "shared_concepts": [
+        "verb_involves_counting",
+        "verb_involves_prime"
+      ],
+      "specificity": 0.000794,
+      "uniqueness": 0.0,
+      "score": 0.001588
+    },
+    {
+      "dataset1": "ANTEDB",
+      "object1": "prime_counting_function/Heath-Brown \\cite{heathbrown_gaps_1982}",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.PrimeCounting",
+      "n_shared_concepts": 2,
+      "shared_concepts": [
+        "verb_involves_counting",
+        "verb_involves_prime"
+      ],
+      "specificity": 0.000794,
+      "uniqueness": 0.0,
+      "score": 0.001588
+    },
+    {
+      "dataset1": "ANTEDB",
+      "object1": "prime_counting_function/Korobov--Vinogradov estimate",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.PrimeCounting",
+      "n_shared_concepts": 2,
+      "shared_concepts": [
+        "verb_involves_counting",
+        "verb_involves_prime"
+      ],
+      "specificity": 0.000794,
+      "uniqueness": 0.0,
+      "score": 0.001588
+    },
+    {
+      "dataset1": "ANTEDB",
+      "object1": "prime_counting_function/Littlewood \\cite{littlewood_sur_1914}",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.PrimeCounting",
+      "n_shared_concepts": 2,
+      "shared_concepts": [
+        "verb_involves_counting",
+        "verb_involves_prime"
+      ],
+      "specificity": 0.000794,
+      "uniqueness": 0.0,
+      "score": 0.001588
+    },
+    {
+      "dataset1": "ANTEDB",
+      "object1": "prime_counting_function/Prime number theorem",
+      "dataset2": "mathlib",
+      "object2": "Mathlib.NumberTheory.PrimeCounting",
+      "n_shared_concepts": 2,
+      "shared_concepts": [
+        "verb_involves_counting",
+        "verb_involves_prime"
+      ],
+      "specificity": 0.000794,
+      "uniqueness": 0.0,
+      "score": 0.001588
     }
   ],
   "hypotheses": [
-    {
-      "hypothesis": "prime_counting_function/Grosswald \\cite{grosswald_sur_1965} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Grosswald \\cite{grosswald_sur_1965}",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Heath-Brown \\cite{heathbrown_gaps_1982} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Heath-Brown \\cite{heathbrown_gaps_1982}",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Korobov--Vinogradov estimate (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Korobov--Vinogradov estimate",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Littlewood \\cite{littlewood_sur_1914} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Littlewood \\cite{littlewood_sur_1914}",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Prime number theorem (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Prime number theorem",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Prime number theorem, alternative formulations (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Prime number theorem, alternative formulations",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Relation to zero free regions (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Relation to zero free regions",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/Schmidt \\cite{schmidt_uber_1903} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/Schmidt \\cite{schmidt_uber_1903}",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/\\cite{koch_sur_1901} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/\\cite{koch_sur_1901}",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
-    {
-      "hypothesis": "prime_counting_function/\\cite{turan_new_1984} Theorem 40.1 (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
-      "rationale": "Tensor bridge with score 0.0430. Shared verb concepts suggest structural relationship.",
-      "searches": [
-        {
-          "search_type": "antedb_topic",
-          "params": {
-            "topic": "prime_counting_function"
-          }
-        },
-        {
-          "search_type": "antedb_bounds",
-          "params": {}
-        },
-        {
-          "search_type": "mathlib_namespace",
-          "params": {
-            "namespace": "NumberTheory"
-          }
-        },
-        {
-          "search_type": "mathlib_imports",
-          "params": {
-            "module_name": "Mathlib.NumberTheory.PrimeCounting"
-          }
-        }
-      ],
-      "falsification": "No correlation beyond shared concepts",
-      "_source": "tensor_bridge",
-      "_score": 0.043011,
-      "_bridge": {
-        "dataset1": "ANTEDB",
-        "object1": "prime_counting_function/\\cite{turan_new_1984} Theorem 40.1",
-        "dataset2": "mathlib",
-        "object2": "Mathlib.NumberTheory.PrimeCounting",
-        "n_shared_concepts": 2,
-        "shared_concepts": [
-          "verb_involves_counting",
-          "verb_involves_prime"
-        ],
-        "specificity": 0.021505,
-        "uniqueness": 0.0,
-        "score": 0.043011
-      }
-    },
     {
       "hypothesis": "792f7b (Fungrim) and Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics (mathlib) share 3 concepts (verb_involves_asymptotics, verb_involves_functions, verb_involves_special). Testing whether their deeper invariants correlate beyond the shared concept values.",
       "rationale": "Tensor bridge with score 0.0330. Shared verb concepts suggest structural relationship.",
@@ -1211,6 +1216,1841 @@
         "uniqueness": 0.0,
         "score": 0.025352
       }
+    },
+    {
+      "hypothesis": "3e84e3 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_series). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0254. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.025352,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "3e84e3",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_series"
+        ],
+        "specificity": 0.008451,
+        "uniqueness": 0.0,
+        "score": 0.025352
+      }
+    },
+    {
+      "hypothesis": "3e84e3 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_series). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0254. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.025352,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "3e84e3",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_series"
+        ],
+        "specificity": 0.008451,
+        "uniqueness": 0.0,
+        "score": 0.025352
+      }
+    },
+    {
+      "hypothesis": "3e84e3 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_series). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0254. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.025352,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "3e84e3",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_series"
+        ],
+        "specificity": 0.008451,
+        "uniqueness": 0.0,
+        "score": 0.025352
+      }
+    },
+    {
+      "hypothesis": "792f7b (Fungrim) and Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral (mathlib) share 3 concepts (verb_involves_functions, verb_involves_integral, verb_involves_special). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0155. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "Analysis"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.015544,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "792f7b",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_functions",
+          "verb_involves_integral",
+          "verb_involves_special"
+        ],
+        "specificity": 0.005181,
+        "uniqueness": 0.0,
+        "score": 0.015544
+      }
+    },
+    {
+      "hypothesis": "792f7b (Fungrim) and Mathlib.Analysis.SpecialFunctions.Pow.Integral (mathlib) share 3 concepts (verb_involves_functions, verb_involves_integral, verb_involves_special). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0155. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "Analysis"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.Analysis.SpecialFunctions.Pow.Integral"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.015544,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "792f7b",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.Analysis.SpecialFunctions.Pow.Integral",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_functions",
+          "verb_involves_integral",
+          "verb_involves_special"
+        ],
+        "specificity": 0.005181,
+        "uniqueness": 0.0,
+        "score": 0.015544
+      }
+    },
+    {
+      "hypothesis": "792f7b (Fungrim) and Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation (mathlib) share 3 concepts (verb_involves_functions, verb_involves_integral, verb_involves_special). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0155. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "Analysis"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.015544,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "792f7b",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.IntegralRepresentation",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_functions",
+          "verb_involves_integral",
+          "verb_involves_special"
+        ],
+        "specificity": 0.005181,
+        "uniqueness": 0.0,
+        "score": 0.015544
+      }
+    },
+    {
+      "hypothesis": "792f7b (Fungrim) and Mathlib.Analysis.SpecialFunctions.MulExpNegMulSqIntegral (mathlib) share 3 concepts (verb_involves_functions, verb_involves_integral, verb_involves_special). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0155. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "Analysis"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.Analysis.SpecialFunctions.MulExpNegMulSqIntegral"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.015544,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "792f7b",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.Analysis.SpecialFunctions.MulExpNegMulSqIntegral",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_functions",
+          "verb_involves_integral",
+          "verb_involves_special"
+        ],
+        "specificity": 0.005181,
+        "uniqueness": 0.0,
+        "score": 0.015544
+      }
+    },
+    {
+      "hypothesis": "f0bcb5 (Fungrim) and Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt (mathlib) share 2 concepts (verb_involves_functional, verb_involves_sqrt). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0077. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "Analysis"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.007737,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f0bcb5",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.Analysis.SpecialFunctions.ContinuousFunctionalCalculus.Rpow.ConjSqrt",
+        "n_shared_concepts": 2,
+        "shared_concepts": [
+          "verb_involves_functional",
+          "verb_involves_sqrt"
+        ],
+        "specificity": 0.003868,
+        "uniqueness": 0.0,
+        "score": 0.007737
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.NumberField.Units.DirichletTheorem (mathlib) share 4 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theorem, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0054. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.NumberField.Units.DirichletTheorem"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.005373,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.NumberField.Units.DirichletTheorem",
+        "n_shared_concepts": 4,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theorem",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001343,
+        "uniqueness": 0.0,
+        "score": 0.005373
+      }
+    },
+    {
+      "hypothesis": "100d3c (Fungrim) and Mathlib.NumberTheory.ModularForms.JacobiTheta.TwoVariable (mathlib) share 3 concepts (verb_involves_number, verb_involves_theory, verb_involves_theta). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.JacobiTheta.TwoVariable"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003058,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "100d3c",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.TwoVariable",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_number",
+          "verb_involves_theory",
+          "verb_involves_theta"
+        ],
+        "specificity": 0.001019,
+        "uniqueness": 0.0,
+        "score": 0.003058
+      }
+    },
+    {
+      "hypothesis": "100d3c (Fungrim) and Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable (mathlib) share 3 concepts (verb_involves_number, verb_involves_theory, verb_involves_theta). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003058,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "100d3c",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.OneVariable",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_number",
+          "verb_involves_theory",
+          "verb_involves_theta"
+        ],
+        "specificity": 0.001019,
+        "uniqueness": 0.0,
+        "score": 0.003058
+      }
+    },
+    {
+      "hypothesis": "100d3c (Fungrim) and Mathlib.NumberTheory.ModularForms.JacobiTheta.Manifold (mathlib) share 3 concepts (verb_involves_number, verb_involves_theory, verb_involves_theta). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.JacobiTheta.Manifold"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003058,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "100d3c",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.Manifold",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_number",
+          "verb_involves_theory",
+          "verb_involves_theta"
+        ],
+        "specificity": 0.001019,
+        "uniqueness": 0.0,
+        "score": 0.003058
+      }
+    },
+    {
+      "hypothesis": "100d3c (Fungrim) and Mathlib.NumberTheory.ModularForms.JacobiTheta.Bounds (mathlib) share 3 concepts (verb_involves_number, verb_involves_theory, verb_involves_theta). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.JacobiTheta.Bounds"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003058,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "100d3c",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.JacobiTheta.Bounds",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_number",
+          "verb_involves_theory",
+          "verb_involves_theta"
+        ],
+        "specificity": 0.001019,
+        "uniqueness": 0.0,
+        "score": 0.003058
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.LSeries.MellinEqDirichlet (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.LSeries.MellinEqDirichlet"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.LSeries.MellinEqDirichlet",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.LSeries.DirichletContinuation (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.LSeries.DirichletContinuation"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.LSeries.DirichletContinuation",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.LSeries.Dirichlet (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.LSeries.Dirichlet"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.LSeries.Dirichlet",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.EulerProduct.DirichletLSeries (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.EulerProduct.DirichletLSeries"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.EulerProduct.DirichletLSeries",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.DirichletCharacter.Orthogonality (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.DirichletCharacter.Orthogonality"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.DirichletCharacter.Orthogonality",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.DirichletCharacter.GaussSum (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.DirichletCharacter.GaussSum"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.DirichletCharacter.GaussSum",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.DirichletCharacter.Bounds (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.DirichletCharacter.Bounds"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.DirichletCharacter.Bounds",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "5540a1 (Fungrim) and Mathlib.NumberTheory.DirichletCharacter.Basic (mathlib) share 3 concepts (verb_involves_dirichlet, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.DirichletCharacter.Basic"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003051,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "5540a1",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.DirichletCharacter.Basic",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_dirichlet",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.003051
+      }
+    },
+    {
+      "hypothesis": "03356b (Fungrim) and Mathlib.NumberTheory.LSeries.HurwitzZetaEven (mathlib) share 3 concepts (verb_involves_even, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0031. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.LSeries.HurwitzZetaEven"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.00305,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "03356b",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.LSeries.HurwitzZetaEven",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_even",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001017,
+        "uniqueness": 0.0,
+        "score": 0.00305
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.QExpansion",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.MDifferentiable (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.MDifferentiable"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.MDifferentiable",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.IsBoundedAtImInfty (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.IsBoundedAtImInfty"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.IsBoundedAtImInfty",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Transform (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Transform"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Transform",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Summable (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Summable"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Summable",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.MDifferentiable (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.MDifferentiable"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.MDifferentiable",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.E2.Defs",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Defs",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Basic",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.LegendreSymbol.GaussEisensteinLemmas (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.LegendreSymbol.GaussEisensteinLemmas"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.LegendreSymbol.GaussEisensteinLemmas",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.Summable (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Summable"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.Summable",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.ModularForms.EisensteinSeries.UniformConvergence (mathlib) share 3 concepts (verb_involves_eisenstein, verb_involves_number, verb_involves_theory). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.UniformConvergence"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003046,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.ModularForms.EisensteinSeries.UniformConvergence",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_eisenstein",
+          "verb_involves_number",
+          "verb_involves_theory"
+        ],
+        "specificity": 0.001015,
+        "uniqueness": 0.0,
+        "score": 0.003046
+      }
+    },
+    {
+      "hypothesis": "f33f09 (Fungrim) and Mathlib.NumberTheory.LSeries.ZetaZeros (mathlib) share 3 concepts (verb_involves_number, verb_involves_theory, verb_involves_zeros). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0030. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "fungrim_bridges",
+          "params": {}
+        },
+        {
+          "search_type": "fungrim_module",
+          "params": {
+            "module": "zeta"
+          }
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.LSeries.ZetaZeros"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.003005,
+      "_bridge": {
+        "dataset1": "Fungrim",
+        "object1": "f33f09",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.LSeries.ZetaZeros",
+        "n_shared_concepts": 3,
+        "shared_concepts": [
+          "verb_involves_number",
+          "verb_involves_theory",
+          "verb_involves_zeros"
+        ],
+        "specificity": 0.001002,
+        "uniqueness": 0.0,
+        "score": 0.003005
+      }
+    },
+    {
+      "hypothesis": "prime_counting_function/Grosswald \\cite{grosswald_sur_1965} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0016. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "antedb_topic",
+          "params": {
+            "topic": "prime_counting_function"
+          }
+        },
+        {
+          "search_type": "antedb_bounds",
+          "params": {}
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.PrimeCounting"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.001588,
+      "_bridge": {
+        "dataset1": "ANTEDB",
+        "object1": "prime_counting_function/Grosswald \\cite{grosswald_sur_1965}",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.PrimeCounting",
+        "n_shared_concepts": 2,
+        "shared_concepts": [
+          "verb_involves_counting",
+          "verb_involves_prime"
+        ],
+        "specificity": 0.000794,
+        "uniqueness": 0.0,
+        "score": 0.001588
+      }
+    },
+    {
+      "hypothesis": "prime_counting_function/Heath-Brown \\cite{heathbrown_gaps_1982} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0016. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "antedb_topic",
+          "params": {
+            "topic": "prime_counting_function"
+          }
+        },
+        {
+          "search_type": "antedb_bounds",
+          "params": {}
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.PrimeCounting"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.001588,
+      "_bridge": {
+        "dataset1": "ANTEDB",
+        "object1": "prime_counting_function/Heath-Brown \\cite{heathbrown_gaps_1982}",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.PrimeCounting",
+        "n_shared_concepts": 2,
+        "shared_concepts": [
+          "verb_involves_counting",
+          "verb_involves_prime"
+        ],
+        "specificity": 0.000794,
+        "uniqueness": 0.0,
+        "score": 0.001588
+      }
+    },
+    {
+      "hypothesis": "prime_counting_function/Korobov--Vinogradov estimate (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0016. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "antedb_topic",
+          "params": {
+            "topic": "prime_counting_function"
+          }
+        },
+        {
+          "search_type": "antedb_bounds",
+          "params": {}
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.PrimeCounting"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.001588,
+      "_bridge": {
+        "dataset1": "ANTEDB",
+        "object1": "prime_counting_function/Korobov--Vinogradov estimate",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.PrimeCounting",
+        "n_shared_concepts": 2,
+        "shared_concepts": [
+          "verb_involves_counting",
+          "verb_involves_prime"
+        ],
+        "specificity": 0.000794,
+        "uniqueness": 0.0,
+        "score": 0.001588
+      }
+    },
+    {
+      "hypothesis": "prime_counting_function/Littlewood \\cite{littlewood_sur_1914} (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0016. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "antedb_topic",
+          "params": {
+            "topic": "prime_counting_function"
+          }
+        },
+        {
+          "search_type": "antedb_bounds",
+          "params": {}
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.PrimeCounting"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.001588,
+      "_bridge": {
+        "dataset1": "ANTEDB",
+        "object1": "prime_counting_function/Littlewood \\cite{littlewood_sur_1914}",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.PrimeCounting",
+        "n_shared_concepts": 2,
+        "shared_concepts": [
+          "verb_involves_counting",
+          "verb_involves_prime"
+        ],
+        "specificity": 0.000794,
+        "uniqueness": 0.0,
+        "score": 0.001588
+      }
+    },
+    {
+      "hypothesis": "prime_counting_function/Prime number theorem (ANTEDB) and Mathlib.NumberTheory.PrimeCounting (mathlib) share 2 concepts (verb_involves_counting, verb_involves_prime). Testing whether their deeper invariants correlate beyond the shared concept values.",
+      "rationale": "Tensor bridge with score 0.0016. Shared verb concepts suggest structural relationship.",
+      "searches": [
+        {
+          "search_type": "antedb_topic",
+          "params": {
+            "topic": "prime_counting_function"
+          }
+        },
+        {
+          "search_type": "antedb_bounds",
+          "params": {}
+        },
+        {
+          "search_type": "mathlib_namespace",
+          "params": {
+            "namespace": "NumberTheory"
+          }
+        },
+        {
+          "search_type": "mathlib_imports",
+          "params": {
+            "module_name": "Mathlib.NumberTheory.PrimeCounting"
+          }
+        }
+      ],
+      "falsification": "No correlation beyond shared concepts",
+      "_source": "tensor_bridge",
+      "_score": 0.001588,
+      "_bridge": {
+        "dataset1": "ANTEDB",
+        "object1": "prime_counting_function/Prime number theorem",
+        "dataset2": "mathlib",
+        "object2": "Mathlib.NumberTheory.PrimeCounting",
+        "n_shared_concepts": 2,
+        "shared_concepts": [
+          "verb_involves_counting",
+          "verb_involves_prime"
+        ],
+        "specificity": 0.000794,
+        "uniqueness": 0.0,
+        "score": 0.001588
+      }
     }
   ],
   "svd_bond_dimensions": {
@@ -1221,7 +3061,7 @@
         2000
       ],
       "top_singular_values": [
-        14.1421,
+        12.6491,
         0.0,
         0.0,
         0.0,
@@ -1233,6 +3073,46 @@
         0.0
       ],
       "energy_95pct_rank": 1
+    },
+    "ANTEDB--Genus2": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--Isogenies": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
     },
     "ANTEDB--KnotInfo": {
       "bond_dim": 0,
@@ -1274,25 +3154,265 @@
       ],
       "energy_95pct_rank": 0
     },
-    "ANTEDB--mathlib": {
-      "bond_dim": 5,
+    "ANTEDB--Lattices": {
+      "bond_dim": 0,
       "shape": [
         240,
         2000
       ],
       "top_singular_values": [
-        40.0216,
-        13.4164,
-        11.3993,
-        11.1803,
-        9.2222,
-        4.7908,
-        4.1391,
-        2.9705,
-        2.4495,
-        1.8708
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
-      "energy_95pct_rank": 5
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--LocalFields": {
+      "bond_dim": 1,
+      "shape": [
+        240,
+        10
+      ],
+      "top_singular_values": [
+        10.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "ANTEDB--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--Maass": {
+      "bond_dim": 1,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        282.8427,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "ANTEDB--NumberFields": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--OpenAlex": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--SmallGroups": {
+      "bond_dim": 1,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        141.4214,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "ANTEDB--SpaceGroups": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        230
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "ANTEDB--mathlib": {
+      "bond_dim": 4,
+      "shape": [
+        240,
+        2000
+      ],
+      "top_singular_values": [
+        42.9319,
+        14.1421,
+        12.2516,
+        11.084,
+        6.886,
+        4.5369,
+        2.4495,
+        1.7321,
+        1.7321,
+        1.4142
+      ],
+      "energy_95pct_rank": 4
+    },
+    "ANTEDB--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        240,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--Genus2": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--Isogenies": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
     },
     "Fungrim--KnotInfo": {
       "bond_dim": 0,
@@ -1321,7 +3441,187 @@
         2000
       ],
       "top_singular_values": [
-        27.1662,
+        27.1293,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Fungrim--Lattices": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--LocalFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        10
+      ],
+      "top_singular_values": [
+        3.1623,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Fungrim--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--Maass": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        89.4427,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Fungrim--NumberFields": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--OpenAlex": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Fungrim--SmallGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        44.7214,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Fungrim--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        21.4476,
         0.0,
         0.0,
         0.0,
@@ -1335,24 +3635,584 @@
       "energy_95pct_rank": 1
     },
     "Fungrim--mathlib": {
-      "bond_dim": 14,
+      "bond_dim": 10,
       "shape": [
         2000,
         2000
       ],
       "top_singular_values": [
-        29.347,
-        16.4674,
-        10.7479,
-        7.0922,
-        6.4105,
-        5.588,
-        5.39,
-        4.9831,
-        4.7362,
-        4.1032
+        50.551,
+        16.2466,
+        14.3086,
+        10.7774,
+        9.2001,
+        8.3329,
+        7.8905,
+        5.6406,
+        4.7938,
+        4.6187
       ],
-      "energy_95pct_rank": 14
+      "energy_95pct_rank": 10
+    },
+    "Fungrim--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Genus2--Isogenies": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        691.1144,
+        44.0067,
+        6.0135,
+        1.3556,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.8989
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Genus2--KnotInfo": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        159.9174,
+        26.5846,
+        23.3211,
+        9.2633,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Genus2--LMFDB": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        508.8984,
+        183.5283,
+        76.4755,
+        19.7035,
+        15.6224,
+        2.6129,
+        2.0818,
+        1.9769,
+        1.4707,
+        1.4142
+      ],
+      "energy_95pct_rank": 2
+    },
+    "Genus2--Lattices": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        648.8312,
+        109.255,
+        59.4929,
+        31.464,
+        13.9968,
+        2.792,
+        1.7297,
+        1.7132,
+        1.6034,
+        1.4524
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Genus2--LocalFields": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        10
+      ],
+      "top_singular_values": [
+        17.162,
+        12.6279,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 2
+    },
+    "Genus2--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Genus2--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Genus2--NumberFields": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        706.8441,
+        162.281,
+        60.426,
+        36.5355,
+        23.5065,
+        1.3878,
+        1.3245,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "energy_95pct_rank": 2
+    },
+    "Genus2--OpenAlex": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        2.8284,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Genus2--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Genus2--SmallGroups": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        567.6217,
+        176.8946,
+        75.0173,
+        33.3828,
+        17.4726,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "energy_95pct_rank": 2
+    },
+    "Genus2--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        105.378,
+        13.4557,
+        9.3906,
+        3.6373,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Genus2--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        141.4214,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Genus2--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Isogenies--KnotInfo": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        1434.8222,
+        111.8022,
+        19.316,
+        2.744,
+        2.3949,
+        2.2361,
+        2.2361,
+        2.177,
+        2.1178,
+        2.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Isogenies--LMFDB": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        2114.0735,
+        395.3521,
+        47.4045,
+        1.7183,
+        1.4142,
+        1.4142,
+        1.4142,
+        1.4142,
+        1.4142,
+        1.4142
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Isogenies--Lattices": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        3307.3192,
+        309.2386,
+        22.3876,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Isogenies--LocalFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        10
+      ],
+      "top_singular_values": [
+        210.903,
+        3.7333,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Isogenies--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Isogenies--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Isogenies--NumberFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        4321.5792,
+        222.2395,
+        33.2421,
+        2.3255,
+        2.0285,
+        1.8478,
+        1.7559,
+        1.7321,
+        1.7263,
+        1.6173
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Isogenies--OpenAlex": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Isogenies--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Isogenies--SmallGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        3399.2359,
+        401.2419,
+        63.2535,
+        2.3789,
+        1.6956,
+        1.4142,
+        1.4141,
+        1.4134,
+        1.4039,
+        1.2741
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Isogenies--SpaceGroups": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        225.4159,
+        58.4093,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 2
+    },
+    "Isogenies--mathlib": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Isogenies--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
     },
     "KnotInfo--LMFDB": {
       "bond_dim": 2,
@@ -1361,16 +4221,196 @@
         2000
       ],
       "top_singular_values": [
-        876.9609,
-        221.2238,
-        74.4814,
-        34.9433,
-        3.8417,
-        3.438,
-        3.1623,
-        3.1039,
-        2.9507,
-        2.827
+        856.0,
+        202.0477,
+        66.5994,
+        44.2362,
+        3.4641,
+        3.4636,
+        3.4075,
+        3.3677,
+        3.169,
+        3.1109
+      ],
+      "energy_95pct_rank": 2
+    },
+    "KnotInfo--Lattices": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        1911.7241,
+        261.8842,
+        172.3678,
+        42.2996,
+        3.6302,
+        2.4136,
+        2.4038,
+        1.7178,
+        1.7007,
+        1.5332
+      ],
+      "energy_95pct_rank": 1
+    },
+    "KnotInfo--LocalFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        10
+      ],
+      "top_singular_values": [
+        105.7931,
+        15.146,
+        2.1019,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "KnotInfo--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "KnotInfo--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "KnotInfo--NumberFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        1515.7345,
+        232.9453,
+        205.6405,
+        101.2732,
+        22.4875,
+        14.8002,
+        7.8777,
+        7.1806,
+        6.7232,
+        5.929
+      ],
+      "energy_95pct_rank": 1
+    },
+    "KnotInfo--OpenAlex": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        17.72,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "KnotInfo--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "KnotInfo--SmallGroups": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        1488.4122,
+        308.1677,
+        204.355,
+        90.6232,
+        17.5346,
+        13.4172,
+        10.0115,
+        5.2416,
+        4.5468,
+        4.4413
+      ],
+      "energy_95pct_rank": 2
+    },
+    "KnotInfo--SpaceGroups": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        252.3919,
+        57.7924,
+        38.7271,
+        17.553,
+        1.8646,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
       ],
       "energy_95pct_rank": 2
     },
@@ -1381,11 +4421,211 @@
         2000
       ],
       "top_singular_values": [
-        162.1018,
+        159.6214,
         0.0,
         0.0,
         0.0,
         0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "KnotInfo--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LMFDB--Lattices": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        3395.0951,
+        893.8701,
+        176.1484,
+        139.9754,
+        54.8945,
+        29.6395,
+        6.2904,
+        5.0,
+        4.9688,
+        4.8906
+      ],
+      "energy_95pct_rank": 2
+    },
+    "LMFDB--LocalFields": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        10
+      ],
+      "top_singular_values": [
+        94.9587,
+        59.5218,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 2
+    },
+    "LMFDB--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LMFDB--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LMFDB--NumberFields": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        2686.2161,
+        718.0196,
+        518.707,
+        172.0607,
+        111.0409,
+        40.1952,
+        7.4274,
+        4.278,
+        3.4486,
+        3.2632
+      ],
+      "energy_95pct_rank": 2
+    },
+    "LMFDB--OpenAlex": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        7.2111,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "LMFDB--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LMFDB--SmallGroups": {
+      "bond_dim": 3,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        2415.458,
+        998.0602,
+        724.7703,
+        153.1788,
+        123.8957,
+        76.1372,
+        4.8122,
+        3.4855,
+        3.3282,
+        2.9849
+      ],
+      "energy_95pct_rank": 3
+    },
+    "LMFDB--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        574.0706,
+        65.8289,
+        53.0092,
+        16.7395,
+        3.0486,
         0.0,
         0.0,
         0.0,
@@ -1401,8 +4641,8 @@
         2000
       ],
       "top_singular_values": [
-        122.9146,
-        105.4277,
+        163.2238,
+        122.4377,
         0.0,
         0.0,
         0.0,
@@ -1413,6 +4653,1126 @@
         0.0
       ],
       "energy_95pct_rank": 2
+    },
+    "LMFDB--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Lattices--LocalFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        10
+      ],
+      "top_singular_values": [
+        442.2174,
+        12.3341,
+        0.8156,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Lattices--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Lattices--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Lattices--NumberFields": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        5829.1287,
+        731.0546,
+        489.2287,
+        183.9729,
+        139.1811,
+        50.4882,
+        24.705,
+        23.2071,
+        11.9938,
+        10.5239
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Lattices--OpenAlex": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        59.0642,
+        12.8226,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Lattices--Polytopes": {
+      "bond_dim": 3,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        265.2131,
+        80.2496,
+        53.8516,
+        48.6826,
+        23.6643,
+        8.3666,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 3
+    },
+    "Lattices--SmallGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        5525.7297,
+        837.6346,
+        751.4888,
+        215.089,
+        125.0591,
+        50.6957,
+        42.3245,
+        29.0295,
+        24.0208,
+        12.6661
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Lattices--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        2129.586,
+        209.0029,
+        73.7504,
+        22.3783,
+        17.1065,
+        13.9256,
+        11.0251,
+        6.0462,
+        3.4771,
+        1.2146
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Lattices--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        204.939,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Lattices--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LocalFields--MMLKG": {
+      "bond_dim": 0,
+      "shape": [
+        10,
+        1401
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LocalFields--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        10,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LocalFields--NumberFields": {
+      "bond_dim": 1,
+      "shape": [
+        10,
+        2000
+      ],
+      "top_singular_values": [
+        315.9658,
+        64.4329,
+        8.369,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "LocalFields--OpenAlex": {
+      "bond_dim": 1,
+      "shape": [
+        10,
+        2000
+      ],
+      "top_singular_values": [
+        3.1623,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "LocalFields--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        10,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "LocalFields--SmallGroups": {
+      "bond_dim": 1,
+      "shape": [
+        10,
+        2000
+      ],
+      "top_singular_values": [
+        438.2211,
+        69.5089,
+        7.7347,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "LocalFields--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        10,
+        230
+      ],
+      "top_singular_values": [
+        84.8958,
+        10.5118,
+        0.4501,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "LocalFields--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        10,
+        2000
+      ],
+      "top_singular_values": [
+        12.6491,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "LocalFields--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        10,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--Maass": {
+      "bond_dim": 0,
+      "shape": [
+        1401,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--NumberFields": {
+      "bond_dim": 0,
+      "shape": [
+        1401,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--OpenAlex": {
+      "bond_dim": 0,
+      "shape": [
+        1401,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        1401,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--SmallGroups": {
+      "bond_dim": 0,
+      "shape": [
+        1401,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--SpaceGroups": {
+      "bond_dim": 0,
+      "shape": [
+        1401,
+        230
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "MMLKG--mathlib": {
+      "bond_dim": 3,
+      "shape": [
+        1401,
+        2000
+      ],
+      "top_singular_values": [
+        222.2031,
+        132.7391,
+        64.6692,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 3
+    },
+    "MMLKG--piBase": {
+      "bond_dim": 1,
+      "shape": [
+        1401,
+        220
+      ],
+      "top_singular_values": [
+        71.1337,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Maass--NumberFields": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Maass--OpenAlex": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Maass--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Maass--SmallGroups": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Maass--SpaceGroups": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Maass--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        77.4597,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "Maass--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "NumberFields--OpenAlex": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "NumberFields--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "NumberFields--SmallGroups": {
+      "bond_dim": 2,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        5744.503,
+        1186.1276,
+        681.2954,
+        511.1434,
+        240.93,
+        152.9279,
+        136.0368,
+        75.5802,
+        72.0469,
+        51.1602
+      ],
+      "energy_95pct_rank": 2
+    },
+    "NumberFields--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        1292.4468,
+        192.7182,
+        122.5932,
+        63.3987,
+        43.0851,
+        41.3277,
+        31.0224,
+        26.6889,
+        20.1014,
+        11.9698
+      ],
+      "energy_95pct_rank": 1
+    },
+    "NumberFields--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        89.4427,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "NumberFields--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "OpenAlex--Polytopes": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        1010
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "OpenAlex--SmallGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        101.4085,
+        21.2678,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "OpenAlex--SpaceGroups": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "OpenAlex--mathlib": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "OpenAlex--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Polytopes--SmallGroups": {
+      "bond_dim": 0,
+      "shape": [
+        1010,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Polytopes--SpaceGroups": {
+      "bond_dim": 0,
+      "shape": [
+        1010,
+        230
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Polytopes--mathlib": {
+      "bond_dim": 0,
+      "shape": [
+        1010,
+        2000
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "Polytopes--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        1010,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "SmallGroups--SpaceGroups": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        230
+      ],
+      "top_singular_values": [
+        1248.8884,
+        212.1906,
+        136.772,
+        75.8449,
+        66.6811,
+        44.8033,
+        32.8093,
+        31.6728,
+        12.2831,
+        10.6568
+      ],
+      "energy_95pct_rank": 1
+    },
+    "SmallGroups--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        2000
+      ],
+      "top_singular_values": [
+        783.5815,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "SmallGroups--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "SpaceGroups--mathlib": {
+      "bond_dim": 1,
+      "shape": [
+        230,
+        2000
+      ],
+      "top_singular_values": [
+        64.3428,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
+    },
+    "SpaceGroups--piBase": {
+      "bond_dim": 0,
+      "shape": [
+        230,
+        220
+      ],
+      "top_singular_values": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 0
+    },
+    "mathlib--piBase": {
+      "bond_dim": 1,
+      "shape": [
+        2000,
+        220
+      ],
+      "top_singular_values": [
+        198.4439,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "energy_95pct_rank": 1
     }
   }
 }

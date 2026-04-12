@@ -1,0 +1,84 @@
+# ============================================================
+# APOLLO v2_d — Gradient Recovery (M2)
+# ============================================================
+# Fixes the flat fitness landscape problem from v2_c:
+#   - Difficulty curriculum (easy tasks mixed in for gradient)
+#   - Post-mutation parameter annealing (structural mutations
+#     get 10 rounds of tuning before competing)
+#   - Accuracy-only AOS reward (bandit rewards real accuracy,
+#     not meaningless Pareto improvements)
+#   - Selection death logging (diagnose why organisms die)
+# ============================================================
+
+apollo:
+  island_id: "beta-v2d"
+  instance_name: "Apollo-Beta v2d (Gradient Recovery)"
+
+  primitives_dir: "agents/hephaestus/src"
+  trap_generator: "agents/hephaestus/src/trap_generator.py"
+  gem_dirs:
+    - "agents/hephaestus/forge_v9/*.py"
+    - "forge/candidates/*gem*.py"
+    - "agents/hephaestus/forge_v7/*specialist*.py"
+
+  # Output directories — isolated under run_v2d/
+  log_dir: "run_v2d/logs"
+  checkpoint_dir: "run_v2d/checkpoints"
+  lineage_dir: "run_v2d/lineage"
+  graveyard_dir: "run_v2d/graveyard"
+  dashboard_dir: "run_v2d/dashboard"
+
+  shared_pool: "\\\\SKULLPORT\\skullport_shared\\apollo_pool"
+
+  population_size: 50
+  offspring_per_generation: 50
+  elite_count: 5
+
+  mutation_rates:
+    route: 0.20
+    parameter: 0.25
+    wiring: 0.35
+    swap: 0.20
+  drift_sigma: 0.02
+  crossover_rate: 0.3
+
+  warmup_generations: 50
+  accuracy_activation_gen: 50
+  ablation_activation_gen: 100
+  params_only_until_gen: 50
+
+  selection_algorithm: "nsga3"
+  fitness_objectives: 6
+
+  ncd_min_differ: 3
+
+  ablation_interval: 5
+  ablation_threshold: 0.20
+
+  novelty_k_nearest: 15
+  novelty_archive_threshold: 0.3
+  novelty_archive_max_size: 500
+
+  n_reference_tasks: 50
+  n_evolution_tasks: 100
+  n_held_out_tasks: 50
+  rotation_count: 10
+  task_rotation_interval: 50
+  quick_screen_count: 3
+
+  sandbox_timeout_seconds: 0.5
+
+  llm_model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+  llm_device: "cuda"
+  llm_max_tokens: 1024
+  llm_temperature: 0.8
+  llm_load_in_8bit: true
+
+  checkpoint_interval: 10
+  checkpoint_keep_last: 5
+  held_out_eval_interval: 10
+  max_generations: 50000
+
+  # v2_d specific
+  annealing_rounds: 10
+  aos_accuracy_only_until: 300

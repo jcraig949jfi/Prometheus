@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Genetic Algorithms",
+    "Gene Regulatory Networks",
+    "Ecosystem Dynamics"
+  ],
+  "concept_strengths": {
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": 0.0377,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
+      },
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Gene Regulatory Networks": {
+      "influence": {
+        "forge_effect": 0.0554,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2564,
+      "forge_effect": 0.0554,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2564,
+        "rate_without": 0.2235,
+        "drop": 0.0329
+      },
+      "summary": "Gene Regulatory Networks: positive forge driver (+0.06); forge rate: 26%",
+      "directive": "**Gene Regulatory Networks**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Ecosystem Dynamics": {
+      "influence": {
+        "forge_effect": -0.0169,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1429,
+      "forge_effect": -0.0169,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1429,
+        "rate_without": 0.2266,
+        "drop": -0.0837
+      },
+      "summary": "Ecosystem Dynamics: removing it increases forge probability by 8%; forge rate: 14%",
+      "directive": "**Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Gene Regulatory Networks",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Differentiable Programming",
+        "Gene Regulatory Networks",
+        "Active Inference"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ecosystem Dynamics",
+        "Free Energy Principle",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Gene Regulatory Networks**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Gene Regulatory Networks + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n- Differentiable Programming + Gene Regulatory Networks + Active Inference (accuracy: 0%, calibration: 0%)\n- Ecosystem Dynamics + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

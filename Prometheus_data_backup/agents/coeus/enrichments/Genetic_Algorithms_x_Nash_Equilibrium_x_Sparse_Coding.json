@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Genetic Algorithms",
+    "Sparse Coding",
+    "Nash Equilibrium"
+  ],
+  "concept_strengths": {
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": 0.0377,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
+      },
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Sparse Coding": {
+      "influence": {
+        "forge_effect": -0.0229,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1875,
+      "forge_effect": -0.0229,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1875,
+        "rate_without": 0.2255,
+        "drop": -0.038
+      },
+      "summary": "Sparse Coding: forge rate: 19%",
+      "directive": "**Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0042,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
+      },
+      "summary": "Nash Equilibrium: forge rate: 21%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Differentiable Programming",
+        "Nash Equilibrium",
+        "Metamorphic Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Dynamical Systems",
+        "Nash Equilibrium",
+        "Counterfactual Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sparse Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)\n- Dynamical Systems + Nash Equilibrium + Counterfactual Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

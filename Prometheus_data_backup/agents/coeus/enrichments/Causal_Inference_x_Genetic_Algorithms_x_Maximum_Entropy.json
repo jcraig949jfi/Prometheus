@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Genetic Algorithms",
+    "Causal Inference",
+    "Maximum Entropy"
+  ],
+  "concept_strengths": {
+    "Genetic Algorithms": {
+      "influence": {
+        "forge_effect": 0.0377,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2903,
+      "forge_effect": 0.0377,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2903,
+        "rate_without": 0.223,
+        "drop": 0.0673
+      },
+      "summary": "Genetic Algorithms: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Causal Inference": {
+      "influence": {
+        "forge_effect": -0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1692,
+      "forge_effect": -0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1692,
+        "rate_without": 0.2267,
+        "drop": -0.0575
+      },
+      "summary": "Causal Inference: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.1336,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Causal Inference + Genetic Algorithms": 0.9509
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Genetic Algorithms",
+        "Analogical Reasoning",
+        "Causal Inference"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Genetic Algorithms",
+        "Compressed Sensing",
+        "Causal Inference"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Genetic Algorithms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Causal Inference + Genetic Algorithms: strong positive synergy (+0.951). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Genetic Algorithms + Analogical Reasoning + Causal Inference (accuracy: 0%, calibration: 0%)\n- Genetic Algorithms + Compressed Sensing + Causal Inference (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

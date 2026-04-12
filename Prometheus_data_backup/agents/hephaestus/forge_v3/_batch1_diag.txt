@@ -1,0 +1,52 @@
+### tensor_decomposition_x_falsificationism_x_free_energy_principle.py
+Current: acc=60% cal=60% (9/15)
+FAILS:
+- "Is 9.11 larger than 9.9?" correct="No" picked="Yes"
+- "A bat and ball cost $1.10. Bat costs $1 more. Ball costs?" correct="$0.05" picked="$0.10"
+- "If all cats are animals, are all animals cats?" correct="No" picked="Yes"
+- "Sum of two odd numbers is always odd?" correct="False" picked="True"
+- "A farmer has 15 sheep. All but 8 die. How many left?" correct="8" picked="7"
+- "If Alice is taller than Bob, and Bob is taller than Carol, who is tall" correct="Alice" picked="Carol"
+
+### ergodic_theory_x_falsificationism_x_maximum_entropy.py
+Current: acc=53% cal=60% (8/15)
+FAILS:
+- "You overtake 2nd place in a race. What place are you in?" correct="Second" picked="First"
+- "0.999 repeating equals 1?" correct="Yes" picked="No"
+- "13 people, 12 months. Must two share a birth month?" correct="Yes" picked="No"
+- "Sum of two odd numbers is always odd?" correct="False" picked="True"
+- "If Alice is taller than Bob, and Bob is taller than Carol, who is tall" correct="Alice" picked="Bob"
+- "It is not the case that all birds can fly. Can penguins fly?" correct="The question cannot be answered from the given information" picked="No, some birds cannot fly"
+- "The dog chased the cat. Who was being chased?" correct="The cat" picked="Both"
+
+### information_theory_x_active_inference_x_free_energy_principle.py
+Current: acc=53% cal=60% (8/15)
+FAILS:
+- "Is 9.11 larger than 9.9?" correct="No" picked="Yes"
+- "Coin flipped heads 5 times. Next flip probability of heads?" correct="50%" picked="Higher than 50%"
+- "Sum of two odd numbers is always odd?" correct="False" picked="True"
+- "A farmer has 15 sheep. All but 8 die. How many left?" correct="8" picked="7"
+- "It is not the case that all birds can fly. Can penguins fly?" correct="The question cannot be answered from the given information" picked="Yes, all birds can fly"
+- "9.11 is less than 9.9. Which number is larger?" correct="9.9" picked="9.11"
+- "If it is raining, the ground is wet. The ground is not wet. Is it rain" correct="No" picked="Not enough information"
+
+### differentiable_programming_x_metacognition_x_mechanism_design.py
+Current: acc=53% cal=60% (8/15)
+FAILS:
+- "Which is heavier: a pound of gold or a pound of feathers?" correct="Same" picked="Gold"
+- "A bat and ball cost $1.10. Bat costs $1 more. Ball costs?" correct="$0.05" picked="$0.10"
+- "Coin flipped heads 5 times. Next flip probability of heads?" correct="50%" picked="Higher than 50%"
+- "It is not the case that all birds can fly. Can penguins fly?" correct="The question cannot be answered from the given information" picked="No, some birds cannot fly"
+- "9.11 is less than 9.9. Which number is larger?" correct="9.9" picked="Cannot be determined"
+- "The dog chased the cat. Who was being chased?" correct="The cat" picked="The dog"
+- "If it is raining, the ground is wet. The ground is not wet. Is it rain" correct="No" picked="Not enough information"
+
+### fourier_transforms_x_criticality_x_compositionality.py
+Current: acc=60% cal=53% (9/15)
+FAILS:
+- "A bat and ball cost $1.10. Bat costs $1 more. Ball costs?" correct="$0.05" picked="$0.10"
+- "A farmer has 15 sheep. All but 8 die. How many left?" correct="8" picked="7"
+- "If Alice is taller than Bob, and Bob is taller than Carol, who is tall" correct="Alice" picked="They are the same height"
+- "9.11 is less than 9.9. Which number is larger?" correct="9.9" picked="?"
+- "The dog chased the cat. Who was being chased?" correct="The cat" picked="The dog"
+- "If it is raining, the ground is wet. The ground is not wet. Is it rain" correct="No" picked="Not enough information"

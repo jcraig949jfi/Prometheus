@@ -1,0 +1,136 @@
+{
+  "challenge": "ALL-055",
+  "title": "Triangle Density vs Conductor",
+  "timestamp": "2026-04-10T06:25:12",
+  "elapsed_seconds": 0.0,
+  "gsp4_buckets": [
+    {
+      "bucket": "mod2_all",
+      "description": "Mod-2 ALL congruences",
+      "n_nodes": 9101,
+      "n_edges": 11356,
+      "n_triangles": 20917,
+      "max_clique": 24,
+      "tri_per_node": 2.298319,
+      "tri_per_edge": 1.841934,
+      "er_expected_triangles": 2.59,
+      "triangle_enrichment_vs_ER": 8076.1,
+      "edge_probability": 0.000274
+    },
+    {
+      "bucket": "mod2_coprime_usp4",
+      "description": "Mod-2 coprime USp(4)",
+      "n_nodes": 1961,
+      "n_edges": 1115,
+      "n_triangles": 99,
+      "max_clique": 4,
+      "tri_per_node": 0.050484,
+      "tri_per_edge": 0.088789,
+      "er_expected_triangles": 0.25,
+      "triangle_enrichment_vs_ER": 396.0,
+      "edge_probability": 0.00058
+    },
+    {
+      "bucket": "mod2_irreducible",
+      "description": "Mod-2 irreducible",
+      "n_nodes": 1150,
+      "n_edges": 640,
+      "n_triangles": 47,
+      "max_clique": 4,
+      "tri_per_node": 0.04087,
+      "tri_per_edge": 0.073438,
+      "er_expected_triangles": 0.23,
+      "triangle_enrichment_vs_ER": 204.3,
+      "edge_probability": 0.000969
+    },
+    {
+      "bucket": "mod3_all",
+      "description": "Mod-3 ALL congruences",
+      "n_nodes": 296,
+      "n_edges": 181,
+      "n_triangles": 37,
+      "max_clique": 5,
+      "tri_per_node": 0.125,
+      "tri_per_edge": 0.20442,
+      "er_expected_triangles": 0.3,
+      "triangle_enrichment_vs_ER": 123.3,
+      "edge_probability": 0.004146
+    },
+    {
+      "bucket": "mod3_coprime_usp4",
+      "description": "Mod-3 coprime USp(4)",
+      "n_nodes": 84,
+      "n_edges": 42,
+      "n_triangles": 0,
+      "max_clique": 2,
+      "tri_per_node": 0.0,
+      "tri_per_edge": 0.0,
+      "er_expected_triangles": 0.17,
+      "triangle_enrichment_vs_ER": 0.0,
+      "edge_probability": 0.012048
+    },
+    {
+      "bucket": "mod3_irreducible",
+      "description": "Mod-3 irreducible",
+      "n_nodes": 72,
+      "n_edges": 36,
+      "n_triangles": 0,
+      "max_clique": 2,
+      "tri_per_node": 0.0,
+      "tri_per_edge": 0.0,
+      "er_expected_triangles": 0.17,
+      "triangle_enrichment_vs_ER": 0.0,
+      "edge_probability": 0.014085
+    }
+  ],
+  "gl2_hecke_by_ell": [
+    {
+      "ell": 5,
+      "n_nodes": 1568,
+      "n_edges": 817,
+      "n_triangles": 27,
+      "tri_per_node": 0.017219,
+      "n_components": 774
+    },
+    {
+      "ell": 7,
+      "n_nodes": 318,
+      "n_edges": 159,
+      "n_triangles": 0,
+      "tri_per_node": 0.0,
+      "n_components": 159
+    },
+    {
+      "ell": 11,
+      "n_nodes": 10,
+      "n_edges": 5,
+      "n_triangles": 0,
+      "tri_per_node": 0.0,
+      "n_components": 5
+    }
+  ],
+  "phase_transitions": [
+    {
+      "from": "mod2_all",
+      "to": "mod2_coprime_usp4",
+      "clique_ratio": 0.17,
+      "from_clique": 24,
+      "to_clique": 4
+    },
+    {
+      "from": "mod3_all",
+      "to": "mod3_coprime_usp4",
+      "clique_ratio": 0.4,
+      "from_clique": 5,
+      "to_clique": 2
+    }
+  ],
+  "gl2_triangle_scaling": null,
+  "gsp4_enrichment_summary": {
+    "total_enrichment_vs_ER": 8076.1,
+    "total_triangles": 20917,
+    "total_nodes": 9101,
+    "max_clique": 24
+  },
+  "assessment": "PHASE TRANSITION: clique size jumps at ['mod2_all\u2192mod2_coprime_usp4', 'mod3_all\u2192mod3_coprime_usp4']. Max triangle enrichment 8076x over ER"
+}

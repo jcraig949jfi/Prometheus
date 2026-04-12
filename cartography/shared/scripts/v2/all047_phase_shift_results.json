@@ -1,0 +1,68 @@
+{
+  "challenge": "ALL-047",
+  "title": "Phase-Shift & Oscillation Alignment",
+  "timestamp": "2026-04-10T07:40:30",
+  "elapsed_seconds": 1.0,
+  "n_forms": 5000,
+  "autocorrelation": {
+    "mean_by_lag": [
+      1.0,
+      -0.044668,
+      -0.041545,
+      -0.034417,
+      -0.033805,
+      -0.031663,
+      -0.027316,
+      -0.026148,
+      -0.026953,
+      -0.022304,
+      -0.027644,
+      -0.023068,
+      -0.024782,
+      -0.022362,
+      -0.018785
+    ],
+    "std_by_lag": [
+      0.0,
+      0.217442,
+      0.215452,
+      0.206593,
+      0.199191,
+      0.187487,
+      0.181283,
+      0.169764,
+      0.165434,
+      0.153342,
+      0.143588,
+      0.134903,
+      0.124593,
+      0.117049,
+      0.106811
+    ],
+    "peak_lag": 1,
+    "peak_value": -0.044668
+  },
+  "cross_correlation": {
+    "n_pairs": 16931,
+    "mean": -0.04325,
+    "std": 0.228244,
+    "frac_above_05": 0.0269,
+    "ks_pvalue": 1.8745522842623963e-48
+  },
+  "spectral": {
+    "dominant_frequency": 0.5,
+    "power_spectrum": [
+      0.0,
+      1.13,
+      0.63,
+      1.36,
+      0.16,
+      0.12,
+      0.07,
+      0.03,
+      0.2,
+      0.24
+    ]
+  },
+  "assessment": "NO OSCILLATION: all AC < 0.05. a_p sequences are effectively white noise in prime index"
+}

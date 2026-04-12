@@ -1,0 +1,93 @@
+{
+  "concept_names": [
+    "Analogical Reasoning",
+    "Spectral Analysis",
+    "Property-Based Testing"
+  ],
+  "concept_strengths": {
+    "Analogical Reasoning": {
+      "influence": {
+        "forge_effect": 0.0935,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.234,
+      "forge_effect": 0.0935,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Analogical Reasoning: positive forge driver (+0.09); forge rate: 23%",
+      "directive": "**Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": 0.025,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
+      },
+      "summary": "Spectral Analysis: forge rate: 26%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Property-Based Testing": {
+      "influence": {
+        "forge_effect": -0.082,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0714,
+      "forge_effect": -0.082,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.0714,
+        "rate_without": 0.2271,
+        "drop": -0.1557
+      },
+      "summary": "Property-Based Testing: removing it increases forge probability by 16%; forge rate: 7%",
+      "directive": "**Property-Based Testing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Analogical Reasoning + Property-Based Testing": -0.0167
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Pragmatics",
+        "Property-Based Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Dialectics",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Hebbian Learning",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Property-Based Testing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,94 @@
+{
+  "concept_names": [
+    "Spectral Analysis",
+    "Dialectics",
+    "Compositionality"
+  ],
+  "concept_strengths": {
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": 0.025,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
+      },
+      "summary": "Spectral Analysis: forge rate: 26%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Dialectics": {
+      "influence": {
+        "forge_effect": -0.0197,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2188,
+      "forge_effect": -0.0197,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Dialectics: forge rate: 22%",
+      "directive": "**Dialectics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Dialectics + Spectral Analysis": -0.0569,
+    "Compositionality + Spectral Analysis": 0.2849
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Spectral Analysis",
+        "Sparse Coding",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Dialectics",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Active Inference",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Dialectics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Dialectics + Spectral Analysis: negative interaction (-0.057). Keep these concepts in separate code paths to avoid interference.\n- Compositionality + Spectral Analysis: strong positive synergy (+0.285). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Spectral Analysis + Sparse Coding + Compositionality (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

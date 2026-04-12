@@ -1,0 +1,95 @@
+{
+  "concept_names": [
+    "Evolution",
+    "Wavelet Transforms",
+    "Model Checking"
+  ],
+  "concept_strengths": {
+    "Evolution": {
+      "influence": {
+        "forge_effect": 0.0222,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.0222,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2235,
+        "drop": 0.0413
+      },
+      "summary": "Evolution: forge rate: 26%",
+      "directive": "**Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Wavelet Transforms": {
+      "influence": {
+        "forge_effect": -0.0685,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
+      },
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
+      "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Model Checking": {
+      "influence": {
+        "forge_effect": -0.0261,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2174,
+      "forge_effect": -0.0261,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Model Checking: forge rate: 22%",
+      "directive": "**Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Evolution + Wavelet Transforms": 0.4489,
+    "Evolution + Model Checking": 0.9425,
+    "Model Checking + Wavelet Transforms": 0.158
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Evolution",
+        "Wavelet Transforms",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Evolution",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Free Energy Principle",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Evolution + Wavelet Transforms: strong positive synergy (+0.449). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Evolution + Model Checking: strong positive synergy (+0.943). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Model Checking + Wavelet Transforms: strong positive synergy (+0.158). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Evolution + Wavelet Transforms + Model Checking (accuracy: 0%, calibration: 0%)\n- Measure Theory + Evolution + Model Checking (accuracy: 0%, calibration: 0%)\n- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

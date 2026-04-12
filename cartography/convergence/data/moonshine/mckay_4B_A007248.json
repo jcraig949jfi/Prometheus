@@ -1,0 +1,59 @@
+{
+  "class": "4B",
+  "oeis_id": "A007248",
+  "name": "McKay-Thompson series of class 4C for the Monster group.",
+  "data": "1,20,-62,216,-641,1636,-3778,8248,-17277,34664,-66878,125312,-229252,409676,-716420,1230328,-2079227,3460416,-5677816,9198424,-14729608,23328520,-36567242,56774712,-87369461,133321908,-201825396,303248408,-452431503",
+  "offset": "0,2",
+  "formula": [
+    "G.f.: 16*(theta_3/theta_2)^4 - 8 = 16 / lambda(z) - 8.",
+    "G.f.: 8*x^(1/2) + (Product_{k>0} (1 - x^(k/2)) / (1 - x^(2*k)))^8.",
+    "Expansion of q * ( -8 + 16 / lambda(z)) in powers of q^2 where nome q = exp(Pi i z). - _Michael Somos_, Nov 14 2006",
+    "Expansion of 4 * q^(1/2) * (k(q) + 1 / k(q)) in powers of q where nome q = exp(Pi i z). - _Michael Somos_, Nov 11 2014",
+    "Expansion of q * (8 + (eta(q) / eta(q^4))^8) in powers of q^2. - _Michael Somos_, Nov 14 2006",
+    "Given g.f. A(x), then B(q) = A(q^2) / q satisfies 0 = f(B(q), B(q^2)) where f(u, v) = (v + 24)^2 - (v + 8) * u^2. - _Michael Somos_, Nov 14 2006",
+    "G.f. is a period 1 Fourier series which satisfies f(-1 / (4 t)) = 8 g(t) where q = exp(2 Pi i t) and g() is the g.f. for A097243. - _Michael Somos_, Jul 22 2011",
+    "a(n) = A029845(2*n - 1) = A124972(2*n - 1). - _Michael Somos_, Nov 14 2006.",
+    "a(n) ~ (-1)^(n+1) * exp(sqrt(2*n)*Pi) / (2^(5/4)*n^(3/4)). - _Vaclav Kotesovec_, Aug 09 2025",
+    "Empirical: Sum_{n>=0} a(n) / exp(n*Pi) = 6 * exp(-Pi / 2) * sqrt(2) = A388181. - _Simon Plouffe_, Sep 15 2025"
+  ],
+  "program": [
+    "(PARI) {a(n) = my(A); if( n<0, 0, n*=2; A = x * O(x^n); polcoeff( 8*x + (eta(x + A) / eta(x^4 + A))^8, n))}; /* _Michael Somos_, Nov 14 2006 */"
+  ],
+  "xref": [
+    "Cf. A029845, A097243, A124972, A112144.",
+    "Cf. A000521, A007240, A014708, A007241, A007267, A045478, etc."
+  ],
+  "fetched": "2026-04-11T09:50:43+00:00",
+  "coefficients": [
+    1,
+    20,
+    -62,
+    216,
+    -641,
+    1636,
+    -3778,
+    8248,
+    -17277,
+    34664,
+    -66878,
+    125312,
+    -229252,
+    409676,
+    -716420,
+    1230328,
+    -2079227,
+    3460416,
+    -5677816,
+    9198424,
+    -14729608,
+    23328520,
+    -36567242,
+    56774712,
+    -87369461,
+    133321908,
+    -201825396,
+    303248408,
+    -452431503
+  ],
+  "n_coefficients": 29
+}

@@ -1,0 +1,94 @@
+{
+  "concept_names": [
+    "Analogical Reasoning",
+    "Phenomenology",
+    "Neural Oscillations"
+  ],
+  "concept_strengths": {
+    "Analogical Reasoning": {
+      "influence": {
+        "forge_effect": 0.0935,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.234,
+      "forge_effect": 0.0935,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Analogical Reasoning: positive forge driver (+0.09); forge rate: 23%",
+      "directive": "**Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Phenomenology": {
+      "influence": {
+        "forge_effect": -0.0562,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.175,
+      "forge_effect": -0.0562,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.175,
+        "rate_without": 0.2256,
+        "drop": -0.0506
+      },
+      "summary": "Phenomenology: removing it increases forge probability by 5%; forge rate: 18%",
+      "directive": "**Phenomenology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neural Oscillations": {
+      "influence": {
+        "forge_effect": -0.0781,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1833,
+      "forge_effect": -0.0781,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
+      },
+      "summary": "Neural Oscillations: negative forge driver (-0.08); forge rate: 18%",
+      "directive": "**Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Analogical Reasoning + Neural Oscillations": 0.2071,
+    "Neural Oscillations + Phenomenology": -0.0321
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Neural Oscillations",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Neural Oscillations",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Analogical Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Phenomenology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Analogical Reasoning + Neural Oscillations: strong positive synergy (+0.207). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Neural Oscillations + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

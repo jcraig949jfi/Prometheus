@@ -1,0 +1,57 @@
+{
+  "class": "2A",
+  "oeis_id": "A007191",
+  "name": "McKay-Thompson series of class 2B for the Monster group with a(0) = -24.",
+  "data": "1,-24,276,-2048,11202,-49152,184024,-614400,1881471,-5373952,14478180,-37122048,91231550,-216072192,495248952,-1102430208,2390434947,-5061476352,10487167336,-21301241856,42481784514,-83300614144",
+  "offset": "-1,2",
+  "formula": [
+    "G.f.: (1/x)(Product_{k>0} 1/(1 + x^k))^24.",
+    "G.f.: (1/q)(Product_{k>0} (1 - q^(2*k - 1)))^24 = 64 * (g_n)^24 where q = e^(-Pi sqrt(n)) and g_n is Ramanujan's class invariant.",
+    "(eta(q)/eta(q^2))^24. - _Gene Ward Smith_, Aug 04 2006",
+    "Expansion of q^(-1) * chi(-q)^24 in powers of q where chi() is a Ramanujan theta function. - _Michael Somos_, Aug 19 2007",
+    "Euler transform of period 2 sequence [-24, 0, ...]. - _Michael Somos_, Aug 19 2007",
+    "Expansion of (1 - lambda(t)) / (lambda(t) / 16)^2 in powers of q = exp(2 Pi i t) where lambda() is the elliptic modular function A115977. - _Michael Somos_, Aug 19 2007",
+    "Expansion of 64 tau(omega) in powers of q = exp(2 Pi i omega) where tau() is Fricke's function on page 371 equation (1). - _Michael Somos_, Jun 12 2012",
+    "G.f. A(x) satisfies 0 = f(A(x), A(x^2)) where f(u, v) = u^2*v - v^2 + 48*u*v + 4096*u. - _Michael Somos_, Aug 19 2007",
+    "G.f. is a period 1 Fourier series which satisfies f(-1 / (2 t)) = 4096 g(t) where q = exp(2 Pi i t) and g() is the g.f. of A014103. - _Michael Somos_, Aug 19 2007",
+    "a(n) = -(-1)^n * A097340(n). A007246(n) = a(n) unless n = 0.",
+    "Convolution inverse of A014103.",
+    "a(n) ~ -(-1)^n * exp(2*Pi*sqrt(n)) / (2 * n^(3/4)). - _Vaclav Kotesovec_, Aug 27 2015",
+    "a(-1) = 1, a(n) = -(24/(n+1))*Sum_{k=1..n+1} A000593(k)*a(n-k) for n > -1. - _Seiichi Manyama_, Mar 29 2017",
+    "Empirical: Sum_{n>=0} a(n) / exp(n*Pi) = 8 * exp(-Pi) = A388178. - _Simon Plouffe_, Sep 15 2025"
+  ],
+  "program": [
+    "(PARI) {a(n) = if( n<-1, 0, n++; polcoeff( prod( k=1, n, 1 + x^k, 1 + x * O(x^n))^-24, n))};",
+    "(PARI) {a(n) = my(A); if( n<-1, 0, n++; A = x * O(x^n); polcoeff( (eta(x + A) / eta(x^2 + A))^24, n))};"
+  ],
+  "xref": [
+    "A134786, A045479, A007191, A097340, A035099, A007246, A107080 are all essentially the same sequence.",
+    "Cf. A161195, A161196, A014103, A115977."
+  ],
+  "fetched": "2026-04-11T09:50:30+00:00",
+  "coefficients": [
+    1,
+    -24,
+    276,
+    -2048,
+    11202,
+    -49152,
+    184024,
+    -614400,
+    1881471,
+    -5373952,
+    14478180,
+    -37122048,
+    91231550,
+    -216072192,
+    495248952,
+    -1102430208,
+    2390434947,
+    -5061476352,
+    10487167336,
+    -21301241856,
+    42481784514,
+    -83300614144
+  ],
+  "n_coefficients": 22
+}

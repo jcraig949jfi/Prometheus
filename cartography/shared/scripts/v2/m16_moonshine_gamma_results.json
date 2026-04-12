@@ -1,0 +1,86 @@
+{
+  "probe": "M16",
+  "title": "Moonshine scaling exponent \u03b3",
+  "timestamp": "2026-04-10T06:56:56",
+  "elapsed_seconds": 0.0,
+  "partition_fits": {
+    "mock_theta": {
+      "gamma": 1.7728,
+      "A": 8.8138,
+      "R2": 0.5965,
+      "p_value": 0.2276794812234397,
+      "se": 1.0311,
+      "n_primes_used": 4,
+      "enrichments": {
+        "2": 15.14,
+        "3": 196.49,
+        "5": 107.53,
+        "7": 246.91
+      }
+    },
+    "modular": {
+      "gamma": null,
+      "reason": "only 1 nonzero primes"
+    },
+    "monstrous": {
+      "gamma": 0.2663,
+      "A": 34.9372,
+      "R2": 0.2143,
+      "p_value": 0.5371136936092766,
+      "se": 0.3606,
+      "n_primes_used": 4,
+      "enrichments": {
+        "2": 32.44,
+        "3": 64.78,
+        "5": 62.03,
+        "7": 47.48
+      }
+    },
+    "theta_lattice": {
+      "gamma": 1.6912,
+      "A": 0.1331,
+      "R2": 0.9485,
+      "p_value": 0.005044647496954031,
+      "se": 0.2276,
+      "n_primes_used": 5,
+      "enrichments": {
+        "2": 0.33,
+        "3": 1.08,
+        "5": 2.07,
+        "7": 4.75,
+        "11": 5.83
+      }
+    },
+    "umbral_M24": {
+      "gamma": 2.1629,
+      "A": 0.2156,
+      "R2": 0.9411,
+      "p_value": 0.006180999059047507,
+      "se": 0.3125,
+      "n_primes_used": 5,
+      "enrichments": {
+        "2": 0.68,
+        "3": 2.77,
+        "5": 9.2,
+        "7": 20.31,
+        "11": 24.92
+      }
+    }
+  },
+  "premium_fit": {
+    "gamma": 1.5001,
+    "R2": 0.9422
+  },
+  "gamma_statistics": {
+    "values": {
+      "mock_theta": 1.7728,
+      "monstrous": 0.2663,
+      "theta_lattice": 1.6912,
+      "umbral_M24": 2.1629
+    },
+    "mean": 1.4733,
+    "std": 0.7193,
+    "cv": 0.4882
+  },
+  "assessment": "WEAKLY UNIVERSAL: \u03b3=1.473\u00b10.719 (CV=0.49) \u2014 some partition dependence"
+}

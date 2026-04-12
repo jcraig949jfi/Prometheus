@@ -1,0 +1,100 @@
+{
+  "concept_names": [
+    "Measure Theory",
+    "Falsificationism",
+    "Type Theory"
+  ],
+  "concept_strengths": {
+    "Measure Theory": {
+      "influence": {
+        "forge_effect": -0.0249,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1458,
+      "forge_effect": -0.0249,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1458,
+        "rate_without": 0.2268,
+        "drop": -0.081
+      },
+      "summary": "Measure Theory: removing it increases forge probability by 8%; forge rate: 15%",
+      "directive": "**Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Falsificationism": {
+      "influence": {
+        "forge_effect": 0.3222,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3662,
+      "forge_effect": 0.3222,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3662,
+        "rate_without": 0.2176,
+        "drop": 0.1486
+      },
+      "summary": "Falsificationism: removing it drops forge probability by 15% (from 37%); forge rate: 37%",
+      "directive": "**Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Type Theory": {
+      "influence": {
+        "forge_effect": -0.0332,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2,
+      "forge_effect": -0.0332,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2,
+        "rate_without": 0.2268,
+        "drop": -0.0268
+      },
+      "summary": "Type Theory: forge rate: 20%",
+      "directive": "**Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Falsificationism + Measure Theory": -0.0534,
+    "Measure Theory + Type Theory": 0.1708,
+    "Falsificationism + Type Theory": 0.0934
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Falsificationism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Error Correcting Codes",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Measure Theory",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Falsificationism**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Falsificationism + Measure Theory: negative interaction (-0.053). Keep these concepts in separate code paths to avoid interference.\n- Measure Theory + Type Theory: strong positive synergy (+0.171). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Ergodic Theory + Falsificationism + Type Theory (accuracy: 0%, calibration: 0%)\n- Measure Theory + Error Correcting Codes + Type Theory (accuracy: 0%, calibration: 0%)\n- Measure Theory + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

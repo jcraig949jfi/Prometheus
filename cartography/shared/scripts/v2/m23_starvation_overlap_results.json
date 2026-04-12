@@ -1,0 +1,48 @@
+{
+  "probe": "M23",
+  "title": "Starvation overlap limit",
+  "timestamp": "2026-04-10T07:00:28",
+  "elapsed_seconds": 0.0,
+  "n_starved_forms": 7557,
+  "total_forms": 17314,
+  "starvation_count_distribution": {
+    "1": 7344,
+    "2": 209,
+    "3": 3,
+    "4": 1
+  },
+  "max_simultaneous": 4,
+  "max_form": "144.2.a.a",
+  "poisson_test": {
+    "lambda": 1.0288,
+    "variance": 0.0296,
+    "dispersion": 0.0288
+  },
+  "prime_cooccurrence": {
+    "2,3": 197,
+    "2,5": 8,
+    "2,23": 7,
+    "19,2": 2,
+    "19,23": 2,
+    "23,5": 2,
+    "2,7": 1,
+    "3,5": 1,
+    "17,19": 1,
+    "17,2": 1,
+    "17,23": 1,
+    "23,3": 1
+  },
+  "per_prime_frequency": {
+    "5": 139,
+    "2": 6237,
+    "3": 1367,
+    "7": 8,
+    "19": 3,
+    "23": 11,
+    "11": 9,
+    "17": 1
+  },
+  "starvation_rate": 0.436468,
+  "multi_starvation_rate": 0.012302,
+  "assessment": "HIGH CEILING: forms can be starved at up to 4 primes simultaneously. Dispersion=0.03 \u2014 UNDERDISPERSED (anti-correlation)"
+}

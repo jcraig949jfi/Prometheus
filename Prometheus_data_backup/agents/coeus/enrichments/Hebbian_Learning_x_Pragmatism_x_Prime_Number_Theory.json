@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Prime Number Theory",
+    "Pragmatism",
+    "Hebbian Learning"
+  ],
+  "concept_strengths": {
+    "Prime Number Theory": {
+      "influence": {
+        "forge_effect": -0.1608,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0857,
+      "forge_effect": -0.1608,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.0857,
+        "rate_without": 0.2275,
+        "drop": -0.1418
+      },
+      "summary": "Prime Number Theory: removing it increases forge probability by 14%; forge rate: 9%",
+      "directive": "**Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Pragmatism": {
+      "influence": {
+        "forge_effect": -0.2295,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
+      },
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
+      "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Hebbian Learning": {
+      "influence": {
+        "forge_effect": 0.0454,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.303,
+      "forge_effect": 0.0454,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.303,
+        "rate_without": 0.2227,
+        "drop": 0.0804
+      },
+      "summary": "Hebbian Learning: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Hebbian Learning",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Pragmatism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Hebbian Learning",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Prime Number Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

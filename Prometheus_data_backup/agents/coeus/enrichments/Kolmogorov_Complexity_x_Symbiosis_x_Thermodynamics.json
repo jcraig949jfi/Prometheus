@@ -1,0 +1,100 @@
+{
+  "concept_names": [
+    "Thermodynamics",
+    "Symbiosis",
+    "Kolmogorov Complexity"
+  ],
+  "concept_strengths": {
+    "Thermodynamics": {
+      "influence": {
+        "forge_effect": 0.22,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.22,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2203,
+        "drop": 0.0655
+      },
+      "summary": "Thermodynamics: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Symbiosis": {
+      "influence": {
+        "forge_effect": -0.0854,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1212,
+      "forge_effect": -0.0854,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1212,
+        "rate_without": 0.2266,
+        "drop": -0.1054
+      },
+      "summary": "Symbiosis: removing it increases forge probability by 11%; forge rate: 12%",
+      "directive": "**Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Kolmogorov Complexity": {
+      "influence": {
+        "forge_effect": 0.0166,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2462,
+      "forge_effect": 0.0166,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2462,
+        "rate_without": 0.2234,
+        "drop": 0.0227
+      },
+      "summary": "Kolmogorov Complexity: forge rate: 25%",
+      "directive": "**Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Symbiosis + Thermodynamics": 0.2987,
+    "Kolmogorov Complexity + Thermodynamics": 0.4297,
+    "Kolmogorov Complexity + Symbiosis": -0.0298
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Thermodynamics",
+        "Gauge Theory",
+        "Kolmogorov Complexity"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Thermodynamics",
+        "Kolmogorov Complexity",
+        "Optimal Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Thermodynamics",
+        "Symbiosis",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Thermodynamics**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 40% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Symbiosis**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Symbiosis + Thermodynamics: strong positive synergy (+0.299). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Kolmogorov Complexity + Thermodynamics: strong positive synergy (+0.430). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Thermodynamics + Gauge Theory + Kolmogorov Complexity (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Kolmogorov Complexity + Optimal Control (accuracy: 0%, calibration: 0%)\n- Thermodynamics + Symbiosis + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

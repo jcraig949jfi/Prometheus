@@ -1,0 +1,40 @@
+{
+  "probe": "M28",
+  "title": "Battery adversarial inversion",
+  "timestamp": "2026-04-10T07:04:03",
+  "elapsed_seconds": 0.0,
+  "n_records": 103,
+  "n_known_true": 0,
+  "score_distributions": {
+    "layer": {
+      "mean": 1.0291,
+      "std": 0.1682,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "delta_pct": {
+      "mean": 29.734,
+      "std": 13.1576,
+      "min": 21.0188,
+      "max": 83.8423
+    }
+  },
+  "adversarial_analysis": {
+    "p1": 1.0,
+    "p5": 1.0,
+    "p10": 1.0,
+    "p25": 1.0,
+    "p50": 1.0,
+    "p75": 1.0,
+    "p90": 1.0,
+    "p95": 1.0,
+    "p99": 2.0,
+    "boundary_fraction": 0.9709,
+    "boundary_range": [
+      1.0,
+      1.0
+    ]
+  },
+  "primary_field": "layer",
+  "assessment": "VULNERABLE: 97% of hypotheses near decision boundary \u2014 battery is attackable"
+}

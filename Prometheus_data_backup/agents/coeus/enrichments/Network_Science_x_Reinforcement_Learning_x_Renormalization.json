@@ -1,0 +1,94 @@
+{
+  "concept_names": [
+    "Renormalization",
+    "Reinforcement Learning",
+    "Network Science"
+  ],
+  "concept_strengths": {
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Reinforcement Learning": {
+      "influence": {
+        "forge_effect": -0.0981,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.15,
+      "forge_effect": -0.0981,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.15,
+        "rate_without": 0.2263,
+        "drop": -0.0763
+      },
+      "summary": "Reinforcement Learning: removing it increases forge probability by 8%; forge rate: 15%",
+      "directive": "**Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Network Science": {
+      "influence": {
+        "forge_effect": 0.1663,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3415,
+      "forge_effect": 0.1663,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3415,
+        "rate_without": 0.2212,
+        "drop": 0.1203
+      },
+      "summary": "Network Science: removing it drops forge probability by 12% (from 34%); forge rate: 34%",
+      "directive": "**Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Network Science + Renormalization": 0.4241,
+    "Network Science + Reinforcement Learning": 0.2821
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Renormalization",
+        "Reinforcement Learning",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Epistemology",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Global Workspace Theory",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Reinforcement Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Network Science**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Network Science + Renormalization: strong positive synergy (+0.424). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Network Science + Reinforcement Learning: strong positive synergy (+0.282). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Renormalization + Reinforcement Learning + Network Science (accuracy: 0%, calibration: 0%)\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Category Theory + Global Workspace Theory + Network Science (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

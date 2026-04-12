@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Emergence",
+    "Neural Oscillations",
+    "Type Theory"
+  ],
+  "concept_strengths": {
+    "Emergence": {
+      "influence": {
+        "forge_effect": 0.146,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3429,
+      "forge_effect": 0.146,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3429,
+        "rate_without": 0.2216,
+        "drop": 0.1212
+      },
+      "summary": "Emergence: removing it drops forge probability by 12% (from 34%); forge rate: 34%",
+      "directive": "**Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Neural Oscillations": {
+      "influence": {
+        "forge_effect": -0.0781,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1833,
+      "forge_effect": -0.0781,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
+      },
+      "summary": "Neural Oscillations: negative forge driver (-0.08); forge rate: 18%",
+      "directive": "**Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Type Theory": {
+      "influence": {
+        "forge_effect": -0.0332,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2,
+      "forge_effect": -0.0332,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2,
+        "rate_without": 0.2268,
+        "drop": -0.0268
+      },
+      "summary": "Type Theory: forge rate: 20%",
+      "directive": "**Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Emergence + Type Theory": 0.4314,
+    "Neural Oscillations + Type Theory": 0.2133
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Holography Principle",
+        "Emergence",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Neural Oscillations",
+        "Free Energy Principle",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Neural Oscillations**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Type Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Emergence + Type Theory: strong positive synergy (+0.431). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Neural Oscillations + Type Theory: strong positive synergy (+0.213). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Holography Principle + Emergence + Type Theory (accuracy: 0%, calibration: 0%)\n- Neural Oscillations + Free Energy Principle + Type Theory (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

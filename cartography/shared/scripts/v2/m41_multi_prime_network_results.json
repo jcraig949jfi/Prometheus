@@ -1,0 +1,207 @@
+{
+  "probe": "M41",
+  "title": "Multi-prime constraint interference network",
+  "timestamp": "2026-04-10T07:36:29",
+  "elapsed_seconds": 0.3,
+  "n_forms": 3000,
+  "edge_label_distribution": {
+    "(2,)": 4303,
+    "(3,)": 587,
+    "(2, 3)": 245,
+    "(5,)": 97,
+    "(7,)": 16,
+    "(2, 5)": 11,
+    "(2, 7)": 2
+  },
+  "n_single_prime_edges": 5003,
+  "n_double_prime_edges": 258,
+  "n_triple_plus_edges": 0,
+  "independence_test": {
+    "expected_double": 850.8,
+    "observed_double": 258,
+    "interference_ratio": 0.3032
+  },
+  "multi_edge_examples": [
+    {
+      "a": "54.2.a.a",
+      "b": "54.2.a.b",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "90.2.a.b",
+      "b": "90.2.a.c",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "90.2.a.b",
+      "b": "90.2.a.a",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "90.2.a.c",
+      "b": "90.2.a.a",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "99.2.a.a",
+      "b": "99.2.a.b",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "110.2.a.a",
+      "b": "110.2.a.c",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "142.2.a.c",
+      "b": "142.2.a.d",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "154.2.a.a",
+      "b": "154.2.a.c",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "162.2.a.d",
+      "b": "162.2.a.a",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "162.2.a.c",
+      "b": "162.2.a.b",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "170.2.a.e",
+      "b": "170.2.a.c",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "189.2.a.c",
+      "b": "189.2.a.b",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "198.2.a.b",
+      "b": "198.2.a.e",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "198.2.a.b",
+      "b": "198.2.a.d",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "198.2.a.e",
+      "b": "198.2.a.d",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "210.2.a.b",
+      "b": "210.2.a.d",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "225.2.a.d",
+      "b": "225.2.a.c",
+      "primes": [
+        2,
+        5
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "235.2.a.a",
+      "b": "235.2.a.b",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "245.2.a.a",
+      "b": "245.2.a.b",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    },
+    {
+      "a": "264.2.a.b",
+      "b": "264.2.a.d",
+      "primes": [
+        2,
+        3
+      ],
+      "n_primes": 2
+    }
+  ],
+  "assessment": "DESTRUCTIVE: ratio=0.30. Multi-prime congruences suppressed below independence"
+}

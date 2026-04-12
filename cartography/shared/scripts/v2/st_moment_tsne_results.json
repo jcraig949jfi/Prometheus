@@ -1,0 +1,46 @@
+{
+  "challenge": "ALL-044",
+  "title": "ST Moment Space t-SNE",
+  "timestamp": "2026-04-10T06:42:31",
+  "elapsed_seconds": 37.3,
+  "n_forms": 17314,
+  "n_cm": 116,
+  "n_non_cm": 17198,
+  "projection_method": "sklearn",
+  "cm_separation": {
+    "center_distance": 38.0126,
+    "cm_spread": 59.5076,
+    "non_cm_spread": 62.5112,
+    "fisher_ratio": 0.194,
+    "silhouette": 0.0367
+  },
+  "moment_centroids": {
+    "cm": [
+      -0.002008,
+      0.230114,
+      -0.000402,
+      0.166968,
+      0.000404,
+      0.135093
+    ],
+    "non_cm": [
+      -0.016803,
+      0.24973,
+      -0.00829,
+      0.124277,
+      -0.005112,
+      0.077302
+    ]
+  },
+  "embedding_stats": {
+    "y_range_x": [
+      -97.94279479980469,
+      105.3919906616211
+    ],
+    "y_range_y": [
+      -93.45343017578125,
+      101.33300018310547
+    ]
+  },
+  "assessment": "MODERATE SEPARATION: Fisher ratio 0.19 \u2014 CM partially separable, clusters overlap"
+}

@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Measure Theory",
+    "Pragmatism",
+    "Feedback Control"
+  ],
+  "concept_strengths": {
+    "Measure Theory": {
+      "influence": {
+        "forge_effect": -0.0249,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1458,
+      "forge_effect": -0.0249,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1458,
+        "rate_without": 0.2268,
+        "drop": -0.081
+      },
+      "summary": "Measure Theory: removing it increases forge probability by 8%; forge rate: 15%",
+      "directive": "**Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Pragmatism": {
+      "influence": {
+        "forge_effect": -0.2295,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
+      },
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
+      "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0252,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
+      },
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Feedback Control + Measure Theory": -0.0237,
+    "Feedback Control + Pragmatism": 0.2402
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Pragmatism",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Pragmatism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Measure Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Feedback Control + Pragmatism: strong positive synergy (+0.240). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

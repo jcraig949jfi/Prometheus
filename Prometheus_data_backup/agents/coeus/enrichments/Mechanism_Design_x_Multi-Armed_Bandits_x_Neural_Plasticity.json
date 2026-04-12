@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Neural Plasticity",
+    "Mechanism Design",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Neural Plasticity": {
+      "influence": {
+        "forge_effect": 0.1279,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2683,
+      "forge_effect": 0.1279,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2683,
+        "rate_without": 0.2232,
+        "drop": 0.0451
+      },
+      "summary": "Neural Plasticity: positive forge driver (+0.13); forge rate: 27%",
+      "directive": "**Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Mechanism Design": {
+      "influence": {
+        "forge_effect": 0.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
+      },
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Mechanism Design + Neural Plasticity": -0.071,
+    "Mechanism Design + Multi-Armed Bandits": 0.2225
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Mechanism Design",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Mechanism Design",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Mechanism Design + Neural Plasticity: negative interaction (-0.071). Keep these concepts in separate code paths to avoid interference.\n- Mechanism Design + Multi-Armed Bandits: strong positive synergy (+0.223). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Ergodic Theory + Mechanism Design + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Mechanism Design + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

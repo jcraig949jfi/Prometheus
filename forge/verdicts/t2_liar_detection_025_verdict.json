@@ -1,0 +1,150 @@
+{
+  "tool_id": "t2_liar_detection_025",
+  "tier": 2,
+  "timestamp": "2026-04-05T21:42:43.684681",
+  "overall_score": 0.0,
+  "seed_scores": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "seed_stability": 0.0,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "format_error"
+    }
+  },
+  "ablation": {
+    "sally_anne_test": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_sat": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "track_beliefs": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "build_bn": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.125,
+    "most_similar_tool": "t2_temporal_scheduling_007_gem",
+    "passes_diversity_check": true
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "C",
+    "cluster_name": "Logic / Constraint / Formal",
+    "cluster_score": 0.0,
+    "seed_scores": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "seed_stability": 0.0,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "argument_strength": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "liar_detection": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "constraint_satisfaction": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "logical_consistency_checking": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "stable_model_finding": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "rule_application_order": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "truth_table_evaluation": {
+        "pass": false,
+        "failure_type": "format_error"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.0,
+      "B": 0.0,
+      "D": 0.0,
+      "E": 0.0,
+      "F": 0.0
+    },
+    "generalist_tag": null
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "concept_names": [
+    "Fractal Geometry",
+    "Feedback Control",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Fractal Geometry": {
+      "influence": {
+        "forge_effect": 0.0187,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.209,
+      "forge_effect": 0.0187,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.209,
+        "rate_without": 0.225,
+        "drop": -0.0161
+      },
+      "summary": "Fractal Geometry: forge rate: 21%",
+      "directive": "**Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0252,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
+      },
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Feedback Control + Fractal Geometry": 0.2994,
+    "Fractal Geometry + Multi-Armed Bandits": 0.4501,
+    "Feedback Control + Multi-Armed Bandits": -0.0388
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Falsificationism",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Mechanism Design",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Feedback Control + Fractal Geometry: strong positive synergy (+0.299). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Fractal Geometry + Multi-Armed Bandits: strong positive synergy (+0.450). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Fractal Geometry + Falsificationism + Feedback Control (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Mechanism Design + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

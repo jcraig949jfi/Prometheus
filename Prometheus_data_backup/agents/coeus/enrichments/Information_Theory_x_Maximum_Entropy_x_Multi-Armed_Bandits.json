@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Information Theory",
+    "Multi-Armed Bandits",
+    "Maximum Entropy"
+  ],
+  "concept_strengths": {
+    "Information Theory": {
+      "influence": {
+        "forge_effect": 0.0184,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1833,
+      "forge_effect": 0.0184,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
+      },
+      "summary": "Information Theory: forge rate: 18%",
+      "directive": "**Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.1336,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Information Theory + Multi-Armed Bandits": 0.5563,
+    "Maximum Entropy + Multi-Armed Bandits": 0.1588
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Information Theory",
+        "Neural Oscillations",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Information Theory",
+        "Pragmatics",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Information Theory",
+        "Sparse Autoencoders",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Information Theory + Multi-Armed Bandits: strong positive synergy (+0.556). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Maximum Entropy + Multi-Armed Bandits: strong positive synergy (+0.159). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Information Theory + Neural Oscillations + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Information Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Information Theory + Sparse Autoencoders + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

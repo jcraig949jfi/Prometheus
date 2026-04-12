@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Epigenetics",
+    "Spectral Analysis",
+    "Emergence"
+  ],
+  "concept_strengths": {
+    "Epigenetics": {
+      "influence": {
+        "forge_effect": 0.0,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2143,
+      "forge_effect": 0.0,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2143,
+        "rate_without": 0.2245,
+        "drop": -0.0102
+      },
+      "summary": "Epigenetics: forge rate: 21%",
+      "directive": "**Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": 0.025,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
+      },
+      "summary": "Spectral Analysis: forge rate: 26%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Emergence": {
+      "influence": {
+        "forge_effect": 0.146,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3429,
+      "forge_effect": 0.146,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3429,
+        "rate_without": 0.2216,
+        "drop": 0.1212
+      },
+      "summary": "Emergence: removing it drops forge probability by 12% (from 34%); forge rate: 34%",
+      "directive": "**Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Emergence + Spectral Analysis": 0.9109
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Epigenetics",
+        "Spectral Analysis",
+        "Emergence"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Spectral Analysis",
+        "Emergence",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Emergence",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Epigenetics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Emergence + Spectral Analysis: strong positive synergy (+0.911). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Epigenetics + Spectral Analysis + Emergence (accuracy: 0%, calibration: 0%)\n- Spectral Analysis + Emergence + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

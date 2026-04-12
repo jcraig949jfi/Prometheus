@@ -1,0 +1,41 @@
+{
+  "challenge": "ALL-059",
+  "title": "CM Detection on GSp4 Congruence Pairs",
+  "timestamp": "2026-04-10T06:36:58",
+  "elapsed_seconds": 0.0,
+  "mod3_pairs": {
+    "n_pairs": 0,
+    "categories": {},
+    "concordance_rate": 0,
+    "mean_a_diff": null,
+    "mean_b_diff": null
+  },
+  "mod2_pairs": {
+    "n_pairs": 0,
+    "categories": {},
+    "mean_a_diff": null,
+    "mean_b_diff": null
+  },
+  "population": {
+    "n_cm_like": 606,
+    "n_generic": 39650,
+    "cm_fraction_population": 0.00916,
+    "cm_fraction_mod3_pairs": 0,
+    "cm_enrichment": 0.0
+  },
+  "st_group_zero_freq": {},
+  "key_findings": [
+    "All 37 mod-3 pairs classified: {'BOTH_GENERIC': 22, 'MIXED': 15}",
+    "Geometric pairs mean a_zf diff: 0.0417, Rep-theoretic: 0.0540. Ratio: 1.29x",
+    "CM detection: precision=0.033, recall=0.270, TP=20, FP=586, FN=54",
+    "ST group E_6: 9/51 CM-like (mean a_zf=0.2375)",
+    "ST group G_{3,3}: 43/2440 CM-like (mean a_zf=0.1294)",
+    "ST group J(E_1): 24/24 CM-like (mean a_zf=0.5529)",
+    "ST group J(E_4): 17/17 CM-like (mean a_zf=0.6718)",
+    "ST group J(E_6): 17/17 CM-like (mean a_zf=0.6110)",
+    "ST group N(G_{1,3}): 5/303 CM-like (mean a_zf=0.1322)",
+    "ST group N(G_{3,3}): 144/144 CM-like (mean a_zf=0.6039)",
+    "ST group USp(4): 312/63107 CM-like (mean a_zf=0.0964)"
+  ],
+  "assessment": "WEAK: concordance=0%, enrichment=0.0x \u2014 CM not special in pairs"
+}

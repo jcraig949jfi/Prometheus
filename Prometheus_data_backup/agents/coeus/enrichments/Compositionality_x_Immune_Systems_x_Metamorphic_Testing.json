@@ -1,0 +1,91 @@
+{
+  "concept_names": [
+    "Immune Systems",
+    "Compositionality",
+    "Metamorphic Testing"
+  ],
+  "concept_strengths": {
+    "Immune Systems": {
+      "influence": {
+        "forge_effect": -0.0226,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2188,
+      "forge_effect": -0.0226,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Immune Systems: forge rate: 22%",
+      "directive": "**Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Metamorphic Testing": {
+      "influence": {
+        "forge_effect": 0.072,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.072,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Metamorphic Testing: positive forge driver (+0.07); forge rate: 18%",
+      "directive": "**Metamorphic Testing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Active Inference",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Adaptive Control",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Compositionality",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Metamorphic Testing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Compositionality + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

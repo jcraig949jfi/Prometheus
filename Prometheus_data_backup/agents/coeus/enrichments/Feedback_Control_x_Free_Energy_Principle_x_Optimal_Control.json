@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Feedback Control",
+    "Optimal Control",
+    "Free Energy Principle"
+  ],
+  "concept_strengths": {
+    "Feedback Control": {
+      "influence": {
+        "forge_effect": -0.0252,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1625,
+      "forge_effect": -0.0252,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1625,
+        "rate_without": 0.2277,
+        "drop": -0.0652
+      },
+      "summary": "Feedback Control: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Optimal Control": {
+      "influence": {
+        "forge_effect": -0.1121,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1633,
+      "forge_effect": -0.1121,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1633,
+        "rate_without": 0.2263,
+        "drop": -0.0631
+      },
+      "summary": "Optimal Control: removing it increases forge probability by 6%; forge rate: 16%",
+      "directive": "**Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.3873,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.341,
+      "forge_effect": 0.3873,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.341,
+        "rate_without": 0.2056,
+        "drop": 0.1354
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 14% (from 34%); forge rate: 34%",
+      "directive": "**Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Feedback Control + Free Energy Principle": 0.2779,
+    "Free Energy Principle + Optimal Control": -0.0557
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Feedback Control",
+        "Pragmatics",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Gauge Theory",
+        "Feedback Control",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Renormalization",
+        "Feedback Control",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Feedback Control**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Optimal Control**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Feedback Control + Free Energy Principle: strong positive synergy (+0.278). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Free Energy Principle + Optimal Control: negative interaction (-0.056). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Feedback Control + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Gauge Theory + Feedback Control + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Renormalization + Feedback Control + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

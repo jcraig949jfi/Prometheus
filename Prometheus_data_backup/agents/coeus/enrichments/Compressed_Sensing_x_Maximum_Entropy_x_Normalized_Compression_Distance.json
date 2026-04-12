@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Compressed Sensing",
+    "Maximum Entropy",
+    "Normalized Compression Distance"
+  ],
+  "concept_strengths": {
+    "Compressed Sensing": {
+      "influence": {
+        "forge_effect": 0.0339,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2368,
+      "forge_effect": 0.0339,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2368,
+        "rate_without": 0.224,
+        "drop": 0.0128
+      },
+      "summary": "Compressed Sensing: forge rate: 24%",
+      "directive": "**Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.1336,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Normalized Compression Distance": {
+      "influence": {
+        "forge_effect": 0.0035,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.0035,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Normalized Compression Distance: forge rate: 18%",
+      "directive": "**Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Kolmogorov Complexity",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Falsificationism",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Compressed Sensing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

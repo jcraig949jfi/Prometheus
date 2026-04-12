@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Fractal Geometry",
+    "Causal Inference",
+    "Neuromodulation"
+  ],
+  "concept_strengths": {
+    "Fractal Geometry": {
+      "influence": {
+        "forge_effect": 0.0187,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.209,
+      "forge_effect": 0.0187,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.209,
+        "rate_without": 0.225,
+        "drop": -0.0161
+      },
+      "summary": "Fractal Geometry: forge rate: 21%",
+      "directive": "**Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Causal Inference": {
+      "influence": {
+        "forge_effect": -0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1692,
+      "forge_effect": -0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1692,
+        "rate_without": 0.2267,
+        "drop": -0.0575
+      },
+      "summary": "Causal Inference: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Neuromodulation": {
+      "influence": {
+        "forge_effect": 0.057,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3036,
+      "forge_effect": 0.057,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3036,
+        "rate_without": 0.2214,
+        "drop": 0.0822
+      },
+      "summary": "Neuromodulation: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Causal Inference + Fractal Geometry": -0.0354
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Causal Inference",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Causal Inference",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Causal Inference**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Neuromodulation**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Category Theory + Causal Inference + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Causal Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

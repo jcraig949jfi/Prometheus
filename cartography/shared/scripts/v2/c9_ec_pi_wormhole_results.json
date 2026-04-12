@@ -1,0 +1,310 @@
+{
+  "challenge": "C9",
+  "title": "EC-OEIS via \u03c0 Wormhole",
+  "timestamp": "2026-04-10T09:10:40",
+  "elapsed_seconds": 234.1,
+  "n_ec": 3000,
+  "n_oeis": 372598,
+  "direct_matches": 10,
+  "silence_rate": 0.9967,
+  "transforms": {
+    "round(\u03c0\u00b7a_p)": {
+      "n_matches": 0,
+      "match_rate": 0.0,
+      "examples": []
+    },
+    "round(a_p/\u03c0)": {
+      "n_matches": 121,
+      "match_rate": 0.121,
+      "examples": [
+        {
+          "ec": "49.2.a.a",
+          "oeis": [
+            "A001899",
+            "A004198",
+            "A005089"
+          ],
+          "transform": "round(a_p/\u03c0)"
+        },
+        {
+          "ec": "54.2.a.a",
+          "oeis": [
+            "A305258"
+          ],
+          "transform": "round(a_p/\u03c0)"
+        },
+        {
+          "ec": "72.2.a.a",
+          "oeis": [
+            "A329972"
+          ],
+          "transform": "round(a_p/\u03c0)"
+        },
+        {
+          "ec": "85.2.a.a",
+          "oeis": [
+            "A364205"
+          ],
+          "transform": "round(a_p/\u03c0)"
+        },
+        {
+          "ec": "110.2.a.c",
+          "oeis": [
+            "A153240",
+            "A153241"
+          ],
+          "transform": "round(a_p/\u03c0)"
+        }
+      ]
+    },
+    "round(a_p\u00b2/\u03c0)": {
+      "n_matches": 57,
+      "match_rate": 0.057,
+      "examples": [
+        {
+          "ec": "27.2.a.a",
+          "oeis": [
+            "A214205"
+          ],
+          "transform": "round(a_p\u00b2/\u03c0)"
+        },
+        {
+          "ec": "49.2.a.a",
+          "oeis": [
+            "A005078",
+            "A260911",
+            "A284104"
+          ],
+          "transform": "round(a_p\u00b2/\u03c0)"
+        },
+        {
+          "ec": "85.2.a.a",
+          "oeis": [
+            "A030308",
+            "A125184",
+            "A327180"
+          ],
+          "transform": "round(a_p\u00b2/\u03c0)"
+        },
+        {
+          "ec": "102.2.a.b",
+          "oeis": [
+            "A052401",
+            "A348975"
+          ],
+          "transform": "round(a_p\u00b2/\u03c0)"
+        },
+        {
+          "ec": "106.2.a.c",
+          "oeis": [
+            "A063198"
+          ],
+          "transform": "round(a_p\u00b2/\u03c0)"
+        }
+      ]
+    },
+    "round(\u03c0\u00b2\u00b7a_p)": {
+      "n_matches": 0,
+      "match_rate": 0.0,
+      "examples": []
+    },
+    "|a_p|": {
+      "n_matches": 45,
+      "match_rate": 0.045,
+      "examples": [
+        {
+          "ec": "21.2.a.a",
+          "oeis": [
+            "A380165"
+          ],
+          "transform": "|a_p|"
+        },
+        {
+          "ec": "27.2.a.a",
+          "oeis": [
+            "A380283"
+          ],
+          "transform": "|a_p|"
+        },
+        {
+          "ec": "36.2.a.a",
+          "oeis": [
+            "A324815"
+          ],
+          "transform": "|a_p|"
+        },
+        {
+          "ec": "49.2.a.a",
+          "oeis": [
+            "A028598",
+            "A028606",
+            "A028614"
+          ],
+          "transform": "|a_p|"
+        },
+        {
+          "ec": "63.2.a.a",
+          "oeis": [
+            "A008733"
+          ],
+          "transform": "|a_p|"
+        }
+      ]
+    },
+    "a_p mod 12": {
+      "n_matches": 5,
+      "match_rate": 0.005,
+      "examples": [
+        {
+          "ec": "49.2.a.a",
+          "oeis": [
+            "A028598",
+            "A028606",
+            "A028614"
+          ],
+          "transform": "a_p mod 12"
+        },
+        {
+          "ec": "130.2.a.b",
+          "oeis": [
+            "A025275"
+          ],
+          "transform": "a_p mod 12"
+        },
+        {
+          "ec": "414.2.a.c",
+          "oeis": [
+            "A063918",
+            "A103271",
+            "A204173"
+          ],
+          "transform": "a_p mod 12"
+        },
+        {
+          "ec": "432.2.a.e",
+          "oeis": [
+            "A380283"
+          ],
+          "transform": "a_p mod 12"
+        },
+        {
+          "ec": "480.2.a.g",
+          "oeis": [
+            "A054674"
+          ],
+          "transform": "a_p mod 12"
+        }
+      ]
+    },
+    "round(a_p\u00b7\u221a2)": {
+      "n_matches": 1,
+      "match_rate": 0.001,
+      "examples": [
+        {
+          "ec": "49.2.a.a",
+          "oeis": [
+            "A028599",
+            "A028607",
+            "A028615"
+          ],
+          "transform": "round(a_p\u00b7\u221a2)"
+        }
+      ]
+    },
+    "partial_sums": {
+      "n_matches": 5,
+      "match_rate": 0.005,
+      "examples": [
+        {
+          "ec": "49.2.a.a",
+          "oeis": [
+            "A093704",
+            "A245101",
+            "A282209"
+          ],
+          "transform": "partial_sums"
+        },
+        {
+          "ec": "282.2.a.b",
+          "oeis": [
+            "A336032"
+          ],
+          "transform": "partial_sums"
+        },
+        {
+          "ec": "357.2.a.d",
+          "oeis": [
+            "A216197"
+          ],
+          "transform": "partial_sums"
+        },
+        {
+          "ec": "390.2.a.g",
+          "oeis": [
+            "A027157"
+          ],
+          "transform": "partial_sums"
+        },
+        {
+          "ec": "414.2.a.c",
+          "oeis": [
+            "A051593",
+            "A073737",
+            "A172170"
+          ],
+          "transform": "partial_sums"
+        }
+      ]
+    },
+    "abs_diffs": {
+      "n_matches": 15,
+      "match_rate": 0.015,
+      "examples": [
+        {
+          "ec": "75.2.a.a",
+          "oeis": [
+            "A111742",
+            "A176040",
+            "A178220"
+          ],
+          "transform": "abs_diffs"
+        },
+        {
+          "ec": "102.2.a.b",
+          "oeis": [
+            "A068796"
+          ],
+          "transform": "abs_diffs"
+        },
+        {
+          "ec": "142.2.a.e",
+          "oeis": [
+            "A193512",
+            "A300253"
+          ],
+          "transform": "abs_diffs"
+        },
+        {
+          "ec": "175.2.a.b",
+          "oeis": [
+            "A134634",
+            "A346500"
+          ],
+          "transform": "abs_diffs"
+        },
+        {
+          "ec": "215.2.a.a",
+          "oeis": [
+            "A104234",
+            "A238857",
+            "A294883"
+          ],
+          "transform": "abs_diffs"
+        }
+      ]
+    }
+  },
+  "subsequence_matches": 1,
+  "total_bridges": 260,
+  "assessment": "\u03c0 WORMHOLE PARTIALLY OPEN: 7 transforms find bridges. Best: 'round(a_p/\u03c0)' with 121 matches. Silence rate reduced from 100% to 91%. But 260 total bridges is still sparse \u2014 the gap is ALGEBRAIC, not transformational."
+}

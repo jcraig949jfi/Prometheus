@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Pragmatism",
+    "Property-Based Testing",
+    "Hoare Logic"
+  ],
+  "concept_strengths": {
+    "Pragmatism": {
+      "influence": {
+        "forge_effect": -0.2295,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.06,
+      "forge_effect": -0.2295,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.06,
+        "rate_without": 0.2298,
+        "drop": -0.1698
+      },
+      "summary": "Pragmatism: removing it increases forge probability by 17%; forge rate: 6%",
+      "directive": "**Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Property-Based Testing": {
+      "influence": {
+        "forge_effect": -0.082,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0714,
+      "forge_effect": -0.082,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.0714,
+        "rate_without": 0.2271,
+        "drop": -0.1557
+      },
+      "summary": "Property-Based Testing: removing it increases forge probability by 16%; forge rate: 7%",
+      "directive": "**Property-Based Testing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Hoare Logic": {
+      "influence": {
+        "forge_effect": 0.0354,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1667,
+      "forge_effect": 0.0354,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.225,
+        "drop": -0.0583
+      },
+      "summary": "Hoare Logic: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Hoare Logic**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Hoare Logic + Property-Based Testing": -0.0119
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Pragmatics",
+        "Property-Based Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Pragmatism",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Falsificationism",
+        "Pragmatism",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Pragmatism**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Property-Based Testing**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Hoare Logic**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Active Inference + Pragmatics + Property-Based Testing (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Pragmatism + Type Theory (accuracy: 0%, calibration: 0%)\n- Falsificationism + Pragmatism + Feedback Control (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

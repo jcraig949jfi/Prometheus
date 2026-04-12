@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Abductive Reasoning",
+    "Mechanism Design",
+    "Sensitivity Analysis"
+  ],
+  "concept_strengths": {
+    "Abductive Reasoning": {
+      "influence": {
+        "forge_effect": 0.0424,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2097,
+      "forge_effect": 0.0424,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2097,
+        "rate_without": 0.225,
+        "drop": -0.0153
+      },
+      "summary": "Abductive Reasoning: forge rate: 21%",
+      "directive": "**Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Mechanism Design": {
+      "influence": {
+        "forge_effect": 0.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
+      },
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Sensitivity Analysis": {
+      "influence": {
+        "forge_effect": 0.038,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1562,
+      "forge_effect": 0.038,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1562,
+        "rate_without": 0.2258,
+        "drop": -0.0695
+      },
+      "summary": "Sensitivity Analysis: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Abductive Reasoning + Mechanism Design": 0.2302,
+    "Mechanism Design + Sensitivity Analysis": 0.0836
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Kalman Filtering",
+        "Abductive Reasoning",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Theory of Mind",
+        "Mechanism Design",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Wavelet Transforms",
+        "Abductive Reasoning",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Abductive Reasoning + Mechanism Design: strong positive synergy (+0.230). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Kalman Filtering + Abductive Reasoning + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Theory of Mind + Mechanism Design + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n- Wavelet Transforms + Abductive Reasoning + Mechanism Design (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

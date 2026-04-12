@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Tensor Decomposition",
+    "Reservoir Computing",
+    "Multi-Armed Bandits"
+  ],
+  "concept_strengths": {
+    "Tensor Decomposition": {
+      "influence": {
+        "forge_effect": -0.0628,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1714,
+      "forge_effect": -0.0628,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1714,
+        "rate_without": 0.2256,
+        "drop": -0.0541
+      },
+      "summary": "Tensor Decomposition: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Reservoir Computing": {
+      "influence": {
+        "forge_effect": -0.0112,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.25,
+      "forge_effect": -0.0112,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.25,
+        "rate_without": 0.2238,
+        "drop": 0.0262
+      },
+      "summary": "Reservoir Computing: forge rate: 25%",
+      "directive": "**Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Multi-Armed Bandits": {
+      "influence": {
+        "forge_effect": 0.0517,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2386,
+      "forge_effect": 0.0517,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2386,
+        "rate_without": 0.2235,
+        "drop": 0.0151
+      },
+      "summary": "Multi-Armed Bandits: positive forge driver (+0.05); forge rate: 24%",
+      "directive": "**Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Cognitive Load Theory",
+        "Pragmatics",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Constraint Satisfaction",
+        "Optimal Control",
+        "Multi-Armed Bandits"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Multi-Armed Bandits**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n- Cognitive Load Theory + Pragmatics + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n- Constraint Satisfaction + Optimal Control + Multi-Armed Bandits (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

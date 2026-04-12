@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
 """
-Crystallography Open Database (COD) Downloader
-================================================
-Downloads crystal structure metadata in batches.
-Full CIF files are huge (~10GB) so we fetch metadata only.
+Crystallography Open Database (COD) — OPTIMADE API Downloader
+==============================================================
+Uses the OPTIMADE v1 API (standard, paginated, JSON) to fetch
+crystal structure metadata in bulk.
 
-Usage: python fetch_cod_crystals.py
-Output: cartography/physics/data/cod/
+Usage: python fetch_cod_crystals.py [--max N]
+Output: cartography/physics/data/cod/cod_structures.json
 
-Estimated time: ~4 hours (520K structures, batches of 500, 2s sleep)
+Default: 10,000 structures. Override with --max.
+Estimated time: ~20 min for 10K (100/page, 2s sleep).
 """
 
+import argparse
 import json
 import os
+import sys
 import time
 import urllib.request
 import urllib.parse
@@ -20,89 +23,189 @@ from pathlib import Path
 
 OUT_DIR = Path(__file__).resolve().parents[2] / "physics" / "data" / "cod"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_FILE = OUT_DIR / "cod_structures.json"
+CHECKPOINT_FILE = OUT_DIR / "checkpoint.json"
 
-SLEEP_BETWEEN = 2  # seconds between batch requests
-BATCH_SIZE = 500
-MAX_BATCHES = 100  # cap at 50K structures for initial run
+# OPTIMADE v1 endpoint — standard materials database API
+BASE_URL = "https://www.crystallography.net/cod/optimade/v1/structures"
 
-# COD search API returns CSV/JSON
-BASE_URL = "https://www.crystallography.net/cod/result"
+PAGE_SIZE = 100
+SLEEP_BETWEEN = 2  # seconds between requests
+TIMEOUT = 90
 
 
-def fetch_batch(offset):
-    """Fetch a batch of COD entries."""
-    out_file = OUT_DIR / f"batch_{offset:06d}.json"
-    if out_file.exists():
-        print(f"  Batch {offset}: already downloaded, skipping")
-        return True
+def fetch_page(url):
+    """Fetch a single OPTIMADE page. Returns (entries, next_url)."""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "Prometheus/1.0 (mathematical-research)",
+        "Accept": "application/json",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+            raw = resp.read().decode("utf-8", errors="replace")
+        data = json.loads(raw)
+    except Exception as e:
+        print(f"  ERROR fetching {url[:80]}...: {e}")
+        return [], None
 
-    params = {
-        "format": "json",
-        "limit": str(BATCH_SIZE),
-        "offset": str(offset),
+    entries = data.get("data", [])
+    # OPTIMADE puts next page link in links.next
+    links = data.get("links", {})
+    next_url = None
+    if isinstance(links, dict):
+        next_url = links.get("next")
+        # Can be a string or {"href": "..."}
+        if isinstance(next_url, dict):
+            next_url = next_url.get("href")
+
+    return entries, next_url
+
+
+def extract_metadata(entry):
+    """Extract useful fields from an OPTIMADE structure entry."""
+    attrs = entry.get("attributes", {})
+    result = {
+        "id": entry.get("id"),
+        "type": entry.get("type"),
+        # Chemical
+        "chemical_formula_descriptive": attrs.get("chemical_formula_descriptive"),
+        "chemical_formula_reduced": attrs.get("chemical_formula_reduced"),
+        "chemical_formula_hill": attrs.get("chemical_formula_hill"),
+        "elements": attrs.get("elements"),
+        "nelements": attrs.get("nelements"),
+        "nsites": attrs.get("nsites"),
+        # Structural
+        "lattice_vectors": attrs.get("lattice_vectors"),
+        "dimension_types": attrs.get("dimension_types"),
+        "nperiodic_dimensions": attrs.get("nperiodic_dimensions"),
+        # Space group
+        "space_group_symbol_hall": attrs.get("space_group_symbol_hall"),
+        "space_group_symbol_hermann_mauguin": attrs.get("space_group_symbol_hermann_mauguin"),
+        "space_group_it_number": attrs.get("space_group_it_number"),
     }
 
-    url = BASE_URL + "?" + urllib.parse.urlencode(params)
+    # Compute cell parameters from lattice vectors if present
+    vecs = attrs.get("lattice_vectors")
+    if vecs and len(vecs) == 3:
+        import math
+        a_vec, b_vec, c_vec = vecs
+        if a_vec and b_vec and c_vec:
+            a = math.sqrt(sum(x**2 for x in a_vec))
+            b = math.sqrt(sum(x**2 for x in b_vec))
+            c = math.sqrt(sum(x**2 for x in c_vec))
+            result["cell_a"] = round(a, 4)
+            result["cell_b"] = round(b, 4)
+            result["cell_c"] = round(c, 4)
+            if a > 0 and b > 0 and c > 0:
+                dot_bc = sum(x*y for x, y in zip(b_vec, c_vec))
+                dot_ac = sum(x*y for x, y in zip(a_vec, c_vec))
+                dot_ab = sum(x*y for x, y in zip(a_vec, b_vec))
+                result["cell_alpha"] = round(math.degrees(math.acos(max(-1, min(1, dot_bc/(b*c))))), 2)
+                result["cell_beta"] = round(math.degrees(math.acos(max(-1, min(1, dot_ac/(a*c))))), 2)
+                result["cell_gamma"] = round(math.degrees(math.acos(max(-1, min(1, dot_ab/(a*b))))), 2)
+                result["cell_volume"] = round(a * b * c * math.sqrt(
+                    1 - (dot_bc/(b*c))**2 - (dot_ac/(a*c))**2 - (dot_ab/(a*b))**2
+                    + 2*(dot_bc/(b*c))*(dot_ac/(a*c))*(dot_ab/(a*b))
+                ), 2)
 
-    try:
-        req = urllib.request.Request(url, headers={"User-Agent": "Prometheus/1.0 (research)"})
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            data = resp.read().decode("utf-8", errors="replace")
+    return result
 
-        # Try to parse as JSON
-        try:
-            entries = json.loads(data)
-            if isinstance(entries, list):
-                n = len(entries)
-            elif isinstance(entries, dict):
-                n = len(entries.get("results", entries.get("data", [])))
-            else:
-                n = 0
-        except json.JSONDecodeError:
-            # Might be HTML error page
-            entries = {"raw": data[:2000], "error": "not JSON"}
-            n = 0
 
-        result = {
-            "offset": offset,
-            "batch_size": BATCH_SIZE,
-            "n_entries": n,
-            "data": entries if n > 0 else None,
-            "fetched": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        }
+def load_checkpoint():
+    """Load checkpoint if exists."""
+    if CHECKPOINT_FILE.exists():
+        with open(CHECKPOINT_FILE) as f:
+            return json.load(f)
+    return {"entries": [], "next_url": None, "pages_done": 0}
 
-        with open(out_file, "w", encoding="utf-8") as f:
-            json.dump(result, f, indent=2, ensure_ascii=False)
 
-        print(f"  Batch {offset}: {n} entries")
-        return n > 0
-
-    except Exception as e:
-        print(f"  Batch {offset}: ERROR - {e}")
-        return False
+def save_checkpoint(entries, next_url, pages_done):
+    """Save progress."""
+    with open(CHECKPOINT_FILE, "w") as f:
+        json.dump({"next_url": next_url, "pages_done": pages_done, "n_entries": len(entries)}, f)
 
 
 def main():
-    print("COD Crystal Structure Downloader")
-    print(f"Output: {OUT_DIR}")
-    print(f"Batch size: {BATCH_SIZE}")
-    print(f"Max batches: {MAX_BATCHES} ({MAX_BATCHES * BATCH_SIZE} structures)")
+    parser = argparse.ArgumentParser(description="Download COD crystal metadata via OPTIMADE API")
+    parser.add_argument("--max", type=int, default=10000, help="Max structures to fetch (default: 10000)")
+    parser.add_argument("--resume", action="store_true", help="Resume from checkpoint")
+    args = parser.parse_args()
+
+    max_structures = args.max
+    max_pages = (max_structures + PAGE_SIZE - 1) // PAGE_SIZE
+
+    # Load existing data if resuming
+    all_entries = []
+    start_url = f"{BASE_URL}?page_limit={PAGE_SIZE}"
+    pages_done = 0
+
+    if args.resume and OUT_FILE.exists() and CHECKPOINT_FILE.exists():
+        with open(OUT_FILE) as f:
+            all_entries = json.load(f)
+        cp = load_checkpoint()
+        start_url = cp.get("next_url") or start_url
+        pages_done = cp.get("pages_done", 0)
+        print(f"Resuming: {len(all_entries)} entries, page {pages_done}")
+    elif OUT_FILE.exists() and not args.resume:
+        # Load existing to append
+        pass
+
+    print(f"COD OPTIMADE Downloader")
+    print(f"Target: {max_structures} structures ({max_pages} pages)")
+    print(f"Output: {OUT_FILE}")
     print(f"Sleep: {SLEEP_BETWEEN}s between requests")
-    print(f"Estimated time: {MAX_BATCHES * SLEEP_BETWEEN / 60:.0f} minutes")
     print()
 
-    total = 0
-    for i in range(MAX_BATCHES):
-        offset = i * BATCH_SIZE
-        print(f"[{i+1}/{MAX_BATCHES}]", end=" ")
-        has_data = fetch_batch(offset)
-        total += BATCH_SIZE if has_data else 0
-        if not has_data:
-            print("  No more data, stopping.")
+    url = start_url
+    consecutive_errors = 0
+
+    for page_num in range(pages_done, max_pages):
+        if url is None:
+            print("No more pages (next_url is None). Done.")
             break
+
+        print(f"[{page_num+1}/{max_pages}] Fetching... ({len(all_entries)} so far)", end=" ")
+        entries, next_url = fetch_page(url)
+
+        if not entries:
+            consecutive_errors += 1
+            print(f"  Empty page (error #{consecutive_errors})")
+            if consecutive_errors >= 3:
+                print("  3 consecutive empty pages. Stopping.")
+                break
+            time.sleep(SLEEP_BETWEEN * 2)
+            # Retry same URL
+            continue
+
+        consecutive_errors = 0
+        extracted = [extract_metadata(e) for e in entries]
+        all_entries.extend(extracted)
+        print(f"  +{len(extracted)} entries")
+
+        # Save periodically (every 5 pages)
+        if (page_num + 1) % 5 == 0:
+            with open(OUT_FILE, "w", encoding="utf-8") as f:
+                json.dump(all_entries, f, indent=1, ensure_ascii=False)
+            save_checkpoint(all_entries, next_url, page_num + 1)
+            print(f"  [checkpoint: {len(all_entries)} saved]")
+
+        url = next_url
+        if len(all_entries) >= max_structures:
+            print(f"Reached target ({max_structures}). Stopping.")
+            break
+
         time.sleep(SLEEP_BETWEEN)
 
-    print(f"\nDone: ~{total} structures downloaded")
+    # Final save
+    with open(OUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(all_entries, f, indent=1, ensure_ascii=False)
+
+    # Clean up checkpoint
+    if CHECKPOINT_FILE.exists():
+        CHECKPOINT_FILE.unlink()
+
+    print(f"\nDone: {len(all_entries)} structures saved to {OUT_FILE}")
+    print(f"Size: {OUT_FILE.stat().st_size / 1024:.0f} KB")
 
 
 if __name__ == "__main__":

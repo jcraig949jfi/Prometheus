@@ -1,0 +1,48 @@
+# Metis Configuration — Cunning Intelligence
+# Reads Eos digests, produces executive briefs
+
+# Where to find Eos digests
+eos_reports_dir: "../eos/reports"
+
+# Where to write briefs
+briefs_dir: "briefs"
+
+# Project context files — fed to the LLM for cross-referencing
+context_files:
+  priorities: "../../docs/PRIORITIES.md"
+  north_star: "../../docs/NORTH_STAR.md"
+  todo: "../../docs/TODO.md"
+  rph_abstract: "../../docs/RPH.md"
+
+# LLM settings
+llm:
+  # Primary: Nemotron 120B via NVIDIA NIM
+  primary:
+    provider: "nvidia"
+    endpoint_env: "NVIDIA_API_ENDPOINT"
+    key_env: "NVIDIA_API_KEY"
+    model_env: "NVIDIA_MODEL"
+    default_model: "nvidia/nemotron-3-super-120b-a12b"
+    max_tokens: 1500
+
+  # Fallback: Cerebras Qwen3-235B
+  fallback:
+    provider: "cerebras"
+    endpoint: "https://api.cerebras.ai/v1"
+    key_env: "CEREBRAS_API_KEY"
+    model: "qwen-3-235b-a22b-instruct-2507"
+    max_tokens: 1500
+
+  # Last resort: Groq Llama 3.1-8B
+  last_resort:
+    provider: "groq"
+    endpoint: "https://api.groq.com/openai/v1"
+    key_env: "GROQ_API_KEY"
+    model: "llama-3.1-8b-instant"
+    max_tokens: 1500
+
+# Analysis settings
+analysis:
+  max_items_to_analyze: 10       # Top N items from Eos digest
+  min_relevance_score: 20        # Only analyze items above this score
+  temperature: 0.3               # Low temperature for analytical focus

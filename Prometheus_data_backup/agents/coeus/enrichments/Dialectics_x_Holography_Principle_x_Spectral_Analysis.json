@@ -1,0 +1,93 @@
+{
+  "concept_names": [
+    "Holography Principle",
+    "Spectral Analysis",
+    "Dialectics"
+  ],
+  "concept_strengths": {
+    "Holography Principle": {
+      "influence": {
+        "forge_effect": -0.1293,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1333,
+      "forge_effect": -0.1293,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1333,
+        "rate_without": 0.2261,
+        "drop": -0.0928
+      },
+      "summary": "Holography Principle: removing it increases forge probability by 9%; forge rate: 13%",
+      "directive": "**Holography Principle**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Spectral Analysis": {
+      "influence": {
+        "forge_effect": 0.025,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.26,
+      "forge_effect": 0.025,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.26,
+        "rate_without": 0.2232,
+        "drop": 0.0368
+      },
+      "summary": "Spectral Analysis: forge rate: 26%",
+      "directive": "**Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Dialectics": {
+      "influence": {
+        "forge_effect": -0.0197,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2188,
+      "forge_effect": -0.0197,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Dialectics: forge rate: 22%",
+      "directive": "**Dialectics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Dialectics + Spectral Analysis": -0.0569
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Dialectics",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Dialectics",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Differentiable Programming",
+        "Dialectics"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Holography Principle**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Spectral Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Dialectics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Dialectics + Spectral Analysis: negative interaction (-0.057). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Analogical Reasoning + Dialectics + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Dialectics + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Differentiable Programming + Dialectics (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

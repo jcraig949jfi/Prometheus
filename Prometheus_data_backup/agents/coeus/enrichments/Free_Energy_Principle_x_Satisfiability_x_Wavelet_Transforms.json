@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Wavelet Transforms",
+    "Free Energy Principle",
+    "Satisfiability"
+  ],
+  "concept_strengths": {
+    "Wavelet Transforms": {
+      "influence": {
+        "forge_effect": -0.0685,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
+      },
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
+      "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.3873,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.341,
+      "forge_effect": 0.3873,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.341,
+        "rate_without": 0.2056,
+        "drop": 0.1354
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 14% (from 34%); forge rate: 34%",
+      "directive": "**Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Satisfiability": {
+      "influence": {
+        "forge_effect": 0.0426,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": 0.0426,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2257,
+        "drop": -0.1145
+      },
+      "summary": "Satisfiability: removing it increases forge probability by 11%; forge rate: 11%",
+      "directive": "**Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Free Energy Principle + Wavelet Transforms": 0.116,
+    "Free Energy Principle + Satisfiability": -0.0379
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Wavelet Transforms",
+        "Mechanism Design",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Wavelet Transforms",
+        "Pragmatics",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Free Energy Principle",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Free Energy Principle + Wavelet Transforms: strong positive synergy (+0.116). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Wavelet Transforms + Mechanism Design + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Wavelet Transforms + Pragmatics + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Active Inference + Free Energy Principle + Model Checking (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

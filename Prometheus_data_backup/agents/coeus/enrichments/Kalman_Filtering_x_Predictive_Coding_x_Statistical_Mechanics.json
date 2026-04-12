@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Statistical Mechanics",
+    "Predictive Coding",
+    "Kalman Filtering"
+  ],
+  "concept_strengths": {
+    "Statistical Mechanics": {
+      "influence": {
+        "forge_effect": -0.0388,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1754,
+      "forge_effect": -0.0388,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1754,
+        "rate_without": 0.2262,
+        "drop": -0.0508
+      },
+      "summary": "Statistical Mechanics: removing it increases forge probability by 5%; forge rate: 18%",
+      "directive": "**Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Predictive Coding": {
+      "influence": {
+        "forge_effect": 0.0238,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1957,
+      "forge_effect": 0.0238,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1957,
+        "rate_without": 0.2252,
+        "drop": -0.0296
+      },
+      "summary": "Predictive Coding: forge rate: 20%",
+      "directive": "**Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Kalman Filtering": {
+      "influence": {
+        "forge_effect": -0.0301,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0301,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.226,
+        "drop": -0.0475
+      },
+      "summary": "Kalman Filtering: forge rate: 18%",
+      "directive": "**Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Predictive Coding + Statistical Mechanics": 0.4657,
+    "Kalman Filtering + Statistical Mechanics": -0.0313
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Statistical Mechanics",
+        "Predictive Coding",
+        "Abductive Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Predictive Coding",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Cognitive Load Theory",
+        "Kalman Filtering"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Statistical Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Predictive Coding**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Kalman Filtering**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Predictive Coding + Statistical Mechanics: strong positive synergy (+0.466). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Statistical Mechanics + Predictive Coding + Abductive Reasoning (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Cognitive Load Theory + Kalman Filtering (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

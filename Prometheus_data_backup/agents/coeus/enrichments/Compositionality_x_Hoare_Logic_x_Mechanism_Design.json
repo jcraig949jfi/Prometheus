@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Compositionality",
+    "Mechanism Design",
+    "Hoare Logic"
+  ],
+  "concept_strengths": {
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Mechanism Design": {
+      "influence": {
+        "forge_effect": 0.2489,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.2489,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2183,
+        "drop": 0.0464
+      },
+      "summary": "Mechanism Design: positive forge driver (+0.25); forge rate: 26%",
+      "directive": "**Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Hoare Logic": {
+      "influence": {
+        "forge_effect": 0.0354,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1667,
+      "forge_effect": 0.0354,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.225,
+        "drop": -0.0583
+      },
+      "summary": "Hoare Logic: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Hoare Logic**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Compositionality + Mechanism Design": -0.0493,
+    "Hoare Logic + Mechanism Design": -0.0441
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Mechanism Design",
+        "Type Theory"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Neural Oscillations",
+        "Mechanism Design"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Mechanism Design**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 38% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Hoare Logic**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Active Inference + Mechanism Design + Type Theory (accuracy: 0%, calibration: 0%)\n- Active Inference + Neural Oscillations + Mechanism Design (accuracy: 0%, calibration: 0%)\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

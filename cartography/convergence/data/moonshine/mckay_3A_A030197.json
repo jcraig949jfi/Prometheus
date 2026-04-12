@@ -1,0 +1,48 @@
+{
+  "class": "3A",
+  "oeis_id": "A030197",
+  "name": "McKay-Thompson series of class 3A for the Monster group with a(0) = 42.",
+  "data": "1,42,783,8672,65367,371520,1741655,7161696,26567946,90521472,288078201,864924480,2469235686,6748494912,17746495281,45086909440,111066966315,266057139456,621284327856,1417338712800,3164665156308",
+  "offset": "-1,2",
+  "formula": [
+    "Expansion of Hauptmodul for X_0^{+}(3).",
+    "Expansion of (h + 27)^2 / h, where h = (eta(q) / eta(q^3))^12.",
+    "Expansion of 27 * (b(q)^3 + c(q)^3)^2 / (b(q) * c(q))^3 in powers of q where b(), c() are cubic AGM theta functions. - _Michael Somos_, Jun 16 2012",
+    "Expansion of (a(q) / (eta(q) * eta(q^3)))^6 in powers of q where a() is a cubic AGM theta function. - _Michael Somos_, Dec 01 2013",
+    "G.f. is a period 1 Fourier series which satisfies f(-1 / (3 t)) = f(t) where q = exp(2 Pi i t). - _Michael Somos_, Dec 01 2013",
+    "a(n) ~ exp(4*Pi*sqrt(n/3)) / (sqrt(2) * 3^(1/4) * n^(3/4)). - _Vaclav Kotesovec_, Nov 07 2015"
+  ],
+  "program": [
+    "(PARI) {a(n) = my(A); if( n<-1, 0, n++; A = x * O(x^n); A = (eta(x^3 + A) / eta(x + A))^12; polcoeff( (1 + 27 * x * A)^2 / A, n))}; /* _Michael Somos_, Jun 16 2012 */"
+  ],
+  "xref": [
+    "Apart from constant term, same as A007243, A045480.",
+    "Cf. A007261. - _Gary W. Adamson_, Jul 21 2009",
+    "Cf. A058092, A058537, A121590."
+  ],
+  "fetched": "2026-04-11T09:50:34+00:00",
+  "coefficients": [
+    1,
+    42,
+    783,
+    8672,
+    65367,
+    371520,
+    1741655,
+    7161696,
+    26567946,
+    90521472,
+    288078201,
+    864924480,
+    2469235686,
+    6748494912,
+    17746495281,
+    45086909440,
+    111066966315,
+    266057139456,
+    621284327856,
+    1417338712800,
+    3164665156308
+  ],
+  "n_coefficients": 21
+}

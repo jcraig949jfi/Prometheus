@@ -1,0 +1,95 @@
+{
+  "concept_names": [
+    "Fractal Geometry",
+    "Morphogenesis",
+    "Free Energy Principle"
+  ],
+  "concept_strengths": {
+    "Fractal Geometry": {
+      "influence": {
+        "forge_effect": 0.0187,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.209,
+      "forge_effect": 0.0187,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.209,
+        "rate_without": 0.225,
+        "drop": -0.0161
+      },
+      "summary": "Fractal Geometry: forge rate: 21%",
+      "directive": "**Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Morphogenesis": {
+      "influence": {
+        "forge_effect": -0.0664,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": -0.0664,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Morphogenesis: negative forge driver (-0.07); forge rate: 22%",
+      "directive": "**Morphogenesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Free Energy Principle": {
+      "influence": {
+        "forge_effect": 0.3873,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.341,
+      "forge_effect": 0.3873,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.341,
+        "rate_without": 0.2056,
+        "drop": 0.1354
+      },
+      "summary": "Free Energy Principle: removing it drops forge probability by 14% (from 34%); forge rate: 34%",
+      "directive": "**Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    }
+  },
+  "pair_synergies": {
+    "Fractal Geometry + Morphogenesis": -0.0464,
+    "Fractal Geometry + Free Energy Principle": 0.4742,
+    "Free Energy Principle + Morphogenesis": -0.0758
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Cellular Automata",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Chaos Theory",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Fractal Geometry",
+        "Differentiable Programming",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Fractal Geometry**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Morphogenesis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Free Energy Principle**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 35% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n\n- Fractal Geometry + Free Energy Principle: strong positive synergy (+0.474). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Free Energy Principle + Morphogenesis: negative interaction (-0.076). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Fractal Geometry + Cellular Automata + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Chaos Theory + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Fractal Geometry + Differentiable Programming + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

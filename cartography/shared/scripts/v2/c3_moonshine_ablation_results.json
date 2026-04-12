@@ -1,0 +1,462 @@
+{
+  "challenge": "C3",
+  "title": "Break the Moonshine Rank-1 Tensor",
+  "timestamp": "2026-04-10T08:33:45",
+  "elapsed_seconds": 0.0,
+  "full_matrix": {
+    "label": "FULL",
+    "shape": [
+      5,
+      5
+    ],
+    "singular_values": [
+      347.7524,
+      51.7668,
+      28.0103,
+      23.6678,
+      0.3365
+    ],
+    "cumulative_variance": [
+      0.9678,
+      0.9892,
+      0.9955,
+      1.0,
+      1.0
+    ],
+    "spectral_gap": 6.7177,
+    "rank1_variance": 0.9678,
+    "partition_loadings": {
+      "mock_theta": -0.9589,
+      "modular": -0.0064,
+      "monstrous": -0.2776,
+      "theta_lattice": -0.0139,
+      "umbral_M24": -0.0565
+    },
+    "prime_loadings": {
+      "2": -0.0684,
+      "3": -0.594,
+      "5": -0.3476,
+      "7": -0.7222,
+      "11": -0.0043
+    },
+    "dominant_partition": "mock_theta",
+    "dominant_prime": "7"
+  },
+  "partition_ablations": {
+    "mock_theta": {
+      "label": "without_mock_theta",
+      "shape": [
+        4,
+        5
+      ],
+      "singular_values": [
+        108.4355,
+        32.7644,
+        27.5632,
+        0.3503
+      ],
+      "cumulative_variance": [
+        0.8651,
+        0.9441,
+        1.0,
+        1.0
+      ],
+      "spectral_gap": 3.3095,
+      "rank1_variance": 0.8651,
+      "partition_loadings": {
+        "modular": 0.0968,
+        "monstrous": 0.9813,
+        "theta_lattice": 0.0402,
+        "umbral_M24": 0.1615
+      },
+      "prime_loadings": {
+        "2": 0.3237,
+        "3": 0.5908,
+        "5": 0.5758,
+        "7": 0.4617,
+        "11": 0.0393
+      },
+      "dominant_partition": "monstrous",
+      "dominant_prime": "3"
+    },
+    "modular": {
+      "label": "without_modular",
+      "shape": [
+        4,
+        5
+      ],
+      "singular_values": [
+        347.7454,
+        47.0528,
+        27.6242,
+        0.3548
+      ],
+      "cumulative_variance": [
+        0.976,
+        0.9938,
+        1.0,
+        1.0
+      ],
+      "spectral_gap": 7.3905,
+      "rank1_variance": 0.976,
+      "partition_loadings": {
+        "mock_theta": 0.9589,
+        "monstrous": 0.2776,
+        "theta_lattice": 0.0139,
+        "umbral_M24": 0.0566
+      },
+      "prime_loadings": {
+        "2": 0.0678,
+        "3": 0.594,
+        "5": 0.3476,
+        "7": 0.7223,
+        "11": 0.0043
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    },
+    "monstrous": {
+      "label": "without_monstrous",
+      "shape": [
+        4,
+        5
+      ],
+      "singular_values": [
+        334.3343,
+        32.4088,
+        27.8503,
+        0.3373
+      ],
+      "cumulative_variance": [
+        0.9839,
+        0.9932,
+        1.0,
+        1.0
+      ],
+      "spectral_gap": 10.3162,
+      "rank1_variance": 0.9839,
+      "partition_loadings": {
+        "mock_theta": 0.9981,
+        "modular": 0.0044,
+        "theta_lattice": 0.0145,
+        "umbral_M24": 0.0592
+      },
+      "prime_loadings": {
+        "2": 0.0458,
+        "3": 0.5871,
+        "5": 0.3227,
+        "7": 0.7409,
+        "11": 0.0047
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    },
+    "theta_lattice": {
+      "label": "without_theta_lattice",
+      "shape": [
+        4,
+        5
+      ],
+      "singular_values": [
+        347.7188,
+        51.7609,
+        27.3614,
+        23.6246
+      ],
+      "cumulative_variance": [
+        0.9681,
+        0.9895,
+        0.9955,
+        1.0
+      ],
+      "spectral_gap": 6.7178,
+      "rank1_variance": 0.9681,
+      "partition_loadings": {
+        "mock_theta": 0.959,
+        "modular": 0.0064,
+        "monstrous": 0.2777,
+        "umbral_M24": 0.0565
+      },
+      "prime_loadings": {
+        "2": 0.0684,
+        "3": 0.5941,
+        "5": 0.3476,
+        "7": 0.7222,
+        "11": 0.0041
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    },
+    "umbral_M24": {
+      "label": "without_umbral_M24",
+      "shape": [
+        4,
+        5
+      ],
+      "singular_values": [
+        347.1994,
+        51.6546,
+        24.0055,
+        6.1865
+      ],
+      "cumulative_variance": [
+        0.9735,
+        0.995,
+        0.9997,
+        1.0
+      ],
+      "spectral_gap": 6.7216,
+      "rank1_variance": 0.9735,
+      "partition_loadings": {
+        "mock_theta": 0.9604,
+        "modular": 0.0064,
+        "monstrous": 0.2782,
+        "theta_lattice": 0.0139
+      },
+      "prime_loadings": {
+        "2": 0.0685,
+        "3": 0.5955,
+        "5": 0.3472,
+        "7": 0.7212,
+        "11": 0.0002
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    }
+  },
+  "prime_ablations": {
+    "2": {
+      "label": "without_p2",
+      "shape": [
+        5,
+        4
+      ],
+      "singular_values": [
+        346.9508,
+        38.6618,
+        27.4261,
+        0.3365
+      ],
+      "cumulative_variance": [
+        0.9817,
+        0.9939,
+        1.0,
+        1.0
+      ],
+      "spectral_gap": 8.974,
+      "rank1_variance": 0.9817,
+      "partition_loadings": {
+        "mock_theta": -0.9604,
+        "modular": 0.0,
+        "monstrous": -0.2725,
+        "theta_lattice": -0.0139,
+        "umbral_M24": -0.0567
+      },
+      "prime_loadings": {
+        "3": -0.5953,
+        "5": -0.348,
+        "7": -0.7243,
+        "11": -0.0043
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    },
+    "3": {
+      "label": "without_p3",
+      "shape": [
+        5,
+        4
+      ],
+      "singular_values": [
+        279.8907,
+        51.1267,
+        25.5112,
+        23.2211
+      ],
+      "cumulative_variance": [
+        0.9537,
+        0.9855,
+        0.9934,
+        1.0
+      ],
+      "spectral_gap": 5.4745,
+      "rank1_variance": 0.9537,
+      "partition_loadings": {
+        "mock_theta": -0.9627,
+        "modular": -0.0096,
+        "monstrous": -0.2574,
+        "theta_lattice": -0.0187,
+        "umbral_M24": -0.0802
+      },
+      "prime_loadings": {
+        "2": -0.0832,
+        "5": -0.4297,
+        "7": -0.8991,
+        "11": -0.0075
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    },
+    "5": {
+      "label": "without_p5",
+      "shape": [
+        5,
+        4
+      ],
+      "singular_values": [
+        326.2554,
+        45.2889,
+        28.0088,
+        13.374
+      ],
+      "cumulative_variance": [
+        0.9725,
+        0.9912,
+        0.9984,
+        1.0
+      ],
+      "spectral_gap": 7.2039,
+      "rank1_variance": 0.9725,
+      "partition_loadings": {
+        "mock_theta": -0.968,
+        "modular": -0.007,
+        "monstrous": -0.2448,
+        "theta_lattice": -0.0135,
+        "umbral_M24": -0.0539
+      },
+      "prime_loadings": {
+        "2": -0.0701,
+        "3": -0.6321,
+        "7": -0.7717,
+        "11": -0.0044
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    },
+    "7": {
+      "label": "without_p7",
+      "shape": [
+        5,
+        4
+      ],
+      "singular_values": [
+        241.8444,
+        43.1147,
+        26.6811,
+        15.5881
+      ],
+      "cumulative_variance": [
+        0.9541,
+        0.9844,
+        0.996,
+        1.0
+      ],
+      "spectral_gap": 5.6093,
+      "rank1_variance": 0.9541,
+      "partition_loadings": {
+        "mock_theta": -0.9268,
+        "modular": -0.0148,
+        "monstrous": -0.374,
+        "theta_lattice": -0.0084,
+        "umbral_M24": -0.0298
+      },
+      "prime_loadings": {
+        "2": -0.1103,
+        "3": -0.8535,
+        "5": -0.5092,
+        "11": -0.0033
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "3"
+    },
+    "11": {
+      "label": "without_p11",
+      "shape": [
+        5,
+        4
+      ],
+      "singular_values": [
+        347.7492,
+        51.7376,
+        24.144,
+        10.5909
+      ],
+      "cumulative_variance": [
+        0.9729,
+        0.9944,
+        0.9991,
+        1.0
+      ],
+      "spectral_gap": 6.7214,
+      "rank1_variance": 0.9729,
+      "partition_loadings": {
+        "mock_theta": -0.9589,
+        "modular": -0.0064,
+        "monstrous": -0.2777,
+        "theta_lattice": -0.0138,
+        "umbral_M24": -0.0562
+      },
+      "prime_loadings": {
+        "2": -0.0684,
+        "3": -0.594,
+        "5": -0.3476,
+        "7": -0.7222
+      },
+      "dominant_partition": "mock_theta",
+      "dominant_prime": "7"
+    }
+  },
+  "gap_changes_partition": {
+    "mock_theta": 3.4082,
+    "modular": -0.6728,
+    "monstrous": -3.5985,
+    "theta_lattice": -0.0001,
+    "umbral_M24": -0.0039
+  },
+  "gap_changes_prime": {
+    "2": -2.2563,
+    "3": 1.2432,
+    "5": -0.4862,
+    "7": 1.1084,
+    "11": -0.0037
+  },
+  "most_impactful_partition": "monstrous",
+  "most_impactful_prime": "p=2",
+  "mock_theta_removal": {
+    "label": "without_mock_theta",
+    "shape": [
+      4,
+      5
+    ],
+    "singular_values": [
+      108.4355,
+      32.7644,
+      27.5632,
+      0.3503
+    ],
+    "cumulative_variance": [
+      0.8651,
+      0.9441,
+      1.0,
+      1.0
+    ],
+    "spectral_gap": 3.3095,
+    "rank1_variance": 0.8651,
+    "partition_loadings": {
+      "modular": 0.0968,
+      "monstrous": 0.9813,
+      "theta_lattice": 0.0402,
+      "umbral_M24": 0.1615
+    },
+    "prime_loadings": {
+      "2": 0.3237,
+      "3": 0.5908,
+      "5": 0.5758,
+      "7": 0.4617,
+      "11": 0.0393
+    },
+    "dominant_partition": "monstrous",
+    "dominant_prime": "3"
+  },
+  "assessment": "TENSOR SURVIVES: gap 6.7\u21923.3. Still rank-1 (87%). New dominant: monstrous. Moonshine rank-1 structure is ROBUST to Mock Theta removal \u2014 the mode is deeper than any single partition."
+}

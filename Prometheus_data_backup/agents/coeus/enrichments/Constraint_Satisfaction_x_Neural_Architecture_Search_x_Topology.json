@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Topology",
+    "Neural Architecture Search",
+    "Constraint Satisfaction"
+  ],
+  "concept_strengths": {
+    "Topology": {
+      "influence": {
+        "forge_effect": -0.0563,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": -0.0563,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2284,
+        "drop": -0.1173
+      },
+      "summary": "Topology: removing it increases forge probability by 12%; forge rate: 11%",
+      "directive": "**Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Neural Architecture Search": {
+      "influence": {
+        "forge_effect": -0.047,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1667,
+      "forge_effect": -0.047,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1667,
+        "rate_without": 0.2257,
+        "drop": -0.059
+      },
+      "summary": "Neural Architecture Search: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Constraint Satisfaction": {
+      "influence": {
+        "forge_effect": 0.0288,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2593,
+      "forge_effect": 0.0288,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2593,
+        "rate_without": 0.2237,
+        "drop": 0.0355
+      },
+      "summary": "Constraint Satisfaction: forge rate: 26%",
+      "directive": "**Constraint Satisfaction**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Neural Architecture Search + Topology": -0.0185
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Constraint Satisfaction",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Phase Transitions",
+        "Neural Architecture Search"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Renormalization",
+        "Constraint Satisfaction"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neural Architecture Search**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Constraint Satisfaction**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Constraint Satisfaction + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)\n- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

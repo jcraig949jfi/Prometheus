@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Quantum Mechanics",
+    "Abductive Reasoning",
+    "Maximum Entropy"
+  ],
+  "concept_strengths": {
+    "Quantum Mechanics": {
+      "influence": {
+        "forge_effect": -0.0439,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3,
+      "forge_effect": -0.0439,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3,
+        "rate_without": 0.2234,
+        "drop": 0.0766
+      },
+      "summary": "Quantum Mechanics: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Abductive Reasoning": {
+      "influence": {
+        "forge_effect": 0.0424,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2097,
+      "forge_effect": 0.0424,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2097,
+        "rate_without": 0.225,
+        "drop": -0.0153
+      },
+      "summary": "Abductive Reasoning: forge rate: 21%",
+      "directive": "**Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.1336,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Abductive Reasoning + Maximum Entropy": 0.4638
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Dynamical Systems",
+        "Abductive Reasoning",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Abductive Reasoning",
+        "Causal Inference",
+        "Neural Oscillations"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Adaptive Control",
+        "Mechanism Design",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Abductive Reasoning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Abductive Reasoning + Maximum Entropy: strong positive synergy (+0.464). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Dynamical Systems + Abductive Reasoning + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Abductive Reasoning + Causal Inference + Neural Oscillations (accuracy: 0%, calibration: 0%)\n- Adaptive Control + Mechanism Design + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

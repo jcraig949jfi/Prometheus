@@ -1,0 +1,86 @@
+{
+  "concept_names": [
+    "Immune Systems",
+    "Error Correcting Codes",
+    "Sensitivity Analysis"
+  ],
+  "concept_strengths": {
+    "Immune Systems": {
+      "influence": {
+        "forge_effect": -0.0226,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2188,
+      "forge_effect": -0.0226,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Immune Systems: forge rate: 22%",
+      "directive": "**Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Error Correcting Codes": {
+      "influence": {
+        "forge_effect": -0.0526,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2286,
+      "forge_effect": -0.0526,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Error Correcting Codes: negative forge driver (-0.05); forge rate: 23%",
+      "directive": "**Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Sensitivity Analysis": {
+      "influence": {
+        "forge_effect": 0.038,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1562,
+      "forge_effect": 0.038,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1562,
+        "rate_without": 0.2258,
+        "drop": -0.0695
+      },
+      "summary": "Sensitivity Analysis: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Free Energy Principle",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Wavelet Transforms",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Emergence",
+        "Error Correcting Codes"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Immune Systems**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Error Correcting Codes**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n- Category Theory + Wavelet Transforms + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Emergence + Error Correcting Codes (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

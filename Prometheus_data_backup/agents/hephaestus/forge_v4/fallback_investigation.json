@@ -1,0 +1,362 @@
+{
+  "abductive_reasoning_x_causal_inference_x_neural_oscillations": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 0,
+    "judgment_tagged": 0,
+    "no_tag": 20,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[OCAR-v4] st=0.498(w=0.25); cp=1.000; nc=0.250; 82.08>82.6"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[OCAR-v4] st=0.498(w=0.25); cp=1.000; nc=0.222; 14.0894>17.4"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[OCAR-v4] st=0.620(w=0.25); cp=0.500; nc=0.226"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[OCAR-v4] st=0.620(w=0.25); cp=0.500; nc=0.226"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[OCAR-v4] st=0.620(w=0.25); cp=0.500; nc=0.189"
+      }
+    ]
+  },
+  "active_inference_x_epistemology_x_network_science": {
+    "fallback_tagged": 0,
+    "structural_tagged": 12,
+    "computation_tagged": 8,
+    "judgment_tagged": 0,
+    "no_tag": 0,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "computation:numeric_comparison,confidence:0.85"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "computation:numeric_comparison,confidence:0.85"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "structural:numeric_stated_premise,confidence:0.85"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "structural:numeric_stated_premise,confidence:0.85"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "structural:numeric_stated_premise,confidence:0.85"
+      }
+    ]
+  },
+  "active_inference_x_free_energy_principle_x_model_checking": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 8,
+    "judgment_tagged": 0,
+    "no_tag": 12,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[AFMC-v4] st=0.498(w=0.25); cp=1.000; nc=0.250; th=0.111; computation:82.08>82.6=False; confidence:m"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[AFMC-v4] st=0.498(w=0.25); cp=1.000; nc=0.222; th=0.103; computation:14.0894>17.4=False; confidence"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AFMC-v4] st=0.620(w=0.25); cp=0.500; nc=0.226; th=0.143; confidence:medium"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AFMC-v4] st=0.620(w=0.25); cp=0.500; nc=0.226; th=0.143; confidence:medium"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AFMC-v4] st=0.620(w=0.25); cp=0.500; nc=0.189; th=0.122; confidence:medium"
+      }
+    ]
+  },
+  "active_inference_x_kolmogorov_complexity_x_free_energy_principle": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 20,
+    "judgment_tagged": 0,
+    "no_tag": 0,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[AKFE-v4] st=0.435(w=0.13) cp=0.900 nc=0.250 | computation:cmp> | cmp=0.30; bol=0.65"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[AKFE-v4] st=0.435(w=0.13) cp=0.900 nc=0.222 | computation:cmp> | cmp=0.30; bol=0.65"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AKFE-v4] st=0.546(w=0.13) cp=0.900 nc=0.151 | computation:cmp< | cmp=0.70; bol=0.30"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AKFE-v4] st=0.546(w=0.13) cp=0.900 nc=0.151 | computation:cmp< | cmp=0.70; bol=0.30"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AKFE-v4] st=0.546(w=0.13) cp=0.900 nc=0.189 | computation:cmp< | cmp=0.70; bol=0.30"
+      }
+    ]
+  },
+  "active_inference_x_mechanism_design_x_type_theory": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 0,
+    "judgment_tagged": 0,
+    "no_tag": 20,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "C:cmp,confidence:0.85"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "C:cmp,confidence:0.85"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "C:st,confidence:0.85"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "C:st,confidence:0.85"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "C:st,confidence:0.85"
+      }
+    ]
+  },
+  "active_inference_x_neural_oscillations_x_mechanism_design": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 20,
+    "judgment_tagged": 0,
+    "no_tag": 0,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[AOMD-v4] st=0.435(w=0.13) cp=0.900 nc=0.250 | computation:cmp> | cmp=0.30; bol=0.65"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[AOMD-v4] st=0.435(w=0.13) cp=0.900 nc=0.222 | computation:cmp> | cmp=0.30; bol=0.65"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AOMD-v4] st=0.546(w=0.13) cp=0.900 nc=0.151 | computation:cmp< | cmp=0.70; bol=0.30"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AOMD-v4] st=0.546(w=0.13) cp=0.900 nc=0.151 | computation:cmp< | cmp=0.70; bol=0.30"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[AOMD-v4] st=0.546(w=0.13) cp=0.900 nc=0.189 | computation:cmp< | cmp=0.70; bol=0.30"
+      }
+    ]
+  },
+  "active_inference_x_pragmatics_x_property-based_testing": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 20,
+    "judgment_tagged": 0,
+    "no_tag": 0,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[APPT-v4] st=0.435(w=0.13) cp=0.900 nc=0.250 | computation:cmp> | cmp=0.30; bol=0.65"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[APPT-v4] st=0.435(w=0.13) cp=0.900 nc=0.222 | computation:cmp> | cmp=0.30; bol=0.65"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[APPT-v4] st=0.546(w=0.13) cp=0.900 nc=0.151 | computation:cmp< | cmp=0.70; bol=0.30"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[APPT-v4] st=0.546(w=0.13) cp=0.900 nc=0.151 | computation:cmp< | cmp=0.70; bol=0.30"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[APPT-v4] st=0.546(w=0.13) cp=0.900 nc=0.189 | computation:cmp< | cmp=0.70; bol=0.30"
+      }
+    ]
+  },
+  "adaptive_control_x_mechanism_design_x_maximum_entropy": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 8,
+    "judgment_tagged": 0,
+    "no_tag": 12,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[ACME] st=0.498(w=0.25); cp=1.000; nc=0.250; th=0.111; computation:82.08>82.6; confidence:medium"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[ACME] st=0.498(w=0.25); cp=1.000; nc=0.222; th=0.103; computation:14.0894>17.4; confidence:medium"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[ACME] st=0.620(w=0.25); cp=0.500; nc=0.226; th=0.143; confidence:medium"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[ACME] st=0.620(w=0.25); cp=0.500; nc=0.226; th=0.143; confidence:medium"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[ACME] st=0.620(w=0.25); cp=0.500; nc=0.189; th=0.122; confidence:medium"
+      }
+    ]
+  },
+  "analogical_reasoning_x_dialectics_x_mechanism_design": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 0,
+    "judgment_tagged": 0,
+    "no_tag": 20,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "[ADMR-v4] st=0.338(w=0.28) cp=0.200 nc=0.250 lr=0.148 | num=0.20; cmp=0.40; bol=0.65"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "[ADMR-v4] st=0.338(w=0.28) cp=0.200 nc=0.222 lr=0.138 | num=0.20; cmp=0.40; bol=0.65"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[ADMR-v4] st=0.774(w=0.34) cp=1.000 nc=0.226 lr=0.143 | num=1.00; cmp=1.00; s_o=0.30; bol=0.30"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[ADMR-v4] st=0.774(w=0.34) cp=1.000 nc=0.226 lr=0.143 | num=1.00; cmp=1.00; s_o=0.30; bol=0.30"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "[ADMR-v4] st=0.774(w=0.34) cp=1.000 nc=0.208 lr=0.102 | num=1.00; cmp=1.00; s_o=0.30; bol=0.30"
+      }
+    ]
+  },
+  "analogical_reasoning_x_hebbian_learning_x_free_energy_principle": {
+    "fallback_tagged": 0,
+    "structural_tagged": 0,
+    "computation_tagged": 20,
+    "judgment_tagged": 0,
+    "no_tag": 0,
+    "empty_reasoning": 0,
+    "total_checked": 20,
+    "samples": [
+      {
+        "prompt": "Is 82.08 larger than 82.6?",
+        "category": "numeric_comparison",
+        "reasoning": "REASON: comp:_ck_numcmp=1.00|struct:-0.05|hebbian:0.20|ncd:0.22"
+      },
+      {
+        "prompt": "Is 14.0894 larger than 17.4?",
+        "category": "numeric_comparison",
+        "reasoning": "REASON: comp:_ck_numcmp=1.00|struct:-0.05|hebbian:0.20|ncd:0.19"
+      },
+      {
+        "prompt": "3.0 is less than 23.271. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "REASON: comp:none=0.00|struct:0.25|hebbian:0.40|ncd:0.23"
+      },
+      {
+        "prompt": "2.7 is less than 71.598. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "REASON: comp:none=0.00|struct:0.25|hebbian:0.40|ncd:0.23"
+      },
+      {
+        "prompt": "44.92 is less than 54.5. Which number is larger?",
+        "category": "numeric_stated_premise",
+        "reasoning": "REASON: comp:none=0.00|struct:0.25|hebbian:0.40|ncd:0.21"
+      }
+    ]
+  }
+}

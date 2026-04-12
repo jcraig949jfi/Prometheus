@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Phase Transitions",
+    "Emergence",
+    "Nash Equilibrium"
+  ],
+  "concept_strengths": {
+    "Phase Transitions": {
+      "influence": {
+        "forge_effect": 0.1361,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3016,
+      "forge_effect": 0.1361,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3016,
+        "rate_without": 0.2211,
+        "drop": 0.0805
+      },
+      "summary": "Phase Transitions: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Emergence": {
+      "influence": {
+        "forge_effect": 0.146,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3429,
+      "forge_effect": 0.146,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3429,
+        "rate_without": 0.2216,
+        "drop": 0.1212
+      },
+      "summary": "Emergence: removing it drops forge probability by 12% (from 34%); forge rate: 34%",
+      "directive": "**Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0042,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
+      },
+      "summary": "Nash Equilibrium: forge rate: 21%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Phase Transitions",
+        "Kolmogorov Complexity",
+        "Nash Equilibrium"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Phase Transitions",
+        "Nash Equilibrium",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Phase Transitions",
+        "Neural Architecture Search"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Phase Transitions**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 33% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Emergence**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 34% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Phase Transitions + Kolmogorov Complexity + Nash Equilibrium (accuracy: 0%, calibration: 0%)\n- Phase Transitions + Nash Equilibrium + Model Checking (accuracy: 0%, calibration: 0%)\n- Category Theory + Phase Transitions + Neural Architecture Search (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

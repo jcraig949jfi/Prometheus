@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Topology",
+    "Neural Plasticity",
+    "Dual Process Theory"
+  ],
+  "concept_strengths": {
+    "Topology": {
+      "influence": {
+        "forge_effect": -0.0563,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": -0.0563,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2284,
+        "drop": -0.1173
+      },
+      "summary": "Topology: removing it increases forge probability by 12%; forge rate: 11%",
+      "directive": "**Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Neural Plasticity": {
+      "influence": {
+        "forge_effect": 0.1279,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2683,
+      "forge_effect": 0.1279,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2683,
+        "rate_without": 0.2232,
+        "drop": 0.0451
+      },
+      "summary": "Neural Plasticity: positive forge driver (+0.13); forge rate: 27%",
+      "directive": "**Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Dual Process Theory": {
+      "influence": {
+        "forge_effect": -0.1791,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.0625,
+      "forge_effect": -0.1791,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.0625,
+        "rate_without": 0.226,
+        "drop": -0.1635
+      },
+      "summary": "Dual Process Theory: removing it increases forge probability by 16%; forge rate: 6%",
+      "directive": "**Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Dual Process Theory + Neural Plasticity": -0.0168
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Plasticity",
+        "Autopoiesis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Neural Plasticity",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Topology**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Neural Plasticity**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 29% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Dual Process Theory**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Plasticity + Autopoiesis (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Neural Plasticity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

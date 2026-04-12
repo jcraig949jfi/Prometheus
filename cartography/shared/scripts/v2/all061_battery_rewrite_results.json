@@ -1,0 +1,97 @@
+{
+  "challenge": "ALL-061",
+  "title": "Battery Failure-Mode Rewrite Rules",
+  "timestamp": "2026-04-10T07:56:34",
+  "elapsed_seconds": 0.4,
+  "n_records": 103,
+  "verdict_distribution": {
+    "KILLED": 62,
+    "SURVIVES": 41
+  },
+  "domain_failure_rates": {
+    "ast_bridges": {
+      "total": 1,
+      "fail": 0,
+      "fail_rate": 0.0,
+      "verdicts": {
+        "KILLED": 1
+      }
+    },
+    "regime_change": {
+      "total": 100,
+      "fail": 0,
+      "fail_rate": 0.0,
+      "verdicts": {
+        "KILLED": 59,
+        "SURVIVES": 41
+      }
+    },
+    "root_probes": {
+      "total": 2,
+      "fail": 0,
+      "fail_rate": 0.0,
+      "verdicts": {
+        "KILLED": 2
+      }
+    }
+  },
+  "numeric_fields": {
+    "layer": {
+      "mean": 1.0291,
+      "std": 0.1682,
+      "min": 1.0,
+      "max": 2.0
+    },
+    "delta_pct": {
+      "mean": 29.734,
+      "std": 13.1576,
+      "min": 21.0188,
+      "max": 83.8423
+    }
+  },
+  "rewrite_rules": [],
+  "n_bridges": 4410,
+  "top_bridges": [
+    {
+      "concept": "integer_737",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_749",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_831",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_849",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_851",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_871",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_923",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_956",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_989",
+      "specificity": 0.5
+    },
+    {
+      "concept": "integer_1043",
+      "specificity": 0.5
+    }
+  ],
+  "assessment": "NO RULES: verdict distribution {'KILLED': 62, 'SURVIVES': 41} but no numeric predictors of failure"
+}

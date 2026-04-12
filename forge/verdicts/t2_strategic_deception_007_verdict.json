@@ -1,0 +1,171 @@
+{
+  "tool_id": "t2_strategic_deception_007",
+  "tier": 2,
+  "timestamp": "2026-04-05T22:28:10.478156",
+  "overall_score": 0.09999999999999999,
+  "seed_scores": [
+    0.16666666666666666,
+    0.041666666666666664,
+    0.125,
+    0.08333333333333333,
+    0.08333333333333333
+  ],
+  "seed_stability": 0.125,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "format_error"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "format_error"
+    }
+  },
+  "ablation": {
+    "bayesian_update": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "entropy": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "confidence_from_agreement": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "track_beliefs": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "solve_constraints": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "topological_sort": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "find_equilibria": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "is_dominated": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    },
+    "check_entailment": {
+      "delta": 0.0,
+      "load_bearing": false,
+      "budget_share": 0
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.5455,
+    "most_similar_tool": "t2_liar_detection_000",
+    "passes_diversity_check": false
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "D",
+    "cluster_name": "Theory-of-Mind / Belief / Epistemic",
+    "cluster_score": 0.05,
+    "seed_scores": [
+      0.0833,
+      0.0,
+      0.0833,
+      0.0,
+      0.0833
+    ],
+    "seed_stability": 0.0833,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "strategic_deception": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "perspective_shift": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "epistemic_belief_tracking": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "information_sufficiency": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "defeasible_reasoning": {
+        "pass": false,
+        "failure_type": "format_error"
+      },
+      "referent_tracking_anaphora": {
+        "pass": false,
+        "failure_type": "format_error"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "A": 0.15,
+      "B": 0.0333,
+      "C": 0.0714,
+      "E": 0.0286,
+      "F": 0.0
+    },
+    "generalist_tag": null
+  }
+}

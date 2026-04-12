@@ -1,0 +1,94 @@
+{
+  "concept_names": [
+    "Renormalization",
+    "Attention Mechanisms",
+    "Evolution"
+  ],
+  "concept_strengths": {
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Attention Mechanisms": {
+      "influence": {
+        "forge_effect": -0.132,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.12,
+      "forge_effect": -0.132,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.12,
+        "rate_without": 0.226,
+        "drop": -0.106
+      },
+      "summary": "Attention Mechanisms: removing it increases forge probability by 11%; forge rate: 12%",
+      "directive": "**Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Evolution": {
+      "influence": {
+        "forge_effect": 0.0222,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2647,
+      "forge_effect": 0.0222,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2647,
+        "rate_without": 0.2235,
+        "drop": 0.0413
+      },
+      "summary": "Evolution: forge rate: 26%",
+      "directive": "**Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Attention Mechanisms + Renormalization": -0.0267,
+    "Evolution + Renormalization": -0.0588
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Criticality",
+        "Optimal Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Neural Plasticity",
+        "Feedback Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Predictive Coding",
+        "Falsificationism"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Attention Mechanisms**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Evolution**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Evolution + Renormalization: negative interaction (-0.059). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Neural Plasticity + Feedback Control (accuracy: 0%, calibration: 0%)\n- Attention Mechanisms + Predictive Coding + Falsificationism (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

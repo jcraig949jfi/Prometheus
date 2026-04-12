@@ -1,0 +1,248 @@
+{
+  "challenge": "ALL-057",
+  "title": "Berlekamp-Massey on Graph Statistics vs Prime",
+  "timestamp": "2026-04-10T06:25:14",
+  "elapsed_seconds": 0.0,
+  "gl2_hecke": {
+    "primes": [
+      5,
+      7,
+      11
+    ],
+    "statistics": {
+      "n_congruences": {
+        "values": [
+          817,
+          159,
+          5
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "bm_result": {
+          "order": 2,
+          "coefficients": [
+            0.19461444308445533,
+            -0.03175483041668102
+          ]
+        }
+      },
+      "n_nodes": {
+        "values": [
+          1568,
+          318,
+          10
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "bm_result": {
+          "order": 2,
+          "coefficients": [
+            0.20280612244897958,
+            -0.03475277228238234
+          ]
+        }
+      },
+      "n_edges": {
+        "values": [
+          817,
+          159,
+          5
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "bm_result": {
+          "order": 2,
+          "coefficients": [
+            0.19461444308445533,
+            -0.03175483041668102
+          ]
+        }
+      },
+      "n_components": {
+        "values": [
+          774,
+          159,
+          5
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "bm_result": {
+          "order": 2,
+          "coefficients": [
+            0.2054263565891473,
+            -0.03574003966107806
+          ]
+        }
+      },
+      "n_triangles": {
+        "values": [
+          27,
+          0,
+          0
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "bm_result": {
+          "order": 1,
+          "coefficients": [
+            0.0
+          ]
+        }
+      },
+      "largest_component": {
+        "values": [
+          5,
+          2,
+          2
+        ],
+        "primes": [
+          5,
+          7,
+          11
+        ],
+        "bm_result": {
+          "order": 2,
+          "coefficients": [
+            0.4,
+            0.24
+          ]
+        }
+      }
+    },
+    "derived": {
+      "n_congruences": {
+        "differences": [
+          -658,
+          -154
+        ],
+        "bm_differences": null,
+        "ratios": [
+          0.194614,
+          0.031447
+        ],
+        "bm_ratios": null
+      },
+      "n_nodes": {
+        "differences": [
+          -1250,
+          -308
+        ],
+        "bm_differences": null,
+        "ratios": [
+          0.202806,
+          0.031447
+        ],
+        "bm_ratios": null
+      },
+      "n_edges": {
+        "differences": [
+          -658,
+          -154
+        ],
+        "bm_differences": null,
+        "ratios": [
+          0.194614,
+          0.031447
+        ],
+        "bm_ratios": null
+      },
+      "n_components": {
+        "differences": [
+          -615,
+          -154
+        ],
+        "bm_differences": null,
+        "ratios": [
+          0.205426,
+          0.031447
+        ],
+        "bm_ratios": null
+      },
+      "n_triangles": {
+        "differences": [
+          -27,
+          0
+        ],
+        "bm_differences": null,
+        "ratios": [
+          0.0
+        ],
+        "bm_ratios": null
+      },
+      "largest_component": {
+        "differences": [
+          -3,
+          0
+        ],
+        "bm_differences": null,
+        "ratios": [
+          0.4,
+          1.0
+        ],
+        "bm_ratios": null
+      }
+    }
+  },
+  "gsp4": {
+    "mod2_all": {
+      "n_nodes": 9101,
+      "n_edges": 11356,
+      "n_components": 3598,
+      "n_triangles": 20917
+    },
+    "mod3_all": {
+      "n_nodes": 296,
+      "n_edges": 181,
+      "n_components": 140,
+      "n_triangles": 37
+    }
+  },
+  "power_law_fits": {
+    "n_congruences": {
+      "alpha": -6.5297,
+      "A": 36723680.7919,
+      "R2": 0.9018
+    },
+    "n_nodes": {
+      "alpha": -6.4803,
+      "A": 65682017.4147,
+      "R2": 0.8909
+    },
+    "n_edges": {
+      "alpha": -6.5297,
+      "A": 36723680.7919,
+      "R2": 0.9018
+    },
+    "n_components": {
+      "alpha": -6.4649,
+      "A": 31718056.544,
+      "R2": 0.8874
+    },
+    "largest_component": {
+      "alpha": -1.0975,
+      "A": 23.9633,
+      "R2": 0.736
+    }
+  },
+  "summary": {
+    "n_raw_recurrences": 6,
+    "n_derived_recurrences": 0,
+    "total_sequences_tested": 6
+  },
+  "assessment": "ALGEBRAIC STRUCTURE: 6/6 graph statistics obey linear recurrences in ell \u2014 congruence counting has hidden regularity"
+}

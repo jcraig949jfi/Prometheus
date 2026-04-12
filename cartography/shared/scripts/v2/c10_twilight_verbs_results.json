@@ -1,0 +1,45 @@
+{
+  "challenge": "C10",
+  "title": "Twilight Realm Verb Profiling",
+  "timestamp": "2026-04-10T09:06:45",
+  "elapsed_seconds": 0.4,
+  "n_records": 103,
+  "n_survives": 41,
+  "n_killed": 62,
+  "n_twilight": 45,
+  "n_deep_shadow": 9,
+  "kill_test_distribution": {
+    "F1_permutation_null": 56,
+    "F6_base_rate": 14,
+    "F9_simpler_explanation": 9,
+    "F11_cross_validation": 16,
+    "F13_growth_rate_filter": 2,
+    "F14_phase_shift": 4,
+    "F3_effect_size": 2
+  },
+  "twilight_killers": {
+    "F1_permutation_null": 39,
+    "F13_growth_rate_filter": 2,
+    "F14_phase_shift": 4
+  },
+  "twilight_by_source": {
+    "regime_change": 44,
+    "ast_bridges": 1
+  },
+  "deep_shadow_by_source": {
+    "regime_change": 7,
+    "root_probes": 2
+  },
+  "delta_pct": {
+    "twilight_mean": 25.9,
+    "shadow_mean": 72.1,
+    "survives_mean": 26.4,
+    "mwu_pvalue": 0.669710755042296
+  },
+  "kill_type_distribution": {
+    "statistical_null": 39,
+    "unknown": 2,
+    "oscillation": 4
+  },
+  "assessment": "TWILIGHT MAPPED: 45 hypotheses killed by exactly 1 test. Top banisher: F1_permutation_null (39 victims, 87%). Type: statistical_null. Twilight delta_pct=25.9 vs survives=26.4 (MWU p=6.697e-01)."
+}

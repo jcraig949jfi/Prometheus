@@ -1,0 +1,156 @@
+{
+  "tool_id": "t2_causal_counterfactual_010",
+  "tier": 2,
+  "timestamp": "2026-04-05T23:18:42.849042",
+  "overall_score": 0.275,
+  "seed_scores": [
+    0.2916666666666667,
+    0.3333333333333333,
+    0.2916666666666667,
+    0.20833333333333334,
+    0.25
+  ],
+  "seed_stability": 0.12499999999999997,
+  "per_category": {
+    "simpson_paradox": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_counterfactual": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "conjunction_fallacy": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "strategic_deception": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "perspective_shift": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_scheduling": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "argument_strength": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "liar_detection": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "compositional_multi_step": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "rate_of_change": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "causal_confounding_hard": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    },
+    "temporal_complex": {
+      "pass": false,
+      "failure_type": "wrong_answer"
+    }
+  },
+  "ablation": {
+    "bayesian_update": {
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.1944
+    },
+    "entropy": {
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.1944
+    },
+    "confidence_from_agreement": {
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.1944
+    },
+    "counterfactual_intervention": {
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.1944
+    },
+    "do_calculus": {
+      "delta": 0.2917,
+      "load_bearing": true,
+      "budget_share": 0.1944
+    },
+    "build_bn": {
+      "delta": -0.0417,
+      "load_bearing": false,
+      "budget_share": 0.0278
+    }
+  },
+  "diversity": {
+    "max_overlap": 0.4,
+    "most_similar_tool": "t2_simpson_paradox_003",
+    "passes_diversity_check": true
+  },
+  "verdict": "FAIL_BATTERY",
+  "promising_primitives": [],
+  "cluster_eval": {
+    "home_cluster": "A",
+    "cluster_name": "Causal / Statistical",
+    "cluster_score": 0.35,
+    "seed_scores": [
+      0.3333,
+      0.3333,
+      0.4167,
+      0.4167,
+      0.25
+    ],
+    "seed_stability": 0.1667,
+    "categories_passed": 0,
+    "min_categories_required": 3,
+    "per_category": {
+      "simpson_paradox": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "causal_counterfactual": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "conjunction_fallacy": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "causal_confounding_hard": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "counterfactual_dependency": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      },
+      "bayesian_update": {
+        "pass": false,
+        "failure_type": "wrong_answer"
+      }
+    },
+    "passes_score": false,
+    "passes_seed": true,
+    "passes_breadth": false,
+    "cluster_verdict": "FAIL",
+    "adjacent_cluster_scores": {
+      "B": 0.1833,
+      "C": 0.2429,
+      "D": 0.3,
+      "E": 0.2714,
+      "F": 0.325
+    },
+    "generalist_tag": null
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "class": "4C",
+  "oeis_id": "A007249",
+  "name": "McKay-Thompson series of class 4D for the Monster group.",
+  "data": "1,-12,66,-232,639,-1596,3774,-8328,17283,-34520,66882,-125568,229244,-409236,716412,-1231048,2079237,-3459264,5677832,-9200232,14729592,-23325752,36567222,-56778888,87369483,-133315692",
+  "offset": "0,2",
+  "formula": [
+    "G.f.: Product_{m>=1} (1 + x^m)^(-12).",
+    "Expansion of chi(-x)^12 in powers of x where chi() is a Ramanujan theta function.",
+    "G.f. is a period 1 Fourier series which satisfies f(-1 / (8 t)) = 64 g(t) where q = exp(2 Pi i t) and g() is the g.f. for A022577. - _Michael Somos_, Jul 22 2011",
+    "a(n) = (-1)^n * A112142(n). (class 8B). Convolution inverse of A022577. - _Michael Somos_, Jul 22 2011",
+    "a(n) ~ (-1)^n * exp(Pi*sqrt(2*n)) / (2^(5/4) * n^(3/4)). - _Vaclav Kotesovec_, Aug 27 2015",
+    "a(0) = 1, a(n) = -(12/n)*Sum_{k=1..n} A000593(k)*a(n-k) for n > 0. - _Seiichi Manyama_, Apr 05 2017",
+    "G.f.: exp(-12*Sum_{k>=1} (-1)^(k+1)*x^k/(k*(1 - x^k))). - _Ilya Gutkovskiy_, Feb 06 2018",
+    "Expansion of q^(1/2)*(eta(q)/eta(q^2))^12 in powers of q. - _G. C. Greubel_, Feb 13 2018",
+    "Empirical: Sum_{n>=0} a(n) / exp(n*Pi) = 2 * exp(-Pi / 2) * sqrt(2) = A388182. - _Simon Plouffe_, Sep 15 2025"
+  ],
+  "program": [
+    "(PARI) {a(n) = local(A); if( n<0, 0, A = x * O(x^n); polcoeff( (eta(x + A) / eta(x^2 + A))^12, n))} /* _Michael Somos_, Jul 22 2011 */"
+  ],
+  "xref": [
+    "Cf. A007191, A022577, A112142.",
+    "Column k=12 of A286352."
+  ],
+  "fetched": "2026-04-11T09:50:45+00:00",
+  "coefficients": [
+    1,
+    -12,
+    66,
+    -232,
+    639,
+    -1596,
+    3774,
+    -8328,
+    17283,
+    -34520,
+    66882,
+    -125568,
+    229244,
+    -409236,
+    716412,
+    -1231048,
+    2079237,
+    -3459264,
+    5677832,
+    -9200232,
+    14729592,
+    -23325752,
+    36567222,
+    -56778888,
+    87369483,
+    -133315692
+  ],
+  "n_coefficients": 26
+}

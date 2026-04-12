@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Gene Regulatory Networks",
+    "Compositionality",
+    "Sensitivity Analysis"
+  ],
+  "concept_strengths": {
+    "Gene Regulatory Networks": {
+      "influence": {
+        "forge_effect": 0.0554,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2564,
+      "forge_effect": 0.0554,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2564,
+        "rate_without": 0.2235,
+        "drop": 0.0329
+      },
+      "summary": "Gene Regulatory Networks: positive forge driver (+0.06); forge rate: 26%",
+      "directive": "**Gene Regulatory Networks**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Sensitivity Analysis": {
+      "influence": {
+        "forge_effect": 0.038,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1562,
+      "forge_effect": 0.038,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1562,
+        "rate_without": 0.2258,
+        "drop": -0.0695
+      },
+      "summary": "Sensitivity Analysis: removing it increases forge probability by 7%; forge rate: 16%",
+      "directive": "**Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Free Energy Principle",
+        "Sensitivity Analysis"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Active Inference",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Adaptive Control",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Gene Regulatory Networks**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Sensitivity Analysis**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Bayesian Inference + Free Energy Principle + Sensitivity Analysis (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Active Inference + Compositionality (accuracy: 0%, calibration: 0%)\n- Chaos Theory + Adaptive Control + Compositionality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,95 @@
+{
+  "concept_names": [
+    "Ergodic Theory",
+    "Maximum Entropy",
+    "Model Checking"
+  ],
+  "concept_strengths": {
+    "Ergodic Theory": {
+      "influence": {
+        "forge_effect": 0.2846,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2936,
+      "forge_effect": 0.2846,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2936,
+        "rate_without": 0.2192,
+        "drop": 0.0744
+      },
+      "summary": "Ergodic Theory: removing it drops forge probability by 7% (from 29%); forge rate: 29%",
+      "directive": "**Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Maximum Entropy": {
+      "influence": {
+        "forge_effect": -0.1336,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1727,
+      "forge_effect": -0.1336,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1727,
+        "rate_without": 0.2282,
+        "drop": -0.0555
+      },
+      "summary": "Maximum Entropy: removing it increases forge probability by 6%; forge rate: 17%",
+      "directive": "**Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    },
+    "Model Checking": {
+      "influence": {
+        "forge_effect": -0.0261,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2174,
+      "forge_effect": -0.0261,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Model Checking: forge rate: 22%",
+      "directive": "**Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Ergodic Theory + Maximum Entropy": 0.3779,
+    "Ergodic Theory + Model Checking": 0.3362,
+    "Maximum Entropy + Model Checking": 0.1291
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Maximum Entropy",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Analogical Reasoning",
+        "Model Checking"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Falsificationism",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ergodic Theory**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 37% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Maximum Entropy**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n- **Model Checking**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Ergodic Theory + Maximum Entropy: strong positive synergy (+0.378). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Ergodic Theory + Model Checking: strong positive synergy (+0.336). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n- Maximum Entropy + Model Checking: strong positive synergy (+0.129). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Ergodic Theory + Maximum Entropy + Model Checking (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Analogical Reasoning + Model Checking (accuracy: 0%, calibration: 0%)\n- Ergodic Theory + Falsificationism + Maximum Entropy (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

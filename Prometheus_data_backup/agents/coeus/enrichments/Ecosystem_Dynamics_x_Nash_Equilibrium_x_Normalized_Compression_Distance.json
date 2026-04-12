@@ -1,0 +1,96 @@
+{
+  "concept_names": [
+    "Ecosystem Dynamics",
+    "Nash Equilibrium",
+    "Normalized Compression Distance"
+  ],
+  "concept_strengths": {
+    "Ecosystem Dynamics": {
+      "influence": {
+        "forge_effect": -0.0169,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1429,
+      "forge_effect": -0.0169,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1429,
+        "rate_without": 0.2266,
+        "drop": -0.0837
+      },
+      "summary": "Ecosystem Dynamics: removing it increases forge probability by 8%; forge rate: 14%",
+      "directive": "**Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Nash Equilibrium": {
+      "influence": {
+        "forge_effect": 0.0042,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2059,
+      "forge_effect": 0.0042,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2059,
+        "rate_without": 0.2252,
+        "drop": -0.0193
+      },
+      "summary": "Nash Equilibrium: forge rate: 21%",
+      "directive": "**Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Normalized Compression Distance": {
+      "influence": {
+        "forge_effect": 0.0035,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1818,
+      "forge_effect": 0.0035,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1818,
+        "rate_without": 0.2246,
+        "drop": -0.0428
+      },
+      "summary": "Normalized Compression Distance: forge rate: 18%",
+      "directive": "**Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {},
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Chaos Theory",
+        "Self-Organized Criticality",
+        "Normalized Compression Distance"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Differentiable Programming",
+        "Nash Equilibrium",
+        "Metamorphic Testing"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Dynamical Systems",
+        "Nash Equilibrium",
+        "Counterfactual Reasoning"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Ecosystem Dynamics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Nash Equilibrium**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Normalized Compression Distance**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\nSimilar combinations that forged successfully:\n- Chaos Theory + Self-Organized Criticality + Normalized Compression Distance (accuracy: 0%, calibration: 0%)\n- Differentiable Programming + Nash Equilibrium + Metamorphic Testing (accuracy: 0%, calibration: 0%)\n- Dynamical Systems + Nash Equilibrium + Counterfactual Reasoning (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

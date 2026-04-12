@@ -1,0 +1,183 @@
+{
+  "challenge": "ALL-050",
+  "title": "Motif Extraction from Mod-2 Graphs",
+  "timestamp": "2026-04-10T06:36:57",
+  "elapsed_seconds": 0.4,
+  "hub_analysis": {
+    "n_deg_ge5": 1159,
+    "n_deg_ge10": 441,
+    "max_degree": 23,
+    "top_hubs": [
+      {
+        "node": "N352256_704512_[2*x^5-2*x^3+2*x^2+x-1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+x^4+2*x^2+x-1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[2*x^5+22*x^4+80*x^3+96*x^2-x,",
+        "degree": 23
+      },
+      {
+        "node": "N352256_352256_[x^5-4*x^4+3*x^3+4*x+2,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-x^4-4*x^3+2*x^2+5*x+1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-x^4-2*x^2+x+1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-3*x^4+6*x^2-3*x-1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+4*x^3+6*x^2+2*x,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+x^4-4*x^3-2*x^2+5*x-1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+3*x^4-6*x^2-3*x+1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-x^4+2*x^2-3*x+1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+x^4-2*x^3-x+1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+4*x^3-6*x^2+2*x,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5+2*x^4-2*x^2-2*x,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[2*x^5-4*x^3+3*x-1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-8*x^3+10*x^2-2*x,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[2*x^5-2*x^3-2*x^2+x+1,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-2*x^4+2*x^2-2*x,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_352256_[x^5+4*x^4+3*x^3+4*x-2,0]",
+        "degree": 23
+      },
+      {
+        "node": "N352256_704512_[x^5-x^4-2*x^3-x-1,0]",
+        "degree": 23
+      }
+    ]
+  },
+  "component_analysis": {
+    "total_components": 3598,
+    "size_distribution": {
+      "24": 1,
+      "22": 1,
+      "19": 1,
+      "18": 1,
+      "17": 1,
+      "16": 3,
+      "15": 5,
+      "14": 2,
+      "13": 5,
+      "12": 4,
+      "11": 7,
+      "10": 12,
+      "9": 13,
+      "8": 21,
+      "7": 13,
+      "6": 37,
+      "5": 61,
+      "4": 205,
+      "3": 407,
+      "2": 2798
+    },
+    "decay_slope": -0.0002,
+    "decay_R2": 0.4227
+  },
+  "degree_power_law": {
+    "alpha": 1.7662,
+    "R2": 0.9146
+  },
+  "motif_census": {
+    "triangles": 20917,
+    "4_cycles": -1,
+    "max_clique": 24,
+    "avg_clustering": 1.0,
+    "triangle_enrichment_vs_ER": 8076.1
+  },
+  "cross_ell_comparison": {
+    "mod2_all": {
+      "n_nodes": 9101,
+      "n_edges": 11356,
+      "n_triangles": 20917,
+      "max_clique": 24,
+      "avg_cc": 1.0,
+      "n_4_cycles": -1
+    },
+    "mod2_coprime_usp4": {
+      "n_nodes": 1961,
+      "n_edges": 1115,
+      "n_triangles": 99,
+      "max_clique": 4,
+      "avg_cc": 1.0,
+      "n_4_cycles": 0
+    },
+    "mod2_irreducible": {
+      "n_nodes": 1150,
+      "n_edges": 640,
+      "n_triangles": 47,
+      "max_clique": 4,
+      "avg_cc": 0.991525,
+      "n_4_cycles": 0
+    },
+    "mod3_all": {
+      "n_nodes": 296,
+      "n_edges": 181,
+      "n_triangles": 37,
+      "max_clique": 5,
+      "avg_cc": 1.0,
+      "n_4_cycles": 0
+    },
+    "mod3_coprime_usp4": {
+      "n_nodes": 84,
+      "n_edges": 42,
+      "n_triangles": 0,
+      "max_clique": 2,
+      "avg_cc": 0,
+      "n_4_cycles": 0
+    },
+    "mod3_irreducible": {
+      "n_nodes": 72,
+      "n_edges": 36,
+      "n_triangles": 0,
+      "max_clique": 2,
+      "avg_cc": 0,
+      "n_4_cycles": 0
+    }
+  },
+  "st_pair_composition": {},
+  "assessment": "EXTREME STRUCTURE: 8076x triangle enrichment, max clique=24, degree power-law alpha=1.77. Graph is far from random \u2014 arithmetic drives topology."
+}

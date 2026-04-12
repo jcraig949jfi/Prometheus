@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Reservoir Computing",
+    "Hebbian Learning",
+    "Compositionality"
+  ],
+  "concept_strengths": {
+    "Reservoir Computing": {
+      "influence": {
+        "forge_effect": -0.0112,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.25,
+      "forge_effect": -0.0112,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.25,
+        "rate_without": 0.2238,
+        "drop": 0.0262
+      },
+      "summary": "Reservoir Computing: forge rate: 25%",
+      "directive": "**Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Hebbian Learning": {
+      "influence": {
+        "forge_effect": 0.0454,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.303,
+      "forge_effect": 0.0454,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.303,
+        "rate_without": 0.2227,
+        "drop": 0.0804
+      },
+      "summary": "Hebbian Learning: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Compositionality": {
+      "influence": {
+        "forge_effect": -0.0337,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1863,
+      "forge_effect": -0.0337,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1863,
+        "rate_without": 0.227,
+        "drop": -0.0407
+      },
+      "summary": "Compositionality: forge rate: 19%",
+      "directive": "**Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Compositionality + Reservoir Computing": -0.0466,
+    "Compositionality + Hebbian Learning": 0.2769
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Ergodic Theory",
+        "Hebbian Learning",
+        "Compositionality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Analogical Reasoning",
+        "Hebbian Learning",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Reservoir Computing",
+        "Sparse Coding"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Reservoir Computing**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Hebbian Learning**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Compositionality**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Compositionality + Hebbian Learning: strong positive synergy (+0.277). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Ergodic Theory + Hebbian Learning + Compositionality (accuracy: 0%, calibration: 0%)\n- Analogical Reasoning + Hebbian Learning + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Reservoir Computing + Sparse Coding (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

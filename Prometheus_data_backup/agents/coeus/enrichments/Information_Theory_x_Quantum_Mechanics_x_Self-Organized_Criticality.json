@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Information Theory",
+    "Quantum Mechanics",
+    "Self-Organized Criticality"
+  ],
+  "concept_strengths": {
+    "Information Theory": {
+      "influence": {
+        "forge_effect": 0.0184,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1833,
+      "forge_effect": 0.0184,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1833,
+        "rate_without": 0.226,
+        "drop": -0.0426
+      },
+      "summary": "Information Theory: forge rate: 18%",
+      "directive": "**Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Quantum Mechanics": {
+      "influence": {
+        "forge_effect": -0.0439,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3,
+      "forge_effect": -0.0439,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3,
+        "rate_without": 0.2234,
+        "drop": 0.0766
+      },
+      "summary": "Quantum Mechanics: removing it drops forge probability by 8% (from 30%); forge rate: 30%",
+      "directive": "**Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Self-Organized Criticality": {
+      "influence": {
+        "forge_effect": -0.1349,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.125,
+      "forge_effect": -0.1349,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.125,
+        "rate_without": 0.2259,
+        "drop": -0.1009
+      },
+      "summary": "Self-Organized Criticality: removing it increases forge probability by 10%; forge rate: 12%",
+      "directive": "**Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Information Theory + Self-Organized Criticality": -0.0229
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Apoptosis",
+        "Falsificationism",
+        "Self-Organized Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Chaos Theory",
+        "Self-Organized Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Information Theory",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Information Theory**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Quantum Mechanics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Self-Organized Criticality**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n\nSimilar combinations that forged successfully:\n- Apoptosis + Falsificationism + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Chaos Theory + Self-Organized Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Information Theory + Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

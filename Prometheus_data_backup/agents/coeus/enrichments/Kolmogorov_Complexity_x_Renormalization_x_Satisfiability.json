@@ -1,0 +1,93 @@
+{
+  "concept_names": [
+    "Renormalization",
+    "Kolmogorov Complexity",
+    "Satisfiability"
+  ],
+  "concept_strengths": {
+    "Renormalization": {
+      "influence": {
+        "forge_effect": 0.0573,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2222,
+      "forge_effect": 0.0573,
+      "confounder_status": null,
+      "interventional": null,
+      "summary": "Renormalization: positive forge driver (+0.06); forge rate: 22%",
+      "directive": "**Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Kolmogorov Complexity": {
+      "influence": {
+        "forge_effect": 0.0166,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2462,
+      "forge_effect": 0.0166,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2462,
+        "rate_without": 0.2234,
+        "drop": 0.0227
+      },
+      "summary": "Kolmogorov Complexity: forge rate: 25%",
+      "directive": "**Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Satisfiability": {
+      "influence": {
+        "forge_effect": 0.0426,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1111,
+      "forge_effect": 0.0426,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1111,
+        "rate_without": 0.2257,
+        "drop": -0.1145
+      },
+      "summary": "Satisfiability: removing it increases forge probability by 11%; forge rate: 11%",
+      "directive": "**Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. "
+    }
+  },
+  "pair_synergies": {
+    "Kolmogorov Complexity + Renormalization": -0.0547
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Active Inference",
+        "Kolmogorov Complexity",
+        "Free Energy Principle"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Kolmogorov Complexity",
+        "Maximum Entropy"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Renormalization",
+        "Constraint Satisfaction"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Renormalization**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Kolmogorov Complexity**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Satisfiability**: Historical inhibitor. Tools relying heavily on this tend to fail reasoning traps. Do NOT use this for direct scoring; restrict it to the confidence() wrapper or structural parsing support only. \n\n- Kolmogorov Complexity + Renormalization: negative interaction (-0.055). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Active Inference + Kolmogorov Complexity + Free Energy Principle (accuracy: 0%, calibration: 0%)\n- Category Theory + Kolmogorov Complexity + Maximum Entropy (accuracy: 0%, calibration: 0%)\n- Category Theory + Renormalization + Constraint Satisfaction (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

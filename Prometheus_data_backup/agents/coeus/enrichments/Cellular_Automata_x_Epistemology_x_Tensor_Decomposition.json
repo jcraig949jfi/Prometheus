@@ -1,0 +1,99 @@
+{
+  "concept_names": [
+    "Tensor Decomposition",
+    "Cellular Automata",
+    "Epistemology"
+  ],
+  "concept_strengths": {
+    "Tensor Decomposition": {
+      "influence": {
+        "forge_effect": -0.0628,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1714,
+      "forge_effect": -0.0628,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1714,
+        "rate_without": 0.2256,
+        "drop": -0.0541
+      },
+      "summary": "Tensor Decomposition: removing it increases forge probability by 5%; forge rate: 17%",
+      "directive": "**Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Cellular Automata": {
+      "influence": {
+        "forge_effect": -0.0187,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.1786,
+      "forge_effect": -0.0187,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.1786,
+        "rate_without": 0.2252,
+        "drop": -0.0466
+      },
+      "summary": "Cellular Automata: forge rate: 18%",
+      "directive": "**Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Epistemology": {
+      "influence": {
+        "forge_effect": 0.0401,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0401,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2229,
+        "drop": 0.0628
+      },
+      "summary": "Epistemology: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
+      "directive": "**Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Cellular Automata + Tensor Decomposition": -0.0306,
+    "Epistemology + Tensor Decomposition": 0.2844
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Tensor Decomposition",
+        "Active Inference",
+        "Epistemology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Active Inference",
+        "Epistemology",
+        "Network Science"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Global Workspace Theory",
+        "Epistemology"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Tensor Decomposition**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Cellular Automata**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Epistemology**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Epistemology + Tensor Decomposition: strong positive synergy (+0.284). These concepts reinforce each other \u2014 integrate them tightly rather than implementing as independent checks.\n\nSimilar combinations that forged successfully:\n- Tensor Decomposition + Active Inference + Epistemology (accuracy: 0%, calibration: 0%)\n- Active Inference + Epistemology + Network Science (accuracy: 0%, calibration: 0%)\n- Category Theory + Global Workspace Theory + Epistemology (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

@@ -1,0 +1,98 @@
+{
+  "concept_names": [
+    "Wavelet Transforms",
+    "Criticality",
+    "Compositional Semantics"
+  ],
+  "concept_strengths": {
+    "Wavelet Transforms": {
+      "influence": {
+        "forge_effect": -0.0685,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.193,
+      "forge_effect": -0.0685,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.193,
+        "rate_without": 0.2255,
+        "drop": -0.0325
+      },
+      "summary": "Wavelet Transforms: negative forge driver (-0.07); forge rate: 19%",
+      "directive": "**Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    },
+    "Criticality": {
+      "influence": {
+        "forge_effect": 0.3514,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.3827,
+      "forge_effect": 0.3514,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.3827,
+        "rate_without": 0.2157,
+        "drop": 0.167
+      },
+      "summary": "Criticality: removing it drops forge probability by 17% (from 38%); forge rate: 38%",
+      "directive": "**Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier. "
+    },
+    "Compositional Semantics": {
+      "influence": {
+        "forge_effect": 0.0164,
+        "reasoning_effect": 0.0
+      },
+      "forge_rate": 0.2857,
+      "forge_effect": 0.0164,
+      "confounder_status": null,
+      "interventional": {
+        "base_rate": 0.2243,
+        "rate_with": 0.2857,
+        "rate_without": 0.2241,
+        "drop": 0.0616
+      },
+      "summary": "Compositional Semantics: removing it drops forge probability by 6% (from 29%); forge rate: 29%",
+      "directive": "**Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. "
+    }
+  },
+  "pair_synergies": {
+    "Criticality + Wavelet Transforms": -0.0739
+  },
+  "field_effects": {
+    "Complex Systems": 0.0039,
+    "Mathematics": -0.0101,
+    "Theoretical Neuroscience": 0.0503
+  },
+  "similar_forges": [
+    {
+      "concept_names": [
+        "Attention Mechanisms",
+        "Criticality",
+        "Optimal Control"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Bayesian Inference",
+        "Evolution",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    },
+    {
+      "concept_names": [
+        "Category Theory",
+        "Information Theory",
+        "Criticality"
+      ],
+      "accuracy": 0,
+      "calibration": 0
+    }
+  ],
+  "enrichment_text": "The following concepts have historical causal signatures regarding their ability to form computable reasoning tools. Adjust your implementation strategy accordingly:\n\n- **Wavelet Transforms**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n- **Criticality**: Moderate positive synergy. Use this concept to support the primary logic, perhaps as a secondary validation step or scoring modifier.  GOODHART WARNING: This concept scores well on static tests but only 36% adversarial survival. Ensure your implementation handles paraphrased, shuffled, and extended versions of prompts, not just the literal patterns.\n- **Compositional Semantics**: Causally neutral. Implement as requested without over-indexing on its mechanics. \n\n- Criticality + Wavelet Transforms: negative interaction (-0.074). Keep these concepts in separate code paths to avoid interference.\n\nSimilar combinations that forged successfully:\n- Attention Mechanisms + Criticality + Optimal Control (accuracy: 0%, calibration: 0%)\n- Bayesian Inference + Evolution + Criticality (accuracy: 0%, calibration: 0%)\n- Category Theory + Information Theory + Criticality (accuracy: 0%, calibration: 0%)\n\nGLOBAL: The final tool must strictly beat the NCD compression baseline. Use structural parsing (negations, comparatives, conditionals, numeric evaluation) as the primary scoring signal. NCD is only a tiebreaker for candidates where no structural signal is detected."
+}

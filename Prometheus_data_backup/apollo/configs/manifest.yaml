@@ -1,0 +1,76 @@
+apollo:
+  # ── Paths (all relative to project root) ──────────────────────
+  # Resolved at runtime via Path(__file__).parent.parent.parent
+  primitives_dir: "agents/hephaestus/src"
+  trap_generator: "agents/hephaestus/src/trap_generator.py"
+  gem_dirs:
+    - "agents/hephaestus/forge_v9/*.py"
+    - "forge/candidates/*gem*.py"
+    - "agents/hephaestus/forge_v7/*specialist*.py"
+
+  # Output directories (relative to apollo/)
+  log_dir: "logs"
+  checkpoint_dir: "checkpoints"
+  lineage_dir: "lineage"
+  graveyard_dir: "graveyard"
+  dashboard_dir: "dashboard"
+
+  # ── Population ────────────────────────────────────────────────
+  population_size: 50
+  offspring_per_generation: 50
+  elite_count: 5
+
+  # ── Mutation rates (v2: primitive routing DAG) ────────────────
+  mutation_rates:
+    route: 0.40        # LLM modifies router_logic
+    parameter: 0.25    # Gaussian noise on parameters (AST-only)
+    wiring: 0.20       # LLM rewires primitive connections
+    swap: 0.15         # LLM replaces one primitive
+  drift_sigma: 0.02
+  crossover_rate: 0.3
+
+  # ── Phase schedule ────────────────────────────────────────────
+  warmup_generations: 50       # Novelty-only, parameter mutation only
+  accuracy_activation_gen: 50  # Accuracy fitness dimension activates
+  ablation_activation_gen: 100 # Ablation fitness dimension activates
+  params_only_until_gen: 50    # No structural mutations until this gen
+
+  # ── Selection ─────────────────────────────────────────────────
+  selection_algorithm: "nsga2"
+  fitness_objectives: 6  # accuracy, calibration, ablation, generalization, diversity, parsimony
+
+  # ── NCD counterpressure ───────────────────────────────────────
+  ncd_min_differ: 3  # Minimum tasks where organism must differ from NCD
+
+  # ── Ablation gate ─────────────────────────────────────────────
+  ablation_interval: 5  # Run ablation every N generations
+  ablation_threshold: 0.20  # Minimum change fraction per primitive
+
+  # ── Novelty ───────────────────────────────────────────────────
+  novelty_k_nearest: 15
+  novelty_archive_threshold: 0.05
+  novelty_archive_max_size: 500
+
+  # ── Tasks (v2: scaled curriculum) ─────────────────────────────
+  n_reference_tasks: 50
+  n_evolution_tasks: 100
+  n_held_out_tasks: 50
+  rotation_count: 10
+  task_rotation_interval: 50
+  quick_screen_count: 3
+
+  # ── Sandbox ───────────────────────────────────────────────────
+  sandbox_timeout_seconds: 0.5
+
+  # ── LLM mutation ──────────────────────────────────────────────
+  llm_model: "Qwen/Qwen2.5-Coder-7B-Instruct"
+  llm_device: "cuda"
+  llm_max_tokens: 512
+  llm_temperature: 0.7
+  llm_load_in_8bit: true  # 8-bit: 8.7GB VRAM, 7 tok/s, 6.9GB headroom on RTX 5060 Ti
+
+  # ── Operational ───────────────────────────────────────────────
+  checkpoint_interval: 10
+  checkpoint_keep_last: 5
+  held_out_eval_interval: 10
+  max_generations: 50000
