@@ -1,0 +1,30 @@
+{
+  "area": "Area 3: Mod-p Determinant Fingerprint",
+  "invariant": "modp_fingerprint",
+  "phoneme_class": "arithmetic",
+  "datasets": {
+    "Knots": {
+      "n": 249
+    },
+    "Lattices": {
+      "n": 39293
+    },
+    "NF": {
+      "n": 9116
+    }
+  },
+  "gates": {
+    "Gate 1 (Null-calibrated)": true,
+    "Gate 2 (Representation-stable)": true,
+    "Gate 3 (Not reducible to marginals)": true,
+    "Gate 4 (Non-tautological)": true,
+    "Gate 5 (Domain-agnostic)": false
+  },
+  "cross_domain": {
+    "total_mi_domain_fp": 0.2038297256579639
+  },
+  "verdict": "REJECTED",
+  "gates_passed": 4,
+  "gates_total": 5,
+  "note": "Calibration area. Expected rejection establishes the complexity floor for MPA coordinates."
+}
