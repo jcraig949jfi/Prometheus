@@ -1,0 +1,50 @@
+{
+  "island_pairs": {
+    "oeis<->charon_landscape": {
+      "validated": 4,
+      "raw": 10
+    },
+    "groups<->charon_landscape": {
+      "validated": 4,
+      "raw": 4
+    },
+    "groups<->oeis": {
+      "validated": 4,
+      "raw": 4
+    },
+    "bianchi<->oeis": {
+      "validated": 3,
+      "raw": 7
+    },
+    "belyi<->charon_landscape": {
+      "validated": 3,
+      "raw": 4
+    },
+    "bianchi<->groups": {
+      "validated": 3,
+      "raw": 4
+    },
+    "bianchi<->belyi": {
+      "validated": 2,
+      "raw": 4
+    },
+    "belyi<->oeis": {
+      "validated": 2,
+      "raw": 4
+    }
+  },
+  "island_triples_highlights": {
+    "bianchi+oeis+charon": "oeis<->charon=r6(raw13)",
+    "groups+oeis+charon": "oeis<->charon=r10(raw10)",
+    "belyi+oeis+charon": "oeis<->charon=r10(raw10)",
+    "bianchi+groups+oeis": "groups<->oeis=r5(raw10)"
+  },
+  "bridge_triples_top": {
+    "groups+genus2+charon": "genus2<->charon=r13",
+    "belyi+genus2+charon": "genus2<->charon=r13",
+    "belyi+NF+oeis": "NF<->oeis=r10",
+    "belyi+genus2+oeis": "genus2<->oeis=r10",
+    "groups+lattices+oeis": "lattices<->oeis=r9"
+  },
+  "finding": "Islands connect through each other. Mnemosyne+Thalassa are the hub (rank 10). Connected domains bridge to rank 13."
+}
