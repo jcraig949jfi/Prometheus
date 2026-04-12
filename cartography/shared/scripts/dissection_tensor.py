@@ -1124,20 +1124,96 @@ class DataLoaders:
 
     @staticmethod
     def load_genus2(max_n=None):
-        """Load genus-2 curves with symmetry and conductor signatures."""
-        path = ROOT / "cartography/genus2/data/genus2_curves_full.json"
-        if not path.exists():
-            path = ROOT / "cartography/genus2/data/genus2_curves.json"
-        if not path.exists():
+        """Load genus-2 curves with symmetry, conductor, endomorphism, and Galois signatures.
+
+        Sources (merged by label, LMFDB file takes priority for shared fields):
+          1. cartography/genus2/data/genus2_curves_full.json  (original)
+          2. cartography/lmfdb_dump/g2c_curves.json           (66K LMFDB records)
+          3. cartography/lmfdb_dump/g2c_endomorphisms.json    (ring/GL2 type)
+          4. cartography/lmfdb_dump/g2c_galrep.json           (Galois images)
+        """
+        # --- Step 1: Merge curve data from both sources -----------------
+        curves_by_label = {}
+
+        # Source A: original genus2_curves_full.json
+        path_orig = ROOT / "cartography/genus2/data/genus2_curves_full.json"
+        if not path_orig.exists():
+            path_orig = ROOT / "cartography/genus2/data/genus2_curves.json"
+        if path_orig.exists():
+            raw = json.loads(path_orig.read_text(encoding="utf-8"))
+            orig_curves = raw if isinstance(raw, list) else raw.get("curves", raw.get("data", []))
+            for c in orig_curves:
+                lbl = c.get("label", c.get("lmfdb_label", ""))
+                if lbl:
+                    curves_by_label[lbl] = dict(c)
+            print(f"    genus-2 original: {len(orig_curves)} records")
+
+        # Source B: LMFDB g2c_curves.json (66K, dict with "records" key)
+        path_lmfdb = ROOT / "cartography/lmfdb_dump/g2c_curves.json"
+        if path_lmfdb.exists():
+            raw = json.loads(path_lmfdb.read_text(encoding="utf-8"))
+            lmfdb_recs = raw.get("records", []) if isinstance(raw, dict) else raw
+            for c in lmfdb_recs:
+                lbl = c.get("label", "")
+                if not lbl:
+                    continue
+                if lbl in curves_by_label:
+                    # Merge — LMFDB fields take priority
+                    curves_by_label[lbl].update(c)
+                else:
+                    curves_by_label[lbl] = dict(c)
+            print(f"    genus-2 LMFDB:    {len(lmfdb_recs)} records")
+
+        if not curves_by_label:
             print("  genus-2 data not found, skipping")
             return []
 
-        data = json.loads(path.read_text(encoding="utf-8"))
-        curves = data if isinstance(data, list) else data.get("curves", data.get("data", []))
+        print(f"    genus-2 merged:   {len(curves_by_label)} unique curves")
+
+        # --- Step 2: Load endomorphism data (keyed by label) ------------
+        endo_by_label = {}
+        path_endo = ROOT / "cartography/lmfdb_dump/g2c_endomorphisms.json"
+        if path_endo.exists():
+            raw = json.loads(path_endo.read_text(encoding="utf-8"))
+            endo_recs = raw.get("records", []) if isinstance(raw, dict) else raw
+            for e in endo_recs:
+                lbl = e.get("label", "")
+                if lbl:
+                    endo_by_label[lbl] = e
+            print(f"    genus-2 endomorphisms: {len(endo_by_label)} records")
+
+        # --- Step 3: Load Galois rep data (keyed by label, multi-row) ---
+        galrep_by_label = {}  # label -> list of (prime, modell_image)
+        path_galrep = ROOT / "cartography/lmfdb_dump/g2c_galrep.json"
+        if path_galrep.exists():
+            raw = json.loads(path_galrep.read_text(encoding="utf-8"))
+            galrep_recs = raw.get("records", []) if isinstance(raw, dict) else raw
+            for g in galrep_recs:
+                lbl = g.get("lmfdb_label", "")
+                if lbl:
+                    galrep_by_label.setdefault(lbl, []).append(g)
+            print(f"    genus-2 galrep:   {len(galrep_by_label)} curves, "
+                  f"{len(galrep_recs)} rows")
+
+        # --- Step 4: Build MathObjects ----------------------------------
+        # Ring-type encoding for endomorphisms
+        ring_type_map = {
+            "[1,-1]": 0,   # Z (trivial endomorphism ring)
+            "[1,1]": 1,    # Z x Z
+            "[2,-1]": 2,   # order in imaginary quadratic field
+            "[2,1]": 3,    # order in real quadratic field
+            "[4,-1]": 4,   # quaternion order
+            "[4,1]": 5,    # M_2(Z)
+        }
+
         objects = []
         ext = StrategyExtractors
+        all_labels = list(curves_by_label.keys())
+        if max_n is not None:
+            all_labels = all_labels[:max_n]
 
-        for c in curves[:max_n]:
+        for lbl in all_labels:
+            c = curves_by_label[lbl]
             cond = c.get("conductor") or c.get("cond")
             if not cond:
                 continue
@@ -1147,12 +1223,14 @@ class DataLoaders:
                 continue
 
             obj = MathObject(
-                obj_id=f"g2_{c.get('label', c.get('lmfdb_label', str(cond)))}",
+                obj_id=f"g2_{lbl}",
                 domain="genus2",
-                label=str(c.get("label", c.get("lmfdb_label", ""))),
+                label=lbl,
                 signatures={},
                 raw={"conductor": cond,
-                     "st_group": c.get("st_group", c.get("st_group_label", ""))},
+                     "st_group": c.get("st_group", c.get("st_group_label", "")),
+                     "analytic_rank": c.get("analytic_rank"),
+                     "root_number": c.get("root_number")},
             )
 
             # S7: p-adic valuation of conductor
@@ -1166,13 +1244,129 @@ class DataLoaders:
             st = c.get("st_group", c.get("st_group_label", ""))
             st_map = {"USp(4)": 0, "N(G_{3,3})": 1, "G_{3,3}": 2,
                       "N(U(1))": 3, "SU(2)": 4, "U(1)": 5,
-                      "E_6": 6, "J(E_6)": 7, "E_4": 8, "J(E_4)": 9}
+                      "E_6": 6, "J(E_6)": 7, "E_4": 8, "J(E_4)": 9,
+                      "F_{a,b}": 10, "F_{ac}": 11, "J(C_2)": 12,
+                      "J(C_4)": 13, "J(C_6)": 14, "J(D_2)": 15,
+                      "J(D_3)": 16, "J(D_4)": 17, "J(D_6)": 18,
+                      "J(T)": 19, "J(O)": 20, "C_{2,1}": 21,
+                      "D_{2,1}": 22, "D_{3,2}": 23, "D_{4,1}": 24,
+                      "D_{4,2}": 25, "D_{6,1}": 26, "D_{6,2}": 27,
+                      "O_1": 28}
             obj.signatures["s9_st"] = np.array([
                 st_map.get(st, -1),
                 float(len(st)) / 10.0,  # name length as proxy
                 1.0 if "N(" in st else 0.0,  # normalizer flag
                 1.0 if "J(" in st else 0.0,  # J-flag
             ], dtype=np.float32)
+
+            # --- Endomorphism-derived features (s9-like encoding) -------
+            endo = endo_by_label.get(lbl, {})
+            ring_base = str(endo.get("ring_base", ""))
+            ring_geom = str(endo.get("ring_geom", ""))
+            is_gl2 = 1.0 if c.get("is_gl2_type", False) else 0.0
+            is_simple_base = 1.0 if endo.get("is_simple_base",
+                                              c.get("is_simple_base", False)) else 0.0
+            is_simple_geom = 1.0 if endo.get("is_simple_geom",
+                                              c.get("is_simple_geom", False)) else 0.0
+            st_group_base = endo.get("st_group_base", "")
+            st_group_geom = endo.get("st_group_geom", "")
+            # Encode ring type as categorical
+            ring_base_code = ring_type_map.get(ring_base, -1)
+            ring_geom_code = ring_type_map.get(ring_geom, -1)
+            obj.signatures["s9_endo"] = np.array([
+                ring_base_code,
+                ring_geom_code,
+                is_gl2,
+                is_simple_base,
+                is_simple_geom,
+                st_map.get(st_group_base, -1) if st_group_base else -1,
+                st_map.get(st_group_geom, -1) if st_group_geom else -1,
+                float(len(endo.get("factorsRR_base", []))) if endo else 0.0,
+            ], dtype=np.float32)
+
+            # --- Galois rep features ------------------------------------
+            galreps = galrep_by_label.get(lbl, [])
+            if galreps:
+                primes_seen = []
+                image_codes = []
+                for gr in galreps:
+                    p = gr.get("prime", 0)
+                    img = gr.get("modell_image", "")
+                    primes_seen.append(int(p) if p else 0)
+                    # Parse modell_image "N.M.K" -> numeric hash
+                    parts = str(img).split(".")
+                    code = 0.0
+                    for i, part in enumerate(parts[:3]):
+                        try:
+                            code += int(part) / (10 ** (i + 1))
+                        except (ValueError, TypeError):
+                            pass
+                    image_codes.append(code)
+                n_reps = len(galreps)
+                mean_prime = float(np.mean(primes_seen)) if primes_seen else 0.0
+                max_prime = float(max(primes_seen)) if primes_seen else 0.0
+                mean_img_code = float(np.mean(image_codes)) if image_codes else 0.0
+                obj.signatures["s10_galrep"] = np.array([
+                    float(n_reps),
+                    mean_prime / 100.0,  # normalize
+                    max_prime / 100.0,
+                    mean_img_code,
+                ], dtype=np.float32)
+            else:
+                obj.signatures["s10_galrep"] = np.full(4, np.nan, dtype=np.float32)
+
+            # --- S19: ADE from discriminant -----------------------------
+            try:
+                disc_val = int(c.get("abs_disc", c.get("disc", 0)))
+            except (ValueError, TypeError):
+                disc_val = 0
+            if disc_val > 0:
+                obj.signatures["s19_ade"] = ext.s19_ade_classify(
+                    disc_val, method="lattice_det")
+
+            # --- S21: automorphic association ---------------------------
+            # Use root_number as functional equation sign, conductor as level
+            root_num = c.get("root_number")
+            analytic_rank = c.get("analytic_rank")
+            # Build a lightweight coefficient-like sequence from invariants
+            # for the automorphic signature (torsion, tamagawa, selmer)
+            torsion_order = c.get("torsion_order", 0)
+            tamagawa = c.get("tamagawa_product", 0)
+            two_selmer = c.get("two_selmer_rank", 0)
+            mw_rank = c.get("mw_rank", 0)
+            try:
+                torsion_order = int(torsion_order) if torsion_order else 0
+                tamagawa = int(tamagawa) if tamagawa else 0
+                two_selmer = int(two_selmer) if two_selmer else 0
+                mw_rank = int(mw_rank) if mw_rank else 0
+            except (ValueError, TypeError):
+                torsion_order = tamagawa = two_selmer = mw_rank = 0
+
+            func_eq_sign = float(root_num) if root_num is not None else 0.0
+            a_rank = float(analytic_rank) if analytic_rank is not None else 0.0
+            obj.signatures["s21_auto"] = np.array([
+                0.0,           # spectral_type placeholder
+                func_eq_sign,  # parity / root number
+                0.0,           # multiplicativity placeholder
+                abs(func_eq_sign),  # functional_equation_type
+                np.log1p(float(cond)),  # conductor_weight_ratio (level proxy)
+                1.0,           # coefficient_field_degree (rational)
+                0.0,           # hecke_multiplicativity placeholder
+                a_rank / 4.0,  # satake_parameter proxy (rank-scaled)
+            ], dtype=np.float32)
+
+            # --- S11: monodromy proxy from invariants -------------------
+            # Build a coefficient-like sequence from arithmetic invariants
+            invariant_seq = [
+                float(torsion_order),
+                float(tamagawa),
+                float(two_selmer),
+                float(mw_rank),
+                float(cond % 12),  # level mod 12
+                func_eq_sign,
+            ]
+            if len(invariant_seq) >= 4:
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(invariant_seq)
 
             objects.append(obj)
 
@@ -1621,7 +1815,9 @@ class DissectionTensor:
         "s6_oeis": 4,
         "s7_det": 5, "s7_disc": 5, "s7_cond": 5,
         "s9_st": 4,
+        "s9_endo": 8,       # genus-2 endomorphism ring/GL2/simplicity
         "s10": 8,
+        "s10_galrep": 4,    # genus-2 Galois representation summary
         "s12_ec": 4, "s12_oeis": 4, "s12_nf": 4,
         "s13": 4,
         "s22": 4,
@@ -1641,8 +1837,8 @@ class DissectionTensor:
         "mod_p":     ["s3_alex", "s3_jones", "s3_ap"],
         "spectral":  ["s5_alex", "s5_jones", "s5_ap", "s5_oeis"],
         "padic":     ["s7_det", "s7_disc", "s7_cond"],
-        "symmetry":  ["s9_st"],
-        "galois":    ["s10"],
+        "symmetry":  ["s9_st", "s9_endo"],
+        "galois":    ["s10", "s10_galrep"],
         "zeta":      ["s12_ec", "s12_oeis", "s12_nf"],
         "disc_cond": ["s13"],
         "operadic":  ["s22"],
@@ -2210,7 +2406,7 @@ def main():
     dt.add_objects(DataLoaders.load_oeis(max_n=20000))
 
     print("Loading genus-2 curves...")
-    dt.add_objects(DataLoaders.load_genus2(max_n=10000))
+    dt.add_objects(DataLoaders.load_genus2(max_n=66000))
 
     # Tier 1 additions — cap totals to stay under ~500K objects
     print("Loading modular forms...")

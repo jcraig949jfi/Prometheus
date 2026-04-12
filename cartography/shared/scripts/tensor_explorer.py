@@ -43,8 +43,8 @@ STRATEGY_GROUPS = {
     "mod_p":     ["s3_alex", "s3_jones", "s3_ap"],
     "spectral":  ["s5_alex", "s5_jones", "s5_ap", "s5_oeis"],
     "padic":     ["s7_det", "s7_disc", "s7_cond"],
-    "symmetry":  ["s9_st"],
-    "galois":    ["s10"],
+    "symmetry":  ["s9_st", "s9_endo"],
+    "galois":    ["s10", "s10_galrep"],
     "zeta":      ["s12_ec", "s12_oeis", "s12_nf"],
     "disc_cond": ["s13"],
     "operadic":  ["s22"],
@@ -816,12 +816,311 @@ def run_genetic_algorithm(data, pop_size=100, n_generations=50,
 
 
 # ============================================================
+# Explorer 4: Relay Walk (genus-2 as bridge)
+# ============================================================
+def run_relay_walk(data, n_trials=100, sample_per_domain=1000):
+    """Relay walk explorer: use genus-2 curves as relay stations
+    to bridge between isolated domain islands.
+
+    For each non-genus2 domain:
+      1. Pick a random object in that domain (source)
+      2. Find nearest genus-2 object (leg 1)
+      3. From that genus-2 relay, find nearest object in a
+         DIFFERENT domain (not source, not genus-2) (leg 2)
+      4. Compare relay distance (leg1 + leg2) to direct distance
+         (source -> destination domain without relay)
+
+    If relay < direct, genus-2 is acting as a translation layer.
+
+    Also tracks which strategy groups contribute most to each
+    relay leg, revealing which phonemes genus-2 uses.
+
+    Returns: dict with relay results and domain-pair summary.
+    """
+    print("\n" + "=" * 60)
+    print("Explorer 4: Relay Walk (genus-2 bridge)")
+    print("=" * 60)
+    t0 = time.time()
+
+    tensor = data["tensor"]
+    mask_t = data["mask"]
+    domains = data["domains"]
+    domain_indices = data["domain_indices"]
+    labels = data["labels"]
+    group_slices = data["group_slices"]
+    strategy_slices = data["strategy_slices"]
+    N, D = tensor.shape
+
+    # Check genus-2 exists
+    if "genus2" not in domain_indices or len(domain_indices["genus2"]) < 10:
+        print("  ERROR: genus-2 domain too small or absent, skipping relay walk")
+        return {}
+
+    non_g2_domains = [d for d in domain_indices.keys() if d != "genus2"]
+    g2_idx_list = domain_indices["genus2"]
+    print(f"  genus-2 objects: {len(g2_idx_list)}")
+    print(f"  Non-genus2 domains: {non_g2_domains}")
+
+    # Pre-sample genus-2 reference set (cap for memory)
+    if len(g2_idx_list) > sample_per_domain:
+        g2_sampled = np.random.choice(g2_idx_list, sample_per_domain, replace=False)
+    else:
+        g2_sampled = np.array(g2_idx_list)
+    g2_idx_t = torch.tensor(g2_sampled, device=DEVICE, dtype=torch.long)
+    g2_tensor = tensor[g2_idx_t]
+    g2_mask = mask_t[g2_idx_t]
+
+    # Pre-sample each non-genus2 domain
+    domain_samples = {}
+    for dom in non_g2_domains:
+        idx_list = domain_indices[dom]
+        if len(idx_list) > sample_per_domain:
+            sampled = np.random.choice(idx_list, sample_per_domain, replace=False)
+        else:
+            sampled = np.array(idx_list)
+        domain_samples[dom] = {
+            "indices": sampled,
+            "idx_t": torch.tensor(sampled, device=DEVICE, dtype=torch.long),
+        }
+        domain_samples[dom]["tensor"] = tensor[domain_samples[dom]["idx_t"]]
+        domain_samples[dom]["mask"] = mask_t[domain_samples[dom]["idx_t"]]
+
+    # Helper: compute per-group distance contribution between two single objects
+    def group_distance_contributions(idx_a, idx_b):
+        """For two objects, compute distance contributed by each strategy group."""
+        contribs = {}
+        t_a = tensor[idx_a]
+        m_a = mask_t[idx_a]
+        t_b = tensor[idx_b]
+        m_b = mask_t[idx_b]
+        for gname in GROUP_NAMES:
+            if gname not in group_slices:
+                contribs[gname] = 0.0
+                continue
+            start, end = group_slices[gname]
+            g_a = t_a[start:end]
+            g_b = t_b[start:end]
+            shared = (m_a[start:end] & m_b[start:end]).float()
+            n_shared = shared.sum().item()
+            if n_shared < 1:
+                contribs[gname] = 0.0
+                continue
+            sq = ((g_a - g_b) ** 2) * shared
+            contribs[gname] = float((sq.sum() / n_shared).sqrt().item())
+        return contribs
+
+    # --- Run relay trials -----------------------------------------------
+    relay_results = []
+    pair_relay_dists = defaultdict(list)   # (src_dom, dst_dom) -> [relay_dist]
+    pair_direct_dists = defaultdict(list)  # (src_dom, dst_dom) -> [direct_dist]
+    leg1_group_contribs = defaultdict(lambda: defaultdict(list))  # src_dom -> group -> [d]
+    leg2_group_contribs = defaultdict(lambda: defaultdict(list))  # dst_dom -> group -> [d]
+
+    trial_count = 0
+    for src_dom in non_g2_domains:
+        src_idx_list = domain_indices[src_dom]
+        if len(src_idx_list) < 5:
+            continue
+
+        # Pick n_trials random starting objects from this domain
+        n_pick = min(n_trials, len(src_idx_list))
+        src_picks = np.random.choice(src_idx_list, n_pick, replace=False)
+
+        for si, src_idx in enumerate(src_picks):
+            src_t = tensor[src_idx].unsqueeze(0)
+            src_m = mask_t[src_idx].unsqueeze(0)
+
+            # LEG 1: source -> nearest genus-2
+            leg1_dists = masked_pairwise_distances(src_t, src_m, g2_tensor, g2_mask)
+            min_leg1, min_j = leg1_dists[0].min(dim=0)
+            leg1_dist = min_leg1.item()
+            if np.isinf(leg1_dist):
+                continue
+            relay_g2_global_idx = int(g2_idx_t[min_j.item()].item())
+
+            # LEG 2: genus-2 relay -> nearest object in ANY other domain
+            relay_t = tensor[relay_g2_global_idx].unsqueeze(0)
+            relay_m = mask_t[relay_g2_global_idx].unsqueeze(0)
+
+            best_leg2_dist = float('inf')
+            best_dst_dom = None
+            best_dst_idx = None
+
+            for dst_dom in non_g2_domains:
+                if dst_dom == src_dom:
+                    continue
+                ds = domain_samples[dst_dom]
+                leg2_dists = masked_pairwise_distances(relay_t, relay_m,
+                                                       ds["tensor"], ds["mask"])
+                min_d, min_k = leg2_dists[0].min(dim=0)
+                d_val = min_d.item()
+                if d_val < best_leg2_dist:
+                    best_leg2_dist = d_val
+                    best_dst_dom = dst_dom
+                    best_dst_idx = int(ds["idx_t"][min_k.item()].item())
+
+                del leg2_dists
+                torch.cuda.empty_cache()
+
+            if best_dst_dom is None or np.isinf(best_leg2_dist):
+                continue
+
+            total_relay = leg1_dist + best_leg2_dist
+
+            # DIRECT: source -> nearest object in destination domain (no relay)
+            ds_direct = domain_samples[best_dst_dom]
+            direct_dists = masked_pairwise_distances(src_t, src_m,
+                                                      ds_direct["tensor"],
+                                                      ds_direct["mask"])
+            direct_min = direct_dists[0].min().item()
+            del direct_dists
+            torch.cuda.empty_cache()
+
+            # Group contributions for this relay
+            g_leg1 = group_distance_contributions(src_idx, relay_g2_global_idx)
+            g_leg2 = group_distance_contributions(relay_g2_global_idx, best_dst_idx)
+
+            for gname, gd in g_leg1.items():
+                leg1_group_contribs[src_dom][gname].append(gd)
+            for gname, gd in g_leg2.items():
+                leg2_group_contribs[best_dst_dom][gname].append(gd)
+
+            pair_key = (src_dom, best_dst_dom)
+            pair_relay_dists[pair_key].append(total_relay)
+            pair_direct_dists[pair_key].append(direct_min)
+
+            relay_results.append({
+                "src_domain": src_dom,
+                "src_label": labels[src_idx],
+                "relay_g2_label": labels[relay_g2_global_idx],
+                "dst_domain": best_dst_dom,
+                "dst_label": labels[best_dst_idx],
+                "leg1_dist": float(leg1_dist),
+                "leg2_dist": float(best_leg2_dist),
+                "relay_total": float(total_relay),
+                "direct_dist": float(direct_min) if not np.isinf(direct_min) else None,
+                "relay_shorter": bool(total_relay < direct_min),
+            })
+            trial_count += 1
+
+        if trial_count % 50 == 0 and trial_count > 0:
+            print(f"    {trial_count} relay trials completed...")
+
+        del leg1_dists
+        torch.cuda.empty_cache()
+
+    print(f"  Total relay trials: {trial_count}")
+
+    # --- Summarize domain pairs -----------------------------------------
+    pair_summary = {}
+    for pair_key in set(list(pair_relay_dists.keys()) + list(pair_direct_dists.keys())):
+        relay_list = pair_relay_dists.get(pair_key, [])
+        direct_list = pair_direct_dists.get(pair_key, [])
+        if not relay_list:
+            continue
+        mean_relay = float(np.mean(relay_list))
+        mean_direct = float(np.mean(direct_list)) if direct_list else None
+        n_relay_shorter = sum(1 for r, d in zip(relay_list, direct_list)
+                              if r < d) if direct_list else 0
+        n_total = len(relay_list)
+        benefit_frac = n_relay_shorter / n_total if n_total > 0 else 0.0
+
+        pair_key_str = f"{pair_key[0]}_to_{pair_key[1]}"
+        pair_summary[pair_key_str] = {
+            "src_domain": pair_key[0],
+            "dst_domain": pair_key[1],
+            "n_trials": n_total,
+            "mean_relay_dist": mean_relay,
+            "mean_direct_dist": mean_direct,
+            "relay_shorter_frac": float(benefit_frac),
+            "relay_advantage": float(mean_direct - mean_relay) if mean_direct else None,
+        }
+
+    # Rank domain pairs by relay advantage
+    ranked_pairs = sorted(
+        [v for v in pair_summary.values() if v["relay_advantage"] is not None],
+        key=lambda x: x["relay_advantage"], reverse=True)
+
+    print(f"\n  Domain pair relay summary (top beneficiaries):")
+    for ps in ranked_pairs[:10]:
+        adv = ps["relay_advantage"]
+        tag = "BRIDGE" if adv > 0 else "no benefit"
+        print(f"    {ps['src_domain']:>8s} -> {ps['dst_domain']:<8s}: "
+              f"relay={ps['mean_relay_dist']:.3f}, "
+              f"direct={ps['mean_direct_dist']:.3f}, "
+              f"adv={adv:+.3f} ({ps['relay_shorter_frac']:.0%}) [{tag}]")
+
+    # --- Strategy group contributions per relay leg ----------------------
+    leg1_summary = {}
+    for dom, group_dict in leg1_group_contribs.items():
+        leg1_summary[dom] = {
+            gname: float(np.mean(vals)) if vals else 0.0
+            for gname, vals in group_dict.items()
+        }
+    leg2_summary = {}
+    for dom, group_dict in leg2_group_contribs.items():
+        leg2_summary[dom] = {
+            gname: float(np.mean(vals)) if vals else 0.0
+            for gname, vals in group_dict.items()
+        }
+
+    # Overall: which groups drive relay legs?
+    all_leg1_groups = defaultdict(list)
+    all_leg2_groups = defaultdict(list)
+    for dom_dict in leg1_group_contribs.values():
+        for gname, vals in dom_dict.items():
+            all_leg1_groups[gname].extend(vals)
+    for dom_dict in leg2_group_contribs.values():
+        for gname, vals in dom_dict.items():
+            all_leg2_groups[gname].extend(vals)
+
+    global_leg1 = {g: float(np.mean(v)) for g, v in all_leg1_groups.items() if v}
+    global_leg2 = {g: float(np.mean(v)) for g, v in all_leg2_groups.items() if v}
+
+    print(f"\n  Strategy group contributions (mean distance per group):")
+    print(f"    {'Group':>12s}  {'Leg1 (src->g2)':>14s}  {'Leg2 (g2->dst)':>14s}")
+    for gname in GROUP_NAMES:
+        l1 = global_leg1.get(gname, 0.0)
+        l2 = global_leg2.get(gname, 0.0)
+        bar1 = "#" * min(int(l1 * 20), 30)
+        bar2 = "#" * min(int(l2 * 20), 30)
+        print(f"    {gname:>12s}  {l1:14.4f} {bar1:15s}  {l2:14.4f} {bar2}")
+
+    elapsed = time.time() - t0
+    print(f"\n  Relay walk complete in {elapsed:.1f}s")
+
+    # --- Build output ---------------------------------------------------
+    result = {
+        "n_trials": trial_count,
+        "relay_results": relay_results,
+        "pair_summary": pair_summary,
+        "ranked_pairs": [
+            {"pair": f"{p['src_domain']}->{p['dst_domain']}",
+             "relay_advantage": p["relay_advantage"],
+             "relay_shorter_frac": p["relay_shorter_frac"],
+             "mean_relay": p["mean_relay_dist"],
+             "mean_direct": p["mean_direct_dist"],
+             "n_trials": p["n_trials"]}
+            for p in ranked_pairs
+        ],
+        "group_contributions": {
+            "leg1_src_to_g2": global_leg1,
+            "leg2_g2_to_dst": global_leg2,
+            "leg1_by_domain": leg1_summary,
+            "leg2_by_domain": leg2_summary,
+        },
+    }
+
+    return result
+
+
+# ============================================================
 # Main
 # ============================================================
 def main():
-    """Run all three explorers and save results."""
+    """Run all four explorers and save results."""
     print("=" * 60)
-    print("TENSOR EXPLORER — MAP-Elites + Random Walk + GA")
+    print("TENSOR EXPLORER — MAP-Elites + Random Walk + GA + Relay Walk")
     print(f"Device: {DEVICE}")
     print("=" * 60)
 
@@ -852,6 +1151,13 @@ def main():
         json.dump(ga_result, f, indent=2, default=str)
     print(f"  Saved GA results: best fitness={ga_result['best_fitness']:.4f}")
 
+    # Explorer 4: Relay Walk (genus-2 as bridge)
+    relay_result = run_relay_walk(data, n_trials=100, sample_per_domain=1000)
+    if relay_result:
+        with open(OUT_DIR / "relay_walk_results.json", "w") as f:
+            json.dump(relay_result, f, indent=2, default=str)
+        print(f"  Saved relay walk results: {relay_result.get('n_trials', 0)} trials")
+
     # Summary
     print("\n" + "=" * 60)
     print("EXPLORATION SUMMARY")
@@ -873,8 +1179,20 @@ def main():
     print(f"    p-adic/symmetry calibration: "
           f"{'RECOVERED' if cal['recovered'] else 'not recovered'}")
 
+    if relay_result:
+        n_relay = relay_result.get("n_trials", 0)
+        ranked = relay_result.get("ranked_pairs", [])
+        print(f"\n  Relay Walk: {n_relay} trials across non-genus2 domains")
+        if ranked:
+            top_r = ranked[0]
+            print(f"    Best bridge: {top_r['pair']} "
+                  f"(advantage={top_r['relay_advantage']:+.3f}, "
+                  f"{top_r['relay_shorter_frac']:.0%} relays shorter)")
+            n_bridge = sum(1 for r in ranked if r["relay_advantage"] and r["relay_advantage"] > 0)
+            print(f"    Domain pairs where genus-2 bridges: {n_bridge}/{len(ranked)}")
+
     print(f"\n  Results saved to: {OUT_DIR}")
-    return archive, trajectories, ga_result
+    return archive, trajectories, ga_result, relay_result
 
 
 if __name__ == "__main__":
