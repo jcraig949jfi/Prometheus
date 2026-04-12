@@ -18,8 +18,10 @@ Dissection strategies mapped to existing data:
   S7  (p-adic valuation)   -> EC conductor factorization, NF discriminant
   S9  (symmetry group)     -> Genus-2 ST groups, crystal space groups
   S10 (Galois group)       -> NF galois_label
+  S11 (monodromy proxy)    -> sign changes, periodicity, growth, Galois content, symmetry, ramification
   S12 (zeta-like density)  -> point count / divisibility density across domains
   S13 (discriminant)       -> NF disc_abs, EC conductor
+  S21 (automorphic assoc)  -> Ramanujan bound, Hecke multiplicativity, Satake params
   S22 (operadic structure) -> Fungrim formula type/module
   S24 (info-theoretic)     -> Shannon entropy of coefficients
 
@@ -254,6 +256,503 @@ class StrategyExtractors:
         ], dtype=np.float32)
         return sig
 
+    # Weyl group orders: |W(X_n)| for ADE root systems
+    _WEYL_ORDERS = {}
+    for _n in range(1, 30):
+        _fac = 1
+        for _k in range(2, _n + 2):
+            _fac *= _k
+        _WEYL_ORDERS[('A', _n)] = _fac
+    for _n in range(4, 20):
+        _fac = 1
+        for _k in range(2, _n + 1):
+            _fac *= _k
+        _WEYL_ORDERS[('D', _n)] = (2 ** (_n - 1)) * _fac
+    _WEYL_ORDERS[('E', 6)] = 51840
+    _WEYL_ORDERS[('E', 7)] = 2903040
+    _WEYL_ORDERS[('E', 8)] = 696729600
+
+    _ADE_LATTICE_DETS = {}
+    for _n in range(1, 30):
+        _ADE_LATTICE_DETS[('A', _n)] = _n + 1
+    for _n in range(4, 20):
+        _ADE_LATTICE_DETS[('D', _n)] = 4
+    _ADE_LATTICE_DETS[('E', 6)] = 3
+    _ADE_LATTICE_DETS[('E', 7)] = 2
+    _ADE_LATTICE_DETS[('E', 8)] = 1
+
+    @staticmethod
+    def s19_ade_classify(data, method="discriminant"):
+        """S19: ADE singularity classification.
+
+        Classifies mathematical objects by their ADE type — the universal
+        classification of simple singularities (A_n, D_n, E_6, E_7, E_8).
+
+        Methods:
+          'discriminant' — polynomial coefficients: use discriminant/shape
+          'order'        — group order: match against Weyl group orders
+          'lattice_det'  — lattice determinant: match root lattice determinants
+          'mckay'        — modular form (level, weight): McKay correspondence
+          'torsion'      — EC torsion structure: ADE from torsion pattern
+
+        Returns: vector of length 8:
+          [0] A-type score, [1] D-type score, [2] E6 score,
+          [3] E7 score, [4] E8 score, [5] best_n (rank),
+          [6] confidence, [7] method code
+        """
+        sig = np.full(8, np.nan, dtype=np.float32)
+        method_code = {"discriminant": 0, "order": 1, "lattice_det": 2,
+                       "mckay": 3, "torsion": 4}.get(method, 0)
+        ext = StrategyExtractors
+
+        if method == "discriminant":
+            if data is None or not hasattr(data, '__len__') or len(data) < 2:
+                return sig
+            coeffs = np.array(data, dtype=np.float64)
+            n = len(coeffs)
+            abs_c = np.abs(coeffs)
+            abs_c = abs_c[abs_c > 0]
+            if len(abs_c) < 2:
+                return sig
+            diffs = np.diff(abs_c)
+            frac_decreasing = np.sum(diffs < 0) / max(len(diffs), 1)
+            a_score = float(frac_decreasing)
+            even_sum = np.sum(abs_c[::2])
+            odd_sum = np.sum(abs_c[1::2]) + 1e-12
+            even_ratio = even_sum / (even_sum + odd_sum)
+            d_score = float(np.exp(-abs(even_ratio - 0.8) * 5))
+            if n >= 6:
+                thirds = np.array([np.sum(abs_c[i::3]) for i in range(3)])
+                thirds_cv = np.std(thirds) / (np.mean(thirds) + 1e-12)
+                e6_score = float(np.exp(-thirds_cv * 3))
+            else:
+                e6_score = 0.0
+            if n >= 7:
+                half1 = np.sum(abs_c[:n // 2])
+                half2 = np.sum(abs_c[n // 2:])
+                ratio = min(half1, half2) / (max(half1, half2) + 1e-12)
+                e7_score = float(np.exp(-abs(ratio - 0.6) * 5))
+            else:
+                e7_score = 0.0
+            ent_p = abs_c / (abs_c.sum() + 1e-12)
+            entropy = -np.sum(ent_p * np.log2(ent_p + 1e-12))
+            max_entropy = np.log2(max(len(abs_c), 2))
+            norm_ent = entropy / max_entropy if max_entropy > 0 else 1.0
+            e8_score = float(np.exp(-norm_ent * 2))
+            scores = [a_score, d_score, e6_score, e7_score, e8_score]
+            best_n = n - 1
+            confidence = min(max(float(max(scores) - np.mean(scores)), 0.0), 1.0)
+            sig[:] = [a_score, d_score, e6_score, e7_score, e8_score,
+                      float(best_n), confidence, float(method_code)]
+
+        elif method == "order":
+            if data is None or int(data) == 0:
+                return sig
+            order = abs(int(data))
+            best_a, best_d = 0.0, 0.0
+            best_a_n, best_d_n = 1, 4
+            e6_score, e7_score, e8_score = 0.0, 0.0, 0.0
+            for n in range(1, 25):
+                w_order = ext._WEYL_ORDERS.get(('A', n))
+                if w_order is None:
+                    continue
+                if w_order == order:
+                    best_a, best_a_n = 1.0, n
+                    break
+                elif order % w_order == 0 or w_order % order == 0:
+                    ratio = min(order, w_order) / max(order, w_order)
+                    score = float(np.exp(-abs(np.log(ratio + 1e-30)) * 0.5))
+                    if score > best_a:
+                        best_a, best_a_n = score, n
+            for n in range(4, 16):
+                w_order = ext._WEYL_ORDERS.get(('D', n))
+                if w_order is None:
+                    continue
+                if w_order == order:
+                    best_d, best_d_n = 1.0, n
+                    break
+                elif order % w_order == 0 or w_order % order == 0:
+                    ratio = min(order, w_order) / max(order, w_order)
+                    score = float(np.exp(-abs(np.log(ratio + 1e-30)) * 0.5))
+                    if score > best_d:
+                        best_d, best_d_n = score, n
+            for e_n, e_order in [(6, 51840), (7, 2903040), (8, 696729600)]:
+                if order == e_order:
+                    if e_n == 6: e6_score = 1.0
+                    elif e_n == 7: e7_score = 1.0
+                    else: e8_score = 1.0
+                elif order % e_order == 0 or e_order % order == 0:
+                    ratio = min(order, e_order) / max(order, e_order)
+                    s = float(np.exp(-abs(np.log(ratio + 1e-30)) * 0.5))
+                    if e_n == 6: e6_score = s
+                    elif e_n == 7: e7_score = s
+                    else: e8_score = s
+            scores = [best_a, best_d, e6_score, e7_score, e8_score]
+            best_idx = int(np.argmax(scores))
+            best_n = [best_a_n, best_d_n, 6, 7, 8][best_idx]
+            sig[:] = [best_a, best_d, e6_score, e7_score, e8_score,
+                      float(best_n), float(max(scores)), float(method_code)]
+
+        elif method == "lattice_det":
+            if data is None or int(data) == 0:
+                return sig
+            det = abs(int(data))
+            best_n = 1
+            a_score = 0.0
+            if det >= 2:
+                n_cand = det - 1
+                if 1 <= n_cand <= 30:
+                    a_score, best_n = 1.0, n_cand
+                else:
+                    a_score = float(np.exp(-abs(np.log(det / 10.0)) * 0.3))
+            d_score = 1.0 if det == 4 else float(np.exp(-abs(det - 4) * 0.5))
+            e6_score = 1.0 if det == 3 else float(np.exp(-abs(det - 3) * 0.5))
+            e7_score = 1.0 if det == 2 else float(np.exp(-abs(det - 2) * 0.5))
+            e8_score = 1.0 if det == 1 else float(np.exp(-abs(det - 1) * 0.5))
+            scores = [a_score, d_score, e6_score, e7_score, e8_score]
+            best_idx = int(np.argmax(scores))
+            if best_idx == 1: best_n = 4
+            elif best_idx == 2: best_n = 6
+            elif best_idx == 3: best_n = 7
+            elif best_idx == 4: best_n = 8
+            confidence = min(max(float(max(scores) - np.mean(scores)), 0.0), 1.0)
+            sig[:] = [a_score, d_score, e6_score, e7_score, e8_score,
+                      float(best_n), confidence, float(method_code)]
+
+        elif method == "mckay":
+            if data is None or not hasattr(data, '__len__') or len(data) < 2:
+                return sig
+            level, weight = int(data[0]), int(data[1])
+            if level == 0:
+                return sig
+            a_n = max(weight - 1, 1)
+            a_score = float(np.exp(-abs(weight - (a_n + 1)) * 0.3))
+            d_n = max(weight // 2 + 1, 4)
+            d_score = float(np.exp(-abs(weight - 2 * (d_n - 1)) * 0.3))
+            e6_score = float(np.exp(-abs(weight - 12) * 0.2))
+            e7_score = float(np.exp(-abs(weight - 18) * 0.2))
+            e8_score = float(np.exp(-abs(weight - 30) * 0.2))
+            for n in range(1, 15):
+                w = ext._WEYL_ORDERS.get(('A', n))
+                if w and w % level == 0:
+                    a_score = min(a_score * 1.5, 1.0)
+                    break
+            for n in range(4, 12):
+                w = ext._WEYL_ORDERS.get(('D', n))
+                if w and w % level == 0:
+                    d_score = min(d_score * 1.5, 1.0)
+                    break
+            if 51840 % level == 0: e6_score = min(e6_score * 1.5, 1.0)
+            if 2903040 % level == 0: e7_score = min(e7_score * 1.5, 1.0)
+            if 696729600 % level == 0: e8_score = min(e8_score * 1.5, 1.0)
+            scores = [a_score, d_score, e6_score, e7_score, e8_score]
+            best_idx = int(np.argmax(scores))
+            best_n = [a_n, d_n, 6, 7, 8][best_idx]
+            confidence = min(max(float(max(scores) - np.mean(scores)), 0.0), 1.0)
+            sig[:] = [a_score, d_score, e6_score, e7_score, e8_score,
+                      float(best_n), confidence, float(method_code)]
+
+        elif method == "torsion":
+            if data is None:
+                return sig
+            torsion = abs(int(data))
+            if torsion == 0:
+                return sig
+            a_n = torsion - 1
+            a_score = float(np.exp(-a_n * 0.1)) if a_n >= 1 else 0.0
+            d_score = 0.8 if torsion % 4 == 0 else (0.5 if torsion % 2 == 0 else 0.0)
+            e6_score = float(np.exp(-abs(torsion - 3) * 0.8))
+            e7_score = float(np.exp(-abs(torsion - 2) * 0.8))
+            e8_score = float(np.exp(-abs(torsion - 1) * 0.8))
+            scores = [a_score, d_score, e6_score, e7_score, e8_score]
+            best_idx = int(np.argmax(scores))
+            best_n = [max(a_n, 1), 4, 6, 7, 8][best_idx]
+            confidence = min(max(float(max(scores) - np.mean(scores)), 0.0), 1.0)
+            sig[:] = [a_score, d_score, e6_score, e7_score, e8_score,
+                      float(best_n), confidence, float(method_code)]
+
+        return sig
+
+    @staticmethod
+    def s21_automorphic_signature(coefficients, level=None, weight=None):
+        """S21: Automorphic association signature.
+
+        Encodes whether a coefficient sequence behaves like Hecke eigenvalues
+        of an automorphic form. EC a_p sequences and modular form traces
+        should score high on Ramanujan bound and multiplicativity; OEIS and
+        knot sequences should score low — that separation IS the signal.
+
+        Args:
+            coefficients: list/array of numeric values (a_p, traces, or raw terms)
+            level: conductor/level of the form (None if unknown)
+            weight: weight of the form (None if unknown; EC = 2)
+
+        Returns: np.array of length 8 (float32)
+        """
+        n_dims = 8
+        if not coefficients or len(coefficients) < 4:
+            return np.full(n_dims, np.nan, dtype=np.float32)
+
+        coeffs = np.array(coefficients, dtype=np.float64)
+        n = len(coeffs)
+        k = weight if weight is not None else 2  # default weight-2 (EC)
+
+        # --- [0] spectral_type: Ramanujan bound compliance ---
+        # For weight-k forms, |a_p| <= 2*p^((k-1)/2) at prime indices.
+        # Approximate: treat index i+1 as the i-th prime-like position.
+        # Use actual small primes for the first terms.
+        small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+        n_check = min(n, len(small_primes))
+        if n_check > 0:
+            satisfied = 0
+            for idx in range(n_check):
+                p = small_primes[idx]
+                bound = 2.0 * p ** ((k - 1) / 2.0)
+                if abs(coeffs[idx]) <= bound + 1e-9:
+                    satisfied += 1
+            spectral_type = satisfied / n_check
+        else:
+            spectral_type = 0.0
+
+        # --- [1] parity: sign distribution ---
+        # Automorphic forms have specific parity constraints.
+        # Encode as normalized sum of signs: +1 if all positive, -1 if all negative.
+        nonzero = coeffs[coeffs != 0]
+        if len(nonzero) > 0:
+            parity = float(np.sum(np.sign(nonzero))) / len(nonzero)
+        else:
+            parity = 0.0
+
+        # --- [2] multiplicativity_score ---
+        # Test a_{mn} = a_m * a_n for coprime (m, n) pairs.
+        # Use 0-indexed: coeffs[i] represents a_{i+1}.
+        from math import gcd
+        mult_tests = 0
+        mult_pass = 0
+        max_idx = min(n, 20)
+        for m in range(1, max_idx + 1):
+            for ni in range(m + 1, max_idx + 1):
+                mn = m * ni
+                if mn - 1 >= n:
+                    continue
+                if gcd(m, ni) != 1:
+                    continue
+                expected = coeffs[m - 1] * coeffs[ni - 1]
+                actual = coeffs[mn - 1]
+                mult_tests += 1
+                if abs(expected) < 1e-12 and abs(actual) < 1e-12:
+                    mult_pass += 1
+                elif abs(expected) > 1e-12:
+                    if abs((actual - expected) / expected) < 0.01:
+                        mult_pass += 1
+        multiplicativity = mult_pass / mult_tests if mult_tests > 0 else 0.0
+
+        # --- [3] functional_equation_type ---
+        # Encode symmetry from sign pattern: even function -> +1, odd -> -1.
+        # Proxy: check if coefficients are symmetric/antisymmetric around midpoint.
+        half = min(n, 20)
+        if half >= 4:
+            front = coeffs[:half]
+            signs = np.sign(front)
+            # Fraction of positive signs among nonzero
+            pos_frac = np.sum(signs > 0) / max(np.sum(signs != 0), 1)
+            # Map: 0.5 = balanced (odd-like), 0 or 1 = biased (even-like)
+            func_eq = abs(pos_frac - 0.5) * 2.0  # 0 = perfectly balanced, 1 = all same sign
+        else:
+            func_eq = 0.0
+
+        # --- [4] conductor_weight_ratio ---
+        if level is not None and level > 0 and k > 0:
+            cw_ratio = np.log1p(float(level)) / float(k)
+        else:
+            cw_ratio = 0.0
+
+        # --- [5] coefficient_field_degree ---
+        # Approximate: if all coefficients are integers, degree = 1.
+        # Otherwise, count distinct fractional parts as proxy for higher degree.
+        int_count = sum(1 for c in coeffs[:20] if abs(c - round(c)) < 1e-9)
+        total_check = min(n, 20)
+        if total_check > 0:
+            int_frac = int_count / total_check
+            # degree 1 -> 1.0, higher degree -> lower score
+            coeff_field_deg = int_frac  # 1.0 = all integers (Q-rational), 0.0 = none
+        else:
+            coeff_field_deg = 0.0
+
+        # --- [6] hecke_multiplicativity ---
+        # Stronger test: a_{p^2} = a_p^2 - p^(k-1) for weight k.
+        # Check at small primes where p^2 - 1 < n.
+        hecke_tests = 0
+        hecke_pass = 0
+        for p in small_primes:
+            p_idx = p - 1       # a_p is at index p-1
+            p2_idx = p * p - 1  # a_{p^2} is at index p^2 - 1
+            if p2_idx >= n or p_idx >= n:
+                continue
+            a_p = coeffs[p_idx]
+            a_p2 = coeffs[p2_idx]
+            expected_hecke = a_p ** 2 - p ** (k - 1)
+            hecke_tests += 1
+            if abs(expected_hecke) < 1e-12 and abs(a_p2) < 1e-12:
+                hecke_pass += 1
+            elif abs(expected_hecke) > 1e-12:
+                if abs((a_p2 - expected_hecke) / expected_hecke) < 0.01:
+                    hecke_pass += 1
+        hecke_mult = hecke_pass / hecke_tests if hecke_tests > 0 else 0.0
+
+        # --- [7] satake_parameter ---
+        # For weight k, a_p = alpha_p + beta_p where alpha*beta = p^(k-1).
+        # Estimate: satake angle theta_p where a_p = 2*p^((k-1)/2)*cos(theta_p).
+        # Average |cos(theta_p)| across primes as a summary.
+        satake_vals = []
+        for p in small_primes:
+            p_idx = p - 1
+            if p_idx >= n:
+                continue
+            a_p = coeffs[p_idx]
+            denom = 2.0 * p ** ((k - 1) / 2.0)
+            if abs(denom) > 1e-12:
+                cos_theta = a_p / denom
+                # Clamp to [-1, 1] — values outside mean Ramanujan violation
+                cos_theta_clamped = max(-1.0, min(1.0, cos_theta))
+                satake_vals.append(abs(cos_theta_clamped))
+        satake_param = float(np.mean(satake_vals)) if satake_vals else 0.0
+
+        return np.array([
+            spectral_type,
+            parity,
+            multiplicativity,
+            func_eq,
+            cw_ratio,
+            coeff_field_deg,
+            hecke_mult,
+            satake_param,
+        ], dtype=np.float32)
+
+    @staticmethod
+    def s11_monodromy_proxy(coefficients, n_terms=None):
+        """S11: Monodromy representation proxy.
+        Extract 6 features that correlate with monodromy structure from
+        a coefficient sequence. Monodromy — how solutions permute as
+        parameters traverse loops — is a deep invariant linking topology
+        and number theory (braid groups, Grothendieck-Teichmuller).
+
+        Features:
+          [0] sign_changes      — normalized count of sign changes
+          [1] period_estimate   — autocorrelation-based period detection
+          [2] growth_type       — 0=bounded, 0.5=polynomial, 1.0=exponential
+          [3] galois_content    — distinct prime factors of GCD of nonzero terms
+          [4] symmetry_score    — palindromic / anti-palindromic test
+          [5] ramification_proxy — fraction of degenerate (0 or +/-1) terms
+
+        Returns: vector of length 6.
+        """
+        if not coefficients or len(coefficients) < 4:
+            return np.full(6, np.nan)
+
+        arr = np.array(coefficients, dtype=np.float64)
+        if n_terms is not None:
+            arr = arr[:n_terms]
+        N = len(arr)
+        sig = np.zeros(6, dtype=np.float32)
+
+        # [0] sign_changes — count transitions between positive and negative
+        nonzero = arr[arr != 0]
+        if len(nonzero) >= 2:
+            signs = np.sign(nonzero)
+            sig[0] = float(np.sum(signs[1:] != signs[:-1])) / len(nonzero)
+        else:
+            sig[0] = 0.0
+
+        # [1] period_estimate — autocorrelation peak detection
+        centered = arr - np.mean(arr)
+        norm = np.dot(centered, centered)
+        if norm > 1e-12 and N >= 6:
+            # Compute autocorrelation for lags 1..N//2
+            max_lag = N // 2
+            autocorr = np.zeros(max_lag)
+            for lag in range(1, max_lag):
+                autocorr[lag] = np.dot(centered[:N - lag], centered[lag:]) / norm
+            # Find first peak: where autocorr goes from increasing to decreasing
+            best_lag = 0
+            for k in range(2, max_lag - 1):
+                if autocorr[k] > autocorr[k - 1] and autocorr[k] > autocorr[k + 1]:
+                    if autocorr[k] > 0.1:  # minimum significance
+                        best_lag = k
+                        break
+            # Normalize period: 0 = aperiodic, 1 = period-2 (fastest)
+            if best_lag > 0:
+                sig[1] = 1.0 / best_lag
+            else:
+                sig[1] = 0.0
+        else:
+            sig[1] = 0.0
+
+        # [2] growth_type — classify via log(|a_n|) / log(n)
+        abs_arr = np.abs(arr)
+        # Use terms at indices >= 2 to avoid log(0) and log(1) issues
+        indices = np.arange(2, N)
+        if len(indices) >= 3:
+            vals = abs_arr[2:N]
+            valid = vals > 0
+            if valid.sum() >= 3:
+                log_vals = np.log(vals[valid])
+                log_idx = np.log(indices[:len(vals)][valid])
+                # Median ratio: log(|a_n|) / log(n)
+                ratios = log_vals / np.maximum(log_idx, 1e-12)
+                med_ratio = np.median(ratios)
+                if med_ratio < 0.5:
+                    sig[2] = 0.0    # bounded
+                elif med_ratio < 5.0:
+                    sig[2] = 0.5    # polynomial
+                else:
+                    sig[2] = 1.0    # exponential
+            else:
+                sig[2] = 0.0  # mostly zeros -> bounded
+        else:
+            sig[2] = 0.0
+
+        # [3] galois_content — distinct prime factors of GCD of nonzero terms
+        int_nonzero = [abs(int(round(v))) for v in arr if v != 0 and np.isfinite(v)]
+        if int_nonzero:
+            from math import gcd
+            from functools import reduce
+            g = reduce(gcd, int_nonzero)
+            if g > 1:
+                # Count distinct prime factors
+                n_prime_factors = 0
+                temp = g
+                for p in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31]:
+                    if temp <= 1:
+                        break
+                    if temp % p == 0:
+                        n_prime_factors += 1
+                        while temp % p == 0:
+                            temp //= p
+                if temp > 1:
+                    n_prime_factors += 1  # remaining large prime factor
+                sig[3] = float(n_prime_factors)
+            else:
+                sig[3] = 0.0
+        else:
+            sig[3] = 0.0
+
+        # [4] symmetry_score — palindromic / anti-palindromic test
+        # +1 = perfect palindrome, -1 = perfect anti-palindrome, 0 = neither
+        rev = arr[::-1]
+        norm_arr = np.linalg.norm(arr)
+        if norm_arr > 1e-12:
+            palin_score = np.dot(arr, rev) / (norm_arr ** 2)
+            sig[4] = float(np.clip(palin_score, -1.0, 1.0))
+        else:
+            sig[4] = 0.0
+
+        # [5] ramification_proxy — fraction of terms that are 0 or +/-1
+        degenerate = np.sum((abs_arr == 0) | (abs_arr == 1))
+        sig[5] = float(degenerate) / N
+
+        return sig
+
 
 # ============================================================
 # Battery encoder — F1-F27 results as tensor dimensions
@@ -394,6 +893,24 @@ class DataLoaders:
             # S24: entropy of Alexander coefficients
             obj.signatures["s24_alex"] = ext.s24_entropy(ac)
 
+            # S21: automorphic signature on Alexander coefficients
+            # Knots will score low on Ramanujan/multiplicativity — useful separation
+            obj.signatures["s21_auto"] = ext.s21_automorphic_signature(ac)
+
+            # S11: monodromy proxy — knot polynomials have deep monodromy
+            # connections to braid groups (Grothendieck-Teichmuller bridge)
+            # Use Alexander coefficients as primary (palindromic structure)
+            # and Jones coefficients as fallback
+            if ac and len(ac) >= 4:
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(ac)
+            elif jc and len(jc) >= 4:
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(jc)
+            else:
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
+
+            # S19: ADE classification from Alexander polynomial coefficients
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(ac, method="discriminant")
+
             objects.append(obj)
         return objects
 
@@ -487,18 +1004,30 @@ class DataLoaders:
                 obj.signatures["s24_ap"] = ext.s24_entropy(ap_list)
                 # S12: divisibility density from a_p values
                 obj.signatures["s12_ec"] = ext.s12_zeta(ap_list, mode="divisibility")
+                # S21: automorphic signature — EC a_p with conductor as level, weight=2
+                obj.signatures["s21_auto"] = ext.s21_automorphic_signature(
+                    ap_list, level=cond, weight=2)
+                # S11: monodromy proxy on a_p traces
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(ap_list)
             else:
                 obj.signatures["s1_ap"] = np.full(8, np.nan)
                 obj.signatures["s3_ap"] = np.full(6, np.nan)
                 obj.signatures["s5_ap"] = np.full(8, np.nan)
                 obj.signatures["s24_ap"] = np.full(4, np.nan)
                 obj.signatures["s12_ec"] = np.full(4, np.nan)
+                obj.signatures["s21_auto"] = np.full(8, np.nan)
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
 
             # S7: p-adic valuation of conductor
             obj.signatures["s7_cond"] = ext.s7_padic(cond)
 
             # S13: conductor as discriminant
             obj.signatures["s13"] = ext.s13_discriminant(cond)
+
+            # S19: ADE classification from torsion structure
+            torsion_val = int(row["torsion"])
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(
+                torsion_val, method="torsion")
 
             objects.append(obj)
         return objects
@@ -578,6 +1107,13 @@ class DataLoaders:
 
                 # S24: entropy
                 obj.signatures["s24_oeis"] = ext.s24_entropy(terms)
+
+                # S21: automorphic signature on raw terms
+                # OEIS will score low on Ramanujan/multiplicativity — creates separation
+                obj.signatures["s21_auto"] = ext.s21_automorphic_signature(terms[:50])
+
+                # S11: monodromy proxy on sequence terms
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(terms[:50])
 
                 objects.append(obj)
                 count += 1
@@ -732,6 +1268,14 @@ class DataLoaders:
             obj.signatures["s3_ap"] = ext.s3_mod_p(traces_list)
             obj.signatures["s1_ap"] = ext.s1_complex(traces_list)
             obj.signatures["s24_ap"] = ext.s24_entropy(traces_list)
+            # S21: automorphic signature — modular form traces with level and weight
+            obj.signatures["s21_auto"] = ext.s21_automorphic_signature(
+                traces_list, level=int(level), weight=int(weight))
+            # S11: monodromy proxy on Hecke traces
+            obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(traces_list)
+            # S19: ADE classification via McKay correspondence (level, weight)
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(
+                [int(level), int(weight)], method="mckay")
             objects.append(obj)
         return objects
 
@@ -773,6 +1317,8 @@ class DataLoaders:
             invariants = [order, exponent, num_conj]
             obj.signatures["s3_ap"] = ext.s3_mod_p(invariants)
             obj.signatures["s24_ap"] = ext.s24_entropy(invariants)
+            # S19: ADE classification from group order matching Weyl groups
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(order, method="order")
             objects.append(obj)
         return objects
 
@@ -847,6 +1393,15 @@ class DataLoaders:
                             obj.signatures["s7_cond"] = ext.s7_padic(level)
                             obj.signatures["s13"] = ext.s13_discriminant(level)
                             obj.signatures["s24_ap"] = ext.s24_entropy(coeffs_50)
+                            # S21: automorphic signature — Maass form coefficients
+                            maass_weight = int(entry.get("weight", 0))
+                            obj.signatures["s21_auto"] = ext.s21_automorphic_signature(
+                                coeffs_50, level=int(level), weight=maass_weight)
+                            # S11: monodromy proxy on Fourier coefficients
+                            obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(coeffs_50)
+                            # S19: ADE classification by level via McKay
+                            obj.signatures["s19_ade"] = ext.s19_ade_classify(
+                                [int(level), maass_weight], method="mckay")
                             objects.append(obj)
                             count += 1
                     elif brace_depth > 0:
@@ -898,6 +1453,8 @@ class DataLoaders:
             obj.signatures["s7_cond"] = ext.s7_padic(det)
             obj.signatures["s3_ap"] = ext.s3_mod_p([dim, det, level, cn, mv])
             obj.signatures["s24_ap"] = ext.s24_entropy([dim, det, level, cn])
+            # S19: ADE classification from lattice determinant
+            obj.signatures["s19_ade"] = ext.s19_ade_classify(det, method="lattice_det")
             objects.append(obj)
         return objects
 
@@ -948,12 +1505,20 @@ class DataLoaders:
                 if len(zv) >= 4:
                     obj.signatures["s5_ap"] = ext.s5_spectral(zv)
                     obj.signatures["s24_ap"] = ext.s24_entropy(zv)
+                    # S21: automorphic signature on zero heights as proxy
+                    obj.signatures["s21_auto"] = ext.s21_automorphic_signature(zv)
+                    # S11: monodromy proxy on zero heights as sequence
+                    obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(zv)
                 else:
                     obj.signatures["s5_ap"] = np.full(8, np.nan)
                     obj.signatures["s24_ap"] = np.full(4, np.nan)
+                    obj.signatures["s21_auto"] = np.full(8, np.nan)
+                    obj.signatures["s11_mono"] = np.full(6, np.nan)
             else:
                 obj.signatures["s5_ap"] = np.full(8, np.nan)
                 obj.signatures["s24_ap"] = np.full(4, np.nan)
+                obj.signatures["s21_auto"] = np.full(8, np.nan)
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
 
             obj.signatures["s3_ap"] = ext.s3_mod_p([conductor, degree, rank])
             objects.append(obj)
@@ -1006,11 +1571,14 @@ class DataLoaders:
                 obj.signatures["s3_ap"] = ext.s3_mod_p(zv)
                 obj.signatures["s1_ap"] = ext.s1_complex(zv)
                 obj.signatures["s24_ap"] = ext.s24_entropy(zv)
+                # S11: monodromy proxy on zero heights as sequence
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(zv)
             else:
                 obj.signatures["s5_ap"] = np.full(8, np.nan)
                 obj.signatures["s3_ap"] = np.full(6, np.nan)
                 obj.signatures["s1_ap"] = np.full(8, np.nan)
                 obj.signatures["s24_ap"] = np.full(4, np.nan)
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
 
             objects.append(obj)
         return objects
@@ -1032,14 +1600,17 @@ class DissectionTensor:
       s5_alex[8], s5_jones[8], s5_ap[8]  = 24  (spectral)
       s7_det[5], s7_disc[5], s7_cond[5]  = 15  (p-adic)
       s10[8]                              =  8  (Galois)
+      s11_mono[6]                         =  6  (monodromy proxy)
       s12_ec[4], s12_oeis[4], s12_nf[4]  = 12  (zeta-like density)
       s13[4]                              =  4  (discriminant)
+      s19_ade[8]                          =  8  (ADE singularity)
+      s21_auto[8]                         =  8  (automorphic)
       s22[4]                              =  4  (operadic)
       s24_alex[4], s24_arith[4],
         s24_ap[4], s24_sym[4]             = 16  (entropy)
       battery[8]                          =  8  (falsification)
       ---
-      Total: ~145 dimensions
+      Total: ~167 dimensions
     """
 
     # Strategy name -> dimensionality
@@ -1054,6 +1625,9 @@ class DissectionTensor:
         "s12_ec": 4, "s12_oeis": 4, "s12_nf": 4,
         "s13": 4,
         "s22": 4,
+        "s21_auto": 8,
+        "s11_mono": 6,
+        "s19_ade": 8,
         "s24_alex": 4, "s24_arith": 4, "s24_ap": 4, "s24_sym": 4,
         "s24_oeis": 4,
     }
@@ -1074,6 +1648,9 @@ class DissectionTensor:
         "operadic":  ["s22"],
         "entropy":   ["s24_alex", "s24_arith", "s24_ap", "s24_sym", "s24_oeis"],
         "attractor": ["s6_oeis"],
+        "automorphic": ["s21_auto"],
+        "monodromy":   ["s11_mono"],
+        "ade":         ["s19_ade"],
     }
 
     def __init__(self):
