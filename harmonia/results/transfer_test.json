@@ -1,0 +1,28 @@
+{
+  "test": "Cross-domain transfer of arithmetic structure",
+  "results": {
+    "ec_torsion_to_nf_class_number_megethos_only": {
+      "rho": 0.121,
+      "p": 8.82e-18,
+      "r2": -0.2,
+      "verdict": "WEAK TRANSFER (rho=0.12, significant but low)"
+    },
+    "ec_torsion_to_nf_class_number_full_phoneme": {
+      "rho": 0.76,
+      "p": 0.0,
+      "r2": 0.7,
+      "verdict": "STRONG TRANSFER (rho=0.76, R^2=0.70)"
+    },
+    "g2_selmer_to_nf_class_number_full_phoneme": {
+      "rho": 0.8,
+      "p": 0.0,
+      "verdict": "STRONG TRANSFER (rho=0.80)"
+    }
+  },
+  "interpretation": {
+    "megethos_only": "Matching by complexity alone gives weak transfer (rho=0.12). Size is not enough.",
+    "full_phoneme": "Matching by ALL 5 phonemes gives strong transfer (rho=0.76-0.80). The phoneme space captures transferable arithmetic structure.",
+    "key_insight": "The 6.28x improvement from Megethos-only to full-phoneme shows that Arithmos (and the other non-Megethos phonemes) carry genuine cross-domain predictive power. EC torsion predicts NF class number at rho=0.76 when matched in the full phoneme space. This is CROSS-DOMAIN PREDICTION of arithmetic invariants.",
+    "genus2_stronger": "Genus2 Selmer -> NF class number (rho=0.80) is even stronger than EC torsion (rho=0.76). The Selmer group is a richer arithmetic invariant than torsion."
+  }
+}
