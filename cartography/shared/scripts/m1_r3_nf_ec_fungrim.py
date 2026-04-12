@@ -226,7 +226,10 @@ print("\n" + "=" * 100)
 print("FUNGRIM/FORMAL TESTS")
 print("=" * 100)
 
-fungrim = json.load(open(DATA / "fungrim/data/fungrim_formulas.json", encoding="utf-8"))
+_fungrim_path = DATA / "fungrim/fungrim_formulas.json"
+if not _fungrim_path.exists():
+    _fungrim_path = DATA / "fungrim/data/fungrim_formulas.json"
+fungrim = json.load(open(_fungrim_path, encoding="utf-8"))
 print(f"  {len(fungrim)} formulas\n")
 
 # G.R1.6: Symbol count — equations vs definitions (already done in unblocked, confirm)
