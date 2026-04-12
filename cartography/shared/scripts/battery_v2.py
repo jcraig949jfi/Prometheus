@@ -948,6 +948,145 @@ class BatteryV2:
 
         return verdict, result
 
+    def F25b_model_transportability(self, values, primary_labels, secondary_labels,
+                                      min_test_n=10):
+        """Model-based transportability: distinguishes UNIVERSAL vs CONDITIONAL vs WEAK.
+
+        Trains two models on all contexts except one:
+          Model A: main effects only (one-hot primary → outcome)
+          Model B: main + interaction (one-hot primary×secondary → outcome)
+
+        Then predicts held-out context.
+
+        Decision table:
+          A transfers, B transfers  → UNIVERSAL
+          A fails, B transfers      → CONDITIONAL (true interaction)
+          A fails, B fails          → WEAK_NOISY (estimation noise, not structure)
+
+        This fixes the F25 bug where small-group noise mimics conditionality.
+        """
+        from collections import defaultdict
+
+        values = np.array(values, dtype=float)
+        n = len(values)
+        sec_groups = sorted(set(secondary_labels))
+
+        if len(sec_groups) < 2:
+            return "INSUFFICIENT_DATA", {}
+
+        # Build one-hot encoders
+        pri_cats = sorted(set(primary_labels))
+        sec_cats = sorted(set(secondary_labels))
+
+        def encode_main(pri_labels, n_rows):
+            mat = np.zeros((n_rows, max(len(pri_cats) - 1, 1)))
+            for i, l in enumerate(pri_labels):
+                idx = pri_cats.index(l) if l in pri_cats else -1
+                if idx > 0 and idx - 1 < mat.shape[1]:
+                    mat[i, idx - 1] = 1
+            return mat
+
+        def encode_interaction(pri_labels, sec_labels, n_rows):
+            """One-hot for each (primary, secondary) cell."""
+            cells = sorted(set(zip(pri_cats, sec_cats)))
+            # Use cell indicators for populated cells only
+            cell_list = sorted(set(zip(primary_labels, secondary_labels)))
+            if len(cell_list) < 3:
+                return None
+            mat = np.zeros((n_rows, max(len(cell_list) - 1, 1)))
+            for i in range(n_rows):
+                cell = (pri_labels[i], sec_labels[i])
+                if cell in cell_list:
+                    idx = cell_list.index(cell)
+                    if idx > 0 and idx - 1 < mat.shape[1]:
+                        mat[i, idx - 1] = 1
+            return mat
+
+        oos_a = []  # main-effects-only OOS R²
+        oos_b = []  # interaction OOS R²
+
+        for held_out in sec_groups:
+            test_mask = np.array([s == held_out for s in secondary_labels])
+            train_mask = ~test_mask
+            n_test = int(np.sum(test_mask))
+            n_train = int(np.sum(train_mask))
+            if n_test < min_test_n or n_train < 30:
+                continue
+
+            y_train = values[train_mask]
+            y_test = values[test_mask]
+            pri_train = [primary_labels[i] for i in range(n) if train_mask[i]]
+            pri_test = [primary_labels[i] for i in range(n) if test_mask[i]]
+            sec_train = [secondary_labels[i] for i in range(n) if train_mask[i]]
+            sec_test = [secondary_labels[i] for i in range(n) if test_mask[i]]
+
+            ss_total = np.sum((y_test - np.mean(y_test))**2)
+            if ss_total == 0:
+                continue
+
+            # Model A: main effects only
+            X_a_train = np.column_stack([np.ones(n_train), encode_main(pri_train, n_train)])
+            X_a_test = np.column_stack([np.ones(n_test), encode_main(pri_test, n_test)])
+            try:
+                beta_a = np.linalg.lstsq(X_a_train, y_train, rcond=None)[0]
+                pred_a = X_a_test @ beta_a
+                r2_a = 1 - np.sum((y_test - pred_a)**2) / ss_total
+            except:
+                r2_a = float("nan")
+
+            # Model B: cell means (full interaction)
+            cell_means = defaultdict(list)
+            for i in range(n_train):
+                cell_means[(pri_train[i], sec_train[i])].append(y_train[i])
+            # For prediction, use cell mean if available, else primary mean, else grand mean
+            pri_means_train = defaultdict(list)
+            for i in range(n_train):
+                pri_means_train[pri_train[i]].append(y_train[i])
+            pri_means = {k: np.mean(v) for k, v in pri_means_train.items()}
+            grand_mean = np.mean(y_train)
+
+            pred_b = []
+            for i in range(n_test):
+                cell = (pri_test[i], sec_test[i])
+                if cell in cell_means and len(cell_means[cell]) >= 2:
+                    pred_b.append(np.mean(cell_means[cell]))
+                elif pri_test[i] in pri_means:
+                    pred_b.append(pri_means[pri_test[i]])
+                else:
+                    pred_b.append(grand_mean)
+            pred_b = np.array(pred_b)
+            r2_b = 1 - np.sum((y_test - pred_b)**2) / ss_total
+
+            oos_a.append({"held_out": str(held_out), "n": n_test, "r2_a": r2_a, "r2_b": r2_b})
+
+        if not oos_a:
+            return "INSUFFICIENT_DATA", {}
+
+        # Weighted averages
+        total_n = sum(r["n"] for r in oos_a)
+        w_r2_a = sum(r["r2_a"] * r["n"] for r in oos_a if np.isfinite(r["r2_a"])) / total_n
+        w_r2_b = sum(r["r2_b"] * r["n"] for r in oos_a) / total_n
+
+        result = {
+            "per_group": oos_a,
+            "weighted_r2_main": w_r2_a,
+            "weighted_r2_interaction": w_r2_b,
+            "n_groups_tested": len(oos_a),
+        }
+
+        # Decision table
+        a_transfers = w_r2_a > 0.05
+        b_transfers = w_r2_b > 0.05
+
+        if a_transfers:
+            verdict = "UNIVERSAL"
+        elif not a_transfers and b_transfers:
+            verdict = "CONDITIONAL"
+        else:
+            verdict = "WEAK_NOISY"
+
+        return verdict, result
+
     def F26_fdr_correction(self, p_values, alpha=0.05):
         """Benjamini-Hochberg FDR correction across multiple hypotheses.
 
