@@ -1,0 +1,50 @@
+{
+  "bond_dimension_distribution": {
+    "1": 104,
+    "2": 316,
+    "3": 73,
+    "4": 356,
+    "5": 231,
+    "6": 466,
+    "7": 371,
+    "8": 215,
+    "9": 37,
+    "10": 6,
+    "note": "Peaks at even ranks (2,4,6,8) and 7. Rank 6 dominates."
+  },
+  "constants_in_spacing_ratios": {
+    "euler_gamma": {
+      "z_score": 2.2,
+      "enrichment": 1.04
+    },
+    "catalan": {
+      "z_score": 2.3,
+      "enrichment": 1.04
+    },
+    "note": "Mild enrichment, suggestive not definitive. GUE median confirmed at 0.999."
+  },
+  "normalized_first_zero": {
+    "median": 1.429281,
+    "nearest_constant": "sqrt(2) = 1.414214",
+    "difference_pct": 1.07,
+    "sqrt2_in_95CI": false,
+    "CI_95": [
+      1.41836,
+      1.439616
+    ],
+    "note": "Tantalizing 1% near-miss with sqrt(2). Not a match."
+  },
+  "phoneme_orthogonality": {
+    "max_off_diagonal_correlation": 0.243,
+    "pair": "rank<->arithmetic",
+    "note": "Phonemes are genuinely independent axes"
+  },
+  "precision_hierarchy": {
+    "raw_zeros": "8-10 digit",
+    "normalized_zeros": "6 digit",
+    "phoneme_projection": "3-4 digit",
+    "tt_cross": "4 digit (eps=1e-4)",
+    "bond_dimension": "EXACT integer",
+    "calibration": "2 digit (75% accuracy)"
+  }
+}
