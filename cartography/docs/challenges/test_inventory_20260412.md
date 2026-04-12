@@ -1,33 +1,79 @@
 # Complete Test Inventory — 2026-04-12
 ## All tests run or intended, across all sources, deduplicated and classified
-## UPDATED after Round 1 (20 tests, 10 per machine) + council review
+## UPDATED after Round 2 (40 total tests, 20 per machine across 2 rounds)
 
 ---
 
 ## Round 1 Results (completed)
 
-20 tests run through frozen battery (F1-F24b). Results archived in `docs/round1_results_20260412/`.
+20 tests through frozen battery (F1-F24b). Results in `docs/round1_results_20260412/`.
 
 - **9 confirmed** (4 conditional laws, 3 constraints, 1 scaling law, 1 tendency)
 - **7 killed** (E_6 tautology, C48 false, S5/S6/C36/C56/C59 dead)
-- **3 suspect** (C11 needs random-prime control, C5 needs threshold sweep, interaction needs balancing)
+- **3 suspect** (C11, C5, interaction term)
 - **1 skip** (C1 NIST data format)
 
-Battery upgraded to v6: F25 (transportability), F26 (BH FDR), F27 (consequence checker).
+## Round 2 Results (completed)
+
+20 tests through battery v6 (F1-F27). M1: 8 scripts + 8 result JSONs. M2: 2 scripts + inline results.
+
+### M2 Follow-ups (Round 1 suspects resolved)
+
+| Test | Result | Verdict |
+|------|--------|---------|
+| R2.1 C11 random-prime ablation | Every prime set gives eta²≈0.493, z=-0.5 | **KILLED** (any hash works the same) |
+| R2.2 C5 Jaccard threshold sweep | Partial r stable 0.33-0.57 across 0.2-0.8 | **SURVIVES** → CONSTRAINT |
+| R2.3 Interaction class-balanced | Balanced: 11.0% (up from 8.5%) | **REAL** (not class imbalance) |
+| R2.4 COD cross-validation | eta²(SG→Tc)=0.41 on 70 independent COD curves | **REPLICATES** externally |
+
+### M2 New Tests
+
+| Test | eta² | Classification |
+|------|------|---------------|
+| C86 Isogeny diameter scaling | R²=0.94, diam=0.97·log(p)-1.22 | **LAW** (likely known — Ramanujan graph) |
+| C05 Maass spectral (level→R) | 0.824 | **LAW** (likely Weyl's law — needs F27 check) |
+| C68 Selmer-root number parity | 0.013 (73.1% match confirmed) | CONSTRAINT |
+| C87 ST→torsion order | 0.084, F25 CONTEXT_DEPENDENT | TENDENCY |
+| C50-deep multi-variable | Confirms: 0.013, 0.005, 0.084 | No change from R1 |
+
+### M1 New Tests
+
+| Test | Key metric | Classification |
+|------|-----------|---------------|
+| C01 Paramodular conjecture | 7/7 levels matched (100%) | **REDISCOVERY** (paramodular conjecture) |
+| C02 Mod-p starvation | 5.9% at p=3, <1% at p=5,7,11 | TENDENCY (starvation is real but rare) |
+| C04 HMF congruences | Enrichment 1.21x (mod-2), 1.30x (mod-3) | TENDENCY (weak enrichment) |
+| C08 Recurrence duality | EC rate 0.01% vs OEIS 48%, eta²=0.139 | **LAW** (EC traces are NOT recurrent) |
+| C09 Moonshine class structure | eta²=0.601, 26 classes | **LAW** (class determines coefficient scale) |
+| C21 NF class number by degree | eta²=0.280, F25 CONDITIONAL | **CONDITIONAL LAW** |
+| C41-deep Unit circle identity | Jones-Alex cosine=0.919, crossing eta²=0.001 | **STRUCTURAL IDENTITY** |
+| C43-ext Prime gap scaling | Slope refined to 0.37/decade, R²=0.88 | SCALING LAW (eta² as grouping=0.004) |
 
 ---
 
-## Summary
+## Cumulative Summary (40 tests across 2 rounds)
 
-| Category | Count | Status |
-|----------|-------|--------|
-| **Round 1 tested** | 20 | 9 confirmed, 7 killed, 3 suspect, 1 skip |
-| **Challenges remaining (untested)** | ~70 | From C-series + frontier proposals |
-| **Genocide survivors (untested by F24)** | ~30 | From R1-R7, not yet through new battery |
-| **Frontier proposals (unscheduled)** | ~45 | ChatGPT/Gemini/DeepSeek/Grok batches |
-| **Known truth calibration** | 218 | 218/218 pass (100%) |
+| Category | Count |
+|----------|-------|
+| **Conditional Laws** | 6 (SC_class→Tc, SG×SC→Tc, N_elem→Tc, crossing→det, C21 NF class#, C09 moonshine) |
+| **Laws (domain-internal / likely known)** | 4 (C41 unit circle, C86 isogeny diam, C05 Maass spectral, C08 EC non-recurrence) |
+| **Constraints** | 4 (ST→conductor, endomorphism→uniformity, C5 curvature, C68 Selmer parity) |
+| **Scaling Laws** | 1 (C43 prime gap 0.37/decade) |
+| **Tendencies** | 4 (N_elem, C87 torsion, C02 starvation, C04 HMF congruences) |
+| **Rediscoveries** | 2 (C01 paramodular, modularity theorem) + 23 prior genocide |
+| **Identities** | 2 (C41-deep Jones≈Alexander, max Jones~det) |
+| **Killed** | 11 (E_6 tautology, C48 false, C11 artifact, S5/S6/C36/C56/C59, KMT, C60) |
+| **Skip / Data issue** | 2 (C1 NIST format, C71 not F24-classified) |
 
-**Total unique testable hypotheses remaining: ~145**
+**Total tested: 40 | Remaining in queue: ~125**
+
+**Novel findings that are NOT known math or rediscoveries:**
+- SC_class → Tc (eta²=0.57) — quantified domain knowledge (conditional)
+- (SG × SC_class) → Tc (14% + 11% interaction) — replicated on COD
+- C5 composition curvature (partial r=0.42) — threshold-stable
+- C09 moonshine class → coefficient scale (eta²=0.60) — needs F27 check
+
+**Key battery improvement validated:** F25 (transportability) correctly classifies conditional vs universal. F27 (consequence checker) needs expansion for Weyl's law, Ramanujan graphs, paramodular conjecture.
 
 ---
 
