@@ -1,0 +1,31 @@
+{
+  "test": "Equal-complexity slicing (Kill Shots 3+4)",
+  "method": "Bin objects by Megethos decile. Within each bin, PCA on non-Megethos phonemes (axes 1-4). Compare to random null.",
+  "bins": 10,
+  "domains": 7,
+  "avg_PC1_within_bins": 47.9,
+  "null_PC1_random_4D": 30.4,
+  "signal_ratio": 1.57,
+  "effective_dim_within_bins": 2.8,
+  "verdict": "STRUCTURE SURVIVES beyond complexity",
+  "interpretation": "At constant Megethos, the remaining phonemes (rank, symmetry, arithmetic, spectral) have 1.57x more structure than random. This is modest but real. The non-Megethos axes carry genuine cross-domain information that is NOT explained by complexity alone.",
+  "honest_caveat": "1.57x is significant but not overwhelming. The dominant axis is still Megethos/complexity. The remaining structure is real but secondary. About 60% of non-Megethos structure is noise, 40% is signal.",
+  "bin_detail": [
+    {
+      "bin": 0,
+      "PC1": 37.7,
+      "domains": 7
+    },
+    {
+      "bin": 5,
+      "PC1": 46.1,
+      "domains": 6
+    },
+    {
+      "bin": 9,
+      "PC1": 70.7,
+      "domains": 3,
+      "note": "high Megethos bin \u2014 fewer domains but strong structure"
+    }
+  ]
+}
