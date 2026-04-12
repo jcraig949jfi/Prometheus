@@ -1,0 +1,62 @@
+{
+  "megethos": {
+    "equation": "M(x) = log N(x) = SUM_p f_p(x) * log(p)",
+    "type": "additive over primes",
+    "R2_zero_density": 0.976,
+    "PCA_loading": 0.9954,
+    "has_prime_decomposition": true,
+    "has_functional_equation": true,
+    "has_sieve": true,
+    "evidence_level": "KNOWN (Iwaniec-Sarnak) + WORKING THEORY (universality)"
+  },
+  "bathos": {
+    "equation": "P(B(x) >= 1) = sigmoid(0.292 * M(x) - 2.225)",
+    "type": "sigmoid dependence on Megethos",
+    "note": "Bathos is not independent of Megethos \u2014 rank probability is a logistic function of conductor",
+    "at_M5": 0.317,
+    "at_M7": 0.454,
+    "at_M10": 0.666,
+    "has_prime_decomposition": false,
+    "connection_to_megethos": "P(rank >= 1) monotonically increases with M",
+    "connection_to_phasma": "rank = order of vanishing of L(E,s) at s=1 (BSD conjecture)",
+    "evidence_level": "PROBABLE (sigmoid fit clean, BSD unproven in general)"
+  },
+  "symmetria": {
+    "equation": "S(x) = (-1)^{B(x)} = epsilon(x)",
+    "type": "parity function of Bathos",
+    "agreement": 1.0,
+    "note": "Symmetria IS the parity of Bathos. The functional equation sign equals (-1)^rank.",
+    "has_prime_decomposition": "INHERITS from Bathos (parity of rank)",
+    "has_functional_equation": "IS the functional equation sign",
+    "evidence_level": "KNOWN (parity conjecture proven for EC/Q by Dokchitser-Dokchitser 2010)"
+  },
+  "arithmos": {
+    "equation": "A(x) = log |E(Q)_tors| = SUM_p a_p(x) * log(p)",
+    "type": "additive over primes (via torsion group structure)",
+    "has_prime_decomposition": true,
+    "values": {
+      "1": 0.0,
+      "2": 0.693,
+      "3": 1.099,
+      "4": 1.386,
+      "5": 1.609,
+      "6": 1.792,
+      "7": 1.946,
+      "8": 2.079
+    },
+    "constrained_by": "Mazur theorem: torsion in {1,2,3,4,5,6,7,8,9,10,12} for EC/Q",
+    "vs_megethos": "R^2 = 0.005 \u2014 Arithmos is INDEPENDENT of Megethos",
+    "note": "Arithmos has a prime decomposition (torsion = product of cyclic groups) but is DISCRETE, not continuous. Only 11 possible values for EC/Q.",
+    "evidence_level": "KNOWN (Mazur theorem)"
+  },
+  "phasma": {
+    "equation": "Phasma(x) = normalized zero spacing distribution",
+    "type": "distributional (not a single number)",
+    "GUE_universality": "Mean normalized spacing = 1.0 at all M bins (confirmed)",
+    "scale_dependence": "Median drops from 0.97 (M=2) to 0.32 (M=7) \u2014 NOT GUE universal!",
+    "note": "The MEAN is universal (1.0) but the MEDIAN and STD change with M. The distribution shape depends on Megethos. This violates naive GUE universality.",
+    "connection_to_megethos": "Zero COUNT is linear in M. Zero DISTRIBUTION shape changes with M.",
+    "has_prime_decomposition": "UNKNOWN \u2014 would require factoring the spacing distribution",
+    "evidence_level": "WORKING THEORY (GUE universality partially confirmed, shape dependence is new)"
+  }
+}
