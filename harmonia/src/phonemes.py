@@ -17,6 +17,7 @@ Cross-domain coupling = shared phonemic coordinates.
 import torch
 import numpy as np
 from typing import Optional
+from pathlib import Path
 from harmonia.src.domain_index import DomainIndex
 
 
@@ -252,6 +253,61 @@ class PhonemeCoupling:
         pmap = DOMAIN_PHONEME_MAP.get(dom_name, {})
         phoneme = PHONEMES[phoneme_idx]
         return phoneme in pmap and any(w > 0 for _, _, w in pmap[phoneme])
+
+
+class KosmosCoupling:
+    """
+    Coupling scorer in the TRUE coordinate system of the Kosmos.
+
+    Instead of measuring distance in the 5 phoneme axes (which are
+    51.4% rotated from truth), rotates into the PCA-discovered true
+    axes before computing coupling. This should improve both
+    sensitivity and specificity.
+    """
+
+    def __init__(self, domains: list[DomainIndex], device: str = "cpu"):
+        self.domains = domains
+        self.n_domains = len(domains)
+        self.device = device
+        self.projector = PhonemeProjector(domains, device)
+
+        # Load or compute the rotation matrix
+        rotation_path = Path(__file__).resolve().parent.parent / "data" / "kosmos_rotation.pt"
+        if rotation_path.exists():
+            self.rotation = torch.load(rotation_path, weights_only=True).to(device)
+        else:
+            # Fallback: identity (no rotation)
+            self.rotation = torch.eye(self.projector.n_phonemes, device=device)
+
+    def __call__(self, *grid_indices) -> torch.Tensor:
+        indices = torch.stack(grid_indices, dim=-1)
+        return self.score_batch(indices)
+
+    def score_batch(self, indices: torch.Tensor) -> torch.Tensor:
+        batch_size = indices.shape[0]
+
+        # Get phoneme vectors and rotate to true axes
+        phonemes = []
+        for d in range(self.n_domains):
+            raw = self.projector.get_phonemes(d, indices[:, d].long())
+            rotated = raw @ self.rotation.T  # (batch, 5) in true coordinates
+            phonemes.append(rotated)
+
+        # Weighted distance: Megethos (axis 0) carries 44% of variance,
+        # so weight each axis by its explained variance
+        axis_weights = torch.tensor([0.468, 0.185, 0.150, 0.108, 0.090],
+                                     device=self.device)
+
+        n_pairs = 0
+        total_score = torch.zeros(batch_size, device=self.device)
+        for i in range(self.n_domains):
+            for j in range(i + 1, self.n_domains):
+                diff = phonemes[i] - phonemes[j]
+                weighted_dist = (diff ** 2 * axis_weights).sum(dim=1).sqrt()
+                total_score += torch.exp(-weighted_dist ** 2 / 2.0)
+                n_pairs += 1
+
+        return total_score / max(n_pairs, 1)
 
 
 def phoneme_profile(domain_name: str) -> dict:
