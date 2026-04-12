@@ -1,0 +1,503 @@
+{
+  "n_combinations": 10,
+  "results": [
+    {
+      "domains": [
+        "number_fields",
+        "space_groups"
+      ],
+      "domain_sizes": [
+        2000,
+        230
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "number_fields",
+          "domain_b": "space_groups",
+          "bond_dim": 7,
+          "top_singular_values": [
+            82.5869140625,
+            9.452208518981934,
+            8.079296112060547,
+            6.844687461853027,
+            3.5671818256378174,
+            1.2547978162765503,
+            1.367552158626495e-06
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "number_fields",
+          "domain_b": "space_groups",
+          "raw_rank": 7,
+          "validated_rank": 1,
+          "surviving_components": [
+            {
+              "idx": 1,
+              "sv": 9.45220947265625,
+              "energy": 0.012697497308857917
+            }
+          ],
+          "killed_components": 6
+        }
+      ],
+      "wall_time": 0.09766483306884766,
+      "n_evals": 15610,
+      "error": null
+    },
+    {
+      "domains": [
+        "knots",
+        "number_fields"
+      ],
+      "domain_sizes": [
+        2000,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "number_fields",
+          "bond_dim": 7,
+          "top_singular_values": [
+            82.26016235351562,
+            7.017674446105957,
+            1.2444204092025757,
+            0.8656901121139526,
+            0.6767657995223999,
+            0.43079450726509094,
+            0.3684767484664917
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "number_fields",
+          "raw_rank": 7,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 7
+        }
+      ],
+      "wall_time": 0.11747550964355469,
+      "n_evals": 28000,
+      "error": null
+    },
+    {
+      "domains": [
+        "knots",
+        "space_groups"
+      ],
+      "domain_sizes": [
+        2000,
+        230
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "space_groups",
+          "bond_dim": 7,
+          "top_singular_values": [
+            83.5759506225586,
+            5.198695659637451,
+            1.1656608581542969,
+            0.7862080931663513,
+            0.5794989466667175,
+            0.38094037771224976,
+            6.452341767726466e-05
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "space_groups",
+          "raw_rank": 7,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 7
+        }
+      ],
+      "wall_time": 0.11056947708129883,
+      "n_evals": 15610,
+      "error": null
+    },
+    {
+      "domains": [
+        "knots",
+        "genus2"
+      ],
+      "domain_sizes": [
+        2000,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        10,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "genus2",
+          "bond_dim": 10,
+          "top_singular_values": [
+            99.02235412597656,
+            7.239562511444092,
+            1.6171300411224365,
+            1.194774866104126,
+            0.5851488709449768,
+            0.5135621428489685,
+            0.3766082525253296,
+            0.26524752378463745,
+            2.5962162908399478e-05,
+            1.6367663420169265e-06
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "genus2",
+          "raw_rank": 10,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 10
+        }
+      ],
+      "wall_time": 0.11347794532775879,
+      "n_evals": 40000,
+      "error": null
+    },
+    {
+      "domains": [
+        "number_fields",
+        "genus2"
+      ],
+      "domain_sizes": [
+        2000,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "number_fields",
+          "domain_b": "genus2",
+          "bond_dim": 7,
+          "top_singular_values": [
+            82.8114242553711,
+            11.636499404907227,
+            6.576111793518066,
+            5.254584789276123,
+            2.6249961853027344,
+            2.3621561527252197,
+            0.32392093539237976
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "number_fields",
+          "domain_b": "genus2",
+          "raw_rank": 7,
+          "validated_rank": 1,
+          "surviving_components": [
+            {
+              "idx": 1,
+              "sv": 11.636495590209961,
+              "energy": 0.019134694624967877
+            }
+          ],
+          "killed_components": 6
+        }
+      ],
+      "wall_time": 0.04992866516113281,
+      "n_evals": 28000,
+      "error": null
+    },
+    {
+      "domains": [
+        "space_groups",
+        "genus2"
+      ],
+      "domain_sizes": [
+        230,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "space_groups",
+          "domain_b": "genus2",
+          "bond_dim": 7,
+          "top_singular_values": [
+            27.83555793762207,
+            3.5550382137298584,
+            2.3674962520599365,
+            1.9443576335906982,
+            0.9457356929779053,
+            0.6118605136871338,
+            7.766676617393387e-07
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "space_groups",
+          "domain_b": "genus2",
+          "raw_rank": 7,
+          "validated_rank": 1,
+          "surviving_components": [
+            {
+              "idx": 1,
+              "sv": 3.555037498474121,
+              "energy": 0.015835256854501472
+            }
+          ],
+          "killed_components": 6
+        }
+      ],
+      "wall_time": 0.03705930709838867,
+      "n_evals": 15610,
+      "error": null
+    },
+    {
+      "domains": [
+        "number_fields",
+        "maass"
+      ],
+      "domain_sizes": [
+        2000,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "number_fields",
+          "domain_b": "maass",
+          "bond_dim": 7,
+          "top_singular_values": [
+            80.91258239746094,
+            6.771949291229248,
+            4.470025062561035,
+            3.8952109813690186,
+            3.238450050354004,
+            1.8928567171096802,
+            1.5613073110580444
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "number_fields",
+          "domain_b": "maass",
+          "raw_rank": 7,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 7
+        }
+      ],
+      "wall_time": 0.05883622169494629,
+      "n_evals": 28000,
+      "error": null
+    },
+    {
+      "domains": [
+        "space_groups",
+        "maass"
+      ],
+      "domain_sizes": [
+        230,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        7,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "space_groups",
+          "domain_b": "maass",
+          "bond_dim": 7,
+          "top_singular_values": [
+            26.939563751220703,
+            2.3557300567626953,
+            1.7024751901626587,
+            1.3740482330322266,
+            1.3573657274246216,
+            0.6616275906562805,
+            4.2929320898110745e-07
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "space_groups",
+          "domain_b": "maass",
+          "raw_rank": 7,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 7
+        }
+      ],
+      "wall_time": 0.04020857810974121,
+      "n_evals": 15610,
+      "error": null
+    },
+    {
+      "domains": [
+        "genus2",
+        "maass"
+      ],
+      "domain_sizes": [
+        2000,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        10,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "genus2",
+          "domain_b": "maass",
+          "bond_dim": 10,
+          "top_singular_values": [
+            98.75041961669922,
+            7.342653751373291,
+            5.927227973937988,
+            4.250977516174316,
+            3.3847763538360596,
+            1.8050556182861328,
+            1.4453060626983643,
+            0.663897693157196,
+            6.425074843718903e-06,
+            1.3512282066585612e-06
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "genus2",
+          "domain_b": "maass",
+          "raw_rank": 10,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 10
+        }
+      ],
+      "wall_time": 0.07776618003845215,
+      "n_evals": 40000,
+      "error": null
+    },
+    {
+      "domains": [
+        "knots",
+        "maass"
+      ],
+      "domain_sizes": [
+        2000,
+        2000
+      ],
+      "tt_ranks": [
+        1,
+        15,
+        1
+      ],
+      "bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "maass",
+          "bond_dim": 15,
+          "top_singular_values": [
+            121.5649642944336,
+            6.439628601074219,
+            3.043811321258545,
+            1.5597227811813354,
+            1.4931479692459106,
+            1.0855294466018677,
+            0.9266920685768127,
+            0.6721540689468384,
+            0.5512819290161133,
+            0.3966883420944214
+          ]
+        }
+      ],
+      "validated_bonds": [
+        {
+          "domain_a": "knots",
+          "domain_b": "maass",
+          "raw_rank": 15,
+          "validated_rank": 0,
+          "surviving_components": [],
+          "killed_components": 15
+        }
+      ],
+      "wall_time": 2.2000837326049805,
+      "n_evals": 60000,
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_evals": 286440,
+    "total_time": 2.9030704498291016,
+    "errors": 0,
+    "nonzero_bonds": [
+      {
+        "domains": [
+          "number_fields",
+          "space_groups"
+        ],
+        "bond": "number_fields<->space_groups",
+        "validated_rank": 1
+      },
+      {
+        "domains": [
+          "number_fields",
+          "genus2"
+        ],
+        "bond": "number_fields<->genus2",
+        "validated_rank": 1
+      },
+      {
+        "domains": [
+          "space_groups",
+          "genus2"
+        ],
+        "bond": "space_groups<->genus2",
+        "validated_rank": 1
+      }
+    ]
+  }
+}
