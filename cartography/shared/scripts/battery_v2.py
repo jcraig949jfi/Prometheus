@@ -1,12 +1,23 @@
 #!/usr/bin/env python3
 """
-Battery V2: F15-F18 — New falsification tests from 2026-04-11 kill audit.
-Proposed by the instrument, refined by frontier model review.
+Battery V2: F15-F24b + F25-F27 — Extended falsification battery.
 
 F15: Log-Normal Calibration Test
 F16: Equivalence Test (TOST)
 F17: Confound Sensitivity Analysis
 F18: Subset Stability Test
+F19: Generative Replay
+F20: Representation Invariance
+F21: Trend Robustness
+F22: Representation Alignment
+F23: Latent Confound Discovery
+F24: Variance Decomposition (eta²)
+F24b: Metric Consistency (tail localization)
+F25: Transportability Gate (leave-one-group-out OOS R²)
+F26: Benjamini-Hochberg FDR Correction
+F27: Domain Consequence Checker (tautology lookup)
+
+Added 2026-04-12 after council review (ChatGPT×2, Gemini, Claude, DeepSeek, Grok, Perplexity).
 """
 
 import numpy as np
@@ -854,3 +865,167 @@ class BatteryV2:
             verdict = "CONSISTENT"
 
         return verdict, result
+
+    # ================================================================
+    # F25-F27: Council-recommended additions (2026-04-12)
+    # ================================================================
+
+    def F25_transportability(self, values, primary_labels, secondary_labels,
+                              min_test_n=10, min_group_n=3):
+        """Test whether a categorical mapping transfers across context partitions.
+
+        Trains group means on all partitions except one, predicts held-out.
+        Repeated for each secondary partition.
+
+        Returns: (verdict, result_dict)
+        Verdicts: UNIVERSAL (OOS R² > 0.15 weighted),
+                  WEAKLY_TRANSFERABLE (OOS R² > 0),
+                  CONTEXT_DEPENDENT (OOS R² ~ 0),
+                  CONDITIONAL (OOS R² < 0, strong within-context)
+                  INSUFFICIENT_DATA
+        """
+        from collections import defaultdict
+
+        values = np.array(values, dtype=float)
+        n = len(values)
+        sec_groups = sorted(set(secondary_labels))
+
+        if len(sec_groups) < 2:
+            return "INSUFFICIENT_DATA", {}
+
+        oos_results = []
+        for held_out in sec_groups:
+            test_mask = np.array([s == held_out for s in secondary_labels])
+            train_mask = ~test_mask
+            n_test = int(np.sum(test_mask))
+            if n_test < min_test_n:
+                continue
+
+            # Learn primary group means from training set
+            train_groups = defaultdict(list)
+            for i in range(n):
+                if train_mask[i]:
+                    train_groups[primary_labels[i]].append(values[i])
+            train_means = {k: np.mean(v) for k, v in train_groups.items()
+                           if len(v) >= min_group_n}
+            grand_mean = np.mean(values[train_mask])
+
+            # Predict test set
+            test_vals = values[test_mask]
+            test_primary = [primary_labels[i] for i in range(n) if test_mask[i]]
+            predicted = np.array([train_means.get(p, grand_mean) for p in test_primary])
+
+            ss_total = np.sum((test_vals - np.mean(test_vals)) ** 2)
+            ss_resid = np.sum((test_vals - predicted) ** 2)
+            r2_oos = 1 - ss_resid / ss_total if ss_total > 0 else 0
+
+            oos_results.append({
+                "held_out": str(held_out), "n_test": n_test, "r2_oos": r2_oos
+            })
+
+        if not oos_results:
+            return "INSUFFICIENT_DATA", {}
+
+        weighted_oos = (sum(r["r2_oos"] * r["n_test"] for r in oos_results) /
+                        sum(r["n_test"] for r in oos_results))
+        mean_oos = np.mean([r["r2_oos"] for r in oos_results])
+
+        result = {
+            "per_group": oos_results,
+            "weighted_oos_r2": weighted_oos,
+            "mean_oos_r2": mean_oos,
+            "n_groups_tested": len(oos_results),
+        }
+
+        if weighted_oos > 0.15:
+            verdict = "UNIVERSAL"
+        elif weighted_oos > 0.0:
+            verdict = "WEAKLY_TRANSFERABLE"
+        elif weighted_oos > -1.0:
+            verdict = "CONTEXT_DEPENDENT"
+        else:
+            verdict = "CONDITIONAL"
+
+        return verdict, result
+
+    def F26_fdr_correction(self, p_values, alpha=0.05):
+        """Benjamini-Hochberg FDR correction across multiple hypotheses.
+
+        Returns: (verdict, result_dict) with adjusted p-values and
+        which hypotheses survive the correction.
+
+        Verdicts: PASSES_FDR, FAILS_FDR
+        """
+        p_arr = np.array(p_values, dtype=float)
+        n_tests = len(p_arr)
+        if n_tests == 0:
+            return "INSUFFICIENT_DATA", {}
+
+        # BH procedure
+        sorted_idx = np.argsort(p_arr)
+        sorted_p = p_arr[sorted_idx]
+        thresholds = np.arange(1, n_tests + 1) / n_tests * alpha
+
+        # Find largest k where p_(k) <= k/m * alpha
+        rejected = sorted_p <= thresholds
+        if np.any(rejected):
+            max_k = np.max(np.where(rejected)[0])
+            reject_mask = np.zeros(n_tests, dtype=bool)
+            reject_mask[sorted_idx[:max_k + 1]] = True
+        else:
+            reject_mask = np.zeros(n_tests, dtype=bool)
+
+        # Adjusted p-values (step-up)
+        adjusted_p = np.minimum(1, sorted_p * n_tests / np.arange(1, n_tests + 1))
+        for i in range(n_tests - 2, -1, -1):
+            adjusted_p[i] = min(adjusted_p[i], adjusted_p[i + 1])
+        adj_p_unsorted = np.empty(n_tests)
+        adj_p_unsorted[sorted_idx] = adjusted_p
+
+        result = {
+            "n_tests": n_tests,
+            "n_rejected": int(np.sum(reject_mask)),
+            "alpha": alpha,
+            "adjusted_p_values": adj_p_unsorted.tolist(),
+            "reject_mask": reject_mask.tolist(),
+        }
+
+        verdict = "PASSES_FDR" if int(np.sum(reject_mask)) > 0 else "FAILS_FDR"
+        return verdict, result
+
+    # Known mathematical consequences that force specific outcomes.
+    KNOWN_CONSEQUENCES = {
+        ("E_6", "root_number"): "CM by Q(sqrt(-3)) forces root number +1 via parity conjecture",
+        ("E_4", "root_number"): "CM structure likely forces root number +1",
+        ("alexander_eval_neg1", "determinant"): "det = |Alexander(-1)| by definition",
+        ("crossing_number", "jones_length"): "Jones span ~ 2*crossing for alternating knots (KMT theorem)",
+        ("ec_conductor", "mf_level"): "Modularity theorem (Wiles 1995)",
+        ("degree", "galois_group"): "Galois group is determined by degree (nesting, not prediction)",
+        ("cm_flag", "root_number"): "CM curves have constrained functional equation signs",
+    }
+
+    def F27_consequence_check(self, grouping_var_name, outcome_var_name):
+        """Check if a finding is a known mathematical consequence (tautology).
+
+        Returns: (verdict, result_dict)
+        Verdicts: TAUTOLOGY, NOT_TAUTOLOGY, PARTIAL_MATCH
+        """
+        key = (grouping_var_name.lower().strip(),
+               outcome_var_name.lower().strip())
+
+        if key in self.KNOWN_CONSEQUENCES:
+            return "TAUTOLOGY", {
+                "match": key,
+                "explanation": self.KNOWN_CONSEQUENCES[key],
+            }
+
+        partial = []
+        for (g, o), explanation in self.KNOWN_CONSEQUENCES.items():
+            if (grouping_var_name.lower() in g or g in grouping_var_name.lower() or
+                    outcome_var_name.lower() in o or o in outcome_var_name.lower()):
+                partial.append({"match": (g, o), "explanation": explanation})
+
+        if partial:
+            return "PARTIAL_MATCH", {"partial_matches": partial}
+
+        return "NOT_TAUTOLOGY", {}

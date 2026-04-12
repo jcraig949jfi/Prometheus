@@ -1,5 +1,19 @@
 # Complete Test Inventory — 2026-04-12
 ## All tests run or intended, across all sources, deduplicated and classified
+## UPDATED after Round 1 (20 tests, 10 per machine) + council review
+
+---
+
+## Round 1 Results (completed)
+
+20 tests run through frozen battery (F1-F24b). Results archived in `docs/round1_results_20260412/`.
+
+- **9 confirmed** (4 conditional laws, 3 constraints, 1 scaling law, 1 tendency)
+- **7 killed** (E_6 tautology, C48 false, S5/S6/C36/C56/C59 dead)
+- **3 suspect** (C11 needs random-prime control, C5 needs threshold sweep, interaction needs balancing)
+- **1 skip** (C1 NIST data format)
+
+Battery upgraded to v6: F25 (transportability), F26 (BH FDR), F27 (consequence checker).
 
 ---
 
@@ -7,17 +21,13 @@
 
 | Category | Count | Status |
 |----------|-------|--------|
-| **Challenges tested (C1-C94)** | 94 | Mixed: 46 WIN, 10 FAIL, 19 PARKED, 5 BLOCKED, 8 KILLED, 6 PARTIAL |
-| **Genocide hypotheses (R1-R7)** | 85 | 51 survive, 34 killed |
-| **Frontier model proposals** | 60 | ~15 merged into C-series, ~45 unscheduled |
-| **Claude self-proposals** | 10 | All unscheduled |
-| **Charon spectral findings** | 11 | 3 confirmed, 4 tested/partial, 4 open |
+| **Round 1 tested** | 20 | 9 confirmed, 7 killed, 3 suspect, 1 skip |
+| **Challenges remaining (untested)** | ~70 | From C-series + frontier proposals |
+| **Genocide survivors (untested by F24)** | ~30 | From R1-R7, not yet through new battery |
+| **Frontier proposals (unscheduled)** | ~45 | ChatGPT/Gemini/DeepSeek/Grok batches |
 | **Known truth calibration** | 218 | 218/218 pass (100%) |
-| **Battery sweep (regime change)** | ~9,150 | ~39% survive |
-| **Bridge hunter probes** | ~282K | Mostly OPEN/FAIL |
-| **F24 re-audit (session 2)** | 25 | 6 LAW, 3 CONSTRAINT, 8 TENDENCY, 4 NEGLIGIBLE, 4 SKIP |
 
-**Total unique testable hypotheses: ~250** (after dedup and removing infrastructure/calibration)
+**Total unique testable hypotheses remaining: ~145**
 
 ---
 
@@ -201,6 +211,50 @@ challenges_from_frontier_models_v3.md, challenges_from_frontier_models_v4.md,
 
 ---
 
-*Inventory compiled: 2026-04-12*
-*Sources: 32 challenge files, 7 genocide JSONs, 10+ result files, 3 battery consensus docs, charon research packages*
-*Total unique tests: ~250 (174 challenges + 85 genocide - duplicates + charon findings)*
+## ROUND 2: Machine Assignments (battery v6: F1-F27)
+
+### Follow-ups from Round 1 (must do first)
+
+| # | Test | Machine | Why |
+|---|------|---------|-----|
+| R2.1 | **Random-prime ablation for C11** — test (2,3,5), (5,7,11), random hashes | M2 | Kills or validates our most suspect finding |
+| R2.2 | **Jaccard threshold sweep for C5** — vary 0.3→0.7, plot partial r | M2 | Kills or promotes composition curvature |
+| R2.3 | **Class-balanced interaction resampling** — subsample SGs to equal representation across classes | M2 | Addresses main council critique of 8.5% interaction |
+| R2.4 | **ICSD/AFLOW cross-validation** — replicate SC_class→Tc and SG→Tc on independent structural data | M2 | CRITICAL external replication. Data already pulled. |
+
+### M1 — Skullport (10 tests)
+
+| # | ID | Claim | Source | Notes |
+|---|---|---|---|---|
+| 1 | C01 | Paramodular conjecture probe | Tier 1 queue | Siegel eigenvalues + genus-2 matching. Data available. |
+| 2 | C04 | Hilbert modular form congruence scan | Tier 1 queue | 368K HMF records. Ready to run. |
+| 3 | C02 | Mod-p residue starvation (deeper) | Tier 1 queue | 43.6% show starvation — which primes, which weights? |
+| 4 | C09 | Moonshine network expansion | Tier 2 queue | 307 bridges found, needs F24 + F25 classification |
+| 5 | C41-deep | Unit circle profile independence test | Round 1 follow-up | Jones-Alexander cosine=0.933 — is this known? F25 across crossing strata |
+| 6 | C43-ext | Prime gap scaling extension to 10^9 | Round 1 follow-up | Confirm 0.43/decade at larger scale |
+| 7 | C10 | Constraint collapse generalization | Tier 2 queue | Log-log slope ratio 1.71 vs theory 2.0 |
+| 8 | C08 | Recurrence operator duality (OEIS vs EC) | Tier 2 queue | EC depleted 0.25x, genus-2 11.3x enrichment |
+| 9 | C21 | Number field class number distribution shape | Tier B (C-series) | Sharp degree-dependence — F24 + F25 |
+| 10 | C07 | Hecke congruence graph structure | Tier 2 queue | 83 cross-prime congruences |
+
+### M2 — SpectreX5 (10 tests)
+
+| # | ID | Claim | Source | Notes |
+|---|---|---|---|---|
+| 1 | R2.1 | Random-prime ablation for C11 | Follow-up | Kill or validate 3-prime fingerprint |
+| 2 | R2.2 | Jaccard threshold sweep for C5 | Follow-up | Kill or promote curvature |
+| 3 | R2.3 | Class-balanced interaction test | Follow-up | Deflate or confirm 8.5% interaction |
+| 4 | R2.4 | ICSD/AFLOW SC replication | Follow-up | External validation of SC findings |
+| 5 | C68 | Genus-2 Selmer-root number parity | C-series | 73.1% match rate — F24 classification |
+| 6 | C86 | Isogeny graph diameter scaling | C-series | 3,240 primes — F24 + F25 |
+| 7 | C05 | Spectral operator matching | Tier 1 queue | Maass spectral spacing vs EC/knots/lattices |
+| 8 | C71 | Genus-2 adelic obstruction density | C-series | Completed but not F24-classified |
+| 9 | C50-deep | G2 multi-variable interaction | Follow-up | ST→torsion, ST→disc, torsion→disc — F25 on each |
+| 10 | C87 | Genus-2 torsion group analysis | C-series | Torsion distribution by ST group — F24 + F25 |
+
+---
+
+*Inventory updated: 2026-04-12 (post-Round 1)*
+*Battery: v6 (F1-F27, unfrozen for F25-F27 only)*
+*Round 1 results: docs/round1_results_20260412/*
+*Round 2: 20 tests assigned (4 follow-ups + 16 new)*
