@@ -181,6 +181,185 @@ def load_maass(path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("maass", labels, features)
 
 
+def load_lattices(path: Optional[Path] = None) -> DomainIndex:
+    path = path or CARTOGRAPHY / "lattices" / "data" / "lattices_full.json"
+    with open(path) as f:
+        raw = json.load(f)
+    data = raw["records"] if isinstance(raw, dict) and "records" in raw else raw
+
+    labels, feats = [], []
+    for lat in data:
+        labels.append(lat.get("label", str(len(labels))))
+        feat = [
+            float(lat.get("dimension", 0)),
+            np.log1p(abs(float(lat.get("determinant", 0)))),
+            np.log1p(float(lat.get("level", 0))),
+            float(lat.get("class_number", 0)),
+            float(lat.get("minimal_vector") or 0),
+            np.log1p(float(lat.get("aut_group_order") or 0)),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("lattices", labels, features)
+
+
+def load_polytopes(path: Optional[Path] = None) -> DomainIndex:
+    path = path or CARTOGRAPHY / "polytopes" / "data" / "polytopes.json"
+    with open(path) as f:
+        data = json.load(f)
+
+    labels, feats = [], []
+    for i, p in enumerate(data):
+        labels.append(f"poly_{i}")
+        f_vec = p.get("f_vector", [])
+        feat = [
+            float(p.get("dimension") or 0),
+            float(p.get("n_vertices") or 0),
+            float(p.get("n_edges") or 0),
+            float(p.get("n_facets") or 0),
+            float(len(f_vec)),
+            float(sum(f_vec)) if f_vec else 0.0,
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("polytopes", labels, features)
+
+
+def load_materials(path: Optional[Path] = None) -> DomainIndex:
+    path = path or CARTOGRAPHY / "physics" / "data" / "materials_project_10k.json"
+    with open(path) as f:
+        data = json.load(f)
+
+    labels, feats = [], []
+    for mat in data:
+        labels.append(mat.get("material_id", str(len(labels))))
+        feat = [
+            float(mat.get("band_gap", 0)),
+            float(mat.get("formation_energy_per_atom", 0)),
+            float(mat.get("spacegroup_number", 0)),
+            float(mat.get("density", 0)),
+            np.log1p(float(mat.get("volume", 0))),
+            float(mat.get("nsites", 0)),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("materials", labels, features)
+
+
+def load_fungrim(path: Optional[Path] = None) -> DomainIndex:
+    path = path or CARTOGRAPHY / "fungrim" / "data" / "fungrim_formulas.json"
+    with open(path) as f:
+        data = json.load(f)
+
+    # Encode type and module as integers
+    types = sorted(set(f.get("type", "") for f in data))
+    modules = sorted(set(f.get("module", "") for f in data))
+    type_map = {t: i for i, t in enumerate(types)}
+    mod_map = {m: i for i, m in enumerate(modules)}
+
+    labels, feats = [], []
+    for formula in data:
+        labels.append(formula.get("id", str(len(labels))))
+        feat = [
+            float(type_map.get(formula.get("type", ""), 0)),
+            float(len(formula.get("symbols", []))),
+            float(mod_map.get(formula.get("module", ""), 0)),
+            float(len(formula.get("formula_text", ""))),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("fungrim", labels, features)
+
+
+def load_elliptic_curves(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load elliptic curves from Charon DuckDB."""
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT lmfdb_label, conductor, rank, analytic_rank, torsion
+        FROM elliptic_curves
+        WHERE conductor IS NOT NULL
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(row[0] or str(len(labels)))
+        feat = [
+            np.log1p(float(row[1] or 0)),  # conductor
+            float(row[2] or 0),              # rank
+            float(row[3] or 0),              # analytic_rank
+            float(row[4] or 0),              # torsion
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("elliptic_curves", labels, features)
+
+
+def load_modular_forms(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load modular forms from Charon DuckDB."""
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT lmfdb_label, level, weight, dim, char_order, char_parity
+        FROM modular_forms
+        WHERE level IS NOT NULL
+        LIMIT 50000
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(row[0] or str(len(labels)))
+        feat = [
+            np.log1p(float(row[1] or 0)),  # level
+            float(row[2] or 0),              # weight
+            float(row[3] or 0),              # dim
+            float(row[4] or 0),              # char_order
+            float(row[5] or 0),              # char_parity
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("modular_forms", labels, features)
+
+
+def load_dirichlet_zeros(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load Dirichlet zeros from Charon DuckDB."""
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT lmfdb_url, conductor, degree, rank, n_zeros_stored, motivic_weight
+        FROM dirichlet_zeros
+        WHERE conductor IS NOT NULL
+        LIMIT 50000
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(row[0] or str(len(labels)))
+        feat = [
+            np.log1p(float(row[1] or 0)),  # conductor
+            float(row[2] or 0),              # degree
+            float(row[3] or 0),              # rank
+            float(row[4] or 0),              # n_zeros_stored
+            float(row[5] or 0),              # motivic_weight
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("dirichlet_zeros", labels, features)
+
+
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
@@ -188,6 +367,13 @@ DOMAIN_LOADERS = {
     "space_groups": load_space_groups,
     "genus2": load_genus2,
     "maass": load_maass,
+    "lattices": load_lattices,
+    "polytopes": load_polytopes,
+    "materials": load_materials,
+    "fungrim": load_fungrim,
+    "elliptic_curves": load_elliptic_curves,
+    "modular_forms": load_modular_forms,
+    "dirichlet_zeros": load_dirichlet_zeros,
 }
 
 
