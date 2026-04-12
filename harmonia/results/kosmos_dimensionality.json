@@ -1,0 +1,127 @@
+{
+  "effective_dimensionality": 11.4,
+  "variance_thresholds": {
+    "80%": 9,
+    "90%": 15,
+    "95%": 20,
+    "99%": 26
+  },
+  "top_15_axes": {
+    "PC1": {
+      "variance": 17.0,
+      "top_domains": [
+        "knots(29%)",
+        "polytopes(11%)",
+        "oeis(9%)"
+      ],
+      "candidate": "combinatorial complexity"
+    },
+    "PC2": {
+      "variance": 12.6,
+      "top_domains": [
+        "ec_zeros(11%)",
+        "knots(8%)",
+        "NF(7%)"
+      ],
+      "candidate": "spectral-arithmetic blend"
+    },
+    "PC3": {
+      "variance": 10.2,
+      "top_domains": [
+        "knots(70%)",
+        "maass(7%)",
+        "ec_zeros(3%)"
+      ],
+      "candidate": "polynomial structure (knot-dominated)"
+    },
+    "PC4": {
+      "variance": 9.5,
+      "top_domains": [
+        "knots(19%)",
+        "ec_zeros(10%)",
+        "genus2(9%)"
+      ],
+      "candidate": "cross-domain bridge axis"
+    },
+    "PC5": {
+      "variance": 8.2,
+      "top_domains": [
+        "materials(11%)",
+        "NF(10%)",
+        "knots(9%)"
+      ],
+      "candidate": "physics-arithmetic bridge"
+    },
+    "PC6": {
+      "variance": 7.3,
+      "top_domains": [
+        "ec_zeros(22%)",
+        "lattices(11%)",
+        "oeis(9%)"
+      ],
+      "candidate": "L-function structure"
+    },
+    "PC7": {
+      "variance": 6.8,
+      "top_domains": [
+        "materials(9%)",
+        "fungrim(9%)",
+        "genus2(8%)"
+      ],
+      "candidate": "formula-geometry bridge"
+    },
+    "PC8": {
+      "variance": 5.0,
+      "top_domains": [
+        "knots(24%)",
+        "maass(14%)",
+        "ec_zeros(11%)"
+      ],
+      "candidate": "polynomial-spectral interaction"
+    },
+    "PC9": {
+      "variance": 3.9,
+      "top_domains": [
+        "genus2(18%)",
+        "maass(18%)",
+        "charon(17%)"
+      ],
+      "candidate": "embedding geometry"
+    },
+    "PC10": {
+      "variance": 2.3,
+      "top_domains": [
+        "maass(34%)",
+        "knots(28%)",
+        "ec_zeros(24%)"
+      ],
+      "candidate": "spectral coefficient structure"
+    },
+    "PC11": {
+      "variance": 2.1,
+      "candidate": "unnamed"
+    },
+    "PC12": {
+      "variance": 2.0,
+      "candidate": "unnamed"
+    },
+    "PC13": {
+      "variance": 1.5,
+      "candidate": "unnamed"
+    },
+    "PC14": {
+      "variance": 1.3,
+      "candidate": "unnamed"
+    },
+    "PC15": {
+      "variance": 1.2,
+      "candidate": "unnamed"
+    }
+  },
+  "interpretation": {
+    "first_finding": "PC1 is NOT pure Megethos in the full Kosmos. It is dominated by knots(29%) and polytopes(11%) \u2014 combinatorial complexity, not conductor.",
+    "second_finding": "Knots appear in PCs 1,3,4,5,8,10 \u2014 they are NOT an island in the full feature space. They decouple in phoneme space but dominate in raw feature space because of their 28-dimensional polynomial coefficients.",
+    "third_finding": "11.4 effective dimensions means the Kosmos is genuinely ~11-dimensional, not 2 (Megethos+Arithmos) and not 28 (max features). The true structure is finite and measurable.",
+    "language_implication": "A mathematical language needs ~15 symbols (90% coverage) or ~20 symbols (95%) to express the full structure. This is comparable to the ~20 consonant phonemes in English."
+  }
+}
