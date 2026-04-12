@@ -1,0 +1,64 @@
+{
+  "structure": {
+    "Z1": {
+      "variance": 42.6,
+      "primary": "Megethos",
+      "secondary": "Arithmos",
+      "interpretation": "Size/complexity axis"
+    },
+    "Z2": {
+      "variance": 28.3,
+      "primary": "Arithmos",
+      "secondary": "Megethos",
+      "interpretation": "Arithmetic group structure axis"
+    },
+    "Z3": {
+      "variance": 14.5,
+      "primary": "Bathos",
+      "interpretation": "Rank/depth axis"
+    },
+    "Z4": {
+      "variance": 8.6,
+      "primary": "Symmetria",
+      "interpretation": "Symmetry axis"
+    },
+    "Z5": {
+      "variance": 6.1,
+      "primary": "Phasma",
+      "interpretation": "Spectral axis"
+    }
+  },
+  "minimum_dimensionality": {
+    "1D": {
+      "transfer_rho": -0.02,
+      "verdict": "FAILS \u2014 Megethos alone cannot transfer"
+    },
+    "2D": {
+      "transfer_rho": 0.5,
+      "verdict": "WORKS \u2014 Z1+Z2 is sufficient for cross-domain transfer"
+    },
+    "3D": {
+      "transfer_rho": 0.45,
+      "verdict": "No improvement over 2D"
+    },
+    "4D": {
+      "transfer_rho": 0.45,
+      "verdict": "No improvement"
+    },
+    "5D": {
+      "transfer_rho": 0.39,
+      "verdict": "Slight degradation (overfitting to noise)"
+    }
+  },
+  "domain_projections": {
+    "elliptic_curves": "sees Z1 (conductor) + Z2 (torsion). Torsion maps PERFECTLY to Arithmos phoneme (R^2=1.0).",
+    "number_fields": "sees Z1 (discriminant) + Z2 (class number, R^2=0.84) + Z5 (regulator, R^2=1.0). Richest projection \u2014 sees 3 of 5 latent dims.",
+    "genus2": "sees Z1 (conductor) + Z3 (Selmer rank, maps to Bathos R^2=1.0). Selmer projects onto a DIFFERENT latent axis than torsion!",
+    "modular_forms": "sees Z1 only (level). No independent arithmetic structure. This is why MF had zero residual."
+  },
+  "key_finding": {
+    "minimum_dims": "The latent object is EXACTLY 2-dimensional for cross-domain transfer (Z1+Z2). Adding more dims does not help.",
+    "projection_asymmetry": "NF sees 3 dims, EC sees 2, G2 sees 2 (different ones!), MF sees 1. Transfer is directional because domains see different subsets.",
+    "selmer_surprise": "Genus2 Selmer rank maps to BATHOS (Z3), not ARITHMOS (Z2). It measures depth/rank, not torsion structure. The two arithmetic-looking invariants live on DIFFERENT latent axes."
+  }
+}
