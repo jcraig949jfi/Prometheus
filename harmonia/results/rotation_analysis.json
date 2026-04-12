@@ -1,0 +1,59 @@
+{
+  "true_axes": {
+    "axis_1": {
+      "variance_pct": 44.2,
+      "composition": "pure complexity (0.99)",
+      "name": "Megethos (confirmed)"
+    },
+    "axis_2": {
+      "variance_pct": 20.4,
+      "composition": "0.95*arithmetic + 0.26*rank",
+      "name": "Arithmos-Bathos blend"
+    },
+    "axis_3": {
+      "variance_pct": 14.0,
+      "composition": "0.66*spectral + 0.59*rank - 0.46*symmetry",
+      "name": "Phasma-Bathos-Symmetria triplet"
+    },
+    "axis_4": {
+      "variance_pct": 11.8,
+      "composition": "0.73*spectral - 0.52*rank + 0.37*symmetry",
+      "name": "Anti-rotated axis 3"
+    },
+    "axis_5": {
+      "variance_pct": 9.6,
+      "composition": "0.80*symmetry + 0.56*rank",
+      "name": "Symmetria-Bathos blend"
+    }
+  },
+  "rotation": {
+    "fraction": 0.514,
+    "interpretation": "51.4% rotated from our phoneme axes \u2014 halfway between our projection and the true basis",
+    "megethos_confirmed": "PC1 = 0.99*complexity. Megethos IS a true axis.",
+    "rank_spread": "Bathos (rank) appears in axes 2-5. Not a single axis \u2014 it is DISTRIBUTED across the true geometry."
+  },
+  "curvature_test": {
+    "mean_angle": 62.5,
+    "std_angle": 19.0,
+    "verdict": "FLAT (std=19 deg < threshold of 20 deg)",
+    "note": "Barely flat. Some domain pairs are nearly orthogonal (EC<->SG: 89 deg). The geometry is flat globally but domains see different projections.",
+    "clusters": {
+      "cluster_1": [
+        "modular_forms",
+        "dirichlet_zeros",
+        "lattices",
+        "materials"
+      ],
+      "cluster_2": [
+        "number_fields",
+        "elliptic_curves",
+        "ec_zeros"
+      ],
+      "cluster_3": [
+        "genus2",
+        "space_groups"
+      ],
+      "note": "MF/Dirichlet/lattices/materials share a viewpoint (8-34 deg). EC/NF/ec_zeros share another (58-72 deg). Genus2 and SG are outliers."
+    }
+  }
+}
