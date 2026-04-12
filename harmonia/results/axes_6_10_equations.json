@@ -1,0 +1,775 @@
+{
+  "PC6": {
+    "name": "Eidolon",
+    "description": "phantom/form \u2014 L-function spectral shadow; driven by knots[determinant, alex_c0]; number_fields[disc_sign, n_class_grp]; space_groups[ptgrp_order, is_symmorphic]",
+    "equation": "Eidolon(x) = -0.52*knots.determinant -0.46*knots.alex_c0 +0.46*knots.alex_len + ...",
+    "equation_type": "independent axis",
+    "variance_pct": 7.49,
+    "domain_contributions_top5": {
+      "ec_zeros": 0.1547,
+      "charon_landscape": 0.1246,
+      "materials": 0.0894,
+      "genus2": 0.0829,
+      "number_fields": 0.0811
+    },
+    "top_feature_loadings": [
+      {
+        "col": 1,
+        "loading": -0.5163,
+        "features": [
+          "knots.determinant",
+          "number_fields.disc_sign",
+          "space_groups.ptgrp_order"
+        ]
+      },
+      {
+        "col": 5,
+        "loading": -0.4568,
+        "features": [
+          "knots.alex_c0",
+          "number_fields.n_class_grp",
+          "genus2.globally_solv"
+        ]
+      },
+      {
+        "col": 2,
+        "loading": 0.4562,
+        "features": [
+          "knots.alex_len",
+          "number_fields.log_disc",
+          "space_groups.is_symmorphic"
+        ]
+      },
+      {
+        "col": 4,
+        "loading": 0.4268,
+        "features": [
+          "knots.conway_len",
+          "number_fields.regulator",
+          "space_groups.lattice_type"
+        ]
+      },
+      {
+        "col": 6,
+        "loading": 0.2618,
+        "features": [
+          "knots.alex_c1",
+          "genus2.root_number",
+          "maass.coeff_1"
+        ]
+      }
+    ],
+    "domain_feature_drivers": {
+      "knots": [
+        {
+          "feature": "determinant",
+          "loading": -0.5163
+        },
+        {
+          "feature": "alex_c0",
+          "loading": -0.4568
+        },
+        {
+          "feature": "alex_len",
+          "loading": 0.4562
+        }
+      ],
+      "number_fields": [
+        {
+          "feature": "disc_sign",
+          "loading": -0.5163
+        },
+        {
+          "feature": "n_class_grp",
+          "loading": -0.4568
+        },
+        {
+          "feature": "log_disc",
+          "loading": 0.4562
+        }
+      ],
+      "space_groups": [
+        {
+          "feature": "ptgrp_order",
+          "loading": -0.5163
+        },
+        {
+          "feature": "is_symmorphic",
+          "loading": 0.4562
+        },
+        {
+          "feature": "lattice_type",
+          "loading": 0.4268
+        }
+      ],
+      "genus2": [
+        {
+          "feature": "disc_sign",
+          "loading": -0.5163
+        },
+        {
+          "feature": "globally_solv",
+          "loading": -0.4568
+        },
+        {
+          "feature": "selmer_rank",
+          "loading": 0.4562
+        }
+      ],
+      "maass": [
+        {
+          "feature": "weight",
+          "loading": -0.5163
+        },
+        {
+          "feature": "coeff_0",
+          "loading": -0.4568
+        },
+        {
+          "feature": "spectral_param",
+          "loading": 0.4562
+        }
+      ]
+    },
+    "prime_decomposition": {
+      "has_prime_decomposition": false,
+      "fraction_within_10pct": 1.0,
+      "random_baseline": 1.0,
+      "improvement_over_random": 1.0
+    },
+    "megethos_dependence": {
+      "R2_linear": 2.977018370539211e-29,
+      "R2_quadratic": 0.007034598412219317,
+      "correlation": 5.456205980843476e-15,
+      "is_function_of_megethos": false
+    },
+    "sieve_property": {
+      "has_sieve": true,
+      "uniformity": 0.9999632525209882,
+      "domain_mutual_info_bits": 0.5952263344636366,
+      "extreme_domains": {
+        "ec_zeros": -0.026676542095670604,
+        "genus2": 0.01504679149361121,
+        "materials": -0.017291320513827434
+      }
+    },
+    "evidence_level": "PROBABLE"
+  },
+  "PC7": {
+    "name": "Morphe",
+    "description": "form/shape \u2014 formula-geometry bridge; driven by knots[alex_c0, determinant]; number_fields[n_class_grp, disc_sign]; space_groups[ptgrp_order, crystal_sys]",
+    "equation": "Morphe(x) = -0.65*knots.alex_c0 +0.36*knots.determinant +0.36*knots.jones_len + ...",
+    "equation_type": "independent axis",
+    "variance_pct": 6.77,
+    "domain_contributions_top5": {
+      "ec_zeros": 0.1963,
+      "oeis": 0.0987,
+      "lattices": 0.0951,
+      "materials": 0.084,
+      "charon_landscape": 0.0809
+    },
+    "top_feature_loadings": [
+      {
+        "col": 5,
+        "loading": -0.6469,
+        "features": [
+          "knots.alex_c0",
+          "number_fields.n_class_grp",
+          "genus2.globally_solv"
+        ]
+      },
+      {
+        "col": 1,
+        "loading": 0.3614,
+        "features": [
+          "knots.determinant",
+          "number_fields.disc_sign",
+          "space_groups.ptgrp_order"
+        ]
+      },
+      {
+        "col": 3,
+        "loading": 0.3557,
+        "features": [
+          "knots.jones_len",
+          "number_fields.class_num",
+          "space_groups.crystal_sys"
+        ]
+      },
+      {
+        "col": 2,
+        "loading": -0.3363,
+        "features": [
+          "knots.alex_len",
+          "number_fields.log_disc",
+          "space_groups.is_symmorphic"
+        ]
+      },
+      {
+        "col": 6,
+        "loading": 0.2252,
+        "features": [
+          "knots.alex_c1",
+          "genus2.root_number",
+          "maass.coeff_1"
+        ]
+      }
+    ],
+    "domain_feature_drivers": {
+      "knots": [
+        {
+          "feature": "alex_c0",
+          "loading": -0.6469
+        },
+        {
+          "feature": "determinant",
+          "loading": 0.3614
+        },
+        {
+          "feature": "jones_len",
+          "loading": 0.3557
+        }
+      ],
+      "number_fields": [
+        {
+          "feature": "n_class_grp",
+          "loading": -0.6469
+        },
+        {
+          "feature": "disc_sign",
+          "loading": 0.3614
+        },
+        {
+          "feature": "class_num",
+          "loading": 0.3557
+        }
+      ],
+      "space_groups": [
+        {
+          "feature": "ptgrp_order",
+          "loading": 0.3614
+        },
+        {
+          "feature": "crystal_sys",
+          "loading": 0.3557
+        },
+        {
+          "feature": "is_symmorphic",
+          "loading": -0.3363
+        }
+      ],
+      "genus2": [
+        {
+          "feature": "globally_solv",
+          "loading": -0.6469
+        },
+        {
+          "feature": "disc_sign",
+          "loading": 0.3614
+        },
+        {
+          "feature": "has_sq_sha",
+          "loading": 0.3557
+        }
+      ],
+      "maass": [
+        {
+          "feature": "coeff_0",
+          "loading": -0.6469
+        },
+        {
+          "feature": "weight",
+          "loading": 0.3614
+        },
+        {
+          "feature": "symmetry",
+          "loading": 0.3557
+        }
+      ]
+    },
+    "prime_decomposition": {
+      "has_prime_decomposition": false,
+      "fraction_within_10pct": 1.0,
+      "random_baseline": 1.0,
+      "improvement_over_random": 1.0
+    },
+    "megethos_dependence": {
+      "R2_linear": 4.3469372189951886e-29,
+      "R2_quadratic": 0.0037943132745629216,
+      "correlation": -6.593130682001676e-15,
+      "is_function_of_megethos": false
+    },
+    "sieve_property": {
+      "has_sieve": true,
+      "uniformity": 0.99999978587384,
+      "domain_mutual_info_bits": 0.4363499883865775,
+      "extreme_domains": {
+        "ec_zeros": -0.030395196319584164,
+        "knots": -0.0186006292713587
+      }
+    },
+    "evidence_level": "POSSIBLE"
+  },
+  "PC8": {
+    "name": "Desmos",
+    "description": "bond/link \u2014 polynomial-spectral coupling; driven by knots[alex_c4, alex_c2]; number_fields[regulator, disc_sign]; space_groups[lattice_type, ptgrp_order]",
+    "equation": "Desmos(x) = -0.49*knots.alex_c4 -0.44*knots.alex_c2 +0.35*knots.alex_c5 + ...",
+    "equation_type": "independent axis",
+    "variance_pct": 5.02,
+    "domain_contributions_top5": {
+      "knots": 0.2755,
+      "maass": 0.1538,
+      "ec_zeros": 0.1364,
+      "charon_landscape": 0.1083,
+      "lattices": 0.0568
+    },
+    "top_feature_loadings": [
+      {
+        "col": 9,
+        "loading": -0.4924,
+        "features": [
+          "knots.alex_c4",
+          "maass.coeff_4",
+          "ec_zeros.n_zeros"
+        ]
+      },
+      {
+        "col": 7,
+        "loading": -0.4366,
+        "features": [
+          "knots.alex_c2",
+          "maass.coeff_2",
+          "ec_zeros.spacing_std"
+        ]
+      },
+      {
+        "col": 10,
+        "loading": 0.3501,
+        "features": [
+          "knots.alex_c5",
+          "maass.coeff_5",
+          "ec_zeros.low_zero_avg"
+        ]
+      },
+      {
+        "col": 4,
+        "loading": 0.3462,
+        "features": [
+          "knots.conway_len",
+          "number_fields.regulator",
+          "space_groups.lattice_type"
+        ]
+      },
+      {
+        "col": 8,
+        "loading": 0.3095,
+        "features": [
+          "knots.alex_c3",
+          "maass.coeff_3",
+          "ec_zeros.spacing_ratio"
+        ]
+      }
+    ],
+    "domain_feature_drivers": {
+      "knots": [
+        {
+          "feature": "alex_c4",
+          "loading": -0.4924
+        },
+        {
+          "feature": "alex_c2",
+          "loading": -0.4366
+        },
+        {
+          "feature": "alex_c5",
+          "loading": 0.3501
+        }
+      ],
+      "number_fields": [
+        {
+          "feature": "regulator",
+          "loading": 0.3462
+        },
+        {
+          "feature": "disc_sign",
+          "loading": 0.2558
+        },
+        {
+          "feature": "n_class_grp",
+          "loading": -0.1892
+        }
+      ],
+      "space_groups": [
+        {
+          "feature": "lattice_type",
+          "loading": 0.3462
+        },
+        {
+          "feature": "ptgrp_order",
+          "loading": 0.2558
+        },
+        {
+          "feature": "crystal_sys",
+          "loading": 0.1679
+        }
+      ],
+      "genus2": [
+        {
+          "feature": "locally_solv",
+          "loading": 0.3462
+        },
+        {
+          "feature": "disc_sign",
+          "loading": 0.2558
+        },
+        {
+          "feature": "globally_solv",
+          "loading": -0.1892
+        }
+      ],
+      "maass": [
+        {
+          "feature": "coeff_4",
+          "loading": -0.4924
+        },
+        {
+          "feature": "coeff_2",
+          "loading": -0.4366
+        },
+        {
+          "feature": "coeff_5",
+          "loading": 0.3501
+        }
+      ]
+    },
+    "prime_decomposition": {
+      "has_prime_decomposition": false,
+      "fraction_within_10pct": 1.0,
+      "random_baseline": 1.0,
+      "improvement_over_random": 1.0
+    },
+    "megethos_dependence": {
+      "R2_linear": 9.218737344064462e-32,
+      "R2_quadratic": 0.026431881564580983,
+      "correlation": -3.0362373662255826e-16,
+      "is_function_of_megethos": false
+    },
+    "sieve_property": {
+      "has_sieve": true,
+      "uniformity": 0.9921896943053443,
+      "domain_mutual_info_bits": 0.4581842400799129,
+      "extreme_domains": {
+        "ec_zeros": 0.023886666280536872,
+        "maass": -0.016005062653480014
+      }
+    },
+    "evidence_level": "POSSIBLE"
+  },
+  "PC9": {
+    "name": "Topos",
+    "description": "place/position \u2014 embedding geometry; driven by knots[alex_c1, alex_c0]; number_fields[n_class_grp, disc_sign]; space_groups[ptgrp_order, crystal_sys]",
+    "equation": "Topos(x) = +0.86*knots.alex_c1 +0.44*knots.alex_c0 +0.17*knots.alex_c2 + ...",
+    "equation_type": "independent axis",
+    "variance_pct": 4.05,
+    "domain_contributions_top5": {
+      "charon_landscape": 0.2057,
+      "genus2": 0.1864,
+      "maass": 0.1656,
+      "ec_zeros": 0.142,
+      "oeis": 0.1326
+    },
+    "top_feature_loadings": [
+      {
+        "col": 6,
+        "loading": 0.8629,
+        "features": [
+          "knots.alex_c1",
+          "genus2.root_number",
+          "maass.coeff_1"
+        ]
+      },
+      {
+        "col": 5,
+        "loading": 0.4394,
+        "features": [
+          "knots.alex_c0",
+          "number_fields.n_class_grp",
+          "genus2.globally_solv"
+        ]
+      },
+      {
+        "col": 7,
+        "loading": 0.1684,
+        "features": [
+          "knots.alex_c2",
+          "maass.coeff_2",
+          "ec_zeros.spacing_std"
+        ]
+      },
+      {
+        "col": 12,
+        "loading": 0.0826,
+        "features": [
+          "knots.jones_c0",
+          "maass.coeff_7",
+          "battery.dom_involved_6"
+        ]
+      },
+      {
+        "col": 1,
+        "loading": 0.0756,
+        "features": [
+          "knots.determinant",
+          "number_fields.disc_sign",
+          "space_groups.ptgrp_order"
+        ]
+      }
+    ],
+    "domain_feature_drivers": {
+      "knots": [
+        {
+          "feature": "alex_c1",
+          "loading": 0.8629
+        },
+        {
+          "feature": "alex_c0",
+          "loading": 0.4394
+        },
+        {
+          "feature": "alex_c2",
+          "loading": 0.1684
+        }
+      ],
+      "number_fields": [
+        {
+          "feature": "n_class_grp",
+          "loading": 0.4394
+        },
+        {
+          "feature": "disc_sign",
+          "loading": 0.0756
+        },
+        {
+          "feature": "class_num",
+          "loading": 0.0642
+        }
+      ],
+      "space_groups": [
+        {
+          "feature": "ptgrp_order",
+          "loading": 0.0756
+        },
+        {
+          "feature": "crystal_sys",
+          "loading": 0.0642
+        },
+        {
+          "feature": "sg_number",
+          "loading": -0.054
+        }
+      ],
+      "genus2": [
+        {
+          "feature": "root_number",
+          "loading": 0.8629
+        },
+        {
+          "feature": "globally_solv",
+          "loading": 0.4394
+        },
+        {
+          "feature": "disc_sign",
+          "loading": 0.0756
+        }
+      ],
+      "maass": [
+        {
+          "feature": "coeff_1",
+          "loading": 0.8629
+        },
+        {
+          "feature": "coeff_0",
+          "loading": 0.4394
+        },
+        {
+          "feature": "coeff_2",
+          "loading": 0.1684
+        }
+      ]
+    },
+    "prime_decomposition": {
+      "has_prime_decomposition": false,
+      "fraction_within_10pct": 0.9991150442477876,
+      "random_baseline": 1.0,
+      "improvement_over_random": 0.9991150442477876
+    },
+    "megethos_dependence": {
+      "R2_linear": 1.027470223725479e-30,
+      "R2_quadratic": 0.0016313149650919456,
+      "correlation": -1.0136420589761846e-15,
+      "is_function_of_megethos": false
+    },
+    "sieve_property": {
+      "has_sieve": true,
+      "uniformity": 0.9973867681491503,
+      "domain_mutual_info_bits": 0.818024455619877,
+      "extreme_domains": {
+        "charon_landscape": -0.02216048907756218,
+        "ec_zeros": -0.01663339297361505,
+        "genus2": -0.012881800575501487,
+        "materials": 0.014476979110062533
+      }
+    },
+    "evidence_level": "PROBABLE"
+  },
+  "PC10": {
+    "name": "Kymatos",
+    "description": "wave \u2014 spectral coefficient oscillation; driven by knots[alex_c6, alex_c2]; number_fields[n_class_grp, regulator]; space_groups[lattice_type, sg_number]",
+    "equation": "Kymatos(x) = +0.86*knots.alex_c6 -0.32*knots.alex_c2 -0.26*knots.alex_c3 + ...",
+    "equation_type": "independent axis",
+    "variance_pct": 2.27,
+    "domain_contributions_top5": {
+      "maass": 0.3535,
+      "knots": 0.2619,
+      "ec_zeros": 0.2313,
+      "charon_landscape": 0.0459,
+      "genus2": 0.0275
+    },
+    "top_feature_loadings": [
+      {
+        "col": 11,
+        "loading": 0.8588,
+        "features": [
+          "knots.alex_c6",
+          "maass.coeff_6",
+          "ec_zeros.high_zero_avg"
+        ]
+      },
+      {
+        "col": 7,
+        "loading": -0.3151,
+        "features": [
+          "knots.alex_c2",
+          "maass.coeff_2",
+          "ec_zeros.spacing_std"
+        ]
+      },
+      {
+        "col": 8,
+        "loading": -0.2565,
+        "features": [
+          "knots.alex_c3",
+          "maass.coeff_3",
+          "ec_zeros.spacing_ratio"
+        ]
+      },
+      {
+        "col": 24,
+        "loading": 0.1665,
+        "features": [
+          "knots.conway_c0",
+          "maass.coeff_19"
+        ]
+      },
+      {
+        "col": 6,
+        "loading": 0.1504,
+        "features": [
+          "knots.alex_c1",
+          "genus2.root_number",
+          "maass.coeff_1"
+        ]
+      }
+    ],
+    "domain_feature_drivers": {
+      "knots": [
+        {
+          "feature": "alex_c6",
+          "loading": 0.8588
+        },
+        {
+          "feature": "alex_c2",
+          "loading": -0.3151
+        },
+        {
+          "feature": "alex_c3",
+          "loading": -0.2565
+        }
+      ],
+      "number_fields": [
+        {
+          "feature": "n_class_grp",
+          "loading": -0.1365
+        },
+        {
+          "feature": "regulator",
+          "loading": -0.0693
+        },
+        {
+          "feature": "degree",
+          "loading": 0.0633
+        }
+      ],
+      "space_groups": [
+        {
+          "feature": "lattice_type",
+          "loading": -0.0693
+        },
+        {
+          "feature": "sg_number",
+          "loading": 0.0633
+        }
+      ],
+      "genus2": [
+        {
+          "feature": "root_number",
+          "loading": 0.1504
+        },
+        {
+          "feature": "globally_solv",
+          "loading": -0.1365
+        },
+        {
+          "feature": "locally_solv",
+          "loading": -0.0693
+        }
+      ],
+      "maass": [
+        {
+          "feature": "coeff_6",
+          "loading": 0.8588
+        },
+        {
+          "feature": "coeff_2",
+          "loading": -0.3151
+        },
+        {
+          "feature": "coeff_3",
+          "loading": -0.2565
+        }
+      ]
+    },
+    "prime_decomposition": {
+      "has_prime_decomposition": false,
+      "fraction_within_10pct": 1.0,
+      "random_baseline": 1.0,
+      "improvement_over_random": 1.0
+    },
+    "megethos_dependence": {
+      "R2_linear": 1.4743450356057014e-29,
+      "R2_quadratic": 0.016691799023533904,
+      "correlation": 3.839720088243024e-15,
+      "is_function_of_megethos": false
+    },
+    "sieve_property": {
+      "has_sieve": true,
+      "uniformity": 0.9999999498020563,
+      "domain_mutual_info_bits": 0.5652572150359078,
+      "extreme_domains": {
+        "ec_zeros": 0.014381232828511453,
+        "maass": -0.013431538381875658
+      }
+    },
+    "evidence_level": "PROBABLE"
+  }
+}
