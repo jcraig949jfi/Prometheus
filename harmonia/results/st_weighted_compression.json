@@ -1,0 +1,100 @@
+{
+  "hypothesis": "Sato-Tate cross-entropy of a_p sequence discriminates rank",
+  "method": "For each newform, compute theta_p = a_p/(2*sqrt(p)) at prime indices. Under Sato-Tate, theta_p ~ semicircle on [-1,1]. Surprise = -log2(P_ST(theta_p)). Cross-entropy = mean surprise measures deviation from ST baseline. Rank information (BSD constraints) should appear as systematic excess/deficit.",
+  "data": {
+    "source": "LMFDB mf_newforms (weight=2, dim=1)",
+    "total_records": 5000,
+    "min_traces": 100,
+    "primes_used": 100
+  },
+  "sato_tate_entropy_bits": 0.9301486090277957,
+  "rank_stratified": {
+    "rank_0": {
+      "count": 2502,
+      "mean_surprise_mean": 0.9230132213737289,
+      "mean_surprise_std": 0.034120750909235074,
+      "mean_surprise_median": 0.9222577338108513,
+      "total_surprise_mean": 92.30132213737286,
+      "total_surprise_std": 3.4120750909235076,
+      "kl_divergence_mean": 0.4578473100984662,
+      "kl_divergence_std": 0.24798422004932544,
+      "excess_vs_st_entropy": -0.007135387654066849
+    },
+    "rank_1": {
+      "count": 2419,
+      "mean_surprise_mean": 0.9221838924683945,
+      "mean_surprise_std": 0.0345562652831103,
+      "mean_surprise_median": 0.9221815211822734,
+      "total_surprise_mean": 92.21838924683944,
+      "total_surprise_std": 3.45562652831103,
+      "kl_divergence_mean": 0.45382878379606567,
+      "kl_divergence_std": 0.2297775088431116,
+      "excess_vs_st_entropy": -0.00796471655940123
+    },
+    "rank_2+": {
+      "count": 79,
+      "mean_surprise_mean": 0.9405795065196697,
+      "mean_surprise_std": 0.02513379182247752,
+      "mean_surprise_median": 0.942577197177481,
+      "total_surprise_mean": 94.05795065196696,
+      "total_surprise_std": 2.513379182247752,
+      "kl_divergence_mean": 0.4603498592210765,
+      "kl_divergence_std": 0.06256567687492913,
+      "excess_vs_st_entropy": 0.01043089749187398
+    }
+  },
+  "correlations": {
+    "mean_surprise": {
+      "spearman_rho": 0.01743871834179274,
+      "p_value": 0.2176171683736981
+    },
+    "total_surprise": {
+      "spearman_rho": 0.01743871834179274,
+      "p_value": 0.2176171683736981
+    },
+    "kl_divergence": {
+      "spearman_rho": 0.014453686075538548,
+      "p_value": 0.30686241952631005
+    }
+  },
+  "mann_whitney": {
+    "kl_divergence": {
+      "U": 3019331.0,
+      "p_value": 0.8908473733589575
+    },
+    "mean_surprise": {
+      "U": 3032081.5,
+      "p_value": 0.9055472514266711,
+      "rank_biserial": -0.0019537904195039424,
+      "cohens_d": -0.02415108507367572,
+      "rank0_mean": 0.9230132213737289,
+      "rank1_mean": 0.9221838924683945,
+      "difference_bits": -0.0008293289053343811
+    }
+  },
+  "conductor_matched_control": {
+    "n_matched_levels": 682,
+    "mean_surprise_diff_mean": -0.0005952202520098664,
+    "mean_surprise_diff_t": -0.4406429654982288,
+    "mean_surprise_diff_p": 0.6596113316639949,
+    "kl_diff_mean": 0.012042128108553648,
+    "kl_diff_t": 1.8505292899732346,
+    "kl_diff_p": 0.06467019895626834
+  },
+  "partial_correlation_control": {
+    "partial_spearman_rho": 0.012901712506009133,
+    "partial_spearman_p": 0.3617167626914812
+  },
+  "permutation_null": {
+    "observed_rho": 0.01743871834179274,
+    "null_mean": -0.0006796655654676495,
+    "null_std": 0.014011249503460757,
+    "permutation_p": 0.218,
+    "n_permutations": 1000
+  },
+  "prior_test_comparison": {
+    "standard_compression_rho": 0.017,
+    "standard_compression_verdict": "NULL"
+  },
+  "verdict": "NULL: no significant correlation between ST cross-entropy and rank"
+}
