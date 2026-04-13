@@ -87,6 +87,24 @@ NOVELTY_TAGS = [
     "information_theoretic", "algebraic", "dynamical", "cross_domain",
 ]
 
+# Domains with actual data loaded in executor
+ACTIVE_DOMAINS = [
+    "elliptic_curves", "modular_forms", "number_fields", "genus2_curves",
+    "maass_forms", "knots", "superconductors",
+]
+
+# Features that actually extract from active domains
+ACTIVE_FEATURES = {
+    "elliptic_curves": ["conductor", "log_conductor", "rank", "torsion", "n_bad_primes",
+                         "ap_kurtosis", "ap_compression_lz"],
+    "modular_forms": ["level", "weight", "dim"],
+    "number_fields": ["discriminant", "log_discriminant", "class_number", "regulator", "degree"],
+    "genus2_curves": ["conductor", "log_conductor", "discriminant", "torsion", "root_number"],
+    "maass_forms": ["level", "spectral_parameter", "coefficient_entropy"],
+    "knots": ["crossing_number", "determinant", "alexander_degree", "jones_degree"],
+    "superconductors": ["tc"],
+}
+
 
 # ============================================================
 # Gene Dataclass
@@ -209,17 +227,28 @@ def crossover(parent_a: Hypothesis, parent_b: Hypothesis, gen: int, rng=None) ->
     return child
 
 
-def random_hypothesis(gen: int, rng=None) -> Hypothesis:
-    """Generate a completely random hypothesis."""
+def random_hypothesis(gen: int, rng=None, active_only=True) -> Hypothesis:
+    """Generate a random hypothesis, biased toward domains with data."""
     if rng is None:
         rng = random.Random()
 
+    if active_only:
+        dom_a = rng.choice(ACTIVE_DOMAINS)
+        dom_b = rng.choice(ACTIVE_DOMAINS)
+        feat_a = rng.choice(ACTIVE_FEATURES.get(dom_a, FEATURES))
+        feat_b = rng.choice(ACTIVE_FEATURES.get(dom_b, FEATURES))
+    else:
+        dom_a = rng.choice(DOMAINS)
+        dom_b = rng.choice(DOMAINS)
+        feat_a = rng.choice(FEATURES)
+        feat_b = rng.choice(FEATURES)
+
     return Hypothesis(
         id=f"hyp_g{gen}_{rng.randint(0, 99999):05d}",
-        domain_a=rng.choice(DOMAINS),
-        domain_b=rng.choice(DOMAINS),
-        feature_a=rng.choice(FEATURES),
-        feature_b=rng.choice(FEATURES),
+        domain_a=dom_a,
+        domain_b=dom_b,
+        feature_a=feat_a,
+        feature_b=feat_b,
         coupling=rng.choice(COUPLINGS),
         conditioning=rng.choice(CONDITIONINGS),
         null_model=rng.choice(NULL_MODELS),
