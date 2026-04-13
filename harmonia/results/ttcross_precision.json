@@ -1,0 +1,24 @@
+{
+  "test": "TT-Cross bond dimensions vs Megethos control",
+  "EC_NF_bond": {
+    "normal": {
+      "rank": 4,
+      "method": "baseline"
+    },
+    "megethos_zeroed": {
+      "rank": 4,
+      "method": "feature 0 set to 0 in both domains"
+    },
+    "megethos_shuffled": {
+      "rank": 4,
+      "method": "feature 0 permuted within EC"
+    },
+    "validated_without_megethos": 2
+  },
+  "verdict": "TT-Cross bonds SURVIVE Megethos removal. Rank unchanged (4->4). Validated rank 2 without Megethos. The tensor coupling function captures non-Megethos structure that phoneme NN matching cannot detect.",
+  "reconciliation": {
+    "phoneme_NN": "DEAD \u2014 within-bin rho=0.033 (Megethos leakage)",
+    "TT_Cross": "ALIVE \u2014 rank 4 survives Megethos zeroing AND shuffling",
+    "explanation": "TT-Cross uses a coupling FUNCTION (cosine similarity in projected space), not nearest-neighbor matching. The function captures distributional coupling that NN collapses. The tensor structure is real. The transfer metric was broken."
+  }
+}

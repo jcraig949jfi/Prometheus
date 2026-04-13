@@ -1,0 +1,14 @@
+{
+  "distributional_test": {
+    "verdict": "ALL 14 FEATURES significant at p=0.00",
+    "strongest": "nn_var KS=0.997, nv2 KS=0.978, sr2 KS=0.972",
+    "but": "The matching is DEGENERATE \u2014 all MF objects map to same RMT neighbors"
+  },
+  "precision_test": {
+    "verdict": "FAILS \u2014 matched RMT stats are CONSTANT across all Megethos bins",
+    "values": "sp_var=0.7314, sp_kurt=0.6362, nn_ratio=-0.6111 (identical in all 10 bins)",
+    "cause": "RMT has pure Phasma (no Megethos). All MF objects match to the same few RMT objects regardless of level.",
+    "fix": "RMT domain needs log(conductor) of the underlying EC as a Megethos feature to enable differentiated matching."
+  },
+  "honest_assessment": "The distributional coupling is real (massive KS stats) but degenerate (all match to same objects). The Montgomery-Odlyzko connection exists but our current measurement cannot distinguish it from trivial phoneme-space collapse. Need RMT with Megethos to test properly."
+}

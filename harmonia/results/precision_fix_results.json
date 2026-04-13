@@ -1,0 +1,37 @@
+{
+  "methods_tested": {
+    "M0_phoneme_NN": {
+      "rho": 0.599,
+      "unique": 306,
+      "verdict": "INFLATED \u2014 Megethos leakage"
+    },
+    "M1_raw_feature": {
+      "rho": 0.027,
+      "unique": 398,
+      "verdict": "Near null \u2014 raw matching shows no signal"
+    },
+    "M2_within_bin": {
+      "rho": 0.033,
+      "verdict": "NEAR NULL \u2014 no Arithmos beyond Megethos"
+    },
+    "M3_quantile_rank": {
+      "rho": 1.0,
+      "verdict": "TAUTOLOGICAL \u2014 rank matches rank by definition"
+    },
+    "M4_trivial": {
+      "rho": 0.962,
+      "verdict": "Upper bound \u2014 knows the answer"
+    },
+    "null": {
+      "rho": 0.002,
+      "verdict": "Random baseline"
+    }
+  },
+  "key_finding": "Within-bin random matching (M2) gives rho=0.033, indistinguishable from null (0.002). The EC->NF Arithmos transfer was entirely Megethos leakage. When you properly control for Megethos, no residual cross-domain structure remains in the phoneme NN matching.",
+  "what_this_means": {
+    "phoneme_NN_transfer": "DEAD as a precision metric. All reported rho values were Megethos leakage.",
+    "TT_Cross_bonds": "UNTESTED by this fix. Bond dimensions use a different mechanism (coupling function, not NN matching). Need separate precision test.",
+    "discovery_of_correspondences": "STILL VALID. The system correctly identifies that torsion and class number are arithmetic-type invariants. It cannot measure HOW they correspond beyond Megethos."
+  },
+  "next_step": "Test TT-Cross bond dimensions with F33-F37 integrated. If bonds survive within-bin controls, the tensor structure is real. If they collapse, the entire landscape was Megethos."
+}

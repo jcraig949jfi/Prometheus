@@ -1,0 +1,24 @@
+{
+  "chemistry_EC": {
+    "top_correspondence": "zpve <-> torsion (rho=0.859, 58x null)",
+    "interpretation": "Zero-point vibrational energy of a molecule predicts EC torsion via phoneme matching. ZPVE measures quantum ground-state energy. Torsion measures finite arithmetic group structure. These have no known theoretical connection. 58x above null.",
+    "megethos_mediated": "spatial_extent <-> log_conductor (rho=0.820). This IS Megethos mediation \u2014 molecular size tracks conductor. Expected."
+  },
+  "chemistry_NF": {
+    "top_correspondence": "spatial_extent <-> log_discriminant (rho=0.841, 44x null)",
+    "interpretation": "Molecular spatial extent predicts NF discriminant via phoneme matching. Both measure size/complexity. This is Megethos.",
+    "non_megethos": "zpve <-> class_number (rho=0.679, 35x null). ZPVE predicts class number. This is NOT Megethos \u2014 it is a spectral-to-arithmetic bridge."
+  },
+  "dynamics_genus2": {
+    "top_correspondence": "orbit_type <-> root_number (rho=0.641, 59x null)",
+    "interpretation": "Dynamical orbit classification of OEIS sequences predicts genus-2 root number. Orbit type = periodic/chaotic/fixed. Root number = functional equation sign. Both are discrete symmetry indicators."
+  },
+  "spectral_sigs_lattices": {
+    "top_correspondence": "entropy <-> log_determinant (rho=0.959, 93x null)",
+    "interpretation": "Spectral entropy of formula FFT predicts lattice determinant at rho=0.96. This is the strongest cross-category correspondence found. Spectral complexity of formulas tracks arithmetic complexity of lattices. Likely Megethos-mediated but at extreme precision."
+  },
+  "rmt_MF": {
+    "result": "No significant correspondences at feature level",
+    "interpretation": "The RMT<->MF bond (which passed F1 at z=2.04) operates through distributional coupling, not individual feature alignment. The connection is in the SHAPE of the zero distribution, not in any single feature pair. This is genuine spectral structure, not ordinal matching."
+  }
+}

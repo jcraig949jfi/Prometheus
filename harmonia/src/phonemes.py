@@ -155,6 +155,19 @@ DOMAIN_PHONEME_MAP = {
         "rank":       [(1, +1, 0.9)],           # genus ~ topological depth
         "arithmetic": [(2, +1, 0.7)],           # orbit_size ~ Galois orbit structure
     },
+    "raw_zeros": {
+        # features: [zero_1, zero_2, ..., zero_10] — actual L-function zero positions
+        # Pure spectral. No arithmetic. These are theorems, not features.
+        "spectral": [(0, +1, 1.0), (1, +1, 1.0), (2, +1, 1.0), (3, +1, 1.0), (4, +1, 1.0),
+                     (5, +1, 1.0), (6, +1, 1.0), (7, +1, 1.0), (8, +1, 1.0), (9, +1, 1.0)],
+    },
+    "zeros_anchored": {
+        # features: [log_conductor, zero_1, ..., zero_10]
+        # Megethos + raw spectral. The bridge between the two primary axes.
+        "complexity": [(0, +1, 1.0)],
+        "spectral": [(1, +1, 1.0), (2, +1, 1.0), (3, +1, 1.0), (4, +1, 1.0), (5, +1, 1.0),
+                     (6, +1, 1.0), (7, +1, 1.0), (8, +1, 1.0), (9, +1, 1.0), (10, +1, 1.0)],
+    },
     "charon_landscape": {
         # features: [coord0-7, curvature, cluster_id]
         "complexity": [(8, +1, 0.7)],           # curvature ~ local complexity
