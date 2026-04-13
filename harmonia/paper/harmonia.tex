@@ -280,6 +280,16 @@ Alternative invariants (rank/regulator instead of torsion/class number) achieve 
 
 $Z_2$ alone (Arithmos phoneme) achieves $\rho = 0.61$---\emph{better} than the full 5D phoneme space ($\rho = 0.51$). Adding Megethos \emph{degrades} cross-domain arithmetic prediction. The transfer signal is purely Arithmos-driven.
 
+\subsection{Curvature of the Phoneme Space}
+
+We measure the curvature of the 5D phoneme space using two complementary methods.
+
+\textbf{Sectional curvature} (triangle comparison, 10,000 random triangles): mean $\kappa = 0.000$. The embedding space is intrinsically \emph{flat}---triangles perfectly obey the Euclidean law of cosines.
+
+\textbf{Ollivier--Ricci curvature} (approximate ORC on $k{=}10$ nearest-neighbor graph, 1,903 edges): mean $\kappa_{\text{OR}} = 0.713$, with 98.8\% of edges positive. The data distribution is \emph{strongly positively curved}---objects cluster into tight, sphere-like neighborhoods.
+
+This distinction matters: the \emph{space} is flat (our angle measurements are valid Euclidean rotations, not geodesic deviations), but the \emph{data} occupies a positively-curved submanifold within it. A hyperbolic or mixed-curvature embedding might better capture the natural geometry of the data distribution, but our current linear analysis is geometrically sound.
+
 \section{Discussion}
 
 \subsection{Interpretation}
