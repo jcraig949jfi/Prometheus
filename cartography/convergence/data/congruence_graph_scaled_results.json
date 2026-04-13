@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "n_curves": 20000,
+    "num_ap": 10,
+    "threshold": 0.7,
+    "primes_ell": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19
+    ],
+    "n_communities": 10,
+    "null_trials": 100,
+    "orc_samples": 5000,
+    "rank_distribution": {
+      "1": 9826,
+      "0": 6936,
+      "2": 2964,
+      "3": 260,
+      "4": 14
+    }
+  },
+  "part1_scale": {
+    "2": {
+      "n_edges": 43464033,
+      "chi2": 61.97129561286484,
+      "chi2_p": 0.004552144420141237,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 3.5239759938115434,
+      "frac_null_exceeding": 0.0,
+      "verdict": "NOT SIGNIFICANT",
+      "time_s": 125.24540209770203
+    },
+    "3": {
+      "n_edges": 4876191,
+      "chi2": 91.13188453062502,
+      "chi2_p": 1.1257625724892958e-06,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 7.483805484205323,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 40.947847843170166
+    },
+    "5": {
+      "n_edges": 298015,
+      "chi2": 151.23553986622136,
+      "chi2_p": 4.505010502656026e-16,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 15.645513999406282,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 26.950647830963135
+    },
+    "7": {
+      "n_edges": 63135,
+      "chi2": 102.96043238216116,
+      "chi2_p": 2.27829313627568e-08,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 9.090049882874503,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 26.986737489700317
+    },
+    "11": {
+      "n_edges": 13829,
+      "chi2": 135.3828270697215,
+      "chi2_p": 1.962766246912847e-13,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 13.49281263211357,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 29.190799236297607
+    },
+    "13": {
+      "n_edges": 10087,
+      "chi2": 154.2486451816068,
+      "chi2_p": 1.388997561434996e-16,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 16.054675258775045,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 28.216888904571533
+    },
+    "17": {
+      "n_edges": 7818,
+      "chi2": 108.08528002212717,
+      "chi2_p": 3.9272495008465676e-09,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 9.78597282447712,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 28.36143207550049
+    },
+    "19": {
+      "n_edges": 7622,
+      "chi2": 109.94531130371088,
+      "chi2_p": 2.0560391798537254e-09,
+      "null_mean": 36.02037637230562,
+      "null_std": 7.364102163616225,
+      "z_score": 10.038553687732055,
+      "frac_null_exceeding": 0.0,
+      "verdict": "SIGNIFICANT",
+      "time_s": 28.302098989486694
+    }
+  },
+  "part2_conductor_matched": {
+    "5": {
+      "congruent_same_rank": 0,
+      "congruent_diff_rank": 60,
+      "noncongruent_same_rank": 0,
+      "noncongruent_diff_rank": 19940,
+      "total_pairs": 20000
+    },
+    "7": {
+      "congruent_same_rank": 0,
+      "congruent_diff_rank": 32,
+      "noncongruent_same_rank": 0,
+      "noncongruent_diff_rank": 19968,
+      "total_pairs": 20000
+    },
+    "11": {
+      "congruent_same_rank": 0,
+      "congruent_diff_rank": 12,
+      "noncongruent_same_rank": 0,
+      "noncongruent_diff_rank": 19988,
+      "total_pairs": 20000
+    },
+    "13": {
+      "congruent_same_rank": 0,
+      "congruent_diff_rank": 12,
+      "noncongruent_same_rank": 0,
+      "noncongruent_diff_rank": 19988,
+      "total_pairs": 20000
+    },
+    "5_full": {
+      "congruent_same_rank": 64,
+      "congruent_diff_rank": 86,
+      "noncongruent_same_rank": 1038,
+      "noncongruent_diff_rank": 1346,
+      "rate_congruent": 0.4266666666666667,
+      "rate_noncongruent": 0.4354026845637584,
+      "odds_ratio": 0.9650042568445579,
+      "fisher_p": 0.8654258753660602,
+      "verdict": "NOT SIGNIFICANT",
+      "total_pairs": 2534
+    },
+    "7_full": {
+      "congruent_same_rank": 31,
+      "congruent_diff_rank": 50,
+      "noncongruent_same_rank": 1071,
+      "noncongruent_diff_rank": 1382,
+      "rate_congruent": 0.38271604938271603,
+      "rate_noncongruent": 0.43660823481451283,
+      "odds_ratio": 0.8000373482726424,
+      "fisher_p": 0.3635002831696735,
+      "verdict": "NOT SIGNIFICANT",
+      "total_pairs": 2534
+    },
+    "11_full": {
+      "congruent_same_rank": 26,
+      "congruent_diff_rank": 30,
+      "noncongruent_same_rank": 1076,
+      "noncongruent_diff_rank": 1402,
+      "rate_congruent": 0.4642857142857143,
+      "rate_noncongruent": 0.43422114608555284,
+      "odds_ratio": 1.1292441140024783,
+      "fisher_p": 0.6839203654773444,
+      "verdict": "NOT SIGNIFICANT",
+      "total_pairs": 2534
+    },
+    "13_full": {
+      "congruent_same_rank": 19,
+      "congruent_diff_rank": 28,
+      "noncongruent_same_rank": 1083,
+      "noncongruent_diff_rank": 1404,
+      "rate_congruent": 0.40425531914893614,
+      "rate_noncongruent": 0.43546441495778043,
+      "odds_ratio": 0.8796992481203008,
+      "fisher_p": 0.7669507193885214,
+      "verdict": "NOT SIGNIFICANT",
+      "total_pairs": 2534
+    }
+  },
+  "part3_curvature": {
+    "7": {
+      "boundary_mean_orc": -0.3308819655038997,
+      "boundary_median_orc": 0.09088827838827795,
+      "boundary_n": 2917,
+      "interior_mean_orc": -0.3332902041567207,
+      "interior_median_orc": 0.14570670185722367,
+      "interior_n": 1948,
+      "mann_whitney_U": 2823625.0,
+      "mann_whitney_p": 0.7149276190454122,
+      "verdict": "NOT REPRODUCED"
+    },
+    "11": {
+      "boundary_mean_orc": -0.37565313640973413,
+      "boundary_median_orc": 0.010088559868725977,
+      "boundary_n": 2000,
+      "interior_mean_orc": -0.390057120248739,
+      "interior_median_orc": -0.03964417935006148,
+      "interior_n": 1473,
+      "mann_whitney_U": 1489989.0,
+      "mann_whitney_p": 0.5607460150073551,
+      "verdict": "NOT REPRODUCED"
+    }
+  },
+  "part4_reindex": {
+    "5": {
+      "true_chi2": 136.73891983293652,
+      "shuffled_chi2s": [
+        34.83323598302453,
+        36.416967503679786,
+        36.8305273922374,
+        27.435668310380976,
+        17.941006360498868
+      ],
+      "shuffled_mean": 30.691481109964315,
+      "shuffled_std": 7.222162286347721,
+      "z_score": 14.683613372055762,
+      "verdict": "DIES under shuffle -> curve-specific a_p pattern matters (STRONG)"
+    },
+    "7": {
+      "true_chi2": 123.71932485113179,
+      "shuffled_chi2s": [
+        19.92980843032317,
+        34.97271702632798,
+        30.91075859442183,
+        52.55374280965712,
+        31.41556934602752
+      ],
+      "shuffled_mean": 33.95651924135153,
+      "shuffled_std": 10.577060866354932,
+      "z_score": 8.486554700210808,
+      "verdict": "DIES under shuffle -> curve-specific a_p pattern matters (STRONG)"
+    },
+    "11": {
+      "true_chi2": 130.5668661525958,
+      "shuffled_chi2s": [
+        22.64239498324595,
+        26.914364110824692,
+        33.47624082008026,
+        31.18355174130684,
+        41.295202762108175
+      ],
+      "shuffled_mean": 31.102350883513186,
+      "shuffled_std": 6.303114523343178,
+      "z_score": 15.780217049955574,
+      "verdict": "DIES under shuffle -> curve-specific a_p pattern matters (STRONG)"
+    },
+    "13": {
+      "true_chi2": 133.03840231913884,
+      "shuffled_chi2s": [
+        44.050134297029174,
+        19.863914813127458,
+        30.17350875936924,
+        32.17917380301161,
+        30.20011575000325
+      ],
+      "shuffled_mean": 31.29336948450815,
+      "shuffled_std": 7.701966289584983,
+      "z_score": 13.210267223866696,
+      "verdict": "DIES under shuffle -> curve-specific a_p pattern matters (STRONG)"
+    }
+  },
+  "part5_twist": {
+    "7": {
+      "same_rank_same_comm": 15,
+      "same_rank_diff_comm": 0,
+      "diff_rank_same_comm": 192,
+      "diff_rank_diff_comm": 5,
+      "total_pairs": 212,
+      "odds_ratio": Infinity,
+      "fisher_p": 1.0,
+      "verdict": "INDEPENDENT"
+    },
+    "11": {
+      "same_rank_same_comm": 9,
+      "same_rank_diff_comm": 6,
+      "diff_rank_same_comm": 113,
+      "diff_rank_diff_comm": 84,
+      "total_pairs": 212,
+      "odds_ratio": 1.1150442477876106,
+      "fisher_p": 1.0,
+      "verdict": "INDEPENDENT"
+    }
+  },
+  "total_time_seconds": 1373.4641091823578
+}
