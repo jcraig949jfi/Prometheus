@@ -1,0 +1,22 @@
+{
+  "kill_1_random_arithmos": {
+    "adversary_claim": "Real transfer indistinguishable from sorted random integers",
+    "real_sorted_rho": 0.877,
+    "random_sorted_rho": 0.996,
+    "verdict": "PARTIALLY SURVIVES \u2014 real is LOWER than random (0.88 vs 1.00), meaning real data breaks perfect ordinal alignment. But the adversary is right that sorted small integers correlate by construction.",
+    "paper_impact": "Must add baseline: report that rank-sorted matching gives high rho for any small-integer distributions. Frame our contribution as the CROSS-DOMAIN matching (phoneme space), not the ordinal correlation itself."
+  },
+  "kill_2_trivial_predictor": {
+    "adversary_claim": "Nearest-integer matching beats phoneme transfer",
+    "trivial_rho": 0.953,
+    "phoneme_rho": "0.51-0.76",
+    "verdict": "CONFIRMED KILL. Trivial 1D nearest-value matching on the target variable outperforms the full phoneme system. The tensor train adds complexity without improving over the simplest possible baseline.",
+    "paper_impact": "MUST report this baseline in the paper. Reframe: the phoneme system finds that torsion and class number are related (which is the discovery), but the TRANSFER METRIC is inflated by ordinal matching. The value is IDENTIFYING which invariants correspond, not the rho number itself."
+  },
+  "kill_4_spurious_physics": {
+    "adversary_claim": "Materials Tc matches EC torsion at rho=-0.649 via Megethos",
+    "our_measurement": -0.192,
+    "verdict": "WEAKENED \u2014 we measure rho=-0.19, not -0.65. Coupling exists but is weak and may be Megethos leakage. The adversary overstated the magnitude but the concern about Megethos-mediated spurious coupling is valid.",
+    "paper_impact": "Add control: for every cross-category bond, report Megethos-only NN baseline. If phoneme transfer barely beats Megethos-only, the coupling is in the encoding."
+  }
+}
