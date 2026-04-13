@@ -1,0 +1,35 @@
+{
+  "modularity_coefficient_level": {
+    "EC_11a1_vs_MF_11_2_a_a": {
+      "a_2": {
+        "MF": -2,
+        "EC": -2,
+        "match": true
+      },
+      "a_3": {
+        "MF": -1,
+        "EC": -1,
+        "match": true
+      },
+      "a_5": {
+        "MF": 1,
+        "EC": 1,
+        "match": true
+      },
+      "a_7": {
+        "MF": -2,
+        "EC": -2,
+        "match": true
+      }
+    },
+    "verdict": "EXACT MATCH at all tested primes. Modularity confirmed at coefficient level from live Postgres.",
+    "source": "devmirror.lmfdb.xyz:5432, tables mf_newforms.traces and ec_curvedata.ainvs"
+  },
+  "precision_state": {
+    "NN_transfer": "DEAD \u2014 within-bin rho=0.033, Megethos leakage",
+    "TT_Cross_bonds": "ALIVE \u2014 rank 4 survives Megethos zeroing, validated 2",
+    "modularity": "CONFIRMED at coefficient level (a_p exact match)",
+    "montgomery_odlyzko": "DEGENERATE matching \u2014 need unfolded zeros",
+    "kill_rate": "11/13 (85%) on cross-domain claims"
+  }
+}
