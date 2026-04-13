@@ -1,0 +1,30 @@
+{
+  "finding": "Knot root GUE \u2014 KILLED",
+  "M2_measurement": {
+    "variance": 0.18,
+    "source": "Z-scored coefficients",
+    "verdict": "ARTIFACT of preprocessing"
+  },
+  "M1_measurement": {
+    "alexander_raw": {
+      "variance": 1.727,
+      "vs_GUE": "9.6x above"
+    },
+    "jones_raw": {
+      "variance": 0.836,
+      "vs_GUE": "4.6x above"
+    },
+    "random_polynomials": {
+      "variance": 0.21,
+      "vs_GUE": "1.2x above \u2014 CLOSEST to GUE"
+    },
+    "shuffled_knot": {
+      "variance": 0.316,
+      "vs_GUE": "1.8x above"
+    }
+  },
+  "root_cause": "M2 computed roots from Z-scored feature vectors, not raw polynomial coefficients. Z-scoring artificially regularizes the spacing distribution toward GUE-like variance.",
+  "killer_finding": "Random polynomials are CLOSER to GUE than real knots. Knot structure introduces EXCESS CLUSTERING (P(s<0.1)=0.34 vs GUE 0.004). Knots are ANTI-GUE.",
+  "F38_candidate": "Raw-data verification: distributional claims must be verified on raw data, not preprocessed features. Preprocessing can create or destroy distributional properties.",
+  "kill_tally": "12/14 killed. TT-Cross Megethos-zeroed bonds remain the only surviving signal."
+}
