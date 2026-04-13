@@ -508,7 +508,195 @@
         "rank": 5,
         "count": 19
       }
-    ]
+    ],
+    "parity_note": "ec_curvedata has no root_number column; signD is sign of discriminant, not functional equation sign",
+    "rank_vs_signD": [
+      {
+        "rank": 0,
+        "signD": -1,
+        "count": 788725
+      },
+      {
+        "rank": 0,
+        "signD": 1,
+        "count": 615785
+      },
+      {
+        "rank": 1,
+        "signD": -1,
+        "count": 1064423
+      },
+      {
+        "rank": 1,
+        "signD": 1,
+        "count": 822709
+      },
+      {
+        "rank": 2,
+        "signD": -1,
+        "count": 278966
+      },
+      {
+        "rank": 2,
+        "signD": 1,
+        "count": 214325
+      },
+      {
+        "rank": 3,
+        "signD": -1,
+        "count": 20678
+      },
+      {
+        "rank": 3,
+        "signD": 1,
+        "count": 16656
+      },
+      {
+        "rank": 4,
+        "signD": -1,
+        "count": 1117
+      },
+      {
+        "rank": 4,
+        "signD": 1,
+        "count": 969
+      },
+      {
+        "rank": 5,
+        "signD": -1,
+        "count": 11
+      },
+      {
+        "rank": 5,
+        "signD": 1,
+        "count": 8
+      }
+    ],
+    "fricke_rank_correlation": {
+      "note": "JOIN of ec_curvedata.conductor = mf_newforms.level (many-to-many, not 1:1 modularity pairing)",
+      "data": [
+        {
+          "rank": 0,
+          "fricke": -1,
+          "count": 2029874
+        },
+        {
+          "rank": 0,
+          "fricke": 1,
+          "count": 1965146
+        },
+        {
+          "rank": 1,
+          "fricke": -1,
+          "count": 2149597
+        },
+        {
+          "rank": 1,
+          "fricke": 1,
+          "count": 2470084
+        },
+        {
+          "rank": 2,
+          "fricke": -1,
+          "count": 229464
+        },
+        {
+          "rank": 2,
+          "fricke": 1,
+          "count": 216646
+        },
+        {
+          "rank": 3,
+          "fricke": -1,
+          "count": 293
+        },
+        {
+          "rank": 3,
+          "fricke": 1,
+          "count": 665
+        },
+        {
+          "rank": 4,
+          "fricke": -1,
+          "count": 7
+        },
+        {
+          "rank": 4,
+          "fricke": 1,
+          "count": 1
+        }
+      ]
+    },
+    "nf_unknown_rank_bounds": [
+      {
+        "rank_bounds": [
+          0,
+          1
+        ],
+        "count": 6969
+      },
+      {
+        "rank_bounds": [
+          0,
+          2
+        ],
+        "count": 2474
+      },
+      {
+        "rank_bounds": [
+          1,
+          2
+        ],
+        "count": 237
+      },
+      {
+        "rank_bounds": [
+          1,
+          3
+        ],
+        "count": 214
+      },
+      {
+        "rank_bounds": [
+          0,
+          3
+        ],
+        "count": 36
+      },
+      {
+        "rank_bounds": [
+          0,
+          4
+        ],
+        "count": 18
+      },
+      {
+        "rank_bounds": [
+          0,
+          5
+        ],
+        "count": 6
+      },
+      {
+        "rank_bounds": [
+          2,
+          3
+        ],
+        "count": 6
+      },
+      {
+        "rank_bounds": [
+          2,
+          4
+        ],
+        "count": 4
+      }
+    ],
+    "nf_rank_known_vs_unknown": {
+      "known": 757544,
+      "unknown": 9974,
+      "total": 767518
+    }
   },
   "3_mazur_edges": {
     "torsion_distribution_Q": [
@@ -950,182 +1138,336 @@
       {
         "column_name": "isodeg"
       }
+    ],
+    "beyond_mazur_torsion": [
+      {
+        "degree": 2,
+        "torsion": 13,
+        "structure": [
+          13
+        ],
+        "count": 1
+      },
+      {
+        "degree": 2,
+        "torsion": 14,
+        "structure": [
+          14
+        ],
+        "count": 14
+      },
+      {
+        "degree": 2,
+        "torsion": 15,
+        "structure": [
+          15
+        ],
+        "count": 8
+      },
+      {
+        "degree": 2,
+        "torsion": 16,
+        "structure": [
+          2,
+          8
+        ],
+        "count": 27
+      },
+      {
+        "degree": 2,
+        "torsion": 16,
+        "structure": [
+          4,
+          4
+        ],
+        "count": 14
+      },
+      {
+        "degree": 2,
+        "torsion": 18,
+        "structure": [
+          18
+        ],
+        "count": 2
+      },
+      {
+        "degree": 2,
+        "torsion": 18,
+        "structure": [
+          3,
+          6
+        ],
+        "count": 10
+      },
+      {
+        "degree": 2,
+        "torsion": 20,
+        "structure": [
+          2,
+          10
+        ],
+        "count": 6
+      },
+      {
+        "degree": 2,
+        "torsion": 24,
+        "structure": [
+          2,
+          12
+        ],
+        "count": 3
+      },
+      {
+        "degree": 3,
+        "torsion": 13,
+        "structure": [
+          13
+        ],
+        "count": 1
+      },
+      {
+        "degree": 3,
+        "torsion": 21,
+        "structure": [
+          21
+        ],
+        "count": 1
+      },
+      {
+        "degree": 3,
+        "torsion": 28,
+        "structure": [
+          2,
+          14
+        ],
+        "count": 1
+      },
+      {
+        "degree": 4,
+        "torsion": 17,
+        "structure": [
+          17
+        ],
+        "count": 1
+      },
+      {
+        "degree": 4,
+        "torsion": 22,
+        "structure": [
+          22
+        ],
+        "count": 2
+      },
+      {
+        "degree": 4,
+        "torsion": 32,
+        "structure": [
+          2,
+          16
+        ],
+        "count": 1
+      },
+      {
+        "degree": 5,
+        "torsion": 25,
+        "structure": [
+          25
+        ],
+        "count": 1
+      },
+      {
+        "degree": 6,
+        "torsion": 19,
+        "structure": [
+          19
+        ],
+        "count": 2
+      },
+      {
+        "degree": 6,
+        "torsion": 27,
+        "structure": [
+          27
+        ],
+        "count": 1
+      },
+      {
+        "degree": 6,
+        "torsion": 36,
+        "structure": [
+          2,
+          18
+        ],
+        "count": 1
+      },
+      {
+        "degree": 6,
+        "torsion": 37,
+        "structure": [
+          37
+        ],
+        "count": 1
+      }
     ]
   },
   "4_hasse_edges": {
-    "hasse_ratio_distribution": {
-      "0.0": 268,
-      "0.3": 72,
-      "0.4": 633,
-      "0.5": 99,
-      "0.6": 390,
-      "0.7": 336,
-      "0.8": 32,
-      "0.9": 30,
-      "1.0": 8,
-      "1.1": 105,
-      "1.2": 9,
-      "1.3": 8,
-      "1.4": 3,
-      "1.5": 4,
-      "1.7": 1,
-      "2.2": 1,
-      "2.3": 1
+    "n_curves": 5000,
+    "mean_max_ratio": 0.849063,
+    "max_ratio": 0.991241,
+    "above_95pct": 380,
+    "above_90pct": 1997,
+    "above_99pct": 44,
+    "violations_above_1": 0,
+    "distribution": {
+      "0.4": 1,
+      "0.5": 21,
+      "0.6": 217,
+      "0.7": 587,
+      "0.8": 1412,
+      "0.9": 2382,
+      "1.0": 380
     },
-    "hasse_ratio_stats": {
-      "n_curves": 2000,
-      "mean": 0.483125,
-      "max": 2.342606,
-      "min": 0.0,
-      "above_95pct": 140,
-      "above_90pct": 162
-    },
-    "supersingular_stats": {
-      "mean_fraction": 0.554933,
-      "max_fraction": 1.0,
-      "min_fraction": 0.0
-    },
-    "near_bound_examples": [
+    "near_bound_top20": [
       {
-        "label": "29945.2.a.c",
-        "level": 29945,
-        "max_ratio": 2.342606,
+        "label": "30084.2.a.c",
+        "level": 30084,
+        "max_ratio": 0.991241,
         "ss_fraction": 0.1333
       },
       {
-        "label": "29843.2.a.a",
-        "level": 29843,
-        "max_ratio": 2.228344,
+        "label": "30150.2.a.cg",
+        "level": 30150,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.2
+      },
+      {
+        "label": "30150.2.a.y",
+        "level": 30150,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.2
+      },
+      {
+        "label": "30170.2.a.d",
+        "level": 30170,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.0
+      },
+      {
+        "label": "30172.2.a.a",
+        "level": 30172,
+        "max_ratio": 0.991241,
         "ss_fraction": 0.1333
       },
       {
-        "label": "29701.2.a.a",
-        "level": 29701,
-        "max_ratio": 1.671258,
+        "label": "30192.2.a.d",
+        "level": 30192,
+        "max_ratio": 0.991241,
         "ss_fraction": 0.1333
       },
       {
-        "label": "29675.2.a.b",
-        "level": 29675,
-        "max_ratio": 1.455214,
-        "ss_fraction": 0.2667
-      },
-      {
-        "label": "29785.2.a.b",
-        "level": 29785,
-        "max_ratio": 1.455214,
+        "label": "30195.2.a.s",
+        "level": 30195,
+        "max_ratio": 0.991241,
         "ss_fraction": 0.1333
       },
       {
-        "label": "29939.2.a.d",
-        "level": 29939,
-        "max_ratio": 1.455214,
-        "ss_fraction": 0.2667
-      },
-      {
-        "label": "29971.2.a.c",
-        "level": 29971,
-        "max_ratio": 1.455214,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "29685.2.a.j",
-        "level": 29685,
-        "max_ratio": 1.38675,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "29835.2.a.b",
-        "level": 29835,
-        "max_ratio": 1.38675,
-        "ss_fraction": 0.6667
-      },
-      {
-        "label": "29835.2.a.j",
-        "level": 29835,
-        "max_ratio": 1.38675,
-        "ss_fraction": 0.6667
-      },
-      {
-        "label": "29751.2.a.b",
-        "level": 29751,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "29755.2.a.e",
-        "level": 29755,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "29787.2.a.a",
-        "level": 29787,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "29813.2.a.c",
-        "level": 29813,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "299731.2.a.a",
-        "level": 299731,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.1333
-      },
-      {
-        "label": "29979.2.a.a",
-        "level": 29979,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.6667
-      },
-      {
-        "label": "30051.2.a.a",
-        "level": 30051,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.6
-      },
-      {
-        "label": "30051.2.a.j",
-        "level": 30051,
-        "max_ratio": 1.315192,
-        "ss_fraction": 0.6
-      },
-      {
-        "label": "2978.2.a.a",
-        "level": 2978,
-        "max_ratio": 1.171303,
+        "label": "30243.2.a.c",
+        "level": 30243,
+        "max_ratio": 0.991241,
         "ss_fraction": 0.0667
       },
       {
-        "label": "29909.2.a.a",
-        "level": 29909,
-        "max_ratio": 1.171303,
+        "label": "302941.2.a.e",
+        "level": 302941,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.0667
+      },
+      {
+        "label": "30276.2.a.m",
+        "level": 30276,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.6
+      },
+      {
+        "label": "30276.2.a.n",
+        "level": 30276,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.6
+      },
+      {
+        "label": "302941.2.a.a",
+        "level": 302941,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.1333
+      },
+      {
+        "label": "3030.2.a.a",
+        "level": 3030,
+        "max_ratio": 0.991241,
         "ss_fraction": 0.0
+      },
+      {
+        "label": "30318.2.a.d",
+        "level": 30318,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.2
+      },
+      {
+        "label": "30330.2.a.g",
+        "level": 30330,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.1333
+      },
+      {
+        "label": "30381.2.a.e",
+        "level": 30381,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.0667
+      },
+      {
+        "label": "30422.2.a.e",
+        "level": 30422,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.0667
+      },
+      {
+        "label": "30446.2.a.f",
+        "level": 30446,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.0
+      },
+      {
+        "label": "30450.2.a.bd",
+        "level": 30450,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.1333
+      },
+      {
+        "label": "30470.2.a.e",
+        "level": 30470,
+        "max_ratio": 0.991241,
+        "ss_fraction": 0.1333
       }
     ],
-    "hasse_ratio_fine_above_80pct": {
-      "0.82": 8,
-      "0.83": 10,
-      "0.89": 8,
-      "0.91": 12,
-      "0.92": 9,
-      "0.94": 1,
-      "0.99": 8,
-      "1.06": 88,
-      "1.11": 17,
-      "1.15": 6,
-      "1.17": 3,
-      "1.32": 8,
-      "1.39": 3,
-      "1.46": 4,
-      "1.67": 1,
-      "2.23": 1,
-      "2.34": 1
-    }
+    "supersingular_mean": 0.159813,
+    "per_prime_mean_ratio": {
+      "2": 0.218072,
+      "3": 0.244566,
+      "5": 0.29695,
+      "7": 0.342852,
+      "11": 0.364497,
+      "13": 0.379831,
+      "17": 0.395285,
+      "19": 0.392071,
+      "23": 0.392299,
+      "29": 0.403386,
+      "31": 0.417582,
+      "37": 0.412641,
+      "41": 0.406005,
+      "43": 0.410328,
+      "47": 0.407999
+    },
+    "indexing_note": "CORRECTED: traces[p-1] = a_p (0-indexed). Initial run used traces[p] which was off by 1."
   },
   "5_conductor_edges": {
     "conductor_log10_distribution": [
@@ -2418,6 +2760,89 @@
       {
         "table_name": "smf_hecke_traces_stats"
       }
+    ],
+    "maass_form_stats": {
+      "total_count": 14995,
+      "distinct_levels": 239,
+      "spectral_parameter_range": [
+        0.038758582,
+        49.9616962905
+      ],
+      "spectral_parameter_mean": 8.1,
+      "levels_overlapping_ec_conductors": 29,
+      "levels_overlapping_out_of_first_50": "29/50"
+    },
+    "level_1_maass_forms_sample": [
+      {
+        "spectral_parameter": 9.534,
+        "symmetry": -1,
+        "fricke": 1
+      },
+      {
+        "spectral_parameter": 12.173,
+        "symmetry": -1,
+        "fricke": 1
+      },
+      {
+        "spectral_parameter": 13.78,
+        "symmetry": 1,
+        "fricke": 1
+      },
+      {
+        "spectral_parameter": 14.359,
+        "symmetry": -1,
+        "fricke": 1
+      },
+      {
+        "spectral_parameter": 16.138,
+        "symmetry": -1,
+        "fricke": 1
+      }
     ]
+  },
+  "_analysis": {
+    "1_modularity": {
+      "finding": "Of 1,141,510 total newforms, only 222,357 (19.5%) are weight=2 dim=1 (EC-corresponding). The remaining 919,153 (80.5%) are the EDGE: abelian varieties (dim>1) and higher-weight motives.",
+      "simplest_non_ec": "23.2.a.a: level 23, weight 2, dim 2, trivial character (char_order=1). This is an honest abelian surface over Q, the simplest object beyond elliptic curves. Field poly x^2 - x - 1 = golden ratio field.",
+      "higher_weight": "Level 1 higher-weight forms: weight 12 dim 1 = Ramanujan delta function, weight 24 dim 2 = first level-1 form needing a number field. Dim grows with weight following dim S_k(SL2(Z)) = floor(k/12) + corrections.",
+      "anomaly": "Weight 1 forms appear (dim=2, count=4989 in top-30). These correspond to Artin representations, not geometric objects. They sit at the modularity BOUNDARY in a different sense."
+    },
+    "2_parity": {
+      "finding": "Parity is trivially satisfied because rank = analytic_rank for ALL 3,824,372 curves (0 mismatches, 0 nulls). The root number is not stored in ec_curvedata directly.",
+      "edge": "Over number fields (ec_nfcurves): 9,974 out of 767,518 curves (1.3%) have UNKNOWN rank (only bounds). These are the live parity edge -- rank_bounds like [0,1] and [0,2] mean parity is UNTESTED for these curves.",
+      "high_rank": "rank >= 3: 37,334 curves. rank >= 4: 2,086. rank >= 5: 19. Parity holds perfectly at all ranks.",
+      "anomaly": "The signD vs rank shows negative discriminant bias: 56.2% of curves have signD=-1. This skew is roughly constant across ranks (55-58%), suggesting its an artifact of how curves are ordered, not a deep structure."
+    },
+    "3_mazur": {
+      "finding": "Over Q: exactly 12 torsion orders (1-10, 12 + torsion=16 via [2,8] structure). 6 curves with torsion [2,8] confirmed. Mazur holds perfectly.",
+      "edge_nf": "Over number fields, torsion goes FAR beyond Mazur. Degree 2: up to torsion 24 (structure [2,12]). Degree 4: torsion 32 (structure [2,16]). Degree 6: torsion 37 (cyclic!).",
+      "kamienny_check": "Over quadratic fields (degree 2): max torsion = 24. Kamienny theorem allows up to 18 for cyclic torsion -- the [2,12]=24 case uses non-cyclic structure to exceed this. Torsion 18 exists as both [18] (2 curves) and [3,6] (10 curves).",
+      "anomaly": "Degree 6, torsion 37: a single curve with PRIME cyclic torsion 37 over a sextic field. This pushes the boundary of known torsion bounds. Worth investigating further."
+    },
+    "4_hasse": {
+      "finding": "Corrected analysis (5000 curves): max |a_p|/(2sqrt(p)) = 0.991241, achieved at p=43 with |a_43|=13. ZERO violations. The bound 2sqrt(p) is never reached for any prime <= 47.",
+      "edge": "The closest approach to the Hasse bound is dictated by number theory: |a_p| is an integer, so the ratio is at most floor(2sqrt(p))/(2sqrt(p)). For p=43: 13/13.115 = 0.9912. For p=73 it would be 17/17.088 = 0.9949.",
+      "per_prime_trend": "Mean |a_p|/(2sqrt(p)) increases with p: 0.218 at p=2, up to ~0.41 at p=47. This converges toward the Sato-Tate prediction of 2/pi = 0.6366 for the mean of |sin(theta)|.",
+      "supersingular": "Mean supersingular fraction = 0.160 across 15 primes. No curve has all primes supersingular. Max is 0.667 (10/15 primes).",
+      "anomaly": "The per-prime mean ratio (0.22 to 0.41) is BELOW the Sato-Tate asymptotic 2/pi = 0.637, but increasing. This is expected: small primes have discretization effects. The convergence toward Sato-Tate is itself a falsifiable prediction."
+    },
+    "5_conductor": {
+      "finding": "Distribution is NOT uniform in log space. 973,225 distinct conductors, max = 299,996,953. The log10 distribution has a DIP at 10^6 (only 61,791 curves) between peaks at 10^5 (2.4M) and 10^8 (420K).",
+      "gaps": "Many small integers are NOT conductors: 1-10, 12, 13, 16, 18, 22, ... The smallest EC conductor is 11. Gaps among small n reflect the constraint that conductors must have specific prime factorization patterns.",
+      "popular": "Conductor 19,051,200 = 2^6 * 3^3 * 5^2 * 443 has 2,840 curves (most popular). Highly composite conductors with many small prime factors attract the most curves.",
+      "anomaly": "The log10 distribution dip at 10^6 is suspicious. It may reflect database coverage (systematic computation up to conductor 500K, then targeted searches) rather than genuine density. The 10^7-10^8 bump likely comes from Cremona database extensions."
+    },
+    "6_rank": {
+      "finding": "Distribution: rank 0 = 36.7%, rank 1 = 49.3%, rank 2 = 12.9%, rank 3 = 0.976%, rank 4 = 0.055%, rank 5 = 0.0005% (19 curves). Max rank in database = 5.",
+      "goldfeld": "Goldfeld conjecture predicts 50/50 split for rank 0/1 and density 0 for rank >= 2. Current data: 36.7/49.3 split with 13.9% at rank >= 2. This DISAGREES with Goldfeld but is expected: the conjecture is ASYMPTOTIC and finite databases are biased toward higher ranks because higher-rank curves tend to have smaller conductors relative to their complexity.",
+      "all_rank5": "All 19 rank-5 curves have torsion=1 (trivial torsion). Conductors range from ~10^8 to ~3*10^8. All are singleton isogeny classes (.a1). This is consistent with the heuristic that high rank and high torsion are anticorrelated.",
+      "anomaly": "Zero rank=analytic_rank mismatches across 3.8M curves with NO null values. This perfect agreement is the strongest computational evidence for BSD parity. The edge: over number fields, 9,974 curves with unknown rank are where this could first fail."
+    },
+    "7_ec_maass": {
+      "finding": "14,995 Maass newforms across 239 distinct levels. Of the first 50 Maass levels, 29 are also EC conductors -- a 58% overlap rate. Maass spectral parameters range from 0.039 to 49.96.",
+      "edge": "The coupling question is level-specificity: do EC and Maass forms at the SAME level show stronger spectral correlation than random pairs? With only 239 Maass levels vs 973K EC conductors, the overlap is sparse (239 max). This limits statistical power.",
+      "structure": "Level 1 Maass forms have symmetry +-1 and all have fricke_eigenvalue=1. The spectral parameters (9.53, 12.17, 13.78, ...) are the eigenvalues of the Laplacian on the modular surface -- these are the NON-holomorphic counterparts to modular forms.",
+      "anomaly": "The Maass form database (15K) is TINY compared to EC (3.8M) and holomorphic newforms (1.1M). Any EC-Maass coupling analysis will be dominated by small-number statistics. The 2 extra channels found earlier may reflect this size mismatch rather than genuine structure. This is a kill path."
+    }
   }
 }
