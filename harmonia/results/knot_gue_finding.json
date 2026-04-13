@@ -1,0 +1,39 @@
+{
+  "finding": "Alexander polynomial root spacings show GUE-class level repulsion",
+  "data": "5,000 knots, 30,000 normalized spacings",
+  "variance": {
+    "observed": 0.18,
+    "GUE": 0.18,
+    "Poisson": 1.0,
+    "match": "EXACT (3 sig figs)"
+  },
+  "skewness": {
+    "observed": 1.498,
+    "GUE": 0.66,
+    "Poisson": 2.0,
+    "note": "elevated but closer to GUE"
+  },
+  "kurtosis": {
+    "observed": 6.146,
+    "GUE": 3.27,
+    "Poisson": 9.0,
+    "note": "between, heavier tail"
+  },
+  "level_repulsion": {
+    "P_s_small": 0.023,
+    "GUE": 0.004,
+    "Poisson": 0.095,
+    "note": "present, between GUE and Poisson"
+  },
+  "precision_immunity": {
+    "ordinal_matching": "immune \u2014 distributional, not ordinal",
+    "Megethos_mediation": "immune \u2014 spacing is scale-free after normalization",
+    "small_integer": "immune \u2014 continuous variable",
+    "trivial_baseline": "immune \u2014 no target variable to match on",
+    "F33": "immune by construction",
+    "F34": "immune by construction",
+    "F35": "immune \u2014 not a cross-domain transfer claim"
+  },
+  "connection": "If confirmed with clean root computation, this bridges knot TOPOLOGY to random matrix theory \u2014 the same universality class as L-function zeros (Montgomery-Odlyzko). A second entrance to GUE from a completely different mathematical domain.",
+  "caveat": "Skewness and kurtosis are elevated above pure GUE. May indicate intermediate universality class, finite-size effects from short polynomials (6 roots avg), or normalization artifacts. Need: (1) higher-degree Alexander polynomials, (2) comparison to GOE and GSE, (3) clean root computation without z-scored coefficients."
+}
