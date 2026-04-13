@@ -1,0 +1,2220 @@
+{
+  "metadata": {
+    "timestamp": "2026-04-13 03:52:39",
+    "device": "cuda",
+    "n_objects": 601033,
+    "n_dims": 182,
+    "s13_zeroed": [
+      129,
+      133
+    ],
+    "max_sample": 1000,
+    "n_null_permutations": 10,
+    "threshold": 0.01,
+    "n_valid_domains": 18,
+    "n_pairs_computed": 110,
+    "elapsed_seconds": 431.9
+  },
+  "results": [
+    {
+      "domain_a": "MF",
+      "domain_b": "SC",
+      "bond_dim": 20,
+      "mean_coupling": 0.033045,
+      "top_5_svals": [
+        90.2788,
+        53.9506,
+        51.2402,
+        33.57,
+        27.6955
+      ],
+      "s1": 90.2788,
+      "n_shared_dims": 29,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 20.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "MF",
+      "bond_dim": 18,
+      "mean_coupling": 0.269688,
+      "top_5_svals": [
+        285.9199,
+        36.6781,
+        26.7068,
+        20.7383,
+        18.9728
+      ],
+      "s1": 285.9199,
+      "n_shared_dims": 53,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "maass",
+      "bond_dim": 17,
+      "mean_coupling": 0.179054,
+      "top_5_svals": [
+        195.7666,
+        19.7936,
+        15.3888,
+        14.3981,
+        12.4049
+      ],
+      "s1": 195.7666,
+      "n_shared_dims": 53,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": true
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "HMF",
+      "bond_dim": 17,
+      "mean_coupling": -0.116683,
+      "top_5_svals": [
+        146.0671,
+        30.1663,
+        23.0882,
+        22.2153,
+        21.7712
+      ],
+      "s1": 146.0671,
+      "n_shared_dims": 53,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 20.2,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "SC",
+      "bond_dim": 16,
+      "mean_coupling": 0.206558,
+      "top_5_svals": [
+        226.0003,
+        55.1465,
+        43.7671,
+        36.41,
+        32.431
+      ],
+      "s1": 226.0003,
+      "n_shared_dims": 29,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "SC",
+      "bond_dim": 16,
+      "mean_coupling": 0.080562,
+      "top_5_svals": [
+        145.0067,
+        54.2405,
+        38.8464,
+        28.3864,
+        26.841
+      ],
+      "s1": 145.0067,
+      "n_shared_dims": 29,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 22.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "maass",
+      "bond_dim": 15,
+      "mean_coupling": 0.025504,
+      "top_5_svals": [
+        106.4319,
+        55.2305,
+        30.1508,
+        26.8783,
+        22.0825
+      ],
+      "s1": 106.4319,
+      "n_shared_dims": 29,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "material",
+      "bond_dim": 14,
+      "mean_coupling": 0.072507,
+      "top_5_svals": [
+        113.8031,
+        45.0868,
+        24.9053,
+        22.1514,
+        13.2546
+      ],
+      "s1": 113.8031,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.1,
+      "null_bond_dim_std": 0.3,
+      "exceeds_null": true
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "Lzeros",
+      "bond_dim": 14,
+      "mean_coupling": -0.039294,
+      "top_5_svals": [
+        106.4682,
+        39.7532,
+        35.0931,
+        29.58,
+        26.601
+      ],
+      "s1": 106.4682,
+      "n_shared_dims": 37,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": true
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "group",
+      "bond_dim": 14,
+      "mean_coupling": -0.082014,
+      "top_5_svals": [
+        115.5149,
+        42.0053,
+        20.0166,
+        16.3544,
+        15.3615
+      ],
+      "s1": 115.5149,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "material",
+      "bond_dim": 14,
+      "mean_coupling": -0.137154,
+      "top_5_svals": [
+        176.045,
+        39.335,
+        33.8552,
+        30.9621,
+        29.3532
+      ],
+      "s1": 176.045,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "material",
+      "bond_dim": 13,
+      "mean_coupling": 0.370603,
+      "top_5_svals": [
+        392.4491,
+        49.2469,
+        44.7958,
+        39.2101,
+        30.3176
+      ],
+      "s1": 392.4491,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "material",
+      "bond_dim": 13,
+      "mean_coupling": 0.335671,
+      "top_5_svals": [
+        351.9286,
+        179.3882,
+        134.8545,
+        45.4524,
+        29.9447
+      ],
+      "s1": 351.9286,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "lattice",
+      "bond_dim": 13,
+      "mean_coupling": 0.165338,
+      "top_5_svals": [
+        202.5715,
+        60.6928,
+        49.7581,
+        44.4847,
+        36.3071
+      ],
+      "s1": 202.5715,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "lattice",
+      "bond_dim": 13,
+      "mean_coupling": 0.108417,
+      "top_5_svals": [
+        149.6553,
+        58.1337,
+        41.8959,
+        34.5995,
+        32.1026
+      ],
+      "s1": 149.6553,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "group",
+      "bond_dim": 13,
+      "mean_coupling": 0.055104,
+      "top_5_svals": [
+        151.2462,
+        67.7288,
+        31.9966,
+        24.659,
+        17.6048
+      ],
+      "s1": 151.2462,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": true
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "lattice",
+      "bond_dim": 13,
+      "mean_coupling": -0.08524,
+      "top_5_svals": [
+        122.8255,
+        49.3395,
+        42.9839,
+        42.7675,
+        38.0868
+      ],
+      "s1": 122.8255,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 17.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "MF",
+      "bond_dim": 13,
+      "mean_coupling": -0.234029,
+      "top_5_svals": [
+        322.1055,
+        93.4724,
+        36.2545,
+        19.4662,
+        17.3726
+      ],
+      "s1": 322.1055,
+      "n_shared_dims": 53,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "OEIS",
+      "bond_dim": 12,
+      "mean_coupling": 0.332869,
+      "top_5_svals": [
+        400.3246,
+        81.5752,
+        66.0793,
+        34.416,
+        26.7044
+      ],
+      "s1": 400.3246,
+      "n_shared_dims": 20,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 23.8,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "SC",
+      "bond_dim": 12,
+      "mean_coupling": 0.1895,
+      "top_5_svals": [
+        298.5594,
+        106.3337,
+        48.7963,
+        45.2856,
+        38.5963
+      ],
+      "s1": 298.5594,
+      "n_shared_dims": 12,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 30.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "lattice",
+      "bond_dim": 12,
+      "mean_coupling": -0.125294,
+      "top_5_svals": [
+        154.3997,
+        38.9779,
+        37.1804,
+        35.8133,
+        31.1646
+      ],
+      "s1": 154.3997,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 17.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "material",
+      "bond_dim": 12,
+      "mean_coupling": -0.161977,
+      "top_5_svals": [
+        199.4767,
+        67.9989,
+        28.8623,
+        26.9953,
+        22.4997
+      ],
+      "s1": 199.4767,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.2,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "maass",
+      "domain_b": "material",
+      "bond_dim": 12,
+      "mean_coupling": -0.227221,
+      "top_5_svals": [
+        248.8917,
+        31.3358,
+        27.9315,
+        25.8847,
+        19.733
+      ],
+      "s1": 248.8917,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "maass",
+      "bond_dim": 11,
+      "mean_coupling": 0.422455,
+      "top_5_svals": [
+        452.387,
+        40.25,
+        14.9929,
+        12.2221,
+        11.6108
+      ],
+      "s1": 452.387,
+      "n_shared_dims": 53,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.3,
+      "null_bond_dim_std": 0.46,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "lattice",
+      "domain_b": "material",
+      "bond_dim": 11,
+      "mean_coupling": 0.241455,
+      "top_5_svals": [
+        275.5685,
+        41.4447,
+        33.3673,
+        24.7801,
+        23.0167
+      ],
+      "s1": 275.5685,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "obj_zeros",
+      "bond_dim": 11,
+      "mean_coupling": 0.149392,
+      "top_5_svals": [
+        220.1456,
+        63.0764,
+        26.8357,
+        14.6101,
+        9.7216
+      ],
+      "s1": 220.1456,
+      "n_shared_dims": 32,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "OEIS",
+      "bond_dim": 11,
+      "mean_coupling": 0.066369,
+      "top_5_svals": [
+        288.1517,
+        97.0491,
+        53.981,
+        38.7481,
+        26.3149
+      ],
+      "s1": 288.1517,
+      "n_shared_dims": 20,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 29.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "genus2",
+      "bond_dim": 11,
+      "mean_coupling": -0.017001,
+      "top_5_svals": [
+        117.1592,
+        73.0093,
+        49.1126,
+        45.4306,
+        42.2033
+      ],
+      "s1": 117.1592,
+      "n_shared_dims": 19,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.7,
+      "null_bond_dim_std": 0.46,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "obj_zeros",
+      "bond_dim": 11,
+      "mean_coupling": -0.067949,
+      "top_5_svals": [
+        177.6978,
+        72.6466,
+        45.9818,
+        20.0144,
+        13.3951
+      ],
+      "s1": 177.6978,
+      "n_shared_dims": 32,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.2,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "group",
+      "bond_dim": 11,
+      "mean_coupling": -0.08386,
+      "top_5_svals": [
+        138.5078,
+        66.7144,
+        25.2297,
+        21.6184,
+        18.2167
+      ],
+      "s1": 138.5078,
+      "n_shared_dims": 15,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "material",
+      "bond_dim": 11,
+      "mean_coupling": -0.166251,
+      "top_5_svals": [
+        228.0109,
+        58.2799,
+        48.0996,
+        46.6836,
+        39.2647
+      ],
+      "s1": 228.0109,
+      "n_shared_dims": 15,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "SC",
+      "bond_dim": 11,
+      "mean_coupling": -0.295441,
+      "top_5_svals": [
+        326.5505,
+        65.6954,
+        42.3187,
+        41.0763,
+        38.7665
+      ],
+      "s1": 326.5505,
+      "n_shared_dims": 21,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.8,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "OEIS",
+      "bond_dim": 10,
+      "mean_coupling": 0.40429,
+      "top_5_svals": [
+        469.755,
+        41.5762,
+        31.4012,
+        28.0123,
+        24.1053
+      ],
+      "s1": 469.755,
+      "n_shared_dims": 20,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 25.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "obj_zeros",
+      "bond_dim": 10,
+      "mean_coupling": 0.120158,
+      "top_5_svals": [
+        253.3816,
+        123.4065,
+        76.9256,
+        27.3584,
+        22.1264
+      ],
+      "s1": 253.3816,
+      "n_shared_dims": 12,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 22.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "genus2",
+      "bond_dim": 10,
+      "mean_coupling": 0.053157,
+      "top_5_svals": [
+        118.9997,
+        71.5445,
+        44.8836,
+        38.1005,
+        35.9859
+      ],
+      "s1": 118.9997,
+      "n_shared_dims": 19,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.6,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "genus2",
+      "bond_dim": 10,
+      "mean_coupling": 0.008069,
+      "top_5_svals": [
+        82.4249,
+        61.845,
+        57.5942,
+        43.2774,
+        37.7617
+      ],
+      "s1": 82.4249,
+      "n_shared_dims": 19,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.9,
+      "null_bond_dim_std": 0.3,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "lattice",
+      "domain_b": "maass",
+      "bond_dim": 10,
+      "mean_coupling": -0.178476,
+      "top_5_svals": [
+        207.1011,
+        53.4974,
+        36.4785,
+        33.9485,
+        28.6688
+      ],
+      "s1": 207.1011,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "maass",
+      "bond_dim": 10,
+      "mean_coupling": -0.203809,
+      "top_5_svals": [
+        222.4842,
+        20.3673,
+        16.8662,
+        15.8056,
+        14.8999
+      ],
+      "s1": 222.4842,
+      "n_shared_dims": 37,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "maass",
+      "bond_dim": 9,
+      "mean_coupling": 0.171975,
+      "top_5_svals": [
+        261.328,
+        93.5843,
+        37.9683,
+        20.7406,
+        18.148
+      ],
+      "s1": 261.328,
+      "n_shared_dims": 20,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "knot",
+      "bond_dim": 9,
+      "mean_coupling": 0.026384,
+      "top_5_svals": [
+        75.2708,
+        27.0303,
+        16.7047,
+        8.0456,
+        4.0247
+      ],
+      "s1": 75.2708,
+      "n_shared_dims": 22,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "obj_zeros",
+      "bond_dim": 9,
+      "mean_coupling": -0.051886,
+      "top_5_svals": [
+        194.0175,
+        95.816,
+        46.2333,
+        28.6889,
+        24.7798
+      ],
+      "s1": 194.0175,
+      "n_shared_dims": 16,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 19.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "group",
+      "bond_dim": 9,
+      "mean_coupling": -0.303908,
+      "top_5_svals": [
+        316.9509,
+        23.8552,
+        16.4535,
+        11.2855,
+        9.4526
+      ],
+      "s1": 316.9509,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "maass",
+      "bond_dim": 9,
+      "mean_coupling": -0.408497,
+      "top_5_svals": [
+        448.8197,
+        27.9015,
+        20.9166,
+        11.664,
+        10.4262
+      ],
+      "s1": 448.8197,
+      "n_shared_dims": 53,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "MF",
+      "bond_dim": 9,
+      "mean_coupling": -0.419255,
+      "top_5_svals": [
+        428.4911,
+        25.4758,
+        25.1372,
+        22.5597,
+        21.7913
+      ],
+      "s1": 428.4911,
+      "n_shared_dims": 37,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "group",
+      "bond_dim": 9,
+      "mean_coupling": -0.430756,
+      "top_5_svals": [
+        447.088,
+        22.1495,
+        19.8872,
+        15.2628,
+        13.6493
+      ],
+      "s1": 447.088,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "lattice",
+      "bond_dim": 9,
+      "mean_coupling": -0.460253,
+      "top_5_svals": [
+        479.0553,
+        56.6641,
+        55.3644,
+        50.4793,
+        43.6856
+      ],
+      "s1": 479.0553,
+      "n_shared_dims": 15,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": 0.53851,
+      "top_5_svals": [
+        268.4454,
+        70.2735,
+        33.4249,
+        32.0828,
+        28.9016
+      ],
+      "s1": 268.4454,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "lattice",
+      "bond_dim": 8,
+      "mean_coupling": 0.391293,
+      "top_5_svals": [
+        413.876,
+        28.991,
+        19.7835,
+        13.004,
+        11.2442
+      ],
+      "s1": 413.876,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 10.9,
+      "null_bond_dim_std": 0.3,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": 0.377976,
+      "top_5_svals": [
+        193.4013,
+        45.3972,
+        39.3844,
+        34.2031,
+        25.9026
+      ],
+      "s1": 193.4013,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 12.9,
+      "null_bond_dim_std": 0.3,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "material",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": 0.358225,
+      "top_5_svals": [
+        187.916,
+        39.8358,
+        25.3119,
+        21.7649,
+        19.3099
+      ],
+      "s1": 187.916,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": 0.247366,
+      "top_5_svals": [
+        137.395,
+        17.9362,
+        12.014,
+        8.9796,
+        6.1537
+      ],
+      "s1": 137.395,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 9.5,
+      "null_bond_dim_std": 0.5,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "genus2",
+      "bond_dim": 8,
+      "mean_coupling": 0.157731,
+      "top_5_svals": [
+        230.7169,
+        107.662,
+        71.3529,
+        54.6986,
+        47.131
+      ],
+      "s1": 230.7169,
+      "n_shared_dims": 11,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 18.7,
+      "null_bond_dim_std": 0.46,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "lattice",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": 0.154959,
+      "top_5_svals": [
+        91.6605,
+        42.1526,
+        32.5589,
+        30.4794,
+        24.6326
+      ],
+      "s1": 91.6605,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 9.7,
+      "null_bond_dim_std": 0.78,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "knot",
+      "bond_dim": 8,
+      "mean_coupling": 0.045156,
+      "top_5_svals": [
+        135.0794,
+        37.5384,
+        19.1919,
+        12.7873,
+        4.2285
+      ],
+      "s1": 135.0794,
+      "n_shared_dims": 14,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 25.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "lattice",
+      "domain_b": "obj_zeros",
+      "bond_dim": 8,
+      "mean_coupling": -0.039068,
+      "top_5_svals": [
+        156.6401,
+        91.1902,
+        35.1028,
+        29.2479,
+        19.4597
+      ],
+      "s1": 156.6401,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "obj_zeros",
+      "bond_dim": 8,
+      "mean_coupling": -0.077131,
+      "top_5_svals": [
+        219.5284,
+        94.53,
+        42.9053,
+        24.1651,
+        13.4044
+      ],
+      "s1": 219.5284,
+      "n_shared_dims": 24,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "obj_zeros",
+      "bond_dim": 8,
+      "mean_coupling": -0.122142,
+      "top_5_svals": [
+        348.6923,
+        120.5489,
+        23.9458,
+        21.1285,
+        14.7766
+      ],
+      "s1": 348.6923,
+      "n_shared_dims": 32,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": -0.177913,
+      "top_5_svals": [
+        101.8149,
+        42.9127,
+        35.8673,
+        32.7457,
+        28.8287
+      ],
+      "s1": 101.8149,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 9.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": -0.192001,
+      "top_5_svals": [
+        112.5756,
+        74.2222,
+        53.528,
+        44.0564,
+        37.4024
+      ],
+      "s1": 112.5756,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 15.8,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "maass",
+      "bond_dim": 8,
+      "mean_coupling": -0.210506,
+      "top_5_svals": [
+        251.1731,
+        37.389,
+        26.1639,
+        24.0501,
+        22.3111
+      ],
+      "s1": 251.1731,
+      "n_shared_dims": 19,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "maass",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": -0.333526,
+      "top_5_svals": [
+        166.6064,
+        32.0396,
+        27.3366,
+        25.5209,
+        18.0175
+      ],
+      "s1": 166.6064,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 8.1,
+      "null_bond_dim_std": 0.3,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "particle",
+      "bond_dim": 8,
+      "mean_coupling": -0.343651,
+      "top_5_svals": [
+        184.3461,
+        51.0082,
+        42.5393,
+        36.9253,
+        32.2907
+      ],
+      "s1": 184.3461,
+      "n_shared_dims": 9,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 13.4,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "genus2",
+      "bond_dim": 8,
+      "mean_coupling": -0.405973,
+      "top_5_svals": [
+        421.311,
+        47.3021,
+        44.5939,
+        38.9422,
+        34.9692
+      ],
+      "s1": 421.311,
+      "n_shared_dims": 19,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "Lzeros",
+      "bond_dim": 8,
+      "mean_coupling": -0.445757,
+      "top_5_svals": [
+        458.1324,
+        36.4429,
+        35.765,
+        32.2292,
+        28.5061
+      ],
+      "s1": 458.1324,
+      "n_shared_dims": 37,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "maass",
+      "domain_b": "obj_zeros",
+      "bond_dim": 7,
+      "mean_coupling": 0.26947,
+      "top_5_svals": [
+        352.1046,
+        39.7755,
+        22.5231,
+        11.5718,
+        7.4708
+      ],
+      "s1": 352.1046,
+      "n_shared_dims": 32,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 8.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "knot",
+      "bond_dim": 7,
+      "mean_coupling": 0.07915,
+      "top_5_svals": [
+        185.1659,
+        18.2587,
+        15.1959,
+        7.9701,
+        5.9676
+      ],
+      "s1": 185.1659,
+      "n_shared_dims": 22,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.5,
+      "null_bond_dim_std": 0.5,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "knot",
+      "domain_b": "maass",
+      "bond_dim": 7,
+      "mean_coupling": 0.041272,
+      "top_5_svals": [
+        98.6836,
+        20.514,
+        8.4187,
+        5.5634,
+        2.8946
+      ],
+      "s1": 98.6836,
+      "n_shared_dims": 22,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 7.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "OEIS",
+      "bond_dim": 7,
+      "mean_coupling": -0.435624,
+      "top_5_svals": [
+        485.9851,
+        33.7659,
+        19.9379,
+        17.9338,
+        13.4381
+      ],
+      "s1": 485.9851,
+      "n_shared_dims": 20,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 20.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "metabolism",
+      "bond_dim": 6,
+      "mean_coupling": 0.328727,
+      "top_5_svals": [
+        374.5698,
+        156.0744,
+        32.2237,
+        28.6662,
+        15.4674
+      ],
+      "s1": 374.5698,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "metabolism",
+      "bond_dim": 6,
+      "mean_coupling": 0.286722,
+      "top_5_svals": [
+        362.1891,
+        132.7761,
+        54.6181,
+        35.1504,
+        15.8543
+      ],
+      "s1": 362.1891,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "lattice",
+      "bond_dim": 6,
+      "mean_coupling": 0.284677,
+      "top_5_svals": [
+        470.0045,
+        96.3219,
+        76.9557,
+        51.4382,
+        30.1757
+      ],
+      "s1": 470.0045,
+      "n_shared_dims": 6,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 25.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "material",
+      "domain_b": "metabolism",
+      "bond_dim": 6,
+      "mean_coupling": 0.110095,
+      "top_5_svals": [
+        216.9255,
+        95.1893,
+        68.9676,
+        25.0327,
+        10.4064
+      ],
+      "s1": 216.9255,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "knot",
+      "bond_dim": 6,
+      "mean_coupling": -0.015382,
+      "top_5_svals": [
+        58.2572,
+        42.3545,
+        10.2893,
+        6.2901,
+        3.0296
+      ],
+      "s1": 58.2572,
+      "n_shared_dims": 22,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.3,
+      "null_bond_dim_std": 0.46,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "genus2",
+      "bond_dim": 6,
+      "mean_coupling": -0.022421,
+      "top_5_svals": [
+        151.8467,
+        136.71,
+        56.276,
+        7.9548,
+        3.4534
+      ],
+      "s1": 151.8467,
+      "n_shared_dims": 14,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 25.6,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "material",
+      "bond_dim": 6,
+      "mean_coupling": -0.366619,
+      "top_5_svals": [
+        496.9873,
+        194.4848,
+        76.3751,
+        46.2152,
+        23.082
+      ],
+      "s1": 496.9873,
+      "n_shared_dims": 6,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 29.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "group",
+      "bond_dim": 6,
+      "mean_coupling": -0.462004,
+      "top_5_svals": [
+        619.6122,
+        90.351,
+        65.1321,
+        47.703,
+        23.7848
+      ],
+      "s1": 619.6122,
+      "n_shared_dims": 6,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.6,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "maass",
+      "bond_dim": 6,
+      "mean_coupling": -0.530413,
+      "top_5_svals": [
+        536.1505,
+        28.2943,
+        18.1652,
+        9.1995,
+        8.3693
+      ],
+      "s1": 536.1505,
+      "n_shared_dims": 23,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 7.9,
+      "null_bond_dim_std": 0.3,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "metabolism",
+      "bond_dim": 5,
+      "mean_coupling": 0.347347,
+      "top_5_svals": [
+        423.1509,
+        56.1318,
+        26.3372,
+        17.6921,
+        8.0775
+      ],
+      "s1": 423.1509,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 6.7,
+      "null_bond_dim_std": 0.46,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "material",
+      "bond_dim": 5,
+      "mean_coupling": 0.107184,
+      "top_5_svals": [
+        439.0107,
+        213.1261,
+        162.6565,
+        107.7329,
+        68.0839
+      ],
+      "s1": 439.0107,
+      "n_shared_dims": 5,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.7,
+      "null_bond_dim_std": 0.46,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "belyi",
+      "bond_dim": 5,
+      "mean_coupling": 0.043541,
+      "top_5_svals": [
+        134.5753,
+        83.3233,
+        10.8526,
+        4.0505,
+        2.2268
+      ],
+      "s1": 134.5753,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "particle",
+      "bond_dim": 5,
+      "mean_coupling": 0.041787,
+      "top_5_svals": [
+        180.0633,
+        100.3944,
+        80.932,
+        62.4491,
+        40.0458
+      ],
+      "s1": 180.0633,
+      "n_shared_dims": 5,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 10.6,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "knot",
+      "bond_dim": 5,
+      "mean_coupling": 0.036299,
+      "top_5_svals": [
+        139.4476,
+        10.3993,
+        3.8192,
+        2.1627,
+        1.536
+      ],
+      "s1": 139.4476,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 8.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "lattice",
+      "bond_dim": 5,
+      "mean_coupling": 0.020958,
+      "top_5_svals": [
+        337.747,
+        232.7628,
+        185.7151,
+        138.8757,
+        84.1738
+      ],
+      "s1": 337.747,
+      "n_shared_dims": 5,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "knot",
+      "bond_dim": 5,
+      "mean_coupling": 0.009087,
+      "top_5_svals": [
+        129.4832,
+        32.5999,
+        21.8302,
+        5.4549,
+        1.7039
+      ],
+      "s1": 129.4832,
+      "n_shared_dims": 14,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 18.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "group",
+      "bond_dim": 5,
+      "mean_coupling": -0.05562,
+      "top_5_svals": [
+        447.015,
+        84.3299,
+        58.6616,
+        33.9213,
+        12.8554
+      ],
+      "s1": 447.015,
+      "n_shared_dims": 5,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "lattice",
+      "domain_b": "metabolism",
+      "bond_dim": 5,
+      "mean_coupling": -0.136534,
+      "top_5_svals": [
+        224.83,
+        68.2118,
+        31.9424,
+        14.7067,
+        3.7824
+      ],
+      "s1": 224.83,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "material",
+      "domain_b": "obj_zeros",
+      "bond_dim": 5,
+      "mean_coupling": -0.143145,
+      "top_5_svals": [
+        382.8322,
+        129.3658,
+        54.2329,
+        31.4512,
+        17.5168
+      ],
+      "s1": 382.8322,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 17.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "metabolism",
+      "domain_b": "obj_zeros",
+      "bond_dim": 5,
+      "mean_coupling": -0.299377,
+      "top_5_svals": [
+        385.1354,
+        197.0723,
+        25.7375,
+        19.2238,
+        5.5431
+      ],
+      "s1": 385.1354,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 8.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "group",
+      "domain_b": "obj_zeros",
+      "bond_dim": 5,
+      "mean_coupling": -0.493325,
+      "top_5_svals": [
+        563.3122,
+        49.73,
+        43.2309,
+        31.594,
+        13.3845
+      ],
+      "s1": 563.3122,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 9.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "metabolism",
+      "bond_dim": 4,
+      "mean_coupling": 0.467241,
+      "top_5_svals": [
+        530.2106,
+        72.1367,
+        27.5245,
+        8.2739,
+        3.8118
+      ],
+      "s1": 530.2106,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 10.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "belyi",
+      "domain_b": "group",
+      "bond_dim": 4,
+      "mean_coupling": 0.072704,
+      "top_5_svals": [
+        149.9805,
+        82.0959,
+        5.3166,
+        2.7798,
+        0.2296
+      ],
+      "s1": 149.9805,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 6.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "knot",
+      "domain_b": "obj_zeros",
+      "bond_dim": 4,
+      "mean_coupling": -0.080877,
+      "top_5_svals": [
+        207.5824,
+        67.8559,
+        8.4771,
+        2.2676,
+        1.0178
+      ],
+      "s1": 207.5824,
+      "n_shared_dims": 6,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 10.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "maass",
+      "domain_b": "metabolism",
+      "bond_dim": 4,
+      "mean_coupling": -0.278604,
+      "top_5_svals": [
+        415.9428,
+        82.0091,
+        11.1567,
+        4.5352,
+        3.2008
+      ],
+      "s1": 415.9428,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 8.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "OEIS",
+      "domain_b": "metabolism",
+      "bond_dim": 4,
+      "mean_coupling": -0.474984,
+      "top_5_svals": [
+        689.6611,
+        159.7673,
+        42.4079,
+        14.9211,
+        4.36
+      ],
+      "s1": 689.6611,
+      "n_shared_dims": 6,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "metabolism",
+      "bond_dim": 4,
+      "mean_coupling": -0.650546,
+      "top_5_svals": [
+        678.541,
+        107.6657,
+        19.458,
+        14.9707,
+        6.5487
+      ],
+      "s1": 678.541,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 14.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "HMF",
+      "domain_b": "belyi",
+      "bond_dim": 3,
+      "mean_coupling": 0.151942,
+      "top_5_svals": [
+        191.2762,
+        76.663,
+        2.0979,
+        0.1477,
+        0.0085
+      ],
+      "s1": 191.2762,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "belyi",
+      "domain_b": "knot",
+      "bond_dim": 3,
+      "mean_coupling": 0.032175,
+      "top_5_svals": [
+        89.3177,
+        35.6201,
+        1.2935,
+        0.7969,
+        0.6335
+      ],
+      "s1": 89.3177,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 5.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "knot",
+      "bond_dim": 3,
+      "mean_coupling": -0.033353,
+      "top_5_svals": [
+        99.0262,
+        21.5848,
+        7.4369,
+        0.8241,
+        0.3852
+      ],
+      "s1": 99.0262,
+      "n_shared_dims": 14,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.4,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "knot",
+      "domain_b": "lattice",
+      "bond_dim": 3,
+      "mean_coupling": -0.041032,
+      "top_5_svals": [
+        154.0401,
+        9.4973,
+        2.9258,
+        0.2814,
+        0.0
+      ],
+      "s1": 154.0401,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "Lzeros",
+      "domain_b": "knot",
+      "bond_dim": 3,
+      "mean_coupling": -0.055159,
+      "top_5_svals": [
+        129.5874,
+        7.6697,
+        4.0901,
+        0.972,
+        0.2846
+      ],
+      "s1": 129.5874,
+      "n_shared_dims": 14,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 11.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "knot",
+      "domain_b": "material",
+      "bond_dim": 3,
+      "mean_coupling": -0.090325,
+      "top_5_svals": [
+        240.7012,
+        64.0996,
+        13.4186,
+        0.0,
+        0.0
+      ],
+      "s1": 240.7012,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.5,
+      "null_bond_dim_std": 0.5,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "genus2",
+      "domain_b": "obj_zeros",
+      "bond_dim": 3,
+      "mean_coupling": -0.14462,
+      "top_5_svals": [
+        407.1199,
+        103.0759,
+        22.4078,
+        3.432,
+        0.0
+      ],
+      "s1": 407.1199,
+      "n_shared_dims": 6,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 16.4,
+      "null_bond_dim_std": 0.49,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "obj_zeros",
+      "domain_b": "particle",
+      "bond_dim": 3,
+      "mean_coupling": -0.165307,
+      "top_5_svals": [
+        133.5533,
+        34.123,
+        8.601,
+        0.1497,
+        0.0
+      ],
+      "s1": 133.5533,
+      "n_shared_dims": 4,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 12.2,
+      "null_bond_dim_std": 0.4,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "belyi",
+      "domain_b": "material",
+      "bond_dim": 3,
+      "mean_coupling": -0.226585,
+      "top_5_svals": [
+        281.7054,
+        99.8345,
+        13.357,
+        0.0,
+        0.0
+      ],
+      "s1": 281.7054,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "SC",
+      "domain_b": "belyi",
+      "bond_dim": 3,
+      "mean_coupling": -0.228851,
+      "top_5_svals": [
+        276.6786,
+        93.976,
+        16.4835,
+        0.0,
+        0.0
+      ],
+      "s1": 276.6786,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 13.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "belyi",
+      "domain_b": "maass",
+      "bond_dim": 3,
+      "mean_coupling": -0.360934,
+      "top_5_svals": [
+        460.7701,
+        28.8388,
+        24.4339,
+        1.5176,
+        0.1375
+      ],
+      "s1": 460.7701,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 6.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "EC",
+      "domain_b": "metabolism",
+      "bond_dim": 3,
+      "mean_coupling": -0.518405,
+      "top_5_svals": [
+        604.98,
+        27.5733,
+        6.1933,
+        4.5488,
+        2.7968
+      ],
+      "s1": 604.98,
+      "n_shared_dims": 10,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 15.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "metabolism",
+      "domain_b": "particle",
+      "bond_dim": 2,
+      "mean_coupling": 0.62647,
+      "top_5_svals": [
+        305.0315,
+        15.2166,
+        2.2027,
+        0.1435,
+        0.0
+      ],
+      "s1": 305.0315,
+      "n_shared_dims": 4,
+      "n_a": 1000,
+      "n_b": 225,
+      "null_bond_dim_mean": 8.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "MF",
+      "domain_b": "belyi",
+      "bond_dim": 2,
+      "mean_coupling": 0.185339,
+      "top_5_svals": [
+        208.4831,
+        44.9294,
+        1.2553,
+        0.1341,
+        0.0071
+      ],
+      "s1": 208.4831,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 12.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    },
+    {
+      "domain_a": "belyi",
+      "domain_b": "lattice",
+      "bond_dim": 2,
+      "mean_coupling": -0.385999,
+      "top_5_svals": [
+        434.0351,
+        54.2409,
+        4.2723,
+        0.0296,
+        0.0
+      ],
+      "s1": 434.0351,
+      "n_shared_dims": 8,
+      "n_a": 1000,
+      "n_b": 1000,
+      "null_bond_dim_mean": 10.0,
+      "null_bond_dim_std": 0.0,
+      "exceeds_null": false
+    }
+  ]
+}
