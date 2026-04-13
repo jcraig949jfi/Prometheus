@@ -411,6 +411,148 @@ def load_ec_zeros(db_path: Optional[Path] = None, limit: int = 20000) -> DomainI
     return DomainIndex("ec_zeros", labels, features)
 
 
+def load_rmt_ensemble(db_path: Optional[Path] = None, limit: int = 30000) -> DomainIndex:
+    """
+    Load GUE/random-matrix-theory spectral statistics from L-function zeros.
+
+    PURE spectral features only -- no conductor, rank, or arithmetic invariants.
+    These capture the quantum-chaos / RMT connection: the statistical fingerprint
+    of how zero spacings conform to (or deviate from) GUE universality.
+
+    14 features per object:
+      Normalized spacing moments (4): mean, var, skew, kurtosis of s_i / mean(s)
+      Nearest-neighbor spacing ratio stats (3): mean(r), var(r), min(r)
+      Number variance Sigma^2(L) for L = 1, 2, 4 (3)
+      Spectral rigidity Delta_3(L) approx for L = 1, 2 (2)
+      Unfolded level statistics (2): mean unfolded spacing, unfolded spacing var
+    """
+    from scipy import stats as sp_stats
+    import duckdb
+
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql(f"""
+        SELECT ec.lmfdb_label, oz.zeros_vector, oz.n_zeros_stored
+        FROM object_zeros oz
+        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
+        WHERE oz.n_zeros_stored >= 8 AND oz.zeros_vector IS NOT NULL
+        ORDER BY oz.n_zeros_stored DESC
+        LIMIT {limit}
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        label, zeros_vec, n_zeros = row
+        zeros = sorted([z for z in (zeros_vec or [])[:n_zeros] if z is not None and z > 0])
+        if len(zeros) < 8:
+            continue
+
+        spacings = np.array([zeros[i + 1] - zeros[i] for i in range(len(zeros) - 1)])
+        mean_sp = spacings.mean()
+        if mean_sp < 1e-12:
+            continue
+        s_norm = spacings / mean_sp
+
+        # Feature 0-3: Normalized spacing distribution moments
+        sp_mean = float(s_norm.mean())
+        sp_var = float(s_norm.var())
+        sp_skew = float(sp_stats.skew(s_norm))
+        sp_kurt = float(sp_stats.kurtosis(s_norm))
+
+        # Feature 4-6: Nearest-neighbor spacing ratios
+        ratios = []
+        for i in range(len(spacings) - 1):
+            lo = min(spacings[i], spacings[i + 1])
+            hi = max(spacings[i], spacings[i + 1])
+            ratios.append(lo / hi if hi > 1e-15 else 0.0)
+        ratios = np.array(ratios) if ratios else np.array([0.0])
+        r_mean = float(ratios.mean())
+        r_var = float(ratios.var())
+        r_min = float(ratios.min())
+
+        # Feature 7-9: Number variance Sigma^2(L)
+        def number_variance(zeros_arr, L_val):
+            n = len(zeros_arr)
+            counts = []
+            for start_idx in range(n):
+                start = zeros_arr[start_idx]
+                end = start + L_val
+                cnt = np.searchsorted(zeros_arr, end) - start_idx
+                counts.append(cnt)
+                if start + L_val > zeros_arr[-1]:
+                    break
+            if len(counts) < 2:
+                return 0.0
+            return float(np.var(counts))
+
+        zeros_arr = np.array(zeros)
+        sigma2_1 = number_variance(zeros_arr, 1.0 * mean_sp)
+        sigma2_2 = number_variance(zeros_arr, 2.0 * mean_sp)
+        sigma2_4 = number_variance(zeros_arr, 4.0 * mean_sp)
+
+        # Feature 10-11: Spectral rigidity Delta_3(L) approximation
+        def delta3_approx(zeros_arr, L_val):
+            n = len(zeros_arr)
+            residuals = []
+            L_actual = L_val * mean_sp
+            for start_idx in range(0, max(1, n - 3)):
+                start = zeros_arr[start_idx]
+                end = start + L_actual
+                mask = (zeros_arr >= start) & (zeros_arr <= end)
+                local_z = zeros_arr[mask]
+                if len(local_z) < 3:
+                    continue
+                x = local_z - start
+                y = np.arange(1, len(local_z) + 1, dtype=float)
+                A_mat = np.vstack([x, np.ones(len(x))]).T
+                try:
+                    result = np.linalg.lstsq(A_mat, y, rcond=None)
+                    resid = result[1]
+                    if len(resid) > 0:
+                        residuals.append(resid[0] / L_actual)
+                    else:
+                        fitted = A_mat @ result[0]
+                        residuals.append(float(np.mean((y - fitted) ** 2)) / L_actual)
+                except np.linalg.LinAlgError:
+                    continue
+                if len(residuals) >= 20:
+                    break
+            return float(np.mean(residuals)) if residuals else 0.0
+
+        d3_1 = delta3_approx(zeros_arr, 1.0)
+        d3_2 = delta3_approx(zeros_arr, 2.0)
+
+        # Feature 12-13: Unfolded level statistics
+        def unfold(z):
+            z = np.array(z)
+            z_safe = np.maximum(z, 0.1)
+            n_smooth = (z_safe / (2 * np.pi)) * np.log(z_safe / (2 * np.pi * np.e) + 1)
+            return n_smooth
+
+        unfolded = unfold(zeros)
+        unf_spacings = np.diff(unfolded)
+        unf_spacings = unf_spacings[unf_spacings > 1e-15]
+        if len(unf_spacings) > 0:
+            unf_mean_sp = float(unf_spacings.mean())
+            unf_var_sp = float(unf_spacings.var())
+        else:
+            unf_mean_sp = 0.0
+            unf_var_sp = 0.0
+
+        labels.append(label or str(len(labels)))
+        feats.append([
+            sp_mean, sp_var, sp_skew, sp_kurt,
+            r_mean, r_var, r_min,
+            sigma2_1, sigma2_2, sigma2_4,
+            d3_1, d3_2,
+            unf_mean_sp, unf_var_sp,
+        ])
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("rmt", labels, features)
+
+
 def load_battery() -> DomainIndex:
     """
     Load battery test results as a dimension.
@@ -740,6 +882,482 @@ def load_dissection_strategies() -> DomainIndex:
     return DomainIndex("dissection", labels, features)
 
 
+def load_dynamics(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load arithmetic dynamics signatures — Lyapunov exponents, orbit
+    classifications, phase portrait statistics for OEIS sequences treated
+    as discrete dynamical systems.
+
+    10 features per object:
+      lyapunov, orbit_type (encoded), period, n_returns, n_terms,
+      correlation, n_diagonal, unique_pairs, phase_density,
+      log_n_terms
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "arithmetic_dynamics_signatures.jsonl"
+
+    # Encode orbit types as integers
+    orbit_type_map = {
+        "fixed_point": 0, "periodic": 1, "quasiperiodic": 2,
+        "chaotic": 3, "divergent": 4, "constant": 5,
+    }
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("seq_id", str(len(labels))))
+
+            lyap = rec.get("lyapunov")
+            period = rec.get("period")
+            ps = rec.get("phase_portrait_stats", {})
+
+            feat = [
+                float(lyap) if lyap is not None else 0.0,
+                float(orbit_type_map.get(rec.get("orbit_type", ""), -1)),
+                float(period) if period is not None else 0.0,
+                float(rec.get("n_returns", 0)),
+                float(rec.get("n_terms", 0)),
+                float(ps.get("correlation", 0)),
+                float(ps.get("n_diagonal", 0)),
+                float(ps.get("unique_pairs", 0)),
+                float(ps.get("phase_density", 0)),
+                np.log1p(float(rec.get("n_terms", 0))),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("dynamics", labels, features)
+
+
+def load_phase_space(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load phase space signatures — autocorrelation lags, mutual information,
+    Lyapunov exponents, and fixed-point counts for OEIS sequences.
+
+    10 features per object:
+      n_terms, autocorr_1, autocorr_2, autocorr_3, mutual_info,
+      lyapunov, orbit_type (encoded), n_fixed_points, period,
+      log_n_terms
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "phase_space_signatures.jsonl"
+
+    orbit_type_map = {
+        "fixed_point": 0, "periodic": 1, "quasiperiodic": 2,
+        "chaotic": 3, "divergent": 4, "constant": 5,
+    }
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("seq_id", str(len(labels))))
+
+            lyap = rec.get("lyapunov")
+            period = rec.get("period")
+
+            feat = [
+                float(rec.get("n_terms", 0)),
+                float(rec.get("autocorr_1", 0)),
+                float(rec.get("autocorr_2", 0)),
+                float(rec.get("autocorr_3", 0)),
+                float(rec.get("mutual_info", 0)),
+                float(lyap) if lyap is not None else 0.0,
+                float(orbit_type_map.get(rec.get("orbit_type", ""), -1)),
+                float(rec.get("n_fixed_points", 0)),
+                float(period) if period is not None else 0.0,
+                np.log1p(float(rec.get("n_terms", 0))),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("phase_space", labels, features)
+
+
+def load_spectral_sigs(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load FFT power spectra of mathematical formulas (spectral_signatures.jsonl).
+
+    Features capture the frequency-domain decomposition of formula structure:
+    centroid, bandwidth, entropy, rolloff, and top 10 FFT magnitudes.
+    These are the calculus/trig fingerprints — spectral decomposition of formulas.
+    Phoneme: Phasma (spectral essence).
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "spectral_signatures.jsonl"
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("id", str(len(labels))))
+
+            top_mags = rec.get("top_magnitudes", [])[:10]
+            top_mags_padded = (list(top_mags) + [0.0] * 10)[:10]
+
+            feat = [
+                float(rec.get("centroid", 0)),
+                float(rec.get("bandwidth", 0)),
+                float(rec.get("entropy", 0)),
+                float(rec.get("rolloff", 0)),
+            ] + [float(m) for m in top_mags_padded]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("spectral_sigs", labels, features)
+
+
+def load_operadic_sigs(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load operadic (compositional skeleton) signatures of formulas.
+
+    Features capture the algebraic composition tree structure:
+    n_ops, is_symmetric, arity profile length, and depth profile statistics
+    (number of distinct operators, mean/max depth, depth spread).
+    These encode the compositional DNA of mathematical formulas.
+    Phoneme: Taxis (order/structure).
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "operadic_signatures.jsonl"
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("hash", str(len(labels))))
+
+            # Parse arity_profile string to get length
+            arity_str = rec.get("arity_profile", "")
+            arity_entries = [e for e in arity_str.split(",") if e.strip()] if arity_str else []
+
+            # Parse depth_profile "op:lo-hi|op:lo-hi" to get stats
+            depth_str = rec.get("depth_profile", "")
+            depth_entries = [e for e in depth_str.split("|") if e.strip()] if depth_str else []
+            depths_lo, depths_hi = [], []
+            for entry in depth_entries:
+                parts = entry.split(":")
+                if len(parts) == 2:
+                    range_parts = parts[1].split("-")
+                    if len(range_parts) == 2:
+                        try:
+                            depths_lo.append(int(range_parts[0]))
+                            depths_hi.append(int(range_parts[1]))
+                        except ValueError:
+                            pass
+
+            n_distinct_ops = len(depth_entries)
+            mean_depth = float(np.mean(depths_hi)) if depths_hi else 0.0
+            max_depth = float(max(depths_hi)) if depths_hi else 0.0
+            depth_spread = float(np.mean([h - l for l, h in zip(depths_lo, depths_hi)])) if depths_lo else 0.0
+
+            feat = [
+                float(rec.get("n_ops", 0)),
+                float(rec.get("is_symmetric", False)),
+                float(len(arity_entries)),
+                float(n_distinct_ops),
+                mean_depth,
+                max_depth,
+                depth_spread,
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("operadic_sigs", labels, features)
+
+
+def load_metabolism(data_dir: Optional[Path] = None) -> DomainIndex:
+    """
+    Load metabolic network models (BiGG/COBRA format) as a domain.
+
+    Each object is a genome-scale metabolic model. 113 files exist but
+    we skip non-model JSON files. Features capture network topology,
+    stoichiometric structure, and biological organization:
+
+    11 features per object:
+      n_reactions, n_metabolites, n_genes,
+      mean_stoich_participants, max_stoich_participants,
+      frac_reversible, n_compartments, n_subsystems,
+      connectivity_ratio (met/rxn), gene_coverage,
+      log_n_reactions
+    """
+    data_dir = data_dir or CARTOGRAPHY / "metabolism" / "data"
+
+    labels, feats = [], []
+    for fname in sorted(os.listdir(data_dir)):
+        if not fname.endswith(".json"):
+            continue
+        fpath = data_dir / fname
+        try:
+            with open(fpath) as f:
+                d = json.load(f)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            continue
+
+        # Skip non-model files (need reactions, metabolites, genes)
+        if not isinstance(d, dict) or "reactions" not in d:
+            continue
+
+        rxns = d["reactions"]
+        mets = d.get("metabolites", [])
+        genes = d.get("genes", [])
+        n_rxn = len(rxns)
+        n_met = len(mets)
+        n_gen = len(genes)
+
+        if n_rxn < 10:
+            continue
+
+        # Stoichiometric participation counts per reaction
+        stoich_counts = []
+        reversible = 0
+        gene_reactions = 0
+        subsystems = set()
+        for r in rxns:
+            met_dict = r.get("metabolites", {})
+            stoich_counts.append(len(met_dict))
+            if r.get("lower_bound", 0) < 0:
+                reversible += 1
+            if r.get("gene_reaction_rule", "").strip():
+                gene_reactions += 1
+            ss = r.get("subsystem", "")
+            if ss:
+                subsystems.add(ss)
+
+        mean_stoich = float(np.mean(stoich_counts)) if stoich_counts else 0.0
+        max_stoich = float(max(stoich_counts)) if stoich_counts else 0.0
+
+        model_id = d.get("id", fname.replace(".json", ""))
+        labels.append(model_id)
+        feat = [
+            float(n_rxn),
+            float(n_met),
+            float(n_gen),
+            mean_stoich,
+            max_stoich,
+            reversible / max(n_rxn, 1),
+            float(len(d.get("compartments", {}))),
+            float(len(subsystems)),
+            n_met / max(n_rxn, 1),
+            gene_reactions / max(n_rxn, 1),
+            np.log1p(float(n_rxn)),
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("metabolism", labels, features)
+
+
+def load_chemistry(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load QM9 molecular property dataset as a domain.
+
+    133K small organic molecules with quantum-chemical properties
+    computed at B3LYP/6-31G(2df,p) level of theory.
+
+    12 features per object:
+      A, B, C (rotational constants),
+      mu (dipole moment), alpha (isotropic polarizability),
+      homo, lumo, gap (orbital energies),
+      r2 (electronic spatial extent), zpve (zero-point vibrational energy),
+      cv (heat capacity at 298.15K),
+      u0 (internal energy at 0K)
+    """
+    import csv
+    path = path or CARTOGRAPHY / "chemistry" / "data" / "qm9.csv"
+
+    labels, feats = [], []
+    with open(path, newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            labels.append(row.get("mol_id", str(len(labels))))
+            feat = [
+                float(row.get("A", 0)),
+                float(row.get("B", 0)),
+                float(row.get("C", 0)),
+                float(row.get("mu", 0)),
+                float(row.get("alpha", 0)),
+                float(row.get("homo", 0)),
+                float(row.get("lumo", 0)),
+                float(row.get("gap", 0)),
+                float(row.get("r2", 0)),
+                float(row.get("zpve", 0)),
+                float(row.get("cv", 0)),
+                float(row.get("u0", 0)),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("chemistry", labels, features)
+
+
+def load_codata(path: Optional[Path] = None) -> DomainIndex:
+    """
+    Load CODATA physical constants (286 constants).
+
+    10 native features per constant — derived from value, uncertainty,
+    unit, and name metadata. No proxy features from formula dissection.
+
+    Features:
+      0: log_abs_value        — log10(|value|), the magnitude scale
+      1: sign                 — sign of value (+1 or -1)
+      2: log_uncertainty      — log10(uncertainty), measurement precision
+      3: log_relative_unc     — log10(uncertainty/|value|), relative precision
+      4: order_of_magnitude   — floor(log10(|value|))
+      5: is_dimensionless     — 1.0 if no unit, 0.0 otherwise
+      6: unit_category        — integer encoding of unit type
+      7: is_ratio             — 1.0 if name contains 'ratio'
+      8: is_mass_related      — 1.0 if name contains 'mass'
+      9: is_magnetic          — 1.0 if name contains 'mag.' or 'moment'
+    """
+    import math
+    path = path or CARTOGRAPHY / "physics" / "data" / "codata" / "constants.json"
+    with open(path) as f:
+        data = json.load(f)
+
+    # Build unit category map
+    all_units = sorted(set(c.get("unit", "") for c in data))
+    unit_map = {u: i for i, u in enumerate(all_units)}
+
+    labels, feats = [], []
+    for c in data:
+        name = c.get("name", "")
+        labels.append(name[:60])
+
+        value = float(c.get("value", 0))
+        unc = float(c.get("uncertainty", 0) or 0)
+        unit = c.get("unit", "")
+
+        abs_val = abs(value) if value != 0 else 1e-300
+        sign = 1.0 if value >= 0 else -1.0
+        log_abs = math.log10(abs_val) if abs_val > 0 else -300.0
+        log_unc = math.log10(unc) if unc > 0 else -30.0
+        log_rel = math.log10(unc / abs_val) if unc > 0 and abs_val > 0 else -30.0
+        oom = math.floor(log_abs) if abs_val > 0 else 0
+        is_dimless = 1.0 if not unit else 0.0
+        unit_cat = float(unit_map.get(unit, 0))
+        name_lower = name.lower()
+        is_ratio = 1.0 if "ratio" in name_lower else 0.0
+        is_mass = 1.0 if "mass" in name_lower else 0.0
+        is_mag = 1.0 if ("mag." in name_lower or "moment" in name_lower) else 0.0
+
+        feat = [
+            log_abs,
+            sign,
+            log_unc,
+            log_rel,
+            float(oom),
+            is_dimless,
+            unit_cat,
+            is_ratio,
+            is_mass,
+            is_mag,
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("codata", labels, features)
+
+
+def load_pdg_particles(path: Optional[Path] = None) -> DomainIndex:
+    """
+    Load PDG particle data (226 particles).
+
+    11 native features per particle — mass, width, error structure, and
+    quantum numbers decoded from the Monte Carlo ID (PDG numbering scheme).
+
+    WARNING from M1: 225 particles in 13/182 active dimensions created
+    geometric illusions (6/8 kills). These native features avoid that trap
+    by staying in the particle domain's own coordinate system rather than
+    projecting through the full tensor at high dimension.
+
+    Features:
+      0: log_mass             — log10(mass_GeV), energy scale
+      1: log_width            — log10(width_GeV), inverse lifetime
+      2: relative_mass_err    — log10(err_plus/mass), measurement precision
+      3: mass_err_asymmetry   — (err_plus + err_minus) / max(err_plus - err_minus, eps)
+      4: is_stable            — 1.0 if width == 0 (stable particle)
+      5: spin_2j_plus_1       — 2J+1 from MC ID last digit
+      6: nq1                  — quark content digit 1 from MC ID
+      7: nq2                  — quark content digit 2 from MC ID
+      8: nq3                  — quark content digit 3 from MC ID
+      9: n_radial             — radial excitation quantum number from MC ID
+     10: is_hadron            — 1.0 if has quark content (mc_id >= 100)
+    """
+    import math
+    path = path or CARTOGRAPHY / "physics" / "data" / "pdg" / "particles.json"
+    with open(path) as f:
+        data = json.load(f)
+
+    labels, feats = [], []
+    for p in data:
+        name = p.get("name", "")
+        mc_id = p.get("mc_ids", [0])[0]
+        mass = float(p.get("mass_GeV", 0) or 0)
+        width = float(p.get("width_GeV", 0) or 0)
+        err_plus = float(p.get("mass_err_plus", 0) or 0)
+        err_minus = float(p.get("mass_err_minus", 0) or 0)
+
+        # Label: use mc_id + name snippet
+        labels.append(f"PDG{mc_id}_{name.strip()[:30]}")
+
+        # Derived features
+        log_mass = math.log10(mass) if mass > 0 else -30.0
+        log_width = math.log10(width) if width > 0 else -30.0
+        rel_err = math.log10(abs(err_plus) / mass) if mass > 0 and err_plus != 0 else -30.0
+        # Asymmetry: (|err+| - |err-|) / max(|err+| + |err-|, eps) — 0 if symmetric
+        sum_err = abs(err_plus) + abs(err_minus)
+        diff_err = abs(err_plus) - abs(err_minus)
+        asym = diff_err / max(sum_err, 1e-30)
+        is_stable = 1.0 if width == 0 else 0.0
+
+        # Decode quantum numbers from PDG MC ID
+        aid = abs(mc_id)
+        nj = aid % 10                  # 2J+1
+        nq3 = (aid // 10) % 10         # quark 3
+        nq2 = (aid // 100) % 10        # quark 2
+        nq1 = (aid // 1000) % 10       # quark 1
+        nr = (aid // 100000) % 10      # radial excitation
+        is_hadron = 1.0 if aid >= 100 else 0.0
+
+        feat = [
+            log_mass,
+            log_width,
+            rel_err,
+            asym,
+            is_stable,
+            float(nj),
+            float(nq1),
+            float(nq2),
+            float(nq3),
+            float(nr),
+            is_hadron,
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("pdg_particles", labels, features)
+
+
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
@@ -755,6 +1373,7 @@ DOMAIN_LOADERS = {
     "modular_forms": load_modular_forms,
     "dirichlet_zeros": load_dirichlet_zeros,
     "ec_zeros": load_ec_zeros,
+    "rmt": load_rmt_ensemble,
     "bianchi": load_bianchi_forms,
     "groups": load_groups,
     "belyi": load_belyi,
@@ -762,6 +1381,14 @@ DOMAIN_LOADERS = {
     "charon_landscape": load_charon_landscape,
     "battery": load_battery,
     "dissection": load_dissection_strategies,
+    "dynamics": load_dynamics,
+    "phase_space": load_phase_space,
+    "spectral_sigs": load_spectral_sigs,
+    "operadic_sigs": load_operadic_sigs,
+    "metabolism": load_metabolism,
+    "chemistry": load_chemistry,
+    "codata": load_codata,
+    "pdg_particles": load_pdg_particles,
 }
 
 

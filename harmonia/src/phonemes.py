@@ -118,6 +118,19 @@ DOMAIN_PHONEME_MAP = {
         "spectral":   [(5, +1, 1.0), (6, +1, 1.0), (7, +1, 0.8),
                        (8, +1, 0.7), (10, +1, 0.6), (11, +1, 0.6)],  # all zero stats
     },
+    "rmt": {
+        # features: [sp_mean, sp_var, sp_skew, sp_kurt,
+        #            r_mean, r_var, r_min,
+        #            sigma2_1, sigma2_2, sigma2_4,
+        #            delta3_1, delta3_2,
+        #            unf_mean_sp, unf_var_sp]
+        # ALL features are pure spectral/GUE -- maps ONLY to Phasma (spectral)
+        "spectral":   [(0, +1, 1.0), (1, +1, 1.0), (2, +1, 1.0), (3, +1, 1.0),
+                       (4, +1, 1.0), (5, +1, 1.0), (6, +1, 1.0),
+                       (7, +1, 1.0), (8, +1, 1.0), (9, +1, 1.0),
+                       (10, +1, 1.0), (11, +1, 1.0),
+                       (12, +1, 1.0), (13, +1, 1.0)],
+    },
     "battery": {
         # features: [verdict_score, neg_log_p, z_score, real_val, null_mean,
         #            source_round, + 12 domain_involvement dims]
@@ -128,6 +141,84 @@ DOMAIN_PHONEME_MAP = {
         # features: [priority, tractability, gpu, log_time, n_domains, + 12 domain_applicability]
         "complexity": [(3, +1, 0.7)],           # execution time
         "rank":       [(4, +1, 0.6)],           # domain coverage
+    },
+    "dynamics": {
+        # Phasma (spectral): Lyapunov exponent is the spectral fingerprint of a dynamical system
+        # features: [lyapunov, orbit_type, period, n_returns, n_terms,
+        #            correlation, n_diagonal, unique_pairs, phase_density, log_n_terms]
+        "spectral":   [(0, +1, 1.0), (5, +1, 0.7)],  # lyapunov + phase correlation = Phasma
+        # Auxesis (growth): orbit complexity and phase space density measure growth/richness
+        "complexity": [(8, +1, 0.8), (9, +1, 0.6)],  # phase_density + log_n_terms = Auxesis
+        "rank":       [(7, +1, 0.7)],                 # unique_pairs ~ dimensional richness
+        "symmetry":   [(1, +1, 0.6), (2, +1, 0.5)],  # orbit_type + period ~ dynamical symmetry
+    },
+    "metabolism": {
+        # features: [n_reactions, n_metabolites, n_genes,
+        #            mean_stoich_participants, max_stoich_participants,
+        #            frac_reversible, n_compartments, n_subsystems,
+        #            connectivity_ratio, gene_coverage, log_n_reactions]
+        # Megethos (network size): reaction/metabolite/gene counts dominate
+        "complexity": [(10, +1, 1.0), (7, +1, 0.7)],  # log_n_reactions + n_subsystems = network scale
+        "rank":       [(6, +1, 0.8), (8, +1, 0.6)],   # n_compartments + connectivity = structural richness
+        "symmetry":   [(5, +1, 0.7)],                  # frac_reversible ~ reaction symmetry (forward/backward)
+        "arithmetic": [(3, +1, 0.6), (4, +1, 0.5)],   # stoichiometric participation = combinatorial complexity
+        "spectral":   [(9, +1, 0.7)],                  # gene_coverage ~ functional coverage fingerprint
+    },
+    "chemistry": {
+        # features: [A, B, C, mu, alpha, homo, lumo, gap,
+        #            r2, zpve, cv, u0]
+        # Molecular properties map naturally to physics phonemes
+        "complexity": [(8, +1, 0.9), (4, +1, 0.7)],   # r2 (spatial extent) + alpha (polarizability) = molecular size
+        "spectral":   [(5, +1, 1.0), (6, +1, 1.0), (7, +1, 0.9)],  # homo, lumo, gap = electronic spectrum
+        "symmetry":   [(0, +1, 0.6), (1, +1, 0.6), (2, +1, 0.6)],  # rotational constants encode molecular symmetry
+        "arithmetic": [(9, +1, 0.7), (10, +1, 0.6)],  # zpve + cv = vibrational/thermal complexity
+    },
+    "phase_space": {
+        # Phasma (spectral): autocorrelation structure and Lyapunov exponent
+        # features: [n_terms, autocorr_1, autocorr_2, autocorr_3, mutual_info,
+        #            lyapunov, orbit_type, n_fixed_points, period, log_n_terms]
+        "spectral":   [(5, +1, 1.0), (1, +1, 0.8), (2, +1, 0.7), (3, +1, 0.6)],  # lyapunov + autocorrs = Phasma
+        # Auxesis (growth): mutual information and sequence length measure growth
+        "complexity": [(4, +1, 0.8), (9, +1, 0.6)],  # mutual_info + log_n_terms = Auxesis
+        "rank":       [(7, +1, 0.7)],                 # n_fixed_points ~ phase space dimension
+        "symmetry":   [(6, +1, 0.6), (8, +1, 0.5)],  # orbit_type + period ~ dynamical symmetry
+    },
+    "spectral_sigs": {
+        # Phasma (spectral essence): FFT decomposition of formula structure
+        # features: [centroid, bandwidth, entropy, rolloff, + 10 top_magnitudes]
+        "spectral":   [(0, +1, 1.0), (1, +1, 0.8), (3, +1, 0.7)],  # centroid + bandwidth + rolloff = Phasma
+        "complexity": [(2, +1, 0.9)],              # entropy measures formula complexity
+        "rank":       [(4, +1, 0.5), (5, +1, 0.4)],  # top magnitudes ~ spectral richness
+    },
+    "operadic_sigs": {
+        # Taxis (order/structure): compositional skeleton of formulas
+        # features: [n_ops, is_symmetric, arity_len, n_distinct_ops, mean_depth, max_depth, depth_spread]
+        "symmetry":   [(1, +1, 1.0)],              # is_symmetric IS symmetry
+        "complexity": [(0, +1, 0.9), (5, +1, 0.7)],  # n_ops + max_depth = structural complexity = Taxis
+        "rank":       [(3, +1, 0.8), (2, +1, 0.6)],  # n_distinct_ops + arity_len ~ compositional richness
+        "arithmetic": [(6, +1, 0.5)],              # depth_spread ~ nesting regularity
+    },
+    "codata": {
+        # Megethos (magnitude): physical constants ARE magnitude — their value spans
+        # 60+ orders of magnitude. log_abs_value and order_of_magnitude are Megethos.
+        # features: [log_abs_value, sign, log_uncertainty, log_relative_unc,
+        #            order_of_magnitude, is_dimensionless, unit_category,
+        #            is_ratio, is_mass, is_magnetic]
+        "complexity": [(0, +1, 1.0), (4, +1, 0.9)],   # log_abs_value + OoM = Megethos
+        "spectral":   [(2, +1, 0.8), (3, +1, 0.9)],   # uncertainty structure = measurement spectral fingerprint
+        "arithmetic": [(5, +1, 0.7), (7, +1, 0.6)],   # dimensionless + ratio = arithmetic purity
+        "symmetry":   [(1, +1, 0.5)],                  # sign symmetry
+    },
+    "pdg_particles": {
+        # Megethos (magnitude): particle mass spans 15+ orders of magnitude.
+        # Phasma (spectral): width/lifetime is the spectral fingerprint of decay.
+        # features: [log_mass, log_width, relative_mass_err, mass_err_asymmetry,
+        #            is_stable, spin_2j+1, nq1, nq2, nq3, n_radial, is_hadron]
+        "complexity": [(0, +1, 1.0)],                  # log_mass = Megethos (energy scale)
+        "spectral":   [(1, +1, 1.0), (2, +1, 0.7)],   # log_width + rel_err = Phasma (decay spectrum)
+        "symmetry":   [(5, +1, 1.0), (3, +1, 0.5)],   # spin = symmetry; err asymmetry = CP proxy
+        "rank":       [(6, +1, 0.8), (7, +1, 0.8), (8, +1, 0.8)],  # quark content = compositeness/rank
+        "arithmetic": [(9, +1, 0.6), (10, +1, 0.7)],  # radial excitation + hadron flag
     },
 }
 
