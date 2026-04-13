@@ -1,0 +1,211 @@
+{
+  "task3_shared_ec_nf": {
+    "n_shared_dims": 4,
+    "shared_dims": [
+      {
+        "dim": 129,
+        "strategy": "s13",
+        "ec_fill": 1.0,
+        "nf_fill": 1.0
+      },
+      {
+        "dim": 130,
+        "strategy": "s13",
+        "ec_fill": 1.0,
+        "nf_fill": 1.0
+      },
+      {
+        "dim": 131,
+        "strategy": "s13",
+        "ec_fill": 1.0,
+        "nf_fill": 1.0
+      },
+      {
+        "dim": 132,
+        "strategy": "s13",
+        "ec_fill": 1.0,
+        "nf_fill": 1.0
+      }
+    ],
+    "strategy_breakdown": {
+      "s13": 4
+    },
+    "all_s13": true
+  },
+  "task2_pc1": {
+    "explained_variance_pct": [
+      46.681,
+      18.37,
+      5.092,
+      4.179,
+      3.282,
+      3.141,
+      3.045,
+      2.71,
+      2.643,
+      1.785
+    ],
+    "phoneme_correlations": {
+      "Megethos": {
+        "rho": 0.2831,
+        "pval": 0.0,
+        "n_valid": 310254
+      },
+      "Bathos": {
+        "rho": 0.3806,
+        "pval": 0.0,
+        "n_valid": 310254
+      },
+      "Symmetria": {
+        "rho": null,
+        "n_valid": 0
+      },
+      "Arithmos": {
+        "rho": null,
+        "n_valid": 0
+      },
+      "Phasma": {
+        "rho": 0.7972,
+        "pval": 0.0,
+        "n_valid": 310254
+      },
+      "Poikilia": {
+        "rho": 0.5539,
+        "pval": 0.0,
+        "n_valid": 310254
+      }
+    },
+    "pc1_name": "Aligns with Phasma (rho=0.797)",
+    "top_strategy_loadings": {
+      "s5_ap": 0.2128,
+      "s3_ap": 0.2107,
+      "s11_mono": 0.1404,
+      "s21_auto": 0.119,
+      "s24_ap": 0.0878,
+      "s7_cond": 0.0358,
+      "s13": 0.0339
+    },
+    "max_abs_corr": 0.7972
+  },
+  "task1_transition": {
+    "n_objects_both": 310254,
+    "n_subsample": 50000,
+    "lstsq_rank": 5,
+    "singular_values": [
+      284.5357,
+      173.0727,
+      90.3114,
+      63.0372,
+      38.7803
+    ],
+    "TmTt_diagonal": [
+      14.7775,
+      7.2437,
+      11.2815,
+      10.0036,
+      11.7936
+    ],
+    "offdiag_max": 1.968669,
+    "orthogonality_ratio": 0.1786,
+    "recon_error_mean": 0.4938,
+    "recon_error_median": 0.4763,
+    "variance_explained": 0.716,
+    "manifold_type": "rotation+scaling (mildly curved)",
+    "dim_5d": 5,
+    "dim_filtered": 41
+  },
+  "task4_camera_angles": {
+    "domain_angles": {
+      "Lzeros": {
+        "count": 184830,
+        "max_principal_angle": 89.8,
+        "mean_principal_angle": 71.8,
+        "all_angles": [
+          41.8,
+          67.9,
+          71.0,
+          88.4,
+          89.8
+        ]
+      },
+      "MF": {
+        "count": 50000,
+        "max_principal_angle": 88.4,
+        "mean_principal_angle": 47.3,
+        "all_angles": [
+          8.7,
+          22.0,
+          44.8,
+          72.7,
+          88.4
+        ]
+      },
+      "EC": {
+        "count": 31073,
+        "max_principal_angle": 89.5,
+        "mean_principal_angle": 61.4,
+        "all_angles": [
+          17.6,
+          38.9,
+          74.5,
+          86.8,
+          89.5
+        ]
+      },
+      "HMF": {
+        "count": 29356,
+        "max_principal_angle": 89.8,
+        "mean_principal_angle": 73.9,
+        "all_angles": [
+          49.8,
+          66.7,
+          78.3,
+          84.7,
+          89.8
+        ]
+      },
+      "maass": {
+        "count": 14995,
+        "max_principal_angle": 88.7,
+        "mean_principal_angle": 67.1,
+        "all_angles": [
+          51.4,
+          53.1,
+          62.4,
+          80.1,
+          88.7
+        ]
+      }
+    },
+    "m2_comparison": {
+      "common_domains": [
+        "EC",
+        "MF",
+        "Dirichlet"
+      ],
+      "m2_angles": [
+        76.1,
+        12.1,
+        5.5
+      ],
+      "our_angles": [
+        89.5,
+        88.4,
+        89.8
+      ],
+      "spearman_rho": -0.5,
+      "spearman_p": 0.6667
+    }
+  },
+  "task5_curvature": {
+    "n_sample": 5000,
+    "k": 10,
+    "n_edges_sampled": 19899,
+    "mean_orc": 0.5959,
+    "median_orc": 0.6002,
+    "std_orc": 0.2104,
+    "frac_positive": 0.9971,
+    "m2_5d_orc": 0.713,
+    "both_positive_curvature": true
+  }
+}
