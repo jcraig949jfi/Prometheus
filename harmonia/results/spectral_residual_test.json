@@ -1,0 +1,25 @@
+{
+  "ec_zeros_loaded": {
+    "objects": 31073,
+    "features": 16,
+    "precision": "6-8 digit zeros, 8-10 digit spacings"
+  },
+  "transfer_16D": {
+    "rho": 0.827,
+    "note": "Full 16D features give strong transfer"
+  },
+  "spectral_adds_within_EC": {
+    "R2_megethos_only": 0.0,
+    "R2_megethos_plus_spectral": 0.059,
+    "spectral_contribution": "+5.9%",
+    "note": "Spectral features add 5.9% R^2 for predicting torsion within EC. Modest but real."
+  },
+  "gue_vs_arithmos": {
+    "high_zero_avg": 0.139,
+    "spacing_std": -0.105,
+    "n_zeros": 0.101,
+    "mean_spacing": -0.088,
+    "note": "GUE features correlate with Arithmos at rho=0.09-0.14. Significant (p<0.001) but weak. The spectral phoneme sees the arithmetic structure dimly \u2014 through a different window."
+  },
+  "verdict": "Spectral features add 5.9% to the within-EC prediction of torsion. They do NOT crack the 21% residual \u2014 they contribute modestly. The GUE statistics (kurtosis, NN ratio) see Arithmos at rho~0.10. The spectral window is real but narrow."
+}
