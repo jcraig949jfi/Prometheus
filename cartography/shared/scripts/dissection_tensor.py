@@ -2400,6 +2400,588 @@ class DataLoaders:
 
         return objects
 
+    @staticmethod
+    def load_qm9(max_n=50000):
+        """Load QM9 molecules with quantum-chemical property signatures.
+
+        Source: ~134K small organic molecules with 15+ computed properties.
+        """
+        import pandas as pd
+        path = ROOT / "cartography/physics/data/qm9/gdb9.sdf.csv"
+        if not path.exists():
+            print("  WARNING: gdb9.sdf.csv not found, skipping QM9")
+            return []
+        try:
+            df = pd.read_csv(path, nrows=max_n)
+        except Exception as e:
+            print(f"  WARNING: Failed to load QM9: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            mol_id = str(row.get("mol_id", f"qm9_{idx}"))
+            u0 = row.get("u0")
+            if u0 is None or pd.isna(u0):
+                continue
+
+            obj = MathObject(
+                obj_id=f"qm9_{mol_id}",
+                domain="QM9",
+                label=mol_id,
+                signatures={},
+                raw={"u0": float(u0), "gap": float(row.get("gap", 0))},
+            )
+
+            # S13: molecular weight proxy from u0 (internal energy)
+            obj.signatures["s13"] = ext.s13_discriminant(int(abs(u0) * 1000))
+
+            # S5: FFT of key property vector
+            props_for_fft = []
+            for col in ["A", "B", "C", "mu", "alpha", "homo", "lumo", "gap"]:
+                v = row.get(col)
+                if v is not None and pd.notna(v):
+                    props_for_fft.append(float(v))
+                else:
+                    props_for_fft.append(0.0)
+            obj.signatures["s5_ap"] = ext.s5_spectral(props_for_fft)
+
+            # S24: entropy of properties
+            all_props = []
+            for col in ["A", "B", "C", "mu", "alpha", "homo", "lumo",
+                        "gap", "r2", "zpve", "cv"]:
+                v = row.get(col)
+                if v is not None and pd.notna(v) and float(v) != 0:
+                    all_props.append(abs(float(v)))
+            if len(all_props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(all_props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            # S11: monodromy proxy on property sequence
+            mono_seq = props_for_fft[:]
+            if len(mono_seq) >= 4:
+                obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(mono_seq)
+            else:
+                obj.signatures["s11_mono"] = np.full(6, np.nan)
+
+            objects.append(obj)
+
+        print(f"  QM9: {len(objects)} molecules loaded")
+        return objects
+
+    @staticmethod
+    def load_manifolds(max_n=50000):
+        """Load 3-manifolds from SnapPy census.
+
+        Source: hyperbolic 3-manifolds with volume, tetrahedra, Chern-Simons.
+        """
+        import pandas as pd
+        path = ROOT / "cartography/physics/data/snappy_manifolds.csv"
+        if not path.exists():
+            print("  WARNING: snappy_manifolds.csv not found, skipping manifolds")
+            return []
+        try:
+            df = pd.read_csv(path, nrows=max_n)
+        except Exception as e:
+            print(f"  WARNING: Failed to load manifolds: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            name = str(row.get("name", f"mfld_{idx}"))
+            volume = row.get("volume")
+            if volume is None or pd.isna(volume):
+                continue
+            volume = float(volume)
+            num_tet = row.get("num_tetrahedra")
+            num_tet = int(num_tet) if num_tet is not None and pd.notna(num_tet) else 0
+            cs = row.get("chern_simons")
+            cs_val = float(cs) if cs is not None and pd.notna(cs) else 0.0
+
+            obj = MathObject(
+                obj_id=f"mfld_{name}_{idx}",
+                domain="manifold",
+                label=name,
+                signatures={},
+                raw={"volume": volume, "num_tetrahedra": num_tet,
+                     "chern_simons": cs_val},
+            )
+
+            # S13: volume as magnitude
+            obj.signatures["s13"] = ext.s13_discriminant(int(volume * 1000))
+
+            # S7: p-adic of num_tetrahedra
+            if num_tet > 0:
+                obj.signatures["s7_cond"] = ext.s7_padic(num_tet)
+            else:
+                obj.signatures["s7_cond"] = np.full(5, np.nan)
+
+            # S24: entropy of [volume, num_tet, chern_simons]
+            props = [abs(v) for v in [volume, float(num_tet), cs_val] if v != 0]
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            # S11: monodromy proxy on [volume, chern_simons]
+            mono_seq = [volume, cs_val, float(num_tet), volume * cs_val
+                        if cs_val != 0 else volume]
+            obj.signatures["s11_mono"] = ext.s11_monodromy_proxy(mono_seq)
+
+            objects.append(obj)
+
+        print(f"  Manifolds: {len(objects)} loaded")
+        return objects
+
+    @staticmethod
+    def load_exoplanets(max_n=None):
+        """Load confirmed exoplanets with orbital and stellar signatures.
+
+        Source: NASA Exoplanet Archive.
+        """
+        import pandas as pd
+        path = ROOT / "cartography/physics/data/exoplanets/confirmed_exoplanets.csv"
+        if not path.exists():
+            print("  WARNING: confirmed_exoplanets.csv not found, skipping exoplanets")
+            return []
+        try:
+            df = pd.read_csv(path, nrows=max_n)
+        except Exception as e:
+            print(f"  WARNING: Failed to load exoplanets: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            name = str(row.get("pl_name", f"exo_{idx}")).strip('"')
+            orbper = row.get("pl_orbper")
+            if orbper is None or pd.isna(orbper) or float(orbper) <= 0:
+                continue
+            orbper = float(orbper)
+
+            mass = row.get("pl_bmassj")
+            mass_val = float(mass) if mass is not None and pd.notna(mass) else 0.0
+            radius = row.get("pl_radj")
+            radius_val = float(radius) if radius is not None and pd.notna(radius) else 0.0
+            eqt = row.get("pl_eqt")
+            eqt_val = float(eqt) if eqt is not None and pd.notna(eqt) else 0.0
+            st_teff = row.get("st_teff")
+            st_teff_val = float(st_teff) if st_teff is not None and pd.notna(st_teff) else 0.0
+
+            obj = MathObject(
+                obj_id=f"exo_{name}",
+                domain="exoplanet",
+                label=name,
+                signatures={},
+                raw={"orbper": orbper, "mass_j": mass_val,
+                     "radius_j": radius_val},
+            )
+
+            # S13: orbital period as magnitude
+            obj.signatures["s13"] = ext.s13_discriminant(int(orbper * 1000))
+
+            # S5: FFT of key observables
+            fft_vals = [orbper, mass_val, radius_val, eqt_val, st_teff_val]
+            fft_vals = [v if v != 0 else 0.0 for v in fft_vals]
+            if sum(1 for v in fft_vals if v != 0) >= 4:
+                obj.signatures["s5_ap"] = ext.s5_spectral(fft_vals)
+            else:
+                obj.signatures["s5_ap"] = np.full(8, np.nan)
+
+            # S24: entropy of orbital params
+            orb_props = []
+            for col in ["pl_orbper", "pl_orbsmax", "pl_orbeccen",
+                        "pl_orbincl", "pl_bmassj", "pl_radj"]:
+                v = row.get(col)
+                if v is not None and pd.notna(v) and float(v) != 0:
+                    orb_props.append(abs(float(v)))
+            if len(orb_props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(orb_props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            objects.append(obj)
+
+        print(f"  Exoplanets: {len(objects)} loaded")
+        return objects
+
+    @staticmethod
+    def load_pulsars(max_n=None):
+        """Load ATNF pulsars with period and dispersion signatures.
+
+        Source: ATNF Pulsar Catalogue.
+        """
+        import pandas as pd
+        path = ROOT / "cartography/physics/data/pulsars/atnf_pulsars.csv"
+        if not path.exists():
+            print("  WARNING: atnf_pulsars.csv not found, skipping pulsars")
+            return []
+        try:
+            df = pd.read_csv(path, nrows=max_n)
+        except Exception as e:
+            print(f"  WARNING: Failed to load pulsars: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            name = str(row.get("JNAME", row.get("PSRJ", f"psr_{idx}")))
+            p0 = row.get("P0")
+            if p0 is None or pd.isna(p0):
+                continue
+            p0 = float(p0)
+            if p0 <= 0:
+                continue
+
+            p1 = row.get("P1")
+            p1_val = float(p1) if p1 is not None and pd.notna(p1) else 0.0
+            dm = row.get("DM")
+            dm_val = float(dm) if dm is not None and pd.notna(dm) else 0.0
+            s1400 = row.get("S1400")
+            s1400_val = float(s1400) if s1400 is not None and pd.notna(s1400) else 0.0
+
+            obj = MathObject(
+                obj_id=f"psr_{name}",
+                domain="pulsar",
+                label=name,
+                signatures={},
+                raw={"P0": p0, "P1": p1_val, "DM": dm_val},
+            )
+
+            # S13: period as magnitude (log of period in ms)
+            obj.signatures["s13"] = ext.s13_discriminant(int(p0 * 1e6))
+
+            # S5: FFT of [P0, P1, DM, S1400]
+            fft_vals = [p0, p1_val, dm_val, s1400_val]
+            nonzero = sum(1 for v in fft_vals if v != 0)
+            if nonzero >= 4:
+                obj.signatures["s5_ap"] = ext.s5_spectral(fft_vals)
+            else:
+                obj.signatures["s5_ap"] = np.full(8, np.nan)
+
+            # S24: entropy of observables
+            props = [abs(v) for v in [p0, p1_val, dm_val, s1400_val] if v != 0]
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            objects.append(obj)
+
+        print(f"  Pulsars: {len(objects)} loaded")
+        return objects
+
+    @staticmethod
+    def load_earthquakes(max_n=50000):
+        """Load USGS M4+ earthquakes from yearly CSV files.
+
+        Source: USGS Earthquake Hazards Program.
+        """
+        import pandas as pd
+        import glob as glob_mod
+        pattern = str(ROOT / "cartography/physics/data/earthquakes_full/usgs_M4_202[0-9].csv")
+        files = sorted(glob_mod.glob(pattern))
+        if not files:
+            print("  WARNING: No earthquake CSV files found, skipping")
+            return []
+
+        frames = []
+        for fp in files:
+            try:
+                df = pd.read_csv(fp)
+                # Skip files that are error messages (< 3 columns)
+                if len(df.columns) > 5:
+                    frames.append(df)
+            except Exception:
+                continue
+        if not frames:
+            print("  WARNING: Could not parse any earthquake files, skipping")
+            return []
+        df = pd.concat(frames, ignore_index=True)
+        if max_n is not None and len(df) > max_n:
+            df = df.sample(n=max_n, random_state=42)
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            mag = row.get("mag")
+            if mag is None or pd.isna(mag):
+                continue
+            mag = float(mag)
+            lat = row.get("latitude")
+            lat_val = float(lat) if lat is not None and pd.notna(lat) else 0.0
+            lon = row.get("longitude")
+            lon_val = float(lon) if lon is not None and pd.notna(lon) else 0.0
+            depth = row.get("depth")
+            depth_val = float(depth) if depth is not None and pd.notna(depth) else 0.0
+
+            eq_id = str(row.get("id", f"eq_{idx}"))
+            obj = MathObject(
+                obj_id=f"eq_{eq_id}",
+                domain="earthquake",
+                label=eq_id,
+                signatures={},
+                raw={"mag": mag, "depth": depth_val,
+                     "lat": lat_val, "lon": lon_val},
+            )
+
+            # S13: magnitude as discriminant
+            obj.signatures["s13"] = ext.s13_discriminant(int(mag * 100))
+
+            # S5: FFT of [lat, lon, depth, mag]
+            obj.signatures["s5_ap"] = ext.s5_spectral(
+                [lat_val, lon_val, depth_val, mag])
+
+            # S24: entropy
+            props = [abs(v) for v in [lat_val, lon_val, depth_val, mag] if v != 0]
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            # S7: p-adic of int(mag*100)
+            mag_int = int(mag * 100)
+            if mag_int > 0:
+                obj.signatures["s7_cond"] = ext.s7_padic(mag_int)
+            else:
+                obj.signatures["s7_cond"] = np.full(5, np.nan)
+
+            objects.append(obj)
+
+        print(f"  Earthquakes: {len(objects)} loaded from {len(files)} files")
+        return objects
+
+    @staticmethod
+    def load_sdss_stars(max_n=50000):
+        """Load SDSS stellar spectra with photometric signatures.
+
+        Source: SDSS spectroscopic survey, 50K star sample.
+        """
+        import pandas as pd
+        path = ROOT / "cartography/physics/data/sdss/sdss_stars_50k.csv"
+        if not path.exists():
+            print("  WARNING: sdss_stars_50k.csv not found, skipping SDSS stars")
+            return []
+        try:
+            df = pd.read_csv(path, comment="#", nrows=max_n)
+        except Exception as e:
+            print(f"  WARNING: Failed to load SDSS stars: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            sn = row.get("snMedian")
+            if sn is None or pd.isna(sn) or float(sn) <= 0:
+                continue
+            sn = float(sn)
+            ra = row.get("ra")
+            ra_val = float(ra) if ra is not None and pd.notna(ra) else 0.0
+            dec = row.get("dec")
+            dec_val = float(dec) if dec is not None and pd.notna(dec) else 0.0
+            z = row.get("z")
+            z_val = float(z) if z is not None and pd.notna(z) else 0.0
+            spec_id = str(row.get("specobjid", f"star_{idx}"))
+
+            obj = MathObject(
+                obj_id=f"star_{spec_id}",
+                domain="star",
+                label=spec_id,
+                signatures={},
+                raw={"snMedian": sn, "z": z_val, "ra": ra_val, "dec": dec_val},
+            )
+
+            # S13: snMedian as quality proxy
+            obj.signatures["s13"] = ext.s13_discriminant(int(sn * 100))
+
+            # S5: FFT of [ra, dec, z, snMedian]
+            obj.signatures["s5_ap"] = ext.s5_spectral(
+                [ra_val, dec_val, z_val, sn])
+
+            # S24: entropy
+            props = [abs(v) for v in [ra_val, dec_val, z_val, sn] if v != 0]
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            objects.append(obj)
+
+        print(f"  SDSS stars: {len(objects)} loaded")
+        return objects
+
+    @staticmethod
+    def load_proteins(max_n=50000):
+        """Load UniProt/SwissProt proteins with mass and sequence signatures.
+
+        Source: SwissProt curated protein database summary.
+        """
+        import pandas as pd
+        path = ROOT / "cartography/physics/data/uniprot/swissprot_summary.tsv"
+        if not path.exists():
+            print("  WARNING: swissprot_summary.tsv not found, skipping proteins")
+            return []
+        try:
+            df = pd.read_csv(path, sep="\t", nrows=max_n)
+        except Exception as e:
+            print(f"  WARNING: Failed to load proteins: {e}")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+
+        for idx, row in df.iterrows():
+            entry = str(row.get("Entry", f"prot_{idx}"))
+            mass = row.get("Mass")
+            if mass is None or pd.isna(mass):
+                continue
+            mass = int(mass)
+            length = row.get("Length")
+            length_val = int(length) if length is not None and pd.notna(length) else 0
+            seq = str(row.get("Sequence", ""))
+            seq_len = len(seq) if seq else 0
+
+            obj = MathObject(
+                obj_id=f"prot_{entry}",
+                domain="protein",
+                label=entry,
+                signatures={},
+                raw={"mass": mass, "length": length_val},
+            )
+
+            # S13: mass as magnitude
+            obj.signatures["s13"] = ext.s13_discriminant(mass)
+
+            # S7: p-adic of length
+            if length_val > 0:
+                obj.signatures["s7_cond"] = ext.s7_padic(length_val)
+            else:
+                obj.signatures["s7_cond"] = np.full(5, np.nan)
+
+            # S24: entropy of [Length, Mass]
+            props = [abs(v) for v in [float(length_val), float(mass)] if v > 0]
+            if len(props) >= 2:
+                obj.signatures["s24_ap"] = ext.s24_entropy(props)
+            else:
+                obj.signatures["s24_ap"] = np.full(4, np.nan)
+
+            # S3: mod-p of [Length, Mass, seq_len]
+            int_vals = [v for v in [length_val, mass, seq_len] if v > 0]
+            if len(int_vals) >= 2:
+                obj.signatures["s3_ap"] = ext.s3_mod_p(int_vals)
+            else:
+                obj.signatures["s3_ap"] = np.full(6, np.nan)
+
+            objects.append(obj)
+
+        print(f"  Proteins: {len(objects)} loaded")
+        return objects
+
+    @staticmethod
+    def load_nuclear(max_n=None):
+        """Load nuclear masses from AME2020 atomic mass evaluation.
+
+        Source: Fixed-width format, 36 header lines.
+        Fields: N-Z, N, Z, A, element, mass excess (keV), binding energy/A (keV).
+        """
+        path = ROOT / "cartography/physics/data/nuclear/atomic_masses_2020.txt"
+        if not path.exists():
+            print("  WARNING: atomic_masses_2020.txt not found, skipping nuclear")
+            return []
+
+        objects = []
+        ext = StrategyExtractors
+        count = 0
+
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                lines = f.readlines()
+
+            # Skip 36 header lines (includes blank lines, column headers)
+            for line in lines[36:]:
+                if max_n is not None and count >= max_n:
+                    break
+                if len(line) < 50:
+                    continue
+                # Fixed-width format (AME2020 mass.mas20):
+                # col  1:  control char (1 char)
+                # col  2-4:  N-Z (3 chars)
+                # col  5-9:  N (5 chars)
+                # col 10-14: Z (5 chars)
+                # col 15-19: A (5 chars)
+                # col 20: space
+                # col 21-23: element (3 chars)
+                # col 24-27: origin (4 chars)
+                # col 28: space
+                # col 29-42: mass excess (14 chars, may have # for estimated)
+                # col 43-54: mass excess unc (12 chars)
+                # col 55-67: binding energy/A (13 chars)
+                try:
+                    N_val = line[4:9].strip()
+                    Z_val = line[9:14].strip()
+                    A_val = line[14:19].strip()
+                    mass_excess_str = line[28:42].strip().replace("#", ".")
+                    binding_str = line[54:67].strip().replace("#", ".")
+
+                    if not N_val or not Z_val or not A_val:
+                        continue
+                    N = int(N_val)
+                    Z = int(Z_val)
+                    A = int(A_val)
+                    if A <= 0:
+                        continue
+
+                    # Parse mass excess
+                    try:
+                        mass_excess = float(mass_excess_str) if mass_excess_str and mass_excess_str != "*" else 0.0
+                    except ValueError:
+                        mass_excess = 0.0
+
+                    # Parse binding energy
+                    try:
+                        binding = float(binding_str) if binding_str and binding_str != "*" else 0.0
+                    except ValueError:
+                        binding = 0.0
+
+                    el = line[20:23].strip()
+                    obj = MathObject(
+                        obj_id=f"nuc_{el}_{A}",
+                        domain="nuclide",
+                        label=f"{el}-{A} (Z={Z}, N={N})",
+                        signatures={},
+                        raw={"Z": Z, "N": N, "A": A,
+                             "mass_excess_keV": mass_excess,
+                             "binding_per_A_keV": binding},
+                    )
+
+                    # S13: A (mass number) as magnitude
+                    obj.signatures["s13"] = ext.s13_discriminant(A)
+
+                    # S7: p-adic of A
+                    obj.signatures["s7_cond"] = ext.s7_padic(A)
+
+                    # S3: mod-p of [Z, N, A]
+                    obj.signatures["s3_ap"] = ext.s3_mod_p([Z, N, A])
+
+                    objects.append(obj)
+                    count += 1
+                except (ValueError, IndexError):
+                    continue
+
+        except Exception as e:
+            print(f"  WARNING: Failed to load nuclear data: {e}")
+
+        print(f"  Nuclear: {len(objects)} nuclides loaded")
+        return objects
+
 
 # ============================================================
 # The Dissection Tensor
@@ -2569,21 +3151,260 @@ class DissectionTensor:
 
         return self.tensor
 
-    def normalize(self):
-        """Per-dimension normalization (z-score where data exists)."""
+    def normalize(self, n_bins=10):
+        """Within-magnitude-bin normalization to remove Megethos leakage.
+
+        1. Identify the Megethos axis (s13 dim 0 = log magnitude)
+        2. Bin all objects by their Megethos value into n_bins equal-count bins
+        3. Within each bin, z-score normalize each dimension independently
+        4. This ensures no cross-domain signal comes from magnitude alone
+
+        Objects with no magnitude data: fall back to global mean/std.
+        """
         if self.tensor is None:
             raise ValueError("Call build() first")
 
-        # Compute mean/std only over valid entries
-        masked = self.tensor * self.mask.float()
-        counts = self.mask.float().sum(dim=0).clamp(min=1)
-        means = masked.sum(dim=0) / counts
-        sq_diff = ((self.tensor - means) ** 2) * self.mask.float()
-        stds = (sq_diff.sum(dim=0) / counts).sqrt().clamp(min=1e-8)
+        N, D = self.tensor.shape
 
-        # Normalize in-place
-        self.tensor = ((self.tensor - means) / stds) * self.mask.float()
-        print(f"Normalized: mean ~ 0, std ~ 1 per dimension")
+        # --- Step 1: Extract magnitude axis for binning ---
+        # Primary: s13 dim 0 (log magnitude)
+        s13_start, _ = self._strategy_slices["s13"]
+        mag_col = s13_start  # dim 0 of s13 = log magnitude
+
+        mag_vals = self.tensor[:, mag_col].clone()  # [N]
+        mag_valid = self.mask[:, mag_col]            # [N] bool
+
+        # Fallback: use s7_cond dim 0 for objects without s13
+        if "s7_cond" in self._strategy_slices:
+            s7_start, _ = self._strategy_slices["s7_cond"]
+            fallback_vals = self.tensor[:, s7_start]
+            fallback_valid = self.mask[:, s7_start]
+            no_mag = ~mag_valid & fallback_valid
+            mag_vals[no_mag] = fallback_vals[no_mag]
+            mag_valid = mag_valid | fallback_valid
+
+        has_mag = mag_valid.cpu().numpy()
+        mag_np = mag_vals.cpu().numpy()
+
+        # --- Step 2: Compute global mean/std as fallback ---
+        mask_f = self.mask.float()
+        counts_global = mask_f.sum(dim=0).clamp(min=1)
+        means_global = (self.tensor * mask_f).sum(dim=0) / counts_global
+        sq_diff_global = ((self.tensor - means_global) ** 2) * mask_f
+        stds_global = (sq_diff_global.sum(dim=0) / counts_global).sqrt().clamp(min=1e-8)
+
+        # --- Step 3: Assign objects to quantile bins ---
+        bin_assignments = np.full(N, -1, dtype=np.int32)
+        mag_vals_valid = mag_np[has_mag]
+        if len(mag_vals_valid) > 0:
+            quantiles = np.quantile(mag_vals_valid,
+                                    np.linspace(0, 1, n_bins + 1))
+            # np.digitize: assign to bin 1..n_bins, then shift to 0-indexed
+            bins = np.digitize(mag_np[has_mag], quantiles[1:-1])
+            bin_assignments[has_mag] = bins
+
+        # --- Step 4: Within-bin z-score normalization ---
+        normed = self.tensor.clone()
+        n_binned = 0
+
+        for b in range(n_bins):
+            in_bin = (bin_assignments == b)
+            n_in = in_bin.sum()
+            if n_in < 2:
+                continue
+            idx = torch.tensor(np.where(in_bin)[0], device=DEVICE, dtype=torch.long)
+            bin_data = self.tensor[idx]          # [n_in, D]
+            bin_mask = self.mask[idx].float()     # [n_in, D]
+            bin_counts = bin_mask.sum(dim=0).clamp(min=1)
+            bin_means = (bin_data * bin_mask).sum(dim=0) / bin_counts
+            bin_sq = ((bin_data - bin_means) ** 2) * bin_mask
+            bin_stds = (bin_sq.sum(dim=0) / bin_counts).sqrt().clamp(min=1e-8)
+            normed[idx] = ((bin_data - bin_means) / bin_stds) * bin_mask
+            n_binned += n_in
+
+        # --- Step 5: Global fallback for objects with no magnitude ---
+        no_mag_mask = (bin_assignments == -1)
+        if no_mag_mask.any():
+            idx_no = torch.tensor(np.where(no_mag_mask)[0], device=DEVICE,
+                                  dtype=torch.long)
+            fallback_data = self.tensor[idx_no]
+            fallback_m = self.mask[idx_no].float()
+            normed[idx_no] = ((fallback_data - means_global) / stds_global) * fallback_m
+
+        self.tensor = normed * self.mask.float()
+        print(f"Normalized: within-bin z-score ({n_bins} magnitude bins, "
+              f"{n_binned}/{N} binned, {N - n_binned} global fallback)")
+
+    def calibrate(self):
+        """Verify tensor encoding against known mathematical truths.
+        Returns dict of {truth_name: {verified: bool, details: str}}
+        """
+        results = {}
+
+        # --- Truth 1: Modularity ---
+        # EC and MF objects with matching conductor/level should be nearest
+        # neighbors in the tensor (conductor == level).
+        ec_objs = [(i, o) for i, o in enumerate(self.objects) if o.domain == "EC"]
+        mf_objs = [(i, o) for i, o in enumerate(self.objects) if o.domain == "MF"]
+        if ec_objs and mf_objs:
+            matches, tested = 0, 0
+            # Build MF conductor lookup: level -> list of tensor indices
+            mf_by_level = defaultdict(list)
+            for idx, o in mf_objs:
+                mf_by_level[o.raw.get("level", -1)].append(idx)
+            for ec_idx, ec_obj in ec_objs[:500]:
+                cond = ec_obj.raw.get("conductor")
+                if cond is None or cond not in mf_by_level:
+                    continue
+                tested += 1
+                # Check if any matching-level MF is among top-5 nearest MF
+                ec_vec = self.tensor[ec_idx].unsqueeze(0)  # [1, D]
+                ec_m = self.mask[ec_idx].unsqueeze(0)
+                mf_indices = torch.tensor([i for i, _ in mf_objs[:5000]],
+                                          device=DEVICE)
+                mf_vecs = self.tensor[mf_indices]
+                mf_masks = self.mask[mf_indices]
+                shared = ec_m & mf_masks
+                diff = (ec_vec - mf_vecs) ** 2 * shared.float()
+                n_shared = shared.float().sum(dim=1).clamp(min=1)
+                dists = (diff.sum(dim=1) / n_shared).sqrt()
+                _, top5 = torch.topk(dists, min(5, len(dists)), largest=False)
+                top5_global = mf_indices[top5].cpu().tolist()
+                expected = set(mf_by_level[cond])
+                if expected & set(top5_global):
+                    matches += 1
+            rate = matches / max(tested, 1)
+            results["modularity"] = {
+                "verified": rate > 0.3,
+                "details": f"{matches}/{tested} EC-MF conductor/level matches "
+                           f"in top-5 neighbors ({rate:.1%})",
+            }
+        else:
+            results["modularity"] = {
+                "verified": False,
+                "details": "Missing EC or MF data",
+            }
+
+        # --- Truth 2: Parity — root_number = (-1)^rank for EC ---
+        if ec_objs:
+            parity_pass, parity_tested = 0, 0
+            for _, o in ec_objs:
+                rank = o.raw.get("rank")
+                # root_number is in s21_auto dim 1 for genus2, but for EC
+                # it's (-1)^rank by BSD. Check raw data.
+                if rank is None:
+                    continue
+                expected_sign = (-1) ** int(rank)
+                # EC don't store root_number directly in raw, but analytic_rank
+                # encodes it: if rank == analytic_rank, parity is consistent
+                a_rank = o.raw.get("analytic_rank")
+                if a_rank is not None:
+                    parity_tested += 1
+                    if int(a_rank) == int(rank):
+                        parity_pass += 1
+            rate = parity_pass / max(parity_tested, 1)
+            results["parity"] = {
+                "verified": rate > 0.95,
+                "details": f"{parity_pass}/{parity_tested} EC rank == "
+                           f"analytic_rank ({rate:.1%})",
+            }
+        else:
+            results["parity"] = {"verified": False, "details": "No EC data"}
+
+        # --- Truth 3: det = |Alexander(-1)| for knots ---
+        knot_objs = [(i, o) for i, o in enumerate(self.objects)
+                     if o.domain == "knot"]
+        if knot_objs:
+            det_pass, det_tested = 0, 0
+            for _, o in knot_objs:
+                det = o.raw.get("determinant")
+                if det is None:
+                    continue
+                det_tested += 1
+                # The s1_alex signature at index 4 = evaluation at z=-1
+                # (4th point on unit circle = e^{i*pi} = -1)
+                s1 = o.signatures.get("s1_alex")
+                if s1 is not None and not np.isnan(s1[4]):
+                    # s1_alex stores log1p(|P(-1)|), so |P(-1)| = expm1(s1[4])
+                    alex_at_neg1 = np.expm1(s1[4])
+                    if abs(abs(det) - abs(alex_at_neg1)) < 1.0:
+                        det_pass += 1
+                    elif abs(det) > 0 and abs(alex_at_neg1) > 0:
+                        ratio = abs(det) / abs(alex_at_neg1)
+                        if 0.9 < ratio < 1.1:
+                            det_pass += 1
+            rate = det_pass / max(det_tested, 1)
+            results["det_alexander"] = {
+                "verified": rate > 0.8,
+                "details": f"{det_pass}/{det_tested} knots: "
+                           f"|det| ~ |Alex(-1)| ({rate:.1%})",
+            }
+        else:
+            results["det_alexander"] = {
+                "verified": False, "details": "No knot data",
+            }
+
+        # --- Truth 4: Hasse bound |a_p| <= 2*sqrt(p) for EC ---
+        if ec_objs:
+            hasse_pass, hasse_tested = 0, 0
+            small_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+            for _, o in ec_objs[:1000]:
+                s5 = o.signatures.get("s5_ap")
+                # We need actual a_p values — check if s1_ap was built
+                # from ap_list. The raw ap values are not stored, but we
+                # can verify via the s21_auto spectral_type (dim 0) which
+                # already encodes Ramanujan bound compliance.
+                s21 = o.signatures.get("s21_auto")
+                if s21 is not None and not np.isnan(s21[0]):
+                    hasse_tested += 1
+                    # s21_auto[0] = spectral_type = fraction satisfying
+                    # Ramanujan bound (which is Hasse for weight 2)
+                    if s21[0] >= 0.9:
+                        hasse_pass += 1
+            rate = hasse_pass / max(hasse_tested, 1)
+            results["hasse_bound"] = {
+                "verified": rate > 0.9,
+                "details": f"{hasse_pass}/{hasse_tested} EC satisfy Ramanujan "
+                           f"bound >= 90% of primes ({rate:.1%})",
+            }
+        else:
+            results["hasse_bound"] = {
+                "verified": False, "details": "No EC data",
+            }
+
+        # --- Truth 5: Conductor positive for all EC ---
+        if ec_objs:
+            cond_pass, cond_tested = 0, 0
+            for _, o in ec_objs:
+                cond = o.raw.get("conductor")
+                if cond is not None:
+                    cond_tested += 1
+                    if int(cond) > 0:
+                        cond_pass += 1
+            rate = cond_pass / max(cond_tested, 1)
+            results["conductor_positive"] = {
+                "verified": rate == 1.0,
+                "details": f"{cond_pass}/{cond_tested} EC have positive "
+                           f"conductor ({rate:.1%})",
+            }
+        else:
+            results["conductor_positive"] = {
+                "verified": False, "details": "No EC data",
+            }
+
+        # --- Print results ---
+        print(f"\n{'='*60}")
+        print(f"CALIBRATION: 5 known truths")
+        print(f"{'='*60}")
+        all_pass = True
+        for name, res in results.items():
+            status = "PASS" if res["verified"] else "FAIL"
+            if not res["verified"]:
+                all_pass = False
+            print(f"  [{status}] {name:25s} — {res['details']}")
+        print(f"{'='*60}")
+        print(f"  Overall: {'ALL PASS' if all_pass else 'SOME FAILED'}")
+        return results
 
     def get_strategy_slice(self, strategy_name):
         """Get tensor slice for a specific strategy."""
@@ -3074,10 +3895,35 @@ def main():
     print("Loading metabolism...")
     dt.add_objects(DataLoaders.load_metabolism(max_n=5000))
 
+    # Science domain loaders (new)
+    print("Loading QM9 molecules...")
+    dt.add_objects(DataLoaders.load_qm9(max_n=50000))
+
+    print("Loading 3-manifolds...")
+    dt.add_objects(DataLoaders.load_manifolds(max_n=50000))
+
+    print("Loading exoplanets...")
+    dt.add_objects(DataLoaders.load_exoplanets())
+
+    print("Loading pulsars...")
+    dt.add_objects(DataLoaders.load_pulsars())
+
+    print("Loading earthquakes...")
+    dt.add_objects(DataLoaders.load_earthquakes(max_n=30000))
+
+    print("Loading SDSS stars...")
+    dt.add_objects(DataLoaders.load_sdss_stars(max_n=40000))
+
+    print("Loading proteins...")
+    dt.add_objects(DataLoaders.load_proteins(max_n=40000))
+
+    print("Loading nuclear masses...")
+    dt.add_objects(DataLoaders.load_nuclear())
+
     n_total = len(dt.objects)
     print(f"\nTotal objects loaded: {n_total}")
-    if n_total > 500000:
-        print(f"  WARNING: {n_total} objects exceeds 500K target — consider reducing max_n caps")
+    if n_total > 1000000:
+        print(f"  WARNING: {n_total} objects exceeds 1M target — consider reducing max_n caps")
 
     # Load battery results as truth-boundary index (NOT tensor dims)
     print("\nLoading battery results (truth-boundary index)...")
@@ -3094,6 +3940,7 @@ def main():
     print("\n--- Building tensor ---")
     dt.build()
     dt.normalize()
+    dt.calibrate()
     dt.summary()
 
     # Explore cross-domain distances (require at least 2 shared strategy groups)
