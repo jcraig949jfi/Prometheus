@@ -1,0 +1,194 @@
+{
+  "metadata": {
+    "script": "adversarial_stress.py",
+    "n_curves_total": 30779,
+    "n_curves_used": 30000,
+    "date": "2026-04-12"
+  },
+  "test1_prefix_localization": {
+    "10": {
+      "valid_n": 30000,
+      "rho": 0.0315530855285518,
+      "p": 4.595575566456747e-08,
+      "alpha_mean": 0.40976144621158805,
+      "alpha_std": 0.2758234797785658
+    },
+    "20": {
+      "valid_n": 30000,
+      "rho": -0.08860788666986696,
+      "p": 2.3370481113740294e-53,
+      "alpha_mean": 0.423862188739897,
+      "alpha_std": 0.2614040657080252
+    },
+    "25": {
+      "valid_n": 30000,
+      "rho": -0.10928434417799593,
+      "p": 2.2824593269698663e-80,
+      "alpha_mean": 0.42503582947447405,
+      "alpha_std": 0.23292970162681456
+    },
+    "trajectory": "STRENGTHENING (convergence phenomenon \u2014 real dynamics)",
+    "verdict": "STRENGTHENING (convergence phenomenon \u2014 real dynamics)"
+  },
+  "test2_synthetic_sequences": {
+    "n_synthetic": 30000,
+    "real": {
+      "rho": -0.10928434417799593,
+      "p": 2.2824593269698663e-80,
+      "n_valid": 30000
+    },
+    "synthetic": {
+      "rho": -0.0015489879128438664,
+      "p": 0.7884826003455666,
+      "n_valid": 30000
+    },
+    "mismatch": {
+      "rho": -0.00483151987200209,
+      "p": 0.40269723689912373
+    },
+    "verdict": "SURVIVES: synthetic data shows no rank signal \u2014 metric is arithmetic-specific"
+  },
+  "test3_prime_vs_full": {
+    "first_vs_second": {
+      "first_12": {
+        "rho": 0.004305832098481083,
+        "p": 0.4558097621263084,
+        "n_valid": 30000
+      },
+      "last_13": {
+        "rho": -0.025785227641383298,
+        "p": 7.9439504406058e-06,
+        "n_valid": 30000
+      }
+    },
+    "even_vs_odd": {
+      "even_pos": {
+        "rho": -0.040806644922984046,
+        "p": 1.543001185240902e-12,
+        "n_valid": 30000
+      },
+      "odd_pos": {
+        "rho": -0.07599946056343636,
+        "p": 1.113817152368559e-39,
+        "n_valid": 30000
+      }
+    },
+    "verdict": "LOCALIZED: signal concentrated in subset (max/min ratio = 17.7)"
+  },
+  "test4_noise_injection": {
+    "0.0": {
+      "epsilon": 0.0,
+      "rho": -0.10328516111773559,
+      "p": 3.9748650668446016e-25,
+      "n_valid": 10000,
+      "alpha_mean": 0.42315878476729046
+    },
+    "0.01": {
+      "epsilon": 0.01,
+      "rho": -0.10258908310807066,
+      "p": 8.253872450838691e-25,
+      "n_valid": 10000,
+      "alpha_mean": 0.42647350418108615
+    },
+    "0.02": {
+      "epsilon": 0.02,
+      "rho": -0.09620561904851942,
+      "p": 5.328243081121327e-22,
+      "n_valid": 10000,
+      "alpha_mean": 0.4278078821228903
+    },
+    "0.05": {
+      "epsilon": 0.05,
+      "rho": -0.08745111558838406,
+      "p": 1.938591704775729e-18,
+      "n_valid": 10000,
+      "alpha_mean": 0.4358604397003326
+    },
+    "0.1": {
+      "epsilon": 0.1,
+      "rho": -0.06803162839378434,
+      "p": 9.74610916100893e-12,
+      "n_valid": 10000,
+      "alpha_mean": 0.44120861995932636
+    },
+    "0.2": {
+      "epsilon": 0.2,
+      "rho": -0.04261091209471489,
+      "p": 2.0215754273280904e-05,
+      "n_valid": 10000,
+      "alpha_mean": 0.4526614416941831
+    },
+    "0.5": {
+      "epsilon": 0.5,
+      "rho": 0.01867049279892592,
+      "p": 0.06190457573743364,
+      "n_valid": 10000,
+      "alpha_mean": 0.46138922455356296
+    },
+    "degradation": {
+      "linear_slope": -0.17280608654933607,
+      "linear_r": -0.9451174205670094,
+      "retention_at_5pct": 0.8466958335737873,
+      "retention_at_10pct": 0.6586776615106843
+    },
+    "verdict": "SMOOTH DEGRADATION: signal robust to noise \u2014 consistent with real arithmetic structure"
+  },
+  "test5_rank_gradient": {
+    "F39_alpha": {
+      "means_by_rank": {
+        "0": 0.44715141947001447,
+        "1": 0.4066518870683115,
+        "2": 0.3203585805544242
+      },
+      "is_monotonic": true,
+      "direction": "decreasing",
+      "jonckheere_terpstra": {
+        "J": 102988733.0,
+        "z": -18.892290434954766,
+        "p": 0.0
+      }
+    },
+    "ST_surprise": {
+      "means_by_rank": {
+        "0": 0.23088632324361755,
+        "1": 0.22646504300342188,
+        "2": 0.2518350031417755
+      },
+      "is_monotonic": false,
+      "direction": "non-monotonic",
+      "jonckheere_terpstra": {
+        "J": 112197675.5,
+        "z": -6.742540488933817,
+        "p": 1.5563994537615145e-11
+      }
+    },
+    "Shannon_mod7": {
+      "means_by_rank": {
+        "0": 2.609124971770232,
+        "1": 2.6056989868269227,
+        "2": 2.6193082750079117
+      },
+      "is_monotonic": false,
+      "direction": "non-monotonic",
+      "jonckheere_terpstra": {
+        "J": 115914951.0,
+        "z": -1.8381806446335631,
+        "p": 0.06603579091085265
+      }
+    },
+    "verdict": "PARTIAL TREND: 1/3 monotonic, 2/3 significant"
+  },
+  "summary": {
+    "verdicts": {
+      "test1_prefix_localization": "STRENGTHENING (convergence phenomenon \u2014 real dynamics)",
+      "test2_synthetic_sequences": "SURVIVES: synthetic data shows no rank signal \u2014 metric is arithmetic-specific",
+      "test3_prime_vs_full": "LOCALIZED: signal concentrated in subset (max/min ratio = 17.7)",
+      "test4_noise_injection": "SMOOTH DEGRADATION: signal robust to noise \u2014 consistent with real arithmetic structure",
+      "test5_rank_gradient": "PARTIAL TREND: 1/3 monotonic, 2/3 significant"
+    },
+    "survived": 3,
+    "killed": 0,
+    "ambiguous": 2,
+    "overall": "3/5 survived, 0/5 killed, 2/5 ambiguous"
+  }
+}
