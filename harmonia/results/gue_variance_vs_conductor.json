@@ -1,0 +1,39 @@
+{
+  "experiment": "Variance vs conductor (stabilization test)",
+  "n_lfunctions": 20000,
+  "conductor_range": "45 to 399762",
+  "variance_curve": {
+    "10^1": {
+      "var": 0.272,
+      "dev": "+53%",
+      "zeros_per_curve": 10.0
+    },
+    "10^2": {
+      "var": 0.218,
+      "dev": "+22%",
+      "zeros_per_curve": 10.0
+    },
+    "10^3": {
+      "var": 0.174,
+      "dev": "-2%",
+      "zeros_per_curve": 9.6
+    },
+    "10^4": {
+      "var": 0.151,
+      "dev": "-15%",
+      "zeros_per_curve": 35.2
+    },
+    "10^5": {
+      "var": 0.152,
+      "dev": "-15%",
+      "zeros_per_curve": 40.2
+    }
+  },
+  "rank_convergence": {
+    "rank_0_at_10^5": 0.154,
+    "rank_1_at_10^5": 0.151,
+    "note": "Rank 0 and rank 1 CONVERGE to same value at large conductor"
+  },
+  "interpretation": "Variance stabilizes at ~0.15 for N > 10^4 (15% below GUE 0.178). Rank-dependent differences vanish at large conductor. The sub-GUE value is likely the correct finite-sample estimate with 35-40 zeros per curve. NOT an anomaly \u2014 a measurement limitation.",
+  "verdict": "The overshoot is REAL but STABLE. The variance does not keep dropping. It converges to a rank-independent value ~15% below GUE, likely due to finite number of stored zeros per curve."
+}
