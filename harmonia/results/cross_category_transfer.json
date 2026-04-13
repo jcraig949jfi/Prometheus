@@ -1,0 +1,435 @@
+{
+  "timestamp": "2026-04-13T01:34:26",
+  "description": "Cross-category transfer tests: math vs physics/chemistry/chaos",
+  "subsample": 2000,
+  "n_pairs": 8,
+  "n_pass": 7,
+  "n_fail": 1,
+  "n_error": 0,
+  "results": [
+    {
+      "domain_a": "chemistry",
+      "domain_b": "materials",
+      "original_rank": 15,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "KILLED",
+          "detail": "var_z=0.89 (real_var=0.063717 vs null=0.061932), rho_z=-1.56 (real_rho=0.0047 vs null=0.0086)",
+          "value": 0.8897298350061972,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=0.56, right=0.48, avg=0.52, min=0.48",
+          "value": 0.516680896282196,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "SURVIVES",
+          "detail": "deviation magnitudes: chemistry=0.69, materials=0.42",
+          "value": 0.41943907737731934,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+          "value": 15.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 1.900 (full=0.015782, nc=0.029991), shared non-complexity: {'spectral', 'symmetry'}",
+          "value": 1.900338521270353,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 15,
+      "wall_time": 5.303349733352661,
+      "inference": "Both have band gap / molecular properties \u2014 should couple via shared material science phonemes",
+      "overall_verdict": "PASS"
+    },
+    {
+      "domain_a": "rmt",
+      "domain_b": "ec_zeros",
+      "original_rank": 4,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "KILLED",
+          "detail": "var_z=-0.44 (real_var=0.031543 vs null=0.031644), rho_z=-1.01 (real_rho=-0.0236 vs null=-0.0286)",
+          "value": -0.4436428936550467,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [4, 4, 4] (CV=0.00, mean=4.0 vs real 4)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=3.35, right=0.95, avg=2.15, min=0.95",
+          "value": 2.1464747190475464,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "SURVIVES",
+          "detail": "deviation magnitudes: rmt=1.28, ec_zeros=0.83",
+          "value": 0.8317276239395142,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [4, 4] (original: 4)",
+          "value": 4.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 1.970 (full=0.001018, nc=0.002005), shared non-complexity: {'spectral'}",
+          "value": 1.969991040616444,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 4,
+      "wall_time": 92.54939436912537,
+      "inference": "GUE statistics vs EC zeros \u2014 should be the SAME objects from different angles (Montgomery-Odlyzko)",
+      "overall_verdict": "PASS"
+    },
+    {
+      "domain_a": "dynamics",
+      "domain_b": "oeis",
+      "original_rank": 1,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "KILLED",
+          "detail": "var_z=0.53 (real_var=0.049297 vs null=0.048886), rho_z=-0.19 (real_rho=0.0206 vs null=0.0019)",
+          "value": 0.5272135382895049,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [1, 1, 1] (CV=0.00, mean=1.0 vs real 1)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "KILLED",
+          "detail": "Cohen's d: left=1.40, right=0.00, avg=0.70, min=0.00",
+          "value": 0.69833140616538,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "SURVIVES",
+          "detail": "deviation magnitudes: dynamics=1.30, oeis=0.35",
+          "value": 0.3516329228878021,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [1, 1] (original: 1)",
+          "value": 1.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "KILLED",
+          "detail": "no shared non-complexity phonemes (d1={'spectral', 'rank', 'complexity', 'symmetry'}, d2=set())",
+          "value": 0.0,
+          "threshold": 1.0
+        }
+      ],
+      "surviving_rank": 0,
+      "wall_time": 3.167921543121338,
+      "inference": "Both are OEIS sequences \u2014 dynamics has Lyapunov exponents, oeis has growth stats",
+      "overall_verdict": "FAIL"
+    },
+    {
+      "domain_a": "spectral_sigs",
+      "domain_b": "modular_forms",
+      "original_rank": 15,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "KILLED",
+          "detail": "var_z=-0.14 (real_var=0.068617 vs null=0.068782), rho_z=0.31 (real_rho=0.0294 vs null=-0.0261)",
+          "value": 0.30631760536765557,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [13, 15, 15] (CV=0.07, mean=14.3 vs real 15)",
+          "value": 0.06577737499409744,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=0.83, right=0.55, avg=0.69, min=0.55",
+          "value": 0.6887496411800385,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "KILLED",
+          "detail": "deviation magnitudes: spectral_sigs=1.31, modular_forms=0.10",
+          "value": 0.09886080026626587,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+          "value": 15.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 1.570 (full=0.035699, nc=0.056058), shared non-complexity: {'spectral', 'rank'}",
+          "value": 1.5702849821548315,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 15,
+      "wall_time": 2.36743426322937,
+      "inference": "Formula spectra vs modular form invariants \u2014 spectral decomposition connection",
+      "overall_verdict": "PASS"
+    },
+    {
+      "domain_a": "codata",
+      "domain_b": "materials",
+      "original_rank": 15,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "KILLED",
+          "detail": "var_z=-0.46 (real_var=0.062154 vs null=0.063426), rho_z=-1.20 (real_rho=0.0032 vs null=0.0008)",
+          "value": -0.463087626314824,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=1.31, right=0.81, avg=1.06, min=0.81",
+          "value": 1.058948963880539,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "SURVIVES",
+          "detail": "deviation magnitudes: codata=0.83, materials=0.55",
+          "value": 0.5503793954849243,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+          "value": 15.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 2.073 (full=0.010487, nc=0.021740), shared non-complexity: {'spectral', 'symmetry'}",
+          "value": 2.0730960274458017,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 15,
+      "wall_time": 3.2935023307800293,
+      "inference": "Physical constants vs material properties \u2014 fundamental physics constraining materials",
+      "overall_verdict": "PASS"
+    },
+    {
+      "domain_a": "pdg_particles",
+      "domain_b": "chemistry",
+      "original_rank": 15,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "SURVIVES",
+          "detail": "var_z=1.29 (real_var=0.071213 vs null=0.066229), rho_z=2.19 (real_rho=0.1609 vs null=-0.0604)",
+          "value": 2.18797848128368,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=1.09, right=0.58, avg=0.83, min=0.58",
+          "value": 0.8334537744522095,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "SURVIVES",
+          "detail": "deviation magnitudes: pdg_particles=0.86, chemistry=0.51",
+          "value": 0.513823926448822,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+          "value": 15.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 1.384 (full=0.014401, nc=0.019928), shared non-complexity: {'spectral', 'arithmetic', 'symmetry'}",
+          "value": 1.3837700393417611,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 15,
+      "wall_time": 3.872072219848633,
+      "inference": "Particle properties vs molecular properties \u2014 subatomic to molecular scale",
+      "overall_verdict": "PASS"
+    },
+    {
+      "domain_a": "chemistry",
+      "domain_b": "elliptic_curves",
+      "original_rank": 15,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "KILLED",
+          "detail": "var_z=1.04 (real_var=0.064492 vs null=0.063921), rho_z=-1.66 (real_rho=-0.0183 vs null=-0.0456)",
+          "value": 1.0435666298211694,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [15, 15, 15] (CV=0.00, mean=15.0 vs real 15)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=0.86, right=0.94, avg=0.90, min=0.86",
+          "value": 0.8998529314994812,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "SURVIVES",
+          "detail": "deviation magnitudes: chemistry=0.68, elliptic_curves=1.29",
+          "value": 0.6779149174690247,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [15, 15] (original: 15)",
+          "value": 15.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 1.964 (full=0.005325, nc=0.010459), shared non-complexity: {'arithmetic'}",
+          "value": 1.9639397796628828,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 15,
+      "wall_time": 7.775048494338989,
+      "inference": "The big cross-category test: molecular chemistry vs pure number theory",
+      "overall_verdict": "PASS"
+    },
+    {
+      "domain_a": "rmt",
+      "domain_b": "modular_forms",
+      "original_rank": 4,
+      "tests": [
+        {
+          "test": "F1_permutation_null",
+          "verdict": "SURVIVES",
+          "detail": "var_z=0.89 (real_var=0.044097 vs null=0.044016), rho_z=2.04 (real_rho=-0.0338 vs null=-0.0251)",
+          "value": 2.0368223230223648,
+          "threshold": 2.0
+        },
+        {
+          "test": "F2_subset_stability",
+          "verdict": "SURVIVES",
+          "detail": "split ranks [4, 4, 4] (CV=0.00, mean=4.0 vs real 4)",
+          "value": 0.0,
+          "threshold": 0.5
+        },
+        {
+          "test": "F3_effect_size",
+          "verdict": "SURVIVES",
+          "detail": "Cohen's d: left=4.91, right=0.43, avg=2.67, min=0.43",
+          "value": 2.6676747798919678,
+          "threshold": 0.5
+        },
+        {
+          "test": "F8_direction_consistency",
+          "verdict": "KILLED",
+          "detail": "deviation magnitudes: rmt=1.22, modular_forms=0.12",
+          "value": 0.12019827216863632,
+          "threshold": 0.3
+        },
+        {
+          "test": "F17_confound_residual",
+          "verdict": "SURVIVES",
+          "detail": "ranks after residualizing each domain's top feature: [4, 4] (original: 4)",
+          "value": 4.0,
+          "threshold": 1.0
+        },
+        {
+          "test": "F1b_phoneme_specificity",
+          "verdict": "SURVIVES",
+          "detail": "non-complexity variance fraction: 1.355 (full=0.064445, nc=0.087303), shared non-complexity: {'spectral'}",
+          "value": 1.3547015078602407,
+          "threshold": 0.3
+        }
+      ],
+      "surviving_rank": 4,
+      "wall_time": 106.80954194068909,
+      "inference": "Quantum chaos <-> number theory \u2014 the deep connection (Bohigas-Giannoni-Schmit)",
+      "overall_verdict": "PASS"
+    }
+  ]
+}
