@@ -1,0 +1,60 @@
+{
+  "test1_critical_line": {
+    "n_curves": 31073,
+    "n_zeros": 703345,
+    "n_negative": 14783,
+    "n_zero_exact": 15599,
+    "verdict": "CONSISTENT (zeros stored assuming GRH holds)"
+  },
+  "test2_gue": {
+    "n_spacings": 31073,
+    "normalized_variance": 0.18443057233503704,
+    "gue_variance_prediction": 0.178,
+    "spacing_ratio_mean": 0.5535841977727165,
+    "gue_ratio_prediction": 0.5307,
+    "poisson_ratio_prediction": 0.3863,
+    "deviation_from_gue": 0.022884197772716552,
+    "verdict": "CONSISTENT"
+  },
+  "test3_root_number": {
+    "n_checked": 31073,
+    "n_violations": 0,
+    "agreement_pct": 100.0,
+    "verdict": "CONSISTENT"
+  },
+  "test4_katz_sarnak": {
+    "n_even": 16290,
+    "n_odd": 14783,
+    "mean_scaled_g1_even": 0.175916010184319,
+    "mean_scaled_g1_odd": 0.26165401909392644,
+    "verdict": "INCONSISTENT with Katz-Sarnak prediction"
+  },
+  "test5_hasse_bound": {
+    "n_checked": 150000,
+    "n_violations": 0,
+    "max_ratio": 0.9912407071619304,
+    "verdict": "CONSISTENT"
+  },
+  "test6_number_variance": {
+    "L_0.5": {
+      "sigma2": 0.8864894134741776,
+      "n_curves": 25960
+    },
+    "L_1.0": {
+      "sigma2": 3.0692568050549394,
+      "n_curves": 25960
+    },
+    "L_1.5": {
+      "sigma2": 6.314219686132315,
+      "n_curves": 25960
+    },
+    "L_2.0": {
+      "sigma2": 10.379548760257308,
+      "n_curves": 25960
+    },
+    "L_3.0": {
+      "sigma2": 21.13396920526857,
+      "n_curves": 25960
+    }
+  }
+}
