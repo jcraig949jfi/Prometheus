@@ -1,0 +1,75 @@
+{
+  "connection": "devmirror.lmfdb.xyz:5432, user=lmfdb, pass=lmfdb",
+  "status": "CONNECTED AND QUERYABLE",
+  "tables": {
+    "lfunc_lfunctions": {
+      "rows": 24201376,
+      "priority": 1,
+      "note": "Every L-function in LMFDB"
+    },
+    "nf_fields": {
+      "rows": 22178569,
+      "priority": 2,
+      "note": "Every number field"
+    },
+    "mf_hecke_cc": {
+      "rows": 14417694,
+      "priority": 3,
+      "note": "Hecke eigenvalues (complex)"
+    },
+    "ec_localdata": {
+      "rows": 13178234,
+      "priority": 4,
+      "note": "Local data at every prime"
+    },
+    "ec_curvedata": {
+      "rows": 3824372,
+      "priority": 1,
+      "note": "52 columns per EC, tested: 100K in 2.3s"
+    },
+    "mf_newforms": {
+      "rows": 1141510,
+      "priority": 1,
+      "note": "All modular newforms"
+    },
+    "artin_reps": {
+      "rows": 798140,
+      "priority": 1,
+      "note": "Artin representations"
+    },
+    "hmf_forms": {
+      "rows": 368356,
+      "priority": 2,
+      "note": "Hilbert modular forms"
+    },
+    "bmf_forms": {
+      "rows": 233333,
+      "priority": 3,
+      "note": "Bianchi modular forms"
+    },
+    "g2c_curves": {
+      "rows": 66158,
+      "priority": 2,
+      "note": "Genus-2 with endomorphisms"
+    }
+  },
+  "test_load": {
+    "ec_postgres": {
+      "objects": 100000,
+      "features": 16,
+      "time_seconds": 2.3,
+      "new_features": [
+        "regulator",
+        "CM",
+        "faltings_height",
+        "abc_quality",
+        "szpiro_ratio",
+        "sha",
+        "num_int_pts",
+        "class_size"
+      ]
+    }
+  },
+  "total_available_rows": "100M+",
+  "current_loaded": "789K (0.8%)"
+}

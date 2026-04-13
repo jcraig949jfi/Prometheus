@@ -1,0 +1,248 @@
+{
+  "description": "Ollivier-Ricci curvature in expanded 5D phoneme space (13 domains)",
+  "domains": {
+    "math": [
+      "elliptic_curves",
+      "modular_forms",
+      "number_fields",
+      "genus2",
+      "lattices",
+      "ec_zeros",
+      "dirichlet_zeros"
+    ],
+    "new": [
+      "rmt",
+      "dynamics",
+      "chemistry",
+      "spectral_sigs",
+      "operadic_sigs",
+      "phase_space"
+    ],
+    "total": 13
+  },
+  "parameters": {
+    "k": 10,
+    "subsample_per_domain": 3000,
+    "total_points": 39000,
+    "total_edges": 250004,
+    "seed": 42
+  },
+  "overall": {
+    "name": "overall",
+    "n_edges": 250004,
+    "mean": 0.14086426331709098,
+    "median": 0.12090248137364368,
+    "std": 0.7047749640441364,
+    "min": -241.86999999999998,
+    "max": 1.0,
+    "fraction_positive": 0.602914353370346,
+    "fraction_negative": 0.2630557911073423
+  },
+  "math_only": {
+    "name": "math_only",
+    "n_edges": 129048,
+    "mean": 0.12617724668164831,
+    "median": 0.11000189758412626,
+    "std": 0.8639560916782509,
+    "min": -241.86999999999998,
+    "max": 1.0,
+    "fraction_positive": 0.5922137499225094,
+    "fraction_negative": 0.2750371954621536
+  },
+  "cross_category": {
+    "name": "cross_category",
+    "n_edges": 5880,
+    "mean": 0.3356417369589808,
+    "median": 0.34665439358313516,
+    "std": 0.3229774415995265,
+    "min": -1.3759881607016564,
+    "max": 0.9967828965093936,
+    "fraction_positive": 0.8481292517006803,
+    "fraction_negative": 0.15187074829931974
+  },
+  "new_domain_only": {
+    "name": "new_domain_only",
+    "n_edges": 115076,
+    "mean": 0.14738203051230367,
+    "median": 0.11782923033736081,
+    "std": 0.4842556473098197,
+    "min": -45.967668363351606,
+    "max": 1.0,
+    "fraction_positive": 0.602384511105704,
+    "fraction_negative": 0.25530084465918174
+  },
+  "ridge_detection": {
+    "delta_orc": -0.2094644902773325,
+    "welch_t": -43.18381688263962,
+    "p_value": 0.0,
+    "verdict": "INVERSE RIDGE \u2014 cross-category edges are MORE curved (tighter coupling)"
+  },
+  "cross_pairs": {
+    "chemistry <->ec_zeros": {
+      "mean_orc": -0.6878518864008063,
+      "n_edges": 2,
+      "frac_positive": 0.0
+    },
+    "dynamics <->modular_forms": {
+      "mean_orc": -0.19617812671066795,
+      "n_edges": 21,
+      "frac_positive": 0.047619047619047616
+    },
+    "ec_zeros <->spectral_sigs": {
+      "mean_orc": -0.1485324198042346,
+      "n_edges": 2,
+      "frac_positive": 0.0
+    },
+    "modular_forms <->operadic_sigs": {
+      "mean_orc": -0.10509266846533215,
+      "n_edges": 29,
+      "frac_positive": 0.3448275862068966
+    },
+    "ec_zeros <->operadic_sigs": {
+      "mean_orc": -0.043499881685246725,
+      "n_edges": 5,
+      "frac_positive": 0.4
+    },
+    "dirichlet_zeros <->rmt": {
+      "mean_orc": -0.029524174530735674,
+      "n_edges": 60,
+      "frac_positive": 0.43333333333333335
+    },
+    "lattices <->phase_space": {
+      "mean_orc": 0.0988340022727325,
+      "n_edges": 98,
+      "frac_positive": 0.6122448979591837
+    },
+    "number_fields <->operadic_sigs": {
+      "mean_orc": 0.12889187592873133,
+      "n_edges": 13,
+      "frac_positive": 0.6923076923076923
+    },
+    "dynamics <->elliptic_curves": {
+      "mean_orc": 0.14470113924379036,
+      "n_edges": 9,
+      "frac_positive": 0.7777777777777778
+    },
+    "genus2 <->phase_space": {
+      "mean_orc": 0.14766743978071697,
+      "n_edges": 12,
+      "frac_positive": 0.75
+    },
+    "number_fields <->spectral_sigs": {
+      "mean_orc": 0.1690238326332529,
+      "n_edges": 1108,
+      "frac_positive": 0.7436823104693141
+    },
+    "lattices <->spectral_sigs": {
+      "mean_orc": 0.18102288865508187,
+      "n_edges": 1,
+      "frac_positive": 1.0
+    },
+    "number_fields <->phase_space": {
+      "mean_orc": 0.19300187532916274,
+      "n_edges": 67,
+      "frac_positive": 0.6865671641791045
+    },
+    "chemistry <->genus2": {
+      "mean_orc": 0.1940177045293581,
+      "n_edges": 25,
+      "frac_positive": 0.88
+    },
+    "genus2 <->spectral_sigs": {
+      "mean_orc": 0.24012745074860709,
+      "n_edges": 4,
+      "frac_positive": 0.75
+    },
+    "modular_forms <->phase_space": {
+      "mean_orc": 0.26321487982044145,
+      "n_edges": 217,
+      "frac_positive": 0.7741935483870968
+    },
+    "elliptic_curves <->operadic_sigs": {
+      "mean_orc": 0.2687099553915454,
+      "n_edges": 97,
+      "frac_positive": 0.7422680412371134
+    },
+    "elliptic_curves <->phase_space": {
+      "mean_orc": 0.2943774782792993,
+      "n_edges": 9,
+      "frac_positive": 0.8888888888888888
+    },
+    "modular_forms <->spectral_sigs": {
+      "mean_orc": 0.3129626071806987,
+      "n_edges": 106,
+      "frac_positive": 0.8207547169811321
+    },
+    "chemistry <->lattices": {
+      "mean_orc": 0.35076893252761504,
+      "n_edges": 2392,
+      "frac_positive": 0.8925585284280937
+    },
+    "dynamics <->lattices": {
+      "mean_orc": 0.35335907209694123,
+      "n_edges": 122,
+      "frac_positive": 0.860655737704918
+    },
+    "dynamics <->ec_zeros": {
+      "mean_orc": 0.3896617953051327,
+      "n_edges": 164,
+      "frac_positive": 0.8963414634146342
+    },
+    "chemistry <->modular_forms": {
+      "mean_orc": 0.39776818426956245,
+      "n_edges": 315,
+      "frac_positive": 0.9142857142857143
+    },
+    "chemistry <->number_fields": {
+      "mean_orc": 0.40947598851563466,
+      "n_edges": 13,
+      "frac_positive": 0.8461538461538461
+    },
+    "lattices <->operadic_sigs": {
+      "mean_orc": 0.4611084702634521,
+      "n_edges": 271,
+      "frac_positive": 0.9630996309963099
+    },
+    "dynamics <->number_fields": {
+      "mean_orc": 0.5092690637430534,
+      "n_edges": 13,
+      "frac_positive": 0.9230769230769231
+    },
+    "elliptic_curves <->spectral_sigs": {
+      "mean_orc": 0.5369966158505749,
+      "n_edges": 270,
+      "frac_positive": 0.9259259259259259
+    },
+    "ec_zeros <->phase_space": {
+      "mean_orc": 0.5718848473054775,
+      "n_edges": 207,
+      "frac_positive": 0.9468599033816425
+    },
+    "dirichlet_zeros <->spectral_sigs": {
+      "mean_orc": 0.6942773420557012,
+      "n_edges": 51,
+      "frac_positive": 1.0
+    },
+    "modular_forms <->rmt": {
+      "mean_orc": 0.7378876610665444,
+      "n_edges": 5,
+      "frac_positive": 1.0
+    },
+    "genus2 <->operadic_sigs": {
+      "mean_orc": 0.747522460568759,
+      "n_edges": 8,
+      "frac_positive": 1.0
+    },
+    "chemistry <->dirichlet_zeros": {
+      "mean_orc": 0.7808401149028661,
+      "n_edges": 164,
+      "frac_positive": 0.9939024390243902
+    }
+  },
+  "comparison_with_original": {
+    "original_orc": 0.713,
+    "expanded_orc": 0.14086426331709098,
+    "change": -0.572135736682909
+  },
+  "elapsed_seconds": 157.32040762901306
+}
