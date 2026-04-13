@@ -1,0 +1,1189 @@
+{
+  "metadata": {
+    "n_curves": 5000,
+    "num_ap_used": 10,
+    "threshold": 0.7,
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11
+    ],
+    "rank_distribution": {
+      "0": 2321,
+      "1": 2498,
+      "2": 181
+    },
+    "torsion_distribution": {
+      "1": 3041,
+      "2": 1741,
+      "4": 72,
+      "3": 124,
+      "6": 9,
+      "5": 12,
+      "7": 1
+    }
+  },
+  "per_prime": {
+    "2": {
+      "n_edges": 3046038,
+      "degree_distribution": {
+        "mean": 1218.4152,
+        "median": 1103.0,
+        "max": 2132,
+        "std": 558.4307419984684,
+        "isolated_nodes": 0,
+        "histogram_bins": [
+          89,
+          353,
+          506,
+          506,
+          363,
+          290,
+          216,
+          163,
+          152,
+          144,
+          133,
+          172,
+          154,
+          154,
+          242,
+          232,
+          124,
+          144,
+          221,
+          642
+        ],
+        "histogram_edges": [
+          389.0,
+          476.15,
+          563.3,
+          650.45,
+          737.6,
+          824.75,
+          911.9000000000001,
+          999.0500000000001,
+          1086.2,
+          1173.35,
+          1260.5,
+          1347.65,
+          1434.8000000000002,
+          1521.95,
+          1609.1000000000001,
+          1696.25,
+          1783.4,
+          1870.5500000000002,
+          1957.7,
+          2044.8500000000001,
+          2132.0
+        ]
+      },
+      "connected_components": {
+        "num_components": 1,
+        "largest": 5000,
+        "top5_sizes": [
+          5000
+        ],
+        "isolated": 0
+      },
+      "clustering_coefficient": {
+        "mean": 0.48582363434393994,
+        "median": 0.46865872587581436,
+        "std": 0.10620804398774944,
+        "n_nodes_with_2plus_neighbors": 5000
+      },
+      "ollivier_ricci_curvature": {
+        "mean": 0.6821640637347453,
+        "median": 0.7095129491756378,
+        "std": 0.22461153930007755,
+        "fraction_positive": 0.995,
+        "fraction_negative": 0.005,
+        "fraction_zero": 0.0,
+        "n_sampled": 1000
+      },
+      "community_rank_profiles": {
+        "0": {
+          "size": 1675,
+          "rank_distribution": {
+            "0": 885,
+            "1": 764,
+            "2": 26
+          },
+          "fraction_rank0": 0.5283582089552239,
+          "fraction_rank1": 0.45611940298507464,
+          "mean_rank": 0.4871641791044776
+        },
+        "1": {
+          "size": 720,
+          "rank_distribution": {
+            "0": 316,
+            "1": 370,
+            "2": 34
+          },
+          "fraction_rank0": 0.4388888888888889,
+          "fraction_rank1": 0.5138888888888888,
+          "mean_rank": 0.6083333333333333
+        },
+        "2": {
+          "size": 657,
+          "rank_distribution": {
+            "0": 285,
+            "1": 345,
+            "2": 27
+          },
+          "fraction_rank0": 0.4337899543378995,
+          "fraction_rank1": 0.5251141552511416,
+          "mean_rank": 0.6073059360730594
+        },
+        "3": {
+          "size": 1086,
+          "rank_distribution": {
+            "0": 478,
+            "1": 557,
+            "2": 51
+          },
+          "fraction_rank0": 0.44014732965009207,
+          "fraction_rank1": 0.5128913443830571,
+          "mean_rank": 0.6068139963167587
+        },
+        "4": {
+          "size": 862,
+          "rank_distribution": {
+            "0": 357,
+            "1": 462,
+            "2": 43
+          },
+          "fraction_rank0": 0.41415313225058004,
+          "fraction_rank1": 0.5359628770301624,
+          "mean_rank": 0.6357308584686775
+        }
+      },
+      "chi_squared_rank_vs_community": {
+        "chi2": 63.88242163771964,
+        "p_value": 8.024150651464871e-11,
+        "dof": 8,
+        "contingency_table": [
+          [
+            885,
+            764,
+            26
+          ],
+          [
+            316,
+            370,
+            34
+          ],
+          [
+            285,
+            345,
+            27
+          ],
+          [
+            478,
+            557,
+            51
+          ],
+          [
+            357,
+            462,
+            43
+          ]
+        ],
+        "rank_labels": [
+          0,
+          1,
+          2
+        ]
+      },
+      "null_chi_squared": {
+        "null_mean": 7.822640244036652,
+        "null_std": 3.491089772831257,
+        "observed_chi2": 63.88242163771964,
+        "frac_null_exceeding_observed": 0.0
+      },
+      "torsion_alignment": {
+        "chi2": 2884.8349441461937,
+        "p_value": 0.0,
+        "dof": 24,
+        "torsion_values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "community_arithmetic": {
+        "within_community_mean_gcd": 27.109330045211674,
+        "across_community_mean_gcd": 15.865675827257432,
+        "within_community_median_gcd": 3.0,
+        "across_community_median_gcd": 3.0,
+        "within_frac_gcd_gt1": 0.7912042745581587,
+        "across_frac_gcd_gt1": 0.7964105440269209,
+        "n_within_pairs": 2433,
+        "n_across_pairs": 3566
+      },
+      "edge_conductor_distance": {
+        "connected_mean_delta_conductor": 2615.0932,
+        "connected_median_delta_conductor": 2684.0,
+        "random_mean_delta_conductor": 1567.9904,
+        "random_median_delta_conductor": 1376.0,
+        "n_connected_pairs": 5000,
+        "n_random_pairs": 5000
+      },
+      "curvature_vs_rank_boundary": {
+        "boundary_mean_orc": 0.6858996367586767,
+        "boundary_median_orc": 0.7174379177773195,
+        "boundary_n": 517,
+        "interior_mean_orc": 0.6746004311894344,
+        "interior_median_orc": 0.7258491125634714,
+        "interior_n": 483,
+        "boundary_vs_interior_U": 126503.5,
+        "boundary_vs_interior_p": 0.7181111788596994
+      },
+      "time_seconds": 345.1410982608795
+    },
+    "3": {
+      "n_edges": 348524,
+      "degree_distribution": {
+        "mean": 139.4096,
+        "median": 102.0,
+        "max": 557,
+        "std": 104.77026595289333,
+        "isolated_nodes": 0,
+        "histogram_bins": [
+          301,
+          1548,
+          1499,
+          545,
+          226,
+          121,
+          72,
+          77,
+          59,
+          52,
+          49,
+          51,
+          57,
+          51,
+          57,
+          44,
+          79,
+          62,
+          8,
+          42
+        ],
+        "histogram_edges": [
+          40.0,
+          65.85,
+          91.7,
+          117.55000000000001,
+          143.4,
+          169.25,
+          195.10000000000002,
+          220.95000000000002,
+          246.8,
+          272.65,
+          298.5,
+          324.35,
+          350.20000000000005,
+          376.05,
+          401.90000000000003,
+          427.75,
+          453.6,
+          479.45000000000005,
+          505.3,
+          531.1500000000001,
+          557.0
+        ]
+      },
+      "connected_components": {
+        "num_components": 1,
+        "largest": 5000,
+        "top5_sizes": [
+          5000
+        ],
+        "isolated": 0
+      },
+      "clustering_coefficient": {
+        "mean": 0.2564338339440901,
+        "median": 0.22097712742046466,
+        "std": 0.09369662985667836,
+        "n_nodes_with_2plus_neighbors": 5000
+      },
+      "ollivier_ricci_curvature": {
+        "mean": 0.5648845109609363,
+        "median": 0.6936905353413357,
+        "std": 0.3889100914577087,
+        "fraction_positive": 0.878,
+        "fraction_negative": 0.122,
+        "fraction_zero": 0.0,
+        "n_sampled": 1000
+      },
+      "community_rank_profiles": {
+        "0": {
+          "size": 955,
+          "rank_distribution": {
+            "0": 473,
+            "1": 456,
+            "2": 26
+          },
+          "fraction_rank0": 0.4952879581151832,
+          "fraction_rank1": 0.4774869109947644,
+          "mean_rank": 0.5319371727748691
+        },
+        "1": {
+          "size": 1042,
+          "rank_distribution": {
+            "0": 458,
+            "1": 538,
+            "2": 46
+          },
+          "fraction_rank0": 0.43953934740882916,
+          "fraction_rank1": 0.5163147792706334,
+          "mean_rank": 0.6046065259117083
+        },
+        "2": {
+          "size": 1058,
+          "rank_distribution": {
+            "0": 484,
+            "1": 536,
+            "2": 38
+          },
+          "fraction_rank0": 0.45746691871455575,
+          "fraction_rank1": 0.5066162570888468,
+          "mean_rank": 0.5784499054820416
+        },
+        "3": {
+          "size": 1142,
+          "rank_distribution": {
+            "0": 492,
+            "1": 605,
+            "2": 45
+          },
+          "fraction_rank0": 0.4308231173380035,
+          "fraction_rank1": 0.5297723292469352,
+          "mean_rank": 0.6085814360770578
+        },
+        "4": {
+          "size": 803,
+          "rank_distribution": {
+            "0": 414,
+            "1": 363,
+            "2": 26
+          },
+          "fraction_rank0": 0.5155666251556662,
+          "fraction_rank1": 0.4520547945205479,
+          "mean_rank": 0.5168119551681195
+        }
+      },
+      "chi_squared_rank_vs_community": {
+        "chi2": 22.690203940979053,
+        "p_value": 0.0037856119572076507,
+        "dof": 8,
+        "contingency_table": [
+          [
+            473,
+            456,
+            26
+          ],
+          [
+            458,
+            538,
+            46
+          ],
+          [
+            484,
+            536,
+            38
+          ],
+          [
+            492,
+            605,
+            45
+          ],
+          [
+            414,
+            363,
+            26
+          ]
+        ],
+        "rank_labels": [
+          0,
+          1,
+          2
+        ]
+      },
+      "null_chi_squared": {
+        "null_mean": 7.822640244036652,
+        "null_std": 3.491089772831257,
+        "observed_chi2": 22.690203940979053,
+        "frac_null_exceeding_observed": 0.0
+      },
+      "torsion_alignment": {
+        "chi2": 805.5469642573207,
+        "p_value": 1.3938241152249957e-154,
+        "dof": 24,
+        "torsion_values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "community_arithmetic": {
+        "within_community_mean_gcd": 18.931106471816285,
+        "across_community_mean_gcd": 17.85044395116537,
+        "within_community_median_gcd": 3.0,
+        "across_community_median_gcd": 3.0,
+        "within_frac_gcd_gt1": 0.7916492693110647,
+        "across_frac_gcd_gt1": 0.8027192008879024,
+        "n_within_pairs": 2395,
+        "n_across_pairs": 3604
+      },
+      "edge_conductor_distance": {
+        "connected_mean_delta_conductor": 2444.5584,
+        "connected_median_delta_conductor": 2470.0,
+        "random_mean_delta_conductor": 1567.9904,
+        "random_median_delta_conductor": 1376.0,
+        "n_connected_pairs": 5000,
+        "n_random_pairs": 5000
+      },
+      "curvature_vs_rank_boundary": {
+        "boundary_mean_orc": 0.5350608889439191,
+        "boundary_median_orc": 0.6390293076317861,
+        "boundary_n": 541,
+        "interior_mean_orc": 0.5532758170570853,
+        "interior_median_orc": 0.6631405864620443,
+        "interior_n": 459,
+        "boundary_vs_interior_U": 119465.0,
+        "boundary_vs_interior_p": 0.30237021606295056
+      },
+      "time_seconds": 7.356385946273804
+    },
+    "5": {
+      "n_edges": 20297,
+      "degree_distribution": {
+        "mean": 8.1188,
+        "median": 7.0,
+        "max": 44,
+        "std": 5.236132786704325,
+        "isolated_nodes": 58,
+        "histogram_bins": [
+          482,
+          773,
+          921,
+          819,
+          688,
+          683,
+          250,
+          176,
+          79,
+          41,
+          29,
+          15,
+          6,
+          9,
+          5,
+          9,
+          1,
+          1,
+          1,
+          12
+        ],
+        "histogram_edges": [
+          0.0,
+          2.2,
+          4.4,
+          6.6000000000000005,
+          8.8,
+          11.0,
+          13.200000000000001,
+          15.400000000000002,
+          17.6,
+          19.8,
+          22.0,
+          24.200000000000003,
+          26.400000000000002,
+          28.6,
+          30.800000000000004,
+          33.0,
+          35.2,
+          37.400000000000006,
+          39.6,
+          41.800000000000004,
+          44.0
+        ]
+      },
+      "connected_components": {
+        "num_components": 64,
+        "largest": 4932,
+        "top5_sizes": [
+          4932,
+          2,
+          2,
+          2,
+          2
+        ],
+        "isolated": 58
+      },
+      "clustering_coefficient": {
+        "mean": 0.15871047493774534,
+        "median": 0.13211053652230123,
+        "std": 0.16095164565012057,
+        "n_nodes_with_2plus_neighbors": 4776
+      },
+      "ollivier_ricci_curvature": {
+        "mean": -0.11497154025981192,
+        "median": 0.33665331738354026,
+        "std": 1.0825541941207557,
+        "fraction_positive": 0.5875251509054326,
+        "fraction_negative": 0.4124748490945674,
+        "fraction_zero": 0.0,
+        "n_sampled": 994
+      },
+      "community_rank_profiles": {
+        "0": {
+          "size": 4932,
+          "rank_distribution": {
+            "0": 2293,
+            "1": 2464,
+            "2": 175
+          },
+          "fraction_rank0": 0.4649229521492295,
+          "fraction_rank1": 0.49959448499594483,
+          "mean_rank": 0.5705596107055961
+        },
+        "1": {
+          "size": 35,
+          "rank_distribution": {
+            "0": 14,
+            "1": 18,
+            "2": 3
+          },
+          "fraction_rank0": 0.4,
+          "fraction_rank1": 0.5142857142857142,
+          "mean_rank": 0.6857142857142857
+        },
+        "2": {
+          "size": 26,
+          "rank_distribution": {
+            "0": 12,
+            "1": 13,
+            "2": 1
+          },
+          "fraction_rank0": 0.46153846153846156,
+          "fraction_rank1": 0.5,
+          "mean_rank": 0.5769230769230769
+        },
+        "3": {
+          "size": 3,
+          "rank_distribution": {
+            "1": 2,
+            "2": 1
+          },
+          "fraction_rank0": 0.0,
+          "fraction_rank1": 0.6666666666666666,
+          "mean_rank": 1.3333333333333333
+        },
+        "4": {
+          "size": 4,
+          "rank_distribution": {
+            "0": 2,
+            "1": 1,
+            "2": 1
+          },
+          "fraction_rank0": 0.5,
+          "fraction_rank1": 0.25,
+          "mean_rank": 0.75
+        }
+      },
+      "chi_squared_rank_vs_community": {
+        "chi2": 17.213653289272585,
+        "p_value": 0.0279596408920965,
+        "dof": 8,
+        "contingency_table": [
+          [
+            2293,
+            2464,
+            175
+          ],
+          [
+            14,
+            18,
+            3
+          ],
+          [
+            12,
+            13,
+            1
+          ],
+          [
+            0,
+            2,
+            1
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ],
+        "rank_labels": [
+          0,
+          1,
+          2
+        ]
+      },
+      "null_chi_squared": {
+        "null_mean": 7.822640244036652,
+        "null_std": 3.491089772831257,
+        "observed_chi2": 17.213653289272585,
+        "frac_null_exceeding_observed": 0.015
+      },
+      "torsion_alignment": {
+        "chi2": 21.18617516748506,
+        "p_value": 0.6277192926265591,
+        "dof": 24,
+        "torsion_values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "community_arithmetic": {
+        "within_community_mean_gcd": 14.20081342145399,
+        "across_community_mean_gcd": 10.582566585956416,
+        "within_community_median_gcd": 2.0,
+        "across_community_median_gcd": 2.0,
+        "within_frac_gcd_gt1": 0.6263345195729537,
+        "across_frac_gcd_gt1": 0.5031476997578692,
+        "n_within_pairs": 3934,
+        "n_across_pairs": 2065
+      },
+      "edge_conductor_distance": {
+        "connected_mean_delta_conductor": 2298.9514,
+        "connected_median_delta_conductor": 2284.5,
+        "random_mean_delta_conductor": 1567.9904,
+        "random_median_delta_conductor": 1376.0,
+        "n_connected_pairs": 5000,
+        "n_random_pairs": 5000
+      },
+      "curvature_vs_rank_boundary": {
+        "boundary_mean_orc": -0.0767998851844582,
+        "boundary_median_orc": 0.41565110228673197,
+        "boundary_n": 489,
+        "interior_mean_orc": -0.09216044758654414,
+        "interior_median_orc": 0.38413535166683005,
+        "interior_n": 502,
+        "boundary_vs_interior_U": 124409.0,
+        "boundary_vs_interior_p": 0.7109292869957458
+      },
+      "time_seconds": 2.362579345703125
+    },
+    "7": {
+      "n_edges": 4638,
+      "degree_distribution": {
+        "mean": 1.8552,
+        "median": 1.0,
+        "max": 23,
+        "std": 2.1959583238303955,
+        "isolated_nodes": 1410,
+        "histogram_bins": [
+          2704,
+          910,
+          608,
+          335,
+          195,
+          118,
+          79,
+          15,
+          9,
+          2,
+          1,
+          2,
+          1,
+          1,
+          0,
+          0,
+          1,
+          4,
+          9,
+          6
+        ],
+        "histogram_edges": [
+          0.0,
+          1.15,
+          2.3,
+          3.4499999999999997,
+          4.6,
+          5.75,
+          6.8999999999999995,
+          8.049999999999999,
+          9.2,
+          10.35,
+          11.5,
+          12.649999999999999,
+          13.799999999999999,
+          14.95,
+          16.099999999999998,
+          17.25,
+          18.4,
+          19.549999999999997,
+          20.7,
+          21.849999999999998,
+          23.0
+        ]
+      },
+      "connected_components": {
+        "num_components": 1670,
+        "largest": 2876,
+        "top5_sizes": [
+          2876,
+          16,
+          9,
+          9,
+          8
+        ],
+        "isolated": 1410
+      },
+      "clustering_coefficient": {
+        "mean": 0.1405426379794797,
+        "median": 0.0,
+        "std": 0.25989431427454646,
+        "n_nodes_with_2plus_neighbors": 2296
+      },
+      "ollivier_ricci_curvature": {
+        "mean": -0.11095056746853103,
+        "median": 0.16696914700544485,
+        "std": 1.004216116763457,
+        "fraction_positive": 0.5549525101763908,
+        "fraction_negative": 0.44369063772048845,
+        "fraction_zero": 0.0013568521031207597,
+        "n_sampled": 737
+      },
+      "community_rank_profiles": {
+        "0": {
+          "size": 2956,
+          "rank_distribution": {
+            "0": 1406,
+            "1": 1494,
+            "2": 56
+          },
+          "fraction_rank0": 0.47564276048714477,
+          "fraction_rank1": 0.5054127198917456,
+          "mean_rank": 0.5433017591339648
+        },
+        "1": {
+          "size": 912,
+          "rank_distribution": {
+            "0": 419,
+            "1": 429,
+            "2": 64
+          },
+          "fraction_rank0": 0.4594298245614035,
+          "fraction_rank1": 0.47039473684210525,
+          "mean_rank": 0.6107456140350878
+        },
+        "2": {
+          "size": 796,
+          "rank_distribution": {
+            "0": 356,
+            "1": 396,
+            "2": 44
+          },
+          "fraction_rank0": 0.4472361809045226,
+          "fraction_rank1": 0.49748743718592964,
+          "mean_rank": 0.6080402010050251
+        },
+        "3": {
+          "size": 140,
+          "rank_distribution": {
+            "0": 62,
+            "1": 74,
+            "2": 4
+          },
+          "fraction_rank0": 0.44285714285714284,
+          "fraction_rank1": 0.5285714285714286,
+          "mean_rank": 0.5857142857142857
+        },
+        "4": {
+          "size": 196,
+          "rank_distribution": {
+            "0": 78,
+            "1": 105,
+            "2": 13
+          },
+          "fraction_rank0": 0.3979591836734694,
+          "fraction_rank1": 0.5357142857142857,
+          "mean_rank": 0.6683673469387755
+        }
+      },
+      "chi_squared_rank_vs_community": {
+        "chi2": 72.4092173782772,
+        "p_value": 1.6260514243414077e-12,
+        "dof": 8,
+        "contingency_table": [
+          [
+            1406,
+            1494,
+            56
+          ],
+          [
+            419,
+            429,
+            64
+          ],
+          [
+            356,
+            396,
+            44
+          ],
+          [
+            62,
+            74,
+            4
+          ],
+          [
+            78,
+            105,
+            13
+          ]
+        ],
+        "rank_labels": [
+          0,
+          1,
+          2
+        ]
+      },
+      "null_chi_squared": {
+        "null_mean": 7.822640244036652,
+        "null_std": 3.491089772831257,
+        "observed_chi2": 72.4092173782772,
+        "frac_null_exceeding_observed": 0.0
+      },
+      "torsion_alignment": {
+        "chi2": 181.70112230988315,
+        "p_value": 3.466347400797971e-26,
+        "dof": 24,
+        "torsion_values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "community_arithmetic": {
+        "within_community_mean_gcd": 19.997891036906854,
+        "across_community_mean_gcd": 14.252060875079264,
+        "within_community_median_gcd": 3.0,
+        "across_community_median_gcd": 3.0,
+        "within_frac_gcd_gt1": 0.7848857644991213,
+        "across_frac_gcd_gt1": 0.7748890298034242,
+        "n_within_pairs": 2845,
+        "n_across_pairs": 3154
+      },
+      "edge_conductor_distance": {
+        "connected_mean_delta_conductor": 1537.8656748598535,
+        "connected_median_delta_conductor": 1342.0,
+        "random_mean_delta_conductor": 1561.0996119016818,
+        "random_median_delta_conductor": 1370.5,
+        "n_connected_pairs": 4638,
+        "n_random_pairs": 4638
+      },
+      "curvature_vs_rank_boundary": {
+        "boundary_mean_orc": -0.10752426174883452,
+        "boundary_median_orc": 0.16803728070175444,
+        "boundary_n": 372,
+        "interior_mean_orc": -0.09188103210589864,
+        "interior_median_orc": 0.255350253195081,
+        "interior_n": 390,
+        "boundary_vs_interior_U": 70203.5,
+        "boundary_vs_interior_p": 0.4417669883198808
+      },
+      "time_seconds": 2.158552885055542
+    },
+    "11": {
+      "n_edges": 1616,
+      "degree_distribution": {
+        "mean": 0.6464,
+        "median": 0.0,
+        "max": 24,
+        "std": 1.6269502266510796,
+        "isolated_nodes": 3322,
+        "histogram_bins": [
+          4344,
+          369,
+          131,
+          67,
+          33,
+          26,
+          7,
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          9,
+          6,
+          3,
+          1,
+          1
+        ],
+        "histogram_edges": [
+          0.0,
+          1.2,
+          2.4,
+          3.5999999999999996,
+          4.8,
+          6.0,
+          7.199999999999999,
+          8.4,
+          9.6,
+          10.799999999999999,
+          12.0,
+          13.2,
+          14.399999999999999,
+          15.6,
+          16.8,
+          18.0,
+          19.2,
+          20.4,
+          21.599999999999998,
+          22.8,
+          24.0
+        ]
+      },
+      "connected_components": {
+        "num_components": 3729,
+        "largest": 597,
+        "top5_sizes": [
+          597,
+          13,
+          13,
+          11,
+          10
+        ],
+        "isolated": 3322
+      },
+      "clustering_coefficient": {
+        "mean": 0.14833204452211543,
+        "median": 0.0,
+        "std": 0.2980497561943017,
+        "n_nodes_with_2plus_neighbors": 656
+      },
+      "ollivier_ricci_curvature": {
+        "mean": 0.12651748178230807,
+        "median": 0.4004576659038903,
+        "std": 0.9652462713773559,
+        "fraction_positive": 0.6741154562383612,
+        "fraction_negative": 0.3240223463687151,
+        "fraction_zero": 0.00186219739292365,
+        "n_sampled": 537
+      },
+      "community_rank_profiles": {
+        "0": {
+          "size": 1820,
+          "rank_distribution": {
+            "0": 833,
+            "1": 899,
+            "2": 88
+          },
+          "fraction_rank0": 0.4576923076923077,
+          "fraction_rank1": 0.493956043956044,
+          "mean_rank": 0.5906593406593407
+        },
+        "1": {
+          "size": 1874,
+          "rank_distribution": {
+            "0": 837,
+            "1": 957,
+            "2": 80
+          },
+          "fraction_rank0": 0.4466382070437567,
+          "fraction_rank1": 0.5106723585912487,
+          "mean_rank": 0.5960512273212379
+        },
+        "2": {
+          "size": 680,
+          "rank_distribution": {
+            "0": 362,
+            "1": 312,
+            "2": 6
+          },
+          "fraction_rank0": 0.5323529411764706,
+          "fraction_rank1": 0.4588235294117647,
+          "mean_rank": 0.4764705882352941
+        },
+        "3": {
+          "size": 287,
+          "rank_distribution": {
+            "0": 134,
+            "1": 149,
+            "2": 4
+          },
+          "fraction_rank0": 0.46689895470383275,
+          "fraction_rank1": 0.519163763066202,
+          "mean_rank": 0.5470383275261324
+        },
+        "4": {
+          "size": 339,
+          "rank_distribution": {
+            "0": 155,
+            "1": 181,
+            "2": 3
+          },
+          "fraction_rank0": 0.45722713864306785,
+          "fraction_rank1": 0.5339233038348082,
+          "mean_rank": 0.551622418879056
+        }
+      },
+      "chi_squared_rank_vs_community": {
+        "chi2": 46.73064493067901,
+        "p_value": 1.7257722067382472e-07,
+        "dof": 8,
+        "contingency_table": [
+          [
+            833,
+            899,
+            88
+          ],
+          [
+            837,
+            957,
+            80
+          ],
+          [
+            362,
+            312,
+            6
+          ],
+          [
+            134,
+            149,
+            4
+          ],
+          [
+            155,
+            181,
+            3
+          ]
+        ],
+        "rank_labels": [
+          0,
+          1,
+          2
+        ]
+      },
+      "null_chi_squared": {
+        "null_mean": 7.822640244036652,
+        "null_std": 3.491089772831257,
+        "observed_chi2": 46.73064493067901,
+        "frac_null_exceeding_observed": 0.0
+      },
+      "torsion_alignment": {
+        "chi2": 604.5458000536742,
+        "p_value": 2.6535442575401807e-112,
+        "dof": 24,
+        "torsion_values": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "community_arithmetic": {
+        "within_community_mean_gcd": 23.996946564885498,
+        "across_community_mean_gcd": 18.67682746374667,
+        "within_community_median_gcd": 4.0,
+        "across_community_median_gcd": 3.0,
+        "within_frac_gcd_gt1": 0.8263358778625954,
+        "across_frac_gcd_gt1": 0.8111867416395383,
+        "n_within_pairs": 2620,
+        "n_across_pairs": 3379
+      },
+      "edge_conductor_distance": {
+        "connected_mean_delta_conductor": 1514.2747524752476,
+        "connected_median_delta_conductor": 1296.0,
+        "random_mean_delta_conductor": 1547.4430693069307,
+        "random_median_delta_conductor": 1388.0,
+        "n_connected_pairs": 1616,
+        "n_random_pairs": 1616
+      },
+      "curvature_vs_rank_boundary": {
+        "boundary_mean_orc": 0.31302949441168915,
+        "boundary_median_orc": 0.5669642857142856,
+        "boundary_n": 216,
+        "interior_mean_orc": 0.038035793156409384,
+        "interior_median_orc": 0.30151515151515157,
+        "interior_n": 336,
+        "boundary_vs_interior_U": 42459.5,
+        "boundary_vs_interior_p": 0.000720946553285584
+      },
+      "time_seconds": 2.7251787185668945
+    }
+  },
+  "summary": {
+    "2": {
+      "n_edges": 3046038,
+      "clustering": 0.48582363434393994,
+      "mean_orc": 0.6821640637347453,
+      "rank_chi2": 63.88242163771964,
+      "rank_chi2_p": 8.024150651464871e-11,
+      "null_frac_exceeding": 0.0
+    },
+    "3": {
+      "n_edges": 348524,
+      "clustering": 0.2564338339440901,
+      "mean_orc": 0.5648845109609363,
+      "rank_chi2": 22.690203940979053,
+      "rank_chi2_p": 0.0037856119572076507,
+      "null_frac_exceeding": 0.0
+    },
+    "5": {
+      "n_edges": 20297,
+      "clustering": 0.15871047493774534,
+      "mean_orc": -0.11497154025981192,
+      "rank_chi2": 17.213653289272585,
+      "rank_chi2_p": 0.0279596408920965,
+      "null_frac_exceeding": 0.015
+    },
+    "7": {
+      "n_edges": 4638,
+      "clustering": 0.1405426379794797,
+      "mean_orc": -0.11095056746853103,
+      "rank_chi2": 72.4092173782772,
+      "rank_chi2_p": 1.6260514243414077e-12,
+      "null_frac_exceeding": 0.0
+    },
+    "11": {
+      "n_edges": 1616,
+      "clustering": 0.14833204452211543,
+      "mean_orc": 0.12651748178230807,
+      "rank_chi2": 46.73064493067901,
+      "rank_chi2_p": 1.7257722067382472e-07,
+      "null_frac_exceeding": 0.0
+    }
+  },
+  "total_time_seconds": 359.9507896900177
+}
