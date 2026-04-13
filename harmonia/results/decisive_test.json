@@ -1,13 +1,66 @@
 {
-  "signal_1_spectral_tail": {
-    "within_bin_rho": -0.150609383347293,
-    "null_mean": 1.679499351170531e-05,
-    "null_std": 0.005648652530183614,
-    "z_score": -26.665860138490142,
+  "test_a_spectral_tail": {
+    "signal": "Spectral tail encodes isogeny structure",
+    "original_claim": {
+      "rho": -0.088,
+      "z": -12.3
+    },
+    "n_curves": 40000,
+    "n_bins": 8,
+    "conductor_controlled": {
+      "rho": -0.13384376201512696,
+      "p": 2.9554844061432254e-159,
+      "z": -26.768752403025392
+    },
+    "shuffled_null": {
+      "n_permutations": 500,
+      "null_mean": 9.691290681072923e-05,
+      "null_std": 0.005221583281030802,
+      "z_vs_null": -25.651352801079184,
+      "empirical_p": 0.0
+    },
     "verdict": "SURVIVES"
   },
-  "signal_2_congruence": {
-    "z_score": 0.0,
-    "verdict": "INSUFFICIENT DATA"
+  "test_b_congruence_graph": {
+    "signal": "Congruence graph curvature predicts rank",
+    "original_claim": {
+      "chi2": 72.4,
+      "p": 1.6e-12
+    },
+    "n_forms": 5000,
+    "prime_only": {
+      "indices_used": "a_2, a_3, a_5, a_7, a_11",
+      "modulus": 7,
+      "threshold": 3,
+      "n_edges": 688157,
+      "n_communities": 5,
+      "chi2": 128.16023783334145,
+      "p": 6.805536598685924e-24,
+      "shuffled_null": {
+        "n_permutations": 500,
+        "null_mean": 7.565476010009482,
+        "null_std": 3.719383930989575,
+        "z_vs_null": 32.42331635047062,
+        "empirical_p": 0.0
+      }
+    },
+    "composite_only": {
+      "indices_used": "a_4, a_6, a_8, a_9, a_10",
+      "modulus": 7,
+      "threshold": 3,
+      "n_edges": 3150090,
+      "n_communities": 2,
+      "chi2": 6.894942332681527,
+      "p": 0.031826017404160474,
+      "shuffled_null": {
+        "n_permutations": 500,
+        "null_mean": 1.8522017741532903,
+        "null_std": 1.846144429569424,
+        "z_vs_null": 2.7314984016198314,
+        "empirical_p": 0.022
+      }
+    },
+    "prime_stronger_than_composite": true,
+    "verdict": "SURVIVES"
   }
 }
