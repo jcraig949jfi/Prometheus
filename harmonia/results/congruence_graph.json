@@ -1,0 +1,354 @@
+{
+  "description": "Congruence graph of weight-2 dim-1 newforms (= elliptic curves up to isogeny). Edges connect forms sharing >= 15/30 trace congruences mod {2,3,5} at first 10 primes. Ollivier-Ricci curvature computed on edges. Pure arithmetic structure, no feature vectors.",
+  "parameters": {
+    "primes": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13,
+      17,
+      19,
+      23,
+      29
+    ],
+    "moduli": [
+      2,
+      3,
+      5
+    ],
+    "threshold": 15,
+    "max_conductor": 5000,
+    "num_forms_queried": 5000,
+    "num_forms_used": 5000
+  },
+  "graph_statistics": {
+    "num_nodes": 5000,
+    "num_edges": 603848,
+    "mean_degree": 241.5392,
+    "median_degree": 192.0,
+    "max_degree": 1024,
+    "num_components": 1,
+    "largest_component": 5000,
+    "top_5_components": [
+      5000
+    ],
+    "isolates": 0,
+    "mean_clustering": 0.2720919786783029,
+    "edge_weight_mean": 16.213990938116876,
+    "edge_weight_median": 16.0
+  },
+  "curvature_summary": {
+    "num_edges_sampled": 10000,
+    "mean_orc": -0.42860782091283256,
+    "std_orc": 0.1994113396112338,
+    "min_orc": -0.9681970349115255,
+    "max_orc": 0.6173360089726178,
+    "median_orc": -0.441608113444207,
+    "fraction_negative": 0.976,
+    "fraction_positive": 0.024,
+    "quintiles": {
+      "Q1": "[-0.9682, -0.5978]",
+      "Q2": "[-0.5978, -0.4877]",
+      "Q3": "[-0.4877, -0.3921]",
+      "Q4": "[-0.3921, -0.2672]",
+      "Q5": "[-0.2672, 0.6173]"
+    }
+  },
+  "stratification": {
+    "rank_analysis": {
+      "same_rank_edges": 5612,
+      "diff_rank_edges": 4388,
+      "same_rank_mean_orc": -0.4306856117896287,
+      "diff_rank_mean_orc": -0.4259504457075955,
+      "same_rank_std_orc": 0.20121057242006288,
+      "diff_rank_std_orc": 0.19705436302641832
+    },
+    "level_analysis": {
+      "same_level_edges": 108,
+      "same_level_mean_orc": -0.345289548010642,
+      "diff_level_mean_orc": -0.42951748260646744,
+      "near_conductors_count": 3921,
+      "near_conductors_mean_orc": -0.43832207291701414,
+      "moderate_conductors_count": 4758,
+      "moderate_conductors_mean_orc": -0.4275380416178779,
+      "distant_conductors_count": 1321,
+      "distant_conductors_mean_orc": -0.4036270697977668
+    },
+    "high_curvature_rank_distribution": {
+      "0": 0.5705,
+      "1": 0.4275,
+      "2": 0.002
+    },
+    "low_curvature_rank_distribution": {
+      "0": 0.47475,
+      "1": 0.5145,
+      "2": 0.01075
+    },
+    "weight_curvature_correlation": 0.5851917630283092,
+    "degree_curvature_correlation": 0.7050410195140439
+  },
+  "bottlenecks_top20": [
+    {
+      "edge": "370.2.a.c -- 1010.2.a.a",
+      "levels": [
+        370,
+        1010
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "orc": -0.9681970349115255,
+      "weight": 15
+    },
+    {
+      "edge": "681.2.a.c -- 742.2.a.f",
+      "levels": [
+        681,
+        742
+      ],
+      "ranks": [
+        1,
+        1
+      ],
+      "orc": -0.9586080586080586,
+      "weight": 15
+    },
+    {
+      "edge": "1139.2.a.b -- 1443.2.a.c",
+      "levels": [
+        1139,
+        1443
+      ],
+      "ranks": [
+        1,
+        0
+      ],
+      "orc": -0.9411269974768712,
+      "weight": 15
+    },
+    {
+      "edge": "565.2.a.a -- 1411.2.a.b",
+      "levels": [
+        565,
+        1411
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "orc": -0.9398268398268399,
+      "weight": 15
+    },
+    {
+      "edge": "522.2.a.f -- 1611.2.a.a",
+      "levels": [
+        522,
+        1611
+      ],
+      "ranks": [
+        1,
+        2
+      ],
+      "orc": -0.929332927200731,
+      "weight": 15
+    },
+    {
+      "edge": "681.2.a.c -- 1748.2.a.c",
+      "levels": [
+        681,
+        1748
+      ],
+      "ranks": [
+        1,
+        2
+      ],
+      "orc": -0.9186813186813187,
+      "weight": 15
+    },
+    {
+      "edge": "225.2.a.a -- 655.2.a.a",
+      "levels": [
+        225,
+        655
+      ],
+      "ranks": [
+        1,
+        2
+      ],
+      "orc": -0.9136752136752138,
+      "weight": 15
+    },
+    {
+      "edge": "1150.2.a.i -- 1234.2.a.d",
+      "levels": [
+        1150,
+        1234
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.9119658119658121,
+      "weight": 15
+    },
+    {
+      "edge": "249.2.a.b -- 428.2.a.a",
+      "levels": [
+        249,
+        428
+      ],
+      "ranks": [
+        1,
+        1
+      ],
+      "orc": -0.9115995115995117,
+      "weight": 15
+    },
+    {
+      "edge": "989.2.a.a -- 1274.2.a.h",
+      "levels": [
+        989,
+        1274
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.9054215428707906,
+      "weight": 15
+    },
+    {
+      "edge": "1050.2.a.b -- 1656.2.a.g",
+      "levels": [
+        1050,
+        1656
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.9041987532086542,
+      "weight": 15
+    },
+    {
+      "edge": "1173.2.a.d -- 1242.2.a.p",
+      "levels": [
+        1173,
+        1242
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.9009661835748793,
+      "weight": 15
+    },
+    {
+      "edge": "318.2.a.e -- 1353.2.a.b",
+      "levels": [
+        318,
+        1353
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.9009146341463414,
+      "weight": 15
+    },
+    {
+      "edge": "550.2.a.b -- 931.2.a.b",
+      "levels": [
+        550,
+        931
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.8999999999999999,
+      "weight": 15
+    },
+    {
+      "edge": "1034.2.a.a -- 1325.2.a.b",
+      "levels": [
+        1034,
+        1325
+      ],
+      "ranks": [
+        2,
+        1
+      ],
+      "orc": -0.8972033257747543,
+      "weight": 15
+    },
+    {
+      "edge": "1020.2.a.b -- 1295.2.a.a",
+      "levels": [
+        1020,
+        1295
+      ],
+      "ranks": [
+        1,
+        1
+      ],
+      "orc": -0.8946675444371297,
+      "weight": 15
+    },
+    {
+      "edge": "472.2.a.e -- 700.2.a.j",
+      "levels": [
+        472,
+        700
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.893730407523511,
+      "weight": 15
+    },
+    {
+      "edge": "516.2.a.b -- 1456.2.a.c",
+      "levels": [
+        516,
+        1456
+      ],
+      "ranks": [
+        0,
+        1
+      ],
+      "orc": -0.8911564625850341,
+      "weight": 15
+    },
+    {
+      "edge": "1265.2.a.a -- 1325.2.a.a",
+      "levels": [
+        1265,
+        1325
+      ],
+      "ranks": [
+        1,
+        2
+      ],
+      "orc": -0.8910344827586207,
+      "weight": 16
+    },
+    {
+      "edge": "426.2.a.c -- 944.2.a.i",
+      "levels": [
+        426,
+        944
+      ],
+      "ranks": [
+        0,
+        0
+      ],
+      "orc": -0.8899711399711401,
+      "weight": 16
+    }
+  ]
+}
