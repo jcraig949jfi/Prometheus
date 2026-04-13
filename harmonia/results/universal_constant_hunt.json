@@ -1,0 +1,27 @@
+{
+  "candidate_constant": {
+    "name": "alpha (Arithmos signal ratio)",
+    "value": 1.577,
+    "uncertainty": 0.1,
+    "range_across_controls": [
+      1.44,
+      1.64
+    ],
+    "definition": "Ratio of residual PC1 variance (after Megethos removal) to random null in 4D",
+    "interpretation": "The fraction of cross-domain mathematical variance that is arithmetic-group-theoretic, beyond what size/complexity explains",
+    "survived": [
+      "rank normalization",
+      "size removal",
+      "monotonic scrambling",
+      "equal-complexity slicing",
+      "all 5 adversarial attacks"
+    ]
+  },
+  "transfer_matrix_findings": {
+    "instrument_ceiling": 0.993,
+    "mean_efficiency": 0.584,
+    "geometric_mean_coupling": 0.346,
+    "no_single_constant": "Transfer rho varies 0.40-0.89 across pairs. No single universal transfer efficiency.",
+    "but": "The Arithmos signal ratio (1.577) is stable across all measurement methods. It is the ratio, not the absolute transfer, that is constant."
+  }
+}
