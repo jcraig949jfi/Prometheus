@@ -715,6 +715,38 @@
       "chemistry-materials-ec_zeros"
     ],
     "n_candidates": 2,
-    "interpretation": "Candidates show 3-body coupling where TT-Cross approximation error at fixed rank is significantly lower for real data than null (shuffled). This means the real coupling tensor has more low-rank structure than noise."
+    "interpretation": "Candidates show 3-body coupling where TT-Cross approximation error at fixed rank is significantly lower for real data than null (shuffled). This means the real coupling tensor has more low-rank structure than noise.",
+    "post_hoc_verdict": "Both initial candidates KILLED by post-hoc falsification. Z-score patterns across ranks are non-monotonic and inconsistent, characteristic of TT-Cross initialization noise rather than genuine 3-body structure. No 3-body effects survive Megethos zeroing.",
+    "final_candidates": 0,
+    "final_verdict": "NULL - no 3-body interactions detected beyond pairwise",
+    "three_body_residual_note": "High 3-body fractions (0.65-1.0) are NOT evidence of 3-body coupling. They reflect the nonlinear nature of the cosine-similarity scoring function, which inherently cannot be decomposed into pairwise terms even for noise. The null model (shuffled) has equally high 3-body fractions, confirming this is a property of the scorer, not the data."
+  },
+  "post_hoc_falsification": {
+    "EC-NF-genus2": {
+      "initial_verdict": "CANDIDATE at rank=5 (z=-2.52)",
+      "full_z_pattern": {
+        "rank_2": 2.64,
+        "rank_3": -0.24,
+        "rank_4": 10.28,
+        "rank_5": -2.52,
+        "rank_6": -0.41,
+        "rank_8": 0.0
+      },
+      "falsification": "KILLED. Z-scores are non-monotonic and contradictory: real data is HARDER to approximate at rank 2 and 4 (z=2.64, 10.28) but EASIER at rank 5 (z=-2.52). A genuine low-rank signal would show consistently lower error at ALL low ranks. This is TT-Cross initialization noise, not structure.",
+      "survived": false
+    },
+    "chemistry-materials-ec_zeros": {
+      "initial_verdict": "CANDIDATE at rank=5 (z=-2.91)",
+      "full_z_pattern": {
+        "rank_2": -0.84,
+        "rank_3": -1.11,
+        "rank_4": -0.06,
+        "rank_5": -2.91,
+        "rank_6": -0.99,
+        "rank_8": 3.12
+      },
+      "falsification": "KILLED. While z is consistently negative at ranks 2-6 (real slightly better than null), it reverses sharply at rank 8 (z=3.12, real WORSE). The rank-5 dip is an outlier, not a trend. If there were genuine 3-body structure, increasing rank would maintain or improve the advantage, not reverse it.",
+      "survived": false
+    }
   }
 }
