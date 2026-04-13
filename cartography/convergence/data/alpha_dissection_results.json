@@ -1,0 +1,249 @@
+{
+  "m1_alpha": 1.0662154572579472,
+  "m1_alpha_method": "explicit_megethos",
+  "m2_alpha": 1.577,
+  "m2_alpha_err": 0.1,
+  "agreement_within_uncertainty": false,
+  "delta": 0.5107845427420528,
+  "method_A_explicit": {
+    "method": "explicit_megethos",
+    "alpha": 1.0662154572579472,
+    "structured_variance": 0.5120261311531067,
+    "null_variance": 0.4802276384830475,
+    "null_std": 5.176488657073604e-05,
+    "per_bin_variance": [
+      0.5799176692962646,
+      0.49072587490081787,
+      0.4875839352607727,
+      0.509711503982544,
+      0.44374507665634155,
+      0.48494014143943787,
+      0.5524356961250305,
+      0.5226158499717712,
+      0.5556050539016724,
+      0.4929804801940918
+    ],
+    "n_bins": 10,
+    "n_objects": 50000,
+    "n_dims": 40
+  },
+  "method_B_pc1": {
+    "method": "pc1_megethos",
+    "alpha": 0.8302953417676374,
+    "structured_variance": 0.28714269399642944,
+    "null_variance": 0.34583199441432955,
+    "null_std": 4.694492151080432e-05,
+    "pc1_variance_explained": 0.46673059463500977,
+    "megethos_correlation": 0.01708366275038166,
+    "per_bin_variance": [
+      0.23107166588306427,
+      0.38036394119262695,
+      0.26794248819351196,
+      0.26039615273475647,
+      0.23947152495384216,
+      0.29954299330711365,
+      0.1955726444721222,
+      0.35836347937583923,
+      0.2990204393863678,
+      0.33968156576156616
+    ],
+    "n_bins": 10,
+    "n_objects": 50000,
+    "n_dims": 41
+  },
+  "bin_sweep": {
+    "5": 1.058226421058213,
+    "10": 1.0662154572579472,
+    "20": 1.0586569144046707,
+    "50": 1.1095516461529151
+  },
+  "size_sweep": {
+    "10000": 1.070030183379813,
+    "20000": 1.062930223126425,
+    "50000": 1.0662154572579472
+  },
+  "per_bin_profile": [
+    0.5799176692962646,
+    0.49072587490081787,
+    0.4875839352607727,
+    0.509711503982544,
+    0.44374507665634155,
+    0.48494014143943787,
+    0.5524356961250305,
+    0.5226158499717712,
+    0.5556050539016724,
+    0.4929804801940918
+  ],
+  "pair_alphas": {
+    "EC-HMF": {
+      "alpha": 0.9552289578585768,
+      "n_objects": 9777,
+      "structured_variance": 0.5338234901428223,
+      "null_variance": 0.5588434958457946
+    },
+    "EC-Lzeros": {
+      "alpha": 0.7355304571066167,
+      "n_objects": 34708,
+      "structured_variance": 0.3240853250026703,
+      "null_variance": 0.4406144189834595
+    },
+    "EC-MF": {
+      "alpha": 1.012149081681792,
+      "n_objects": 13117,
+      "structured_variance": 0.24137365818023682,
+      "null_variance": 0.2384763890504837
+    },
+    "EC-maass": {
+      "alpha": 1.1085500748825192,
+      "n_objects": 7389,
+      "structured_variance": 0.3089710474014282,
+      "null_variance": 0.27871636509895326
+    },
+    "HMF-Lzeros": {
+      "alpha": 0.9256096054191166,
+      "n_objects": 34491,
+      "structured_variance": 0.44823676347732544,
+      "null_variance": 0.48426114082336424
+    },
+    "HMF-MF": {
+      "alpha": 0.987523305912795,
+      "n_objects": 12900,
+      "structured_variance": 0.6294720768928528,
+      "null_variance": 0.6374250340461731
+    },
+    "HMF-maass": {
+      "alpha": 0.7835138349455494,
+      "n_objects": 7172,
+      "structured_variance": 0.5337098240852356,
+      "null_variance": 0.6811747288703919
+    },
+    "Lzeros-MF": {
+      "alpha": 1.007748298548916,
+      "n_objects": 37831,
+      "structured_variance": 0.5911368131637573,
+      "null_variance": 0.5865917253494263
+    },
+    "Lzeros-maass": {
+      "alpha": 0.7357425648295364,
+      "n_objects": 32103,
+      "structured_variance": 0.3662237524986267,
+      "null_variance": 0.4977607250213623
+    },
+    "MF-maass": {
+      "alpha": 0.859041877315756,
+      "n_objects": 10512,
+      "structured_variance": 0.28047728538513184,
+      "null_variance": 0.3265001308917999
+    }
+  },
+  "pair_summary": {
+    "mean": 0.9110638058501174,
+    "median": 0.9404192816388467,
+    "median_within_m2_uncertainty": false
+  },
+  "top_pairs": [
+    [
+      "EC-maass",
+      {
+        "alpha": 1.1085500748825192,
+        "n_objects": 7389,
+        "structured_variance": 0.3089710474014282,
+        "null_variance": 0.27871636509895326
+      }
+    ],
+    [
+      "EC-MF",
+      {
+        "alpha": 1.012149081681792,
+        "n_objects": 13117,
+        "structured_variance": 0.24137365818023682,
+        "null_variance": 0.2384763890504837
+      }
+    ],
+    [
+      "Lzeros-MF",
+      {
+        "alpha": 1.007748298548916,
+        "n_objects": 37831,
+        "structured_variance": 0.5911368131637573,
+        "null_variance": 0.5865917253494263
+      }
+    ],
+    [
+      "HMF-MF",
+      {
+        "alpha": 0.987523305912795,
+        "n_objects": 12900,
+        "structured_variance": 0.6294720768928528,
+        "null_variance": 0.6374250340461731
+      }
+    ],
+    [
+      "EC-HMF",
+      {
+        "alpha": 0.9552289578585768,
+        "n_objects": 9777,
+        "structured_variance": 0.5338234901428223,
+        "null_variance": 0.5588434958457946
+      }
+    ],
+    [
+      "HMF-Lzeros",
+      {
+        "alpha": 0.9256096054191166,
+        "n_objects": 34491,
+        "structured_variance": 0.44823676347732544,
+        "null_variance": 0.48426114082336424
+      }
+    ],
+    [
+      "MF-maass",
+      {
+        "alpha": 0.859041877315756,
+        "n_objects": 10512,
+        "structured_variance": 0.28047728538513184,
+        "null_variance": 0.3265001308917999
+      }
+    ],
+    [
+      "HMF-maass",
+      {
+        "alpha": 0.7835138349455494,
+        "n_objects": 7172,
+        "structured_variance": 0.5337098240852356,
+        "null_variance": 0.6811747288703919
+      }
+    ],
+    [
+      "Lzeros-maass",
+      {
+        "alpha": 0.7357425648295364,
+        "n_objects": 32103,
+        "structured_variance": 0.3662237524986267,
+        "null_variance": 0.4977607250213623
+      }
+    ],
+    [
+      "EC-Lzeros",
+      {
+        "alpha": 0.7355304571066167,
+        "n_objects": 34708,
+        "structured_variance": 0.3240853250026703,
+        "null_variance": 0.4406144189834595
+      }
+    ]
+  ],
+  "config": {
+    "min_fill_rate": 0.5,
+    "default_subsample": 50000,
+    "n_null": 100,
+    "seed": 42,
+    "n_kept_dims": 40,
+    "n_available_objects": 310254
+  },
+  "diagnostic": {
+    "pc1_is_megethos": false,
+    "pc1_megethos_corr": 0.01708366275038166,
+    "note": "In 41-dim filtered space, PC1 captures strategy covariance, not magnitude. s13 dim 0 (log magnitude) loads on PC2/PC4. Method A (explicit regress-out) is the valid measurement for the M1 tensor."
+  }
+}

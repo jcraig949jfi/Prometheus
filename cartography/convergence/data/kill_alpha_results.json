@@ -1,0 +1,47 @@
+{
+  "baseline": {
+    "alpha": 2.0965,
+    "m2_reference": 1.577,
+    "n_objects": 50000,
+    "n_dims": 41
+  },
+  "bootstrap": {
+    "mean": 2.0842,
+    "std": 0.0435,
+    "ci_95_lo": 1.9967,
+    "ci_95_hi": 2.163,
+    "n_resamples": 100
+  },
+  "test1_reverse_rank": {
+    "alpha": 1.9325,
+    "delta": -0.164,
+    "pct_change": -7.82,
+    "verdict": "SURVIVES"
+  },
+  "test2_noise_domain": {
+    "alpha": 2.0278,
+    "delta": -0.0687,
+    "pct_change": -3.28,
+    "verdict": "SURVIVES"
+  },
+  "test3_remove_worst": {
+    "alpha": 2.3584,
+    "delta": 0.2619,
+    "pct_change": 12.49,
+    "removed_domain": "NF",
+    "removed_domain_resid_var": 1.3649,
+    "verdict": "SURVIVES"
+  },
+  "test4_duplicate_ec": {
+    "alpha": 2.4531,
+    "delta": 0.3566,
+    "pct_change": 17.01,
+    "ec_fraction_in_subsample": 0.38,
+    "verdict": "SURVIVES"
+  },
+  "summary": {
+    "kills": 0,
+    "total_tests": 4,
+    "verdict": "ROBUST"
+  }
+}
