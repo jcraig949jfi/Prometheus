@@ -1,0 +1,33 @@
+{
+  "unfolding": {
+    "method": "N(T,E) = (T/2pi) * log(N*T^2/(4*pi^2*e^2))",
+    "problem": "Variance 13.27 vs GUE 0.178 \u2014 overcorrection at large conductor",
+    "small_conductor_better": "N~10^1: var=0.345, much closer to GUE 0.178"
+  },
+  "nn_ratio": {
+    "observed": 0.5497,
+    "GUE_predicted": 0.536,
+    "match": "2.5% \u2014 robust to unfolding errors (ratio cancels density)"
+  },
+  "rank_stratified": {
+    "rank_0": {
+      "var": 12.87,
+      "P_small": 0.227
+    },
+    "rank_1": {
+      "var": 13.67,
+      "P_small": 0.18
+    },
+    "rank_2": {
+      "var": 14.49,
+      "P_small": 0.191
+    },
+    "note": "Variance INCREASES with rank. Higher rank = more spread zeros."
+  },
+  "next_steps": [
+    "Fix unfolding formula \u2014 likely missing conductor-dependent correction term",
+    "Use NN ratio as primary GUE diagnostic (unfolding-robust)",
+    "Stratify NN ratio by conductor to test convergence to 0.536",
+    "Cross-family zero repulsion experiment once unfolding is correct"
+  ]
+}
