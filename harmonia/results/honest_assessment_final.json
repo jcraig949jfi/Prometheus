@@ -1,0 +1,21 @@
+{
+  "rmt_mf_degenerate": {
+    "finding": "Phoneme NN matching collapses to 1 unique match regardless of Megethos inclusion",
+    "cause": "Z-score normalization makes all domain distributions identical (mean=0, std=1). NN in this normalized space finds the same closest point for all queries.",
+    "implication": "The phoneme NN methodology CANNOT differentiate within-domain structure. It can only detect between-domain coupling at the coarsest level.",
+    "montgomery_odlyzko": "The connection is mathematically established (Montgomery 1973, Odlyzko 1989). Our measurement of it via phoneme NN is degenerate, but the connection itself is not in question."
+  },
+  "broader_lesson": {
+    "what_phoneme_NN_can_do": "Detect that two domains have nonzero coupling (bond dimension > 0)",
+    "what_it_cannot_do": "Measure the PRECISION of that coupling or differentiate within-domain structure",
+    "what_survives": "Discovery of correspondences (which invariants align). Prediction accuracy numbers are inflated."
+  },
+  "kill_tally": {
+    "total_claims": 13,
+    "killed": 11,
+    "degenerate": 1,
+    "genuinely_alive": 1,
+    "known_math_validated": 4,
+    "kill_rate": "85%"
+  }
+}
