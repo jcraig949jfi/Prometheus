@@ -1,11 +1,20 @@
 {
   "experiment": "3-way TT-Cross with Megethos zeroed",
   "date": "2026-04-12",
+  "method": "Two complementary approaches: (1) TT-Cross approximation error at fixed ranks (real vs null) \u2014 if real data has lower error at the same rank, it has more low-rank structure. (2) Three-body residual \u2014 fraction of variance not explained by pairwise terms.",
   "params": {
     "subsample": 1000,
-    "max_rank": 15,
-    "eps": 0.001,
-    "n_null_trials": 5
+    "test_ranks": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      8
+    ],
+    "n_eval_points": 3000,
+    "n_null_trials": 5,
+    "eps": 0.001
   },
   "triples": {
     "EC-MF-maass": {
@@ -14,93 +23,137 @@
         "modular_forms",
         "maass"
       ],
-      "real_bonds": [
-        15,
-        15
-      ],
-      "null_bonds_raw": [
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ]
-      ],
-      "null_mean": [
-        15.0,
-        15.0
-      ],
-      "null_std": [
-        0.0,
-        0.0
-      ],
-      "z_scores": [
-        0.0,
-        0.0
-      ],
-      "excess_over_null": [
-        0,
-        0
-      ],
-      "verdict": "NULL \u2014 no 3-body effect detected",
-      "pairwise_comparison": {
-        "elliptic_curves-modular_forms": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
+      "three_body_residual": {
+        "r_squared_pairwise": 0.139604,
+        "three_body_fraction": 0.860396,
+        "full_std": 0.071038,
+        "residual_std": 0.065893
+      },
+      "rank_analysis": {
+        "2": {
+          "real_error": 0.08527,
+          "null_mean": 0.085395,
+          "null_std": 0.002354,
+          "z_score": -0.05,
+          "null_errors": [
+            0.089569,
+            0.083442,
+            0.086052,
+            0.082984,
+            0.084926
+          ]
+        },
+        "3": {
+          "real_error": 0.054536,
+          "null_mean": 0.055645,
+          "null_std": 0.003401,
+          "z_score": -0.33,
+          "null_errors": [
+            0.053654,
+            0.051927,
+            0.053146,
+            0.060018,
+            0.059478
+          ]
+        },
+        "4": {
+          "real_error": 0.037222,
+          "null_mean": 0.035253,
+          "null_std": 0.003089,
+          "z_score": 0.64,
+          "null_errors": [
+            0.034988,
+            0.029561,
+            0.037265,
+            0.038531,
+            0.035918
+          ]
+        },
+        "5": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": 0.0,
+          "null_errors": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             0.0
           ]
         },
-        "elliptic_curves-maass": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
+        "6": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": 0.0,
+          "null_errors": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             0.0
           ]
         },
-        "modular_forms-maass": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
+        "8": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": 0.0,
+          "null_errors": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             0.0
           ]
         }
-      }
+      },
+      "real_errors": {
+        "2": {
+          "rel_error": 0.08527,
+          "actual_ranks": [
+            2,
+            2
+          ]
+        },
+        "3": {
+          "rel_error": 0.054536,
+          "actual_ranks": [
+            3,
+            3
+          ]
+        },
+        "4": {
+          "rel_error": 0.037222,
+          "actual_ranks": [
+            4,
+            4
+          ]
+        },
+        "5": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            5,
+            5
+          ]
+        },
+        "6": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            6,
+            6
+          ]
+        },
+        "8": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            8,
+            8
+          ]
+        }
+      },
+      "verdict": "MARGINAL - large 3-body residual but TT error not significantly different"
     },
     "EC-NF-genus2": {
       "domains": [
@@ -108,93 +161,137 @@
         "number_fields",
         "genus2"
       ],
-      "real_bonds": [
-        15,
-        15
-      ],
-      "null_bonds_raw": [
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ]
-      ],
-      "null_mean": [
-        15.0,
-        15.0
-      ],
-      "null_std": [
-        0.0,
-        0.0
-      ],
-      "z_scores": [
-        0.0,
-        0.0
-      ],
-      "excess_over_null": [
-        0,
-        0
-      ],
-      "verdict": "NULL \u2014 no 3-body effect detected",
-      "pairwise_comparison": {
-        "elliptic_curves-number_fields": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+      "three_body_residual": {
+        "r_squared_pairwise": 9.7e-05,
+        "three_body_fraction": 0.999903,
+        "full_std": 0.095044,
+        "residual_std": 0.095039
+      },
+      "rank_analysis": {
+        "2": {
+          "real_error": 0.198526,
+          "null_mean": 0.161667,
+          "null_std": 0.013972,
+          "z_score": 2.64,
+          "null_errors": [
+            0.187028,
+            0.153299,
+            0.165226,
+            0.146976,
+            0.155807
           ]
         },
-        "elliptic_curves-genus2": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+        "3": {
+          "real_error": 0.080491,
+          "null_mean": 0.086154,
+          "null_std": 0.023885,
+          "z_score": -0.24,
+          "null_errors": [
+            0.068429,
+            0.07978,
+            0.069144,
+            0.132817,
+            0.0806
           ]
         },
-        "number_fields-genus2": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
+        "4": {
+          "real_error": 0.102667,
+          "null_mean": 0.065457,
+          "null_std": 0.003618,
+          "z_score": 10.28,
+          "null_errors": [
+            0.062877,
+            0.064251,
+            0.072563,
+            0.062979,
+            0.064616
+          ]
+        },
+        "5": {
+          "real_error": 0.032836,
+          "null_mean": 0.041605,
+          "null_std": 0.003482,
+          "z_score": -2.52,
+          "null_errors": [
+            0.036991,
+            0.041541,
+            0.047761,
+            0.041279,
+            0.040453
+          ]
+        },
+        "6": {
+          "real_error": 0.030369,
+          "null_mean": 0.030827,
+          "null_std": 0.001124,
+          "z_score": -0.41,
+          "null_errors": [
+            0.029162,
+            0.030688,
+            0.031993,
+            0.032136,
+            0.030157
+          ]
+        },
+        "8": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": 0.0,
+          "null_errors": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             0.0
           ]
         }
-      }
+      },
+      "real_errors": {
+        "2": {
+          "rel_error": 0.198526,
+          "actual_ranks": [
+            2,
+            2
+          ]
+        },
+        "3": {
+          "rel_error": 0.080491,
+          "actual_ranks": [
+            3,
+            3
+          ]
+        },
+        "4": {
+          "rel_error": 0.102667,
+          "actual_ranks": [
+            4,
+            4
+          ]
+        },
+        "5": {
+          "rel_error": 0.032836,
+          "actual_ranks": [
+            5,
+            5
+          ]
+        },
+        "6": {
+          "rel_error": 0.030369,
+          "actual_ranks": [
+            6,
+            6
+          ]
+        },
+        "8": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            8,
+            8
+          ]
+        }
+      },
+      "verdict": "CANDIDATE - real data has significantly lower TT approx error than null"
     },
     "EC-rmt-MF": {
       "domains": [
@@ -202,93 +299,137 @@
         "rmt",
         "modular_forms"
       ],
-      "real_bonds": [
-        15,
-        15
-      ],
-      "null_bonds_raw": [
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ]
-      ],
-      "null_mean": [
-        15.0,
-        15.0
-      ],
-      "null_std": [
-        0.0,
-        0.0
-      ],
-      "z_scores": [
-        0.0,
-        0.0
-      ],
-      "excess_over_null": [
-        0,
-        0
-      ],
-      "verdict": "NULL \u2014 no 3-body effect detected",
-      "pairwise_comparison": {
-        "elliptic_curves-rmt": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
+      "three_body_residual": {
+        "r_squared_pairwise": 0.288574,
+        "three_body_fraction": 0.711426,
+        "full_std": 0.091512,
+        "residual_std": 0.077187
+      },
+      "rank_analysis": {
+        "2": {
+          "real_error": 0.172657,
+          "null_mean": 0.137543,
+          "null_std": 0.033281,
+          "z_score": 1.06,
+          "null_errors": [
+            0.126485,
+            0.175688,
+            0.103268,
+            0.103989,
+            0.178286
+          ]
+        },
+        "3": {
+          "real_error": 0.0,
+          "null_mean": 1e-06,
+          "null_std": 0.0,
+          "z_score": -2.0,
+          "null_errors": [
+            1e-06,
+            0.0,
+            1e-06,
+            1e-06,
+            1e-06
+          ]
+        },
+        "4": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": -0.5,
+          "null_errors": [
+            0.0,
+            0.0,
+            0.0,
+            1e-06,
             0.0
           ]
         },
-        "elliptic_curves-modular_forms": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
+        "5": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": -0.5,
+          "null_errors": [
+            1e-06,
+            0.0,
+            0.0,
+            0.0,
             0.0
           ]
         },
-        "rmt-modular_forms": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
+        "6": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": 0.0,
+          "null_errors": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
             0.0
-          ],
-          "z_scores": [
-            0.0
+          ]
+        },
+        "8": {
+          "real_error": 0.0,
+          "null_mean": 0.0,
+          "null_std": 0.0,
+          "z_score": -0.82,
+          "null_errors": [
+            0.0,
+            0.0,
+            1e-06,
+            0.0,
+            1e-06
           ]
         }
-      }
+      },
+      "real_errors": {
+        "2": {
+          "rel_error": 0.172657,
+          "actual_ranks": [
+            2,
+            2
+          ]
+        },
+        "3": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            3,
+            3
+          ]
+        },
+        "4": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            4,
+            4
+          ]
+        },
+        "5": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            5,
+            5
+          ]
+        },
+        "6": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            6,
+            6
+          ]
+        },
+        "8": {
+          "rel_error": 0.0,
+          "actual_ranks": [
+            8,
+            8
+          ]
+        }
+      },
+      "verdict": "MARGINAL - large 3-body residual but TT error not significantly different"
     },
     "chemistry-materials-ec_zeros": {
       "domains": [
@@ -296,93 +437,137 @@
         "materials",
         "ec_zeros"
       ],
-      "real_bonds": [
-        15,
-        15
-      ],
-      "null_bonds_raw": [
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ]
-      ],
-      "null_mean": [
-        15.0,
-        15.0
-      ],
-      "null_std": [
-        0.0,
-        0.0
-      ],
-      "z_scores": [
-        0.0,
-        0.0
-      ],
-      "excess_over_null": [
-        0,
-        0
-      ],
-      "verdict": "NULL \u2014 no 3-body effect detected",
-      "pairwise_comparison": {
-        "chemistry-materials": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+      "three_body_residual": {
+        "r_squared_pairwise": 0.346069,
+        "three_body_fraction": 0.653931,
+        "full_std": 0.081013,
+        "residual_std": 0.065512
+      },
+      "rank_analysis": {
+        "2": {
+          "real_error": 0.12013,
+          "null_mean": 0.161368,
+          "null_std": 0.049316,
+          "z_score": -0.84,
+          "null_errors": [
+            0.124269,
+            0.145924,
+            0.257234,
+            0.154139,
+            0.125272
           ]
         },
-        "chemistry-ec_zeros": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+        "3": {
+          "real_error": 0.100765,
+          "null_mean": 0.106354,
+          "null_std": 0.005047,
+          "z_score": -1.11,
+          "null_errors": [
+            0.102351,
+            0.11455,
+            0.109488,
+            0.100756,
+            0.104627
           ]
         },
-        "materials-ec_zeros": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+        "4": {
+          "real_error": 0.081551,
+          "null_mean": 0.081731,
+          "null_std": 0.002777,
+          "z_score": -0.06,
+          "null_errors": [
+            0.08067,
+            0.082246,
+            0.077216,
+            0.085671,
+            0.08285
+          ]
+        },
+        "5": {
+          "real_error": 0.059678,
+          "null_mean": 0.069156,
+          "null_std": 0.003253,
+          "z_score": -2.91,
+          "null_errors": [
+            0.069236,
+            0.075152,
+            0.065691,
+            0.068727,
+            0.066972
+          ]
+        },
+        "6": {
+          "real_error": 0.049957,
+          "null_mean": 0.054283,
+          "null_std": 0.00436,
+          "z_score": -0.99,
+          "null_errors": [
+            0.056404,
+            0.055008,
+            0.051461,
+            0.047864,
+            0.060676
+          ]
+        },
+        "8": {
+          "real_error": 0.038104,
+          "null_mean": 0.027082,
+          "null_std": 0.003538,
+          "z_score": 3.12,
+          "null_errors": [
+            0.023261,
+            0.028896,
+            0.027126,
+            0.032688,
+            0.02344
           ]
         }
-      }
+      },
+      "real_errors": {
+        "2": {
+          "rel_error": 0.12013,
+          "actual_ranks": [
+            2,
+            2
+          ]
+        },
+        "3": {
+          "rel_error": 0.100765,
+          "actual_ranks": [
+            3,
+            3
+          ]
+        },
+        "4": {
+          "rel_error": 0.081551,
+          "actual_ranks": [
+            4,
+            4
+          ]
+        },
+        "5": {
+          "rel_error": 0.059678,
+          "actual_ranks": [
+            5,
+            5
+          ]
+        },
+        "6": {
+          "rel_error": 0.049957,
+          "actual_ranks": [
+            6,
+            6
+          ]
+        },
+        "8": {
+          "rel_error": 0.038104,
+          "actual_ranks": [
+            8,
+            8
+          ]
+        }
+      },
+      "verdict": "CANDIDATE - real data has significantly lower TT approx error than null"
     },
     "dynamics-oeis-spectral_sigs": {
       "domains": [
@@ -390,99 +575,146 @@
         "oeis",
         "spectral_sigs"
       ],
-      "real_bonds": [
-        15,
-        15
-      ],
-      "null_bonds_raw": [
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ],
-        [
-          15,
-          15
-        ]
-      ],
-      "null_mean": [
-        15.0,
-        15.0
-      ],
-      "null_std": [
-        0.0,
-        0.0
-      ],
-      "z_scores": [
-        0.0,
-        0.0
-      ],
-      "excess_over_null": [
-        0,
-        0
-      ],
-      "verdict": "NULL \u2014 no 3-body effect detected",
-      "pairwise_comparison": {
-        "dynamics-oeis": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+      "three_body_residual": {
+        "r_squared_pairwise": 0.051092,
+        "three_body_fraction": 0.948908,
+        "full_std": 0.079387,
+        "residual_std": 0.077332
+      },
+      "rank_analysis": {
+        "2": {
+          "real_error": 0.129952,
+          "null_mean": 0.132019,
+          "null_std": 0.001653,
+          "z_score": -1.25,
+          "null_errors": [
+            0.133045,
+            0.129204,
+            0.133428,
+            0.133356,
+            0.131064
           ]
         },
-        "dynamics-spectral_sigs": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+        "3": {
+          "real_error": 0.119247,
+          "null_mean": 0.090532,
+          "null_std": 0.005754,
+          "z_score": 4.99,
+          "null_errors": [
+            0.086246,
+            0.090522,
+            0.09048,
+            0.101004,
+            0.084407
           ]
         },
-        "oeis-spectral_sigs": {
-          "bonds": [
-            15
-          ],
-          "null_mean": [
-            15.0
-          ],
-          "null_std": [
-            0.0
-          ],
-          "z_scores": [
-            0.0
+        "4": {
+          "real_error": 0.076812,
+          "null_mean": 0.074054,
+          "null_std": 0.019732,
+          "z_score": 0.14,
+          "null_errors": [
+            0.065923,
+            0.05608,
+            0.065395,
+            0.112392,
+            0.070482
+          ]
+        },
+        "5": {
+          "real_error": 0.042769,
+          "null_mean": 0.046697,
+          "null_std": 0.007416,
+          "z_score": -0.53,
+          "null_errors": [
+            0.041275,
+            0.042093,
+            0.05952,
+            0.040004,
+            0.050595
+          ]
+        },
+        "6": {
+          "real_error": 0.050367,
+          "null_mean": 0.033581,
+          "null_std": 0.00787,
+          "z_score": 2.13,
+          "null_errors": [
+            0.030821,
+            0.023934,
+            0.041689,
+            0.043916,
+            0.027545
+          ]
+        },
+        "8": {
+          "real_error": 0.020643,
+          "null_mean": 0.020886,
+          "null_std": 0.005219,
+          "z_score": -0.05,
+          "null_errors": [
+            0.022321,
+            0.029372,
+            0.021824,
+            0.014381,
+            0.016533
           ]
         }
-      }
+      },
+      "real_errors": {
+        "2": {
+          "rel_error": 0.129952,
+          "actual_ranks": [
+            2,
+            2
+          ]
+        },
+        "3": {
+          "rel_error": 0.119247,
+          "actual_ranks": [
+            3,
+            3
+          ]
+        },
+        "4": {
+          "rel_error": 0.076812,
+          "actual_ranks": [
+            4,
+            4
+          ]
+        },
+        "5": {
+          "rel_error": 0.042769,
+          "actual_ranks": [
+            5,
+            5
+          ]
+        },
+        "6": {
+          "rel_error": 0.050367,
+          "actual_ranks": [
+            6,
+            6
+          ]
+        },
+        "8": {
+          "rel_error": 0.020643,
+          "actual_ranks": [
+            8,
+            8
+          ]
+        }
+      },
+      "verdict": "MARGINAL - large 3-body residual but TT error not significantly different"
     }
   },
   "summary": {
     "n_triples_tested": 5,
-    "candidates": [],
-    "n_candidates": 0,
-    "interpretation": "No 3-body effects detected. All triples explained by pairwise structure."
+    "candidates": [
+      "EC-NF-genus2",
+      "chemistry-materials-ec_zeros"
+    ],
+    "n_candidates": 2,
+    "interpretation": "Candidates show 3-body coupling where TT-Cross approximation error at fixed rank is significantly lower for real data than null (shuffled). This means the real coupling tensor has more low-rank structure than noise."
   }
 }
