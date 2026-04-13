@@ -131,6 +131,35 @@ DOMAIN_PHONEME_MAP = {
                        (10, +1, 1.0), (11, +1, 1.0),
                        (12, +1, 1.0), (13, +1, 1.0)],
     },
+    "bianchi": {
+        # features: [log_level_norm, level_idx, sign, cm, base_change]
+        "complexity": [(0, +1, 1.0)],           # log(level_norm) ~ conductor
+        "symmetry":   [(2, +1, 0.7)],           # sign of functional equation
+        "arithmetic": [(3, +1, 0.8)],           # CM flag
+    },
+    "groups": {
+        # features: [log_order, log_exponent, num_conjugacy_classes]
+        "complexity": [(0, +1, 1.0)],           # log(order) ~ size
+        "rank":       [(1, +1, 0.8)],           # log(exponent) ~ depth
+        "symmetry":   [(2, +1, 0.7)],           # n_conjugacy ~ representation richness
+    },
+    "oeis": {
+        # features: [log_mean, log_max, growth, monotonicity, zero_frac, neg_frac, n_terms]
+        "complexity": [(1, +1, 1.0)],           # log(max_value) ~ size
+        "spectral":   [(2, +1, 0.8)],           # growth rate ~ spectral signature
+        "symmetry":   [(3, +1, 0.6)],           # monotonicity ~ directional symmetry
+    },
+    "belyi": {
+        # features: [degree, genus, orbit_size]
+        "complexity": [(0, +1, 1.0)],           # degree ~ covering complexity
+        "rank":       [(1, +1, 0.9)],           # genus ~ topological depth
+        "arithmetic": [(2, +1, 0.7)],           # orbit_size ~ Galois orbit structure
+    },
+    "charon_landscape": {
+        # features: [coord0-7, curvature, cluster_id]
+        "complexity": [(8, +1, 0.7)],           # curvature ~ local complexity
+        "spectral":   [(0, +1, 0.5), (1, +1, 0.5)],  # embedding coords ~ spectral
+    },
     "battery": {
         # features: [verdict_score, neg_log_p, z_score, real_val, null_mean,
         #            source_round, + 12 domain_involvement dims]
