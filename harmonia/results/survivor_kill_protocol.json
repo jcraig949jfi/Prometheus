@@ -1,0 +1,70 @@
+{
+  "test1_prime_reindexing": {
+    "n_curves": 31073,
+    "rho_before_ap_control": -0.0844177028423314,
+    "p_before_ap_control": 2.9779274356590354e-50,
+    "rho_after_ap_control": -0.09133290940071526,
+    "p_after_ap_control": 1.5001331220615867e-58,
+    "signal_reduction_pct": -8.191654505571577,
+    "verdict": "SURVIVES"
+  },
+  "test2_low_zero_ablation": {
+    "zero_correlations": {
+      "gamma1": {
+        "rho": -0.043997089619318516,
+        "p": 8.556959181909686e-15,
+        "n": 31073
+      },
+      "gamma2": {
+        "rho": 0.0304005716978883,
+        "p": 8.32704945085336e-08,
+        "n": 31073
+      },
+      "gamma3": {
+        "rho": 0.058849851188550135,
+        "p": 2.983101082194169e-25,
+        "n": 31073
+      },
+      "mean_first3": {
+        "rho": 0.01694697035962064,
+        "p": 0.002813359973617425
+      },
+      "spacing_1_2": {
+        "rho": 0.13350913652256094,
+        "p": 1.5201614538982718e-123
+      }
+    },
+    "verdict": "SURVIVES \u2014 signal distributed across zeros"
+  },
+  "test3_cm_split_cm": {
+    "n": 294,
+    "raw_rho": 0.21068747785022215,
+    "within_bin_rho": -0.15537347100946497
+  },
+  "test3_cm_split_noncm": {
+    "n": 30779,
+    "raw_rho": -0.04726346775949582,
+    "within_bin_rho": -0.14893348078632562
+  },
+  "test3_cm_split": {
+    "verdict": "PARTIAL \u2014 present in both CM and non-CM"
+  },
+  "test4_low_zero_coupling": {
+    "n": 31073,
+    "rho_before": -0.0844177028423314,
+    "p_before": 2.9779274356590354e-50,
+    "rho_after": -0.10838330052032177,
+    "p_after": 7.835196749656194e-82,
+    "reduction_pct": -28.389303275346634,
+    "verdict": "SURVIVES \u2014 independent of neighboring zero stats"
+  },
+  "test5_fine_conductor_bootstrap": {
+    "n_bins": 50,
+    "observed_mean_rho": -0.1627942499933153,
+    "null_mean": 0.0003780281880704636,
+    "null_std": 0.005574964745543132,
+    "z_score": -29.268755163309816,
+    "n_permutations": 500,
+    "verdict": "SURVIVES"
+  }
+}
