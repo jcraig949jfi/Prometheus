@@ -1,0 +1,20 @@
+{
+  "sectional_curvature": {
+    "method": "Triangle comparison (10K random triangles)",
+    "mean": 0.0,
+    "std": 0.0,
+    "verdict": "FLAT \u2014 triangles perfectly obey Euclidean law of cosines"
+  },
+  "ollivier_ricci": {
+    "method": "Approximate ORC on k=10 NN graph (1903 edges)",
+    "mean": 0.713,
+    "median": 0.75,
+    "fraction_positive": 0.988,
+    "verdict": "STRONGLY POSITIVE \u2014 sphere-like clustering"
+  },
+  "interpretation": {
+    "why_different": "Sectional curvature measures the INTRINSIC geometry of the embedding (flat because we project linearly into R^5). Ollivier-Ricci measures the EXTRINSIC geometry of the data distribution within the space (positive because objects cluster into tight neighborhoods). The space is flat. The data distribution within it is clustered/spherical.",
+    "angular_correction": "0.000 degrees \u2014 curvature does NOT affect our axis tilt measurements. The 7.8 degree tilt is a true Euclidean rotation, not a geodesic deviation.",
+    "for_gemini": "The space itself is Euclidean (flat sectional curvature). But the data occupies a positively-curved submanifold within it (ORC=0.71). If we switched to a hyperbolic embedding, the natural geometry of the data might be better captured, but our current angle measurements are valid in flat space."
+  }
+}
