@@ -1,0 +1,32 @@
+{
+  "test1_level_ablation": {
+    "rank_level_rho": 0.058261921127048616,
+    "rank_level_p": 3.752522814754805e-05,
+    "within_level_chi2_mean": 112.97458291585914,
+    "n_bins_tested": 5,
+    "verdict": "SURVIVES"
+  },
+  "test2_synthetic_null": {
+    "observed_chi2": 0.0,
+    "synth_mean": 0.0,
+    "synth_std": 0.0,
+    "z_score": 0.0,
+    "n_trials": 200,
+    "verdict": "KILLED"
+  },
+  "test3_edge_density": {
+    "degree_rank_rho": 0.03552427650878611,
+    "degree_rank_p": 0.012001150978949666,
+    "verdict": "INFORMATIONAL"
+  },
+  "test4_modulus_sensitivity": {
+    "tested": [
+      2,
+      3,
+      5,
+      7,
+      11,
+      13
+    ]
+  }
+}
