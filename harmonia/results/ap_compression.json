@@ -1,0 +1,87 @@
+{
+  "hypothesis": "a_p sequence compressibility predicts elliptic curve rank",
+  "data": {
+    "source": "LMFDB mf_newforms (weight=2, dim=1)",
+    "total_records": 1521,
+    "traces_length_used": 50
+  },
+  "rank_stratified": {
+    "rank_0": {
+      "count": 689,
+      "compress_ratio_mean": 0.3390711175616836,
+      "compress_ratio_std": 0.05160916418266716,
+      "compress_ratio_median": 0.345,
+      "entropy_mean": 2.743130071374197,
+      "entropy_std": 0.5252754574287212,
+      "lz_complexity_mean": 38.78084179970973,
+      "lz_complexity_std": 4.91907030871825
+    },
+    "rank_1": {
+      "count": 776,
+      "compress_ratio_mean": 0.33514175257731965,
+      "compress_ratio_std": 0.05205796243225983,
+      "compress_ratio_median": 0.34,
+      "entropy_mean": 2.6790896734651954,
+      "entropy_std": 0.5375615085285842,
+      "lz_complexity_mean": 38.88917525773196,
+      "lz_complexity_std": 4.8937774860210785
+    },
+    "rank_2+": {
+      "count": 56,
+      "compress_ratio_mean": 0.37008928571428573,
+      "compress_ratio_std": 0.05302872428684096,
+      "compress_ratio_median": 0.39,
+      "entropy_mean": 3.1125603632409096,
+      "entropy_std": 0.5473249383132164,
+      "lz_complexity_mean": 41.75,
+      "lz_complexity_std": 5.8317174632717395
+    }
+  },
+  "correlations": {
+    "compress_ratio": {
+      "spearman_rho": 0.01651288316233089,
+      "p_value": 0.5198887797896157
+    },
+    "entropy": {
+      "spearman_rho": 0.001793404733825877,
+      "p_value": 0.94428492305659
+    },
+    "lz_complexity": {
+      "spearman_rho": 0.04798922432953983,
+      "p_value": 0.061328572638050284
+    },
+    "mann_whitney_compress": {
+      "U": 276279.5,
+      "p_value": 0.26806560195816165,
+      "rank_biserial": -0.033469618302335746
+    },
+    "mann_whitney_entropy": {
+      "U": 282638.0,
+      "p_value": 0.05825341698990162
+    }
+  },
+  "conductor_matched_control": {
+    "n_matched_levels": 157,
+    "compress_ratio_diff_mean": -0.00527448471132062,
+    "compress_ratio_diff_t": -2.7537479363021413,
+    "compress_ratio_diff_p": 0.0065917128423416595,
+    "entropy_diff_mean": -0.08901274380723005,
+    "entropy_diff_t": -3.9758382255623976,
+    "entropy_diff_p": 0.00010700383838087886
+  },
+  "random_null": {
+    "real_mean": 0.3382084155161078,
+    "real_std": 0.052299791587094434,
+    "random_mean": 0.5236522024983563,
+    "random_std": 0.01340800135772289,
+    "mann_whitney_U": 0.0,
+    "mann_whitney_p": 0.0,
+    "rank_0_mean": 0.5233454281567489,
+    "rank_0_std": 0.013364586574552148,
+    "rank_1_mean": 0.5239561855670104,
+    "rank_1_std": 0.013376704550275415,
+    "rank_2+_mean": 0.5232142857142857,
+    "rank_2+_std": 0.014249955245185731
+  },
+  "verdict": "WEAK/CONFOUNDED: No raw correlation (Spearman rho<0.05, p>0.05), but conductor-matched pairs show rank-1 slightly less compressible and lower entropy than rank-0 (p=0.007 compression, p=0.0001 entropy). Effect is tiny (delta=-0.005 compression ratio). Rank-2+ appears more compressible but n=56 is too small. Random null confirms a_p sequences carry real structure (compression 0.34 vs 0.52 random) but this structure does not meaningfully stratify by rank."
+}
