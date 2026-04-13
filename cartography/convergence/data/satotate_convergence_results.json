@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "script": "satotate_convergence.py",
+    "n_curves": 30779,
+    "n_primes_per_curve": 25,
+    "k_values": [
+      5,
+      10,
+      15,
+      20,
+      25
+    ],
+    "n_permutations": 1000,
+    "candidate": "F39"
+  },
+  "distribution": {
+    "mean": 0.4211786449551076,
+    "median": 0.40402714146351487,
+    "std": 0.2904803134178402,
+    "min": -0.5559255700669644,
+    "max": 1.6016084564275963,
+    "q25": 0.222002889826449,
+    "q75": 0.6061978242541264,
+    "n_unique_4dp": 8469,
+    "discreteness": "quasi-discrete"
+  },
+  "raw_correlations": {
+    "alpha_rank": {
+      "rho": -0.10402220801371447,
+      "p": 8.503491861314247e-75
+    },
+    "alpha_torsion": {
+      "rho": -0.01801015704479699,
+      "p": 0.0015786666289201922
+    },
+    "alpha_log_conductor": {
+      "rho": -0.015788159021414807,
+      "p": 0.005606902270310429
+    }
+  },
+  "partial_correlations": {
+    "alpha_rank_given_conductor": {
+      "rho": -0.09521657143771561,
+      "p": 6.465287385956512e-63
+    },
+    "alpha_torsion_given_conductor_rank": {
+      "rho": -0.033472498044778184,
+      "p": 4.259071555186915e-09
+    }
+  },
+  "permutation_null": {
+    "alpha_rank": {
+      "obs": -0.10402220801371447,
+      "null_std": 0.005671325114778099,
+      "p_perm": 0.0
+    },
+    "alpha_conductor": {
+      "obs": -0.015788159021414807,
+      "null_std": 0.005751358247981395,
+      "p_perm": 0.005
+    },
+    "alpha_rank_partial": {
+      "obs": -0.09521657143771561,
+      "null_std": 0.005201031904053781,
+      "p_perm": 0.0
+    }
+  },
+  "f33_check": {
+    "sorted_alpha_vs_sorted_rank": 0.8751597185340662,
+    "sorted_alpha_vs_sorted_conductor": 0.9999990429532927
+  },
+  "f34_check": {
+    "r2_conductor_only": 0.0046733563531491384,
+    "residual_vs_rank": {
+      "rho": -0.0957389458213387,
+      "p": 1.3659984206896079e-63
+    },
+    "residual_vs_torsion": {
+      "rho": -0.02544995508285483,
+      "p": 7.989393095626766e-06
+    }
+  },
+  "invariant_quality": {
+    "n_multi_groups": 4152,
+    "n_distinguished": 3309,
+    "pct_distinguished": 79.69653179190752,
+    "eta_squared": 0.4867505439618379
+  },
+  "verdict": {
+    "killed": false,
+    "reasons": []
+  }
+}
