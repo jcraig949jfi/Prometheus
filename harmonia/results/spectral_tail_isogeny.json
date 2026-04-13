@@ -1,0 +1,383 @@
+{
+  "test": "spectral_tail_isogeny",
+  "question": "Do low-lying L-function zeros encode isogeny class structure?",
+  "dataset": {
+    "source": "LMFDB (devmirror.lmfdb.xyz)",
+    "n_isogeny_classes": 20000,
+    "conductor_range": [
+      11,
+      14310
+    ],
+    "note": "One curve per isogeny class (isogenous curves share L-function)"
+  },
+  "spectral_features": [
+    "gamma1",
+    "mean3",
+    "spacing_12",
+    "density_below_5"
+  ],
+  "raw_correlations": {
+    "gamma1": {
+      "class_size": {
+        "spearman_r": -0.085655,
+        "p_value": 6.89e-34
+      },
+      "class_deg": {
+        "spearman_r": -0.082547,
+        "p_value": 1.38e-31
+      }
+    },
+    "mean3": {
+      "class_size": {
+        "spearman_r": -0.068884,
+        "p_value": 1.8e-22
+      },
+      "class_deg": {
+        "spearman_r": -0.064696,
+        "p_value": 5.26e-20
+      }
+    },
+    "spacing_12": {
+      "class_size": {
+        "spearman_r": 0.047795,
+        "p_value": 1.35e-11
+      },
+      "class_deg": {
+        "spearman_r": 0.049697,
+        "p_value": 2.03e-12
+      }
+    },
+    "density_below_5": {
+      "class_size": {
+        "spearman_r": 0.020771,
+        "p_value": 0.00331
+      },
+      "class_deg": {
+        "spearman_r": 0.016108,
+        "p_value": 0.0227
+      }
+    }
+  },
+  "conductor_controlled_correlations": {
+    "gamma1": {
+      "class_size": {
+        "spearman_r": -0.087627,
+        "p_value": 2.15e-35
+      },
+      "class_deg": {
+        "spearman_r": -0.090638,
+        "p_value": 9.32e-38
+      }
+    },
+    "mean3": {
+      "class_size": {
+        "spearman_r": -0.08221,
+        "p_value": 2.43e-31
+      },
+      "class_deg": {
+        "spearman_r": -0.087071,
+        "p_value": 5.77e-35
+      }
+    },
+    "spacing_12": {
+      "class_size": {
+        "spearman_r": 0.038472,
+        "p_value": 5.25e-08
+      },
+      "class_deg": {
+        "spearman_r": 0.038249,
+        "p_value": 6.27e-08
+      }
+    },
+    "density_below_5": {
+      "class_size": {
+        "spearman_r": -0.0511,
+        "p_value": 4.8e-13
+      },
+      "class_deg": {
+        "spearman_r": -0.04267,
+        "p_value": 1.57e-09
+      }
+    }
+  },
+  "permutation_test": {
+    "n_permutations": 500,
+    "method": "Permute conductor-residualized target, recompute Spearman rho",
+    "results": {
+      "gamma1": {
+        "class_size": {
+          "observed_r": -0.087627,
+          "null_mean": -0.000247,
+          "null_std": 0.007134,
+          "perm_p_value": 0.0,
+          "z_score": -12.248
+        },
+        "class_deg": {
+          "observed_r": -0.090638,
+          "null_mean": -0.000195,
+          "null_std": 0.006928,
+          "perm_p_value": 0.0,
+          "z_score": -13.0554
+        }
+      },
+      "mean3": {
+        "class_size": {
+          "observed_r": -0.08221,
+          "null_mean": 3.1e-05,
+          "null_std": 0.007302,
+          "perm_p_value": 0.0,
+          "z_score": -11.2633
+        },
+        "class_deg": {
+          "observed_r": -0.087071,
+          "null_mean": -5e-06,
+          "null_std": 0.007021,
+          "perm_p_value": 0.0,
+          "z_score": -12.4
+        }
+      },
+      "spacing_12": {
+        "class_size": {
+          "observed_r": 0.038472,
+          "null_mean": -0.000277,
+          "null_std": 0.006885,
+          "perm_p_value": 0.0,
+          "z_score": 5.628
+        },
+        "class_deg": {
+          "observed_r": 0.038249,
+          "null_mean": 0.000458,
+          "null_std": 0.007294,
+          "perm_p_value": 0.0,
+          "z_score": 5.1812
+        }
+      },
+      "density_below_5": {
+        "class_size": {
+          "observed_r": -0.0511,
+          "null_mean": 0.000317,
+          "null_std": 0.007127,
+          "perm_p_value": 0.0,
+          "z_score": -7.2143
+        },
+        "class_deg": {
+          "observed_r": -0.04267,
+          "null_mean": -0.000242,
+          "null_std": 0.007168,
+          "perm_p_value": 0.0,
+          "z_score": -5.919
+        }
+      }
+    }
+  },
+  "stratified_by_conductor": {
+    "<1k": {
+      "n": 80,
+      "gamma1_vs_class_size": {
+        "rho": -0.2605,
+        "p": 0.0196
+      },
+      "gamma1_vs_class_deg": {
+        "rho": -0.1832,
+        "p": 0.104
+      },
+      "mean3_vs_class_size": {
+        "rho": -0.1481,
+        "p": 0.19
+      },
+      "mean3_vs_class_deg": {
+        "rho": -0.0671,
+        "p": 0.554
+      },
+      "spacing_12_vs_class_size": {
+        "rho": 0.2462,
+        "p": 0.0277
+      },
+      "spacing_12_vs_class_deg": {
+        "rho": 0.213,
+        "p": 0.0578
+      },
+      "density_below_5_vs_class_size": {
+        "rho": -0.0636,
+        "p": 0.575
+      },
+      "density_below_5_vs_class_deg": {
+        "rho": -0.0852,
+        "p": 0.452
+      }
+    },
+    "1k-5k": {
+      "n": 1438,
+      "gamma1_vs_class_size": {
+        "rho": -0.1802,
+        "p": 5.76e-12
+      },
+      "gamma1_vs_class_deg": {
+        "rho": -0.1714,
+        "p": 6.06e-11
+      },
+      "mean3_vs_class_size": {
+        "rho": -0.1752,
+        "p": 2.24e-11
+      },
+      "mean3_vs_class_deg": {
+        "rho": -0.1699,
+        "p": 8.93e-11
+      },
+      "spacing_12_vs_class_size": {
+        "rho": 0.0814,
+        "p": 0.002
+      },
+      "spacing_12_vs_class_deg": {
+        "rho": 0.0774,
+        "p": 0.00333
+      },
+      "density_below_5_vs_class_size": {
+        "rho": 0.1345,
+        "p": 3.05e-07
+      },
+      "density_below_5_vs_class_deg": {
+        "rho": 0.1317,
+        "p": 5.36e-07
+      }
+    },
+    "5k-15k": {
+      "n": 18482,
+      "gamma1_vs_class_size": {
+        "rho": -0.1055,
+        "p": 7.36e-47
+      },
+      "gamma1_vs_class_deg": {
+        "rho": -0.1044,
+        "p": 5.79e-46
+      },
+      "mean3_vs_class_size": {
+        "rho": -0.1118,
+        "p": 1.83e-52
+      },
+      "mean3_vs_class_deg": {
+        "rho": -0.1099,
+        "p": 1.01e-50
+      },
+      "spacing_12_vs_class_size": {
+        "rho": 0.0265,
+        "p": 0.000316
+      },
+      "spacing_12_vs_class_deg": {
+        "rho": 0.0273,
+        "p": 0.00021
+      },
+      "density_below_5_vs_class_size": {
+        "rho": 0.0708,
+        "p": 5.92e-22
+      },
+      "density_below_5_vs_class_deg": {
+        "rho": 0.0687,
+        "p": 9.25e-21
+      }
+    }
+  },
+  "gamma1_by_class_size": {
+    "1": {
+      "n": 11914,
+      "gamma1_mean": 1.109221,
+      "gamma1_std": 0.406479,
+      "mean3_mean": 2.025547,
+      "density5_mean": 5.2553,
+      "mean_log_cond": 9.2528
+    },
+    "2": {
+      "n": 6233,
+      "gamma1_mean": 1.041085,
+      "gamma1_std": 0.402296,
+      "mean3_mean": 1.98032,
+      "density5_mean": 5.2785,
+      "mean_log_cond": 9.1915
+    },
+    "3": {
+      "n": 190,
+      "gamma1_mean": 1.057122,
+      "gamma1_std": 0.567976,
+      "mean3_mean": 2.043687,
+      "density5_mean": 5.1263,
+      "mean_log_cond": 9.0103
+    },
+    "4": {
+      "n": 1487,
+      "gamma1_mean": 1.031369,
+      "gamma1_std": 0.405881,
+      "mean3_mean": 1.984157,
+      "density5_mean": 5.2421,
+      "mean_log_cond": 9.0992
+    },
+    "6": {
+      "n": 144,
+      "gamma1_mean": 1.096598,
+      "gamma1_std": 0.599662,
+      "mean3_mean": 2.105001,
+      "density5_mean": 5.0694,
+      "mean_log_cond": 8.7968
+    },
+    "8": {
+      "n": 32,
+      "gamma1_mean": 1.048389,
+      "gamma1_std": 0.334265,
+      "mean3_mean": 2.044279,
+      "density5_mean": 5.0625,
+      "mean_log_cond": 8.9449
+    }
+  },
+  "rank0_controlled_correlations": {
+    "gamma1": {
+      "class_size": {
+        "spearman_r": -0.053439,
+        "p_value": 1.5e-06
+      },
+      "class_deg": {
+        "spearman_r": -0.054438,
+        "p_value": 9.49e-07
+      }
+    },
+    "mean3": {
+      "class_size": {
+        "spearman_r": -0.003995,
+        "p_value": 0.719
+      },
+      "class_deg": {
+        "spearman_r": -0.009468,
+        "p_value": 0.394
+      }
+    },
+    "spacing_12": {
+      "class_size": {
+        "spearman_r": 0.051157,
+        "p_value": 4.1e-06
+      },
+      "class_deg": {
+        "spearman_r": 0.050315,
+        "p_value": 5.89e-06
+      }
+    },
+    "density_below_5": {
+      "class_size": {
+        "spearman_r": -0.15701,
+        "p_value": 7.28e-46
+      },
+      "class_deg": {
+        "spearman_r": -0.144997,
+        "p_value": 2.66e-39
+      }
+    }
+  },
+  "verdict": "SIGNAL: Some spectral features predict isogeny class structure beyond conductor.",
+  "verdict_detail": [
+    "gamma1 vs class_size: r=-0.0876, perm_p=0.0000, z=-12.25",
+    "gamma1 vs class_deg: r=-0.0906, perm_p=0.0000, z=-13.06",
+    "mean3 vs class_size: r=-0.0822, perm_p=0.0000, z=-11.26",
+    "mean3 vs class_deg: r=-0.0871, perm_p=0.0000, z=-12.40",
+    "spacing_12 vs class_size: r=0.0385, perm_p=0.0000, z=5.63",
+    "spacing_12 vs class_deg: r=0.0382, perm_p=0.0000, z=5.18",
+    "density_below_5 vs class_size: r=-0.0511, perm_p=0.0000, z=-7.21",
+    "density_below_5 vs class_deg: r=-0.0427, perm_p=0.0000, z=-5.92"
+  ]
+}
