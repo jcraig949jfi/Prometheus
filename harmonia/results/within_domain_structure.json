@@ -1,0 +1,176 @@
+{
+  "experiment": "within_domain_structure",
+  "description": "Tests whether TT-Cross finds internal structure within a single domain when split by a known variable. Feature 0 (Megethos) and the split variable are zeroed out so we're testing for residual structure. Compared against random splits of the same domain.",
+  "methodology": {
+    "scorer": "DistributionalCoupling",
+    "max_rank": 15,
+    "eps": 0.001,
+    "subsample": 2000,
+    "null_trials": 10,
+    "significance_threshold": "2 sigma above null mean"
+  },
+  "tests": [
+    {
+      "test_name": "EC_rank_0_vs_1",
+      "domain": "elliptic_curves",
+      "split_key": "rank",
+      "split_values": [
+        0,
+        1
+      ],
+      "description": "EC split by rank: does TT find structure between rank-0 and rank-1 beyond conductor distribution?",
+      "features_zeroed": {
+        "feature_0": 0,
+        "split_feature": 1
+      },
+      "group_a_size": 2000,
+      "group_b_size": 2000,
+      "split_bond_dim": 4,
+      "split_top_svs": [
+        43.77587890625,
+        9.449113845825195,
+        1.6155675649642944,
+        6.347589760480332e-07
+      ],
+      "null_bonds": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "null_mean": 4.0,
+      "null_std": 0.5,
+      "sigma_separation": 0.0,
+      "verdict": "NO_STRUCTURE",
+      "wall_time_seconds": 0.64
+    },
+    {
+      "test_name": "EC_torsion_1_vs_2",
+      "domain": "elliptic_curves",
+      "split_key": "torsion",
+      "split_values": [
+        1,
+        2
+      ],
+      "description": "EC split by torsion: structure between trivial and Z/2 torsion?",
+      "features_zeroed": {
+        "feature_0": 0,
+        "split_feature": 3
+      },
+      "group_a_size": 2000,
+      "group_b_size": 2000,
+      "split_bond_dim": 4,
+      "split_top_svs": [
+        40.530677795410156,
+        22.767305374145508,
+        5.228485861152876e-06,
+        5.389012803710957e-13
+      ],
+      "null_bonds": [
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "null_mean": 4.0,
+      "null_std": 0.5,
+      "sigma_separation": 0.0,
+      "verdict": "NO_STRUCTURE",
+      "wall_time_seconds": 0.57
+    },
+    {
+      "test_name": "NF_degree_2_vs_3",
+      "domain": "number_fields",
+      "split_key": "degree",
+      "split_values": [
+        2,
+        3
+      ],
+      "description": "NF split by degree: structure between quadratic and cubic fields?",
+      "features_zeroed": {
+        "feature_0": 0,
+        "split_feature": 0
+      },
+      "group_a_size": 2000,
+      "group_b_size": 1902,
+      "split_bond_dim": 7,
+      "split_top_svs": [
+        75.81452941894531,
+        12.814535140991211,
+        8.296990394592285,
+        4.392114162445068,
+        2.5672950744628906
+      ],
+      "null_bonds": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        7
+      ],
+      "null_mean": 7.0,
+      "null_std": 0.5,
+      "sigma_separation": 0.0,
+      "verdict": "NO_STRUCTURE",
+      "wall_time_seconds": 0.87
+    },
+    {
+      "test_name": "Genus2_rootnum_plus1_vs_minus1",
+      "domain": "genus2",
+      "split_key": "root_number",
+      "split_values": [
+        1,
+        -1
+      ],
+      "description": "Genus2 split by root_number: structure between even and odd functional equations?",
+      "features_zeroed": {
+        "feature_0": 0,
+        "split_feature": 6
+      },
+      "group_a_size": 2000,
+      "group_b_size": 2000,
+      "split_bond_dim": 7,
+      "split_top_svs": [
+        82.17044067382812,
+        13.370538711547852,
+        9.217665672302246,
+        6.066306114196777,
+        1.4868227243423462
+      ],
+      "null_bonds": [
+        10,
+        10,
+        10,
+        7,
+        7,
+        10,
+        7,
+        7,
+        7,
+        7
+      ],
+      "null_mean": 8.2,
+      "null_std": 1.4697,
+      "sigma_separation": -0.8165,
+      "verdict": "NO_STRUCTURE",
+      "wall_time_seconds": 1.04
+    }
+  ]
+}
