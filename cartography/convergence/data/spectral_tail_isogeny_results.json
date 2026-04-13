@@ -1,0 +1,538 @@
+{
+  "n_curves": 31073,
+  "tests": {
+    "first_zero_vs_class_size": {
+      "name": "first_zero_vs_class_size",
+      "raw_rho": -0.043995,
+      "raw_p": 8.576165532148881e-15,
+      "within_conductor_bin": {
+        "median_rho": -0.15024739418613994,
+        "n_bins": 10,
+        "rhos": [
+          -0.0003,
+          -0.1532,
+          -0.1739,
+          -0.1273,
+          -0.1293,
+          -0.2134,
+          -0.1301,
+          -0.1915,
+          -0.1473,
+          -0.1978
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": -0.1275945047128126,
+        "p_value": 6.336350971053544e-113
+      },
+      "f33_ordinal": {
+        "real_rho": -0.043995,
+        "sorted_rho": 0.952006,
+        "ordinal_artifact": false
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.125418,
+        "cond_p": 3.8517373376272255e-109
+      },
+      "permutation_null": {
+        "real_rho": -0.043995,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F34_trivial_baseline"
+      ]
+    },
+    "first_zero_vs_class_deg": {
+      "name": "first_zero_vs_class_deg",
+      "raw_rho": -0.018929,
+      "raw_p": 0.0008473902566991394,
+      "within_conductor_bin": {
+        "median_rho": -0.13728922310545477,
+        "n_bins": 10,
+        "rhos": [
+          0.0375,
+          -0.1206,
+          -0.1475,
+          -0.1199,
+          -0.115,
+          -0.1828,
+          -0.1287,
+          -0.1896,
+          -0.1459,
+          -0.1835
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": -0.11246992975663836,
+        "p_value": 5.16898011526e-88
+      },
+      "f33_ordinal": {
+        "real_rho": -0.018929,
+        "sorted_rho": 0.975007,
+        "ordinal_artifact": false
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.146551,
+        "cond_p": 1.0107594431976418e-148
+      },
+      "permutation_null": {
+        "real_rho": -0.018929,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F34_trivial_baseline"
+      ]
+    },
+    "first_zero_vs_max_iso_deg": {
+      "name": "first_zero_vs_max_iso_deg",
+      "raw_rho": -0.019003,
+      "raw_p": 0.0008082871729631467,
+      "within_conductor_bin": {
+        "median_rho": -0.13196951242293742,
+        "n_bins": 10,
+        "rhos": [
+          0.0289,
+          -0.1216,
+          -0.1453,
+          -0.1197,
+          -0.1119,
+          -0.1697,
+          -0.1252,
+          -0.1794,
+          -0.1387,
+          -0.1761
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": -0.10824783720604657,
+        "p_value": 1.244327356929074e-81
+      },
+      "f33_ordinal": {
+        "real_rho": -0.019003,
+        "sorted_rho": 0.970347,
+        "ordinal_artifact": false
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.140521,
+        "cond_p": 8.860037112781221e-137
+      },
+      "permutation_null": {
+        "real_rho": -0.019003,
+        "p_value": 0.002,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F34_trivial_baseline"
+      ]
+    },
+    "micro_spacing_vs_class_size": {
+      "name": "micro_spacing_vs_class_size",
+      "raw_rho": 0.15544,
+      "raw_p": 2.7851696090495185e-167,
+      "within_conductor_bin": {
+        "median_rho": 0.08541857867367982,
+        "n_bins": 10,
+        "rhos": [
+          0.2398,
+          0.1158,
+          0.1095,
+          0.0603,
+          0.0282,
+          0.1249,
+          0.0511,
+          0.0819,
+          0.0643,
+          0.0889
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": 0.07789270594588982,
+        "p_value": 5.0295307934621394e-43
+      },
+      "f33_ordinal": {
+        "real_rho": 0.15544,
+        "sorted_rho": 0.952006,
+        "ordinal_artifact": false
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.125418,
+        "cond_p": 3.8517373376272255e-109
+      },
+      "permutation_null": {
+        "real_rho": 0.15544,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "SURVIVES",
+      "kill_reasons": []
+    },
+    "micro_spacing_vs_class_deg": {
+      "name": "micro_spacing_vs_class_deg",
+      "raw_rho": 0.171335,
+      "raw_p": 2.4740375141126968e-203,
+      "within_conductor_bin": {
+        "median_rho": 0.08435651200587341,
+        "n_bins": 10,
+        "rhos": [
+          0.2668,
+          0.1051,
+          0.098,
+          0.061,
+          0.0264,
+          0.1061,
+          0.0523,
+          0.0866,
+          0.07,
+          0.0821
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": 0.07975356280058139,
+        "p_value": 5.008716112333153e-45
+      },
+      "f33_ordinal": {
+        "real_rho": 0.171335,
+        "sorted_rho": 0.975007,
+        "ordinal_artifact": false
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.146551,
+        "cond_p": 1.0107594431976418e-148
+      },
+      "permutation_null": {
+        "real_rho": 0.171335,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F34_trivial_baseline"
+      ]
+    },
+    "micro_spacing_vs_max_iso_deg": {
+      "name": "micro_spacing_vs_max_iso_deg",
+      "raw_rho": 0.164567,
+      "raw_p": 1.5641533610875655e-187,
+      "within_conductor_bin": {
+        "median_rho": 0.07950381574939314,
+        "n_bins": 10,
+        "rhos": [
+          0.2478,
+          0.1015,
+          0.0939,
+          0.0616,
+          0.0252,
+          0.0977,
+          0.0533,
+          0.0782,
+          0.0652,
+          0.0808
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": 0.07503245298662238,
+        "p_value": 4.854267549388401e-40
+      },
+      "f33_ordinal": {
+        "real_rho": 0.164567,
+        "sorted_rho": 0.970347,
+        "ordinal_artifact": false
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.140521,
+        "cond_p": 8.860037112781221e-137
+      },
+      "permutation_null": {
+        "real_rho": 0.164567,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F34_trivial_baseline"
+      ]
+    },
+    "tail_density_vs_class_size": {
+      "name": "tail_density_vs_class_size",
+      "raw_rho": -0.006652,
+      "raw_p": 0.2410082808070732,
+      "within_conductor_bin": {
+        "median_rho": -0.0041122692221800304,
+        "n_bins": 1,
+        "rhos": [
+          -0.0041
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": -0.16663990893740338,
+        "p_value": 2.6729226061453576e-192
+      },
+      "f33_ordinal": {
+        "real_rho": -0.006652,
+        "sorted_rho": 0.012754,
+        "ordinal_artifact": true
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.125418,
+        "cond_p": 3.8517373376272255e-109
+      },
+      "permutation_null": {
+        "real_rho": -0.006652,
+        "p_value": 0.241,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F33_ordinal",
+        "F34_trivial_baseline",
+        "permutation_null",
+        "within_bin_vanishes"
+      ]
+    },
+    "tail_density_vs_class_deg": {
+      "name": "tail_density_vs_class_deg",
+      "raw_rho": -0.017364,
+      "raw_p": 0.0022058654619801906,
+      "within_conductor_bin": {
+        "median_rho": -0.05383951569751137,
+        "n_bins": 1,
+        "rhos": [
+          -0.0538
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": -0.07102865443015778,
+        "p_value": 4.7474736849980774e-36
+      },
+      "f33_ordinal": {
+        "real_rho": -0.017364,
+        "sorted_rho": 0.012453,
+        "ordinal_artifact": true
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.146551,
+        "cond_p": 1.0107594431976418e-148
+      },
+      "permutation_null": {
+        "real_rho": -0.017364,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F33_ordinal",
+        "F34_trivial_baseline"
+      ]
+    },
+    "tail_density_vs_max_iso_deg": {
+      "name": "tail_density_vs_max_iso_deg",
+      "raw_rho": -0.015877,
+      "raw_p": 0.005130478977514991,
+      "within_conductor_bin": {
+        "median_rho": -0.044570224834160975,
+        "n_bins": 1,
+        "rhos": [
+          -0.0446
+        ]
+      },
+      "partial_correlation": {
+        "partial_rho": -0.09246993555104267,
+        "p_value": 5.607163312000533e-60
+      },
+      "f33_ordinal": {
+        "real_rho": -0.015877,
+        "sorted_rho": 0.012513,
+        "ordinal_artifact": true
+      },
+      "f34_trivial_baseline": {
+        "cond_rho": -0.140521,
+        "cond_p": 8.860037112781221e-137
+      },
+      "permutation_null": {
+        "real_rho": -0.015877,
+        "p_value": 0.0,
+        "n_permutations": 1000
+      },
+      "verdict": "KILLED",
+      "kill_reasons": [
+        "F33_ordinal",
+        "F34_trivial_baseline"
+      ]
+    }
+  },
+  "stratified": {
+    "first_zero_vs_class_size": {
+      "rank_0": {
+        "n": 15599,
+        "rho": 0.036902,
+        "p": 4.023473115976059e-06
+      },
+      "rank_1": {
+        "n": 14783,
+        "rho": 0.071249,
+        "p": 4.205222099503074e-18
+      },
+      "rank_2": {
+        "n": 691,
+        "rho": 0.003624,
+        "p": 0.9242369776808604
+      },
+      "root_number_1": {
+        "n": 16290,
+        "rho": -0.022874,
+        "p": 0.0035049803554450475
+      },
+      "root_number_-1": {
+        "n": 14783,
+        "rho": 0.071249,
+        "p": 4.205222099503074e-18
+      }
+    },
+    "first_zero_vs_class_deg": {
+      "rank_0": {
+        "n": 15599,
+        "rho": 0.071645,
+        "p": 3.277559857478776e-19
+      },
+      "rank_1": {
+        "n": 14783,
+        "rho": 0.081177,
+        "p": 4.814603860886418e-23
+      },
+      "rank_2": {
+        "n": 691,
+        "rho": 0.005151,
+        "p": 0.8924775710581592
+      },
+      "root_number_1": {
+        "n": 16290,
+        "rho": 0.0098,
+        "p": 0.21101205410270782
+      },
+      "root_number_-1": {
+        "n": 14783,
+        "rho": 0.081177,
+        "p": 4.814603860886418e-23
+      }
+    },
+    "micro_spacing_mean_vs_class_size": {
+      "rank_0": {
+        "n": 15599,
+        "rho": 0.182668,
+        "p": 4.014003657640987e-117
+      },
+      "rank_1": {
+        "n": 14783,
+        "rho": 0.052925,
+        "p": 1.2035502527045474e-10
+      },
+      "rank_2": {
+        "n": 691,
+        "rho": -0.101673,
+        "p": 0.007478463862717415
+      },
+      "root_number_1": {
+        "n": 16290,
+        "rho": 0.207784,
+        "p": 2.403528519028457e-158
+      },
+      "root_number_-1": {
+        "n": 14783,
+        "rho": 0.052925,
+        "p": 1.2035502527045474e-10
+      }
+    },
+    "micro_spacing_mean_vs_class_deg": {
+      "rank_0": {
+        "n": 15599,
+        "rho": 0.207653,
+        "p": 1.606729710390949e-151
+      },
+      "rank_1": {
+        "n": 14783,
+        "rho": 0.067477,
+        "p": 2.1589943664376196e-16
+      },
+      "rank_2": {
+        "n": 691,
+        "rho": -0.094839,
+        "p": 0.012626579096148362
+      },
+      "root_number_1": {
+        "n": 16290,
+        "rho": 0.230925,
+        "p": 4.0417092341885462e-196
+      },
+      "root_number_-1": {
+        "n": 14783,
+        "rho": 0.067477,
+        "p": 2.1589943664376196e-16
+      }
+    },
+    "tail_density_vs_class_size": {
+      "rank_0": {
+        "n": 15599,
+        "rho": -0.006338,
+        "p": 0.42863024989420606
+      },
+      "rank_1": {
+        "n": 14783,
+        "rho": NaN,
+        "p": NaN
+      },
+      "rank_2": {
+        "n": 691,
+        "rho": NaN,
+        "p": NaN
+      },
+      "root_number_1": {
+        "n": 16290,
+        "rho": -0.006914,
+        "p": 0.3775797063116467
+      },
+      "root_number_-1": {
+        "n": 14783,
+        "rho": NaN,
+        "p": NaN
+      }
+    },
+    "tail_density_vs_class_deg": {
+      "rank_0": {
+        "n": 15599,
+        "rho": -0.02441,
+        "p": 0.002296212844957423
+      },
+      "rank_1": {
+        "n": 14783,
+        "rho": NaN,
+        "p": NaN
+      },
+      "rank_2": {
+        "n": 691,
+        "rho": NaN,
+        "p": NaN
+      },
+      "root_number_1": {
+        "n": 16290,
+        "rho": -0.023912,
+        "p": 0.00227241008831242
+      },
+      "root_number_-1": {
+        "n": 14783,
+        "rho": NaN,
+        "p": NaN
+      }
+    }
+  },
+  "summary": {
+    "total_tests": 9,
+    "survived": 1,
+    "killed": 8,
+    "conclusion": "No evidence that low-lying zeros predict isogeny class geometry beyond conductor."
+  }
+}
