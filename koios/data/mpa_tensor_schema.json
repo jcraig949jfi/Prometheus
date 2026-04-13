@@ -1,0 +1,58 @@
+{
+  "_schema_version": "0.1",
+  "_description": "MPA Tensor: accumulated invariant coordinates that passed all 5 admission gates. Each object gets a vector of validated invariants.",
+  "_admission_gates": [
+    "Gate 1: Null-calibrated (survives permutation baseline)",
+    "Gate 2: Representation-stable (survives regrouping)",
+    "Gate 3: Not reducible to marginals (survives size/density controls)",
+    "Gate 4: Non-tautological (not forced by shared constraints)",
+    "Gate 5: Domain-agnostic (computable across systems)"
+  ],
+  "_idn_normalizations": [
+    "size_residual: regress out dominant size variable",
+    "entropy_ratio: observed entropy / max entropy for cardinality",
+    "rank_quantile: rank within size-matched peer group"
+  ],
+  "admitted_coordinates": [
+    {
+      "name": "m4_m2_squared",
+      "phoneme_class": "spectral",
+      "description": "M4/M2^2 of normalized coefficient sequence. Encodes Sato-Tate symmetry class.",
+      "admitted_date": "2026-04-12",
+      "gates_passed": 5,
+      "domains_tested": ["EC", "MF", "Maass"],
+      "known_limitations": [
+        "CM curves: zero-inflation inflates ratio to ~3.5 (expected 1.5) with n=25",
+        "MF traces: composite-index contamination inflates ratio to ~3.3 (expected 2.0)",
+        "Finite-sample bias at n=25 primes adds ~0.16 upward shift"
+      ],
+      "idn_size_r2": {"EC": 0.001, "MF": 0.003},
+      "cross_domain_eta2": 0.0
+    }
+  ],
+  "rejected_coordinates": [
+    {
+      "name": "modp_fingerprint",
+      "phoneme_class": "arithmetic",
+      "description": "det mod (2,3,5,7,11) residue vector",
+      "rejected_date": "2026-04-12",
+      "gates_passed": 4,
+      "failed_gate": "Gate 5 (domain-agnostic)",
+      "failure_reason": "MI(domain,fp)=0.20, driven by mod-2 (knots always odd, lattices mostly even). For p>=5 MI<0.002.",
+      "domains_tested": ["Knots", "Lattices", "NF"],
+      "salvageable": "Strip mod-2, use only mod 5,7,11 -- may pass Gate 5"
+    },
+    {
+      "name": "aut_size_ratio",
+      "phoneme_class": "symmetry",
+      "description": "log(aut_group_order) / log(size_variable)",
+      "rejected_date": "2026-04-13",
+      "gates_passed": 4,
+      "failed_gate": "Gate 1 (null-calibrated)",
+      "failure_reason": "Permutation of aut within size groups produces identical rho distribution (z<0.1, p>0.46 all domains). The log-ratio adds no information beyond aut variation within fixed size.",
+      "domains_tested": ["Lattices", "Groups", "Genus2"],
+      "salvageable": "Try raw aut_order residual (not ratio) or use aut as categorical, not continuous"
+    }
+  ],
+  "pending_coordinates": []
+}

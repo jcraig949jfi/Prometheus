@@ -1,0 +1,39 @@
+{
+  "area": "Area 2: Automorphism-to-Size Ratio",
+  "invariant": "aut_size_ratio",
+  "phoneme_class": "symmetry",
+  "datasets": {
+    "Lattices": {
+      "n": 39292,
+      "mean_rho": 1.2178018575839156,
+      "std_rho": 0.6596741614582801,
+      "median_rho": 1.2618595071429148
+    },
+    "Groups": {
+      "n": 533287,
+      "mean_rho": 0.5697470949681891,
+      "std_rho": 0.17890565931221947,
+      "median_rho": 0.6059085621685278
+    },
+    "Genus2": {
+      "n": 66158,
+      "mean_rho": 0.06129409097987908,
+      "std_rho": 0.01727761248713269,
+      "median_rho": 0.05639888107490505
+    }
+  },
+  "gates": {
+    "Gate 1 (Null-calibrated)": false,
+    "Gate 2 (Representation-stable)": true,
+    "Gate 3 (Not reducible to marginals)": true,
+    "Gate 4 (Non-tautological)": true,
+    "Gate 5 (Domain-agnostic)": true
+  },
+  "cross_domain": {
+    "eta_sq_domain": 1.2806092991788071e-31,
+    "permutation_z": -1.0007068087246247
+  },
+  "verdict": "REJECTED",
+  "gates_passed": 4,
+  "gates_total": 5
+}
