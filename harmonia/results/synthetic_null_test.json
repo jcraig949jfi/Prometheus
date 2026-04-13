@@ -1,0 +1,31 @@
+{
+  "real_signal_rho": -0.1628,
+  "n_trials": 200,
+  "n_curves": 31073,
+  "synthetic_1_gue_random_cs": {
+    "description": "GUE Wigner spacing + randomly permuted class_size",
+    "mean_rho": -0.00028833748373905364,
+    "std_rho": 0.005338860908655867,
+    "false_positive_rate": 0.0
+  },
+  "synthetic_2_real_zeros_conductor_cs": {
+    "description": "Real zeros + class_size predicted from conductor",
+    "mean_rho": 0.0014170420477491697,
+    "std_rho": 0.005284510642411615,
+    "false_positive_rate": 0.0
+  },
+  "synthetic_3_real_zeros_factorization_cs": {
+    "description": "Real zeros + class_size predicted from conductor factorization",
+    "r2_factorization_model": 0.19309136311975217,
+    "mean_rho": -0.02024784786416803,
+    "std_rho": 0.004747271742080909,
+    "false_positive_rate": 0.0
+  },
+  "synthetic_4_gue_spacing_real_cs": {
+    "description": "GUE-resampled spacing (per conductor bin) + real class_size",
+    "mean_rho": -0.0012328655358382617,
+    "std_rho": 0.005756965263865667,
+    "false_positive_rate": 0.0
+  },
+  "verdict": "PIPELINE VALIDATED - no false positives from synthetic data"
+}
