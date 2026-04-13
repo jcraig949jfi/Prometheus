@@ -23,7 +23,7 @@
 \maketitle
 
 \begin{abstract}
-We present Harmonia, a system that discovers and validates cross-domain structure in mathematical objects using tensor train decomposition over heterogeneous datasets. Working with 509,182 objects across 20 mathematical domains---including elliptic curves, modular forms, number fields, genus-2 curves, lattices, knot invariants, and materials---we identify a shared coordinate system with two primary axes: \textbf{Megethos} (a universal magnitude/complexity axis) and \textbf{Arithmos} (an arithmetic group structure axis measuring torsion, class number, and Selmer rank). After subjecting these axes to systematic adversarial controls---including rank-normalization, monotonic scrambling, equal-complexity slicing, and five targeted attack families---we establish that: (1) Megethos survives all controls and \emph{strengthens} under rank-normalization (17.6\% $\to$ 38.2\% variance); (2) Arithmos persists as a $1.57\times$ signal above random null after removing Megethos; (3) the two axes are near-independent ($\rho = 0.104$); and (4) the coordinate system enables cross-domain prediction of arithmetic invariants at $\rho = 0.76$--$0.95$, generalizing out-of-distribution at 114--203\% retention. The transfer is directional (rich$\to$simple, 2.36$\times$ asymmetry), rotationally symmetric in the Megethos--Arithmos plane (gauge freedom, $\sigma = 0.0$), and purely Arithmos-driven ($Z_2$ alone at $\rho = 0.61$ outperforms the full 5D space at $\rho = 0.51$). Independent verification using a 41-dimensional dissection tensor (182 features, 601K objects) confirms: Mantel $r = 0.94$ distance preservation, positive Ollivier--Ricci curvature in both spaces, and transfer $\rho = 0.95$ through shared magnitude dimensions. The manifold has Euler characteristic $\chi = -30{,}687$---locally spherical but globally hyperbolic, with curvature that \emph{facilitates} rather than obstructs transfer.
+We find evidence that arithmetic--geometric mathematical objects share a low-dimensional latent structure enabling cross-domain prediction. Working with 509,182 objects across 20 mathematical domains---including elliptic curves, modular forms, number fields, genus-2 curves, lattices, knot invariants, and materials---we find evidence for a shared coordinate system with two primary axes: \textbf{Megethos} (a universal magnitude/complexity axis) and \textbf{Arithmos} (an arithmetic group structure axis measuring torsion, class number, and Selmer rank). After subjecting these axes to systematic adversarial controls---including rank-normalization, monotonic scrambling, equal-complexity slicing, and five targeted attack families---we observe that: (1) Megethos survives all controls and \emph{strengthens} under rank-normalization (17.6\% $\to$ 38.2\% variance); (2) Arithmos persists as a $1.57\times$ signal above random null after removing Megethos; (3) the two axes are near-independent ($\rho = 0.104$); and (4) the coordinate system enables cross-domain prediction of arithmetic invariants at $\rho = 0.76$--$0.95$, generalizing out-of-distribution at 114--203\% retention. The transfer is directional (rich$\to$simple, 2.36$\times$ asymmetry) and purely Arithmos-driven ($Z_2$ alone at $\rho = 0.61$ outperforms the full 5D space at $\rho = 0.51$). Independent verification using a 41-dimensional dissection tensor (182 features, 601K objects) confirms: Mantel $r = 0.94$ distance preservation and transfer $\rho = 0.95$ through shared magnitude dimensions.
 \end{abstract}
 
 \section{Introduction}
@@ -36,9 +36,9 @@ Our main contributions are:
 \begin{enumerate}[nosep]
     \item A coordinate system with two verified independent axes (Megethos, Arithmos) that survives systematic adversarial controls.
     \item Cross-domain prediction of arithmetic invariants ($\rho = 0.76$--$0.95$) that generalizes out-of-distribution.
-    \item Identification of the latent object as 2-dimensional for transfer, with different domains as directional projections.
+    \item Evidence that the latent object is optimally 2-dimensional under our evaluation protocol for transfer, with different domains as directional projections.
     \item Independent verification from a second representation (41D dissection tensor), confirming 94\% distance preservation and consistent positive curvature.
-    \item Characterization of the manifold geometry: Euler characteristic $\chi = -30{,}687$, positive Ollivier--Ricci curvature that facilitates (not obstructs) transfer.
+    \item Characterization of the $k$-NN graph geometry: Euler characteristic $\chi = -30{,}687$, positive Ollivier--Ricci curvature that correlates positively with transfer performance.
     \item An autonomous adversarial ecosystem that continuously tests the system's claims.
 \end{enumerate}
 
@@ -82,6 +82,8 @@ Each domain's features are projected into a shared 5-dimensional ``phoneme'' spa
     \item \textbf{Arithmos} (arithmetic): torsion, class number, Selmer rank
     \item \textbf{Phasma} (spectral): spectral parameter, zero spacings
 \end{itemize}
+
+We acknowledge that the phoneme projection is hand-designed to include magnitude, rank, and arithmetic invariants. The subsequent ``discovery'' of Megethos and Arithmos as dominant axes is therefore partially tautological in the 5D space. The key non-trivial finding is that the 41D dissection tensor---constructed from formula-level features without reference to these invariants---preserves 94\% of the same distance structure (Mantel $r = 0.94$). This cross-representation consistency, rather than the phoneme-space PCA alone, is the primary evidence for intrinsic structure.
 
 \subsection{Independent Representation: Dissection Tensor}
 
@@ -155,15 +157,15 @@ No zero-padding & 25.8\% & Survives (stronger) \\
 \end{tabular}
 \end{table}
 
-Rank-normalization, which destroys scale information, \emph{strengthens} PC1 from 17.6\% to 38.2\% (Table~\ref{tab:controls}). This rules out raw magnitude dominance and establishes that Megethos captures ordinal cross-domain structure that is more regular than the metric structure.
+Rank-normalization, which destroys scale information, \emph{strengthens} PC1 from 17.6\% to 38.2\% (Table~\ref{tab:controls}). This rules out raw magnitude dominance and suggests that Megethos captures ordinal cross-domain structure that is more regular than the metric structure.
 
-Monotonic scrambling (random power-law transforms) changes PC1 significantly ($z = -2.28$), establishing that the signal depends on \emph{specific functional form}, not just ordering. Cross-domain Spearman correlation of Megethos quantile distributions is $\rho > 0.9999$ for all 21 domain pairs tested.
+Monotonic scrambling (random power-law transforms) changes PC1 significantly ($z = -2.28$), indicating that the signal depends on \emph{specific functional form}, not just ordering. Cross-domain Spearman correlation of Megethos quantile distributions is $\rho > 0.9999$ for all 21 domain pairs tested.
 
 \subsection{Arithmos: The Irreducible Kernel}
 
 \subsubsection{Equal-Complexity Slicing}
 
-After binning objects by Megethos decile and computing PCA on the non-Megethos phonemes within each bin, we find PC1 = 47.9\% versus a random null of 30.4\%, giving a signal ratio of $1.57\times$ ($z = 149$). Structure beyond complexity is real but modest.
+After binning objects by Megethos decile and computing PCA on the non-Megethos phonemes within each bin, we find PC1 = 47.9\% versus a random null of 30.4\%, giving a signal ratio of $1.57\times$ ($z = 149$). Structure beyond complexity appears to be real but modest.
 
 \subsubsection{Identifying the Driver}
 
@@ -195,7 +197,7 @@ Megethos and Arithmos have Spearman $\rho = 0.104$ combined across domains, conf
 
 \subsubsection{Representation Dependence}
 
-The Arithmos signal ratio is representation-dependent: $1.57\times$ in the 5D phoneme space, $1.07\times$ in the 41D dissection tensor with explicit Megethos regression. The \emph{phenomenon} (structured residual after magnitude removal) is real in both spaces, but the specific ratio depends on the projection. This establishes that the Arithmos signal is a property of the data, not a universal constant; its magnitude reflects the degree to which a given feature space concentrates arithmetic structure.
+The Arithmos signal ratio is representation-dependent: $1.57\times$ in the 5D phoneme space, $1.07\times$ in the 41D dissection tensor with explicit Megethos regression. The \emph{phenomenon} (structured residual after magnitude removal) is real in both spaces, but the specific ratio depends on the projection. This suggests that the Arithmos signal is a property of the data, not a universal constant; its magnitude reflects the degree to which a given feature space concentrates arithmetic structure.
 
 \subsection{Cross-Domain Transfer}
 
@@ -262,7 +264,7 @@ Mean transfer $\rho$ & $-0.02$ & \textbf{0.50} & 0.45 & 0.45 & 0.39 \\
 \end{tabular}
 \end{table}
 
-The latent object is \textbf{exactly 2-dimensional} for cross-domain transfer. One dimension fails. Three or more dimensions do not improve.
+The latent object is \textbf{optimally 2-dimensional under our evaluation protocol} for cross-domain transfer. One dimension fails. Three or more dimensions do not improve and in fact slightly degrade performance, possibly due to curse-of-dimensionality effects in nearest-neighbor matching.
 
 \subsubsection{Domain Projections}
 
@@ -280,7 +282,9 @@ Notably, Selmer rank projects onto $Z_3$ (Bathos/depth), not $Z_2$ (Arithmos). T
 
 \subsubsection{Gauge Freedom}
 
-The Megethos--Arithmos plane is rotationally symmetric: all rotations of the $(Z_1, Z_2)$ plane yield identical transfer performance ($\sigma = 0.0$ across 20 random rotations). This is a gauge symmetry---the coordinate choice within the plane is arbitrary; the geometry is what is real.
+The Megethos--Arithmos plane exhibits approximate rotational invariance: all rotations of the $(Z_1, Z_2)$ plane yield identical transfer performance ($\sigma = 0.0$ across 20 random rotations). The coordinate choice within the plane appears to be arbitrary; the geometry is what carries the signal.
+
+We note an apparent tension between the rotational invariance of the Megethos--Arithmos plane ($\sigma = 0.0$ across rotations) and the finding that $Z_2$ alone outperforms the full 5D space (Section~4.5.3). This tension resolves if the approximate rotational invariance applies to the TT-Cross bond structure (which is invariant to rotations within the plane) while the nearest-neighbor transfer metric (which depends on axis-specific distances) is not fully invariant. The rotational invariance is a property of the tensor decomposition, not of all downstream metrics.
 
 \subsubsection{Degeneracy}
 
@@ -290,7 +294,7 @@ Alternative invariants (rank/regulator instead of torsion/class number) achieve 
 
 $Z_2$ alone (Arithmos phoneme) achieves $\rho = 0.61$---\emph{better} than the full 5D phoneme space ($\rho = 0.51$). Adding Megethos \emph{degrades} cross-domain arithmetic prediction. The transfer signal is purely Arithmos-driven.
 
-\subsection{Geometry of the Manifold}
+\subsection{Geometry of the $k$-NN Graph}
 
 \subsubsection{Two-Camera Verification}
 
@@ -316,7 +320,7 @@ Space & Mean ORC & Fraction positive & $k$ \\
 \end{tabular}
 \end{table}
 
-Both representations show strongly positive Ollivier--Ricci curvature ($> 98\%$ of edges positive), confirming that the data occupies a genuinely positively-curved submanifold regardless of the ambient embedding.
+Both representations show strongly positive Ollivier--Ricci curvature ($> 98\%$ of edges positive), suggesting that the data occupies a positively-curved region of the $k$-NN graph regardless of the ambient embedding.
 
 \subsubsection{Curvature and Transfer}
 
@@ -324,7 +328,9 @@ Contrary to our initial prediction that curvature would \emph{obstruct} transfer
 
 \subsubsection{Topology}
 
-The Euler characteristic of the nearest-neighbor graph is $\chi = -30{,}687$ ($V = 5{,}000$, $E = 35{,}687$, $\beta_0 = 5$, $\beta_1 = 30{,}692$). This is far from a sphere ($\chi = 2$) or torus ($\chi = 0$). The manifold is locally spherical (positive ORC everywhere) but globally hyperbolic, with approximately 30,000 independent cycles. We describe this informally as a ``coral reef'' topology: smooth at each point, enormously tangled in aggregate.
+The Euler characteristic of the nearest-neighbor graph is $\chi = -30{,}687$ ($V = 5{,}000$, $E = 35{,}687$, $\beta_0 = 5$, $\beta_1 = 30{,}692$). This is far from a sphere ($\chi = 2$) or torus ($\chi = 0$). The $k$-NN graph exhibits a locally spherical (positive ORC everywhere) but globally hyperbolic structure, with approximately 30,000 independent cycles. We describe this informally as a ``coral reef'' topology: smooth at each point, enormously tangled in aggregate.
+
+We emphasize that $\chi = -30{,}687$ is computed from a $k$-NN graph on a 5,000-point subsample, which is a coarse combinatorial proxy for the underlying continuous geometry. The Euler characteristic is sensitive to $k$, sampling density, and noise. We report it as a descriptive statistic of the graph, not as a certified topological invariant of the data manifold.
 
 \subsubsection{Geodesic Deviation}
 
@@ -334,13 +340,13 @@ EC-to-NF geodesics on the nearest-neighbor graph deviate from straight-line path
 
 Loading the full 31,073 elliptic curves with 16-dimensional spectral features (including GUE-sensitive statistics: normalized spacing variance, skewness, kurtosis, and nearest-neighbor spacing ratios at 6--8 digit precision), we test whether spectral data cracks the residual unexplained variance.
 
-Within EC, spectral features add $+5.9\%$ $R^2$ for predicting torsion beyond Megethos (from $R^2 = 0.000$ to $R^2 = 0.059$). GUE statistics correlate with Arithmos at $|\rho| = 0.09$--$0.14$ (significant at $p < 0.001$ but weak). The spectral phoneme sees arithmetic structure dimly---through a narrow window. The ${\sim}21\%$ residual between the two camera representations remains unexplained by spectral summary statistics and likely resides in the nonlinear manifold topology ($\chi = -30{,}687$) or in the raw zero locations themselves.
+Within EC, spectral features add $+5.9\%$ $R^2$ for predicting torsion beyond Megethos (from $R^2 = 0.000$ to $R^2 = 0.059$). GUE statistics correlate with Arithmos at $|\rho| = 0.09$--$0.14$ (significant at $p < 0.001$ but weak). The spectral phoneme sees arithmetic structure dimly---through a narrow window. The ${\sim}21\%$ residual between the two camera representations remains unexplained by spectral summary statistics and likely resides in the nonlinear structure of the $k$-NN graph ($\chi = -30{,}687$) or in the raw zero locations themselves.
 
 \section{Discussion}
 
 \subsection{Interpretation}
 
-Our results are consistent with the following interpretation: \emph{arithmetic--geometric mathematical objects are lossy, directional projections of a shared latent structure, with Megethos and Arithmos as its primary coordinates.}
+Our results are consistent with the following interpretation: \emph{arithmetic--geometric mathematical objects behave as lossy, directional projections of a shared latent structure, with Megethos and Arithmos as its primary coordinates.}
 
 The evidence for this:
 \begin{enumerate}[nosep]
@@ -348,12 +354,12 @@ The evidence for this:
     \item Projections preserve neighborhoods (cross-domain prediction at $\rho = 0.76$--$0.95$).
     \item Projections stabilize at scale (OOD improves to $203\%$).
     \item Different domains see different subsets of the latent object.
-    \item The geometry has gauge freedom (rotationally symmetric in the M--A plane).
-    \item Two independent representations confirm the same geometry (Mantel $r = 0.94$).
-    \item The manifold is positively curved in both representations (ORC $= 0.60$--$0.71$).
+    \item The $k$-NN graph exhibits approximate rotational invariance in the M--A plane.
+    \item Two independent representations confirm consistent distance structure (Mantel $r = 0.94$).
+    \item The $k$-NN graph shows positive Ollivier--Ricci curvature in both representations (ORC $= 0.60$--$0.71$).
 \end{enumerate}
 
-The \emph{coral reef} topology ($\chi = -30{,}687$) and the finding that curvature \emph{facilitates} transfer (positive correlation, $r = +0.27$) suggest that the manifold's structure is not an obstruction to cross-domain translation but rather a resource: dense, curved neighborhoods are precisely where shared arithmetic structure concentrates.
+The ``coral reef'' topology ($\chi = -30{,}687$ in the $k$-NN graph) and the finding that curvature correlates positively with transfer performance ($r = +0.27$) suggest that dense, curved neighborhoods are precisely where shared arithmetic structure concentrates.
 
 \subsection{Relationship to Known Mathematics}
 
@@ -379,25 +385,35 @@ The finding that modular forms and Dirichlet zeros have \emph{zero} Arithmos res
 \begin{enumerate}[nosep]
     \item The $1.57\times$ signal-to-null ratio for Arithmos, while statistically significant ($z = 149$), is modest. The secondary structure is real but not dominant.
     \item Calibration specificity is 33\% (1/3 known falsehoods rejected). The system is more permissive than desired.
-    \item The phoneme projection is hand-designed, not learned. Different projection choices yield different signal ratios, though the gauge freedom result suggests the underlying geometry is robust.
+    \item The phoneme projection is hand-designed, not learned. Different projection choices yield different signal ratios, though the cross-representation consistency (Mantel $r = 0.94$) suggests the underlying distance structure is robust.
     \item All results are on LMFDB and related datasets. Generalization to other mathematical databases is untested.
-    \item The Euler characteristic is computed from a $k$-NN graph, which is a combinatorial approximation of the underlying smooth manifold. The true topology may differ.
+    \item The Euler characteristic is computed from a $k$-NN graph, which is a combinatorial approximation sensitive to $k$, sampling density, and noise. The true topology of the underlying data manifold may differ.
 \end{enumerate}
 
 \subsection{The Adversarial Ecosystem}
 
 To continuously stress-test these claims, we built an autonomous adversarial system with four components: a Generator that invents attacks from 5 families (data, representation, structural, cross-domain, metric) with 20+ mutation operators; an Executor that runs the full measurement battery; a Judge that scores damage to core invariants; and an Archivist that logs and prioritizes the most damaging attacks. This system runs at 1.7 attacks/second and produces a daily report of what almost broke.
 
+\subsection{Future Work}
+
+Several directions would strengthen or refute the claims made here:
+
+\begin{enumerate}[nosep]
+    \item[(a)] \textbf{Learned embeddings.} Training variational autoencoders (VAEs) and contrastive learning models on the raw invariant data would test whether Megethos and Arithmos emerge as dominant latent axes in an unsupervised setting, without the hand-designed phoneme projection.
+    \item[(b)] \textbf{Simple regression baselines.} Comparing cross-domain transfer against simple regression baselines (e.g., ridge regression, kernel regression) applied directly to raw invariants would quantify how much of the transfer signal is attributable to the phoneme projection versus the underlying data correlations.
+    \item[(c)] \textbf{Random forest on raw features.} Training random forests on raw domain features without the phoneme projection would establish whether the coordinate system provides genuine compression, or whether equivalent transfer performance is achievable without any intermediate representation.
+\end{enumerate}
+
 \section{Conclusion}
 
-We have identified a two-dimensional coordinate system---Megethos (magnitude) and Arithmos (arithmetic group structure)---that provides a shared language for arithmetic--geometric mathematical objects across domains. The system enables cross-domain prediction at $\rho = 0.76$--$0.95$, generalizes out-of-distribution, and survives systematic adversarial testing in two independent representations.
+We have found evidence for a two-dimensional coordinate system---Megethos (magnitude) and Arithmos (arithmetic group structure)---that provides a shared language for arithmetic--geometric mathematical objects across domains. The system enables cross-domain prediction at $\rho = 0.76$--$0.95$, generalizes out-of-distribution, and survives systematic adversarial testing in two independent representations.
 
-The strongest defensible claim is: \emph{there exists a stable, low-dimensional coordinate system over arithmetic--geometric objects in which known invariants align and become mutually predictive across domains. The coordinate system is confirmed by two independent representations (94\% distance preservation), sits on a positively-curved manifold with coral-reef topology, and enables directional transfer where curvature facilitates rather than obstructs prediction.}
+The strongest defensible claim is: \emph{we observe a stable, low-dimensional coordinate system over arithmetic--geometric objects in which known invariants align and become mutually predictive across domains. The coordinate system is confirmed by two independent representations (94\% distance preservation), and enables directional transfer where denser neighborhoods correlate with better prediction.}
 
-Whether this coordinate system is canonical, or merely one chart among many, remains open. The gauge freedom in the Megethos--Arithmos plane and the representation dependence of the signal ratio suggest that while the \emph{geometry} is intrinsic, the \emph{coordinates} are not. Different mathematical ``cameras''---invariant-level and formula-level---see the same manifold from different angles, with different dominant axes but the same pairwise distances and the same curvature sign. The manifold is what is real.
+Whether this coordinate system is canonical, or merely one chart among many, remains open. The approximate rotational invariance in the Megethos--Arithmos plane and the representation dependence of the signal ratio suggest that while the \emph{distance structure} may be intrinsic, the \emph{coordinates} are not. Different mathematical ``cameras''---invariant-level and formula-level---see the same objects from different angles, with different dominant axes but the same pairwise distances and the same curvature sign. The distance structure is what is real.
 
 \bibliographystyle{plain}
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 \bibitem{oseledets2011}
 I.~V. Oseledets,
 \newblock Tensor-train decomposition,
@@ -442,6 +458,42 @@ N.~J.~A. Sloane,
 T.~Dokchitser and V.~Dokchitser,
 \newblock On the {B}irch--{S}winnerton-{D}yer quotients modulo squares,
 \newblock {\em Ann. of Math.}, 172(1):567--596, 2010.
+
+\bibitem{tensorrt}
+NVIDIA Corporation,
+\newblock TensorRT: High-performance deep learning inference optimizer,
+\newblock \url{https://github.com/NVIDIA/TensorRT}, 2024.
+
+\bibitem{thor}
+Los Alamos National Laboratory,
+\newblock Thor: Tensor decomposition library,
+\newblock \url{https://github.com/lanl/thor}, 2024.
+
+\bibitem{gap}
+The GAP Group,
+\newblock GAP -- Groups, Algorithms, and Programming,
+\newblock \url{https://www.gap-system.org}, 2024.
+
+\bibitem{bilbao}
+M.~I. Aroyo et al.,
+\newblock Bilbao Crystallographic Server,
+\newblock \url{https://www.cryst.ehu.es}, 2024.
+
+\bibitem{spglib}
+A.~Togo and I.~Tanaka,
+\newblock Spglib: a software library for crystal symmetry search,
+\newblock \url{https://spglib.github.io/spglib/}, 2018.
+
+\bibitem{pymatgen}
+S.~P. Ong et al.,
+\newblock Python Materials Genomics (pymatgen),
+\newblock \url{https://pymatgen.org},
+\newblock {\em Comput. Mater. Sci.}, 68:314--319, 2013.
+
+\bibitem{fungrim}
+F.~Johansson,
+\newblock Fungrim: the Mathematical Functions Grimoire,
+\newblock \url{https://fungrim.org}, 2024.
 \end{thebibliography}
 
 \end{document}
