@@ -1,0 +1,97 @@
+{
+  "finding": "F39",
+  "description": "Sato-Tate convergence rate as potential invariant",
+  "n_curves": 1073,
+  "n_skipped": 8927,
+  "exponent_stats": {
+    "mean": -0.6770169232453617,
+    "median": -0.648510756390409,
+    "std": 0.6088846180146426,
+    "min": -2.9482425833046553,
+    "max": 2.2340698008557247
+  },
+  "mean_by_rank": {
+    "0": {
+      "n": 569,
+      "mean": -0.6914276577347044,
+      "std": 0.6307607140787755
+    },
+    "1": {
+      "n": 464,
+      "mean": -0.63536402480219,
+      "std": 0.5837522850727018
+    },
+    "2": {
+      "n": 40,
+      "mean": -0.9551978470752551,
+      "std": 0.4818812694950238
+    }
+  },
+  "correlations": {
+    "spearman_vs_conductor": {
+      "rho": 0.05862597854090126,
+      "p": 0.054882491229112394
+    },
+    "spearman_vs_rank": {
+      "rho": 0.013217488150040299,
+      "p": 0.6653960354989361
+    },
+    "pearson_vs_log_conductor": {
+      "r": 0.07197284391225685,
+      "p": 0.018378556166296463
+    }
+  },
+  "ols_model": {
+    "intercept": -0.9447612892111715,
+    "coef_log_conductor": 0.02831784910330606,
+    "coef_rank": 0.025840632406081063,
+    "r_squared": 0.005674175636232959
+  },
+  "residual_analysis": {
+    "residual_std": 0.6071547014286335,
+    "residual_range": 5.051840780342827,
+    "residuals_by_rank": {
+      "0": {
+        "n": 569,
+        "mean": -0.02067571679714452,
+        "std": 0.6259360085177809
+      },
+      "1": {
+        "n": 464,
+        "mean": 0.050708977834380706,
+        "std": 0.5842380780715924
+      },
+      "2": {
+        "n": 40,
+        "mean": -0.29411207143939866,
+        "std": 0.4832178098821306
+      }
+    },
+    "ks_rank0_vs_rank1": {
+      "statistic": 0.07549921216895945,
+      "p_value": 0.10160991921851457
+    }
+  },
+  "variance_decomposition": {
+    "total": 0.3707404780548371,
+    "explained_by_conductor_rank": 0.0021036465879441125,
+    "unexplained": 0.368636831466893,
+    "pct_explained": 0.5674175636232948
+  },
+  "within_group_test": {
+    "n_groups": 173,
+    "mean_within_variance": 0.211259753951222,
+    "within_total_ratio": 0.5698319079147707
+  },
+  "verdict": "WEAK \u2014 exponent varies but within-group variance is high, suggesting noise rather than invariant",
+  "survives": false,
+  "windows_used": [
+    10,
+    20,
+    30,
+    50,
+    75,
+    100
+  ],
+  "n_primes": 100
+}
