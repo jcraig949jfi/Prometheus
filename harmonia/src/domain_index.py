@@ -411,6 +411,75 @@ def load_ec_zeros(db_path: Optional[Path] = None, limit: int = 20000) -> DomainI
     return DomainIndex("ec_zeros", labels, features)
 
 
+def load_raw_zeros(db_path: Optional[Path] = None, n_zeros: int = 10) -> DomainIndex:
+    """
+    Load raw L-function zero positions as features.
+
+    No summary statistics. No engineering. Just the actual locations where
+    L-functions vanish on the critical line, at 8-10 digit precision computed
+    by professional number theorists. These are theorems, not features.
+
+    Each object gets n_zeros features: the first n_zeros positive zeros
+    of its L-function, in ascending order.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql(f"""
+        SELECT ec.lmfdb_label, oz.zeros_vector
+        FROM object_zeros oz
+        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
+        WHERE oz.n_zeros_stored >= {n_zeros} AND oz.zeros_vector IS NOT NULL
+              AND ec.conductor IS NOT NULL
+        ORDER BY oz.n_zeros_stored DESC
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        zeros = sorted([z for z in (row[1] or []) if z is not None and z > 0])
+        if len(zeros) < n_zeros:
+            continue
+        labels.append(row[0] or str(len(labels)))
+        feats.append(zeros[:n_zeros])
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("raw_zeros", labels, features)
+
+
+def load_zeros_anchored(db_path: Optional[Path] = None, n_zeros: int = 10) -> DomainIndex:
+    """
+    Raw zero positions + log(conductor) for Megethos anchoring.
+
+    Feature 0: log(conductor) — the Megethos coordinate.
+    Features 1-N: raw zero positions — the Phasma coordinates at maximum precision.
+    This domain bridges the two axes through ground-truth data.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql(f"""
+        SELECT ec.lmfdb_label, ec.conductor, oz.zeros_vector
+        FROM object_zeros oz
+        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
+        WHERE oz.n_zeros_stored >= {n_zeros} AND oz.zeros_vector IS NOT NULL
+              AND ec.conductor IS NOT NULL
+        ORDER BY oz.n_zeros_stored DESC
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        zeros = sorted([z for z in (row[2] or []) if z is not None and z > 0])
+        if len(zeros) < n_zeros:
+            continue
+        labels.append(row[0] or str(len(labels)))
+        feats.append([np.log1p(float(row[1] or 0))] + zeros[:n_zeros])
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("zeros_anchored", labels, features)
+
+
 def load_rmt_ensemble(db_path: Optional[Path] = None, limit: int = 30000) -> DomainIndex:
     """
     Load GUE/random-matrix-theory spectral statistics from L-function zeros.
@@ -1732,6 +1801,8 @@ DOMAIN_LOADERS = {
     "dirichlet_zeros": load_dirichlet_zeros,
     "ec_zeros": load_ec_zeros,
     "rmt": load_rmt_ensemble,
+    "raw_zeros": load_raw_zeros,
+    "zeros_anchored": load_zeros_anchored,
     "bianchi": load_bianchi_forms,
     "groups": load_groups,
     "belyi": load_belyi,
