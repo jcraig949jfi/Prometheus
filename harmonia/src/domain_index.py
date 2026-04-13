@@ -1785,6 +1785,119 @@ def load_lmfdb_objects(db_path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("lmfdb_objects", labels, features)
 
 
+def load_ec_rich(limit: int = 100000) -> DomainIndex:
+    """
+    Load rich elliptic curve data (16 features) directly from live LMFDB Postgres.
+
+    Features: log_conductor, rank, analytic_rank, torsion, regulator, CM,
+    num_bad_primes, class_size, class_deg, degree, sha, num_int_pts,
+    faltings_height, abc_quality, szpiro_ratio, semistable.
+
+    Phoneme mapping:
+      Megethos (complexity): log_conductor
+      Bathos (rank): rank
+      Arithmos (arithmetic): torsion, class_size
+      Phasma (spectral): faltings_height, szpiro_ratio
+    """
+    import psycopg2
+    conn = psycopg2.connect(
+        host='devmirror.lmfdb.xyz', port=5432,
+        dbname='lmfdb', user='lmfdb', password='lmfdb',
+        connect_timeout=15,
+    )
+    cur = conn.cursor()
+    cur.execute(f'''
+        SELECT lmfdb_label, conductor, rank, analytic_rank, torsion,
+               regulator, cm, num_bad_primes, class_size, class_deg,
+               degree, sha, num_int_pts, faltings_height, abc_quality,
+               szpiro_ratio, semistable
+        FROM ec_curvedata
+        WHERE conductor IS NOT NULL AND rank IS NOT NULL
+        ORDER BY conductor LIMIT {limit}
+    ''')
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(str(row[0] or len(labels)))
+        feat = [
+            np.log1p(float(row[1] or 0)),   # log_conductor
+            float(row[2] or 0),               # rank
+            float(row[3] or 0),               # analytic_rank
+            float(row[4] or 0),               # torsion
+            float(row[5] or 0),               # regulator
+            float(row[6] or 0),               # CM discriminant (0 = no CM)
+            float(row[7] or 0),               # num_bad_primes
+            float(row[8] or 0),               # class_size
+            float(row[9] or 0),               # class_deg
+            float(row[10] or 0),              # degree
+            float(row[11] or 0),              # sha (analytic)
+            float(row[12] or 0),              # num_int_pts
+            float(row[13] or 0),              # faltings_height
+            float(row[14] or 0),              # abc_quality
+            float(row[15] or 0),              # szpiro_ratio
+            float(row[16] or 0),              # semistable (bool -> 0/1)
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("ec_rich", labels, features)
+
+
+def load_artin(limit: int = 100000) -> DomainIndex:
+    """
+    Load Artin representations from live LMFDB Postgres.
+
+    Features: log_conductor, dimension, Galois_n (order), Galois_t (transitive number),
+    indicator (Frobenius-Schur).
+
+    Phoneme mapping:
+      Megethos (complexity): log_conductor
+      Bathos (rank): dimension
+      Symmetria (symmetry): indicator (Frobenius-Schur)
+      Taxis (complexity): Galn, Galt (Galois group structure)
+    """
+    import psycopg2
+    conn = psycopg2.connect(
+        host='devmirror.lmfdb.xyz', port=5432,
+        dbname='lmfdb', user='lmfdb', password='lmfdb',
+        connect_timeout=15,
+    )
+    cur = conn.cursor()
+    cur.execute(f'''
+        SELECT "Baselabel", "Dim", "Conductor", "Galn", "Galt", "Indicator"
+        FROM artin_reps
+        WHERE "Conductor" IS NOT NULL
+        ORDER BY "Conductor" LIMIT {limit}
+    ''')
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(str(row[0] or len(labels)))
+        conductor = row[2]
+        # Conductor may be a string or numeric; handle both
+        try:
+            cond_val = float(conductor)
+        except (TypeError, ValueError):
+            cond_val = 0.0
+        feat = [
+            np.log1p(cond_val),               # log_conductor
+            float(row[1] or 0),               # dimension
+            float(row[3] or 0),               # Galn (Galois group order)
+            float(row[4] or 0),               # Galt (transitive number)
+            float(row[5] or 0),               # indicator (Frobenius-Schur)
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("artin", labels, features)
+
+
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
@@ -1827,6 +1940,8 @@ DOMAIN_LOADERS = {
     "knowledge_graph": load_knowledge_graph,
     "bridges": load_bridges,
     "lmfdb_objects": load_lmfdb_objects,
+    "ec_rich": load_ec_rich,
+    "artin": load_artin,
 }
 
 

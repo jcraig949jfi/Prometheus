@@ -340,6 +340,34 @@ DOMAIN_PHONEME_MAP = {
         "rank":       [(51, +1, 0.7)],                 # coeff_completeness ~ data richness
         "arithmetic": [(52, +1, 0.7)],                 # zeros_completeness ~ analytic depth
     },
+    "ec_rich": {
+        # Rich elliptic curves (16 features from LMFDB Postgres):
+        # features: [log_conductor, rank, analytic_rank, torsion, regulator, CM,
+        #            num_bad_primes, class_size, class_deg, degree, sha, num_int_pts,
+        #            faltings_height, abc_quality, szpiro_ratio, semistable]
+        # Megethos (complexity): log_conductor
+        "complexity": [(0, +1, 1.0)],
+        # Bathos (rank): rank + analytic_rank
+        "rank":       [(1, +1, 1.0), (2, +1, 0.8)],
+        # Arithmos (arithmetic): torsion, class_size, sha, num_int_pts
+        "arithmetic": [(3, +1, 1.0), (7, +1, 0.8), (10, +1, 0.7), (11, +1, 0.6)],
+        # Phasma (spectral): faltings_height, szpiro_ratio, abc_quality, regulator
+        "spectral":   [(12, +1, 1.0), (14, +1, 0.9), (13, +1, 0.8), (4, +1, 0.7)],
+        # Symmetria: CM discriminant, semistable
+        "symmetry":   [(5, +1, 0.7), (15, +1, 0.5)],
+    },
+    "artin": {
+        # Artin representations (5 features from LMFDB Postgres):
+        # features: [log_conductor, dimension, Galn, Galt, indicator]
+        # Megethos (complexity): log_conductor
+        "complexity": [(0, +1, 1.0), (2, +1, 0.7), (3, +1, 0.6)],  # conductor + Galois group size
+        # Bathos (rank): dimension
+        "rank":       [(1, +1, 1.0)],
+        # Symmetria: indicator (Frobenius-Schur: +1=orthogonal, 0=complex, -1=symplectic)
+        "symmetry":   [(4, +1, 1.0)],
+        # Taxis -> complexity: Galn, Galt encode Galois group structure
+        # (Also mapped under complexity above for Galois group order/transitive number)
+    },
 }
 
 
