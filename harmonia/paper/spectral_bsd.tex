@@ -13,8 +13,8 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{conjecture}{Conjecture}
 
-\title{Spectral Encoding of Arithmetic Invariants:\\
-  Three Independent Channels in L-Function Zeros}
+\title{Spectral Encoding of Arithmetic Invariants\\
+  in L-Function Zeros}
 
 \author[1]{James Craig}
 \affil[1]{JFI Research}
@@ -24,7 +24,7 @@
 \maketitle
 
 \begin{abstract}
-We report a systematic computational investigation of the relationship between L-function zero statistics and arithmetic invariants of elliptic curves, using 31,073 curves with stored zeros and 3.8 million curves from the LMFDB database. After an adversarial falsification campaign that killed 18 cross-domain statistical claims and established 10 negative dimensions, we find that L-function zeros encode arithmetic invariants through three independent spectral channels: (1)~the first zero height $\gamma_1$ predicts rank with 92.1\% accuracy; (2)~the gap distribution (mean spacing, variance, skewness) predicts isogeny class size with $R^2 = 0.249$; and (3)~higher-order spacing ratios predict the order of the Shafarevich--Tate group with $R^2 = 0.067$. The class size signal survives conductor-matched permutation controls ($z = -29.3$), local reduction conditioning ($\rho = -0.113$, $p = 1.89 \times 10^{-86}$), and a synthetic null test with 0\% false positive rate across 800 trials. It decays as $N^{-0.464}$, consistent with random matrix theory finite-size corrections. The rank-${\geq}2$ fraction follows a logistic growth law ($R^2 = 0.995$) with predicted saturation at 13.7\%, compatible with the Goldfeld conjecture. All findings are calibrated against seven known theorems verified at 100.000\% across 3.8 million curves, and subjected to a 38-test adversarial battery.
+We report a systematic computational investigation of the relationship between L-function zero statistics and arithmetic invariants of elliptic curves, using 31,073 curves with stored zeros and 3.8 million curves from the LMFDB database. After an adversarial falsification campaign that killed 18 cross-domain statistical claims and established 10 negative dimensions, we find that L-function zeros encode arithmetic invariants through two robust spectral channels and one marginal binary signal: (1)~the first zero height $\gamma_1$ predicts rank with 92.1\% accuracy; (2)~the gap distribution (mean spacing, variance, skewness) predicts isogeny class size with $R^2 = 0.249$; and (3)~gap statistics weakly distinguish trivial from nontrivial Shafarevich--Tate group (AUC $= 0.658$), though they cannot predict Sha magnitude within the nontrivial subset. These channels are informationally independent (mutual information $\approx 0$ between targets) despite using partially overlapping spectral features (prediction cross-correlation up to $\rho = 0.45$). The class size signal survives conductor-matched permutation controls ($z = -29.3$), local reduction conditioning ($\rho = -0.113$, $p = 1.89 \times 10^{-86}$), and a synthetic null test with 0\% false positive rate across 800 trials. It decays as $N^{-0.464}$, consistent with random matrix theory finite-size corrections. The rank-${\geq}2$ fraction shows decelerating growth consistent with the Goldfeld conjecture, though the saturation level has not converged within our conductor range ($N \leq 500{,}000$). All findings are calibrated against seven known theorems verified at 100.000\% across 3.8 million curves, and subjected to a 38-test adversarial battery.
 \end{abstract}
 
 %% ============================================================
@@ -256,37 +256,41 @@ Spectral + conductor (Ridge) & 0.074 \\
 
 Spectral features predict class size at $R^2 = 0.249$---10$\times$ the conductor baseline. The gradient boosting model captures nonlinear relationships that linear regression misses. The dominant features are mean gap (8.5\%), zero variance (8.0\%), and zero skewness (7.9\%): the \emph{shape} of the gap distribution, not any single spacing.
 
-\subsection{Sha prediction (rank-0 only)}
+\subsection{Sha signal (rank-0 only)}
 
 \begin{center}
-\begin{tabular}{lr}
+\begin{tabular}{llr}
 \toprule
-\textbf{Model} & \textbf{$R^2$} \\
+\textbf{Model} & \textbf{Metric} & \textbf{Value} \\
 \midrule
-Conductor only & 0.004 \\
-Spectral only (Ridge) & 0.013 \\
-\textbf{Spectral only (gradient boosting)} & \textbf{0.067} \\
+Binary classifier (Sha${}=1$ vs Sha${}>1$) & AUC & 0.658 \\
+Continuous predictor (all rank-0) & $R^2$ & 0.050 \\
+Continuous predictor (Sha ${}>1$ only) & $R^2$ & $-0.061$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The weakest channel but nonzero. Critically, the features that predict Sha are \emph{different} from those that predict rank or class size: spacing ratios (ratio$_4$: 6.6\%), gap$_3$ (6.5\%), and max gap (6.0\%). Sha lives in the higher-order spacing structure.
+The Sha signal is a weak binary classifier, not a continuous predictor. Spectral features can modestly distinguish trivial Sha (93.4\% of rank-0 curves) from nontrivial Sha (6.6\%), but have no predictive power for Sha magnitude within the nontrivial subset ($R^2 = -0.061$, worse than predicting the mean). The features most predictive of the binary split are max gap ($\rho = -0.097$) and gap standard deviation ($\rho = -0.087$): curves with more uniform zero spacing are slightly more likely to have nontrivial Sha.
 
-\subsection{Three independent spectral channels}
+This distinction tracks with the arithmetic: trivial vs nontrivial Sha is a qualitative structural property (whether the curve has invisible local-global obstructions), while Sha magnitude is a quantitative measure of severity. The zeros appear to encode the former but not the latter.
+
+\subsection{Informationally independent, spectrally overlapping}
 
 \begin{center}
-\begin{tabular}{lll}
+\begin{tabular}{llll}
 \toprule
-\textbf{Arithmetic invariant} & \textbf{Spectral channel} & \textbf{Dominant feature} \\
+\textbf{Arithmetic invariant} & \textbf{Spectral channel} & \textbf{Dominant feature} & \textbf{Strength} \\
 \midrule
-Rank & First zero position & $\gamma_1$ \\
-Isogeny class size & Gap distribution shape & mean gap, variance, skewness \\
-Sha & Higher-order spacing ratios & ratio$_4$, gap$_3$, max gap \\
+Rank & First zero position & $\gamma_1$ & 92.1\% accuracy \\
+Isogeny class size & Gap distribution shape & mean gap, variance, skewness & $R^2 = 0.249$ \\
+Sha (binary) & Gap uniformity & max gap, gap std & AUC $= 0.658$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-These channels are approximately independent: removing $\gamma_1$ from the class size model has negligible effect ($< 1\%$ $R^2$ change), and the features important for Sha prediction (spacing ratios) are unimportant for rank ($< 0.1\%$ importance).
+The arithmetic targets are genuinely independent: mutual information between rank and Sha is 0.000, between class size and Sha is 0.000, and between rank and class size is 0.022 nats. However, the spectral predictions are correlated ($\rho = -0.45$ between rank and class size predictions), because the models read from overlapping regions of the zero spectrum.
+
+The critical test: adding the rank channel's predictions to the class size model produces $R^2$ change of $-0.003$---zero information gain. The prediction correlation is structural (shared sensitivity to $\gamma_1$ and zero variance) rather than informational (they are not learning the same thing). This is analogous to two signals occupying the same frequency band but modulated on orthogonal carriers.
 
 %% ============================================================
 \section{Goldfeld Conjecture: Quantitative Constraints}
@@ -329,9 +333,9 @@ Power law: $a N^b$ & 0.925 \\
 \end{tabular}
 \end{center}
 
-The logistic model ($R^2 = 0.995$) predicts saturation at $L = 13.7\%$ with midpoint at conductor $10^{4.23} \approx 17{,}000$. The growth is already decelerating.
+The logistic model ($R^2 = 0.995$) fits best, but the fitted saturation level is sensitive to conductor range: it rises from 10.2\% ($N \leq 50{,}000$) to 13.7\% ($N \leq 500{,}000$) and has not converged. The growth is genuinely decelerating---the second derivative is negative and the slope ratio (late/early) is $0.97\times$---but the true asymptote remains unknown.
 
-This is \textbf{Goldfeld-compatible}: if rank-${\geq}2$ saturates at 13.7\%, the remaining 86.3\% are rank 0--1, and their ratio can approach 50/50 asymptotically. The logarithmic model ($R^2 = 0.980$) predicts unbounded growth and is Goldfeld-incompatible.
+This is \textbf{consistent with Goldfeld}: the deceleration is real evidence that rank-${\geq}2$ growth is slowing, but we cannot pin down where it stops. Extended data above $N = 10^6$ would be decisive, as the logistic and logarithmic models diverge dramatically (13.7\% vs 28.2\% at $N = 10^9$).
 
 \subsection{Extrapolation}
 
@@ -445,7 +449,7 @@ Our results show that L-function zeros carry arithmetic information in structure
 \begin{enumerate}[nosep]
   \item \textbf{First zero position} ($\gamma_1$) encodes \textbf{rank}. This is a direct spectral consequence of BSD: the order of vanishing determines how far the first nontrivial zero sits from the critical point.
   \item \textbf{Gap distribution shape} (mean spacing, variance, skewness) encodes \textbf{isogeny class size}. This is a finite-size spectral effect: greater Hecke orbit multiplicity produces stronger eigenvalue repulsion, decaying as $N^{-1/2}$.
-  \item \textbf{Higher-order spacing ratios} encode \textbf{Sha}. This is the weakest channel but uses features orthogonal to the other two, suggesting an independent encoding.
+  \item \textbf{Gap uniformity} weakly encodes \textbf{whether Sha is trivial} (AUC $= 0.658$). The zeros distinguish the qualitative structural property (local-global obstructions exist or not) but do not predict the quantitative severity. This is a marginal binary signal, not a continuous channel.
 \end{enumerate}
 
 \subsection{The negative space}
@@ -471,11 +475,11 @@ Our empirical finding---that arithmetic invariants perturb an underlying univers
 \section{Conclusion}
 %% ============================================================
 
-L-function zeros encode arithmetic invariants of elliptic curves through three independent spectral channels. This encoding survives aggressive adversarial testing, including 18 kills of alternative explanations, synthetic null validation at 0\% false positive rate, and smooth degradation under perturbation.
+L-function zeros encode arithmetic invariants of elliptic curves through two robust spectral channels and one marginal binary signal, informationally independent despite spectral overlap. This encoding survives aggressive adversarial testing, including 18 kills of alternative explanations, synthetic null validation at 0\% false positive rate, and smooth degradation under perturbation.
 
-The rank channel ($\gamma_1$ predicts rank at 92.1\%) is a direct spectral manifestation of BSD. The class size channel (gap distribution predicts class size at $R^2 = 0.249$) is a finite-size spectral effect consistent with Hecke orbit multiplicity perturbing eigenvalue repulsion. The Sha channel (higher-order ratios predict Sha at $R^2 = 0.067$) is weaker but spectrally orthogonal to the other two.
+The rank channel ($\gamma_1$ predicts rank at 92.1\%) is a direct spectral manifestation of BSD. The class size channel (gap distribution predicts class size at $R^2 = 0.249$) is a finite-size spectral effect consistent with Hecke orbit multiplicity perturbing eigenvalue repulsion. The Sha signal (AUC $= 0.658$ for trivial vs nontrivial) is a faint binary distinction---the zeros encode whether local-global obstructions exist, but not their magnitude.
 
-The rank-${\geq}2$ growth law follows a logistic curve ($R^2 = 0.995$) with predicted saturation at 13.7\%, providing quantitative evidence compatible with the Goldfeld conjecture.
+The rank-${\geq}2$ fraction shows decelerating growth (negative second derivative, slope ratio $0.97\times$) consistent with the Goldfeld conjecture, though the saturation level has not converged within our conductor range.
 
 These results suggest that the spectral theory of L-functions, particularly the finite-size corrections to random matrix universality, is the correct framework for understanding how arithmetic invariants are encoded in analytic data. The computational instrument developed here---a falsification-first exploration engine with a 38-test adversarial battery, 3.8 million curves, and systematic synthetic null validation---may be applicable to other spectral problems in arithmetic geometry.
 

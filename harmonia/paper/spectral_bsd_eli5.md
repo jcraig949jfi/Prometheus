@@ -58,9 +58,9 @@ Dad found that the zeros carry three different kinds of secret information, like
 - Curves whose "family" is bigger (more siblings) have their silent moments spaced further apart
 - This is like saying: curves with more cousins have a different rhythm
 
-**Station 3: What's the pattern in the gaps?**
-- The way the gaps between silent moments relate to each other can tell you about Sha -- that mysterious "difficulty" number
-- This is the quietest radio station, but it's definitely there
+**Station 3: Is there something hiding?**
+- Station 3 is very faint -- Dad can barely hear whether Sha is there or not, but can't yet tell how big it is
+- It's a whisper, not a voice: the gaps can tell you "yes, there's something tricky about this curve" or "no, this one is straightforward" -- but not *how* tricky
 
 ### Step 3: Make sure it's real
 
