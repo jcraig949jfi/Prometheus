@@ -311,7 +311,7 @@ def load_modular_forms(db_path: Optional[Path] = None) -> DomainIndex:
         SELECT lmfdb_label, level, weight, dim, char_order, char_parity
         FROM modular_forms
         WHERE level IS NOT NULL
-        LIMIT 50000
+        LIMIT 100000
     """).fetchall()
     db.close()
 
@@ -340,7 +340,7 @@ def load_dirichlet_zeros(db_path: Optional[Path] = None) -> DomainIndex:
         SELECT lmfdb_url, conductor, degree, rank, n_zeros_stored, motivic_weight
         FROM dirichlet_zeros
         WHERE conductor IS NOT NULL
-        LIMIT 50000
+        LIMIT 100000
     """).fetchall()
     db.close()
 
@@ -652,7 +652,7 @@ def load_battery() -> DomainIndex:
     return DomainIndex("battery", labels, features)
 
 
-def load_bianchi_forms(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+def load_bianchi_forms(path: Optional[Path] = None, limit: int = 100000) -> DomainIndex:
     """Load Bianchi modular forms — automorphic forms over imaginary quadratic fields."""
     path = path or CARTOGRAPHY / "convergence" / "data" / "bianchi_forms.json"
     with open(path) as f:
@@ -679,7 +679,7 @@ def load_bianchi_forms(path: Optional[Path] = None, limit: int = 50000) -> Domai
     return DomainIndex("bianchi", labels, features)
 
 
-def load_groups(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+def load_groups(path: Optional[Path] = None, limit: int = 100000) -> DomainIndex:
     """Load abstract groups from GAP SmallGrp library."""
     path = path or CARTOGRAPHY / "groups" / "data" / "abstract_groups.json"
     with open(path) as f:
@@ -721,7 +721,7 @@ def load_belyi(path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("belyi", labels, features)
 
 
-def load_oeis(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+def load_oeis(path: Optional[Path] = None, limit: int = 100000) -> DomainIndex:
     """
     Load OEIS sequences with statistical features computed from terms.
     Each sequence becomes an object with features: growth rate, entropy,
@@ -776,7 +776,7 @@ def load_oeis(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
     return DomainIndex("oeis", labels, features)
 
 
-def load_charon_landscape(db_path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+def load_charon_landscape(db_path: Optional[Path] = None, limit: int = 100000) -> DomainIndex:
     """
     Load the Charon embedding landscape — 119K objects with 16D coordinates,
     local curvature, and cluster assignments. This is a pre-computed
@@ -1358,6 +1358,364 @@ def load_pdg_particles(path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("pdg_particles", labels, features)
 
 
+def load_padic_sigs(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load p-adic valuation signatures — Newton polygon features for primes 2,3,5,7,11.
+
+    Features capture the p-adic landscape of mathematical objects:
+    n_segments, min/max valuation, total_width for each prime.
+    Phoneme: Topos (place/locality).
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "padic_signatures.jsonl"
+
+    primes = ["2", "3", "5", "7", "11"]
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("id", str(len(labels))))
+
+            padic = rec.get("padic", {})
+            feat = []
+            for p in primes:
+                pd = padic.get(p, {})
+                feat.append(float(pd.get("n_segments") or 0))
+                feat.append(float(pd.get("min_valuation") or 0))
+                feat.append(float(pd.get("max_valuation") or 0))
+                feat.append(float(pd.get("total_width") or 0))
+            # 20 features from 5 primes x 4 stats -- trim to 10 most informative
+            # Keep: n_segments and max_valuation for each prime (2 per prime = 10)
+            feat_trimmed = []
+            for i, p in enumerate(primes):
+                feat_trimmed.append(feat[i * 4 + 0])  # n_segments
+                feat_trimmed.append(feat[i * 4 + 2])  # max_valuation
+            feats.append(feat_trimmed)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("padic_sigs", labels, features)
+
+
+def load_info_theoretic(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load information-theoretic signatures — Shannon entropy, compression ratios,
+    LZ complexity for OEIS sequences.
+
+    Phoneme: Auxesis (growth).
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "info_theoretic_signatures.jsonl"
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("id", str(len(labels))))
+
+            feat = [
+                float(rec.get("entropy", 0)),
+                float(rec.get("compression_ratio", 0)),
+                float(rec.get("lz_complexity", 0)),
+                float(rec.get("diff_entropy", 0)),
+                float(rec.get("n_terms", 0)),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("info_theoretic", labels, features)
+
+
+def load_fractional_deriv(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load fractional derivative signatures — fractional calculus invariants
+    evaluated at multiple fractional orders and evaluation points.
+
+    Features: 9 entries of the signature_vector (fractional derivatives at
+    3 alpha values x 3 evaluation points).
+    Phoneme: Phasma (spectral).
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "fractional_derivative_signatures.jsonl"
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("id", str(len(labels))))
+
+            sig_vec = rec.get("signature_vector", [])
+            # Pad/truncate to 9 entries
+            sig_padded = (list(sig_vec) + [0.0] * 9)[:9]
+            feat = [float(v) if v is not None else 0.0 for v in sig_padded]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("fractional_deriv", labels, features)
+
+
+def load_functional_eq(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load functional equation classification signatures — reflection, shift,
+    scaling, multiplicative, and duplication symmetry detection.
+
+    Phoneme: Symmetria.
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "functional_equation_signatures.jsonl"
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("hash", str(len(labels))))
+
+            feat = [
+                float(rec.get("has_reflection", False)),
+                float(rec.get("has_shift", False)),
+                float(rec.get("has_scaling", False)),
+                float(rec.get("has_multiplicative", False)),
+                float(rec.get("has_duplication", False)),
+                float(rec.get("n_reflections", 0)),
+                float(rec.get("n_shifts", 0)),
+                float(rec.get("n_scalings", 0)),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("functional_eq", labels, features)
+
+
+def load_resurgence(path: Optional[Path] = None, limit: int = 50000) -> DomainIndex:
+    """
+    Load resurgence / Borel summability signatures — radius of convergence,
+    Gevrey order, divergence rate, growth rate from OEIS sequences.
+
+    Phoneme: Phasma (spectral).
+    """
+    path = path or CARTOGRAPHY / "convergence" / "data" / "resurgence_signatures.jsonl"
+
+    labels, feats = [], []
+    with open(path) as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            labels.append(rec.get("id", str(len(labels))))
+
+            sig = rec.get("signature", rec)  # data is nested under "signature" key
+            feat = [
+                float(sig.get("radius_of_convergence") or 0),
+                float(sig.get("radius_root_test") or 0),
+                float(sig.get("radius_ratio_test") or 0),
+                float(sig.get("gevrey_order") or 0),
+                float(sig.get("gevrey_fit_r2") or 0),
+                float(sig.get("is_borel_summable") or 0),
+                float(sig.get("divergence_rate") or 0),
+                float(sig.get("growth_rate_tail") or 0),
+                float(sig.get("n_terms") or 0),
+            ]
+            feats.append(feat)
+
+            if len(feats) >= limit:
+                break
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("resurgence", labels, features)
+
+
+def load_disagreement(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load disagreement atlas from Charon DuckDB.
+
+    Objects where different analysis methods disagreed. Features capture
+    the nature and extent of disagreement: conductor, rank, torsion, CM flag,
+    jaccard similarity, precision, recall, zero coherence, graph degree,
+    component size, neighbor counts, and overlap.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT label, conductor, rank, torsion, cm,
+               jaccard, precision_score, recall_score, zero_coherence,
+               graph_degree, component_size, n_zero_nn, n_graph_nn, n_overlap,
+               disagreement_type
+        FROM disagreement_atlas
+        WHERE label IS NOT NULL
+    """).fetchall()
+    db.close()
+
+    # Encode disagreement_type as numeric
+    type_map = {"A": 0.0, "B": 1.0, "C": 2.0, "D": 3.0}
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(row[0])
+        feat = [
+            np.log1p(float(row[1] or 0)),    # log_conductor
+            float(row[2] or 0),               # rank
+            float(row[3] or 0),               # torsion
+            float(row[4] or 0),               # cm flag
+            float(row[5] or 0),               # jaccard
+            float(row[6] or 0),               # precision_score
+            float(row[7] or 0),               # recall_score
+            float(row[8] or 0),               # zero_coherence
+            float(row[9] or 0),               # graph_degree
+            float(row[10] or 0),              # component_size
+            float(row[11] or 0),              # n_zero_nn
+            float(row[12] or 0),              # n_graph_nn
+            float(row[13] or 0),              # n_overlap
+            type_map.get(row[14], 0.0),       # disagreement_type encoded
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("disagreement", labels, features)
+
+
+def load_knowledge_graph(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load knowledge graph summary statistics per object from Charon DuckDB.
+
+    Computes per-object features from graph_edges: degree, mean weight,
+    and fraction of edges by type (isogeny, modularity, twist).
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT
+            source_label,
+            COUNT(*) AS degree,
+            AVG(weight) AS mean_weight,
+            SUM(CASE WHEN edge_type = 'isogeny' THEN 1 ELSE 0 END) AS n_isogeny,
+            SUM(CASE WHEN edge_type = 'modularity' THEN 1 ELSE 0 END) AS n_modularity,
+            SUM(CASE WHEN edge_type = 'twist' THEN 1 ELSE 0 END) AS n_twist
+        FROM graph_edges
+        WHERE source_label IS NOT NULL
+        GROUP BY source_label
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(row[0])
+        degree = float(row[1] or 0)
+        mean_weight = float(row[2] or 0)
+        n_isogeny = float(row[3] or 0)
+        n_modularity = float(row[4] or 0)
+        n_twist = float(row[5] or 0)
+        total = max(degree, 1.0)
+        feat = [
+            np.log1p(degree),                  # log_degree
+            mean_weight,                       # mean_weight
+            n_isogeny / total,                 # frac_isogeny
+            n_modularity / total,              # frac_modularity
+            n_twist / total,                   # frac_twist
+            np.log1p(n_isogeny),               # log_n_isogeny
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("knowledge_graph", labels, features)
+
+
+def load_bridges(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load known cross-domain bridges from Charon DuckDB.
+
+    Features per source object: number of bridges, whether verified,
+    and bridge type encoding.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT
+            source_label,
+            COUNT(*) AS n_bridges,
+            SUM(CASE WHEN verified THEN 1 ELSE 0 END) AS n_verified,
+            SUM(CASE WHEN bridge_type = 'modularity' THEN 1 ELSE 0 END) AS n_modularity
+        FROM known_bridges
+        WHERE source_label IS NOT NULL
+        GROUP BY source_label
+    """).fetchall()
+    db.close()
+
+    labels, feats = [], []
+    for row in rows:
+        labels.append(row[0])
+        n_bridges = float(row[1] or 0)
+        n_verified = float(row[2] or 0)
+        n_modularity = float(row[3] or 0)
+        feat = [
+            np.log1p(n_bridges),               # log_n_bridges
+            n_verified / max(n_bridges, 1.0),   # verified_fraction
+            n_modularity / max(n_bridges, 1.0), # modularity_fraction
+            n_bridges,                          # raw bridge count
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("bridges", labels, features)
+
+
+def load_lmfdb_objects(db_path: Optional[Path] = None) -> DomainIndex:
+    """Load LMFDB objects with invariant vectors from Charon DuckDB.
+
+    The invariant_vector is a 50-dimensional float vector capturing deep
+    arithmetic invariants. We also extract conductor and completeness scores.
+    """
+    import duckdb
+    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
+    db = duckdb.connect(str(db_path), read_only=True)
+    rows = db.sql("""
+        SELECT lmfdb_label, conductor, invariant_vector,
+               coefficient_completeness, zeros_completeness, object_type
+        FROM objects
+        WHERE invariant_vector IS NOT NULL
+    """).fetchall()
+    db.close()
+
+    # Encode object_type
+    type_map = {"elliptic_curve": 0.0, "modular_form": 1.0, "genus2_curve": 2.0}
+
+    labels, feats = [], []
+    for row in rows:
+        label = row[0] or str(len(labels))
+        conductor = float(row[1] or 0)
+        inv_vec = row[2]  # list of 50 floats
+        coeff_comp = float(row[3] or 0)
+        zeros_comp = float(row[4] or 0)
+        obj_type = type_map.get(row[5], -1.0)
+
+        # Build feature vector: log_conductor + invariant_vector(50) +
+        # completeness(2) + object_type(1) = 54 features
+        feat = [np.log1p(conductor)] + [float(v or 0) for v in inv_vec] + [
+            coeff_comp,
+            zeros_comp,
+            obj_type,
+        ]
+        labels.append(label)
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("lmfdb_objects", labels, features)
+
+
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
@@ -1389,6 +1747,15 @@ DOMAIN_LOADERS = {
     "chemistry": load_chemistry,
     "codata": load_codata,
     "pdg_particles": load_pdg_particles,
+    "padic_sigs": load_padic_sigs,
+    "info_theoretic": load_info_theoretic,
+    "fractional_deriv": load_fractional_deriv,
+    "functional_eq": load_functional_eq,
+    "resurgence": load_resurgence,
+    "disagreement": load_disagreement,
+    "knowledge_graph": load_knowledge_graph,
+    "bridges": load_bridges,
+    "lmfdb_objects": load_lmfdb_objects,
 }
 
 

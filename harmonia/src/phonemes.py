@@ -220,6 +220,84 @@ DOMAIN_PHONEME_MAP = {
         "rank":       [(6, +1, 0.8), (7, +1, 0.8), (8, +1, 0.8)],  # quark content = compositeness/rank
         "arithmetic": [(9, +1, 0.6), (10, +1, 0.7)],  # radial excitation + hadron flag
     },
+    "padic_sigs": {
+        # Topos (place/locality): p-adic valuations encode local structure at each prime.
+        # features: [n_seg_2, max_val_2, n_seg_3, max_val_3, n_seg_5, max_val_5,
+        #            n_seg_7, max_val_7, n_seg_11, max_val_11]  (10 features)
+        "arithmetic": [(1, +1, 1.0), (3, +1, 0.9), (5, +1, 0.8),
+                       (7, +1, 0.7), (9, +1, 0.6)],   # max_valuation at each prime = p-adic arithmetic
+        "complexity": [(0, +1, 0.8), (2, +1, 0.7), (4, +1, 0.6)],  # n_segments = Newton polygon complexity
+    },
+    "info_theoretic": {
+        # Auxesis (growth): entropy and compression measure information growth/density.
+        # features: [entropy, compression_ratio, lz_complexity, diff_entropy, n_terms]
+        "complexity": [(0, +1, 1.0), (3, +1, 0.9)],   # entropy + diff_entropy = information complexity
+        "rank":       [(2, +1, 0.8)],                  # lz_complexity ~ structural richness
+        "arithmetic": [(1, +1, 0.7)],                  # compression_ratio = redundancy structure
+    },
+    "fractional_deriv": {
+        # Phasma (spectral): fractional derivatives probe spectral structure at non-integer orders.
+        # features: 9 entries of signature_vector (3 alphas x 3 eval points)
+        "spectral":   [(0, +1, 1.0), (1, +1, 0.9), (2, +1, 0.8),
+                       (3, +1, 0.7), (4, +1, 0.6), (5, +1, 0.5)],  # fractional spectral decomposition
+        "complexity": [(6, +1, 0.6), (7, +1, 0.5), (8, +1, 0.4)],  # higher-order fractional features
+    },
+    "functional_eq": {
+        # Symmetria: functional equations ARE symmetry — reflections, shifts, scalings.
+        # features: [has_reflection, has_shift, has_scaling, has_multiplicative,
+        #            has_duplication, n_reflections, n_shifts, n_scalings]
+        "symmetry":   [(0, +1, 1.0), (1, +1, 0.9), (2, +1, 0.8),
+                       (3, +1, 0.7), (4, +1, 0.6)],   # all symmetry type flags
+        "complexity": [(5, +1, 0.8), (6, +1, 0.7), (7, +1, 0.6)],  # counts of each symmetry type
+    },
+    "resurgence": {
+        # Phasma (spectral): Borel summability and Gevrey order are spectral/analytic invariants.
+        # features: [radius_convergence, radius_root, radius_ratio, gevrey_order,
+        #            gevrey_fit_r2, is_borel_summable, divergence_rate, growth_rate_tail, n_terms]
+        "spectral":   [(0, +1, 1.0), (1, +1, 0.9), (2, +1, 0.8),
+                       (3, +1, 1.0)],                  # convergence radii + Gevrey = spectral fingerprint
+        "complexity": [(6, +1, 0.8), (7, +1, 0.7)],   # divergence/growth rates = analytic complexity
+        "arithmetic": [(5, +1, 0.7)],                  # is_borel_summable = summability arithmetic
+    },
+    "disagreement": {
+        # Disagreement atlas: objects where analysis methods disagree.
+        # features: [log_conductor, rank, torsion, cm, jaccard, precision_score,
+        #            recall_score, zero_coherence, graph_degree, component_size,
+        #            n_zero_nn, n_graph_nn, n_overlap, disagreement_type]
+        "complexity": [(0, +1, 1.0)],                  # log_conductor = scale
+        "rank":       [(1, +1, 1.0)],                  # rank
+        "arithmetic": [(2, +1, 1.0), (3, +1, 0.7)],   # torsion + CM flag
+        "spectral":   [(4, +1, 0.9), (5, +1, 0.8), (6, +1, 0.8),
+                       (7, +1, 0.9)],                  # jaccard, precision, recall, zero_coherence
+        "symmetry":   [(13, +1, 0.5)],                 # disagreement_type as categorical symmetry
+    },
+    "knowledge_graph": {
+        # Knowledge graph per-object summary from graph_edges.
+        # features: [log_degree, mean_weight, frac_isogeny, frac_modularity,
+        #            frac_twist, log_n_isogeny]
+        "complexity": [(0, +1, 1.0)],                  # log_degree = connectivity complexity
+        "rank":       [(0, +1, 0.7)],                  # degree also measures structural richness
+        "spectral":   [(1, +1, 0.8)],                  # mean_weight = edge spectral fingerprint
+        "symmetry":   [(2, +1, 0.7), (4, +1, 0.6)],   # isogeny/twist fractions encode symmetry structure
+        "arithmetic": [(3, +1, 0.8)],                  # modularity fraction = arithmetic bridge
+    },
+    "bridges": {
+        # Known cross-domain bridges per source object.
+        # features: [log_n_bridges, verified_fraction, modularity_fraction, n_bridges]
+        "complexity": [(0, +1, 0.8)],                  # log_n_bridges = bridge complexity
+        "arithmetic": [(2, +1, 1.0)],                  # modularity_fraction = arithmetic connection
+        "symmetry":   [(1, +1, 0.6)],                  # verified_fraction as quality/symmetry proxy
+    },
+    "lmfdb_objects": {
+        # LMFDB objects with 50-dim invariant vectors.
+        # features: [log_conductor, inv_vec(50), coeff_completeness, zeros_completeness, object_type]
+        # The invariant vector spans all phoneme axes at once.
+        "complexity": [(0, +1, 1.0)],                  # log_conductor = scale
+        "spectral":   [(1, +1, 0.5), (2, +1, 0.5), (3, +1, 0.5),
+                       (4, +1, 0.5), (5, +1, 0.5)],   # first invariant components as spectral
+        "rank":       [(51, +1, 0.7)],                 # coeff_completeness ~ data richness
+        "arithmetic": [(52, +1, 0.7)],                 # zeros_completeness ~ analytic depth
+    },
 }
 
 
