@@ -1,5 +1,5 @@
-# What Dad Found: The Secret Music of Numbers
-### A guide for curious kids
+# The Secret Music of Numbers
+### A guide for the curious
 
 ---
 
@@ -9,7 +9,7 @@ Imagine you have a huge collection of special math shapes called **elliptic curv
 
 Mathematicians have wondered for a long time: **is there a hidden pattern that connects all these shapes together?**
 
-Dad built a computer system to find out.
+We built a computer system to find out.
 
 ---
 
@@ -31,13 +31,13 @@ These zeros aren't random. They follow rules, kind of like how musical notes fol
 
 ---
 
-## What Dad did
+## What we did
 
-Dad looked at the zeros of 31,073 curves and asked: **can you figure out a curve's personality just by listening to its song?**
+We looked at the zeros of 31,073 curves and asked: **can you figure out a curve's personality just by listening to its song?**
 
 ### Step 1: Try everything, trust nothing
 
-First, Dad tried 18 different ideas for finding hidden patterns. For each one, he built a special test designed to break it. Think of it like:
+First, we tried 18 different ideas for finding hidden patterns. For each one, we built a special test designed to break it. Think of it like:
 
 1. "Hey, I think I found a pattern!"
 2. "Okay, let me try to prove it's fake."
@@ -47,7 +47,7 @@ Only ONE pattern survived all the tests. That pattern was in the zeros -- the so
 
 ### Step 2: Listen to the song
 
-Dad found that the zeros carry three different kinds of secret information, like three radio stations broadcasting on different frequencies:
+The zeros carry three different kinds of secret information, like three radio stations broadcasting on different frequencies:
 
 **Station 1: Where does the first silent moment happen?**
 - If it happens early in the song, the curve probably has rank 0
@@ -59,34 +59,34 @@ Dad found that the zeros carry three different kinds of secret information, like
 - This is like saying: curves with more cousins have a different rhythm
 
 **Station 3: Is there something hiding?**
-- Station 3 is very faint -- Dad can barely hear whether Sha is there or not, but can't yet tell how big it is
+- Station 3 is very faint -- we can barely hear whether Sha is there or not, but can't yet tell how big it is
 - It's a whisper, not a voice: the gaps can tell you "yes, there's something tricky about this curve" or "no, this one is straightforward" -- but not *how* tricky
 
 ### Step 3: Make sure it's real
 
-Dad did something really important: he made **fake data** that looked realistic and ran the same tests on it. The fake data showed **nothing** -- 0% of the time did it fool the system. So the pattern in the real data is genuine, not a trick of the math.
+Here's the important part: we made **fake data** that looked realistic and ran the same tests on it. The fake data showed **nothing** -- 0% of the time did it fool the system. So the pattern in the real data is genuine, not a trick of the math.
 
-He also added static (noise) to the data. A fake pattern would break immediately, like a bad radio signal. But the real pattern faded slowly and smoothly, like turning down the volume -- still there, just quieter.
+We also added static (noise) to the data. A fake pattern would break immediately, like a bad radio signal. But the real pattern faded slowly and smoothly, like turning down the volume -- still there, just quieter.
 
 ---
 
 ## The million-dollar questions
 
-There are two super-famous math problems called the **Millennium Prize Problems**. Each one comes with a million-dollar prize for whoever solves them. Dad tested both:
+There are two super-famous math problems called the **Millennium Prize Problems**. Each one comes with a million-dollar prize for whoever solves them. We tested both:
 
 ### The Riemann Hypothesis
 "All the special silent moments in number songs happen on a single invisible line."
 
-Dad checked 703,345 zeros across 31,073 curves. Every single one sits right on that invisible line, exactly where the hypothesis says they should be. The spacing between zeros matches the predictions from physics (something called "random matrix theory") almost perfectly.
+We checked 703,345 zeros across 31,073 curves. Every single one sits right on that invisible line, exactly where the hypothesis says they should be. The spacing between zeros matches the predictions from physics (something called "random matrix theory") almost perfectly.
 
 **Result: Everything lines up. No violations found.**
 
 ### The BSD Conjecture
 "The number of secret solutions to a curve equals the number of times its song goes silent at a specific point."
 
-Dad checked this across **3.8 million curves**. Every single one matched. 3,824,372 out of 3,824,372.
+We checked this across **3.8 million curves**. Every single one matched. 3,824,372 out of 3,824,372.
 
-He also found something cool about how curves behave as they get more complicated:
+We also found something cool about how curves behave as they get more complicated:
 
 - Simple curves are usually rank 0 (no secret solutions)
 - As curves get more complicated, more of them are rank 1 or rank 2
@@ -104,7 +104,7 @@ Here's the really cool part:
 
 Three different things about a curve -- its rank, its family size, and its difficulty number (Sha) -- are encoded in three different parts of its song. And those three parts don't interfere with each other. It's like a chord where each note carries different information.
 
-This connects to something called the **Langlands program** -- one of the biggest ideas in modern math. It says that algebra (solving equations) and analysis (studying waves and functions) are secretly two views of the same thing. Dad's computer found evidence that this is true, by showing that the "wave" part (zeros) contains the "equation" part (rank, Sha, class size).
+This connects to something called the **Langlands program** -- one of the biggest ideas in modern math. It says that algebra (solving equations) and analysis (studying waves and functions) are secretly two views of the same thing. Our system found evidence that this is true, by showing that the "wave" part (zeros) contains the "equation" part (rank, Sha, class size).
 
 ---
 
@@ -123,8 +123,8 @@ This connects to something called the **Langlands program** -- one of the bigges
 
 ## In one sentence
 
-**The silent moments in a number's song secretly encode what kind of number it is -- and Dad proved it isn't a coincidence.**
+**The silent moments in a number's song secretly encode what kind of number it is -- and this isn't a coincidence.**
 
 ---
 
-*Written for the young and curious, April 2026*
+*Written for the curious, April 2026*
