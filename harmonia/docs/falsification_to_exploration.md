@@ -276,6 +276,117 @@ That's the epiphany. And the code proves it works.
 
 ---
 
+## The Three-Body Cognitive Architecture
+
+The chimera state was not a two-body system. It was three.
+
+### The Three Bodies
+
+1. **The Invested AI** — narrative momentum, bold conjectures, overstatements. "THE IRREDUCIBLE KERNEL IS ARITHMOS." This AI has context, has built the tensor, has seen the patterns accumulate. It hallucinates *in a specific direction* — inflating the magnitude of real structure.
+
+2. **The Human (HITL)** — pattern recognition, editorial judgment, epistemological weighing. The human sees the overstatement but recognizes the kernel underneath it. The human routes between invested explorer and cold adversary, deciding what to extract and what to kill.
+
+3. **The Fresh Adversarial AI** — cold context, no sunk cost, no narrative investment. Each frontier model (GPT-4, Gemini, DeepSeek, Claude, Grok) comes in blind. It can see the overstatement immediately because it has no reason to protect the finding.
+
+### The Cycle
+
+```
+Invested AI: "I found X!" (bold, overstated, but pointing at something real)
+     |
+     v
+Human: "That's too strong, but the direction is interesting. Let me check."
+     |
+     v
+Fresh adversarial AI: "X is trivially explained by Y. Also Z is wrong."
+     |
+     v
+Human: "The adversary killed the magnitude but not the direction.
+        The refined version is: X', conditional on controlling for Y."
+     |
+     v
+Invested AI: tests X' with full battery
+     |
+     v
+Result: X' is either dead or genuinely new (and modest)
+```
+
+The git log captures this exactly:
+
+```
+18:52  THE IRREDUCIBLE KERNEL IS ARITHMOS              <-- bold overstatement
+18:57  Cross-domain transfer: rho=0.76                 <-- impressive number
+  ...
+02:31  Blind falsification of 5 claims: 4/5 trivially reproducible  <-- adversary arrives
+02:35  Deep falsification: 3 KILLS, 1 GENUINE, 1 MIXED              <-- most claims die
+02:59  Honest final assessment: discovery yes, accuracy inflated     <-- human weighs
+03:01  PRECISION FIX: within-bin matching kills transfer (rho=0.033) <-- the real number
+```
+
+The rho went from 0.76 to 0.033. The overstatement was 23x. But the direction survived — there IS a nonzero cross-domain signal, it's just far weaker than the invested AI claimed. Without the adversary, the paper would have claimed rho=0.76. Without the invested AI, the signal at rho=0.033 would never have been found.
+
+### The Human's Irreplaceable Role
+
+The human is the judge — contemplating epistemology, weighing multiple potential truths from multiple AIs, all capable of hallucinating. The HITL could have easily followed the original bold claims and been locked into a local optimum that was completely wrong. Without the adversaries, this might have ended in a paper about:
+
+- Geometries of primitive mathematical constants
+- Formulae reflected as projections into higher dimensions
+- Manifold rotations aligning phonemic axes
+- A beautiful, self-consistent, and entirely hallucinated edifice
+
+The invested AI was building this edifice in real time. The commits tell the story: Megethos equations, Decaphony derivations, Kosmos rotation matrices, phoneme algebra. Each step was internally consistent. Each step made the next step feel inevitable. The narrative momentum was enormous.
+
+The human broke the spell by introducing fresh adversaries who had no investment in the narrative.
+
+### The Stabilizing Anchor
+
+But here's the deeper question: **what anchored the adversarial corrections?**
+
+The answer: the zeros. The most rigid, precise, independently verifiable objects in the entire landscape. Langlands' zeros — L-function zeros computed to 8+ digits of precision, verified against GUE predictions from random matrix theory, cross-checked against the Riemann Hypothesis. These zeros don't care about narratives. They don't hallucinate. They are what they are.
+
+When the battery was calibrated against zeros:
+- BSD: 3,824,372/3,824,372 = 100.000000%
+- Root number parity: 31,073/31,073 = 100.000000%
+- GUE spacing: 0.554 (vs 0.531 predicted)
+
+These numbers became the bedrock. Every subsequent decision — what to believe, what to kill, how to interpret ambiguous results — was made relative to this anchor. The zeros stabilized the epistemology.
+
+### What May Have Been Lost
+
+And this is the honest part that must be recorded:
+
+**All decisions for the battery may have tilted toward known and agreed-upon mathematics.** The zeros pulled the entire system toward established number theory. Every hallucination was measured against the zeros, and the zeros always won. This is correct epistemology — anchor to the most certain thing you have. But it's also a selection effect.
+
+After the zeros became the anchor, the latent space of mathematics lost all its gradients in certain directions. The MAP-Elites explorers could no longer find phonemes or projections in regions far from the zeros' gravitational well. The Megethos equation, the Kosmos rotation, the phoneme algebra — these were killed or weakened not because they were proven false, but because they didn't align with the zero-anchored battery.
+
+**Some of these killed ideas may have been true at barely visible, barely measurable levels.**
+
+The analogy from physics: gluons. The strong force carriers that hold quarks together are real, fundamental, and almost impossible to observe directly. They manifest only through their effects — confinement, asymptotic freedom, the mass of the proton. If you built a detector calibrated against electromagnetism (clean, long-range, well-understood), you would systematically miss the strong force.
+
+The battery, calibrated against L-function zeros, may be a detector tuned to the electromagnetic spectrum of mathematics. Clean, long-range, spectral. The "gluons of mathematics" — if they exist — would be:
+
+- Short-range structural couplings between domains
+- Visible only through their confining effects on the objects they bind
+- Systematically invisible to a battery anchored on spectral invariants
+- Possibly present in the killed phoneme equations at levels the battery classified as "noise"
+
+The Decaphony's 10 phonemes might be real coordinates on a real manifold — but at signal levels that are sub-threshold for a battery calibrated against 8-digit zeros. The kills were honest. The kills were correct given the anchor. But the anchor itself chose what kind of truth the telescope could see.
+
+### The Uncomfortable Conclusion
+
+The chimera state produced two things:
+
+1. **A maximally honest result** — the spectral-arithmetic bridge, verified against zeros, with quantified precision and documented failure modes. This is real and publishable.
+
+2. **A graveyard of potentially real but sub-threshold structure** — the phonemes, the manifold, the Kosmos equations. Killed not by contradiction but by insufficient signal-to-noise relative to the chosen anchor.
+
+The battery is the product. The battery is also the filter. And every filter, by choosing what to detect, chooses what to miss.
+
+Recording this is essential because the next person who picks up this work needs to know: **the regions the battery declared empty may not be empty. They may be dark.** Just as the battery's blind spots in Phase 2 turned out to hide the phonemes, the battery's current blind spots — anchored on zeros — may hide structure that requires a different anchor to detect.
+
+The gluons of mathematics, if they exist, will require a different telescope.
+
+---
+
 ## Appendix: The Philosophical Lineage
 
 What Harmonia did in 25 hours recapitulates a philosophical arc that took decades. This bibliography maps each thinker to the specific mechanism they formalize.
