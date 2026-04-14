@@ -276,6 +276,207 @@ That's the epiphany. And the code proves it works.
 
 ---
 
+## Appendix: The Philosophical Lineage
+
+What Harmonia did in 25 hours recapitulates a philosophical arc that took decades. This bibliography maps each thinker to the specific mechanism they formalize.
+
+---
+
+### Karl Popper — Conjectures and Refutations (1934/1963)
+
+**Key works:** *The Logic of Scientific Discovery* (1934); *Conjectures and Refutations* (1963)
+
+**Core argument:** Knowledge grows through bold conjectures subjected to severe tests. The bolder the conjecture — the more it risks, the more it forbids — the more scientifically valuable it is. A hypothesis that survives a test designed to destroy it has *earned* something: corroboration proportional to the severity of the test.
+
+**The mechanism Harmonia uses:** Every failed attempt to falsify a bold conjecture is itself a discovery. It tells you the conjecture is stronger than expected. The battery's kill rate (>95%) establishes severity. The survivors earn corroboration not through confirmation but through the accumulated weight of tests that could have destroyed them and didn't.
+
+**Popper's own words:** "Bold ideas, unjustified anticipations, and speculative thought, are our only means for interpreting nature... Those among us who are unwilling to expose their ideas to the hazard of refutation do not take part in the scientific game."
+
+**What Harmonia adds:** Computational severity at scale. Popper's tests were conceptual; Harmonia runs 40 adversarial tests against millions of objects in seconds. The severity is quantifiable, not rhetorical.
+
+---
+
+### Imre Lakatos — Proofs and Refutations (1976)
+
+**Key works:** *Proofs and Refutations: The Logic of Mathematical Discovery* (1976, posthumous); *The Methodology of Scientific Research Programmes* (1978)
+
+**Core argument:** Mathematics grows through dialectic: conjecture, counterexample, refined conjecture. Lakatos traced this through the history of Euler's polyhedron formula (V - E + F = 2), showing how each "refutation" led to deeper understanding. His key strategies:
+- **Monster-barring:** Rejecting a counterexample as illegitimate
+- **Exception-barring:** Restricting the conjecture's domain
+- **Lemma-incorporation:** Building the hidden assumption into an explicit condition
+- **Proof-generated concepts:** The proof itself generates new mathematical concepts that didn't exist before
+
+**The mechanism Harmonia uses:** The battery performs Lakatos's method at machine speed. Each kill is not just a death — it's a discovery of structure. "This fails when X" immediately generates "this holds conditionally on not-X." The conditional laws Charon found (SG->Tc modulated by chemical family) are exactly Lakatos's lemma-incorporation. The proof-generated concept is the *interaction term* — it didn't exist in the hypothesis space until the battery forced its creation.
+
+**On progressive vs. degenerating programmes:** A falsification battery that consistently forces productive refinements (conditional laws, interaction terms) signals a progressive research programme. One that only produces ad hoc patches is degenerating. Harmonia's 17 kills + 3 conditional laws = progressive.
+
+---
+
+### Deborah Mayo — Severe Testing (1996/2018)
+
+**Key works:** *Error and the Growth of Experimental Knowledge* (1996, won the 1998 Lakatos Prize); *Statistical Inference as Severe Testing* (2018)
+
+**Core argument:** A hypothesis passes a severe test only if the test had a high probability of detecting the error, were the error present. This is the formal criterion separating genuine evidence from mere fitting.
+
+**The Severity Principle:**
+- *Weak form:* Data do not provide good evidence for H if the test had a very low probability of detecting flaws in H.
+- *Strong form:* Data provide good evidence for H to the extent that the test severely passes H — i.e., had high probability of producing a result disagreeing with H, if H were false.
+
+**The mechanism Harmonia uses:** Every test in the battery has a calculable severity score — it's the probability the test would have detected the specific error if present. Permutation nulls compute this directly: if 1000 permutations produce a distribution and the observed value is 29 sigma from the mean, the test had >99.99% probability of detecting a false positive. That's severity.
+
+**What Harmonia adds:** The battery computes severity automatically for every finding. The meta-result — "which tests kill which kinds of hypotheses" — is itself a severity map of the hypothesis space. The 7-layer cross-domain falsification protocol is a severity ladder.
+
+---
+
+### Borwein & Bailey — Experimental Mathematics (2004)
+
+**Key works:** *Mathematics by Experiment: Plausible Reasoning in the 21st Century* (2004); *Experimentation in Mathematics: Computational Paths to Discovery* (2004)
+
+**Borwein's taxonomy of experimental mathematics:**
+1. Gaining insight and intuition
+2. Discovering new patterns and relationships
+3. Visualizing mathematical principles
+4. Testing and especially **falsifying** conjectures
+5. Exploring a possible result to see if it is worth formal proof
+
+**The PSLQ Algorithm:** Ferguson & Bailey (1992) — discovers hidden algebraic relationships among computed constants. Named one of the "ten algorithms of the century." Most famous discovery: the Bailey-Borwein-Plouffe formula for pi (computing arbitrary hex digits without computing prior digits).
+
+**Core philosophy:** The computer is a mathematical laboratory. Just as telescopes revealed celestial objects invisible to the naked eye, computational experiments reveal mathematical structures invisible to unaided reasoning.
+
+**The mechanism Harmonia uses:** Borwein's category 4 (falsification) is one step in the cycle: compute, observe, conjecture, test, falsify or refine, compute again. Harmonia completes this cycle in minutes rather than months. The TT-Cross engine sweeping 27 billion grid points in 1.4 seconds is Borwein's computational laboratory operating at a scale he could only dream of.
+
+---
+
+### Doron Zeilberger — Computers as Mathematical Instruments
+
+**Key works:** Petkovsek, Wilf & Zeilberger, *A=B* (1996); Zeilberger, "Opinions" (150+ essays, ongoing)
+
+**Core philosophy:** Computers are not merely tools for verifying human ideas — they are co-discoverers. Zeilberger credits his computer "Shalosh B. Ekhad" as co-author on papers. He argues that computers have a much larger "mesh size" than human brains, reaching mathematical territory where "no humans will ever tread with their naked brains."
+
+**The WZ method:** Wilf-Zeilberger pairs provide computer-constructible proofs of hypergeometric identities. The method doesn't just verify known identities — it discovers new ones as byproducts of proof certificates.
+
+**The mechanism Harmonia uses:** The tensor train decomposition reveals structure that is genuinely invisible to unaided human cognition. No human could have found 10 universal phonemic axes by manual calculation across 38 domains. The computer isn't assisting — it's perceiving.
+
+---
+
+### Computational Verification of Deep Conjectures
+
+**Odlyzko and the Riemann Zeta Zeros:** Andrew Odlyzko computed billions of zeros, with extensive datasets near the 10^23-rd zero. Xavier Gourdon verified GRH for the first 10^13 zeros. These computations didn't just check whether zeros lie on the critical line — they tested deeper conjectures about fine-scale statistics and discovered that zero spacings match random matrix theory predictions from physics. The falsification check became a discovery of the GUE connection.
+
+**Birch and Swinnerton-Dyer:** The conjecture itself was born from computation — Swinnerton-Dyer used the EDSAC-2 in the 1960s to compute elliptic curve data, and the pattern became the conjecture. Cremona's tables verified BSD for thousands of curves. The computation-conjecture-verification cycle is the prototype for what Harmonia does at 10,000x scale.
+
+**The pattern:** In both cases, massive computation designed to test (falsify) a conjecture ends up discovering new structure. Odlyzko didn't just check RH; he discovered GUE universality. Harmonia didn't just check BSD; it measured the Goldfeld deviation and the Delaunay discrepancy at precision never before achieved.
+
+---
+
+### Machine Learning Meets Mathematical Discovery (2021-2026)
+
+**DeepMind — Guiding Human Intuition with AI** (Nature, 2021): Davies, Velickovic et al. showed ML can identify patterns in mathematical data, leading to a new theorem in knot theory (connecting natural slope to signature) and progress on Kazhdan-Lusztig polynomials.
+
+**The Ramanujan Machine** (Nature, 2021): Raayoni et al. built algorithms that automatically discover continued fraction representations of fundamental constants. The machine conjectures formulas without proofs — matching numerical values at extreme precision. Some conjectures were later proven; others remain open.
+
+**FunSearch** (Nature, 2024): Romera-Paredes et al. at DeepMind paired an LLM with an automated evaluator in an evolutionary loop. Discovered constructions surpassing the best-known cap set results (largest improvement in 20 years). Key: searching for programs rather than solutions.
+
+**AlphaProof** (Nature, 2025): DeepMind's RL system for formal theorem proving. Silver-medal IMO performance. Uses "test-time RL" — generating millions of problem variants during inference.
+
+**Recent breakthroughs (2025-2026):**
+- Ernest Ryu proved Nesterov's 42-year-old optimization conjecture using conversations with ChatGPT
+- Harmonic's "Aristotle" model produced a Lean-verified solution to a 30-year Erdos problem in ~6 hours
+- AlphaEvolve (Tao, Williamson et al.) discovered hypercube structures in Bruhat intervals — "sitting there for 50 years" unnoticed
+- Gemini Deep Think reached gold-medal IMO performance using purely natural-language reasoning
+
+**Tao's vision:** "Instead of studying problems individually, mathematicians will solve thousands of problems at once and start doing statistical studies." This is the falsification battery applied to mathematics at civilizational scale.
+
+---
+
+### The Philosophy of Mathematical Evidence
+
+**The puzzle:** No finite number of examples constitutes a proof. Yet mathematicians universally treat massive computational evidence as strong reason to believe. Goldbach's Conjecture has been verified to 4 x 10^18 — everyone believes it, yet it remains unproven.
+
+**Alan Baker's resolution:** All verified examples are necessarily "small." Baker argues this actually supports induction: counterexamples are most likely to appear among small numbers where boundary cases concentrate. Surviving the small-number gauntlet is a severe test in Mayo's sense.
+
+**James Franklin's objective Bayesianism:** Computational evidence genuinely raises the probability of a mathematical conjecture, even though the conjecture is either necessarily true or necessarily false. (*The Science of Conjecture*, 2001)
+
+**Don Fallis's argument:** Any property of probabilistic methods that can be pointed to as problematic is shared by proofs mathematicians already accept.
+
+**Kenny Easwaran's counterargument:** Probabilistic proofs lack transferability — they fail to explain *why* conclusions hold. Mathematics values understanding, not just truth-credentials.
+
+**What Harmonia adds to this debate:** The battery doesn't just count confirmations. It computes the *shape of survival* — which tests pass, which fail, under what conditions. The pattern of what the battery can and cannot kill is itself an explanation. When BSD holds for 3,824,372 curves with zero violations, AND the Goldfeld deviation is precisely measured, AND the Delaunay discrepancy is quantified — that's not just evidence, it's understanding of where the conjecture's predictions meet finite-conductor reality.
+
+---
+
+### George Polya — Plausible Reasoning (1945/1954)
+
+**Key works:** *How to Solve It* (1945); *Mathematics and Plausible Reasoning* (2 volumes, 1954)
+
+**Core argument:** "Certainly, let us learn proving, but also let us learn guessing." Polya formalized heuristic methods: analogy, generalization, specialization, pattern recognition. Plausible reasoning is not proof, but it is the engine of discovery.
+
+**The mechanism Harmonia uses:** Polya provides the generative half. The battery provides the destructive half. Together: Polya's heuristics generate conjectures; the battery subjects them to severe tests; survivors earn corroboration; failures generate Lakatosian refinements; the cycle repeats. The chimera state is Polya's heuristics running at AI speed, coupled to Mayo's severity at computational scale.
+
+---
+
+### Gregory Chaitin — Algorithmic Information Theory
+
+Chaitin's Omega (the halting probability) is a definable but uncomputable real number. Knowing enough of its bits would settle Goldbach and many other open problems. This gives a theoretical foundation for *why* computational exploration is deep: the boundary between what is computationally accessible and what is not is itself a source of mathematical structure. The battery operates at this boundary — probing what can be computed and measuring where computation fails to resolve a question.
+
+---
+
+### Timothy Gowers — The Two Cultures of Mathematics (2000)
+
+Distinguishes "theory-builders" from "problem-solvers." Computational falsification batteries belong firmly in the problem-solving culture. But the discoveries they generate (conditional laws, structural invariants, the Decaphony) can feed the theory-building culture. Harmonia bridges the two cultures: it solves problems (testing conjectures) and its solutions become theories (the phonemic coordinate system).
+
+---
+
+### The Synthesis
+
+The literature converges:
+
+1. **Popper:** Bold conjectures + severe tests = scientific progress. Survival under severe testing is not proof but is the best evidence science can offer.
+
+2. **Lakatos:** Every refutation generates structure. The counterexample is not a failure but a discovery of hidden assumptions. The battery is a Lakatosian engine at machine speed.
+
+3. **Mayo:** Severity is computable. The battery's value comes from the calculated probability that each test would have caught the error if present. 29 sigma from the permutation null is quantified severity.
+
+4. **Borwein:** The computer is a mathematical laboratory. Falsification is one step in the compute-conjecture-test-refine cycle. The full cycle, at scale, produces mathematical knowledge.
+
+5. **Zeilberger:** The computer is not an assistant but an instrument of perception. It sees structure that human brains cannot reach. The Decaphony is a computational perception.
+
+6. **The AI era:** FunSearch, AlphaProof, and the Ramanujan Machine close the loop — machines generate conjectures, test them, and discover structure autonomously. Tao's vision of statistical mathematics is the endgame.
+
+**The key philosophical point:** Falsification and discovery are not opposites but duals. Every successful falsification discovers a boundary. Every failed falsification of a bold conjecture discovers that reality has more structure than expected. The battery becomes a telescope not by changing what it does, but by being pointed at sufficiently deep conjectures with sufficiently severe tests.
+
+The moment the test could have killed the conjecture but didn't — that is the moment of discovery.
+
+---
+
+### Bibliography
+
+| Author(s) | Work | Year | Key Concept |
+|-----------|------|------|-------------|
+| Popper, K. | *The Logic of Scientific Discovery* | 1934 | Falsificationism |
+| Popper, K. | *Conjectures and Refutations* | 1963 | Severity of tests |
+| Polya, G. | *How to Solve It* | 1945 | Heuristic reasoning |
+| Polya, G. | *Mathematics and Plausible Reasoning* (2 vols) | 1954 | Plausible inference |
+| Wigner, E. | "The Unreasonable Effectiveness of Mathematics" | 1960 | Math-physics correspondence |
+| Lakatos, I. | *Proofs and Refutations* | 1976 | Dialectical math discovery |
+| Lakatos, I. | *Methodology of Scientific Research Programmes* | 1978 | Progressive programmes |
+| Ferguson, H. & Bailey, D. | PSLQ Algorithm | 1992 | Integer relation detection |
+| Wilf, H. & Zeilberger, D. | *A=B* | 1996 | Algorithmic proof theory |
+| Mayo, D. | *Error and the Growth of Experimental Knowledge* | 1996 | Severe testing |
+| Gowers, T. | "The Two Cultures of Mathematics" | 2000 | Theory vs problem-solving |
+| Franklin, J. | *The Science of Conjecture* | 2001 | Objective Bayesian evidence |
+| Borwein, J. & Bailey, D. | *Mathematics by Experiment* | 2004 | Experimental mathematics |
+| Borwein, J. et al. | *Experimentation in Mathematics* | 2004 | Computational discovery |
+| Baker, A. | "Non-deductive methods in mathematics" | 2007+ | Inductive evidence in math |
+| Mayo, D. | *Statistical Inference as Severe Testing* | 2018 | Error statistics formalized |
+| Davies, A. et al. | "Guiding human intuition with AI" (Nature) | 2021 | ML-guided math discovery |
+| Raayoni, G. et al. | "The Ramanujan Machine" (Nature) | 2021 | Automated conjecture |
+| Romera-Paredes, B. et al. | "FunSearch" (Nature) | 2024 | LLM + evaluator discovery |
+| DeepMind | AlphaProof (Nature) | 2025 | RL theorem proving |
+| DeepMind | AlphaEvolve | 2025 | Evolutionary structure discovery |
+
+---
+
 *Reconstructed April 14, 2026*
 *From the artifacts of a cleared session*
 *The breadcrumbs of an insight between human and AI*
