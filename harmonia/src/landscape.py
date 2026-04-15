@@ -22,6 +22,10 @@ from harmonia.src.domain_index import DomainIndex, DOMAIN_LOADERS, load_domains
 from harmonia.src.engine import (
     HarmoniaEngine, UngatedExplorationReport, UngatedBondReport,
 )
+from harmonia.src.gradient_tracker import (
+    GradientTracker,
+    ProsecutionCandidate as GTCandidate,
+)
 from harmonia.src.validate import validate_bond, extract_bond_components
 from harmonia.src.tensor_falsify import falsify_bond, FalsificationReport
 
@@ -475,3 +479,47 @@ def run_landscape(n_iterations=200, max_order=3, save=True):
         print(f"\nSaved to {path}")
 
     return summary
+
+
+def report_to_gradient_tracker(
+    report: UngatedExplorationReport,
+    min_agreeing: int = 2,
+    max_prosecution_rate: float = 0.20,
+    require_alignment: bool = True,
+) -> GradientTracker:
+    """
+    Feed an UngatedExplorationReport into GradientTracker.
+
+    This is the canonical integration path: explore_ungated() produces the
+    report, this function feeds it into GradientTracker, and the tracker
+    determines the prosecution queue.
+
+    Args:
+        report: From engine.explore_ungated()
+        min_agreeing: Minimum scorers that must agree
+        max_prosecution_rate: Cap on prosecution rate
+        require_alignment: Whether AlignmentCoupling must agree
+
+    Returns:
+        Populated GradientTracker ready for .prosecution_queue()
+    """
+    tracker = GradientTracker(
+        min_agreeing=min_agreeing,
+        max_prosecution_rate=max_prosecution_rate,
+        require_alignment=require_alignment,
+    )
+
+    # Feed bond matrix scores (mean coupling per scorer per pair)
+    for pair_key, scorer_bonds in report.bond_matrix.items():
+        da, db = pair_key.split("::")
+        for scorer_name, bond in scorer_bonds.items():
+            effective_dim = bond.bond_dim - bond.n_below_energy_threshold
+            tracker.record(da, db, scorer_name, resolution=1, score=float(effective_dim))
+
+    # Feed gradient measurements (coupling at multiple resolutions)
+    for pair_key, gpts in report.gradients.items():
+        da, db = pair_key.split("::")
+        for gpt in gpts:
+            tracker.record(da, db, "gradient", gpt.resolution, gpt.mean_coupling)
+
+    return tracker
