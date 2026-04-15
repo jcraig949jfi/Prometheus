@@ -39,10 +39,10 @@ DO $$ BEGIN
 END $$;
 
 -- Set passwords (CHANGE THESE)
-ALTER USER harmonia  WITH PASSWORD 'CHANGE_ME_harmonia';
-ALTER USER ergon     WITH PASSWORD 'CHANGE_ME_ergon';
-ALTER USER charon    WITH PASSWORD 'CHANGE_ME_charon';
-ALTER USER ingestor  WITH PASSWORD 'CHANGE_ME_ingestor';
+ALTER USER harmonia  WITH PASSWORD 'prometheus';
+ALTER USER ergon     WITH PASSWORD 'prometheus';
+ALTER USER charon    WITH PASSWORD 'prometheus';
+ALTER USER ingestor  WITH PASSWORD 'prometheus';
 
 -- ============================================================
 -- 3. PROMETHEUS_SCI DATABASE

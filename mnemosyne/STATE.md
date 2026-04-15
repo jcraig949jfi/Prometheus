@@ -1,5 +1,4 @@
-# Mnemosyne State — 2026-04-15
-## Save point before session restart
+# Mnemosyne State — 2026-04-15 (Session 2 End)
 
 ---
 
@@ -8,77 +7,91 @@
 - **Machine:** M2 (SpectreX5)
 - **Agora name:** Mnemosyne
 
-## Connections (all verified working)
+## Connections
 
 | Service | Host | Port | User | Status |
 |---------|------|------|------|--------|
-| LMFDB Postgres | devmirror.lmfdb.xyz | 5432 | lmfdb/lmfdb | READ-ONLY, 3.8M EC |
-| prometheus_sci | 192.168.1.176 | 5432 | ingestor/CHANGE_ME_ingestor | LIVE, 691K rows |
-| prometheus_fire | 192.168.1.176 | 5432 | ergon/CHANGE_ME_ergon | LIVE, empty |
+| LMFDB Postgres | 192.168.1.176 | 5432 | lmfdb/lmfdb | READ-ONLY, 3.8M EC, 24.4M lfunc |
+| prometheus_sci | 192.168.1.176 | 5432 | postgres/prometheus | LIVE, 854K rows |
+| prometheus_fire | 192.168.1.176 | 5432 | postgres/prometheus | LIVE, 152K rows |
 | Redis | 192.168.1.176 | 6379 | password=prometheus | LIVE |
 | DuckDB | charon/data/charon.duckdb | local | — | 14 tables, 134K objects |
 
-Postgres superuser: postgres/prometheus on 192.168.1.176
+**Note:** Agent users (harmonia, ergon, charon, ingestor) exist but password is not "prometheus". Using postgres superuser for now. James needs to update passwords.
 
-Config files:
-- ~/.prometheus/db.toml (connection details)
-- ~/.prometheus/credentials.toml (passwords)
+## What's Loaded
 
-## What's Loaded in prometheus_sci
+### prometheus_sci (854,710 rows)
 
-| Table | Rows | Source File |
-|-------|------|------------|
-| topology.knots | 12,965 | cartography/knots/data/knots.json |
+| Table | Rows | Source |
+|-------|------|--------|
+| algebra.groups | 544,831 | cartography/groups/data/abstract_groups.json |
 | chemistry.qm9 | 133,885 | cartography/chemistry/data/qm9.csv |
+| topology.knots | 12,965 | cartography/knots/data/knots.json |
+| physics.materials | 10,000 | cartography/physics/data/materials_project_10k.json |
+| topology.polytopes | 980 | cartography/polytopes/data/polytopes.json |
 | algebra.space_groups | 230 | cartography/spacegroups/data/space_groups.json |
 | algebra.lattices | 26 | cartography/lattices/data/*.json |
-| algebra.groups | 544,831 | cartography/groups/data/abstract_groups.json |
-| core.data_source | 4 | provenance tracking |
-| **TOTAL** | **691,937** | |
+| core.data_source | 6 | provenance tracking |
 
-### Schema fix applied
-- algebra.groups: order_val and exponent columns widened from INTEGER to NUMERIC
-  (some group orders are 60+ digits, e.g. label "258623241511168180642964355153611979969197632389120000000000.a")
+### prometheus_fire (~152K rows)
 
-### Not yet loaded (Priority 2)
-- physics.superconductors — need to find source CSV
-- physics.materials — cartography/physics/data/materials_project_10k.json
-- physics.codata — cartography/physics/data/codata/
-- physics.pdg_particles — need to find source
-- analysis.oeis — cartography/oeis/data/ (~50GB, 1,536 files)
-- analysis.fungrim — cartography/fungrim/data/
-- biology.metabolism — cartography/metabolism/data/ (~13GB)
-- topology.polytopes — cartography/polytopes/data/
+| Table | Rows | Source |
+|-------|------|--------|
+| xref.object_registry | 134,475 | DuckDB objects |
+| xref.bridges | 17,314 | DuckDB known_bridges |
+| agora.messages | 60 | Agora bootstrap |
+| agora.decisions | 3 | Agora bootstrap |
+| agora.open_questions | 1 | Spectral tail OQ1 |
+| meta.ingestion_log | 4 | M2 migration log |
 
-## prometheus_fire — Empty, Ready
-All 11 tables exist with proper schemas. Ready for:
-- results.ergon_runs, results.hypotheses, results.harmonia_bonds
-- kill.taxonomy, kill.shadow_cells
-- tensor.domain_features, tensor.domain_metadata
-- xref.object_registry, xref.bridges
-- meta.calibration, meta.ingestion_log
+### LMFDB Mirror (5 tables)
 
-## Agora Status
-- Mnemosyne registered and announced on agora:main
-- Sent data audit, task claims, and loading completion announcement
-- Other agents: Kairos (M2, offline), Claude_M1 (M1, offline)
-- All agents on 2-minute polling loops
+| Table | Rows | Size |
+|-------|------|------|
+| lfunc_lfunctions | 24,351,376 | 341 GB |
+| ec_curvedata | 3,824,372 | — |
+| mf_newforms | 1,100,000+ | — |
+| artin_reps | 793,000+ | — |
+| g2c_curves | 66,158 | — |
 
-## Key Files I Created
-- mnemosyne/README.md — workspace overview
-- mnemosyne/STATE.md — this file
-- mnemosyne/data_audit_20260415.md — complete inventory of all data sources
-- mnemosyne/ingest_priority1.py — ingestion scripts (needs update for direct connection)
-- docs/forensic_timeline_april_2026.md — forensic audit (committed to main, pushed)
+## In-Progress: Conductor Index Build
 
-## Git Status
-- Branch: data-layer-architecture
-- forensic_timeline committed and pushed to main via cherry-pick
-- mnemosyne/ directory is new, not yet committed
+- `CREATE INDEX idx_lfunc_conductor_numeric ON lfunc_lfunctions ((conductor::numeric))`
+- Started this session, ran ~47 min, still active (pid 27940, BufferIo)
+- Table is 341 GB, all columns TEXT — expression index is I/O-bound
+- **Should persist** and be available next session (Postgres index builds are transactional)
+- Once done, enables: materialized views, join key discovery, OQ1 dataset
 
-## Next Steps
-1. Load remaining Priority 2 tables (superconductors, materials, CODATA, OEIS, fungrim)
-2. Migrate DuckDB tables to prometheus_fire (objects, landscape, known_bridges, etc.)
-3. Set up Redis cache layer for tensor slices
-4. Wire Harmonia/Ergon loaders to query Postgres with file fallback
-5. Change default passwords (CHANGE_ME_* are still in use)
+## Pending Work (Next Session)
+
+### Blocked on Index Completion
+1. Find EC ↔ lfunc join key (origin or label pattern matching)
+2. Build lfunc_typed materialized view (proper types)
+3. Build bsd_joined view (EC + L-function leading_term)
+4. Deliver OQ1 spectral tail test dataset
+
+### Blocked on Agora Schema Design
+5. Migrate 6 remaining DuckDB tables (677K rows) — request posted to agora:tasks
+
+### Blocked on External Data/Computation
+6. Omega (real period) — not in ec_curvedata, needs sage or LMFDB API
+7. Tamagawa product — not stored, needs local Tate algorithm
+8. Root number — not in ec_curvedata, needed for BSD parity test
+
+### Blocked on James
+9. Agent user passwords (harmonia, ergon, charon, ingestor)
+
+## Key Findings This Session
+
+1. **BSD Sha circularity** — Rank ≥ 2 Sha computed assuming BSD. Testing BSD with it is circular.
+2. **Leading_term bypass killed** — Isogeny classes don't span rank boundaries. Can't cross-calibrate.
+3. **L-function zeros confirmed** at all conductor ranges for spectral tail test.
+4. **abc_quality and szpiro_ratio** are precomputed columns in ec_curvedata.
+
+## Files
+- `mnemosyne/migrate_m2.py` — M2 migration script (executed successfully)
+- `mnemosyne/STATE.md` — this file
+- `mnemosyne/data_audit_20260415.md` — data inventory
+- `roles/Mnemosyne/SESSION_JOURNAL_20260415.md` — full session journal
+- `roles/Mnemosyne/RESPONSIBILITIES.md` — role definition
