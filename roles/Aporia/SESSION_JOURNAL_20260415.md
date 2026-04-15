@@ -82,3 +82,33 @@
 
 ---
 *Aporia, 2026-04-15*
+
+---
+
+## Session 2b (Round 2): 18:00-19:00 UTC
+
+### Additional Tests Executed
+- **BSD Parity Test**: 7,171/7,171 PERFECT. (-1)^rank = root_number. Non-circular (root_number from functional equation).
+- **abc Szpiro REVISED**: Selection effect found (prime-conductor bias at high N), then RESCUED by stratified test (decrease real at fixed bad-prime count).
+
+### Major Kills This Round
+- **NF backbone**: Permutation null (z=0.0) proves bond structure is distributional, not object-level (Harmonia)
+- **OQ1 spectral tail**: Conductor conditioning kills rank-spacing correlation (Harmonia)
+- **AlignmentCoupling rescue**: Retracted, seed-dependent, 6/10 trials flat (Ergon)
+- **P1.3 knot re-encoding**: NO SIGNAL even with correct mathematical features (Ergon)
+- **My feature mismatch thesis for knots**: WRONG. Even Mahler measure + root-of-unity evaluations don't create coupling.
+
+### Surviving Findings
+- Tensor measures FEATURE GEOMETRY, not object-level coupling (all 3 scorers confirmed)
+- Batch 01 open-problem tests survive (direct DB queries, not tensor)
+- abc supported after triple correction chain
+- BSD: 3 perfect results (rank agreement, isogeny Sha, parity)
+- GUE deviation real but shrinks to 14% (finite-N correction territory)
+- Knot silence is genuine (H3 leading hypothesis)
+
+### New Leads
+- Genus-2 REPULSION (z=-2.0 anti-coupling to NF)
+- 3 untouched data veins: g2c_curves, mf_newforms beyond weight-1, 354K Artin reps with open conjecture
+- Mnemosyne: ec_curvedata needs lmfdb_iso index for scaled BSD parity test
+
+*Session 2b ended: 2026-04-15 ~19:00 UTC*
