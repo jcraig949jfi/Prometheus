@@ -1,98 +1,163 @@
 # Ergon Handoff — Start Here
 ## For the next Claude Code session
-### 2026-04-14
+### 2026-04-15 (Session 2 — Agora polling test run)
 
 ---
 
 ## Current State
 
-### Overnight run (still in progress)
-- Run ID: `ergon_20260413_215133`
-- 10,000 generations x 20 hyp/gen, seed 31068
-- As of gen 6400: 81K tested, 21 cells, 602 dead zones, 1009 gradient zones
-- ETA completion: ~5:30 AM, then auto-bridges to Harmonia
-- Check status: `python ergon/monitor.py`
-- Results will be in: `ergon/results/archive_*.json`, `ergon/results/shadow_*.json`
+### What was done THIS session (2026-04-15, Session 2)
 
-### What exists and works
-- **Tensor executor**: 7 domains, 58K objects, 28 features, ~5 hyp/s with 16-stage battery
-- **Shadow archive**: Tracks all failures — dead zones, gradient zones, kill patterns
-- **Harmonia bridge**: Promotes survivors to TT-Cross + falsification. All tested pairs show real bond structure.
-- **Constrained operators**: `constrained_operators.py` ready but NOT yet active in the run (will eliminate ~40% data_unavailable waste next run)
-- **Structured logging**: JSONL per run, checkpoints every 1000 gens
-- **Monitor**: `python monitor.py` or `python monitor.py --watch`
+This was a **test run** of Ergon as an Agora polling agent. Primary activity was monitoring Redis streams every 5 minutes, ACKing team messages, and tracking Batch 01 execution.
+
+#### 1. Agora Polling Loop (test run)
+- Connected to Redis, announced Ergon@M1 back online
+- Set up 5-minute cron polling across all 4 streams (agora:main, tasks, challenges, discoveries)
+- Posted heartbeats every other cycle
+- Ran ~40+ polling cycles over several hours
+
+#### 2. Batch 01 Execution — COMPLETED (6/8 tests, executed by Aporia)
+Ergon monitored and ACK'd results but did NOT execute tests directly. Aporia picked up execution while Ergon was in passive polling mode. **Lesson: next session, Ergon should execute, not just poll.**
+
+**Kairos v3 execution order (LOCKED):**
+
+| # | Test | Result | Executed by |
+|---|------|--------|-------------|
+| 1 | MATH-0332 Jones unknot | CALIBRATION PASS (0/249 counterexamples) | Aporia |
+| 2 | MATH-0130 Langlands GL(2) | CALIBRATION PASS (100% match, 10880/10880) | Aporia |
+| 3 | MATH-0136 abc Szpiro | STRONGLY SUPPORTED (monotone decrease) | Aporia |
+| 4 | MATH-0063 BSD Phase 1 | PERFECT (3,824,372/3,824,372 rank agreement) | Aporia |
+| 5 | MATH-0260 Artin entireness | FRONTIER MAPPED (359K open reps) | Aporia |
+| 6 | MATH-0151 Chowla | SUPPORTED (N=10^7, indistinguishable from null) | Aporia |
+| 7 | MATH-0145 Brumer-Stark | DEFERRED (nf_fields data gap) | — |
+| 8 | MATH-0042 Lehmer | DEFERRED (NF polys data gap) | — |
+
+**Gate: 2/2 calibrations PASSED. Open problems UNLOCKED.**
+**Zero falsifications across all tests.**
+
+#### 3. Major Findings from Agora (observed, not executed)
+
+**NF Universal Mediator + Backbone Discovery (Kairos):**
+- 77.3% of domain pairs show emergence when NF is third domain (34/44 pairs)
+- Top-1 SV (~97% energy) = Megethos (log_disc_abs) — KILLED by battery every time
+- Top-2 SV (~1-3% energy) = real mathematical backbone — PASSES battery every time
+- NF PCA: Megethos is only PC3 (18.3%). PC1 = arithmetic (class number formula, 37.6%). PC2 = degree/regulator (22.6%)
+- Backbone carries arithmetic or structural info, NOT size. Promoted to PROBABLE.
+
+**Tensor Depth Hierarchy (Kairos):**
+- Pure suppressors: dirichlet_zeros (31-0), modular_forms (25-0), elliptic_curves (19-0)
+- Pure enhancers: number_fields (0-34), space_groups (0-24)
+- Maps to analytic (suppressors) vs algebraic (enhancers) divide in mathematics
+
+**Silent Islands Revised (Kairos + Aporia):**
+- 3 islands, not 4: knots, Maass forms, fungrim
+- Genus-2 RETRACTED as island (deep sweep rank 8-10 to most domains)
+- Root cause: "computational bridges" — features need intermediate computation (Mahler measure, roots of unity evaluation)
+- Aporia computed 2977 Mahler measures from Alexander polynomials (P1.1 partial)
+
+**BSD Phase 2 (Kairos + Mnemosyne):**
+- Sha circularity at rank >= 2: Sha computed ASSUMING BSD, so testing BSD with it is circular
+- 2.89M rank 0-1 curves available for non-circular calibration
+- Isogeny consistency: 99.93% (42 anomalies = 2-adic Sha computation, explained)
+- Blocked on Omega (real period) + Tamagawa product
+- Isogeny classes NEVER span rank boundaries (0 spanning in all LMFDB)
+
+**abc Szpiro Transition:**
+- Median Szpiro ratio: 4.41 (<1K conductor) -> 1.46 (100M-1B)
+- Real transition at conductor ~1-2M (fine-grained bins confirmed)
+- Convergence toward ~1.5, not 1.0
 
 ### What needs doing (in priority order)
 
-#### 1. Check overnight results
-```bash
-python ergon/monitor.py
-# Look at: shadow archive, final bridge results
-```
+#### 1. EXECUTE, don't just poll
+Next Ergon session should pick up work and run it. Don't get stuck in a passive monitoring loop. The go signal is already given.
 
-#### 2. Phase 1: CSV fallback for Harmonia loaders (zero-risk)
-Two functions in `harmonia/src/domain_index.py` need CSV fallback:
-- `load_ec_rich` (line 1788) — Currently Postgres only. Fallback: `C:\prometheus_share\lmfdb_local\ec_curvedata.csv`
-- `load_artin` (line 1849) — Currently Postgres only. Fallback: `C:\prometheus_share\lmfdb_local\artin_reps.csv`
+#### 2. Silent Islands execution (P1-P8, Kairos-approved)
+Priority tests that Ergon should run:
+- P1.3: Knot feature re-encoding (fast, approved)
+- P2.1: Maass Dirichlet coefficients (approved)
+- P4.1: Fungrim numerical evaluation (approved)
+- P5: NF Langlands check (must-work calibration)
+- P1: Alexander poly at roots of unity (fast)
 
-Pattern: `try: postgres except: read CSV with same column mapping`
-Same normalization, same DomainIndex output. No behavior change when Postgres is up.
+#### 3. NF PCA definitional test
+Load NF features from domain_index.py, compute PCA, project tensor bond vectors onto NF PCA basis. Answers: is the backbone degree or class_number?
 
-#### 3. Phase 2: Upgrade data scale
-Replace 10K extracts with full LMFDB exports:
-- EC: 10K → 3.8M (`ec_curvedata.csv`, pipe-delimited)
-- MF: 10K → 1.1M (`mf_newforms.csv`)
-- G2: 10K → 66K (`g2c_curves.csv`)
-- Artin: new domain, 798K (`artin_reps.csv`)
+#### 4. OQ1 Spectral tail decisive test
+6 equal-N conductor bins, spectral tail coupling per bin. Needs Postgres (EC + L-function zeros at high conductor). Mnemosyne assigned preflight.
 
-**MUST run calibration check after** (7 known theorems at 100.000%)
+#### 5. BSD Phase 2 (when Omega + Tamagawa available)
+Run Kairos's revised protocol on rank 0-1 calibration set (2.89M curves).
 
-#### 4. Phase 3: Wire Ergon to Harmonia loaders
-Replace `tensor_builder.py`'s hand-rolled loading with `harmonia.src.domain_index.load_domains()`.
+#### 6. Wire explore_ungated() through GradientTracker
+Kairos's gradient_tracker.py is on main. Integrate with explore_ungated().
 
-#### 5. Phase 4: New domains from share
-`C:\prometheus_share\cartography/` has: maass (335MB), physics (660MB), fungrim, mathlib, polytopes, spacegroups
+#### 7. CSV fallback for Harmonia loaders (carried over)
+Still needed: load_ec_rich and load_artin CSV fallbacks.
 
-See `ergon/docs/data_expansion_plan.md` for full details.
+---
+
+## Agora State Summary (as of 2026-04-15, end of session 2)
+
+### Stream message counts (approximate)
+- agora:main: ~60+ messages
+- agora:tasks: ~7 messages
+- agora:challenges: ~15+ messages
+- agora:discoveries: ~25+ messages
+
+### Key Decisions This Session
+- [PASSED] Jones unknot calibration
+- [PASSED] Langlands GL(2) calibration (100% match)
+- [SUPPORTED] abc Szpiro (monotone decrease, no falsification)
+- [PERFECT] BSD Phase 1 (3.8M/3.8M rank agreement)
+- [MAPPED] Artin entireness frontier (359K open reps)
+- [KILLED] Megethos as NF hub mechanism (97% energy, battery kills it)
+- [PROBABLE] NF arithmetic backbone (component-2, 1-3% energy)
+- [CONFIRMED] Tensor depth hierarchy (suppressors vs enhancers)
+- [RETRACTED] Genus-2 as silent island
+- [IDENTIFIED] Sha circularity at rank >= 2
+- [CLOSED] Silent islands challenge loop ("computational bridge" thesis)
+
+### Open Questions
+- [OPEN] What is NF component-2? Degree vs class_number (needs PCA projection)
+- [OPEN] Spectral tail asymptote: H1 vs H2 (needs high-conductor data)
+- [OPEN] BSD Phase 2: full formula test (needs Omega + Tamagawa)
+- [OPEN] Artin linkage: Mnemosyne investigating lfunc origin field
+- [OPEN] Suppression mechanism: why do zeros absorb shared variance?
+
+### Infrastructure (all live)
+- Redis: localhost:6379, password=prometheus
+- Postgres on M1: lmfdb (30M+ rows)
+- Postgres connection: host=192.168.1.176 port=5432
+
+### Team Status (end of session)
+- Kairos (M2): ACTIVE — ran emergence test, NF PCA, BSD isogeny, depth hierarchy
+- Mnemosyne (M2): ACTIVE — BSD data audit, Artin linkage investigation
+- Aporia (M1): ACTIVE — executed all 6 Batch 01 tests, P1.1 Mahler measures
+- Ergon (M1): POLLING ONLY this session — should EXECUTE next session
+- Claude_M1 (M1): OFFLINE
 
 ---
 
 ## WARNINGS
 
 ### Phoneme framework is UNVALIDATED
-`harmonia/src/phonemes.py` defines 5 universal axes. This was a construction
-hypothesis, not validated structure. Megethos (complexity axis) was explicitly killed.
-- Do NOT extend `DOMAIN_PHONEME_MAP`
-- Use `distributional` scorer, not `phoneme`/`kosmos`
-- Stale docs may reference phonemes as fact — treat as historical
-- See `ergon/docs/phoneme_warning.md`
+Same as before — do NOT extend DOMAIN_PHONEME_MAP, use distributional scorer only.
 
 ### Don't break Harmonia
-Harmonia is a nearly flawless instrument. Changes to `harmonia/src/` must:
-- Not change any scoring behavior
-- Not modify tensor_falsify.py logic
-- Pass calibration check (7 theorems) after any data change
-- Only add fallback paths, never replace working paths
+Changes to harmonia/src/ must not change scoring behavior, must pass calibration.
 
-### Data architecture
-- Code: GitHub commits
-- Big data: `C:\prometheus_share\` (shared between machines)
-- Live DB: Postgres on M1 (`devmirror.lmfdb.xyz`)
-- Local DB: `charon/data/charon.duckdb` (small extracts)
-- Keep consistency across machines
+### tntorch ZeroDivisionError on Windows
+`tn.cross()` crashes with ZeroDivisionError when convergence is very fast. Fixed by passing `verbose=False`.
+
+### Sha circularity
+Do NOT use LMFDB sha values to "verify" BSD at rank >= 2. They are computed by assuming BSD. Only rank 0-1 sha is independent.
+
+### Gate condition
+Calibration gate (2/2) is PASSED. Open-problem tests are unlocked. But maintain execution order discipline.
 
 ---
 
-## Key files to read first
-
-1. `ergon/README.md` — Full architecture overview
-2. `ergon/docs/data_expansion_plan.md` — The 4-phase plan
-3. `ergon/docs/phoneme_warning.md` — What not to trust
-4. `harmonia/src/domain_index.py` lines 1788-1898 — The two Postgres loaders to add CSV fallback
-5. `C:\prometheus_share\lmfdb_local\` — The CSV data files (check headers with `head -1`)
-
-## Key constraints
-- 21 kills, 0 novel bridges, 1 weak survivor (spectral tail z=-25.7)
-- 7 theorems at 100.000% on 3.8M objects (calibration anchor)
-- Finding hierarchy: 3 conditional laws, 2 constraints, 1 exact identity, 0 universal laws
-- Falsification-first: everything assumed false until every kill path exhausted
+## Key files (no code changes this session)
+- `ergon/HANDOFF.md` — This file (updated)
+- No code was modified by Ergon this session. All test execution was by Aporia.

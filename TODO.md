@@ -1,292 +1,157 @@
-# Prometheus — Master TODO List
-## Updated: 2026-04-14
+# Prometheus — TODO
+## Updated: 2026-04-15
 
 ---
 
-## ACTIVE: Database Architecture Deployment
+## PRE-FLIGHT: What James needs to verify before Mnemosyne sessions
 
-Branch `data-layer-architecture` is pushed to GitHub. M1 needs to pull and set up.
+Mnemosyne (and any agent using `prometheus_data/`) needs local connection
+details. The defaults in `prometheus_data/config.py` point to
+`devmirror.lmfdb.xyz` — which is wrong for local work.
 
-### Overview
+**Option A: `~/.prometheus/db.toml`** (preferred, persistent)
+Check if this file exists. If not, create it:
 
-Three Postgres databases + Redis. One Python package (`prometheus_data/`) for all access.
-Full design: `docs/database_architecture.md`
-
-| Database | Purpose | Status |
-|----------|---------|--------|
-| **lmfdb** | Raw LMFDB mirror (existing) | RUNNING (read-only, 612 tables) |
-| **prometheus_sci** | Normalized scientific data (knots, physics, chemistry, etc.) | NOT CREATED |
-| **prometheus_fire** | Working data (results, kills, shadows, cross-refs, tensors) | NOT CREATED |
-| **Redis** | Fast cache for tensor slices and kill lookups | NOT INSTALLED |
-
-### Step 1: Pull branch on M1
-```bash
-cd ~/Prometheus
-git fetch origin
-git checkout data-layer-architecture
-```
-
-### Step 2: Run database setup on M1
-```bash
-sudo -u postgres psql -f scripts/db_setup.sql
-```
-This creates both databases, all schemas, all tables, roles, and users.
-**Change the passwords** — search `CHANGE_ME` in the SQL file.
-
-### Step 3: Update pg_hba.conf on M1
-Add these lines to allow remote access from M2:
-```
-host prometheus_sci  all  0.0.0.0/0  scram-sha-256
-host prometheus_fire all  0.0.0.0/0  scram-sha-256
-```
-Then: `sudo systemctl reload postgresql`
-
-### Step 4: Install Redis on M1
-```bash
-sudo apt install redis-server
-sudo systemctl enable redis-server
-```
-Edit `/etc/redis/redis.conf`:
-```
-bind 0.0.0.0
-requirepass <choose-a-password>
-maxmemory 512mb
-maxmemory-policy allkeys-lru
-```
-Then: `sudo systemctl restart redis-server`
-
-Open firewall: `sudo ufw allow 6379/tcp`
-
-### Step 5: Create credentials on BOTH machines
-Create `~/.prometheus/credentials.toml`:
 ```toml
+[lmfdb]
+host = "localhost"
+port = 5432
+
 [sci]
-password = "<the password you set>"
+host = "localhost"
+port = 5432
+dbname = "prometheus_sci"
+user = "postgres"
+password = "prometheus"
 
 [fire]
-password = "<the password you set>"
+host = "localhost"
+port = 5432
+dbname = "prometheus_fire"
+user = "postgres"
+password = "prometheus"
 
 [redis]
-password = "<the password you set>"
+host = "localhost"
+port = 6379
+password = "prometheus"
 ```
 
-### Step 6: Test from M2
-```python
-from prometheus_data import get_fire, get_sci, get_redis
+On M2, replace `localhost` with `192.168.1.176`.
 
-with get_fire() as conn:
-    cur = conn.cursor()
-    cur.execute("SELECT 1")
-    print("Fire:", cur.fetchone())
-
-with get_sci() as conn:
-    cur = conn.cursor()
-    cur.execute("SELECT 1")
-    print("Sci:", cur.fetchone())
-
-r = get_redis()
-print("Redis:", r.ping() if r else "not available")
-```
-
-### Step 7: Populate PrometheusSci
-After databases are running, migrate data from JSON/CSV:
-- Knots -> `topology.knots`
-- Superconductors -> `physics.superconductors`
-- QM9 -> `chemistry.qm9`
-- Space groups -> `algebra.space_groups`
-- etc.
-
-Script: `prometheus_data/migrate.py` (to be written in Phase 2)
-
-### Database Management
-
-**Backups** (run on M1):
+**Option B: Environment variables** (per-session)
 ```bash
-pg_dump -U postgres prometheus_sci > ~/backups/prometheus_sci_$(date +%Y%m%d).sql
-pg_dump -U postgres prometheus_fire > ~/backups/prometheus_fire_$(date +%Y%m%d).sql
+export PROMETHEUS_SCI_HOST=localhost
+export PROMETHEUS_SCI_PASSWORD=prometheus
+export PROMETHEUS_FIRE_HOST=localhost
+export PROMETHEUS_FIRE_PASSWORD=prometheus
+export AGORA_REDIS_PASSWORD=prometheus
 ```
 
-**Monitor connections**:
-```sql
-SELECT datname, usename, state, query_start FROM pg_stat_activity WHERE datname LIKE 'prometheus%';
-```
-
-**Check table sizes**:
-```sql
-\connect prometheus_fire
-SELECT schemaname, tablename, pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename))
-FROM pg_tables WHERE schemaname NOT IN ('pg_catalog','information_schema') ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
-```
-
-**Redis monitoring**:
+**Also verify services are running:**
 ```bash
-redis-cli -a <password> info memory
-redis-cli -a <password> info keyspace
-redis-cli -a <password> dbsize
+# Postgres (Windows service)
+net start postgresql-x64-17       # if stopped
+
+# Redis (WSL)
+wsl -d Ubuntu -- sudo service redis-server status
+wsl -d Ubuntu -- sudo service redis-server start   # if stopped
 ```
 
 ---
 
-## ACTIVE: Ergon Overnight Run Results
+## DONE (completed 2026-04-14/15, do NOT re-run)
 
-Run completed (or completing) around 5:30 AM 2026-04-14.
+These are recorded for reference only. **Do not re-run `db_setup.sql`** —
+it will collide with existing databases.
 
-### Check results
-```bash
-cd ergon
-python monitor.py                    # Quick status
-```
-
-### Key output files
-- `ergon/results/archive_*.json` — MAP-Elites survivors (bridge to Harmonia)
-- `ergon/results/shadow_*.json` — Negative space map (dead zones, gradients)
-- `ergon/results/bridge_*.json` — Harmonia falsification results
-- `ergon/logs/ergon_*.jsonl` — Structured run log
-
-### For the next Ergon run
-The constrained operators (`constrained_operators.py`) are wired in and will
-eliminate ~40% `data_unavailable` waste. Just run `run_overnight.bat` again.
+- [x] PostgreSQL installed on M1 (port 5432, firewall open, remote access configured)
+- [x] lmfdb database: 30M+ rows (ec 3.8M, lfunc 24.3M, mf 1.1M, artin 798K, g2c 66K)
+- [x] prometheus_sci database: 691K rows (knots, qm9, space_groups, lattices, groups)
+- [x] prometheus_fire database: Agora schemas + results/kill/tensor/xref/meta schemas
+- [x] Redis installed on WSL, bound 0.0.0.0:6379, auth enabled, streams active (50+ msgs)
+- [x] `prometheus_data/` Python package (config.py, pool.py)
+- [x] `agora/` Python package (client, protocol, config, hello, setup_m2)
+- [x] `scripts/db_setup.sql` (already executed — DO NOT re-run)
+- [x] data-layer-architecture branch merged to main
+- [x] All 5 LMFDB CSV dumps downloaded to F:\lmfdb_local\ and loaded
+- [x] Firewall rules for Postgres (5432) and Redis (6379)
+- [x] pg_hba.conf: 0.0.0.0/0 access
 
 ---
 
-## ACTIVE: Ergon Data Expansion (4 phases)
+## ACTIVE: Mnemosyne — Next data ingestion
 
-Full plan: `ergon/docs/data_expansion_plan.md`
+Tables exist in prometheus_sci (created by db_setup.sql) but are empty:
 
-| Phase | What | Status | Depends On |
-|-------|------|--------|------------|
-| 1 | CSV fallback for Harmonia Postgres loaders | NOT STARTED | Database setup |
-| 2 | Upgrade data scale (3.8M EC, 1.1M MF, 798K Artin) | NOT STARTED | Phase 1 |
-| 3 | Wire Ergon tensor_builder to Harmonia loaders | NOT STARTED | Phase 2 |
-| 4 | Add new domains from share | NOT STARTED | Phase 3 |
+| Table | Source | Status |
+|-------|--------|--------|
+| `analysis.oeis` | OEIS bulk download | NOT LOADED |
+| `analysis.fungrim` | Fungrim project | NOT LOADED |
+| `physics.superconductors` | SuperCon dataset | NOT LOADED |
+| `physics.materials` | Materials Project | NOT LOADED |
+| `physics.codata` | CODATA constants | NOT LOADED |
+| `physics.pdg_particles` | PDG particle data | NOT LOADED |
+| `topology.polytopes` | Polymake / polytope DB | NOT LOADED |
+| `biology.metabolism` | BiGG Models | NOT LOADED |
 
----
-
-## WARNING: Phoneme Framework
-
-The 5-axis phoneme system in Harmonia (complexity, rank, symmetry, arithmetic,
-spectral) is an **unvalidated construction**. Megethos (complexity) was explicitly
-killed. Do NOT extend `DOMAIN_PHONEME_MAP` for new domains. Use `distributional`
-scorer, not `phoneme`/`kosmos`. See `ergon/docs/phoneme_warning.md`.
-
-Stale documentation may reference phonemes, islands, and Megethos/Arithmos axes
-as established fact. Treat as historical hypothesis, not current truth.
+Mnemosyne knows how to load these — just needs working DB connection (see pre-flight above).
 
 ---
 
-## REFERENCE: Existing PostgreSQL Setup (M1 LMFDB mirror)
+## ACTIVE: Open Question #1 — Spectral tail asymptote
 
-This section documents the EXISTING setup. The new databases (prometheus_sci,
-prometheus_fire) are separate from this.
-
-### LMFDB Mirror Setup (already done)
-
-### Step 1: Install PostgreSQL
-Open **admin PowerShell** (right-click -> Run as Administrator):
-```powershell
-F:\pg17_installer.exe --mode unattended --superpassword prometheus --serverport 5432 --datadir F:\pgdata --install_runtimes 0 --enable_acledit 1
-```
-
-### Step 2: Open firewall for M2
-Same admin PowerShell:
-```powershell
-netsh advfirewall firewall add rule name="PostgreSQL" dir=in action=allow protocol=tcp localport=5432
-```
-
-### Step 3: Configure remote access
-Edit `F:\pgdata\pg_hba.conf` — add this line at the end:
-```
-host    all    all    0.0.0.0/0    md5
-```
-
-Edit `F:\pgdata\postgresql.conf` — find `listen_addresses` and change to:
-```
-listen_addresses = '*'
-```
-
-### Step 4: Restart PostgreSQL
-```powershell
-net stop postgresql-x64-17
-net start postgresql-x64-17
-```
-
-### Step 5: Create lmfdb database and user
-```powershell
-& "C:\Program Files\PostgreSQL\17\bin\psql" -U postgres -c "CREATE DATABASE lmfdb;"
-& "C:\Program Files\PostgreSQL\17\bin\psql" -U postgres -c "CREATE USER lmfdb WITH PASSWORD 'lmfdb';"
-& "C:\Program Files\PostgreSQL\17\bin\psql" -U postgres -c "GRANT ALL ON DATABASE lmfdb TO lmfdb;"
-```
-
-### Step 6: Tell Claude Code to load data
-Once Postgres is running, Claude Code will:
-- Load the CSV dumps from `F:\lmfdb_local\` into the database
-- The 5 target tables: g2c_curves, artin_reps, mf_newforms, ec_curvedata, lfunc_lfunctions
-- Give M2 the connection string: `host=<M1_IP> port=5432 dbname=lmfdb user=lmfdb password=lmfdb`
+**What**: Does the spectral tail (rho) converge to nonzero (H1) or zero (H2) at high conductor?
+**Decisive test**: Equal-N conductor bins 15K–500K+, measure rho convergence.
+**Data needed**: High-conductor EC curves from the lmfdb database (already loaded, 3.8M rows).
+**Assigned**: Mnemosyne (query) → Kairos (analysis)
+**Status**: NOT STARTED — unblocked, ready to go.
 
 ---
 
-## LMFDB Data Dump Status (pulling from devmirror.lmfdb.xyz)
+## ACTIVE: Ergon overnight results transfer
 
-| Table | Rows | File | Status |
-|-------|------|------|--------|
-| g2c_curves | 66K | 40 MB | DONE |
-| artin_reps | 793K | 445 MB | DONE |
-| mf_newforms | 1.1M | 8.0 GB | DONE |
-| ec_curvedata | 3.8M | 1.8 GB | DONE |
-| lfunc_lfunctions | 24.2M | ~43 GB est | IN PROGRESS (~6 hrs) |
-
-Files at: `F:\lmfdb_local\`
-Completed files also pushed to: `Z:\lmfdb_local\` for M2
+42 files in `ergon/results/` on M2 (SpectreX5), not yet on M1/main.
+Coordinate with Kairos or pull from M2 directly.
 
 ---
 
-## New Data Already Downloaded
+## ACTIVE: Aporia triage
 
-| Dataset | Location | Size | Objects |
-|---------|----------|------|---------|
-| Exoplanets | cartography/physics/data/exoplanets/ | 694 KB | 6,158 |
-| GW events | cartography/physics/data/gravitational_waves/ | 405 KB | 219 |
-| Pulsars | cartography/physics/data/pulsars/ | 5.3 MB | 4,351 (511 columns!) |
-| QM9 molecules | cartography/physics/data/qm9/ | 43 MB | 134K |
-
-All pushed to Z:\ for M2.
+490 math problems being classified into Bucket A/B/C.
+Output: `aporia/mathematics/triage.jsonl` (not yet created).
+Blind trials alongside Bucket A (Kairos requirement).
 
 ---
 
-## Push to Z:\ when done
+## BACKLOG: Aporia — blocked data sources
 
-These files need copying to Z:\ when they finish:
-```powershell
-copy F:\lmfdb_local\mf_newforms.csv Z:\lmfdb_local\
-copy F:\lmfdb_local\ec_curvedata.csv Z:\lmfdb_local\
-copy F:\lmfdb_local\lfunc_lfunctions.csv Z:\lmfdb_local\
-```
+These sites blocked Claude Code's fetcher. Download manually if desired.
+
+**High priority:**
+1. Erdős Problems — https://www.erdosproblems.com/ → `aporia/data/erdos_problems/`
+2. Open Problem Garden — http://garden.irmacs.sfu.ca/ → `aporia/data/open_problem_garden/`
+3. Wikenigma — https://wikenigma.org.uk/ → `aporia/data/wikenigma/`
+
+**Books (if accessible):**
+4. Richard Guy — "Unsolved Problems in Number Theory" (ISBN 978-0-387-20860-2)
+5. Arnold's Problems (ISBN 978-3-540-20748-1)
+6. Nash & Rassias — "Open Problems in Mathematics" (ISBN 978-3-319-32162-2)
+
+**PDFs:**
+7. Steinerberger open problems — faculty.washington.edu/steinerb/openproblems.pdf
+8. Erdős graph theory (Fan Chung) — mathweb.ucsd.edu/~fan/ep.pdf
+9. Kourovka Notebook — arXiv:1401.0300 (~800 group theory problems)
+
+**Already downloaded:**
+- `aporia/data/ben_green_100_problems.pdf` — integrated
+- `aporia/data/strings2024_100_questions.pdf` — integrated
 
 ---
 
-## Session Summary (2026-04-12 to 2026-04-13)
+## BACKLOG: Infrastructure improvements
 
-### Infrastructure Built
-- Dissection tensor v7: 601K objects x 182 dims, 19 domains, GPU-resident
-- 15 strategy groups (the IPA features)
-- 3 explorers (MAP-Elites, random walk, GA) + relay walker
-- Tensor reasoner (local ollama + NemoClaw cloud)
-- Geometric analysis suite (PCA, ICA, rotation, topology, Grassmannian, curvature)
-- GPU tensor battery (F24/F25/F1 in 10 seconds)
-- Kill-with-fire adversarial suite (8 tests)
-- Base-e calibration pipeline
-- Megethos large conductor sieve (LMFDB 85K curves)
-
-### Key Findings
-- Megethos b/a -> e^2 at 0.39% precision (85K curves to conductor 1.4M)
-- 6,019 topological loops (rotation-invariant, real structure)
-- 25 Grassmannian bridges between domain pairs
-- Particle-EC bridge KILLED (6/8 adversarial kills — sparsity artifact)
-- Alpha is projection-dependent, not universal (3 spaces, 3 values)
-- PC1 of raw tensor is "fingerprint complexity" not Megethos (r=0.017)
-- Mantel r=0.94 between 41D tensor and 5D phonemes (94% same geometry)
-- ORC = 0.596 in 41D (positively curved manifold confirmed in both cameras)
-- Euler chi = -30,687 (locally spherical, globally hyperbolic)
-- Curvature FACILITATES transfer (r=+0.271, prediction was backwards)
-- Island phonemes are genuinely independent (Topos, Auxesis = NEW VOICES)
-- Every domain is a camera angle on the same positively-curved manifold
+- [ ] Backup scripts for prometheus_sci and prometheus_fire
+- [ ] Redis cache layer for tensor slices (Mnemosyne Phase 3)
+- [ ] `prometheus_data/migrate.py` — reusable ingestion script
+- [ ] Wire Harmonia loaders to query Postgres with CSV file fallback

@@ -96,29 +96,48 @@ The `confidence` field is mandatory. No claim without calibration.
 
 ## Responsibilities
 
-### Phase 1: Infrastructure (Current)
-- [ ] Get Redis accessible from M2 (bind to LAN IP, configure firewall)
-- [ ] Build Python client library (`agora/client.py`) — connect, send, receive, heartbeat
-- [ ] Build CLI wrapper for Claude Code sessions to interact with Redis
-- [ ] First cross-machine "hello world" — two agents conversing via streams
+### Phase 1: Infrastructure — COMPLETE
+- [x] Get Redis accessible from M2 (bind to LAN IP, configure firewall)
+- [x] Build Python client library (`agora/client.py`) — connect, send, receive, heartbeat
+- [x] Build CLI wrapper for Claude Code sessions to interact with Redis
+- [x] First cross-machine "hello world" — two agents conversing via streams
 
-### Phase 2: Protocol
-- [ ] Define message schemas and validation
-- [ ] Implement consumer groups so messages aren't lost
-- [ ] Build the challenge/response protocol
-- [ ] Implement heartbeat monitoring
+### Phase 2: Protocol — COMPLETE
+- [x] Define message schemas and validation (`agora/protocol.py`)
+- [x] Implement consumer groups so messages aren't lost
+- [x] Build the challenge/response protocol
+- [x] Implement heartbeat monitoring
+- [x] Conversation persistence to Postgres (`agora.messages`, `agora.decisions`, `agora.open_questions`)
 
-### Phase 3: Science
-- [ ] Connect Agora to existing Prometheus pipelines
-- [ ] Route Charon discoveries through `agora:discoveries` for group verification
-- [ ] Implement adversarial review: one agent proposes, another tries to kill
-- [ ] Build the shared hypothesis tracker
+### Phase 3: Science — IN PROGRESS
+- [x] Connect Agora to existing Prometheus pipelines
+- [x] Route discoveries through `agora:discoveries` for group verification
+- [x] Implement adversarial review: one agent proposes, another tries to kill
+- [x] Build the shared hypothesis tracker (`hypotheses:alive` / `hypotheses:killed` sets)
+- [ ] Complete adversarial code review of Kairos's `gradient_tracker.py`
+- [ ] Settle Open Question #1 (spectral tail asymptote) — waiting on Mnemosyne's high-conductor EC query
 
-### Phase 4: Scale
-- [ ] Add 3rd, 4th, 5th agents with distinct roles
+### Phase 4: Scale — PARTIALLY COMPLETE
+- [x] Add 3rd, 4th, 5th agents with distinct roles (Kairos, Mnemosyne, Aporia, Ergon)
 - [ ] Implement role-based routing (some messages only go to relevant agents)
-- [ ] Build the group decision protocol (when do we accept a finding?)
+- [x] Build the group decision protocol (when do we accept a finding?)
 - [ ] Cross-machine task scheduling
+
+---
+
+## Agora Coordination Loop
+
+On session start, the Agora agent MUST:
+1. Read this file (`roles/Agora/RESPONSIBILITIES.md`)
+2. Read session state (`roles/Agora/SESSION_STATE_20260415.md`)
+3. Connect to Redis and check all streams for new messages
+4. Start a **5-minute coordination loop** checking:
+   - `agora:main` — new announcements, status updates
+   - `agora:challenges` — open challenges needing review
+   - `agora:discoveries` — findings needing adversarial verification
+   - `agora:tasks` — unclaimed work, blocked agents
+   - Agent heartbeats — who's alive, who's dead
+5. Unblock other agents, review submissions, maintain adversarial friction
 
 ---
 
