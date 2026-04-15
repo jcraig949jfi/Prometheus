@@ -1,5 +1,6 @@
-# Agora Session State — 2026-04-15
+# Agora Session State — 2026-04-15 (FINAL)
 ## Save point for account switch. Resume from this document.
+## Updated at end of session with final git state.
 
 ---
 
@@ -89,12 +90,15 @@
 
 ## Active Work Items
 
-### Exploration Protocol Reform (APPROVED, IN PROGRESS)
+### Exploration Protocol Reform — CODE-COMPLETE (all on main)
 - Design: 4-file change set, adversarially reviewed and approved
-- Kairos half: gradient_tracker.py (NEW) + validate.py gating_mode — SHIPPED (on M2, needs git push)
-- Ergon half: engine.py explore_ungated() + gradient_sweep() + landscape.py — IN PROGRESS
+- Kairos: gradient_tracker.py (211 lines, NEW) + validate.py gating_mode — MERGED TO MAIN
+- Ergon: engine.py explore_ungated() + gradient_sweep() + landscape.py — MERGED TO MAIN
+- Smoke tests PASS: known-connected pairs show positive gradients, 20% safety cap fires correctly
+- Ergon wired his landscape_to_prosecution_queue() through Kairos's GradientTracker (single interface)
 - Spec constraints: AlignmentCoupling required in prosecution threshold, rate > 20% = too noisy
 - Falsification criteria: >20% prosecution rate, <5% battery survival, no new signals = reform unnecessary
+- **NEXT STEP**: Run explore_ungated() on ALL 106 Megethos-zeroed void pairs (falsification criterion #3)
 
 ### Aporia Triage (IN PROGRESS)
 - 490 math problems being classified into Bucket A (testable now), B (needs data), C (structural)
@@ -102,16 +106,33 @@
 - Kairos corrections: downgrade additive combinatorics, upgrade knot theory
 - Kairos addition: blind trials should be Priority 0 alongside Bucket A
 - Output: aporia/mathematics/triage.jsonl (not yet created)
+- Aporia directory + 1,047 questions now committed to main (was untracked)
 
-### Mnemosyne Data Ingestion (IN PROGRESS)
-- Priority 1 data loaded into prometheus_sci (691K rows)
-- Ergon overnight results found on M2 (42 files) — transfer pending
-- High-conductor EC pull for Open Question #1 — not yet started (was blocked, now unblocked)
+### Mnemosyne Data Ingestion (PARTIALLY COMPLETE)
+- Priority 1 data loaded into prometheus_sci (691K rows across 5 tables)
+- Ergon overnight results found on M2 (42 files in ergon/results/) — transfer pending
+- High-conductor EC pull for Open Question #1 — not yet started (unblocked, ready to go)
+- Mnemosyne also created mnemosyne/data_audit_20260415.md (full inventory)
 
-### Ergon Reactivation (IN PROGRESS)
+### Ergon (READY FOR SCIENCE)
 - Tensor builds cleanly: (58111, 28) from 7 domains
-- Overnight results on M2 need transfer
-- Implementing explore_ungated() per approved reform spec
+- explore_ungated() implemented and smoke-tested
+- Overnight results on M2 need transfer (Kairos found 42 files)
+- **NEXT STEP**: Run the exploration reform on all domain pairs
+
+---
+
+## Git State (FINAL)
+- All code on main, pushed to origin
+- Last commit: Aporia catalog + Ergon exploration reform code
+- No uncommitted work except TODO.md (local edits, not critical)
+- data-layer-architecture branch: fully merged into main
+
+## What Lives Where
+- **Git (main)**: All code, role docs, session state, question catalog
+- **PostgreSQL (M1:5432)**: 30M+ LMFDB, 691K prometheus_sci, Agora messages/decisions/questions
+- **Redis (M1:6379)**: Streams (50+ messages), agent state, open_questions hash
+- **M2 only (not on main)**: ergon/results/ (42 overnight run files), mnemosyne/data_audit_20260415.md
 
 ---
 
@@ -120,12 +141,30 @@
 Any agent restarting should:
 1. `git pull` to get latest code
 2. Read this file: `roles/Agora/SESSION_STATE_20260415.md`
-3. Read `docs/forensic_timeline_april_2026.md` (ground truth)
-4. Read `roles/Agora/RESPONSIBILITIES.md` (protocol)
-5. Connect to Redis: `AGORA_REDIS_PASSWORD=prometheus`
-6. Call `client.catchup()` for latest from Postgres
-7. Resume their assigned work item above
+3. Read `docs/forensic_timeline_april_2026.md` (ground truth — what is real vs hallucinated)
+4. Read `roles/Agora/RESPONSIBILITIES.md` (communication protocol)
+5. Read own role doc: `roles/{AgentName}/RESPONSIBILITIES.md`
+6. Connect to Redis: `AGORA_REDIS_PASSWORD=prometheus` (host=localhost on M1, host=192.168.1.176 on M2)
+7. Call `client.catchup()` for decisions, open questions, and recent messages from Postgres
+8. Resume assigned work item above
 
 Claude_M1 specifically:
-- CronCreate job 0bd25d4e (2-minute loop) will need to be re-created
-- All infrastructure is stable — focus on coordination and review
+- Re-create 2-minute loop: `/loop 2m Check Redis agora streams...`
+- All infrastructure is stable — focus on coordination, review, and unblocking others
+- Adversarial code review of Kairos's gradient_tracker.py still owed (promised, not yet done)
+
+Kairos specifically:
+- Standing adversarial review of Ergon's explore_ungated() results when they come
+- Standing review of Aporia's Bucket A predictions when they start flowing
+
+Ergon specifically:
+- Run explore_ungated() on all domain pairs (the real test, falsification criterion #3)
+- Transfer overnight results from M2 (coordinate with Kairos)
+
+Aporia specifically:
+- Continue triage, post Bucket A candidates to agora:discoveries
+- Run blind trials alongside Bucket A (Kairos requirement)
+
+Mnemosyne specifically:
+- High-conductor EC pull for Open Question #1 (the decisive test)
+- Continue prometheus_sci ingestion (next: OEIS, Maass forms, isogenies)
