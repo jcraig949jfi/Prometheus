@@ -19,7 +19,9 @@ from pathlib import Path
 from typing import Optional
 
 from harmonia.src.domain_index import DomainIndex, DOMAIN_LOADERS, load_domains
-from harmonia.src.engine import HarmoniaEngine
+from harmonia.src.engine import (
+    HarmoniaEngine, UngatedExplorationReport, UngatedBondReport,
+)
 from harmonia.src.validate import validate_bond, extract_bond_components
 from harmonia.src.tensor_falsify import falsify_bond, FalsificationReport
 
@@ -335,6 +337,130 @@ class LandscapeExplorer:
             print(f"  {d:>18}: {stats['mean']:.1f} (n={stats['n']})")
 
         return summary
+
+
+@dataclass
+class ProsecutionCandidate:
+    """A domain pair that passed ungated exploration and is ready for battery."""
+    domain_a: str
+    domain_b: str
+    agreeing_scorers: list[str]
+    gradient_sign: str  # "positive", "flat", "negative", "unknown"
+    mean_bond_dim: float
+    max_bond_dim: int
+    gradient_slope: float  # coupling vs log(resolution) slope
+    reason: str
+
+
+def landscape_to_prosecution_queue(
+    report: UngatedExplorationReport,
+    min_agreeing_scorers: int = 2,
+    require_alignment: bool = True,
+    max_prosecution_rate: float = 0.20,
+) -> list[ProsecutionCandidate]:
+    """
+    Convert ungated exploration results into a prosecution queue.
+
+    Per approved spec (Kairos + Claude_M1, reviewed on agora:challenges):
+    - Prosecution threshold: positive sign in >= 2 scorers (alignment required)
+      AND positive gradient
+    - Prosecution rate > 20% of explored pairs = too noisy (filter is broken)
+
+    Args:
+        report: UngatedExplorationReport from engine.explore_ungated()
+        min_agreeing_scorers: Minimum scorers that must agree on positive coupling
+        require_alignment: Whether AlignmentCoupling must be among agreeing scorers
+        max_prosecution_rate: If prosecution rate exceeds this, return empty
+            (filter is too weak)
+
+    Returns:
+        Ordered list of ProsecutionCandidate, best first.
+    """
+    candidates = []
+    n_pairs = len(report.bond_matrix)
+
+    for pair_key, scorer_bonds in report.bond_matrix.items():
+        da, db = pair_key.split("::")
+
+        # Check which scorers show positive coupling (bond_dim > 1)
+        positive_scorers = []
+        dims = []
+        for scorer_name, bond in scorer_bonds.items():
+            # A bond dimension > 1 means the scorer found structure
+            # beyond the trivial rank-1 approximation
+            effective_dim = bond.bond_dim - bond.n_below_energy_threshold
+            if effective_dim > 1:
+                positive_scorers.append(scorer_name)
+            dims.append(bond.bond_dim)
+
+        # Check alignment requirement
+        if require_alignment and "alignment" not in positive_scorers:
+            continue
+
+        # Check minimum agreeing scorers
+        if len(positive_scorers) < min_agreeing_scorers:
+            continue
+
+        # Check gradient
+        gradient_slope = 0.0
+        gradient_sign = "unknown"
+        if pair_key in report.gradients:
+            gpts = report.gradients[pair_key]
+            if len(gpts) >= 2:
+                # Linear regression of mean_coupling vs log(resolution)
+                import math
+                xs = [math.log(g.resolution) for g in gpts]
+                ys = [g.mean_coupling for g in gpts]
+                n = len(xs)
+                mx = sum(xs) / n
+                my = sum(ys) / n
+                num = sum((x - mx) * (y - my) for x, y in zip(xs, ys))
+                den = sum((x - mx) ** 2 for x in xs)
+                gradient_slope = num / den if den > 0 else 0.0
+                if gradient_slope > 0.01:
+                    gradient_sign = "positive"
+                elif gradient_slope < -0.01:
+                    gradient_sign = "negative"
+                else:
+                    gradient_sign = "flat"
+
+        # Require positive gradient
+        if gradient_sign != "positive":
+            continue
+
+        mean_dim = sum(dims) / len(dims) if dims else 0
+        max_dim = max(dims) if dims else 0
+
+        candidates.append(ProsecutionCandidate(
+            domain_a=da,
+            domain_b=db,
+            agreeing_scorers=positive_scorers,
+            gradient_sign=gradient_sign,
+            mean_bond_dim=mean_dim,
+            max_bond_dim=max_dim,
+            gradient_slope=gradient_slope,
+            reason=(f"{len(positive_scorers)} scorers agree "
+                    f"({', '.join(positive_scorers)}), "
+                    f"gradient={gradient_slope:.4f}"),
+        ))
+
+    # Check prosecution rate
+    prosecution_rate = len(candidates) / max(n_pairs, 1)
+    if prosecution_rate > max_prosecution_rate:
+        print(f"[Prosecution] WARNING: rate {prosecution_rate:.1%} exceeds "
+              f"{max_prosecution_rate:.0%} threshold — filter too weak. "
+              f"Returning empty queue.")
+        return []
+
+    # Sort by gradient slope (strongest positive gradient first)
+    candidates.sort(key=lambda c: -c.gradient_slope)
+
+    print(f"[Prosecution] {len(candidates)}/{n_pairs} pairs pass "
+          f"({prosecution_rate:.1%} prosecution rate)")
+    for c in candidates[:10]:
+        print(f"  {c.domain_a} <-> {c.domain_b}: {c.reason}")
+
+    return candidates
 
 
 def run_landscape(n_iterations=200, max_order=3, save=True):

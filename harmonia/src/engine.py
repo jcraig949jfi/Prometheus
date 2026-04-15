@@ -15,6 +15,7 @@ from typing import Optional
 from harmonia.src.domain_index import DomainIndex, load_domains, DOMAIN_LOADERS
 from harmonia.src.coupling import CouplingScorer, DistributionalCoupling, AlignmentCoupling
 from harmonia.src.phonemes import PhonemeCoupling, KosmosCoupling
+from harmonia.src.validate import extract_bond_components
 
 
 @dataclass
@@ -57,6 +58,75 @@ class ExplorationReport:
 
     def to_dict(self) -> dict:
         return asdict(self)
+
+
+@dataclass
+class UngatedBondReport:
+    """Bond report from ungated exploration — one per (domain_pair, scorer)."""
+    domain_a: str
+    domain_b: str
+    scorer: str
+    bond_dim: int
+    top_singular_values: list[float]
+    energy_fractions: list[float]
+    # Annotations (not gates) — what prosecution mode WOULD have killed
+    n_below_energy_threshold: int  # energy < 1%
+    n_below_selectivity_threshold: int  # CV < 0.1
+
+
+@dataclass
+class GradientPoint:
+    """Coupling measurement at one resolution level."""
+    resolution: int
+    mean_coupling: float
+    std_coupling: float
+    bond_dim: int
+
+
+@dataclass
+class UngatedExplorationReport:
+    """Full report from ungated multi-scorer exploration."""
+    domains: list[str]
+    domain_sizes: list[int]
+    scorer_reports: dict  # scorer_name -> ExplorationReport
+    bond_matrix: dict  # "domA::domB" -> {scorer -> UngatedBondReport}
+    gradients: dict  # "domA::domB" -> list[GradientPoint]
+    wall_time_seconds: float
+
+    def summary(self) -> str:
+        lines = [
+            f"Ungated Exploration — {len(self.domains)} domains, "
+            f"{sum(self.domain_sizes)} total objects",
+            f"Scorers: {list(self.scorer_reports.keys())}",
+            f"Wall time: {self.wall_time_seconds:.2f}s",
+            "",
+        ]
+        for pair_key, scorer_bonds in sorted(self.bond_matrix.items()):
+            da, db = pair_key.split("::")
+            dims = {s: b.bond_dim for s, b in scorer_bonds.items()}
+            lines.append(f"  {da} <-> {db}: {dims}")
+            if pair_key in self.gradients:
+                gpts = self.gradients[pair_key]
+                grad_str = " -> ".join(
+                    f"{g.resolution}:{g.mean_coupling:.4f}" for g in gpts)
+                lines.append(f"    gradient: [{grad_str}]")
+        return "\n".join(lines)
+
+    def to_dict(self) -> dict:
+        return {
+            "domains": self.domains,
+            "domain_sizes": self.domain_sizes,
+            "scorer_reports": {s: r.to_dict() for s, r in self.scorer_reports.items()},
+            "bond_matrix": {
+                k: {s: asdict(b) for s, b in v.items()}
+                for k, v in self.bond_matrix.items()
+            },
+            "gradients": {
+                k: [asdict(g) for g in v]
+                for k, v in self.gradients.items()
+            },
+            "wall_time_seconds": self.wall_time_seconds,
+        }
 
 
 class HarmoniaEngine:
@@ -163,6 +233,7 @@ class HarmoniaEngine:
             eps=self.eps,
             rmax=self.max_rank,
             max_iter=self.max_iter,
+            verbose=False,  # tntorch verbose has ZeroDivisionError on fast convergence
         )
         wall_time = time.time() - t0
 
@@ -202,6 +273,159 @@ class HarmoniaEngine:
         )
 
         return tt, report
+
+    def explore_ungated(
+        self,
+        scorers: list[str] = None,
+        gradient_resolutions: list[int] = None,
+    ) -> UngatedExplorationReport:
+        """
+        Ungated exploration: run TT-Cross with multiple scorers, record
+        everything without killing anything. Gates become annotations.
+
+        Per approved exploration reform spec (Kairos + Claude_M1):
+        - All scorers run sequentially on the same domains
+        - Bond components annotated with energy/selectivity but NOT killed
+        - Gradient sweep measures coupling vs resolution for each domain pair
+
+        Args:
+            scorers: Which scorers to use. Default: all 3 approved scorers.
+            gradient_resolutions: Resolution levels for gradient sweep.
+                Default: [100, 500, 2000, 10000].
+
+        Returns:
+            UngatedExplorationReport with multi-angle bond data.
+        """
+        if scorers is None:
+            scorers = ["cosine", "distributional", "alignment"]
+        if gradient_resolutions is None:
+            gradient_resolutions = [100, 500, 2000, 10000]
+
+        t0 = time.time()
+        scorer_reports = {}
+        bond_matrix = {}  # "domA::domB" -> {scorer -> UngatedBondReport}
+
+        # Phase 1: Run TT-Cross with each scorer
+        for scorer_name in scorers:
+            print(f"\n[Ungated] Running scorer: {scorer_name}")
+            engine = HarmoniaEngine(
+                domains=self.domain_names,
+                device=self.device,
+                max_rank=self.max_rank,
+                eps=self.eps,
+                max_iter=self.max_iter,
+                scorer=scorer_name,
+                subsample=self.subsample,
+            )
+            tt, report = engine.explore()
+            scorer_reports[scorer_name] = report
+
+            # Extract ungated bond info with annotations
+            for i, bond in enumerate(report.bonds):
+                pair_key = f"{bond.domain_a}::{bond.domain_b}"
+                if pair_key not in bond_matrix:
+                    bond_matrix[pair_key] = {}
+
+                # Compute annotation stats (what prosecution WOULD kill)
+                components = extract_bond_components(
+                    tt, i, engine._domain_list)
+                total_energy = sum(sv ** 2 for sv, _, _ in components)
+
+                n_low_energy = 0
+                n_low_selectivity = 0
+                energy_fracs = []
+
+                for sv, left_scores, right_scores in components:
+                    efrac = (sv ** 2) / total_energy if total_energy > 0 else 0
+                    energy_fracs.append(efrac)
+                    if efrac < 0.01:
+                        n_low_energy += 1
+                    else:
+                        left_cv = (left_scores.std()
+                                   / left_scores.mean().clamp(min=1e-8))
+                        right_cv = (right_scores.std()
+                                    / right_scores.mean().clamp(min=1e-8))
+                        if left_cv < 0.1 and right_cv < 0.1:
+                            n_low_selectivity += 1
+
+                bond_matrix[pair_key][scorer_name] = UngatedBondReport(
+                    domain_a=bond.domain_a,
+                    domain_b=bond.domain_b,
+                    scorer=scorer_name,
+                    bond_dim=bond.bond_dim,
+                    top_singular_values=bond.top_singular_values,
+                    energy_fractions=energy_fracs,
+                    n_below_energy_threshold=n_low_energy,
+                    n_below_selectivity_threshold=n_low_selectivity,
+                )
+
+        # Phase 2: Gradient sweep — does coupling strengthen with resolution?
+        gradients = self._gradient_sweep(gradient_resolutions)
+
+        wall_time = time.time() - t0
+        return UngatedExplorationReport(
+            domains=self.domain_names,
+            domain_sizes=[dom.n_objects for dom in self._domain_list],
+            scorer_reports=scorer_reports,
+            bond_matrix=bond_matrix,
+            gradients=gradients,
+            wall_time_seconds=wall_time,
+        )
+
+    def _gradient_sweep(
+        self,
+        resolutions: list[int],
+    ) -> dict:
+        """
+        Measure coupling at multiple resolution levels to detect gradient.
+        Positive gradient (coupling increases with N) = real structure.
+        Flat or negative gradient = noise or artifact.
+
+        Returns:
+            Dict of "domA::domB" -> list[GradientPoint]
+        """
+        gradients = {}
+        scorer_name = "distributional"  # Use distributional as reference
+
+        for res in resolutions:
+            # Skip resolutions larger than our smallest domain
+            min_dom_size = min(dom.n_objects for dom in self._domain_list)
+            effective_res = min(res, min_dom_size)
+
+            print(f"[Gradient] Resolution {effective_res}...")
+            try:
+                engine = HarmoniaEngine(
+                    domains=self.domain_names,
+                    device=self.device,
+                    max_rank=self.max_rank,
+                    eps=1e-3,
+                    max_iter=50,
+                    scorer=scorer_name,
+                    subsample=effective_res,
+                )
+                tt, report = engine.explore()
+
+                for i, bond in enumerate(report.bonds):
+                    pair_key = f"{bond.domain_a}::{bond.domain_b}"
+                    if pair_key not in gradients:
+                        gradients[pair_key] = []
+
+                    # Compute mean coupling from singular values
+                    svs = bond.top_singular_values
+                    mean_c = sum(svs) / len(svs) if svs else 0.0
+                    std_c = (sum((s - mean_c)**2 for s in svs)
+                             / max(len(svs), 1)) ** 0.5 if svs else 0.0
+
+                    gradients[pair_key].append(GradientPoint(
+                        resolution=effective_res,
+                        mean_coupling=mean_c,
+                        std_coupling=std_c,
+                        bond_dim=bond.bond_dim,
+                    ))
+            except Exception as e:
+                print(f"[Gradient] Resolution {effective_res} failed: {e}")
+
+        return gradients
 
     def inspect_bond(self, tt, bond_idx: int) -> dict:
         """
