@@ -97,18 +97,24 @@ def validate_bond(
     domains: list[DomainIndex],
     battery_path: Optional[Path] = None,
     run_battery: bool = False,
+    gating_mode: str = "prosecution",
 ) -> ValidationReport:
     """
     Validate each component of a TT bond.
 
-    Without the battery (run_battery=False), uses heuristic validation:
-    - Components with < 1% of total energy are KILLED (noise)
-    - Components where object scores are uniform are KILLED (no selectivity)
-    - Remaining components SURVIVE pending battery confirmation
+    gating_mode controls behavior:
+    - "prosecution" (default): kills components with <1% energy or low
+      selectivity. Original behavior — use for final validation.
+    - "exploration": records all components as OBSERVED with annotations.
+      No killing. Use for ungated exploration where we want to see the
+      full landscape before deciding what to prosecute.
 
     With the battery (run_battery=True), runs F1/F3/F17/F24b on the
-    top-scoring objects from each component.
+    top-scoring objects from each component (prosecution mode only).
     """
+    if gating_mode not in ("prosecution", "exploration"):
+        raise ValueError(f"gating_mode must be 'prosecution' or 'exploration', got {gating_mode}")
+
     components = extract_bond_components(tt, bond_idx, domains)
 
     total_energy = sum(sv ** 2 for sv, _, _ in components)
@@ -118,19 +124,28 @@ def validate_bond(
     for k, (sv, left_scores, right_scores) in enumerate(components):
         energy_frac = (sv ** 2) / total_energy if total_energy > 0 else 0
 
-        # Heuristic validation
-        verdict = "SURVIVES"
-        kill_reason = None
+        # Compute heuristic metrics regardless of mode
+        left_cv = left_scores.std() / left_scores.mean().clamp(min=1e-8)
+        right_cv = right_scores.std() / right_scores.mean().clamp(min=1e-8)
+        low_energy = energy_frac < 0.01
+        low_selectivity = left_cv < 0.1 and right_cv < 0.1
 
-        # Kill if energy fraction too small
-        if energy_frac < 0.01:
-            verdict = "KILLED"
-            kill_reason = "energy < 1%"
+        if gating_mode == "exploration":
+            # Exploration mode: observe everything, annotate but don't kill
+            verdict = "OBSERVED"
+            kill_reason = None
+            if low_energy:
+                kill_reason = "annotation: energy < 1%"
+            elif low_selectivity:
+                kill_reason = "annotation: uniform scores (no selectivity)"
         else:
-            # Kill if scores are too uniform (no selectivity)
-            left_cv = left_scores.std() / left_scores.mean().clamp(min=1e-8)
-            right_cv = right_scores.std() / right_scores.mean().clamp(min=1e-8)
-            if left_cv < 0.1 and right_cv < 0.1:
+            # Prosecution mode: original gating behavior
+            verdict = "SURVIVES"
+            kill_reason = None
+            if low_energy:
+                verdict = "KILLED"
+                kill_reason = "energy < 1%"
+            elif low_selectivity:
                 verdict = "KILLED"
                 kill_reason = "uniform scores (no selectivity)"
 
