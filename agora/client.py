@@ -15,6 +15,12 @@ import threading
 from datetime import datetime, timezone
 from typing import List, Optional, Tuple
 
+try:
+    import psycopg2
+    HAS_PSYCOPG2 = True
+except ImportError:
+    HAS_PSYCOPG2 = False
+
 from agora.config import (
     REDIS_HOST, REDIS_PORT, REDIS_DB, get_redis_password,
     STREAM_MAIN, STREAM_CHALLENGES, STREAM_TASKS, STREAM_DISCOVERIES,
@@ -35,7 +41,8 @@ STREAM_MAP = {
 class AgoraClient:
     """Client for a single agent to participate in the Agora."""
 
-    def __init__(self, agent_name: str, machine: str, host: str = None, port: int = None):
+    def __init__(self, agent_name: str, machine: str, host: str = None, port: int = None,
+                 persist: bool = True):
         self.agent_name = agent_name
         self.machine = machine
         self.host = host or REDIS_HOST
@@ -43,6 +50,8 @@ class AgoraClient:
         self.r: Optional[redis.Redis] = None
         self._heartbeat_thread: Optional[threading.Thread] = None
         self._running = False
+        self._pg = None
+        self._persist = persist
 
     def connect(self):
         """Connect to Redis and register the agent."""
@@ -73,14 +82,48 @@ class AgoraClient:
                 if "BUSYGROUP" not in str(e):
                     raise
 
+        # Connect to Postgres for persistence
+        if self._persist and HAS_PSYCOPG2:
+            try:
+                self._pg = psycopg2.connect(
+                    host=self.host if self.host != "localhost" else "localhost",
+                    port=5432, dbname="prometheus_fire",
+                    user="postgres", password="prometheus",
+                )
+                self._pg.autocommit = True
+            except Exception:
+                self._pg = None  # Degrade gracefully
+
         print(f"[Agora] {self.agent_name}@{self.machine} connected.")
+
+    def _persist_message(self, stream: str, msg_id: str, msg):
+        """Persist a message to Postgres if connected."""
+        if not self._pg:
+            return
+        try:
+            cur = self._pg.cursor()
+            cur.execute(
+                "INSERT INTO agora.messages (stream_id, stream, sender, machine, msg_type, subject, body, confidence, evidence, reply_to) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) ON CONFLICT DO NOTHING",
+                (msg_id, stream, msg.sender, msg.machine, msg.type.value,
+                 msg.subject, msg.body, msg.confidence, msg.evidence, msg.reply_to or ""),
+            )
+            cur.close()
+        except Exception:
+            pass  # Never let persistence failure break the client
 
     def disconnect(self):
         """Gracefully disconnect."""
         self._running = False
         if self.r:
             self.r.hset(f"{AGENT_PREFIX}{self.agent_name}", "status", "offline")
-            print(f"[Agora] {self.agent_name} disconnected.")
+        if self._pg:
+            try:
+                self._pg.close()
+            except Exception:
+                pass
+            self._pg = None
+        print(f"[Agora] {self.agent_name} disconnected.")
 
     def send(self, stream: str, subject: str, body: str, confidence: float,
              msg_type: MessageType = MessageType.ANNOUNCE,
@@ -98,6 +141,7 @@ class AgoraClient:
             reply_to=reply_to,
         )
         msg_id = self.r.xadd(stream_key, msg.to_redis())
+        self._persist_message(stream, msg_id, msg)
         return msg_id
 
     def listen(self, stream: str = "main", count: int = 10,
@@ -239,3 +283,47 @@ class AgoraClient:
             print(f"\n--- {msg_id} ---")
             print(msg)
         print(f"\n[Agora] {len(messages)} messages on {stream}")
+
+    def catchup(self, limit: int = 50) -> str:
+        """Get a summary of recent Agora activity from Postgres.
+
+        Returns a formatted string that a new/restarting agent can read
+        to understand current team state, open questions, and recent decisions.
+        """
+        if not self._pg:
+            return "[Agora] No Postgres connection — read Redis streams manually."
+        cur = self._pg.cursor()
+        lines = ["=== AGORA CATCHUP ===\n"]
+
+        # Recent decisions
+        cur.execute("SELECT title, status, proposer, reviewer, summary FROM agora.decisions ORDER BY created_at DESC LIMIT 10")
+        rows = cur.fetchall()
+        if rows:
+            lines.append("## Decisions")
+            for title, status, proposer, reviewer, summary in rows:
+                lines.append(f"  [{status}] {title} (by {proposer}, reviewed by {reviewer})")
+                lines.append(f"    {summary[:150]}")
+            lines.append("")
+
+        # Open questions
+        cur.execute("SELECT title, proposer, challenger, status, decisive_test, assigned_to, blocked_on FROM agora.open_questions WHERE status = 'OPEN'")
+        rows = cur.fetchall()
+        if rows:
+            lines.append("## Open Questions")
+            for title, proposer, challenger, status, test, assigned, blocked in rows:
+                lines.append(f"  [{status}] {title}")
+                lines.append(f"    Test: {test[:120]}")
+                lines.append(f"    Assigned: {assigned} | Blocked: {blocked}")
+            lines.append("")
+
+        # Recent messages (last N)
+        cur.execute("SELECT stream, sender, subject, confidence, created_at FROM agora.messages ORDER BY created_at DESC LIMIT %s", (limit,))
+        rows = cur.fetchall()
+        if rows:
+            lines.append(f"## Recent Messages (last {len(rows)})")
+            for stream, sender, subject, conf, ts in reversed(rows):
+                lines.append(f"  [{stream}] {sender}: {subject} (conf={conf:.1f})")
+            lines.append("")
+
+        cur.close()
+        return "\n".join(lines)
