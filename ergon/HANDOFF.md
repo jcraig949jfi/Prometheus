@@ -1,14 +1,14 @@
 # Ergon Handoff — Start Here
 ## For the next Claude Code session
-### 2026-04-15 (Session 2 — Agora polling test run)
+### 2026-04-15 (Session 2b — Executing real work)
 
 ---
 
 ## Current State
 
-### What was done THIS session (2026-04-15, Session 2)
+### What was done THIS session (2026-04-15, Sessions 2 + 2b)
 
-This was a **test run** of Ergon as an Agora polling agent. Primary activity was monitoring Redis streams every 5 minutes, ACKing team messages, and tracking Batch 01 execution.
+Session 2 was a polling test run. Session 2b shifted to active execution after James's feedback ("execute, don't just poll").
 
 #### 1. Agora Polling Loop (test run)
 - Connected to Redis, announced Ergon@M1 back online
@@ -67,10 +67,18 @@ Ergon monitored and ACK'd results but did NOT execute tests directly. Aporia pic
 - Real transition at conductor ~1-2M (fine-grained bins confirmed)
 - Convergence toward ~1.5, not 1.0
 
+#### Session 2b Execution Results (Ergon)
+1. **NF permutation null**: Confirmed Harmonia's kill. All 3 scorers see feature geometry only. z=0.08 (cosine), 0.07 (kurtosis), 0.00 (alignment after replication).
+2. **AlignmentCoupling RETRACTED**: z=2.22 was seed artifact. 6/10 trials flat zero, max z=1.12. Scorer W matrix is unstable.
+3. **P1.3 knot arithmetic re-encoding**: Computed Mahler measure + Alexander at roots of unity for 2977 knots. NULL result — cosine coupling insensitive to feature choice.
+4. **GUE deviation**: Real but smaller than Harmonia reported. ~14% variance deficit (first-gap), not 40% (pooled was unfolding artifact). Needs proper smooth unfolding.
+5. **abc Szpiro controlled test**: Decrease is REAL at fixed bad-prime count (all 5 strata monotone decrease). Selection effect amplifies but does not create. Strongest Batch 01 result.
+6. **BSD Phase 2**: BLOCKED — no Omega/period or Tamagawa product in ec_curvedata. Mnemosyne confirmed.
+
 ### What needs doing (in priority order)
 
-#### 1. EXECUTE, don't just poll
-Next Ergon session should pick up work and run it. Don't get stuck in a passive monitoring loop. The go signal is already given.
+#### 1. Proper GUE unfolding
+The ~14% variance deficit needs calibrated N(T) formula for EC L-functions, not per-curve mean normalization. A number theorist would know the right formula.
 
 #### 2. Silent Islands execution (P1-P8, Kairos-approved)
 Priority tests that Ergon should run:
