@@ -140,19 +140,29 @@ def get_redis():
 
 
 # ============================================================
-# Public API: DuckDB (transitional, for backward compatibility)
+# Public API: DuckDB (DEPRECATED — use Postgres instead)
 # ============================================================
 
 def get_duckdb(read_only=True):
-    """Get a DuckDB connection to charon.duckdb.
+    """DEPRECATED: DuckDB data has been migrated to Postgres.
 
-    This is the transitional path. Will be deprecated once all data
-    moves to Postgres.
+    All charon.duckdb data is now in:
+      - prometheus_fire.xref.object_registry (134K objects)
+      - prometheus_fire.xref.bridges (17K bridges)
+      - prometheus_fire.zeros.* (322K zeros)
+      - prometheus_fire.analysis.disagreement_atlas (119K rows)
+      - Redis: graph:neighbors:*, landscape:*, bridge:*, hypothesis:queue
 
-    Usage:
-        db = get_duckdb()
-        rows = db.execute("SELECT * FROM elliptic_curves LIMIT 10").fetchall()
+    Use get_fire() or get_lmfdb() instead. This function still works
+    but will be removed in a future cleanup.
     """
+    import warnings
+    warnings.warn(
+        "get_duckdb() is deprecated. DuckDB data has been migrated to Postgres "
+        "(prometheus_fire) and Redis. Use get_fire() or get_lmfdb() instead.",
+        DeprecationWarning,
+        stacklevel=2,
+    )
     import duckdb
     from prometheus_data.config import get_config
     config = get_config("local")

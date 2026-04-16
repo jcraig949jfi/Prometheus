@@ -18,6 +18,30 @@ CARTOGRAPHY = Path(os.environ.get(
 ))
 
 
+def _pg_fire():
+    """Get a psycopg2 connection to prometheus_fire (zeros, atlas, objects, bridges)."""
+    import psycopg2
+    try:
+        from prometheus_data.config import get_pg_dsn
+        dsn = get_pg_dsn("fire")
+    except Exception:
+        dsn = dict(host='localhost', port=5432, dbname='prometheus_fire',
+                   user='postgres', password='prometheus', connect_timeout=15)
+    return psycopg2.connect(**dsn)
+
+
+def _pg_lmfdb():
+    """Get a psycopg2 connection to lmfdb (EC, MF, lfunc — the big tables)."""
+    import psycopg2
+    try:
+        from prometheus_data.config import get_pg_dsn
+        dsn = get_pg_dsn("lmfdb")
+    except Exception:
+        dsn = dict(host='localhost', port=5432, dbname='lmfdb',
+                   user='lmfdb', password='lmfdb', connect_timeout=15)
+    return psycopg2.connect(**dsn)
+
+
 class DomainIndex:
     """Index for a single mathematical domain."""
 
@@ -276,16 +300,16 @@ def load_fungrim(path: Optional[Path] = None) -> DomainIndex:
 
 
 def load_elliptic_curves(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load elliptic curves from Charon DuckDB."""
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
-        SELECT lmfdb_label, conductor, rank, analytic_rank, torsion
-        FROM elliptic_curves
+    """Load elliptic curves from Postgres (lmfdb.ec_curvedata, 3.8M rows)."""
+    conn = _pg_lmfdb()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT lmfdb_label, conductor::bigint, rank::int, analytic_rank::int, torsion::int
+        FROM ec_curvedata
         WHERE conductor IS NOT NULL
-    """).fetchall()
-    db.close()
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     labels, feats = [], []
     for row in rows:
@@ -303,17 +327,17 @@ def load_elliptic_curves(db_path: Optional[Path] = None) -> DomainIndex:
 
 
 def load_modular_forms(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load modular forms from Charon DuckDB."""
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
-        SELECT lmfdb_label, level, weight, dim, char_order, char_parity
-        FROM modular_forms
+    """Load modular forms from Postgres (lmfdb.mf_newforms, 1.1M rows)."""
+    conn = _pg_lmfdb()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT label, level::int, weight::int, dim::int, char_order::int, char_parity::int
+        FROM mf_newforms
         WHERE level IS NOT NULL
         LIMIT 100000
-    """).fetchall()
-    db.close()
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     labels, feats = [], []
     for row in rows:
@@ -332,17 +356,17 @@ def load_modular_forms(db_path: Optional[Path] = None) -> DomainIndex:
 
 
 def load_dirichlet_zeros(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load Dirichlet zeros from Charon DuckDB."""
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
-        SELECT lmfdb_url, conductor, degree, rank, n_zeros_stored, motivic_weight
-        FROM dirichlet_zeros
+    """Load Dirichlet zeros from Postgres (prometheus_fire.zeros.dirichlet_zeros, 185K rows)."""
+    conn = _pg_fire()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT lmfdb_url, conductor, degree, 0 AS rank, n_zeros_stored, motivic_weight
+        FROM zeros.dirichlet_zeros
         WHERE conductor IS NOT NULL
         LIMIT 100000
-    """).fetchall()
-    db.close()
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     labels, feats = [], []
     for row in rows:
@@ -368,20 +392,44 @@ def load_ec_zeros(db_path: Optional[Path] = None, limit: int = 20000) -> DomainI
     spacings, spacing ratios, and GUE statistics. The spectral features
     (first zero, mean spacing, spacing variance) have 6-digit precision
     from LMFDB data.
+
+    Data sources: prometheus_fire.zeros.object_zeros + lmfdb.ec_curvedata
+    (joined via xref.object_registry.source_key = ec_curvedata.lmfdb_label)
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql(f"""
-        SELECT ec.lmfdb_label, ec.conductor, ec.rank, ec.torsion,
-               oz.zeros_vector, oz.n_zeros_stored, oz.root_number, oz.analytic_rank
-        FROM object_zeros oz
-        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
-        WHERE oz.n_zeros_stored >= 5 AND oz.zeros_vector IS NOT NULL
-              AND ec.conductor IS NOT NULL
+    # Get zeros + EC label from prometheus_fire
+    fire = _pg_fire()
+    fire_cur = fire.cursor()
+    fire_cur.execute(f"""
+        SELECT r.source_key, oz.zeros_vector, oz.root_number, oz.analytic_rank
+        FROM zeros.object_zeros oz
+        JOIN xref.object_registry r ON r.object_id = oz.object_id
+        WHERE r.object_type = 'elliptic_curve'
+              AND oz.zeros_vector IS NOT NULL
+              AND array_length(oz.zeros_vector, 1) >= 5
         LIMIT {limit}
-    """).fetchall()
-    db.close()
+    """)
+    zero_rows = {row[0]: row[1:] for row in fire_cur.fetchall()}
+    fire.close()
+
+    # Get EC invariants from lmfdb
+    lmfdb = _pg_lmfdb()
+    lmfdb_cur = lmfdb.cursor()
+    labels_list = list(zero_rows.keys())
+    # Batch query in chunks to avoid oversized IN clause
+    rows = []
+    chunk_size = 5000
+    for i in range(0, len(labels_list), chunk_size):
+        chunk = labels_list[i:i+chunk_size]
+        lmfdb_cur.execute("""
+            SELECT lmfdb_label, conductor::bigint, rank::int, torsion::int
+            FROM ec_curvedata
+            WHERE lmfdb_label = ANY(%s) AND conductor IS NOT NULL
+        """, (chunk,))
+        for ec_row in lmfdb_cur.fetchall():
+            label, conductor, rank, torsion = ec_row
+            zvec, root_num, ana_rank = zero_rows[label]
+            rows.append((label, conductor, rank, torsion, zvec, len(zvec) if zvec else 0, root_num, ana_rank))
+    lmfdb.close()
 
     labels, feats = [], []
     for row in rows:
@@ -421,19 +469,22 @@ def load_raw_zeros(db_path: Optional[Path] = None, n_zeros: int = 10) -> DomainI
 
     Each object gets n_zeros features: the first n_zeros positive zeros
     of its L-function, in ascending order.
+
+    Data source: prometheus_fire.zeros.object_zeros + xref.object_registry
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql(f"""
-        SELECT ec.lmfdb_label, oz.zeros_vector
-        FROM object_zeros oz
-        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
-        WHERE oz.n_zeros_stored >= {n_zeros} AND oz.zeros_vector IS NOT NULL
-              AND ec.conductor IS NOT NULL
-        ORDER BY oz.n_zeros_stored DESC
-    """).fetchall()
-    db.close()
+    conn = _pg_fire()
+    cur = conn.cursor()
+    cur.execute(f"""
+        SELECT r.source_key, oz.zeros_vector
+        FROM zeros.object_zeros oz
+        JOIN xref.object_registry r ON r.object_id = oz.object_id
+        WHERE r.object_type = 'elliptic_curve'
+              AND oz.zeros_vector IS NOT NULL
+              AND array_length(oz.zeros_vector, 1) >= {n_zeros}
+        ORDER BY array_length(oz.zeros_vector, 1) DESC
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     labels, feats = [], []
     for row in rows:
@@ -454,19 +505,40 @@ def load_zeros_anchored(db_path: Optional[Path] = None, n_zeros: int = 10) -> Do
     Feature 0: log(conductor) — the Megethos coordinate.
     Features 1-N: raw zero positions — the Phasma coordinates at maximum precision.
     This domain bridges the two axes through ground-truth data.
+
+    Data sources: prometheus_fire.zeros.object_zeros + lmfdb.ec_curvedata
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql(f"""
-        SELECT ec.lmfdb_label, ec.conductor, oz.zeros_vector
-        FROM object_zeros oz
-        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
-        WHERE oz.n_zeros_stored >= {n_zeros} AND oz.zeros_vector IS NOT NULL
-              AND ec.conductor IS NOT NULL
-        ORDER BY oz.n_zeros_stored DESC
-    """).fetchall()
-    db.close()
+    # Get zeros + labels from prometheus_fire
+    fire = _pg_fire()
+    fire_cur = fire.cursor()
+    fire_cur.execute(f"""
+        SELECT r.source_key, oz.zeros_vector
+        FROM zeros.object_zeros oz
+        JOIN xref.object_registry r ON r.object_id = oz.object_id
+        WHERE r.object_type = 'elliptic_curve'
+              AND oz.zeros_vector IS NOT NULL
+              AND array_length(oz.zeros_vector, 1) >= {n_zeros}
+        ORDER BY array_length(oz.zeros_vector, 1) DESC
+    """)
+    zero_map = {row[0]: row[1] for row in fire_cur.fetchall()}
+    fire.close()
+
+    # Get conductors from lmfdb
+    lmfdb = _pg_lmfdb()
+    lmfdb_cur = lmfdb.cursor()
+    labels_list = list(zero_map.keys())
+    rows = []
+    chunk_size = 5000
+    for i in range(0, len(labels_list), chunk_size):
+        chunk = labels_list[i:i+chunk_size]
+        lmfdb_cur.execute("""
+            SELECT lmfdb_label, conductor::bigint
+            FROM ec_curvedata
+            WHERE lmfdb_label = ANY(%s) AND conductor IS NOT NULL
+        """, (chunk,))
+        for label, conductor in lmfdb_cur.fetchall():
+            rows.append((label, conductor, zero_map[label]))
+    lmfdb.close()
 
     labels, feats = [], []
     for row in rows:
@@ -496,19 +568,21 @@ def load_rmt_ensemble(db_path: Optional[Path] = None, limit: int = 30000) -> Dom
       Unfolded level statistics (2): mean unfolded spacing, unfolded spacing var
     """
     from scipy import stats as sp_stats
-    import duckdb
 
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql(f"""
-        SELECT ec.lmfdb_label, oz.zeros_vector, oz.n_zeros_stored
-        FROM object_zeros oz
-        JOIN elliptic_curves ec ON oz.object_id = ec.object_id
-        WHERE oz.n_zeros_stored >= 8 AND oz.zeros_vector IS NOT NULL
-        ORDER BY oz.n_zeros_stored DESC
+    conn = _pg_fire()
+    cur = conn.cursor()
+    cur.execute(f"""
+        SELECT r.source_key, oz.zeros_vector, array_length(oz.zeros_vector, 1)
+        FROM zeros.object_zeros oz
+        JOIN xref.object_registry r ON r.object_id = oz.object_id
+        WHERE r.object_type = 'elliptic_curve'
+              AND oz.zeros_vector IS NOT NULL
+              AND array_length(oz.zeros_vector, 1) >= 8
+        ORDER BY array_length(oz.zeros_vector, 1) DESC
         LIMIT {limit}
-    """).fetchall()
-    db.close()
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     labels, feats = [], []
     for row in rows:
@@ -850,17 +924,32 @@ def load_charon_landscape(db_path: Optional[Path] = None, limit: int = 100000) -
     Load the Charon embedding landscape — 119K objects with 16D coordinates,
     local curvature, and cluster assignments. This is a pre-computed
     embedding of the entire LMFDB object space.
+
+    Data source: Redis landscape:* hashes (migrated from DuckDB 2026-04-16).
+    Falls back to Redis scan since landscape data is stored as hashes.
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql(f"""
-        SELECT object_id, coordinates, local_curvature, cluster_id
-        FROM landscape
-        WHERE coordinates IS NOT NULL
-        LIMIT {limit}
-    """).fetchall()
-    db.close()
+    import redis as _redis
+    import json as _json
+    try:
+        from prometheus_data.config import get_redis_config
+        r = _redis.Redis(**get_redis_config(), decode_responses=True)
+    except Exception:
+        r = _redis.Redis(host='localhost', port=6379, password='prometheus', decode_responses=True)
+
+    rows = []
+    count = 0
+    for key in r.scan_iter("landscape:*", count=5000):
+        if key == "landscape:by_curvature" or key.startswith("landscape:by_cluster"):
+            continue
+        obj_id = key.split(":")[-1]
+        data = r.hgetall(key)
+        coords = _json.loads(data.get("coordinates", "[]"))
+        curvature = float(data.get("curvature", 0))
+        cluster = int(data.get("cluster_id", 0))
+        rows.append((obj_id, coords, curvature, cluster))
+        count += 1
+        if count >= limit:
+            break
 
     labels, feats = [], []
     for row in rows:
@@ -1609,25 +1698,25 @@ def load_resurgence(path: Optional[Path] = None, limit: int = 50000) -> DomainIn
 
 
 def load_disagreement(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load disagreement atlas from Charon DuckDB.
+    """Load disagreement atlas from Postgres (prometheus_fire.analysis.disagreement_atlas, 119K rows).
 
     Objects where different analysis methods disagreed. Features capture
     the nature and extent of disagreement: conductor, rank, torsion, CM flag,
     jaccard similarity, precision, recall, zero coherence, graph degree,
     component size, neighbor counts, and overlap.
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
+    conn = _pg_fire()
+    cur = conn.cursor()
+    cur.execute("""
         SELECT label, conductor, rank, torsion, cm,
                jaccard, precision_score, recall_score, zero_coherence,
                graph_degree, component_size, n_zero_nn, n_graph_nn, n_overlap,
                disagreement_type
-        FROM disagreement_atlas
+        FROM analysis.disagreement_atlas
         WHERE label IS NOT NULL
-    """).fetchall()
-    db.close()
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     # Encode disagreement_type as numeric
     type_map = {"A": 0.0, "B": 1.0, "C": 2.0, "D": 3.0}
@@ -1658,44 +1747,32 @@ def load_disagreement(db_path: Optional[Path] = None) -> DomainIndex:
 
 
 def load_knowledge_graph(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load knowledge graph summary statistics per object from Charon DuckDB.
+    """Load knowledge graph summary statistics per object from Redis.
 
-    Computes per-object features from graph_edges: degree, mean weight,
-    and fraction of edges by type (isogeny, modularity, twist).
+    Computes per-object features from Redis graph:neighbors:* adjacency sets.
+    Graph edges were migrated from DuckDB to Redis on 2026-04-16.
+    Note: Redis stores adjacency only (no weight/type), so we use degree only.
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
-        SELECT
-            source_label,
-            COUNT(*) AS degree,
-            AVG(weight) AS mean_weight,
-            SUM(CASE WHEN edge_type = 'isogeny' THEN 1 ELSE 0 END) AS n_isogeny,
-            SUM(CASE WHEN edge_type = 'modularity' THEN 1 ELSE 0 END) AS n_modularity,
-            SUM(CASE WHEN edge_type = 'twist' THEN 1 ELSE 0 END) AS n_twist
-        FROM graph_edges
-        WHERE source_label IS NOT NULL
-        GROUP BY source_label
-    """).fetchall()
-    db.close()
+    import redis as _redis
+    try:
+        from prometheus_data.config import get_redis_config
+        r = _redis.Redis(**get_redis_config(), decode_responses=True)
+    except Exception:
+        r = _redis.Redis(host='localhost', port=6379, password='prometheus', decode_responses=True)
+
+    rows = []
+    for key in r.scan_iter("graph:neighbors:*", count=5000):
+        obj_id = key.split(":")[-1]
+        degree = r.scard(key)
+        rows.append((obj_id, degree))
 
     labels, feats = [], []
     for row in rows:
-        labels.append(row[0])
+        labels.append(str(row[0]))
         degree = float(row[1] or 0)
-        mean_weight = float(row[2] or 0)
-        n_isogeny = float(row[3] or 0)
-        n_modularity = float(row[4] or 0)
-        n_twist = float(row[5] or 0)
-        total = max(degree, 1.0)
         feat = [
             np.log1p(degree),                  # log_degree
-            mean_weight,                       # mean_weight
-            n_isogeny / total,                 # frac_isogeny
-            n_modularity / total,              # frac_modularity
-            n_twist / total,                   # frac_twist
-            np.log1p(n_isogeny),               # log_n_isogeny
+            degree,                            # raw_degree
         ]
         feats.append(feat)
 
@@ -1704,25 +1781,26 @@ def load_knowledge_graph(db_path: Optional[Path] = None) -> DomainIndex:
 
 
 def load_bridges(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load known cross-domain bridges from Charon DuckDB.
+    """Load known cross-domain bridges from Postgres (prometheus_fire.xref.bridges, 17K rows).
 
     Features per source object: number of bridges, whether verified,
     and bridge type encoding.
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
+    conn = _pg_fire()
+    cur = conn.cursor()
+    cur.execute("""
         SELECT
-            source_label,
+            r.source_key AS source_label,
             COUNT(*) AS n_bridges,
-            SUM(CASE WHEN verified THEN 1 ELSE 0 END) AS n_verified,
-            SUM(CASE WHEN bridge_type = 'modularity' THEN 1 ELSE 0 END) AS n_modularity
-        FROM known_bridges
-        WHERE source_label IS NOT NULL
-        GROUP BY source_label
-    """).fetchall()
-    db.close()
+            SUM(CASE WHEN b.evidence_grade = 'verified' THEN 1 ELSE 0 END) AS n_verified,
+            SUM(CASE WHEN b.bridge_type = 'modularity' THEN 1 ELSE 0 END) AS n_modularity
+        FROM xref.bridges b
+        JOIN xref.object_registry r ON r.object_id = b.source_object_id
+        WHERE r.source_key IS NOT NULL
+        GROUP BY r.source_key
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     labels, feats = [], []
     for row in rows:
@@ -1743,21 +1821,21 @@ def load_bridges(db_path: Optional[Path] = None) -> DomainIndex:
 
 
 def load_lmfdb_objects(db_path: Optional[Path] = None) -> DomainIndex:
-    """Load LMFDB objects with invariant vectors from Charon DuckDB.
+    """Load LMFDB objects with invariant vectors from Postgres (prometheus_fire.xref.object_registry, 134K rows).
 
     The invariant_vector is a 50-dimensional float vector capturing deep
     arithmetic invariants. We also extract conductor and completeness scores.
     """
-    import duckdb
-    db_path = db_path or Path(CARTOGRAPHY).parent / "charon" / "data" / "charon.duckdb"
-    db = duckdb.connect(str(db_path), read_only=True)
-    rows = db.sql("""
-        SELECT lmfdb_label, conductor, invariant_vector,
-               coefficient_completeness, zeros_completeness, object_type
-        FROM objects
+    conn = _pg_fire()
+    cur = conn.cursor()
+    cur.execute("""
+        SELECT source_key, conductor, invariant_vector,
+               coefficient_completeness, 0.0 AS zeros_completeness, object_type
+        FROM xref.object_registry
         WHERE invariant_vector IS NOT NULL
-    """).fetchall()
-    db.close()
+    """)
+    rows = cur.fetchall()
+    conn.close()
 
     # Encode object_type
     type_map = {"elliptic_curve": 0.0, "modular_form": 1.0, "genus2_curve": 2.0}

@@ -38,29 +38,39 @@ if _scripts not in sys.path:
 def _load_domain(domain):
     """Load domain data. Returns list of dicts with raw fields."""
     data_root = _root / "cartography"
-    charon_db = _root / "charon/data/charon.duckdb"
 
     objects = []
 
     if domain == "elliptic_curves":
-        import duckdb
-        con = duckdb.connect(str(charon_db), read_only=True)
-        rows = con.execute("""
-            SELECT conductor, rank, torsion, cm, aplist
-            FROM elliptic_curves WHERE conductor > 0 LIMIT 10000
-        """).fetchall()
+        import psycopg2
+        try:
+            from prometheus_data.config import get_pg_dsn
+            con = psycopg2.connect(**get_pg_dsn("lmfdb"))
+        except Exception:
+            con = psycopg2.connect(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')
+        cur = con.cursor()
+        cur.execute("""
+            SELECT conductor::bigint, rank::int, torsion::int, cm::int
+            FROM ec_curvedata WHERE conductor::bigint > 0 LIMIT 10000
+        """)
+        rows = cur.fetchall()
         con.close()
-        for cond, rank, tors, cm, aplist in rows:
-            ap = json.loads(aplist) if isinstance(aplist, str) and aplist else []
+        for cond, rank, tors, cm in rows:
             objects.append({"conductor": cond, "rank": rank or 0, "torsion": tors or 1,
-                           "cm": cm or 0, "ap": ap[:25] if isinstance(ap, list) else []})
+                           "cm": cm or 0, "ap": []})
 
     elif domain == "modular_forms":
-        import duckdb
-        con = duckdb.connect(str(charon_db), read_only=True)
-        rows = con.execute("""
-            SELECT level, weight, dim FROM modular_forms WHERE level > 0 LIMIT 10000
-        """).fetchall()
+        import psycopg2
+        try:
+            from prometheus_data.config import get_pg_dsn
+            con = psycopg2.connect(**get_pg_dsn("lmfdb"))
+        except Exception:
+            con = psycopg2.connect(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')
+        cur = con.cursor()
+        cur.execute("""
+            SELECT level::int, weight::int, dim::int FROM mf_newforms WHERE level::int > 0 LIMIT 10000
+        """)
+        rows = cur.fetchall()
         con.close()
         for level, weight, dim in rows:
             objects.append({"level": level, "weight": weight, "dim": dim or 1})
