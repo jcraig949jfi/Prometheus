@@ -77,6 +77,7 @@ def ingest():
         # Pad to fixed length for embedding
         alex_coeffs = alex["coefficients"] if alex else []
         jones_coeffs = jones["coefficients"] if jones else []
+        conway_coeffs = conway["coefficients"] if conway else []
 
         # Determinant = |Alexander(−1)| — alternating sum of coefficients
         determinant = None
@@ -95,6 +96,7 @@ def ingest():
             "conway": conway,
             "alex_coeffs": alex_coeffs,
             "jones_coeffs": jones_coeffs,
+            "conway_coeffs": conway_coeffs,
         }
         knots.append(knot)
 
