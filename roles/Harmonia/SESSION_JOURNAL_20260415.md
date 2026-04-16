@@ -107,6 +107,44 @@ Novel cross-domain bridges found: still ZERO.
 
 ---
 
-*6 kills (3 NF permutation + 1 spectral conductor + 1 GUE needs verification + 1 NF PCA bug). 2 downgrades. 1 new negative dimension. 1 new possible finding (GUE deviation).*
+### BSD Parity Test (COMPLETE — PERFECT)
+
+3,844,373 total curves tested across multiple queries. Zero disagreements.
+
+| Test | Curves | Agreement |
+|------|--------|-----------|
+| rank = analytic_rank (all ec_curvedata) | 3,824,372 | 100.000000% |
+| root_number parity, rank 2 (lfunc join) | 5,000 | 100.0000% |
+| root_number parity, rank 3 (lfunc join) | 5,000 | 100.0000% |
+| root_number parity, rank 4 (lfunc join) | 1 | 100% |
+| (-1)^ov = root_number, ov >= 2 | 10,000 | 100.0000% |
+
+**Specimen for a mathematician:** Coverage cliff at rank >= 4. 2,086 rank-4 curves exist in ec_curvedata but only 1 has lfunc data. 19 rank-5 curves, zero with lfunc. These 2,105 missing L-function records are where a BSD counterexample would hide.
+
+### Lehmer Conjecture Scan (COMPLETE — NO COUNTEREXAMPLE)
+
+90K non-trivial polynomials tested across degrees 2-24 from 22M LMFDB number fields (devmirror).
+
+- Lehmer's polynomial **rediscovered blind** at degree 20 (field 20.4.1860495326773308902342656.1, M=1.1762808183)
+- **4.4% gap** between Lehmer bound and next smallest (degree 12, M=1.2278)
+- Smallest Mahler measures by degree map the Lehmer landscape
+
+**Specimen for a mathematician:** The degree-12 field 12.0.201018619201.1 at M=1.228 is the closest non-Lehmer approach. The gap structure and degree-dependence of minimum Mahler measures are concrete objects to study. Only 2000 fields/degree sampled — exhaustive scan of 22M might find closer approaches.
+
+### Signal Registry Design
+
+Wrote cartography/docs/signal_registry_design.md. Three-tier architecture:
+1. Calibration anchors (KNOWN) — proven theorems, 100% pass required
+2. Specimens (NEW) — every signal with ANY statistical life, full battery profile
+3. Shadow archive (KILLS) — negative space with fingerprints
+
+Key insight: battery profiles are fingerprints. A signal killed by F1 (noise) is different from one killed by F24 (accounting problem). Interest scoring from 0.0 (noise) to 1.0 (finding).
+
+---
+
+*6 kills. 2 downgrades. 1 new negative dimension. 1 new possible (GUE deviation).*
+*2 open-problem tests complete (BSD parity perfect, Lehmer no counterexample).*
+*Both produced specimens: BSD coverage cliff at rank >= 4, Lehmer gap structure.*
 *The instrument keeps getting sharper. The honest number is still zero.*
-*April 15, 2026*
+*But the specimens point where to look next.*
+*April 15-16, 2026*
