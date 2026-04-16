@@ -56,7 +56,10 @@ This directory is the master catalog of all data assets in Project Prometheus: w
 ### Planning
 | File | Contents |
 |------|----------|
-| [proposals.md](proposals.md) | Schema changes, new data sources, infrastructure work. Propose and discuss here. |
-| [MIGRATION_PLAN.md](MIGRATION_PLAN.md) | DuckDB → Postgres+Redis migration (Agora). 4 phases, ~3 hours. |
+| [unified_data_plan.md](unified_data_plan.md) | **START HERE for planning.** Consolidated from all agents. 8 priorities, schemas, blockers. |
+| [proposals.md](proposals.md) | Individual proposals with status tracking |
+| [MIGRATION_PLAN.md](MIGRATION_PLAN.md) | DuckDB → Postgres+Redis migration detail (Agora) |
+| [harmonia_data_storage_recommendation.md](harmonia_data_storage_recommendation.md) | Harmonia's three-tier storage recommendation |
+| [database_architecture.md](database_architecture.md) | Original architecture design (Agora/Claude_M1) |
 | [loose_files.md](loose_files.md) | Cartography data files not yet in any database |
 | [data_audit_20260415.md](data_audit_20260415.md) | Raw inventory from first Mnemosyne session |
