@@ -16,17 +16,27 @@ Redis    = speed    (cached state, coordination, hot lookups)
 Files    = archive  (static reference, model weights, backups)
 ```
 
-### What We Have Now
+### What We Have Now (updated 2026-04-16)
 
 | Tier | System | Size | Status |
 |------|--------|------|--------|
-| Postgres | lmfdb (5 tables) | 341 GB, 30M rows | LIVE, read-only |
+| Postgres | lmfdb (5 tables + 1 mat view + 6 indexes) | 341 GB, 30M rows | LIVE, `bsd_joined` view (2.48M rows) |
 | Postgres | prometheus_sci (14 tables) | ~855K rows | LIVE, 6 tables populated |
 | Postgres | prometheus_fire (15 tables) | ~152K rows | LIVE, partially populated |
 | Redis | 192.168.1.176:6379 | ~10 MB | LIVE, Agora streams + agent state |
-| DuckDB | charon.duckdb | 1.2 GB, 1.1M rows | LEGACY, partially migrated |
+| DuckDB | charon.duckdb | 1.2 GB, 1.1M rows | LEGACY, migration planned (Priority 3) |
 | DuckDB | noesis_v2.duckdb | 19.5 MB, 52K rows | LEGACY, not migrated |
 | Flat files | cartography/ | ~170 GB | Source data, partially loaded |
+
+### lmfdb Indexes (all on lfunc_lfunctions, 24.3M rows)
+| Index | Column | Built |
+|-------|--------|-------|
+| `idx_lfunc_origin` | origin | 2026-04-15 |
+| `idx_lfunc_conductor_numeric` | conductor (numeric) | 2026-04-15 (523 MB) |
+| `idx_lfunc_conductor` | conductor (text) | 2026-04-15 |
+| `idx_lfunc_degree` | degree | 2026-04-15 |
+| `idx_lfunc_motivic_weight` | motivic_weight | 2026-04-15 |
+| `idx_lfunc_order_of_vanishing` | order_of_vanishing | 2026-04-15 |
 
 ---
 
@@ -247,9 +257,20 @@ Then load into local lmfdb database.
 
 ---
 
-## Materialized Views (After Join Key Resolved)
+## Materialized Views
 
-**`lfunc_typed`** — lfunc with proper types for fast analysis:
+**`bsd_joined`** — LIVE (created 2026-04-16)
+- 2,481,157 rows, 3 indexes (conductor, rank, isogeny class)
+- EC algebraic invariants + L-function zeros/leading_term in one table
+- Coverage: 64.9% of EC (conductor up to ~400K)
+- Full docs: `thesauros/bsd_joined_view.md`
+- Script: `thesauros/create_bsd_joined.py`
+- Refresh: `REFRESH MATERIALIZED VIEW bsd_joined;`
+
+**`lfunc_typed`** — NOT YET CREATED
+- Would cast all lfunc TEXT columns to proper types for fast analysis
+- Less urgent now that bsd_joined handles the EC↔lfunc case
+- Still useful for non-EC L-functions (Artin, Dirichlet, Maass)
 ```sql
 CREATE MATERIALIZED VIEW lfunc_typed AS
 SELECT
@@ -267,29 +288,17 @@ SELECT
 FROM lfunc_lfunctions;
 ```
 
-**`bsd_joined`** — EC algebraic invariants + L-function data:
-```sql
--- Depends on P-001 join key resolution
-CREATE MATERIALIZED VIEW bsd_joined AS
-SELECT
-    ec.lmfdb_label, ec.conductor::bigint, ec.rank::int, ec.analytic_rank::int,
-    ec.regulator::double precision, ec.sha::int, ec.torsion::int,
-    ec.manin_constant::int, ec.faltings_height::double precision,
-    ec.bad_primes, ec.isogeny_degrees,
-    lf.leading_term::double precision, lf.positive_zeros, lf.root_number
-FROM ec_curvedata ec
-JOIN lfunc_lfunctions lf ON <join_condition_tbd>;
-```
-
 ---
 
 ## Known Data Quality Issues
 
-1. **LMFDB all-text columns** — Every column is TEXT. Casts required. Conductor index mitigates for one column.
-2. **Sha circularity at rank ≥ 2** — Computed assuming BSD. Cannot test BSD independently.
-3. **Missing EC ingredients** — Omega, Tamagawa product, root_number not in ec_curvedata.
-4. **LMFDB selection effects** — High-conductor ECs biased toward prime conductors. Stratify by bad_primes.
+1. **LMFDB all-text columns** — Every column is TEXT. Casts required. `bsd_joined` handles this for EC↔lfunc; `lfunc_typed` would handle the rest.
+2. **Sha circularity at rank ≥ 2** — Computed assuming BSD. Cannot test BSD independently. See `bsd_joined_view.md` for details.
+3. **Missing EC ingredients** — Omega (real_period) and Tamagawa product not in ec_curvedata. Computable from ainvs via sage/pari or LMFDB API. root_number IS available in lfunc (included in bsd_joined).
+4. **LMFDB selection effects** — High-conductor ECs biased toward prime conductors. Stratify by bad_primes. Confirmed by Ergon's abc controlled test (2026-04-15).
 5. **abc_quality ≈ szpiro_ratio** — Both columns appear identical. Verify before using both.
+6. **lfunc coverage gap at high conductor** — bsd_joined has 0% coverage above conductor 400K. 747K EC curves (20%) have no L-function data. Rank 5 curves (19 total) are all above the cutoff.
+7. **Isogeny-level join** — bsd_joined joins at the isogeny class level (all curves in a class share one L-function). Multiple EC rows can map to the same lfunc row. Use DISTINCT on ec_iso for class-level analysis.
 
 ---
 
@@ -306,12 +315,27 @@ From the database architecture doc — all agents must respect:
 
 ---
 
-## Summary: What Blocks Science
+## Summary: What Blocks Science (updated 2026-04-16)
 
-| Blocker | What It Blocks | Fix |
-|---------|---------------|-----|
-| No lfunc origin index | 90s EC↔lfunc joins | Priority 1 (1 command) |
-| No EC↔lfunc join key | BSD Phase 2, spectral analysis | Priority 2 (investigation) |
-| Zeros in DuckDB only | 10+ open problems, GUE analysis | Priority 3 (migration) |
-| No signal registry | Battery re-audits, specimen tracking | Priority 4 (new schema) |
-| No nf_fields locally | Lehmer, Brumer-Stark, Leopoldt | Priority 6 (large pull) |
+| Blocker | What It Blocks | Fix | Status |
+|---------|---------------|-----|--------|
+| ~~No lfunc origin index~~ | ~~90s EC↔lfunc joins~~ | ~~Priority 1~~ | **DONE** (2026-04-15) |
+| ~~No EC↔lfunc join key~~ | ~~BSD Phase 2, spectral analysis~~ | ~~Priority 2~~ | **DONE** (2026-04-16) — `bsd_joined` live |
+| Zeros in DuckDB only | 10+ open problems, GUE analysis | Priority 3 (migration) | NOT STARTED |
+| No signal registry | Battery re-audits, specimen tracking | Priority 4 (new schema) | NOT STARTED |
+| No nf_fields locally | Lehmer, Brumer-Stark, Leopoldt | Priority 6 (large pull) | NOT STARTED |
+| Missing Omega + Tamagawa | Full BSD formula (Phase 2) | Compute from ainvs or LMFDB API | NOT STARTED |
+| lfunc coverage gap >400K | Rank 5 BSD, high-conductor spectral | Needs LMFDB to compute more L-functions | EXTERNAL DEP |
+
+## Priority Scorecard
+
+| Priority | Description | Status | Date |
+|----------|-------------|--------|------|
+| **P1** | lfunc origin index | **DONE** | 2026-04-15 |
+| **P2** | EC↔lfunc join key + bsd_joined view | **DONE** | 2026-04-16 |
+| **P3** | DuckDB → Postgres migration (zeros + atlas) | NOT STARTED | — |
+| **P4** | Signal registry (specimens + battery) | NOT STARTED | — |
+| **P5** | Redis tensor/battery cache | NOT STARTED | — |
+| **P6** | nf_fields pull (22M rows) | NOT STARTED | — |
+| **P7** | Ingest remaining cartography data | NOT STARTED | — |
+| **P8** | Cleanup (archive backups, consolidate logs) | NOT STARTED | — |
