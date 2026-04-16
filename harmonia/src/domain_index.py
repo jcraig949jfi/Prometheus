@@ -1785,23 +1785,11 @@ def load_lmfdb_objects(db_path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("lmfdb_objects", labels, features)
 
 
-def load_ec_rich(limit: int = 100000) -> DomainIndex:
-    """
-    Load rich elliptic curve data (16 features) directly from live LMFDB Postgres.
-
-    Features: log_conductor, rank, analytic_rank, torsion, regulator, CM,
-    num_bad_primes, class_size, class_deg, degree, sha, num_int_pts,
-    faltings_height, abc_quality, szpiro_ratio, semistable.
-
-    Phoneme mapping:
-      Megethos (complexity): log_conductor
-      Bathos (rank): rank
-      Arithmos (arithmetic): torsion, class_size
-      Phasma (spectral): faltings_height, szpiro_ratio
-    """
+def _ec_rich_from_postgres(host: str, limit: int) -> list:
+    """Try loading EC data from a Postgres instance."""
     import psycopg2
     conn = psycopg2.connect(
-        host='devmirror.lmfdb.xyz', port=5432,
+        host=host, port=5432,
         dbname='lmfdb', user='lmfdb', password='lmfdb',
         connect_timeout=15,
     )
@@ -1818,27 +1806,91 @@ def load_ec_rich(limit: int = 100000) -> DomainIndex:
     rows = cur.fetchall()
     cur.close()
     conn.close()
+    return rows
+
+
+def _ec_rich_from_csv(limit: int) -> list:
+    """Load EC data from local CSV fallback."""
+    import csv
+    csv_paths = [
+        Path("F:/lmfdb_local/ec_curvedata.csv"),
+        Path("C:/prometheus_share/lmfdb_local/ec_curvedata.csv"),
+    ]
+    for csv_path in csv_paths:
+        if csv_path.exists():
+            rows = []
+            cols = ['lmfdb_label', 'conductor', 'rank', 'analytic_rank', 'torsion',
+                    'regulator', 'cm', 'num_bad_primes', 'class_size', 'class_deg',
+                    'degree', 'sha', 'num_int_pts', 'faltings_height', 'abc_quality',
+                    'szpiro_ratio', 'semistable']
+            with open(csv_path, encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for i, row in enumerate(reader):
+                    if i >= limit:
+                        break
+                    rows.append(tuple(row.get(c, '') for c in cols))
+            return rows
+    raise FileNotFoundError("No EC CSV found at F:/lmfdb_local/ or C:/prometheus_share/lmfdb_local/")
+
+
+def load_ec_rich(limit: int = 100000) -> DomainIndex:
+    """
+    Load rich elliptic curve data (16 features) from Postgres or CSV fallback.
+
+    Fallback chain: local Postgres -> CSV -> remote LMFDB mirror.
+
+    Features: log_conductor, rank, analytic_rank, torsion, regulator, CM,
+    num_bad_primes, class_size, class_deg, degree, sha, num_int_pts,
+    faltings_height, abc_quality, szpiro_ratio, semistable.
+    """
+    rows = None
+    # Try local Postgres first
+    for host in ['localhost', 'devmirror.lmfdb.xyz']:
+        try:
+            rows = _ec_rich_from_postgres(host, limit)
+            if rows:
+                break
+        except Exception:
+            continue
+    # CSV fallback
+    if not rows:
+        try:
+            rows = _ec_rich_from_csv(limit)
+        except FileNotFoundError:
+            raise RuntimeError(
+                "load_ec_rich: no data source available. "
+                "Need local Postgres, CSV at F:/lmfdb_local/, or devmirror.lmfdb.xyz"
+            )
+
+    def _safe_float(val):
+        if val is None or val == '':
+            return 0.0
+        if isinstance(val, bool):
+            return 1.0 if val else 0.0
+        if isinstance(val, str) and val.lower() in ('true', 'false'):
+            return 1.0 if val.lower() == 'true' else 0.0
+        return float(val)
 
     labels, feats = [], []
     for row in rows:
         labels.append(str(row[0] or len(labels)))
         feat = [
-            np.log1p(float(row[1] or 0)),   # log_conductor
-            float(row[2] or 0),               # rank
-            float(row[3] or 0),               # analytic_rank
-            float(row[4] or 0),               # torsion
-            float(row[5] or 0),               # regulator
-            float(row[6] or 0),               # CM discriminant (0 = no CM)
-            float(row[7] or 0),               # num_bad_primes
-            float(row[8] or 0),               # class_size
-            float(row[9] or 0),               # class_deg
-            float(row[10] or 0),              # degree
-            float(row[11] or 0),              # sha (analytic)
-            float(row[12] or 0),              # num_int_pts
-            float(row[13] or 0),              # faltings_height
-            float(row[14] or 0),              # abc_quality
-            float(row[15] or 0),              # szpiro_ratio
-            float(row[16] or 0),              # semistable (bool -> 0/1)
+            np.log1p(_safe_float(row[1])),    # log_conductor
+            _safe_float(row[2]),               # rank
+            _safe_float(row[3]),               # analytic_rank
+            _safe_float(row[4]),               # torsion
+            _safe_float(row[5]),               # regulator
+            _safe_float(row[6]),               # CM discriminant (0 = no CM)
+            _safe_float(row[7]),               # num_bad_primes
+            _safe_float(row[8]),               # class_size
+            _safe_float(row[9]),               # class_deg
+            _safe_float(row[10]),              # degree
+            _safe_float(row[11]),              # sha (analytic)
+            _safe_float(row[12]),              # num_int_pts
+            _safe_float(row[13]),              # faltings_height
+            _safe_float(row[14]),              # abc_quality
+            _safe_float(row[15]),              # szpiro_ratio
+            _safe_float(row[16]),              # semistable (bool -> 0/1)
         ]
         feats.append(feat)
 
@@ -1846,22 +1898,11 @@ def load_ec_rich(limit: int = 100000) -> DomainIndex:
     return DomainIndex("ec_rich", labels, features)
 
 
-def load_artin(limit: int = 100000) -> DomainIndex:
-    """
-    Load Artin representations from live LMFDB Postgres.
-
-    Features: log_conductor, dimension, Galois_n (order), Galois_t (transitive number),
-    indicator (Frobenius-Schur).
-
-    Phoneme mapping:
-      Megethos (complexity): log_conductor
-      Bathos (rank): dimension
-      Symmetria (symmetry): indicator (Frobenius-Schur)
-      Taxis (complexity): Galn, Galt (Galois group structure)
-    """
+def _artin_from_postgres(host: str, limit: int) -> list:
+    """Try loading Artin rep data from a Postgres instance."""
     import psycopg2
     conn = psycopg2.connect(
-        host='devmirror.lmfdb.xyz', port=5432,
+        host=host, port=5432,
         dbname='lmfdb', user='lmfdb', password='lmfdb',
         connect_timeout=15,
     )
@@ -1875,6 +1916,61 @@ def load_artin(limit: int = 100000) -> DomainIndex:
     rows = cur.fetchall()
     cur.close()
     conn.close()
+    return rows
+
+
+def _artin_from_csv(limit: int) -> list:
+    """Load Artin rep data from local CSV fallback."""
+    import csv
+    csv_paths = [
+        Path("F:/lmfdb_local/artin_reps.csv"),
+        Path("C:/prometheus_share/lmfdb_local/artin_reps.csv"),
+    ]
+    for csv_path in csv_paths:
+        if csv_path.exists():
+            rows = []
+            with open(csv_path, encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for i, row in enumerate(reader):
+                    if i >= limit:
+                        break
+                    rows.append((
+                        row.get('Baselabel', ''),
+                        row.get('Dim', '0'),
+                        row.get('Conductor', '0'),
+                        row.get('Galn', '0'),
+                        row.get('Galt', '0'),
+                        row.get('Indicator', '0'),
+                    ))
+            return rows
+    raise FileNotFoundError("No Artin CSV found at F:/lmfdb_local/ or C:/prometheus_share/lmfdb_local/")
+
+
+def load_artin(limit: int = 100000) -> DomainIndex:
+    """
+    Load Artin representations from Postgres or CSV fallback.
+
+    Fallback chain: local Postgres -> CSV -> remote LMFDB mirror.
+
+    Features: log_conductor, dimension, Galois_n (order), Galois_t (transitive number),
+    indicator (Frobenius-Schur).
+    """
+    rows = None
+    for host in ['localhost', 'devmirror.lmfdb.xyz']:
+        try:
+            rows = _artin_from_postgres(host, limit)
+            if rows:
+                break
+        except Exception:
+            continue
+    if not rows:
+        try:
+            rows = _artin_from_csv(limit)
+        except FileNotFoundError:
+            raise RuntimeError(
+                "load_artin: no data source available. "
+                "Need local Postgres, CSV at F:/lmfdb_local/, or devmirror.lmfdb.xyz"
+            )
 
     labels, feats = [], []
     for row in rows:
