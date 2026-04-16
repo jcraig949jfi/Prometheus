@@ -38,12 +38,25 @@ This directory is the master catalog of all data assets in Project Prometheus: w
 
 ## Documents
 
+### Core Reference
 | File | Contents |
 |------|----------|
-| [postgres_lmfdb.md](postgres_lmfdb.md) | LMFDB mirror: 5 tables, 30M+ rows, schema |
+| [data_dictionary.md](data_dictionary.md) | **Every column in every table.** Types, meanings, caveats. Start here. |
+| [provenance.md](provenance.md) | Origin tracking for all data sources |
+
+### Database Docs
+| File | Contents |
+|------|----------|
+| [postgres_lmfdb.md](postgres_lmfdb.md) | LMFDB mirror: 5 tables, 30M+ rows, indexes |
 | [postgres_sci.md](postgres_sci.md) | prometheus_sci: scientific data, 14 tables |
 | [postgres_fire.md](postgres_fire.md) | prometheus_fire: operational data, 15 tables |
 | [redis.md](redis.md) | Redis namespaces, streams, cache strategy |
 | [duckdb_legacy.md](duckdb_legacy.md) | DuckDB tables, migration status |
+
+### Planning
+| File | Contents |
+|------|----------|
+| [proposals.md](proposals.md) | Schema changes, new data sources, infrastructure work. Propose and discuss here. |
+| [MIGRATION_PLAN.md](MIGRATION_PLAN.md) | DuckDB → Postgres+Redis migration (Agora). 4 phases, ~3 hours. |
 | [loose_files.md](loose_files.md) | Cartography data files not yet in any database |
-| [provenance.md](provenance.md) | Origin tracking for all data sources |
+| [data_audit_20260415.md](data_audit_20260415.md) | Raw inventory from first Mnemosyne session |
