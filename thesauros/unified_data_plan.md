@@ -72,10 +72,13 @@ lf.origin = 'EllipticCurve/Q/' || ec.conductor || '/' || split_part(ec.lmfdb_iso
 
 ---
 
-### Priority 3: DuckDB → Postgres Migration
+### Priority 3: DuckDB → Postgres + Redis Migration — DONE (2026-04-16)
 **Impact:** Unblocks 10+ open problems (Harmonia), gives all agents access to zeros data  
-**Effort:** ~3 hours (schema + data + validation)  
+**Effort:** 61 seconds migration time + schema setup  
 **Source:** Agora (MIGRATION_PLAN.md), Harmonia (zeros access is #1 bottleneck)  
+**Status:** COMPLETE — 854,568 rows migrated. Script: `thesauros/migrate_p3_duckdb.py`  
+- Postgres: zeros (3 tables, 322K rows), disagreement_atlas (119K), objects+bridges (152K, pre-existing)
+- Redis: graph edges (96K keys/396K edges), landscape (119K), bridges (17K), hypothesis queue (100)  
 
 #### New Schemas Needed in prometheus_fire
 
@@ -209,16 +212,13 @@ Cache structures from Harmonia's recommendation:
 
 ---
 
-### Priority 6: nf_fields → Local Postgres
+### Priority 6: nf_fields → Local Postgres — PARTIAL (2026-04-16)
 **Impact:** Unblocks Lehmer, Brumer-Stark, Leopoldt tests  
 **Effort:** Large pull from devmirror (22M rows), several hours  
 **Source:** Harmonia (needed for 3+ open problems)  
-
-The LMFDB devmirror has `nf_fields` with 22,178,569 rows. We don't have it locally. Pull via:
-```bash
-psql -h devmirror.lmfdb.xyz -U lmfdb -d lmfdb -c "\copy nf_fields TO 'nf_fields.csv' CSV HEADER"
-```
-Then load into local lmfdb database.
+**Status:** PARTIAL — 2,400,000 / 22,178,569 rows (10.8%) already loaded by Mnemosyne.  
+Enough for initial tests. Full pull can continue incrementally.  
+Script: `thesauros/migrate_p6_nffields.py` (needs modification to resume from 2.4M offset)
 
 ---
 
@@ -321,9 +321,9 @@ From the database architecture doc — all agents must respect:
 |---------|---------------|-----|--------|
 | ~~No lfunc origin index~~ | ~~90s EC↔lfunc joins~~ | ~~Priority 1~~ | **DONE** (2026-04-15) |
 | ~~No EC↔lfunc join key~~ | ~~BSD Phase 2, spectral analysis~~ | ~~Priority 2~~ | **DONE** (2026-04-16) — `bsd_joined` live |
-| Zeros in DuckDB only | 10+ open problems, GUE analysis | Priority 3 (migration) | NOT STARTED |
-| No signal registry | Battery re-audits, specimen tracking | Priority 4 (new schema) | NOT STARTED |
-| No nf_fields locally | Lehmer, Brumer-Stark, Leopoldt | Priority 6 (large pull) | NOT STARTED |
+| ~~Zeros in DuckDB only~~ | ~~10+ open problems, GUE analysis~~ | ~~Priority 3~~ | **DONE** (2026-04-16) |
+| ~~No signal registry~~ | ~~Battery re-audits~~ | ~~Priority 4~~ | **DONE** (schema, 2026-04-16) |
+| No nf_fields locally (full) | Lehmer, Brumer-Stark, Leopoldt | Priority 6 | PARTIAL (2.4M/22M) |
 | Missing Omega + Tamagawa | Full BSD formula (Phase 2) | Compute from ainvs or LMFDB API | NOT STARTED |
 | lfunc coverage gap >400K | Rank 5 BSD, high-conductor spectral | Needs LMFDB to compute more L-functions | EXTERNAL DEP |
 
@@ -333,9 +333,9 @@ From the database architecture doc — all agents must respect:
 |----------|-------------|--------|------|
 | **P1** | lfunc origin index | **DONE** | 2026-04-15 |
 | **P2** | EC↔lfunc join key + bsd_joined view | **DONE** | 2026-04-16 |
-| **P3** | DuckDB → Postgres migration (zeros + atlas) | NOT STARTED | — |
-| **P4** | Signal registry (specimens + battery) | NOT STARTED | — |
-| **P5** | Redis tensor/battery cache | NOT STARTED | — |
-| **P6** | nf_fields pull (22M rows) | NOT STARTED | — |
-| **P7** | Ingest remaining cartography data | NOT STARTED | — |
+| **P3** | DuckDB → Postgres + Redis migration | **DONE** | 2026-04-16 (854K rows, 61s) |
+| **P4** | Signal registry (specimens + battery) | **DONE** (schema) | 2026-04-16 (empty, ready) |
+| **P5** | Redis tensor/battery cache | **DONE** (graph/landscape/bridges/hyp) | 2026-04-16 (part of P3) |
+| **P6** | nf_fields pull (22M rows) | **PARTIAL** | 2.4M/22M rows (10.8%) |
+| **P7** | Ingest remaining cartography data | **PARTIAL** | 5 tables loaded (702K), CODATA/fungrim/OEIS remaining |
 | **P8** | Cleanup (archive backups, consolidate logs) | NOT STARTED | — |
