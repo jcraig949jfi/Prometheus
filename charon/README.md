@@ -1,5 +1,7 @@
 # Charon: Geometric Embedding for Arithmetic Correspondences
 
+> **DATA MIGRATION (2026-04-16):** `charon/data/charon.duckdb` has been fully migrated to Postgres (prometheus_fire) and Redis. The DuckDB file remains as a read-only archive. Scripts in `src/` and `tests/` still import duckdb — see `src/DUCKDB_NOTICE.md` for how to update them if re-running.
+
 > **Charon** investigates whether geometric proximity in a mathematical embedding space can predict discrete Langlands-type correspondences in arithmetic. A rigorous, test-driven system for exploring whether continuous metrics can capture the discrete structure of the Langlands program.
 
 ## Mission
