@@ -1,337 +1,810 @@
 # Prometheus Data Dictionary
 
-Every column in every table across all databases. The single source of truth for what a field means, what type it is, and where it came from.
+Every table across all databases. The single source of truth for what a field means, where it came from, and what scripts use it.
 
-Last updated: 2026-04-15
-
----
-
-## LMFDB Mirror (`lmfdb` database)
-
-All columns are **TEXT** type in the mirror (raw CSV dump). Cast as needed.
-
-### ec_curvedata — Elliptic Curves over Q
-
-3,824,372 rows. Origin: devmirror.lmfdb.xyz
-
-| Column | Semantic Type | Description |
-|--------|--------------|-------------|
-| id | identifier | Internal row ID |
-| lmfdb_label | identifier | Unique LMFDB label (e.g., "11.a1"). Format: `{conductor}.{iso_class}{curve_number}` |
-| Clabel | identifier | Cremona label |
-| lmfdb_iso | identifier | Isogeny class label (e.g., "11.a"). Groups curves in same isogeny class |
-| Ciso | identifier | Cremona isogeny class |
-| lmfdb_number | integer | Curve number within isogeny class |
-| Cnumber | integer | Cremona curve number |
-| iso_nlabel | integer | Isogeny class number label |
-| conductor | numeric | Conductor N. Central invariant. Indexed as numeric (idx_lfunc_conductor_numeric) |
-| rank | integer | Algebraic rank (Mordell-Weil). Independently computed from analytic_rank |
-| analytic_rank | integer | Order of vanishing of L(E,s) at s=1. Independently computed from rank |
-| ainvs | array | Short Weierstrass coefficients [a1,a2,a3,a4,a6] |
-| jinv | text | j-invariant (rational number as string) |
-| cm | integer | CM discriminant (0 if no CM) |
-| torsion | integer | Size of torsion subgroup |
-| torsion_structure | array | Torsion group structure (e.g., [2,4] for Z/2 × Z/4) |
-| torsion_primes | array | Primes dividing torsion order |
-| regulator | float | Regulator (determinant of height pairing matrix) |
-| sha | integer | Analytic order of Sha (Tate-Shafarevich group). **CAUTION:** For rank ≥ 2, computed ASSUMING BSD. Circular for BSD testing. |
-| sha_primes | array | Primes dividing Sha order |
-| signD | integer | Sign of discriminant (+1 or -1) |
-| absD | numeric | Absolute value of minimal discriminant |
-| bad_primes | array | List of primes of bad reduction |
-| num_bad_primes | integer | Count of bad primes |
-| degree | integer | Modular degree |
-| class_size | integer | Number of curves in isogeny class |
-| class_deg | integer | Maximal isogeny degree in class |
-| isogeny_degrees | array | Degrees of isogenies to optimal curve |
-| optimality | integer | Whether curve is optimal in its class |
-| manin_constant | integer | Manin constant (conjectured 1 for optimal curves) |
-| semistable | boolean | Whether curve has semistable reduction everywhere |
-| potential_good_reduction | boolean | Whether curve has potential good reduction |
-| faltings_height | float | Faltings height |
-| stable_faltings_height | float | Stable Faltings height. Related to Omega via: Omega ≈ exp(-stable_faltings_height) × correction |
-| faltings_index | integer | Faltings index within isogeny class |
-| faltings_ratio | integer | Faltings ratio (integer, related to isogeny invariant) |
-| min_quad_twist_ainvs | array | Coefficients of minimal quadratic twist |
-| min_quad_twist_disc | integer | Discriminant of minimal quadratic twist |
-| num_int_pts | integer | Number of known integral points |
-| abc_quality | float | abc quality: q = log|Δ|/log(N). **Precomputed.** |
-| szpiro_ratio | float | Szpiro ratio: log|Δ|/log(N). **Precomputed.** Same as abc_quality. |
-| nonmax_primes | array | Primes where Galois representation is non-maximal |
-| nonmax_rad | integer | Product of non-maximal primes |
-| elladic_images | text | ℓ-adic Galois image data |
-| modell_images | text | mod-ℓ Galois image labels |
-| adelic_level | integer | Adelic level |
-| adelic_index | integer | Adelic index |
-| adelic_genus | integer | Adelic genus |
-| modm_images | text | mod-m image data |
-| serre_invariants | text | Serre invariants |
-| intrinsic_torsion | text | Intrinsic torsion data |
-| squarefree_disc | numeric | Squarefree part of discriminant |
-| trace_hash | integer | Hash of Frobenius traces (for fast matching) |
-
-**Not available:** real_period (Omega), tamagawa_product, root_number
-
-### lfunc_lfunctions — L-functions
-
-24,351,376 rows. 341 GB. Origin: devmirror.lmfdb.xyz
-
-| Column | Semantic Type | Description |
-|--------|--------------|-------------|
-| label | identifier | L-function label (e.g., "2-11-11.10-c1-0-0"). Encodes degree-conductor-character-weight |
-| origin | identifier | Source object path (e.g., "ModularForm/GL2/Q/holomorphic/11/2/a/a/1/1") |
-| conductor | numeric | Conductor (indexed via idx_lfunc_conductor_numeric) |
-| degree | integer | Degree of the L-function (1=Dirichlet, 2=EC/MF, higher for Artin etc.) |
-| motivic_weight | integer | Weight in the motivic sense |
-| positive_zeros | array (text) | Comma-separated imaginary parts of non-trivial zeros on the critical line |
-| leading_term | float | L^(r)(E,1)/r! — the leading Taylor coefficient at s=1 |
-| root_number | complex | Root number of the functional equation |
-| sign_arg | float | Argument of the root number |
-| order_of_vanishing | integer | Analytic rank (order of zero at central point) |
-| symmetry_type | text | Symmetry type (orthogonal/symplectic/unitary) |
-| st_group | text | Sato-Tate group |
-| algebraic | boolean | Whether L-function is algebraic |
-| self_dual | boolean | Whether L(s) = L*(s) |
-| primitive | boolean | Whether L-function is primitive |
-| gamma_factors | text | Gamma factor data for functional equation |
-| euler_factors | text | Euler product factors at good primes |
-| bad_lfactors | text | Local factors at bad primes |
-| dirichlet_coefficients | text | First few Dirichlet coefficients |
-| accuracy | integer | Decimal digits of accuracy |
-| precision | integer | Bits of precision |
-| plot_values | text | Precomputed plot data |
-| a2–a10, A2–A10 | float | Individual Dirichlet/Euler coefficients |
-| z1, z2, z3 | float | First few zeros |
-| coefficient_field | text | Field of definition for coefficients |
-| trace_hash | integer | Hash for fast matching |
-| analytic_conductor | float | Analytic conductor |
-| root_analytic_conductor | float | Root of analytic conductor |
-| bad_primes | array | List of bad primes |
-| conductor_radical | integer | Radical of conductor |
-| mu_real, mu_imag | array | Mu parameters (real/imaginary parts) |
-| nu_real_doubled, nu_imag | array | Nu parameters |
-| prelabel | text | Pre-assigned label |
-| spectral_label | text | Spectral label |
-| credit | text | Data attribution |
-
-**Join key to ec_curvedata:** Not straightforward. `origin` field contains paths like "ModularForm/GL2/Q/holomorphic/..." for EC L-functions (via modularity), not direct EC labels. Join strategy TBD — see proposals.
-
-### artin_reps — Artin Representations
-
-~793,000 rows. Origin: devmirror.lmfdb.xyz
-
-| Column | Semantic Type | Description |
-|--------|--------------|-------------|
-| Baselabel | identifier | Artin representation label (e.g., "2.12435.6t3.f") |
-| Dim | integer | Dimension of the representation |
-| Conductor | numeric | Artin conductor |
-| Galn | integer | Order of Galois group |
-| Galt | integer | Transitive group label (nTt format, t component) |
-| Container | text | Container representation |
-| Indicator | integer | Frobenius-Schur indicator (+1 orthogonal, -1 symplectic, 0 complex) |
-| Is_Even | boolean | Whether the representation is even (det = trivial) |
-| BadPrimes | array | Primes where rep is ramified |
-| HardPrimes | array | Primes requiring special treatment |
-| GaloisConjugates | array | Galois conjugate representations |
-| GalConjSigns | array | Signs of Galois conjugates |
-| CharacterField | integer | Degree of character field |
-| NFGal | text | Associated number field Galois closure |
-| Hide | boolean | Whether to hide in LMFDB display |
-| Dets | text | Determinant character data |
-| GaloisLabel | text | Galois group label |
-| Proj_GAP | integer | Projective image GAP ID |
-| Proj_nTj | text | Projective image transitive group |
-| Proj_Polynomial | text | Projective image polynomial |
-| NumBadPrimes | integer | Count of bad primes |
-
-**Linkage to lfunc:** No direct Artin entries found in lfunc_lfunctions.origin. Artin L-functions stored under ModularForm origins via Langlands correspondence.
-
-### mf_newforms — Modular Forms
-
-~1,100,000 rows. Origin: devmirror.lmfdb.xyz. Schema not yet fully audited.
-
-### g2c_curves — Genus-2 Curves
-
-66,158 rows. Origin: devmirror.lmfdb.xyz. **Completely untouched by analysis.** Schema not yet fully audited.
+Last updated: 2026-04-16
 
 ---
 
-## prometheus_sci Database
+## LMFDB Mirror (`lmfdb` database, M1:5432)
 
-### core.data_source — Provenance Tracking
+All columns are **TEXT** type in the mirror (raw CSV dump from devmirror.lmfdb.xyz). Cast as needed. All tables read-only except for index creation.
 
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| source_id | SERIAL PK | NO | Auto-increment ID |
-| name | TEXT | NO | Human-readable source name (e.g., "materials_project_10k") |
-| origin_url | TEXT | YES | URL of original data source |
-| file_path | TEXT | YES | Local file path of source data |
-| loaded_at | TIMESTAMPTZ | YES | When data was ingested |
-| row_count | INTEGER | YES | Number of rows loaded |
-| checksum | TEXT | YES | File checksum for change detection |
+### ec_curvedata -- Elliptic Curves over Q
 
-### topology.knots — Knot Invariants
+- **Rows:** 3,824,372
+- **Source:** LMFDB devmirror (devmirror.lmfdb.xyz), table ec_curvedata
+- **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
+- **Indexes:** Standard LMFDB indexes
 
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| knot_id | SERIAL PK | NO | Auto-increment ID |
-| name | TEXT | NO | Knot name (e.g., "3_1" for trefoil) |
-| crossing_number | SMALLINT | YES | Minimum crossing number |
-| determinant | INTEGER | YES | Knot determinant |
-| alexander_coeffs | DOUBLE[] | YES | Alexander polynomial coefficients |
-| jones_coeffs | DOUBLE[] | YES | Jones polynomial coefficients |
-| conway_coeffs | DOUBLE[] | YES | Conway polynomial coefficients |
-| signature | SMALLINT | YES | Knot signature |
-| source_id | INTEGER FK | YES | → core.data_source |
+Key columns (52 total):
 
-### topology.polytopes — Polytopes
+| Column | Description |
+|--------|-------------|
+| lmfdb_label | Unique label, e.g. "11.a1" = conductor.iso_class+curve_number |
+| lmfdb_iso | Isogeny class label, e.g. "11.a" |
+| conductor | Conductor (integer as text) |
+| rank | Algebraic rank (via descent/Mordell-Weil) |
+| analytic_rank | Order of vanishing of L(E,s) at s=1 |
+| regulator | Regulator of Mordell-Weil group |
+| sha | Analytic order of Sha (**circular at rank >= 2** -- computed assuming BSD) |
+| sha_primes | Primes dividing Sha |
+| torsion | Order of torsion subgroup |
+| torsion_structure | Torsion group structure, e.g. "{2,4}" |
+| ainvs | Weierstrass coefficients [a1,a2,a3,a4,a6] |
+| cm | CM discriminant (0 if no CM) |
+| bad_primes | Primes of bad reduction |
+| num_bad_primes | Count of bad primes |
+| isogeny_degrees | Degrees of isogenies in class |
+| class_size | Number of curves in isogeny class |
+| semistable | Semistability flag |
+| manin_constant | Manin constant (mostly 1) |
+| faltings_height | Faltings height |
+| signD | Sign of discriminant |
+| jinv | j-invariant (as string) |
 
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| polytope_id | SERIAL PK | NO | Auto-increment ID |
-| name | TEXT | YES | Collection/source name |
-| dimension | SMALLINT | YES | Ambient dimension |
-| n_vertices | INTEGER | YES | Number of vertices |
-| n_edges | INTEGER | YES | Number of edges |
-| n_facets | INTEGER | YES | Number of facets |
-| f_vector | INTEGER[] | YES | Full f-vector [f0, f1, ..., fd] |
-| is_simplicial | BOOLEAN | YES | Whether all facets are simplices |
-| source_id | INTEGER FK | YES | → core.data_source |
+**Scripts:** harmonia/src/domain_index.py, ergon/tensor_builder.py, forge/v3/executor.py, thesauros/create_bsd_joined.py, charon/src/ingest.py, aporia/scripts/triage_classifier.py, cartography/shared/scripts/oq1_spectral_tail.py, ~20 harmonia/scripts/ and cartography/ research scripts
 
-### chemistry.qm9 — Quantum Molecules
-
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| mol_id | SERIAL PK | NO | Auto-increment ID |
-| smiles | TEXT | YES | SMILES molecular notation |
-| homo | DOUBLE | YES | HOMO energy (Hartree) |
-| lumo | DOUBLE | YES | LUMO energy (Hartree) |
-| homo_lumo_gap | DOUBLE | YES | HOMO-LUMO gap (eV) |
-| zpve | DOUBLE | YES | Zero-point vibrational energy (Hartree) |
-| polarizability | DOUBLE | YES | Isotropic polarizability (Bohr³) |
-| n_atoms | SMALLINT | YES | Total atom count |
-| source_id | INTEGER FK | YES | → core.data_source |
-
-### physics.materials — Materials Project
-
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| mat_id | SERIAL PK | NO | Auto-increment ID |
-| material_id | TEXT | YES | Materials Project ID (e.g., "mp-1197903") |
-| band_gap | DOUBLE | YES | Electronic band gap (eV) |
-| formation_energy_per_atom | DOUBLE | YES | Formation energy per atom (eV/atom) |
-| spacegroup_number | SMALLINT | YES | International space group number (1-230) |
-| density | DOUBLE | YES | Density (g/cm³) |
-| volume | DOUBLE | YES | Unit cell volume (ų) |
-| nsites | INTEGER | YES | Number of sites in unit cell |
-| source_id | INTEGER FK | YES | → core.data_source |
-
-### physics.superconductors, physics.codata, physics.pdg_particles
-
-Empty. Schema defined in `scripts/db_setup.sql`. See `thesauros/postgres_sci.md`.
-
-### algebra.groups — Abstract Groups
-
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| group_id | SERIAL PK | NO | Auto-increment ID |
-| label | TEXT | YES | GAP-style label (e.g., "60.5" for A5) |
-| order_val | NUMERIC | YES | Group order. **NUMERIC** (not INT) — some orders exceed 60 digits |
-| exponent | NUMERIC | YES | Group exponent. **NUMERIC** for same reason |
-| n_conjugacy | INTEGER | YES | Number of conjugacy classes |
-| is_abelian | BOOLEAN | YES | Whether group is abelian |
-| is_solvable | BOOLEAN | YES | Whether group is solvable |
-| source_id | INTEGER FK | YES | → core.data_source |
-
-### algebra.space_groups, algebra.lattices, analysis.fungrim, analysis.oeis, biology.metabolism
-
-See `thesauros/postgres_sci.md` for column definitions. All either empty or small.
+**Data quality:** All columns TEXT. Selection bias at high conductor (prime conductor, trivial torsion dominate above 1M). Sha circular at rank >= 2.
 
 ---
 
-## prometheus_fire Database
+### mf_newforms -- Modular Forms (Newforms)
 
-### xref.object_registry — Universal Object Index
+- **Rows:** 1,141,510
+- **Source:** LMFDB devmirror, table mf_newforms
+- **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
 
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| object_id | BIGSERIAL PK | NO | Universal object ID (preserves DuckDB IDs) |
-| source_db | TEXT | NO | Origin database ("charon_duckdb", "lmfdb", "sci") |
-| source_table | TEXT | NO | Origin table within source_db |
-| source_key | TEXT | NO | Primary key in source table (label or ID) |
-| object_type | TEXT | NO | Domain type (matches DOMAINS enum: "EC", "MF", etc.) |
+Key columns (81 total):
 
-### xref.bridges — Known Cross-Domain Correspondences
+| Column | Description |
+|--------|-------------|
+| label | Unique LMFDB label, e.g. "23.1.b.a" |
+| space_label | Space label |
+| level | Level N (integer as text) |
+| weight | Weight k (integer as text) |
+| dim | Dimension of Hecke eigenvalue field |
+| hecke_orbit | Hecke orbit index |
+| hecke_orbit_code | Join key to Hecke coefficient tables |
+| char_order | Character order |
+| char_parity | Character parity (0 or 1) |
+| fricke_eigenval | Fricke eigenvalue |
+| analytic_conductor | Analytic conductor |
+| self_twist_type | Self-twist type |
+| is_cm | Has complex multiplication |
+| sato_tate_group | Sato-Tate group label |
 
-| Column | Type | Nullable | Description |
-|--------|------|----------|-------------|
-| bridge_id | BIGSERIAL PK | NO | Auto-increment ID |
-| source_object_id | BIGINT FK | YES | → object_registry |
-| target_object_id | BIGINT FK | YES | → object_registry |
-| bridge_type | TEXT | NO | Type of correspondence (e.g., "modularity", "L-function") |
-| evidence_grade | TEXT | YES | "verified" or "unverified" |
-| confidence | DOUBLE | YES | 0.0-1.0 confidence score |
-| provenance | TEXT | YES | Source reference or method |
-| created_at | TIMESTAMPTZ | YES | When bridge was recorded |
-
-### results.hypotheses, results.ergon_runs, results.harmonia_bonds
-
-See `thesauros/postgres_fire.md`. All empty — awaiting Ergon/Harmonia integration.
-
-### kill.taxonomy, kill.shadow_cells
-
-See `thesauros/postgres_fire.md`. Empty — shadow archive currently in Redis.
-
-### tensor.domain_features, tensor.domain_metadata
-
-See `thesauros/postgres_fire.md`. Empty — tensor data currently in .npz files.
-
-### meta.ingestion_log
-
-4 rows from M2 migration. Tracks what was loaded, when, how many rows, success/failure.
-
-### agora.messages, agora.decisions, agora.open_questions, agora.agent_sessions
-
-Communication persistence. See `thesauros/postgres_fire.md`.
+**Scripts:** harmonia/src/domain_index.py, ergon/tensor_builder.py, forge/v3/executor.py, aporia/scripts/triage_classifier.py, ~15 harmonia/scripts/ and cartography/ research scripts
 
 ---
 
-## DuckDB Legacy (charon.duckdb)
+### lfunc_lfunctions -- L-functions
 
-See `thesauros/duckdb_legacy.md` for full table schemas. Key tables not yet migrated:
+- **Rows:** 24,351,376
+- **Source:** LMFDB devmirror, table lfunc_lfunctions
+- **Loaded by:** Manual CSV dump + psql COPY (2026-04-14, ~6 hours)
+- **Indexes:** idx_lfunc_origin, idx_lfunc_conductor_numeric (523 MB), idx_lfunc_conductor, idx_lfunc_degree, idx_lfunc_motivic_weight, idx_lfunc_order_of_vanishing
+- **Size on disk:** ~341 GB (largest table)
 
-| Table | Rows | Key Columns |
+Key columns (71 total):
+
+| Column | Description |
+|--------|-------------|
+| origin | Path to source object, e.g. "EllipticCurve/Q/11/a" or "ModularForm/GL2/Q/holomorphic/23/1/b/a" |
+| conductor | Conductor (text, use ::numeric for queries) |
+| degree | Degree of L-function |
+| motivic_weight | Motivic weight |
+| order_of_vanishing | Analytic rank |
+| leading_term | Leading Taylor coefficient L^(r)(s=1)/r! |
+| root_number | Root number (functional equation sign) |
+| sign_arg | Sign argument |
+| positive_zeros | Positive zeros on critical line (text blob) |
+| z1, z2, z3 | First three zeros |
+| self_dual | Self-dual flag |
+| symmetry_type | Symmetry type |
+| analytic_conductor | Analytic conductor |
+
+**Join to EC:** `origin = 'EllipticCurve/Q/' || conductor || '/' || iso_letter` (see bsd_joined)
+**Scripts:** thesauros/create_bsd_joined.py, cartography/shared/scripts/oq1_spectral_tail.py, charon/src/ingest_dirichlet_*.py, ~10 research scripts
+
+---
+
+### artin_reps -- Artin Representations
+
+- **Rows:** 798,140
+- **Source:** LMFDB devmirror, table artin_reps
+- **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
+
+Key columns (22 total):
+
+| Column | Description |
+|--------|-------------|
+| Baselabel | Base label |
+| Dim | Dimension of representation |
+| Conductor | Conductor |
+| Galn | Galois group order n |
+| Galt | Galois group transitive number t |
+| Indicator | Frobenius-Schur indicator |
+| Is_Even | Even representation flag |
+
+**Scripts:** harmonia/src/domain_index.py, aporia/scripts/triage_classifier.py
+
+---
+
+### g2c_curves -- Genus-2 Curves
+
+- **Rows:** 66,158
+- **Source:** LMFDB devmirror, table g2c_curves
+- **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
+
+Key columns (51 total):
+
+| Column | Description |
+|--------|-------------|
+| label | LMFDB label |
+| abs_disc | Absolute discriminant |
+| analytic_rank | Analytic rank |
+| two_selmer_rank | 2-Selmer rank |
+| has_square_sha | Whether Sha is a perfect square |
+| locally_solvable | Locally solvable |
+| globally_solvable | Globally solvable |
+| root_number | Root number |
+| conductor | Conductor |
+
+**Scripts:** aporia/scripts/triage_classifier.py, cartography/shared/scripts/dissection_tensor.py, ~15 cartography/v2/ genus2 analysis scripts
+
+---
+
+### nf_fields -- Number Fields
+
+- **Rows:** 2,400,000 (partial -- full LMFDB has 22,178,569)
+- **Source:** LMFDB devmirror, table nf_fields
+- **Loaded by:** Mnemosyne streaming pull (2026-04-15)
+- **Indexes:** idx_nf_degree, idx_nf_disc
+
+Key columns (43 total):
+
+| Column | Description |
+|--------|-------------|
+| label | LMFDB label |
+| degree | Extension degree [K:Q] |
+| disc_abs | Absolute discriminant |
+| disc_sign | Sign of discriminant |
+| class_number | Class number h(K) |
+| regulator | Regulator |
+| class_group | Class group structure |
+
+**Scripts:** thesauros/migrate_p6_nffields.py, cartography/v2/nf_*.py (3 scripts)
+
+---
+
+### bsd_joined -- Materialized View (EC + L-function)
+
+- **Rows:** 2,481,157
+- **Source:** JOIN of ec_curvedata and lfunc_lfunctions
+- **Created by:** thesauros/create_bsd_joined.py (2026-04-16)
+- **Join key:** `lf.origin = 'EllipticCurve/Q/' || ec.conductor || '/' || split_part(ec.lmfdb_iso, '.', 2)`
+- **Coverage:** 64.9% of EC (conductor up to ~400K)
+- **Indexes:** idx_bsd_conductor, idx_bsd_rank, idx_bsd_iso
+- **Refresh:** `REFRESH MATERIALIZED VIEW bsd_joined;`
+
+Combines EC algebraic invariants with L-function analytic data. See `thesauros/bsd_joined_view.md` for full column reference.
+
+**WARNING:** Sha is circular at rank >= 2. Do not use for BSD testing at higher rank.
+
+**Scripts:** prometheus_data/__init__.py, thesauros/create_bsd_joined.py
+
+---
+
+## prometheus_sci Database (M1:5432)
+
+Normalized scientific data from external sources. 1,142,469 total rows.
+
+### core.data_source -- Provenance Tracking
+
+- **Rows:** 6
+- **Source:** Internal (tracks data ingestion provenance)
+- **Schema:** source_id (serial PK), name, origin_url, file_path, loaded_at, row_count, checksum
+
+---
+
+### topology.knots -- Knot Invariants
+
+- **Rows:** 12,965
+- **Source:** KnotInfo database (knotinfo.math.indiana.edu)
+- **Source file:** `cartography/knots/data/knots.json` (2.7 MB)
+- **Loaded by:** mnemosyne/ingest_priority1.py, cartography/knots/scripts/ingest_knotinfo.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| knot_id | serial PK | Internal ID |
+| name | text UNIQUE | Knot name, e.g. "3_1" (trefoil) |
+| crossing_number | smallint | Minimum crossing number |
+| determinant | integer | Knot determinant |
+| alexander_coeffs | double[] | Alexander polynomial coefficients |
+| jones_coeffs | double[] | Jones polynomial coefficients |
+| conway_coeffs | double[] | Conway polynomial coefficients |
+| signature | smallint | Knot signature |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** harmonia/src/domain_index.py (load_knots), mnemosyne/ingest_priority1.py, cartography/knots/scripts/ingest_knotinfo.py
+
+---
+
+### topology.polytopes -- Polytopes
+
+- **Rows:** 980
+- **Source:** Polymake / polytope databases
+- **Loaded by:** mnemosyne/migrate_m2.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| polytope_id | serial PK | Internal ID |
+| name | text | Polytope name |
+| dimension | smallint | Dimension |
+| n_vertices | integer | Number of vertices |
+| n_edges | integer | Number of edges |
+| n_facets | integer | Number of facets |
+| f_vector | integer[] | f-vector [f0, f1, ...] |
+| is_simplicial | boolean | Whether simplicial |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** harmonia/src/domain_index.py (load_polytopes), mnemosyne/migrate_m2.py
+
+---
+
+### chemistry.qm9 -- Quantum Molecules (QM9 Dataset)
+
+- **Rows:** 133,885
+- **Source:** QM9 dataset (Ramakrishnan et al. 2014, rdkit.org/docs/GettingStartedInPython.html)
+- **Source file:** `cartography/chemistry/data/qm9.csv` (29 MB)
+- **Loaded by:** mnemosyne/ingest_priority1.py
+- **URL:** https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904
+
+| Column | Type | Description |
+|--------|------|-------------|
+| mol_id | serial PK | Internal ID |
+| smiles | text | SMILES string (molecular structure) |
+| homo | double | Highest occupied molecular orbital energy (eV) |
+| lumo | double | Lowest unoccupied molecular orbital energy (eV) |
+| homo_lumo_gap | double | HOMO-LUMO gap (eV) |
+| zpve | double | Zero-point vibrational energy (eV) |
+| polarizability | double | Isotropic polarizability (Bohr^3) |
+| n_atoms | smallint | Number of atoms |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** harmonia/src/domain_index.py (load_qm9), mnemosyne/ingest_priority1.py
+
+---
+
+### algebra.space_groups -- Crystallographic Space Groups
+
+- **Rows:** 230
+- **Source:** International Tables for Crystallography (all 230 space groups)
+- **Source file:** `cartography/spacegroups/data/space_groups.json` (80 KB)
+- **Loaded by:** mnemosyne/ingest_priority1.py
+- **URL:** https://www.cryst.ehu.es/ (Bilbao Crystallographic Server)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| sg_id | serial PK | Internal ID |
+| number | smallint UNIQUE | Space group number (1-230) |
+| symbol | text | Hermann-Mauguin symbol |
+| point_group_order | smallint | Order of point group |
+| crystal_system | text | Crystal system (triclinic, monoclinic, ..., cubic) |
+| lattice_type | text | Bravais lattice type (P, I, F, C, R) |
+| is_symmorphic | boolean | Whether symmorphic |
+
+**Scripts:** harmonia/src/domain_index.py (load_space_groups), mnemosyne/ingest_priority1.py
+
+---
+
+### algebra.lattices -- Mathematical Lattices
+
+- **Rows:** 39,293
+- **Source:** LMFDB lattice database (lmfdb.org/Lattice)
+- **Source file:** `cartography/lattices/data/lattices_full.json` (6.8 MB, key: "records")
+- **Loaded by:** thesauros/ingest_empty_tables.py (reload from 26 to 39,293)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| lattice_id | serial PK | Internal ID |
+| label | text UNIQUE | LMFDB label, e.g. "1.2.4.1.1" |
+| dimension | smallint | Lattice dimension |
+| determinant | double | Determinant of Gram matrix |
+| level | integer | Level |
+| class_number | integer | Class number |
+| kissing_number | integer | Kissing number (from minimal_vector in source) |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** harmonia/src/domain_index.py (load_lattices), thesauros/ingest_empty_tables.py, mnemosyne/ingest_priority1.py
+
+---
+
+### algebra.groups -- Abstract Groups
+
+- **Rows:** 544,831
+- **Source:** LMFDB abstract groups database (lmfdb.org/Groups/Abstract)
+- **Source file:** `cartography/groups/data/abstract_groups.json` (107 MB)
+- **Loaded by:** mnemosyne/ingest_priority1.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| group_id | serial PK | Internal ID |
+| label | text UNIQUE | LMFDB label |
+| order_val | numeric | Group order |
+| exponent | numeric | Group exponent |
+| n_conjugacy | integer | Number of conjugacy classes |
+| is_abelian | boolean | Whether abelian |
+| is_solvable | boolean | Whether solvable |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** harmonia/src/domain_index.py (load_groups), mnemosyne/ingest_priority1.py
+
+---
+
+### physics.codata -- NIST Physical Constants (CODATA 2022)
+
+- **Rows:** 355
+- **Source:** NIST CODATA Fundamental Physical Constants (2022 adjustment)
+- **Source file:** `cartography/physics/data/codata_constants.json` (52 KB)
+- **Loaded by:** thesauros/ingest_empty_tables.py
+- **URL:** https://physics.nist.gov/cuu/Constants/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| constant_id | serial PK | Internal ID |
+| name | text UNIQUE | Constant name, e.g. "speed of light in vacuum" |
+| value | double | Numerical value |
+| uncertainty | double | Standard uncertainty |
+| unit | text | SI unit |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** thesauros/ingest_empty_tables.py, cartography/v2/codata_*.py (6 analysis scripts)
+
+---
+
+### physics.superconductors -- Superconductor Materials
+
+- **Rows:** 2,012
+- **Source:** AFLOW Superconductor Database (aflow.org)
+- **Source file:** `cartography/physics/data/superconductors/aflow_canonical_superconductors.csv` (500 KB)
+- **Loaded by:** thesauros/ingest_empty_tables.py
+- **URL:** https://aflow.org/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| sc_id | serial PK | Internal ID |
+| material_formula | text | Chemical formula / compound name |
+| tc | double | Critical temperature Tc (K) |
+| spacegroup | text | Space group |
+| sc_class | text | Superconductor class |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** thesauros/ingest_empty_tables.py
+
+---
+
+### physics.materials -- Materials Project Compounds
+
+- **Rows:** 10,000
+- **Source:** Materials Project (materialsproject.org)
+- **Source file:** `cartography/physics/data/materials_project_10k.json` (4.5 MB)
+- **Loaded by:** mnemosyne/migrate_m2.py
+- **URL:** https://materialsproject.org/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| mat_id | serial PK | Internal ID |
+| material_id | text UNIQUE | Materials Project ID |
+| band_gap | double | Electronic band gap (eV) |
+| formation_energy_per_atom | double | Formation energy per atom (eV/atom) |
+| spacegroup_number | smallint | Space group number |
+| density | double | Density (g/cm^3) |
+| volume | double | Unit cell volume (A^3) |
+| nsites | integer | Number of sites in unit cell |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** mnemosyne/migrate_m2.py, harmonia/src/domain_index.py (load_materials)
+
+---
+
+### physics.pdg_particles -- Particle Data Group
+
+- **Rows:** 226
+- **Source:** Particle Data Group (pdg.lbl.gov), 2024 review
+- **Source file:** `cartography/physics/data/pdg/particles.json` (100 KB)
+- **Loaded by:** thesauros/ingest_empty_tables.py
+- **URL:** https://pdg.lbl.gov/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| particle_id | serial PK | Internal ID |
+| name | text | Particle name |
+| pdg_id | integer | MC particle ID (first from mc_ids list) |
+| mass_gev | double | Mass in GeV |
+| charge | double | Electric charge |
+| spin | double | Spin |
+| lifetime_s | double | Lifetime in seconds (derived from width) |
+| is_stable | boolean | Whether stable (width = 0 or null) |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** thesauros/ingest_empty_tables.py, cartography/v2/fricke_pdg_parity.py, cartography/v2/pdg_*.py
+
+---
+
+### analysis.fungrim -- Fungrim Mathematical Formulas
+
+- **Rows:** 3,130
+- **Source:** Fungrim project (fungrim.org) -- a database of mathematical formulas
+- **Source file:** `cartography/fungrim/fungrim_formulas.json` (1.6 MB)
+- **Loaded by:** thesauros/ingest_empty_tables.py
+- **URL:** https://fungrim.org/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| formula_id | serial PK | Internal ID |
+| fungrim_id | text UNIQUE | Fungrim ID, e.g. "4a2e64" |
+| formula_type | text | Formula type (e.g. "Entry") |
+| module | text | Module/topic category |
+| n_symbols | smallint | Number of symbols in formula |
+| formula_text | text | LaTeX or text representation of formula |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** thesauros/ingest_empty_tables.py, harmonia/src/domain_index.py (load_fungrim), cartography/fungrim/scripts/ingest_fungrim.py
+
+---
+
+### analysis.oeis -- Online Encyclopedia of Integer Sequences
+
+- **Rows:** 394,454
+- **Source:** OEIS (oeis.org) bulk download
+- **Source files:** `cartography/oeis/data/oeis_names.json` (40 MB), `cartography/oeis/data/stripped_new.txt` (81 MB), `cartography/oeis/data/oeis_keywords.json` (10 MB)
+- **Loaded by:** thesauros/ingest_oeis.py
+- **URL:** https://oeis.org/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| seq_id | serial PK | Internal ID |
+| oeis_id | text UNIQUE | OEIS ID, e.g. "A000001" |
+| name | text | Sequence name/description |
+| first_terms | bigint[] | First 20 terms of sequence |
+| growth_rate | double | log(last_nonzero/first_nonzero) -- computed |
+| entropy | double | Shannon entropy of term frequencies -- computed |
+| is_monotone | boolean | Whether terms are non-decreasing -- computed |
+| source_id | integer FK | References core.data_source |
+
+**Additional data files not yet loaded:**
+- `oeis_crossrefs.jsonl` (62 MB) -- cross-reference graph between sequences
+- `oeis_formulas.jsonl` (60 MB) -- formula text per sequence
+- `oeis_programs.jsonl` (73 MB) -- program code per sequence
+
+**Scripts:** thesauros/ingest_oeis.py
+
+---
+
+### biology.metabolism -- Genome-Scale Metabolic Models (BiGG)
+
+- **Rows:** 108
+- **Source:** BiGG Models database (bigg.ucsd.edu)
+- **Source files:** `cartography/metabolism/data/*.json` (109 individual model files, 256 MB total)
+- **Loaded by:** thesauros/ingest_empty_tables.py
+- **URL:** http://bigg.ucsd.edu/
+
+| Column | Type | Description |
+|--------|------|-------------|
+| model_id | serial PK | Internal ID |
+| bigg_id | text UNIQUE | BiGG model ID, e.g. "e_coli_core" |
+| n_reactions | integer | Number of metabolic reactions |
+| n_metabolites | integer | Number of metabolites |
+| n_genes | integer | Number of genes |
+| n_compartments | smallint | Number of cellular compartments |
+| frac_reversible | double | Fraction of reactions that are reversible |
+| source_id | integer FK | References core.data_source |
+
+**Scripts:** thesauros/ingest_empty_tables.py
+
+---
+
+## prometheus_fire Database (M1:5432)
+
+Working data: research results, cross-references, tensor data, signals. 598,606 total rows.
+
+### xref.object_registry -- Universal Object Index
+
+- **Rows:** 134,475
+- **Source:** Migrated from charon.duckdb `objects` table (2026-04-15)
+- **Loaded by:** mnemosyne/migrate_m2.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| object_id | bigserial PK | Object ID (preserved from DuckDB) |
+| source_db | text | Source database ("charon_duckdb") |
+| source_table | text | Source table name |
+| source_key | text | LMFDB label (join key to lmfdb tables) |
+| object_type | text | "elliptic_curve", "modular_form", or "genus2_curve" |
+| invariant_vector | double[] | Universal coordinates: a_p for first 50 primes |
+| properties | jsonb | Type-specific metadata |
+| conductor | bigint | Conductor |
+| coefficient_completeness | double | Fraction of 50 primes with known a_p |
+
+**UNIQUE:** (source_db, source_table, source_key)
+
+**Scripts:** harmonia/src/domain_index.py (load_lmfdb_objects, load_ec_zeros, load_raw_zeros, etc.), thesauros/migrate_p3_duckdb.py, mnemosyne/migrate_m2.py
+
+---
+
+### xref.bridges -- Known Cross-Domain Correspondences
+
+- **Rows:** 17,314
+- **Source:** Migrated from charon.duckdb `known_bridges` table (2026-04-15)
+- **Also in Redis:** bridge:{source_id}:{target_id} hashes + bridges:by_source/target/type set indexes
+- **Loaded by:** mnemosyne/migrate_m2.py, thesauros/migrate_p3_duckdb.py (Redis)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| bridge_id | bigserial PK | Bridge ID |
+| source_object_id | bigint FK | Source object (references object_registry) |
+| target_object_id | bigint FK | Target object (references object_registry) |
+| bridge_type | text | "modularity", "langlands", "galois", etc. |
+| evidence_grade | text | Evidence quality |
+| confidence | double | Confidence score |
+| provenance | text | Source reference |
+| created_at | timestamptz | When recorded |
+
+**Scripts:** harmonia/src/domain_index.py (load_bridges), charon/src/build_graph.py, charon/tests/*.py
+
+---
+
+### zeros.object_zeros -- L-function Zeros per Object
+
+- **Rows:** 120,649
+- **Source:** Migrated from charon.duckdb `object_zeros` table (2026-04-16)
+- **Loaded by:** thesauros/migrate_p3_duckdb.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| object_id | bigint PK | References xref.object_registry |
+| zeros_vector | double[] | Positive zeros on critical line |
+| root_number | double | Root number (+1 or -1) |
+| analytic_rank | smallint | Analytic rank |
+
+**Scripts:** harmonia/src/domain_index.py (load_ec_zeros, load_raw_zeros, load_zeros_anchored, load_rmt_ensemble), ~40 charon/ and harmonia/ research scripts
+
+---
+
+### zeros.dirichlet_zeros -- L-function Zeros by Conductor
+
+- **Rows:** 184,830
+- **Source:** Migrated from charon.duckdb `dirichlet_zeros` table (2026-04-16)
+- **Loaded by:** thesauros/migrate_p3_duckdb.py
+- **Indexes:** idx_dirichlet_conductor, idx_dirichlet_url
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigserial PK | Internal ID |
+| lmfdb_url | text | LMFDB URL path for this L-function |
+| conductor | bigint | Conductor |
+| degree | smallint | Degree of L-function |
+| zeros_vector | double[] | Positive zeros on critical line |
+| n_zeros_stored | smallint | Number of zeros in vector |
+| motivic_weight | smallint | Motivic weight |
+
+**Scripts:** harmonia/src/domain_index.py (load_dirichlet_zeros), charon/src/ingest_dirichlet_*.py
+
+---
+
+### zeros.object_zeros_ext -- Extended Zero Data
+
+- **Rows:** 17,313
+- **Source:** Migrated from charon.duckdb `object_zeros_ext` table (2026-04-16)
+- **Loaded by:** thesauros/migrate_p3_duckdb.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigserial PK | Internal ID |
+| lmfdb_url | text UNIQUE | LMFDB URL path |
+| conductor | bigint | Conductor |
+| rank | smallint | Rank |
+| zeros_vector | double[] | Extended zeros |
+| n_zeros_raw | smallint | Number of zeros before filtering |
+| n_zeros_stored | smallint | Number of zeros stored |
+
+---
+
+### analysis.disagreement_atlas -- Embedding Disagreement Map
+
+- **Rows:** 119,397
+- **Source:** Migrated from charon.duckdb `disagreement_atlas` table (2026-04-16)
+- **Originally computed by:** charon/src/disagreement_atlas.py
+- **Loaded by:** thesauros/migrate_p3_duckdb.py
+
+| Column | Type | Description |
+|--------|------|-------------|
+| object_id | bigint PK | References object_registry |
+| label | text | LMFDB label |
+| object_type | text | Object type |
+| conductor | bigint | Conductor |
+| rank | smallint | Rank |
+| torsion | smallint | Torsion order |
+| cm | smallint | CM discriminant |
+| jaccard | double | Jaccard similarity (embedding vs zero neighbors) |
+| precision_score | double | Precision of embedding neighbors |
+| recall_score | double | Recall of zero-based neighbors |
+| zero_coherence | double | Coherence between zero and graph structure |
+| graph_degree | integer | Degree in knowledge graph |
+| component_size | integer | Connected component size |
+| n_zero_nn | integer | Number of zero-based nearest neighbors |
+| n_graph_nn | integer | Number of graph nearest neighbors |
+| n_overlap | integer | Overlap between neighbor sets |
+| disagreement_type | text | Type classification (A/B/C/D) |
+
+**Scripts:** harmonia/src/domain_index.py (load_disagreement), charon/src/disagreement_atlas.py, charon/src/inner_twist_*.py
+
+---
+
+### noesis.* -- Noesis Research State (19 tables)
+
+- **Total rows:** 51,992
+- **Source:** Migrated from noesis/v2/noesis_v2.duckdb (2026-04-16)
+- **Loaded by:** thesauros/migrate_noesis_v2.py
+
+| Table | Rows | Description |
 |-------|------|-------------|
-| elliptic_curves | 31K | object_id, lmfdb_label, conductor, rank, ainvs, torsion, regulator, sha, faltings_height, trace_hash |
-| modular_forms | 102K | object_id, lmfdb_label, level, weight, dim, hecke_orbit, analytic_conductor, traces, field_poly |
-| dirichlet_zeros | 185K | lmfdb_url, conductor, degree, rank, zeros_vector, motivic_weight |
-| object_zeros | 121K | object_id, zeros_vector, root_number, analytic_rank |
-| landscape | 119K | object_id, coordinates[], local_curvature, nearest_neighbors[], cluster_id |
-| disagreement_atlas | 119K | object_id, label, jaccard, precision_score, recall_score, zero_coherence, graph_degree |
-| graph_edges | 396K | source_id, target_id (k-NN knowledge graph) |
+| cross_domain_edges | 20,502 | Cross-domain operator connections |
+| depth2_matrix | 19,049 | Depth-2 operator composition status |
+| composition_instances | 4,962 | Instances of compositions in traditions |
+| tradition_hub_matrix | 2,213 | Tradition-to-hub mappings |
+| floor1_matrix | 2,120 | Floor 1 operator resolution evidence |
+| operations | 1,714 | Mathematical operations catalog |
+| chain_steps | 400 | Steps within operator chains |
+| transformations | 295 | Operator transformations |
+| abstract_compositions | 236 | Abstract composition patterns |
+| cross_domain_links | 185 | Cross-domain link metadata |
+| ethnomathematics | 131 | Ethnomathematical systems catalog |
+| chains | 100 | Operator chains with verification status |
+| discoveries | 35 | Discovered patterns/structures |
+| depth3_probes | 19 | Depth-3 composition probes |
+| tradition_multi_hub | 10 | Multi-hub tradition mappings |
+| damage_operators | 9 | Damage operator definitions |
+| prime_landscape | 6 | Prime landscape features |
+| validation_pairs | 6 | Cross-domain validation pairs |
+| reclassification_log | 0 | Reclassification audit trail |
 
 ---
 
-## Redis
+### signals.specimens -- Signal/Hypothesis Tracking
 
-No persistent schema — see `thesauros/redis.md` for namespace documentation.
+- **Rows:** 0 (schema only, ready for population)
+- **Created:** 2026-04-16
+- **Purpose:** Track discovered signals, their battery results, and kill status
+
+| Column | Type | Description |
+|--------|------|-------------|
+| specimen_id | bigserial PK | Internal ID |
+| claim | text | What the signal claims |
+| status | text | ALIVE, KILLED, MARGINAL |
+| interest | double | Interest score |
+| kill_test | text | Which test killed it |
+| domain_a, domain_b | text | Domain pair |
+| created_at, killed_at | timestamptz | Timestamps |
+
+### signals.battery_results -- Battery Test Results per Specimen
+
+- **Rows:** 0 (schema only)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | bigserial PK | Internal ID |
+| specimen_id | bigint FK | References specimens |
+| test_name | text | Battery test name |
+| result | text | passed, failed, not_run |
+| z_score | double | z-score |
+| p_value | double | p-value |
+| detail | jsonb | Full test output |
+| run_at | timestamptz | When run |
+
+---
+
+### agora.messages -- Multi-Agent Communication Log
+
+- **Rows:** 107
+- **Source:** Agora Redis streams, persisted by agora/client.py
+- **Also in Redis:** agora:main, agora:challenges, agora:discoveries, agora:tasks streams
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | serial PK | Internal ID |
+| stream_id | text | Redis stream message ID |
+| stream | text | Which stream (main, challenges, discoveries, tasks) |
+| sender | text | Agent name (Agora, Kairos, Harmonia, etc.) |
+| machine | text | M1 or M2 |
+| msg_type | text | announce, challenge, share, kill, etc. |
+| subject | text | Message subject line |
+| body | text | Full message body |
+| confidence | real | Confidence score (0.0-1.0) |
+| evidence | text | Supporting evidence |
+| reply_to | text | Message ID being replied to |
+| created_at | timestamptz | Timestamp |
+
+### agora.decisions -- Team Decisions
+
+- **Rows:** 3
+
+### agora.open_questions -- Open Research Questions
+
+- **Rows:** 1
+
+---
+
+### Empty Tables (Schema Ready, No Data)
+
+| Table | Purpose |
+|-------|---------|
+| results.ergon_runs | Ergon evolutionary run metadata |
+| results.hypotheses | Generated hypotheses with z-scores |
+| results.harmonia_bonds | TT-Cross bond decomposition results |
+| kill.taxonomy | Kill classification system |
+| kill.shadow_cells | Shadow archive (dead zone tracking) |
+| tensor.domain_features | Per-object feature values |
+| tensor.domain_metadata | Domain metadata (feature names, counts) |
+| meta.calibration | Calibration test results |
+
+---
+
+## Redis (M1:6379, password: prometheus)
+
+### Agora Communication (existing)
+| Key Pattern | Type | Count | Description |
+|-------------|------|-------|-------------|
+| agora:main | Stream | ~120 msgs | General communication |
+| agora:challenges | Stream | ~15 msgs | Adversarial challenges |
+| agora:discoveries | Stream | ~25 msgs | Shared findings |
+| agora:tasks | Stream | ~6 msgs | Task coordination |
+| agent:{name} | Hash | ~8 agents | Agent state (status, heartbeat, machine) |
+
+### Knowledge Graph (migrated from DuckDB 2026-04-16)
+| Key Pattern | Type | Count | Description |
+|-------------|------|-------|-------------|
+| graph:neighbors:{id} | Set | 96,210 | Adjacency list per object (undirected, 396K edges) |
+
+### Landscape (migrated from DuckDB 2026-04-16)
+| Key Pattern | Type | Count | Description |
+|-------------|------|-------|-------------|
+| landscape:{id} | Hash | 119,464 | {coordinates, curvature, cluster_id, version} |
+| landscape:by_curvature | Sorted Set | 119,464 | Score=curvature, member=object_id |
+| landscape:by_cluster:{id} | Set | varies | Object IDs per cluster |
+
+### Bridges (migrated from DuckDB 2026-04-16)
+| Key Pattern | Type | Count | Description |
+|-------------|------|-------|-------------|
+| bridge:{src}:{tgt} | Hash | 17,314 | {type, verified, source_reference} |
+| bridges:by_source:{id} | Set | varies | Bridge keys by source |
+| bridges:by_target:{id} | Set | varies | Bridge keys by target |
+| bridges:by_type:{type} | Set | varies | Bridge keys by type |
+
+### Hypothesis Queue (migrated from DuckDB 2026-04-16)
+| Key Pattern | Type | Count | Description |
+|-------------|------|-------|-------------|
+| hypothesis:queue | Sorted Set | 100 | Score=priority, member=hypothesis JSON |
+
+### Other State
+| Key Pattern | Type | Description |
+|-------------|------|-------------|
+| hypotheses:alive | Set | Active hypotheses |
+| hypotheses:killed | Set | Killed hypotheses |
+| leaderboard:kills | Sorted Set | Kill count per agent |
+| leaderboard:discoveries | Sorted Set | Discovery count per agent |
 
 ---
 
 ## Known Data Quality Issues
 
-1. **LMFDB all-text columns**: Every column in the LMFDB mirror is TEXT. Numerical queries require explicit casts (`conductor::numeric`). The conductor index mitigates this for one column.
-
-2. **Sha circularity at rank ≥ 2**: `ec_curvedata.sha` for rank ≥ 2 is computed by assuming BSD. Cannot be used to test BSD independently. Rank 0-1 Sha is independently computed.
-
-3. **Missing EC ingredients**: `real_period` (Omega), `tamagawa_product`, and `root_number` are not columns in ec_curvedata. Needed for full BSD formula.
-
-4. **EC ↔ lfunc join key**: No direct label match. `lfunc_lfunctions.origin` uses ModularForm paths, not EC labels. Join strategy needed.
-
-5. **Artin ↔ lfunc linkage**: No Artin-labeled entries in lfunc origin field. Linkage goes through ModularForm paths via Langlands.
-
-6. **abc_quality vs szpiro_ratio**: Both columns exist in ec_curvedata and appear to store the same value (log|Δ|/log(N)). Verify before using both.
-
-7. **groups.order_val**: Widened from INTEGER to NUMERIC because some group orders exceed 60 digits. Queries should cast appropriately.
-
-8. **LMFDB selection effects**: High-conductor EC curves are biased toward prime conductors with fewer bad primes. Stratify by bad_primes count for unbiased analysis.
+1. **LMFDB all-text columns** -- every column is TEXT. Use explicit casts (::int, ::bigint, ::double precision) in queries.
+2. **Sha circularity at rank >= 2** -- LMFDB computes Sha by assuming BSD. Cannot use for independent BSD testing. See bsd_joined_view.md.
+3. **Missing EC ingredients** -- real_period (Omega) and tamagawa_product not in ec_curvedata. Needed for full BSD formula.
+4. **LMFDB selection effects** -- high-conductor ECs biased toward prime conductors. Stratify by num_bad_primes.
+5. **lfunc coverage gap** -- bsd_joined has 0% coverage above conductor 400K. 747K EC curves have no L-function data.
+6. **Isogeny-level join** -- bsd_joined joins at isogeny class level. Multiple EC rows share one lfunc row.
+7. **nf_fields partial** -- only 2.4M of 22M rows loaded (10.8%).
+8. **Noesis data is research state** -- not validated scientific data. Treat as exploratory.
