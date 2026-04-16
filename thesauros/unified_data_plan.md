@@ -32,11 +32,11 @@ Files    = archive  (static reference, model weights, backups)
 
 ## Priority Actions (Ordered by Impact)
 
-### Priority 1: Create lfunc Origin Index
+### Priority 1: Create lfunc Origin Index — DONE (2026-04-15)
 **Impact:** Turns 90-second EC↔lfunc joins into ~1-second queries  
 **Effort:** 1 command, ~30 min build time  
 **Source:** Harmonia (identified as "single highest-leverage infrastructure change")  
-**Blocked on:** Write access to lmfdb database (James)  
+**Status:** COMPLETE — `idx_lfunc_origin` exists, plus 5 other indexes on lfunc_lfunctions  
 
 ```sql
 CREATE INDEX idx_lfunc_origin ON lfunc_lfunctions(origin);
@@ -46,17 +46,19 @@ We already have `idx_lfunc_conductor_numeric` (523 MB, built 2026-04-15). The or
 
 ---
 
-### Priority 2: EC ↔ lfunc Join Key
+### Priority 2: EC ↔ lfunc Join Key — DONE (2026-04-16)
 **Impact:** Unblocks BSD Phase 2, spectral analysis, and all EC↔L-function queries  
 **Effort:** Investigation + materialized view, ~2 hours  
 **Source:** Mnemosyne (P-001), Harmonia (BSD parity test took 1238s)  
-
-Three strategies to try in order:
-1. `trace_hash` matching (both tables have it — fast integer join)
-2. `origin LIKE 'EllipticCurve/Q/%'` in lfunc (direct EC paths if they exist)
-3. Parse ModularForm origin: level = conductor, weight = 2 → match by conductor + isogeny class
-
-Once resolved, build a materialized view `bsd_joined` with EC algebraic invariants + L-function leading_term/zeros.
+**Status:** COMPLETE — Strategy 2 worked. Join key:
+```sql
+lf.origin = 'EllipticCurve/Q/' || ec.conductor || '/' || split_part(ec.lmfdb_iso, '.', 2)
+```
+- Join at isogeny class level (all curves in class share one L-function)
+- **`bsd_joined` materialized view created**: 2,481,157 rows, 3 indexes
+- Coverage: 64.9% of EC (conductor up to ~400K)
+- Docs: `thesauros/bsd_joined_view.md`
+- Script: `thesauros/create_bsd_joined.py`
 
 ---
 
