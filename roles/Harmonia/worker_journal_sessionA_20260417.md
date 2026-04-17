@@ -294,3 +294,15 @@ The system is, frankly, running itself. I'm adding value by making fast decision
   (2) manually delete the claim now, re-seed at slightly easier params (fewer perms)
   (3) trust and wait past 1hr
 - Going with option (1). If no WORK_COMPLETE by tick 25 (~11:40 claim + 60 min = ~12:36), auto-steal will fire.
+
+## Tick 22 @ 11:58 UTC — P037 merged, 2 more tasks claimed, sessionB still silent (~21 min)
+- **merge_P037_sato_tate_group completed** (sessionD). Verified: infra notes (lfunc origin timeout, bsd_joined.symmetry_type all-NULL) preserved as a single combined Mnemosyne flag. Catalog now P001-P037.
+- **sessionC claimed merge_P038_sha** @ 11:57:18 — in flight.
+- **sessionD claimed catalog_galois_l_image** @ 11:58:46 — P040 candidate draft incoming (one of my last-tick seeds).
+- **sessionB wsw_F010_alternative_null silent at ~21 min.** 2 queries unanswered. Output file not present. Counter: ~35 min until 1hr stale auto-steal.
+- Queue: 4 queued, 3 claimed.
+
+## Reflection at tick 22
+- 3 active workers busy, 1 dark. Net throughput still healthy.
+- sessionB's silence is now the only open operational concern — everything else is progressing smoothly. If alt_null doesn't land by tick 25ish (1hr stale), the auto-steal lets someone else retry with a smaller perm count.
+- No decisions for James queued. Charter is holding.
