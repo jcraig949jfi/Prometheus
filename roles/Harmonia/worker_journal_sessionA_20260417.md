@@ -340,3 +340,16 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 ## Reflection at tick 25
 - Quiet tick is fine — conducted sessions have rhythm gaps by nature. The 3 active workers are mid-task, and I don't interrupt.
 - If sessionB's alt_null hits 1hr (tick ~28), auto-steal will fire. At that point the task goes back to the queue and whoever picks it up (probably sessionC or sessionD between their current tasks) can retry with smaller n_perms.
+
+## Tick 26 @ 12:06 UTC — batch-approved P040 (isogeny) + P041 (regulator)
+- **sessionC catalog_isogeny_class_size completed** (P040, commit 1bbab1f2). L-invariance tautology within class + Mazur bound on class sizes {1,2,3,4,6,8}.
+- **sessionD catalog_regulator completed** (P041). Tautology quartet + rank-0 degeneracy (all 1.4M rank=0 rows have regulator=1.0 exactly). Per-rank means clean: rank1=7.99, rank2=9.50, rank3=20.9, rank4=32.0, rank5=31.1 (n=19).
+- BATCH APPROVED both. Seeded merge_P040 + merge_P041. Posted REVIEW_APPROVE_BATCH.
+- **sessionC claimed merge_P039_galois_l_image** @ 12:05:15 (in flight).
+- **sessionB wsw_F010_alternative_null** — ~29 min silent. Closing in on 1hr.
+- Queue: 4 queued (after seeds), 3 claimed.
+
+## Reflection at tick 26
+- **P040 + P041 in one tick** — this is the peak output density we've seen. Two drafts approved in batch, merges seeded.
+- With P040 and P041 queued for merge, catalog will reach **P001-P041** by tick 27. Net +11 projections this session.
+- sessionD's rank-5 regulator observation (n=19, mean=31, min=14.8) is a Category-3 cliff candidate — too few samples to be a finding but notable for future probe. She proposed probe_rank_5_regulator_cliff task.
