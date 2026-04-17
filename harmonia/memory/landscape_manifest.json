@@ -4,7 +4,7 @@
   "charter_ref": "docs/landscape_charter.md",
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
-    24,
+    25,
     23
   ],
   "tensor_encoding": {
@@ -49,6 +49,13 @@
       "tier": "calibration",
       "n_objects": 67035,
       "description": "Among sha\u22659: (-1)^rank = root_number perfect."
+    },
+    {
+      "id": "F009",
+      "label": "Torsion primes \u2286 nonmax primes (Serre open-image lineage)",
+      "tier": "calibration",
+      "n_objects": 1385133,
+      "description": "For every non-CM EC over Q: primes(rational torsion) \u2286 nonmax_primes (mod-\u2113 image is non-maximal at every torsion prime). 100.000% across 1,385,133 non-CM EC rows with torsion>1; zero violations (sessionD audit_nonmax_vs_torsion, 2026-04-17). All 15 Mazur torsion cells pass at 100%. Theorem lineage: Serre open-image + Mazur torsion classification. Load-bearing calibration anchor; joins F001-F005."
     },
     {
       "id": "F010",
@@ -347,6 +354,10 @@
       "P023": 2,
       "P024": 1
     },
+    "F009": {
+      "P024": 2,
+      "P039": 2
+    },
     "F010": {
       "P001": -1,
       "P010": 2,
@@ -450,7 +461,8 @@
     "F002",
     "F003",
     "F004",
-    "F005"
+    "F005",
+    "F009"
   ],
   "live_specimens": [
     "F010",

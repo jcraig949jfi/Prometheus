@@ -60,6 +60,9 @@ FEATURES = [
     {"id": "F005", "label": "High-Sha parity (H43)",
      "tier": "calibration", "n_objects": 67035,
      "description": "Among sha≥9: (-1)^rank = root_number perfect."},
+    {"id": "F009", "label": "Torsion primes ⊆ nonmax primes (Serre open-image lineage)",
+     "tier": "calibration", "n_objects": 1385133,
+     "description": "For every non-CM EC over Q: primes(rational torsion) ⊆ nonmax_primes (mod-ℓ image is non-maximal at every torsion prime). 100.000% across 1,385,133 non-CM EC rows with torsion>1; zero violations (sessionD audit_nonmax_vs_torsion, 2026-04-17). All 15 Mazur torsion cells pass at 100%. Theorem lineage: Serre open-image + Mazur torsion classification. Load-bearing calibration anchor; joins F001-F005."},
 
     # ----- LIVE SPECIMENS (weak-but-survives) -----
     {"id": "F010", "label": "NF backbone via Galois-label",
@@ -262,6 +265,7 @@ INVARIANCE = {
     "F003": {"P020": +2, "P023": +2, "P041": +2},             # BSD parity
     "F004": {"P043": +2},                                      # Hasse
     "F005": {"P023": +2, "P024": +1},                          # high-Sha parity
+    "F009": {"P024": +2, "P039": +2},                          # torsion primes subset of nonmax primes (Serre+Mazur lineage)
 
     # Live specimens — sparse +1s, many -1s in wrong projections
     "F010": {"P001": -1, "P010": +2, "P040": -2, "P042": +1, "P052": +1, "P020": +1, "P021": +1, "P028": +1},  # NF backbone: pooled ρ=0.40 was Pattern-20 artifact (collapses at n=75 to 0.109). Durable signal is decontaminated ρ=0.27 via P052. Survives P020/P021 (sessionC wsw_F010), P042 feature-perm. P028 weak resolver (Is_Even=True ρ=0.38 z=2.75 at bigsample; split z_diff 5.38→1.95 attenuated — not a DIFFER verdict like F011). P040 -2 (pooled not durable at this coupling).

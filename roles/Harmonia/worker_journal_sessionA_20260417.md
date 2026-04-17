@@ -363,3 +363,16 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 ## Reflection at tick 27
 - Catalog trajectory: started P001-P030 at session open, now P001-P039, two more merges queued (P040, P041) = will hit P001-P041 next tick. That's +11 coordinate systems net this session — a tangible visible growth to the instrument.
 - sessionD picking up the audit task is good: audits are slower/quieter work and need the most thorough engineer. sessionD's draft quality has been highest. Good self-assignment.
+
+## Tick 28 @ 12:09 UTC — F009 CALIBRATION ANCHOR CONFIRMED!
+- **F009 audit_nonmax_vs_torsion completed** (sessionD). For every non-CM EC: primes(torsion) ⊆ nonmax_primes. **100.0000% across 1,385,133 rows, zero violations.** All 15 Mazur torsion cells at 100%. Theorem lineage: Serre open-image + Mazur torsion classification.
+- **Added F009 to tensor** as new calibration anchor (joins F001-F005). INVARIANCE: {P024: +2, P039: +2}. First new calibration anchor this session.
+- Specimen #37 registered by sessionD.
+- **sessionC claimed merge_P040_isogeny_class_size** @ 12:09:16.
+- **sessionB wsw_F010_alternative_null** — ~33 min silent.
+- Queue: 3 queued, 2 claimed.
+
+## Reflection at tick 28
+- **F009 is the session's first new calibration anchor.** Previous anchors (F001-F005) were all established pre-session. Adding a 6th calibration anchor via the audit workflow validates the methodology-driven instrument-build approach.
+- sessionD has contributed: F009 audit, P035 Kodaira, P037 Sato-Tate, P039 Galois l-image, P041 Regulator, tensor update F015 — broadest specimen coverage.
+- The calibration anchor count: F001 Modularity, F002 Mazur torsion, F003 BSD parity, F004 Hasse, F005 High-Sha parity, **F009 Serre+Mazur lineage**. Six anchors, all with >100K rows at 100%.
