@@ -524,3 +524,47 @@ The system is, frankly, running itself. I'm adding value by making fast decision
   5. Catalog grown from P001-P030 to P001-P039 + P100-P103 (+13)
   6. Block-shuffle protocol discovered and proven discriminating
   7. P028 Katz-Sarnak established as cross-specimen resolver
+
+## Session End @ ~12:50 UTC — wrap-up after 38 ticks
+
+James asked to stop looping. Final state:
+- **Queue**: 3 queued (all seeded this tick, can be picked up on reboot), 0 claimed
+- **Workers**: all idle on heartbeats
+- **Final commit**: 6c7f68d2 (sessionD's P100-P103 merges + journal backfilled on her behalf)
+- **All memory artifacts**: committed and pushed. Nothing at risk.
+
+### Session totals (from tick 0 to tick 38, ~3 hours conducted)
+- **Ticks**: 38 conductor ticks at 2-min cadence
+- **Catalog growth**: P001-P030 → P001-P039 + P100-P103 (+13 new projections)
+- **Calibration anchors**: F001-F005 → F001-F005 + F009 (+1 new anchor this session)
+- **Live specimens (block-verified)**: F011, F013, F015 (3)
+- **Live specimens (weak provenance)**: F014
+- **Killed**: F010 (new this session), F012 (killed early), F020-F028, F022 (killed earlier)
+- **Pattern library**: 20 patterns total. 4 Pattern 20 anchors confirmed via four-anchor audit. Pattern 19 anchor cases F012/F014/F011/F010.
+- **Total WORK_COMPLETEs**: 60 across 4 sessions
+- **Specimens registered**: 45+
+- **Abandoned tasks**: 6 (all clean — no silent failures)
+
+### Session-defining findings (by importance)
+1. **P028 Katz-Sarnak is the first cross-specimen resolver** — F011 + F013 both block-shuffle-verified at z_block >> 10. Session's highest-order positive finding.
+2. **F010 KILLED under block-shuffle null** — triple-layer artifact (Pattern 20 + Pattern 19 + null-model-mismatch). Provided the kill case for the methodology pair.
+3. **F009 calibration anchor confirmed** — torsion primes ⊆ nonmax primes at 100% across 1.4M non-CM EC rows. First new calibration anchor this session.
+4. **F015 sign-uniform-negative durable** — survives block-shuffle at every k-stratum (z from -3.48 to -24.03). First specimen verified under block-shuffle protocol.
+5. **Block-shuffle protocol** established as standard: discriminates between durable specimens and Pattern-20 artifacts. Discovered from the F010 trajectory.
+6. **reserve_p_id self-healing fix** (sessionB) — catalog scan on every call; no more namespace collisions.
+7. **Pattern 20 four-anchor audit** (sessionC) — unified pattern with three symptoms, composes with Pattern 19.
+
+### Worker contributions
+- **sessionA** (conductor): tensor maintenance, namespace decisions (v1+v2 — v1 was incomplete, sessionD caught), approvals, seeds, decisions_for_james, 38 journal entries
+- **sessionB**: Liouville side-check, F011 Katz-Sarnak, F010 small-n KS, reserve_p_id infra (implementation), wsw_F013_P028, audit_P028_findings_block_shuffle, merge_P034/P100/P102, 13 specimens registered
+- **sessionC**: Pattern 20 synthesis, Pattern 20 four-anchor audit, F010 bigsample, F010 KS bigsample, F010 alternative null (final kill verdict), catalog_sha, catalog_isogeny, catalog_artin_dim, catalog_modular_degree, catalog_polish, merge_P033/P035/P039, F014/F015 block-shuffle audit
+- **sessionD**: catalog_mf_weight, catalog_alignment_coupling, catalog_kodaira, catalog_root_number, catalog_sato_tate_group, catalog_regulator, catalog_galois_l_image, wsw_F015, tensor F015 diff, F009 audit (calibration anchor!), EC harvest triage, second-collision namespace audit, merge_P031/P032/P036/P037/P101/P103
+
+### What the session leaves for James
+- decisions_for_james.md cleared of pendings; all resolved with summary tables
+- Tensor + pattern library + catalog + journals all committed
+- 3 seeded tasks in queue (F014 block-shuffle, Iwasawa catalog, ingest_codata blocked) for next-session pickup
+- Clean namespace (reserve_p_id self-healing)
+- Working block-shuffle methodology protocol
+
+The session ended on a strong positive. Over and out.
