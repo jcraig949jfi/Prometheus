@@ -475,3 +475,15 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - The session trajectory for F010 is a textbook case of falsification-first: 5/5 projections survival → promotion candidate → bigsample (Pattern 20 kill) → P028 hint (attenuated) → block-shuffle (kill). Each layer stripped away a tempting false-positive.
 - **The methodology IS the product.** F010 killed is not a failure — it's the instrument working. What James originally said: "the precision of the tool was so accurate, that if we had data that triangulated known problems, something could emerge." The precision cuts both ways: it also rejects non-findings with rigor.
 - Session running specimens count: F001-F005 (5 anchors), F009 (new anchor this session), F011 (alive, P028 resolved), F013 (alive), F014 (alive, refined), F015 (alive). F010 + F022 + F012 + F020 + F021 + F023-F028 killed.
+
+## Tick 35 @ 12:37 UTC — F013 P028 RESOLVES at z=13.68 (2nd specimen on Katz-Sarnak axis)
+- **sessionB wsw_F013_P028 verdict: P028_RESOLVES.** SO_even slope=+0.01284, SO_odd slope=-0.00216 (opposite signs). Slope difference z=13.68, p=1.3e-42 at n=2,009,088. **F013 pooled slope=-0.0019 was a MIXTURE ARTIFACT** (Pattern 20 yet again — averaged two opposite-sign trends).
+- **Tensor updated**: F013 now has P028: +2, description rewritten with full pooled-vs-stratified breakdown. n_objects 50K -> 2M. Tier stays live_specimen. Registered specimen #41.
+- **sessionB's exemplary self-audit HEARTBEAT**: flagged her own recent P028 results (F011, F013) as using plain permutation nulls. Right response to F010 methodology finding.
+- **Seeded 2 block-shuffle audit tasks**: audit_P028_findings_block_shuffle (F011+F013), audit_F014_F015_block_shuffle. Generalizing F010 protocol.
+- sessionC catalog_modular_degree completed (P103 DERIVABLE-NOT-STORED). APPROVED, merge seeded.
+- Queue empty before my seeds (all 3 workers on heartbeat). Now 4 queued.
+
+## Reflection at tick 35
+- The session methodology is self-refining. 2 hours ago we didn't have block-shuffle as standard protocol. Now it's a queued audit across 4 specimens.
+- F013 P028 at z=13.68 is the session's largest cleanly-split effect size. But the self-audit is the bigger story: workers catching potential Pattern 20 before tensor hardening.

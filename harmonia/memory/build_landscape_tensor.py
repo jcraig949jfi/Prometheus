@@ -80,9 +80,9 @@ FEATURES = [
     {"id": "F012", "label": "Möbius bias at g2c aut groups (H85) — KILLED",
      "tier": "killed", "n_objects": 66158,
      "description": "KILLED across Möbius AND Liouville definitions (sessionB wsw_F012 + liouville_side_check_F012, 2026-04-17). Clean measurement on full n=66158 g2c: max|z| over adequate strata = 0.39 (μ) / 0.52 (λ), permutation p = 0.68 (μ) / 0.60 (λ). The prior |z|=6.15 DID NOT REPRODUCE under either Möbius or Liouville. Definitional drift hypothesis excluded. Canonical Pattern 19 case: stale or never-reproducible tensor entry. Likely causes: different subset, different scorer, or original measurement was noise. 63% non-squarefree g2c discriminants reduce effective S/N but don't account for the 16x discrepancy."},
-    {"id": "F013", "label": "Zero spacing rigidity vs rank (H06)",
-     "tier": "live_specimen", "n_objects": 50000,
-     "description": "Spacing variance decreases linearly with rank. slope=-0.0019, R²=0.399. Weak."},
+    {"id": "F013", "label": "Zero spacing rigidity vs rank (H06) — P028 Katz-Sarnak resolves, pooled was mixture artifact",
+     "tier": "live_specimen", "n_objects": 2009088,
+     "description": "Original pooled slope=-0.0019 (R²=0.399, n=50K) was a Pattern-20 MIXTURE ARTIFACT. sessionB wsw_F013_P028 (2026-04-17, n=2M) stratified by Katz-Sarnak symmetry type: SO_even slope=+0.01284 (variance INCREASES with rank, rank 0→2: 0.095→0.121); SO_odd slope=-0.00216 (slight decrease). Slope difference z=13.68, p=1.3e-42. P028 is a strong resolver. The pooled averaged two opposite-sign trends — same structural pattern as F015. CAVEAT: result uses plain permutation null (not block-shuffle-within-rank); sessionB flagged for self-audit given F010 methodology finding. Per-rank cell n is large (rank 0: 773K, rank 2: 222K) so block-shuffle may not matter, but pending verification (audit_P028_findings_block_shuffle). F013 joins F011 under P028 resolver."},
     {"id": "F014", "label": "Lehmer spectrum (refined) — Salem density in (1.176, 1.228)",
      "tier": "live_specimen", "n_objects": 22178569,
      "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). "
@@ -290,7 +290,7 @@ INVARIANCE = {
     "F010": {"P001": -1, "P010": -1, "P040": -2, "P042": +1, "P052": -2, "P020": +1, "P021": +1, "P028": +1},  # NF backbone KILLED: decon ρ=0.27 via P052 killed by block-shuffle-within-degree null (z=-0.86). P052 demoted +1→-2 (the decon signal is degree-marginal leakage, not real). P010 demoted +2→-1 (the object-keyed coupling doesn't survive stricter nulls). P028 stays +1 (Is_Even=True still has some z=2.75 residual but on a dead feature). F010 joins F022 — same data, no durable signal under the correct null model.
     "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
     "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
-    "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
+    "F013": {"P023": +1, "P041": +1, "P028": +2, "P051": +1},   # spacing rigidity; P028 resolves at z=13.68 (SO_even vs SO_odd opposite sign, sessionB 2026-04-17). P051 unfolding also matters (sessionD prior).
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
     "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7
 

@@ -80,10 +80,10 @@
     },
     {
       "id": "F013",
-      "label": "Zero spacing rigidity vs rank (H06)",
+      "label": "Zero spacing rigidity vs rank (H06) \u2014 P028 Katz-Sarnak resolves, pooled was mixture artifact",
       "tier": "live_specimen",
-      "n_objects": 50000,
-      "description": "Spacing variance decreases linearly with rank. slope=-0.0019, R\u00b2=0.399. Weak."
+      "n_objects": 2009088,
+      "description": "Original pooled slope=-0.0019 (R\u00b2=0.399, n=50K) was a Pattern-20 MIXTURE ARTIFACT. sessionB wsw_F013_P028 (2026-04-17, n=2M) stratified by Katz-Sarnak symmetry type: SO_even slope=+0.01284 (variance INCREASES with rank, rank 0\u21922: 0.095\u21920.121); SO_odd slope=-0.00216 (slight decrease). Slope difference z=13.68, p=1.3e-42. P028 is a strong resolver. The pooled averaged two opposite-sign trends \u2014 same structural pattern as F015. CAVEAT: result uses plain permutation null (not block-shuffle-within-rank); sessionB flagged for self-audit given F010 methodology finding. Per-rank cell n is large (rank 0: 773K, rank 2: 222K) so block-shuffle may not matter, but pending verification (audit_P028_findings_block_shuffle). F013 joins F011 under P028 resolver."
     },
     {
       "id": "F014",
@@ -398,7 +398,9 @@
     },
     "F013": {
       "P023": 1,
-      "P041": 1
+      "P041": 1,
+      "P028": 2,
+      "P051": 1
     },
     "F014": {
       "P053": 2,
