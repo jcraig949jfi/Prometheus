@@ -1,0 +1,124 @@
+{
+  "per_projection": {
+    "P010": {
+      "description": "baseline categorical object-keyed rho, galois-label permutation null",
+      "real_rho": 0.40360788789804936,
+      "n": 71,
+      "null_mean": -0.03114080769424531,
+      "null_std": 0.1067869094497069,
+      "z_score": 4.071179677664957,
+      "p_perm": 0.0,
+      "verdict": "+1"
+    },
+    "P020": {
+      "description": "within-bin rho (3 bins of mean_log_disc) \u2014 conductor conditioning proxy",
+      "bins": [
+        {
+          "range": [
+            7.0974768825583,
+            16.081997873253982
+          ],
+          "n": 24,
+          "rho": 0.20909080714934625
+        },
+        {
+          "range": [
+            16.081997873253982,
+            20.46769078821012
+          ],
+          "n": 23,
+          "rho": 0.3920969751782961
+        },
+        {
+          "range": [
+            20.46769078821012,
+            77.22169011377044
+          ],
+          "n": 24,
+          "rho": 0.28496619905721027
+        }
+      ],
+      "rho_pooled_fisher_z": 0.29568728940410854,
+      "retention_ratio_vs_P010": 0.7326102840656044,
+      "verdict": "+1"
+    },
+    "P021": {
+      "description": "within-stratum rho by mean NF num_ram (integer bins)",
+      "per_stratum": [
+        {
+          "range": [
+            1,
+            1.9999
+          ],
+          "n": 14,
+          "rho": 0.08761468015641483
+        },
+        {
+          "range": [
+            2,
+            2.9999000000000002
+          ],
+          "n": 54,
+          "rho": 0.29568563564125494
+        },
+        {
+          "range": [
+            3,
+            3.9999000000000002
+          ],
+          "n": 3,
+          "rho": null
+        },
+        {
+          "range": [
+            4,
+            4.9999
+          ],
+          "n": 0,
+          "rho": null
+        }
+      ],
+      "rho_pooled_fisher_z": 0.2601739159084342,
+      "verdict": "+1"
+    },
+    "P042": {
+      "description": "ad-hoc feature permutation: rho(log_disc, log_cond) vs rho(log_class_number, log_cond) over same shared labels",
+      "n_labels": 71,
+      "rho_disc_vs_cond": 0.40360788789804936,
+      "rho_class_number_vs_cond": -0.0025140584124064068,
+      "drop": 0.4010938294856429,
+      "verdict": "+1",
+      "caveat": "This is a minimum P042 implementation \u2014 true F39 permutes ALL feature columns on each side, not a single-feature swap."
+    },
+    "P052": {
+      "description": "prime decontamination (microscope.py 3-layer)",
+      "verdict": "deferred",
+      "note": "Not run in this tick. Requires integration with cartography/shared/scripts/microscope.py and a prime-factorization pipeline for disc_abs + Conductor. Flagged as follow-up task for sessionA to seed if P052 on F010 is load-bearing for the Pattern-13 redirect. Current data (P020+P021) already constrains the result."
+    }
+  },
+  "verdict_by_projection": {
+    "P010": "+1",
+    "P020": "+1",
+    "P021": "+1",
+    "P042": "+1",
+    "P052": "deferred"
+  },
+  "shape_summary": "F010 Galois-label coupling walk over 71 shared labels. P010:rho=0.404(+1); P020:rho=0.296(+1); P021:rho=0.260(+1); P042:rho=0.404(+1); P052:deferred",
+  "_meta": {
+    "task_id": "wsw_F010",
+    "instance": "Harmonia_M2_sessionC",
+    "started": "2026-04-17T10:50:24.131550+00:00",
+    "finished": "2026-04-17T10:51:19.852710+00:00",
+    "per_degree": 2000,
+    "per_combo": 300,
+    "n_perms_P010_null": 100,
+    "n_shared_labels": 71,
+    "prior_reference": "Harmonia 2026-04-15: rho=0.40, z=3.64, 114 shared labels",
+    "notes": [
+      "verdict convention: +1 = projection resolves F010 (coupling persists/visible); 0 = inconclusive; -1 = coupling collapses",
+      "P020 uses mean_log_disc as a conductor proxy (true conductor fields are heterogeneous across NF and Artin tables; direct conductor binning would require cross-side normalization)",
+      "P042 is an ad-hoc single-feature swap \u2014 full F39 remains TO-DO",
+      "P052 deferred \u2014 microscope integration out of scope for this tick"
+    ]
+  }
+}
