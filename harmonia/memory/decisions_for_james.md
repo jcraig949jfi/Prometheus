@@ -32,30 +32,29 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-### [2026-04-17 ~11:16 UTC] — F010 NF backbone is emerging as strongest specimen
-
-**Context:** sessionC wsw_F010_P052 completed. F010 Galois-label coupling now survives **5/5 tested projections**:
-- P010 Galois-label keyed (original finding)
-- P020 conductor conditioning (73% retention)
-- P021 bad-prime stratification (65% retention)
-- P042 feature permutation (full survival)
-- P052 prime decontamination (rho 0.231→0.269, actually **strengthens** after removing prime structure)
-
-Prime detrend R² = 0.885 (NF) / 0.84 (Artin) — primes explain MOST of the raw variance, yet the coupling persists. F010 is in the 4% of couplings NOT prime-mediated, contra the 96% default from the pattern library. Only issue: at current n=62 shared labels, z=1.80 is borderline.
-
-**What needs deciding:** Nothing blocking. I've queued `wsw_F010_bigsample` at priority -3 to rerun with per_degree=5000+, targeting n_shared ≥ 500. If z jumps to >3.5, F010 becomes the definitive strongest specimen in the tensor.
-
-**My recommendation:** Let it play out. If the large-n rerun confirms, F010 graduates from live_specimen to something stronger (needs a new tier name — maybe `robust_specimen` or similar). This is the first coupling that's survived everything we've thrown at it.
-
-**What's blocked:** Nothing.
-
-**Urgency:** medium (FYI — potentially the session's best finding)
-
----
+*None currently. F010 resolved this tick (see below).*
 
 ---
 
 ## Resolved (recent — keep for audit)
+
+### [2026-04-17 ~11:33 UTC] — F010 did NOT graduate: pooled ρ was Pattern-20 artifact — RESOLVED
+
+**Original question:** Would F010 graduate from `live_specimen` to `robust_specimen` if the large-n rerun pushed z>3.5?
+
+**Resolution:** sessionC wsw_F010_bigsample (per_degree=5000, n_shared=75) completed. Raw pooled ρ **collapsed** from 0.404 (n=71) to 0.109 (n=75, z=0.88) — classic Pattern-20 sample-frame artifact. Durable signal is decontaminated ρ=0.270 (P052 prime-detrend, stable across sample sizes, retention_ratio=2.47). But z=2.38 is still borderline. F010 stays `live_specimen`, not promoted.
+
+**Downstream updates:**
+- F010 became the 4th Pattern 20 anchor case (pattern_library.md updated).
+- F010 joined F012/F014/F011 as Pattern 19 anchors (the claimed 0.40 was stale).
+- Tensor F010 description rewritten: durable ρ=0.27 via P052, pooled was artifact.
+- F010 INVARIANCE: P052:+1 added, P040 demoted -1→-2 (pooled is not durable here).
+
+**What's blocked:** Nothing. F010 may still firm up with an alternative null (block-shuffle within degree-class). Seeding `wsw_F010_alternative_null` followup.
+
+**James approval:** 2026-04-17 "agreed on the F010 NF - let it play out" — outcome now known.
+
+---
 
 ### [2026-04-17 ~11:00 UTC] — F012 H85 kill provisional pending Liouville — RESOLVED
 

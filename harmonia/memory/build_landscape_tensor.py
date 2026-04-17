@@ -63,9 +63,8 @@ FEATURES = [
 
     # ----- LIVE SPECIMENS (weak-but-survives) -----
     {"id": "F010", "label": "NF backbone via Galois-label",
-     "tier": "live_specimen", "n_objects": 114,
-     "description": "ρ(NF log_disc, Artin log_cond) = 0.40 over 114 shared labels. z=3.64. "
-                    "Survives object-keyed permutation. Reads as Langlands functoriality through categorical projection."},
+     "tier": "live_specimen", "n_objects": 75,
+     "description": "Pattern-20 anchor. Raw pooled ρ=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to ρ=0.109 at per_degree=5000 (n=75) — the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated ρ=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. Borderline at current n; needs alternative null (block-shuffle within degree-class) to firm up. Still live: signal is in the 4% of couplings NOT prime-mediated."},
     {"id": "F011", "label": "GUE first-gap deficit (~38% unfolded, n=2M)",
      "tier": "live_specimen", "n_objects": 2009089,
      "description": "Unfolded first-gap variance ~0.110 vs GUE 0.178 = ~38% deficit at n=2,009,089 "
@@ -238,6 +237,15 @@ PROJECTIONS = [
      "type": "feature_extraction",
      "description": "M(P) = |leading|·∏ max(1, |root|). Maps any polynomial to its growth rate. "
                     "Domain-agnostic — flattens distinction between different domain polynomials."},
+
+    # ----- Feature-distribution scorer added tick 13 (sessionB) -----
+    {"id": "P034", "label": "AlignmentCoupling (rank-based extremity coupling)",
+     "type": "feature_distribution",
+     "description": "Rank-based (quantile) coupling scorer with extremity weighting and sign-agreement term. "
+                    "Megethos-robust BY CONSTRUCTION (quantile transform kills magnitude). Learns an interaction "
+                    "matrix per domain pair at init via 5-shuffle 2σ filter. Sigmoid-normalized output. Complements "
+                    "P001 (raw cosine) and P002 (kurtosis-extended cosine); does NOT replace either. Code: "
+                    "harmonia/src/coupling.py:AlignmentCoupling (lines 182-298)."},
 ]
 
 
@@ -256,7 +264,7 @@ INVARIANCE = {
     "F005": {"P023": +2, "P024": +1},                          # high-Sha parity
 
     # Live specimens — sparse +1s, many -1s in wrong projections
-    "F010": {"P001": -1, "P010": +2, "P040": -1, "P042": +1},  # NF backbone: dies distributional, survives object-keyed
+    "F010": {"P001": -1, "P010": +2, "P040": -2, "P042": +1, "P052": +1, "P020": +1, "P021": +1},  # NF backbone: pooled ρ=0.40 was Pattern-20 artifact (collapses at n=75 to 0.109). Durable signal is decontaminated ρ=0.27 via P052. Survives P020/P021 (sessionC wsw_F010), P042 feature-perm. P040 demoted -1→-2 (pooled is not durable at this coupling).
     "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
     "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
     "F013": {"P023": +1, "P041": +1},                           # spacing rigidity

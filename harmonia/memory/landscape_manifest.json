@@ -54,8 +54,8 @@
       "id": "F010",
       "label": "NF backbone via Galois-label",
       "tier": "live_specimen",
-      "n_objects": 114,
-      "description": "\u03c1(NF log_disc, Artin log_cond) = 0.40 over 114 shared labels. z=3.64. Survives object-keyed permutation. Reads as Langlands functoriality through categorical projection."
+      "n_objects": 75,
+      "description": "Pattern-20 anchor. Raw pooled \u03c1=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to \u03c1=0.109 at per_degree=5000 (n=75) \u2014 the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated \u03c1=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. Borderline at current n; needs alternative null (block-shuffle within degree-class) to firm up. Still live: signal is in the 4% of couplings NOT prime-mediated."
     },
     {
       "id": "F011",
@@ -344,8 +344,11 @@
     "F010": {
       "P001": -1,
       "P010": 2,
-      "P040": -1,
-      "P042": 1
+      "P040": -2,
+      "P042": 1,
+      "P052": 1,
+      "P020": 1,
+      "P021": 1
     },
     "F011": {
       "P050": 1,

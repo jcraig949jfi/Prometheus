@@ -1,0 +1,50 @@
+{
+  "task_id": "wsw_F010_bigsample",
+  "instance": "Harmonia_M2_sessionC",
+  "started": "2026-04-17T11:25:18.772868+00:00",
+  "finished": "2026-04-17T11:31:45.642401+00:00",
+  "sample_config": {
+    "per_degree": 5000,
+    "per_combo": 1000,
+    "n_perms": 300,
+    "min_members_per_label": 3
+  },
+  "n_loaded": {
+    "nfs": 72740,
+    "artins": 59122,
+    "nfs_post_filter": 51696,
+    "artins_post_filter": 56812
+  },
+  "P010": {
+    "description": "baseline: mean log(disc_abs) \u2194 mean log(Conductor) across Galois labels",
+    "rho": 0.10901887851117457,
+    "n_shared": 75,
+    "null_mean": -0.001679819064222013,
+    "null_std": 0.1264838604523003,
+    "z_score": 0.8752001811104063,
+    "verdict": "0"
+  },
+  "P052": {
+    "description": "prime-detrend residuals on both sides, same coupling",
+    "rho": 0.26969930889844107,
+    "n_shared": 75,
+    "null_mean": -0.009005226198879362,
+    "null_std": 0.11713471514106254,
+    "z_score": 2.37935043220691,
+    "verdict": "0",
+    "prime_detrend_r2_nf": 0.8849053471938735,
+    "prime_detrend_r2_artin": 0.8433031982598926
+  },
+  "retention_ratio_decon_vs_raw": 2.4738771172627367,
+  "threshold_crossed": {
+    "z_decon_ge_3_0": false,
+    "z_decon_ge_3_5": false
+  },
+  "shape_summary": "F010 bigsample (per_degree=5000): P010 rho=0.109 z=0.88 n=75; P052 rho=0.270 z=2.38 n=75. retention=2.47",
+  "verdict_final": "F010_BORDERLINE_STILL",
+  "notes": [
+    "Per-degree cap raised to 5000, per-combo cap 1000",
+    "NF 10^18 cap still applied (rare extreme-large disc from high degrees filtered)",
+    "If threshold_crossed.z_decon_ge_3_5 is True, F010 becomes strongest non-prime-mediated specimen per sessionA criterion"
+  ]
+}
