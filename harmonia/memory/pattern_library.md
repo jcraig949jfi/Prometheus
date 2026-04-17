@@ -150,27 +150,66 @@ objects. These hold. They must continue to hold.
 
 ## Pattern 8 — The GUE Story (Current Mystery)
 
-**Recognition:** There is a real curvature in the zero-spacing manifold
-near its GUE attractor at finite conductor. It shrinks as you move to
-cleaner projections:
-- Raw pooled spacings: 40% deficit (z=-19.26)
-- After first-gap analysis (Mnemosyne): 14% deficit
-- After unfolding (not yet done properly): unknown
+**Updated:** 2026-04-17 per sessionC's wsw_F011 at n=2,009,089 (validated
+by sessionA). The 14% figure previously recorded here was superseded; the
+real post-unfolding deficit is ~38%.
+
+**Recognition:** There is a real ~38% first-gap variance deficit below the
+GUE asymptote at finite conductor. It is invariant under every family /
+arithmetic / rank axis tested so far:
+- Raw pooled spacings: ~40% deficit (z=-19.26, original n=4K measurement)
+- First-gap only, raw γ (P050), n=2,009,089: **~59% deficit, z=-595**
+- First-gap unfolded (P051), n=2,009,089: **~38% deficit, z=-383**
+- P021 (num_bad_primes) stratified unfolded: ~38% deficit, z=-385 (uniform)
+- P023 (rank) stratified unfolded: ~39% deficit, z=-390 (uniform)
+- P024 (torsion) stratified unfolded: ~38% deficit, z=-383 (uniform)
+- P025 (CM) stratified unfolded: ~38% deficit, z=-383 (uniform)
+- P026 (semistable) stratified unfolded: ~38% deficit, z=-383 (uniform)
+
+The 14% figure previously in this entry came from a smaller sample without
+unfolding; 38% is the clean large-n post-unfolding number. The older 14%
+reflected P050 at a different scale, not the current instrument's reading.
+
+**Uniform visibility is the shape.** All 7 tested projections resolve F011
+with the same magnitude. This is the inverse of Pattern 3 (a weak signal
+visible through multiple projections = real). Here the signal is strong
+and its magnitude is invariant across the axis classes we know how to
+enumerate. That invariance IS the finding: the deficit is NOT carried
+by any family-level, arithmetic, or rank-parity axis in our current
+catalog. Sharpens Pattern 13: we now have five more independent kills
+(P021, P023, P024, P025, P026) along family / arithmetic axes, confirming
+the axis class is exhausted.
 
 **What's been ruled out as the mechanism:**
 - Faltings height (H08 killed)
 - ADE reduction type (H10 killed)
-- Rank-dependent (H06 survives but weak)
+- num_bad_primes, rank, torsion, CM, semistable stratifications all leave
+  the deficit at ~38% — 5 more family / arithmetic axes exhausted
+- Rank-dependent (H06 survives but weak; sessionD wsw_F013 2026-04-17
+  shows rank-spacing coupling is object-level real but density-mediated,
+  so H06 is a parallel finding, not an F011 mechanism)
 
 **What hasn't been tested:**
-- Conductor-windowed finite-N scaling (H09)
-- N(T) density-normalization (proper unfolding)
-- Family-stratified GUE (symmetry type Katz-Sarnak)
+- Conductor-windowed finite-N scaling (H09) — direct finite-N probe
+- Katz-Sarnak family-symmetry type (P028, sessionB entry 2026-04-17) —
+  the last family-class axis before redirection is forced
+- Non-axis mechanisms: random-matrix corrections at finite N exceeding
+  known universality; higher-moment structure; conductor-continuous
+  finite-N curvature without a categorical carrier
 
-**The charter reading:** This isn't an "anomaly in need of explanation."
-It's a measurement that our current coordinate systems don't resolve.
-The right axis hasn't been found. The feature is real; the projection is
-missing.
+**Side observation (worth its own specimen):** P021 per-stratum variance
+is monotone with num_bad_primes (0.166 at k=1 → 0.088 at k=6). Not an
+F011 resolution, but a candidate new feature — file for a future
+weak-signal walk.
+
+**The charter reading (sharpened):** This feature is not an anomaly with
+a single missing axis. It is visible through EVERY axis we can express
+in the current catalog. The right coordinate system is either (a) a
+conductor-continuous axis (H09), (b) a new symmetry-type axis not yet
+tested (P028 Katz-Sarnak), or (c) genuinely off the axis-class tree —
+i.e., the deficit lives in a projection we haven't invented yet. Under
+the landscape charter, invention of a new scorer may be the next probe,
+not another stratification from the existing catalog.
 
 ---
 
