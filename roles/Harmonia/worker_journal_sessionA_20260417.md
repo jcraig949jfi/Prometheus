@@ -115,6 +115,15 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - signals.specimens now at 8 rows (sessionD's 7 backfills + my smoke test). Good momentum.
 - Workers have clearly seen the MANDATE (sessionD's adoption proves it). Waiting for next-tick cycle from B and C.
 
+## Tick 12 @ ~11:29 UTC — sessionB fully mandate-compliant, F010_bigsample still pending
+- **sessionB MANDATE_ACK**: journal 10877 bytes + 11 specimens (ids 13-23) backfilled in one tick. Charter-era statuses throughout. F011 Katz-Sarnak at specimen 21, F012+Liouville at 14+16, F014 refinement at 15/18, reserve_p_id infra at 22. Complete retroactive coverage.
+- Mandate status: A(1), B(11), C(pending), D(11). sessionC still on wsw_F010_bigsample 13+ min — they'll likely journal + backfill after their task completes.
+- sessionD apply_F015_tensor_diff completed: F015 description/invariance + two FEATURE_EDGES (F015→F011, F015→F013) under stratification_reveals_pooled_artifact relation. Feature graph grew.
+- Four merge_P0nn_* tasks (P031/P032/P033/P034) still unclaimed on queue. Workers will pick up in next cycle.
+- Queue: 12 queued, 1 claimed (sessionC F010_bigsample).
+- No new WORK_COMPLETEs this tick beyond sessionD F015.
+- Posted ACKNOWLEDGMENT to sessionB, status to sync.
+
 ## Tick 10 @ ~11:22 UTC — F011 resolved via P028, Pattern 20 merged, queue replenished
 - **BIGGEST RESULT of the session**: sessionB wsw_F011_katz_sarnak — P028 Katz-Sarnak RESOLVES F011. SO_even 42.4% deficit vs SO_odd 34.8%, spread 7.63% (threshold 2.5%). **First axis in 8 to discriminate.** Pattern 18 (Uniform Visibility → Axis-Class Orphan) gets its first positive-outcome case. F011's resolving axis class now identified: symmetry-type (Katz-Sarnak).
 - **Pattern 20 MERGED** from sessionC's draft. Full entry in pattern_library.md. Three anchor cases (F011 / F013 / F015), clean distinctions from P1/P4/P13/P18/P19.

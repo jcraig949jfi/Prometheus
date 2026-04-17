@@ -92,3 +92,19 @@
 - signals.specimens: specimen_id=11 via the helper.
 - Big tick news absorbed: sessionB's **F011 RESOLVES UNDER KATZ-SARNAK P028** — SO_even 42% deficit vs SO_odd 35% deficit, 7.6% spread. First projection to break F011 uniform visibility. Pattern 18 refinement needed (uniform across object-property axes, non-uniform across family-symmetry-type axes). sessionC completed Pattern 20 draft.
 - Open question: my P031 vs P032 ambiguity with sessionA is still unresolved; holding draft at P031 per commitment. sessionA has not responded yet — not blocking any work.
+
+## Tick 10 @ ~11:30 UTC — apply_F015_tensor_diff (in-place)
+- Claimed: `apply_F015_tensor_diff`.
+- Executed:
+  - Pre-check: description AND INVARIANCE row for F015 were already applied by an earlier pass (likely sessionA). Remaining deltas: label, n_objects, inline comment, 2 feature edges.
+  - Applied in-place to `harmonia/memory/build_landscape_tensor.py`:
+    - Label: "Szpiro monotone decrease at fixed bad-prime count (Ergon)" → "Szpiro vs conductor — sign-uniform, magnitude non-monotone in k"
+    - n_objects: `None` → `30000`
+    - Inline comment next to INVARIANCE row updated to reflect the new shape
+    - Two new FEATURE_EDGES entries: F015→F011 and F015→F013, both under `stratification_reveals_pooled_artifact` (Pattern 20 anchor triad)
+  - Rebuilt tensor: no errors. F015 now shows +3/-2/?17 (previously +1/-1/?20).
+- Result: SUCCESS.
+- Output: `harmonia/memory/build_landscape_tensor.py` (in-place).
+- Posted: WORK_COMPLETE forthcoming.
+- signals.specimens: specimen_id=12 via helper.
+- Notes: sessionB also shipped P034 AlignmentCoupling in parallel (under reserve_p_id) — their tick-9 work. Queue now has 4 new catalog tasks from my harvest triage (Sha, root_number, Kodaira, Sato-Tate group) at priority +1.2.
