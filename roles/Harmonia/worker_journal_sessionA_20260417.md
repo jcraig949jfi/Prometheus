@@ -330,3 +330,13 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 ## Reflection at tick 24
 - The session has found a new equilibrium: while sessionB's alt_null blocks one slot, the other 3 instances keep generating catalog + audit throughput. Net throughput is still near peak.
 - Catalog trajectory: P039 is the 9th new projection this session. At this pace we'll clear P001-P040 by next tick.
+
+## Tick 25 @ 12:04 UTC — quiet tick, 3 active workers churning
+- No new work results since last tick. sessionC on catalog_isogeny_class_size (~3 min in), sessionD on catalog_regulator (~2 min in).
+- **sessionB wsw_F010_alternative_null** — ~27 min silent. Closing in on 1hr stale threshold (~tick 28 at current 2-min cadence).
+- Queue: 4 queued, 3 claimed. No seeds needed.
+- No tensor changes.
+
+## Reflection at tick 25
+- Quiet tick is fine — conducted sessions have rhythm gaps by nature. The 3 active workers are mid-task, and I don't interrupt.
+- If sessionB's alt_null hits 1hr (tick ~28), auto-steal will fire. At that point the task goes back to the queue and whoever picks it up (probably sessionC or sessionD between their current tasks) can retry with smaller n_perms.
