@@ -1,0 +1,39 @@
+{
+  "task_id": "wsw_F010_P052",
+  "instance": "Harmonia_M2_sessionC",
+  "started": "2026-04-17T11:08:33.777099+00:00",
+  "finished": "2026-04-17T11:12:56.218467+00:00",
+  "baseline_rho_raw": 0.23134915725487715,
+  "baseline_n_shared": 62,
+  "prior_task_baseline": {
+    "rho": 0.404,
+    "z": 4.07,
+    "n_shared": 71,
+    "source": "cartography/docs/wsw_F010_results.json (sessionC)"
+  },
+  "layer_1_prime_detrend": {
+    "nf_r2": 0.8852574528958926,
+    "nf_n": 21696,
+    "artin_r2": 0.8396506023154866,
+    "artin_n": 24778,
+    "note": "r2 = fraction of log(value) variance explained by prime features (n_distinct, total_exp, log_largest_prime, log_smallest_prime, is_prime, smoothness). High r2 means the side is heavily prime-structured; low r2 means log(value) has non-prime info."
+  },
+  "decontaminated_coupling": {
+    "rho": 0.2693694574443896,
+    "n_shared_labels": 62,
+    "null_mean": -0.0030213102112649913,
+    "null_std": 0.1509605398058619,
+    "z_score": 1.8043839006269735,
+    "p_perm": 0.08,
+    "n_perms": 200
+  },
+  "retention_ratio_vs_baseline": 1.1643416411827494,
+  "verdict": "0",
+  "verdict_rule": "+1 if |rho_decon| >= 0.20 AND z >= 3; -1 if |rho_decon| < 0.10; else 0",
+  "shape_summary": "F010 P052 microscope decontamination: baseline raw rho=0.231 -> prime-detrended rho=0.269 (z=1.80, n=62). retention=1.16. verdict=0.",
+  "notes": [
+    "microscope Layer 1 only (prime detrend). Layer 2 (small-int filter) applied pre-detrend via disc/cond > 1. Layer 3 (rank/fractional) deferred \u2014 Layer 1 alone is the conventional first-pass microscope.",
+    "z uses label-permutation null on NF side, N_PERMS=200.",
+    "This sharpens the F010 entry: if P052 verdict is +1, F010 graduates past the 96%-prime-mediated default and becomes stronger than most prior coupling findings."
+  ]
+}
