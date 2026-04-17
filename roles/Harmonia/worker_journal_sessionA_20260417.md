@@ -173,3 +173,20 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - The F010 negative result is actually **strong evidence for Pattern 20 as a real pattern**. We now have 4 independent anchors (F011, F013, F015, F010) where pooled-vs-stratified/preprocessed diverges. The methodology is the product.
 - Falsification-first epistemology kept us honest here: we nearly promoted F010 to robust_specimen after 5/5 projection survival at n=62. The larger-n run caught the artifact before we acted on it.
 - No robust_specimen tier yet. Good — no forced pieces.
+
+## Tick 14 @ 11:38 UTC — F010 P028 tentative, 4 merges complete, P035 approved
+- **sessionB wsw_F010_katz_sarnak** (completed 11:32, 6 seconds before sessionC bigsample) reported **Is_Even split at z=5.38** (rho=0.77 Is_Even=True n=56 vs rho=-0.05 Is_Even=False n=51). At face value: P028 resolves F010 like it resolves F011 — big parallel.
+- **BUT**: the split sits on the n=71 pooled that sessionC just showed is a Pattern-20 artifact. Timing meant sessionB didn't know. I flagged via ACKNOWLEDGMENT and seeded **wsw_F010_katz_sarnak_bigsample** @ -2.5 (decisive test: Is_Even split at per_degree=5000).
+- **Not writing P028 into F010 INVARIANCE this tick.** Tensor F010 description updated to note the tentative finding + pending bigsample verification.
+- If the Is_Even split survives at n>=100 per subset at per_degree=5000: F010 joins F011 as P028-resolved. MAJOR parallel.
+- If it also collapses: sessionB was seeing the same artifact sliced by parity. Still informative.
+- **Merge wave**: merge_P031 (sessionD, last tick), merge_P032 (sessionD, 11:34), merge_P034 (sessionB, 11:36), merge_P033 (sessionC, 11:39 — her first completed task post-mandate). **All 4 approved drafts merged.** Catalog now has P001-P034.
+- **P035 Kodaira draft** (sessionD catalog_kodaira): DERIVABLE-NOT-STORED — needs Tate-algorithm materialization to be usable. APPROVED with caveat; seeded merge_P035_kodaira. NOT auto-seeding materialize_kodaira_per_prime (Mnemosyne/Koios infra task, James should decide).
+- **Queue**: 6 queued, 2 active claims (sessionB wsw_F010_alternative_null + now sessionC post-merge). New seeds: wsw_F010_katz_sarnak_bigsample + merge_P035_kodaira.
+- **Specimens**: sessionA=2, sessionB=11, sessionD=11. sessionC's mandate adoption pending (may happen next tick now that she's finished merge_P033).
+- Falsification-first called the shot correctly twice today: F010 5/5 projections bigsample -> collapse caught, F010 Katz-Sarnak striking split -> bigsample followup before adoption.
+
+## Reflection at tick 14
+- Parallelism is working: while I processed F010 P028 tentativeness, the other 3 workers were merging P031-P034, drafting Kodaira, and picking up the F010 alternative null test — 4 merges + 1 new draft + 2 new followup claims this tick.
+- The "don't propagate early" discipline saved us from adding a P028:+2 to F010 that would need to be unwound if the bigsample collapses the split.
+- 35 results recorded across 4 instances in ~110 minutes of wall time.

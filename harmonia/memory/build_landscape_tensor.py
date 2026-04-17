@@ -64,7 +64,7 @@ FEATURES = [
     # ----- LIVE SPECIMENS (weak-but-survives) -----
     {"id": "F010", "label": "NF backbone via Galois-label",
      "tier": "live_specimen", "n_objects": 75,
-     "description": "Pattern-20 anchor. Raw pooled ρ=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to ρ=0.109 at per_degree=5000 (n=75) — the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated ρ=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. Borderline at current n; needs alternative null (block-shuffle within degree-class) to firm up. Still live: signal is in the 4% of couplings NOT prime-mediated."},
+     "description": "Pattern-20 anchor. Raw pooled ρ=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to ρ=0.109 at per_degree=5000 (n=75) — the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated ρ=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. sessionB wsw_F010_katz_sarnak (2026-04-17, per_degree=2000 n=71) reports Is_Even split z=5.38 (ρ=0.77 at Is_Even=True n=56; ρ=-0.05 at Is_Even=False n=51) — TENTATIVE: split sits on top of the Pattern-20-artifact pooled; needs bigsample verification (wsw_F010_katz_sarnak_bigsample queued). If the split holds at per_degree=5000, F010 is P028-resolved just like F011. Two parallel followups running: block-shuffle null (sessionB wsw_F010_alternative_null) + bigsample Katz-Sarnak."},
     {"id": "F011", "label": "GUE first-gap deficit (~38% unfolded, n=2M)",
      "tier": "live_specimen", "n_objects": 2009089,
      "description": "Unfolded first-gap variance ~0.110 vs GUE 0.178 = ~38% deficit at n=2,009,089 "

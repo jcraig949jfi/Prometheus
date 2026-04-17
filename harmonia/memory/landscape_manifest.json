@@ -5,7 +5,7 @@
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
     24,
-    22
+    23
   ],
   "tensor_encoding": {
     "-2": "projection provably collapses the feature (known artifact)",
@@ -55,7 +55,7 @@
       "label": "NF backbone via Galois-label",
       "tier": "live_specimen",
       "n_objects": 75,
-      "description": "Pattern-20 anchor. Raw pooled \u03c1=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to \u03c1=0.109 at per_degree=5000 (n=75) \u2014 the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated \u03c1=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. Borderline at current n; needs alternative null (block-shuffle within degree-class) to firm up. Still live: signal is in the 4% of couplings NOT prime-mediated."
+      "description": "Pattern-20 anchor. Raw pooled \u03c1=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to \u03c1=0.109 at per_degree=5000 (n=75) \u2014 the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated \u03c1=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. sessionB wsw_F010_katz_sarnak (2026-04-17, per_degree=2000 n=71) reports Is_Even split z=5.38 (\u03c1=0.77 at Is_Even=True n=56; \u03c1=-0.05 at Is_Even=False n=51) \u2014 TENTATIVE: split sits on top of the Pattern-20-artifact pooled; needs bigsample verification (wsw_F010_katz_sarnak_bigsample queued). If the split holds at per_degree=5000, F010 is P028-resolved just like F011. Two parallel followups running: block-shuffle null (sessionB wsw_F010_alternative_null) + bigsample Katz-Sarnak."
     },
     {
       "id": "F011",
@@ -316,6 +316,12 @@
       "label": "Mahler measure projection",
       "type": "feature_extraction",
       "description": "M(P) = |leading|\u00b7\u220f max(1, |root|). Maps any polynomial to its growth rate. Domain-agnostic \u2014 flattens distinction between different domain polynomials."
+    },
+    {
+      "id": "P034",
+      "label": "AlignmentCoupling (rank-based extremity coupling)",
+      "type": "feature_distribution",
+      "description": "Rank-based (quantile) coupling scorer with extremity weighting and sign-agreement term. Megethos-robust BY CONSTRUCTION (quantile transform kills magnitude). Learns an interaction matrix per domain pair at init via 5-shuffle 2\u03c3 filter. Sigmoid-normalized output. Complements P001 (raw cosine) and P002 (kurtosis-extended cosine); does NOT replace either. Code: harmonia/src/coupling.py:AlignmentCoupling (lines 182-298)."
     }
   ],
   "invariance_matrix_dict": {
