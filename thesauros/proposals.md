@@ -228,9 +228,86 @@ CREATE INDEX idx_obj_zeros_rank ON zeros.object_zeros(analytic_rank);
 
 Load from `bsd_joined` (2.48M EC L-functions) by parsing the comma-separated `positive_zeros` text field. Expected ~100× scope expansion vs the current 120K rows; arbitrary zero count (not capped at 20); no NULL padding.
 
-**Follow-up:** Audit `zeros.dirichlet_zeros` (184,830 rows) and `zeros.object_zeros_ext` (17,313 rows) for the same format — likely same DuckDB provenance, same corruption pattern.
+**Follow-up audit (2026-04-16):** `zeros.dirichlet_zeros` and `zeros.object_zeros_ext` inspected. Both carry the same disease with different parameters. Full decoding below.
 
-**Retention:** keep `object_zeros_corrupt_20260416` for 30 days as a forensic reference, then drop.
+---
+
+#### Audit result: `zeros.dirichlet_zeros` (184,830 rows, length 24 — CORRUPT)
+
+Identical 24-slot format as `object_zeros`. All rows have exactly 20 real zeros + 4 metadata cells. No NULL padding (always 20 stored).
+
+| Pos | Decoded meaning | Evidence |
+|-----|------|----------|
+| 1–20 | real L-function zeros (monotone increasing) | all 184,830 rows break monotonicity at pos 20→21 |
+| 21 | constant `1.0` | 184,830 / 184,830 rows |
+| 22 | constant `0.0` | 184,830 / 184,830 rows |
+| 23 | constant `1.0` | 184,830 / 184,830 rows — could be `degree` (all Dirichlet L-functions have degree 1) |
+| 24 | `ln(conductor)` | 184,829 / 184,830 rows — exact match to 1e-9 tolerance (1 numerical edge case) |
+
+`ln(conductor)` at pos 24 is the analytic-height normalization constant (used for unfolding zeros to mean-spacing 1). So the DuckDB source was storing a precomputed cache slot alongside the zeros — reasonable as a computation cache, disastrous as "zeros".
+
+**Contamination risk:** any consumer of `dirichlet_zeros.zeros_vector` with `array_length(vec)` as the zero count picks up 4 metadata cells. Mean/variance calculations are silently biased (pos 24 = ln(N) ranges 0–30, dominates the tail).
+
+#### Audit result: `zeros.object_zeros_ext` (17,313 rows, length 40 — CORRUPT, worse)
+
+**Length 40** (not 24), different padding convention — pads with `0.0` instead of NULL.
+
+| Pos | Decoded meaning | Evidence |
+|-----|------|----------|
+| 1..n_zeros_stored | real zeros (variable, 10–29) | monotone on valid range |
+| (n_zeros_stored+1)..36 | **padded with `0.0`** | silent — downstream mean/sum gets poisoned without NULL hint |
+| 37 | constant `1.0` | 17,313 / 17,313 — possibly root_number normalization |
+| 38 | `rank` | 17,313 / 17,313 — 100% match with `rank` column (distribution: 8811 rank-0, 7913 rank-1, 589 rank-2) |
+| 39 | constant `2.0` | 17,313 / 17,313 — degree (all EC L-functions have degree 2) |
+| 40 | `ln(conductor)` | 17,313 / 17,313 — exact match |
+
+**The 0.0-padding is worse than the NULL-padding in `object_zeros`.** A downstream script computing `numpy.mean(zeros_vector)` over `object_zeros_ext` silently averages in 14+ fabricated zeros-at-zero per row. NULL at least fails or warns; 0.0 just produces quietly-wrong answers. Any histogram or spacing statistic computed over `object_zeros_ext` without explicit `[:n_zeros_stored]` slicing is contaminated.
+
+---
+
+**Unified rebuild plan (now covers all 3 tables):**
+
+All three rebuild from `lfunc.positive_zeros` (authoritative, variable-length TEXT column). Target schema:
+
+```sql
+ALTER TABLE zeros.object_zeros     RENAME TO object_zeros_corrupt_20260416;
+ALTER TABLE zeros.dirichlet_zeros  RENAME TO dirichlet_zeros_corrupt_20260416;
+ALTER TABLE zeros.object_zeros_ext RENAME TO object_zeros_ext_corrupt_20260416;
+
+CREATE TABLE zeros.object_zeros (
+    object_id       BIGINT REFERENCES xref.object_registry,
+    lmfdb_label     TEXT,
+    lfunc_label     TEXT,
+    zeros           DOUBLE PRECISION[],   -- variable length, no padding, no metadata
+    n_zeros         SMALLINT GENERATED ALWAYS AS (COALESCE(array_length(zeros,1),0)) STORED,
+    root_number     DOUBLE PRECISION,
+    analytic_rank   SMALLINT,
+    conductor       BIGINT,
+    source          TEXT DEFAULT 'lfunc.positive_zeros@2026-04-16',
+    PRIMARY KEY (object_id)
+);
+CREATE TABLE zeros.dirichlet_zeros (LIKE zeros.object_zeros INCLUDING ALL);
+CREATE TABLE zeros.object_zeros_ext (LIKE zeros.object_zeros INCLUDING ALL);
+
+CREATE INDEX idx_obj_zeros_cond  ON zeros.object_zeros(conductor);
+CREATE INDEX idx_obj_zeros_rank  ON zeros.object_zeros(analytic_rank);
+CREATE INDEX idx_dir_zeros_cond  ON zeros.dirichlet_zeros(conductor);
+CREATE INDEX idx_ext_zeros_cond  ON zeros.object_zeros_ext(conductor);
+```
+
+Loaders:
+- `object_zeros`: join on `bsd_joined` (2.48M EC L-functions) — ~20× scope expansion vs current 120K.
+- `dirichlet_zeros`: filter `lfunc_lfunctions WHERE degree='1'` — Dirichlet characters.
+- `object_zeros_ext`: the "extended-zero-count" EC subset; source rows had up to 29 zeros vs 20 in `object_zeros`. Pull from `lfunc_lfunctions` where the stored `positive_zeros` string has >20 comma-separated entries.
+
+**Scope note:** with `lfunc.positive_zeros` as the source, the "ext" / "base" split becomes meaningless — all L-functions get whatever count of zeros the authoritative source has. Recommend folding `object_zeros_ext` into `object_zeros` after rebuild; keep it as a schema only if the downstream code still expects the split.
+
+**Retention:** keep all three `*_corrupt_20260416` tables for 30 days as forensic references, then drop.
+
+**Downstream audit checklist** (before rebuild goes live):
+- [ ] Grep for `zeros_vector` in all agent code; confirm which scripts slice to `[:n_zeros_stored]` vs treat as pure zeros.
+- [ ] Any finding that touched `zeros.object_zeros_ext.zeros_vector` needs re-audit — the 0.0-padding contamination is silent.
+- [ ] `prometheus_fire.agora.decisions` check: any decision referencing zero statistics from these tables needs a provenance note.
 
 ---
 
