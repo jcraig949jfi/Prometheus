@@ -384,6 +384,64 @@ class TensorExecutor:
         self._killed_prefilter = 0
         self._killed_megethos = 0
 
+    def _f0_object_permutation_null(self, hypothesis, a, b, real_coupling, n_perms=50):
+        """F0: Object-identity permutation null.
+
+        Tests whether the coupling depends on WHICH objects are sampled.
+        Resample feature_a from domain_a with fresh random objects, keeping
+        the same feature_b sample. If coupling is unchanged, it's a
+        distributional artifact (feature geometry, not object pairing).
+
+        This is the test that killed ALL explorer survivors in session 3.
+        It catches what the existing F1 (shuffle-b) cannot: distributional
+        coupling that survives permutation of paired values but is not
+        specific to any particular set of objects.
+
+        Returns: (killed: bool, z_score: float, note: str)
+        """
+        slice_a_full = self.tensor.get_slice(hypothesis.domain_a, hypothesis.feature_a)
+        if slice_a_full is None:
+            return False, 0.0, "no_data"
+
+        valid_a_full = slice_a_full[np.isfinite(slice_a_full)]
+        if len(valid_a_full) < 40:
+            return False, 0.0, "too_few_objects"
+
+        real_val = real_coupling.get("value", 0.0)
+        if np.isnan(real_val):
+            return True, 0.0, "coupling_nan"
+
+        # Resample domain_a objects and recompute coupling
+        null_values = []
+        n = min(len(b), hypothesis.resolution)
+        for _ in range(n_perms):
+            resample_a = self.rng.choice(valid_a_full, n, replace=False)
+            resample_b = self.rng.choice(
+                self.tensor.get_slice(hypothesis.domain_b, hypothesis.feature_b)[
+                    np.isfinite(self.tensor.get_slice(hypothesis.domain_b, hypothesis.feature_b))
+                ],
+                n, replace=False,
+            )
+            null_c = _compute_coupling(resample_a, resample_b, hypothesis.coupling)
+            val = null_c.get("value", float("nan"))
+            if not np.isnan(val):
+                null_values.append(val)
+
+        if len(null_values) < 10:
+            return False, 0.0, "insufficient_null"
+
+        null_arr = np.array(null_values)
+        null_std = np.std(null_arr)
+        if null_std < 1e-10:
+            # Zero variance in null = coupling is deterministic = distributional
+            return True, 0.0, "null_zero_variance"
+
+        z = (real_val - np.mean(null_arr)) / null_std
+        # Kill if z < 2: real coupling is indistinguishable from resampled coupling
+        if abs(z) < 2.0:
+            return True, float(z), f"z={z:.2f},null_mean={np.mean(null_arr):.4f}"
+        return False, float(z), f"z={z:.2f},SURVIVES"
+
     def execute(self, hypothesis):
         """Execute a hypothesis against the tensor. Returns result dict."""
         result = {
@@ -433,10 +491,24 @@ class TensorExecutor:
                 result["notes"] = "Coupling computation returned NaN"
                 return result
 
-            # --- Permutation null (adaptive: short-circuit if clearly non-significant) ---
+            # --- F0: Object-identity permutation null (NEW — the honest test) ---
+            f0_killed, f0_z, f0_note = self._f0_object_permutation_null(
+                hypothesis, a, b, coupling
+            )
+            if f0_killed:
+                result["coupling"] = coupling
+                result["z_score"] = f0_z
+                result["status"] = "executed"
+                result["survival_depth"] = 0
+                result["kill_test"] = "F0_object_permutation"
+                result["notes"] = f"Object-identity null: {f0_note}"
+                self._executed += 1
+                return result
+
+            # --- F1: Paired permutation null (existing — tests pairing significance) ---
             null_values = []
             n_perms_max = 200
-            n_perms_early = 50  # check after this many
+            n_perms_early = 50
             real_val = coupling["value"]
 
             for i in range(n_perms_max):
@@ -446,7 +518,6 @@ class TensorExecutor:
                 if not np.isnan(null_c.get("value", float("nan"))):
                     null_values.append(null_c["value"])
 
-                # Early exit: if after 50 perms, z < 1.5, this won't reach z > 2
                 if i == n_perms_early - 1 and null_values:
                     _nv = np.array(null_values)
                     _std = np.std(_nv)
@@ -474,12 +545,15 @@ class TensorExecutor:
                 a, b, hypothesis, coupling, z_score, p_perm
             )
 
+            # Offset depth by 1 for F0 survival
+            depth += 1
+
             result["survival_depth"] = depth
             result["kill_test"] = kill_test
 
             if not kill_test:
                 result["status"] = "survived"
-                result["notes"] = f"Survived {depth} tests: {notes}"
+                result["notes"] = f"Survived {depth} tests (F0+F1-F25): {notes}"
             else:
                 result["notes"] = f"Killed at depth {depth} by {kill_test}: {notes}"
 
