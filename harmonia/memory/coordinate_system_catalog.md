@@ -1229,6 +1229,92 @@ For **elliptic curves** (via `lfunc_lfunctions` with `origin LIKE 'EllipticCurve
 
 ---
 
+## P039 — Galois ℓ-adic image stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task `catalog_galois_l_image`). Reviewed and approved by Harmonia_M2_sessionA. Merged by Harmonia_M2_sessionC via `merge_P039_galois_l_image`.
+
+> **CM-CONVENTION WARNING (read before using):** LMFDB's `nonmax_primes` column flags images as "max" relative to the *expected* image — full `GL_2(Z_ℓ)` for non-CM curves, but the **normalizer of a (non-split) Cartan for CM curves**. Consequently, CM rows can appear with `nonmax_primes = '[]'` despite being strictly below full `GL_2`. Pooled analyses without first stratifying by `P025 cm` silently mix two distinct "maximality" conventions. Any claim about "Galois image maximality" on CM rows must disambiguate CM-max (full Cartan) from absolute-max (full `GL_2`).
+
+**Code:** Several LMFDB columns on `ec_curvedata` encode aspects of the Galois image:
+- `nonmax_primes` (text, list of ℓ where image is non-maximal)
+- `nonmax_rad` (radical of the nonmax-prime list)
+- `elladic_images` (per-ℓ subgroup labels in `GL_2(Z_ℓ)`)
+- `modell_images` (per-ℓ mod-ℓ subgroup labels)
+- `adelic_level`, `adelic_index`, `adelic_genus` (adelic-image invariants)
+
+Use `nonmax_primes = '[]'` as the boolean-level filter for "fully surjective image at every prime"; use `elladic_images` / `modell_images` for per-prime fine classification; use `adelic_index` for the global adelic refinement.
+**Type:** stratification (Galois-representation image axis; carries Serre-openness and exceptional-prime structure)
+
+**What it resolves:**
+- **Serre's Open Image Theorem** (Serre 1972): for a non-CM elliptic curve over Q, the image of `ρ_ℓ: Gal(Q̄/Q) → GL_2(Z_ℓ)` is open for every ℓ and surjective for all but finitely many ℓ (the *exceptional primes*, listed in `nonmax_primes`). P039 is the direct stratification of that classification.
+- **Exceptional-prime structure.** The finite set of primes where the image drops below full `GL_2(Z_ℓ)` encodes the arithmetic of the specific curve (rational torsion, isogenies of prescribed degree, rational cyclic subgroups). The union `nonmax_primes ∪ {primes dividing torsion order}` is bounded in terms of the conductor (Masser-Wustholz-type bounds).
+- **CM vs non-CM Galois-image signature.** CM curves have `ρ_ℓ` contained in the normalizer of a Cartan; interpretation requires the CM-convention caveat above.
+- **Congruence-subgroup structure.** `adelic_level` is the level of `Γ ≤ GL_2(Ẑ)` capturing the adelic image; `adelic_index` is `[GL_2(Ẑ) : Γ]`; `adelic_genus` is the genus of the corresponding modular curve. Joint `adelic_level × adelic_index × adelic_genus` is a finer projection than `nonmax_primes` alone.
+- **Isogeny-class signature.** Curves sharing an isogeny class typically share `adelic_index` up to specific isogeny structure; P039 cross-references with isogeny and torsion via shared lattice constraints.
+
+**What it collapses:**
+- **Within-image fine structure.** Two curves with identical `elladic_images` but different conductors, ranks, or torsion collapse in P039. Stratify jointly with P020 / P023 / P024 for finer resolution.
+- **Per-prime-independent information.** The `nonmax_primes = '[]'` boolean collapses per-prime detail; use `elladic_images` per-ℓ entries when the specific exceptional-prime identity matters.
+- **CM-specific versus non-CM cells.** Interpretation of `nonmax_primes` differs between regimes (see CM-convention warning); pooling without `P025 cm` stratification mixes conventions.
+
+**Tautology profile:**
+- **P039 ↔ P024 torsion.** Rational ℓ-torsion forces the mod-ℓ image to stabilize a line, making it non-surjective on `GL_2(F_ℓ)`. Any curve with rational 2-torsion has `2 ∈ nonmax_primes`; similarly for 3, 5, 7. Theorems, not findings. Joint `P039 × P024` must factor out torsion-induced non-maximality before claiming structural signal.
+- **P039 ↔ P025 CM.** CM curves' image is in the normalizer of a Cartan; the LMFDB "max relative to expected image" convention creates forbidden-cell-like structure (CM rows with "fully surjective" label mean "fills Cartan," not "fills GL_2"). Similar to `P033 × P031` asymmetric tautology.
+- **P039 ↔ Isogeny degrees (P040).** Image is non-maximal at ℓ exactly when the curve has a rational cyclic subgroup of order divisible by ℓ. So `nonmax_primes` is nearly equivalent to the set of primes dividing `isogeny_degrees`. Joint `P039 × P040` double-counts this identity.
+- **Adelic-invariant bundle** (`adelic_level, adelic_index, adelic_genus`). For a specific `Γ`, these three are joint invariants computable from `Γ`. Independent use is triple-counting.
+
+**Stratum-count summary (live `ec_curvedata` queries, 2026-04-17):**
+- **Fully surjective at every prime** (`nonmax_primes = '[]'`): 2,217,470 rows (58.0%)
+- **Has at least one exceptional prime:** 1,606,902 rows (42.0%)
+- Top `adelic_level` values: 6 (26,853), 120 (16,615), 840 (16,466), 24 (14,270), 168 (12,862), 8 (12,541). Heavy populations at `{6, 24, 120}` reflect rational 2-, 3-, 2×3-torsion (torsion-forced non-maximality at small primes).
+- Top `adelic_index`: 2 (2,223,342 — **dominant**), 12 (836,392), 48 (411,166), 16 (195,058), 192 (48,164). The `adelic_index = 2` cluster (58%) is the "almost-surjective with a single global twist" cohort — **Pattern 4 / Pattern 20 trap**.
+- CM rows on the surjective-image subset: ~5,938 of 2,217,470 are CM with empty `nonmax_primes` — illustrates the CM-convention issue.
+
+**Small-n strata discipline:**
+- Top two `adelic_index` values cover 80%+ of the dataset; `n ≥ 100` is easy at the top and hard below.
+- Per-ℓ subgroup labels have long tails (many rare labels at small ℓ like `2Cs, 2B, 2Cn, 3B`); rare-label claims need explicit coverage reporting.
+- **Mazur-Kenku-Momose-Parent bound:** for non-CM curves over Q, the set of primes `ℓ` where some mod-ℓ image is non-surjective is contained in `{2, 3, 5, 7, 11, 13, 17, 37}`. Any `cm=0` row with `ℓ > 37` in `nonmax_primes` is a data-integrity violation.
+
+**Calibration anchors:**
+- **Serre's Open Image Theorem** (1972): for non-CM EC over Q, image is open in `GL_2(Z_ℓ)` for every ℓ and surjective for almost all ℓ. Proved.
+- **Mazur-Kenku-Momose-Parent exceptional-prime bound**: non-CM mod-ℓ image is surjective for ℓ > 37 (sharper for ℓ > 13 except known exceptions at ℓ = 17, 37). Rows with cm=0 and any `ℓ > 37` in `nonmax_primes` must be audited.
+- **Rational torsion → mod-ℓ non-maximality for ℓ | torsion order**: proved / textbook. Cross-check: every prime dividing `torsion` should appear in `nonmax_primes`. Candidate data-quality anchor (F009).
+- **Adelic genus ≥ 0** (trivial but fast).
+
+**Known failure modes:**
+- **CM convention ambiguity** (see top warning). Pooled CM / non-CM ambiguity is the largest hazard.
+- **Torsion-induced non-maximality reported as signal.** Non-CM + non-trivial-torsion curves have predictably non-surjective mod-ℓ images at torsion-order primes; a "signal" that "curves with non-empty `nonmax_primes` have property X" is vulnerable to the `P039 × P024` tautology.
+- **Isogeny class vs individual curve.** Curves in the same isogeny class share most Galois-image data but not all (rational cyclic subgroups can be created/destroyed under isogeny). Using P039 at isogeny-class level vs individual-curve level gives different partitions.
+- **Pooled `adelic_index = 2` dominance.** 58% of the dataset sits in this bucket; any pooled "adelic index signal" is a Pattern 4 trap with P039 hidden inside the pool.
+
+**When to use:**
+- **Sanity-check isogeny-adjacent claims** — `nonmax_primes = '[]'` is the cleanest "Galois-generic" flag.
+- **Refinement of CM stratification** — P039 distinguishes CM-discriminant Galois-image signatures; P025 alone only gives the CM discriminant.
+- **Selmer-group / p-descent calibration** — for ℓ ∈ `nonmax_primes`, mod-p Selmer analysis is non-standard; P039 filters generic cases where Selmer-rank bounds apply unconditionally.
+- **Galois-representation-feature cross-specimen tests** — any analysis involving `elladic_images` labels should stratify by P039.
+
+**When NOT to use:**
+- **For CM rows without disambiguating the "max" convention** — report ambiguous.
+- **Jointly with P024 without accounting for the torsion-induced-non-maximality tautology** — you'll double-count the torsion axis.
+- **Pooled across `adelic_index` classes without reporting the dominant `index = 2` share** — Pattern 4 trap.
+- **For ℓ > 37 on non-CM rows without data-integrity audit** — treat as data-quality alarm before feature claim.
+
+**Related projections:**
+- **P024 torsion:** partial tautology via rational-torsion → mod-ℓ non-maximality.
+- **P025 CM:** interpretation-conflating aliasing (CM convention vs non-CM convention).
+- **P031 Frobenius-Schur / P033 Is_Even:** Galois-image-determines-Sato-Tate on Artin reps; P039 is the direct LMFDB-column companion on the EC side.
+- **P037 Sato-Tate group:** for EC, P039 determines P037 (image type determines the Lie group Frobenius traces live in). Joint use is nested.
+- **P040 Isogeny class size:** shared cyclic-subgroup information; nearly identity at the per-prime level (`nonmax_primes ≈ primes | isogeny_degrees`).
+
+**Follow-ups this entry motivates:**
+1. `audit_nonmax_primes_vs_torsion` — verify every prime dividing `torsion` appears in `nonmax_primes` across all 3.82M EC. Candidate calibration anchor F009.
+2. `audit_mazur_kenku_bound` — flag any non-CM row with `ℓ > 37` in `nonmax_primes`.
+3. `clarify_cm_max_convention` — short doc on LMFDB's "max" convention for CM rows; add to Section 8 tautology table or sister entry.
+4. `wsw_F010_P039` — F010 NF backbone resolved under Artin `Is_Even` (P033); does the EC partner resolve under P039? CM-dominated coupling = trivial aliasing; non-CM with specific `adelic_index` = structural.
+5. `catalog_adelic_invariants` — if `adelic_level × adelic_index × adelic_genus` deserves its own sister entry, file it; else note the triple as a P039 sub-projection.
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
