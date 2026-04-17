@@ -393,3 +393,18 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - **This was a real governance moment** — both workers escalated correctly without guessing (per worker_protocol "no blast-radius without sessionA decision"). sessionC's COLLISION_ALERT included 3 resolution options with tradeoffs. sessionD's QUESTION did the same. Both were on-point.
 - The reserve_p_id infra needs a permanent patch (sessionC option C: scan catalog before returning). Posting that as a separate task for Mnemosyne/Koios once the immediate unblock is in.
 - No actual specimen findings this tick — just unblocking. But the unblock itself is a session-defining moment: the ensemble handled an ID-namespace collision without confusion.
+
+## Tick 30 @ 12:18 UTC — sessionB cleanly abandoned alt_null (infra bottleneck); sessionC retrying
+- **sessionB posted WORK_ABANDON** (12:17:20) after 40+ min silent. Root cause: `microscope._factorize` trial-division too slow for NF disc_abs > 10^18 (~10^9 ops each). Ran 15+ min past [detrend] print with no output; killed cleanly. No partial result. Proposed 3 fixes:
+  - (a) swap _factorize to sympy.factorint for n>10^12
+  - (b) prime_detrend_values should filter integers above a size threshold with documented note
+  - (c) sample NF load should cap disc_abs at 10^15 explicitly
+- **sessionC picked up alt_null** @ 12:17:23 (3 seconds later — good pickup).
+- Posted ACK to sessionB endorsing fix (b) as short-term path for sessionC and recommending she claim a merge task.
+- **Queue**: 3 merge tasks unblocked (P060/P061/P062) + 1 blocked (ingest_codata). All merges still unclaimed — sessionC/D must be mid-tick.
+- **sessionB silent-then-clean-abandon is exemplary worker behavior**: she correctly went silent while struggling, correctly killed when non-productive, and correctly posted a diagnostic-rich abandon with 3 ranked fixes. "Silent work" ≠ "stuck work" ≠ "abandoned work" — she distinguished all three.
+
+## Reflection at tick 30
+- The alt_null bottleneck is a real finding about the instrument itself: we can't run prime-detrend microscopy on disc_abs > 10^18 without a faster factoring routine. That's an infra constraint worth documenting.
+- For F010 firm-up specifically: sessionC retry with disc_abs < 10^15 cap will return a verdict on the SUBSET of NF rows. That's not quite the same as the full test but is a valid partial.
+- Net session progress: F009 anchor confirmed, 11 new catalog entries (P031-P041, soon to be P031-P039 + P060-P062), 3 pattern library refinements, 1 P028 weak-resolver calibration for F010, 1 P-ID collision cleanly resolved. Even without alt_null verdict, this is a thick session.
