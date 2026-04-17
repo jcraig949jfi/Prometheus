@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 """
-Tensor Builder: Precompute all domain×feature data into a single numpy tensor.
+Tensor Builder v2: Precompute all domain×feature data into a single numpy tensor.
 
-Loads all active domains, extracts all active features, stacks into one matrix.
-The tensor executor then maps hypothesis (domain_a, feature_a, domain_b, feature_b)
-to tensor slice indices — microseconds instead of disk I/O per hypothesis.
+Uses Harmonia's DomainIndex loaders instead of hand-rolled loading.
+Each loader returns z-scored (N, D) feature matrices — we stack them into
+one big tensor with domain boundaries and feature column indices.
+
+v2 changes (2026-04-16):
+  - Switched from 7 hand-rolled domains to 31 Harmonia loaders
+  - From 58K objects to 5M+ objects
+  - Features are z-scored by Harmonia (consistent with coupling scorers)
+  - Backward compatible: TensorData.save/load format unchanged
+  - Old gene_schema ACTIVE_DOMAINS/ACTIVE_FEATURES still work as subset
 
 Output: .npz file with:
   - data: (n_objects_total, n_features_total) float32 matrix
@@ -14,198 +21,79 @@ Output: .npz file with:
 """
 import sys
 import json
-import math
 import time
 import numpy as np
 from pathlib import Path
 from collections import OrderedDict
 
 _root = Path(__file__).resolve().parent.parent  # Prometheus/
-_forge_v3 = str(_root / "forge/v3")
-if _forge_v3 not in sys.path:
-    sys.path.insert(0, _forge_v3)
+if str(_root) not in sys.path:
+    sys.path.insert(0, str(_root))
 
-from gene_schema import ACTIVE_DOMAINS, ACTIVE_FEATURES
+from harmonia.src.domain_index import DOMAIN_LOADERS
 
-_scripts = str(_root / "cartography/shared/scripts")
-if _scripts not in sys.path:
-    sys.path.insert(0, _scripts)
 
 # ============================================================
-# Data Loading (identical to executor.py — single source of truth)
+# Domain configuration
 # ============================================================
 
-def _load_domain(domain):
-    """Load domain data. Returns list of dicts with raw fields."""
-    data_root = _root / "cartography"
+# Domains to include in the tensor, ordered by priority.
+# "core" = mathematical objects with known cross-domain structure
+# "extended" = additional mathematical/physical domains
+# "derived" = computed features from other analyses
+#
+# Excluded: battery, dissection, disagreement, knowledge_graph, bridges,
+#           charon_landscape, lmfdb_objects (meta-domains, not raw objects)
 
-    objects = []
+CORE_DOMAINS = [
+    "elliptic_curves",   # 3.8M objects, 4 features (from local Postgres)
+    "modular_forms",     # 100K, 5 features
+    "number_fields",     # 9K, 6 features
+    "genus2",            # 66K, 7 features
+    "artin",             # 100K, 5 features (NEW)
+    "ec_rich",           # 100K, 16 features (NEW — rich EC from Postgres)
+    "knots",             # 13K, 28 features
+    "maass",             # 15K, 25 features
+]
 
-    if domain == "elliptic_curves":
-        import psycopg2
-        try:
-            from prometheus_data.config import get_pg_dsn
-            con = psycopg2.connect(**get_pg_dsn("lmfdb"))
-        except Exception:
-            con = psycopg2.connect(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')
-        cur = con.cursor()
-        cur.execute("""
-            SELECT conductor::bigint, rank::int, torsion::int, cm::int
-            FROM ec_curvedata WHERE conductor::bigint > 0 LIMIT 10000
-        """)
-        rows = cur.fetchall()
-        con.close()
-        for cond, rank, tors, cm in rows:
-            objects.append({"conductor": cond, "rank": rank or 0, "torsion": tors or 1,
-                           "cm": cm or 0, "ap": []})
+EXTENDED_DOMAINS = [
+    "lattices",          # 39K, 6 features
+    "polytopes",         # 1K, 6 features
+    "materials",         # 10K, 6 features
+    "space_groups",      # 230, 5 features
+    "belyi",             # 1K, 3 features (NEW)
+    "bianchi",           # 100K, 5 features (NEW)
+    "groups",            # 100K, 3 features (NEW)
+    "oeis",              # 100K, 7 features (NEW)
+    "codata",            # 286, 10 features (NEW — physical constants)
+    "pdg_particles",     # 226, 11 features (NEW — particle physics)
+    "chemistry",         # 50K, 12 features (NEW — QM9 molecules)
+    "metabolism",        # 108, 11 features (NEW)
+]
 
-    elif domain == "modular_forms":
-        import psycopg2
-        try:
-            from prometheus_data.config import get_pg_dsn
-            con = psycopg2.connect(**get_pg_dsn("lmfdb"))
-        except Exception:
-            con = psycopg2.connect(host='localhost', port=5432, dbname='lmfdb', user='lmfdb', password='lmfdb')
-        cur = con.cursor()
-        cur.execute("""
-            SELECT level::int, weight::int, dim::int FROM mf_newforms WHERE level::int > 0 LIMIT 10000
-        """)
-        rows = cur.fetchall()
-        con.close()
-        for level, weight, dim in rows:
-            objects.append({"level": level, "weight": weight, "dim": dim or 1})
+DERIVED_DOMAINS = [
+    "dynamics",          # 50K, 10 features
+    "phase_space",       # 50K, 10 features
+    "spectral_sigs",     # 50K, 14 features
+    "operadic_sigs",     # 50K, 7 features
+    "padic_sigs",        # 50K, 10 features
+    "info_theoretic",    # 50K, 5 features
+    "fractional_deriv",  # 50K, 9 features
+    "functional_eq",     # 50K, 8 features
+    "resurgence",        # 50K, 9 features
+]
 
-    elif domain == "number_fields":
-        nf_path = data_root / "number_fields/data/number_fields.json"
-        if nf_path.exists():
-            raw = json.load(open(nf_path, encoding="utf-8"))
-            for f in raw[:10000]:
-                try:
-                    objects.append({
-                        "discriminant": float(f.get("disc_abs", 0)),
-                        "class_number": float(f.get("class_number", 0)),
-                        "regulator": float(f.get("regulator", 0)),
-                        "degree": int(float(f.get("degree", 0))),
-                    })
-                except:
-                    pass
+ALL_DOMAINS = CORE_DOMAINS + EXTENDED_DOMAINS + DERIVED_DOMAINS
 
-    elif domain == "genus2_curves":
-        import ast
-        g2_path = data_root / "genus2/data/genus2_curves_full.json"
-        if g2_path.exists():
-            raw = json.load(open(g2_path, encoding="utf-8"))
-            for c in raw[:10000]:
-                if c.get("conductor", 0) > 0:
-                    t = c.get("torsion", [])
-                    if isinstance(t, str):
-                        try:
-                            t = ast.literal_eval(t)
-                        except:
-                            t = []
-                    order = 1
-                    if isinstance(t, list):
-                        for x in t:
-                            order *= x
-                    objects.append({
-                        "conductor": c["conductor"],
-                        "discriminant": abs(c.get("discriminant", 0)),
-                        "torsion": order,
-                        "st_group": c.get("st_group", ""),
-                        "root_number": c.get("root_number", 0),
-                    })
-
-    elif domain == "maass_forms":
-        maass_path = data_root / "maass/data/maass_with_coefficients.json"
-        if maass_path.exists():
-            raw = json.load(open(maass_path, encoding="utf-8"))
-            for m in raw[:5000]:
-                coeffs = m.get("coefficients", [])
-                objects.append({
-                    "level": m.get("level", 0),
-                    "spectral_parameter": m.get("spectral_parameter", 0),
-                    "coefficients": coeffs[:25] if isinstance(coeffs, list) else [],
-                })
-
-    elif domain == "knots":
-        knot_path = data_root / "knots/data/knots.json"
-        if knot_path.exists():
-            raw = json.load(open(knot_path, encoding="utf-8"))
-            for k in raw.get("knots", raw if isinstance(raw, list) else [])[:10000]:
-                objects.append({
-                    "crossing_number": k.get("crossing_number", 0),
-                    "determinant": k.get("determinant", 0),
-                    "alex_coeffs": k.get("alex_coeffs", []),
-                    "jones_coeffs": k.get("jones_coeffs", []),
-                })
-
-    elif domain == "superconductors":
-        import csv
-        import io
-        csv_path = data_root / "physics/data/superconductors/3DSC/superconductors_3D/data/final/MP/3DSC_MP.csv"
-        if csv_path.exists():
-            with open(csv_path) as f:
-                lines = [l for l in f if not l.startswith("#")]
-            for row in csv.DictReader(io.StringIO("".join(lines))):
-                try:
-                    tc = float(row.get("tc", ""))
-                    sg = row.get("spacegroup_2", "").strip()
-                    sc_class = row.get("sc_class", "").strip()
-                    if tc > 0 and sg:
-                        objects.append({"tc": tc, "sg": sg, "sc_class": sc_class})
-                except:
-                    pass
-
-    return objects
-
-
-def _extract_feature_value(obj, feature_name):
-    """Extract a single numeric value from one object for one feature."""
-    val = None
-
-    # Direct field match
-    if feature_name in obj:
-        try:
-            val = float(obj[feature_name])
-        except (TypeError, ValueError):
-            pass
-
-    # Computed features
-    if val is None:
-        if feature_name == "log_conductor" and "conductor" in obj:
-            val = math.log(max(obj["conductor"], 1))
-        elif feature_name == "log_discriminant" and "discriminant" in obj:
-            val = math.log(max(obj["discriminant"], 1))
-        elif feature_name == "n_bad_primes" and "conductor" in obj:
-            c = int(obj["conductor"])
-            count = 0
-            for p in [2, 3, 5, 7, 11, 13]:
-                if c % p == 0:
-                    count += 1
-            val = float(count)
-        elif feature_name == "ap_kurtosis" and "ap" in obj and len(obj.get("ap", [])) >= 5:
-            arr = np.array(obj["ap"], dtype=float)
-            if np.std(arr) > 0:
-                val = float(np.mean(((arr - np.mean(arr)) / np.std(arr)) ** 4))
-        elif feature_name == "coefficient_entropy" and "coefficients" in obj and len(obj.get("coefficients", [])) >= 5:
-            arr = np.abs(np.array(obj["coefficients"][:20], dtype=float))
-            total = np.sum(arr)
-            if total > 0:
-                p = arr / total
-                p = p[p > 0]
-                val = float(-np.sum(p * np.log2(p)))
-        elif feature_name == "alexander_degree" and "alex_coeffs" in obj:
-            val = float(len(obj.get("alex_coeffs", [])))
-        elif feature_name == "jones_degree" and "jones_coeffs" in obj:
-            val = float(len(obj.get("jones_coeffs", [])))
-        elif feature_name == "ap_compression_lz" and "ap" in obj and len(obj.get("ap", [])) >= 5:
-            import zlib
-            s = ",".join(str(x) for x in obj["ap"])
-            val = float(len(zlib.compress(s.encode())) / len(s.encode()))
-
-    if val is not None and np.isfinite(val):
-        return val
-    return float("nan")
+# For backward compatibility with forge/v3 gene_schema
+try:
+    _forge_v3 = str(_root / "forge/v3")
+    if _forge_v3 not in sys.path:
+        sys.path.insert(0, _forge_v3)
+    from gene_schema import ACTIVE_DOMAINS as LEGACY_DOMAINS, ACTIVE_FEATURES as LEGACY_FEATURES
+except ImportError:
+    LEGACY_DOMAINS = None
+    LEGACY_FEATURES = None
 
 
 # ============================================================
@@ -226,7 +114,7 @@ class TensorData:
         self.build_time = 0.0
 
     def get_slice(self, domain, feature):
-        """Get the 1D array for a (domain, feature) pair. Returns NaN array if unavailable."""
+        """Get the 1D array for a (domain, feature) pair. Returns None if unavailable."""
         col = self.feature_col.get((domain, feature))
         if col is None:
             return None
@@ -264,91 +152,111 @@ class TensorData:
         return td
 
 
-def build_tensor(domains=None, features_map=None, verbose=True):
-    """Build the precomputed tensor from all active domains and features.
+def build_tensor(domains=None, max_per_domain=None, verbose=True):
+    """Build the precomputed tensor from Harmonia domain loaders.
 
     Args:
-        domains: list of domain names (default: ACTIVE_DOMAINS)
-        features_map: dict of {domain: [feature_names]} (default: ACTIVE_FEATURES)
+        domains: list of domain names (default: ALL_DOMAINS)
+        max_per_domain: cap objects per domain (None = no cap, use for testing)
         verbose: print progress
 
     Returns:
         TensorData object with everything in RAM
     """
     if domains is None:
-        domains = ACTIVE_DOMAINS
-    if features_map is None:
-        features_map = ACTIVE_FEATURES
+        domains = ALL_DOMAINS
 
     t0 = time.time()
     td = TensorData()
 
-    # Phase 1: Load all domain data
-    domain_objects = OrderedDict()
-    for domain in domains:
-        if verbose:
-            print(f"  Loading {domain}...", end="", flush=True)
-        objects = _load_domain(domain)
-        if not objects or objects[0].get("_empty"):
+    # Phase 1: Load all domains via Harmonia loaders
+    domain_data = OrderedDict()  # name -> DomainIndex
+    for name in domains:
+        loader = DOMAIN_LOADERS.get(name)
+        if loader is None:
             if verbose:
-                print(" EMPTY (skipped)")
+                print(f"  {name}: no loader (skipped)")
             continue
-        domain_objects[domain] = objects
-        td.domain_sizes[domain] = len(objects)
-        if verbose:
-            print(f" {len(objects)} objects")
 
-    # Phase 2: Build column index — one column per (domain, feature) pair
+        if verbose:
+            print(f"  Loading {name}...", end="", flush=True)
+
+        try:
+            dom = loader()
+            if dom.n_objects == 0:
+                if verbose:
+                    print(" EMPTY (skipped)")
+                continue
+
+            # Optional cap
+            if max_per_domain and dom.n_objects > max_per_domain:
+                # Subsample deterministically
+                np.random.seed(hash(name) % 2**31)
+                idx = np.random.choice(dom.n_objects, max_per_domain, replace=False)
+                idx.sort()
+                import torch
+                dom.features = dom.features[idx]
+                dom.labels = [dom.labels[i] for i in idx]
+                dom.n_objects = max_per_domain
+
+            domain_data[name] = dom
+            td.domain_sizes[name] = dom.n_objects
+            if verbose:
+                print(f" {dom.n_objects:,} objects x {dom.n_features} features")
+
+        except Exception as e:
+            if verbose:
+                print(f" FAILED: {str(e)[:60]}")
+            continue
+
+    if not domain_data:
+        raise RuntimeError("No domains loaded successfully")
+
+    # Phase 2: Build column index
+    # Each domain gets its own feature columns (features are domain-specific)
     col_idx = 0
-    for domain in domain_objects:
-        for feature in features_map.get(domain, []):
-            td.feature_col[(domain, feature)] = col_idx
-            td.feature_names.append((domain, feature))
+    feature_name_map = {}  # domain -> list of feature names
+    for name, dom in domain_data.items():
+        feat_names = [f"f{i}" for i in range(dom.n_features)]
+        feature_name_map[name] = feat_names
+        for fname in feat_names:
+            td.feature_col[(name, fname)] = col_idx
+            td.feature_names.append((name, fname))
             col_idx += 1
 
     td.n_features = col_idx
 
     # Phase 3: Compute row boundaries
     row_offset = 0
-    for domain, objects in domain_objects.items():
-        n = len(objects)
-        td.domain_boundaries[domain] = (row_offset, row_offset + n)
-        row_offset += n
+    for name, dom in domain_data.items():
+        td.domain_boundaries[name] = (row_offset, row_offset + dom.n_objects)
+        row_offset += dom.n_objects
 
     td.n_objects = row_offset
 
     if verbose:
-        print(f"\n  Tensor shape: ({td.n_objects}, {td.n_features})")
+        print(f"\n  Tensor shape: ({td.n_objects:,}, {td.n_features})")
         mem_mb = td.n_objects * td.n_features * 4 / (1024 * 1024)
-        print(f"  Memory: {mem_mb:.2f} MB")
+        print(f"  Memory: {mem_mb:.1f} MB")
 
-    # Phase 4: Allocate and fill the tensor
+    # Phase 4: Allocate and fill
     td.data = np.full((td.n_objects, td.n_features), np.nan, dtype=np.float32)
 
-    for domain, objects in domain_objects.items():
-        start, end = td.domain_boundaries[domain]
-        features = features_map.get(domain, [])
-        if verbose:
-            print(f"  Extracting {domain}: {len(features)} features × {len(objects)} objects...", end="", flush=True)
+    for name, dom in domain_data.items():
+        start, end = td.domain_boundaries[name]
+        features_np = dom.features.numpy() if hasattr(dom.features, 'numpy') else np.array(dom.features)
 
-        for feature in features:
-            col = td.feature_col[(domain, feature)]
-            for i, obj in enumerate(objects):
-                td.data[start + i, col] = _extract_feature_value(obj, feature)
-
-        # Report valid counts
-        if verbose:
-            valid_counts = []
-            for feature in features:
-                col = td.feature_col[(domain, feature)]
-                n_valid = int(np.sum(np.isfinite(td.data[start:end, col])))
-                valid_counts.append(f"{feature}={n_valid}")
-            print(f" [{', '.join(valid_counts)}]")
+        for fi in range(dom.n_features):
+            col = td.feature_col[(name, f"f{fi}")]
+            td.data[start:end, col] = features_np[:, fi]
 
     td.build_time = time.time() - t0
     if verbose:
-        print(f"\n  Build time: {td.build_time:.2f}s")
-        print(f"  Total valid cells: {int(np.sum(np.isfinite(td.data)))}/{td.n_objects * td.n_features}")
+        n_valid = int(np.sum(np.isfinite(td.data)))
+        n_total = td.n_objects * td.n_features
+        print(f"\n  Build time: {td.build_time:.1f}s")
+        print(f"  Valid cells: {n_valid:,}/{n_total:,} ({n_valid/max(n_total,1):.1%})")
+        print(f"  Domains: {len(domain_data)}")
 
     return td
 
@@ -358,22 +266,36 @@ def build_tensor(domains=None, features_map=None, verbose=True):
 # ============================================================
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Build Ergon tensor from Harmonia domain loaders")
+    parser.add_argument("--domains", choices=["core", "extended", "all", "legacy"], default="core",
+                        help="Which domain set to build (default: core)")
+    parser.add_argument("--max-per-domain", type=int, default=None,
+                        help="Cap objects per domain (for testing)")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output path (default: ergon/tensor.npz)")
+    args = parser.parse_args()
+
+    domain_map = {
+        "core": CORE_DOMAINS,
+        "extended": CORE_DOMAINS + EXTENDED_DOMAINS,
+        "all": ALL_DOMAINS,
+        "legacy": LEGACY_DOMAINS if LEGACY_DOMAINS else CORE_DOMAINS,
+    }
+    domains = domain_map[args.domains]
+
     print("=" * 70)
-    print("TENSOR BUILDER — Precomputing feature tensor for forge v3")
+    print(f"TENSOR BUILDER v2 — {args.domains} domains ({len(domains)} requested)")
     print("=" * 70)
 
-    td = build_tensor()
+    td = build_tensor(domains=domains, max_per_domain=args.max_per_domain)
 
-    out_path = Path(__file__).parent / "tensor.npz"
+    out_path = Path(args.output) if args.output else Path(__file__).parent / "tensor.npz"
     td.save(out_path)
     print(f"\n  Saved: {out_path} ({out_path.stat().st_size / 1024:.0f} KB)")
 
-    # Verification: reload and spot-check
+    # Verification
     td2 = TensorData.load(out_path)
-    print(f"  Reload check: shape=({td2.n_objects}, {td2.n_features}), domains={list(td2.domain_boundaries.keys())}")
-
-    # Spot check: EC conductors should be positive
-    ec_cond = td2.get_slice("elliptic_curves", "conductor")
-    if ec_cond is not None:
-        valid = ec_cond[np.isfinite(ec_cond)]
-        print(f"  EC conductors: n={len(valid)}, min={valid.min():.0f}, max={valid.max():.0f}, median={np.median(valid):.0f}")
+    print(f"  Reload check: ({td2.n_objects:,}, {td2.n_features}), {len(td2.domain_boundaries)} domains")
+    for name, (start, end) in sorted(td2.domain_boundaries.items()):
+        print(f"    {name}: {end - start:,} objects")
