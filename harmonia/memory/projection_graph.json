@@ -1,0 +1,58 @@
+{
+  "edges": [
+    {
+      "from": "P002",
+      "to": "P001",
+      "relation": "refines",
+      "note": "DistributionalCoupling extends CouplingScorer with kurtosis sensitivity."
+    },
+    {
+      "from": "P003",
+      "to": "P001",
+      "relation": "confound_of",
+      "note": "CouplingScorer is susceptible to Megethos unless normalized."
+    },
+    {
+      "from": "P003",
+      "to": "P002",
+      "relation": "confound_of",
+      "note": "Same Megethos issue for distributional scorer."
+    },
+    {
+      "from": "P010",
+      "to": "P001",
+      "relation": "orthogonal_to",
+      "note": "Categorical object-keyed scorer breaks where distributional scorer fails, and vice versa."
+    },
+    {
+      "from": "P050",
+      "to": "P051",
+      "relation": "precedes_in_pipeline",
+      "note": "First-gap analysis often does the job without full unfolding."
+    },
+    {
+      "from": "P052",
+      "to": "P001",
+      "relation": "preprocessing_for",
+      "note": "Prime decontamination must run before any numerical coupling on scalar features."
+    },
+    {
+      "from": "P020",
+      "to": "P023",
+      "relation": "independent_of",
+      "note": "Conductor and rank stratifications can be applied jointly."
+    },
+    {
+      "from": "P040",
+      "to": "P042",
+      "relation": "weaker_than",
+      "note": "F1 label shuffle catches less than F39 feature permutation for representation artifacts."
+    },
+    {
+      "from": "P027",
+      "to": "P010",
+      "relation": "heuristic_proxy_for",
+      "note": "ADE-type via Galois label is a coarse proxy for the actual object-keyed Galois scorer."
+    }
+  ]
+}

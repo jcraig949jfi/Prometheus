@@ -1,0 +1,442 @@
+{
+  "version": "1.0",
+  "date": "2026-04-17",
+  "charter_ref": "docs/landscape_charter.md",
+  "harmonia_charter": "roles/Harmonia/CHARTER.md",
+  "tensor_shape": [
+    24,
+    22
+  ],
+  "tensor_encoding": {
+    "-2": "projection provably collapses the feature (known artifact)",
+    "-1": "projection tested, feature not resolved",
+    "0": "projection not tested against this feature",
+    "+1": "projection resolves the feature",
+    "+2": "projection strongly resolves AND validates under permutation-break null"
+  },
+  "features": [
+    {
+      "id": "F001",
+      "label": "Modularity (a_p agreement)",
+      "tier": "calibration",
+      "n_objects": 436950,
+      "description": "EC \u2194 MF a_p coefficients agree at 100.000%. Known theorem (Wiles et al.)."
+    },
+    {
+      "id": "F002",
+      "label": "Mazur torsion",
+      "tier": "calibration",
+      "n_objects": 3824372,
+      "description": "EC torsion subgroup structure \u2208 Mazur's 15. 100.000% of 3.8M."
+    },
+    {
+      "id": "F003",
+      "label": "BSD parity (rank = analytic_rank)",
+      "tier": "calibration",
+      "n_objects": 2481157,
+      "description": "rank = ov for all of bsd_joined. 100.000%. Not a finding \u2014 projection calibration."
+    },
+    {
+      "id": "F004",
+      "label": "Hasse bound on a_p",
+      "tier": "calibration",
+      "n_objects": 150000,
+      "description": "|a_p| \u2264 2\u221ap. 100% of 150K coefficients."
+    },
+    {
+      "id": "F005",
+      "label": "High-Sha parity (H43)",
+      "tier": "calibration",
+      "n_objects": 67035,
+      "description": "Among sha\u22659: (-1)^rank = root_number perfect."
+    },
+    {
+      "id": "F010",
+      "label": "NF backbone via Galois-label",
+      "tier": "live_specimen",
+      "n_objects": 114,
+      "description": "\u03c1(NF log_disc, Artin log_cond) = 0.40 over 114 shared labels. z=3.64. Survives object-keyed permutation. Reads as Langlands functoriality through categorical projection."
+    },
+    {
+      "id": "F011",
+      "label": "GUE 14% first-gap deficit",
+      "tier": "live_specimen",
+      "n_objects": 4000,
+      "description": "After Mnemosyne's first-gap reduction from 40% pooled. Mechanism unknown. Faltings (H08) and ADE (H10) both killed as explanations."
+    },
+    {
+      "id": "F012",
+      "label": "M\u00f6bius bias at g2c aut groups (H85)",
+      "tier": "live_specimen",
+      "n_objects": 50000,
+      "description": "Max |z|=6.15 for M\u00f6bius on g2c abs_disc stratified by aut_grp. Needs permutation audit."
+    },
+    {
+      "id": "F013",
+      "label": "Zero spacing rigidity vs rank (H06)",
+      "tier": "live_specimen",
+      "n_objects": 50000,
+      "description": "Spacing variance decreases linearly with rank. slope=-0.0019, R\u00b2=0.399. Weak."
+    },
+    {
+      "id": "F014",
+      "label": "Lehmer spectrum gap",
+      "tier": "live_specimen",
+      "n_objects": 22178569,
+      "description": "4.4% gap between Lehmer bound (1.176) and next smallest Mahler measure (1.228 at deg 12). Both deg-10 and deg-20 fields sit exactly at Lehmer bound (the polynomial itself)."
+    },
+    {
+      "id": "F015",
+      "label": "Szpiro monotone decrease at fixed bad-prime count (Ergon)",
+      "tier": "live_specimen",
+      "n_objects": null,
+      "description": "abc Szpiro ratio decreases monotonically with conductor when stratified by num_bad_primes. Coordinate system revelation: bad_primes is the axis that resolves this."
+    },
+    {
+      "id": "F020",
+      "label": "Megethos axis (sorted log-normals)",
+      "tier": "killed",
+      "n_objects": null,
+      "description": "\u03c1=1.0 for sorted log-normals. Not structure \u2014 artifact of cosine on magnitude-sorted vectors."
+    },
+    {
+      "id": "F021",
+      "label": "Phoneme framework (5-axis)",
+      "tier": "killed",
+      "n_objects": 789000,
+      "description": "Trivial 1D predictor gave \u03c1=1.0. Unvalidated; the framework was a coordinate choice, not landscape."
+    },
+    {
+      "id": "F022",
+      "label": "NF backbone via feature distribution",
+      "tier": "killed",
+      "n_objects": 9116,
+      "description": "z=0.00 under permutation null when coupling = cosine of feature vectors. Same data as F010. Kill tells us: this coordinate system collapses the feature."
+    },
+    {
+      "id": "F023",
+      "label": "Spectral tail ARI=0.55 (2026-04-15 version)",
+      "tier": "killed",
+      "n_objects": 4000,
+      "description": "Conductor conditioning kills: all 4 bins p>0.05. Signal was mediated by conductor, not structural."
+    },
+    {
+      "id": "F024",
+      "label": "Faltings explains GUE (H08)",
+      "tier": "killed",
+      "n_objects": 10000,
+      "description": "y-intercept 0.164 outside GUE 99% CI. Faltings is NOT the axis that resolves the 14% curvature."
+    },
+    {
+      "id": "F025",
+      "label": "ADE splits GUE (H10)",
+      "tier": "killed",
+      "n_objects": 20000,
+      "description": "|\u0394var|=0.006 < 0.025. ADE (multiplicative/additive reduction) is NOT the resolver either."
+    },
+    {
+      "id": "F026",
+      "label": "Artin dim-2/dim-3 proof-frontier ratio (H61)",
+      "tier": "killed",
+      "n_objects": 798000,
+      "description": "Ratio 1.8:1, not 50:1 as predicted. The 'proof frontier' framing was wrong."
+    },
+    {
+      "id": "F027",
+      "label": "Alexander Mahler \u00d7 EC L-value (Charon)",
+      "tier": "killed",
+      "n_objects": null,
+      "description": "z=0 under permutation. Wrong polynomial projection \u2014 Alexander has cyclotomic gap, no Lehmer probing."
+    },
+    {
+      "id": "F028",
+      "label": "Szpiro \u00d7 Faltings coupling (H40)",
+      "tier": "killed_tautology",
+      "n_objects": 200000,
+      "description": "\u03c1=0.97 after partial control \u2014 but both sides encode log|Disc|. Near-identity, not cross-domain."
+    },
+    {
+      "id": "F030",
+      "label": "Delinquent EC (no L-function data)",
+      "tier": "data_frontier",
+      "n_objects": 1508097,
+      "description": "51.7% of iso classes lack lfunc data. All 19 rank-5 curves in this gap (conductor 19M-289M)."
+    },
+    {
+      "id": "F031",
+      "label": "Object zeros_vector corruption",
+      "tier": "data_artifact",
+      "n_objects": 120649,
+      "description": "Positions 21-24 are metadata, not zeros. Mnemosyne's audit: pos 21 = root_number (100% match). Use lfunc.positive_zeros (authoritative) or truncate to [0:20]."
+    },
+    {
+      "id": "F032",
+      "label": "Knot silence (persistent)",
+      "tier": "null_confirmed",
+      "n_objects": 12965,
+      "description": "Every coordinate system tested shows knot-side coupling at noise level to every other domain. Knot projection reveals features other projections don't share."
+    },
+    {
+      "id": "F033",
+      "label": "rank \u2265 4 coverage cliff",
+      "tier": "data_frontier",
+      "n_objects": 2105,
+      "description": "2,086 rank-4 + 19 rank-5 curves. Only 1 has lfunc data. Frontier for BSD verification."
+    }
+  ],
+  "projections": [
+    {
+      "id": "P001",
+      "label": "CouplingScorer (cosine feature similarity)",
+      "type": "feature_distribution",
+      "description": "Cosine of normalized feature vectors. Sees distributional alignment. Collapses under permutation of object labels (distributional, not object-level)."
+    },
+    {
+      "id": "P002",
+      "label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "type": "feature_distribution",
+      "description": "Kurtosis-sensitive coupling. Resolves tail structure. Magnitude-confounded (Megethos)."
+    },
+    {
+      "id": "P003",
+      "label": "Megethos / log|magnitude| axis",
+      "type": "magnitude_axis",
+      "description": "PC of log-magnitude features (log disc, log conductor). Confounds everything. Sorted log-normals give \u03c1=1.0. Anti-projection: explicitly remove before other analysis."
+    },
+    {
+      "id": "P010",
+      "label": "Galois-label object-keyed scorer",
+      "type": "categorical_object_level",
+      "description": "Match by Galois label (e.g. '7T7'). Breaks under permutation of labels. Resolves Langlands-style coupling (F010). Introduced 2026-04-17."
+    },
+    {
+      "id": "P011",
+      "label": "Lhash exact match",
+      "type": "categorical_object_level",
+      "description": "LMFDB isospectral grouping hash. Index built 2026-04-17. Should resolve EC\u2194MF modularity pairs. Not yet fully tested (Koios running cross-family join)."
+    },
+    {
+      "id": "P012",
+      "label": "trace_hash",
+      "type": "categorical_object_level",
+      "description": "Alternative to Lhash \u2014 hashes Hecke eigenvalues. More strict. Useful when Lhash is too coarse."
+    },
+    {
+      "id": "P020",
+      "label": "Conductor conditioning",
+      "type": "stratification",
+      "description": "Condition on conductor before testing. Removes the biggest single confound in EC data. Killed spectral tail (F023). Standard discipline."
+    },
+    {
+      "id": "P021",
+      "label": "Bad-prime count stratification",
+      "type": "stratification",
+      "description": "Split by num_bad_primes. Ergon used this to rescue abc/Szpiro (F015). Axis revealed real structure that pooled analysis missed."
+    },
+    {
+      "id": "P022",
+      "label": "aut_grp stratification (genus-2)",
+      "type": "stratification",
+      "description": "Split by automorphism group. H85 lives here. The axis that resolves M\u00f6bius bias."
+    },
+    {
+      "id": "P023",
+      "label": "Rank stratification",
+      "type": "stratification",
+      "description": "Split by EC rank 0/1/2/3/4/5. Resolves F013 (spacing rigidity)."
+    },
+    {
+      "id": "P024",
+      "label": "Torsion stratification",
+      "type": "stratification",
+      "description": "Split by torsion order. Tested in H38 \u2014 z1 not predicted by torsion. Collapses for this feature."
+    },
+    {
+      "id": "P025",
+      "label": "CM vs non-CM",
+      "type": "stratification",
+      "description": "Binary CM flag. Tested 2026-04-16: zero spacings indistinguishable (KS p=0.38). Clean null."
+    },
+    {
+      "id": "P026",
+      "label": "Semistable vs additive",
+      "type": "stratification",
+      "description": "Multiplicative vs additive reduction. Tested H10 \u2014 does NOT split GUE deficit."
+    },
+    {
+      "id": "P027",
+      "label": "ADE type stratification",
+      "type": "stratification",
+      "description": "Classify via Dynkin type (rough proxy via Galois label). H11 found WRONG direction at d=4.96."
+    },
+    {
+      "id": "P040",
+      "label": "F1 permutation null (label shuffle)",
+      "type": "null_model",
+      "description": "Shuffle all labels, recompute. Kills distributional artifacts. Catches noise."
+    },
+    {
+      "id": "P041",
+      "label": "F24 variance decomposition",
+      "type": "null_model",
+      "description": "Partition variance among axes. Kills effects that don't decompose cleanly."
+    },
+    {
+      "id": "P042",
+      "label": "F39 feature permutation (proposed)",
+      "type": "null_model",
+      "description": "Shuffle features, keep objects. Catches representation artifacts. The F40 proposal."
+    },
+    {
+      "id": "P043",
+      "label": "Bootstrap stability",
+      "type": "null_model",
+      "description": "1000-sample bootstrap. Catches unstable effects."
+    },
+    {
+      "id": "P050",
+      "label": "First-gap analysis (first zero spacing only)",
+      "type": "preprocessing",
+      "description": "Use only \u03b3\u2082 - \u03b3\u2081. Mnemosyne's tool that shrank GUE deficit from 40% to 14%. Coordinate choice removed pooling artifact."
+    },
+    {
+      "id": "P051",
+      "label": "N(T) unfolding (density normalization)",
+      "type": "preprocessing",
+      "description": "Divide zero spacings by local density log(N\u00b7T\u00b2/(4\u03c0\u00b2)). Turns raw zeros into unfolded ones. Correct preprocessing before any RMT comparison."
+    },
+    {
+      "id": "P052",
+      "label": "Prime decontamination (3-layer microscope)",
+      "type": "preprocessing",
+      "description": "Detrend + filter + normalize to remove shared prime factorization. 96% of scalar cross-dataset structure was shared primes. Use before any numerical coupling."
+    },
+    {
+      "id": "P053",
+      "label": "Mahler measure projection",
+      "type": "feature_extraction",
+      "description": "M(P) = |leading|\u00b7\u220f max(1, |root|). Maps any polynomial to its growth rate. Domain-agnostic \u2014 flattens distinction between different domain polynomials."
+    }
+  ],
+  "invariance_matrix_dict": {
+    "F001": {
+      "P010": 2,
+      "P011": 2,
+      "P012": 2,
+      "P020": 1
+    },
+    "F002": {
+      "P024": 1,
+      "P001": 1
+    },
+    "F003": {
+      "P020": 2,
+      "P023": 2,
+      "P041": 2
+    },
+    "F004": {
+      "P043": 2
+    },
+    "F005": {
+      "P023": 2,
+      "P024": 1
+    },
+    "F010": {
+      "P001": -1,
+      "P010": 2,
+      "P040": -1,
+      "P042": 1
+    },
+    "F011": {
+      "P050": 1,
+      "P051": 0,
+      "P024": -1,
+      "P026": -1,
+      "P027": -1
+    },
+    "F012": {
+      "P022": 2,
+      "P040": 0
+    },
+    "F013": {
+      "P023": 1,
+      "P041": 1
+    },
+    "F014": {
+      "P053": 2,
+      "P040": 1
+    },
+    "F015": {
+      "P021": 2,
+      "P001": -1
+    },
+    "F020": {
+      "P001": -2,
+      "P003": -2,
+      "P040": -2
+    },
+    "F021": {
+      "P002": -2,
+      "P040": -2
+    },
+    "F022": {
+      "P001": -1,
+      "P040": -2,
+      "P010": 2
+    },
+    "F023": {
+      "P020": -2,
+      "P040": 1
+    },
+    "F024": {
+      "P027": -1,
+      "P020": -1
+    },
+    "F025": {
+      "P026": -1,
+      "P027": -1
+    },
+    "F026": {
+      "P040": -1
+    },
+    "F027": {
+      "P053": -1,
+      "P040": -1
+    },
+    "F028": {
+      "P020": -2,
+      "P041": -2,
+      "P001": 1
+    },
+    "F030": {
+      "P020": 0
+    },
+    "F031": {
+      "P020": -2
+    },
+    "F032": {
+      "P001": -2,
+      "P010": -2,
+      "P011": -2,
+      "P053": -2
+    },
+    "F033": {
+      "P023": 0
+    }
+  },
+  "calibration_anchors": [
+    "F001",
+    "F002",
+    "F003",
+    "F004",
+    "F005"
+  ],
+  "live_specimens": [
+    "F010",
+    "F011",
+    "F012",
+    "F013",
+    "F014",
+    "F015"
+  ]
+}
