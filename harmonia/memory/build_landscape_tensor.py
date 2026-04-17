@@ -66,10 +66,15 @@ FEATURES = [
      "tier": "live_specimen", "n_objects": 114,
      "description": "ρ(NF log_disc, Artin log_cond) = 0.40 over 114 shared labels. z=3.64. "
                     "Survives object-keyed permutation. Reads as Langlands functoriality through categorical projection."},
-    {"id": "F011", "label": "GUE 14% first-gap deficit",
-     "tier": "live_specimen", "n_objects": 4000,
-     "description": "After Mnemosyne's first-gap reduction from 40% pooled. Mechanism unknown. "
-                    "Faltings (H08) and ADE (H10) both killed as explanations."},
+    {"id": "F011", "label": "GUE first-gap deficit (~38% unfolded, n=2M)",
+     "tier": "live_specimen", "n_objects": 2009089,
+     "description": "Unfolded first-gap variance ~0.110 vs GUE 0.178 = ~38% deficit at n=2,009,089 "
+                    "(sessionC wsw_F011, 2026-04-17; validated by sessionA). Raw P050: ~59% z=-595. "
+                    "Unfolded P051: ~38% z=-383. Uniform across 7 projections (P050-P051-P021-P023-P024-P025-P026 "
+                    "all verdict +1). 14% was a smaller-sample pre-unfolding artifact; Mnemosyne's first-gap "
+                    "reduction from 40% pooled held directionally but the clean n=2M number is ~38%. "
+                    "Faltings (H08) killed; ADE (H10) killed. Pattern 13: conductor-family axes do not resolve. "
+                    "Next probes: P028 Katz-Sarnak, H09 conductor-window finite-N, representation-theoretic axes."},
     {"id": "F012", "label": "Möbius bias at g2c aut groups (H85)",
      "tier": "live_specimen", "n_objects": 50000,
      "description": "Max |z|=6.15 for Möbius on g2c abs_disc stratified by aut_grp. Needs permutation audit."},
@@ -244,7 +249,7 @@ INVARIANCE = {
 
     # Live specimens — sparse +1s, many -1s in wrong projections
     "F010": {"P001": -1, "P010": +2, "P040": -1, "P042": +1},  # NF backbone: dies distributional, survives object-keyed
-    "F011": {"P050": +1, "P051": 0, "P024": -1, "P026": -1, "P027": -1},  # GUE deficit: mechanism unknown
+    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
     "F012": {"P022": +2, "P040": 0},                            # H85 Möbius: aut_grp is the axis (needs perm audit)
     "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
     "F014": {"P053": +2, "P040": +1},                           # Lehmer spectrum
@@ -276,6 +281,9 @@ INVARIANCE = {
 #                 'reveals_mechanism_of', 'artifact_of'
 
 FEATURE_EDGES = [
+    # F013 density-regime parallel to F011 (sessionD wsw_F013)
+    {"from": "F013", "to": "F011", "relation": "parallel_density_regime",
+     "note": "Both mostly collapse under N(T) unfolding (P051). F013: raw slope -0.00467 -> unfolded -0.00121 (~74% reduction). F011: pooled ~40% -> first-gap raw ~59% -> unfolded ~38%. Both are density-regime features. Proper N(T) unfolding is the next natural probe for the resolving coordinate system."},
     # F010 (NF backbone alive) supersedes F022 (NF backbone killed via feature-dist)
     {"from": "F010", "to": "F022", "relation": "supersedes",
      "note": "Same data, different projection. Feature-dist projection kills; Galois-label resolves."},

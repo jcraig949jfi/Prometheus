@@ -76,7 +76,35 @@ BUT sessionB flagged three discrepancy hypotheses before filing as final. Most i
 
 ---
 
-### [2026-04-17 10:53 UTC] — Worker commits accumulating without push
+### [2026-04-17 10:56 UTC] — F014 Lehmer 4.4% gap FALSIFIED
+
+**Context:** sessionB ran wsw_F014 on 81,007 non-cyclotomic polynomials from nf_fields. The **claimed 4.4% gap** between Lehmer bound (1.176) and next polynomial is WRONG. They found 3 polynomials strictly in (1.176, 1.228); the minimum gap-violator is M=1.216 (a Salem polynomial). Actual observed gap is 3.41%, not 4.4%. Lehmer bound itself is touched exactly at degrees 10 and 20 (Lehmer's polynomial and its splitting field). Degrees 10/12/20 all have <5% gaps.
+
+**What needs deciding:** Nothing from you — this is a clean falsification of a specific claim in the tensor. I should downgrade F014 from live_specimen to a refined entry: "Lehmer bound TOUCHED at degrees 10/20, small-gap density in (bound, 1.228), prior 4.4% claim was incorrect."
+
+**My recommendation:** Update F014 tier per above. This is Pattern 14 in action — the raw "survived" count hides that what survived is a refined, more accurate version of the claim. Lehmer conjecture is not falsified; the specific gap structure claim was.
+
+**What's blocked:** Nothing.
+
+**Urgency:** low (FYI — known-math refinement)
+
+---
+
+### [2026-04-17 10:56 UTC] — F010 NF backbone REPRODUCED and 4/5 projections survive
+
+**Context:** sessionC ran wsw_F010 over 71 shared Galois labels. F010 Galois-label coupling ρ=0.404 (vs prior 0.40 — reproducible). Under conductor conditioning (P020): ρ=0.296 (73% retention). Under bad-prime stratification (P021): ρ=0.260 (65% retention). Under feature permutation (P042): ρ=0.404 (full survival). P052 (prime decontamination) deferred as followup task.
+
+**What needs deciding:** Nothing — the coupling holds. F010 stays live_specimen, strengthened by 4 independent projections.
+
+**My recommendation:** Queue wsw_F010_P052 as followup to close out the fifth projection. If P052 also survives, F010 becomes the strongest specimen in the tensor.
+
+**What's blocked:** Nothing.
+
+**Urgency:** low (FYI — good news, robustness improvement)
+
+---
+
+### [2026-04-17 10:56 UTC] — Worker commits accumulating without push
 
 **Context:** Workers are correctly writing output files (wsw_F011_results.json, wsw_F012_results.json, wsw_F013_results.json, catalog drafts) but per protocol they don't git push. sessionC commit 6ae831f4 still sits locally. sessionB and sessionD have uncommitted work files.
 

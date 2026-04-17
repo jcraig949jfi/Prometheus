@@ -599,6 +599,62 @@ projection. Critical for revealing features hidden in pooled analysis.
 
 ---
 
+## P030 — MF level stratification
+
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17 (task catalog_mf_level)
+**Code:** `WHERE level = N` on `lmfdb.mf_newforms` (1,141,510 rows; level range 1..999,983)
+**Type:** stratification (arithmetic axis, orthogonal to P029 weight)
+
+**What it resolves:**
+- Level-dependent modular-form features (Fourier coefficients a_n sharing factors with N)
+- Atkin-Lehner eigenvalue structure (AL involutions act at fixed level)
+- Fricke involution and Hecke eigenvalue interactions that factor through N
+- Oldform/newform decomposition at fixed level
+
+**What it collapses:**
+- Level-invariant features (weight-only, character-only, Galois-rep-only)
+- Analyses aggregating across X_0(N) of differing genus
+- The `weight` coordinate (P029) — independent axis, joint required for full resolution
+
+**Tautology profile:**
+- **CRITICAL:** For EC↔MF modularity pairs in weight 2, `mf_newforms.level ≡ ec_curvedata.conductor` by the modularity theorem. Any cross-side coupling between level and conductor collapses to IDENTITY under this projection. Treat as calibration anchor (F001), not finding. Add `(level, conductor)` to the Section-8 tautology-pair table.
+- `level_radical`, `level_is_squarefree`, `level_is_prime*` etc. are deterministic functions of level — redundant if used together.
+- Level correlates with `Nk2 = level · weight²` (analytic conductor driver). Joint analytic-conductor-driven studies require partial-control argument or P052 decontamination.
+
+**Calibration anchors:**
+- F001 modularity: `mf_newforms.level` matches `ec_curvedata.conductor` on matched weight-2 newforms. The identity that makes the tautology profile load-bearing.
+- Ramanujan-Petersson bound |a_p| ≤ 2√p for p ∤ level — uniform at every level, violations = data-quality signal not level effect.
+- Dimension formulas `dim S_k(Γ_0(N))` known exactly; strata at N=1, prime, square can be cross-checked against classical formulas.
+
+**Known failure modes:**
+- Tautological EC↔MF coupling collapse (see above).
+- Small-level singularities: levels 1, 2, 3 have genus-0 modular curves; variance measurements over all levels without exclusion yield misleading per-stratum stats. Recommend `level ≥ 11` or explicit exclusion.
+- Top-heavy distribution: levels concentrated at small-to-moderate values. Without MIN_STRATUM_N ≥ 100 filter, triggers Pattern 4 sampling-frame trap.
+
+**When to use:**
+- Isolating Atkin-Lehner / Fricke signals at fixed N
+- Testing whether MF↔X coupling is level-mediated (within-level ρ vs pooled ρ)
+- Joint stratification with P029 (weight) for dimension-formula sanity
+- Before claiming a novel MF feature — check whether the signal is explained by level
+
+**When NOT to use:**
+- Comparing MF.level against EC conductor on matched pairs (tautological, F001)
+- Without controlling Nk2 on analytic-conductor-driven effects
+- Small-level tails (level ≤ 10) without manual sanity checks
+
+**Related projections:**
+- **P029 MF weight:** orthogonal axis; joint (P029, P030) is the natural MF coordinate pair.
+- **P020 conductor conditioning:** becomes redundant for EC↔MF weight-2 matched pairs (level≡conductor). Use one or the other.
+- **P052 prime decontamination:** recommended pairing for numeric features with prime structure.
+- **Pattern 13:** P030 is a conductor-family axis; if F011 doesn't resolve here, Pattern 13 redirects away from all such axes.
+
+**Follow-ups this entry motivates:**
+1. `wsw_F001_via_P030` — confirm modularity calibration at per-level.
+2. `catalog_nk2_joint` — document `Nk2 = level × weight²` as its own derived coordinate.
+3. `catalog_level_radical` — separate entry for the squarefree-kernel projection.
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
