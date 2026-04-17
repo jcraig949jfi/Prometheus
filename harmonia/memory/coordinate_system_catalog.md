@@ -67,7 +67,7 @@ under label permutation, which is their fingerprint.
 - Cheap first pass to rule out trivial couplings
 
 **When NOT to use:**
-- Claims about object-level cross-domain coupling (use P010 Galois-label or P011 Lhash)
+- Claims about object-level coupling across projections (use P010 Galois-label or P011 Lhash)
 - Any coupling where objects share a magnitude axis without decontamination
 - Publication-grade findings without at least one permutation null
 
@@ -228,7 +228,7 @@ distinguishes them from feature-distribution projections.
 **When to use:**
 - Any coupling claim in number-theoretic domains (NF, Artin, MF, EC)
 - When P001 kills a signal at z=0 — try P010 before filing as KILLED
-- Cross-domain tests where both sides have canonical Galois structure
+- Coupling-across-projection tests where both sides have canonical Galois structure
 
 **When NOT to use:**
 - Geometric / topological domains without canonical Galois assignment
@@ -417,6 +417,7 @@ projection. Critical for revealing features hidden in pooled analysis.
 **Known failure modes:**
 - Rank ≥ 4: severe data gap (F030, F033 — only 1 of 2,105 rank-4+ curves has lfunc data)
 - Claims at rank ≥ 2 that use Sha are circular (Mnemosyne's BSD v1 kill)
+- **Rank ≥ 2 BSD-joined circularity (promoted from tautology note per sessionB review, 2026-04-17):** For rows where Sha is computed assuming BSD, stratifying by `rank` and comparing to any BSD-derived quantity (Sha, regulator × Sha, analytic_rank) is a closed loop. Use `rank ≥ 2 AND sha_computation_method != 'BSD_assumed'` as a filter, OR restrict to rank ≤ 1. Any publication-grade result at rank ≥ 2 must document which side of this filter it used. This is more than a tautology — it is a coordinate-system-invalidation at specific ranks, adjacent to the F003 BSD-parity calibration anchor (Pattern 7).
 
 **When to use:**
 - Any BSD-adjacent analysis
@@ -1048,7 +1049,7 @@ systems because they change what features are visible.
 
 **What it resolves:**
 - Structure independent of shared prime factorization
-- True cross-domain coupling (once prime confound is removed)
+- Structure independent of shared prime factorization (once prime confound is removed)
 
 **What it collapses:**
 - Any coupling that was mediated by shared primes (which is 96% of pre-microscope findings)
@@ -1121,7 +1122,7 @@ compute features, but they make certain projections tractable or intractable.
 - TT-Cross initialization noise can give spurious low-rank signals — validated by Charon's post-hoc falsification on three-way couplings (all killed)
 
 **Calibration anchors:**
-- Known bridges (modularity) should show low bond dimension in the coupled pair
+- Known invariances (e.g., modularity) should show low bond dimension in the coupled pair
 
 **Known failure modes:**
 - Over-reliance on bond dimension without post-hoc null (three-way Megethos-zeroed experiment)
@@ -1207,6 +1208,7 @@ Identity Trap) requires knowing these.
 | rank | analytic_rank | BSD proven rank 0-1; by construction in data | F003 calibration |
 | sha | BSD formula | Computed assuming BSD at rank ≥ 2 | Mnemosyne's circularity catch |
 | leading_term | regulator·sha | Direct BSD formula | (implicit in BSD tests) |
+| Mahler(P × Φ_n) | Mahler(P) | Mahler measure of a product equals product of Mahler measures; cyclotomic factors have M = 1. Any Lehmer-bound search at a degree divisible by 10 (or any degree where Lehmer's polynomial has been multiplied by a cyclotomic) will appear to "find" the Lehmer bound again. This is arithmetically forced, not independent corroboration. | F014 deg-10 and deg-20 "both at Lehmer" are the same polynomial, seen twice via cyclotomic multiplication (sessionB wsw_F014) |
 
 **Discipline:** Before celebrating any ρ > 0.8, check if both variables share a
 formula component. If they do, it's a tautology, not a finding.
