@@ -87,10 +87,10 @@
     },
     {
       "id": "F015",
-      "label": "Szpiro monotone decrease at fixed bad-prime count (Ergon)",
+      "label": "Szpiro vs conductor \u2014 sign-uniform, magnitude non-monotone in k",
       "tier": "live_specimen",
-      "n_objects": null,
-      "description": "abc Szpiro ratio decreases monotonically with conductor when stratified by num_bad_primes. Coordinate system revelation: bad_primes is the axis that resolves this."
+      "n_objects": 30000,
+      "description": "Szpiro-vs-conductor slope is sign-uniformly-negative within every bad-prime stratum (P042 z=-6.9..-22.7) but magnitude is NOT monotone in k \u2014 k=4 breaks the smooth trend. 88% of pooled -0.597 slope is k-mediated confound; 12% residual survives decontamination (P052 kill). Within-conductor bins show opposite-sign trend (szpiro increases with k). Pattern 19 variant: Ergon monotone claim partially reproduces (sign, yes; magnitude, no). Parallels F011/F013 stratification-reveals-pooled-artifact shape (Pattern 20 anchor case)."
     },
     {
       "id": "F020",
@@ -375,6 +375,10 @@
     },
     "F015": {
       "P021": 2,
+      "P020": 1,
+      "P042": 2,
+      "P051": 0,
+      "P052": -1,
       "P001": -1
     },
     "F020": {

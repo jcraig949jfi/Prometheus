@@ -242,12 +242,7 @@ def main():
             "z_decon_ge_3_0": (z_decon is not None and z_decon >= 3.0),
             "z_decon_ge_3_5": (z_decon is not None and z_decon >= 3.5),
         },
-        "shape_summary": (
-            f"F010 bigsample (per_degree={PER_DEGREE}): "
-            f"P010 rho={base_res['rho']:.3f} z={z_base:.2f} n={len(base_shared)}; "
-            f"P052 rho={decon_res['rho']:.3f} z={z_decon:.2f} n={len(decon_shared)}. "
-            f"retention={retention:.2f if retention is not None else 'n/a'}"
-        ),
+        "shape_summary": None,  # filled below
         "verdict_final": (
             "F010_STRONG_NONPRIME" if (z_decon is not None and z_decon >= 3.5) else
             "F010_SIGNIFICANT_NONPRIME" if (z_decon is not None and z_decon >= 3.0) else

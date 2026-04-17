@@ -94,10 +94,9 @@ FEATURES = [
                     "Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap "
                     "claims without degree-AND-num_ram stratification are suspect — Salem polynomials cluster "
                     "in the sub-1.228 region at specific degree × low-num_ram combinations."},
-    {"id": "F015", "label": "Szpiro monotone decrease at fixed bad-prime count (Ergon)",
-     "tier": "live_specimen", "n_objects": None,
-     "description": "abc Szpiro ratio decreases monotonically with conductor when stratified by num_bad_primes. "
-                    "Coordinate system revelation: bad_primes is the axis that resolves this."},
+    {"id": "F015", "label": "Szpiro vs conductor — sign-uniform, magnitude non-monotone in k",
+     "tier": "live_specimen", "n_objects": 30000,
+     "description": "Szpiro-vs-conductor slope is sign-uniformly-negative within every bad-prime stratum (P042 z=-6.9..-22.7) but magnitude is NOT monotone in k — k=4 breaks the smooth trend. 88% of pooled -0.597 slope is k-mediated confound; 12% residual survives decontamination (P052 kill). Within-conductor bins show opposite-sign trend (szpiro increases with k). Pattern 19 variant: Ergon monotone claim partially reproduces (sign, yes; magnitude, no). Parallels F011/F013 stratification-reveals-pooled-artifact shape (Pattern 20 anchor case)."},
 
     # ----- KILLED but structurally informative -----
     {"id": "F020", "label": "Megethos axis (sorted log-normals)",
@@ -262,7 +261,7 @@ INVARIANCE = {
     "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
     "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
-    "F015": {"P021": +2, "P001": -1},                           # abc rescue: bad_primes is the axis
+    "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7
 
     # Killed — structurally informative
     "F020": {"P001": -2, "P003": -2, "P040": -2},              # Megethos: not landscape
@@ -322,6 +321,19 @@ FEATURE_EDGES = [
     # abc trajectory
     {"from": "F015", "to": "F023", "relation": "contrasts",
      "note": "abc survived at fixed bad-primes (coord axis found); spectral tail died at fixed conductor."},
+
+    # Pattern 20 anchor triad — stratification reveals pooled artifact
+    {"from": "F015", "to": "F011", "relation": "stratification_reveals_pooled_artifact",
+     "note": "Both F015 and F011 show: the POOLED view hides or distorts structure; STRATIFIED views reveal it. "
+             "F011: pooled 40% deficit → first-gap unfolded 38% with uniform visibility across 7 projections, "
+             "then P028 Katz-Sarnak RESOLVES at SO_even 42% vs SO_odd 35% (sessionB wsw_F011_katz_sarnak). "
+             "F015: pooled slope -0.597 → only 12% residual after k-decontamination (88% k-mediated). "
+             "Shape: single-axis pooled summaries understate the axis-class enumeration."},
+    {"from": "F015", "to": "F013", "relation": "stratification_reveals_pooled_artifact",
+     "note": "Parallel to F015→F011 edge. F013: raw slope -0.00467 → ~74% collapse under N(T) unfolding. "
+             "F015: pooled slope -0.597 → ~88% collapse under k-decontamination. "
+             "Both: naive pooled magnitude reported a larger effect than the stratified/decontaminated residual. "
+             "Pattern 20 anchor set: F011 + F013 + F015 (sessionC Pattern 20 merge 2026-04-17)."},
 ]
 
 

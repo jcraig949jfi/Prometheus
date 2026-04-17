@@ -1,0 +1,102 @@
+# Worker Journal — Harmonia_M2_sessionB — 2026-04-17
+
+*Backfill per sessionA MANDATE_FOLLOWUP 1776425028861-0. Append-only. Terse.*
+
+## Tick 0 @ ~09:40 UTC — cross-context sync + charter absorption
+- Read: restore_protocol, sync_protocol, landscape_charter, Harmonia CHARTER, build_landscape_tensor, pattern_library, parallel_expectations.
+- Cross-context dialogue with sessionA (session-end Harmonia) on agora:harmonia_sync: CALIBRATION passed (Pattern 1 recalled from memory), PREDICT converged byte-for-byte on F011 next-coordinate (P051 unfold → H09 finite-N → Katz-Sarnak stratify), DIFF_RESOLVE produced **Pattern 13 (Direction of Accumulated Kills)** — my authorship, sessionA merged into pattern_library.md.
+- Notes: joint commit 4f42135a with sessionA — open_problems_framework.md, investment_priorities.md, Patterns 15–16 authored in this window.
+
+## Tick 1 @ ~10:17 UTC — catalog_katz_sarnak + wsw_F012
+- Claimed: `catalog_katz_sarnak` → **P028 Katz-Sarnak family symmetry type** entry.
+- Executed (catalog): Full Section 4 entry. What-resolves: low-lying zero statistics, parity-driven features, family-level discrimination. Tautology profile: rank parity × SO_even/odd, family-definition × symmetry type, Atkin-Lehner aliasing. Function-field Katz-Sarnak theorem as ground-truth calibration. Pattern 13 note framing P028 as third family-axis probe on F011.
+- Result (catalog): APPROVED as drafted by sessionA (1776421907499-0); appended to catalog Section 4 after P027.
+- Output (catalog): `cartography/docs/catalog_katz_sarnak_draft.md` (merged into catalog).
+- Claimed: `wsw_F012` (under HITL auth 1776422625075-0 and prior HANDOFF authority).
+- Executed (F012): full n=66158 g2c_curves; Möbius μ(abs_disc) stratified by aut_grp_label; 1000-shuffle permutation null; P022 × P040 × P043 projections; P023 rank joint for tautology check.
+- Result (F012): **KILLED**. max|z| over adequate strata (n≥100) = **0.39** (H85's claimed 6.15 did NOT reproduce). Permutation-null p = 0.6843; bootstrap mean max|z| = 0.88. Likely origin of 6.15: small-n stratum inflation (aut_grp 6.2 at n=58).
+- Output (F012): `cartography/docs/wsw_F012_results.json` + script.
+- Posted: TENSOR_DIFF 1776421208050-0; WORK_COMPLETE 1776422987232-0.
+- Notes: Proposed Pattern 19 (Stale/Irreproducible Tensor Entry) from the 16× discrepancy. sessionA later promoted.
+
+## Tick 2 @ ~10:40 UTC — wsw_F014
+- Claimed: `wsw_F014`.
+- Executed: 81,007 polynomials across degrees 2–24 from `lmfdb.nf_fields`; Pattern-4-biased ORDER BY disc_abs ASC per degree (explicitly disclosed); Mahler measure via numpy.roots; stratified by degree and num_ram.
+- Result: **Lehmer bound CONFIRMED at 1.17628 at degrees 10 and 20; claimed 4.4% gap FALSIFIED.** Observed gap 3.41%; polynomial at 1.216392 (deg 10, num_ram=1) found inside the claimed gap. Strong per-num_ram monotone (1.176 at k=1 → 1.800 at k=5) echoes sessionC's F011 P021 monotone.
+- Output: `cartography/docs/wsw_F014_results.json`, `cartography/docs/wsw_F014.py`.
+- Posted: WORK_COMPLETE 1776423279076-0.
+- Notes: Third tensor correction this session (F011 14→38, F012 6.15 gone, F014 4.4→3.4). Strengthened Pattern 19 motivation.
+
+## Tick 3 @ ~10:55 UTC — liouville_side_check_F012
+- Claimed: `liouville_side_check_F012` (my proposed followup from F012 kill post).
+- Executed: Re-ran wsw_F012 IDENTICALLY but with Liouville λ(n) = (−1)^Ω(n) in place of Möbius μ. Same seed, same stratification, same 1000-shuffle null.
+- Result: **F012 KILL CONFIRMED ACROSS DEFINITIONS.** max|z| adequate = 0.52 (μ was 0.39); null-p99 adequate = 2.43. Definitional drift excluded. Stratum 6.2 (n=58, below adequacy) showed |z|=4.89 under λ — confirms the likely origin of H85's 6.15 is small-n stratum inflation, not scorer definition.
+- Output: `cartography/docs/liouville_F012_results.json`, `cartography/docs/liouville_F012.py`.
+- Posted: WORK_COMPLETE 1776423440503-0.
+- Notes: Proposed promoting n≥100 adequacy threshold in P022 from "failure mode note" to a hard REQUIREMENT. Flagged F010 NF backbone (n=114, just above threshold) as next small-n-inflation audit candidate.
+
+## Tick 4 @ ~11:00 UTC — catalog_character_parity
+- Claimed: `catalog_character_parity` → initially P030, renumbered to **P031** per sessionA REVISION_REQUEST 1776423774297-0 (sessionC's MF level took P030 first). Subsequently held at P031 after sessionA arbitrated vs sessionD's Frobenius-Schur collision.
+- Executed: MF / Dirichlet character parity entry. Resolves: archimedean Γ-factor split, Rubinstein–Sarnak prime-biases, parity-driven central-zero forcing. Tautology profile: char_parity ≡ weight mod 2 on MF; alias with P028 on EC families; Atkin-Lehner via modularity.
+- Result: APPROVED at P031 after revision posted 1776423954824-0.
+- Output: `cartography/docs/catalog_character_parity_draft.md` (approved; sessionA to merge).
+- Posted: TENSOR_DIFF 1776423584651-0 (original P030); revised TENSOR_DIFF 1776423954824-0 (P031).
+- Notes: Proposed `reserve_id()` infrastructure to prevent future ID-collision churn. Became tick-9 task.
+
+## Tick 5 @ ~11:05 UTC — tensor_update_F014_lehmer_gap_refined
+- Claimed: `tensor_update_F014_lehmer_gap_refined`.
+- Executed: Rewrote F014 FEATURE block in `build_landscape_tensor.py` — label → "Lehmer spectrum (refined) — Salem density in (1.176, 1.228)"; description flags 4.4% claim as FALSIFIED, cites 1.216392 Salem polynomial counterexample, documents per-num_ram monotone. INVARIANCE expanded: `{P053:+2, P040:+1, P023:+2, P021:+2}`.
+- Result: SUCCESS (in-place Edit succeeded on third attempt after two "file modified since read" retries from sessionD's concurrent F012 edits).
+- Output: `harmonia/memory/build_landscape_tensor.py` (modified).
+- Posted: WORK_COMPLETE 1776423759188-0.
+- Notes: Flagged concurrency fragility — build_landscape_tensor.py as shared Python source needs atomic merge or JSON backing; non-blocking observation.
+
+## Tick 6 @ ~11:10 UTC — review_catalog + P030→P031 revision
+- Claimed: `review_catalog`.
+- Executed: Deep review of `coordinate_system_catalog.md` against `harmonia/src/coupling.py` and `cartography/shared/scripts/falsification_battery.py`. **5 issues surfaced:**
+  - MEDIUM: AlignmentCoupling scorer missing from catalog (third class in coupling.py).
+  - MEDIUM: Battery reference mismatch — catalog says F1–F39 but battery has F1–F14; P041 F24 citation unresolved.
+  - LOW: 4 language-discipline slips (lines 70, 178, 801, 874) with un-scare-quoted "cross-domain"/"bridge".
+  - LOW: P023 rank≥2 BSD-joined circularity buried in tautology profile — deserves elevation.
+  - LOW: Missing tautology pair Mahler(P · Φ_n) = Mahler(P) — explains F014 deg-10/20 Lehmer touch.
+- Proposed 3 follow-up tasks: `catalog_alignment_coupling`, `catalog_polish_v1`, `clarify_battery_scope_v1`. All three were seeded into queue by sessionA next tick.
+- Output: `cartography/docs/review_catalog_Harmonia_M2_sessionB.md`.
+- Posted: WORK_COMPLETE 1776424123193-0.
+- Side-action: Re-posted `catalog_character_parity` TENSOR_DIFF at P031 (1776423954824-0) after sessionA revision request.
+
+## Tick 7 @ ~11:20 UTC — harvest_nf_complexity_projections
+- Claimed: `harvest_nf_complexity_projections`.
+- Executed: Single Claude Opus (claude-opus-4-7) API call, 348 in / 1544 out tokens, 24s. Parsed 53 projection rows; heuristic match against 43-column `nf_fields` schema; 19 direct column hits, 34 derivable/sibling-table.
+- Result: SUCCESS.
+- Output: `cartography/docs/harvest_nf_projections.md` + `cartography/docs/harvest_nf_projections_raw.txt` (provenance).
+- Posted: WORK_COMPLETE 1776424283954-0.
+- Notes: Sibling of sessionD's EC harvest. Flagged possible CM disambiguation and sibling-table gaps.
+
+## Tick 8 @ ~11:25 UTC — wsw_F011_katz_sarnak
+- Claimed: `wsw_F011_katz_sarnak` — direct test of my P028 entry against F011.
+- Executed: Cross-DB join (prometheus_fire.zeros.object_zeros × lmfdb.public.ec_curvedata) at n=2,009,089. Unfolded first gap via catalog degree-2 formula; stratified by rank parity → SO_even (n=995,538) vs SO_odd (n=1,013,551).
+- Result: **P028_RESOLVES F011.** SO_even deficit 42.39%, SO_odd deficit 34.77%, spread **7.63% > 2.5% threshold**. First projection in 8 to break the uniform-visibility pattern. Consistent with Katz-Sarnak central-zero-forcing prediction; Pattern 5 gate needs magnitude comparison to theory before novelty claim.
+- Output: `cartography/docs/wsw_F011_katz_sarnak_results.json`, `harmonia/wsw_F011_katz_sarnak.py`.
+- Posted: WORK_COMPLETE 1776424613069-0.
+- Notes: IMPORTANT correction — my script's "sanity check" used `signD` (disc sign) as if it were root number. Retracted a near-Pattern-7 false alarm. F003 BSD parity anchor was NOT tested by this script. Pattern 18 needs refinement: F011 is uniform across object-property axes but non-uniform across family-symmetry-type axes.
+
+## Tick 9 @ ~11:30 UTC — infra_reserve_p_id
+- Claimed: `infra_reserve_p_id` (my own proposal from tick 6 realized as a task).
+- Executed: Added `reserve_p_id()` and `peek_next_p_id()` to `agora/work_queue.py`; amended `claim_task()` to reserve an ID atomically for catalog_entry tasks after HSETNX succeeds; reservation stored in both task dict and claim JSON so stolen claims inherit. Counter initialized at 32 so first INCR returns P033. Smoke test at `agora/test_reserve_p_id.py` — 4 sequential reserves + 1 burst of 5 all monotonic, ALL PASSED.
+- Result: SUCCESS.
+- Output: `agora/work_queue.py` (modified), `agora/test_reserve_p_id.py` (new).
+- Posted: WORK_COMPLETE 1776424765754-0.
+- Notes: Pattern 15 case — documenting the machinery IS the product. First real exercise at tick 10 confirmed atomicity.
+
+## Tick 10 @ ~11:35 UTC — catalog_alignment_coupling
+- Claimed: `catalog_alignment_coupling` (my tick-6 Issue 1, now a task); **reserved_p_id = P034** via the tick-9 infrastructure (sessionD took P033 for artin_is_even just before me — no collision, as designed).
+- Executed: Full Section 1 entry for AlignmentCoupling. Rank-based, Megethos-robust BY CONSTRUCTION (quantile transform erases magnitude). 4 tautology-profile entries; calibration anchors explicitly predict P034 will also fail on F021 phoneme corpus; relationship map vs P001/P002/P040/P052; Pattern 15/11/1 connections.
+- Result: DRAFT POSTED (awaiting APPROVE).
+- Output: `cartography/docs/catalog_alignment_coupling_draft.md`.
+- Posted: TENSOR_DIFF + WORK_COMPLETE 1776424993731-0.
+
+## Tick 11 @ ~11:40 UTC — journal adoption + specimens backfill
+- Direct request from sessionA MANDATE_FOLLOWUP 1776425028861-0. Caught up on both deliverables in this tick.
+- This journal created; 11 completed tasks backfilled.
+- `signals.specimens` rows registered for each (see `register` script output below).
+- Posted: WORK_COMPLETE on mandate adoption (out-of-band, not a formal task).
