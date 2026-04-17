@@ -2,7 +2,7 @@
 
 Every table across all databases. The single source of truth for what a field means, where it came from, and what scripts use it.
 
-Last updated: 2026-04-16
+Last updated: 2026-04-16 (evening — Aporia unblock: nf_fields full, 6 new indexes, lmfdb user grants)
 
 ---
 
@@ -10,12 +10,47 @@ Last updated: 2026-04-16
 
 All columns are **TEXT** type in the mirror (raw CSV dump from devmirror.lmfdb.xyz). Cast as needed. All tables read-only except for index creation.
 
+### Access / Permissions
+
+| User | Password | Access |
+|------|----------|--------|
+| postgres | prometheus | Full superuser access across all databases |
+| lmfdb | lmfdb | SELECT on all tables + `bsd_joined` view (granted 2026-04-16) |
+
+The `lmfdb` user also has SELECT access across all schemas in `prometheus_sci` and `prometheus_fire` as of 2026-04-16.
+
+Agent users (harmonia, ergon, charon, ingestor) exist but still have `CHANGE_ME_*` placeholder passwords from `scripts/db_setup.sql`. **Use postgres/prometheus until these are fixed.**
+
+### Index Inventory (lmfdb database)
+
+| Table | Index | Column(s) | Built |
+|-------|-------|-----------|-------|
+| lfunc_lfunctions | idx_lfunc_origin | origin | 2026-04-15 |
+| lfunc_lfunctions | idx_lfunc_conductor_numeric | (conductor::numeric) | 2026-04-15 (523 MB) |
+| lfunc_lfunctions | idx_lfunc_conductor | conductor | 2026-04-15 |
+| lfunc_lfunctions | idx_lfunc_degree | degree | 2026-04-15 |
+| lfunc_lfunctions | idx_lfunc_motivic_weight | motivic_weight | 2026-04-15 |
+| lfunc_lfunctions | idx_lfunc_order_of_vanishing | order_of_vanishing | 2026-04-15 |
+| ec_curvedata | idx_ec_iso | lmfdb_iso | 2026-04-16 |
+| ec_curvedata | idx_ec_conductor_numeric | (conductor::bigint) | 2026-04-16 |
+| mf_newforms | idx_mf_weight_level | (weight::int, level::int) | 2026-04-16 |
+| mf_newforms | idx_mf_level | (level::int) | 2026-04-16 |
+| artin_reps | idx_artin_dim_conductor | ("Dim"::int, "Conductor"::numeric) | 2026-04-16 |
+| artin_reps | idx_artin_dim | ("Dim"::int) | 2026-04-16 |
+| nf_fields | idx_nf_degree | degree | 2026-04-15 |
+| nf_fields | idx_nf_disc | disc_abs | 2026-04-15 |
+| bsd_joined | idx_bsd_conductor | conductor | 2026-04-16 |
+| bsd_joined | idx_bsd_rank | rank | 2026-04-16 |
+| bsd_joined | idx_bsd_iso | ec_iso | 2026-04-16 |
+
 ### ec_curvedata -- Elliptic Curves over Q
 
 - **Rows:** 3,824,372
 - **Source:** LMFDB devmirror (devmirror.lmfdb.xyz), table ec_curvedata
 - **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
-- **Indexes:** Standard LMFDB indexes
+- **Indexes (built 2026-04-16):**
+  - `idx_ec_iso` on lmfdb_iso (btree on TEXT, for isogeny-class joins)
+  - `idx_ec_conductor_numeric` on (conductor::bigint) (functional, for range queries)
 
 Key columns (52 total):
 
@@ -54,6 +89,9 @@ Key columns (52 total):
 - **Rows:** 1,141,510
 - **Source:** LMFDB devmirror, table mf_newforms
 - **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
+- **Indexes (built 2026-04-16):**
+  - `idx_mf_weight_level` on (weight::int, level::int) (composite, for Langlands matching)
+  - `idx_mf_level` on (level::int)
 
 Key columns (81 total):
 
@@ -114,6 +152,10 @@ Key columns (71 total):
 - **Rows:** 798,140
 - **Source:** LMFDB devmirror, table artin_reps
 - **Loaded by:** Manual CSV dump + psql COPY (2026-04-14)
+- **Indexes (built 2026-04-16):**
+  - `idx_artin_dim_conductor` on (Dim::int, Conductor::numeric) (composite, for Langlands + Artin tests)
+  - `idx_artin_dim` on (Dim::int)
+  - Note: Conductor values include decimal form like "517099.0" — use ::numeric, not ::bigint
 
 Key columns (22 total):
 
@@ -157,10 +199,11 @@ Key columns (51 total):
 
 ### nf_fields -- Number Fields
 
-- **Rows:** 2,400,000 (partial -- full LMFDB has 22,178,569)
+- **Rows:** 22,178,569 (FULL pull complete as of 2026-04-16)
 - **Source:** LMFDB devmirror, table nf_fields
-- **Loaded by:** Mnemosyne streaming pull (2026-04-15)
+- **Loaded by:** Mnemosyne streaming pull (started 2026-04-15, completed 2026-04-16)
 - **Indexes:** idx_nf_degree, idx_nf_disc
+- **Unblocks:** Lehmer, Brumer-Stark, Leopoldt tests
 
 Key columns (43 total):
 
@@ -806,5 +849,5 @@ Working data: research results, cross-references, tensor data, signals. 598,606 
 4. **LMFDB selection effects** -- high-conductor ECs biased toward prime conductors. Stratify by num_bad_primes.
 5. **lfunc coverage gap** -- bsd_joined has 0% coverage above conductor 400K. 747K EC curves have no L-function data.
 6. **Isogeny-level join** -- bsd_joined joins at isogeny class level. Multiple EC rows share one lfunc row.
-7. **nf_fields partial** -- only 2.4M of 22M rows loaded (10.8%).
+7. ~~**nf_fields partial**~~ -- FULLY LOADED as of 2026-04-16 (22,178,569 rows). Lehmer, Brumer-Stark, Leopoldt tests unblocked.
 8. **Noesis data is research state** -- not validated scientific data. Treat as exploratory.

@@ -22,6 +22,8 @@ Much has changed since 2026-04-15. This file reflects reality as of 2026-04-16. 
 
 **Password note:** Agent users (harmonia, ergon, charon, ingestor) were created with `CHANGE_ME_*` placeholder passwords in `scripts/db_setup.sql` and still have those. Keep using `postgres/prometheus` — it works across all three databases.
 
+**Permissions (2026-04-16 Aporia unblock):** The `lmfdb` user now has SELECT across all three databases — all LMFDB public tables, `bsd_joined` view, and every schema in `prometheus_sci` and `prometheus_fire`. So agents can connect as `lmfdb/lmfdb` for read-only work if they prefer not to use the superuser.
+
 ---
 
 ## What's Loaded (2026-04-16 state)
@@ -70,12 +72,12 @@ Much has changed since 2026-04-15. This file reflects reality as of 2026-04-16. 
 
 | Table | Rows | Notes |
 |-------|------|-------|
-| lfunc_lfunctions | 24,351,376 | 341 GB. **6 indexes** built: origin, conductor_numeric (523 MB), conductor, degree, motivic_weight, order_of_vanishing |
-| ec_curvedata | 3,824,372 | |
-| mf_newforms | 1,141,510 | |
-| artin_reps | 798,140 | |
-| g2c_curves | 66,158 | |
-| nf_fields | 2,400,000 | **PARTIAL** (10.8% of full 22,178,569) |
+| lfunc_lfunctions | 24,351,376 | 341 GB. **6 indexes**: origin, conductor_numeric (523 MB), conductor, degree, motivic_weight, order_of_vanishing |
+| ec_curvedata | 3,824,372 | **2 indexes (2026-04-16)**: idx_ec_iso, idx_ec_conductor_numeric |
+| mf_newforms | 1,141,510 | **2 indexes (2026-04-16)**: idx_mf_weight_level, idx_mf_level |
+| artin_reps | 798,140 | **2 indexes (2026-04-16)**: idx_artin_dim_conductor, idx_artin_dim (use ::numeric for Conductor, .0 suffixes) |
+| g2c_curves | 66,158 | No indexes yet |
+| nf_fields | 22,178,569 | **FULL** (completed 2026-04-16, indexes: degree, disc_abs) |
 | **bsd_joined** | 2,481,157 | **NEW materialized view** (2026-04-16). EC + L-function joined via `lf.origin = 'EllipticCurve/Q/' || conductor || '/' || iso_letter`. 3 indexes. See `thesauros/bsd_joined_view.md`. |
 
 ### Redis (M1:6379, migrated from DuckDB 2026-04-16)

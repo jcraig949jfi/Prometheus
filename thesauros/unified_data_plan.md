@@ -212,13 +212,12 @@ Cache structures from Harmonia's recommendation:
 
 ---
 
-### Priority 6: nf_fields → Local Postgres — PARTIAL (2026-04-16)
+### Priority 6: nf_fields → Local Postgres — DONE (2026-04-16)
 **Impact:** Unblocks Lehmer, Brumer-Stark, Leopoldt tests  
-**Effort:** Large pull from devmirror (22M rows), several hours  
+**Effort:** Large pull from devmirror (22M rows)  
 **Source:** Harmonia (needed for 3+ open problems)  
-**Status:** PARTIAL — 2,400,000 / 22,178,569 rows (10.8%) already loaded by Mnemosyne.  
-Enough for initial tests. Full pull can continue incrementally.  
-Script: `thesauros/migrate_p6_nffields.py` (needs modification to resume from 2.4M offset)
+**Status:** COMPLETE — 22,178,569 rows (full table). Mnemosyne's streaming pull completed sometime between 2026-04-15 and 2026-04-16 evening.  
+**Indexes:** idx_nf_degree, idx_nf_disc
 
 ---
 
@@ -323,7 +322,7 @@ From the database architecture doc — all agents must respect:
 | ~~No EC↔lfunc join key~~ | ~~BSD Phase 2, spectral analysis~~ | ~~Priority 2~~ | **DONE** (2026-04-16) — `bsd_joined` live |
 | ~~Zeros in DuckDB only~~ | ~~10+ open problems, GUE analysis~~ | ~~Priority 3~~ | **DONE** (2026-04-16) |
 | ~~No signal registry~~ | ~~Battery re-audits~~ | ~~Priority 4~~ | **DONE** (schema, 2026-04-16) |
-| No nf_fields locally (full) | Lehmer, Brumer-Stark, Leopoldt | Priority 6 | PARTIAL (2.4M/22M) |
+| ~~No nf_fields locally (full)~~ | ~~Lehmer, Brumer-Stark, Leopoldt~~ | ~~Priority 6~~ | **DONE** (2026-04-16) — 22.1M rows |
 | Missing Omega + Tamagawa | Full BSD formula (Phase 2) | Compute from ainvs or LMFDB API | NOT STARTED |
 | lfunc coverage gap >400K | Rank 5 BSD, high-conductor spectral | Needs LMFDB to compute more L-functions | EXTERNAL DEP |
 
@@ -336,6 +335,6 @@ From the database architecture doc — all agents must respect:
 | **P3** | DuckDB → Postgres + Redis migration | **DONE** | 2026-04-16 (854K rows, 61s) |
 | **P4** | Signal registry (specimens + battery) | **DONE** (schema) | 2026-04-16 (empty, ready) |
 | **P5** | Redis tensor/battery cache | **DONE** (graph/landscape/bridges/hyp) | 2026-04-16 (part of P3) |
-| **P6** | nf_fields pull (22M rows) | **PARTIAL** | 2.4M/22M rows (10.8%) |
-| **P7** | Ingest remaining cartography data | **PARTIAL** | 5 tables loaded (702K), CODATA/fungrim/OEIS remaining |
+| **P6** | nf_fields pull (22M rows) | **DONE** | 2026-04-16 (full 22.1M) |
+| **P7** | Ingest remaining cartography data | **DONE** | 2026-04-16 — every prometheus_sci table populated (1.14M rows) |
 | **P8** | Cleanup (archive backups, consolidate logs) | NOT STARTED | — |
