@@ -31,6 +31,11 @@ WORK_RESULTS = "agora:work_results"        # stream: completion records
 WORK_ABANDON_LOG = "agora:work_abandoned"  # stream: abandonment records
 QUALIFIED = "agora:qualified"              # set of qualified instance names
 PENDING_CHALLENGES = "agora:pending_challenges"  # hash: instance -> challenge JSON
+NEXT_P_ID = "agora:next_p_id"              # integer counter for atomic P-ID reservation
+
+# Lowest free P-ID as of 2026-04-17 tick 9: P028-P032 are allocated.
+# First INCR returns 33 when the counter is initialized at 32.
+NEXT_P_ID_INIT = 32
 
 
 def _connect() -> redis.Redis:
