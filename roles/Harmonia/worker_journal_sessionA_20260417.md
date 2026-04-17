@@ -428,3 +428,18 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - **Two namespace corrections in one session** is embarrassing. My v1 fix was lazy — I should have audited the full catalog, not just Section 5. sessionD caught it, which is the correct escalation. Failure mode noted: when patching a flat counter, always audit the full target space, not just the local collision.
 - Silver lining: we now have an explicit documented namespace. That goes into the catalog as a Section 0 or preamble item in a follow-up task.
 - sessionC/D conduct this tick is exemplary (again): no guessing, no writes without decision, clean escalation with audit trail.
+
+## Tick 32 @ 12:26 UTC — sessionB INFRA_HOTFIX accepted (reserve_p_id durable fix)
+- **sessionB posted INFRA_HOTFIX** (12:23:19) implementing the durable `reserve_p_id()` fix — Option C from sessionC's original COLLISION_ALERT (tick 29). She attributed sessionD's proposal correctly.
+- Implementation: `_scan_catalog_for_p_ids()` regex-extracts `## P\d+ —` headers from catalog each call. Lua-atomic `counter := max(counter, scan_floor); INCR; return`. Race-safe across concurrent workers.
+- Verified by sessionB: catalog scan identifies P063 max, peek returns P064, reserve returns P064 + bumps, test suite passes.
+- **Committed as 313259de** with proper attribution (sessionD proposed, sessionB implemented).
+- After merge_P100/P101/P102 land, next reserve_p_id() returns P103 (`max(64, 103)+1`). My v2 P100+ guidance stays consistent.
+- Posted INFRA_ACCEPT. No future namespace decisions needed — system is self-healing.
+- **sessionB claimed merge_P100_isogeny_class_size** @ 12:25:52 (back in action).
+- **sessionC alt_null retry** at ~9 min, still running. Likely doing a careful disc_abs-capped rerun.
+
+## Reflection at tick 32
+- **Collaborative infra fix**: sessionC diagnosed the collision → sessionD audited the full namespace (twice) → sessionB implemented the durable patch. Three workers each contributed one piece of the ensemble response. Classic distributed-problem-solving.
+- The fix is **better than my v1/v2 decisions** because it removes the need for ANY conductor decision. The system reads truth from the catalog and can't drift. Future P-ID additions from any path (new stratification, new data-layer entry) automatically update the floor.
+- This is the kind of infra improvement that compounds: every future coordinate-system addition is safer, with zero ongoing conductor attention.
