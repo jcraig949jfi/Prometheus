@@ -251,6 +251,98 @@ fills in the patterns that only become visible through shared reasoning.
 
 ---
 
+## Pattern 15 — The Machinery is the Product
+
+**Recognition:** When someone proves a hard theorem, the inventions they had
+to make — new functors, new cohomology theories, new invariants, new scorers
+— are the deeper object. The theorem is the receipt.
+
+**Canonical example:** Wiles proving Fermat. The theorem fits on one line. The
+proof invented modularity lifting, Galois cohomology methods, and Euler
+systems. Most practitioners use the theorem. The machinery goes unread. The
+machinery is where the landscape actually got measured.
+
+**Internal canonical:** The Galois-label object-keyed scorer (P010) was
+created to rescue the NF backbone after the distributional scorer collapsed
+it to z=0. Under the old frame, the rescue was a "survived finding." Under
+the charter, *the scorer itself was the finding*. It is a new coordinate
+system. Every future specimen can now be viewed through it. That utility is
+independent of whether any single NF-backbone measurement persists.
+
+**Corollary:** Every time we build a new scorer, index, feature extractor,
+stratification, or null model, we have added a coordinate system to the
+instrument. Document it in the coordinate-system catalog immediately, with
+what-it-resolves and what-it-collapses. If we don't, the scorer is an
+artifact, not an instrument. Pattern 10 (Instrument Grows Faster Than
+Findings) is the output of this discipline applied consistently.
+
+**Discipline:**
+- Before celebrating a finding that came out of a new probe, ask: is the
+  probe the real result?
+- When reading someone else's proof, read for the new invariants and
+  functors, not the statement.
+- When Ergon generates at scale and I rescue signal through a new scorer,
+  the scorer goes into the catalog before the signal goes into the registry.
+
+**Anti-discipline:** Treating a scorer as infrastructure rather than an
+instrument. The Megethos axis (P003) confounded everything for a month
+because nobody wrote "magnitude-sorted vectors give ρ=1.0 as an artifact"
+into any document. Silence makes every instrument an artifact by default.
+
+---
+
+## Pattern 16 — Problems-Nobody-Asks are the Frontier
+
+**Recognition:** The specimens that make an expert say *"huh, that's
+strange"* rather than *"that's a conjecture"* are where the landscape is
+most likely unmapped. No named problem, no shortcut request, just terrain
+anomalies. Most of the landscape is in this category and most of our
+attention is not.
+
+**Why this works under the charter:** Famous problems have their terrain
+heavily mapped already, even if unsolved. The shortcuts people seek are
+well-known paths through well-known terrain. Obscure anomalies, by contrast,
+sit in regions no one has bothered to catalog — because there was no
+shortcut to chase, no prize to claim, no paper to write.
+
+**Canonical specimens:**
+- The 19 rank-5 elliptic curves at conductor 19M–289M (F033 / F030).
+- The degree-12 field at Mahler measure 1.228, 4.4% above the Lehmer bound (F014).
+- The |z|=6.15 Möbius bias at genus-2 aut groups (F012 / H85).
+- Anything flagged INCONCLUSIVE that had the right texture but lacked z.
+
+**Operational filter — what makes a Category-3 specimen:**
+1. Data points where multiple fingerprint modalities disagree on the same
+   object.
+2. Very specific boundary objects (degree exactly 12, conductor in a narrow
+   window, aut_grp is one specific group).
+3. Near-misses in the literature — moves that didn't go through because the
+   terrain was harder than expected.
+4. Questions phrased as *"what is the shape of X?"* rather than *"what is
+   the value of X?"*
+5. Coverage cliffs (rank ≥ 4 in bsd_joined, only 1 of 2105 curves has
+   lfunc data) — the frontier of measurement is a frontier of landscape.
+
+**Discipline:**
+- When a Category-3 candidate is noticed in passing, file it immediately —
+  even if we can't probe it yet. Under-filing is the main failure mode.
+- For each filed candidate, record: what caught the eye, which projections
+  have already been applied, what remains untested.
+- Don't demand a theorem statement to justify filing. Unasked problems
+  don't have theorem statements. That's the signal.
+
+**Anti-discipline:** Treating "this isn't famous" as "this isn't
+interesting." That's backwards under the charter. Fame is a proxy for
+"already mapped." Obscurity is a proxy for "unmapped." Obscurity is what we
+want.
+
+**Connection to Pattern 15:** Category-3 specimens often require inventing
+a new projection to see them at all. That's not a complication — it's how
+the instrument grows. New coordinate systems emerge from stubborn anomalies
+more often than from open problems.
+
+---
+
 ## Pattern 12 — Who the Other Agents Are
 
 (Not a pattern about math, but about the operational landscape.)
