@@ -483,6 +483,54 @@ projection. Critical for revealing features hidden in pooled analysis.
 
 ---
 
+## P028 — Katz-Sarnak family symmetry type
+
+**Code:** Derivable from family definition; not a single function. For a given L-function family, classify each L-function into one of {U, Sp, SO_even, SO_odd}. In LMFDB, partly carried by `st_group` and partly by family metadata; for EC the SO_even/SO_odd split follows root-number / rank-parity, for quadratic twists the family is Sp by construction.
+**Type:** stratification (symmetry-type axis, from random-matrix universality for low-lying zeros)
+
+**What it resolves:**
+- **Low-lying zero statistics** (first few zeros above the central point). Each symmetry type has a distinct one-level density function — sin²(πt)/(πt)² for U, different Bessel-function combinations for Sp / SO_even / SO_odd. Pooled GUE cannot see these differences because GUE is the bulk asymptotic; Katz-Sarnak is the finite-family near-center regime.
+- **Parity-driven features.** SO_odd families have a *forced* central zero (the functional-equation sign requires it); SO_even does not. Any feature depending on "is there a zero at s=1/2?" splits cleanly here.
+- **Family-level discrimination.** Dirichlet L-functions (U), quadratic L-functions (Sp), and elliptic-curve L-functions (SO split by rank parity) sit at distinct symmetry-type points in the Katz-Sarnak classification.
+- **GUE deviations at finite conductor.** F011's 14% first-gap deficit is a low-lying zero question — exactly the regime where Katz-Sarnak predicts family-specific deviations from universal GUE.
+
+**What it collapses:**
+- **Bulk spectral statistics.** For high zeros, every symmetry type converges back to universal GUE. Above a conductor-dependent unfolding scale, Katz-Sarnak distinctions wash out. Do not use this stratification for pair-correlation or moment analysis of bulk zeros.
+- **Within-type distinctions.** Two SO_even families look identical to first order. Second-order corrections (via Conrey-Farmer-Mezzadri-Snaith moment conjectures) can distinguish them, but the projection itself does not.
+- **Structure orthogonal to symmetry type.** Conductor effects, bad-prime effects, non-parity-driven rank effects still need independent axes.
+
+**Tautology profile:**
+- **Rank parity × symmetry type for EC.** For elliptic-curve L-functions, SO_even ↔ rank even, SO_odd ↔ rank odd (by root-number/BSD parity). So Katz-Sarnak stratification of EC is not independent of P023 rank stratification modulo 2. Joint claims via P028 × P023 must demonstrate residual signal after parity control.
+- **Family definition × symmetry type.** Quadratic L-functions are Sp by construction; Dirichlet complex-character L-functions are U by construction. Stratifying across these families is identical to stratifying by family. Only meaningful within a single family containing multiple symmetry types (e.g., EC has both SO_even and SO_odd).
+- **Functional-equation sign aliasing.** For EC, the Atkin-Lehner sign determines SO_even vs SO_odd. Verify P028 is not a rename of an already-catalogued sign projection.
+
+**Calibration anchors:**
+- **Function-field Katz-Sarnak theorem.** For L-functions over F_q(T), symmetry type is *provable* via algebro-geometric monodromy. That is the ground truth the number-field case is modelled on. If P028 misclassifies a function-field family, the instrument is broken.
+- **Rubinstein–Sarnak mock-Gaussian** lowest-zero distribution results for EC families match Katz-Sarnak predictions at current LMFDB conductor ranges.
+- **Modularity cross-projection.** Weight-2 MF L-function symmetry type must match corresponding EC symmetry type under modularity — an identity calibration every P028 implementation must satisfy.
+
+**Known failure modes:**
+- **Small-n strata.** SO_odd counts at narrow conductor windows can drop below 100, especially in quadratic-twist families. Require n_per_type ≥ 100 before reporting per-type z-scores.
+- **Symmetry-type misclassification for imprimitive L-functions.** Use primitive forms only; decomposable L-functions inherit ambiguous symmetry.
+- **Bulk-regime misuse.** Applying Katz-Sarnak predictions to zero index ~1000 rather than ~3 produces spurious deviations — GUE has already reasserted itself at that height.
+- **Double-counting with P051 unfolding.** N(T) unfolding rescales zero heights; Katz-Sarnak one-level density is already in the unfolded regime by definition. Do not unfold a second time.
+
+**When to use:**
+- **F011 GUE first-gap deficit.** Textbook application — low-lying zero question across a family containing multiple symmetry types. Pattern 13 context: H08 Faltings and H10 ADE died as mechanism hypotheses, both family-level. P028 is *also* family-level BUT encodes low-lying-zero prediction directly rather than a general object property. Worth one more family-axis shot before full pivot to preprocessing (P051) + finite-N (H09).
+- **Cross-family modularity calibration.** Verify EC and matched MF families classify identically post-modularity.
+- **Any first-zero statistics question** (not bulk).
+- **Parity-sensitive analyses** where separating "central zero present?" from "spacing of zeros above it" matters.
+
+**When NOT to use:**
+- **Bulk zero statistics** — use P051 N(T) unfolding + GUE directly.
+- **Within-U or within-Sp publication-grade claims** without second-order moment analysis — first-order Katz-Sarnak will not distinguish two U families.
+- **After P051 unfolding** — already in the unfolded regime; do not apply both as independent preprocessing.
+- **When the primary variation tested is EC rank-parity** — nearly identical to P028 in that case, so you are just re-running P023 with a rename.
+
+**Pattern 13 note:** If P028 *also* kills the F011 mechanism (symmetry-type stratification does not explain the 14% first-gap deficit), that is the *third* family-level axis to die cleanly. Under Pattern 13, three family-axis kills = the feature is definitively not on the family axis; redirect remaining effort entirely into preprocessing (P051) + finite-N (H09) + sample-frame discipline. P028's expected contribution is therefore either (a) rescues F011 (high-value), or (b) kills the family-axis hypothesis conclusively (also high-value — ends a search direction).
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
