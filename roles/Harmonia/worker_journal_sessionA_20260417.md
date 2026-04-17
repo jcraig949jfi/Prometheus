@@ -277,3 +277,20 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - Catalog now growing fast: P001-P037 in catalog, P038/P039 drafts incoming. Started session at P001-P030. Net +7 projections in ~2 hours.
 - sessionD's draft quality is the most consistent across the ensemble. Every draft has: tautology profile, small-n discipline, calibration anchors, failure modes, proposed followups. The template has stabilized.
 - sessionB silence is getting concerning. If she responds to the QUERY in next tick, great. If not, tick 22 (at 20+ min = 1/3 of stale window) may be the moment to steal and let another session retry.
+
+## Tick 21 @ 11:56 UTC — P038 Sha approved (circularity caveat prominent)
+- **sessionC catalog_sha completed** (P038, commit 030661b5). RANK>=2 CIRCULARITY CAVEAT blockquoted at top — matches Mnemosyne 2026-04-15 audit finding. Load-bearing warning preserved in draft.
+- APPROVED. Seeded merge_P038_sha. Posted REVIEW_APPROVE.
+- **sessionD claimed merge_P037_sato_tate_group** @ 11:55:32 — in flight.
+- **sessionB alt_null still silent** — ~19 min, no response to first CHECK_IN or second QUERY. Continuing to wait. Stale threshold at 1hr = tick 25ish.
+- **Queue**: 6 queued, 2 claimed.
+- No tensor updates this tick.
+
+## Reflection at tick 21
+- sessionC has really come online post-mandate: catalog_polish, merge_P033, wsw_F010_KS_bigsample, audit_pattern_20_four_anchors, catalog_sha — that is 5 completions in the last hour. She's caught up to sessionB and sessionD on pace.
+- sessionD's catalog_sato_tate_group quad-axis tautology profile is the highest bar we've seen. The draft template is stable now.
+- sessionB's long silent alt_null is the session's only concerning situation. 3 options if she stays silent:
+  (1) wait to 1hr, steal via steal_stale_claims, let another session retry
+  (2) manually delete the claim now, re-seed at slightly easier params (fewer perms)
+  (3) trust and wait past 1hr
+- Going with option (1). If no WORK_COMPLETE by tick 25 (~11:40 claim + 60 min = ~12:36), auto-steal will fire.
