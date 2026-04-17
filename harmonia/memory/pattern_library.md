@@ -217,6 +217,47 @@ or the old frame reasserts itself quietly.
 
 ---
 
+## Pattern 14 — Verdict vs Shape
+
+**Produced by:** Harmonia_M2_sessionA, 2026-04-17 (the "9 survived — what???" correction)
+**Derived from:** James pushing back on my summary of the frontier runner with exactly
+that three-character response.
+
+**Recognition:** Counting "survived / killed" is lossy. The count hides
+tautologies, trivial bounds, marginal nulls, and known-math calibrations —
+all of which superficially look the same as genuine findings. The *shape*
+of each specimen (its invariance profile across projections, its tautology
+status, whether it's calibration or discovery) is the finding; the count is
+PR.
+
+**Canonical example:** Frontier runner output, 2026-04-17.
+- Raw summary: "9 survived, 7 killed, 4 inconclusive"
+- Honest summary: 1 live specimen (H85 Möbius bias), 1 weak signal (H06
+  rank-spacing rigidity), 3 known-math calibrations (BSD parity, Mazur
+  regime, GUE convergence), 4 non-findings (1 tautology, 1 trivial clustering,
+  1 trivial bound, 1 marginal null at 0.00012 below threshold)
+- The *count* collapses these into one bucket. The *shape* distinguishes them.
+
+**Diagnostic before reporting any "survived" result:**
+1. Is this a known-math regime? (calibration, not discovery)
+2. Are both variables in the correlation sharing a formula? (Pattern 1)
+3. How far above the kill threshold did it "survive"? (0.00012 above is
+   not a real effect — it's a razor's edge artifact)
+4. Is the test set-up trivial? (e.g., clustering by a 2-valued categorical
+   axis into "up to 20 manifolds" will trivially succeed)
+
+**Discipline:** Never report "N survived" as a headline. Report the
+invariance profile and tier classification. If asked for a count, provide
+it AFTER the shape description, not before.
+
+**Meta:** The correction itself teaches a meta-pattern: a user's short
+skeptical reaction ("9 survived. what???") is often a correct read of a
+framing error the instrument is making. Treat the user's incredulity as
+calibration. They see the framing from outside the instrument; we're
+embedded in it.
+
+---
+
 ## Pattern 13 — Direction of Accumulated Kills
 
 **Produced by:** Harmonia_M2_sessionB (parallel instance, sync session of 2026-04-17)
@@ -340,6 +381,64 @@ want.
 a new projection to see them at all. That's not a complication — it's how
 the instrument grows. New coordinate systems emerge from stubborn anomalies
 more often than from open problems.
+
+---
+
+## Pattern 17 — Language and Organization is the Real Bottleneck
+
+**Produced by:** Harmonia_M2_sessionA, from James asking "where should we invest?"
+2026-04-17.
+
+**Recognition:** Given all the data, compute, models, and research access we
+have, the thing that limits our trajectory is NOT any of those. It is the
+*language and organization* of what we already have. We have more coordinate
+systems than we've documented, more results than we've indexed, more projections
+than we've named. The instrument is ahead of our ability to describe what it's
+measuring.
+
+**Symptoms of this bottleneck:**
+- Two sessions using the same scorer give different reports because there's no
+  shared vocabulary for what the scorer does
+- Results scattered across JSON files with no way to query "which features are
+  invariant across all 6 fingerprint modalities?"
+- New scorers built as one-offs, never documented, producing artifacts nobody
+  can interpret later
+- Battery tests treated as truth-verdicts instead of coordinate-system probes
+  (Pattern 6 was already this insight)
+- Language drift: "cross-domain" and "bridge" resurface in drafts because the
+  replacement vocabulary isn't reflexive yet
+
+**The investment asymmetry:** One hour documenting a scorer saves ten hours
+of re-deriving what it does. One hour building a registry schema saves
+twenty hours of hand-curating JSON. One hour establishing shared language
+saves dozens of hours of miscoordination across instances.
+
+**Discipline:**
+1. Every new scorer gets an entry in the coordinate system catalog. If it
+   doesn't, it's not a real instrument — it's a noise generator.
+2. Every specimen records its projection, feature type, invariance profile,
+   and tautology check. Not "survived/killed." (Pattern 14.)
+3. Use the replacement vocabulary consistently. Projection, feature, invariance,
+   collapse. The old words are gravity — they pull the old frame back.
+4. Before starting any new scorer or test, ask: *where does this fit in the
+   existing catalog?* If nowhere, the catalog has a gap — document it first,
+   scorer second.
+
+**The ambition behind this pattern:** The product isn't discoveries. It's a
+map — (feature × projection × invariance). When that map is dense enough,
+anomalies stand out against it automatically, and we stop needing hypotheses
+as probes. The map itself tells us where to look next. That's where we're
+building toward.
+
+**Connection to Pattern 10 (Instrument Grows Faster Than Findings):** That
+pattern says "the instrument IS the product." This pattern specifies the
+*form* the instrument takes: a well-organized catalog of coordinate systems,
+features, and invariance relationships. The instrument is a map, organized.
+
+**Anti-pattern:** "Let's just run more hypotheses and see what survives."
+That's the old frame. Under this pattern: if you don't have a coordinate plan
+(projection + expected feature type + tautology check) before the test,
+don't run it. The catalog is the prerequisite.
 
 ---
 

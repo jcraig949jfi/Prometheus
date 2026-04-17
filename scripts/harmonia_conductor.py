@@ -91,12 +91,30 @@ def handle_calibration_reply(r, msg_id, data):
         })
 
 
-def monitor_loop(interval_sec: int = 10):
-    """Main conductor loop: listen, challenge, qualify, monitor."""
+def monitor_loop(interval_sec: int = 10, catch_up_seconds: int = 300):
+    """Main conductor loop: listen, challenge, qualify, monitor.
+
+    catch_up_seconds: look back this far for PINGs that arrived before startup
+    (avoids the 1-second race condition where a worker posts just before we start).
+    """
     r = connect()
     log(f"Conductor starting. Listening on {SYNC_STREAM}")
     log(f"Calibration pool has {len(CALIBRATION_POOL)} questions")
-    last_id = '$'  # only new messages from this point
+
+    # Catch up on recent PINGs that might have been posted before we started.
+    import time as _time
+    cutoff_ms = int((_time.time() - catch_up_seconds) * 1000)
+    backfill = r.xrange(SYNC_STREAM, min=f"{cutoff_ms}-0", max='+')
+    last_id = '$'  # default for new messages
+    if backfill:
+        log(f"Catch-up: examining {len(backfill)} messages from last {catch_up_seconds}s")
+        for msg_id, data in backfill:
+            mtype = data.get('type', '')
+            if mtype == 'PING':
+                handle_ping(r, msg_id, data)
+            elif mtype == 'CALIBRATION_REPLY':
+                handle_calibration_reply(r, msg_id, data)
+            last_id = msg_id
     while True:
         try:
             resp = r.xread({SYNC_STREAM: last_id}, block=5000, count=20)
