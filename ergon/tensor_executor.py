@@ -388,44 +388,62 @@ class TensorExecutor:
         """F0: Object-identity permutation null.
 
         Tests whether the coupling depends on WHICH objects are sampled.
-        Resample feature_a from domain_a with fresh random objects, keeping
-        the same feature_b sample. If coupling is unchanged, it's a
-        distributional artifact (feature geometry, not object pairing).
+        Resamples BOTH domains independently and recomputes coupling.
+        If coupling is unchanged, it's a distributional artifact.
 
-        This is the test that killed ALL explorer survivors in session 3.
-        It catches what the existing F1 (shuffle-b) cannot: distributional
-        coupling that survives permutation of paired values but is not
-        specific to any particular set of objects.
+        For tiny domains (< 2x resolution), resampling draws nearly the same
+        objects every time, so F0 has no power. In that case, we use a
+        stricter test: compare real coupling against synthetic null data
+        (Gaussian with matched mean/std) to detect MI bias on small N.
 
         Returns: (killed: bool, z_score: float, note: str)
         """
         slice_a_full = self.tensor.get_slice(hypothesis.domain_a, hypothesis.feature_a)
-        if slice_a_full is None:
+        slice_b_full = self.tensor.get_slice(hypothesis.domain_b, hypothesis.feature_b)
+        if slice_a_full is None or slice_b_full is None:
             return False, 0.0, "no_data"
 
         valid_a_full = slice_a_full[np.isfinite(slice_a_full)]
-        if len(valid_a_full) < 40:
+        valid_b_full = slice_b_full[np.isfinite(slice_b_full)]
+        if len(valid_a_full) < 40 or len(valid_b_full) < 40:
             return False, 0.0, "too_few_objects"
 
         real_val = real_coupling.get("value", 0.0)
         if np.isnan(real_val):
             return True, 0.0, "coupling_nan"
 
-        # Resample domain_a objects and recompute coupling
-        null_values = []
-        n = min(len(b), hypothesis.resolution)
-        for _ in range(n_perms):
-            resample_a = self.rng.choice(valid_a_full, n, replace=False)
-            resample_b = self.rng.choice(
-                self.tensor.get_slice(hypothesis.domain_b, hypothesis.feature_b)[
-                    np.isfinite(self.tensor.get_slice(hypothesis.domain_b, hypothesis.feature_b))
-                ],
-                n, replace=False,
-            )
-            null_c = _compute_coupling(resample_a, resample_b, hypothesis.coupling)
-            val = null_c.get("value", float("nan"))
-            if not np.isnan(val):
-                null_values.append(val)
+        n = min(len(a), hypothesis.resolution)
+
+        # Check if either domain is too small for meaningful resampling
+        # (resampling >80% of domain gives nearly identical draws)
+        a_coverage = n / len(valid_a_full)
+        b_coverage = n / len(valid_b_full)
+        tiny_domain = a_coverage > 0.8 or b_coverage > 0.8
+
+        if tiny_domain:
+            # Synthetic null: generate Gaussian data with same mean/std,
+            # compute coupling. This catches MI bias on small N.
+            null_values = []
+            for _ in range(n_perms):
+                synth_a = self.rng.normal(np.mean(valid_a_full), max(np.std(valid_a_full), 1e-8), n)
+                synth_b = self.rng.normal(np.mean(valid_b_full), max(np.std(valid_b_full), 1e-8), n)
+                null_c = _compute_coupling(synth_a.astype(np.float64), synth_b.astype(np.float64),
+                                           hypothesis.coupling)
+                val = null_c.get("value", float("nan"))
+                if not np.isnan(val):
+                    null_values.append(val)
+            note_prefix = "tiny_domain_synthetic"
+        else:
+            # Standard resample null: draw fresh objects from both domains
+            null_values = []
+            for _ in range(n_perms):
+                resample_a = self.rng.choice(valid_a_full, n, replace=False)
+                resample_b = self.rng.choice(valid_b_full, n, replace=False)
+                null_c = _compute_coupling(resample_a, resample_b, hypothesis.coupling)
+                val = null_c.get("value", float("nan"))
+                if not np.isnan(val):
+                    null_values.append(val)
+            note_prefix = "resample"
 
         if len(null_values) < 10:
             return False, 0.0, "insufficient_null"
@@ -433,14 +451,12 @@ class TensorExecutor:
         null_arr = np.array(null_values)
         null_std = np.std(null_arr)
         if null_std < 1e-10:
-            # Zero variance in null = coupling is deterministic = distributional
-            return True, 0.0, "null_zero_variance"
+            return True, 0.0, f"{note_prefix}_null_zero_variance"
 
         z = (real_val - np.mean(null_arr)) / null_std
-        # Kill if z < 2: real coupling is indistinguishable from resampled coupling
         if abs(z) < 2.0:
-            return True, float(z), f"z={z:.2f},null_mean={np.mean(null_arr):.4f}"
-        return False, float(z), f"z={z:.2f},SURVIVES"
+            return True, float(z), f"{note_prefix}:z={z:.2f},null_mean={np.mean(null_arr):.4f}"
+        return False, float(z), f"{note_prefix}:z={z:.2f},SURVIVES"
 
     def execute(self, hypothesis):
         """Execute a hypothesis against the tensor. Returns result dict."""
