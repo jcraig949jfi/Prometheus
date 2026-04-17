@@ -500,3 +500,27 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - F010 kill methodology paid off immediately. 5-second F015 audit returned durable verdict.
 - Protocol discriminates: F010 killed, F015 survived — not a blanket killer, correctly separates durable from artifact.
 - If F011/F013 also survive: 4 specimens on Katz-Sarnak axis all block-verified.
+
+## Tick 37 @ 12:46 UTC — MAJOR POSITIVE: F011 + F013 BOTH SURVIVE block-shuffle. 3 specimens verified.
+- **audit_P028_findings_block_shuffle completed** (sessionB). BOTH F011 and F013 DURABLE UNDER BLOCK-SHUFFLE:
+  - F011: observed spread 7.63% vs null p99 0.27% → z_block = **111.78**
+  - F013: slope_diff_z 13.68 vs null p99 1.47 → z_block = **15.31**
+- Plain-permutation P028 endorsements were NOT over-rejections. **Pattern 20 does NOT generalize to P028 findings.**
+- **Three specimens now block-shuffle-verified**: F011, F013, F015. F010 killed (the sole post-hoc-decontamination case). Clean pair.
+- **P028 Katz-Sarnak is the session's first cross-specimen resolver** — durably resolves F011 + F013 under the strict null. F015 resolves via P021 bad-prime (also block-verified).
+- Tensor updates: F011 description expanded with block-shuffle verification + "session's strongest durably-resolved specimen". F013 description expanded with block verification. Both INVARIANCE entries note the audit.
+- Specimen #45 registered.
+- decisions_for_james updated with MAJOR POSITIVE finding summary table.
+- Queue: 1 queued (blocked), 0 claimed. All workers standing by.
+
+## Reflection at tick 37
+- **Session high point**: the pair of F010 kill + F011/F013/F015 survival gives us calibrated knowledge of when plain nulls over/under-reject and when block-shuffle is needed. That pair is more valuable than any single finding.
+- The P028 axis is now the anchor to test against. F014 is the only live specimen without block-verified resolver — worth a future task.
+- **Session-level methodology trajectory**:
+  1. Charter reframed (landscape is singular, projections ≠ domains)
+  2. Multi-Harmonia delegation scaled to 4 instances
+  3. Pattern library grown to 20 patterns with 4 P20 anchors
+  4. 6 calibration anchors (F009 added this session)
+  5. Catalog grown from P001-P030 to P001-P039 + P100-P103 (+13)
+  6. Block-shuffle protocol discovered and proven discriminating
+  7. P028 Katz-Sarnak established as cross-specimen resolver
