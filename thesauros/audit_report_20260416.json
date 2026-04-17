@@ -1,0 +1,1468 @@
+{
+  "prometheus_sci": [
+    {
+      "schema": "algebra",
+      "table": "groups",
+      "columns": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 544831,
+          "zero_pct": 0.0,
+          "samples": [
+            "1454116",
+            "1454117",
+            "1454118"
+          ]
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 544831,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'1008.334'",
+            "'1008.335'",
+            "'1008.336'"
+          ]
+        },
+        {
+          "name": "order_val",
+          "type": "numeric",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 13589,
+          "zero_pct": 0.0,
+          "samples": [
+            "Decimal('1008')",
+            "Decimal('1008')",
+            "Decimal('1008')"
+          ]
+        },
+        {
+          "name": "exponent",
+          "type": "numeric",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 4898,
+          "zero_pct": 0.0,
+          "samples": [
+            "Decimal('168')",
+            "Decimal('168')",
+            "Decimal('84')"
+          ]
+        },
+        {
+          "name": "n_conjugacy",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 2.118638623720016,
+          "distinct_count": 12001,
+          "zero_pct": 0.0,
+          "samples": [
+            "99",
+            "102",
+            "120"
+          ]
+        },
+        {
+          "name": "is_abelian",
+          "type": "boolean",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "is_solvable",
+          "type": "boolean",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "CONSTANT (always 4)"
+          ],
+          "null_pct": 0.0,
+          "distinct_count": 1,
+          "zero_pct": 0.0,
+          "samples": [
+            "4",
+            "4",
+            "4"
+          ]
+        }
+      ],
+      "issues": [],
+      "row_count": 544831
+    },
+    {
+      "schema": "algebra",
+      "table": "lattices",
+      "columns": [
+        {
+          "name": "lattice_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 39293,
+          "zero_pct": 0.0,
+          "samples": [
+            "27",
+            "28",
+            "29"
+          ]
+        },
+        {
+          "name": "label",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 39293,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'1.2.4.1.1'",
+            "'2.1.2.1.1'",
+            "'2.2.4.1.1'"
+          ]
+        },
+        {
+          "name": "dimension",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 15,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "name": "determinant",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 1511,
+          "zero_pct": 0.0,
+          "samples": [
+            "2.0",
+            "1.0",
+            "2.0"
+          ]
+        },
+        {
+          "name": "level",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 1274,
+          "zero_pct": 0.0,
+          "samples": [
+            "4",
+            "2",
+            "4"
+          ]
+        },
+        {
+          "name": "class_number",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 54,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "name": "kissing_number",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 117,
+          "zero_pct": 0.0,
+          "samples": [
+            "2",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 39293
+    },
+    {
+      "schema": "algebra",
+      "table": "space_groups",
+      "columns": [
+        {
+          "name": "sg_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 230,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "number",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 230,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "symbol",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 230,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'P1'",
+            "'P-1'",
+            "'P121'"
+          ]
+        },
+        {
+          "name": "point_group_order",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 16,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "2"
+          ]
+        },
+        {
+          "name": "crystal_system",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 7,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'triclinic'",
+            "'triclinic'",
+            "'monoclinic'"
+          ]
+        },
+        {
+          "name": "lattice_type",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 5,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'primitive'",
+            "'primitive'",
+            "'primitive'"
+          ]
+        },
+        {
+          "name": "is_symmorphic",
+          "type": "boolean",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2,
+          "samples": [
+            "True",
+            "True",
+            "True"
+          ]
+        }
+      ],
+      "issues": [],
+      "row_count": 230
+    },
+    {
+      "schema": "analysis",
+      "table": "fungrim",
+      "columns": [
+        {
+          "name": "formula_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 3130,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "fungrim_id",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 3130,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'6db9b2'",
+            "'0d9952'",
+            "'c2fb41'"
+          ]
+        },
+        {
+          "name": "formula_type",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 5,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'definition'",
+            "'definition'",
+            "'definition'"
+          ]
+        },
+        {
+          "name": "module",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 60,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'symbolic_expressions'",
+            "'symbolic_expressions'",
+            "'symbolic_expressions'"
+          ]
+        },
+        {
+          "name": "n_symbols",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 42,
+          "zero_pct": 0.0,
+          "samples": [
+            "4",
+            "4",
+            "5"
+          ]
+        },
+        {
+          "name": "formula_text",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2988,
+          "empty_str_pct": 4.4089456869009584,
+          "samples": [
+            "'\\\\ldots \u00e2\u20ac\u201d Entry'",
+            "'\\\\ldots \u00e2\u20ac\u201d Entry ID'",
+            "'\\\\ldots \u00e2\u20ac\u201d Formula'"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 3130
+    },
+    {
+      "schema": "analysis",
+      "table": "oeis",
+      "columns": [
+        {
+          "name": "seq_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 394454,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "oeis_id",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 394454,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'A000001'",
+            "'A000002'",
+            "'A000003'"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 392339,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'Number of groups of order n.'",
+            "\"Kolakoski sequence: a(n) is length of n-th run; a(1) = 1; s",
+            "'Number of classes of primitive positive definite binary qua"
+          ]
+        },
+        {
+          "name": "first_terms",
+          "type": "ARRAY",
+          "flags": [],
+          "null_pct": 0.04613972731928184,
+          "distinct_count": 381769,
+          "array_min_len": 1,
+          "array_max_len": 20,
+          "array_distinct_lens": 20
+        },
+        {
+          "name": "growth_rate",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.1143352583571215,
+          "distinct_count": 223319,
+          "zero_pct": 5.311645971393369,
+          "samples": [
+            "0.4054651081081645",
+            "0.4054651081081645",
+            "0.916290731874155"
+          ]
+        },
+        {
+          "name": "entropy",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.10115247912304097,
+          "distinct_count": 83724,
+          "zero_pct": 0.009887084425560395,
+          "samples": [
+            "2.827762063544142",
+            "0.9997526101661922",
+            "2.739659019402921"
+          ]
+        },
+        {
+          "name": "is_monotone",
+          "type": "boolean",
+          "flags": [],
+          "null_pct": 0.10115247912304097,
+          "distinct_count": 2,
+          "samples": [
+            "False",
+            "False",
+            "False"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 394454
+    },
+    {
+      "schema": "biology",
+      "table": "metabolism",
+      "columns": [
+        {
+          "name": "model_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 108,
+          "zero_pct": 0.0,
+          "samples": [
+            "106",
+            "107",
+            "108"
+          ]
+        },
+        {
+          "name": "bigg_id",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 108,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'e_coli_core'",
+            "'iAB_RBC_283'",
+            "'iAF1260'"
+          ]
+        },
+        {
+          "name": "n_reactions",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 88,
+          "zero_pct": 0.0,
+          "samples": [
+            "95",
+            "469",
+            "2382"
+          ]
+        },
+        {
+          "name": "n_metabolites",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 78,
+          "zero_pct": 0.0,
+          "samples": [
+            "72",
+            "342",
+            "1668"
+          ]
+        },
+        {
+          "name": "n_genes",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 93,
+          "zero_pct": 0.0,
+          "samples": [
+            "137",
+            "346",
+            "1261"
+          ]
+        },
+        {
+          "name": "n_compartments",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 8,
+          "zero_pct": 0.0,
+          "samples": [
+            "2",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "frac_reversible",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 104,
+          "zero_pct": 0.0,
+          "samples": [
+            "0.4842105263157895",
+            "0.3752665245202559",
+            "0.2413937867338371"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 108
+    },
+    {
+      "schema": "chemistry",
+      "table": "qm9",
+      "columns": [
+        {
+          "name": "mol_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 133885,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "smiles",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 133802,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'C'",
+            "'N'",
+            "'O'"
+          ]
+        },
+        {
+          "name": "homo",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 1828,
+          "zero_pct": 0.0,
+          "samples": [
+            "-0.3877",
+            "-0.257",
+            "-0.2928"
+          ]
+        },
+        {
+          "name": "lumo",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2422,
+          "zero_pct": 0.053030585950629275,
+          "samples": [
+            "0.1171",
+            "0.0829",
+            "0.0687"
+          ]
+        },
+        {
+          "name": "homo_lumo_gap",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2705,
+          "zero_pct": 0.0,
+          "samples": [
+            "0.5048",
+            "0.3399",
+            "0.3615"
+          ]
+        },
+        {
+          "name": "zpve",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 73488,
+          "zero_pct": 0.0,
+          "samples": [
+            "0.044749",
+            "0.034358",
+            "0.021375"
+          ]
+        },
+        {
+          "name": "polarizability",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 5457,
+          "zero_pct": 0.0,
+          "samples": [
+            "13.21",
+            "9.46",
+            "6.31"
+          ]
+        },
+        {
+          "name": "n_atoms",
+          "type": "smallint",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "CONSTANT (always 2)"
+          ],
+          "null_pct": 0.0,
+          "distinct_count": 1,
+          "zero_pct": 0.0,
+          "samples": [
+            "2",
+            "2",
+            "2"
+          ]
+        }
+      ],
+      "issues": [],
+      "row_count": 133885
+    },
+    {
+      "schema": "core",
+      "table": "data_source",
+      "columns": [
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'knotinfo'",
+            "'qm9'",
+            "'lattices'"
+          ]
+        },
+        {
+          "name": "origin_url",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "empty_str_pct": 16.666666666666668,
+          "samples": [
+            "'https://www.indiana.edu/~knotinfo/'",
+            "'https://doi.org/10.6084/m9.figshare.978904'",
+            "''"
+          ]
+        },
+        {
+          "name": "file_path",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'cartography/knots/data/knots.json'",
+            "'cartography/chemistry/data/qm9.csv'",
+            "'cartography/lattices/data/'"
+          ]
+        },
+        {
+          "name": "loaded_at",
+          "type": "timestamp with time zone",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "samples": [
+            "datetime.datetime(2026, 4, 15, 5, 52, 25, 861300, tzinfo=dat",
+            "datetime.datetime(2026, 4, 15, 5, 53, 17, 357219, tzinfo=dat",
+            "datetime.datetime(2026, 4, 15, 5, 53, 47, 203455, tzinfo=dat"
+          ]
+        },
+        {
+          "name": "row_count",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "zero_pct": 0.0,
+          "samples": [
+            "12965",
+            "133885",
+            "26"
+          ]
+        },
+        {
+          "name": "checksum",
+          "type": "text",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 6
+    },
+    {
+      "schema": "physics",
+      "table": "codata",
+      "columns": [
+        {
+          "name": "constant_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 355,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 355,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'alpha particle-electron mass ratio'",
+            "'alpha particle mass'",
+            "'alpha particle mass energy equivalent'"
+          ]
+        },
+        {
+          "name": "value",
+          "type": "double precision",
+          "flags": [
+            "MOSTLY_NULL (99%)"
+          ],
+          "null_pct": 98.87323943661971,
+          "distinct_count": 4,
+          "zero_pct": 0.0,
+          "samples": [
+            "683.0",
+            "3477.23",
+            "1776.86"
+          ]
+        },
+        {
+          "name": "uncertainty",
+          "type": "double precision",
+          "flags": [
+            "MOSTLY_NULL (99%)"
+          ],
+          "null_pct": 99.15492957746478,
+          "distinct_count": 3,
+          "zero_pct": 0.0,
+          "samples": [
+            "0.23",
+            "0.12",
+            "0.0011"
+          ]
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 76,
+          "empty_str_pct": 26.197183098591548,
+          "samples": [
+            "''",
+            "'kg'",
+            "'J'"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 355
+    },
+    {
+      "schema": "physics",
+      "table": "materials",
+      "columns": [
+        {
+          "name": "mat_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 10000,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "material_id",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 10000,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'mp-1197903'",
+            "'mp-1094120'",
+            "'mp-1179802'"
+          ]
+        },
+        {
+          "name": "band_gap",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6682,
+          "zero_pct": 28.4,
+          "samples": [
+            "0.07970000000000001",
+            "0.0",
+            "0.0"
+          ]
+        },
+        {
+          "name": "formation_energy_per_atom",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 9188,
+          "zero_pct": 0.89,
+          "samples": [
+            "1.4104997176249991",
+            "0.18974828500000201",
+            "0.053649282500000006"
+          ]
+        },
+        {
+          "name": "spacegroup_number",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 96,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        {
+          "name": "density",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 9525,
+          "zero_pct": 0.0,
+          "samples": [
+            "1.030996672490697",
+            "8.161255619756384",
+            "1.525035869723976"
+          ]
+        },
+        {
+          "name": "volume",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 9996,
+          "zero_pct": 0.0,
+          "samples": [
+            "1547.5694249833693",
+            "226.83961495276392",
+            "744.4945979508938"
+          ]
+        },
+        {
+          "name": "nsites",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 57,
+          "zero_pct": 0.0,
+          "samples": [
+            "80",
+            "12",
+            "8"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "CONSTANT (always 5)"
+          ],
+          "null_pct": 0.0,
+          "distinct_count": 1,
+          "zero_pct": 0.0,
+          "samples": [
+            "5",
+            "5",
+            "5"
+          ]
+        }
+      ],
+      "issues": [],
+      "row_count": 10000
+    },
+    {
+      "schema": "physics",
+      "table": "pdg_particles",
+      "columns": [
+        {
+          "name": "particle_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 226,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 208,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'mma               0'",
+            "'+'",
+            "'0'"
+          ]
+        },
+        {
+          "name": "pdg_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 226,
+          "zero_pct": 0.0,
+          "samples": [
+            "22",
+            "24",
+            "23"
+          ]
+        },
+        {
+          "name": "mass_gev",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 217,
+          "zero_pct": 0.4424778761061947,
+          "samples": [
+            "0.0",
+            "80.369",
+            "91.188"
+          ]
+        },
+        {
+          "name": "charge",
+          "type": "double precision",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "spin",
+          "type": "double precision",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "lifetime_s",
+          "type": "double precision",
+          "flags": [],
+          "null_pct": 13.274336283185841,
+          "distinct_count": 159,
+          "zero_pct": 0.0,
+          "samples": [
+            "3.1644230769230766e-25",
+            "2.6375475856541774e-25",
+            "1.7789189189189188e-22"
+          ]
+        },
+        {
+          "name": "is_stable",
+          "type": "boolean",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2,
+          "samples": [
+            "True",
+            "False",
+            "False"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 226
+    },
+    {
+      "schema": "physics",
+      "table": "superconductors",
+      "columns": [
+        {
+          "name": "sc_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2012,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "material_formula",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 370,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'As1Ba1Fe2'",
+            "'As2Ba1Fe1'",
+            "'As1Ba1Fe2'"
+          ]
+        },
+        {
+          "name": "tc",
+          "type": "double precision",
+          "flags": [
+            "CONSTANT (always 0.0)"
+          ],
+          "null_pct": 0.0,
+          "distinct_count": 1,
+          "zero_pct": 100.0,
+          "samples": [
+            "0.0",
+            "0.0",
+            "0.0"
+          ]
+        },
+        {
+          "name": "spacegroup",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 82,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'166'",
+            "'10'",
+            "'139'"
+          ]
+        },
+        {
+          "name": "sc_class",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 6,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'Ferrite'",
+            "'Ferrite'",
+            "'Ferrite'"
+          ]
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        }
+      ],
+      "issues": [],
+      "row_count": 2012
+    },
+    {
+      "schema": "topology",
+      "table": "knots",
+      "columns": [
+        {
+          "name": "knot_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 12965,
+          "zero_pct": 0.0,
+          "samples": [
+            "12717",
+            "12718",
+            "2847"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 12965,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'3_1'",
+            "'4_1'",
+            "'13*a_1104'"
+          ]
+        },
+        {
+          "name": "crossing_number",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 11,
+          "zero_pct": 0.0,
+          "samples": [
+            "3",
+            "4",
+            "13"
+          ]
+        },
+        {
+          "name": "determinant",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 77.03817971461628,
+          "distinct_count": 167,
+          "zero_pct": 0.0,
+          "samples": [
+            "3",
+            "5",
+            "5"
+          ]
+        },
+        {
+          "name": "alexander_coeffs",
+          "type": "ARRAY",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 1774,
+          "array_min_len": 1,
+          "array_max_len": 11,
+          "array_distinct_lens": 6
+        },
+        {
+          "name": "jones_coeffs",
+          "type": "ARRAY",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 2472,
+          "array_min_len": 4,
+          "array_max_len": 13,
+          "array_distinct_lens": 10
+        },
+        {
+          "name": "conway_coeffs",
+          "type": "ARRAY",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 1774,
+          "array_min_len": 1,
+          "array_max_len": 6,
+          "array_distinct_lens": 6
+        },
+        {
+          "name": "signature",
+          "type": "smallint",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "CONSTANT (always 1)"
+          ],
+          "null_pct": 0.0,
+          "distinct_count": 1,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "1",
+            "1"
+          ]
+        }
+      ],
+      "issues": [],
+      "row_count": 12965
+    },
+    {
+      "schema": "topology",
+      "table": "polytopes",
+      "columns": [
+        {
+          "name": "polytope_id",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 980,
+          "zero_pct": 0.0,
+          "samples": [
+            "1",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "name",
+          "type": "text",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 12,
+          "empty_str_pct": 0.0,
+          "samples": [
+            "'Polytopes_Combinatorial_01Polytopes.json'",
+            "'Polytopes_Combinatorial_01Polytopes.json'",
+            "'Polytopes_Combinatorial_01Polytopes.json'"
+          ]
+        },
+        {
+          "name": "dimension",
+          "type": "smallint",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 8,
+          "zero_pct": 0.0,
+          "samples": [
+            "2",
+            "2",
+            "3"
+          ]
+        },
+        {
+          "name": "n_vertices",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 47,
+          "zero_pct": 0.0,
+          "samples": [
+            "3",
+            "4",
+            "4"
+          ]
+        },
+        {
+          "name": "n_edges",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.10204081632653061,
+          "distinct_count": 96,
+          "zero_pct": 0.0,
+          "samples": [
+            "3",
+            "4",
+            "6"
+          ]
+        },
+        {
+          "name": "n_facets",
+          "type": "integer",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 25,
+          "zero_pct": 0.0,
+          "samples": [
+            "3",
+            "4",
+            "4"
+          ]
+        },
+        {
+          "name": "f_vector",
+          "type": "ARRAY",
+          "flags": [],
+          "null_pct": 0.0,
+          "distinct_count": 295,
+          "array_min_len": 1,
+          "array_max_len": 8,
+          "array_distinct_lens": 8
+        },
+        {
+          "name": "is_simplicial",
+          "type": "boolean",
+          "flags": [
+            "MOSTLY_NULL (100%)"
+          ],
+          "null_pct": 100.0
+        },
+        {
+          "name": "source_id",
+          "type": "integer",
+          "flags": [
+            "CONSTANT (always 6)"
+          ],
+          "null_pct": 0.0,
+          "distinct_count": 1,
+          "zero_pct": 0.0,
+          "samples": [
+            "6",
+            "6",
+            "6"
+          ]
+        }
+      ],
+      "issues": [],
+      "row_count": 980
+    }
+  ]
+}
