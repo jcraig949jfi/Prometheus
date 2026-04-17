@@ -18,36 +18,31 @@ from typing import List, Optional
 # ============================================================
 
 DOMAINS = [
-    "elliptic_curves", "modular_forms", "number_fields", "genus2_curves",
-    "maass_forms", "knots", "lattices", "isogenies", "oeis", "polytopes",
-    "space_groups", "fungrim", "findstat", "metamath", "mathlib", "mmlkg",
-    "dirichlet_zeros", "ec_zeros", "materials", "superconductors",
-    "chemistry_qm9", "metabolism", "finance_ff", "source_code_scipy",
+    # Core mathematical
+    "elliptic_curves", "modular_forms", "number_fields", "genus2",
+    "artin", "ec_rich", "knots", "maass",
+    # Extended mathematical
+    "lattices", "polytopes", "materials", "space_groups",
+    "belyi", "bianchi", "groups", "oeis",
+    # Physical / cross-disciplinary
+    "codata", "pdg_particles", "chemistry", "metabolism",
+    # Derived signatures
+    "dynamics", "phase_space", "spectral_sigs", "operadic_sigs",
+    "padic_sigs", "info_theoretic", "fractional_deriv", "functional_eq",
+    "resurgence",
+    # Legacy names (kept for old hypothesis compatibility)
+    "genus2_curves", "maass_forms", "superconductors",
+    "dirichlet_zeros", "ec_zeros", "fungrim",
 ]
 
-FEATURES = [
-    # Arithmetic
+# Generic indexed features (f0-f27) + legacy named features
+FEATURES = [f"f{i}" for i in range(28)] + [
+    # Legacy named features (for old hypothesis compatibility)
     "conductor", "log_conductor", "rank", "analytic_rank", "torsion",
     "class_number", "regulator", "discriminant", "log_discriminant",
-    "n_bad_primes", "omega_conductor",
-    # Spectral
-    "first_zero", "zero_spacing_1_2", "zero_spacing_2_3", "zero_density_tail",
-    "spectral_parameter", "nn_spacing_ratio",
-    # Coefficient
-    "ap_mod2_fingerprint", "ap_mod3_fingerprint", "ap_mod5_fingerprint",
-    "ap_compression_lz", "ap_compression_st", "ap_mean_abs", "ap_kurtosis",
-    "coefficient_entropy", "coefficient_autocorrelation",
-    # Structural
+    "n_bad_primes", "spectral_parameter", "coefficient_entropy",
     "crossing_number", "determinant", "alexander_degree", "jones_degree",
-    "dimension", "f_vector_sum", "kissing_number",
-    # Graph/topology
-    "congruence_degree_mod2", "congruence_degree_mod3", "congruence_degree_mod5",
-    "isogeny_class_size", "graph_diameter", "graph_clustering",
-    # Physics/chemistry
-    "homo_lumo_gap", "formation_energy", "band_gap", "density", "volume",
-    "n_atoms", "zpve", "polarizability",
-    # Meta
-    "n_symbols", "module_depth", "proof_length", "import_degree",
+    "level", "weight", "dim", "tc", "root_number",
 ]
 
 COUPLINGS = [
@@ -89,20 +84,39 @@ NOVELTY_TAGS = [
 
 # Domains with actual data loaded in executor
 ACTIVE_DOMAINS = [
-    "elliptic_curves", "modular_forms", "number_fields", "genus2_curves",
-    "maass_forms", "knots", "superconductors",
+    # Core mathematical
+    "elliptic_curves", "modular_forms", "number_fields", "genus2",
+    "artin", "ec_rich", "knots", "maass",
+    # Extended mathematical
+    "lattices", "polytopes", "materials", "space_groups",
+    "belyi", "bianchi", "groups", "oeis",
+    # Physical / cross-disciplinary
+    "codata", "pdg_particles", "chemistry", "metabolism",
 ]
 
-# Features that actually extract from active domains
+# Features per domain — Harmonia z-scored feature indices (f0, f1, ...).
+# See harmonia/src/domain_index.py load_* functions for semantics.
 ACTIVE_FEATURES = {
-    "elliptic_curves": ["conductor", "log_conductor", "rank", "torsion", "n_bad_primes",
-                         "ap_kurtosis", "ap_compression_lz"],
-    "modular_forms": ["level", "weight", "dim"],
-    "number_fields": ["discriminant", "log_discriminant", "class_number", "regulator", "degree"],
-    "genus2_curves": ["conductor", "log_conductor", "discriminant", "torsion", "root_number"],
-    "maass_forms": ["level", "spectral_parameter", "coefficient_entropy"],
-    "knots": ["crossing_number", "determinant", "alexander_degree", "jones_degree"],
-    "superconductors": ["tc"],
+    "elliptic_curves": [f"f{i}" for i in range(4)],
+    "modular_forms":   [f"f{i}" for i in range(5)],
+    "number_fields":   [f"f{i}" for i in range(6)],
+    "genus2":          [f"f{i}" for i in range(7)],
+    "artin":           [f"f{i}" for i in range(5)],
+    "ec_rich":         [f"f{i}" for i in range(16)],
+    "knots":           [f"f{i}" for i in range(28)],
+    "maass":           [f"f{i}" for i in range(25)],
+    "lattices":        [f"f{i}" for i in range(6)],
+    "polytopes":       [f"f{i}" for i in range(6)],
+    "materials":       [f"f{i}" for i in range(6)],
+    "space_groups":    [f"f{i}" for i in range(5)],
+    "belyi":           [f"f{i}" for i in range(3)],
+    "bianchi":         [f"f{i}" for i in range(5)],
+    "groups":          [f"f{i}" for i in range(3)],
+    "oeis":            [f"f{i}" for i in range(7)],
+    "codata":          [f"f{i}" for i in range(10)],
+    "pdg_particles":   [f"f{i}" for i in range(11)],
+    "chemistry":       [f"f{i}" for i in range(12)],
+    "metabolism":      [f"f{i}" for i in range(11)],
 }
 
 
