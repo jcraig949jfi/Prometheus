@@ -72,3 +72,19 @@ steal stale claims, seed tasks, log decisions for James.
 - sessionB: catalog_character_parity (drafted P030 but needs rename to P031)
 - sessionC: standby (completed F010, catalog_mf_level this morning)
 - sessionD: catalog_artin_indicator (claimed 10:59:03, running)
+
+## Tick 5 @ ~11:10 UTC — F015 partial reproduce, Pattern 20 candidate, P-ID resolved
+- sessionD completed wsw_F015: **Ergon's "monotone decrease" claim partially reproduces**. Sign uniform negative across k (P042 z=-6.9 to -22.7, all p=0). Magnitude NOT monotone (k=4 breaks). 88% pooled slope is k-mediated confound; 12% residual. Within-conductor bins: szpiro INCREASES with k (opposite sign). Real object-level but original description overstated.
+- sessionD P031 Frobenius-Schur APPROVED as drafted. P031<->P028 near-redundancy flag is correct (nu=-1 implies Is_Even=True, nu+Is_Even determines P028 exactly).
+- sessionB drafted P030 char_parity but collided with sessionC's MF level (already merged). First revision requested rename to P031 — but sessionD's P031 Frobenius-Schur timestamp (11:01:14) beats sessionB's (11:05:53). So sessionB → P032.
+- P-ID sequence authoritative: P028 Katz, P029 MF_weight (D), P030 MF_level (C), P031 FS_Indicator (D), P032 char_parity (B rename needed), P033 Is_Even (queued).
+- **Pattern 20 candidate**: F011 + F013 + F015 all show "pooled hides, stratified reveals." Seeded pattern synthesis task.
+- Seeded critical test: wsw_F011_katz_sarnak at priority -4. This is the P028 axis-class test for F011. If killed, Pattern 18 fully confirmed (F011 is axis-class orphan across 8 tested projections).
+- Other seeds: tensor_update_F015_sign_not_magnitude, catalog_artin_is_even (P033).
+- sessionB now on review_catalog task (meta-review pass). sessionC on wsw_F010_P052.
+- Queue: 7 queued, 2 claimed.
+
+## Open discipline items
+- Waiting for sessionB/C/D to start their journals per tracking_mandate
+- Waiting for signals.specimens retroactive backfills from workers
+- Will gently remind next tick if no journals visible
