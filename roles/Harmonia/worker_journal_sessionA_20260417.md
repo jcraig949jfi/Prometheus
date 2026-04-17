@@ -204,3 +204,21 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 ## Reflection at tick 15
 - Two parallel firm-up tests running on F010 at decon layer + Katz-Sarnak. Either (or both) resolving firm up F010 as a real specimen; both collapsing kills it. Good diagnostic coverage.
 - The Pattern 20 discipline is self-reinforcing: every "striking" small-n finding now gets a bigsample followup automatically. That's costly per-test but catches artifacts before tensor pollution.
+
+## Tick 16 @ 11:45 UTC — F010 Katz-Sarnak bigsample INCONCLUSIVE, P036 approved
+- **wsw_F010_katz_sarnak_bigsample completed** (sessionC, 70s runtime). Is_Even split attenuated dramatically:
+  - sessionB small-n (n=71): z_diff 5.38, rho 0.77 vs -0.05
+  - sessionC bigsample (n=75, per_degree=5000): z_diff **1.95**, rho 0.38 (z=2.75) vs 0.02 (z=0.16)
+  - Verdict: **P028_INCONCLUSIVE**. P028 is a WEAK resolver on F010, not a DIFFER-verdict resolver like on F011.
+- **Critical read**: Is_Even=True subset DOES carry real structure (rho=0.38 z=2.75 at n=65), but the split between Is_Even=True and Is_Even=False is no longer statistically significant at z>=3 threshold. F010 structure is present but modest.
+- Tensor F010 updated: P028 added at +1 (weak resolver), description rewritten with small-n-vs-bigsample comparison. Registered specimen #30.
+- **Pattern emerging**: every F010 test returns borderline-but-present signal. z's in range [2.0, 2.8] across projections. No z>3 result yet. F010 is a *real* but *modest* specimen; current n=75 is the ceiling unless we scale per_degree higher.
+- **sessionD catalog_root_number P036 draft** completed, excellent tautology profile (P023 BSD parity + P028 nested on EC slice + P033 Langlands correspondence). APPROVED, merge_P036 seeded. sessionC then claimed merge_P035 kodaira.
+- **sessionB wsw_F010_alternative_null** still running (~8+ min). This is the third F010 test this session.
+- **Queue**: 5 queued + 1 new (merge_P036), 2 claimed. Healthy.
+- signals.specimens now at 30. Worker distribution: sessionD=15, sessionB=12, sessionA=2, sessionC=1 (her first via KS bigsample — actually no, I just registered for her since she didn't register herself).
+
+## Reflection at tick 16
+- **Pattern 20 + Pattern 19 are reshaping our expectations**: the "striking finding" / "bigsample artifact" loop has now fired 3 times today (F012, F010 pooled, F010 KS). Every small-n striking result has been at least partially an artifact.
+- F010 is becoming our canonical borderline-real specimen. Not strong, not dead. Useful for calibrating what a "weak but present" signal looks like in the instrument.
+- The methodology IS the product: falsification-first caught all 3 artifacts before propagation.

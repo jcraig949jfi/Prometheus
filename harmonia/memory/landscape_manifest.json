@@ -55,7 +55,7 @@
       "label": "NF backbone via Galois-label",
       "tier": "live_specimen",
       "n_objects": 75,
-      "description": "Pattern-20 anchor. Raw pooled \u03c1=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to \u03c1=0.109 at per_degree=5000 (n=75) \u2014 the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated \u03c1=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. sessionB wsw_F010_katz_sarnak (2026-04-17, per_degree=2000 n=71) reports Is_Even split z=5.38 (\u03c1=0.77 at Is_Even=True n=56; \u03c1=-0.05 at Is_Even=False n=51) \u2014 TENTATIVE: split sits on top of the Pattern-20-artifact pooled; needs bigsample verification (wsw_F010_katz_sarnak_bigsample queued). If the split holds at per_degree=5000, F010 is P028-resolved just like F011. Two parallel followups running: block-shuffle null (sessionB wsw_F010_alternative_null) + bigsample Katz-Sarnak."
+      "description": "Pattern-20 anchor. Raw pooled \u03c1=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to \u03c1=0.109 at per_degree=5000 (n=75). Durable signal is decontaminated \u03c1=0.27 (z=2.38 borderline) via P052 prime-detrend. P028 Katz-Sarnak: Is_Even split striking at small-n (z_diff=5.38, \u03c1=0.77 Is_Even=True vs \u03c1=-0.05 Is_Even=False, sessionB n=71) but ATTENUATED at per_degree=5000 to z_diff=1.95 (\u03c1=0.38 Is_Even=True n=65 z=2.75; \u03c1=0.02 Is_Even=False n=49 z=0.16, sessionC wsw_F010_katz_sarnak_bigsample). Interpretation: Is_Even=True does carry real structure (z=2.75 stable), but split-significance no longer crosses z>=3. P028 is a WEAK resolver on F010, not a DIFFER-verdict resolver like on F011. Pending: wsw_F010_alternative_null (sessionB, block-shuffle null, still running)."
     },
     {
       "id": "F011",
@@ -354,7 +354,8 @@
       "P042": 1,
       "P052": 1,
       "P020": 1,
-      "P021": 1
+      "P021": 1,
+      "P028": 1
     },
     "F011": {
       "P050": 1,

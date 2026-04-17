@@ -64,7 +64,7 @@ FEATURES = [
     # ----- LIVE SPECIMENS (weak-but-survives) -----
     {"id": "F010", "label": "NF backbone via Galois-label",
      "tier": "live_specimen", "n_objects": 75,
-     "description": "Pattern-20 anchor. Raw pooled ρ=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to ρ=0.109 at per_degree=5000 (n=75) — the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated ρ=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. sessionB wsw_F010_katz_sarnak (2026-04-17, per_degree=2000 n=71) reports Is_Even split z=5.38 (ρ=0.77 at Is_Even=True n=56; ρ=-0.05 at Is_Even=False n=51) — TENTATIVE: split sits on top of the Pattern-20-artifact pooled; needs bigsample verification (wsw_F010_katz_sarnak_bigsample queued). If the split holds at per_degree=5000, F010 is P028-resolved just like F011. Two parallel followups running: block-shuffle null (sessionB wsw_F010_alternative_null) + bigsample Katz-Sarnak."},
+     "description": "Pattern-20 anchor. Raw pooled ρ=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to ρ=0.109 at per_degree=5000 (n=75). Durable signal is decontaminated ρ=0.27 (z=2.38 borderline) via P052 prime-detrend. P028 Katz-Sarnak: Is_Even split striking at small-n (z_diff=5.38, ρ=0.77 Is_Even=True vs ρ=-0.05 Is_Even=False, sessionB n=71) but ATTENUATED at per_degree=5000 to z_diff=1.95 (ρ=0.38 Is_Even=True n=65 z=2.75; ρ=0.02 Is_Even=False n=49 z=0.16, sessionC wsw_F010_katz_sarnak_bigsample). Interpretation: Is_Even=True does carry real structure (z=2.75 stable), but split-significance no longer crosses z>=3. P028 is a WEAK resolver on F010, not a DIFFER-verdict resolver like on F011. Pending: wsw_F010_alternative_null (sessionB, block-shuffle null, still running)."},
     {"id": "F011", "label": "GUE first-gap deficit (~38% unfolded, n=2M)",
      "tier": "live_specimen", "n_objects": 2009089,
      "description": "Unfolded first-gap variance ~0.110 vs GUE 0.178 = ~38% deficit at n=2,009,089 "
@@ -264,7 +264,7 @@ INVARIANCE = {
     "F005": {"P023": +2, "P024": +1},                          # high-Sha parity
 
     # Live specimens — sparse +1s, many -1s in wrong projections
-    "F010": {"P001": -1, "P010": +2, "P040": -2, "P042": +1, "P052": +1, "P020": +1, "P021": +1},  # NF backbone: pooled ρ=0.40 was Pattern-20 artifact (collapses at n=75 to 0.109). Durable signal is decontaminated ρ=0.27 via P052. Survives P020/P021 (sessionC wsw_F010), P042 feature-perm. P040 demoted -1→-2 (pooled is not durable at this coupling).
+    "F010": {"P001": -1, "P010": +2, "P040": -2, "P042": +1, "P052": +1, "P020": +1, "P021": +1, "P028": +1},  # NF backbone: pooled ρ=0.40 was Pattern-20 artifact (collapses at n=75 to 0.109). Durable signal is decontaminated ρ=0.27 via P052. Survives P020/P021 (sessionC wsw_F010), P042 feature-perm. P028 weak resolver (Is_Even=True ρ=0.38 z=2.75 at bigsample; split z_diff 5.38→1.95 attenuated — not a DIFFER verdict like F011). P040 -2 (pooled not durable at this coupling).
     "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
     "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
     "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
