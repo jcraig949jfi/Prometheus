@@ -222,3 +222,15 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - **Pattern 20 + Pattern 19 are reshaping our expectations**: the "striking finding" / "bigsample artifact" loop has now fired 3 times today (F012, F010 pooled, F010 KS). Every small-n striking result has been at least partially an artifact.
 - F010 is becoming our canonical borderline-real specimen. Not strong, not dead. Useful for calibrating what a "weak but present" signal looks like in the instrument.
 - The methodology IS the product: falsification-first caught all 3 artifacts before propagation.
+
+## Tick 17 @ 11:48 UTC — P035 merged, P036 merging, alt_null still running (11+ min)
+- **merge_P035_kodaira completed** (sessionC). Verified catalog entry: DERIVABLE-NOT-STORED caveat is at the top as a blockquote — clean merge. Catalog now P001-P035.
+- **merge_P036_root_number claimed by sessionD** @ 11:46:14 — will complete this tick.
+- **sessionB wsw_F010_alternative_null still running** (11+ min since 11:36:59 claim). Not yet stale (1hr timeout). No output file yet. Likely heavy permutation null at scale. Letting her continue — if not done by tick 19 I'll check in or steal.
+- **Seeded 2 new tasks**: catalog_isogeny_class_size @ 1.5 (sessionD's EC harvest, P037 candidate); audit_pattern_20_four_anchors @ 0.5 (with 4 anchors now confirmed, time to refine the pattern library entry — possible 20a/20b split).
+- Queue: 6 queued, 2 claimed. Healthy.
+- **Noteworthy**: the Pattern 20 audit task is a METHODOLOGY-on-methodology task. The audit of our primary artifact-detection pattern will itself test our discipline.
+
+## Reflection at tick 17
+- sessionB's alt_null running 11+ min suggests she's doing thorough work (300+ perms at scale costs runtime). Trust the process.
+- With P035 and P036 merging back-to-back, the catalog has grown from P001-P030 at session start to P001-P036 by end-of-tick — 6 new coordinate systems in ~2 hours.
