@@ -92,6 +92,8 @@ ACTIVE_DOMAINS = [
     "belyi", "bianchi", "groups", "oeis",
     # Physical / cross-disciplinary
     "codata", "pdg_particles", "chemistry", "metabolism",
+    # Fingerprint domains (Aporia E-FP tests)
+    "nf_cf", "artin_ade",
 ]
 
 # Features per domain — Harmonia z-scored feature indices (f0, f1, ...).
@@ -117,6 +119,8 @@ ACTIVE_FEATURES = {
     "pdg_particles":   [f"f{i}" for i in range(11)],
     "chemistry":       [f"f{i}" for i in range(12)],
     "metabolism":      [f"f{i}" for i in range(11)],
+    "nf_cf":           [f"f{i}" for i in range(10)],
+    "artin_ade":       [f"f{i}" for i in range(11)],
 }
 
 

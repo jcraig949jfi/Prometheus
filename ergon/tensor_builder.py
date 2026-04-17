@@ -69,6 +69,9 @@ EXTENDED_DOMAINS = [
     "pdg_particles",     # 226, 11 features (NEW — particle physics)
     "chemistry",         # 50K, 12 features (NEW — QM9 molecules)
     "metabolism",        # 108, 11 features (NEW)
+    # Fingerprint domains (Aporia E-FP tests)
+    "nf_cf",             # ~2K, 10 features (NF + continued fraction features)
+    "artin_ade",         # 100K, 11 features (Artin + ADE/Dynkin classification)
 ]
 
 DERIVED_DOMAINS = [

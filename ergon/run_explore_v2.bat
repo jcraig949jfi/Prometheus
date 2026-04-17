@@ -8,11 +8,12 @@ echo.
 echo  ============================================================
 echo   ERGON EXPLORER v2
 echo   Started: %date% %time%
-echo   Domains: 20 (core + extended)
+echo   Domains: 22 (core + extended + fingerprints)
 echo   Objects: ~4.6M across EC, MF, NF, genus2, artin, knots,
 echo            maass, lattices, polytopes, materials, space_groups,
 echo            belyi, bianchi, groups, oeis, codata, pdg_particles,
-echo            chemistry, metabolism, ec_rich
+echo            chemistry, metabolism, ec_rich,
+echo            nf_cf (CF features), artin_ade (ADE types)
 echo   Hypothesis space: 400 domain pairs x 181 features
 echo  ============================================================
 echo.

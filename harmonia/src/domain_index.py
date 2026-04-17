@@ -2072,6 +2072,161 @@ def load_artin(limit: int = 100000) -> DomainIndex:
     return DomainIndex("artin", labels, features)
 
 
+def load_nf_cf(limit: int = 10000) -> DomainIndex:
+    """
+    E-FP-1: Number fields with continued fraction features.
+
+    Loads NF defining polynomials from Postgres, computes largest real root,
+    extracts CF expansion. Features encode approximation structure — a
+    genuinely different modality from arithmetic invariants.
+
+    Features (10): degree, log_disc, class_number, regulator,
+                   cf_a0, cf_mean, cf_max, cf_var, cf_len, log_alpha
+    """
+    import psycopg2
+    conn = psycopg2.connect(
+        host='localhost', port=5432,
+        dbname='lmfdb', user='lmfdb', password='lmfdb',
+        connect_timeout=15,
+    )
+    cur = conn.cursor()
+    cur.execute(f"""
+        SELECT label, coeffs, degree::int, disc_abs::float,
+               class_number::int, regulator::float
+        FROM nf_fields
+        WHERE degree::int BETWEEN 2 AND 6
+          AND coeffs IS NOT NULL
+          AND disc_abs::float > 0
+        LIMIT {limit}
+    """)
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    def cf_expansion(x, n_terms=12):
+        cf = []
+        for _ in range(n_terms):
+            a = int(np.floor(x))
+            cf.append(a)
+            frac = x - a
+            if abs(frac) < 1e-12:
+                break
+            x = 1.0 / frac
+            if abs(x) > 1e15:
+                break
+        return cf
+
+    labels, feats = [], []
+    for label, coeffs_str, degree, disc, cn, reg in rows:
+        try:
+            coeffs_str = coeffs_str.strip('{}')
+            coeffs = [int(x) for x in coeffs_str.split(',')]
+            poly_coeffs = list(reversed(coeffs))
+            roots = np.roots(poly_coeffs)
+            real_roots = [r.real for r in roots if abs(r.imag) < 1e-8]
+            if not real_roots:
+                continue
+            alpha = max(real_roots, key=abs)
+            cf = cf_expansion(abs(alpha), n_terms=12)
+            if len(cf) < 3:
+                continue
+            cf_tail = cf[1:] if len(cf) > 1 else [0]
+            feat = [
+                float(degree),
+                np.log1p(abs(disc)),
+                float(cn or 0),
+                float(reg or 0),
+                float(cf[0]),                          # cf_a0 (integer part)
+                float(np.mean(cf_tail)),               # cf_mean
+                float(max(cf_tail)),                    # cf_max
+                float(np.var(cf_tail)),                 # cf_var
+                float(len(cf)),                         # cf_len
+                np.log1p(abs(alpha)),                   # log_alpha
+            ]
+            labels.append(str(label))
+            feats.append(feat)
+        except Exception:
+            continue
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("nf_cf", labels, features)
+
+
+def load_artin_ade(limit: int = 100000) -> DomainIndex:
+    """
+    E-FP-3: Artin representations with ADE type labels.
+
+    Maps Galois groups to ADE/Dynkin classification where possible.
+    Features include ADE type as one-hot encoding plus standard Artin features.
+    Tests whether the deepest algebraic classification (root systems) shows up
+    as tensor structure.
+
+    Features (11): log_conductor, dimension, Galn, Galt, indicator,
+                   ade_rank, is_weyl, is_cyclic, is_symmetric, is_alternating, is_dihedral
+    """
+    import psycopg2
+    conn = psycopg2.connect(
+        host='localhost', port=5432,
+        dbname='lmfdb', user='lmfdb', password='lmfdb',
+        connect_timeout=15,
+    )
+    cur = conn.cursor()
+    cur.execute(f'''
+        SELECT "Baselabel", "Dim", "Conductor", "Galn", "Galt",
+               "Indicator", "GaloisLabel"
+        FROM artin_reps
+        WHERE "Conductor" IS NOT NULL
+        ORDER BY "Conductor" LIMIT {limit}
+    ''')
+    rows = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    # ADE mapping from transitive group notation
+    # S_n = Weyl(A_{n-1}), D_n dihedral related to B/D types
+    WEYL_MAP = {
+        '1T1': 0, '2T1': 1, '3T2': 2, '4T5': 3,
+        '5T5': 4, '6T16': 5, '7T7': 6, '8T50': 7,
+    }
+
+    labels, feats = [], []
+    for row in rows:
+        baselabel, dim, conductor, galn, galt, indicator, gal_label = row
+        try:
+            cond_val = float(conductor)
+        except (TypeError, ValueError):
+            cond_val = 0.0
+
+        n_str, t_str = (gal_label or '1T1').split('T')
+        n, t = int(n_str), int(t_str)
+
+        ade_rank = float(WEYL_MAP.get(gal_label, -1))
+        is_weyl = 1.0 if gal_label in WEYL_MAP else 0.0
+        is_cyclic = 1.0 if t == 1 else 0.0
+        is_symmetric = 1.0 if gal_label in WEYL_MAP else 0.0
+        is_alternating = 1.0 if t == n - 1 and n >= 4 else 0.0  # rough heuristic
+        is_dihedral = 1.0 if t == 3 and n >= 3 else 0.0  # nT3 is often dihedral
+
+        feat = [
+            np.log1p(cond_val),
+            float(dim or 0),
+            float(galn or 0),
+            float(galt or 0),
+            float(indicator or 0),
+            ade_rank,
+            is_weyl,
+            is_cyclic,
+            is_symmetric,
+            is_alternating,
+            is_dihedral,
+        ]
+        labels.append(str(baselabel or len(labels)))
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("artin_ade", labels, features)
+
+
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
@@ -2116,6 +2271,8 @@ DOMAIN_LOADERS = {
     "lmfdb_objects": load_lmfdb_objects,
     "ec_rich": load_ec_rich,
     "artin": load_artin,
+    "nf_cf": load_nf_cf,
+    "artin_ade": load_artin_ade,
 }
 
 
