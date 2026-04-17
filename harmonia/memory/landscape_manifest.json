@@ -5,7 +5,7 @@
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
     25,
-    23
+    25
   ],
   "tensor_encoding": {
     "-2": "projection provably collapses the feature (known artifact)",
@@ -59,10 +59,10 @@
     },
     {
       "id": "F010",
-      "label": "NF backbone via Galois-label",
-      "tier": "live_specimen",
+      "label": "NF backbone via Galois-label \u2014 KILLED, joins F022 under block-shuffle null",
+      "tier": "killed",
       "n_objects": 75,
-      "description": "Pattern-20 anchor. Raw pooled \u03c1=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to \u03c1=0.109 at per_degree=5000 (n=75). Durable signal is decontaminated \u03c1=0.27 (z=2.38 borderline) via P052 prime-detrend. P028 Katz-Sarnak: Is_Even split striking at small-n (z_diff=5.38, \u03c1=0.77 Is_Even=True vs \u03c1=-0.05 Is_Even=False, sessionB n=71) but ATTENUATED at per_degree=5000 to z_diff=1.95 (\u03c1=0.38 Is_Even=True n=65 z=2.75; \u03c1=0.02 Is_Even=False n=49 z=0.16, sessionC wsw_F010_katz_sarnak_bigsample). Interpretation: Is_Even=True does carry real structure (z=2.75 stable), but split-significance no longer crosses z>=3. P028 is a WEAK resolver on F010, not a DIFFER-verdict resolver like on F011. Pending: wsw_F010_alternative_null (sessionB, block-shuffle null, still running)."
+      "description": "KILLED under block-shuffle-within-degree null (sessionC wsw_F010_alternative_null 2026-04-17). The 0.27 decontaminated \u03c1 was degree-mediated between-strata leakage \u2014 block null z=-0.86 (observed \u03c1=0.173 BELOW null mean 0.205 at n=51). Progression: pooled \u03c1=0.40 (n=71) \u2192 bigsample pooled 0.109 (n=75) \u2192 decon \u03c1=0.27 via P052 (z=2.38 weak-null) \u2192 block-null z=-0.86 (dead). The plain label-permute null over-rejected because it didn't preserve per-degree structure; block-shuffle preserves per-degree marginal AND destroys within-degree structure, revealing no within-degree coupling. F010 joins F022 as same-data-no-durable-signal. Triple-layer artifact: Pattern 20 (pooled) + Pattern 19 (stale original) + F022 twin (NF-Artin coupling is degree-marginal only)."
     },
     {
       "id": "F011",
@@ -329,6 +329,18 @@
       "label": "AlignmentCoupling (rank-based extremity coupling)",
       "type": "feature_distribution",
       "description": "Rank-based (quantile) coupling scorer with extremity weighting and sign-agreement term. Megethos-robust BY CONSTRUCTION (quantile transform kills magnitude). Learns an interaction matrix per domain pair at init via 5-shuffle 2\u03c3 filter. Sigmoid-normalized output. Complements P001 (raw cosine) and P002 (kurtosis-extended cosine); does NOT replace either. Code: harmonia/src/coupling.py:AlignmentCoupling (lines 182-298)."
+    },
+    {
+      "id": "P100",
+      "label": "Isogeny class size stratification",
+      "type": "stratification",
+      "description": "WHERE class_size = k on ec_curvedata. 100% coverage across 3,824,372 EC. Mazur-bounded values {1,2,3,4,6,8}. Resolves Q-rational cyclic-isogeny structure; collapses per-curve variation within class and L-function-derived features (invariant within class). Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois \u2113-adic image (class_size\u22652 \u21d4 nonmax_primes\u2260[]). Code: cartography/docs/catalog_isogeny_class_size_draft.md (sessionC)."
+    },
+    {
+      "id": "P102",
+      "label": "Artin representation dimension stratification",
+      "type": "stratification",
+      "description": "WHERE \"Dim\" = d on artin_reps. 100% coverage across 798,140 irreducible reps. Resolves fixed-degree L-function cohort structure and the Deligne-Serre stratum at (Dim=2, Is_Even=False). Collapses per-Galois-group, parity, and Frobenius-Schur structure within a dimension. Partial tautologies: Dim | |G| (Maschke), Dim \u00d7 Is_Even (non-uniform \u2014 dim-2 odd-dominated, dim-4 even-dominated), symplectic reps only at even Dim. H61 and H63 killed at this axis (Pattern 19 anchors). Code: cartography/docs/catalog_artin_dim_draft.md (sessionC)."
     }
   ],
   "invariance_matrix_dict": {
@@ -360,10 +372,10 @@
     },
     "F010": {
       "P001": -1,
-      "P010": 2,
+      "P010": -1,
       "P040": -2,
       "P042": 1,
-      "P052": 1,
+      "P052": -2,
       "P020": 1,
       "P021": 1,
       "P028": 1
@@ -465,7 +477,6 @@
     "F009"
   ],
   "live_specimens": [
-    "F010",
     "F011",
     "F013",
     "F014",

@@ -458,3 +458,20 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - Catalog growth trajectory: P001-P039 at tick 32 end, will hit P001-P039 + P100-P102 by next tick. That's +14 new projections this session.
 - sessionB's comeback is graceful — completed a clean infra hotfix + a merge in the same hour she abandoned alt_null. Workers reading this session retrospectively will see the full arc of clean-abandon → productive-pivot.
 - The wsw_F013_P028 seed is opportunistic — if F013 shows a P028 split, we'd have 2/3 live specimens with Katz-Sarnak as a resolving axis, which starts to look like a real shared structure. If F013 is axis-class-uniform, it joins the F011 cohort.
+
+## Tick 34 @ 12:33 UTC — F010 KILLED (block-shuffle null) + session's strongest methodology finding
+- **F010 FINAL VERDICT: KILLED.** sessionC wsw_F010_alternative_null (commit TBD). Block-shuffle-within-degree null z=-0.86. Observed ρ=0.173 BELOW null mean 0.205 at n=51.
+- **The learning**: the plain label-permute null at sessionC bigsample OVER-REJECTED because it didn't preserve per-degree marginal structure. Block-shuffle preserves per-degree, destroys within-degree. z near zero reveals: signal was BETWEEN-degree ("low-degree NFs pair with low-dim Artin reps" trivial marginal).
+- **F010 tier changed to `killed`**. INVARIANCE demoted: P052 +1→-2, P010 +2→-1. F010 joins F022 (its feature-distribution twin).
+- **Triple-layer artifact confirmed**: Pattern 20 (pooled) + Pattern 19 (stale 0.40 claim) + null-model-mismatch (plain permute blind to degree-marginal). All three patterns fired on the same specimen.
+- **Specimen #39 registered** (sessionC's work, backfilled by me — she was clearly busy executing).
+- **decisions_for_james updated**: F010 killed, medium-high urgency because this is a paradigm methodology finding — other live specimens (F011/F013/F014/F015) have NOT been through block-shuffle nulls. Worth making it a standard protocol.
+- **sessionB completed merge_P102_artin_dim** — catalog now P001-P039 + P100-P102.
+- **sessionB claimed wsw_F013_P028** @ 12:32:58 (my Katz-Sarnak seed) — if F013 also shows P028 structure, that's one more datapoint on the Katz-Sarnak resolving axis.
+- **sessionC claimed catalog_modular_degree** @ 12:33:29 — P103 candidate draft incoming.
+
+## Reflection at tick 34
+- This is the session's most important methodology finding: **null-model selection matters as much as projection selection**. The same data gave z=2.38 under plain permute and z=-0.86 under block-shuffle. A 3-sigma swing based purely on what the null preserves.
+- The session trajectory for F010 is a textbook case of falsification-first: 5/5 projections survival → promotion candidate → bigsample (Pattern 20 kill) → P028 hint (attenuated) → block-shuffle (kill). Each layer stripped away a tempting false-positive.
+- **The methodology IS the product.** F010 killed is not a failure — it's the instrument working. What James originally said: "the precision of the tool was so accurate, that if we had data that triangulated known problems, something could emerge." The precision cuts both ways: it also rejects non-findings with rigor.
+- Session running specimens count: F001-F005 (5 anchors), F009 (new anchor this session), F011 (alive, P028 resolved), F013 (alive), F014 (alive, refined), F015 (alive). F010 + F022 + F012 + F020 + F021 + F023-F028 killed.

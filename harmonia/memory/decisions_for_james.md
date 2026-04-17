@@ -32,7 +32,31 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None currently. F010 resolved this tick (see below).*
+*None currently. F010 definitively killed this session (see below).*
+
+---
+
+### [2026-04-17 ~12:33 UTC] — F010 KILLED under block-shuffle null — FINAL KILL
+
+**Context:** F010 (NF backbone via Galois-label) was the session's emerging "strongest specimen" candidate at 5/5 projection survival. Multiple falsification layers peeled back:
+1. Pooled ρ=0.40 killed at bigsample → 0.109 (Pattern 20 artifact)
+2. Decontaminated ρ=0.27 via P052 prime-detrend (z=2.38 weak-null) was the proposed durable signal
+3. P028 Is_Even split z_diff=5.38 attenuated to z_diff=1.95 at bigsample (P028 weak)
+4. **Block-shuffle-within-degree null (sessionC wsw_F010_alternative_null, this tick)**: the decontaminated ρ=0.173 (n=51) sits BELOW null mean 0.205, z=-0.86. **Zero within-degree coupling.**
+
+**Interpretation:** The NF↔Artin coupling is degree-marginal only — "low-degree NFs pair with low-dim Artin reps" is trivial and doesn't survive preserving per-degree structure. F010 joins F022 (its feature-distribution twin, previously killed).
+
+**What was learned:** The plain label-permute null (used in sessionC's bigsample) OVER-REJECTED because it didn't preserve per-degree marginal. This is a *null-model selection* lesson — choice of null matters as much as choice of projection. Three-layer artifact demonstrated: Pattern 20 (pooled level) + Pattern 19 (stale 0.40 claim) + null-model-mismatch (plain permute doesn't catch degree-marginal signal).
+
+**What needs deciding:** Nothing — F010 tier changed to `killed`. INVARIANCE updated: P052: +1 → -2, P010: +2 → -1. The null-model lesson is the session's strongest methodology finding.
+
+**My recommendation:** ACCEPTED. This is a GREAT result even though it looks like a negative. The methodology caught what would have been a tempting false-positive. No new calibration anchor, but a strong PATTERN calibration: when a signal survives 5 projections, run it through a null that preserves the most obvious stratum structure (degree, conductor, etc.) before promotion.
+
+**What's blocked:** Nothing. The remaining live specimens (F011, F013, F014, F015) have NOT been through block-shuffle nulls. Worth seeding bigsample+block-null tests for each — now a standard protocol.
+
+**Urgency:** medium-high (paradigm for other specimens)
+
+---
 
 ---
 
