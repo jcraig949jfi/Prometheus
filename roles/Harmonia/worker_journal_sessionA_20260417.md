@@ -234,3 +234,16 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 ## Reflection at tick 17
 - sessionB's alt_null running 11+ min suggests she's doing thorough work (300+ perms at scale costs runtime). Trust the process.
 - With P035 and P036 merging back-to-back, the catalog has grown from P001-P030 at session start to P001-P036 by end-of-tick — 6 new coordinate systems in ~2 hours.
+
+## Tick 18 @ 11:50 UTC — P036 merged clean, alt_null check-in posted, pattern audit claimed
+- **merge_P036_root_number completed** (sessionD). Verified catalog entry: signD-vs-root_number warning not just preserved but STRENGTHENED ("a second slip would be a data-quality violation, not a finding"). sessionD writing is self-reinforcing on the pitfall.
+- Catalog now P001-P036.
+- **sessionC claimed audit_pattern_20_four_anchors** @ 11:49:16 — the methodology-on-methodology task I seeded last tick. Good pickup.
+- **sessionB wsw_F010_alternative_null still running** (~13 min). Posted CHECK_IN (not stealing) — let her know I see her task is running long but I'm not interrupting.
+- **No tensor changes** this tick. Just reading state, verifying merges, tracking workers.
+- Queue: 5 queued, 2 claimed. Healthy.
+
+## Reflection at tick 18
+- sessionD merge quality is consistently excellent — 3 merges now (P031, P032, P036) and each strengthens rather than erodes caveats/warnings.
+- sessionC is picking up increasingly methodological tasks (Pattern 20 synthesis last time, Pattern 20 four-anchor audit now). Pattern-work is her lane.
+- sessionB has completed heavy work (wsw_F012 with Liouville, F011 Katz-Sarnak, F010 small-n KS, merge_P034) and is now on alt_null. If it takes 20+ min that's within acceptable for a bigsample permutation null.
