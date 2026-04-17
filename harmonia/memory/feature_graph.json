@@ -1,0 +1,76 @@
+{
+  "edges": [
+    {
+      "from": "F013",
+      "to": "F011",
+      "relation": "parallel_density_regime",
+      "note": "Both mostly collapse under N(T) unfolding (P051). F013: raw slope -0.00467 -> unfolded -0.00121 (~74% reduction). F011: pooled ~40% -> first-gap raw ~59% -> unfolded ~38%. Both are density-regime features. Proper N(T) unfolding is the next natural probe for the resolving coordinate system."
+    },
+    {
+      "from": "F010",
+      "to": "F022",
+      "relation": "supersedes",
+      "note": "Same data, different projection. Feature-dist projection kills; Galois-label resolves."
+    },
+    {
+      "from": "F022",
+      "to": "F010",
+      "relation": "same_object_different_projection",
+      "note": "Reverse link for navigation."
+    },
+    {
+      "from": "F001",
+      "to": "F003",
+      "relation": "supports",
+      "note": "Both are EC\u2194MF or EC\u2194L-function identities; both must hold or instrument is broken."
+    },
+    {
+      "from": "F003",
+      "to": "F005",
+      "relation": "supports",
+      "note": "High-Sha parity is consistent subset of BSD parity."
+    },
+    {
+      "from": "F024",
+      "to": "F011",
+      "relation": "reveals_mechanism_of",
+      "note": "H08 kill tells us Faltings is not the axis that resolves the 14% curvature."
+    },
+    {
+      "from": "F025",
+      "to": "F011",
+      "relation": "reveals_mechanism_of",
+      "note": "H10 kill tells us ADE reduction type is not the axis either."
+    },
+    {
+      "from": "F028",
+      "to": "F014",
+      "relation": "contradicts",
+      "note": "Szpiro-Faltings correlation is the formula-level leak; Lehmer shows real disc structure."
+    },
+    {
+      "from": "F033",
+      "to": "F030",
+      "relation": "subset_of",
+      "note": "Rank\u22654 coverage cliff is specific instance of delinquent EC problem."
+    },
+    {
+      "from": "F015",
+      "to": "F023",
+      "relation": "contrasts",
+      "note": "abc survived at fixed bad-primes (coord axis found); spectral tail died at fixed conductor."
+    },
+    {
+      "from": "F015",
+      "to": "F011",
+      "relation": "stratification_reveals_pooled_artifact",
+      "note": "Both F015 and F011 show: the POOLED view hides or distorts structure; STRATIFIED views reveal it. F011: pooled 40% deficit \u2192 first-gap unfolded 38% with uniform visibility across 7 projections, then P028 Katz-Sarnak RESOLVES at SO_even 42% vs SO_odd 35% (sessionB wsw_F011_katz_sarnak). F015: pooled slope -0.597 \u2192 only 12% residual after k-decontamination (88% k-mediated). Shape: single-axis pooled summaries understate the axis-class enumeration."
+    },
+    {
+      "from": "F015",
+      "to": "F013",
+      "relation": "stratification_reveals_pooled_artifact",
+      "note": "Parallel to F015\u2192F011 edge. F013: raw slope -0.00467 \u2192 ~74% collapse under N(T) unfolding. F015: pooled slope -0.597 \u2192 ~88% collapse under k-decontamination. Both: naive pooled magnitude reported a larger effect than the stratified/decontaminated residual. Pattern 20 anchor set: F011 + F013 + F015 (sessionC Pattern 20 merge 2026-04-17)."
+    }
+  ]
+}

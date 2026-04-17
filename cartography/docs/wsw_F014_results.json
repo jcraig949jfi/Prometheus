@@ -1,0 +1,1131 @@
+{
+  "specimen_id": "F014",
+  "specimen_label": "Lehmer spectrum gap",
+  "completed_by": "Harmonia_M2_sessionB",
+  "n_evaluated": 81007,
+  "n_per_degree_cap": 5000,
+  "degrees_probed": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "reference_constants": {
+    "LEHMER_BOUND": 1.17628081825992,
+    "NEXT_KNOWN_claimed_in_F014": 1.228,
+    "claimed_gap_pct": 4.4
+  },
+  "sampling_strategy": {
+    "method": "ORDER BY disc_abs ASC LIMIT N_per_degree, per degree",
+    "bias": "intentional — biases toward small-discriminant polynomials where minimum-Mahler lives",
+    "pattern_4_disclosure": "This is a Pattern 4 (Sampling Frame Trap) pattern DELIBERATELY applied. Do not use the output for distribution-average claims. Use only for minimum-finding.",
+    "alternative_not_taken": "Uniform random sample — would likely miss the minimum-Mahler polynomials, which are rare"
+  },
+  "projections_used": {
+    "P053": "Mahler measure projection (numpy.roots)",
+    "P023_analog": "degree stratification",
+    "P021_analog": "num_ram stratification (number of ramified primes, proxy for bad-prime count)",
+    "P020_analog": "disc_abs-decade stratification (implicit via discriminant-ordered sampling)"
+  },
+  "headline": {
+    "global_min_non_cyclotomic_mahler": 1.1762808182599205,
+    "second_min_non_cyclotomic_mahler": 1.2163916611382715,
+    "gap_percent_observed": 3.4099716883666997,
+    "claimed_gap_percent": 4.4,
+    "gap_verdict": "GAP VIOLATED: 3 polynomial(s) strictly in (Lehmer, 1.228). Minimum such: 1.216392",
+    "degrees_at_lehmer_bound": [
+      10,
+      20
+    ],
+    "degrees_with_small_gap_lt_5pct": [
+      10,
+      12,
+      20
+    ],
+    "base_verdict": "Lehmer bound TOUCHED in sample"
+  },
+  "per_degree": {
+    "2": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 2,
+      "min_non_cyclotomic_mahler": 1.618033988749895,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 5,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.618033988749895,
+          "num_ram": 1,
+          "disc_abs": 5
+        },
+        {
+          "m": 1.9999999999999996,
+          "num_ram": 1,
+          "disc_abs": 7
+        },
+        {
+          "m": 2.0,
+          "num_ram": 1,
+          "disc_abs": 8
+        },
+        {
+          "m": 2.0000000000000004,
+          "num_ram": 1,
+          "disc_abs": 8
+        },
+        {
+          "m": 2.9999999999999996,
+          "num_ram": 1,
+          "disc_abs": 11
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 37.555077293827104
+    },
+    "3": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3247179572447452,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 23,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3247179572447452,
+          "num_ram": 1,
+          "disc_abs": 23
+        },
+        {
+          "m": 1.4655712318767693,
+          "num_ram": 1,
+          "disc_abs": 31
+        },
+        {
+          "m": 1.839286755214162,
+          "num_ram": 2,
+          "disc_abs": 44
+        },
+        {
+          "m": 1.999999999999999,
+          "num_ram": 2,
+          "disc_abs": 104
+        },
+        {
+          "m": 1.9999999999999993,
+          "num_ram": 1,
+          "disc_abs": 83
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 12.619192345957758
+    },
+    "4": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 3,
+      "min_non_cyclotomic_mahler": 1.3802775690976132,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 283,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3802775690976132,
+          "num_ram": 1,
+          "disc_abs": 283
+        },
+        {
+          "m": 1.4012683679398528,
+          "num_ram": 1,
+          "disc_abs": 229
+        },
+        {
+          "m": 1.5560301913226822,
+          "num_ram": 1,
+          "disc_abs": 257
+        },
+        {
+          "m": 1.618033988749895,
+          "num_ram": 2,
+          "disc_abs": 400
+        },
+        {
+          "m": 1.7220838057390393,
+          "num_ram": 2,
+          "disc_abs": 117
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.342521247559485
+    },
+    "5": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.349716104669693,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 1649,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.349716104669693,
+          "num_ram": 2,
+          "disc_abs": 1649
+        },
+        {
+          "m": 1.364199545582772,
+          "num_ram": 2,
+          "disc_abs": 3017
+        },
+        {
+          "m": 1.4092352349583268,
+          "num_ram": 2,
+          "disc_abs": 3233
+        },
+        {
+          "m": 1.4098717208302602,
+          "num_ram": 2,
+          "disc_abs": 2869
+        },
+        {
+          "m": 1.443268791270373,
+          "num_ram": 1,
+          "disc_abs": 1609
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 14.744377678991397
+    },
+    "6": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 2,
+      "min_non_cyclotomic_mahler": 1.3247179572447454,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 33856,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3247179572447454,
+          "num_ram": 2,
+          "disc_abs": 33856
+        },
+        {
+          "m": 1.3247179572447476,
+          "num_ram": 2,
+          "disc_abs": 33856
+        },
+        {
+          "m": 1.3599141493821225,
+          "num_ram": 1,
+          "disc_abs": 14731
+        },
+        {
+          "m": 1.3709572397150198,
+          "num_ram": 2,
+          "disc_abs": 49781
+        },
+        {
+          "m": 1.397704106536786,
+          "num_ram": 2,
+          "disc_abs": 43531
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 12.619192345957778
+    },
+    "7": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3738952757242606,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 816631,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3738952757242606,
+          "num_ram": 2,
+          "disc_abs": 816631
+        },
+        {
+          "m": 1.3793672168169047,
+          "num_ram": 1,
+          "disc_abs": 776887
+        },
+        {
+          "m": 1.3887275743684055,
+          "num_ram": 3,
+          "disc_abs": 870199
+        },
+        {
+          "m": 1.3944012317476029,
+          "num_ram": 3,
+          "disc_abs": 830455
+        },
+        {
+          "m": 1.3956780534879045,
+          "num_ram": 2,
+          "disc_abs": 349847
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 16.79993878984382
+    },
+    "8": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 4,
+      "min_non_cyclotomic_mahler": 1.2806381562677607,
+      "min_sample_num_ram": 3,
+      "min_sample_disc_abs": 11489547,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.2806381562677607,
+          "num_ram": 3,
+          "disc_abs": 11489547
+        },
+        {
+          "m": 1.359999711711501,
+          "num_ram": 3,
+          "disc_abs": 5781875
+        },
+        {
+          "m": 1.3672228037538368,
+          "num_ram": 3,
+          "disc_abs": 2671805
+        },
+        {
+          "m": 1.370086874298242,
+          "num_ram": 2,
+          "disc_abs": 2067245
+        },
+        {
+          "m": 1.380277569097613,
+          "num_ram": 2,
+          "disc_abs": 20502784
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 8.871804792516905
+    },
+    "9": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.32471795724474,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 239483061,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.32471795724474,
+          "num_ram": 2,
+          "disc_abs": 239483061
+        },
+        {
+          "m": 1.3773643269140265,
+          "num_ram": 6,
+          "disc_abs": 370643273
+        },
+        {
+          "m": 1.387960855218803,
+          "num_ram": 3,
+          "disc_abs": 404197705
+        },
+        {
+          "m": 1.4655712318767642,
+          "num_ram": 2,
+          "disc_abs": 586376253
+        },
+        {
+          "m": 1.4846323078923584,
+          "num_ram": 1,
+          "disc_abs": 38525297
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 12.619192345957325
+    },
+    "10": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.1762808182599205,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 1332031009,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.1762808182599205,
+          "num_ram": 1,
+          "disc_abs": 1332031009
+        },
+        {
+          "m": 1.2163916611382726,
+          "num_ram": 1,
+          "disc_abs": 1487567761
+        },
+        {
+          "m": 1.26723385944022,
+          "num_ram": 3,
+          "disc_abs": 379908823
+        },
+        {
+          "m": 1.2835823606213916,
+          "num_ram": 2,
+          "disc_abs": 1035983667
+        },
+        {
+          "m": 1.304363761709164,
+          "num_ram": 2,
+          "disc_abs": 886967524
+        }
+      ],
+      "at_lehmer_bound": true,
+      "gap_vs_lehmer_pct": 3.7753672673758865e-14
+    },
+    "11": {
+      "n_evaluated": 1599,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3869136516982818,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 275311670611,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3869136516982818,
+          "num_ram": 1,
+          "disc_abs": 275311670611
+        },
+        {
+          "m": 1.9454556961820852,
+          "num_ram": 1,
+          "disc_abs": 6205948139
+        },
+        {
+          "m": 1.9999999999999991,
+          "num_ram": 3,
+          "disc_abs": 292149150705664
+        },
+        {
+          "m": 2.000000000000003,
+          "num_ram": 2,
+          "disc_abs": 292159150705664
+        },
+        {
+          "m": 2.0009718298940964,
+          "num_ram": 2,
+          "disc_abs": 20765311670611
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.906679269832214
+    },
+    "12": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 4,
+      "min_non_cyclotomic_mahler": 1.2277855586946012,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 201018619201,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.2277855586946012,
+          "num_ram": 1,
+          "disc_abs": 201018619201
+        },
+        {
+          "m": 1.2407264236525466,
+          "num_ram": 2,
+          "disc_abs": 2458729426447
+        },
+        {
+          "m": 1.272818365083504,
+          "num_ram": 4,
+          "disc_abs": 184052780197
+        },
+        {
+          "m": 1.3022688050943374,
+          "num_ram": 3,
+          "disc_abs": 10129334617423
+        },
+        {
+          "m": 1.304433562726855,
+          "num_ram": 1,
+          "disc_abs": 316981386121
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 4.378609226228174
+    },
+    "13": {
+      "n_evaluated": 312,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3804602756037518,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 293959006143997,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3804602756037518,
+          "num_ram": 2,
+          "disc_abs": 293959006143997
+        },
+        {
+          "m": 1.3836642036838374,
+          "num_ram": 6,
+          "disc_abs": 311791207040509
+        },
+        {
+          "m": 1.9999999999999971,
+          "num_ram": 2,
+          "disc_abs": 1240576436601868288
+        },
+        {
+          "m": 1.9999999999999996,
+          "num_ram": 3,
+          "disc_abs": 1240567520501420032
+        },
+        {
+          "m": 2.0002437838026044,
+          "num_ram": 4,
+          "disc_abs": 73343569978705405
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.358053806052524
+    },
+    "14": {
+      "n_evaluated": 2837,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3175755952749755,
+      "min_sample_num_ram": 3,
+      "min_sample_disc_abs": 160805685121205,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3175755952749755,
+          "num_ram": 3,
+          "disc_abs": 160805685121205
+        },
+        {
+          "m": 1.3847452520905383,
+          "num_ram": 4,
+          "disc_abs": 11414881932150269
+        },
+        {
+          "m": 1.402376781313201,
+          "num_ram": 3,
+          "disc_abs": 13048447346663
+        },
+        {
+          "m": 1.4363969690799092,
+          "num_ram": 3,
+          "disc_abs": 154291569457229
+        },
+        {
+          "m": 1.4813343236923024,
+          "num_ram": 2,
+          "disc_abs": 7488261696523347
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 12.011993634655518
+    },
+    "15": {
+      "n_evaluated": 2571,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3247179572447472,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 196421600341796875,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3247179572447472,
+          "num_ram": 2,
+          "disc_abs": 196421600341796875
+        },
+        {
+          "m": 1.3801162083525385,
+          "num_ram": 3,
+          "disc_abs": 426781883555301359
+        },
+        {
+          "m": 1.383532682208617,
+          "num_ram": 2,
+          "disc_abs": 449005897206417391
+        },
+        {
+          "m": 1.443268791270383,
+          "num_ram": 2,
+          "disc_abs": 59770508839234803
+        },
+        {
+          "m": 1.4655712318767662,
+          "num_ram": 2,
+          "disc_abs": 873692352294921875
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 12.619192345957929
+    },
+    "16": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 5,
+      "min_non_cyclotomic_mahler": 1.2806381562677642,
+      "min_sample_num_ram": 4,
+      "min_sample_disc_abs": 8651387061220737024,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.2806381562677642,
+          "num_ram": 4,
+          "disc_abs": 8651387061220737024
+        },
+        {
+          "m": 1.280638156267765,
+          "num_ram": 4,
+          "disc_abs": 8651387061220737024
+        },
+        {
+          "m": 1.3599997117115032,
+          "num_ram": 4,
+          "disc_abs": 2190873625600000000
+        },
+        {
+          "m": 1.3599997117115101,
+          "num_ram": 4,
+          "disc_abs": 2190873625600000000
+        },
+        {
+          "m": 1.3797198489533995,
+          "num_ram": 1,
+          "disc_abs": 233622440259572809
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 8.871804792517207
+    },
+    "17": {
+      "n_evaluated": 223,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3836349428172667,
+      "min_sample_num_ram": 1,
+      "min_sample_disc_abs": 808793517812627212561,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3836349428172667,
+          "num_ram": 1,
+          "disc_abs": 808793517812627212561
+        },
+        {
+          "m": 2.000000000000015,
+          "num_ram": 3,
+          "disc_abs": 54213999356238892467552256
+        },
+        {
+          "m": 2.0000000000000284,
+          "num_ram": 2,
+          "disc_abs": 54214017802982966177103872
+        },
+        {
+          "m": 2.0000152569267637,
+          "num_ram": 3,
+          "disc_abs": 2418678879491144686176529
+        },
+        {
+          "m": 2.335976221016533,
+          "num_ram": 5,
+          "disc_abs": 51796166163753707827691520
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.62794405370709
+    },
+    "18": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 2,
+      "min_non_cyclotomic_mahler": 1.286395966836282,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 3846557029528535745209,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.286395966836282,
+          "num_ram": 2,
+          "disc_abs": 3846557029528535745209
+        },
+        {
+          "m": 1.324717957244743,
+          "num_ram": 3,
+          "disc_abs": 15034518472210440781824
+        },
+        {
+          "m": 1.3247179572447494,
+          "num_ram": 3,
+          "disc_abs": 15034518472210440781824
+        },
+        {
+          "m": 1.3805307327677199,
+          "num_ram": 3,
+          "disc_abs": 40173648337182874339601
+        },
+        {
+          "m": 1.3828314726170117,
+          "num_ram": 2,
+          "disc_abs": 38519167813410200811247
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 9.361297648231325
+    },
+    "19": {
+      "n_evaluated": 197,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3808829126554096,
+      "min_sample_num_ram": 3,
+      "min_sample_disc_abs": 1939073247585017051548555,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3808829126554096,
+          "num_ram": 3,
+          "disc_abs": 1939073247585017051548555
+        },
+        {
+          "m": 1.3824645596482787,
+          "num_ram": 3,
+          "disc_abs": 2017766063735610126699403
+        },
+        {
+          "m": 1.9999999999999865,
+          "num_ram": 5,
+          "disc_abs": 518630802867009170210778775552
+        },
+        {
+          "m": 2.0000000000000075,
+          "num_ram": 2,
+          "disc_abs": 518630842213417245507316350976
+        },
+        {
+          "m": 2.0000038145663273,
+          "num_ram": 3,
+          "disc_abs": 20630828016636731405933022091
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.393983751104507
+    },
+    "20": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 3,
+      "min_non_cyclotomic_mahler": 1.1762808182599236,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 1860495326773308902342656,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.1762808182599236,
+          "num_ram": 2,
+          "disc_abs": 1860495326773308902342656
+        },
+        {
+          "m": 1.1762808182599331,
+          "num_ram": 2,
+          "disc_abs": 1860495326773308902342656
+        },
+        {
+          "m": 1.2163916611382715,
+          "num_ram": 2,
+          "disc_abs": 2320349626175642005405696
+        },
+        {
+          "m": 1.2163916611382868,
+          "num_ram": 2,
+          "disc_abs": 2320349626175642005405696
+        },
+        {
+          "m": 1.3829920985984903,
+          "num_ram": 4,
+          "disc_abs": 106836019655660313589123979
+        }
+      ],
+      "at_lehmer_bound": true,
+      "gap_vs_lehmer_pct": 3.020293813900709e-13
+    },
+    "21": {
+      "n_evaluated": 1834,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.3247179572447543,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 1901751171347368714361726129,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3247179572447543,
+          "num_ram": 2,
+          "disc_abs": 1901751171347368714361726129
+        },
+        {
+          "m": 1.3807686530795125,
+          "num_ram": 2,
+          "disc_abs": 5737729418385982521381124421
+        },
+        {
+          "m": 1.38242090457235,
+          "num_ram": 6,
+          "disc_abs": 5947444618385982521381124421
+        },
+        {
+          "m": 1.4655712318767609,
+          "num_ram": 2,
+          "disc_abs": 15367056821818447650208822777
+        },
+        {
+          "m": 1.9999999999999927,
+          "num_ram": 5,
+          "disc_abs": 6126396420533500008339733920874496
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 12.619192345958533
+    },
+    "22": {
+      "n_evaluated": 1238,
+      "n_cyclotomic_approx": 1,
+      "min_non_cyclotomic_mahler": 1.3809917019411284,
+      "min_sample_num_ram": 2,
+      "min_sample_disc_abs": 347270464382605539918027848005,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3809917019411284,
+          "num_ram": 2,
+          "disc_abs": 347270464382605539918027848005
+        },
+        {
+          "m": 1.3821887185491424,
+          "num_ram": 2,
+          "disc_abs": 335585290345833574875265599163
+        },
+        {
+          "m": 1.6180339887499018,
+          "num_ram": 2,
+          "disc_abs": 3974743622404285210611376953125
+        },
+        {
+          "m": 1.999999999999998,
+          "num_ram": 4,
+          "disc_abs": 716026150027540754847509948276508347
+        },
+        {
+          "m": 2.0000000000000044,
+          "num_ram": 2,
+          "disc_abs": 716026155870127773233492469657632768
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.40323233222816
+    },
+    "23": {
+      "n_evaluated": 196,
+      "n_cyclotomic_approx": 0,
+      "min_non_cyclotomic_mahler": 1.382587092939827,
+      "min_sample_num_ram": 3,
+      "min_sample_disc_abs": 20539040122483692476958386186983,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.382587092939827,
+          "num_ram": 3,
+          "disc_abs": 20539040122483692476958386186983
+        },
+        {
+          "m": 1.999999999999994,
+          "num_ram": 2,
+          "disc_abs": 87579030453634096837343451956922810368
+        },
+        {
+          "m": 1.9999999999999976,
+          "num_ram": 5,
+          "disc_abs": 87579030112206219473123894560276086784
+        },
+        {
+          "m": 2.000000238417967,
+          "num_ram": 3,
+          "disc_abs": 2864125503948510940846004233663441639
+        },
+        {
+          "m": 2.340001985723238,
+          "num_ram": 5,
+          "disc_abs": 90443135077114607930277421835553341440
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.5388624448622
+    },
+    "24": {
+      "n_evaluated": 5000,
+      "n_cyclotomic_approx": 7,
+      "min_non_cyclotomic_mahler": 1.3809173077242527,
+      "min_sample_num_ram": 3,
+      "min_sample_disc_abs": 1354616244850132036483436505754343,
+      "top5_smallest_non_cyclotomic": [
+        {
+          "m": 1.3809173077242527,
+          "num_ram": 3,
+          "disc_abs": 1354616244850132036483436505754343
+        },
+        {
+          "m": 1.3821602982011416,
+          "num_ram": 3,
+          "disc_abs": 1312855308850436212414726439933209
+        },
+        {
+          "m": 1.9999999999999862,
+          "num_ram": 2,
+          "disc_abs": 11188186607572508208626560435749082103808
+        },
+        {
+          "m": 2.000000000000024,
+          "num_ram": 4,
+          "disc_abs": 11188186586692040208778648401394049193241
+        },
+        {
+          "m": 2.0000000000000355,
+          "num_ram": 2,
+          "disc_abs": 11188186607572508208626560435749082103808
+        }
+      ],
+      "at_lehmer_bound": false,
+      "gap_vs_lehmer_pct": 17.396907803618934
+    }
+  },
+  "per_num_ram": {
+    "1": {
+      "n": 6254,
+      "min_non_cyclotomic_mahler": 1.1762808182599205,
+      "example": {
+        "degree": 10,
+        "disc_abs": 1332031009,
+        "m": 1.1762808182599205
+      },
+      "gap_vs_lehmer_pct": 3.7753672673758865e-14
+    },
+    "2": {
+      "n": 29774,
+      "min_non_cyclotomic_mahler": 1.1762808182599236,
+      "example": {
+        "degree": 20,
+        "disc_abs": 1860495326773308902342656,
+        "m": 1.1762808182599236
+      },
+      "gap_vs_lehmer_pct": 3.020293813900709e-13
+    },
+    "3": {
+      "n": 32565,
+      "min_non_cyclotomic_mahler": 1.26723385944022,
+      "example": {
+        "degree": 10,
+        "disc_abs": 379908823,
+        "m": 1.26723385944022
+      },
+      "gap_vs_lehmer_pct": 7.732255747810912
+    },
+    "4": {
+      "n": 9984,
+      "min_non_cyclotomic_mahler": 1.272818365083504,
+      "example": {
+        "degree": 12,
+        "disc_abs": 184052780197,
+        "m": 1.272818365083504
+      },
+      "gap_vs_lehmer_pct": 8.20701530833366
+    },
+    "5": {
+      "n": 1741,
+      "min_non_cyclotomic_mahler": 1.7997206593182424,
+      "example": {
+        "degree": 7,
+        "disc_abs": 2369276,
+        "m": 1.7997206593182424
+      },
+      "gap_vs_lehmer_pct": 53.00093577829324
+    },
+    "6": {
+      "n": 490,
+      "min_non_cyclotomic_mahler": 1.3773643269140265,
+      "example": {
+        "degree": 9,
+        "disc_abs": 370643273,
+        "m": 1.3773643269140265
+      },
+      "gap_vs_lehmer_pct": 17.094855712394484
+    },
+    "7": {
+      "n": 133,
+      "min_non_cyclotomic_mahler": 2.0000004768347726,
+      "example": {
+        "degree": 22,
+        "disc_abs": 24505927529441764252916332330221568,
+        "m": 2.0000004768347726
+      },
+      "gap_vs_lehmer_pct": 70.02746672290264
+    },
+    "8": {
+      "n": 50,
+      "min_non_cyclotomic_mahler": 4.00000000023286,
+      "example": {
+        "degree": 17,
+        "disc_abs": 316912650884297612260512565521,
+        "m": 4.00000000023286
+      },
+      "gap_vs_lehmer_pct": 240.05485239061252
+    },
+    "9": {
+      "n": 10,
+      "min_non_cyclotomic_mahler": 8.999999999999993,
+      "example": {
+        "degree": 17,
+        "disc_abs": 170321434298742410423358967906272585,
+        "m": 8.999999999999993
+      },
+      "gap_vs_lehmer_pct": 665.1234178343358
+    },
+    "10": {
+      "n": 2,
+      "min_non_cyclotomic_mahler": 6.00000000000001,
+      "example": {
+        "degree": 22,
+        "disc_abs": 832221030762852937859059793264108030719426560,
+        "m": 6.00000000000001
+      },
+      "gap_vs_lehmer_pct": 410.08227855622516
+    },
+    "11": {
+      "n": 1,
+      "min_non_cyclotomic_mahler": 4.142121429503099e+26,
+      "example": {
+        "degree": 14,
+        "disc_abs": 103318334065426770765470197661413735479481944901632942974418171604331965573259563498841619061291062477630041009194956313095225461332708654891833432491165229458866561911760649155550195068503373410096128256000000,
+        "m": 4.142121429503099e+26
+      },
+      "gap_vs_lehmer_pct": 3.521371228029176e+28
+    },
+    "12": {
+      "n": 3,
+      "min_non_cyclotomic_mahler": 4.009551113096222e+37,
+      "example": {
+        "degree": 14,
+        "disc_abs": 12082462805952683578833887544607885354840529275474033703346853825890523525763932307253207072895617326779140942034887593472026784080351332996854475050975704479877705399512513606726026903633577245444000000000000,
+        "m": 4.009551113096222e+37
+      },
+      "gap_vs_lehmer_pct": 3.408668279592944e+39
+    }
+  },
+  "gap_region_histogram": {
+    "1.176": 3,
+    "1.216": 3,
+    "1.228": 1,
+    "1.241": 1,
+    "1.267": 1,
+    "1.273": 1,
+    "1.281": 3,
+    "1.284": 1,
+    "1.286": 1
+  },
+  "gap_region_examples": [
+    {
+      "degree": 8,
+      "num_ram": 3,
+      "disc_abs": 11489547,
+      "m": 1.2806381562677607
+    },
+    {
+      "degree": 10,
+      "num_ram": 3,
+      "disc_abs": 379908823,
+      "m": 1.26723385944022
+    },
+    {
+      "degree": 10,
+      "num_ram": 2,
+      "disc_abs": 1035983667,
+      "m": 1.2835823606213916
+    },
+    {
+      "degree": 10,
+      "num_ram": 1,
+      "disc_abs": 1332031009,
+      "m": 1.1762808182599205
+    },
+    {
+      "degree": 10,
+      "num_ram": 1,
+      "disc_abs": 1487567761,
+      "m": 1.2163916611382726
+    },
+    {
+      "degree": 12,
+      "num_ram": 4,
+      "disc_abs": 184052780197,
+      "m": 1.272818365083504
+    },
+    {
+      "degree": 12,
+      "num_ram": 1,
+      "disc_abs": 201018619201,
+      "m": 1.2277855586946012
+    },
+    {
+      "degree": 12,
+      "num_ram": 2,
+      "disc_abs": 2458729426447,
+      "m": 1.2407264236525466
+    },
+    {
+      "degree": 16,
+      "num_ram": 4,
+      "disc_abs": 8651387061220737024,
+      "m": 1.2806381562677642
+    },
+    {
+      "degree": 16,
+      "num_ram": 4,
+      "disc_abs": 8651387061220737024,
+      "m": 1.280638156267765
+    },
+    {
+      "degree": 18,
+      "num_ram": 2,
+      "disc_abs": 3846557029528535745209,
+      "m": 1.286395966836282
+    },
+    {
+      "degree": 20,
+      "num_ram": 2,
+      "disc_abs": 1860495326773308902342656,
+      "m": 1.1762808182599236
+    },
+    {
+      "degree": 20,
+      "num_ram": 2,
+      "disc_abs": 1860495326773308902342656,
+      "m": 1.1762808182599331
+    },
+    {
+      "degree": 20,
+      "num_ram": 2,
+      "disc_abs": 2320349626175642005405696,
+      "m": 1.2163916611382868
+    },
+    {
+      "degree": 20,
+      "num_ram": 2,
+      "disc_abs": 2320349626175642005405696,
+      "m": 1.2163916611382715
+    }
+  ],
+  "gap_strict_violations_count": 3,
+  "gap_strict_violations_min_m": 1.2163916611382715,
+  "verdict": "KILLED",
+  "shape_summary": "From a Pattern-4-biased sample of 81007 number-field polynomials across degrees 2-24, global minimum non-cyclotomic Mahler measure = 1.176281. Gap to next distinct cluster: 3.41% (claimed 4.4%). GAP VIOLATED: 3 polynomial(s) strictly in (Lehmer, 1.228). Minimum such: 1.216392.",
+  "notes": [
+    "Cyclotomic polynomials have Mahler measure exactly 1; filtered them out with m > 1.0001.",
+    "Mahler measure computed as |leading_coeff| * prod over roots with |r| > 1 of |r|, via numpy.roots.",
+    "Degrees with low row counts in LMFDB (11, 13, 15, 17, 19, 21, 23) have small samples; their minima are inherently less stable than high-count degrees.",
+    "num_ram is number of ramified primes in the field; a direct analog of P021 bad-prime stratification."
+  ]
+}

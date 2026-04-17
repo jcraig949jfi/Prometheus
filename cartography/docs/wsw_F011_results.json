@@ -1,0 +1,267 @@
+{
+  "per_projection": {
+    "P050": {
+      "n": 2009089,
+      "var": 0.07230951052015966,
+      "deviation_from_gue": -0.10569048947984033,
+      "relative_deviation": -0.5937667948305637,
+      "z_score": -595.114303953071,
+      "verdict": "+1",
+      "description": "first-gap only, raw gamma values (no unfolding)"
+    },
+    "P051": {
+      "n": 2009089,
+      "var": 0.11005812367650022,
+      "deviation_from_gue": -0.06794187632349977,
+      "relative_deviation": -0.3816959344016841,
+      "z_score": -382.56216464242533,
+      "verdict": "+1",
+      "description": "first-gap after N(T) unfolding (catalog degree-2 formula)"
+    },
+    "P021": {
+      "description": "pooled within-stratum var by num_bad_primes, on unfolded first-gap",
+      "n": 2009089,
+      "var": 0.10955068723687937,
+      "deviation_from_gue": -0.06844931276312062,
+      "relative_deviation": -0.384546700916408,
+      "z_score": -385.4189211622649,
+      "verdict": "+1",
+      "n_strata_used": 6,
+      "per_stratum_preview": {
+        "1": {
+          "n": 3915,
+          "var": 0.1656688974952339,
+          "mean": 1.0272078731446408,
+          "included": true
+        },
+        "2": {
+          "n": 74596,
+          "var": 0.1387527789317126,
+          "mean": 0.9973222706615517,
+          "included": true
+        },
+        "3": {
+          "n": 464308,
+          "var": 0.12225495183843967,
+          "mean": 0.9696987008136151,
+          "included": true
+        },
+        "4": {
+          "n": 922339,
+          "var": 0.10842418288253253,
+          "mean": 0.9440437020906137,
+          "included": true
+        },
+        "5": {
+          "n": 492493,
+          "var": 0.09707224081178757,
+          "mean": 0.9173042980734228,
+          "included": true
+        },
+        "6": {
+          "n": 51438,
+          "var": 0.08793000797257394,
+          "mean": 0.8950217325996903,
+          "included": true
+        }
+      },
+      "n_strata_total": 6
+    },
+    "P023": {
+      "description": "pooled within-stratum var by rank, on unfolded first-gap",
+      "n": 2009088,
+      "var": 0.10870578313897111,
+      "deviation_from_gue": -0.06929421686102888,
+      "relative_deviation": -0.38929335315184765,
+      "z_score": -390.1764367514626,
+      "verdict": "+1",
+      "n_strata_used": 4,
+      "per_stratum_preview": {
+        "0": {
+          "n": 773232,
+          "var": 0.09542708220968436,
+          "mean": 0.8982963441528977,
+          "included": true
+        },
+        "1": {
+          "n": 1008146,
+          "var": 0.11613914703460682,
+          "mean": 0.969866732028586,
+          "included": true
+        },
+        "2": {
+          "n": 222305,
+          "var": 0.12110671624822941,
+          "mean": 0.9873607738129812,
+          "included": true
+        },
+        "3": {
+          "n": 5405,
+          "var": 0.11181783342896089,
+          "mean": 0.9868794768062273,
+          "included": true
+        },
+        "4": {
+          "n": 1,
+          "included": false
+        }
+      },
+      "n_strata_total": 5
+    },
+    "P024": {
+      "description": "pooled within-stratum var by torsion, on unfolded first-gap",
+      "n": 2008878,
+      "var": 0.11005144836935538,
+      "deviation_from_gue": -0.06794855163064462,
+      "relative_deviation": -0.38173343612721694,
+      "z_score": -382.5790887696322,
+      "verdict": "+1",
+      "n_strata_used": 7,
+      "per_stratum_preview": {
+        "1": {
+          "n": 1092533,
+          "var": 0.1143511822871893,
+          "mean": 0.9470681384905705,
+          "included": true
+        },
+        "2": {
+          "n": 783831,
+          "var": 0.10554875760997384,
+          "mean": 0.9411589685182978,
+          "included": true
+        },
+        "3": {
+          "n": 34904,
+          "var": 0.10641156904851423,
+          "mean": 0.944166508418146,
+          "included": true
+        },
+        "4": {
+          "n": 90362,
+          "var": 0.09992427083769827,
+          "mean": 0.939133094686191,
+          "included": true
+        },
+        "5": {
+          "n": 1067,
+          "var": 0.1075497009287528,
+          "mean": 0.9430061750089622,
+          "included": true
+        },
+        "6": {
+          "n": 4821,
+          "var": 0.09213814950985232,
+          "mean": 0.9341102083134264,
+          "included": true
+        },
+        "7": {
+          "n": 63,
+          "included": false
+        },
+        "8": {
+          "n": 1360,
+          "var": 0.08275252368575381,
+          "mean": 0.9232504530171044,
+          "included": true
+        },
+        "9": {
+          "n": 14,
+          "included": false
+        },
+        "10": {
+          "n": 42,
+          "included": false
+        },
+        "12": {
+          "n": 87,
+          "included": false
+        },
+        "16": {
+          "n": 5,
+          "included": false
+        }
+      },
+      "n_strata_total": 12
+    },
+    "P025": {
+      "description": "pooled within-stratum var by CM indicator (0 vs nonzero), on unfolded first-gap",
+      "n": 2009089,
+      "var": 0.11005720711540921,
+      "deviation_from_gue": -0.06794279288459078,
+      "relative_deviation": -0.3817010836212965,
+      "z_score": -382.5672303385921,
+      "verdict": "+1",
+      "n_strata_used": 2,
+      "per_stratum_preview": {
+        "0": {
+          "n": 2004983,
+          "var": 0.11008303733673645,
+          "mean": 0.9442585304103288,
+          "included": true
+        },
+        "1": {
+          "n": 4106,
+          "var": 0.09744109778114939,
+          "mean": 0.9660818120793133,
+          "included": true
+        }
+      },
+      "n_strata_total": 2
+    },
+    "P026": {
+      "description": "pooled within-stratum var by semistable, on unfolded first-gap",
+      "n": 2009089,
+      "var": 0.11005708685813122,
+      "deviation_from_gue": -0.06794291314186877,
+      "relative_deviation": -0.3817017592239819,
+      "z_score": -382.5679074743385,
+      "verdict": "+1",
+      "n_strata_used": 2,
+      "per_stratum_preview": {
+        "0": {
+          "n": 1489960,
+          "var": 0.10812608872231098,
+          "mean": 0.9436864200596143,
+          "included": true
+        },
+        "1": {
+          "n": 519129,
+          "var": 0.11559928078997185,
+          "mean": 0.9460731620966409,
+          "included": true
+        }
+      },
+      "n_strata_total": 2
+    }
+  },
+  "verdict_by_projection": {
+    "P050": "+1",
+    "P051": "+1",
+    "P021": "+1",
+    "P023": "+1",
+    "P024": "+1",
+    "P025": "+1",
+    "P026": "+1"
+  },
+  "shape_summary": "F011 deficit visible through all 7 projections (every verdict = +1). Unfolded first-gap variance ~0.110 vs GUE 0.178 (~38% deficit) is invariant under P021/P023/P024/P025/P026 stratifications \u2014 family, arithmetic, and rank axes all fail to collapse it. Stratum details: P050:var=0.0723,z=-595.11; P051:var=0.1101,z=-382.56; P021:var=0.1096,z=-385.42; P023:var=0.1087,z=-390.18; P024:var=0.1101,z=-382.58; P025:var=0.1101,z=-382.57; P026:var=0.1101,z=-382.57",
+  "_meta": {
+    "task_id": "wsw_F011",
+    "instance": "Harmonia_M2_sessionC",
+    "started": "2026-04-17T10:24:25.155134+00:00",
+    "finished": "2026-04-17T10:24:35.681716+00:00",
+    "gue_var_baseline": 0.178,
+    "min_stratum_n": 100,
+    "unfolding_formula": "(gamma/2pi) * (log(N*gamma^2/4pi^2) - 2)  [catalog degree-2]",
+    "n_merged": 2009089,
+    "n_unfolded_ok": 2009089,
+    "data_source": "zeros.object_zeros (prometheus_fire) INNER JOIN public.ec_curvedata (lmfdb) on lmfdb_label",
+    "notes": [
+      "bsd_joined view was not present; joined raw tables across DBs in-process.",
+      "z-score uses Gaussian SE approximation of sample variance under null sigma^2=0.178.",
+      "H09 conductor-window NOT run per task instruction.",
+      "verdict convention: +1 = F011 deficit visible (z<=-3), 0 = wrong-sign excess, -1 = deficit collapses (|z|<3)",
+      "P021 trend (var monotone with num_bad_primes 0.166 -> 0.088) is a side observation, not a F011 resolution claim",
+      "measured ~38% deficit exceeds the 14% deficit recorded in pattern_library.md; this is a tensor-update candidate and should be validated before overwriting existing entry"
+    ]
+  }
+}

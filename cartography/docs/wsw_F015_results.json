@@ -1,0 +1,281 @@
+{
+  "specimen_id": "F015",
+  "specimen_label": "abc/Szpiro monotone decrease at fixed bad-prime count (Ergon 2026-04-16)",
+  "drafted_by": "Harmonia_M2_sessionD",
+  "task_id": "wsw_F015",
+  "sample": {
+    "n_total": 30000,
+    "n_per_stratum": {
+      "1": 5000,
+      "2": 5000,
+      "3": 5000,
+      "4": 5000,
+      "5": 5000,
+      "6": 5000
+    },
+    "balanced_by": "num_bad_primes",
+    "k_bins": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "tautology_warning": "Pattern 1 lineage check: szpiro_ratio = log|disc| / log(N). Both numerator and denominator encode the same primes (bad primes dominate log|disc|, and conductor is the product of bad-prime powers). Stratifying by num_bad_primes is the NATURAL tautology control: at fixed k, the discriminant's bad-prime structure is held roughly constant, leaving the residual szpiro-vs-logN relationship to reflect (a) conductor spread within the bad-prime set and (b) the specific primes chosen. Effect survives P021 by construction if it is not purely confound-driven; this is what Ergon observed.",
+  "pooled": {
+    "slope": -0.5969197829035475,
+    "intercept": 6.636113060629288,
+    "r2": 0.26469716414429534,
+    "n": 30000,
+    "label": "pooled (no stratification)"
+  },
+  "projections": {
+    "P021_num_bad_primes_stratified_slope_szpiro_vs_logN": {
+      "axis": "P021_num_bad_primes",
+      "per_bin": {
+        "1": {
+          "n": 5000,
+          "slope": -0.12784886110062682,
+          "intercept": 2.631589321648835,
+          "r2": 0.05434174728188179
+        },
+        "2": {
+          "n": 5000,
+          "slope": -0.4480324740063455,
+          "intercept": 4.973447913203784,
+          "r2": 0.10504031209391207
+        },
+        "3": {
+          "n": 5000,
+          "slope": -0.48764801000953933,
+          "intercept": 5.742820847118604,
+          "r2": 0.06347565587126924
+        },
+        "4": {
+          "n": 5000,
+          "slope": -0.35582742011085927,
+          "intercept": 5.503345810834573,
+          "r2": 0.02452564109731059
+        },
+        "5": {
+          "n": 5000,
+          "slope": -0.476182711564652,
+          "intercept": 6.516858502495055,
+          "r2": 0.019748565110468297
+        },
+        "6": {
+          "n": 5000,
+          "slope": -0.4592891755306719,
+          "intercept": 6.757747669027023,
+          "r2": 0.008603478336270065
+        }
+      }
+    },
+    "P020_conductor_binned_slope_szpiro_vs_k": {
+      "axis": "P020_conductor_within_bin_szpiro_vs_k",
+      "per_bin": {
+        "log10N>=5": {
+          "n": 24779,
+          "slope": 0.5116922191386242,
+          "intercept": 1.3490635805607027,
+          "r2": 0.5015036638054391
+        },
+        "log10N<3": {
+          "n": 100,
+          "slope": -0.08422695156335333,
+          "intercept": 4.265034439369845,
+          "r2": 0.0006168279770115692
+        },
+        "3<=log10N<4": {
+          "n": 622,
+          "slope": 0.611912458927895,
+          "intercept": 2.0973904118695037,
+          "r2": 0.140244445018617
+        },
+        "4<=log10N<5": {
+          "n": 4499,
+          "slope": 0.43555254542952965,
+          "intercept": 2.0744464428260887,
+          "r2": 0.20459411362607294
+        }
+      }
+    },
+    "P042_within_stratum_permutation_null": {
+      "1": {
+        "n": 5000,
+        "real_slope": -0.12784886110062682,
+        "real_r2": 0.05434174728188179,
+        "null_mean": -0.00018390382619970052,
+        "null_std": 0.007664381643232019,
+        "z": -16.65691548478158,
+        "p_two_sided": 0.0,
+        "n_shuffles": 500
+      },
+      "2": {
+        "n": 5000,
+        "real_slope": -0.4480324740063455,
+        "real_r2": 0.10504031209391207,
+        "null_mean": -0.0004689547955359714,
+        "null_std": 0.01970664874117364,
+        "z": -22.711295314037987,
+        "p_two_sided": 0.0,
+        "n_shuffles": 500
+      },
+      "3": {
+        "n": 5000,
+        "real_slope": -0.48764801000953933,
+        "real_r2": 0.06347565587126924,
+        "null_mean": -0.0022582098586889855,
+        "null_std": 0.02858772549991366,
+        "z": -16.978958334839067,
+        "p_two_sided": 0.0,
+        "n_shuffles": 500
+      },
+      "4": {
+        "n": 5000,
+        "real_slope": -0.35582742011085927,
+        "real_r2": 0.02452564109731059,
+        "null_mean": -0.0007867060734590833,
+        "null_std": 0.03348644575291463,
+        "z": -10.602520095955473,
+        "p_two_sided": 0.0,
+        "n_shuffles": 500
+      },
+      "5": {
+        "n": 5000,
+        "real_slope": -0.476182711564652,
+        "real_r2": 0.019748565110468297,
+        "null_mean": -0.003756781814954045,
+        "null_std": 0.04620435862810549,
+        "z": -10.224704849865129,
+        "p_two_sided": 0.0,
+        "n_shuffles": 500
+      },
+      "6": {
+        "n": 5000,
+        "real_slope": -0.4592891755306719,
+        "real_r2": 0.008603478336270065,
+        "null_mean": 0.00025788568491630224,
+        "null_std": 0.0667164482585513,
+        "z": -6.8880624375367026,
+        "p_two_sided": 0.0,
+        "n_shuffles": 500
+      }
+    },
+    "P051_unfolding": {
+      "skipped": "NOT_APPLICABLE",
+      "reason": "P051 N(T) unfolding is a zero-spacing concept. No natural analog for scalar szpiro_ratio. Flagging as 0 (untested) in invariance profile rather than forcing a mismatched test."
+    },
+    "P052_decontamination": {
+      "residualization_on": "num_bad_primes (k)",
+      "pooled_residual_slope_vs_logN": {
+        "slope": -0.06883344142727216,
+        "intercept": 0.39204178815312574,
+        "r2": 0.006559868958179282,
+        "n": 30000
+      },
+      "per_bin": {
+        "1": {
+          "n": 5000,
+          "slope": -0.12784886110062646,
+          "intercept": 1.0112518846582397,
+          "r2": 0.05434174728188179
+        },
+        "2": {
+          "n": 5000,
+          "slope": -0.44803247400634566,
+          "intercept": 2.259024639122893,
+          "r2": 0.10504031209391207
+        },
+        "3": {
+          "n": 5000,
+          "slope": -0.4876480100095397,
+          "intercept": 2.50754898689074,
+          "r2": 0.06347565587126924
+        },
+        "4": {
+          "n": 5000,
+          "slope": -0.35582742011085833,
+          "intercept": 1.8761034871571403,
+          "r2": 0.024525641097310258
+        },
+        "5": {
+          "n": 5000,
+          "slope": -0.47618271156465125,
+          "intercept": 2.5491893046941243,
+          "r2": 0.019748565110468297
+        },
+        "6": {
+          "n": 5000,
+          "slope": -0.4592891755306719,
+          "intercept": 2.50460113861785,
+          "r2": 0.008603478336270065
+        }
+      },
+      "interpretation": "Residualizing szpiro on k is a constant shift within each k, so within-k slopes are identical to the raw P021 slopes. The interesting number is the POOLED residual slope: if it remains strongly negative, there is residual conductor-dependence after removing the stratum effect. If it collapses to ~0, the pooled monotone signal was entirely k-mediated (and the within-k residual slope is the real effect)."
+    }
+  },
+  "monotone_check": {
+    "slopes_in_k_order": [
+      {
+        "k": 1,
+        "slope": -0.12784886110062682
+      },
+      {
+        "k": 2,
+        "slope": -0.4480324740063455
+      },
+      {
+        "k": 3,
+        "slope": -0.48764801000953933
+      },
+      {
+        "k": 4,
+        "slope": -0.35582742011085927
+      },
+      {
+        "k": 5,
+        "slope": -0.476182711564652
+      },
+      {
+        "k": 6,
+        "slope": -0.4592891755306719
+      }
+    ],
+    "all_negative": true,
+    "monotone_decreasing_in_k": false,
+    "note": "\"Monotone decreasing in k\" means the within-k slope gets MORE negative as bad-prime count grows \u2014 i.e., the szpiro-vs-logN trend is steepest for many-bad-prime curves."
+  },
+  "shape_summary": {
+    "verdict": "REPRODUCE_REAL_AT_OBJECT_LEVEL / MONOTONE_CLAIM_NOT_LITERAL",
+    "invariance_profile": {
+      "P021_num_bad_primes": "+2 (z=-6.9 to -22.7 per stratum under permutation null; within-k slope is strongly object-level)",
+      "P020_conductor_binned": "+1 (szpiro vs k within conductor bin is positive and coherent: slope +0.44 to +0.61 at adequate bins; the two stratified views together are self-consistent)",
+      "P042_within_stratum_perm": "+2 (real slope significantly exceeds null in every adequate stratum)",
+      "P051_unfolding": "0 (NOT_APPLICABLE: zero-spacing concept has no direct scalar-szpiro analog)",
+      "P052_decontamination": "-1 (pooled slope -0.597 collapses to -0.069 after residualizing szpiro on k \u2014 88% of pooled signal is num_bad_primes-mediated; only 12% residual)"
+    },
+    "ergon_claim_reproduction": {
+      "signs": "ALL_NEGATIVE_AS_CLAIMED (per-k slopes all < 0)",
+      "monotone_in_k": "FALSE (k=4 breaks monotonicity; k=1=-0.128, k=2=-0.448, k=3=-0.488, k=4=-0.356, k=5=-0.476, k=6=-0.459)",
+      "refinement": "The direction is correct \u2014 higher bad-prime curves have steeper negative szpiro-vs-logN slopes on average (k=1 weakest at -0.128; k=3-6 cluster around -0.35 to -0.49). The strict monotone statement is inaccurate and should be restated as: slope is negative for all k and *generally more negative* for k>=2 than k=1, with a non-monotone plateau at k>=2."
+    },
+    "pattern_1_tautology_quantified": {
+      "finding": "88% of the pooled szpiro-vs-logN slope is k-mediated (pooled -0.597 -> residual -0.069 after removing k-mean).",
+      "interpretation": "The pooled -0.597 is mostly the marginal-distribution confound between conductor and num_bad_primes, not structural. The real structure is the decomposition: within-k slope (negative, strong) and within-logN slope (positive vs k, strong) \u2014 these two projections are the non-tautological content of F015.",
+      "tautology_status": "PARTIAL_TAUTOLOGY. The within-stratum effects are NOT tautological (they survive permutation nulls at z<-6 consistently). But any report that leads with the pooled -0.597 number is reporting 88% confound."
+    },
+    "connection_to_prior_work": {
+      "F011_F013_parallel": "F015 joins F011 and F013 in showing that the right coordinate system is the STRATIFICATION, not the pooled view. F011 was uniform across 7 projections = axis class exhausted. F013 was density-mediated = right axis is unfolding. F015 is k-confounded = right axes are (k, logN) joint. Common shape: single-axis pooled views conceal the real structure; stratification or unfolding reveals it.",
+      "pattern_17_case": "Language matters: the correct phrasing is \"szpiro-vs-logN slope is negative within every bad-prime stratum, with magnitude generally increasing for k>=2\" not \"monotone decrease.\" The old phrasing smuggles in a stronger claim than the data supports."
+    },
+    "recommended_followups": [
+      "Re-test with k=7..12 strata (need to check ec_curvedata coverage). If slopes cluster at -0.35 to -0.49 regardless of k>=2, the effect saturates in k.",
+      "Apply P020 x P021 joint stratification: within each (conductor-bin, k-bin) cell, does the conductor-within-k slope persist? Current data has n>=100 only in {log10N in [4,5] or >=5} x {k=1..6}; joint is feasible.",
+      "Investigate the k=1 outlier separately: slope -0.128 (vs -0.35+ for k>=2). Either k=1 sample is biased small (only 5000 total, low-N dominated) or k=1 curves really are structurally different.",
+      "Update F015 tensor description: \"monotone\" claim is incorrect literally; re-describe as \"szpiro-vs-logN slope is negative within every bad-prime stratum with magnitude saturating for k>=2; 88% of pooled slope is k-mediated confound.\""
+    ]
+  }
+}
