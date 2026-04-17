@@ -906,6 +906,78 @@ projection. Critical for revealing features hidden in pooled analysis.
 
 ---
 
+## P035 — Kodaira reduction type stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task `catalog_kodaira`). Reviewed and approved (with caveat) by Harmonia_M2_sessionA. Merged by Harmonia_M2_sessionC via `merge_P035_kodaira`.
+
+> **DERIVABLE-NOT-STORED caveat (read before using):** `P035` is not a direct `lmfdb` column. Kodaira symbols per bad prime (`I_n`, `II`, `III`, `IV`, `I_n*`, `II*`, `III*`, `IV*`) must be computed from the a-invariants via **Tate's algorithm** (PARI `ellglobalred`, Sage `EllipticCurve.kodaira_symbol`, or LMFDB's build pipeline). **Any worker using P035 must first materialize Kodaira via Tate's algorithm or accept placeholder status.** Materialization is a multi-million-row infrastructure task owned by Mnemosyne / Koios with James's input — not auto-seedable.
+
+**Code:** Derivable from `lmfdb.ec_curvedata` (`ainvs`, `bad_primes`, `semistable`, `potential_good_reduction`) via Tate's algorithm. No direct column. Proposed materialization: `kodaira_per_prime(lmfdb_label, prime, kodaira_symbol, n, split_nonsplit)` at ~7M rows (3.8M curves × mean ~2 bad primes).
+**Type:** stratification (geometric reduction-type axis, refines P026 semistable vs additive)
+
+**What it resolves:**
+- **Per-bad-prime singular fiber geometry.** The Néron model at a bad prime `p` has a specific geometric type captured by the Kodaira symbol. `I_n (n≥1)` families are multiplicative / semistable; all others (`II`, `III`, `IV`, `I_n*`, `II*`, `III*`, `IV*`) are additive.
+- **Refinement of P026 (semistable vs additive).** Within "additive," Kodaira distinguishes seven finer types, each with distinct local component groups, Tamagawa numbers, and L-function local factors.
+- **Tamagawa-number prediction** (up to limited ambiguity). The local component-group order `c_p` is determined by the Kodaira type plus split/non-split information. Ogg's formula `f_p = ord_p(Δ) − m + 1` ties conductor exponent to Kodaira + Δ valuation.
+- **Modular-curve genus and degeneration signature.** Kodaira types classify the degeneration of the Weierstrass singular fiber; the join profile across all bad primes is the curve's "global reduction signature."
+- **Néron differential period behavior.** Additive-reduction types have specific integral-period factors relevant for BSD leading-term computations.
+
+**What it collapses:**
+- **Per-prime vs global.** Kodaira type is a PER-BAD-PRIME invariant. A curve has one Kodaira symbol per bad prime, not a single scalar. P035 usage must choose: (i) stratify by tuple of per-prime types, (ii) stratify by dominant type across bad primes, or (iii) stratify per `(curve, prime)` pair. Each choice collapses different features.
+- **Non-reduction-related structure.** Features independent of the Néron model at bad primes are invariant under P035.
+- **Split vs non-split multiplicative distinction** (if only coarse Kodaira symbol `I_n` is used). Record split/non-split separately.
+
+**Tautology profile:**
+- **P035 ↔ P026 (semistable vs additive).** P035 IS the refinement: `P026 = "semistable"` iff all Kodaira types are `I_n`; `P026 = "additive"` iff any is non-`I_n`. Joint P026 × P035 is *nested*, not orthogonal — double-counting risk.
+- **P035 ↔ P021 (num_bad_primes).** For fixed `num_bad_primes`, the Kodaira type tuple has combinatorially more entropy than the scalar count — P035 refines P021 within each P021 stratum.
+- **P035 ↔ Tamagawa numbers.** Product of local Tamagawa `c_p` enters the BSD formula. Most Kodaira types determine `c_p` up to small ambiguity; for `I_n`, `c_p = n` (or `n/2` for non-split). Treating P035 and "Tamagawa-number stratification" as independent re-asserts this near-identity as if it were signal.
+- **P035 ↔ Conductor exponent `f_p` (Ogg's formula).** `f_p` is derivable from Kodaira + Δ valuation; joint with conductor conditioning (P020) risks formula-lineage leak (Pattern 1).
+
+**Stratum-count summary (distribution shape, materialization pending):**
+- 8-element coarse class: `{I_n (n≥1), II, III, IV, I_n* (n≥0), II*, III*, IV*}`. `I_n` and `I_n*` index infinitely many sub-types by `n`; use the coarse 8-class split for finite analysis with `n` as secondary axis.
+- Per LMFDB aggregate counts: `I_n` dominates (~70–80% of all bad-prime Kodaira symbols); `II / III / IV` occur at 5–10% each; `II* / III* / IV*` and `I_n*` are rarer.
+- **Small-n strata discipline:** at fine granularity (e.g., "curves all of whose bad primes are type II"), strata quickly drop below `n=100`. Apply sessionB's Liouville-lesson discipline.
+
+**Calibration anchors:**
+- **Tate's algorithm is proved**, not conjectural. Any LMFDB Kodaira symbol disagreeing with an independent PARI/GP or Sage computation on the same a-invariants is a data-quality violation — candidate F-level calibration anchor once materialized.
+- **Ogg's formula** (conductor exponent from Kodaira + Δ) is proved. A P035 implementation computing `f_p` from Kodaira + local Δ valuation that disagrees with `ec_curvedata.conductor` at the corresponding prime is broken.
+- **Neron component-group sizes** match the Kodaira type exactly (textbook identity). `I_n → c_p ∈ {1,...,n}` per split/non-split; `II → 1`; `III → 2`; `IV → 3`; `I_0* → {1,2,4}`; `I_n*` varies; `II* → 1`; `III* → 2`; `IV* → 3`.
+- **Semistable reduction theorem** (Deligne-Mumford): every elliptic curve acquires semistable reduction (all Kodaira types become `I_n`) after a tame base change. Joint P035 × extension-degree analyses can validate.
+
+**Known failure modes:**
+- **Using P035 without materialized data** — any worker drawing claims from "Kodaira stratification" must either (a) run Tate's algorithm on the curves they use, (b) query LMFDB's public detail endpoint per curve (slow, rate-limited), or (c) defer until Mnemosyne materializes the `kodaira_per_prime` table. Do not fabricate strata from indirect LMFDB columns without an audit trail.
+- **Choosing the wrong aggregation rule** (per-prime vs dominant-type vs tuple) and reporting as if canonical. Different choices yield different strata; document the rule explicitly.
+- **Stratifying without split/non-split awareness.** Two `I_n` curves can have genuinely different arithmetic; ignoring split/non-split is an information leak.
+- **Confusing Kodaira symbol with Kodaira-Néron model.** The symbol is a label; the Néron model is the geometric object. P035 classifies labels.
+
+**When to use:**
+- **Refining a P026 "additive" cohort** — when a pooled "additive" stratum has structural variation, P035 is the natural next refinement axis.
+- **Tamagawa-number-driven claims** — local `c_p` structure is cleaner via Kodaira axis than via raw `c_p` values.
+- **Cross-projection calibration** — Ogg's formula and Tate's algorithm are proved; candidate anchor source once materialized.
+- **Investigating the Salem-region density around F014** — low-`num_ram` EC may correlate with specific Kodaira signatures.
+
+**When NOT to use:**
+- **As the sole axis for BSD-adjacent claims** — Tamagawa `c_p` enters BSD multiplicatively; Pattern 1 risk.
+- **Jointly with P026 as if orthogonal** (nested-refinement tautology).
+- **Before Tate-algorithm data is materialized** — the axis is notional without the per-prime Kodaira table.
+- **At small `n` per sub-stratum** — rare types (`IV*`, `III*`, `II*`) have few representatives.
+
+**Related projections:**
+- **P026 semistable vs additive:** parent axis; P035 refines within additive cohort.
+- **P021 num_bad_primes:** orthogonal-in-count; P035 refines at fixed `num_bad_primes`.
+- **P020 conductor conditioning:** joint usage requires Ogg's formula awareness.
+- **P036 Root number (sessionD draft):** local root numbers are Kodaira-type-sensitive (Rohrlich); joint P035 × P036 is natural.
+- **P034 AlignmentCoupling** and **P039 Faltings height / P046 Regulator (proposed):** Kodaira can enter Néron differential period factor — formula-lineage check warranted.
+
+**Follow-ups this entry motivates:**
+1. **`materialize_kodaira_per_prime`** — run Tate's algorithm (PARI `ellglobalred` or Sage) on all 3.8M `ec_curvedata` rows, write to `kodaira_per_prime` table (Mnemosyne/Koios infra task; needs James input on runtime and storage).
+2. **`audit_kodaira_ogg_consistency`** — verify Ogg's formula on every `(curve, bad_prime)` pair once materialized (Pattern 7).
+3. **Candidate calibration anchor F006** — Kodaira consistency across LMFDB vs independent Tate-algorithm runs.
+4. **Joint split/non-split flag** — orthogonal refinement of `I_n` that Kodaira alone doesn't capture; co-document here or give a sister P-ID.
+5. **`wsw_F014_kodaira_salem_region`** — test whether Salem polynomials in the `(1.176, 1.228)` interval correlate with specific Kodaira signatures; connects F014 (Lehmer refined) to P035.
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
