@@ -1315,6 +1315,352 @@ Use `nonmax_primes = '[]'` as the boolean-level filter for "fully surjective ima
 
 ---
 
+<!-- Merged from cartography/docs/catalog_isogeny_class_size_draft.md by Harmonia_M2_sessionB, 2026-04-17, tick 16. Renumbered P040 -> P100 per sessionA NAMESPACE_V2 (stratifications now start at P100). -->
+
+## P100 — Isogeny class size stratification
+
+**Code:** `WHERE class_size = k` on `lmfdb.ec_curvedata`. 100% coverage across 3,824,372 EC rows. Values are members of `{1, 2, 3, 4, 6, 8}` for non-CM curves (Mazur's bound on rational cyclic isogenies); CM curves follow the same bound structure with slightly different attainable sets. Paired data: `isogeny_degrees` (array of all `d` such that an isogeny of degree `d` exists from this curve to another curve in its class) — `class_size = len(isogeny_degrees)` by construction.
+**Type:** stratification (algebraic axis, finite-group-bounded)
+
+**What it resolves:**
+- **Isogeny-equivalence class membership.** Members of the same Q-isogeny class share the same L-function (hence the same `analytic_rank`, root number, local factors at all primes). `P100` picks which class-size bucket a curve sits in.
+- **Q-rational cyclic-isogeny structure at the object level.** Each size bucket corresponds to a distinct shape of the isogeny graph: size 1 = isolated, size 2 = single 2-isogeny pair, size 4 = `[1,2,4]` linear chain or `[1,2]²` star, etc.
+- **Cross-projection anchor for P024 torsion.** Isogenies act on rational torsion; each isogeny degree in `isogeny_degrees` corresponds to a rational cyclic subgroup. Curves with larger class sizes tend to have torsion containing cyclic subgroups of the listed degrees.
+- **Cohort for L-function-invariance tests.** Any signal claimed per-curve that varies within a single isogeny class implies either an error in the measurement or a non-L-function-derived feature.
+
+**What it collapses:**
+- **Per-curve structure within a class.** Four curves in an isogeny class of size 4 share the L-function and hence many derived features, so pooled-by-class measurements hide the intra-class variation in non-L-function features (e.g., `faltings_height`, `regulator`, explicit Weierstrass coefficients).
+- **The SHAPE of the isogeny graph beyond its size.** `class_size = 4` can be `[1,2,4]` (linear chain) or involve `[1,2,2]` (star). The coarse size number loses this structure; use `isogeny_degrees` for finer resolution.
+- **Degree-of-individual-isogeny information.** `class_size` is a cardinality; the individual isogeny degrees (2, 3, 5, 7, 11, 13, 37, etc.) are only recoverable via `isogeny_degrees`.
+
+**Tautology profile:**
+- **P100 ↔ `isogeny_degrees` (strict near-identity).** `class_size = len(isogeny_degrees)` by construction. `isogeny_degrees` is the finer projection; `P100` is the cardinality summary. Independent use of both risks double-counting.
+- **P100 ↔ L-function invariants (analytic_rank, root number, conductor, local factors).** All members of an isogeny class share the same L-function → stratifying by `class_size` while also using `analytic_rank` or root number as a response variable does not reveal class-size structure in those variables (they are invariant within class by definition).
+- **P100 ↔ P024 Torsion.** Isogeny degree `d` rational cyclic isogenies correspond to rational subgroup structure. Curves with `isogeny_degrees ∋ d` admit a rational `d`-torsion-like structure (though not always `d`-torsion proper — could be a quotient). Partial tautology: `class_size ≥ 2` implies *some* rational cyclic subgroup exists.
+- **P100 ↔ P039 Galois ℓ-adic image (sessionD).** A rational cyclic isogeny of degree `d = ∏ p_i^{e_i}` forces each `p_i` into `nonmax_primes`. Therefore `class_size ≥ 2` implies `nonmax_primes ≠ []`. Partial tautology — P100 refines P039 at each non-maximal prime.
+- **P100 ↔ P025 CM.** CM curves have distinguished isogeny structure: the endomorphism ring is larger than Z, so isogeny classes can be structurally distinct from non-CM classes. Stratifying by `P100 × P025` jointly is orthogonal in principle but the CM subfamily (~5K rows) has small-n strata issues at every `class_size > 1`.
+- **P100 ↔ P022 aut_grp (EC-only concept).** For EC, aut_grp is usually trivial `{±1}`; rarely larger for CM curves. The aut_grp-isogeny interaction is not a tautology but joint coverage is sparse.
+
+**Stratum-count summary (100% coverage across 3,824,372 EC rows):**
+- `class_size = 1` (isolated): 2,244,844 (58.70%) — dominant stratum.
+- `class_size = 2`: 1,120,652 (29.30%).
+- `class_size = 4`: 391,176 (10.23%).
+- `class_size = 6`: 37,512 (0.98%).
+- `class_size = 3`: 20,628 (0.54%).
+- `class_size = 8`: 9,560 (0.25%).
+- Mazur-bound: `class_size ∈ {1, 2, 3, 4, 6, 8}` exhausts the observed values. No `class_size = 5, 7, ≥ 9`.
+- Top `isogeny_degrees` values: `[1]` (58.70%), `[1,2]` (25.67%), `[1,2,4]` (7.15%), `[1,3]` (5.41%), `[1,2,3,6]` (1.07%), `[1,2,4,8]` (0.66%).
+
+**Small-n strata discipline:**
+- `class_size = 8` is the smallest non-CM stratum at 9,560 rows; still adequate for most analyses but drops fast when joint-stratified.
+- Joint `P100 × P023 rank` at `rank ≥ 3` within any `class_size > 2` stratum quickly drops below `n = 100`. Rank ≥ 4 with any non-trivial class is <100 curves total.
+- Joint `P100 × P024 torsion ≥ 4` × `class_size ≥ 4`: small; check before publication.
+- Joint `P100 × P025 CM` breaks at `class_size ≥ 2` in CM subfamily (<50 curves per bucket).
+
+**Calibration anchors:**
+- **Mazur's theorem on rational torsion + Kenku-Momose-Parent ℓ-adic image bound** (proved): `class_size` for non-CM EC over Q is bounded by 8; attainable values are `{1, 2, 3, 4, 6, 8}`. A non-CM curve with `class_size = 5, 7, 9+` is a data corruption signal.
+- **L-function invariance within isogeny class** (trivial consequence of isogeny): `analytic_rank`, `root_number`, `conductor` are invariant within class. Any disagreement is a data-quality violation.
+- **`class_size = len(isogeny_degrees)`** must hold row-by-row. Implementation spot-check.
+- **`class_deg` matches isogeny-graph traversal degree** — for the optimal curve, `class_deg` is the total degree of the Q-isogeny class as a degree of covering. Related to but distinct from `class_size`.
+
+**Known failure modes:**
+- **Pooled analysis with 58.7% `class_size = 1`**: the trivial stratum dominates any unfiltered per-curve analysis. Pattern 4 / Pattern 20 trap.
+- **Stratifying by `P100` AND using L-function-derived features as response** (root number, analytic rank) gives zero variance within stratum by construction → misleading "perfect stratification." Not a finding.
+- **Treating `class_size` and `isogeny_degrees` as independent axes** (near-identity).
+- **Inferring torsion structure from `class_size` alone.** Class size says there's *some* rational cyclic subgroup; doesn't specify which torsion points it hits. For torsion analysis use `P024` directly.
+- **CM subfamily small-n** at joint-stratification — explicit coverage reporting mandatory (Pattern 9).
+- **Missing Mazur-bound audit.** Any fresh EC ingestion should check `class_size ∈ {1, 2, 3, 4, 6, 8}` for non-CM rows; violations flag upstream data quality.
+
+**When to use:**
+- **Q-rational cyclic isogeny structure** when analyzing EC-family structure at the object level.
+- **L-function-equivalence cohort analysis** — filter to unique classes (e.g., one representative per class) to avoid over-counting L-functions. `WHERE class_size = 1 OR lmfdb_number = '1'` picks the optimal-curve-per-class cohort.
+- **Cross-projection with P039 Galois ℓ-adic image** — `class_size ≥ 2` ⇔ non-trivial `nonmax_primes`; joint usage locates where the non-maximality manifests.
+- **Pattern 16 Category-3 candidates** — small exotic strata (`class_size = 3, 6, 8`) are under-studied compared to `class_size = 1, 2`; worth a walk.
+- **Mazur-bound spot-checks** on EC data imports.
+
+**When NOT to use:**
+- **Alongside L-function-derived response variables** (circular; root number and analytic rank are class-invariant by definition).
+- **Jointly with `isogeny_degrees` as if orthogonal** — near-identity.
+- **As a torsion proxy without `P024` cross-check** — `class_size` is not torsion.
+- **For CM subfamily fine stratification** without explicit coverage (small-n).
+- **On non-EC objects.** `class_size` is EC-specific; MF isogeny classes exist but live in `mf_newforms.is_twist_minimal` / related columns, not here.
+
+**Related projections:**
+- **P024 Torsion stratification:** partial tautology at `class_size ≥ 2` (rational cyclic subgroups). Standard joint axis for "torsion plus isogeny" analyses.
+- **P039 Galois ℓ-adic image (sessionD):** partial tautology — `class_size ≥ 2` ⇒ `nonmax_primes ≠ []`. P100 refines P039 at each non-maximal prime.
+- **P025 CM vs non-CM:** orthogonal-in-principle, small-n in CM cohort for joint stratification.
+- **P023 Rank:** independent axis; useful for rank-per-class-size analyses (all class members share rank).
+- **`class_deg` column:** related finer-granularity — total degree of the isogeny class as a covering; distinct from class cardinality.
+- **`isogeny_degrees` column:** direct finer projection (tautology-partner).
+
+**Follow-ups this entry motivates:**
+1. **`audit_mazur_bound_class_size`** — verify `class_size ∈ {1, 2, 3, 4, 6, 8}` for all non-CM `ec_curvedata` rows. Any violation is a data-quality signal (candidate F-level anchor).
+2. **`wsw_F003_by_P040`** — re-examine the F003 BSD-parity calibration anchor stratified by `class_size`. Expected: anchor holds exactly within each stratum by isogeny invariance; Pattern 7 spot-check.
+3. **`catalog_isogeny_degrees_sister`** — document `isogeny_degrees` as a sister finer-granularity axis with explicit nesting tautology note.
+4. **`catalog_class_deg_sister`** — document `class_deg` as a distinct concept (isogeny-class covering degree, not cardinality).
+5. **`wsw_category3_class_size_3_6_8`** — Pattern-16 candidate walk on the rare `class_size = 3, 6, 8` strata (small but texture-rich).
+6. **L-function invariance audit** (`audit_class_size_Linv`) — verify `analytic_rank`, `root_number`, `conductor` agree within every isogeny class. Disagreements flag upstream data issues.
+
+---
+
+## P101 — EC regulator stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_regulator; approved by sessionA; ID path P041 → P061 → P101 per NAMESPACE_DECISION_V2)
+
+**Code:** `WHERE regulator BETWEEN lo AND hi` (or coarse bins) on `ec_curvedata.regulator` (float, 3,824,372 rows, zero NULLs). Natural sub-stratifications: log-magnitude bins, per-rank bins (required because rank-0 regulator is a degenerate cell).
+**Type:** stratification (magnitude axis on Mordell-Weil lattice; BSD-formula factor)
+
+**What it resolves:**
+- **Covolume of the Mordell-Weil lattice.** The regulator is `det(⟨P_i, P_j⟩)` where `⟨·,·⟩` is the canonical Néron-Tate height pairing on a basis of `E(Q)/torsion`. Encodes how "spread out" the rational points are.
+- **BSD leading-term factor.** The BSD conjecture predicts
+    `L^(r)(E, 1) / r! = (Ω · regulator · ∏_p c_p · |Ш(E/Q)|) / |E(Q)_tors|²`
+  where `r = rank = analytic_rank` (F003 anchor). Regulator is the load-bearing Mordell-Weil-lattice factor; the other factors are archimedean period (Ω), Tamagawa product (`c_p`), Sha (via `P038`), and torsion (via `P024`).
+- **Rank-dependent Mordell-Weil structure.** Regulator grows with rank in both minimum and mean (empirically): rank-1 mean 7.99, rank-2 mean 9.50, rank-3 mean 20.9, rank-4 mean 32.0 (see summary below). Higher-rank curves have "further-apart" rational points, consistent with heuristic height-growth conjectures.
+- **Silverman / Néron height-gap probe.** The minimum non-zero regulator is bounded below by classical inequalities; the observed minima (0.009 at rank 1, 1.50 at rank 4, 14.8 at rank 5) probe the height-gap conjectures.
+
+**What it collapses:**
+- **Rank 0 collapses to a single value.** All 1,404,510 rank-0 EC in `ec_curvedata` have `regulator = 1.000000` exactly (convention: empty product for empty lattice). `P101` is degenerate for rank-0 questions; use `P023 rank = 0` as the effective stratifier instead.
+- **Isogeny-class fine structure.** Curves in the same isogeny class have regulators differing by a bounded factor (isogeny degrees); pooling across isogeny classes while comparing regulators mixes these factors.
+- **Lattice-shape information.** `P101` reports only the determinant; the *shape* of the lattice (orthogonality, short-vector structure) is collapsed. For shape questions, use the full height-pairing matrix.
+
+**Tautology profile:**
+- **P101 ↔ P023 rank (trivial tautology at rank 0).** `rank = 0 ⇒ regulator = 1`. Pooling across ranks without reporting the rank distribution treats the rank-0 spike at `regulator = 1` as if it were a signal. Always stratify by rank first, then analyze regulator within each rank ≥ 1 cell.
+- **P101 ↔ leading_term (BSD identity, Pattern 1 formula lineage).** `leading_term = Ω · regulator · ∏c_p · |Ш| / |tors|²`. Any correlation claim between regulator and leading_term is reporting the BSD identity, not structural information. The only non-tautological correlation is `regulator × (Ω · ∏c_p · |Ш| / |tors|²)` vs `leading_term` — with the constraint that the ratio is 1 by BSD.
+- **P101 ↔ P038 Sha (BSD-formula joint factor).** Joint `regulator × Sha` enters BSD multiplicatively; at fixed rank, `regulator · |Ш|` is determined by `leading_term` up to the other factors. Independent-axis use double-counts the BSD identity.
+- **P101 ↔ conductor (heuristic scaling, not strict tautology).** Heuristic height-conjecture bounds (e.g., Lang's conjecture, Silverman) predict `regulator ≲ log(conductor)^{f(rank)}` for explicit functions `f`. Within each rank bin this is a predicted scaling, and any observation aligning with it is calibration of the heuristic, not discovery. Use `P020 × P023 × P101` joint stratification for clean effects.
+
+**Stratum-count summary (live `ec_curvedata` queries, 2026-04-17):**
+
+| Rank | n | min regulator | max regulator | mean |
+|---|---|---|---|---|
+| 0 | 1,404,510 | 1.000000 | 1.0000e+00 | 1.0000e+00 |
+| 1 | 1,887,132 | 0.008914 | 1.0471e+04 | 7.9850e+00 |
+| 2 | 493,291 | 0.015169 | 4.4695e+03 | 9.5015e+00 |
+| 3 | 37,334 | 0.118694 | 1.3171e+03 | 2.0934e+01 |
+| 4 | 2,086 | 1.504345 | 1.7003e+02 | 3.1977e+01 |
+| 5 | 19 | 14.790528 | 4.6846e+01 | 3.1115e+01 |
+
+Total: 3,824,372 rows; zero NULLs.
+
+**Small-n strata discipline:**
+- At rank ≤ 3, all strata are above `n = 100` by wide margins. No small-n concern.
+- **Rank 4: n = 2,086.** Adequate at the marginal level, but joint stratifications (`rank=4 × P020 conductor × P101 log-bin`) rapidly fall below 100 per cell. Pattern 9 (delinquent frontier) applies jointly with F030/F033.
+- **Rank 5: n = 19.** Below adequacy threshold. Any rank-5 claim about regulator structure is a point-estimate on 19 observations and should be reported with explicit coverage caveat (Pattern 9).
+- **Log-magnitude bins at rank 1**: regulator ranges 0.009 to 10,471, spanning ~6 decades. Log-bins of width 1 (decade) cover the distribution; expect n per decade-bin to range from single-digit (extreme tails) to >500K (central bulk).
+
+**Calibration anchors:**
+- **Rank-0 regulator = 1 convention.** All 1,404,510 rank-0 EC have exactly `regulator = 1.0`. Any deviation = data-quality violation (Pattern 7 anchor).
+- **BSD identity** for proved cases (rank 0-1, Kolyvagin / Gross-Zagier): `L^{(r)}(1)/r! = Ω · regulator · ∏c_p · |Ш| / |tors|²` holds exactly on verified curves. LMFDB's `leading_term` column should match the RHS on a per-row basis.
+- **Regulator positivity.** For rank ≥ 1, `regulator > 0` (Néron-Tate height pairing is positive-definite). Any non-positive regulator = data-quality violation.
+- **Silverman height-difference bound** (1990): |h_canonical - h_naive| ≤ c(E) for explicit c(E). Candidate calibration for any computation derived from naive heights.
+
+**Known failure modes:**
+- **Pooling across ranks without rank stratification.** The 1.4M rank-0 `regulator = 1` spike will dominate any pooled magnitude analysis.
+- **Reporting `regulator × sha` correlation as a finding.** Pattern 1 — they appear multiplicatively in BSD, so the correlation is an identity not a signal.
+- **High-rank (≥ 4) extrapolation.** 2,086 rank-4 and 19 rank-5 curves are the delinquent frontier (F030/F033). Any regulator scaling "observed at all ranks" is effectively a rank ≤ 3 observation.
+- **Log-regulator vs conductor confound.** Both regulator and conductor scale with "how arithmetically complex the curve is" in rank-dependent ways. Pre-control for conductor (`P020`) before claiming a regulator trend.
+
+**When to use:**
+- **BSD-formula consistency checks.** Per-row verification of `leading_term = Ω · regulator · ∏c_p · |Ш| / |tors|²` is the cleanest instrument-health check available for rank ≥ 1.
+- **Mordell-Weil height-distribution analyses** — any question about the distribution of heights of rational points factors through regulator (plus higher-order lattice-shape info).
+- **Height-gap conjecture tests** — stratify by rank, look at minimum regulator within each rank-bin, compare to Silverman-type lower bounds.
+- **Joint `P101 × P020 × P023`** for cleanest rank-specific conductor-regulator scaling analyses.
+
+**When NOT to use:**
+- **At rank 0** (degenerate — trivially 1).
+- **Jointly with `leading_term` as independent axes** (BSD formula lineage).
+- **Jointly with `P038` Sha at fixed rank + conductor** (BSD identity collapses the joint axis).
+- **For cross-family comparisons** (regulator is EC-specific; the MF-side analog requires different normalization).
+
+**Related projections:**
+- **P023 rank** — tautology at rank 0 (degenerate) and joint-factor in BSD for rank ≥ 1.
+- **P020 conductor conditioning** — required pre-control for height-scaling heuristics.
+- **P038 Sha** — joint BSD-formula factor (sessionC merged).
+- **P024 torsion** — BSD denominator term; treat jointly not independently.
+- **P036 Root number** — rank-parity-aliased via F003.
+- **P100 Isogeny class size (sessionC, preceding entry):** regulators differ within isogeny class by bounded factor — pooling across class is a Pattern 20 artifact risk.
+
+**Follow-ups this entry motivates:**
+1. `audit_bsd_identity_per_row` — for each EC row with rank ≤ 1, verify `leading_term ≈ Ω · regulator · ∏c_p · |Ш| / |tors|²` within numerical precision. Candidate new calibration anchor (F-series, next free slot).
+2. `wsw_regulator_vs_conductor_per_rank` — within each rank ∈ {1, 2, 3}, test the predicted `regulator ≲ (log N)^{f(r)}` heuristic scaling. Expect calibration-level agreement; any deviation is a Lang-conjecture-adjacent frontier.
+3. `catalog_leading_term_as_derived_projection` — document `leading_term` as an *output* of the BSD factor product, not an independent axis. Add to Section 8 tautology pairs.
+4. `probe_rank_5_regulator_cliff` — the 19 rank-5 curves are Category-3 specimens per Pattern 16. A dedicated walk (once higher-rank lfunc data is materialized, per F033 coverage cliff) is warranted.
+
+---
+
+<!-- Merged from cartography/docs/catalog_artin_dim_draft.md by Harmonia_M2_sessionB, 2026-04-17, tick 17. Drafted by sessionC with P??? placeholder due to P040-P043 collision; assigned P102 per sessionA NAMESPACE_V2. -->
+
+## P102 — Artin representation dimension stratification
+
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17 (task `catalog_artin_dim`).
+**Code:** `WHERE "Dim" = d` on `lmfdb.artin_reps`. 100% coverage across 798,140 irreducible Artin representations (non-null `Dim`).
+**Type:** stratification (Galois-representation dimension axis, integer scalar)
+
+**What it resolves:**
+- **The dimension `d` of the irreducible complex representation** ρ: Gal(Q̄/Q) → GL_d(ℂ). This is the rank of the image under ρ and — for a faithful rep — the dimension of the minimum faithful complex rep of the finite quotient Gal(L/Q) that ρ factors through.
+- **Cohort structure for fixed-dimension analyses.** Each `Dim` stratum indexes a population of reps whose L-function has a fixed degree-`d` Euler product structure (each Frobenius is in `GL_d`, each local factor has degree `d`).
+- **Deligne-Serre stratum via `(Dim=2, Is_Even=False)`** — the 244,811-row cohort of odd 2-dimensional Artin reps corresponding to weight-1 newforms. The `Dim=2` stratum contains both Deligne-Serre-relevant (odd) and Deligne-Serre-irrelevant (even) reps; joint stratification with `P033 Is_Even` separates them.
+- **Killed hypothesis anchors (per task brief):**
+  - **H61 killed** — the dim-2-even vs dim-3 ratio was claimed to be ~50:1 but measured at 1.8:1. This projection is where that kill was observed.
+  - **H63 killed** — no spike at `Dim=4` was expected per some conjecture; none found. `P102` is the axis under which the null was confirmed.
+- **Mazur-bound-extended discipline for Artin reps:** unlike EC where `class_size ≤ 8`, there is no universal upper bound on `Dim`; however, for a fixed Galois group G with |G| = n, `Dim` divides n (Maschke/Schur). The observed top `Dim` values (`Dim=35`, `Dim=21`, `Dim=18`, `Dim=16`) reflect specific transitive Galois groups with large faithful reps.
+
+**What it collapses:**
+- **Per-Galois-group structure within a dimension.** Two reps with `Dim=4` from `G=S_4` vs `G=A_5` collapse in this projection. Stratify jointly with `Galn/Galt` for finer resolution.
+- **Parity (`Is_Even`) information.** `Dim` alone does not distinguish even from odd reps within a dimension — this is the whole point of P033's joint use.
+- **Frobenius-Schur indicator structure** — `Dim` does not tell you whether the rep is orthogonal / symplectic / unitary; use `P031` for that.
+- **Image-type structure** — two `Dim=4` reps can have very different Galois images (full `S_4` vs a subgroup) — `P039` captures this.
+
+**Tautology profile:**
+- **P102 ↔ `Is_Even` (P033) partial correlations.** Empirical distribution across dimensions is highly non-uniform:
+  - Dim=1: 71.7% `Is_Even=False` / 28.3% `Is_Even=True` — odd-dominated.
+  - Dim=2: 77.3% `Is_Even=False` / 22.7% `Is_Even=True` — odd-dominated (Deligne-Serre cell).
+  - Dim=4: 26.2% `Is_Even=False` / 73.8% `Is_Even=True` — even-dominated (reverse).
+  - Dim=6: nearly balanced.
+  - Dim≥7: increasingly even-dominated; `Is_Even=False` at Dim=7 drops to 69 rows (Pattern 9 coverage cliff for odd reps at higher dim).
+  This is a STRUCTURAL fact about which Galois groups admit faithful reps of each dimension with each parity, not a tautology in the formal sense. But joint `Dim × Is_Even` strata are non-uniform and a "Dim effect" measured across parity is really a parity effect conflated with Dim.
+- **P102 ↔ Frobenius-Schur indicator (P031).** Symplectic reps (`ν = -1`) occur only in even dimension. Empirical: `ν = -1` at Dim=2 (n=761), Dim=4 (n=12), Dim=6 (n=12); zero at all odd dims. Joint `P102 × P031` has forbidden cells at `(ν = -1, odd Dim)`. This is a representation-theory fact, not a tautology proper, but makes P31 × P102 non-orthogonal at odd dims.
+- **P102 ↔ `Galn` (Galois group order partial tautology).** `Dim | |G|` (Maschke's theorem). So for `Galn = G` of order n, only divisors of n appear in the `Dim` column. Filtering by `Galn` fixes the allowed Dim spectrum.
+- **P102 ↔ L-function degree.** `L-function degree = Dim` for irreducible Artin reps. This is the definition; pooling across `Dim` mixes L-functions of different degree.
+
+**Stratum-count summary (`artin_reps`, 2026-04-17; 798,140 rows with non-null `Dim`):**
+- Dim=2: 316,843 (39.7%) — dominant stratum, Deligne-Serre cohort lives here.
+- Dim=1: 194,258 (24.3%).
+- Dim=4: 124,464 (15.6%).
+- Dim=6: 48,837 (6.1%).
+- Dim=3: 39,913 (5.0%).
+- Dim=5: 21,259 (2.7%).
+- Dim=9: 15,392 (1.9%).
+- Dim=12: 10,146 (1.3%).
+- Dim=8: 9,480 (1.2%).
+- Dim=10: 3,718 (0.5%).
+- Dim=18, 14, 16, 21, 35: 10,398 combined (1.3%).
+- Long tail to `Dim=35` with <100 rows per value.
+
+**Small-n strata discipline (post-sessionB Liouville lesson, 2026-04-17):**
+- `Dim ≥ 11` strata have single-digit to low-hundreds coverage; explicit `n ≥ 100` check mandatory.
+- Joint `Dim × Is_Even × Galn` breaks below adequacy very quickly for `Dim ≥ 6`.
+- Joint `Dim × Frobenius-Schur` at `ν = -1` is bounded by 785 total rows across Dim=2/4/6.
+
+**Calibration anchors:**
+- **Maschke's theorem:** `Dim | |G|` for any irreducible rep of finite G. Any row with `Dim ∤ Galn_order` is a data-integrity violation.
+- **Artin L-function degree identity:** `L-function degree = Dim` for irreducible reps. Candidate F-level anchor: `L-function degree recorded in lfunc_lfunctions.degree must equal artin_reps.Dim` on linked rows.
+- **Killed H61 and H63 as Pattern 19 provenance anchors:** H61 claimed dim-2-even vs dim-3 ratio ~50:1; measured 1.8:1 (killed). H63 claimed spike at Dim=4; none observed. These kills are calibration for the projection (P102 can kill overconfident dimension-based conjectures).
+- **Trivial rep at Dim=1:** exactly one row per number field with trivial character.
+
+**Known failure modes:**
+- **Pooled Artin analysis is 39.7% `Dim=2`** — any "artin_reps feature" measured without Dim stratification is biased toward the Deligne-Serre cohort's shape. Pattern 4 / Pattern 20 trap.
+- **Treating Dim as orthogonal to `Is_Even` and `P031`** — strong distribution-level correlations (77% odd at Dim=2, 74% even at Dim=4). Joint claims must account for the non-uniform distribution.
+- **Claims at Dim≥11** without explicit coverage reporting — Pattern 9 delinquent frontier.
+- **Conflating Dim with "L-function degree on our side" when the L-function is composite** — Dim is per-irreducible-rep; an Artin L-function built from a reducible rep is a product of irreducible-L-functions of various dims.
+- **H61/H63-style claims** should be filed as Pattern 19 anchors — dimension-based ratios are tempting to overclaim, and the LMFDB empirical distribution rarely matches simple conjectural ratios.
+
+**When to use:**
+- **Fixed-L-function-degree cohort analysis** — any claim about "degree-d Artin L-functions" needs `WHERE Dim = d` filtering.
+- **Deligne-Serre work** — `(Dim=2, Is_Even=False)` is the standard joint restriction (corresponds to weight-1 MF).
+- **Joint with `P031`, `P033`, `P039`** to form the standard Artin-classification tuple `(Dim, ν, Is_Even, Galois image)`.
+- **Cross-projection with L-function degree in `lfunc_lfunctions`** as a calibration consistency check.
+- **Pattern 19 audits** when reviving dim-based conjectures (H61, H63, etc.).
+
+**When NOT to use:**
+- **As the sole axis on any cross-specimen claim** — always stratify further by parity, FS indicator, or Galois group.
+- **At `Dim ≥ 11` without coverage reporting** — coverage cliff for odd reps.
+- **For composite-rep L-functions** — use degree from `lfunc_lfunctions` instead.
+- **As a substitute for `Galn` / `Galt`** — these are orthogonal projections; `Dim ≤ Galn_order` (Maschke), not equivalent.
+
+**Related projections:**
+- **P031 Frobenius-Schur indicator:** symplectic reps (`ν=-1`) occur only in even dimension; forbidden-cell partial tautology.
+- **P033 Is_Even:** strong distribution-level correlation (dim=2 odd-dominated, dim=4 even-dominated). Joint axis is the canonical Artin classification.
+- **P039 Galois ℓ-adic image:** orthogonal at the Artin level (P039 is EC-specific); for the Artin side the analog is image subgroup labels.
+- **`Galn`/`Galt`:** orthogonal-in-principle, with `Dim | |Galn_order|` constraint (Maschke).
+- **L-function degree** (in `lfunc_lfunctions`): near-identity for irreducible reps.
+
+**Follow-ups this entry motivates:**
+1. **`audit_maschke_dim_galn`** — verify `Dim | Galn_order` across all 798K rows. Candidate F-level anchor (F010 or next free).
+2. **`audit_artin_dim_vs_lfunc_degree`** — verify `Dim = L-function degree` on linked Artin-origin rows in `lfunc_lfunctions`. Candidate cross-table calibration anchor.
+3. **`wsw_pattern19_h61_h63_retrospective`** — formalize H61 and H63 kills as Pattern 19 anchors; document the specific claim and the measured number.
+4. **`catalog_galn_galt_sister`** — document `Galn × Galt` (Galois group label) as a separate finer-granularity projection; co-reference with `Dim`.
+5. **`wsw_deligne_serre_exact_count`** — establish the exact bijection-preserving projection for 19,306 weight-1 newforms ↔ 244,811 Dim=2 Is_Even=False Artin reps (Galois-conjugate multiplicities accounted). Fits with earlier `catalog_artin_is_even` follow-up 1.
+
+---
+
+## P103 — EC modular degree stratification
+
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17 (task `catalog_modular_degree`; approved by sessionA).
+
+> **DERIVABLE-NOT-STORED caveat (read before using):** The modular degree `deg(φ)` of an EC over Q — where `φ: X_0(N) → E` is the optimal modular parametrization — is NOT a column on our read-only `lmfdb.ec_curvedata` mirror. Sister columns (`num_int_pts`, `class_size`, `faltings_height`) are present but `modular_degree` itself is not. Any worker using P103 at scale must either (a) compute via Magma `ModularDegree` or Sage `EllipticCurve.modular_degree()` (rank-0 / rank-1 cases only for a provable version; otherwise heuristic via L-symbolic computation), (b) pull from LMFDB's public EC detail endpoint per curve (slow, rate-limited), or (c) wait for a Mnemosyne/Koios materialization. P103 is a PLACEHOLDER catalog entry pending materialization — its content is doctrinal scaffolding, not a ready-to-query axis.
+
+**Code:** No `modular_degree` column exists in `lmfdb.ec_curvedata` at catalog-draft time (`information_schema` search 2026-04-17 returns zero hits). Derivation path: `modular_degree = deg(φ)` where `φ: X_0(N) → E` is the strong Weil parametrization. Computable per-curve via Magma / Sage / PARI at moderate cost for small conductor; expensive for N > 10^6.
+**Type:** stratification (derived integer-valued axis; modular-parametrization geometry)
+
+**What it resolves:**
+- **Modular parametrization degree.** The minimal degree of a dominant morphism `φ: X_0(N) → E` when E has conductor N (equivalently: the degree of the optimal curve in the isogeny class). For the optimal curve, `deg(φ) = m_E` with `m_E ∈ Z_{≥1}` a canonical integer invariant.
+- **Faltings-height relation (Edixhoven-Jong / Ullmo-Yafaev).** `log(modular_degree)` and `Faltings_height` are related via explicit theorems at proven levels (cf. Ullmo's bound); provides a BSD-adjacent calibration hook but with formula-lineage risk (Pattern 1).
+- **Congruence-prime detection.** Primes dividing `modular_degree` control the congruences between `f_E` (the weight-2 newform attached to E) and other newforms of level N. This is the Ribet-Taylor-Wiles lifting regime — modular degree divisibility by `p` signals a non-trivial `p`-adic deformation space.
+- **Quality indicator for the Birch-Swinnerton-Dyer period.** The Manin-constant and the modular degree jointly determine the real period `Ω_E` up to rational ambiguity; `modular_degree` is one-half of that constraint.
+- **Isogeny-class invariance (up to Manin constant).** All curves in an isogeny class share the same `X_0(N)`, and the optimal curve has a distinguished `deg(φ)`. Non-optimal curves have `modular_degree` differing by an integer factor related to the isogeny degree. Joint with `P100 Isogeny class size` is the natural classification.
+
+**What it collapses:**
+- **Sign information, Manin constant, and period.** `modular_degree` is an integer magnitude; orientation and Manin-constant fine structure collapse.
+- **Within-conductor variation.** Two different conductors can share the same `modular_degree`; the axis does NOT separate curves by `N`.
+- **L-function content beyond the optimal-curve constraint.** Different isogenous curves with the same modular degree still have identical L-functions by definition.
+
+**Tautology profile:**
+- **P103 ↔ Faltings height (partial tautology via Edixhoven-Jong / Ullmo).** For rank-0 curves over Q, one has inequalities of the form `c_1 · log(m_E) + O(log N) ≤ h_F(E) ≤ c_2 · log(m_E) + O(log N)` with explicit constants. Joint `(P103, Faltings_height)` analyses must factor out this formula-lineage before claiming independent signal. **Pattern 1 family.**
+- **P103 ↔ `num_int_pts` (partial).** Integral-point counts are bounded in terms of `modular_degree` via Vojta-type bounds. Joint usage has implicit formula-lineage through the arithmetic of the modular parametrization.
+- **P103 ↔ P100 Isogeny class (near-identity on optimal-curve representative).** The optimal curve is the distinguished member whose `modular_degree` is the class-canonical value; non-optimal curves differ by explicit integer factors. P103 applied at isogeny-class level is `(P100, P103|optimal)` — use the pair, not P103 in isolation across class members.
+- **P103 ↔ `sha_primes` via Ribet lifting.** Primes of congruence divide `modular_degree`; those same primes often appear in `sha_primes` for curves with non-trivial Ш. Joint use re-asserts Ribet-Taylor-Wiles ↔ BSD formal structure.
+- **P103 ↔ conductor (conductor-exponent weak correlation).** `log(modular_degree)` grows on the order of `log(N)` with heavy conductor-windowed variation; pooled linear fits between the two look structural when they are mostly asymptotic scaling.
+
+**Stratum-count summary (post-materialization prediction, not yet measured on our mirror):**
+- Distribution is heavy-tailed and conductor-correlated. Expected regimes: `modular_degree = 1` (rank-0 with trivial Manin constant, narrow window), small `modular_degree ∈ {1, 2, 4, 8}` commonly, long tail into thousands and beyond for high-conductor curves.
+- Small-n strata discipline: at any fixed `modular_degree = k` for `k > 10`, coverage drops fast; joint stratification with conductor window requires explicit `n ≥ 100` check.
+- Expected ranges (from literature heuristics): 95%+ of curves have `modular_degree ≤ 1000`; rarer curves extend to 10^5+.
+
+**Calibration anchors:**
+- **Modularity theorem (Breuil-Conrad-Diamond-Taylor, 2001):** every EC over Q is modular, so `modular_degree` is well-defined and finite for every curve. Any attempt to compute on our mirror that returns undefined / infinite is a data-integrity violation.
+- **Isogeny invariance of `deg(φ)·c_E`** where `c_E` is the Manin constant: the product is an isogeny-class invariant. Cross-check for any P103 implementation.
+- **Edixhoven-Jong bound** (rank 0): explicit relation between `modular_degree` and Faltings height. Calibration spot-check on known rank-0 examples.
+- **Modular-degree is a positive integer**: axis-level sanity check.
+
+**Known failure modes:**
+- **Using P103 without materialized data** — any worker drawing P103-based claims must document which of (Magma / Sage / public LMFDB endpoint / future `modular_degree` table) they used, and spot-check against a known value (e.g., the curve `11.a1` has `deg(φ) = 1`).
+- **Treating `modular_degree` as orthogonal to Faltings height** — partial tautology via Edixhoven-Jong (Pattern 1 family).
+- **Pooling across ranks without rank-conditioning** — heuristics for `modular_degree` vs `L(E,1)` / `L'(E,1)` differ by rank; pooled analysis mixes regimes.
+- **Using non-optimal-curve `modular_degree`** — for non-optimal class members, the value is an integer multiple of the optimal; a "P103 analysis" over all curves without optimality filtering is a Pattern-20 mixture-of-strata risk.
+- **Sparse high-value strata** — `modular_degree > 10^4` is rare; Pattern 9 coverage-cliff discipline applies.
+
+**When to use:**
+- **Ribet-Taylor-Wiles deformation / congruence-prime analyses** — `modular_degree` is the arithmetic-of-congruence axis.
+- **BSD period-calibration work (rank 0, 1)** — combined with Manin constant and `Ω_E`, `modular_degree` closes the BSD leading-coefficient cycle for small conductor.
+- **Joint with P100 Isogeny class size** to separate optimal-vs-non-optimal curves within each class.
+- **Faltings-height calibration spot-checks** — when bounds are being verified empirically.
+- **Small-conductor exploratory analyses** — where Magma / Sage `modular_degree` is computationally affordable.
+
+**When NOT to use:**
+- **Before materialization** — reporting "P103 distribution" over 3.8M curves is vacuous on our current mirror.
+- **Alongside Faltings height as if orthogonal** (Pattern 1 via Edixhoven-Jong).
+- **Across non-optimal curves without flagging** — Pattern 20 mixture risk.
+- **For non-EC objects** — `modular_degree` is EC-specific.
+- **As a substitute for `sha_primes` / Selmer in congruence detection** — these are related but orthogonal refinements.
+
+**Related projections:**
+- **P038 Sha:** via Ribet lifting (`p | modular_degree` implies non-trivial congruence at level Np; often present in `sha_primes`).
+- **P100 Isogeny class size:** joint natural-classification axis; `modular_degree` is optimal-curve-canonical.
+- **Faltings height (separate proposed entry):** partial tautology via Edixhoven-Jong (Pattern 1 family).
+- **Conductor P020:** heuristic log-scaling `log(modular_degree) ~ log(N)` with heavy tails.
+- **Manin constant** (not yet catalogued): `deg(φ)·c_E` is isogeny-invariant.
+- **P035 Kodaira:** sibling DERIVABLE-NOT-STORED entry; similar materialization constraint.
+
+**Follow-ups this entry motivates:**
+1. **`materialize_modular_degree_per_curve`** — Mnemosyne/Koios infra task: run Magma `ModularDegree` or Sage on all 3.8M `ec_curvedata` rows, write to a new `ec_modular_degree(lmfdb_label, modular_degree, manin_constant, optimal)` table. Requires James input on runtime and storage (per P035 Kodaira precedent — not auto-seedable).
+2. **`catalog_faltings_height`** — separate entry (sessionD EC harvest candidate); will need Edixhoven-Jong Pattern-1 cross-reference back to P103.
+3. **`catalog_manin_constant`** — Manin-constant catalog entry; product `deg(φ)·c_E` is the isogeny-invariant companion.
+4. **`audit_modular_degree_optimal_curve`** — once materialized, verify that every isogeny class has exactly one "optimal" curve and that `modular_degree` scales predictably among isogenous curves.
+5. **`wsw_F005_P103_check`** — F005 High-Sha parity cohort (`sha ≥ 16`, 67K curves) vs `modular_degree` distribution. Heuristic: high-Sha curves often have large `modular_degree`. Pattern 1 check before claiming the correlation.
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
