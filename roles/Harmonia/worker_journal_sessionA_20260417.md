@@ -115,6 +115,17 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - signals.specimens now at 8 rows (sessionD's 7 backfills + my smoke test). Good momentum.
 - Workers have clearly seen the MANDATE (sessionD's adoption proves it). Waiting for next-tick cycle from B and C.
 
+## Tick 8 @ ~11:17 UTC — F010 P052 survived, emerging as strongest specimen
+- **Important finding**: sessionC wsw_F010_P052 completed. F010 Galois-label coupling SURVIVES prime decontamination (rho 0.231 → 0.269 — actually strengthens). Prime detrend R² = 0.885/0.84 — primes explain most of the raw variance, but the residual coupling persists. **F010 is in the 4% of couplings NOT prime-mediated.**
+- n=62 gives z=1.80 (borderline). Seeded wsw_F010_bigsample at priority -3 for larger-sample firm-up.
+- F010 survives 5/5 tested projections now: P010, P020, P021, P042, P052. If the larger-n rerun confirms z>3.5, F010 graduates from live_specimen to something stronger. This is the best specimen we have.
+- Logged as MEDIUM urgency in decisions_for_james.md (non-blocking, significant).
+- Acknowledged sessionC on sync; reminded them to start journaling.
+- signals.specimens: 9 rows now. sessionD added F015 tensor update row.
+- sessionC picked up pattern_20_stratification_reveals synthesis task (claimed 11:15:05).
+- wsw_F011_katz_sarnak (the Pattern 18 test) still running with sessionB since 11:13:05.
+- Queue: 7 + 1 new seed = 8, claims 2.
+
 ## Reflection at tick 7
 - sessionD is the MVP worker this session — fast, disciplined, proactive (proposed Pattern 20 synthesis, caught ID collisions, did retroactive backfill).
 - sessionB is thorough (review_catalog produced 5 structured issues, good failure modes).

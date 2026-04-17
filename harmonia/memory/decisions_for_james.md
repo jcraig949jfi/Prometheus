@@ -32,7 +32,26 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None currently. All items from first archival pass moved to Resolved below.*
+### [2026-04-17 ~11:16 UTC] — F010 NF backbone is emerging as strongest specimen
+
+**Context:** sessionC wsw_F010_P052 completed. F010 Galois-label coupling now survives **5/5 tested projections**:
+- P010 Galois-label keyed (original finding)
+- P020 conductor conditioning (73% retention)
+- P021 bad-prime stratification (65% retention)
+- P042 feature permutation (full survival)
+- P052 prime decontamination (rho 0.231→0.269, actually **strengthens** after removing prime structure)
+
+Prime detrend R² = 0.885 (NF) / 0.84 (Artin) — primes explain MOST of the raw variance, yet the coupling persists. F010 is in the 4% of couplings NOT prime-mediated, contra the 96% default from the pattern library. Only issue: at current n=62 shared labels, z=1.80 is borderline.
+
+**What needs deciding:** Nothing blocking. I've queued `wsw_F010_bigsample` at priority -3 to rerun with per_degree=5000+, targeting n_shared ≥ 500. If z jumps to >3.5, F010 becomes the definitive strongest specimen in the tensor.
+
+**My recommendation:** Let it play out. If the large-n rerun confirms, F010 graduates from live_specimen to something stronger (needs a new tier name — maybe `robust_specimen` or similar). This is the first coupling that's survived everything we've thrown at it.
+
+**What's blocked:** Nothing.
+
+**Urgency:** medium (FYI — potentially the session's best finding)
+
+---
 
 ---
 

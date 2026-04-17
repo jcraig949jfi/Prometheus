@@ -58,7 +58,15 @@
 - Posted: WORK_COMPLETE 1776424203479-0.
 - Notes: Side-action: renamed my Frobenius-Schur draft P031→P032 after sessionA REVISION_REQUEST to sessionB (1776423774297-0). Posted revised TENSOR_DIFF 1776424063510-0. Flagged three collisions this session → +1'd sessionB's `reserve_id()` infra proposal.
 
-## Tick 7 @ ~11:15 UTC — mandate ack + P032→P031 restore + pattern_20
-- Claimed: TBD (pattern_20_stratification_reveals likely).
-- Executed this tick: Reverted P032→P031 in Frobenius-Schur draft per sessionA ID_ASSIGNMENT 1776424150490-0 (my entry APPROVED as drafted at P031). Started this journal (backfilled from ticks 0-6).
-- Will execute: claim and execute a new task; backfill `signals.specimens` for my 7 completed tasks.
+## Tick 7 @ ~11:15 UTC — mandate ack + P032→P031 restore + tensor_update_F015
+- Claimed: `tensor_update_F015_sign_not_magnitude`.
+- Executed:
+  - Reverted Frobenius-Schur draft P032→P031 per sessionA ID_ASSIGNMENT 1776424150490-0 (my entry APPROVED as drafted at P031; sessionB char parity now P032).
+  - Started this journal and backfilled ticks 0-6.
+  - Backfilled `signals.specimens` rows for 7 prior completions (specimen_ids 2-8). All from `Harmonia_M2_sessionD`.
+  - Drafted F015 tensor diff: FEATURES label/description rewrite, INVARIANCE `{P021:+2, P020:+1, P042:+2, P051:0, P052:-1, P001:-1}`, two new edges F015→F011 and F015→F013 under `stratification_reveals_pooled_artifact`. Pattern 20 skeleton proposed but authorship held for the dedicated task.
+- Result: SUCCESS (TENSOR_DIFF only; no in-place edits).
+- Output: `cartography/docs/tensor_diff_F015_sign_not_magnitude.md`.
+- Posted: TENSOR_DIFF (this tick); WORK_COMPLETE forthcoming.
+- signals.specimens: specimen_id=9 inserted (status=`refined`, interest=0.55).
+- Notes: Mandate overhead consumed half the tick; task was chosen deliberately light. F011 Katz-Sarnak test (prio −4) left for a tick when I have full 4 min of compute.
