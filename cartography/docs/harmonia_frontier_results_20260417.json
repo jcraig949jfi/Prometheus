@@ -1,0 +1,541 @@
+{
+  "runner": "harmonia_frontier_runner.py",
+  "started": "2026-04-17T07:18:54.027279+00:00",
+  "n_total": 20,
+  "n_completed": 20,
+  "results": [
+    {
+      "id": "H06",
+      "title": "Zero Spacing Rigidity vs Rank",
+      "status": "SURVIVED",
+      "verdict": "Linear decrease: slope=-0.0019, R\u00b2=0.399",
+      "effect_size": -0.0019335088342970653,
+      "z_score": null,
+      "p_value": 0.3686198235013761,
+      "n_samples": 50000,
+      "details": {
+        "per_rank_mean_var": {
+          "0": 0.16711539534411077,
+          "1": 0.16471758961067504,
+          "2": 0.15779474627108936,
+          "3": 0.16297798034298244
+        },
+        "slope": -0.0019335088342970653,
+        "intercept": 0.16605169114366,
+        "r_squared": 0.39864092727543343
+      },
+      "duration_seconds": 1.29,
+      "error": null
+    },
+    {
+      "id": "H08",
+      "title": "Faltings Height Controls GUE Deficit",
+      "status": "KILLED",
+      "verdict": "y-intercept 0.1643 outside 99% CI of GUE",
+      "effect_size": 2.132749450357541e-05,
+      "z_score": -425.49456473782664,
+      "p_value": 0.5084034156913012,
+      "n_samples": 10000,
+      "details": {
+        "slope": 2.132749450357541e-05,
+        "intercept": 0.16427847774406146,
+        "ci_99": [
+          0.16419540584547426,
+          0.16436154964264865
+        ],
+        "r_squared": 4.5154293010241384e-05,
+        "GUE_target": 0.178
+      },
+      "duration_seconds": 0.27,
+      "error": null
+    },
+    {
+      "id": "H10",
+      "title": "ADE Singularity Splits GUE Deviation",
+      "status": "KILLED",
+      "verdict": "|\u0394var|=0.0062 < 0.025 OR p=9.009e-06 >= 0.01",
+      "effect_size": -0.0061971940842757145,
+      "z_score": null,
+      "p_value": 9.00890482826893e-06,
+      "n_samples": 20000,
+      "details": {
+        "mult_n": 197420,
+        "mult_var": 0.16964789074627834,
+        "add_n": 574762,
+        "add_var": 0.16345069666200263,
+        "delta_var": -0.0061971940842757145,
+        "ks": 0.006470885296478546
+      },
+      "duration_seconds": 0.78,
+      "error": null
+    },
+    {
+      "id": "H11",
+      "title": "ADE Gatekeeping in NF Discriminants",
+      "status": "KILLED",
+      "verdict": "Cohen's d=4.960, p=1.000e+00",
+      "effect_size": 4.959866884469025,
+      "z_score": null,
+      "p_value": 1.0,
+      "n_samples": 100000,
+      "details": {
+        "ade_n": 99851,
+        "ade_mean_log_ratio": 12.5166992779861,
+        "non_ade_n": 149,
+        "non_ade_mean_log_ratio": 6.047448306321988,
+        "cohens_d": 4.959866884469025
+      },
+      "duration_seconds": 0.2,
+      "error": null
+    },
+    {
+      "id": "H18",
+      "title": "Knot Silence Null Test",
+      "status": "INCONCLUSIVE",
+      "verdict": "Within-knot z=19.09 - but this is within-domain, silence is cross-domain claim",
+      "effect_size": 0.37815571530440656,
+      "z_score": 19.087377894943508,
+      "p_value": 7.83928946760802e-102,
+      "n_samples": 2977,
+      "details": {
+        "known_alternating_relation": "known positive for alternating knots"
+      },
+      "duration_seconds": 0.12,
+      "error": null
+    },
+    {
+      "id": "H38",
+      "title": "Torsion Predicts z1 Distribution",
+      "status": "KILLED",
+      "verdict": "\u03c1(T, KS)=0.086, p=8.717e-01",
+      "effect_size": 0.08571428571428573,
+      "z_score": null,
+      "p_value": 0.8717434402332361,
+      "n_samples": 500000,
+      "details": {
+        "ks_by_torsion": {
+          "2": {
+            "n": 196411,
+            "ks": 0.052301230811901855,
+            "p": 1.0555199933185377e-270
+          },
+          "3": {
+            "n": 8749,
+            "ks": 0.049251443719995014,
+            "p": 2.6508126978114733e-18
+          },
+          "4": {
+            "n": 23033,
+            "ks": 0.06862110025355561,
+            "p": 2.4645475757151567e-87
+          },
+          "5": {
+            "n": 302,
+            "ks": 0.08266350270193024,
+            "p": 0.03042209723070366
+          },
+          "6": {
+            "n": 1222,
+            "ks": 0.04341196440290973,
+            "p": 0.019836422258895196
+          },
+          "8": {
+            "n": 357,
+            "ks": 0.0582180598703792,
+            "p": 0.1709106903533657
+          }
+        }
+      },
+      "duration_seconds": 1.2,
+      "error": null
+    },
+    {
+      "id": "H40",
+      "title": "Szpiro-Faltings Coupling",
+      "status": "SURVIVED",
+      "verdict": "partial \u03c1=0.9738, p=0.00e+00",
+      "effect_size": 0.9737988707863373,
+      "z_score": null,
+      "p_value": 0.0,
+      "n_samples": 200000,
+      "details": {
+        "n_after_filter": 200000
+      },
+      "duration_seconds": 0.38,
+      "error": null
+    },
+    {
+      "id": "H41",
+      "title": "Rank-Regulator Super-Linear Scaling",
+      "status": "KILLED",
+      "verdict": "\u0394\u00b2_r not all positive: [-1.5931970123817252, 0.21745793528959267]",
+      "effect_size": -0.6878695385460663,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 2481157,
+      "details": {
+        "means": {
+          "0": 0.0,
+          "1": 1.0435529693740577,
+          "2": 0.4939089263663902,
+          "3": 0.16172281864831545
+        },
+        "second_diffs": [
+          -1.5931970123817252,
+          0.21745793528959267
+        ]
+      },
+      "duration_seconds": 2.68,
+      "error": null
+    },
+    {
+      "id": "H43",
+      "title": "Root Number Parity in High-Sha",
+      "status": "SURVIVED",
+      "verdict": "Perfect: 67035/67035",
+      "effect_size": 1.0,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 67035,
+      "details": {
+        "agree": 67035,
+        "total": 67035
+      },
+      "duration_seconds": 0.34,
+      "error": null
+    },
+    {
+      "id": "H47",
+      "title": "NF r2/degree Phase Transition",
+      "status": "INCONCLUSIVE",
+      "verdict": "r2 column missing: operator does not exist: text > integer\nLINE 4: ...WHERE disc_abs IS NOT NULL AND r2 IS NOT NULL AND degree > 0\n                                                                    ^\nHINT:  No operator matches the given name and argument types. You might need to add explicit type casts.\n",
+      "effect_size": null,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 0,
+      "details": {},
+      "duration_seconds": 0.0,
+      "error": null
+    },
+    {
+      "id": "H60",
+      "title": "Artin Frontier Clusters",
+      "status": "SURVIVED",
+      "verdict": "4 discrete clusters (Dim \u00d7 Is_Even)",
+      "effect_size": 4,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 100000,
+      "details": {
+        "n_discrete_clusters": 4,
+        "top_10_clusters": {
+          "dim2_even0": 74433,
+          "dim2_even1": 21719,
+          "dim1_even1": 2548,
+          "dim1_even0": 1300
+        },
+        "per_dim_stats": {
+          "1": {
+            "n": 3848,
+            "log_mean": 13.574855944007549,
+            "log_std": 16.80446986203079
+          },
+          "2": {
+            "n": 96152,
+            "log_mean": 12.26846978183834,
+            "log_std": 11.693409090109755
+          }
+        }
+      },
+      "duration_seconds": 0.12,
+      "error": null
+    },
+    {
+      "id": "H61",
+      "title": "Artin Dimensional Gap",
+      "status": "KILLED",
+      "verdict": "ratio=1.8",
+      "effect_size": 1.8047252774785159,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 798140,
+      "details": {
+        "counts_even": {
+          "1": 55076,
+          "2": 72032,
+          "3": 22776,
+          "4": 91900,
+          "5": 17762,
+          "6": 22673,
+          "7": 1093,
+          "8": 8548,
+          "9": 10201,
+          "10": 3610,
+          "11": 108,
+          "12": 4754,
+          "14": 1958,
+          "15": 985,
+          "16": 2327,
+          "17": 9,
+          "18": 661,
+          "20": 686,
+          "21": 1016,
+          "24": 1,
+          "25": 2,
+          "27": 1,
+          "28": 23,
+          "30": 1,
+          "35": 990,
+          "40": 1,
+          "44": 1,
+          "45": 24,
+          "55": 1,
+          "56": 23,
+          "64": 23,
+          "70": 23
+        },
+        "counts_all": {
+          "1": 194258,
+          "2": 316843,
+          "3": 39913,
+          "4": 124464,
+          "5": 21259,
+          "6": 48837,
+          "7": 1162,
+          "8": 9480,
+          "9": 15392,
+          "10": 3718,
+          "11": 135,
+          "12": 10146,
+          "14": 2620,
+          "15": 1316,
+          "16": 2327,
+          "17": 9,
+          "18": 2783,
+          "20": 686,
+          "21": 1347,
+          "24": 1,
+          "25": 2,
+          "27": 1,
+          "28": 23,
+          "30": 1,
+          "35": 1321,
+          "40": 1,
+          "44": 1,
+          "45": 24,
+          "55": 1,
+          "56": 23,
+          "64": 23,
+          "70": 23
+        }
+      },
+      "duration_seconds": 0.55,
+      "error": null
+    },
+    {
+      "id": "H63",
+      "title": "Non-Automorphic Spike Above Dim 4",
+      "status": "KILLED",
+      "verdict": "No spike: dim4=124464, dim5=21259",
+      "effect_size": 5.85464979538078,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 798140,
+      "details": {
+        "counts_by_dim": {
+          "1": 194258,
+          "2": 316843,
+          "3": 39913,
+          "4": 124464,
+          "5": 21259,
+          "6": 48837,
+          "7": 1162,
+          "8": 9480,
+          "9": 15392,
+          "10": 3718,
+          "11": 135,
+          "12": 10146,
+          "14": 2620,
+          "15": 1316,
+          "16": 2327,
+          "17": 9,
+          "18": 2783,
+          "20": 686,
+          "21": 1347,
+          "24": 1,
+          "25": 2,
+          "27": 1,
+          "28": 23,
+          "30": 1,
+          "35": 1321,
+          "40": 1,
+          "44": 1,
+          "45": 24,
+          "55": 1,
+          "56": 23,
+          "64": 23,
+          "70": 23
+        }
+      },
+      "duration_seconds": 0.36,
+      "error": null
+    },
+    {
+      "id": "H67",
+      "title": "Genus-2 Aut Group GUE Healing",
+      "status": "INCONCLUSIVE",
+      "verdict": "g2c aut_grp missing: column \"aut_grp\" does not exist\nLINE 2:         SELECT aut_grp, analytic_rank::int, abs_disc::numeri...\n                       ^\nHINT:  Perhaps you meant to reference the column \"g2c_curves.aut_grp_id\".\n",
+      "effect_size": null,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 0,
+      "details": {},
+      "duration_seconds": 0.0,
+      "error": null
+    },
+    {
+      "id": "H73",
+      "title": "Zero Variance Convergence",
+      "status": "SURVIVED",
+      "verdict": "Near-flat: slope=0.00094",
+      "effect_size": 0.0011424123367718513,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 20000,
+      "details": {
+        "per_bin": {
+          "10000-50000": {
+            "n": 5000,
+            "mean_var": 0.16382822275770062,
+            "std_var": 0.040240942661049224
+          },
+          "50000-100000": {
+            "n": 5000,
+            "mean_var": 0.16358935218370366,
+            "std_var": 0.03782044689470077
+          },
+          "100000-200000": {
+            "n": 5000,
+            "mean_var": 0.1663990678741216,
+            "std_var": 0.03730698175569898
+          },
+          "200000-400000": {
+            "n": 5000,
+            "mean_var": 0.16602041712822094,
+            "std_var": 0.03599434751551381
+          }
+        },
+        "slope": 0.0009386298801978887,
+        "r_squared": 0.6931761659088737
+      },
+      "duration_seconds": 0.52,
+      "error": null
+    },
+    {
+      "id": "H75",
+      "title": "Torsion-Rank Anticorrelation",
+      "status": "SURVIVED",
+      "verdict": "All 4 decades \u03c1<-0.05",
+      "effect_size": -0.09950176224041099,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 1121365,
+      "details": {
+        "per_decade": {
+          "1000-10000": {
+            "n": 59574,
+            "rho": -0.12961232063639516,
+            "p": 1.7401443916334284e-221
+          },
+          "10000-100000": {
+            "n": 500000,
+            "rho": -0.09765559988017708,
+            "p": 0.0
+          },
+          "100000-1000000": {
+            "n": 500000,
+            "rho": -0.0897414465168004,
+            "p": 0.0
+          },
+          "1000000-10000000": {
+            "n": 61791,
+            "rho": -0.08099768192827132,
+            "p": 1.9098199582724985e-90
+          }
+        }
+      },
+      "duration_seconds": 2.21,
+      "error": null
+    },
+    {
+      "id": "H80",
+      "title": "Lehmer Bound for L-function Leading Terms",
+      "status": "SURVIVED",
+      "verdict": "282373 samples, 0 counterexamples",
+      "effect_size": 0,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 282373,
+      "details": {
+        "counterexamples_count": 0,
+        "lehmer_bound": 1.17628081825991
+      },
+      "duration_seconds": 0.78,
+      "error": null
+    },
+    {
+      "id": "H82",
+      "title": "Mahler Measure Floor Accumulation",
+      "status": "INCONCLUSIVE",
+      "verdict": "Too sparse",
+      "effect_size": null,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 166,
+      "details": {},
+      "duration_seconds": 8.37,
+      "error": null
+    },
+    {
+      "id": "H85",
+      "title": "Chowla at Genus-2 Discriminants",
+      "status": "SURVIVED",
+      "verdict": "max |z|=6.15",
+      "effect_size": 6.145921552865744,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 50000,
+      "details": {
+        "per_aut": {
+          "[2,1]": {
+            "n": 47653,
+            "sum_mu": -655,
+            "z": -6.145921552865744
+          },
+          "[4,2]": {
+            "n": 2269,
+            "sum_mu": 4,
+            "z": 0.1720020327158301
+          }
+        }
+      },
+      "duration_seconds": 0.4,
+      "error": null
+    },
+    {
+      "id": "H90",
+      "title": "EC Rank vs Group Smoothness (Null)",
+      "status": "SURVIVED",
+      "verdict": "MI=0.00988 bits < 0.01 (null confirmed)",
+      "effect_size": 0.00987568350739651,
+      "z_score": null,
+      "p_value": null,
+      "n_samples": 500000,
+      "details": {
+        "mi_bits": 0.00987568350739651
+      },
+      "duration_seconds": 17.88,
+      "error": null
+    }
+  ]
+}

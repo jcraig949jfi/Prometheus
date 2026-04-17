@@ -254,7 +254,7 @@ def h11_ade_gatekeeping_nf(conn_lmfdb, conn_fire, result):
     cur.execute("""
     SELECT degree::int, galois_label, disc_abs::numeric
     FROM nf_fields
-    WHERE galois_label IS NOT NULL AND disc_abs IS NOT NULL AND degree <= 10
+    WHERE galois_label IS NOT NULL AND disc_abs IS NOT NULL AND degree::int <= 10
     LIMIT 100000
     """)
     rows = cur.fetchall()
@@ -608,7 +608,8 @@ def h60_artin_frontier_clusters(conn_lmfdb, conn_fire, result):
     """H60: 359K open reps cluster into <20 feature manifolds."""
     cur = conn_lmfdb.cursor()
     cur.execute("""
-    SELECT "Dim"::int, "Conductor"::numeric, "Indicator"::int, "Is_Even"::int
+    SELECT "Dim"::int, "Conductor"::numeric, "Indicator"::int,
+           CASE WHEN "Is_Even" IN ('t','true','True','1') THEN 1 ELSE 0 END AS is_even
     FROM artin_reps
     WHERE "Dim" IS NOT NULL AND "Conductor" IS NOT NULL
     LIMIT 100000
@@ -660,7 +661,7 @@ def h61_artin_dimensional_gap(conn_lmfdb, conn_fire, result):
     cur.execute("""
     SELECT "Dim"::int, COUNT(*)
     FROM artin_reps
-    WHERE "Is_Even" = '1' OR "Is_Even" = 1
+    WHERE "Is_Even" IN ('1','t','true','True')
     GROUP BY "Dim"::int
     ORDER BY "Dim"::int
     """)
@@ -972,8 +973,8 @@ def h85_chowla_g2_discriminants(conn_lmfdb, conn_fire, result):
     cur = conn_lmfdb.cursor()
     try:
         cur.execute("""
-        SELECT aut_grp, abs_disc::numeric FROM g2c_curves
-        WHERE aut_grp IS NOT NULL AND abs_disc IS NOT NULL
+        SELECT aut_grp_id, abs_disc::numeric FROM g2c_curves
+        WHERE aut_grp_id IS NOT NULL AND abs_disc IS NOT NULL
         LIMIT 50000
         """)
         rows = cur.fetchall()
