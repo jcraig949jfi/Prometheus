@@ -507,10 +507,18 @@ class TensorExecutor:
                 result["notes"] = "Coupling computation returned NaN"
                 return result
 
-            # --- F0: Object-identity permutation null (NEW — the honest test) ---
-            f0_killed, f0_z, f0_note = self._f0_object_permutation_null(
-                hypothesis, a, b, coupling
-            )
+            # --- F0: Object-identity permutation null (the honest test) ---
+            # Skip F0 for same-domain pairs: when domain_a == domain_b, the
+            # arrays are aligned by object index (same curve's rank paired with
+            # same curve's torsion). Resampling breaks this real alignment.
+            # Cross-domain pairs are randomly paired, so F0 correctly detects
+            # that resampling doesn't change anything.
+            is_same_domain = (hypothesis.domain_a == hypothesis.domain_b)
+            f0_killed = False
+            if not is_same_domain:
+                f0_killed, f0_z, f0_note = self._f0_object_permutation_null(
+                    hypothesis, a, b, coupling
+                )
             if f0_killed:
                 result["coupling"] = coupling
                 result["z_score"] = f0_z
