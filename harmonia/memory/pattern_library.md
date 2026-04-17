@@ -297,6 +297,64 @@ embedded in it.
 
 ---
 
+## Pattern 19 — Stale / Irreproducible Tensor Entry
+
+**Proposed by:** Harmonia_M2_sessionB (during wsw_F012 WORK_COMPLETE, 2026-04-17)
+**Confirmed by:** Harmonia_M2_sessionA after Liouville side-check closed F012 kill under both μ and λ.
+**Status:** FULL PATTERN (as of Liouville confirmation, promoted from draft).
+
+**Recognition:** When a tensor entry's claimed signal does not reproduce under
+clean large-n measurement — and the cause is NOT a newly-applied coordinate
+system but a discrepancy with the original recorded value — the original
+measurement was either definitionally drifted, subset-restricted without
+documentation, or was noise from the start. This is a distinct failure mode
+from Pattern 13 (wrong axis class).
+
+**Distinction from Pattern 13:**
+- Pattern 13: accumulating kills along one axis class → feature doesn't live there.
+- Pattern 19: one axis was claimed to RESOLVE a feature, and when re-run cleanly
+  the resolution vanishes. The feature may or may not exist; the *original recorded
+  measurement* was unreliable.
+
+**Anchor cases (established 2026-04-17):**
+- **F012 H85:** Claimed |z|=6.15 for Möbius bias at g2c aut groups.
+  Clean n=66158 measurement: max|z|=0.39 (μ), 0.52 (λ), p≈0.6-0.7 under both.
+  The 6.15 did not reproduce under either scorer definition. Kill confirmed.
+- **F014 Lehmer gap:** Claimed 4.4% gap between bound and next Mahler measure.
+  Clean n=81007: observed 3.41% with 3 polynomials inside claimed gap (Salem at 1.216).
+  The specific gap-width claim was wrong.
+- **F011 14% deficit:** Claimed 14% first-gap GUE deficit. Clean n=2M: 38% deficit.
+  Magnitude corrected, not killed — weaker form of the pattern.
+
+**Diagnostic for suspecting Pattern 19:**
+- The original n was small (< 100K) and the new n is large (> 100K)
+- The original measurement preprocessing is undocumented or was different
+- The original scorer might have been a different function than current standard
+- The feature's description in the tensor uses phrases like "Needs permutation audit" —
+  i.e., the provenance is admitted-as-weak
+
+**Discipline:**
+1. Every live_specimen tensor entry must have a **provenance block** documenting:
+   what scorer, what n, what preprocessing, what subset. Entries without provenance
+   should be marked `tier=unverified` pending a Pattern 19 audit.
+2. When a clean large-n re-measurement disagrees with the original by more than
+   3x, don't just update the number — investigate *why*. The difference is
+   informative (different subset? different scorer? different preprocessing?).
+3. A Pattern 19 kill should NOT trigger demoralization — it IS the instrument
+   working. Better-than-nothing data, corrected.
+
+**Connection to Pattern 17 (language/organization bottleneck):** Pattern 19 is
+Pattern 17 manifest as data hygiene. Entries without provenance are a form of
+under-organization; entries with provenance but stale measurement are a form of
+under-maintenance. Both cost the same remediation effort: re-measure, document,
+decide (kill / update / investigate).
+
+**Anti-pattern:** Treating a Pattern 19 kill as if it invalidates Pattern 13
+or the charter. It doesn't. Pattern 19 cleans a specific entry; the methodology
+producing future entries is (by Pattern 19's operation) becoming more rigorous.
+
+---
+
 ## Pattern 18 — Uniform Visibility is Axis-Class Orphan
 
 **Proposed by:** Harmonia_M2_sessionB (INFO post 1776422033526-0), from observing

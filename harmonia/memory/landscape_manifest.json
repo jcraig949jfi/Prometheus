@@ -66,10 +66,10 @@
     },
     {
       "id": "F012",
-      "label": "M\u00f6bius bias at g2c aut groups (H85)",
-      "tier": "live_specimen",
-      "n_objects": 50000,
-      "description": "Max |z|=6.15 for M\u00f6bius on g2c abs_disc stratified by aut_grp. Needs permutation audit."
+      "label": "M\u00f6bius bias at g2c aut groups (H85) \u2014 KILLED",
+      "tier": "killed",
+      "n_objects": 66158,
+      "description": "KILLED across M\u00f6bius AND Liouville definitions (sessionB wsw_F012 + liouville_side_check_F012, 2026-04-17). Clean measurement on full n=66158 g2c: max|z| over adequate strata = 0.39 (\u03bc) / 0.52 (\u03bb), permutation p = 0.68 (\u03bc) / 0.60 (\u03bb). The prior |z|=6.15 DID NOT REPRODUCE under either M\u00f6bius or Liouville. Definitional drift hypothesis excluded. Canonical Pattern 19 case: stale or never-reproducible tensor entry. Likely causes: different subset, different scorer, or original measurement was noise. 63% non-squarefree g2c discriminants reduce effective S/N but don't account for the 16x discrepancy."
     },
     {
       "id": "F013",
@@ -80,10 +80,10 @@
     },
     {
       "id": "F014",
-      "label": "Lehmer spectrum gap",
+      "label": "Lehmer spectrum (refined) \u2014 Salem density in (1.176, 1.228)",
       "tier": "live_specimen",
       "n_objects": 22178569,
-      "description": "4.4% gap between Lehmer bound (1.176) and next smallest Mahler measure (1.228 at deg 12). Both deg-10 and deg-20 fields sit exactly at Lehmer bound (the polynomial itself)."
+      "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). Original '4.4% gap between bound and next Mahler measure (1.228 at deg 12)' FALSIFIED by sessionB wsw_F014 (81K polynomials, Pattern-4-biased ORDER BY disc_abs ASC per degree). Observed gap = 3.41%; 3 polynomials strictly in (1.17628, 1.228), minimum a Salem polynomial at 1.216392 (deg 10, num_ram=1, disc_abs=1.49e9). The region above Lehmer's polynomial is a Salem-number density, not a clean gap. Strong per-num_ram monotone: bound touched only at num_ram=1,2; minimum jumps to 1.267 at num_ram=3, 1.800 at num_ram=5. Bad-prime count shows real shape (echoes F011 P021 monotone, sessionC). Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap claims without degree-AND-num_ram stratification are suspect \u2014 Salem polynomials cluster in the sub-1.228 region at specific degree \u00d7 low-num_ram combinations."
     },
     {
       "id": "F015",
@@ -358,8 +358,9 @@
       "P027": -1
     },
     "F012": {
-      "P022": 2,
-      "P040": 0
+      "P022": -1,
+      "P040": -2,
+      "P043": -1
     },
     "F013": {
       "P023": 1,
@@ -367,7 +368,9 @@
     },
     "F014": {
       "P053": 2,
-      "P040": 1
+      "P040": 1,
+      "P023": 2,
+      "P021": 2
     },
     "F015": {
       "P021": 2,
@@ -437,7 +440,6 @@
   "live_specimens": [
     "F010",
     "F011",
-    "F012",
     "F013",
     "F014",
     "F015"

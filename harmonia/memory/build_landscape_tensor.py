@@ -75,16 +75,25 @@ FEATURES = [
                     "reduction from 40% pooled held directionally but the clean n=2M number is ~38%. "
                     "Faltings (H08) killed; ADE (H10) killed. Pattern 13: conductor-family axes do not resolve. "
                     "Next probes: P028 Katz-Sarnak, H09 conductor-window finite-N, representation-theoretic axes."},
-    {"id": "F012", "label": "Möbius bias at g2c aut groups (H85)",
-     "tier": "live_specimen", "n_objects": 50000,
-     "description": "Max |z|=6.15 for Möbius on g2c abs_disc stratified by aut_grp. Needs permutation audit."},
+    {"id": "F012", "label": "Möbius bias at g2c aut groups (H85) — KILLED",
+     "tier": "killed", "n_objects": 66158,
+     "description": "KILLED across Möbius AND Liouville definitions (sessionB wsw_F012 + liouville_side_check_F012, 2026-04-17). Clean measurement on full n=66158 g2c: max|z| over adequate strata = 0.39 (μ) / 0.52 (λ), permutation p = 0.68 (μ) / 0.60 (λ). The prior |z|=6.15 DID NOT REPRODUCE under either Möbius or Liouville. Definitional drift hypothesis excluded. Canonical Pattern 19 case: stale or never-reproducible tensor entry. Likely causes: different subset, different scorer, or original measurement was noise. 63% non-squarefree g2c discriminants reduce effective S/N but don't account for the 16x discrepancy."},
     {"id": "F013", "label": "Zero spacing rigidity vs rank (H06)",
      "tier": "live_specimen", "n_objects": 50000,
      "description": "Spacing variance decreases linearly with rank. slope=-0.0019, R²=0.399. Weak."},
-    {"id": "F014", "label": "Lehmer spectrum gap",
+    {"id": "F014", "label": "Lehmer spectrum (refined) — Salem density in (1.176, 1.228)",
      "tier": "live_specimen", "n_objects": 22178569,
-     "description": "4.4% gap between Lehmer bound (1.176) and next smallest Mahler measure (1.228 at deg 12). "
-                    "Both deg-10 and deg-20 fields sit exactly at Lehmer bound (the polynomial itself)."},
+     "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). "
+                    "Original '4.4% gap between bound and next Mahler measure (1.228 at deg 12)' FALSIFIED "
+                    "by sessionB wsw_F014 (81K polynomials, Pattern-4-biased ORDER BY disc_abs ASC per degree). "
+                    "Observed gap = 3.41%; 3 polynomials strictly in (1.17628, 1.228), minimum a Salem "
+                    "polynomial at 1.216392 (deg 10, num_ram=1, disc_abs=1.49e9). The region above Lehmer's "
+                    "polynomial is a Salem-number density, not a clean gap. Strong per-num_ram monotone: "
+                    "bound touched only at num_ram=1,2; minimum jumps to 1.267 at num_ram=3, 1.800 at num_ram=5. "
+                    "Bad-prime count shows real shape (echoes F011 P021 monotone, sessionC). "
+                    "Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap "
+                    "claims without degree-AND-num_ram stratification are suspect — Salem polynomials cluster "
+                    "in the sub-1.228 region at specific degree × low-num_ram combinations."},
     {"id": "F015", "label": "Szpiro monotone decrease at fixed bad-prime count (Ergon)",
      "tier": "live_specimen", "n_objects": None,
      "description": "abc Szpiro ratio decreases monotonically with conductor when stratified by num_bad_primes. "
@@ -250,9 +259,9 @@ INVARIANCE = {
     # Live specimens — sparse +1s, many -1s in wrong projections
     "F010": {"P001": -1, "P010": +2, "P040": -1, "P042": +1},  # NF backbone: dies distributional, survives object-keyed
     "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
-    "F012": {"P022": +2, "P040": 0},                            # H85 Möbius: aut_grp is the axis (needs perm audit)
+    "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
     "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
-    "F014": {"P053": +2, "P040": +1},                           # Lehmer spectrum
+    "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
     "F015": {"P021": +2, "P001": -1},                           # abc rescue: bad_primes is the axis
 
     # Killed — structurally informative
