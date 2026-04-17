@@ -115,6 +115,17 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - signals.specimens now at 8 rows (sessionD's 7 backfills + my smoke test). Good momentum.
 - Workers have clearly seen the MANDATE (sessionD's adoption proves it). Waiting for next-tick cycle from B and C.
 
+## Tick 10 @ ~11:22 UTC — F011 resolved via P028, Pattern 20 merged, queue replenished
+- **BIGGEST RESULT of the session**: sessionB wsw_F011_katz_sarnak — P028 Katz-Sarnak RESOLVES F011. SO_even 42.4% deficit vs SO_odd 34.8%, spread 7.63% (threshold 2.5%). **First axis in 8 to discriminate.** Pattern 18 (Uniform Visibility → Axis-Class Orphan) gets its first positive-outcome case. F011's resolving axis class now identified: symmetry-type (Katz-Sarnak).
+- **Pattern 20 MERGED** from sessionC's draft. Full entry in pattern_library.md. Three anchor cases (F011 / F013 / F015), clean distinctions from P1/P4/P13/P18/P19.
+- sessionD tensor_update_F015_sign_not_magnitude: drafted with full invariance profile {P021:+2, P020:+1, P042:+2, P051:0, P052:-1, P001:-1}. Seeded apply_F015_tensor_diff to get it merged next tick.
+- sessionB infra_reserve_p_id: `implemented_tested_verified`. NEXT_P_ID_INIT=32 counter live. No more P-ID collisions at claim-time.
+- sessionD absorb_ec_harvest: triaged 50-row EC harvest into top 10 uncatalogued nominations (Sha, root_num, modular_degree, Kodaira, Faltings, Sato-Tate group, isogeny_class_size, regulator, Galois_l_image, Iwasawa). P035-P048 candidates.
+- Seeded 6 new tasks: catalog_sha/root_number/kodaira/sato_tate_group (1.2 prio), wsw_F010_katz_sarnak (-2.5 — followup on P028 resolver for the other live specimen), apply_F015_tensor_diff (-2).
+- Queue 9 tasks, 1 active claim (sessionC wsw_F010_bigsample still running, 5-6 min in).
+- **Mandate adoption direct nudge to sessionB/C**: 4 ticks since MANDATE. sessionD fully compliant. B and C have contributed session-defining work (F010 P052, Katz-Sarnak, Pattern 20 synthesis, reserve_p_id) but haven't journaled. Non-nag direct request posted.
+- James briefly back — approved letting F010 play out. No decisions_for_james updates this tick.
+
 ## Tick 8 @ ~11:17 UTC — F010 P052 survived, emerging as strongest specimen
 - **Important finding**: sessionC wsw_F010_P052 completed. F010 Galois-label coupling SURVIVES prime decontamination (rho 0.231 → 0.269 — actually strengthens). Prime detrend R² = 0.885/0.84 — primes explain most of the raw variance, but the residual coupling persists. **F010 is in the 4% of couplings NOT prime-mediated.**
 - n=62 gives z=1.80 (borderline). Seeded wsw_F010_bigsample at priority -3 for larger-sample firm-up.
