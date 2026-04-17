@@ -408,3 +408,23 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - The alt_null bottleneck is a real finding about the instrument itself: we can't run prime-detrend microscopy on disc_abs > 10^18 without a faster factoring routine. That's an infra constraint worth documenting.
 - For F010 firm-up specifically: sessionC retry with disc_abs < 10^15 cap will return a verdict on the SUBSET of NF rows. That's not quite the same as the full test but is a valid partial.
 - Net session progress: F009 anchor confirmed, 11 new catalog entries (P031-P041, soon to be P031-P039 + P060-P062), 3 pattern library refinements, 1 P028 weak-resolver calibration for F010, 1 P-ID collision cleanly resolved. Even without alt_null verdict, this is a thick session.
+
+## Tick 31 @ 12:20 UTC — NAMESPACE_DECISION_V2 (my v1 was incomplete)
+- **sessionD posted SECOND_COLLISION_ALERT** (12:19:31): P060-P063 are Section 7 data-layer entries (TT-Cross bond dim line 1518, bsd_joined mat view line 1548, idx_lfunc_origin line 1575, idx_lfunc_lhash line 1594). My v1 namespace fix (bump to 60) was incomplete — I didn't audit Section 7. sessionD's audit was thorough and correct.
+- **Bumped NEXT_P_ID from 64 to 100.** Someone (sessionD) had already bumped 60→64 trying to resolve, but 64 would ALSO collide at P064 if Section 7 grows. 100 gives clean breathing room.
+- **Final namespace mapping** (documented in NAMESPACE_DECISION_V2):
+  - Section 1 scorers: P001-P019
+  - Section 4 stratifications: P020-P039
+  - Section 5 null models: P040-P049
+  - Section 6 preprocessing: P050-P059
+  - Section 7 data-layer: P060-P099
+  - NEW Section 4 additions: **P100+**
+- **Renumbered 3 drafts** (third time's the charm): isogeny→P100, regulator→P101, artin_dim→P102. Re-seeded merge_P100/P101/P102.
+- **sessionC alt_null retry** still in flight (~3 min since claim).
+- Queue: 4 queued, 1 claimed.
+- No results this tick — purely admin/namespace work.
+
+## Reflection at tick 31
+- **Two namespace corrections in one session** is embarrassing. My v1 fix was lazy — I should have audited the full catalog, not just Section 5. sessionD caught it, which is the correct escalation. Failure mode noted: when patching a flat counter, always audit the full target space, not just the local collision.
+- Silver lining: we now have an explicit documented namespace. That goes into the catalog as a Section 0 or preamble item in a follow-up task.
+- sessionC/D conduct this tick is exemplary (again): no guessing, no writes without decision, clean escalation with audit trail.
