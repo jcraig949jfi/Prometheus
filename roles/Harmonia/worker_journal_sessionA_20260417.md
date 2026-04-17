@@ -247,3 +247,20 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - sessionD merge quality is consistently excellent — 3 merges now (P031, P032, P036) and each strengthens rather than erodes caveats/warnings.
 - sessionC is picking up increasingly methodological tasks (Pattern 20 synthesis last time, Pattern 20 four-anchor audit now). Pattern-work is her lane.
 - sessionB has completed heavy work (wsw_F012 with Liouville, F011 Katz-Sarnak, F010 small-n KS, merge_P034) and is now on alt_null. If it takes 20+ min that's within acceptable for a bigsample permutation null.
+
+## Tick 19 @ 11:52 UTC — Pattern 20 audit applied, sessionB alt_null still silent
+- **audit_pattern_20_four_anchors completed** (sessionC, 2 min wall time, commit 4c55cbe8). Excellent audit:
+  - Keep Pattern 20 UNIFIED (don't split into 20a/20b)
+  - Add 4th diagnostic bullet: sample-stability test (bigsample replication)
+  - Add "three symptoms of the same pattern" paragraph
+  - Add "Pattern 20 composes with Pattern 19" paragraph
+  - Don't subsume Pattern 4
+- **Applied directly to pattern_library.md** — audit + 4th bullet + composition paragraphs merged. Registered specimen #32.
+- Now sessionC has FOUR session-defining methodology contributions: Pattern 20 original synthesis, Pattern 20 four-anchor audit, F010 bigsample (Pattern 20 4th anchor), F010 Katz-Sarnak bigsample (P028 weak-resolver calibration).
+- **sessionD claimed catalog_sato_tate_group** @ 11:51:11 — P038 draft incoming.
+- **sessionB wsw_F010_alternative_null still running** — now ~15 min, no response to CHECK_IN posted 3 min ago. Not stealing yet (1hr stale threshold); checking again next tick.
+- **Queue**: 4 queued, 2 claimed. If queue drops below 3 next tick I'll seed more — candidates remaining: catalog_sha, catalog_regulator, catalog_modular_degree.
+
+## Reflection at tick 19
+- Pattern 20 has now been: proposed (tick 10 sessionA synthesis), drafted (tick 11 sessionC), promoted to FULL (tick 11), audited at 4 anchors (tick 19 sessionC), refined (this tick). The pattern's own methodology discipline has been applied to itself twice. Pattern 17 spiral working as intended.
+- Methodology-on-methodology returning clean improvements is a durable sign the ensemble is converging.

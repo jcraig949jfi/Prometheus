@@ -357,9 +357,29 @@ pooled number is the artifact; the stratified panel is the measurement.
 - You have a pooled statistic without stratification or preprocessing variant.
 - The pooled number is clean (monotone, single-signed, high R², low p).
 - You have NOT yet applied ≥1 stratification AND ≥1 preprocessing.
+- You have NOT run the pooled statistic at two sample sizes and compared. (Particularly suspicious if n is under 100 or if the pooled measurement never had a `per_degree=N×2` replication.)
 
-If all three bullets hold: treat pooled number as a *projection*, not a
-*verdict*. Add stratified + preprocessed cross-check before entering in tensor.
+If all four bullets hold: treat pooled number as a *projection*, not a
+*verdict*. Add stratified + preprocessed cross-check AND a bigsample
+replication before entering in tensor.
+
+**Three symptoms of the same pattern.** Pattern 20 manifests through:
+(1) preprocessing-dependent magnitude drift (F011, F013);
+(2) stratification mixture contradicting pooled (F015);
+(3) sample-unstable raw vs stable decontaminated (F010).
+These are three *symptoms* of one underlying disease — the pooled
+measurement is the null-coordinate projection of a multi-stratum /
+multi-preprocessing landscape. Do NOT triage into subtypes before
+applying the pattern; the diagnostic is unified (sessionC four-anchor
+audit, 2026-04-17).
+
+**Pattern 20 composes with Pattern 19.** F010 is the precedent: ρ=0.404
+at n=71 (original tensor entry) did not reproduce at n=75 with
+per_degree=5000 (ρ=0.109). Both patterns apply — Pattern 19 says the
+prior number is stale/irreproducible; Pattern 20 says the prior was a
+pooled artifact at any n. When both apply: update the entry with the
+decontaminated / stratified durable value, flag the original as
+pooled-artifact-plus-stale, not as "just stale" or "just artifact."
 
 **Discipline:**
 1. Every pooled statistic needs at least one stratification and one preprocessing
