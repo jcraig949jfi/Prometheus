@@ -297,6 +297,96 @@ embedded in it.
 
 ---
 
+## Pattern 20 — Stratification Reveals Pooled Artifact
+
+**Proposed by:** Harmonia_M2_sessionA via task `pattern_20_stratification_reveals`
+(synthesis from F011/F013/F015 shared shape).
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17.
+**Status:** FULL (three anchor cases established; sessionA approved via merge).
+
+**Recognition:** A pooled single-axis measurement (ρ, slope, variance, bias)
+can look clean — monotone, uniform, significant — while masking stratum-level
+structure that contradicts the pooled reading. The stratified or preprocessed
+view shows the real shape: different magnitudes per stratum, different signs
+per stratum, or the effect largely collapsing under proper preprocessing. The
+pooled number is the artifact; the stratified panel is the measurement.
+
+**Distinction from siblings:**
+- **Pattern 13 (Accumulated Kills):** kills along one axis class → feature
+  doesn't live on that class. Pattern 20 is about how a *single-axis pooled
+  view* is deceptive regardless of which axis you chose.
+- **Pattern 18 (Uniform Visibility):** feature real but resolving axis not
+  in tested set. Pattern 20 is the pooled-vs-stratified mismatch revealing
+  the pooled view was artifact, *before* claiming the feature at all.
+- **Pattern 19 (Stale/Irreproducible):** prior recorded value disagrees with
+  fresh measurement. Pattern 20 is *intra-run*: preprocessing or stratification
+  choice made right now changes the answer on the same dataset.
+- **Pattern 1 (Distribution/Identity Trap):** two sides share a formula. Pattern
+  20 is more general — no formula-sharing required; any mixture-of-strata or
+  density-confound produces the same artifact.
+- **Pattern 4 (Sampling Frame Trap):** `LIMIT N` without stratification biases
+  samples. Pattern 4 is about rows pulled; Pattern 20 is about aggregation
+  after pulling. Both point at *unstratified = unsafe*.
+
+**Anchor cases (2026-04-17):**
+
+1. **F011 GUE first-gap deficit** (sessionC wsw_F011, n=2,009,089):
+   - Pooled spacings (original n~4K): 40% deficit, z=-19.26
+   - First-gap raw (P050) n=2M: 59% deficit
+   - First-gap unfolded (P051) n=2M: 38% deficit
+   - Three preprocessings → three different magnitudes. Only unfolded (P051) is the honest number.
+
+2. **F013 zero-spacing rigidity vs rank** (sessionD wsw_F013):
+   - Pooled raw slope: -0.00467 (R² 0.049)
+   - Unfolded slope (P051): -0.00121 (R² 0.001)
+   - ~74% density-mediated. Proper unfolding exposed ~26% structural residual.
+
+3. **F015 abc/Szpiro vs conductor** (sessionD wsw_F015):
+   - Pooled slope: -0.60 (R² 0.27)
+   - Per-k-stratum slopes: -0.13, -0.45, -0.49, -0.36, -0.48, -0.46
+   - Sign uniform but **magnitude non-monotone**; pooled ~40% larger than any stratum.
+
+**Diagnostic for suspecting Pattern 20:**
+- You have a pooled statistic without stratification or preprocessing variant.
+- The pooled number is clean (monotone, single-signed, high R², low p).
+- You have NOT yet applied ≥1 stratification AND ≥1 preprocessing.
+
+If all three bullets hold: treat pooled number as a *projection*, not a
+*verdict*. Add stratified + preprocessed cross-check before entering in tensor.
+
+**Discipline:**
+1. Every pooled statistic needs at least one stratification and one preprocessing
+   cross-check before publication.
+2. Report the pooled + stratified + preprocessed values as an *invariance profile*,
+   not a single headline number. "The per-stratum range is [-0.13, -0.49] with a
+   pooled-slope artifact at -0.60" is the right summary form.
+3. If pooled and stratified disagree on magnitude (>20%) or sign, the pooled is
+   the artifact.
+
+**Connection to Pattern 17:** reinforces it. The instrument needs a schema
+field for `invariance_profile` on every specimen, not just `headline_stat`.
+Current tensor description fields bolt the profile onto free text — classic
+Pattern 17 symptom (missing structure → bloated language).
+
+**Connection to charter:** Pattern 20 is the pattern-library formalization of
+"projections, not verdicts" (Pattern 6) applied to the *measurement step* itself.
+Every measurement is through a coordinate system; the pooled measurement is
+through the *trivial* (null) coordinate, which is rarely informative.
+
+**Anti-pattern:** Reporting `rho=0.60 R²=0.40` as specimen-level headline
+without stratification, then downgrading when stratification halves it. Pooled
+should never have been the headline.
+
+**Open question (per sessionC draft):** Should Pattern 20 subsume Pattern 4?
+Recommendation (sessionA): keep both, cross-reference. Pattern 4 is about which
+rows you pulled; Pattern 20 is about how you aggregated after. Adjacent but
+distinct.
+
+**Implementation next step:** Add `pooled_vs_stratified_ratio` field to
+signals.specimens. Auto-flag rows with ratio > 1.2 or sign-discordance.
+
+---
+
 ## Pattern 19 — Stale / Irreproducible Tensor Entry
 
 **Proposed by:** Harmonia_M2_sessionB (during wsw_F012 WORK_COMPLETE, 2026-04-17)
@@ -372,13 +462,21 @@ This is the positive-side complement to Pattern 13 (Direction of Accumulated Kil
   real AND the walked axes are all "not-the-resolving-axis" — you've confirmed a
   shape but not its natural coordinate.
 
-**Canonical example:** F011 GUE 14→38% first-gap deficit.
+**Canonical example:** F011 GUE first-gap deficit.
 - sessionC's wsw_F011 applied P050, P051, P021, P023, P024, P025, P026
 - Every projection returned +1 (deficit visible through each)
 - Conclusion: the deficit IS real (not a coordinate artifact — it survives
   multiple independent views). But the resolving axis (the one along which the
   deficit is explained, not just visible) is among P028 (Katz-Sarnak),
   H09 (finite-N conductor-window), or something uncatalogued.
+
+**Resolution (2026-04-17, tick 9):** sessionB's wsw_F011_katz_sarnak CONFIRMED
+Pattern 18's prediction. Applied P028: SO_even 42.39% deficit (n=995K),
+SO_odd 34.77% (n=1M), spread 7.63% (well above the 2.5% threshold). **P028 is
+the first of 8 tested projections to discriminate on F011.** F011's resolving
+axis class is symmetry-type (Katz-Sarnak). Pattern 18 worked: the navigation
+pointed to the axis outside the initial tested set, and that axis resolved.
+Pattern 18 is now a confirmed pattern with one positive-outcome case.
 
 **Why this is not Pattern 13:**
 - Pattern 13 says "multiple kills on the same axis class → feature doesn't live there."

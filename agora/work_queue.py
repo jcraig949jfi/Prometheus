@@ -80,6 +80,41 @@ def push_task(
     return task_id
 
 
+def reserve_p_id(r: Optional[redis.Redis] = None) -> str:
+    """Atomically reserve the next available projection ID.
+
+    Uses Redis INCR on NEXT_P_ID. Returns a formatted "P{n:03d}" string
+    (e.g. "P033"). Callers MUST record the reservation — a reserved-but-
+    unused ID becomes a gap in the catalog (acceptable tradeoff vs. collisions).
+
+    The counter is lazily initialized to NEXT_P_ID_INIT on first call.
+    First INCR after init returns NEXT_P_ID_INIT + 1 (i.e. "P033" given init=32).
+
+    Thread/session-safe: INCR is atomic in Redis.
+    """
+    if r is None:
+        r = _connect()
+    # SETNX initializer — returns 1 if set, 0 if already present. We don't care
+    # about the return; INCR is the authoritative step.
+    r.setnx(NEXT_P_ID, NEXT_P_ID_INIT)
+    n = int(r.incr(NEXT_P_ID))
+    return f"P{n:03d}"
+
+
+def peek_next_p_id(r: Optional[redis.Redis] = None) -> str:
+    """Read the next P-ID that WOULD be returned without reserving it.
+
+    Purely diagnostic. Do not rely on the result for claim logic — another
+    worker can reserve between peek and use.
+    """
+    if r is None:
+        r = _connect()
+    raw = r.get(NEXT_P_ID)
+    if raw is None:
+        return f"P{NEXT_P_ID_INIT + 1:03d}"
+    return f"P{int(raw) + 1:03d}"
+
+
 def claim_task(instance_name: str, task_type_filter: Optional[str] = None,
                timeout_sec: int = 3600) -> Optional[dict]:
     """Claim the highest-priority task this instance is qualified to run.
@@ -87,6 +122,10 @@ def claim_task(instance_name: str, task_type_filter: Optional[str] = None,
     Returns task dict or None if nothing available or not qualified.
     Claim is held for timeout_sec; after that, other workers can steal it
     via steal_stale_claims().
+
+    For catalog_entry tasks, a P-ID is atomically reserved at claim time and
+    returned in the task dict under key "reserved_p_id" and mirrored into the
+    claim JSON under the same key. Workers MUST use that ID in their draft.
     """
     r = _connect()
     # Gate check
@@ -119,6 +158,15 @@ def claim_task(instance_name: str, task_type_filter: Optional[str] = None,
         # HSETNX ensures only one instance claims
         ok = r.hsetnx(WORK_CLAIMS, task_id, json.dumps(claim, default=str))
         if ok:
+            # For catalog_entry tasks, reserve a P-ID now. Do this AFTER the
+            # HSETNX succeeds so we don't burn P-IDs on failed-claim races.
+            if task.get("task_type") == "catalog_entry":
+                p_id = reserve_p_id(r)
+                task["reserved_p_id"] = p_id
+                # Update claim JSON to carry the reservation too, so stale-claim
+                # stealers can inherit it.
+                claim["reserved_p_id"] = p_id
+                r.hset(WORK_CLAIMS, task_id, json.dumps(claim, default=str))
             # Remove from queue (optional — or leave for visibility)
             r.zrem(WORK_QUEUE, task_id)
             return task

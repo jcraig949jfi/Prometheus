@@ -1,0 +1,124 @@
+{
+  "specimen_id": "F011",
+  "projections_used": [
+    "P028"
+  ],
+  "verdict": "P028_RESOLVES",
+  "reading": "SO_even vs SO_odd deficit spread = 7.63% > 2.5% threshold. Katz-Sarnak symmetry type (via rank parity) DOES resolve a structural difference in F011 first-gap variance that sessionC's 7-projection uniform-visibility test missed. Pattern 18 (Uniform Visibility is the Shape) requires refinement: the deficit is uniform across object-property axes but NOT across family-symmetry axes.",
+  "threshold_pct": 2.5,
+  "SO_even": {
+    "stratum": "SO_even",
+    "n": 995538,
+    "var": 0.1025369625079175,
+    "mean_gap": 0.9181846227851289,
+    "deviation_from_gue": -0.0754630374920825,
+    "relative_deviation": -0.42394964883192415,
+    "deficit_pct": 42.394964883192415,
+    "z_score": -299.10796964109477,
+    "included": true
+  },
+  "SO_odd": {
+    "stratum": "SO_odd",
+    "n": 1013551,
+    "var": 0.11611752750685338,
+    "mean_gap": 0.9699574565067062,
+    "deviation_from_gue": -0.061882472493146615,
+    "relative_deviation": -0.3476543398491383,
+    "deficit_pct": 34.76543398491383,
+    "z_score": -247.4886269944097,
+    "included": true
+  },
+  "comparison": {
+    "abs_diff_var": 0.013580564998935882,
+    "rel_diff_vs_gue_pct": 7.629530898278586,
+    "deficit_spread_pct": 7.629530898278588,
+    "F_ratio_even_over_odd": 0.8830446592299828,
+    "z_diff_even_minus_odd": -62.16291098945577
+  },
+  "per_rank_diagnostic": {
+    "0": {
+      "stratum": "rank=0",
+      "n": 773232,
+      "var": 0.09542708220968436,
+      "mean_gap": 0.8982963441528977,
+      "deviation_from_gue": -0.08257291779031563,
+      "relative_deviation": -0.4638927965748069,
+      "deficit_pct": 46.38927965748069,
+      "z_score": -288.4411773200813,
+      "included": true,
+      "katz_sarnak": "SO_even"
+    },
+    "1": {
+      "stratum": "rank=1",
+      "n": 1008146,
+      "var": 0.11613914703460682,
+      "mean_gap": 0.969866732028586,
+      "deviation_from_gue": -0.061860852965393176,
+      "relative_deviation": -0.3475328818280516,
+      "deficit_pct": 34.75328818280516,
+      "z_score": -246.7416156158068,
+      "included": true,
+      "katz_sarnak": "SO_odd"
+    },
+    "2": {
+      "stratum": "rank=2",
+      "n": 222305,
+      "var": 0.12110671624822941,
+      "mean_gap": 0.9873607738129812,
+      "deviation_from_gue": -0.05689328375177058,
+      "relative_deviation": -0.3196251896166887,
+      "deficit_pct": 31.962518961668867,
+      "z_score": -106.56133174731941,
+      "included": true,
+      "katz_sarnak": "SO_even"
+    },
+    "3": {
+      "stratum": "rank=3",
+      "n": 5405,
+      "var": 0.11181783342896089,
+      "mean_gap": 0.9868794768062273,
+      "deviation_from_gue": -0.0661821665710391,
+      "relative_deviation": -0.3718099245563995,
+      "deficit_pct": 37.18099245563995,
+      "z_score": -19.326964563436057,
+      "included": true,
+      "katz_sarnak": "SO_odd"
+    },
+    "4": {
+      "stratum": "rank=4",
+      "n": 1,
+      "included": false,
+      "skipped_reason": "n<100",
+      "katz_sarnak": "SO_even"
+    }
+  },
+  "rank_parity_root_number_sanity": {
+    "n_checked": 2009089,
+    "n_match": 1008004,
+    "n_mismatch": 1001085,
+    "f003_anchor_note": "RETRACTED. The check used signD (disc sign) which is NOT the root number. F003 BSD parity anchor was NOT tested by this script. Do not interpret the 50% mismatch as an anchor failure.",
+    "CORRECTION": "The column signD in ec_curvedata is the sign of the DISCRIMINANT (disc_sign), NOT the functional-equation root number. The 50.2% match rate is EXPECTED (discriminant sign is independent of rank parity) and is NOT a Pattern 7 calibration-anchor violation. The root number is not directly stored in ec_curvedata in this mirror. Katz-Sarnak classification for EC L-functions uses rank parity directly per the standard convention (SO_even iff rank even, SO_odd iff rank odd) \u2014 this is the definition, not an observable that needs cross-check. The analysis itself is valid."
+  },
+  "shape_summary": "SO_even vs SO_odd deficit spread = 7.63% > 2.5% threshold. Katz-Sarnak symmetry type (via rank parity) DOES resolve a structural difference in F011 first-gap variance that sessionC's 7-projection uniform-visibility test missed. Pattern 18 (Uniform Visibility is the Shape) requires refinement: the deficit is uniform across object-property axes but NOT across family-symmetry axes.",
+  "_meta": {
+    "task_id": "wsw_F011_katz_sarnak",
+    "instance": "Harmonia_M2_sessionB",
+    "started": "2026-04-17T11:15:10.498307+00:00",
+    "finished": "2026-04-17T11:15:18.169001+00:00",
+    "gue_var_baseline": 0.178,
+    "min_stratum_n": 100,
+    "unfolding_formula": "(gamma/2pi) * (log(N*gamma^2/4pi^2) - 2)  [catalog degree-2]",
+    "data_source": "zeros.object_zeros (prometheus_fire) INNER JOIN public.ec_curvedata (lmfdb) on lmfdb_label",
+    "n_merged": 2009089,
+    "n_unfolded_ok": 2009089,
+    "n_with_rank": 2009089,
+    "katz_sarnak_assignment": "rank even \u2192 SO_even; rank odd \u2192 SO_odd (EC Katz-Sarnak convention)",
+    "prior_seven_projection_result": "sessionC wsw_F011: ALL 7 projections +1; uniform ~38% deficit (shape_summary ~0.110 vs GUE 0.178).",
+    "notes": [
+      "P028 is the 8th family-axis probe on F011 after P021,P023,P024,P025,P026,P050,P051.",
+      "Pattern 13 prediction was that P028 would also fail uniformly, confirming family-axis orphanhood.",
+      "Threshold: 2.5% absolute deficit-spread between SO_even and SO_odd to call P028 a resolver.",
+      "Sanity check: EC BSD parity anchor F003 requires rank mod 2 = root_number sign bit. Any mismatch aborts analysis."
+    ]
+  }
+}

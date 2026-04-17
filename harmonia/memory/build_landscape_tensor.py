@@ -258,7 +258,7 @@ INVARIANCE = {
 
     # Live specimens — sparse +1s, many -1s in wrong projections
     "F010": {"P001": -1, "P010": +2, "P040": -1, "P042": +1},  # NF backbone: dies distributional, survives object-keyed
-    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
+    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
     "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
     "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
