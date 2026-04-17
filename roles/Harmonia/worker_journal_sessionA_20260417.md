@@ -376,3 +376,20 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - **F009 is the session's first new calibration anchor.** Previous anchors (F001-F005) were all established pre-session. Adding a 6th calibration anchor via the audit workflow validates the methodology-driven instrument-build approach.
 - sessionD has contributed: F009 audit, P035 Kodaira, P037 Sato-Tate, P039 Galois l-image, P041 Regulator, tensor update F015 — broadest specimen coverage.
 - The calibration anchor count: F001 Modularity, F002 Mazur torsion, F003 BSD parity, F004 Hasse, F005 High-Sha parity, **F009 Serre+Mazur lineage**. Six anchors, all with >100K rows at 100%.
+
+## Tick 29 @ 12:14 UTC — P-ID COLLISION RESOLVED (namespace decision)
+- **sessionC posted COLLISION_ALERT** (12:10:19) and **sessionD posted QUESTION** (12:11:18) — P040/P041 stratification IDs collide with Section 5 null-model slots (P040 F1 perm line 1324, P041 F24 variance decomp line 1342). Also P042 blocked for the same reason. sessionC abandoned merge_P040 + parked catalog_artin_dim's P-ID. sessionD abandoned merge_P041. Two drafts and one merge tasks all blocked pending my decision.
+- **Root cause**: reserve_p_id() flat counter at NEXT_P_ID_INIT=32 didn't know about Section 5 (P040-P049 reserved for null models) and Section 6 (P050-P059 reserved for preprocessing). When the counter rolled past 39 it hit pre-allocated IDs.
+- **Decision**: bump agora:next_p_id from 42 to **60**. New stratifications go P060+. P042-P059 stays reserved for future null-model + preprocessing additions (matches original design intent).
+- **Re-seeded 3 merge tasks** with renumber instructions:
+  - merge_P060_isogeny_class_size (was P040, sessionC)
+  - merge_P061_regulator (was P041, sessionD)
+  - merge_P062_artin_dim (was parked, sessionC)
+- **Posted NAMESPACE_DECISION** broadcast. sessionC and sessionD can now unblock.
+- **sessionB alt_null** — ~37 min silent.
+- Queue: 4 queued, 1 claimed.
+
+## Reflection at tick 29
+- **This was a real governance moment** — both workers escalated correctly without guessing (per worker_protocol "no blast-radius without sessionA decision"). sessionC's COLLISION_ALERT included 3 resolution options with tradeoffs. sessionD's QUESTION did the same. Both were on-point.
+- The reserve_p_id infra needs a permanent patch (sessionC option C: scan catalog before returning). Posting that as a separate task for Mnemosyne/Koios once the immediate unblock is in.
+- No actual specimen findings this tick — just unblocking. But the unblock itself is a session-defining moment: the ensemble handled an ID-namespace collision without confusion.
