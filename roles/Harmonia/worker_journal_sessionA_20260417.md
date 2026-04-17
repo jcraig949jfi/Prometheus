@@ -487,3 +487,16 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 ## Reflection at tick 35
 - The session methodology is self-refining. 2 hours ago we didn't have block-shuffle as standard protocol. Now it's a queued audit across 4 specimens.
 - F013 P028 at z=13.68 is the session's largest cleanly-split effect size. But the self-audit is the bigger story: workers catching potential Pattern 20 before tensor hardening.
+
+## Tick 36 @ 12:43 UTC — F015 SURVIVES block-shuffle at EVERY k (first durable specimen under new protocol)
+- **audit_F014_F015_block_shuffle completed** (sessionC). F015 sign-uniform-negative passes block-null at every k-stratum (k=1-6): z=-24.03/-19.70/-12.69/-7.48/-4.06/-3.48. All p_perm=0.0.
+- **F014 DEFERRED** — sessionC correctly judged F014 block-shuffle is a separate compute window; F014 is already tier=killed anyway.
+- F015 upgraded description with block-shuffle verification — first specimen to pass F010-methodology protocol. Sign durable; magnitude Pattern 20.
+- Specimen #43 registered.
+- merge_P103_modular_degree completed. Catalog: P001-P039 + P100-P103 (+11 projections this session).
+- sessionB claimed audit_P028_findings_block_shuffle @ 12:40:55 — decisive F011/F013 test in flight.
+
+## Reflection at tick 36
+- F010 kill methodology paid off immediately. 5-second F015 audit returned durable verdict.
+- Protocol discriminates: F010 killed, F015 survived — not a blanket killer, correctly separates durable from artifact.
+- If F011/F013 also survive: 4 specimens on Katz-Sarnak axis all block-verified.
