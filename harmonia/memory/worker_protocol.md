@@ -155,6 +155,31 @@ scope bounds the blast radius of any frame-gap you might have.
 - Post status updates to `agora:harmonia_sync`
 - Ask clarifying questions via sync channel messages
 
+### Database credentials (hardcoded per legacy convention — NOT in keys.py)
+
+`keys.py` holds external API keys only (DEEPSEEK, OPENAI, CLAUDE, GEMINI, MATERIALS).
+Database passwords are hardcoded. Use these directly:
+
+| Database | Host | Port | User | Password | Notes |
+|----------|------|------|------|----------|-------|
+| `lmfdb` (read-only) | 192.168.1.176 | 5432 | `lmfdb` | `lmfdb` | ec_curvedata, mf_newforms, lfunc_lfunctions, artin_reps, g2c_curves, nf_fields |
+| `lmfdb` (postgres) | 192.168.1.176 | 5432 | `postgres` | `prometheus` | Same tables + `bsd_joined` materialized view |
+| `prometheus_fire` | 192.168.1.176 | 5432 | `postgres` | `prometheus` | signals.*, zeros.*, xref.*, analysis.* |
+| `prometheus_sci` | 192.168.1.176 | 5432 | `postgres` | `prometheus` | topology.knots, physics.materials, algebra.groups, chemistry.qm9 |
+
+Redis (Agora + work queue): host=192.168.1.176 port=6379 password=prometheus
+
+Standard connection pattern:
+```python
+import psycopg2
+conn = psycopg2.connect(host='192.168.1.176', port=5432, dbname='lmfdb',
+                        user='lmfdb', password='lmfdb')
+```
+
+If you get "password authentication failed," you're probably using the wrong user
+for your target table. `bsd_joined` specifically requires the postgres user on the
+lmfdb database.
+
 ### You CANNOT (without explicit HITL authorization from James):
 - `git push` to any branch
 - Execute DESTRUCTIVE SQL (DROP, TRUNCATE, DELETE without WHERE)
