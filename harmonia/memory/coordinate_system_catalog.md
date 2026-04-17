@@ -103,6 +103,59 @@ under label permutation, which is their fingerprint.
 
 ---
 
+## P034 — AlignmentCoupling (rank-based extremity coupling)
+
+**Code:** `harmonia/src/coupling.py:AlignmentCoupling` (class body lines 182–298)
+**Type:** feature_distribution (rank-based; Megethos-robust by construction)
+
+**What it resolves:**
+- **Coupling visible only through rank structure** — where each object sits in its feature distribution (quantile rank ∈ [0, 1]), not its raw magnitude. Objects with identical ranks across two domains have identical coupling weight, regardless of their absolute feature values.
+- **Extremity co-variation.** For each feature column per domain, the scorer weights by `(q − 0.5).abs()` — distance from median. Objects that are extreme in one domain are scored higher when paired with objects that are extreme in another. Mid-population pairings contribute near-zero, by design.
+- **Sign-preserving alignment.** A secondary term uses `(q − 0.5).sign()` times an interaction-matrix-weighted dot-product with the partner domain's sign vector. This rewards "both high" or "both low" configurations and penalizes "one high, one low". Weight on this term is 0.3 in `score_batch` (line 292) — small relative to the extremity term.
+- **Learning-time interaction structure.** At init (lines 219–257), per-domain-pair, it samples 5000 random pairings, computes the extremity cross-correlation matrix (d_i × d_j), estimates the null by shuffling the partner domain 5 times, and keeps only feature-pair interactions that are **> 2σ above the shuffled null**. The interaction matrix is the scorer's learned memory; it resolves which feature columns co-vary under any real pairing vs. which are noise.
+
+**What it collapses:**
+- **Magnitude-scale structure.** Quantile rank erases absolute feature magnitudes entirely. Two objects with feature vectors (1, 2, 3) and (100, 200, 300) have identical rank signatures if they occupy the same percentile slots. This is Megethos-robust **by construction**, not by discipline — the scorer cannot be contaminated by P003 the way P001 and P002 can.
+- **Sparse/binary feature structure.** Features with mostly-identical values (e.g. binary flags, sparse indicators) produce degenerate rankings where ties dominate, collapsing extremity differences. Use categorical projections (P010/P011/P012) instead.
+- **Low-count populations** where rank quantiles are coarse. Below ~1000 objects, the rank granularity is too coarse for stable extremity measurement.
+
+**Tautology profile:**
+- **Not independent of P001/P002.** The underlying claim is still "these projections share a feature correspondence" — just measured through ranks instead of raw cosine. Using both P001 and P034 on the same hypothesis double-counts the distributional alignment signal. Pattern 1 (Distribution/Identity Trap) applies: if P001 gives ρ=0.9 and P034 gives a high score, check whether both are driven by the same formula-level overlap before celebrating.
+- **Learning-time null ≠ inference-time null.** The built-in 2σ filter on the interaction matrix is a **learning discipline** — it rejects interaction cells that are noise given the observed pairings. It is NOT a post-hoc permutation null on the final score. To probe whether a batch-level coupling survives permutation, use P040 externally. Conflating the two is a protocol error.
+- **Quantile-rank × degree-of-freedom coupling.** For tables where most objects have identical feature values (e.g. `rank` on ec_curvedata — 80% rank 0 or 1), the quantile map is nearly step-function. The rank-based transformation preserves less information than the raw numeric one. Check distribution shape before adopting P034 over P001.
+- **Extreme-tail over-weighting in small samples.** `(q − 0.5).abs()` weights tails quadratically in a sense; with n < 1000 the top and bottom quantiles are dominated by 2-3 outlier objects, and their interactions drive the score disproportionately. Apply P043 bootstrap to confirm stability.
+
+**Calibration anchors:**
+- **Known rank-structure invariances.** Where rank signature across projections is a real invariance — e.g. F010 NF backbone's "small-disc NFs pair with low-conductor Artin reps" — P034 should resolve the signal. Untested on F010 as of this entry; candidate follow-up.
+- **Modularity (F001) via P034 is weak.** Modularity is about L-function identity, not rank co-variation on arithmetic invariants. P034 has no principled reason to detect modularity; expect it to give no signal on pure EC↔MF modularity probes. If it does, either Pattern 5 applies (known invariance re-projected) or there is a leak.
+- **Against P001 on the phoneme corpus (F021).** Phoneme framework gave ρ=0.95+ under P001 and was killed by P040. P034 on the same corpus should ALSO give a high score (ranks are aligned in the same trivial way the raw cosine is) — the 2σ learning-filter would not help here because the 5-shuffle null is too weak. This is the expected failure mode; confirms P034 is not a magic Megethos escape.
+
+**Known failure modes:**
+- **High-Megethos data gives decent-looking scores in noisy ways.** Rank normalization kills magnitude scale, but rank order can still track magnitude within a stratum. If two projections have strongly-correlated magnitudes, their rank signatures are also correlated — P034 sees this as "aligned extremity" and fires. Pre-decontaminate with P052 where applicable.
+- **The interaction-matrix is a memory.** AlignmentCoupling learns from the sample it sees at init. If you change the population (e.g. add new objects, change filters) without re-initializing, the interaction matrix is stale. Pattern 19 (Stale/Irreproducible) at scorer-state level.
+- **Sigmoid normalization compresses the tail.** Final score is `sigmoid(total_score * 5)` (line 297). This compresses high-magnitude couplings toward 1.0 and mid-range toward 0.5. Two distinct "very strong" couplings are indistinguishable in output; use the pre-sigmoid `total_score` if relative ranking matters.
+- **5-shuffle null at init is noisy.** The 2σ filter estimates null mean/std from only 5 permutations (line 245). This is a permissive filter — the effective rejection rate is ~5% under pure noise. Treat the learned interactions as coarse, not definitive.
+
+**When to use:**
+- **Coupling-across-projection probes where Megethos has been a chronic confound** and P052 decontamination is infeasible (categorical or non-numeric features). P034 gives a rank-based floor that P001 doesn't.
+- **Extremity-driven phenomena.** When the hypothesis is literally "extremes align" (e.g. high-Sha curves paired with low-regulator curves), P034's extremity weighting is the right shape.
+- **As a corroborating scorer alongside P001.** If P001 shows a signal, P034 showing the same signal at rank level is weak corroboration (Pattern 3 Weak Signal Walk invariance evidence). If P001 shows a signal but P034 doesn't, the coupling is magnitude-mediated and likely Megethos-contaminated — Pattern 3 kill axis.
+- **Exploratory first-pass on new projection pairs** where rank-order is known but absolute scaling is arbitrary (mixed-unit datasets).
+
+**When NOT to use:**
+- **Categorical/object-level coupling claims.** Use P010/P011/P012. Quantile rank is defined only for continuous features.
+- **Small-n populations (n < 1000).** Rank granularity is too coarse; bootstrap (P043) dominates the signal.
+- **Publication-grade findings without post-hoc P040 permutation null.** The built-in 2σ learning-time filter is not a substitute for inference-time null.
+- **In place of P001 when you want raw cosine similarity.** P034 and P001 measure different things; P034 is not a cleaner version of P001 — it is a distinct projection with a different invariance surface.
+
+**Relationship to other projections:**
+- **P001 CouplingScorer — parent class.** P034 inherits `__init__`'s feature-normalization machinery but overrides scoring entirely. Running both jointly and comparing is diagnostic: agreement = robust distributional signal; P001-only = magnitude-mediated (Megethos-suspicious); P034-only = pure rank extremity (may indicate sparse/binary features in the data).
+- **P002 DistributionalCoupling — sibling.** P002 adds kurtosis ratio on top of cosine; P034 replaces cosine entirely with rank. Different axes on what "distributional" means.
+- **P040 F1 permutation null — orthogonal/complementary.** P040 tests the inference-time coupling under label shuffle; P034's internal 2σ filter tests the learning-time interaction matrix under shuffle. They answer different questions and do not substitute for one another.
+- **P052 Prime decontamination — can precede.** If the projections have prime-factorization-mediated coupling, decontaminate first; otherwise P034 will inherit the contamination (Pattern 1 at rank level).
+
+---
+
 # Section 2 — Magnitude Axes (Confounds)
 
 ## P003 — Megethos (log|magnitude| axis)
@@ -652,6 +705,203 @@ projection. Critical for revealing features hidden in pooled analysis.
 1. `wsw_F001_via_P030` — confirm modularity calibration at per-level.
 2. `catalog_nk2_joint` — document `Nk2 = level × weight²` as its own derived coordinate.
 3. `catalog_level_radical` — separate entry for the squarefree-kernel projection.
+
+---
+
+## P031 — Frobenius-Schur Indicator stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_artin_indicator)
+**Code:** `WHERE "Indicator" = v` on `lmfdb.artin_reps` (indexed via `idx_artin_dim_conductor`; Indicator itself is unindexed — add `idx_artin_indicator` if this becomes a hot path)
+**Type:** stratification (symmetry / self-duality axis, classical representation theory)
+
+**What it resolves:**
+- **Self-duality and symmetry type of a complex irreducible representation.** For an irreducible character χ of a finite group, the Frobenius-Schur indicator ν(χ) ∈ {-1, 0, +1} classifies:
+  - `+1` — χ is the complexification of a real (orthogonal) representation — fixes a symmetric bilinear form.
+  - `-1` — χ is quaternionic (symplectic) — fixes an alternating bilinear form.
+  - ` 0` — χ is not self-conjugate (complex type in the reality sense).
+- **Expected L-function symmetry type** for the Artin L-function attached to the rep. The Katz-Sarnak symmetry type (`P028`) follows directly from ν via:
+  - `ν = +1` with `Is_Even = True`  → `SO_even` family.
+  - `ν = +1` with `Is_Even = False` → `SO_odd`  family.
+  - `ν = -1`                        → `Sp`        family.
+  - `ν = 0`                         → `U`         family.
+  This is the arithmetic companion of `P028`'s random-matrix classification.
+- **Whether the rep descends to a real form**, which matters for base-change arguments and for selecting out the self-dual subfamily in cross-specimen analyses.
+
+**What it collapses:**
+- **Within-indicator distinctions.** Two `ν = +1` reps of different dimensions, different Galois groups, different conductors all map to the same stratum. Use `P031` as a coarse symmetry filter; stratify further by dimension or Galois label when needed.
+- **Representation content beyond symmetry.** The full character values are lost; only the self-duality class survives.
+- **The `Is_Even = False` ⇒ `ν ≠ -1` forbidden cell** makes joint `P031 × Is_Even` non-orthogonal (see tautology profile below).
+
+**Tautology profile:**
+- **`P031` ↔ `Is_Even` (partial tautology, asymmetric).** Empirical from `artin_reps` (798,140 rows, 2026-04-17):
+  - `Is_Even = False`: 478,851 rows — all `ν ∈ {0, +1}` — no `ν = -1` (symplectic reps are even by definition).
+  - `Is_Even = True`:  319,289 rows — `ν ∈ {-1, 0, +1}` distributed (785 / 14,865 / 303,639).
+  The implication `ν = -1 ⇒ Is_Even = True` is a representation-theory fact, not a finding. Joint `P031 × Is_Even` has forbidden cells; do not treat the axes as independent without accounting for this.
+- **`P031` ↔ `Dim` (partial tautology).** Symplectic reps occur only in even dimension. Empirical distribution of `ν = -1`: Dim=2 (761), Dim=4 (12), Dim=6 (12); zero at all odd dims. Joint `P031 × Dim` has forbidden cells at (`ν = -1`, odd Dim).
+- **`P031` ↔ `P028` Katz-Sarnak (near-redundancy).** Per the symmetry-type map above, `P031` plus `Is_Even` determines `P028` exactly in the Artin case. Applying both axes independently is double-counting; within the Artin family, one is a rename of the other. `P028` extends to families beyond Artin (quadratic twists, Dirichlet, etc.) where `P031` does not apply — outside Artin, the two are genuinely distinct.
+
+**Stratum-count summary (live `artin_reps` query, 2026-04-17):**
+- `ν = +1` (orthogonal / real): 768,164 (96.3%)
+- `ν = 0` (complex / non-self-dual): 29,191 (3.7%)
+- `ν = -1` (symplectic): 785 (0.1%)
+- Total: 798,140 irreducible reps.
+
+**Small-n strata discipline (post-sessionB Liouville lesson, 2026-04-17):**
+- Joint `P031 × Dim × Is_Even` strata quickly drop below `n = 100` for `ν = -1` (785 total symplectic reps distributed across Dim = 2 / 4 / 6 at 761 / 12 / 12).
+- sessionB's `liouville_side_check_F012` demonstrated that small-n strata produce spurious `|z|` under normal-approximation tests (Pattern 19). Enforce `n ≥ 100` per adequate stratum at entry time, not as an optional reporting caveat. For `ν = -1` jointly with any other axis, effective adequacy is capped by 785.
+- For `ν = 0` (29,191 rows), joint with Dim gives useful strata at Dim ≤ 6 (sum ~26,000) and drops rapidly beyond.
+- For `ν = +1`, most joint strata are adequate; this is the "default stratum" that dominates pooled analysis by 96%.
+
+**Calibration anchors:**
+- **Frobenius-Schur identity.** For a finite group G and its character table: ∑_χ ν(χ) · χ(1) = #{g ∈ G : g² = 1}. Any implementation that disagrees numerically on a small test group (S₄, Q₈, D₄) is broken.
+- **Dimension-1 reps are self-dual with ν ∈ {0, +1} only** (a 1-dim rep cannot be symplectic). Empirical: 194,258 dim-1 reps in `artin_reps`; zero at `ν = -1`. Holds.
+- **Q₈ (quaternion group) has a unique 2-dim irreducible at `ν = -1`.** This is the textbook example for symplectic reps and should appear in `artin_reps` for the relevant Galois label.
+- **Cross-projection to `P028` on the Artin slice** (see tautology): `ν = +1, Is_Even = False` must match `SO_odd` assignment; any row where these disagree flags a data-quality issue (candidate calibration anchor).
+
+**Known failure modes:**
+- **Pooled analysis by `Indicator` is effectively a `ν = +1` analysis.** 96.3% of the rows carry `ν = +1`; any "artin_reps feature" measured without `P031` stratification is reporting the `ν = +1` stratum by default. This is a Pattern 4 sampling-frame trap with `P031` hidden inside the pool.
+- **Treating `P031 × Is_Even` as orthogonal** reintroduces the forbidden-cell tautology. Observed empirical probability of `ν = -1 | Is_Even = False` = 0; treat as structural constraint, not sampling noise.
+- **Small-n at `ν = -1`.** Any test stratified at the `ν = -1` level cannot extrapolate beyond the 785-rep subpopulation. Pattern 9 (delinquent frontier) applies when higher-dimensional symplectic reps are needed — they do not exist in the data.
+
+**When to use:**
+- **Cross-projection calibration with `P028`** (Katz-Sarnak) for Artin-type L-functions: `P031 + Is_Even → P028` map is a hard calibration anchor. Both sides must agree on every row.
+- **Filtering to self-dual reps** (drop `ν = 0`) before applying tools that assume self-duality (e.g., real-coefficient L-function moment conjectures).
+- **Probing the symplectic frontier.** The 785 `ν = -1` reps are a narrow, textured subfamily worth its own walk (Pattern 16 — obscure, well-defined, likely unmapped).
+- **Joint with `Dim`** when dimension-specific symmetry effects are at stake (e.g., dim-2 orthogonal-vs-symplectic split relevant to certain modular lifts).
+
+**When NOT to use:**
+- **Alongside `P028` on the Artin slice as independent axes.** Pick one. `P028` is more portable (works beyond Artin); `P031` is the raw LMFDB column and cheaper to query.
+- **As the sole axis** for any cross-projection claim. The 96.3% `ν = +1` dominance means the signal will usually be a `ν = +1` signal regardless. Always stratify within Indicator to extract non-pooled structure.
+- **For dim-1 reps** — the three-valued axis collapses to two (`ν ∈ {0, +1}` only); dim-specific stratification is more informative here.
+
+**Related projections:**
+- **P028 Katz-Sarnak:** near-redundancy for Artin; `P031 + Is_Even → P028` exactly on the Artin slice. Pick one of `{P028, P031}` per analysis within Artin.
+- **P033 Is_Even (sessionD, same session):** joint axis; forbidden-cell tautology (`ν = -1 ⇒ Is_Even = True`).
+- **P027 ADE-type (via Galois label):** heuristic proxy, not a direct companion. `P031` is the cleaner self-duality axis; `P027` was a killed hypothesis for F011 resolution.
+
+**Follow-ups this entry motivates:**
+1. Build `idx_artin_indicator` (single-column B-tree); `P031` scans 798K rows unindexed today.
+2. `wsw_artin_symplectic_subfamily` — Category-3 specimen walk on the 785-row `ν = -1` subfamily (Pattern 16).
+3. `calibrate_F006_P031_P028_agreement` — verify that `ν + Is_Even → P028` agrees with `lfunc_lfunctions.symmetry_type` on every Artin-origin L-function; any disagreement = data-quality signal (candidate new calibration anchor F006).
+4. Cross-project `F010` NF backbone restricted to Artin-side `ν = -1` vs `ν = +1` — does the ρ=0.40 signal sharpen or collapse under symmetry filtering?
+
+---
+
+## P032 — MF / Dirichlet character parity stratification
+
+**Drafted by:** Harmonia_M2_sessionB, 2026-04-17 (task catalog_character_parity; renumbered P031 → P032 at merge per sessionA ID_ASSIGNMENT)
+**Code:** `WHERE char_parity = 0` (even) vs `WHERE char_parity = 1` (odd) on `lmfdb.mf_newforms`. For Dirichlet L-functions directly: `WHERE char_parity = ...` on `lmfdb.char_dirichlet` (primitive characters only — parity is ill-defined for imprimitive induced characters).
+**Type:** stratification (sign-of-functional-equation axis / Γ-factor choice)
+
+**What it resolves:**
+- **Archimedean local factor split.** Even characters give Γ_R(s) = π^(-s/2) Γ(s/2); odd give Γ_R(s+1) = π^(-(s+1)/2) Γ((s+1)/2). The functional equation pairs s ↔ 1-s through different shifts, producing distinct low-lying zero densities.
+- **Katz-Sarnak low-lying zero predictions by parity.** Even Dirichlet families have SO_even-like lowest-zero distribution; odd have SO_odd-like forced central zero. Even/odd split at the low-lying level — bulk is universal.
+- **Möbius/Liouville correlations at the L-function level.** μ (Möbius) and λ (Liouville) are "odd" with respect to parity of Ω (prime-factor count); character parity is the family-level analog. Any correlation between μ or λ and L-function data is expected to stratify by character parity.
+- **Rubinstein–Sarnak chebyshev-type biases.** Prime-counting biases (π(x; q, a) for a a non-residue vs a residue) couple to character parity through the explicit formula. This is the foundational parity-sensitive family-level effect.
+
+**What it collapses:**
+- **Bulk zero statistics.** Above the unfolding scale, parity is invisible — all families converge to universal GUE.
+- **Weight-invariant MF features.** Because for nonzero modular forms of weight k, character parity must equal k mod 2 (forced identity), char_parity stratification in MF without weight conditioning just re-splits weight parity.
+- **Features of non-primitive characters.** Induced characters inherit parity from the underlying primitive — applying this stratification to imprimitive L-functions double-counts.
+
+**Tautology profile:**
+- **MF char_parity × MF weight parity.** Fully aliased within `mf_newforms`. Stratifying by char_parity across varying weight is identical to stratifying by weight mod 2. Only independent when conditioned on a single weight (or joint with P029 weight stratification).
+- **char_parity × Katz-Sarnak P028.** For MF and for Dirichlet L-function families, char_parity is one of the coordinates that P028 uses internally to pick SO_even vs SO_odd. Using both P032 and P028 jointly on the same family risks double-reporting. Use one or the other, or apply P028 within a fixed P032 class.
+- **char_parity × CM flag (P025).** For weight-1 MF and for CM forms generally, character parity is correlated with the CM-character's parity. Non-independent; control via joint P025 × P032 when probing CM-specific signals.
+- **Dirichlet χ(-1) identity.** By construction, char_parity encodes χ(-1). It is NOT an observable derived from zeros — it is a family-definition input. Do not treat "signal resolves under P032" as revealing new structure; it only means the signal respects the functional-equation sign.
+
+**Calibration anchors:**
+- **Functional equation Γ-factor structure** (Riemann, Hecke, Weil): the Γ_R / Γ_C factor-pair choice determined by parity is a proved identity, not a conjecture. If a fresh P032 implementation classifies any primitive character wrong, the instrument is broken (Pattern 7 — stop all work).
+- **Rubinstein–Sarnak 1994** prime-bias predictions: verified empirically across residue classes modulo small N. An implementation of P032 on a Dirichlet L-function dataset should reproduce their prime-race asymmetries at the expected magnitudes.
+- **Weight-char identity for MF newforms.** For every row in `mf_newforms`, `char_parity` must equal `weight % 2`. A deviation is a data-integrity violation, not a finding. Easy SQL check; worth running once.
+
+**Known failure modes:**
+- **Applied to MF without joint weight conditioning:** you are not measuring what you think. The signal is weight-parity, not character-parity. Always use `(weight, char_parity)` tuples when the data source is MF.
+- **Applied to imprimitive induced characters:** inherited parity creates circular structure.
+- **Small-n parity strata.** Some weight × level × character combinations have few instances. Apply Pattern 4 / F012-Liouville discipline: require n ≥ 100 per stratum before publication-grade per-stratum |z|.
+- **Parity-aliased-with-rank for EC L-functions via modularity.** Modularity sends weight-2 MF ↔ EC. EC L-function parity (Atkin-Lehner sign) equals MF character parity under this correspondence. Using both as "independent" is a Pattern 1 tautology trap.
+
+**When to use:**
+- Any Dirichlet L-function family analysis where you expect parity-sensitive behavior (prime-counting biases, chebyshev biases, low-lying zero densities).
+- As an axis of invariance analysis: does the feature resolve through χ(-1) = +1 but not −1, or both, or neither?
+- Joint with P028 Katz-Sarnak when you want to separate "symmetry-type signal" from "parity-only signal" — use P032 within each P028 class.
+- Cross-family modularity checks: the char_parity of a weight-2 MF must match the sign of the corresponding EC L-function. An identity calibration.
+
+**When NOT to use:**
+- MF analysis without joint weight stratification. You will measure weight-parity and think you measured character-parity.
+- Bulk zero questions. Parity is a low-lying phenomenon.
+- As evidence of novel structure — every parity effect has a classical explanation via the Γ-factor structure. Claims must pass Pattern 5 ("Known Bridges Are Known") explicitly — for character-parity phenomena, the relevant known theory is the explicit formula + Weil's explicit formula + Rubinstein–Sarnak. If your claim reduces to any of these, it is calibration, not discovery.
+- On imprimitive characters without projecting to the primitive.
+
+**Pattern 13 / Pattern 18-candidate connection:** Because char_parity is family-level (a property of χ itself, not of objects within the family), adding P032 to a "family-axis exhaustion" ledger is natural. If F011's GUE deficit is ALSO flat under P032 (even vs odd Dirichlet), that is another family-axis kill — further evidence the deficit sits in preprocessing (P051 unfolding) or finite-N structure (H09 conductor-window), not in any family axis. (Post-merge note: F011 was resolved under P028 Katz-Sarnak by sessionB's wsw_F011_katz_sarnak — SO_even 42% vs SO_odd 35% — so a P032 probe on the same specimen is expected to inherit or refine that split.)
+
+---
+
+## P033 — Artin `Is_Even` (parity) stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task `catalog_artin_is_even`). Merged by Harmonia_M2_sessionC via `merge_P033_is_even`.
+**Code:** `WHERE "Is_Even" = <True|False>` on `lmfdb.artin_reps` (no dedicated index; covered by pooled scans or by joint `idx_artin_dim_conductor`).
+**Type:** stratification (binary parity axis, Galois-representation parity / determinantal sign)
+
+**What it resolves:**
+- **Parity of the Artin representation**, i.e. the sign of `det(ρ(c))` where `c ∈ Gal(Q̄/Q)` is complex conjugation. `Is_Even=True` ⇔ `det ρ(c) = +1`; `Is_Even=False` ⇔ `det ρ(c) = -1`.
+- **The Deligne-Serre stratum at (Dim=2, Is_Even=False).** Weight-1 newforms correspond bijectively to odd 2-dimensional Artin representations with `Is_Even=False`. 244,811 such reps in LMFDB — the largest single `Is_Even × Dim` cell.
+- **Functional-equation archimedean parity.** Combined with the Frobenius-Schur indicator `P031` (ν), `Is_Even` decides the Γ-factor type at infinity and the SO_even vs SO_odd split on the Artin side (when ν=+1, `Is_Even` picks between SO_even and SO_odd; when ν=-1, symplectic; when ν=0, unitary).
+- **Conjugacy of `c`-action.** Since `c²=e`, `Is_Even` is the single bit of information `c` carries; joint with `Dim` it determines the signature of the real form.
+
+**What it collapses:**
+- **Any structure not depending on `c`-parity.** Two `Is_Even=True` reps at different dimensions / Galois groups / conductors all map to the same stratum; further stratification by `Dim` and `Galois label` is usually required.
+- **The `Is_Even=False` ⇒ ν≠−1 forbidden cell** makes joint `P033 × P031` non-orthogonal (symplectic reps are automatically even).
+- **Parity-free features** — anything depending only on the image of ρ without reference to `c`'s image is invariant under `Is_Even` and collapses in this projection.
+
+**Tautology profile:**
+- **`P033` ↔ `P031` (asymmetric forbidden cells).** Empirical from `artin_reps` — the `(Is_Even=False, ν=−1)` cell is empty (symplectic reps are even by definition). Joint `P033 × P031` has a forbidden cell; do not treat as independent.
+- **`P033` ↔ `P028` Katz-Sarnak (near-redundancy via P031).** On the Artin slice, `P031 + P033` determines Katz-Sarnak symmetry type exactly: ν=+1 AND Is_Even=True → SO_even; ν=+1 AND Is_Even=False → SO_odd; ν=−1 → Sp (implies Is_Even=True); ν=0 → U. Applying all three independently on the Artin slice is triple-counting.
+- **`P033` ↔ `Dim` (statistical).** Dim=1 and Dim=2 are odd-dominated; Dim=4 reverses to even-dominated; Dim≥7 increasingly even with coverage cliff for odd (Pattern 9).
+- **`P033` ↔ `Dets`.** The `Dets` column records det ρ as a Dirichlet character; `Is_Even` is its parity-at-infinity summary. Do not use both as independent axes.
+
+**Calibration anchors:**
+- **Deligne-Serre bijection.** 19,306 weight-1 newforms (`P029` weight=1) ↔ 244,811 `Dim=2, Is_Even=False` Artin reps (split across Galois conjugates). Bijection-preserving sub-sampling recovers the count.
+- **Trivial representation** (1-dim, ρ ≡ 1): `Is_Even=True`, ν=+1; once per number field.
+- **Sign character of Z/2Z**: `Is_Even=False`, ν=+1.
+- **F010 NF backbone via Is_Even (sessionB `wsw_F010_katz_sarnak`, 2026-04-17):** `Is_Even=True` ρ=0.77 (n=56); `Is_Even=False` ρ=-0.05 (n=51). Fisher z=5.38, p~1e-7. The NF↔Artin coupling lives entirely in the even-parity stratum — strongest empirical calibration of `P033` as a resolving axis to date, and the canonical Pattern 20 case (pooled F010 rho collapses under larger n while stratified rho sharpens to 0.77).
+
+**Small-n strata discipline (post-sessionB Liouville lesson, 2026-04-17):**
+- Joint `P033 × Dim` drops below `n=100` at `Is_Even=False, Dim=7` (n=69), `Dim=11` (n=27), `Dim=17+` (single digits).
+- Joint `P033 × P031 × Dim` becomes sparse fast (ν=−1 has 785 total across Dim=2/4/6).
+- Enforce `n ≥ 100` per adequate stratum at entry time per Pattern 19. For Dim≥7 odd, explicit coverage reporting is mandatory (Pattern 9).
+
+**Known failure modes:**
+- **Pooled `artin_reps` analysis is 60:40 toward `Is_Even=False`** — any pooled feature silently averages two structurally different subfamilies (Pattern 4 variant, Pattern 20 precedent).
+- **Dim=2 / Is_Even=False is the Deligne-Serre stratum** — any coupling with weight-1 MF must use this joint restriction.
+- **`Is_Even` on dim-1 reps** is the character parity — redundant with character-level stratification at Dim=1.
+- **EC "parity" is not `Is_Even`.** EC parity is root number (relates to `signD` / Atkin-Lehner via modularity).
+
+**When to use:**
+- **Deligne-Serre-oriented analyses** — restrict to `Dim=2, Is_Even=False`.
+- **F010-type NF↔Artin couplings** — stratify by `Is_Even` before computing (canonical Pattern 20 application).
+- **Joint with `P031` and `P028`** to decompose Artin L-functions into Katz-Sarnak symmetry strata at object level.
+- **Parity-aware functional-equation analyses** — root numbers, L-value-at-center-point vanishing, local root-number factorizations.
+- **Calibration of root-number / ε-factor code** — audit implementations against `Is_Even`.
+
+**When NOT to use:**
+- **As sole axis on Dim=1 reps** — character-level stratification is finer.
+- **Jointly with `P031` AND `P028`** — triple-counting on the Artin slice; pick two.
+- **For Artin → EC projections** — EC parity lives in root number, not `Is_Even`.
+- **Without `Dim` stratification** — Dim=1/2 vs Dim=4+ parity flip hides structure.
+
+**Related projections:**
+- **P031 Frobenius-Schur Indicator:** forbidden-cell partial tautology (symplectic ⇒ even). Joint `P031 × P033` determines `P028` on the Artin slice.
+- **P028 Katz-Sarnak:** near-redundancy via `P031 + P033` on the Artin side.
+- **P029 MF weight:** cross-tabulates for Deligne-Serre (weight=1 ↔ Dim=2 Is_Even=False).
+- **`Dets`:** the full character field; `Is_Even` is the binary summary.
+
+**Follow-ups this entry motivates:**
+1. **Deligne-Serre count reconciliation** — bijection-preserving sub-sampling task.
+2. **`Dets` as standalone catalog entry** — reserve next P-ID via `infra_reserve_p_id`.
+3. **F010 P033 tensor update** — sessionB result demands `F010 → P033: +2` in the tensor invariance matrix.
+4. **F026 H61 re-examination** — the killed dim-2/dim-3 ratio may have `Is_Even` structure inside it.
+5. **Pattern 1 tautology-pair extension** — add `(Is_Even, Dets)` as a partial tautology pair.
 
 ---
 
