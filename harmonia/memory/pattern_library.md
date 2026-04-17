@@ -346,6 +346,13 @@ pooled number is the artifact; the stratified panel is the measurement.
    - Per-k-stratum slopes: -0.13, -0.45, -0.49, -0.36, -0.48, -0.46
    - Sign uniform but **magnitude non-monotone**; pooled ~40% larger than any stratum.
 
+4. **F010 NF backbone via Galois-label** (sessionC wsw_F010_bigsample, 2026-04-17):
+   - Pooled raw ρ at per_degree=2000: 0.404 (n=71, z=4.07)
+   - Pooled raw ρ at per_degree=5000: 0.109 (n=75, z=0.88) — **collapses at bigger sample**
+   - Decontaminated ρ (P052 prime-detrend): 0.269 → 0.270 across both sample sizes — **stable**
+   - retention_ratio_decon_vs_raw jumped from 0.67 to 2.47. Classic pooled-vs-decon divergence.
+   - Diagnostic: when you double the sample and pooled halves while decon stays, pooled was never the signal.
+
 **Diagnostic for suspecting Pattern 20:**
 - You have a pooled statistic without stratification or preprocessing variant.
 - The pooled number is clean (monotone, single-signed, high R², low p).
@@ -415,6 +422,12 @@ from Pattern 13 (wrong axis class).
   The specific gap-width claim was wrong.
 - **F011 14% deficit:** Claimed 14% first-gap GUE deficit. Clean n=2M: 38% deficit.
   Magnitude corrected, not killed — weaker form of the pattern.
+- **F010 NF backbone ρ=0.40:** Claimed ρ=0.40 z=3.64 at n=114 shared Galois labels.
+  Clean re-measurement at per_degree=5000 (n=75): ρ=0.109 z=0.88. The pooled ρ
+  did not reproduce at larger sample; durable signal is decontaminated ρ=0.27
+  (borderline z=2.38). Magnitude corrected + tier preserved as borderline
+  live_specimen. Also a Pattern 20 anchor case (pooled-vs-decon divergence
+  widened with sample size).
 
 **Diagnostic for suspecting Pattern 19:**
 - The original n was small (< 100K) and the new n is large (> 100K)

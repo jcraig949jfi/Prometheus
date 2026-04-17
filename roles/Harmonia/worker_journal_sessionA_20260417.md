@@ -151,3 +151,25 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - sessionB is thorough (review_catalog produced 5 structured issues, good failure modes).
 - sessionC is careful (F010_P052 has been running 14 min; not stalled, working).
 - The 2-min vs 4-min asymmetry works: I stay slightly ahead of the workers, ready to approve/seed when they complete.
+
+## Tick 9-12 (condensed — 11:17-11:29 UTC)
+- Tick 9: P028 result from sessionB in hand earlier; F011 mystery resolved. Approved 4 catalog drafts (P031/P032/P033/P034). sessionB picked up mandate + backfilled 11 specimens in one tick. Mandate-compliant across sessionA/B/D (sessionC still on F010_bigsample — will backfill on completion).
+- Tick 10: seeded 6 tasks (4 catalog entries from sessionD's EC harvest triage, wsw_F010_katz_sarnak followup on P028, apply_F015_tensor_diff). Direct MANDATE_FOLLOWUP posted.
+- Tick 11: F015 tensor diff applied. 4 catalog drafts all APPROVED + merge tasks seeded.
+- Tick 12: sessionB achieved full mandate compliance (11 specimens + journal). Tracked F010_bigsample still running (cliffhanger).
+
+## Tick 13 @ 11:33 UTC — F010 did NOT graduate, pooled ρ was Pattern-20 artifact
+- **BIG FINDING (negative)**: sessionC wsw_F010_bigsample completed. Raw pooled ρ collapsed from 0.404 (n=71) to **0.109 at per_degree=5000 (n=75, z=0.88)**. Decontaminated ρ via P052 stable at 0.270 (z=2.38 — borderline, does NOT cross z>3.5 threshold). F010 **does NOT graduate** to robust_specimen. Still live_specimen.
+- F010 is now the **4th anchor case of Pattern 20** (pooled-vs-decon divergence; added to pattern_library.md).
+- F010 also joins Pattern 19 anchors (F012/F014/F011): the claimed 0.40 ρ did not reproduce at larger n.
+- Tensor F010 updated: n_objects 114→75, description rewritten around durable decon ρ=0.27, INVARIANCE P052:+1 added, P040 demoted -1→-2, P020:+1, P021:+1 added per sessionC's earlier survivals.
+- decisions_for_james: F010 pending moved to resolved. No open pending items.
+- Registered specimen #27 (F010 bigsample, status=stale_pattern_19, backfilled on sessionC's behalf since she's still working).
+- Seeded wsw_F010_alternative_null @ -1.5 (block-shuffle within degree-class — the remaining firm-up test).
+- Also this tick: sessionD merged P031 Frobenius-Schur into catalog. sessionC claimed P033 merge. sessionD claimed P032 merge. 3 merges happening in parallel.
+- Queue: 8 (healthy). Claims: 2 (P032, P033 merges in-flight).
+
+## Reflection at tick 13
+- The F010 negative result is actually **strong evidence for Pattern 20 as a real pattern**. We now have 4 independent anchors (F011, F013, F015, F010) where pooled-vs-stratified/preprocessed diverges. The methodology is the product.
+- Falsification-first epistemology kept us honest here: we nearly promoted F010 to robust_specimen after 5/5 projection survival at n=62. The larger-n run caught the artifact before we acted on it.
+- No robust_specimen tier yet. Good — no forced pieces.
