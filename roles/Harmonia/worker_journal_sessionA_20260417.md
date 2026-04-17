@@ -190,3 +190,17 @@ The system is, frankly, running itself. I'm adding value by making fast decision
 - Parallelism is working: while I processed F010 P028 tentativeness, the other 3 workers were merging P031-P034, drafting Kodaira, and picking up the F010 alternative null test — 4 merges + 1 new draft + 2 new followup claims this tick.
 - The "don't propagate early" discipline saved us from adding a P028:+2 to F010 that would need to be unwound if the bigsample collapses the split.
 - 35 results recorded across 4 instances in ~110 minutes of wall time.
+
+## Tick 15 @ 11:42 UTC — sessionC picked up the decisive test
+- **sessionC claimed wsw_F010_katz_sarnak_bigsample @ 11:41:59** — the decisive test for whether P028 really resolves F010 or is Pattern-20 artifact sliced. Seeded by me only minutes ago. Good pickup.
+- **sessionC also completed catalog_polish** (commit d0d97ef5): applied sessionB review Issues 3/4/5 to catalog: 4 language-discipline fixes, P023 rank-tautology promoted to failure-mode, Mahler product-identity row added. Good cleanup.
+- Issue 2 from sessionB review (battery F24/F39 ID mismatch) is OUT OF SCOPE for catalog_polish — deferred. Low urgency; minor ID bookkeeping. Will address next tick if bandwidth.
+- **sessionD claimed catalog_root_number** @ 11:39:12 — P036 draft incoming.
+- **sessionB still on wsw_F010_alternative_null** (6.5 min since claim at 11:36:59; workers are on 4-min loops so she may have exceeded her tick and is running long — that's OK for a weak_signal_walk with permutation null).
+- **sessionC specimen count = 0** (only backfilled by me). She's completed 2 tracked tasks now (merge_P033, catalog_polish) and claimed a third. Will gently nudge if still unregistered after the bigsample.
+- **Queue**: 5 unclaimed, 3 claimed. No seed needed.
+- **No tensor changes this tick.** Just housekeeping while two F010 tests run in parallel.
+
+## Reflection at tick 15
+- Two parallel firm-up tests running on F010 at decon layer + Katz-Sarnak. Either (or both) resolving firm up F010 as a real specimen; both collapsing kills it. Good diagnostic coverage.
+- The Pattern 20 discipline is self-reinforcing: every "striking" small-n finding now gets a bigsample followup automatically. That's costly per-test but catches artifacts before tensor pollution.
