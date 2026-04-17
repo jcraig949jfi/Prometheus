@@ -129,7 +129,7 @@ The `confidence` field is mandatory. No claim without calibration.
 
 On session start, the Agora agent MUST:
 1. Read this file (`roles/Agora/RESPONSIBILITIES.md`)
-2. Read session state (`roles/Agora/SESSION_STATE_20260415.md`)
+2. Read session state (`roles/Agora/SESSION_STATE_20260415.md`) and open work below
 3. Connect to Redis and check all streams for new messages
 4. Start a **5-minute coordination loop** checking:
    - `agora:main` — new announcements, status updates
@@ -138,6 +138,44 @@ On session start, the Agora agent MUST:
    - `agora:tasks` — unclaimed work, blocked agents
    - Agent heartbeats — who's alive, who's dead
 5. Unblock other agents, review submissions, maintain adversarial friction
+
+---
+
+## Open Work Log (pick up on next session)
+
+### P-009: Finish zeros tables rebuild (IN PROGRESS, stalled 2026-04-17)
+
+**Status:** EC done (2,009,089 rows in new `zeros.object_zeros`). MF + G2 + Dirichlet unfinished.
+
+**Where it stalled:** the MF fetch in `thesauros/rebuild_zeros_p009.py` used `fetchall()` on 1.1M MF L-functions with long `positive_zeros` text blobs. Under I/O contention from other agents' bridge-hunting queries on the 341 GB lfunc table, the single fetch ran >50 minutes without returning. James killed it.
+
+**The fix for next session:**
+1. Rewrite `load_object_zeros` (MF step) and `load_dirichlet_zeros` to use a **named server-side cursor** (`cursor('stream_name')` with `.itersize = 10_000`) instead of `fetchall()`. Streams rows in batches, doesn't hold 1M rows in Python RAM, yields to concurrent readers.
+2. Current EC population is preserved and complete — use the existing skip guard at the top of `load_object_zeros`.
+3. After successful rebuild: drop the 3 `*_corrupt_20260416` tables after 30 days (target 2026-05-16).
+
+**State preserved in DB:**
+- `zeros.object_zeros`: 2,009,089 EC rows (clean, variable-length `zeros` column)
+- `zeros.dirichlet_zeros`: 0 (empty, schema ready)
+- `zeros.object_zeros_corrupt_20260416`, `zeros.dirichlet_zeros_corrupt_20260416`, `zeros.object_zeros_ext_corrupt_20260416`: retained for forensic audit
+
+**Acceptance criteria:**
+- `zeros.object_zeros` has EC + MF + G2 entries, all with variable-length `zeros` arrays (not uniform length 24)
+- `zeros.dirichlet_zeros` populated from `lfunc_lfunctions WHERE degree='1'`
+- Audit re-run confirms no UNIFORM_ARRAY_LEN flag on any zeros table
+- Mnemosyne verifies provenance: every row has `source = 'lfunc.positive_zeros@<date>'`
+
+**Reference:** Mnemosyne's P-009 proposal in `thesauros/proposals.md`.
+
+### P-012: DONE (schema added 2026-04-16)
+- `signals.specimens.data_provenance` JSONB column with GIN index added.
+- Convention: every hypothesis write must populate `data_provenance`.
+
+### Prometheus_sci data gaps documented, not fixable in-repo
+- `physics.pdg_particles.charge/.spin`: source JSON lacks these. Need different PDG dump.
+- `algebra.groups.is_solvable`: needs composition series computation.
+- `topology.knots.signature`: P-011, needs KnotInfo re-scrape.
+- `topology.polytopes.is_simplicial`: source lacks field.
 
 ---
 
