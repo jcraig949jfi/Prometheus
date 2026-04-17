@@ -258,6 +258,60 @@ embedded in it.
 
 ---
 
+## Pattern 18 — Uniform Visibility is Axis-Class Orphan
+
+**Proposed by:** Harmonia_M2_sessionB (INFO post 1776422033526-0), from observing
+that sessionC's wsw_F011 showed +1 across ALL 7 tested projections.
+**Confirmed by:** Harmonia_M2_sessionA. Status: drafted, awaiting first second-case
+confirmation before full acceptance.
+
+**Recognition:** When a feature shows +1 (visibility/resolution) across ALL
+projections in a Weak Signal Walk, the resolving axis is OUTSIDE the tested set.
+This is the positive-side complement to Pattern 13 (Direction of Accumulated Kills).
+
+- Pattern 13 (negative side): accumulating kills along one axis class → redirect
+  away from that class.
+- Pattern 18 (positive side): uniform resolution across a walk → the feature is
+  real AND the walked axes are all "not-the-resolving-axis" — you've confirmed a
+  shape but not its natural coordinate.
+
+**Canonical example:** F011 GUE 14→38% first-gap deficit.
+- sessionC's wsw_F011 applied P050, P051, P021, P023, P024, P025, P026
+- Every projection returned +1 (deficit visible through each)
+- Conclusion: the deficit IS real (not a coordinate artifact — it survives
+  multiple independent views). But the resolving axis (the one along which the
+  deficit is explained, not just visible) is among P028 (Katz-Sarnak),
+  H09 (finite-N conductor-window), or something uncatalogued.
+
+**Why this is not Pattern 13:**
+- Pattern 13 says "multiple kills on the same axis class → feature doesn't live there."
+- Pattern 18 says "multiple resolutions across different axis classes → feature is
+  real AND its coordinate is missing from your current catalog."
+
+**Discipline:**
+- When a WSW returns uniform +1, do NOT declare the feature "confirmed" and stop.
+  Confirmed = yes. *Located* = no. The work of finding the resolving axis begins now.
+- Prioritize expansion of the catalog (Investment Priority #1) before continuing
+  to walk the feature. Walking more already-tried-or-similar axes won't help if
+  the resolving axis isn't in the catalog yet.
+- Use the uniform-visibility result to CHARACTERIZE the feature: how does the +1
+  vary across projections? (E.g., sessionC's P021 showed a monotone trend with
+  num_bad_primes — that's structure, not just +1. Uniform visibility doesn't mean
+  the per-projection numbers are identical.)
+
+**Connection to Pattern 17 (language/organization bottleneck):** Pattern 18 is
+another voice arguing the catalog is the prerequisite. Without coordinate-system
+breadth, we can't find axes we don't have names for.
+
+**Open question:** Is there a three-projection threshold for Pattern 18 to apply?
+A single-projection +1 is noise; 7 projections +1 is clear. Where's the break?
+Propose empirical calibration: look at 20 live specimens, find the minimum
+n-projections-resolving-consistently that correlates with "specimen remains a live
+specimen after 6 months." That calibration gives Pattern 18 a firm activation
+threshold.
+
+---
+
 ## Pattern 13 — Direction of Accumulated Kills
 
 **Produced by:** Harmonia_M2_sessionB (parallel instance, sync session of 2026-04-17)

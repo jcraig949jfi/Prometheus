@@ -531,6 +531,74 @@ projection. Critical for revealing features hidden in pooled analysis.
 
 ---
 
+## P029 — MF weight stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_mf_weight)
+**Code:** `WHERE weight = k` on `lmfdb.mf_newforms` (index: `idx_mf_weight_level` on `(weight::int, level::int)`)
+**Type:** stratification (modular-form weight axis)
+
+**What it resolves:**
+- Modularity correspondence at **weight 2**: weight-2 rational newforms (`weight='2' AND dim='1'`) are in 1–1 bijection with isogeny classes of elliptic curves over Q. This is the calibration anchor F001.
+- Deligne-Serre correspondence at **weight 1**: weight-1 newforms ↔ odd 2-dimensional Artin reps. Different structural regime from weight ≥ 2 and the only clean MF↔Artin stratum.
+- L-function functional-equation differences: analytic conductor scales as `N·k²/(4π²)` at leading order, so weight changes the effective spectral scale.
+- Character-parity alignments: weight parity must match character parity for non-trivial forms.
+
+**What it collapses:**
+- EC↔MF coupling pooled across weights (modularity is weight-2-only; non-weight-2 entries dilute the signal).
+- Sato-Tate / Galois-side comparisons where Satake parameters are weight-dependent.
+- Family-type symmetry (Katz-Sarnak) pooled across weights within a level.
+
+**Tautology profile:**
+- Weight co-varies with analytic conductor through `N·k²` — treating P029 as independent of P020 can reintroduce conductor mediation. Use joint P020 × P029 when claiming weight-specific structural effect.
+- `mf_newforms` skews heavily toward weight 2 (~91% of 1.14M rows). Unstratified "MF-wide" claims almost always reduce to weight-2 claims (Pattern 4 variant).
+- weight=2 AND dim=1 is the slice used by `harmonia/scripts/st_weighted_compression.py`; treating Sato-Tate results on that slice as "MF-universal" is a tautology-by-sampling-frame.
+
+**Calibration anchors:**
+- F001 modularity — **weight-2-only anchor**. Without P029 stratification, "100% a_p agreement" is ill-defined.
+- Deligne-Serre (weight 1 ↔ Artin 2-dim odd) — candidate calibration anchor; 19,306 weight-1 newforms ready for comparison against Artin side. Unclaimed F-slot.
+
+**Known failure modes:**
+- Pooled Lhash (P011) matching across weights gives false "modularity-adjacent" hits.
+- High-weight strata underpopulated: 249 distinct weights, 35 with n≥100, only 14 with n≥1000.
+- `dim` column further splits — weight-2 dim=1 ≈ 620K, weight-2 dim>1 ≈ 418K. Several scripts silently restrict to dim=1.
+
+**Stratum-count summary (LMFDB live, 2026-04-17):**
+- weight 1: 19,306 (Deligne-Serre regime)
+- weight 2: 1,038,068 (modularity regime; dominates)
+- weight 3: 12,713
+- weight 4: 28,466
+- weight 5: 4,053
+- weight 6: 10,789
+- ...
+- 14 weights with n≥1000; 35 with n≥100; 249 distinct total.
+
+**Discipline for small-n strata:**
+- Require n≥1000 per stratum for permutation-null z-scores to be stable.
+- For n ∈ [100, 1000), report n alongside z and cap claim at "suggestive, coverage-limited."
+- For n<100, don't stratify at that granularity — merge with nearest populated weight or abandon the bin.
+
+**When to use:**
+- Any EC↔MF test (must stratify to weight=2, always).
+- MF↔Artin tests involving odd 2-dim Galois reps (weight 1 specifically).
+- Sato-Tate / a_p statistics that pool across weights — pre-split or report as pooled-baseline-only.
+- Zero-density / RMT analysis on `mf_newforms` L-functions.
+
+**When NOT to use:**
+- Counting-level statistics where weight is irrelevant.
+- Exploratory first pass where the question is "does ANY MF signal exist" — pool first, stratify after signal.
+
+**Related projections:**
+- **P020 conductor conditioning** — joint P020 × P029 required for weight-specific claims.
+- **P011 Lhash** — modularity matching valid within weight=2 only; cross-weight Lhash matches are drum-pair candidates, not modularity failures.
+- **(pending) P030 level stratification** — co-varies with weight through analytic conductor; likely needs joint P029×P030 projection.
+
+**Follow-ups this entry uncovered:**
+1. Section 9 MF stratification entries (weight / level / character parity) co-vary through analytic conductor — candidate joint projection `P029 × P030 × P031` rather than three independent slots.
+2. Deligne-Serre as candidate calibration anchor — give it an F-slot for a second surveyor's pin at weight=1.
+3. Pattern 4 canonical example: 91% weight-2 skew in mf_newforms is a textbook sampling-frame trap.
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
