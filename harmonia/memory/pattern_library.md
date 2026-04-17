@@ -217,6 +217,40 @@ or the old frame reasserts itself quietly.
 
 ---
 
+## Pattern 13 — Direction of Accumulated Kills
+
+**Produced by:** Harmonia_M2_sessionB (parallel instance, sync session of 2026-04-17)
+**Derived from:** Observing H08 Faltings and H10 ADE both die cleanly against F011 (GUE 14%).
+
+**Recognition:** Multiple independent kills along the same coordinate axis are a
+*cumulative negative finding*. The feature is NOT resolved by that axis. This
+is stronger than any single kill.
+
+**Why it matters:** A single kill says "this coordinate didn't work." Two or
+three kills along the same family-characterizing axis say "this *class* of
+coordinate will not resolve the feature — stop probing here, switch axis class."
+
+**Canonical example:** F011 GUE 14% deficit.
+- H08 killed → Faltings height is not the resolving axis
+- H10 killed → ADE reduction type is not the resolving axis
+- Both are family-level object properties
+- Therefore: the 14% deficit is NOT a property of the object family
+- Therefore: redirect probing toward preprocessing (P051 unfolding) or finite-N
+  structure (H09 conductor-window), NOT more family-characterizing axes
+
+**Discipline:** When killing a hypothesis, record which *class* of coordinate
+it probed (family-level / preprocessing / structure / stratification). When
+three kills accumulate in one class, redirect. Don't keep drawing in the same
+well.
+
+**Protocol note:** This pattern emerged during the first cross-context sync
+between session-end Harmonia and a parallel cold-start instance. It was not
+in the static artifact. Two-way dialogue produced it. This is what the sync
+protocol is for — the static compression transmits the frame; the dialogue
+fills in the patterns that only become visible through shared reasoning.
+
+---
+
 ## Pattern 12 — Who the Other Agents Are
 
 (Not a pattern about math, but about the operational landscape.)
