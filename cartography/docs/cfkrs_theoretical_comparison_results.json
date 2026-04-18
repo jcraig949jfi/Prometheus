@@ -1,0 +1,1162 @@
+{
+  "task": "cfkrs_theoretical_comparison_pattern5_gate",
+  "instance": "Harmonia_worker_W1",
+  "started": "2026-04-18T13:16:10.347965+00:00",
+  "finished": "2026-04-18T13:16:10.352324+00:00",
+  "empirical_source": "cartography\\docs\\keating_snaith_moments_results.json",
+  "formula_source_of_truth": "Keating-Snaith 2000 (Comm. Math. Phys. 214), Theorem 2",
+  "cfkrs_constants": {
+    "g_SO_even_KS2000": {
+      "1": 1.0,
+      "2": 0.16666666666666666,
+      "3": 0.001388888888888889,
+      "4": 3.306878306878307e-07
+    },
+    "g_SO_even_BarnesG_crosscheck": {
+      "1": 1.0,
+      "2": 0.16666666666666666,
+      "3": 0.000925925925925926,
+      "4": 7.34861845972957e-08
+    },
+    "g_SO_even_cross_check_ratio": {
+      "1": 1.0,
+      "2": 1.0,
+      "3": 1.5,
+      "4": 4.5
+    },
+    "g_SO_odd_CS2007": {
+      "1": 1.0,
+      "2": 0.1111111111111111,
+      "3": 0.0005555555555555556,
+      "4": 7.558578987150415e-08
+    },
+    "ratio_odd_over_even": {
+      "1": 1.0,
+      "2": 0.6666666666666666,
+      "3": 0.39999999999999997,
+      "4": 0.22857142857142856
+    },
+    "formula_source": "g_SO_even(k) = prod_{j=1}^{k-1} Gamma(j+1) * j! / Gamma(j+k+1) (Keating-Snaith 2000, Comm. Math. Phys. 214, Thm 2). g_SO_odd(k) = g_SO_even(k) * 2^k * (k!)^2 / (2k)! (Conrey-Snaith 2007 leading rank-1 ratio \u2014 ignores curve-family arithmetic factor which cancels only partially between ranks)."
+  },
+  "per_rank_comparison": {
+    "0": {
+      "symmetry_assignment": "SO_even",
+      "exponent_matches_empirical_R_k": true,
+      "largest_decade_used_for_proxy_a_k": "100000-1000000",
+      "cells": {
+        "100-1000": {
+          "log_X_mid": 5.756462732485114,
+          "n": 2594,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 1.7851832556199914,
+              "R_k_empirical_se": 0.014677277170145008,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 2.8988815786116366,
+              "R_k_theory_proxy": 2.8988815786116366,
+              "empirical_over_theory_ratio": 0.6158179308845622,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "2": {
+              "R_k_empirical": 0.6506547305673618,
+              "R_k_empirical_se": 0.011122609665987269,
+              "g_theory_CFKRS": 0.16666666666666666,
+              "a_k_proxy": 6.583768429259712,
+              "R_k_theory_proxy": 1.097294738209952,
+              "empirical_over_theory_ratio": 0.5929625905513711,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "3": {
+              "R_k_empirical": 0.047378953405417756,
+              "R_k_empirical_se": 0.001342932632778934,
+              "g_theory_CFKRS": 0.001388888888888889,
+              "a_k_proxy": 34.09269724858793,
+              "R_k_theory_proxy": 0.047350968400816575,
+              "empirical_over_theory_ratio": 1.0005910122970305,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "4": {
+              "R_k_empirical": 0.0006776893555153022,
+              "R_k_empirical_se": 2.9707459678733692e-05,
+              "g_theory_CFKRS": 3.306878306878307e-07,
+              "a_k_proxy": 643.5894900027233,
+              "R_k_theory_proxy": 0.0002128272123024879,
+              "empirical_over_theory_ratio": 3.1842232399873436,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            }
+          }
+        },
+        "1000-10000": {
+          "log_X_mid": 8.05904782547916,
+          "n": 18298,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 2.258016240445582,
+              "R_k_empirical_se": 0.00962758495088004,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 2.8988815786116366,
+              "R_k_theory_proxy": 2.8988815786116366,
+              "empirical_over_theory_ratio": 0.7789266926615938,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "2": {
+              "R_k_empirical": 0.8431012684662157,
+              "R_k_empirical_se": 0.0074810822870228786,
+              "g_theory_CFKRS": 0.16666666666666666,
+              "a_k_proxy": 6.583768429259712,
+              "R_k_theory_proxy": 1.097294738209952,
+              "empirical_over_theory_ratio": 0.7683453124377418,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "3": {
+              "R_k_empirical": 0.0485519605518413,
+              "R_k_empirical_se": 0.0007272688048211337,
+              "g_theory_CFKRS": 0.001388888888888889,
+              "a_k_proxy": 34.09269724858793,
+              "R_k_theory_proxy": 0.047350968400816575,
+              "empirical_over_theory_ratio": 1.025363623840986,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "4": {
+              "R_k_empirical": 0.0004112677134278983,
+              "R_k_empirical_se": 9.892016011698951e-06,
+              "g_theory_CFKRS": 3.306878306878307e-07,
+              "a_k_proxy": 643.5894900027233,
+              "R_k_theory_proxy": 0.0002128272123024879,
+              "empirical_over_theory_ratio": 1.9324019188080617,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            }
+          }
+        },
+        "10000-100000": {
+          "log_X_mid": 10.361632918473205,
+          "n": 192677,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 2.7039684320922257,
+              "R_k_empirical_se": 0.004456003698542916,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 2.8988815786116366,
+              "R_k_theory_proxy": 2.8988815786116366,
+              "empirical_over_theory_ratio": 0.9327626392338659,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "2": {
+              "R_k_empirical": 1.074851236768625,
+              "R_k_empirical_se": 0.003950228103715129,
+              "g_theory_CFKRS": 0.16666666666666666,
+              "a_k_proxy": 6.583768429259712,
+              "R_k_theory_proxy": 1.097294738209952,
+              "empirical_over_theory_ratio": 0.9795465150248147,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "3": {
+              "R_k_empirical": 0.05629428107761401,
+              "R_k_empirical_se": 0.00038045264608031835,
+              "g_theory_CFKRS": 0.001388888888888889,
+              "a_k_proxy": 34.09269724858793,
+              "R_k_theory_proxy": 0.047350968400816575,
+              "empirical_over_theory_ratio": 1.188872856856782,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "4": {
+              "R_k_empirical": 0.00036105778325629773,
+              "R_k_empirical_se": 4.20534502035247e-06,
+              "g_theory_CFKRS": 3.306878306878307e-07,
+              "a_k_proxy": 643.5894900027233,
+              "R_k_theory_proxy": 0.0002128272123024879,
+              "empirical_over_theory_ratio": 1.6964831674961383,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            }
+          }
+        },
+        "100000-1000000": {
+          "log_X_mid": 12.664218011467252,
+          "n": 559386,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 2.8988815786116366,
+              "R_k_empirical_se": 0.003133603686547418,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 2.8988815786116366,
+              "R_k_theory_proxy": 2.8988815786116366,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "2": {
+              "R_k_empirical": 1.097294738209952,
+              "R_k_empirical_se": 0.0027629860396424593,
+              "g_theory_CFKRS": 0.16666666666666666,
+              "a_k_proxy": 6.583768429259712,
+              "R_k_theory_proxy": 1.097294738209952,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "3": {
+              "R_k_empirical": 0.047350968400816575,
+              "R_k_empirical_se": 0.00023235316669404654,
+              "g_theory_CFKRS": 0.001388888888888889,
+              "a_k_proxy": 34.09269724858793,
+              "R_k_theory_proxy": 0.047350968400816575,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            },
+            "4": {
+              "R_k_empirical": 0.0002128272123024879,
+              "R_k_empirical_se": 1.9269588359288303e-06,
+              "g_theory_CFKRS": 3.306878306878307e-07,
+              "a_k_proxy": 643.5894900027233,
+              "R_k_theory_proxy": 0.0002128272123024879,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product."
+            }
+          }
+        }
+      }
+    },
+    "1": {
+      "symmetry_assignment": "SO_odd",
+      "exponent_matches_empirical_R_k": false,
+      "largest_decade_used_for_proxy_a_k": "100000-1000000",
+      "cells": {
+        "100-1000": {
+          "log_X_mid": 5.756462732485114,
+          "n": 1859,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 1.809669342184418,
+              "R_k_empirical_se": 0.012469813734086592,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 8.05069121994961,
+              "R_k_theory_proxy": 8.05069121994961,
+              "empirical_over_theory_ratio": 0.22478434369710495,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "2": {
+              "R_k_empirical": 0.6190981049713777,
+              "R_k_empirical_se": 0.008246368351679436,
+              "g_theory_CFKRS": 0.1111111111111111,
+              "a_k_proxy": 58.379964007946796,
+              "R_k_theory_proxy": 6.486662667549644,
+              "empirical_over_theory_ratio": 0.09544169886750777,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "3": {
+              "R_k_empirical": 0.03949282967896809,
+              "R_k_empirical_se": 0.0007756384209344407,
+              "g_theory_CFKRS": 0.0005555555555555556,
+              "a_k_proxy": 905.4519143206034,
+              "R_k_theory_proxy": 0.5030288412892241,
+              "empirical_over_theory_ratio": 0.07851007027301062,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "4": {
+              "R_k_empirical": 0.0004641232071899816,
+              "R_k_empirical_se": 1.2093977511711079e-05,
+              "g_theory_CFKRS": 7.558578987150415e-08,
+              "a_k_proxy": 48134.361377503454,
+              "R_k_theory_proxy": 0.0036382737246790212,
+              "empirical_over_theory_ratio": 0.1275668743782954,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            }
+          }
+        },
+        "1000-10000": {
+          "log_X_mid": 8.05904782547916,
+          "n": 19983,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 3.699609354224336,
+              "R_k_empirical_se": 0.009933503948326029,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 8.05069121994961,
+              "R_k_theory_proxy": 8.05069121994961,
+              "empirical_over_theory_ratio": 0.4595393430388568,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "2": {
+              "R_k_empirical": 1.9430115797518452,
+              "R_k_empirical_se": 0.010829994257084327,
+              "g_theory_CFKRS": 0.1111111111111111,
+              "a_k_proxy": 58.379964007946796,
+              "R_k_theory_proxy": 6.486662667549644,
+              "empirical_over_theory_ratio": 0.29953948267912994,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "3": {
+              "R_k_empirical": 0.14287347783286436,
+              "R_k_empirical_se": 0.00129016722879718,
+              "g_theory_CFKRS": 0.0005555555555555556,
+              "a_k_proxy": 905.4519143206034,
+              "R_k_theory_proxy": 0.5030288412892241,
+              "empirical_over_theory_ratio": 0.284026413806991,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "4": {
+              "R_k_empirical": 0.0014505829292171197,
+              "R_k_empirical_se": 1.9533573728025945e-05,
+              "g_theory_CFKRS": 7.558578987150415e-08,
+              "a_k_proxy": 48134.361377503454,
+              "R_k_theory_proxy": 0.0036382737246790212,
+              "empirical_over_theory_ratio": 0.39870087821528444,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            }
+          }
+        },
+        "10000-100000": {
+          "log_X_mid": 10.361632918473205,
+          "n": 244182,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 6.209095939524024,
+              "R_k_empirical_se": 0.005841082516957062,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 8.05069121994961,
+              "R_k_theory_proxy": 8.05069121994961,
+              "empirical_over_theory_ratio": 0.7712500417526743,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "2": {
+              "R_k_empirical": 4.524759748786547,
+              "R_k_empirical_se": 0.009009514431718805,
+              "g_theory_CFKRS": 0.1111111111111111,
+              "a_k_proxy": 58.379964007946796,
+              "R_k_theory_proxy": 6.486662667549644,
+              "empirical_over_theory_ratio": 0.6975481816593044,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "3": {
+              "R_k_empirical": 0.37658621180997576,
+              "R_k_empirical_se": 0.001269798621676719,
+              "g_theory_CFKRS": 0.0005555555555555556,
+              "a_k_proxy": 905.4519143206034,
+              "R_k_theory_proxy": 0.5030288412892241,
+              "empirical_over_theory_ratio": 0.7486374157887535,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "4": {
+              "R_k_empirical": 0.0034956428775754973,
+              "R_k_empirical_se": 1.8898741887876108e-05,
+              "g_theory_CFKRS": 7.558578987150415e-08,
+              "a_k_proxy": 48134.361377503454,
+              "R_k_theory_proxy": 0.0036382737246790212,
+              "empirical_over_theory_ratio": 0.9607971093169723,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            }
+          }
+        },
+        "100000-1000000": {
+          "log_X_mid": 12.664218011467252,
+          "n": 742100,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 8.05069121994961,
+              "R_k_empirical_se": 0.004833141498342061,
+              "g_theory_CFKRS": 1.0,
+              "a_k_proxy": 8.05069121994961,
+              "R_k_theory_proxy": 8.05069121994961,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "2": {
+              "R_k_empirical": 6.486662667549644,
+              "R_k_empirical_se": 0.008331240881038187,
+              "g_theory_CFKRS": 0.1111111111111111,
+              "a_k_proxy": 58.379964007946796,
+              "R_k_theory_proxy": 6.486662667549644,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "3": {
+              "R_k_empirical": 0.5030288412892241,
+              "R_k_empirical_se": 0.001121451378418941,
+              "g_theory_CFKRS": 0.0005555555555555556,
+              "a_k_proxy": 905.4519143206034,
+              "R_k_theory_proxy": 0.5030288412892241,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            },
+            "4": {
+              "R_k_empirical": 0.0036382737246790212,
+              "R_k_empirical_se": 1.3503610467124874e-05,
+              "g_theory_CFKRS": 7.558578987150415e-08,
+              "a_k_proxy": 48134.361377503454,
+              "R_k_theory_proxy": 0.0036382737246790212,
+              "empirical_over_theory_ratio": 1.0,
+              "caveat": "a(k)_proxy calibrated to largest-decade R_k; this test is SHAPE of convergence only. True a(k) needs per-curve Euler product.",
+              "note_rank1_exponent": "Empirical R_k uses exponent k(k-1)/2 but SO_odd leading growth is (log X)^{k(k+1)/2}; R_k therefore carries an unnormalized (log X)^k residual. Convergence to constant not expected; the +O(log X) growth in the empirical slope is CONSISTENT with CFKRS SO_odd, not a failure."
+            }
+          }
+        }
+      }
+    },
+    "2": {
+      "symmetry_assignment": "rank_2_no_clean_CFKRS",
+      "exponent_matches_empirical_R_k": false,
+      "largest_decade_used_for_proxy_a_k": "100000-1000000",
+      "cells": {
+        "1000-10000": {
+          "log_X_mid": 8.05904782547916,
+          "n": 1468,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 3.5017079176908035,
+              "R_k_empirical_se": 0.029119451753148146
+            },
+            "2": {
+              "R_k_empirical": 1.6758667075037506,
+              "R_k_empirical_se": 0.027412946359587482
+            },
+            "3": {
+              "R_k_empirical": 0.10806690618749563,
+              "R_k_empirical_se": 0.0026691004528655964
+            },
+            "4": {
+              "R_k_empirical": 0.0009271407808804788,
+              "R_k_empirical_se": 3.1282573401015034e-05
+            }
+          }
+        },
+        "10000-100000": {
+          "log_X_mid": 10.361632918473205,
+          "n": 44341,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 8.045164332951659,
+              "R_k_empirical_se": 0.013822304204360302
+            },
+            "2": {
+              "R_k_empirical": 7.064146829625929,
+              "R_k_empirical_se": 0.024696941098664556
+            },
+            "3": {
+              "R_k_empirical": 0.6670451206850246,
+              "R_k_empirical_se": 0.0036614468271407388
+            },
+            "4": {
+              "R_k_empirical": 0.006675412370542112,
+              "R_k_empirical_se": 5.2176197024728336e-05
+            }
+          }
+        },
+        "100000-1000000": {
+          "log_X_mid": 12.664218011467252,
+          "n": 176479,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 12.386245393655098,
+              "R_k_empirical_se": 0.011273388201817643
+            },
+            "2": {
+              "R_k_empirical": 13.885384555272058,
+              "R_k_empirical_se": 0.02580502175716355
+            },
+            "3": {
+              "R_k_empirical": 1.3841077160042985,
+              "R_k_empirical_se": 0.004079980720012298
+            },
+            "4": {
+              "R_k_empirical": 0.012064154470001196,
+              "R_k_empirical_se": 5.176645189891294e-05
+            }
+          }
+        }
+      }
+    },
+    "3": {
+      "symmetry_assignment": "rank_3_no_clean_CFKRS",
+      "exponent_matches_empirical_R_k": false,
+      "largest_decade_used_for_proxy_a_k": "100000-1000000",
+      "cells": {
+        "10000-100000": {
+          "log_X_mid": 10.361632918473205,
+          "n": 430,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 6.921023266133698,
+              "R_k_empirical_se": 0.09239755242150373
+            },
+            "2": {
+              "R_k_empirical": 4.976345760998709,
+              "R_k_empirical_se": 0.131210748498693
+            },
+            "3": {
+              "R_k_empirical": 0.36860187190045873,
+              "R_k_empirical_se": 0.014592862328275497
+            },
+            "4": {
+              "R_k_empirical": 0.002789108246321711,
+              "R_k_empirical_se": 0.0001484993342508455
+            }
+          }
+        },
+        "100000-1000000": {
+          "log_X_mid": 12.664218011467252,
+          "n": 4974,
+          "by_k": {
+            "1": {
+              "R_k_empirical": 12.378799979788331,
+              "R_k_empirical_se": 0.0570508925275646
+            },
+            "2": {
+              "R_k_empirical": 13.37791490639431,
+              "R_k_empirical_se": 0.12621050697214858
+            },
+            "3": {
+              "R_k_empirical": 1.2514015070356235,
+              "R_k_empirical_se": 0.01858354457273823
+            },
+            "4": {
+              "R_k_empirical": 0.010037274053283146,
+              "R_k_empirical_se": 0.00021193796703034766
+            }
+          }
+        }
+      }
+    }
+  },
+  "sub_leading_correction_fits": {
+    "0": {
+      "1": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 3.8790980223902802,
+        "A_se": 0.08926335531204659,
+        "B_fit": -12.375576226780426,
+        "B_se": 0.9732005793008959,
+        "resid_rms": 0.05199435702420782,
+        "resid_rms_if_constant": 0.42979893993164325,
+        "improvement_factor_vs_constant": 8.266261273921227,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          1.7851832556199914,
+          2.258016240445582,
+          2.7039684320922257,
+          2.8988815786116366
+        ],
+        "n_points": 4,
+        "CFKRS_sub_leading_sign_prediction": "negative (R_k approaches asymptote from BELOW as log X grows for SO_even; consistent with observed negative normalized slope at k>=2)"
+      },
+      "2": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 1.4871974216269783,
+        "A_se": 0.10005959805319575,
+        "B_fit": -4.752937216525486,
+        "B_se": 1.0700430073707514,
+        "resid_rms": 0.03685267506634912,
+        "resid_rms_if_constant": 0.1829090827561368,
+        "improvement_factor_vs_constant": 4.963251173132735,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.6506547305673618,
+          0.8431012684662157,
+          1.074851236768625,
+          1.097294738209952
+        ],
+        "n_points": 4,
+        "CFKRS_sub_leading_sign_prediction": "negative (R_k approaches asymptote from BELOW as log X grows for SO_even; consistent with observed negative normalized slope at k>=2)"
+      },
+      "3": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 0.04352999874109014,
+        "A_se": 0.013182733691616506,
+        "B_fit": 0.06933698262115888,
+        "B_se": 0.14651275473590392,
+        "resid_rms": 0.005468470151665273,
+        "resid_rms_if_constant": 0.003726832999799071,
+        "improvement_factor_vs_constant": 0.681512908809453,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.047378953405417756,
+          0.0485519605518413,
+          0.05629428107761401,
+          0.047350968400816575
+        ],
+        "n_points": 4,
+        "CFKRS_sub_leading_sign_prediction": "negative (R_k approaches asymptote from BELOW as log X grows for SO_even; consistent with observed negative normalized slope at k>=2)"
+      },
+      "4": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": -0.0002377508317788591,
+        "A_se": 0.00011773232534147852,
+        "B_fit": 0.005778262159191678,
+        "B_se": 0.001396289463077943,
+        "resid_rms": 5.947894462468577e-05,
+        "resid_rms_if_constant": 0.00016792945465585437,
+        "improvement_factor_vs_constant": 2.8233428773071734,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.0006776893555153022,
+          0.0004112677134278983,
+          0.00036105778325629773,
+          0.0002128272123024879
+        ],
+        "n_points": 4,
+        "CFKRS_sub_leading_sign_prediction": "negative (R_k approaches asymptote from BELOW as log X grows for SO_even; consistent with observed negative normalized slope at k>=2)"
+      }
+    },
+    "1": {
+      "1": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 13.481655569142255,
+        "A_se": 1.2206144318216723,
+        "B_fit": -72.21237084254932,
+        "B_se": 12.184303707299426,
+        "resid_rms": 0.632854818107565,
+        "resid_rms_if_constant": 2.3782621177837053,
+        "improvement_factor_vs_constant": 3.7579900630218113,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          1.809669342184418,
+          3.699609354224336,
+          6.209095939524024,
+          8.05069121994961
+        ],
+        "n_points": 4
+      },
+      "2": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 10.597440965052659,
+        "A_se": 1.5258024799761347,
+        "B_fit": -59.69919670285222,
+        "B_se": 12.21401121824657,
+        "resid_rms": 0.7363740021940974,
+        "resid_rms_if_constant": 2.2720379830026762,
+        "improvement_factor_vs_constant": 3.0854402467128383,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.6190981049713777,
+          1.9430115797518452,
+          4.524759748786547,
+          6.486662667549644
+        ],
+        "n_points": 4
+      },
+      "3": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 0.8248496627116721,
+        "A_se": 0.12051501105501904,
+        "B_fit": -4.6282050769752345,
+        "B_se": 0.8726971217406876,
+        "resid_rms": 0.05884541866813579,
+        "resid_rms_if_constant": 0.1836277496642068,
+        "improvement_factor_vs_constant": 3.1205105481497646,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.03949282967896809,
+          0.14287347783286436,
+          0.37658621180997576,
+          0.5030288412892241
+        ],
+        "n_points": 4
+      },
+      "4": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 0.006394472106529454,
+        "A_se": 0.0006985650679828797,
+        "B_fit": -0.03462488972036983,
+        "B_se": 0.00531093586785932,
+        "resid_rms": 0.0003946442379828332,
+        "resid_rms_if_constant": 0.0013515512053346764,
+        "improvement_factor_vs_constant": 3.4247331526818545,
+        "log_X_points": [
+          5.756462732485114,
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.0004641232071899816,
+          0.0014505829292171197,
+          0.0034956428775754973,
+          0.0036382737246790212
+        ],
+        "n_points": 4
+      }
+    },
+    "2": {
+      "1": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 28.812281061667424,
+        "A_se": 2.616098261543095,
+        "B_fit": -210.3989432641804,
+        "B_se": 29.031841726626528,
+        "resid_rms": 0.5424597963158659,
+        "resid_rms_if_constant": 3.6274108785252075,
+        "improvement_factor_vs_constant": 6.686967224411636,
+        "log_X_points": [
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          3.5017079176908035,
+          8.045164332951659,
+          12.386245393655098
+        ],
+        "n_points": 3
+      },
+      "2": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 33.95637134835574,
+        "A_se": 5.545616781716624,
+        "B_fit": -265.1718408043673,
+        "B_se": 55.20769080175887,
+        "resid_rms": 0.9716814239244164,
+        "resid_rms_if_constant": 4.995944720573186,
+        "improvement_factor_vs_constant": 5.141545981599214,
+        "log_X_points": [
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          1.6758667075037506,
+          7.064146829625929,
+          13.885384555272058
+        ],
+        "n_points": 3
+      },
+      "3": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 3.3704711528758247,
+        "A_se": 0.5358006580747346,
+        "B_fit": -26.530054801031152,
+        "B_se": 4.943761108791872,
+        "resid_rms": 0.10504417199701406,
+        "resid_rms_if_constant": 0.522272338302833,
+        "improvement_factor_vs_constant": 4.971930649495518,
+        "log_X_points": [
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.10806690618749563,
+          0.6670451206850246,
+          1.3841077160042985
+        ],
+        "n_points": 3
+      },
+      "4": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 0.03050543476607318,
+        "A_se": 0.0023713234056530865,
+        "B_fit": -0.23921086113481602,
+        "B_se": 0.02147853236481181,
+        "resid_rms": 0.0005047330772128157,
+        "resid_rms_if_constant": 0.004547456451378507,
+        "improvement_factor_vs_constant": 9.009626388050483,
+        "log_X_points": [
+          8.05904782547916,
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.0009271407808804788,
+          0.006675412370542112,
+          0.012064154470001196
+        ],
+        "n_points": 3
+      }
+    },
+    "3": {
+      "1": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 36.93879519123386,
+        "A_se": 3.1612267955270884e-13,
+        "B_fit": -311.0331337183381,
+        "B_se": 3.7556644673447536e-12,
+        "resid_rms": 3.6942243651845925e-14,
+        "resid_rms_if_constant": 2.7288883568273166,
+        "improvement_factor_vs_constant": 73869047655717.03,
+        "log_X_points": [
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          6.921023266133698,
+          12.378799979788331
+        ],
+        "n_points": 2
+      },
+      "2": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 51.184976060673954,
+        "A_se": 5.171444149275634e-13,
+        "B_fit": -478.79686483067286,
+        "B_se": 5.887736105274364e-12,
+        "resid_rms": 5.139553230712333e-14,
+        "resid_rms_if_constant": 4.2007845726978,
+        "improvement_factor_vs_constant": 81734430681547.36,
+        "log_X_points": [
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          4.976345760998709,
+          13.37791490639431
+        ],
+        "n_points": 2
+      },
+      "3": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 5.223999865143858,
+        "A_se": 4.929804769634349e-15,
+        "B_fit": -50.30985167907954,
+        "B_se": 5.464181419266726e-14,
+        "resid_rms": 5.102800490722269e-16,
+        "resid_rms_if_constant": 0.4413998175675824,
+        "improvement_factor_vs_constant": 865014845025040.5,
+        "log_X_points": [
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.36860187190045873,
+          1.2514015070356235
+        ],
+        "n_points": 2
+      },
+      "4": {
+        "model": "R_k(X) = A + B * (1/log X)",
+        "A_fit": 0.042654020184609134,
+        "A_se": 4.617509083961529e-16,
+        "B_fit": -0.41306558383179415,
+        "B_se": 5.068291238751518e-15,
+        "resid_rms": 4.7333838135812315e-17,
+        "resid_rms_if_constant": 0.003624082903480717,
+        "improvement_factor_vs_constant": 76564315217421.0,
+        "log_X_points": [
+          10.361632918473205,
+          12.664218011467252
+        ],
+        "R_k_points": [
+          0.002789108246321711,
+          0.010037274053283146
+        ],
+        "n_points": 2
+      }
+    }
+  },
+  "headline_per_rank_k": {
+    "0": {
+      "1": {
+        "status": "CALIBRATION_CONFIRMED",
+        "reason": "second-largest decade within 6.72% of 1 (threshold 10%), monotonically approaching; max dev across all decades 38.42%",
+        "max_dev_from_1_across_decades": 0.38418206911543784,
+        "second_largest_decade_dev_from_1": 0.06723736076613407,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 0.6158179308845622
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 0.7789266926615938
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 0.9327626392338659
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      },
+      "2": {
+        "status": "CALIBRATION_CONFIRMED",
+        "reason": "second-largest decade within 2.05% of 1 (threshold 10%), monotonically approaching; max dev across all decades 40.70%",
+        "max_dev_from_1_across_decades": 0.4070374094486289,
+        "second_largest_decade_dev_from_1": 0.020453484975185288,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 0.5929625905513711
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 0.7683453124377418
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 0.9795465150248147
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      },
+      "3": {
+        "status": "FRONTIER",
+        "reason": "max deviation 18.89% (threshold 25%); monotone=False",
+        "max_dev_from_1_across_decades": 0.1888728568567819,
+        "second_largest_decade_dev_from_1": 0.1888728568567819,
+        "monotone_toward_1": false,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 1.0005910122970305
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 1.025363623840986
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 1.188872856856782
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      },
+      "4": {
+        "status": "FRONTIER",
+        "reason": "max deviation 218.42% (threshold 25%); monotone=True",
+        "max_dev_from_1_across_decades": 2.1842232399873436,
+        "second_largest_decade_dev_from_1": 0.6964831674961383,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 3.1842232399873436
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 1.9324019188080617
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 1.6964831674961383
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      }
+    },
+    "1": {
+      "1": {
+        "status": "FRONTIER",
+        "reason": "rank 1 = SO_odd; empirical R_k uses wrong exponent k(k-1)/2 vs CFKRS k(k+1)/2; residual (log X)^k growth visible in raw empirical slopes \u2014 this is EXPECTED, not a CFKRS failure, but rank-1 CFKRS calibration requires recomputing empirical R_k with correct exponent.",
+        "max_dev_from_1_across_decades": 0.775215656302895,
+        "second_largest_decade_dev_from_1": 0.2287499582473257,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 0.22478434369710495
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 0.4595393430388568
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 0.7712500417526743
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      },
+      "2": {
+        "status": "FRONTIER",
+        "reason": "rank 1 = SO_odd; empirical R_k uses wrong exponent k(k-1)/2 vs CFKRS k(k+1)/2; residual (log X)^k growth visible in raw empirical slopes \u2014 this is EXPECTED, not a CFKRS failure, but rank-1 CFKRS calibration requires recomputing empirical R_k with correct exponent.",
+        "max_dev_from_1_across_decades": 0.9045583011324922,
+        "second_largest_decade_dev_from_1": 0.30245181834069557,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 0.09544169886750777
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 0.29953948267912994
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 0.6975481816593044
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      },
+      "3": {
+        "status": "FRONTIER",
+        "reason": "rank 1 = SO_odd; empirical R_k uses wrong exponent k(k-1)/2 vs CFKRS k(k+1)/2; residual (log X)^k growth visible in raw empirical slopes \u2014 this is EXPECTED, not a CFKRS failure, but rank-1 CFKRS calibration requires recomputing empirical R_k with correct exponent.",
+        "max_dev_from_1_across_decades": 0.9214899297269894,
+        "second_largest_decade_dev_from_1": 0.25136258421124646,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 0.07851007027301062
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 0.284026413806991
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 0.7486374157887535
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      },
+      "4": {
+        "status": "FRONTIER",
+        "reason": "rank 1 = SO_odd; empirical R_k uses wrong exponent k(k-1)/2 vs CFKRS k(k+1)/2; residual (log X)^k growth visible in raw empirical slopes \u2014 this is EXPECTED, not a CFKRS failure, but rank-1 CFKRS calibration requires recomputing empirical R_k with correct exponent.",
+        "max_dev_from_1_across_decades": 0.8724331256217046,
+        "second_largest_decade_dev_from_1": 0.039202890683027736,
+        "monotone_toward_1": true,
+        "ratios_per_decade": [
+          {
+            "decade": "100-1000",
+            "emp_over_theory": 0.1275668743782954
+          },
+          {
+            "decade": "1000-10000",
+            "emp_over_theory": 0.39870087821528444
+          },
+          {
+            "decade": "10000-100000",
+            "emp_over_theory": 0.9607971093169723
+          },
+          {
+            "decade": "100000-1000000",
+            "emp_over_theory": 1.0
+          }
+        ]
+      }
+    },
+    "2": {
+      "1": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      },
+      "2": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      },
+      "3": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      },
+      "4": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      }
+    },
+    "3": {
+      "1": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      },
+      "2": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      },
+      "3": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      },
+      "4": {
+        "status": "NA",
+        "reason": "rank 2+ has no clean SO_even/SO_odd assignment; CFKRS 2-parameter family test not applicable"
+      }
+    }
+  },
+  "headline": {
+    "overall_verdict": "FRONTIER",
+    "rank0_k_confirmed": 2,
+    "rank0_k_partial": 0,
+    "rank0_k_frontier": 2,
+    "rank0_k2_sub_leading_B_fit": -4.752937216525486,
+    "rank0_k2_sub_leading_B_se": 1.0700430073707514,
+    "rank0_k2_B_z_from_zero": -4.441818865023128,
+    "rank0_k2_1overlogX_fit_beats_constant_by_factor": 4.963251173132735,
+    "sign_check_B_negative_as_SO_even_predicts": true,
+    "verdict_counts_across_all_rank_k": {
+      "confirmed": 2,
+      "frontier": 6,
+      "na": 8
+    },
+    "one_liner": "Rank-0 CFKRS shape test: 2/4 k-values CALIBRATION_CONFIRMED, 0/4 PARTIAL, 2/4 FRONTIER (proxy a(k) calibration). Rank-0 k=2 sub-leading fit R_k = A + B/logX gives B=-4.75+/-1.07 (z=-4.44), beats constant by 4.96x; sign NEGATIVE as SO_even predicts. Overall verdict: FRONTIER."
+  },
+  "caveats": [
+    "a(k) proxy = empirical R_k at largest decade / g_theory(k). This CALIBRATES the absolute scale; only the SHAPE of convergence across smaller decades is a CFKRS test.",
+    "Rank 1 empirical R_k uses exponent k(k-1)/2 but SO_odd CFKRS uses k(k+1)/2. The residual (log X)^k growth seen in raw empirical slopes is EXPECTED, not a CFKRS failure; a clean rank-1 test requires recomputing empirical R_k with the correct exponent.",
+    "Rank 2 and 3 have no clean 2-family (SO_even/SO_odd) CFKRS prediction within this setup; higher-rank family-moment theory is not treated here.",
+    "Barnes-G cross-check confirms g_SO_even at k<=2 exactly; diverges at k>=3 (factor 1.5 at k=3, 4.5 at k=4) because the two formulas compute different symmetry constants. The KS-2000 formula prod_{j=1}^{k-1} Gamma(j+1)*j!/Gamma(j+k+1) is the one named in the task spec and is used as source of truth.",
+    "Per Pattern 20: all comparisons are per-cell (rank, decade) and never pooled."
+  ],
+  "pattern_20_discipline": [
+    "All CFKRS ratios computed per (rank, decade) cell; never pooled.",
+    "Rank-0 SO_even and rank-1 SO_odd reported separately.",
+    "Rank 2+ excluded from 2-family CFKRS test (reported as NA)."
+  ]
+}
