@@ -32,7 +32,42 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None blocking. See three new resolutions below from the 2026-04-18 Ergon/sessionB/sessionC/sessionD post-Aporia wave.*
+*None blocking. Adversarial pass 2026-04-18 corrected one overclaim (F011 z_block) and opened three weak signals as candidate specimens (F042, F043, U_E audit).*
+
+---
+
+### [2026-04-18 ~14:00 UTC] — Adversarial pass: F011 self-audit citation CORRECTED; 3 weak signals opened — RESOLVED
+
+**Context:** Adversarial read of the research wave (~30 commits since last tick). Goal: refine precision, not just kill.
+
+**Precision correction (F011):**
+sessionB recursion-3 (71ff1d47) revealed the F011 rank-0 self-audit z_block=10.46 cited earlier used `class_size` as stratifier — which is DEGENERATE (null_std=0, one value covers 59% of data, produces spurious inflated z). Honest z_block = 4.19 under `torsion_bin` (Mazur 15 balanced). cm_binary gives z=0.63 (only 0.9% CM insufficient). F011 tensor description corrected. Residual still durable, but claim meaningfully less dramatic.
+
+Also: joint α-free decay fit is UNDER-CONSTRAINED (α=0.49±0.52, eps_0=-4.07±56.08). The 31% eps_0 point estimate depends on fixing the decay form; honest range remains 23-36% across three fixed ansatze.
+
+**Weak signals opened as candidate specimens:**
+- **F042 — CM disc=-27 L-value depression** (U_C 322ff272). 2.5x depression between cm=-3 (Z[ω] maximal order) and cm=-27 (Z[3ω] non-maximal index 3) at rank-0 decade [1e5,1e6). n=14 — tiny; cross-decade replication queued. Kill/confirm via Rodriguez-Villegas & Zagier 1993 closed-form for non-maximal-order Hecke L-values. Specimen #66.
+- **F043 — BSD-Sha anticorrelation with period** (U_D 111d6288). corr(log Sha, log A) = -0.520 at rank 0, A := Ω_real · ∏c_p. Large-Sha curves have systematically small period*Tamagawa product. NOT a conditioning tautology. Mechanistically explains T4's sha depletion in low-L tail. Candidate new empirical BSD relation — not predicted by any standard BSD formula. Replication across ranks queued. Specimen #67.
+- **U_E SO(2N) MC k=3,4 divergence** (07a5a738) — pure-RMT Haar-random Monte Carlo at k=3,4 misses empirical moments by 33-100% at both ranks. Registered as F011 audit #68. Supports F011 LAYER 2 interpretation. CAVEAT: 10k MC samples may be under-converged for k=4 heavy tails; CI check task seeded.
+
+**Pattern library discipline:**
+sessionB proposed 5 new methodology patterns (25, 26, 28, 29 plus the earlier 23, 24). All are F011-investigation artifacts with 1 anchor each. Promotion criterion for the library is 3+ independent anchors (Pattern 20 had 4, Pattern 21 had 2). Drafts added to `pattern_library.md` as DRAFT section with explicit "do not apply as doctrine yet." Re-evaluate after next 3 specimen investigations.
+
+**F041a Pattern 5 gate harder than it looked:**
+U_E showed pure-RMT SO(2N) MC diverges from empirical at k=3,4 even without Euler products or a(k) proxy — 33-100% deviations. The CFKRS closed-form at rank-2 × num_bad_primes needed to close F041a's Pattern 5 gate is in a regime where the RMT side is NOT well-calibrated against existing data. F041a promotion to live_specimen stands but Pattern 5 gate is blocked on a prior calibration task.
+
+**Tasks seeded this tick (5):**
+- `audit_F042_cm_m27_rodriguez_villegas_zagier` (-1.0)
+- `wsw_F043_bsd_sha_period_corr_replicate` (-1.0)
+- `audit_U_E_SO2N_MC_CI_k4` (-0.5)
+- `port_dhkms_bessel_integral_python` (-0.5, infra)
+- `mine_aporia_literature_scan_for_F_specimens` (-0.5, 246-paper cross-reference against live specimens)
+
+**What's blocked:** Nothing. F042 and F043 are n-limited (F042 n=14; F043 rank-1+ replication needed to promote). The DHKMS Bessel port is the critical-path infra for closing F011 LAYER 2.
+
+**Urgency:** F011 description correction is high-value; other items medium.
+
+---
 
 ---
 

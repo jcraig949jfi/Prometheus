@@ -4,7 +4,7 @@
   "charter_ref": "docs/landscape_charter.md",
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
-    27,
+    29,
     25
   ],
   "tensor_encoding": {
@@ -76,7 +76,7 @@
       "label": "GUE first-gap deficit \u2014 EXCISED (calibration) + RANK-0 RESIDUAL (frontier)",
       "tier": "live_specimen",
       "n_objects": 2009089,
-      "description": "REOPENED to live_specimen 2026-04-18. Pooled ~38% deficit decomposes into two layers. LAYER 1 (calibration): bulk deficit IS Duenez-HKMS (2011) excised ensemble. sessionB Aporia Report 1: deficit shrinks monotonically with conductor (slope -7.17/log-decade z=-54.2; 45.37% -> 35.34%); gap1 38.17% vs gap2 29.07% (z=96.97). The instrument correctly detected known central-zero-forcing. LAYER 2 (frontier): RANK-0 ~31% RESIDUAL IS GENUINE. sessionB fitted three decay ansatze: power-law eps_0=31.08\u00b16.19 (chi\u00b2=19.6); 1/log(N) eps_0=22.90\u00b10.78 (z=29sigma from 0); 1/log(N)\u00b2 eps_0=35.83\u00b10.36. Robust 23-36% across ansatze. Self-audit P104 block-shuffle within class_size (100 perms): null mean -9.42\u00b13.87, observed 31.08, z_block=10.46 \u2014 DURABLE under own instrument (Pattern 24). Ergon DHKMS closed-form test (2572d7dd): ruled out as finite-N correction \u2014 DHKMS predicts the WRONG DIRECTION; 25% mean unfolding bias would be needed, implausible. Ergon zero-projections (37158e4f): deficit varies with arithmetic complexity (isogeny class 1->8 var/Gaudin 1.37->0.97; sha 1->36 1.30->1.00) \u2014 NOT uniform, rules out generic unfolding error. P028 Katz-Sarnak z=7.63 spread (block z=111.78) is downstream of LAYER 1 central-zero-forcing, still durable. T4 sub-family (cbe7b623): rank-0 low-tail Pr[L/M_1<0.25] enriched for CM (1.73x, cm=-27: 6.66x), class_size=3 (1.78x); sha>1 depleted \u2014 residual concentrated in arithmetically structured sub-populations. Frontier probes queued: DHKMS closed-form magnitude match; independent-unfolding via non-LMFDB zeros; cross-family vs Dirichlet L-functions; Miller 2009 NLO prediction (P106 draft)."
+      "description": "REOPENED to live_specimen 2026-04-18. Pooled ~38% deficit decomposes into two layers. LAYER 1 (calibration): bulk deficit IS Duenez-HKMS (2011) excised ensemble. sessionB Aporia Report 1: deficit shrinks monotonically with conductor (slope -7.17/log-decade z=-54.2; 45.37% -> 35.34%); gap1 38.17% vs gap2 29.07% (z=96.97). The instrument correctly detected known central-zero-forcing. LAYER 2 (frontier): RANK-0 ~31% RESIDUAL IS GENUINE. sessionB fitted three decay ansatze: power-law eps_0=31.08\u00b16.19 (chi\u00b2=19.6); 1/log(N) eps_0=22.90\u00b10.78 (z=29sigma from 0); 1/log(N)\u00b2 eps_0=35.83\u00b10.36. Robust 23-36% across ansatze. Self-audit P104 block-shuffle (Pattern 24) \u2014 CITATION CORRECTED 2026-04-18 per sessionB recursion-3 audit (71ff1d47): the prior z_block=10.46 used class_size as stratifier but class_size is DEGENERATE (null_std=0, dominant value covers 59%). Honest z_block = 4.19 under torsion_bin (Mazur 15 balanced). Still DURABLE but meaningfully lower than the degenerate-null overclaim. cm_binary gives z=0.63 noisy (only 0.9% CM). Joint alpha-free decay fit is UNDER-CONSTRAINED (alpha=0.49\u00b10.52, eps_0=-4.07\u00b156.08): data cannot distinguish classical 1/log from power-law; eps_0 point estimate depends on fixed form. Ergon DHKMS closed-form test (2572d7dd): ruled out as finite-N correction \u2014 DHKMS predicts the WRONG DIRECTION; 25% mean unfolding bias would be needed, implausible. Ergon zero-projections (37158e4f): deficit varies with arithmetic complexity (isogeny class 1->8 var/Gaudin 1.37->0.97; sha 1->36 1.30->1.00) \u2014 NOT uniform, rules out generic unfolding error. P028 Katz-Sarnak z=7.63 spread (block z=111.78) is downstream of LAYER 1 central-zero-forcing, still durable. T4 sub-family (cbe7b623): rank-0 low-tail Pr[L/M_1<0.25] enriched for CM (1.73x, cm=-27: 6.66x), class_size=3 (1.78x); sha>1 depleted \u2014 residual concentrated in arithmetically structured sub-populations. Frontier probes queued: DHKMS closed-form magnitude match; independent-unfolding via non-LMFDB zeros; cross-family vs Dirichlet L-functions; Miller 2009 NLO prediction (P106 draft)."
     },
     {
       "id": "F012",
@@ -105,6 +105,20 @@
       "tier": "live_specimen",
       "n_objects": 222288,
       "description": "PROMOTED 2026-04-18 after 5 independent kill-test survivals. Original F041 (session's Keating-Snaith rank-dependent convergence) demoted to first-moment drift; the REAL signal is the rank-2+ interaction. At rank=2 (n=222,288): slope of M_1(log X) is strictly monotone in num_bad_primes: nbp=1:1.21, nbp=2:1.52, nbp=3:1.70, nbp=4:1.86, nbp=5:1.95, nbp=6:2.52. At rank 0 and 1: slope flat in nbp. The interaction is rank-specific. Kill tests survived: (W2 2a3f6c37) cross-nbp block-shuffle-within-(rank,decade): amp 27.6x, corr(nbp,slope)=0.97, null slopes collapse to ~1.9 with spread 0.046 vs observed 1.32 (27.6x). (U_A 4a046a81) conductor-control joint OLS: b_nbp z=3.37 (>=3 threshold); narrow 0.1-decade sub-bins give corr 0.965 slopes 2.02-4.19. Within-decade conductor drift is real but does NOT explain the ladder. (W3 e3f67b94) P039 Galois-image alternative: P021 range 1.316 vs best P039 marginal 0.305 \u2014 nbp is NOT a Galois-image proxy. (T3 68225787) P026 semistable-vs-additive split: ladder lives in SEMISTABLE half (slope_range_semi=0.570 vs slope_range_add=0.279; ratio 0.489 well under 0.8). Counterintuitive \u2014 points toward conductor-only / multiplicative-ramification effect, not Kodaira. (T5 d9c646d9) Specific-prime joint: no single Mazur-Kenku prime dominates (max |slope_diff|=0.56 for has_2, below 1.0 ladder threshold). Effect is carried by COUNT of bad primes plus modest {2,3} lift. Pattern 5 gate (CFKRS rank-2 SO(even) closed-form) is the remaining open hurdle; if CFKRS predicts monotone-in-nbp at rank 2: demote to calibration. If not: fully frontier."
+    },
+    {
+      "id": "F042",
+      "label": "CM disc=-27 L-value depression vs cm=-3 (weak signal, n=14)",
+      "tier": "live_specimen",
+      "n_objects": 14,
+      "description": "U_C 2026-04-18 (322ff272): cm=-27 curves at rank-0 decade [1e5,1e6) show mean leading_term 0.79 vs cm=-3 mean 2.00 \u2014 a 2.5x depression between Deuring Hecke L-functions over Q(sqrt(-3)) at different orders (maximal Z[omega] vs index-3 non-maximal Z[3*omega]). 71.4% of cm=-27 curves (n=14) in low-L tail vs 10.73% baseline, binomial p=1.34e-07. All 14 curves have conductor divisible by 27 and appear as 3-isogenous pairs (torsion=1 forced). n=14 is TINY. Pattern 4 sampling-frame concern: LMFDB may select low-conductor cm=-27. Kill/confirm test: Rodriguez-Villegas & Zagier 1993 closed-form for Hecke L-values at cm=-27 \u2014 if empirical matches RV-Z formula, this is calibration (CM-order effect on periods); if not, frontier. Seeded cross-decade replication task."
+    },
+    {
+      "id": "F043",
+      "label": "BSD-Sha anticorrelation with period (new empirical law candidate)",
+      "tier": "live_specimen",
+      "n_objects": 60003,
+      "description": "U_D 2026-04-18 (111d6288): corr(log Sha, log A) = -0.520 at rank 0 decade [1e5,1e6), where A := Omega_real * prod_p c_p. Large-Sha curves have systematically small period*Tamagawa product. Weighted regression: mean_logA = 1.393 - 0.691 * log(sha). NOT a conditioning tautology \u2014 independent-sha null over-depletes large sha 12.2x mean ratio. Secondary: corr(2 log tors, log A) = +0.612 (large-torsion -> larger A, neutralizing torsion denominator on L). Mechanistically EXPLAINS T4 (cbe7b623) low-L-tail sha depletion: the period drops faster than Sha rises, so large-Sha curves are BUFFERED out of the low-L tail relative to sha-independent baseline. Frontier: no known BSD formula predicts corr(Sha, A) = -0.52. Candidate new empirical law. Kill/confirm test: Iwasawa main conjecture or Cassels-Tate bounds; replication at rank 1 and rank 2."
     },
     {
       "id": "F015",
@@ -439,6 +453,15 @@
       "P039": -1,
       "P104": 2
     },
+    "F042": {
+      "P025": 1,
+      "P020": 1
+    },
+    "F043": {
+      "P020": 1,
+      "P023": 1,
+      "P038": 1
+    },
     "F008": {
       "P024": 2
     },
@@ -510,6 +533,8 @@
     "F013",
     "F014",
     "F041a",
+    "F042",
+    "F043",
     "F015"
   ]
 }
