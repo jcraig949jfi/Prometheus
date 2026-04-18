@@ -1,0 +1,711 @@
+{
+  "task": "rank0_low_tail_arithmetic_characterization",
+  "worker": "Harmonia_T4",
+  "started": "2026-04-18T13:55:50.916105+00:00",
+  "finished": "2026-04-18T13:56:06.069670+00:00",
+  "config": {
+    "decade_lo": 100000,
+    "decade_hi": 1000000,
+    "tail_threshold": 0.25,
+    "gate_high": 2.0,
+    "gate_low": 0.5,
+    "neutral_band": [
+      0.8,
+      1.25
+    ],
+    "min_cell_count_for_enrichment": 20,
+    "min_overall_share_for_enrichment": 0.005
+  },
+  "cohort": {
+    "n_rank0_total": 559386,
+    "n_low_tail": 60003,
+    "low_tail_fraction": 0.10726582359944653,
+    "M_1_decade": 2.8988815786116366,
+    "threshold_leading_term": 0.7247203946529092,
+    "n_arithmetic_joined": 559386,
+    "n_all_rows_used": 559386,
+    "n_low_tail_rows_used": 60003
+  },
+  "axes": {
+    "num_bad_primes": {
+      "field": "num_bad_primes",
+      "low_tail_n_present": 60003,
+      "overall_n_present": 559386,
+      "per_value": {
+        "1": {
+          "low_tail_count": 84,
+          "low_tail_share": 0.001399930003499825,
+          "overall_count": 800,
+          "overall_share": 0.0014301394743522363,
+          "enrichment_ratio": 0.9788765561721913
+        },
+        "2": {
+          "low_tail_count": 2461,
+          "low_tail_share": 0.04101461593586987,
+          "overall_count": 15113,
+          "overall_share": 0.027017122344856682,
+          "enrichment_ratio": 1.5180971316020977
+        },
+        "3": {
+          "low_tail_count": 15254,
+          "low_tail_share": 0.2542206223022182,
+          "overall_count": 108202,
+          "overall_share": 0.19342993925482582,
+          "enrichment_ratio": 1.3142775274685186
+        },
+        "4": {
+          "low_tail_count": 28341,
+          "low_tail_share": 0.472326383680816,
+          "overall_count": 257956,
+          "overall_share": 0.4611413228075068,
+          "enrichment_ratio": 1.0242551693377047
+        },
+        "5": {
+          "low_tail_count": 12717,
+          "low_tail_share": 0.2119394030298485,
+          "overall_count": 159387,
+          "overall_share": 0.28493205049822484,
+          "enrichment_ratio": 0.7438243702639163
+        },
+        "6": {
+          "low_tail_count": 1146,
+          "low_tail_share": 0.019099045047747613,
+          "overall_count": 17928,
+          "overall_share": 0.032049425620233614,
+          "enrichment_ratio": 0.5959247218361974
+        }
+      },
+      "max_enrichment_ratio": 1.5180971316020977,
+      "max_enrichment_key": "2",
+      "min_enrichment_ratio": 0.5959247218361974,
+      "min_enrichment_key": "6"
+    },
+    "torsion": {
+      "field": "torsion",
+      "low_tail_n_present": 60003,
+      "overall_n_present": 559386,
+      "per_value": {
+        "1": {
+          "low_tail_count": 29623,
+          "low_tail_share": 0.49369198206756326,
+          "overall_count": 288933,
+          "overall_share": 0.5165181109287683,
+          "enrichment_ratio": 0.9558076892596067
+        },
+        "2": {
+          "low_tail_count": 25604,
+          "low_tail_share": 0.42671199773344665,
+          "overall_count": 232429,
+          "overall_share": 0.4155073598552699,
+          "enrichment_ratio": 1.0269661598342796
+        },
+        "3": {
+          "low_tail_count": 1283,
+          "low_tail_share": 0.021382264220122328,
+          "overall_count": 9759,
+          "overall_share": 0.01744591391275434,
+          "enrichment_ratio": 1.225631648021042
+        },
+        "4": {
+          "low_tail_count": 3301,
+          "low_tail_share": 0.055013915970868126,
+          "overall_count": 26379,
+          "overall_share": 0.04715706149242205,
+          "enrichment_ratio": 1.1666103491140694
+        },
+        "5": {
+          "low_tail_count": 33,
+          "low_tail_share": 0.0005499725013749313,
+          "overall_count": 271,
+          "overall_share": 0.00048445974693682003,
+          "enrichment_ratio": 1.1352284784284772
+        },
+        "6": {
+          "low_tail_count": 124,
+          "low_tail_share": 0.0020665633384997417,
+          "overall_count": 1216,
+          "overall_share": 0.002173812001015399,
+          "enrichment_ratio": 0.9506633220970531
+        },
+        "7": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 12,
+          "overall_share": 2.1452092115283545e-05,
+          "enrichment_ratio": 0.0
+        },
+        "8": {
+          "low_tail_count": 35,
+          "low_tail_share": 0.000583304168124927,
+          "overall_count": 351,
+          "overall_share": 0.0006274736943720436,
+          "enrichment_ratio": 0.9296073657855568
+        },
+        "9": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 3,
+          "overall_share": 5.363023028820886e-06,
+          "enrichment_ratio": 0.0
+        },
+        "10": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 12,
+          "overall_share": 2.1452092115283545e-05,
+          "enrichment_ratio": 0.0
+        },
+        "12": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 20,
+          "overall_share": 3.57534868588059e-05,
+          "enrichment_ratio": 0.0
+        },
+        "16": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        }
+      },
+      "max_enrichment_ratio": 1.225631648021042,
+      "max_enrichment_key": "3",
+      "min_enrichment_ratio": 0.9558076892596067,
+      "min_enrichment_key": "1"
+    },
+    "sha": {
+      "field": "sha",
+      "low_tail_n_present": 60003,
+      "overall_n_present": 559386,
+      "per_value": {
+        "1": {
+          "low_tail_count": 55440,
+          "low_tail_share": 0.9239538023098846,
+          "overall_count": 447910,
+          "overall_share": 0.8007172149463877,
+          "enrichment_ratio": 1.153907753028325
+        },
+        "4": {
+          "low_tail_count": 3480,
+          "low_tail_share": 0.05799710014499275,
+          "overall_count": 69680,
+          "overall_share": 0.12456514821607978,
+          "enrichment_ratio": 0.4655965249957938
+        },
+        "9": {
+          "low_tail_count": 673,
+          "low_tail_share": 0.011216105861373598,
+          "overall_count": 24763,
+          "overall_share": 0.04426817975423053,
+          "enrichment_ratio": 0.25336722502807946
+        },
+        "16": {
+          "low_tail_count": 255,
+          "low_tail_share": 0.004249787510624469,
+          "overall_count": 8852,
+          "overall_share": 0.015824493283707494,
+          "enrichment_ratio": 0.2685575730250993
+        },
+        "25": {
+          "low_tail_count": 101,
+          "low_tail_share": 0.0016832491708747895,
+          "overall_count": 4251,
+          "overall_share": 0.007599403631839195,
+          "enrichment_ratio": 0.22149753486214185
+        },
+        "36": {
+          "low_tail_count": 13,
+          "low_tail_share": 0.00021665583387497293,
+          "overall_count": 1241,
+          "overall_share": 0.0022185038595889063,
+          "enrichment_ratio": 0.09765853367283289
+        },
+        "49": {
+          "low_tail_count": 21,
+          "low_tail_share": 0.00034998250087495624,
+          "overall_count": 1091,
+          "overall_share": 0.0019503527081478622,
+          "enrichment_ratio": 0.1794457481525557
+        },
+        "64": {
+          "low_tail_count": 12,
+          "low_tail_share": 0.000199990000499975,
+          "overall_count": 698,
+          "overall_share": 0.0012477966913723262,
+          "enrichment_ratio": 0.1602745077645831
+        },
+        "81": {
+          "low_tail_count": 4,
+          "low_tail_share": 6.666333349999167e-05,
+          "overall_count": 306,
+          "overall_share": 0.0005470283489397304,
+          "enrichment_ratio": 0.12186449501054358
+        },
+        "100": {
+          "low_tail_count": 1,
+          "low_tail_share": 1.6665833374997917e-05,
+          "overall_count": 156,
+          "overall_share": 0.00027887719749868605,
+          "enrichment_ratio": 0.059760473514785806
+        },
+        "121": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 145,
+          "overall_share": 0.00025921277972634283,
+          "enrichment_ratio": 0.0
+        },
+        "144": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 65,
+          "overall_share": 0.00011619883229111919,
+          "enrichment_ratio": 0.0
+        },
+        "169": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 79,
+          "overall_share": 0.00014122627309228332,
+          "enrichment_ratio": 0.2360160472989009
+        },
+        "196": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 28,
+          "overall_share": 5.005488160232827e-05,
+          "enrichment_ratio": 0.0
+        },
+        "225": {
+          "low_tail_count": 1,
+          "low_tail_share": 1.6665833374997917e-05,
+          "overall_count": 20,
+          "overall_share": 3.57534868588059e-05,
+          "enrichment_ratio": 0.4661316934153293
+        },
+        "256": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 25,
+          "overall_share": 4.4691858573507384e-05,
+          "enrichment_ratio": 0.0
+        },
+        "289": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 16,
+          "overall_share": 2.8602789487044724e-05,
+          "enrichment_ratio": 0.0
+        },
+        "324": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 3,
+          "overall_share": 5.363023028820886e-06,
+          "enrichment_ratio": 0.0
+        },
+        "361": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 15,
+          "overall_share": 2.681511514410443e-05,
+          "enrichment_ratio": 0.0
+        },
+        "400": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 7,
+          "overall_share": 1.2513720400582067e-05,
+          "enrichment_ratio": 0.0
+        },
+        "441": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "484": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 2,
+          "overall_share": 3.5753486858805905e-06,
+          "enrichment_ratio": 0.0
+        },
+        "529": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 7,
+          "overall_share": 1.2513720400582067e-05,
+          "enrichment_ratio": 0.0
+        },
+        "576": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "625": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 9,
+          "overall_share": 1.6089069086462657e-05,
+          "enrichment_ratio": 0.0
+        },
+        "676": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 2,
+          "overall_share": 3.5753486858805905e-06,
+          "enrichment_ratio": 0.0
+        },
+        "729": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "784": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 3,
+          "overall_share": 5.363023028820886e-06,
+          "enrichment_ratio": 0.0
+        },
+        "841": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 2,
+          "overall_share": 3.5753486858805905e-06,
+          "enrichment_ratio": 0.0
+        },
+        "961": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 2,
+          "overall_share": 3.5753486858805905e-06,
+          "enrichment_ratio": 0.0
+        },
+        "1089": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "1681": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "2209": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "2500": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        },
+        "5625": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 1,
+          "overall_share": 1.7876743429402952e-06,
+          "enrichment_ratio": 0.0
+        }
+      },
+      "max_enrichment_ratio": 1.153907753028325,
+      "max_enrichment_key": "1",
+      "min_enrichment_ratio": 0.22149753486214185,
+      "min_enrichment_key": "25"
+    },
+    "cm": {
+      "field": "cm",
+      "low_tail_n_present": 60003,
+      "overall_n_present": 559386,
+      "per_value": {
+        "-163": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 2,
+          "overall_share": 3.5753486858805905e-06,
+          "enrichment_ratio": 9.322633868306585
+        },
+        "-67": {
+          "low_tail_count": 4,
+          "low_tail_share": 6.666333349999167e-05,
+          "overall_count": 4,
+          "overall_share": 7.150697371761181e-06,
+          "enrichment_ratio": 9.322633868306585
+        },
+        "-43": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 2,
+          "overall_share": 3.5753486858805905e-06,
+          "enrichment_ratio": 9.322633868306585
+        },
+        "-28": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 10,
+          "overall_share": 1.787674342940295e-05,
+          "enrichment_ratio": 1.8645267736613171
+        },
+        "-27": {
+          "low_tail_count": 10,
+          "low_tail_share": 0.00016665833374997918,
+          "overall_count": 14,
+          "overall_share": 2.5027440801164134e-05,
+          "enrichment_ratio": 6.6590241916475605
+        },
+        "-19": {
+          "low_tail_count": 0,
+          "low_tail_share": 0.0,
+          "overall_count": 4,
+          "overall_share": 7.150697371761181e-06,
+          "enrichment_ratio": 0.0
+        },
+        "-16": {
+          "low_tail_count": 6,
+          "low_tail_share": 9.99950002499875e-05,
+          "overall_count": 26,
+          "overall_share": 4.647953291644768e-05,
+          "enrichment_ratio": 2.151377046532289
+        },
+        "-12": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 22,
+          "overall_share": 3.932883554468649e-05,
+          "enrichment_ratio": 0.8475121698460533
+        },
+        "-11": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 14,
+          "overall_share": 2.5027440801164134e-05,
+          "enrichment_ratio": 1.331804838329512
+        },
+        "-8": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 10,
+          "overall_share": 1.787674342940295e-05,
+          "enrichment_ratio": 1.8645267736613171
+        },
+        "-7": {
+          "low_tail_count": 2,
+          "low_tail_share": 3.3331666749995835e-05,
+          "overall_count": 10,
+          "overall_share": 1.787674342940295e-05,
+          "enrichment_ratio": 1.8645267736613171
+        },
+        "-4": {
+          "low_tail_count": 30,
+          "low_tail_share": 0.0004999750012499375,
+          "overall_count": 220,
+          "overall_share": 0.00039328835544686497,
+          "enrichment_ratio": 1.2712682547690797
+        },
+        "-3": {
+          "low_tail_count": 122,
+          "low_tail_share": 0.002033231671749746,
+          "overall_count": 664,
+          "overall_share": 0.001187015763712356,
+          "enrichment_ratio": 1.7128935721888607
+        },
+        "0": {
+          "low_tail_count": 59817,
+          "low_tail_share": 0.9969001549922504,
+          "overall_count": 558384,
+          "overall_share": 0.9982087503083739,
+          "enrichment_ratio": 0.9986890564566587
+        }
+      },
+      "max_enrichment_ratio": 0.9986890564566587,
+      "max_enrichment_key": "0",
+      "min_enrichment_ratio": 0.9986890564566587,
+      "min_enrichment_key": "0"
+    },
+    "cm_is_CM": {
+      "field": "cm",
+      "low_tail_true_count": 186,
+      "low_tail_n": 60003,
+      "low_tail_share": 0.0030998450077496125,
+      "overall_true_count": 1002,
+      "overall_n": 559386,
+      "overall_share": 0.0017912496916261758,
+      "enrichment_ratio": 1.7305488019012223
+    },
+    "semistable": {
+      "field": "semistable",
+      "low_tail_true_count": 14928,
+      "low_tail_n": 60003,
+      "low_tail_share": 0.2487875606219689,
+      "overall_true_count": 128210,
+      "overall_n": 559386,
+      "overall_share": 0.22919772750837525,
+      "enrichment_ratio": 1.0854713235011364
+    },
+    "nonmax_primes_len": {
+      "field": "nonmax_primes_len",
+      "low_tail_n_present": 60003,
+      "overall_n_present": 559386,
+      "per_value": {
+        "0": {
+          "low_tail_count": 23808,
+          "low_tail_share": 0.3967801609919504,
+          "overall_count": 248177,
+          "overall_share": 0.44365965540789365,
+          "enrichment_ratio": 0.8943345561298717
+        },
+        "1": {
+          "low_tail_count": 34724,
+          "low_tail_share": 0.5787043981134277,
+          "overall_count": 300148,
+          "overall_share": 0.5365668786848438,
+          "enrichment_ratio": 1.0785317191621395
+        },
+        "2": {
+          "low_tail_count": 1441,
+          "low_tail_share": 0.024015465893371998,
+          "overall_count": 10927,
+          "overall_share": 0.019533917545308605,
+          "enrichment_ratio": 1.2294239410844503
+        },
+        "3": {
+          "low_tail_count": 30,
+          "low_tail_share": 0.0004999750012499375,
+          "overall_count": 134,
+          "overall_share": 0.00023954836195399956,
+          "enrichment_ratio": 2.0871568361880413
+        }
+      },
+      "max_enrichment_ratio": 1.2294239410844503,
+      "max_enrichment_key": "2",
+      "min_enrichment_ratio": 0.8943345561298717,
+      "min_enrichment_key": "0"
+    },
+    "nonmax_primes_nonempty": {
+      "field": "nonmax_primes_len",
+      "low_tail_true_count": 36195,
+      "low_tail_n": 60003,
+      "low_tail_share": 0.6032198390080497,
+      "overall_true_count": 311209,
+      "overall_n": 559386,
+      "overall_share": 0.5563403445921064,
+      "enrichment_ratio": 1.084264056834336
+    },
+    "class_size": {
+      "field": "class_size",
+      "low_tail_n_present": 60003,
+      "overall_n_present": 559386,
+      "per_value": {
+        "1": {
+          "low_tail_count": 24471,
+          "low_tail_share": 0.407829608519574,
+          "overall_count": 252998,
+          "overall_share": 0.45227803341520884,
+          "enrichment_ratio": 0.9017232286078563
+        },
+        "2": {
+          "low_tail_count": 23840,
+          "low_tail_share": 0.39731346765995035,
+          "overall_count": 215270,
+          "overall_share": 0.38483265580475734,
+          "enrichment_ratio": 1.03243178994021
+        },
+        "3": {
+          "low_tail_count": 726,
+          "low_tail_share": 0.012099395030248488,
+          "overall_count": 3804,
+          "overall_share": 0.006800313200544883,
+          "enrichment_ratio": 1.779240848683118
+        },
+        "4": {
+          "low_tail_count": 9760,
+          "low_tail_share": 0.16265853373997965,
+          "overall_count": 78492,
+          "overall_share": 0.14031813452606964,
+          "enrichment_ratio": 1.1592124873193734
+        },
+        "6": {
+          "low_tail_count": 942,
+          "low_tail_share": 0.015699215039248038,
+          "overall_count": 7134,
+          "overall_share": 0.012753268762536067,
+          "enrichment_ratio": 1.230995388834427
+        },
+        "8": {
+          "low_tail_count": 264,
+          "low_tail_share": 0.00439978001099945,
+          "overall_count": 1688,
+          "overall_share": 0.0030175942908832183,
+          "enrichment_ratio": 1.4580422637635893
+        }
+      },
+      "max_enrichment_ratio": 1.779240848683118,
+      "max_enrichment_key": "3",
+      "min_enrichment_ratio": 0.9017232286078563,
+      "min_enrichment_key": "1"
+    }
+  },
+  "top_enrichments": [
+    {
+      "key": "sha::min@25",
+      "enrichment": 0.22149753486214185
+    },
+    {
+      "key": "class_size::max@3",
+      "enrichment": 1.779240848683118
+    },
+    {
+      "key": "cm_is_CM",
+      "enrichment": 1.7305488019012223
+    },
+    {
+      "key": "num_bad_primes::min@6",
+      "enrichment": 0.5959247218361974
+    },
+    {
+      "key": "num_bad_primes::max@2",
+      "enrichment": 1.5180971316020977
+    },
+    {
+      "key": "nonmax_primes_len::max@2",
+      "enrichment": 1.2294239410844503
+    },
+    {
+      "key": "torsion::max@3",
+      "enrichment": 1.225631648021042
+    },
+    {
+      "key": "sha::max@1",
+      "enrichment": 1.153907753028325
+    }
+  ],
+  "verdict": {
+    "label": "SUB_FAMILY_FOUND",
+    "any_sub_family_hits": [
+      {
+        "key": "sha::min@25",
+        "enrichment": 0.22149753486214185
+      }
+    ],
+    "all_axes_within_neutral_band_0_8_to_1_25": false,
+    "notes": "Enrichment = low_tail_share(value) / overall_share(value). Values > 2 or < 0.5 flag sub-family structure; [0.8,1.25] flags generic finite-N tail. Binary axes (cm_is_CM, semistable, nonmax_primes_nonempty) have a single enrichment number; count/distribution axes report max and min across values with enough support (>=20 low-tail hits and overall share >= 0.5%%)."
+  }
+}
