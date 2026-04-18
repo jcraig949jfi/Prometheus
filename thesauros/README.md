@@ -64,3 +64,4 @@ This directory is the master catalog of all data assets in Project Prometheus: w
 | [loose_files.md](loose_files.md) | Cartography data files not yet in any database |
 | [data_audit_20260415.md](data_audit_20260415.md) | Raw inventory from first Mnemosyne session |
 | [dataset_scan_20260418.md](dataset_scan_20260418.md) | External dataset scan — gaps and candidate ingestions ranked by leverage |
+| [missing_data.md](missing_data.md) | **Missing-data registry** — datasets verified absent on M2, check M1 first |
