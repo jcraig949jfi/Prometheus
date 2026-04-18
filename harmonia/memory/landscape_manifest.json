@@ -4,7 +4,7 @@
   "charter_ref": "docs/landscape_charter.md",
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
-    26,
+    27,
     25
   ],
   "tensor_encoding": {
@@ -51,6 +51,13 @@
       "description": "Among sha\u22659: (-1)^rank = root_number perfect."
     },
     {
+      "id": "F008",
+      "label": "Scholz reflection |r3(K*) - r3(K)| \u2264 1 for quadratic fields",
+      "tier": "calibration",
+      "n_objects": 344130,
+      "description": "Zero violations of Scholz 1932 reflection across 344,130 imaginary-real quadratic pairs (Ergon scholz_reflection.py in 2572d7dd; sessionD independent verification in 12e93a0f). 71.5% equality (r3 matches), 28.5% differ by 1 \u2014 never >1. Explains the p=3 BST convergence anomaly (alpha_3 \u2248 0.16 vs alpha_{p>=5} \u2248 0.23-0.28) observed in Cohen-Lenstra Reports 18b/c. Theorem lineage: Scholz reflection (1932) + Davenport-Heilbronn (1971). Load-bearing calibration anchor for NF class-group work. Any tool that predicts |r3(K*) - r3(K)| > 1 has a bug."
+    },
+    {
       "id": "F009",
       "label": "Torsion primes \u2286 nonmax primes (Serre open-image lineage)",
       "tier": "calibration",
@@ -66,10 +73,10 @@
     },
     {
       "id": "F011",
-      "label": "GUE first-gap deficit \u2014 Duenez-HKMS excised ensemble (calibration)",
-      "tier": "calibration_confirmed",
+      "label": "GUE first-gap deficit \u2014 EXCISED (calibration) + RANK-0 RESIDUAL (frontier)",
+      "tier": "live_specimen",
       "n_objects": 2009089,
-      "description": "DOWNGRADED to calibration 2026-04-18 (sessionB post-loop, Aporia Report 1). The ~38% unfolded first-gap deficit is the Duenez-Huynh-Keating-Miller-Snaith (2011) excised ensemble at EC L-functions \u2014 a known finite-conductor central-zero-forcing effect, not a novel anomaly. Two decisive tests confirmed: (1) deficit shrinks monotonically with conductor (slope -7.17 per log-decade, z=-54.2, 45.37% at bin 0 -> 35.34% at bin 9) \u2014 excised-consistent; (2) gap1 deficit 38.17% vs gap2 29.07% (z=96.97) \u2014 first gap much heavier as central-zero-forcing predicts. Prior history retained for audit: Raw P050 ~59% z=-595, Unfolded P051 ~38% z=-383 at n=2,009,089. P028 Katz-Sarnak resolved at z=7.63 spread, block-shuffle verified at z_block=111.78. All durable but CALIBRATION-level \u2014 the instrument correctly detected a known RMT effect. Pattern 5 (known bridge) gate closed retrospectively. Residual frontier: rank-3 deficit (37.2%) > rank-2 (32.0%) inversion is not predicted by naive central-zero count \u2014 candidate higher-order effect; and magnitude comparison vs Duenez-HKMS closed-form prediction unrun."
+      "description": "REOPENED to live_specimen 2026-04-18. Pooled ~38% deficit decomposes into two layers. LAYER 1 (calibration): bulk deficit IS Duenez-HKMS (2011) excised ensemble. sessionB Aporia Report 1: deficit shrinks monotonically with conductor (slope -7.17/log-decade z=-54.2; 45.37% -> 35.34%); gap1 38.17% vs gap2 29.07% (z=96.97). The instrument correctly detected known central-zero-forcing. LAYER 2 (frontier): RANK-0 ~31% RESIDUAL IS GENUINE. sessionB fitted three decay ansatze: power-law eps_0=31.08\u00b16.19 (chi\u00b2=19.6); 1/log(N) eps_0=22.90\u00b10.78 (z=29sigma from 0); 1/log(N)\u00b2 eps_0=35.83\u00b10.36. Robust 23-36% across ansatze. Self-audit P104 block-shuffle within class_size (100 perms): null mean -9.42\u00b13.87, observed 31.08, z_block=10.46 \u2014 DURABLE under own instrument (Pattern 24). Ergon DHKMS closed-form test (2572d7dd): ruled out as finite-N correction \u2014 DHKMS predicts the WRONG DIRECTION; 25% mean unfolding bias would be needed, implausible. Ergon zero-projections (37158e4f): deficit varies with arithmetic complexity (isogeny class 1->8 var/Gaudin 1.37->0.97; sha 1->36 1.30->1.00) \u2014 NOT uniform, rules out generic unfolding error. P028 Katz-Sarnak z=7.63 spread (block z=111.78) is downstream of LAYER 1 central-zero-forcing, still durable. T4 sub-family (cbe7b623): rank-0 low-tail Pr[L/M_1<0.25] enriched for CM (1.73x, cm=-27: 6.66x), class_size=3 (1.78x); sha>1 depleted \u2014 residual concentrated in arithmetically structured sub-populations. Frontier probes queued: DHKMS closed-form magnitude match; independent-unfolding via non-LMFDB zeros; cross-family vs Dirichlet L-functions; Miller 2009 NLO prediction (P106 draft)."
     },
     {
       "id": "F012",
@@ -93,11 +100,11 @@
       "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). Original '4.4% gap between bound and next Mahler measure (1.228 at deg 12)' FALSIFIED by sessionB wsw_F014 (81K polynomials, Pattern-4-biased ORDER BY disc_abs ASC per degree). Observed gap = 3.41%; 3 polynomials strictly in (1.17628, 1.228), minimum a Salem polynomial at 1.216392 (deg 10, num_ram=1, disc_abs=1.49e9). The region above Lehmer's polynomial is a Salem-number density, not a clean gap. Strong per-num_ram monotone: bound touched only at num_ram=1,2; minimum jumps to 1.267 at num_ram=3, 1.800 at num_ram=5. Bad-prime count shows real shape (echoes F011 P021 monotone, sessionC). Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap claims without degree-AND-num_ram stratification are suspect \u2014 Salem polynomials cluster in the sub-1.228 region at specific degree \u00d7 low-num_ram combinations."
     },
     {
-      "id": "F041",
-      "label": "Keating-Snaith moment convergence rate is rank-dependent",
+      "id": "F041a",
+      "label": "Rank-2+ moment slope monotone in num_bad_primes (supersedes F041)",
       "tier": "live_specimen",
-      "n_objects": 2009089,
-      "description": "Candidate new live specimen (sessionC Aporia Report 4, 2026-04-18). Moment ratios R_k(X) = M_k(X) / (log X)^{k(k-1)/2} computed on 2M EC leading_term values, stratified by (analytic_rank, conductor-decade 10^3..10^6). Pattern 20 discipline: no pooled statistic; 13 cells at n>=100 per stratum reported. Slope of R_k vs log X across decades (the convergence rate, = Aporia's proposed phoneme): rank=0 k=1: +0.164 \u00b1 0.020; rank=1 k=1: +0.922 \u00b1 0.040 (5.6x larger); rank=2 k=1: +1.929 \u00b1 0.025 (12x larger). Rate is strongly rank-dependent at k=1. Higher-k columns (k=3, k=4) show approx-zero slopes for rank 0 \u2014 RMT prediction already satisfied at small conductor. Interpretation: convergence rate IS a phoneme (different rank cohorts approach RMT asymptotics at different speeds), consistent with SO_even vs SO_odd excised-ensemble story. Not yet block-shuffle verified. Proposed followups: arithmetic-factor decontamination, wsw_F041_moment_convergence, arithmetic-factor stratified by P021."
+      "n_objects": 222288,
+      "description": "PROMOTED 2026-04-18 after 5 independent kill-test survivals. Original F041 (session's Keating-Snaith rank-dependent convergence) demoted to first-moment drift; the REAL signal is the rank-2+ interaction. At rank=2 (n=222,288): slope of M_1(log X) is strictly monotone in num_bad_primes: nbp=1:1.21, nbp=2:1.52, nbp=3:1.70, nbp=4:1.86, nbp=5:1.95, nbp=6:2.52. At rank 0 and 1: slope flat in nbp. The interaction is rank-specific. Kill tests survived: (W2 2a3f6c37) cross-nbp block-shuffle-within-(rank,decade): amp 27.6x, corr(nbp,slope)=0.97, null slopes collapse to ~1.9 with spread 0.046 vs observed 1.32 (27.6x). (U_A 4a046a81) conductor-control joint OLS: b_nbp z=3.37 (>=3 threshold); narrow 0.1-decade sub-bins give corr 0.965 slopes 2.02-4.19. Within-decade conductor drift is real but does NOT explain the ladder. (W3 e3f67b94) P039 Galois-image alternative: P021 range 1.316 vs best P039 marginal 0.305 \u2014 nbp is NOT a Galois-image proxy. (T3 68225787) P026 semistable-vs-additive split: ladder lives in SEMISTABLE half (slope_range_semi=0.570 vs slope_range_add=0.279; ratio 0.489 well under 0.8). Counterintuitive \u2014 points toward conductor-only / multiplicative-ramification effect, not Kodaira. (T5 d9c646d9) Specific-prime joint: no single Mazur-Kenku prime dominates (max |slope_diff|=0.56 for has_2, below 1.0 ladder threshold). Effect is carried by COUNT of bad primes plus modest {2,3} lift. Pattern 5 gate (CFKRS rank-2 SO(even) closed-form) is the remaining open hurdle; if CFKRS predicts monotone-in-nbp at rank 2: demote to calibration. If not: fully frontier."
     },
     {
       "id": "F015",
@@ -424,9 +431,16 @@
       "P052": -1,
       "P001": -1
     },
-    "F041": {
+    "F041a": {
       "P023": 2,
-      "P020": 1
+      "P020": 1,
+      "P021": 2,
+      "P026": 1,
+      "P039": -1,
+      "P104": 2
+    },
+    "F008": {
+      "P024": 2
     },
     "F020": {
       "P001": -2,
@@ -488,12 +502,14 @@
     "F003",
     "F004",
     "F005",
+    "F008",
     "F009"
   ],
   "live_specimens": [
+    "F011",
     "F013",
     "F014",
-    "F041",
+    "F041a",
     "F015"
   ]
 }

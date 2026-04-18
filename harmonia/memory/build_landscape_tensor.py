@@ -60,6 +60,9 @@ FEATURES = [
     {"id": "F005", "label": "High-Sha parity (H43)",
      "tier": "calibration", "n_objects": 67035,
      "description": "Among sha≥9: (-1)^rank = root_number perfect."},
+    {"id": "F008", "label": "Scholz reflection |r3(K*) - r3(K)| ≤ 1 for quadratic fields",
+     "tier": "calibration", "n_objects": 344130,
+     "description": "Zero violations of Scholz 1932 reflection across 344,130 imaginary-real quadratic pairs (Ergon scholz_reflection.py in 2572d7dd; sessionD independent verification in 12e93a0f). 71.5% equality (r3 matches), 28.5% differ by 1 — never >1. Explains the p=3 BST convergence anomaly (alpha_3 ≈ 0.16 vs alpha_{p>=5} ≈ 0.23-0.28) observed in Cohen-Lenstra Reports 18b/c. Theorem lineage: Scholz reflection (1932) + Davenport-Heilbronn (1971). Load-bearing calibration anchor for NF class-group work. Any tool that predicts |r3(K*) - r3(K)| > 1 has a bug."},
     {"id": "F009", "label": "Torsion primes ⊆ nonmax primes (Serre open-image lineage)",
      "tier": "calibration", "n_objects": 1385133,
      "description": "For every non-CM EC over Q: primes(rational torsion) ⊆ nonmax_primes (mod-ℓ image is non-maximal at every torsion prime). 100.000% across 1,385,133 non-CM EC rows with torsion>1; zero violations (sessionD audit_nonmax_vs_torsion, 2026-04-17). All 15 Mazur torsion cells pass at 100%. Theorem lineage: Serre open-image + Mazur torsion classification. Load-bearing calibration anchor; joins F001-F005."},
@@ -68,23 +71,25 @@ FEATURES = [
     {"id": "F010", "label": "NF backbone via Galois-label — KILLED, joins F022 under block-shuffle null",
      "tier": "killed", "n_objects": 75,
      "description": "KILLED under block-shuffle-within-degree null (sessionC wsw_F010_alternative_null 2026-04-17). The 0.27 decontaminated ρ was degree-mediated between-strata leakage — block null z=-0.86 (observed ρ=0.173 BELOW null mean 0.205 at n=51). Progression: pooled ρ=0.40 (n=71) → bigsample pooled 0.109 (n=75) → decon ρ=0.27 via P052 (z=2.38 weak-null) → block-null z=-0.86 (dead). The plain label-permute null over-rejected because it didn't preserve per-degree structure; block-shuffle preserves per-degree marginal AND destroys within-degree structure, revealing no within-degree coupling. F010 joins F022 as same-data-no-durable-signal. Triple-layer artifact: Pattern 20 (pooled) + Pattern 19 (stale original) + F022 twin (NF-Artin coupling is degree-marginal only)."},
-    {"id": "F011", "label": "GUE first-gap deficit — Duenez-HKMS excised ensemble (calibration)",
-     "tier": "calibration_confirmed", "n_objects": 2009089,
-     "description": "DOWNGRADED to calibration 2026-04-18 (sessionB post-loop, Aporia Report 1). The "
-                    "~38% unfolded first-gap deficit is the Duenez-Huynh-Keating-Miller-Snaith (2011) "
-                    "excised ensemble at EC L-functions — a known finite-conductor central-zero-forcing "
-                    "effect, not a novel anomaly. Two decisive tests confirmed: "
-                    "(1) deficit shrinks monotonically with conductor (slope -7.17 per log-decade, z=-54.2, "
-                    "45.37% at bin 0 -> 35.34% at bin 9) — excised-consistent; "
-                    "(2) gap1 deficit 38.17% vs gap2 29.07% (z=96.97) — first gap much heavier as "
-                    "central-zero-forcing predicts. "
-                    "Prior history retained for audit: Raw P050 ~59% z=-595, Unfolded P051 ~38% z=-383 at "
-                    "n=2,009,089. P028 Katz-Sarnak resolved at z=7.63 spread, block-shuffle verified at "
-                    "z_block=111.78. All durable but CALIBRATION-level — the instrument correctly detected "
-                    "a known RMT effect. Pattern 5 (known bridge) gate closed retrospectively. "
-                    "Residual frontier: rank-3 deficit (37.2%) > rank-2 (32.0%) inversion is not predicted "
-                    "by naive central-zero count — candidate higher-order effect; and magnitude comparison "
-                    "vs Duenez-HKMS closed-form prediction unrun."},
+    {"id": "F011", "label": "GUE first-gap deficit — EXCISED (calibration) + RANK-0 RESIDUAL (frontier)",
+     "tier": "live_specimen", "n_objects": 2009089,
+     "description": "REOPENED to live_specimen 2026-04-18. Pooled ~38% deficit decomposes into two layers. "
+                    "LAYER 1 (calibration): bulk deficit IS Duenez-HKMS (2011) excised ensemble. sessionB Aporia Report 1: "
+                    "deficit shrinks monotonically with conductor (slope -7.17/log-decade z=-54.2; 45.37% -> 35.34%); "
+                    "gap1 38.17% vs gap2 29.07% (z=96.97). The instrument correctly detected known central-zero-forcing. "
+                    "LAYER 2 (frontier): RANK-0 ~31% RESIDUAL IS GENUINE. sessionB fitted three decay ansatze: power-law "
+                    "eps_0=31.08±6.19 (chi²=19.6); 1/log(N) eps_0=22.90±0.78 (z=29sigma from 0); 1/log(N)² eps_0=35.83±0.36. "
+                    "Robust 23-36% across ansatze. Self-audit P104 block-shuffle within class_size (100 perms): "
+                    "null mean -9.42±3.87, observed 31.08, z_block=10.46 — DURABLE under own instrument (Pattern 24). "
+                    "Ergon DHKMS closed-form test (2572d7dd): ruled out as finite-N correction — DHKMS predicts the WRONG "
+                    "DIRECTION; 25% mean unfolding bias would be needed, implausible. Ergon zero-projections (37158e4f): "
+                    "deficit varies with arithmetic complexity (isogeny class 1->8 var/Gaudin 1.37->0.97; sha 1->36 1.30->1.00) "
+                    "— NOT uniform, rules out generic unfolding error. P028 Katz-Sarnak z=7.63 spread (block z=111.78) is "
+                    "downstream of LAYER 1 central-zero-forcing, still durable. T4 sub-family (cbe7b623): rank-0 low-tail "
+                    "Pr[L/M_1<0.25] enriched for CM (1.73x, cm=-27: 6.66x), class_size=3 (1.78x); sha>1 depleted — residual "
+                    "concentrated in arithmetically structured sub-populations. Frontier probes queued: DHKMS closed-form "
+                    "magnitude match; independent-unfolding via non-LMFDB zeros; cross-family vs Dirichlet L-functions; "
+                    "Miller 2009 NLO prediction (P106 draft)."},
     {"id": "F012", "label": "Möbius bias at g2c aut groups (H85) — KILLED",
      "tier": "killed", "n_objects": 66158,
      "description": "KILLED across Möbius AND Liouville definitions (sessionB wsw_F012 + liouville_side_check_F012, 2026-04-17). Clean measurement on full n=66158 g2c: max|z| over adequate strata = 0.39 (μ) / 0.52 (λ), permutation p = 0.68 (μ) / 0.60 (λ). The prior |z|=6.15 DID NOT REPRODUCE under either Möbius or Liouville. Definitional drift hypothesis excluded. Canonical Pattern 19 case: stale or never-reproducible tensor entry. Likely causes: different subset, different scorer, or original measurement was noise. 63% non-squarefree g2c discriminants reduce effective S/N but don't account for the 16x discrepancy."},
@@ -105,13 +110,17 @@ FEATURES = [
                     "Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap "
                     "claims without degree-AND-num_ram stratification are suspect — Salem polynomials cluster "
                     "in the sub-1.228 region at specific degree × low-num_ram combinations."},
-    {"id": "F041", "label": "Keating-Snaith moment convergence rate is rank-dependent",
-     "tier": "live_specimen", "n_objects": 2009089,
-     "description": "Candidate new live specimen (sessionC Aporia Report 4, 2026-04-18). Moment ratios R_k(X) = M_k(X) / (log X)^{k(k-1)/2} computed on 2M EC leading_term values, stratified by (analytic_rank, conductor-decade 10^3..10^6). Pattern 20 discipline: no pooled statistic; 13 cells at n>=100 per stratum reported. "
-                    "Slope of R_k vs log X across decades (the convergence rate, = Aporia's proposed phoneme): "
-                    "rank=0 k=1: +0.164 ± 0.020; rank=1 k=1: +0.922 ± 0.040 (5.6x larger); rank=2 k=1: +1.929 ± 0.025 (12x larger). "
-                    "Rate is strongly rank-dependent at k=1. Higher-k columns (k=3, k=4) show approx-zero slopes for rank 0 — RMT prediction already satisfied at small conductor. "
-                    "Interpretation: convergence rate IS a phoneme (different rank cohorts approach RMT asymptotics at different speeds), consistent with SO_even vs SO_odd excised-ensemble story. Not yet block-shuffle verified. Proposed followups: arithmetic-factor decontamination, wsw_F041_moment_convergence, arithmetic-factor stratified by P021."},
+    {"id": "F041a", "label": "Rank-2+ moment slope monotone in num_bad_primes (supersedes F041)",
+     "tier": "live_specimen", "n_objects": 222288,
+     "description": "PROMOTED 2026-04-18 after 5 independent kill-test survivals. Original F041 (session's Keating-Snaith rank-dependent convergence) demoted to first-moment drift; the REAL signal is the rank-2+ interaction. "
+                    "At rank=2 (n=222,288): slope of M_1(log X) is strictly monotone in num_bad_primes: nbp=1:1.21, nbp=2:1.52, nbp=3:1.70, nbp=4:1.86, nbp=5:1.95, nbp=6:2.52. At rank 0 and 1: slope flat in nbp. The interaction is rank-specific. "
+                    "Kill tests survived: "
+                    "(W2 2a3f6c37) cross-nbp block-shuffle-within-(rank,decade): amp 27.6x, corr(nbp,slope)=0.97, null slopes collapse to ~1.9 with spread 0.046 vs observed 1.32 (27.6x). "
+                    "(U_A 4a046a81) conductor-control joint OLS: b_nbp z=3.37 (>=3 threshold); narrow 0.1-decade sub-bins give corr 0.965 slopes 2.02-4.19. Within-decade conductor drift is real but does NOT explain the ladder. "
+                    "(W3 e3f67b94) P039 Galois-image alternative: P021 range 1.316 vs best P039 marginal 0.305 — nbp is NOT a Galois-image proxy. "
+                    "(T3 68225787) P026 semistable-vs-additive split: ladder lives in SEMISTABLE half (slope_range_semi=0.570 vs slope_range_add=0.279; ratio 0.489 well under 0.8). Counterintuitive — points toward conductor-only / multiplicative-ramification effect, not Kodaira. "
+                    "(T5 d9c646d9) Specific-prime joint: no single Mazur-Kenku prime dominates (max |slope_diff|=0.56 for has_2, below 1.0 ladder threshold). Effect is carried by COUNT of bad primes plus modest {2,3} lift. "
+                    "Pattern 5 gate (CFKRS rank-2 SO(even) closed-form) is the remaining open hurdle; if CFKRS predicts monotone-in-nbp at rank 2: demote to calibration. If not: fully frontier."},
     {"id": "F015", "label": "Szpiro vs conductor — sign-uniform, magnitude non-monotone in k — BLOCK-SHUFFLE VERIFIED",
      "tier": "live_specimen", "n_objects": 30000,
      "description": "Szpiro-vs-conductor slope is sign-uniformly-negative within every bad-prime stratum (P042 z=-6.9..-22.7). **Block-shuffle-within-k null (sessionC audit_F014_F015_block_shuffle, 2026-04-17) VERIFIED the sign-uniform-negative claim at ALL k:** k=1 z=-24.03, k=2 z=-19.70, k=3 z=-12.69, k=4 z=-7.48, k=5 z=-4.06, k=6 z=-3.48. Every stratum z<=-3 under the rigorous null. Magnitude is NOT monotone in k (k=4 breaks the smooth trend; this remains a Pattern-20 anchor on the magnitude side). 88% of pooled -0.597 slope is k-mediated confound; 12% residual survives decontamination (P052 kill). Within-conductor bins show opposite-sign trend (szpiro increases with k). Pattern 19 variant: Ergon monotone claim partially reproduces (sign, yes; magnitude, no). F015 is the first specimen verified under the F010-methodology block-shuffle protocol — **sign claim is durable**."},
@@ -309,7 +318,8 @@ INVARIANCE = {
     "F013": {"P023": +1, "P041": +1, "P028": +2, "P051": +1},   # spacing rigidity; P028 resolves at z=13.68 (SO_even vs SO_odd opposite sign, sessionB 2026-04-17). P051 unfolding also matters (sessionD prior).
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
     "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7; BLOCK-SHUFFLE VERIFIED at every k (sessionC 2026-04-17 z from -3.48 to -24.03). First specimen to pass block-shuffle protocol — durable sign.
-    "F041": {"P023": +2, "P020": +1},                                                                          # Keating-Snaith moment convergence rate rank-dependent (sessionC Aporia Report 4, 2026-04-18). R_k slope on log-conductor differs 12x between rank 0 and rank 2 at k=1. Not yet block-shuffle verified.
+    "F041a": {"P023": +2, "P020": +1, "P021": +2, "P026": +1, "P039": -1, "P104": +2},                          # PROMOTED 2026-04-18. Rank-2+ monotone-in-nbp slope ladder survives: block-null W2 (amp 27.6x corr 0.97), conductor-control U_A (z=3.37), P026 semistable split T3, specific-prime joint T5. P039 Galois-image ruled out (W3). CFKRS Pattern 5 gate pending.
+    "F008": {"P024": +2},                                                                                      # Scholz reflection calibration: 100% pass across 344K quadratic pairs (Ergon + sessionD 2026-04-18).
 
     # Killed — structurally informative
     "F020": {"P001": -2, "P003": -2, "P040": -2},              # Megethos: not landscape
