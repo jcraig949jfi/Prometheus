@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Prometheus Landscape Tensor</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Consolas','Monaco',monospace; background:#0d1117; color:#c9d1d9; }
+#header { background:#161b22; padding:10px 20px; border-bottom:1px solid #30363d; display:flex; justify-content:space-between; align-items:center; }
+#header h1 { font-size:16px; color:#58a6ff; }
+#header .stats { font-size:12px; color:#8b949e; }
+#header .stats span { color:#c9d1d9; margin-left:4px; }
+.container { display:flex; flex-direction:column; padding:12px; gap:12px; }
+#heatmap-wrap { overflow:auto; background:#0d1117; border:1px solid #30363d; border-radius:6px; }
+table#tensor { border-collapse:collapse; }
+table#tensor th { font-size:10px; padding:2px 4px; color:#8b949e; position:sticky; background:#161b22; z-index:2; cursor:pointer; }
+table#tensor th.col-header { top:0; writing-mode:vertical-rl; text-orientation:mixed; min-height:80px; max-width:24px; border-bottom:1px solid #30363d; }
+table#tensor th.row-header { left:0; text-align:right; white-space:nowrap; max-width:120px; overflow:hidden; text-overflow:ellipsis; border-right:1px solid #30363d; }
+table#tensor th.corner { top:0; left:0; z-index:3; }
+table#tensor td { width:22px; height:22px; min-width:22px; border:1px solid #21262d; cursor:pointer; text-align:center; font-size:9px; transition: opacity 0.15s; }
+table#tensor td.v-2 { background:#da3633; color:#fff; }
+table#tensor td.v-1 { background:#d29922; color:#000; }
+table#tensor td.v0  { background:#21262d; color:#484f58; }
+table#tensor td.v1  { background:#238636; color:#fff; }
+table#tensor td.v2  { background:#2ea043; color:#fff; font-weight:bold; }
+table#tensor td.v0.hot  { background:#1a2332; }
+table#tensor tr.dimmed td:not(.highlight) { opacity:0.25; }
+table#tensor td.highlight { outline:2px solid #f0f6fc; z-index:1; position:relative; }
+#tooltip { position:fixed; background:#1c2128; border:1px solid #30363d; border-radius:6px; padding:10px 14px; font-size:12px; max-width:420px; pointer-events:none; display:none; z-index:100; box-shadow:0 4px 12px rgba(0,0,0,0.5); }
+#tooltip .tt-id { color:#58a6ff; font-weight:bold; }
+#tooltip .tt-label { color:#c9d1d9; }
+#tooltip .tt-verdict { font-weight:bold; margin:4px 0; }
+#tooltip .tt-desc { color:#8b949e; font-size:11px; max-height:120px; overflow:auto; }
+.graphs { display:flex; gap:12px; }
+.graph-panel { flex:1; background:#161b22; border:1px solid #30363d; border-radius:6px; padding:8px; min-height:250px; }
+.graph-panel h3 { font-size:12px; color:#58a6ff; margin-bottom:6px; }
+svg.graph { width:100%; height:240px; }
+svg.graph line { stroke:#30363d; stroke-width:1; }
+svg.graph circle { cursor:pointer; }
+svg.graph text { font-size:9px; fill:#8b949e; }
+#gap-banner { background:#1a1a2e; border:1px solid #d29922; border-radius:6px; padding:8px 14px; font-size:12px; color:#d29922; }
+#gap-banner strong { color:#f0883e; }
+#update-indicator { width:8px; height:8px; border-radius:50%; background:#238636; display:inline-block; margin-right:6px; }
+#update-indicator.stale { background:#d29922; }
+</style>
+</head>
+<body>
+<div id="header">
+  <h1><span id="update-indicator"></span>Prometheus Landscape Tensor</h1>
+  <div class="stats">
+    <span id="s-dims"></span> |
+    density <span id="s-density"></span>% |
+    v<span id="s-version"></span> |
+    <span id="s-updated"></span> |
+    <span id="s-commit"></span>
+  </div>
+</div>
+<div class="container">
+  <div id="gap-banner">
+    <strong>GAP:</strong> Tensor has <span id="gap-tensor-p">25</span> projections; coordinate_system_catalog has 42.
+    Missing from tensor: <strong>P028 Katz-Sarnak</strong>, P031-P033, P035-P039, P101, P103, P104.
+    <em>Gap-filler's lane.</em>
+  </div>
+  <div id="heatmap-wrap"><table id="tensor"></table></div>
+  <div class="graphs">
+    <div class="graph-panel"><h3>Feature Edges</h3><svg id="feat-graph" class="graph"></svg></div>
+    <div class="graph-panel"><h3>Projection Edges</h3><svg id="proj-graph" class="graph"></svg></div>
+  </div>
+</div>
+<div id="tooltip"></div>
+<script>
+const VERDICT_LABEL = {'-2':'HARD COLLAPSE','-1':'COLLAPSE','0':'UNTESTED','1':'RESOLVES','2':'STRONG RESOLVE'};
+const VERDICT_COLOR = {'-2':'#da3633','-1':'#d29922','0':'#484f58','1':'#238636','2':'#2ea043'};
+let STATE = null;
+let selectedRow = null, selectedCol = null;
+let lastVersion = null;
+
+async function fetchState() {
+  const r = await fetch('/api/state');
+  STATE = await r.json();
+  return STATE;
+}
+async function fetchUpdates() {
+  const r = await fetch('/api/updates');
+  return await r.json();
+}
+
+function renderHeader(d) {
+  const dims = d.dims;
+  document.getElementById('s-dims').textContent = `${dims.n_features}F x ${dims.n_projections}P`;
+  document.getElementById('s-density').textContent = parseFloat(dims.density_pct).toFixed(1);
+  document.getElementById('s-version').textContent = dims.version;
+  document.getElementById('s-updated').textContent = (dims.updated_at||'').slice(0,19);
+  document.getElementById('s-commit').textContent = dims.source_commit||'';
+  document.getElementById('gap-tensor-p').textContent = dims.n_projections;
+}
+
+function neighborDensity(fi, pi, matrix, fs, ps) {
+  // Count +1/+2 cells in same row and column
+  let pos = 0, total = 0;
+  for (let j = 0; j < ps.length; j++) { if (matrix[fi][j] > 0) pos++; if (matrix[fi][j] !== 0) total++; }
+  for (let i = 0; i < fs.length; i++) { if (matrix[i][pi] > 0) pos++; if (matrix[i][pi] !== 0) total++; }
+  return total > 0 ? pos / (fs.length + ps.length) : 0;
+}
+
+function renderHeatmap(d) {
+  const {features:fs, projections:ps, matrix, feature_meta:fm, projection_meta:pm} = d;
+  const table = document.getElementById('tensor');
+  table.innerHTML = '';
+
+  // Header row
+  let headerRow = '<tr><th class="corner"></th>';
+  ps.forEach((p,j) => {
+    const m = pm[p] || {};
+    headerRow += `<th class="col-header" data-col="${j}" title="${p}: ${m.label||''}">${p}</th>`;
+  });
+  headerRow += '</tr>';
+  table.innerHTML = headerRow;
+
+  // Data rows
+  fs.forEach((f,i) => {
+    const m = fm[f] || {};
+    const tier = m.tier || '';
+    let tr = document.createElement('tr');
+    tr.dataset.row = i;
+    let th = `<th class="row-header" data-row="${i}" title="${f}: ${m.label||''}">${f}</th>`;
+    let cells = '';
+    ps.forEach((p,j) => {
+      const v = matrix[i][j];
+      let cls = `v${v}`;
+      if (v === 0) {
+        const nd = neighborDensity(i, j, matrix, fs, ps);
+        if (nd > 0.15) cls += ' hot';
+      }
+      cells += `<td class="${cls}" data-row="${i}" data-col="${j}" data-f="${f}" data-p="${p}" data-v="${v}">${v!==0?v:''}</td>`;
+    });
+    tr.innerHTML = th + cells;
+    table.appendChild(tr);
+  });
+
+  // Event listeners
+  table.querySelectorAll('td').forEach(td => {
+    td.addEventListener('mouseenter', showTooltip);
+    td.addEventListener('mouseleave', hideTooltip);
+  });
+  table.querySelectorAll('th.row-header').forEach(th => {
+    th.addEventListener('click', () => toggleRow(parseInt(th.dataset.row)));
+  });
+  table.querySelectorAll('th.col-header').forEach(th => {
+    th.addEventListener('click', () => toggleCol(parseInt(th.dataset.col)));
+  });
+  table.querySelectorAll('td').forEach(td => {
+    td.addEventListener('click', () => {
+      const r = parseInt(td.dataset.row), c = parseInt(td.dataset.col);
+      toggleRow(r); toggleCol(c);
+    });
+  });
+}
+
+function showTooltip(e) {
+  const td = e.target;
+  const f = td.dataset.f, p = td.dataset.p, v = parseInt(td.dataset.v);
+  const fm = STATE.feature_meta[f] || {};
+  const pm = STATE.projection_meta[p] || {};
+  const tt = document.getElementById('tooltip');
+  tt.innerHTML = `
+    <div class="tt-id">${f} x ${p}</div>
+    <div class="tt-verdict" style="color:${VERDICT_COLOR[v]}">${VERDICT_LABEL[v]} (${v})</div>
+    <div class="tt-label"><strong>Feature:</strong> ${fm.label||f} <em>[${fm.tier||''}]</em></div>
+    <div class="tt-label"><strong>Projection:</strong> ${pm.label||p} <em>[${pm.type||''}]</em></div>
+    <div class="tt-desc">${(fm.description||'').slice(0,200)}${(fm.description||'').length>200?'...':''}</div>
+  `;
+  tt.style.display = 'block';
+  const rect = td.getBoundingClientRect();
+  tt.style.left = Math.min(rect.right + 8, window.innerWidth - 440) + 'px';
+  tt.style.top = Math.min(rect.top, window.innerHeight - 200) + 'px';
+}
+function hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
+
+function toggleRow(ri) {
+  const table = document.getElementById('tensor');
+  if (selectedRow === ri) { selectedRow = null; clearHighlights(); return; }
+  selectedRow = ri;
+  clearHighlights();
+  const rows = table.querySelectorAll('tr');
+  rows.forEach(tr => {
+    const r = parseInt(tr.dataset.row);
+    if (!isNaN(r) && r !== ri) tr.classList.add('dimmed');
+  });
+  table.querySelectorAll(`td[data-row="${ri}"]`).forEach(td => {
+    if (parseInt(td.dataset.v) !== 0) td.classList.add('highlight');
+  });
+}
+function toggleCol(ci) {
+  const table = document.getElementById('tensor');
+  if (selectedCol === ci) { selectedCol = null; clearHighlights(); return; }
+  selectedCol = ci;
+  clearHighlights();
+  table.querySelectorAll(`td[data-col="${ci}"]`).forEach(td => {
+    if (parseInt(td.dataset.v) !== 0) td.classList.add('highlight');
+  });
+}
+function clearHighlights() {
+  document.querySelectorAll('.dimmed').forEach(el => el.classList.remove('dimmed'));
+  document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+}
+
+function renderGraph(svgId, edges, nodeIds, metaMap) {
+  const svg = d3.select(`#${svgId}`);
+  svg.selectAll('*').remove();
+  const w = svg.node().getBoundingClientRect().width || 400;
+  const h = 240;
+  if (!edges || edges.length === 0) {
+    svg.append('text').attr('x',w/2).attr('y',h/2).attr('text-anchor','middle').text('No edges');
+    return;
+  }
+
+  const nodeSet = new Set();
+  edges.forEach(e => { nodeSet.add(e.from); nodeSet.add(e.to); });
+  const nodes = [...nodeSet].map(id => ({id, label: (metaMap[id]||{}).label || id}));
+  const links = edges.map(e => ({source:e.from, target:e.to, relation:e.relation, note:e.note||''}));
+
+  const sim = d3.forceSimulation(nodes)
+    .force('link', d3.forceLink(links).id(d=>d.id).distance(60))
+    .force('charge', d3.forceManyBody().strength(-120))
+    .force('center', d3.forceCenter(w/2, h/2))
+    .force('collision', d3.forceCollide(20));
+
+  const g = svg.append('g');
+
+  const link = g.selectAll('line').data(links).join('line')
+    .attr('stroke','#30363d').attr('stroke-width',1.5)
+    .attr('marker-end','url(#arrow)');
+
+  svg.append('defs').append('marker').attr('id','arrow').attr('viewBox','0 -5 10 10')
+    .attr('refX',18).attr('refY',0).attr('markerWidth',6).attr('markerHeight',6).attr('orient','auto')
+    .append('path').attr('d','M0,-5L10,0L0,5').attr('fill','#484f58');
+
+  const RCOLOR = {supersedes:'#da3633',supports:'#238636',contradicts:'#f0883e',
+    refines:'#58a6ff',confound_of:'#d29922',orthogonal_to:'#8b949e',
+    same_object_different_projection:'#bc8cff',parallel_density_regime:'#79c0ff',
+    reveals_mechanism_of:'#56d364',contrasts:'#f0883e',subset_of:'#8b949e',
+    stratification_reveals_pooled_artifact:'#d2a8ff',precedes_in_pipeline:'#58a6ff',
+    preprocessing_for:'#58a6ff',weaker_than:'#8b949e',heuristic_proxy_for:'#8b949e',
+    independent_of:'#8b949e'};
+  link.attr('stroke', d => RCOLOR[d.relation]||'#30363d');
+
+  const node = g.selectAll('g.node').data(nodes).join('g').attr('class','node');
+  node.append('circle').attr('r',6).attr('fill',d => {
+    const m = metaMap[d.id]||{};
+    if (m.tier === 'calibration') return '#238636';
+    if (m.tier === 'killed' || m.tier === 'killed_tautology') return '#da3633';
+    if (m.tier === 'live_specimen') return '#58a6ff';
+    if (m.type === 'stratification') return '#bc8cff';
+    if (m.type === 'null_model') return '#d29922';
+    return '#8b949e';
+  });
+  node.append('text').attr('dx',9).attr('dy',3).text(d=>d.id).attr('font-size','9px').attr('fill','#c9d1d9');
+
+  node.append('title').text(d => `${d.id}: ${d.label}`);
+  link.append('title').text(d => `${d.source.id||d.source} -[${d.relation}]-> ${d.target.id||d.target}: ${d.note.slice(0,100)}`);
+
+  sim.on('tick', () => {
+    link.attr('x1',d=>d.source.x).attr('y1',d=>d.source.y).attr('x2',d=>d.target.x).attr('y2',d=>d.target.y);
+    node.attr('transform',d=>`translate(${d.x},${d.y})`);
+  });
+}
+
+async function init() {
+  const d = await fetchState();
+  lastVersion = d.dims.version;
+  renderHeader(d);
+  renderHeatmap(d);
+  renderGraph('feat-graph', d.feature_edges, d.features, d.feature_meta);
+  renderGraph('proj-graph', d.projection_edges, d.projections, d.projection_meta);
+
+  // Auto-refresh every 5s
+  setInterval(async () => {
+    try {
+      const u = await fetchUpdates();
+      const v = u.dims?.version;
+      if (v && v !== lastVersion) {
+        lastVersion = v;
+        const full = await fetchState();
+        STATE = full;
+        renderHeader(full);
+        renderHeatmap(full);
+        renderGraph('feat-graph', full.feature_edges, full.features, full.feature_meta);
+        renderGraph('proj-graph', full.projection_edges, full.projections, full.projection_meta);
+        document.getElementById('update-indicator').classList.remove('stale');
+      }
+    } catch(e) {
+      document.getElementById('update-indicator').classList.add('stale');
+    }
+  }, 5000);
+}
+
+init();
+</script>
+</body>
+</html>
