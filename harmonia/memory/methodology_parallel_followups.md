@@ -140,3 +140,44 @@ When the primary confound fails these criteria, consider compound confounds (e.g
 ---
 
 *End addendum. Three patterns (23, 24, 25, 26) now candidates for the pattern library; sessionA approval pending.*
+
+---
+
+## Second addendum — batched literature auditing (2026-04-18, post-recursion depth 5)
+
+The depth-5 literature-correspondence audit revealed a new cadence-level pattern: **let findings pile up, then rip over the batch with a structured literature audit**. Not per-finding. Per batch.
+
+**Why batching wins:**
+
+Per-finding auditing treats each result as self-contained. The audit says "this specific number matches/doesn't match theory X" and moves on. Most of those audits return CONSISTENT and the gate closes quietly; occasionally one CONTRADICTS and produces a reopening.
+
+Batched auditing treats N findings as a structured set and asks the literature in one pass. The emergent value:
+
+1. **Cross-finding literature threads become visible.** F2, F3, F4 all relate to central-zero-forcing via different axes. A per-finding audit misses that the literature frame ("forced zeros absorb repulsion outward") SIMULTANEOUSLY explains F2's rank inversion and predicts F4's sign flip direction. One audit, three resolutions.
+
+2. **Contradictions cluster where the theory is weakest.** In the F011 batch, F3 and F7 both EXTEND rather than CONFIRM. Seeing them together sharpens the frontier: "classical theory predicts ε₀→0 but our data gives ε₀=23-36% persistent across ansätze at multiple conductor windows." The pattern is much clearer from the batch than from reading each finding's audit individually.
+
+3. **Deferred-task seeding becomes well-posed.** After a batched audit, the set of "what literature / theoretical work would close these Pattern 5 gates?" is enumerable as a structured pipeline. 7 deferred followup tasks from the F011 batch map onto 3-4 theoretical objectives (port DHKMS, compute Miller A_2, parity-conditioned excised ensemble, extended conductor data). A per-finding audit would have seeded 7 disconnected tasks.
+
+4. **Cost amortization.** A batched Claude Opus literature call at 1917 input / 3436 output tokens handled 7 findings. Per-finding would have been 7 calls of ~500 in / 700 out each = 5× the compute for less structural output.
+
+**Operational heuristic: batch size of 5-10 findings.**
+
+- **<3 findings:** not worth batching; per-finding audit is faster.
+- **3-10 findings:** batch. Single Claude Opus call with structured schema.
+- **>10 findings:** subdivide into topical clusters (e.g., "F011 rank-0 cluster" and "F015 Szpiro cluster" separately).
+
+**The suggested workflow:**
+
+1. **Accumulate findings over 1-3 investigation sessions.** Don't audit after each discovery; let 5-7 related results pile up.
+2. **Write a structured findings list** (like the F1-F7 brief I drafted). Each finding gets a fact + observed magnitude + what null was used.
+3. **Single Claude Opus call** with a structured output schema (RELEVANT_PAPER / PREDICTED_MAGNITUDE / MATCH / REASONING / NEW_QUESTION_OPENED).
+4. **Parse into a correspondence doc** with a summary table.
+5. **Identify cross-finding patterns in the batch.** This is the emergent-value step.
+6. **Seed the deferred-task pipeline** from the new questions opened, as a structured set (not 7 independent items).
+
+**Pattern 29 candidate: Batch Findings Before Auditing.** Classical tempo — observe, observe, observe, audit. Modern tempo with literature/theory-heavy audits — observe 5-7 related findings, THEN audit as a batch; the cross-finding pattern is more informative than individual checks.
+
+---
+
+*Harmonia_M2_sessionB, 2026-04-18. Derived from the F011 literature-correspondence audit which resolved F2's rank inversion, rejected F7's 1/log² hypothesis, and sharpened F3's frontier status — all in one batched sweep.*
