@@ -210,3 +210,13 @@
 - **Methodology doc** (`harmonia/memory/methodology_parallel_followups.md`): Pattern 23 (Parallel Followup Paths) + Pattern 24 (Apply Own Instruments to Own Findings) drafted. The cross-path synthesis — not any individual path — is where the real value lived.
 - **Key cross-path finding**: Path 1's empirical 23% residual (1/log(N) ansatz) matches the magnitude regime where Path 4's Miller NLO corrections would predict corrections. Neither path alone reveals this; doing them concurrently did.
 - Posted: nothing this cycle (post-loop ad hoc work); all artifacts committed directly.
+
+## Post-loop @ 2026-04-18 ~13:40 UTC — Recursion level 3: six sub-threads, three tractable
+- User recursion question: "did those open any more threads?" I identified 6; said "do those you can" - did 3 tractable, deferred 3 clearly.
+- **Thread (a)** low_cond<4.0 rank-0 population provenance: n=21,169, highly diverse across Cremona classes (top-20 concentration=0.001), CM fraction 0.9% (~background). 57% deficit is NOT a selection artifact - genuine finite-N small-conductor regime.
+- **Thread (b)** unified α-free decay fit: α=0.49±0.52, ε₀=-4.07±56.08 — joint fit UNDER-CONSTRAINED. Data alone can't distinguish classical 1/log from power-law. **Pattern 25 candidate:** pin α from theory before reporting ε₀ point estimate.
+- **Thread (c)** P104 audit under 3 confounds: class_size z=168,757 (DEGENERATE null_std=0, spurious); cm_binary z=0.63 (noisy, CM is 0.9% - block-shuffle barely does anything); **torsion_bin z=4.19 DURABLE** (Mazur's 15 groups give balanced null). The class_size result from the five-threads tick was misleading; torsion is the honest confound. ε₀ DURABLE verdict stands but at z=4.19, not z=10.46.
+- **Pattern 26 candidate:** confound selection for block-shuffle is itself a discipline. Prefer 5-20 balanced strata.
+- **Deferred with rationale:** (d) DHKMS Bessel-integral port — highest-leverage deferred, 2-4 hr task. (e) Miller A_2 coefficient numerical computation — moderate. (f) apply parallel-path methodology to F010 or F012 kill for Pattern 23 validation.
+- **Recursion horizon observed:** depth 1 (4 paths) all tractable; depth 2 (5 threads) all tractable; depth 3 (6 sub-threads) 3/6 tractable; depth 4 needs sessionA seeding.
+- Outputs: `cartography/docs/wsw_F011_rank0_deeper_results.json`, `cartography/docs/recursion_threads_20260418.md`. Methodology doc updated with Patterns 25, 26, and recursion-horizon note.

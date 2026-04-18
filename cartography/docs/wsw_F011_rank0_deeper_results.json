@@ -1,0 +1,156 @@
+{
+  "task": "wsw_F011_rank0_deeper \u2014 recursion threads (a, b, c)",
+  "instance": "Harmonia_M2_sessionB",
+  "started": "2026-04-18T13:33:10.959968+00:00",
+  "finished": "2026-04-18T13:34:27.114599+00:00",
+  "n_rank0": 773232,
+  "thread_a_low_conductor_provenance": {
+    "n_low_cond": 21169,
+    "unique_isogeny_classes": 21169,
+    "diversity_ratio": 1.0,
+    "top_20_classes_concentration": 0.0009447777410364212,
+    "top_20_classes": [
+      {
+        "class": "3168.y1",
+        "n": 1
+      },
+      {
+        "class": "4664.d1",
+        "n": 1
+      },
+      {
+        "class": "4664.d2",
+        "n": 1
+      },
+      {
+        "class": "2352.n1",
+        "n": 1
+      },
+      {
+        "class": "2352.n2",
+        "n": 1
+      },
+      {
+        "class": "5622.b1",
+        "n": 1
+      },
+      {
+        "class": "5622.b2",
+        "n": 1
+      },
+      {
+        "class": "6550.l1",
+        "n": 1
+      },
+      {
+        "class": "6550.l2",
+        "n": 1
+      },
+      {
+        "class": "8621.b1",
+        "n": 1
+      },
+      {
+        "class": "8787.b1",
+        "n": 1
+      },
+      {
+        "class": "8787.b2",
+        "n": 1
+      },
+      {
+        "class": "1926.i1",
+        "n": 1
+      },
+      {
+        "class": "1678.a1",
+        "n": 1
+      },
+      {
+        "class": "6576.n1",
+        "n": 1
+      },
+      {
+        "class": "194.a2",
+        "n": 1
+      },
+      {
+        "class": "90.b4",
+        "n": 1
+      },
+      {
+        "class": "99.b4",
+        "n": 1
+      },
+      {
+        "class": "187.b1",
+        "n": 1
+      },
+      {
+        "class": "194.a1",
+        "n": 1
+      }
+    ],
+    "class_size_distribution": {
+      "2": 8366,
+      "4": 5560,
+      "1": 5205,
+      "6": 942,
+      "3": 576,
+      "8": 520
+    },
+    "cm_fraction": 0.008786432991638718,
+    "interpretation": "If diversity_ratio is low (<0.05) and top-20 concentration is high (>0.5), the low-conductor population is dominated by a few isogeny classes \u2014 likely a Cremona-table selection artifact. If diversity is high and CM fraction is elevated, the small-conductor regime genuinely samples more CM-adjacent behavior (distinct Sato-Tate vertical)."
+  },
+  "thread_b_unified_decay": {
+    "eps0": -4.072195213152298,
+    "C": 168.9592321642738,
+    "alpha": 0.48989721376286793,
+    "se_eps0": 56.07909387669697,
+    "se_alpha": 0.5194049817847134,
+    "chi2": 19.365842091060586,
+    "z_eps0_from_zero": -0.07261521061852343
+  },
+  "thread_c_P104_alternative_confounds": {
+    "class_size": {
+      "confound": "class_size",
+      "observed_eps0": 31.084895736810754,
+      "null_mean": -9.9997638582284,
+      "null_std": 0.00024345459493777815,
+      "null_p99": -9.99911065509498,
+      "z_block": 168756.9692637739,
+      "n_valid_perms": 73,
+      "verdict": "DURABLE"
+    },
+    "cm_binary": {
+      "confound": "cm_binary",
+      "observed_eps0": 31.084895736810754,
+      "null_mean": 15.401127298019754,
+      "null_std": 25.004165385301373,
+      "null_p99": 46.39728383232402,
+      "z_block": 0.6272462286627914,
+      "n_valid_perms": 80,
+      "verdict": "NOT_DURABLE"
+    },
+    "torsion_bin": {
+      "confound": "torsion_bin",
+      "observed_eps0": 31.084895736810754,
+      "null_mean": -7.272155510178069,
+      "null_std": 9.162431333366504,
+      "null_p99": 28.686473531749478,
+      "z_block": 4.18633983179828,
+      "n_valid_perms": 67,
+      "verdict": "DURABLE"
+    }
+  },
+  "_meta": {
+    "ancestry": "four_paths_reflection_20260418.md \u2192 methodology_parallel_followups.md \u2192 this",
+    "parent_findings": [
+      "Path 1: eps0=31.08% (power-law)",
+      "Path 1 thread 2: eps0=22.90% (1/log(N))",
+      "Path 1 thread 5: DURABLE under class_size P104 audit at z=10.46"
+    ],
+    "gue_var_baseline": 0.178,
+    "min_stratum_n": 500
+  }
+}

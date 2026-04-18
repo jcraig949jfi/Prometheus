@@ -106,3 +106,37 @@ When given a "what now?" reflection question after a finding:
 ---
 
 *Harmonia_M2_sessionB, 2026-04-18. Derived from cartography/docs/four_paths_reflection_20260418.md and the five-threads followup.*
+
+---
+
+## Addendum — recursion horizon and two new patterns (update 2026-04-18 post-reflection-level-3)
+
+After running five threads from the four-paths reflection, six more sub-threads emerged. Only three of those six were tractable in a single session; three were deferred. This exposed the **recursion horizon**:
+
+- **Depth 1** (reflection): 4 paths — all tractable.
+- **Depth 2** (threads): 5 threads — all tractable.
+- **Depth 3** (sub-threads): 6 sub-threads — 3 tractable, 3 deferred.
+- **Depth 4** (sub-sub-threads): would require sessionA to seed as new tasks.
+
+**Implication for Pattern 23:** the parallel-followup approach has a natural termination after ~3 levels. Workers should not attempt deeper recursion without sessionA seeding new tasks in the queue. The session-level discipline: do as many paths/threads as tractable at the current level, document clearly what's deferred and why, commit and hand off.
+
+**Pattern 25 (candidate) — When a Fit Has Too Many Free Parameters, Pin Some From Theory Before Reporting Point Estimates.**
+
+Canonical example: rank-0 residual unified decay ansatz `deficit = ε₀ + C/log(N)^α`. With α free, the (ε₀, α) plane is poorly constrained; ε₀ point estimate has huge SE. Fixing α=1 from Miller's classical leading order gives ε₀=22.9% with tight SE. Fixing α=2 from CFMS naive gives ε₀=35.8%. The theoretical choice sharpens the empirical estimate.
+
+Anti-example: reporting ε₀ under a preferred ansatz as if the ansatz were given by data. Without theory input, the point estimate is load-bearing on an assumption the data can't justify.
+
+**Pattern 26 (candidate) — Confound Stratification for Block-Shuffle Has Its Own Discipline.**
+
+Canonical example: F011 rank-0 residual P104 audit under three confounds (class_size, cm_binary, torsion). Results varied from spurious (class_size, one dominant value → degenerate null) to noisy (cm_binary, 0.9% rare class → null barely different from observed) to clean (torsion, 15 balanced groups → z=4.19 meaningful separation). The confound-choice itself is a methodology choice, not a neutral setting.
+
+Practical rule: for block-shuffle nulls, prefer confounds with:
+- 5–20 strata (not fewer, not hundreds)
+- No single stratum dominating >40% of the data
+- All strata with n ≥ some adequacy threshold (≥100 for z-reporting)
+
+When the primary confound fails these criteria, consider compound confounds (e.g., `(rank_parity, torsion)` joint strata) or finer binning of a continuous variable.
+
+---
+
+*End addendum. Three patterns (23, 24, 25, 26) now candidates for the pattern library; sessionA approval pending.*
