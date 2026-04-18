@@ -51,9 +51,9 @@ FEATURES = [
     {"id": "F002", "label": "Mazur torsion",
      "tier": "calibration", "n_objects": 3824372,
      "description": "EC torsion subgroup structure ∈ Mazur's 15. 100.000% of 3.8M."},
-    {"id": "F003", "label": "BSD parity (rank = analytic_rank)",
+    {"id": "F003", "label": "BSD parity (rank = analytic_rank) + FULL BSD identity at 10⁻¹² (rank 2-3)",
      "tier": "calibration", "n_objects": 2481157,
-     "description": "rank = ov for all of bsd_joined. 100.000%. Not a finding — projection calibration."},
+     "description": "rank = ov for all of bsd_joined. 100.000%. 2026-04-18 UPGRADE via Charon eb6d31df: full BSD identity (leading_term = Omega · Reg · prod(c_p) · |Sha| / |Tor|²) verified at 10⁻¹² precision across 218/218 conditional rank 2-3 curves via devmirror.lmfdb.xyz (ec_mwbsd unblocked). Zero failures. Instrument-health check: any row failing at 10⁻¹² is a bug."},
     {"id": "F004", "label": "Hasse bound on a_p",
      "tier": "calibration", "n_objects": 150000,
      "description": "|a_p| ≤ 2√p. 100% of 150K coefficients."},
@@ -113,8 +113,13 @@ FEATURES = [
                     "bound touched only at num_ram=1,2; minimum jumps to 1.267 at num_ram=3, 1.800 at num_ram=5. "
                     "Bad-prime count shows real shape (echoes F011 P021 monotone, sessionC). "
                     "Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap "
-                    "claims without degree-AND-num_ram stratification are suspect — Salem polynomials cluster "
-                    "in the sub-1.228 region at specific degree × low-num_ram combinations."},
+                    "claims without degree-AND-num_ram stratification are suspect. "
+                    "2026-04-18 STRUCTURAL UPGRADE (Charon eb6d31df): the gap (1.176, 1.241) is not just a density "
+                    "question — it is STRUCTURAL. The trinomial M(x^n - x - 1) Mahler-measure sequence sets a lower "
+                    "floor for degrees >= 22, converging to 1.381 as n→∞. The gap WIDENS with degree rather than "
+                    "shrinking. The 3.41% 'gap' observed at our sample is a finite-degree artifact of the full "
+                    "asymptotic structure. F014 stays live_specimen; the frontier shifts from 'how small can "
+                    "minimum Mahler get' to 'what is the exact asymptotic form of the floor above Lehmer'."},
     {"id": "F041a", "label": "Rank-2+ moment slope monotone in num_bad_primes (supersedes F041)",
      "tier": "live_specimen", "n_objects": 222288,
      "description": "PROMOTED 2026-04-18 after 5 independent kill-test survivals. Original F041 (session's Keating-Snaith rank-dependent convergence) demoted to first-moment drift; the REAL signal is the rank-2+ interaction. "
@@ -126,12 +131,29 @@ FEATURES = [
                     "(T3 68225787) P026 semistable-vs-additive split: ladder lives in SEMISTABLE half (slope_range_semi=0.570 vs slope_range_add=0.279; ratio 0.489 well under 0.8). Counterintuitive — points toward conductor-only / multiplicative-ramification effect, not Kodaira. "
                     "(T5 d9c646d9) Specific-prime joint: no single Mazur-Kenku prime dominates (max |slope_diff|=0.56 for has_2, below 1.0 ladder threshold). Effect is carried by COUNT of bad primes plus modest {2,3} lift. "
                     "Pattern 5 gate (CFKRS rank-2 SO(even) closed-form) is the remaining open hurdle; if CFKRS predicts monotone-in-nbp at rank 2: demote to calibration. If not: fully frontier."},
-    {"id": "F042", "label": "CM disc=-27 L-value depression vs cm=-3 (weak signal, n=14)",
-     "tier": "live_specimen", "n_objects": 14,
-     "description": "U_C 2026-04-18 (322ff272): cm=-27 curves at rank-0 decade [1e5,1e6) show mean leading_term 0.79 vs cm=-3 mean 2.00 — a 2.5x depression between Deuring Hecke L-functions over Q(sqrt(-3)) at different orders (maximal Z[omega] vs index-3 non-maximal Z[3*omega]). 71.4% of cm=-27 curves (n=14) in low-L tail vs 10.73% baseline, binomial p=1.34e-07. All 14 curves have conductor divisible by 27 and appear as 3-isogenous pairs (torsion=1 forced). n=14 is TINY. Pattern 4 sampling-frame concern: LMFDB may select low-conductor cm=-27. Kill/confirm test: Rodriguez-Villegas & Zagier 1993 closed-form for Hecke L-values at cm=-27 — if empirical matches RV-Z formula, this is calibration (CM-order effect on periods); if not, frontier. Seeded cross-decade replication task."},
+    {"id": "F042", "label": "CM disc=-27 L-value depression — novel quantitative precision on KNOWN qualitative effect",
+     "tier": "calibration_refinement", "n_objects": 14,
+     "description": "DOWNGRADED 2026-04-18 (from live_specimen) per sessionC literature scan (c9a7543a). The 6.66x enrichment is the Deuring non-maximal-order character-sum compression described qualitatively in Gross LNM 776 (1980) and Rodriguez-Villegas & Zagier (1993). Our contribution is NOT a frontier finding — it is quantitative precision (6.66x enrichment factor, 2.5x leading_term depression between cm=-3 and cm=-27, 71.4% low-L tail participation) on a well-established qualitative structure. Useful as a Pattern 5 calibration instance and for non-maximal-order test sets; not a promotion candidate. Discovered U_C 322ff272, n=14 at rank-0 decade [1e5,1e6). Frontier reopens only if a broader test across Q(sqrt(-d)) non-maximal orders at other d values shows precision deviating from the Gross/RVZ qualitative predictions by more than factor 2."},
     {"id": "F043", "label": "BSD-Sha anticorrelation with period (new empirical law candidate)",
      "tier": "live_specimen", "n_objects": 60003,
      "description": "U_D 2026-04-18 (111d6288): corr(log Sha, log A) = -0.520 at rank 0 decade [1e5,1e6), where A := Omega_real * prod_p c_p. Large-Sha curves have systematically small period*Tamagawa product. Weighted regression: mean_logA = 1.393 - 0.691 * log(sha). NOT a conditioning tautology — independent-sha null over-depletes large sha 12.2x mean ratio. Secondary: corr(2 log tors, log A) = +0.612 (large-torsion -> larger A, neutralizing torsion denominator on L). Mechanistically EXPLAINS T4 (cbe7b623) low-L-tail sha depletion: the period drops faster than Sha rises, so large-Sha curves are BUFFERED out of the low-L tail relative to sha-independent baseline. Frontier: no known BSD formula predicts corr(Sha, A) = -0.52. Candidate new empirical law. Kill/confirm test: Iwasawa main conjecture or Cassels-Tate bounds; replication at rank 1 and rank 2."},
+    {"id": "F044", "label": "Rank-4 corridor: disc=conductor EXACTLY — additive reduction forbidden at rank ≥ 4?",
+     "tier": "live_specimen", "n_objects": 2086,
+     "description": "Charon 2026-04-18 (eb6d31df): across 2086 rank-4 EC in LMFDB, 2085 have disc=conductor (prime conductor, no additive bad reduction — only multiplicative). ONLY 1 exception. Connects abc conjecture to BSD via measurable arithmetic narrowing at high rank. Open frontier questions: "
+                    "(a) theorem hiding in plain sight (some constraint forbids additive reduction at rank >= 4)? "
+                    "(b) LMFDB selection artifact (the method of finding rank-4 curves favors prime conductor via isogeny-class or searchable-range restrictions)? "
+                    "(c) Pattern 4 sampling frame (LMFDB's rank-4 set is not a random sample of rank-4 curves over Q)? "
+                    "Kill/confirm tests needed: (1) verify the 1 exception's existence and its conductor structure; "
+                    "(2) replicate at rank 5 where disc=conductor would extend the pattern; "
+                    "(3) literature scan — Stein, Elkies, or Dujella rank-record constructions may have selection bias. "
+                    "If (a) holds: candidate new calibration anchor. If (b) or (c): Pattern 4 story."},
+    {"id": "F045", "label": "Isogeny-class murmuration (5/21 primes) — novel axis, weaker than rank",
+     "tier": "live_specimen", "n_objects": None,
+     "description": "Ergon 2026-04-18 (7e68116c): murmuration-style stratification by isogeny class size shows 5 of 21 tested primes significant (vs ~1 expected under chance). Headline: p=79 F=6.6. Effect magnitude 5-10x weaker than classical rank-based murmurations. Wachs 2026 literature confirms Sha-direction structure but NOT the isogeny axis — isogeny-class stratification is novel. PRECISION CAVEATS (adversarial review): "
+                    "(1) '5/21 significant vs ~1 expected' needs explicit multiple-testing correction. At α=0.05 uncorrected, 5 FPs out of 21 tests has p~0.0001 under null, but raw per-prime p-values should be reported. "
+                    "(2) Are the 5 significant primes clustered at small primes (which could be multiplicative-reduction artifact piggybacking on F041a) or distributed? p=79 being the headline suggests non-clustering, but all 5 should be named. "
+                    "(3) 5-10x weaker than rank murmurations — the sign of the effect matters. If same-sign-as-rank, the isogeny axis may be a weak proxy. If independent-sign, it is a genuinely new axis. "
+                    "Kill/confirm task: compute per-prime uncorrected p-values + correlation with F041a nbp ladder to test whether isogeny-class-size and num_bad_primes are independent axes. If correlated, F045 may collapse into F041a."},
     {"id": "F015", "label": "Szpiro vs conductor — sign-uniform, magnitude non-monotone in k — BLOCK-SHUFFLE VERIFIED",
      "tier": "live_specimen", "n_objects": 30000,
      "description": "Szpiro-vs-conductor slope is sign-uniformly-negative within every bad-prime stratum (P042 z=-6.9..-22.7). **Block-shuffle-within-k null (sessionC audit_F014_F015_block_shuffle, 2026-04-17) VERIFIED the sign-uniform-negative claim at ALL k:** k=1 z=-24.03, k=2 z=-19.70, k=3 z=-12.69, k=4 z=-7.48, k=5 z=-4.06, k=6 z=-3.48. Every stratum z<=-3 under the rigorous null. Magnitude is NOT monotone in k (k=4 breaks the smooth trend; this remains a Pattern-20 anchor on the magnitude side). 88% of pooled -0.597 slope is k-mediated confound; 12% residual survives decontamination (P052 kill). Within-conductor bins show opposite-sign trend (szpiro increases with k). Pattern 19 variant: Ergon monotone claim partially reproduces (sign, yes; magnitude, no). F015 is the first specimen verified under the F010-methodology block-shuffle protocol — **sign claim is durable**."},
@@ -330,7 +352,9 @@ INVARIANCE = {
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
     "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7; BLOCK-SHUFFLE VERIFIED at every k (sessionC 2026-04-17 z from -3.48 to -24.03). First specimen to pass block-shuffle protocol — durable sign.
     "F041a": {"P023": +2, "P020": +1, "P021": +2, "P026": +1, "P039": -1, "P104": +2},                          # PROMOTED 2026-04-18. Rank-2+ monotone-in-nbp slope ladder survives: block-null W2 (amp 27.6x corr 0.97), conductor-control U_A (z=3.37), P026 semistable split T3, specific-prime joint T5. P039 Galois-image ruled out (W3). CFKRS Pattern 5 gate pending — harder than it looked given U_E SO(2N) MC k=3,4 divergence.
-    "F042": {"P025": +1, "P020": +1},                                                                          # U_C cm=-27 vs cm=-3 Deuring-order depression, n=14 weak signal pending RVZ 1993 closed-form match.
+    "F042": {"P025": +1, "P020": +1},                                                                          # CM disc=-27 quantitative precision on known qualitative structure (Gross 1980, RVZ 1993). calibration_refinement, not frontier.
+    "F044": {"P020": +2, "P023": +2, "P026": +2},                                                               # Rank-4 corridor disc=conductor in 2085/2086. Semistable forced. Open: theorem vs LMFDB artifact.
+    "F045": {"P023": +1},                                                                                       # Isogeny-class murmuration 5/21 primes significant. Novel axis per Wachs 2026. Effect 5-10x weaker than rank. Pattern 5 gate + multiple-testing rigor pending.
     "F043": {"P020": +1, "P023": +1, "P038": +1},                                                              # U_D corr(log Sha, log A)=-0.520 at rank 0; candidate new empirical BSD relation. NOT conditioning tautology.
     "F008": {"P024": +2},                                                                                      # Scholz reflection calibration: 100% pass across 344K quadratic pairs (Ergon + sessionD 2026-04-18).
 

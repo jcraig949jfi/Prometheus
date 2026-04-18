@@ -4,7 +4,7 @@
   "charter_ref": "docs/landscape_charter.md",
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
-    29,
+    31,
     25
   ],
   "tensor_encoding": {
@@ -31,10 +31,10 @@
     },
     {
       "id": "F003",
-      "label": "BSD parity (rank = analytic_rank)",
+      "label": "BSD parity (rank = analytic_rank) + FULL BSD identity at 10\u207b\u00b9\u00b2 (rank 2-3)",
       "tier": "calibration",
       "n_objects": 2481157,
-      "description": "rank = ov for all of bsd_joined. 100.000%. Not a finding \u2014 projection calibration."
+      "description": "rank = ov for all of bsd_joined. 100.000%. 2026-04-18 UPGRADE via Charon eb6d31df: full BSD identity (leading_term = Omega \u00b7 Reg \u00b7 prod(c_p) \u00b7 |Sha| / |Tor|\u00b2) verified at 10\u207b\u00b9\u00b2 precision across 218/218 conditional rank 2-3 curves via devmirror.lmfdb.xyz (ec_mwbsd unblocked). Zero failures. Instrument-health check: any row failing at 10\u207b\u00b9\u00b2 is a bug."
     },
     {
       "id": "F004",
@@ -97,7 +97,7 @@
       "label": "Lehmer spectrum (refined) \u2014 Salem density in (1.176, 1.228)",
       "tier": "live_specimen",
       "n_objects": 22178569,
-      "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). Original '4.4% gap between bound and next Mahler measure (1.228 at deg 12)' FALSIFIED by sessionB wsw_F014 (81K polynomials, Pattern-4-biased ORDER BY disc_abs ASC per degree). Observed gap = 3.41%; 3 polynomials strictly in (1.17628, 1.228), minimum a Salem polynomial at 1.216392 (deg 10, num_ram=1, disc_abs=1.49e9). The region above Lehmer's polynomial is a Salem-number density, not a clean gap. Strong per-num_ram monotone: bound touched only at num_ram=1,2; minimum jumps to 1.267 at num_ram=3, 1.800 at num_ram=5. Bad-prime count shows real shape (echoes F011 P021 monotone, sessionC). Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap claims without degree-AND-num_ram stratification are suspect \u2014 Salem polynomials cluster in the sub-1.228 region at specific degree \u00d7 low-num_ram combinations."
+      "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). Original '4.4% gap between bound and next Mahler measure (1.228 at deg 12)' FALSIFIED by sessionB wsw_F014 (81K polynomials, Pattern-4-biased ORDER BY disc_abs ASC per degree). Observed gap = 3.41%; 3 polynomials strictly in (1.17628, 1.228), minimum a Salem polynomial at 1.216392 (deg 10, num_ram=1, disc_abs=1.49e9). The region above Lehmer's polynomial is a Salem-number density, not a clean gap. Strong per-num_ram monotone: bound touched only at num_ram=1,2; minimum jumps to 1.267 at num_ram=3, 1.800 at num_ram=5. Bad-prime count shows real shape (echoes F011 P021 monotone, sessionC). Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap claims without degree-AND-num_ram stratification are suspect. 2026-04-18 STRUCTURAL UPGRADE (Charon eb6d31df): the gap (1.176, 1.241) is not just a density question \u2014 it is STRUCTURAL. The trinomial M(x^n - x - 1) Mahler-measure sequence sets a lower floor for degrees >= 22, converging to 1.381 as n\u2192\u221e. The gap WIDENS with degree rather than shrinking. The 3.41% 'gap' observed at our sample is a finite-degree artifact of the full asymptotic structure. F014 stays live_specimen; the frontier shifts from 'how small can minimum Mahler get' to 'what is the exact asymptotic form of the floor above Lehmer'."
     },
     {
       "id": "F041a",
@@ -108,10 +108,10 @@
     },
     {
       "id": "F042",
-      "label": "CM disc=-27 L-value depression vs cm=-3 (weak signal, n=14)",
-      "tier": "live_specimen",
+      "label": "CM disc=-27 L-value depression \u2014 novel quantitative precision on KNOWN qualitative effect",
+      "tier": "calibration_refinement",
       "n_objects": 14,
-      "description": "U_C 2026-04-18 (322ff272): cm=-27 curves at rank-0 decade [1e5,1e6) show mean leading_term 0.79 vs cm=-3 mean 2.00 \u2014 a 2.5x depression between Deuring Hecke L-functions over Q(sqrt(-3)) at different orders (maximal Z[omega] vs index-3 non-maximal Z[3*omega]). 71.4% of cm=-27 curves (n=14) in low-L tail vs 10.73% baseline, binomial p=1.34e-07. All 14 curves have conductor divisible by 27 and appear as 3-isogenous pairs (torsion=1 forced). n=14 is TINY. Pattern 4 sampling-frame concern: LMFDB may select low-conductor cm=-27. Kill/confirm test: Rodriguez-Villegas & Zagier 1993 closed-form for Hecke L-values at cm=-27 \u2014 if empirical matches RV-Z formula, this is calibration (CM-order effect on periods); if not, frontier. Seeded cross-decade replication task."
+      "description": "DOWNGRADED 2026-04-18 (from live_specimen) per sessionC literature scan (c9a7543a). The 6.66x enrichment is the Deuring non-maximal-order character-sum compression described qualitatively in Gross LNM 776 (1980) and Rodriguez-Villegas & Zagier (1993). Our contribution is NOT a frontier finding \u2014 it is quantitative precision (6.66x enrichment factor, 2.5x leading_term depression between cm=-3 and cm=-27, 71.4% low-L tail participation) on a well-established qualitative structure. Useful as a Pattern 5 calibration instance and for non-maximal-order test sets; not a promotion candidate. Discovered U_C 322ff272, n=14 at rank-0 decade [1e5,1e6). Frontier reopens only if a broader test across Q(sqrt(-d)) non-maximal orders at other d values shows precision deviating from the Gross/RVZ qualitative predictions by more than factor 2."
     },
     {
       "id": "F043",
@@ -119,6 +119,20 @@
       "tier": "live_specimen",
       "n_objects": 60003,
       "description": "U_D 2026-04-18 (111d6288): corr(log Sha, log A) = -0.520 at rank 0 decade [1e5,1e6), where A := Omega_real * prod_p c_p. Large-Sha curves have systematically small period*Tamagawa product. Weighted regression: mean_logA = 1.393 - 0.691 * log(sha). NOT a conditioning tautology \u2014 independent-sha null over-depletes large sha 12.2x mean ratio. Secondary: corr(2 log tors, log A) = +0.612 (large-torsion -> larger A, neutralizing torsion denominator on L). Mechanistically EXPLAINS T4 (cbe7b623) low-L-tail sha depletion: the period drops faster than Sha rises, so large-Sha curves are BUFFERED out of the low-L tail relative to sha-independent baseline. Frontier: no known BSD formula predicts corr(Sha, A) = -0.52. Candidate new empirical law. Kill/confirm test: Iwasawa main conjecture or Cassels-Tate bounds; replication at rank 1 and rank 2."
+    },
+    {
+      "id": "F044",
+      "label": "Rank-4 corridor: disc=conductor EXACTLY \u2014 additive reduction forbidden at rank \u2265 4?",
+      "tier": "live_specimen",
+      "n_objects": 2086,
+      "description": "Charon 2026-04-18 (eb6d31df): across 2086 rank-4 EC in LMFDB, 2085 have disc=conductor (prime conductor, no additive bad reduction \u2014 only multiplicative). ONLY 1 exception. Connects abc conjecture to BSD via measurable arithmetic narrowing at high rank. Open frontier questions: (a) theorem hiding in plain sight (some constraint forbids additive reduction at rank >= 4)? (b) LMFDB selection artifact (the method of finding rank-4 curves favors prime conductor via isogeny-class or searchable-range restrictions)? (c) Pattern 4 sampling frame (LMFDB's rank-4 set is not a random sample of rank-4 curves over Q)? Kill/confirm tests needed: (1) verify the 1 exception's existence and its conductor structure; (2) replicate at rank 5 where disc=conductor would extend the pattern; (3) literature scan \u2014 Stein, Elkies, or Dujella rank-record constructions may have selection bias. If (a) holds: candidate new calibration anchor. If (b) or (c): Pattern 4 story."
+    },
+    {
+      "id": "F045",
+      "label": "Isogeny-class murmuration (5/21 primes) \u2014 novel axis, weaker than rank",
+      "tier": "live_specimen",
+      "n_objects": null,
+      "description": "Ergon 2026-04-18 (7e68116c): murmuration-style stratification by isogeny class size shows 5 of 21 tested primes significant (vs ~1 expected under chance). Headline: p=79 F=6.6. Effect magnitude 5-10x weaker than classical rank-based murmurations. Wachs 2026 literature confirms Sha-direction structure but NOT the isogeny axis \u2014 isogeny-class stratification is novel. PRECISION CAVEATS (adversarial review): (1) '5/21 significant vs ~1 expected' needs explicit multiple-testing correction. At \u03b1=0.05 uncorrected, 5 FPs out of 21 tests has p~0.0001 under null, but raw per-prime p-values should be reported. (2) Are the 5 significant primes clustered at small primes (which could be multiplicative-reduction artifact piggybacking on F041a) or distributed? p=79 being the headline suggests non-clustering, but all 5 should be named. (3) 5-10x weaker than rank murmurations \u2014 the sign of the effect matters. If same-sign-as-rank, the isogeny axis may be a weak proxy. If independent-sign, it is a genuinely new axis. Kill/confirm task: compute per-prime uncorrected p-values + correlation with F041a nbp ladder to test whether isogeny-class-size and num_bad_primes are independent axes. If correlated, F045 may collapse into F041a."
     },
     {
       "id": "F015",
@@ -457,6 +471,14 @@
       "P025": 1,
       "P020": 1
     },
+    "F044": {
+      "P020": 2,
+      "P023": 2,
+      "P026": 2
+    },
+    "F045": {
+      "P023": 1
+    },
     "F043": {
       "P020": 1,
       "P023": 1,
@@ -533,8 +555,9 @@
     "F013",
     "F014",
     "F041a",
-    "F042",
     "F043",
+    "F044",
+    "F045",
     "F015"
   ]
 }
