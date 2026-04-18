@@ -1,0 +1,292 @@
+{
+  "task": "wsw_F011_rank0_deep \u2014 threads 1, 2, 5 from four-paths reflection",
+  "instance": "Harmonia_M2_sessionB",
+  "started": "2026-04-18T13:22:33.061563+00:00",
+  "finished": "2026-04-18T13:23:03.100349+00:00",
+  "n_rank0": 773232,
+  "thread1a_sign_disc_by_conductor": [
+    {
+      "bin": 0,
+      "n": 77319,
+      "mean_log_cond": 4.094217230333329,
+      "sign_disc_pos_frac": 0.46738835215147634
+    },
+    {
+      "bin": 1,
+      "n": 77322,
+      "mean_log_cond": 4.716681591781575,
+      "sign_disc_pos_frac": 0.46270143038203876
+    },
+    {
+      "bin": 2,
+      "n": 77301,
+      "mean_log_cond": 4.951448519892058,
+      "sign_disc_pos_frac": 0.4568116841955473
+    },
+    {
+      "bin": 3,
+      "n": 77349,
+      "mean_log_cond": 5.106972929736343,
+      "sign_disc_pos_frac": 0.4630570530970019
+    },
+    {
+      "bin": 4,
+      "n": 77324,
+      "mean_log_cond": 5.224929907372089,
+      "sign_disc_pos_frac": 0.46179711344472607
+    },
+    {
+      "bin": 5,
+      "n": 77320,
+      "mean_log_cond": 5.319380968449681,
+      "sign_disc_pos_frac": 0.45611743404035177
+    },
+    {
+      "bin": 6,
+      "n": 77324,
+      "mean_log_cond": 5.398214243183127,
+      "sign_disc_pos_frac": 0.45632662562723086
+    },
+    {
+      "bin": 7,
+      "n": 77297,
+      "mean_log_cond": 5.465745399987301,
+      "sign_disc_pos_frac": 0.4529412525712512
+    },
+    {
+      "bin": 8,
+      "n": 77352,
+      "mean_log_cond": 5.525021864779811,
+      "sign_disc_pos_frac": 0.45749301892646604
+    },
+    {
+      "bin": 9,
+      "n": 77324,
+      "mean_log_cond": 5.577603861822527,
+      "sign_disc_pos_frac": 0.45094666597692823
+    }
+  ],
+  "thread1b_conductor_extremes": {
+    "low_cond_<4.0": {
+      "name": "log_cond<4.0",
+      "n": 21169,
+      "var": 0.07632124858924073,
+      "deficit_pct": 57.12289405098836,
+      "se_var": 0.0007418576014910725
+    },
+    "mid_cond": {
+      "name": "log_cond in [4.5,5.0)",
+      "n": 143982,
+      "var": 0.09242300495391907,
+      "deficit_pct": 48.07696350903422,
+      "se_var": 0.0003444629286708073
+    },
+    "high_cond_>=5.5": {
+      "name": "log_cond>=5.5",
+      "n": 150216,
+      "var": 0.0990250545853307,
+      "deficit_pct": 44.36794686217376,
+      "se_var": 0.0003613295142701987
+    }
+  },
+  "thread1c_note": "SO_even one-level density prediction for variance at rank 0 not yet computed. Duenez-HKMS or Katz-Sarnak SO(even) kernel would give the right theoretical comparison. Flag as dependency for future thread on DHKMS catalog entry (thread 3 companion).",
+  "thread2_decay_fits": {
+    "power_law": {
+      "eps0": 31.084895736810754,
+      "C": 77.32548038681071,
+      "beta": 0.1374927679306568,
+      "se_eps0": 6.18760016893225,
+      "chi2": 19.564745362262066
+    },
+    "one_over_log": {
+      "eps0": 22.896475246268942,
+      "C": 276.20539349276095,
+      "se_eps0": 0.7760294733989092,
+      "chi2": 20.295643176874865
+    },
+    "one_over_log_squared": {
+      "eps0": 35.83136314995249,
+      "C": 1445.4791445412902,
+      "se_eps0": 0.3637528043928619,
+      "chi2": 27.399300273132237
+    }
+  },
+  "thread2b_tail_fraction": 0.1942702836923459,
+  "thread5_P104_audit": {
+    "design": "block-shuffle cond_bin within class_size strata; 100 perms; refit eps0 each perm",
+    "n_perms_valid": 92,
+    "observed_eps0": 31.084895736810754,
+    "null_eps0_mean": -9.422931755946474,
+    "null_eps0_std": 3.8737315752457007,
+    "null_eps0_p99": 15.515488293670654,
+    "z_block": 10.457055866135464,
+    "verdict": "DURABLE_UNDER_CLASS_SIZE_BLOCK_SHUFFLE"
+  },
+  "per_bin_observed": [
+    {
+      "bin": 0,
+      "mean_log_cond": 3.7780745336471875,
+      "n": 38633,
+      "var": 0.0808619955192228,
+      "deficit_pct": 54.571912629650114,
+      "se_deficit_pct": 0.3268630689418263
+    },
+    {
+      "bin": 1,
+      "mean_log_cond": 4.409926810054049,
+      "n": 38686,
+      "var": 0.08959944782582385,
+      "deficit_pct": 49.66323155852592,
+      "se_deficit_pct": 0.3619337046650994
+    },
+    {
+      "bin": 2,
+      "mean_log_cond": 4.6403519834369495,
+      "n": 38658,
+      "var": 0.09054264091498439,
+      "deficit_pct": 49.13334780057056,
+      "se_deficit_pct": 0.3658761323610179
+    },
+    {
+      "bin": 3,
+      "mean_log_cond": 4.792999355059729,
+      "n": 38664,
+      "var": 0.09266986028062123,
+      "deficit_pct": 47.93828074122403,
+      "se_deficit_pct": 0.3744430111366347
+    },
+    {
+      "bin": 4,
+      "mean_log_cond": 4.906229597396959,
+      "n": 38645,
+      "var": 0.09333406203129851,
+      "deficit_pct": 47.56513369028173,
+      "se_deficit_pct": 0.3772194922491138
+    },
+    {
+      "bin": 5,
+      "mean_log_cond": 4.9966545748336735,
+      "n": 38656,
+      "var": 0.09458596502174015,
+      "deficit_pct": 46.86181740351677,
+      "se_deficit_pct": 0.38222479451320857
+    },
+    {
+      "bin": 6,
+      "mean_log_cond": 5.073711190138448,
+      "n": 38683,
+      "var": 0.09322664740365587,
+      "deficit_pct": 47.62547898671018,
+      "se_deficit_pct": 0.3766002480436123
+    },
+    {
+      "bin": 7,
+      "mean_log_cond": 5.140249293282231,
+      "n": 38666,
+      "var": 0.09621641094090061,
+      "deficit_pct": 45.94583655005584,
+      "se_deficit_pct": 0.38876319360850353
+    },
+    {
+      "bin": 8,
+      "mean_log_cond": 5.198626888865256,
+      "n": 38661,
+      "var": 0.09701049208199487,
+      "deficit_pct": 45.49972354944108,
+      "se_deficit_pct": 0.3919970314870225
+    },
+    {
+      "bin": 9,
+      "mean_log_cond": 5.25123156524894,
+      "n": 38663,
+      "var": 0.09668515237385333,
+      "deficit_pct": 45.68249866637453,
+      "se_deficit_pct": 0.3906723035320109
+    },
+    {
+      "bin": 10,
+      "mean_log_cond": 5.298074782601804,
+      "n": 38662,
+      "var": 0.09743342933390704,
+      "deficit_pct": 45.26211835173762,
+      "se_deficit_pct": 0.39370093160307895
+    },
+    {
+      "bin": 11,
+      "mean_log_cond": 5.340689358879881,
+      "n": 38658,
+      "var": 0.09672621841831526,
+      "deficit_pct": 45.65942785487906,
+      "se_deficit_pct": 0.39086351287267784
+    },
+    {
+      "bin": 12,
+      "mean_log_cond": 5.380129771073829,
+      "n": 38666,
+      "var": 0.09621905221161813,
+      "deficit_pct": 45.94435269010217,
+      "se_deficit_pct": 0.38877386568439243
+    },
+    {
+      "bin": 13,
+      "mean_log_cond": 5.416302457746171,
+      "n": 38658,
+      "var": 0.0980106812673039,
+      "deficit_pct": 44.937819512750615,
+      "se_deficit_pct": 0.39605393248712945
+    },
+    {
+      "bin": 14,
+      "mean_log_cond": 5.450003464552161,
+      "n": 38610,
+      "var": 0.09856520418998156,
+      "deficit_pct": 44.62628978090923,
+      "se_deficit_pct": 0.3985422284620334
+    },
+    {
+      "bin": 15,
+      "mean_log_cond": 5.481456003734056,
+      "n": 38687,
+      "var": 0.09858634000354341,
+      "deficit_pct": 44.614415728346394,
+      "se_deficit_pct": 0.3982307810900892
+    },
+    {
+      "bin": 16,
+      "mean_log_cond": 5.511105340107594,
+      "n": 38676,
+      "var": 0.09862489687760927,
+      "deficit_pct": 44.59275456314086,
+      "se_deficit_pct": 0.39844317897621834
+    },
+    {
+      "bin": 17,
+      "mean_log_cond": 5.538938389452028,
+      "n": 38676,
+      "var": 0.09936558302054438,
+      "deficit_pct": 44.17663875250315,
+      "se_deficit_pct": 0.4014355404463747
+    },
+    {
+      "bin": 18,
+      "mean_log_cond": 5.565214164582396,
+      "n": 38661,
+      "var": 0.09879456016800954,
+      "deficit_pct": 44.49743810785981,
+      "se_deficit_pct": 0.39920603928277093
+    },
+    {
+      "bin": 19,
+      "mean_log_cond": 5.589992918155472,
+      "n": 38663,
+      "var": 0.09955813573914002,
+      "deficit_pct": 44.06846306789886,
+      "se_deficit_pct": 0.40228106663335783
+    }
+  ],
+  "_meta": {
+    "ancestry": "cartography/docs/four_paths_reflection_20260418.md",
+    "gue_var_baseline": 0.178,
+    "min_stratum_n": 500
+  }
+}
