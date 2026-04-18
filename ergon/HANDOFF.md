@@ -56,6 +56,29 @@ The triage agent discovered lfunc has an origin index. This changes the game —
 - `cartography/docs/catalog_F041a_draft.md` — F041a specimen nomination
 - `harmonia/src/domain_index.py` — load_knots_engineered(), load_knots_topo()
 
+### Level 2 Research (scripts written, NOT yet executed — agents hit rate limit)
+These scripts are ready to run. Just execute them:
+- `ergon/tamagawa_mediation.py` — Q1+P1: does Tamagawa mediate isogeny effect?
+- `ergon/convergence_by_class_size.py` — Q5+P5: finite-conductor transient or structural?
+- `ergon/wachs_reproduction.py` — Q3: reproduce Wachs displacement, correlate with variance
+- `ergon/higher_gap_analysis.py` — gap1 vs gap2-4 deficit, cross-family comparison
+- `ergon/isogeny_sha_joint.py` — joint distribution, partial correlations, BSD connection
+- `ergon/murmuration_isogeny.py` — COMPLETED: weak but above-chance signal (5/21 primes significant)
+
+### Murmuration by Isogeny (COMPLETED)
+- 5/21 large primes show significant F-test stratification (vs ~1 expected by chance)
+- p=79 strongest (F=6.6, p=3.85e-06): class_size=8 has mean a_p/sqrt(p)=-0.045 vs class_size=6 at +0.028
+- Effect ~5-10x weaker than rank murmurations
+- Small primes heavily confounded by conductor divisibility
+- NOVEL axis — nobody has tested isogeny-stratified murmurations before
+- Results + plots in ergon/results/murmuration_isogeny/
+
+### Literature Findings (literature_zero_suppression.md)
+- Wachs (arXiv:2603.04604, Mar 2026) independently found Sha modulates zero displacement/packing — CONFIRMS our Sha direction
+- Isogeny class size stratification is NOVEL — no prior work
+- CFKRS arithmetic factor a_E(k) may depend on isogeny structure through Euler product — UNTESTED
+- 6 testable predictions, 7 research questions documented
+
 ## Infrastructure
 - Tensor v2: 23 domains, 4.76M objects, 208 features
 - F0 honest battery: object-identity permutation null + synthetic null for tiny domains
