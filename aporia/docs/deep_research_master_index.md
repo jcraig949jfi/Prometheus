@@ -16,12 +16,12 @@
 | 11 | Greenberg Iwasawa | Charon | DONE | Screen 22M NF by p|h, tower computation on survivors |
 | 12 | Tropical Rank | Ergon | DONE | Chip-firing computes tropical rank, direct tensor connection |
 | 13 | Zaremba | Harmonia | DONE | nf_cf infrastructure EXISTS, 22M discriminants testable |
-| 14 | Selmer Distribution | Charon | Pending | BKLPR p=3 test on 3.8M EC |
-| 15 | Lehmer 22M | Ergon | Pending | Mahler measure scan, Boyd-Mossinghoff comparison |
+| 14 | Selmer Distribution | Charon | DONE | BKLPR p=3 test on 3.8M EC |
+| 15 | Lehmer 22M | Ergon | DONE | Mahler measure scan, Boyd-Mossinghoff comparison |
 | 16 | Volume Conjecture | Harmonia | DONE | SnapPy volumes ~30min, Jones at optimal phase, trace fields = NF |
 | 17 | Density Hypothesis | Charon | DONE | N(sigma,T) from 24M L-functions |
 | 18 | Cohen-Lenstra | Harmonia | DONE | S3/D4/S4 bins distinguish Bartel-Lenstra from Cohen-Martinet |
-| 19 | Flajolet-Odlyzko | Ergon | Pending | Singularity type classification of 394K OEIS |
+| 19 | Flajolet-Odlyzko | Ergon | DONE | Singularity type classification of 394K OEIS |
 | 20 | Durrett Spatial | Ergon | DONE | Monte Carlo fixation probability by dimension |
 
 ## Immediate Actions (no blockers)
