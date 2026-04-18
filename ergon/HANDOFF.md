@@ -1,110 +1,63 @@
 # Ergon Handoff — Start Here
 ## For the next Claude Code session
-### 2026-04-17
+### 2026-04-18
 
 ---
 
-## Current State
+## What was done this session (2026-04-18)
 
-### What was done (2026-04-15 to 2026-04-17)
+### Aporia Research Execution (6 items)
+1. **L-space filter**: 13/2977 knot candidates (0.4%). Torus knots T(2,3/5/7) confirmed.
+2. **Hyperbolic volumes**: 12,965 computed via SnapPy in 20s. New `knots_topo` domain (4 features).
+3. **Knot re-engineering**: `knots_eng` domain — 12 engineered features (Mahler, roots of unity, PCA, signature).
+4. **Oscillation detector**: abc CONVERGENT, BSD FLAT, Chowla CONVERGENT. No ZFC independence signals.
+5. **Density anomaly scan**: Mendeleev gaps in space_groups (2403), codata (1073).
+6. **Knot silence test**: Volumes + engineered features do NOT break cross-domain silence. Aporia confirmed: bridge is categorical, not numerical.
 
-#### Session 2 (Apr 15): Agora polling test run
-- Monitored Redis, tracked Batch 01 execution by Aporia (6/8 tests complete)
+### Harmonia Work Queue (8 items)
+1. **F041a catalog entry**: DRAFTED. Rank-2+ slope monotone in nbp (1.21→2.52). Pending CFKRS gate.
+2. **DHKMS prediction**: 31% rank-0 residual is NOT a reference error. Gaudin baseline confirmed. DHKMS finite-N goes WRONG direction. Either unfolding error or genuine anomaly.
+3. **F011 low-tail mechanism**: Faltings height low-tail compresses with conductor (15.8%→7.6%). Bad primes strongly predict faltings height.
+4. **Euler product deflation**: BLOCKED — needs lfunc Dirichlet coefficient access.
+5. **Scholz reflection p=3**: ZERO violations across 344,130 pairs. 71.5% equality, 28.5% differ by 1. Cohen-Lenstra deficit (0.816 ratio). Explains p=3 BST anomaly.
+6. **Bootstrap CI k=3,4**: Agent running (awaiting completion).
+7. **P104 block-shuffle null**: REVIEWED, APPROVED for merge. Thorough calibration anchors.
+8. **EC projection triage**: 3 ready now (#3 isogeny, #5 Sha, #7 compound), 3 testable, 1 blocked. Key finding: lfunc has ~1.74M EC L-functions with zeros AND an origin index.
 
-#### Session 2b (Apr 15-16): Active execution
-- NF permutation null confirmed (Harmonia validated)
-- AlignmentCoupling z=2.22 RETRACTED (seed artifact, 6/10 flat zero)
-- P1.3 knot arithmetic re-encoding: null result (scorer bottleneck)
-- GUE deviation: ~14% variance deficit (first-gap), not 40% (unfolding artifact)
-- abc Szpiro controlled: decrease REAL at fixed bad-prime count (5 strata tested)
-- Chowla N=10^8: SUPPORTED (0/100 violations)
-- Artin linkage: CONFIRMED DEAD END (0 Artin L-functions in lfunc table)
-- GradientTracker integration wired up
-- CSV fallback for load_ec_rich and load_artin shipped
+### Threads Opened
 
-#### Session 3 (Apr 16-17): Tensor v2 + Explorer v2 + Fingerprints
-**Tensor builder v2**: Rewrote to use Harmonia's DomainIndex loaders.
-  - 7 domains -> 29 domains, 58K objects -> 5.08M objects
-  - Three tiers: core (8), extended (22 w/ fingerprints), all (29)
-  - EC scale-up: 10K -> 3.8M from local Postgres
+**THREAD A: F011 rank-0 residual is genuine frontier.**
+DHKMS can't explain it. The 31% non-excised deficit at rank 0 is:
+- Not a Wigner-vs-Gaudin reference error (Harmonia used Gaudin)
+- Not a finite-N correction (DHKMS predicts the opposite direction)
+- Possibly an unfolding artifact, but would need 25% mean bias (implausible)
+- The most interesting open finding in the project
 
-**Gene schema v2**: 20 ACTIVE_DOMAINS with Harmonia feature indices (f0-fN).
-  - 400+ domain pairs (was 49)
-  - New: artin, ec_rich, belyi, bianchi, groups, oeis, chemistry, codata, pdg_particles, metabolism
+**THREAD B: Scholz reflection as new F-anchor.**
+Zero violations is perfect calibration. The 71.5/28.5 equality/inequality split is a testable prediction. Could become a battery test: any NF computation that violates |r3(K*)-r3(K)| <= 1 has a bug.
 
-**E-FP-1 (nf_cf)**: NF with continued fraction features of defining polynomial roots.
-  - Loads from Postgres (22M NF), computes largest real root, CF expansion
-  - 10 features: arithmetic + approximation modality
+**THREAD C: Three EC zero projections immediately executable.**
+Isogeny class size, Sha order, and compound (rank×CM×w) projections need zero joins from lfunc — and we now know lfunc has an origin index. These could produce new specimens.
 
-**E-FP-3 (artin_ade)**: Artin reps with ADE/Dynkin type classification.
-  - Maps Galois labels (nTt) to root system types
-  - 11 features: Artin invariants + is_weyl, is_cyclic, ade_rank
-
-**Explorer v2 run** (5000 gen, 20 domains):
-  - 60K hypotheses tested at gen 3000
-  - 35 MAP-Elites cells filled, max depth 15
-  - 72.6% killed at F1 (permutation null)
-
-**CRITICAL FINDING: All survivors fail independent permutation null.**
-  - 3 depth-15 survivors: all pdg_particles:f0 pairings, z<1 under permutation
-  - 9 depth-12 survivors: all MI-on-small-samples artifacts, z<1
-  - 5 depth-6 math-domain survivors: all noise under permutation
-  - The battery passes hypotheses that permutation null kills
-  - Root cause: coupling scorers measure feature GEOMETRY, not object pairing
-
-### The Fundamental Problem (clear now)
-
-The entire Ergon pipeline — tensor slicing, coupling scoring, battery testing —
-operates on DISTRIBUTIONAL properties of features. Shuffling which specific
-mathematical objects are paired does not change the coupling score because the
-feature distributions are preserved.
-
-This means:
-1. **No object-level coupling detectable** by any current scorer (cosine, distributional, alignment, MI)
-2. **Battery survival ≠ real structure** — the battery checks statistical significance of the coupling score, but the score itself is distributional
-3. **MAP-Elites archive is populated by feature geometry artifacts**, not mathematical discoveries
-4. **MI is especially bad** on small domains (pdg 226, metabolism 108, codata 286) — biased upward
-
-### What needs doing
-
-#### 1. Fix the battery: add permutation null as F0
-The permutation null should be the FIRST test, not an afterthought. If shuffling
-object labels within a domain doesn't change the coupling score, the hypothesis
-is dead regardless of what other tests say. This would kill 100% of current
-survivors and make the battery honest.
-
-#### 2. Rethink the coupling methodology
-The fingerprints report (Aporia) identified the right direction: mathematical
-connections are SPECIFIC (knot K's Alexander polynomial evaluates to a specific
-algebraic integer in a specific number field). Random-pair coupling cannot detect
-this. Need MATCHING-based approaches:
-- Join on algebraic identities (Alexander discriminant = NF discriminant)
-- Join on shared L-function (EC L-function = MF L-function via modularity)
-- Join on operator eigenvalues (Hecke eigenvalue = NF invariant)
-
-#### 3. Investigate the shadow archive
-The shadow archive (13MB at gen 3000) maps which domain pairs are dead zones.
-Even though the coupling scores are distributional, the PATTERN of kills
-(which tests kill which pairs) may reveal real structure about the tensor geometry.
+**THREAD D: lfunc origin index exists.**
+The triage agent discovered lfunc has an origin index. This changes the game — EC↔lfunc joins are feasible at scale. Unlocks zero-statistic tests we thought were blocked.
 
 ---
+
+## Key Files Created This Session
+- `ergon/dhkms_prediction.py` — DHKMS theoretical comparison
+- `ergon/scholz_reflection.py` — Scholz p=3 test on 344K pairs
+- `ergon/oscillation_detector.py` — Independence oscillation test
+- `ergon/density_anomaly_scan.py` — Mendeleev gap finder
+- `ergon/moment_bootstrap.py` — Bootstrap CI for moment non-monotonicity
+- `ergon/ec_projection_triage.md` — 8 open projections assessed
+- `ergon/results/hyperbolic_volumes.json` — 12,965 knot volumes
+- `ergon/results/l_space_candidates.json` — 13 L-space candidates
+- `cartography/docs/catalog_F041a_draft.md` — F041a specimen nomination
+- `harmonia/src/domain_index.py` — load_knots_engineered(), load_knots_topo()
 
 ## Infrastructure
-
-- Redis: localhost:6379, password=prometheus
-- Postgres on M1: lmfdb (30M+ rows, ec_curvedata 3.8M, artin_reps 798K, nf_fields 22M)
-- lfunc_lfunctions: 342 GB, 24M rows, 1 index (conductor only), NO Artin L-functions
-- Tensor v2: core (4.2M, 96 feat), extended (4.6M, 202 feat), all (5.1M, 263 feat)
-
-## Key Files
-- `ergon/tensor_builder.py` — v2, Harmonia loaders, 3 tiers
-- `ergon/run_explore_v2.bat` — double-click explorer (22 domains)
-- `forge/v3/gene_schema.py` — updated ACTIVE_DOMAINS (20), ACTIVE_FEATURES (f0-fN)
-- `harmonia/src/domain_index.py` — load_nf_cf(), load_artin_ade(), CSV fallbacks
-- `harmonia/src/landscape.py` — report_to_gradient_tracker() bridge
-
-## Warnings
-- Phoneme framework UNVALIDATED — use distributional scorer only
-- MI biased on small N — pdg (226), metabolism (108), codata (286) produce spurious MI
-- AlignmentCoupling W matrix is SEED-DEPENDENT — always replicate across 5+ seeds
-- Permutation null kills ALL current tensor coupling claims — scorer measures geometry not objects
+- Tensor v2: 23 domains, 4.76M objects, 208 features
+- F0 honest battery: object-identity permutation null + synthetic null for tiny domains
+- SnapPy available on M1 (volumes work, Alexander polynomial needs Sage)
+- Postgres: ec_curvedata (3.8M), nf_fields (22M), artin_reps (798K), lfunc (24M with origin index)
