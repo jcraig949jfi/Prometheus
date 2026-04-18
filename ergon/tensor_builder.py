@@ -72,6 +72,9 @@ EXTENDED_DOMAINS = [
     # Fingerprint domains (Aporia E-FP tests)
     "nf_cf",             # ~2K, 10 features (NF + continued fraction features)
     "artin_ade",         # 100K, 11 features (Artin + ADE/Dynkin classification)
+    # Engineered variants
+    "knots_eng",         # 13K, 12 features (Mahler measure, roots of unity, PCA)
+    "knots_topo",        # 13K, 4 features (hyperbolic volume from SnapPy)
 ]
 
 DERIVED_DOMAINS = [

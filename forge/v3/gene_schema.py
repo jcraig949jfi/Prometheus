@@ -93,7 +93,7 @@ ACTIVE_DOMAINS = [
     # Physical / cross-disciplinary
     "codata", "pdg_particles", "chemistry", "metabolism",
     # Engineered variants
-    "knots_eng",
+    "knots_eng", "knots_topo",
     # Fingerprint domains (Aporia E-FP tests)
     "nf_cf", "artin_ade",
 ]
@@ -109,6 +109,7 @@ ACTIVE_FEATURES = {
     "ec_rich":         [f"f{i}" for i in range(16)],
     "knots":           [f"f{i}" for i in range(28)],
     "knots_eng":       [f"f{i}" for i in range(12)],
+    "knots_topo":      [f"f{i}" for i in range(4)],
     "maass":           [f"f{i}" for i in range(25)],
     "lattices":        [f"f{i}" for i in range(6)],
     "polytopes":       [f"f{i}" for i in range(6)],
