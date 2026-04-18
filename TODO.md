@@ -116,11 +116,25 @@ Coordinate with Kairos or pull from M2 directly.
 
 ---
 
-## ACTIVE: Aporia triage
+## ACTIVE: Critical Unblocks for Deep Research Results
 
-490 math problems being classified into Bucket A/B/C.
-Output: `aporia/mathematics/triage.jsonl` (not yet created).
-Blind trials alongside Bucket A (Kairos requirement).
+These three items unlock major research pipelines. All 20 deep research reports are complete — these are the blockers preventing execution.
+
+- [ ] **Ingest `ec_mwbsd` table** — Download CSV from devmirror.lmfdb.xyz, COPY into local lmfdb Postgres. Adds `tamagawa_product` and `real_period` columns. **Unlocks:** BSD Phase 2 full formula test (14-test battery on 2.2M rank 0-1 curves). Existing fetch script: `cartography/v2/ec_tamagawa.py`.
+- [ ] **`pip install snappy` on M1** — SnapPy computes hyperbolic volumes + A-polynomials for knots. **Unlocks:** Knot silence fix (we tested the WRONG polynomial — A-poly not Alexander), Volume conjecture (batch volumes in ~30min), L-space pipeline stages 2-5, trace field extraction (trace fields ARE number fields).
+- [ ] **`pip install chipfiring` on M1** — Chip-firing algorithms compute tropical rank on graphs. **Unlocks:** Tropical maximal rank connection to tensor decomposition, Baker-Norine Riemann-Roch on domain graphs.
+
+Also pending from earlier:
+- [ ] Paste frontier model prompts from `aporia/docs/prompt_open_problems_targeted.md` and `aporia/docs/prompt_solved_problems_genealogy.md` into Gemini/ChatGPT browser. Save responses for Aporia to catalog.
+
+---
+
+## COMPLETED: Aporia triage (2026-04-15)
+
+537 math problems classified into Bucket A/B/C (was 490, expanded to 537).
+Output: `aporia/mathematics/triage.jsonl` + `questions.jsonl`.
+20 deep research reports: `aporia/docs/deep_research_master_index.md`.
+90+ frontier hypotheses: `cartography/docs/challenges/aporia_frontier_hypotheses_consolidated_20260417.md`.
 
 ---
 

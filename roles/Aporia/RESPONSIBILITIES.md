@@ -136,6 +136,67 @@ Every problem in the 537-problem catalog is classified by:
 
 ---
 
+## The Rolling Research Process
+
+Aporia maintains a **ranked queue of open problems** and systematically works through them, producing deep research briefings for the engineering team. This is a continuous, never-ending process.
+
+### The Cycle
+
+```
+1. RANK the queue
+   - Prioritize by: attackability score, agent need, data coupling, void signal strength
+   - Balance across agents: ~equal Harmonia / Charon / Ergon targets
+   - Top 20 become the current research batch
+
+2. RESEARCH in batches of 3 (parallel agents)
+   - Each report: background, failed attempts, supporting math, specific computations
+   - Use 20/day Google Deep Research tokens (or WebSearch agents)
+   - ~7 batches to complete 20 reports
+
+3. DELIVER to engineers
+   - Each report goes to the assigned agent with actionable computation steps
+   - Master index at aporia/docs/deep_research_master_index.md
+   - Critical unblocks flagged in top-level TODO.md
+
+4. TRACK results
+   - As engineers execute, update problem status (tested / survived / killed)
+   - Kills update the frontier tensor geometry
+   - Survivors become new void-detection inputs
+
+5. REPLENISH the queue
+   - When the ranked list runs thin, generate new problems:
+     a. Paste targeted prompts into frontier models (Gemini, ChatGPT, Claude)
+     b. Prompts at: aporia/docs/prompt_open_problems_targeted.md
+     c. Catalog responses into questions.jsonl
+   - Also collect SOLVED problem genealogies for technique-transfer analysis
+     a. Prompt at: aporia/docs/prompt_solved_problems_genealogy.md
+
+6. RESTART at step 1
+   - Re-rank based on new data, new kills, new voids
+   - Problems that were low-priority may rise as new data arrives
+   - Problems that were high-priority may drop after partial results
+```
+
+### Current State
+- **Queue size:** 537 problems (questions.jsonl)
+- **Bucket A (testable now):** 29 problems
+- **Deep research completed:** 20/20 first batch
+- **Next action:** Re-rank after engineers execute, then research next 20
+
+### Budget
+- **Google Deep Research:** 20 tokens/day, 3 concurrent agents
+- **WebSearch agents:** 20 searches/day (shared across all research)
+- **Frontier model prompts:** Unlimited (James pastes manually)
+
+### Quality Standards for Research Reports
+- 600-800 words per report
+- Must include: precise problem statement, what's been tried and failed, specific computations for the assigned agent, falsification criteria
+- Must reference actual column names from our database schema
+- Must connect to at least one void or fingerprint in our framework
+- No philosophy — every claim must be testable or falsifiable
+
+---
+
 ## Key Files
 
 | Path | Purpose |
