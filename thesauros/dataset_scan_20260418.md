@@ -1,178 +1,173 @@
 # External Dataset Scan — 2026-04-18
 **Author:** Mnemosyne
-**Purpose:** Identify datasets we don't yet have that would complement existing cross-domain data and open new cross-domain bond candidates.
+**Purpose:** Identify datasets that would complement existing cross-domain data.
+
+**Revision note (2026-04-18 afternoon):** The first draft of this document recommended several datasets we already have on disk but hadn't ingested. Kairos caught the mistake. This version is rewritten after a full walk of `cartography/*/data/`. The "what's on disk already" section is the important part — most of the interesting work here is cataloguing and ingestion, not external downloading.
 
 ---
 
-## Current Coverage (live row counts, 2026-04-18)
+## What's Actually on Disk (and not yet in Postgres)
 
-| Domain | Strength | Weakness |
-|--------|----------|----------|
-| Number theory / L-functions | **Strong** — 24M lfuncs, 3.8M EC, 1.1M modular forms, 22M number fields, 2.48M bsd_joined | `object_zeros` rebuild pending (P-009) |
-| Algebra — finite groups | **Strong** — 544K groups, 39K lattices, 230 space_groups | No character tables, no Lie theory, no representations |
-| Topology | **Weak** — 12,965 knots, 980 polytopes; no 3-manifolds, no graphs, no simplicial complexes | Knot signatures empty (P-011); Mahler measures computed but unloaded |
-| Chemistry | **Thin** — 134K QM9 molecules | No dynamics, no reactions, no inorganics beyond AFLOW subset |
-| Physics | **Thin** — 10K materials, 16K superconductors, 226 particles, 355 constants | No exoplanets/GW/pulsars (on disk, unloaded); no astronomical catalogs |
-| Biology | **Very thin** — 108 BiGG metabolism models | No proteins, no expression, no phylogeny |
-| Combinatorics | **Empty** — FindStat on disk, unloaded | Entire domain missing |
-| Dynamical systems | **Empty** | Arithmetic dynamics directly adjacent to our EC/lfunc work |
-| Logic / formal math | **Empty** — 187 MB mathlib + metamath on disk, unloaded | Proof graphs unexplored |
+Full walk of `cartography/*/data/` surfaced a lot I missed before. Grouped by priority.
 
----
+### Topology / knots / 3-manifolds (much richer than I thought)
 
-## Tier 0 — Already On Disk, Just Needs Ingestion
+| Path | Size | Contents | Ingestion path |
+|------|------|----------|---------------|
+| `physics/data/snappy_manifolds.csv` | 20M | **223,673 3-manifolds** with volume, num_tetrahedra, homology, Chern–Simons | new table `topology.manifolds`; bridges to `nf_fields` via trace fields |
+| `topology/data/pi-base/` | 28M | π-Base: topological spaces (properties + theorems) | new schema `topology.pi_base` (spaces, properties, theorems) |
+| `knots/data/knot_polys.xlsx` | 8.5M | Knot polynomials (likely HOMFLY + Kauffman + Khovanov-adjacent) | augment `topology.knots` with new invariant columns |
+| `knots/data/PD_3-16.txt.zip` | 29M | PD codes for all knots, 3 to 16 crossings | parseable to augment `topology.knots` with braid words |
+| `knots/data/knotinfo_3d.csv.tar.gz` | 45M | **only 3D embedding coordinates** (not the full KnotInfo database) | new table `topology.knot_embeddings` (if we need 3D viz data) |
+| `charon/data/mahler_measures.json` | 1.2M | 2,977 Mahler measures (computed) | `topology.mahler_measures` (already in loose_files) |
 
-Should be finished before scouting outward. All listed in `thesauros/loose_files.md` with verified file paths.
+### Modular / Siegel / paramodular / Maass forms
 
-| Dataset | Target | Rows | Effort |
-|--------|-------|------|--------|
-| NASA Exoplanet Archive | `physics.exoplanets` | 6,158 | 1 hour |
-| Gravitational wave events (GWTC) | `physics.gw_events` | 219 | 30 min |
-| ATNF Pulsar Catalogue | `physics.pulsars` | 4,351 | 1 hour |
-| Mahler measures (precomputed) | `topology.mahler_measures` | 2,977 | 30 min |
-| FindStat | `analysis.findstat` | ~500 | 1 hour |
-| OEIS crossrefs / formulas | `analysis.oeis_crossrefs`, `analysis.oeis_formulas` | ~375K each | 2 hours |
-| Small groups (atlas) append | `algebra.groups` | ~500 | 30 min |
+| Path | Size | Contents | Status |
+|------|------|----------|--------|
+| `maass/data/maass_with_coefficients.json` | 335M | Maass forms with Fourier coefficients | unloaded — new table `analysis.maass_forms` |
+| `maass/data/maass_with_fricke.json` | 335M | Maass forms with Fricke involution data | same |
+| `genus2/data/siegel_fourier_coeffs.json` | 619M | Siegel modular form Fourier coefficients | unloaded — relates to `g2c_curves` |
+| `genus2/data/genus2_curves_full.json` | 18M | Full genus-2 curve dataset | check vs LMFDB's 66K `g2c_curves` |
+| `paramodular_level16/` | (several html + eigs files) | Paramodular forms level 16 | ad-hoc format; low priority |
+| `paramodular_wt2/`, `paramodular_wt3/` | small | Paramodular forms weights 2 & 3 | same |
+| `omf5_data/` | ~MBs | Orthogonal modular forms in 5 variables (OMF5) — Hecke eigenvalues | rare dataset, worth preserving |
+| `convergence/data/hmf_forms_full.json` | 45M | Hilbert modular forms full | unloaded |
+| `convergence/data/bianchi_forms.json` | 33M | Bianchi modular forms | unloaded |
+| `convergence/data/hmf_hecke_eigenvalues.jsonl` | **69 GB** | Hilbert modular form Hecke eigenvalues | massive — ingestion cost needs triage |
 
-**Recommendation:** clear this queue before pulling any new external source. Cheap, de-risks later work, and every one of these opens a join that isn't currently possible.
+### Algebra / groups / number fields
 
----
+| Path | Size | Contents | Status |
+|------|------|----------|--------|
+| `atlas/data/small_groups.json` | 1.1M | JSON extract of GAP SmallGroups (~500 groups) | loose_files already flagged; append to `algebra.groups` |
+| `atlas/data/smallgrp/` | 100M | Full GAP SmallGroups **package** (not parsed JSON) | GAP library, not directly ingestable — use for generating data on demand |
+| `atlas/data/gap-system/` | 127M | Full GAP computer algebra system | tool, not data |
+| `local_fields/data/` | (files) | Local number fields | unloaded |
+| `number_fields/data/number_fields.json` | 1.8M | ~9K number fields (local copy) | append/intersect with `nf_fields` (22M) |
 
-## Tier 1 — Direct Augmentation of Strong Domains
+**Terminology correction:** `cartography/atlas/` is the **GAP SmallGroups** library, not the **ATLAS of Finite Group Representations** (Wilson/QMUL Monster-family sporadics). Different databases. The distinction matters for bond candidates — SmallGroups catalogues every group up to order ~2000; the ATLAS has deep representation-theoretic data on specific simple groups.
 
-Highest leverage because they plug into tables that already see heavy cross-domain traffic.
+### Formal mathematics
 
-### 1.1 Knot invariants beyond what we have
-**Gap:** `topology.knots` has Alexander, Jones, Conway, determinant (partial), and now crossing_number (fixed 2026-04-16). Missing: signature (P-011 open), genus, slice genus, braid index, HOMFLY-PT polynomial, **Khovanov homology**.
+| Path | Size | Contents | Status |
+|------|------|----------|--------|
+| `mathlib/data/mathlib4` | 138M | Full Lean Mathlib4 snapshot | unloaded — schema needs designing |
+| `metamath/data/set.mm` | 49M | Metamath set.mm proof database | unloaded — proof DAG |
 
-**Sources:**
-- **KnotInfo** — [knotinfo.math.indiana.edu](https://knotinfo.math.indiana.edu/) — canonical table for all prime knots up to 13 crossings. Contains Khovanov homology ranks and torsions computed via KnotJob (Schütz). Downloadable CSV.
-- **Knot Atlas** — [katlas.org/wiki/Khovanov_Homology](https://katlas.org/wiki/Khovanov_Homology) — community wiki with Khovanov polynomials for small knots.
-- **khoca** — [github.com/LLewark/khoca](https://github.com/LLewark/khoca) — C++/Python tool for computing Khovanov–Rozansky homology if we ever need to go beyond 13 crossings.
+### Physics (beyond what's in `physics.*`)
 
-**Why it matters for us:** Khovanov homology categorifies the Jones polynomial. We already have Jones coefficients, so this is structurally adjacent — and Khovanov ranks give new numerical invariants that could participate in cross-domain bonds (already seen plausible knot↔L-function links in noesis.cross_domain_edges).
+| Path | Size | Contents | Status |
+|------|------|----------|--------|
+| `physics/data/basis_sets/` | 292M | Quantum chemistry basis sets | specialized, defer |
+| `physics/data/nist_asd/` | 16M | NIST Atomic Spectra Database | unloaded — new table |
+| `physics/data/superconductors/` | 107M | More superconductor data beyond the 16K in `physics.superconductors` | check for delta |
+| `physics/data/exoplanets/` | 700K | Confirmed exoplanets (6,158) | loose_files — ingest |
+| `physics/data/gravitational_waves/` | 13K | GWTC parameters (219) | loose_files — ingest |
+| `physics/data/pulsars/` | 5.3M | ATNF pulsars (4,351) | loose_files — ingest |
+| `physics/data/pubchem_50k.csv` | ? | PubChem 50K compounds | loose_files — ingest |
+| `physics/data/cod_crystals_bulk.json` | ? | COD crystal structures | loose_files — ingest |
+| `isogenies/data/graphs/` | 380M | Isogeny graph data | specialized |
+| `isogenies/data/isogeny-database-v1-30000.zip` | 283M | Isogeny database | specialized |
 
-### 1.2 SnapPy 3-manifold census with hyperbolic volumes
-**Gap:** we have knots but no 3-manifolds. Knot complements in S³ are 3-manifolds; hyperbolic volume of a knot complement is a classical invariant.
+### Convergence signatures (research outputs, not raw data)
 
-**Source:** [snappy.computop.org/censuses.html](https://snappy.computop.org/censuses.html)
-- `OrientableCuspedCensus` — all cusped hyperbolic 3-manifolds triangulated with ≤9 ideal tetrahedra; recently extended to 10 tets (adds ~150,000 manifolds)
-- `OrientableClosedCensus` — 11,031 closed hyperbolic 3-manifolds (Hodgson-Weeks)
-- Platonic manifold census
+Per `loose_files.md`, everything under `convergence/data/*_signatures.jsonl` is **derived research output**, not source data. But two exceptions that are effectively source-quality:
 
-**Why it matters for us:** Hyperbolic volume and trace fields bridge topology ↔ number theory directly. Trace fields are number fields (already in `nf_fields` — 22M rows); hyperbolic volumes relate to special values of L-functions. This is a potential Tier-3 ensemble invariance candidate.
+| Path | Size | Notes |
+|------|------|-------|
+| `convergence/data/hmf_hecke_eigenvalues.jsonl` | 69 GB | Canonical computed HMF Hecke eigenvalues — source-quality |
+| `convergence/data/bianchi_forms.json` | 33M | Source-quality Bianchi forms |
+| `convergence/data/arithmetic_dynamics_signatures.jsonl` | 11M | **NOT an arithmetic-dynamics database** — it's Lyapunov/orbit-type signatures computed from OEIS sequences treating them as dynamical systems |
 
-### 1.3 ATLAS of Finite Group Representations + character tables
-**Gap:** we have 544,831 abstract groups but no representations or character tables. Representation theory links groups to their L-functions (Artin reps, already partially in LMFDB with 800K rows).
+### Open problems
 
-**Source:** [brauer.maths.qmul.ac.uk/Atlas/v3](https://brauer.maths.qmul.ac.uk/Atlas/v3/) — 5,215 representations of 716 groups. GAP's `AtlasRep` package and `CtblLib` character table library cover the full ATLAS character tables.
-
-**Why it matters for us:** `artin_reps` (~800K) is the bridge. ATLAS character tables + Artin reps would let us test conjectures like Dedekind's Zeta quotient decomposition, or connect finite-group classification to L-function L-values.
-
----
-
-## Tier 2 — New Domains with Clear Cross-Domain Links
-
-### 2.1 Graph databases — House of Graphs + Brouwer strongly regular
-**Gap:** no graph table at all. Cayley graphs of our 544K groups have been computed nowhere; interesting families (strongly regular, distance-regular, cages) are directly adjacent to combinatorial designs and codes.
-
-**Sources:**
-- **House of Graphs** — [houseofgraphs.org](https://houseofgraphs.org/meta-directory) — curated database of "interesting" graphs and counterexamples. Downloadable in graph6 / multicode format.
-- **Brouwer's strongly regular graphs** — existence results up to 1300 vertices, full SageMath implementation ([doc.sagemath.org/.../strongly_regular_db.html](https://doc.sagemath.org/html/en/reference/graphs/sage/graphs/strongly_regular_db.html))
-
-**Candidate table:**
-```sql
-CREATE SCHEMA graphs;
-CREATE TABLE graphs.strongly_regular (
-    g_id SERIAL PRIMARY KEY, v INT, k INT, lambda INT, mu INT,
-    is_primitive BOOLEAN, family TEXT, source TEXT,
-    graph6 TEXT, automorphism_order BIGINT
-);
-```
-
-**Why it matters for us:** SRGs are specified by 4 parameters (v, k, λ, μ); known families include Paley graphs (which tie to quadratic characters of number fields), Johnson/Kneser graphs (combinatorics), and incidence graphs of designs (codes).
-
-### 2.2 CodeTables — Best-known linear codes
-**Gap:** no coding-theory table. Linear codes over GF(q) are the algebraic-combinatorial bridge to lattices (Construction A: codes → lattices).
-
-**Source:** [codetables.de](https://codetables.de/) — Markus Grassl's regularly-updated tables of best-known linear codes over GF(2,3,4,5,7,8,9).
-
-**Why it matters for us:** we already have 39,293 lattices. Linear codes yield lattices via Construction A; comparing code minimum distance with lattice minimum norm is a direct cross-domain test. Extremal self-dual codes connect to modular forms (we have 1.14M of those).
-
-### 2.3 Arithmetic dynamics data
-**Gap:** dynamical systems entirely absent. Yet arithmetic dynamics is the closest sibling to our EC/lfunc work — canonical heights, preperiodic points, boundedness conjectures, all structurally parallel to Mordell-Weil.
-
-**Sources:**
-- Recent computational work on [extreme examples in arithmetic dynamics](https://arxiv.org/html/2601.11482) — datasets of polynomials up to degree 13, rational functions up to degree 5, with preperiodic-point counts.
-- No canonical "database" yet exists; this is more literature-driven than catalog-driven.
-
-**Candidate table:**
-```sql
-CREATE TABLE analysis.arith_dynamical_systems (
-    id BIGSERIAL PRIMARY KEY,
-    map_type TEXT, degree INT, coefficients NUMERIC[],
-    n_preperiodic INT, n_periodic INT, min_cycle_length INT,
-    canonical_height_leading_coeff NUMERIC, source TEXT
-);
-```
-
-**Why it matters for us:** Uniform Boundedness Conjecture (Morton-Silverman) for dynamics is the analog of Mazur's torsion theorem for EC. We have 3.8M EC with torsion data; cross-referencing with bounded preperiodic point counts would be a literal analog across domains.
+| Path | Contents |
+|------|----------|
+| `cartography/open_problems/` | Problem registry + enrichment script — worth integrating with `prometheus_fire.agora.open_questions` |
 
 ---
 
-## Tier 3 — Larger Efforts, Domain-Creating
+## Real External Gaps (confirmed not on disk)
 
-### 3.1 AlphaFold / PDB protein structures
-**Gap:** biology is one table with 108 rows. AlphaFold DB has ~200M predicted structures; the PDB has ~200K experimental ones.
+After the walk, these are genuine gaps:
 
-**Cost:** very large ingestion, storage concerns. Not recommended unless a specific bio-adjacent research direction opens.
+### 1. Graph databases
+`cartography/graph/data/` is **empty**. Exists as a scaffolded directory with `graph_exploration.py` and a 2026-04-05 log but zero data files.
 
-### 3.2 Materials Project (full) + AFLOW full
-**Gap:** `physics.materials` is capped at 10,000 rows; full MP has ~150K materials. AFLOW canonical database is millions.
+**Candidates:**
+- [House of Graphs](https://houseofgraphs.org/meta-directory) — curated "interesting" graphs, downloadable in graph6
+- Brouwer strongly regular graph database (implemented in [SageMath](https://doc.sagemath.org/html/en/reference/graphs/sage/graphs/strongly_regular_db.html))
 
-**Cost:** moderate (~GB of JSON per 100K entries). Worthwhile if we pivot to materials bonds; currently materials don't participate in strong bonds per our noesis.cross_domain_edges.
+**Why it matters:** connects to `algebra.groups` (automorphism groups, Cayley graphs) and to codes→lattices→modular forms chain.
 
-### 3.3 Lean Mathlib + Metamath
-**Gap:** 187 MB of formal math on disk, unloaded. No schema yet exists. Mathlib alone has ~200K declarations.
+### 2. ATLAS of Finite Group Representations (Wilson / QMUL)
+Confirmed absent — our `atlas/` is GAP SmallGroups, not the ATLAS. [brauer.maths.qmul.ac.uk/Atlas/v3](https://brauer.maths.qmul.ac.uk/Atlas/v3/) has 5,215 representations of 716 groups including character tables and subgroup structure for sporadic simples.
 
-**Schema to design if we want this:**
-```sql
-CREATE SCHEMA formal;
--- declarations, dependencies (DAG), tactic use, import graph
-```
+**Why it matters:** bridge from `algebra.groups` to `artin_reps` (798K Artin reps in LMFDB). Character tables + Artin rep L-functions is a direct cross-domain test.
 
-**Why it matters:** gives us a proof dependency graph that's structurally a DAG on mathematical concepts — a native cross-domain bridge, already labeled by the authors.
+### 3. CodeTables.de
+No coding-theory data on disk. [codetables.de](https://codetables.de/) (Grassl) has best-known linear codes over GF(2,3,4,5,7,8,9).
 
----
+**Why it matters:** Construction A maps codes → lattices. We have 39,293 lattices; extremal self-dual codes connect to modular forms (1.14M of those). Direct cross-domain bond candidate.
 
-## Explicit Non-Recommendations
+### 4. Full KnotInfo database
+We only have 3D coordinates, not the main invariant table. [knotinfo.math.indiana.edu](https://knotinfo.math.indiana.edu/) has signature, genus, slice genus, Khovanov ranks, HOMFLY-PT — the signature backfill (P-011) was asking for exactly this.
 
-| Skip | Reason |
-|------|--------|
-| CIFAR / MNIST / generic ML benchmarks | Not structural data; no math invariants |
-| Full Materials Project / AFLOW bulk | Only justified if a materials bond emerges in Tier-3 bonds |
-| PDB/AlphaFold | Too large for current infra; unclear cross-domain payoff |
-| Generic social-network graphs (Facebook, Twitter) | No mathematical invariants of interest |
-| Full NCBI GenBank | Out of scope |
+### 5. Arithmetic dynamics (rational map data)
+Confirmed: our `arithmetic_dynamics_signatures.jsonl` is OEIS-sequence orbit-type signatures, not actual rational-map preperiodic-point data. No canonical database exists yet; literature-driven if we want it.
 
----
+### 6. Classical physics tables
+- **AFLOW** — we have the superconductor subset; full AFLOW covers millions of inorganic materials
+- **Materials Project** (full, ~150K) — we have the 10K subset
+- **Gaia stellar catalog** — no astronomical catalogs at all
 
-## Recommended Sequencing
-
-1. **Clear Tier 0** (Exoplanets, GW, Pulsars, Mahler measures, FindStat, OEIS aux). ~1 day of work. Everything already on disk.
-2. **KnotInfo Khovanov + extended knot invariants** (Tier 1.1) — direct patch to a table with known gaps (signature P-011 already open).
-3. **SnapPy 3-manifold census** (Tier 1.2) — opens topology ↔ number theory via trace fields.
-4. **ATLAS character tables** (Tier 1.3) — bridges groups ↔ Artin reps.
-5. **Graphs + SRG + codes** (Tier 2.1 + 2.2) — combinatorial bridge; codes→lattices→modular forms chain.
-6. **Arithmetic dynamics** (Tier 2.3) — literature-driven for now; wait for a research direction.
-7. **Mathlib / PDB / full MP** (Tier 3) — deferred unless a specific bond demands them.
-
-Total new data volume for Tier 0 + Tier 1: <5 GB. Storage is not a constraint.
+### 7. Congruent number database / extended BSD data
+Directly adjacent to our EC work; scattered in papers, no single database.
 
 ---
 
-## Open Questions for Agora
+## Revised Sequencing
 
-- Does anyone currently need any of these? (Harmonia's battery, Aporia's triage, Kairos's kill-tests — do any want new substrate?)
-- Ranking: is topology ↔ number theory (SnapPy) more interesting than algebra ↔ rep theory (ATLAS)?
-- For codes → lattices: do we have any researcher who cares? If no, defer.
+Given the size of the "already on disk but unloaded" queue, that's the first thing to clear — not external scouting.
+
+### Priority 0 (no download, pure ingestion)
+
+**Sub-queue A — quick wins (< 1 hour each):**
+- `physics/data/exoplanets/` → `physics.exoplanets` (6,158)
+- `physics/data/gravitational_waves/` → `physics.gw_events` (219)
+- `physics/data/pulsars/` → `physics.pulsars` (4,351)
+- `charon/data/mahler_measures.json` → `topology.mahler_measures` (2,977)
+- `cartography/findstat/` → `analysis.findstat` (~500)
+- `atlas/data/small_groups.json` append → `algebra.groups` (~500)
+
+**Sub-queue B — larger, higher impact:**
+- `physics/data/snappy_manifolds.csv` → `topology.manifolds` (**223,673 rows**) — this alone is a new domain
+- `topology/data/pi-base/` → new schema `topology.pi_base`
+- `knots/data/knot_polys.xlsx` + `PD_3-16.txt.zip` → augment `topology.knots`
+- `maass/data/maass_with_coefficients.json` → `analysis.maass_forms`
+- `cartography/open_problems/` → integrate with `agora.open_questions`
+
+**Sub-queue C — needs schema design:**
+- `genus2/data/siegel_fourier_coeffs.json` (619M) — coefficient schema
+- `convergence/data/hmf_forms_full.json` + `bianchi_forms.json` — HMF/Bianchi schemas
+- `mathlib/data/mathlib4/` — proof-graph schema (declarations + deps)
+- `metamath/data/set.mm` — same
+- `convergence/data/hmf_hecke_eigenvalues.jsonl` (69 GB) — needs triage, probably Postgres partitioning + Redis summary
+
+### Priority 1 (external — only after P0 clear)
+
+- **Full KnotInfo** (signature/genus/Khovanov) — fixes P-011 directly
+- **Graph databases** (House of Graphs + Brouwer SRG)
+- **ATLAS of Finite Group Representations** — groups ↔ Artin reps bridge
+- **CodeTables.de** — codes → lattices → modular forms chain
+
+### Priority 2 (deferred)
+
+Everything else. No concrete research driver yet.
+
+---
+
+## Lesson
+
+The embarrassment was real: more than half of my original recommendations were for data already on disk. Process fix: before any future "we should get X" recommendation, grep `cartography/*/data/` for the keyword and size-check any hits. `loose_files.md` is a useful start but has gaps of its own; the directory walk is authoritative.
