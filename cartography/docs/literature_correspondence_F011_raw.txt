@@ -1,0 +1,55 @@
+## F1
+
+- **RELEVANT_PAPER**: Miller (2006), "Investigations of zeros near the central point of elliptic curve L-functions," Exp. Math. — finite-conductor one-level density with lower-order arithmetic corrections; also Dueñez-Huynh-Keating-Miller-Snaith (2010-2012) on effective/discretized random matrix models for low-lying zeros.
+- **PREDICTED_MAGNITUDE**: Finite-conductor corrections to nearest-neighbor / first-gap statistics of size O(1/log N). At log N ≈ 10-13 (natural log of our conductors), 1/log N ≈ 0.08-0.10, i.e. corrections at the 10-40% level, decreasing monotonically with N toward the GUE asymptote.
+- **MATCH**: CONSISTENT.
+- **MATCH_REASONING**: The observed 30-45% deficit shrinking monotonically with conductor matches the qualitative DHKMS/Miller picture that the "arithmetic" finite-N scale suppresses low-lying gap variance, with a 1/log N-scale approach to GUE.
+- **NEW_QUESTION_OPENED**: Is the *second*-gap deficit decaying at the same rate as the first, or is there a distinct sub-leading scale controlling deeper-in-spectrum gaps? The 97σ separation between first and second gap deficits suggests the finite-N correction is strongly gap-index-dependent, which is not explicit in the current DHKMS framework.
+
+## F2
+
+- **RELEVANT_PAPER**: Dueñez-Huynh-Keating-Miller-Snaith (2012), "A random matrix model for elliptic curve L-functions of finite conductor," J. Phys. A — the "excised orthogonal ensemble" predicts *more* repulsion (and stronger deviations from naive SO) as the number of forced central zeros increases.
+- **PREDICTED_MAGNITUDE**: Naive ordering would predict rank 2 > rank 1 > rank 0 in repulsion strength (hence deficit in nearest-neighbor variance). Predicted deficit differences across rank: several percent at our conductors.
+- **MATCH**: CONTRADICTS (naive DHKMS-style ordering).
+- **MATCH_REASONING**: Rank 0 exhibits the *largest* first-gap deficit (46.4%) while rank 2 shows the smallest (32.0%), inverting the forced-zero-repulsion hierarchy that excised-ensemble logic would naively suggest for *first-gap-above-center* variance.
+- **NEW_QUESTION_OPENED**: The contradiction suggests that "first gap" measured from the lowest non-central zero behaves differently than the first-zero-height statistic DHKMS model: forced zeros may *absorb* repulsion rather than propagate it outward, leaving the first *nontrivial* gap less constrained for higher-rank curves. A refined excised-ensemble prediction conditioning on gap index above the forced block is needed.
+
+## F3
+
+- **RELEVANT_PAPER**: Conrey-Farmer-Mezzadri-Snaith-type heuristics and Huynh-Keating-Snaith (2009) "Lower order terms for the one-level density of elliptic curve L-functions" — predict 1/log N leading correction; also Miller (2006) for data-driven fits.
+- **PREDICTED_MAGNITUDE**: Classical arithmetic lower-order terms predict ε(N) ~ C/log N with ε_∞ = 0 (full GUE recovery as N→∞). A non-zero residual ε_0 is *not* predicted by standard RMT+arithmetic.
+- **MATCH**: EXTENDS / potentially CONTRADICTS.
+- **MATCH_REASONING**: All three fit ansätze yield a *non-zero* asymptotic deficit ε_0 ∈ [23%, 36%] with high significance (the 1/log N fit gives 29σ from zero); standard theory predicts ε_0 → 0, though ansatz-sensitivity means the conductor range may simply be too narrow to resolve the true decay exponent.
+- **NEW_QUESTION_OPENED**: Is ε_0 > 0 a real obstruction to GUE universality for this gap statistic, or an artifact of fitting on 1.8 decades of log N where 1/log N varies only from 0.11 to 0.08? Pushing to log_cond > 7 (LMFDB-BHM range) would discriminate ansätze; separately, is there a theoretically motivated joint fit (ε_0 fixed at 0, fitting α and C) that is statistically acceptable?
+
+## F4
+
+- **RELEVANT_PAPER**: Katz-Sarnak (1999) "Random Matrices, Frobenius Eigenvalues, and Monodromy" for the SO(even)/SO(odd) split; Miller (2004, 2008) for empirical stratification by functional equation sign in elliptic curve families.
+- **PREDICTED_MAGNITUDE**: SO(even) and SO(odd) one-level densities differ by O(1) near the origin but converge at finite rate 1/log N away from it; gap-variance differences across symmetry types are predicted at the few-percent level at our conductors, without a predicted *sign flip* in rank-slope.
+- **MATCH**: EXTENDS.
+- **MATCH_REASONING**: The 7.6% deficit spread is consistent in magnitude with Katz-Sarnak symmetry stratification, but the *sign flip* in rank-slope between SO_even (+0.0128/rank) and SO_odd (−0.0022/rank), durable at z=15, is a structural feature not explicitly predicted by existing symmetry-type literature.
+- **NEW_QUESTION_OPENED**: Does the slope sign flip reflect that within SO_even, increasing rank adds *pairs* of forced zeros (rank 0 → 2) while within SO_odd it adds pairs on top of a single forced zero (rank 1 → 3), so the "geometry" of the forced-zero block differs parity-wise? A parity-conditioned excised-ensemble calculation would be the natural test.
+
+## F5
+
+- **RELEVANT_PAPER**: Miller-Montague (2011?) and Sarnak's observations on CM vs non-CM L-function statistics; more directly, general expectation that CM curves have modular forms with CM and different Sato-Tate behavior but do not dominate one-level density families.
+- **PREDICTED_MAGNITUDE**: CM contributes O(0.9%) by count and should not shift pooled statistics by more than ~1% even under pessimistic assumptions. (Uncertain specific citation — closest is Miller's thesis work on CM subfamilies.)
+- **MATCH**: CONSISTENT.
+- **MATCH_REASONING**: Non-CM rank-0 deficit (29.94%) matches pooled rank-0 deficit (31%) within errors, confirming CM is not the carrier of the residual as expected from its negligible population fraction.
+- **NEW_QUESTION_OPENED**: Is there a CM-only finite-conductor prediction (the Hecke-Grossencharacter L-function family has *unitary* symmetry rather than orthogonal) that would predict CM rank-0 to have a *different* gap-variance signature? A 1,766-curve CM cohort is thin but could be tested against unitary GUE directly without the orthogonal correction.
+
+## F6
+
+- **RELEVANT_PAPER**: No direct literature — this is a methodological confound-audit analogous to Miller (2008, 2015) robustness checks, and to Sarnak-Shin-Templier stratification ideas. Best-known closest reference: Miller's empirical protocols in "1- and 2-level densities for families of elliptic curves."
+- **PREDICTED_MAGNITUDE**: Torsion structure should influence L-function arithmetic at the 1/log N level (via local factors at primes dividing the torsion), giving a detectable but small effect. Class-size confound is expected to be degenerate by construction.
+- **MATCH**: CONSISTENT / EXTENDS.
+- **MATCH_REASONING**: Survival under the cleanest (cm_binary) audit supports the residual being a genuine feature; torsion_bin showing z=4.19 durable signal is new information consistent with torsion-level arithmetic modulating zero statistics.
+- **NEW_QUESTION_OPENED**: Does the torsion-stratified residual correspond to modular degree / Tamagawa number effects known in BSD arithmetic, i.e., can the torsion-conditional gap-variance deficit be predicted from the local L-factor structure at torsion primes?
+
+## F7
+
+- **RELEVANT_PAPER**: Miller (2006) on low-conductor elliptic curve zero statistics, and Bober-Hiary-Miller-type computations on the smallest-conductor Cremona cohort.
+- **PREDICTED_MAGNITUDE**: At log_cond < 4, 1/log N ≈ 0.11, predicted deficit in the 40-50% range under a 1/log N ansatz extrapolated from F3; a 57% deficit exceeds this linear extrapolation.
+- **MATCH**: EXTENDS (possibly CONTRADICTS monotone-decay extrapolation).
+- **MATCH_REASONING**: A 57% deficit in the lowest-conductor cohort is ~13pp above the rank-0 mean and exceeds what a simple monotone 1/log N extrapolation from F3's fit would predict at log_cond = 3.8-4.0, while the diversity of the cohort rules out selection artifact.
+- **NEW_QUESTION_OPENED**: Is there an *accelerated* low-conductor regime where additional finite-N corrections (e.g., from the square of the logarithmic derivative, or from contributions of the smallest primes dominating the explicit formula) kick in? This cohort is a natural laboratory for testing whether the CFMS 1/log²N heuristic outperforms 1/log N specifically at low conductor.

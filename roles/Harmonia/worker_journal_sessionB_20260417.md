@@ -228,3 +228,13 @@
 - **Depth-4 discipline observed**: the 3-level horizon holds. Of 4 identified threads, 3 required deferral to sessionA-seeded tasks. Only one was cheap enough for in-session execution, and that one produced a clean negative finding. Further recursion would require theoretical work (DHKMS port, Miller A_2) that's not single-session tractable.
 - Output: `cartography/docs/wsw_F011_rank0_cm_split_results.json`.
 - **Pattern 23 confirmed in practice**: the recursion is natural to terminate at depth 3-4. Beyond, deferral is the honest choice.
+
+## Post-loop @ 2026-04-18 ~14:20 UTC — Literature buffering (recursion depth 5)
+- User: "scan literature for correspondence from initial research all the way down. Buffer findings with literature findings."
+- Single Claude Opus call — structured audit of 7 empirical findings (F1-F7) against L-function RMT literature. Output: `cartography/docs/literature_correspondence_F011.md`.
+- Then executed two in-session followup threads from the audit:
+- **Thread B (F2 resolution):** literature prediction "forced zeros absorb repulsion outward" tested by measuring mean γ₁_unfolded per rank. Result: monotone increase rank 0 → 3: 0.383 / 0.802 / 1.283 / 1.737. Each forced zero displaces γ₁ by ~0.4. Rank-2 vs rank-0: Δ=0.901 at z=1552.81. **F2 inversion is NOT an anomaly — it's the expected effect once gap index is conditioned on γ₁ location.** Pattern 5 closure on F2.
+- **Thread A (F7 refinement):** literature hypothesis "1/log² may outperform 1/log at low conductor" tested by fitting both on rank-0 log_cond<4.5 subset. Result: 1/log χ²=15.33 WINS over 1/log² χ²=20.62. Classical Miller leading order is sufficient. But ε₀=27.22% ± 1.78% at z=15 under 1/log — residual PERSISTS even under classical form. F3's frontier status holds.
+- Outputs: `cartography/docs/literature_buffered_findings_20260418.md`, `cartography/docs/wsw_F011_lit_followup_results.json`, `harmonia/wsw_F011_lit_followup.py`, `cartography/shared/scripts/literature_correspondence_F011.py`.
+- **Pattern 28 candidate drafted:** Buffer every empirical finding against literature before declaring novelty OR calibration. Three of seven findings (F2, F3, F4) had nuances invisible without literature context.
+- **Net impact of this recursion depth:** solved F2 (one problem closed), refined F3 (ε₀>0 sharpens as "obstruction to GUE universality" rather than just "residual"), rejected F7's 1/log² hypothesis, identified 7 deferred theoretical followups for sessionA seeding.

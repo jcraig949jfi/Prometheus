@@ -1,0 +1,133 @@
+{
+  "task": "literature-correspondence-followup threads A and B",
+  "instance": "Harmonia_M2_sessionB",
+  "started": "2026-04-18T14:21:51.914403+00:00",
+  "finished": "2026-04-18T14:21:58.757423+00:00",
+  "thread_A_low_conductor_ansatz_comparison": {
+    "domain": "rank 0, log_cond < 4.5",
+    "n_total": 69735,
+    "n_bins": 10,
+    "per_bin": [
+      {
+        "bin": 0,
+        "mean_log_cond": 2.9728833197402182,
+        "n": 6964,
+        "deficit_pct": 60.74990878018879,
+        "se_def": 0.6652080108984441
+      },
+      {
+        "bin": 1,
+        "mean_log_cond": 3.601275205762829,
+        "n": 6964,
+        "deficit_pct": 56.10620124680612,
+        "se_def": 0.7439092662452453
+      },
+      {
+        "bin": 2,
+        "mean_log_cond": 3.87911844675716,
+        "n": 6993,
+        "deficit_pct": 55.713085777841236,
+        "se_def": 0.749013609807985
+      },
+      {
+        "bin": 3,
+        "mean_log_cond": 4.057167979396224,
+        "n": 6972,
+        "deficit_pct": 53.04567071444655,
+        "se_def": 0.7953221864069489
+      },
+      {
+        "bin": 4,
+        "mean_log_cond": 4.159716415088213,
+        "n": 6962,
+        "deficit_pct": 51.06505854695702,
+        "se_def": 0.8294653603896959
+      },
+      {
+        "bin": 5,
+        "mean_log_cond": 4.242599954466211,
+        "n": 6984,
+        "deficit_pct": 50.81620166777467,
+        "se_def": 0.8323692770121716
+      },
+      {
+        "bin": 6,
+        "mean_log_cond": 4.312286954566616,
+        "n": 6975,
+        "deficit_pct": 49.68802710497828,
+        "se_def": 0.8520113379105546
+      },
+      {
+        "bin": 7,
+        "mean_log_cond": 4.373792393837452,
+        "n": 6974,
+        "deficit_pct": 50.49704887804047,
+        "se_def": 0.8383710157619538
+      },
+      {
+        "bin": 8,
+        "mean_log_cond": 4.428476879331067,
+        "n": 6939,
+        "deficit_pct": 49.97861911486355,
+        "se_def": 0.8492851428492578
+      },
+      {
+        "bin": 9,
+        "mean_log_cond": 4.476045199454039,
+        "n": 7008,
+        "deficit_pct": 49.12452349687513,
+        "se_def": 0.8595228545185442
+      }
+    ],
+    "fit_one_over_log": {
+      "eps0": 27.217475776508657,
+      "C": 234.52301195946137,
+      "se_eps0": 1.7791863346468275,
+      "chi2": 15.327982024941031
+    },
+    "fit_one_over_log_squared": {
+      "eps0": 41.322524318928856,
+      "C": 948.9797517408322,
+      "se_eps0": 0.8558703600378605,
+      "chi2": 20.61740738178982
+    },
+    "winner_by_chi2": "1/log(N) (classical Miller)",
+    "winner_chi2": 15.327982024941031,
+    "reading": "At low conductor (log_cond<4.5), the 1/log(N) (classical Miller) ansatz gives the lower chi\u00b2. If 1/log\u00b2 wins, it supports the literature hint that CFMS-style lower-order terms dominate at small N. If 1/log wins, classical Miller leading order is sufficient even at the extreme."
+  },
+  "thread_B_rank_conditioned_gamma1_displacement": {
+    "rank_0": {
+      "n": 773072,
+      "mean_z1_unf": 0.38268190025830284,
+      "median_z1_unf": 0.3636868075727881,
+      "std_z1_unf": 0.18467114335898255
+    },
+    "rank_1": {
+      "n": 1008146,
+      "mean_z1_unf": 0.8015829212981503,
+      "median_z1_unf": 0.7936951550006635,
+      "std_z1_unf": 0.23066522325403627
+    },
+    "rank_2": {
+      "n": 222305,
+      "mean_z1_unf": 1.2833588298506895,
+      "median_z1_unf": 1.2827362012907024,
+      "std_z1_unf": 0.2549206667914643
+    },
+    "rank_3": {
+      "n": 5405,
+      "mean_z1_unf": 1.7368966176151717,
+      "median_z1_unf": 1.7364629487683314,
+      "std_z1_unf": 0.2570397344830613
+    },
+    "rank_2_minus_rank_0_mean_z1": 0.9006769295923867,
+    "z_displacement": 1552.8119372412652,
+    "t_test_p_value": 0.0,
+    "verdict": "DISPLACEMENT_CONFIRMED",
+    "reading": "Rank 2 \u03b3\u2081 sits delta=0.9007 higher than rank 0 \u03b3\u2081 at z=1552.81. Supports the literature hypothesis: the forced central zeros in rank-2 curves PUSH \u03b3\u2081 outward, so rank-2's first nontrivial gap is measured in a less-repelled region. This explains the inverted deficit ordering F2: rank-0's \u03b3\u2081 sits closer to s=1/2 where the excised-ensemble repulsion is strongest."
+  },
+  "_meta": {
+    "literature_source": "cartography/docs/literature_correspondence_F011.md (F2 and F7 audit entries)",
+    "rationale": "F2 audit: 'forced zeros may absorb repulsion rather than propagate it outward.' Test B: does rank 2 \u03b3\u2081 sit higher than rank 0 \u03b3\u2081? F7 audit: 'a 57% deficit at log_cond<4 exceeds 1/log extrapolation; test CFMS 1/log\u00b2'. Test A: fit both ans\u00e4tze on low_cond subset."
+  }
+}
