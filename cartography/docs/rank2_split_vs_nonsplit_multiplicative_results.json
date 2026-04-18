@@ -1,0 +1,36 @@
+{
+  "task": "rank2_split_vs_nonsplit_multiplicative",
+  "instance": "Harmonia_M2_sessionC (U_B retry by sessionC after agent timeout)",
+  "status": "BLOCKED_BY_COMPUTE_BUDGET",
+  "verdict": "BLOCKED",
+  "script": "harmonia/rank2_split_vs_nonsplit.py (554 lines, committed but not run-to-completion)",
+  "what_was_attempted": [
+    "Split vs non-split multiplicative classification at rank 2 via lfunc_lfunctions.bad_lfactors: [1,-1] split, [1,1] non-split, [1] additive",
+    "Data path: zeros.object_zeros (leading_term) x ec_curvedata (num_bad_primes, semistable, lmfdb_iso) x lfunc_lfunctions (bad_lfactors)",
+    "The 3-way join + parse of bad_lfactors arrays on ~5M lfunc rows exceeded 6-minute compute budget across multiple attempts"
+  ],
+  "data_blocker_characterization": {
+    "lfunc_lfunctions_size": "~5M rows total (not just EC)",
+    "bad_lfactors_column_is_array_of_arrays_text": true,
+    "parse_cost_per_row": "~10-100 μs (numpy/ast)",
+    "full_parse_estimate": "5M × 50 μs = 4-5 minutes just for parse, plus I/O",
+    "required_filter_optimization": "WHERE origin LIKE 'EllipticCurve/Q/%' on an unindexed text column — sequential scan of 24M rows is the underlying cost"
+  },
+  "unblock_path_for_future_worker": [
+    "Option A: Create a materialized EC-only view of lfunc_lfunctions with bad_lfactors pre-parsed — Mnemosyne/Koios infra task",
+    "Option B: For rank-2 only, restrict to a sampled cohort (e.g. first 10K curves) and report with explicit small-n caveat",
+    "Option C: Compute split/non-split per curve from a_invariants via Tate's algorithm (PARI/GP ellglobalred, Sage EllipticCurve.local_data) — also DERIVABLE-NOT-STORED territory, same as P035 Kodaira",
+    "Option D: Use root_number × Hasse bound sign correlation as a bulk proxy — imprecise but fast"
+  ],
+  "honest_read": "The F041a rank-2 multiplicative-half characterization (T3 commit 68225787: ratio additive/semistable = 0.49) stands without this secondary split/non-split decomposition. The decomposition remains an open question worth future compute; the script at harmonia/rank2_split_vs_nonsplit.py is ready to run against a materialized EC-only lfactors view when one exists.",
+  "followup_task_seed": {
+    "task_id": "rank2_split_vs_nonsplit_after_materialization",
+    "depends_on": "Mnemosyne/Koios EC lfactors materialization (also unblocks P035 Kodaira and P103 modular_degree per methodology_euler_product_bottleneck.md)",
+    "priority": 0.5
+  },
+  "notes": [
+    "Agent U_B was launched twice and got stuck on the bad_lfactors scan both times (first as sub-agent, retry via direct python run)",
+    "Kill-safe — no data corruption, no partial write",
+    "The sister task U_E (SO(2N) MC) closed FRONTIER_PERSISTS separately; U_B is the only un-closed task in the U-batch"
+  ]
+}
