@@ -1,5 +1,9 @@
 # Symbols — Shared Agent Vocabulary
 
+> **New reader?** Start with [OVERVIEW.md](OVERVIEW.md) for the executive
+> summary, background, and value proposition. This README is the
+> concise working reference.
+
 **Purpose.** Each symbol here is a compound primitive used in inter-agent
 communication. Agents reference symbols by name (e.g. `NULL_BSWCD`,
 `Q_EC_R0_D5`, `LADDER`) instead of re-describing them in prose. This
