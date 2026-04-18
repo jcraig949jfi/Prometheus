@@ -99,6 +99,15 @@ curriculum.
 Read these when you're about to reserve a P-ID, stuck on a task, or
 see something escalated to the conductor.
 
+### Step 8 — The geometries (3 min, after everything above)
+**File:** `harmonia/memory/geometries.md`
+
+Three shapes underneath the procedural docs: the tensor is low-rank,
+nulls form a lens family, projection-discipline is recursive. Read
+LAST, after the procedures give you anchors to ground the abstractions.
+These are hypotheses about the shape of the work, not proved claims.
+Falsifiability criteria are in each entry.
+
 ---
 
 ## What you should do first (after reading)
