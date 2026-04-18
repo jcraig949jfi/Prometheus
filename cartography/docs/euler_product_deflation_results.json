@@ -1,0 +1,525 @@
+{
+  "task": "euler_product_deflation_W4",
+  "instance": "Harmonia_worker_W4",
+  "started": "2026-04-18T13:42:10.483556+00:00",
+  "finished": "2026-04-18T13:47:17.104617+00:00",
+  "status": "SUCCESS_DEFLATED",
+  "config": {
+    "target_sample": 5000,
+    "decade": [
+      100000,
+      1000000
+    ],
+    "sub_decades": [
+      [
+        100000,
+        300000
+      ],
+      [
+        300000,
+        1000000
+      ]
+    ],
+    "k_values": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "n_primes_truncation": 25,
+    "primes_used_first_and_last": [
+      2,
+      97
+    ],
+    "seed": 20260417
+  },
+  "data_access": {
+    "leading_term_from": "prometheus_fire.zeros.object_zeros (rank 0, conductor 10^5..10^6)",
+    "euler_factors_from": "lmfdb.public.lfunc_lfunctions (origin = EllipticCurve/Q/N/iso)",
+    "bad_lfactors_from": "lmfdb.public.lfunc_lfunctions.bad_lfactors",
+    "join": "lmfdb_label -> iso via string manipulation -> origin"
+  },
+  "counts": {
+    "sample_size": 5000,
+    "parse_fail": 0,
+    "coverage_fail": 0,
+    "usable_rows": 5000
+  },
+  "correlation_L_vs_a_E_1": {
+    "pearson": 0.874220135126437,
+    "spearman": 0.9488116315524653,
+    "interpretation": "Pearson(L(1,E), truncated Euler product) should be > 0.5 if the truncation to N primes captures most of the multiplicative content. Values near 1 confirm the Euler product is computed correctly."
+  },
+  "per_subdecade": {
+    "[100000,300000)": {
+      "n": 3436,
+      "conductor_range": [
+        100000,
+        300000
+      ],
+      "log_X_mid": 12.062231609304284,
+      "raw_M_k": {
+        "1": 2.879113674996023,
+        "2": 13.336038641003432,
+        "3": 87.60188906749102,
+        "4": 774.1485029209496
+      },
+      "deflated_M_k_by_aE1": {
+        "1": 2.2243096540275857,
+        "2": 5.73909916191321,
+        "3": 16.80072194987603,
+        "4": 55.04019307354813
+      },
+      "deflated_M_k_by_aE_cks": {
+        "1": 2.2243096540275857,
+        "2": 47.69970416769643,
+        "3": 9645.923537796265,
+        "4": 18143108.1741986
+      },
+      "a_E_simple_distribution": {
+        "1": {
+          "mean": 1.8023306713568576,
+          "median": 0.9671046077202344,
+          "std": 2.257081944792041,
+          "p05": 0.21673244085880172,
+          "p95": 6.061568754506273
+        },
+        "2": {
+          "mean": 8.341332094668571,
+          "median": 0.9352913757826216,
+          "std": 26.89443403871509,
+          "p05": 0.046972961095419416,
+          "p95": 36.74264906263854
+        },
+        "3": {
+          "mean": 68.77121881586599,
+          "median": 0.9045247025778029,
+          "std": 424.7279900270259,
+          "p05": 0.010180568921811507,
+          "p95": 222.718497402234
+        },
+        "4": {
+          "mean": 792.6778938937304,
+          "median": 0.874770157799037,
+          "std": 8068.815082061532,
+          "p05": 0.002206460984807064,
+          "p95": 1350.0271592011427
+        }
+      },
+      "a_E_cks_distribution": {
+        "1": {
+          "mean": 1.8023306713568576,
+          "median": 0.9671046077202344,
+          "std": 2.257081944792041,
+          "p05": 0.21673244085880172,
+          "p95": 6.061568754506273
+        },
+        "2": {
+          "mean": 1.0036064765821384,
+          "median": 0.11253172413873941,
+          "std": 3.235865432395068,
+          "p05": 0.005651659404585408,
+          "p95": 4.4207759800880915
+        },
+        "3": {
+          "mean": 0.11978180429817241,
+          "median": 0.0015754497705956166,
+          "std": 0.739767098175032,
+          "p05": 1.7731936924100972e-05,
+          "p95": 0.38791843344882965
+        },
+        "4": {
+          "mean": 0.002404722713778978,
+          "median": 2.6537635072202216e-06,
+          "std": 0.02447811784658781,
+          "p05": 6.693673291643496e-09,
+          "p95": 0.0040955361553008385
+        }
+      },
+      "rmt_prediction": {
+        "1": {
+          "g_SO_even": 1.0,
+          "exponent_k(k-1)/2": 0.0,
+          "logX_to_exp": 1.0,
+          "rmt_prediction": 1.0,
+          "M_k_raw_over_rmt": 2.879113674996023,
+          "M_k_deflated_by_aE1_over_rmt": 2.2243096540275857,
+          "M_k_deflated_by_aE_cks_over_rmt": 2.2243096540275857
+        },
+        "2": {
+          "g_SO_even": 0.08333333333333333,
+          "exponent_k(k-1)/2": 1.0,
+          "logX_to_exp": 12.062231609304284,
+          "rmt_prediction": 1.0051859674420236,
+          "M_k_raw_over_rmt": 13.267235191255908,
+          "M_k_deflated_by_aE1_over_rmt": 5.709489933010059,
+          "M_k_deflated_by_aE_cks_over_rmt": 47.45361128456822
+        },
+        "3": {
+          "g_SO_even": 0.00011574074074074075,
+          "exponent_k(k-1)/2": 3.0,
+          "logX_to_exp": 1755.023716063437,
+          "rmt_prediction": 0.20312774491474966,
+          "M_k_raw_over_rmt": 431.26501061810393,
+          "M_k_deflated_by_aE1_over_rmt": 82.71012882522325,
+          "M_k_deflated_by_aE_cks_over_rmt": 47486.98185885215
+        },
+        "4": {
+          "g_SO_even": 1.1482216343327454e-09,
+          "exponent_k(k-1)/2": 6.0,
+          "logX_to_exp": 3080108.243945115,
+          "rmt_prediction": 0.0035366469217844223,
+          "M_k_raw_over_rmt": 218893.35295318408,
+          "M_k_deflated_by_aE1_over_rmt": 15562.818197802311,
+          "M_k_deflated_by_aE_cks_over_rmt": 5130030951.759375
+        }
+      },
+      "L_deflated_summary": {
+        "mean": 2.2243096540275857,
+        "median": 2.1588106795933633,
+        "std": 0.8898180490131381
+      }
+    },
+    "[300000,1000000)": {
+      "n": 1564,
+      "conductor_range": [
+        300000,
+        1000000
+      ],
+      "log_X_mid": 13.213524155801306,
+      "raw_M_k": {
+        "1": 2.923591598860077,
+        "2": 14.4320821368786,
+        "3": 104.45562087465052,
+        "4": 1014.373421667558
+      },
+      "deflated_M_k_by_aE1": {
+        "1": 2.2735527505928306,
+        "2": 5.893310784977611,
+        "3": 17.110695772985906,
+        "4": 55.1094966409047
+      },
+      "deflated_M_k_by_aE_cks": {
+        "1": 2.2735527505928306,
+        "2": 48.98141207896731,
+        "3": 9823.891115937058,
+        "4": 18165952.972684823
+      },
+      "a_E_simple_distribution": {
+        "1": {
+          "mean": 1.733140340619675,
+          "median": 0.9066504021831362,
+          "std": 2.2561347083716212,
+          "p05": 0.22120255041096928,
+          "p95": 6.1865252692232096
+        },
+        "2": {
+          "mean": 8.090664694941054,
+          "median": 0.8220150283678584,
+          "std": 27.26374384225109,
+          "p05": 0.048930815581546355,
+          "p95": 38.274099874065556
+        },
+        "3": {
+          "mean": 69.03277545555557,
+          "median": 0.7452803949492246,
+          "std": 414.53767333574933,
+          "p05": 0.01082373083631541,
+          "p95": 236.79605808369664
+        },
+        "4": {
+          "mean": 808.2953202484638,
+          "median": 0.6757089586918745,
+          "std": 7188.166529514204,
+          "p05": 0.0023942733238729677,
+          "p95": 1465.0590323603603
+        }
+      },
+      "a_E_cks_distribution": {
+        "1": {
+          "mean": 1.733140340619675,
+          "median": 0.9066504021831362,
+          "std": 2.2561347083716212,
+          "p05": 0.22120255041096928,
+          "p95": 6.1865252692232096
+        },
+        "2": {
+          "mean": 0.973446854236526,
+          "median": 0.09890262094289767,
+          "std": 3.2802997873023507,
+          "p05": 0.005887223151500399,
+          "p95": 4.605035992214626
+        },
+        "3": {
+          "mean": 0.12023736880273747,
+          "median": 0.0012980870770095646,
+          "std": 0.7220181831395275,
+          "p05": 1.8852159829869383e-05,
+          "p95": 0.4124379293597205
+        },
+        "4": {
+          "mean": 0.0024521008230656144,
+          "median": 2.0498776279588437e-06,
+          "std": 0.021806521232779555,
+          "p05": 7.263433847802371e-09,
+          "p95": 0.0044445048351712
+        }
+      },
+      "rmt_prediction": {
+        "1": {
+          "g_SO_even": 1.0,
+          "exponent_k(k-1)/2": 0.0,
+          "logX_to_exp": 1.0,
+          "rmt_prediction": 1.0,
+          "M_k_raw_over_rmt": 2.923591598860077,
+          "M_k_deflated_by_aE1_over_rmt": 2.2735527505928306,
+          "M_k_deflated_by_aE_cks_over_rmt": 2.2735527505928306
+        },
+        "2": {
+          "g_SO_even": 0.08333333333333333,
+          "exponent_k(k-1)/2": 1.0,
+          "logX_to_exp": 13.213524155801306,
+          "rmt_prediction": 1.101127012983442,
+          "M_k_raw_over_rmt": 13.106646160442182,
+          "M_k_deflated_by_aE1_over_rmt": 5.352071755110262,
+          "M_k_deflated_by_aE_cks_over_rmt": 44.482981074322126
+        },
+        "3": {
+          "g_SO_even": 0.00011574074074074075,
+          "exponent_k(k-1)/2": 3.0,
+          "logX_to_exp": 2307.044592144554,
+          "rmt_prediction": 0.26701905001673076,
+          "M_k_raw_over_rmt": 391.1916429487169,
+          "M_k_deflated_by_aE1_over_rmt": 64.08043086032173,
+          "M_k_deflated_by_aE_cks_over_rmt": 36790.97470881391
+        },
+        "4": {
+          "g_SO_even": 1.1482216343327454e-09,
+          "exponent_k(k-1)/2": 6.0,
+          "logX_to_exp": 5322454.75014343,
+          "rmt_prediction": 0.006111357691871774,
+          "M_k_raw_over_rmt": 165981.68080011004,
+          "M_k_deflated_by_aE1_over_rmt": 9017.553777649346,
+          "M_k_deflated_by_aE_cks_over_rmt": 2972490547.6971016
+        }
+      },
+      "L_deflated_summary": {
+        "mean": 2.2735527505928306,
+        "median": 2.2210633458480995,
+        "std": 0.851311963335868
+      }
+    },
+    "[100000,1000000)": {
+      "n": 5000,
+      "conductor_range": [
+        100000,
+        1000000
+      ],
+      "log_X_mid": 12.664218011467252,
+      "raw_M_k": {
+        "1": 2.8930263695806993,
+        "2": 13.678881046513183,
+        "3": 92.8737363767705,
+        "4": 849.2908575048887
+      },
+      "deflated_M_k_by_aE1": {
+        "1": 2.2397128946331946,
+        "2": 5.7873365576077545,
+        "3": 16.8976817617448,
+        "4": 55.06187122941727
+      },
+      "deflated_M_k_by_aE_cks": {
+        "1": 2.2397128946331946,
+        "2": 48.10062240234197,
+        "3": 9701.591796238705,
+        "4": 18150254.027165093
+      },
+      "a_E_simple_distribution": {
+        "1": {
+          "mean": 1.7806879359022671,
+          "median": 0.9446751439682717,
+          "std": 2.2567880772130593,
+          "p05": 0.21772901747783788,
+          "p95": 6.087730609926348
+        },
+        "2": {
+          "mean": 8.262923332033804,
+          "median": 0.8924112676980238,
+          "std": 27.00801750348063,
+          "p05": 0.047405937351890075,
+          "p95": 37.06047162565543
+        },
+        "3": {
+          "mean": 68.85303373276088,
+          "median": 0.8430390074263128,
+          "std": 421.5255443443578,
+          "p05": 0.010321653512754688,
+          "p95": 225.61426072226666
+        },
+        "4": {
+          "mean": 797.5630248574911,
+          "median": 0.7963983707021811,
+          "std": 7803.323625102613,
+          "p05": 0.0022473252236842093,
+          "p95": 1373.4796927925838
+        }
+      },
+      "a_E_cks_distribution": {
+        "1": {
+          "mean": 1.7806879359022671,
+          "median": 0.9446751439682717,
+          "std": 2.2567880772130593,
+          "p05": 0.21772901747783788,
+          "p95": 6.087730609926348
+        },
+        "2": {
+          "mean": 0.9941725467124308,
+          "median": 0.10737250571872833,
+          "std": 3.2495314871184133,
+          "p05": 0.005703753934603941,
+          "p95": 4.45901552972208
+        },
+        "3": {
+          "mean": 0.11992430487520037,
+          "median": 0.001468357477764625,
+          "std": 0.7341892601107692,
+          "p05": 1.797767005422176e-05,
+          "p95": 0.39296210958641103
+        },
+        "4": {
+          "mean": 0.002419542586363838,
+          "median": 2.416009410628087e-06,
+          "std": 0.023672704523242404,
+          "p05": 6.8176418848970066e-09,
+          "p95": 0.004166683390082393
+        }
+      },
+      "rmt_prediction": {
+        "1": {
+          "g_SO_even": 1.0,
+          "exponent_k(k-1)/2": 0.0,
+          "logX_to_exp": 1.0,
+          "rmt_prediction": 1.0,
+          "M_k_raw_over_rmt": 2.8930263695806993,
+          "M_k_deflated_by_aE1_over_rmt": 2.2397128946331946,
+          "M_k_deflated_by_aE_cks_over_rmt": 2.2397128946331946
+        },
+        "2": {
+          "g_SO_even": 0.08333333333333333,
+          "exponent_k(k-1)/2": 1.0,
+          "logX_to_exp": 12.664218011467252,
+          "rmt_prediction": 1.0553515009556043,
+          "M_k_raw_over_rmt": 12.9614455791527,
+          "M_k_deflated_by_aE1_over_rmt": 5.483799996842201,
+          "M_k_deflated_by_aE_cks_over_rmt": 45.57782156825248
+        },
+        "3": {
+          "g_SO_even": 0.00011574074074074075,
+          "exponent_k(k-1)/2": 3.0,
+          "logX_to_exp": 2031.117904756963,
+          "rmt_prediction": 0.23508309082835221,
+          "M_k_raw_over_rmt": 395.0677015922978,
+          "M_k_deflated_by_aE1_over_rmt": 71.87961372382489,
+          "M_k_deflated_by_aE_cks_over_rmt": 41268.777614134735
+        },
+        "4": {
+          "g_SO_even": 1.1482216343327454e-09,
+          "exponent_k(k-1)/2": 6.0,
+          "logX_to_exp": 4125439.9430243154,
+          "rmt_prediction": 0.004736919393720967,
+          "M_k_raw_over_rmt": 179291.8111780977,
+          "M_k_deflated_by_aE1_over_rmt": 11623.983152933664,
+          "M_k_deflated_by_aE_cks_over_rmt": 3831657775.5627837
+        }
+      },
+      "L_deflated_summary": {
+        "mean": 2.2397128946331946,
+        "median": 2.179411393196442,
+        "std": 0.8781668079642239
+      }
+    }
+  },
+  "cross_subdecade_stability": {
+    "1": {
+      "sub1_raw_ratio": 2.879113674996023,
+      "sub2_raw_ratio": 2.923591598860077,
+      "sub1_def_by_aE1": 2.2243096540275857,
+      "sub2_def_by_aE1": 2.2735527505928306,
+      "sub1_def_by_aE_cks": 2.2243096540275857,
+      "sub2_def_by_aE_cks": 2.2735527505928306,
+      "d_log_X": 1.1512925464970216,
+      "slope_raw_per_logX": 0.03863303380134348,
+      "slope_def_by_aE1_per_logX": 0.04277201022022966,
+      "slope_def_by_aE_cks_per_logX": 0.04277201022022966,
+      "def_by_aE1_flattens_vs_raw": false,
+      "def_by_aE_cks_flattens_vs_raw": false
+    },
+    "2": {
+      "sub1_raw_ratio": 13.267235191255908,
+      "sub2_raw_ratio": 13.106646160442182,
+      "sub1_def_by_aE1": 5.709489933010059,
+      "sub2_def_by_aE1": 5.352071755110262,
+      "sub1_def_by_aE_cks": 47.45361128456822,
+      "sub2_def_by_aE_cks": 44.482981074322126,
+      "d_log_X": 1.1512925464970216,
+      "slope_raw_per_logX": -0.13948585987318557,
+      "slope_def_by_aE1_per_logX": -0.3104494847875937,
+      "slope_def_by_aE_cks_per_logX": -2.5802566161699523,
+      "def_by_aE1_flattens_vs_raw": false,
+      "def_by_aE_cks_flattens_vs_raw": false
+    },
+    "3": {
+      "sub1_raw_ratio": 431.26501061810393,
+      "sub2_raw_ratio": 391.1916429487169,
+      "sub1_def_by_aE1": 82.71012882522325,
+      "sub2_def_by_aE1": 64.08043086032173,
+      "sub1_def_by_aE_cks": 47486.98185885215,
+      "sub2_def_by_aE_cks": 36790.97470881391,
+      "d_log_X": 1.1512925464970216,
+      "slope_raw_per_logX": -34.80728490018997,
+      "slope_def_by_aE1_per_logX": -16.181550051361963,
+      "slope_def_by_aE_cks_per_logX": -9290.433767318678,
+      "def_by_aE1_flattens_vs_raw": true,
+      "def_by_aE_cks_flattens_vs_raw": false
+    },
+    "4": {
+      "sub1_raw_ratio": 218893.35295318408,
+      "sub2_raw_ratio": 165981.68080011004,
+      "sub1_def_by_aE1": 15562.818197802311,
+      "sub2_def_by_aE1": 9017.553777649346,
+      "sub1_def_by_aE_cks": 5130030951.759375,
+      "sub2_def_by_aE_cks": 2972490547.6971016,
+      "d_log_X": 1.1512925464970216,
+      "slope_raw_per_logX": -45958.49448870806,
+      "slope_def_by_aE1_per_logX": -5685.144440540246,
+      "slope_def_by_aE_cks_per_logX": -1874015783.935117,
+      "def_by_aE1_flattens_vs_raw": true,
+      "def_by_aE_cks_flattens_vs_raw": false
+    }
+  },
+  "g_so_even_values": {
+    "1": 1.0,
+    "2": 0.08333333333333333,
+    "3": 0.00011574074074074075,
+    "4": 1.1482216343327454e-09
+  },
+  "interpretation": "We compute a per-curve arithmetic factor a_E(k) = prod_{p<=P_50} L_p(1,E)^k, which is the truncated Euler product of L(1,E) raised to power k. At k=1, a_E(1) is an approximation of L(1,E) itself. Deflating leading_term by a_E(1) gives a residual whose scale is the tail of the Euler product. If truncation captures the arithmetic content, the residual higher moments should be closer to pure-RMT predictions g_SO_even(k) * (log X)^{k(k-1)/2}. We report both raw and deflated M_k / RMT-prediction ratios; the difference is the arithmetic-factor contribution.",
+  "caveats": [
+    "Per-curve a_E(k) is NOT the family arithmetic factor a(k) in Conrey-Keating-Snaith; it's a per-curve variable. The family factor is an average over the arithmetic content, and the task instructions define per-curve deflation as the operational proxy.",
+    "Truncation at N_PRIMES=50 leaves a residual multiplicative tail. Larger N would capture more arithmetic content but the per-prime data grows.",
+    "g_SO_even convention here is the bare Barnes-G ratio prod j!/(j+k)!. Alternate conventions include a 2^(k^2) prefactor. The ratio M_k_raw / (g_SO * (log X)^{k(k-1)/2}) is the empirical arithmetic constant; convention choice shifts it by a known factor but not the scaling with X.",
+    "leading_term in prometheus_fire IS L(1,E)/1! = L(1,E) for rank 0 curves. This is verified via BSD parity audits (F003).",
+    "Sample is restricted to rank-0 (SO_even conjecture). No rank pooling."
+  ],
+  "pattern_20_discipline": [
+    "Sample restricted to rank 0 \u2014 no pooling across ranks.",
+    "Sub-decade stratification within 10^5..10^6 for Pattern 20 compliance.",
+    "Each sub-decade reports its own n, M_k, a_E(k) stats, and RMT ratios."
+  ],
+  "followups_motivated": [
+    "Extend N_PRIMES to 200 \u2014 does the deflated residual shrink toward 1?",
+    "Compute family arithmetic factor a(k) = mean_E a_E(k) and divide out; the remaining ratio should be g_SO_even(k) exactly.",
+    "Repeat with rank 1 (SO_odd prediction) \u2014 distinct g_SO_odd(k) with different factorial structure.",
+    "Block-shuffle a_E(1) within sub-decade and verify deflation still works (pipeline sanity check)."
+  ]
+}
