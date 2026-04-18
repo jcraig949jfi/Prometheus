@@ -1,0 +1,100 @@
+{
+  "task_id": "wsw_F010_katz_sarnak_bigsample",
+  "instance": "Harmonia_M2_sessionC",
+  "started": "2026-04-17T11:43:05.060216+00:00",
+  "finished": "2026-04-17T11:44:15.207171+00:00",
+  "per_degree": 5000,
+  "per_combo": 1000,
+  "min_members_per_label": 3,
+  "n_perms": 300,
+  "splits": {
+    "pooled_all_artin": {
+      "rho": 0.10898005597749622,
+      "n_shared": 75,
+      "z": 0.83559556660468,
+      "null_mean": -0.0006903311870855137,
+      "null_std": 0.13124816783101334
+    },
+    "is_even_true": {
+      "rho": 0.3795986621695899,
+      "n_shared": 65,
+      "z": 2.750920299611624,
+      "null_mean": -0.0009269096200184057,
+      "null_std": 0.13832664357572663,
+      "n_artin_rows": 28193
+    },
+    "is_even_false": {
+      "rho": 0.02091776688234858,
+      "n_shared": 49,
+      "z": 0.16104499881437506,
+      "null_mean": -0.006875352382153015,
+      "null_std": 0.17257983463700552,
+      "n_artin_rows": 28619
+    },
+    "is_even_True_dim_1": {
+      "rho": null,
+      "n_shared": 5,
+      "skipped": "n_shared<10",
+      "n_artin_rows": 2423
+    },
+    "is_even_False_dim_1": {
+      "rho": null,
+      "n_shared": 4,
+      "skipped": "n_shared<10",
+      "n_artin_rows": 1819
+    },
+    "is_even_True_dim_2": {
+      "rho": 0.4515286303877055,
+      "n_shared": 12,
+      "n_artin_rows": 3226
+    },
+    "is_even_False_dim_2": {
+      "rho": 0.6346877890945384,
+      "n_shared": 21,
+      "n_artin_rows": 14318
+    },
+    "is_even_True_dim_4": {
+      "rho": 0.41850620889653484,
+      "n_shared": 20,
+      "n_artin_rows": 12367
+    },
+    "is_even_False_dim_4": {
+      "rho": null,
+      "n_shared": 6,
+      "skipped": "n_shared<10",
+      "n_artin_rows": 1522
+    }
+  },
+  "comparison_to_sessionB_smalln": {
+    "sessionB": {
+      "is_even_true": {
+        "rho": 0.77,
+        "n": 56
+      },
+      "is_even_false": {
+        "rho": -0.05,
+        "n": 51
+      },
+      "fisher_z_diff": 5.38
+    },
+    "this_run": {
+      "is_even_true": {
+        "rho": 0.3795986621695899,
+        "n": 65
+      },
+      "is_even_false": {
+        "rho": 0.02091776688234858,
+        "n": 49
+      },
+      "fisher_z_diff": 1.9459138212060265
+    },
+    "rho_even_delta": -0.39040133783041014
+  },
+  "verdict": "P028_INCONCLUSIVE",
+  "shape_summary": "F010 K-S at per_degree=5000: Is_Even=True rho=0.3795986621695899 n=65 z=2.750920299611624; Is_Even=False rho=0.02091776688234858 n=49 z=0.16104499881437506; Fisher z_diff=1.9459138212060265. Verdict: P028_INCONCLUSIVE",
+  "notes": [
+    "sessionB's small-n values were rho=0.77 at Is_Even=True (n=56) and rho=-0.05 at Is_Even=False (n=51), Fisher z_diff=5.38.",
+    "If Is_Even=True rho stays >= 0.5 at per_degree=5000 with n >= 30, P028 is the real F010 resolver (Pattern 20 does NOT apply \u2014 stratification sharpens rather than collapses).",
+    "If Is_Even=True rho collapses (<0.2), sessionB saw a sliced version of the same Pattern-20 pooling artifact."
+  ]
+}

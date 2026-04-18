@@ -100,3 +100,73 @@
 - This journal created; 11 completed tasks backfilled.
 - `signals.specimens` rows registered for each (see `register` script output below).
 - Posted: WORK_COMPLETE on mandate adoption (out-of-band, not a formal task).
+
+## Tick 12 @ ~11:45 UTC — wsw_F010_katz_sarnak
+- Claimed: `wsw_F010_katz_sarnak` (highest priority -2.5).
+- Executed: cross-DB join of `nf_fields` × `artin_reps` at per-Galois-label aggregation; stratified Artin side by Is_Even and Dim; computed ρ(NF log_disc, Artin log_cond) per stratum.
+- Result: **P028 RESOLVES F010 at Is_Even.** ρ_even=0.772 (n=56), ρ_odd=-0.048 (n=51), Fisher z=5.38, p≈7e-8. Dim axis flat (Dim=2: 0.625, Dim=4: 0.622). Baseline ρ=0.404 is a mixture of strong-even and null-odd couplings.
+- Output: `cartography/docs/wsw_F010_katz_sarnak_results.json`, `harmonia/wsw_F010_katz_sarnak.py`.
+- Posted: WORK_COMPLETE 1776425563295-0. specimen_id 25 registered.
+- Notes: Pattern 5 caveat — Artin conductor-discriminant formulas are parity-structured, so this may be classical. Also retracted a near-Pattern-7 false alarm: my script's "sanity check" column signD is disc sign, NOT root number; the 50% mismatch was expected, not an F003 anchor failure.
+
+## Tick 13 @ ~11:50 UTC — merge_P034_alignment_coupling
+- Claimed: `merge_P034_alignment_coupling` (0.1 priority, my own tick-6 Issue 1 now a task).
+- Executed: appended full P034 entry to `coordinate_system_catalog.md` Section 1 after P002; added PROJECTIONS row to `build_landscape_tensor.py`.
+- Result: SUCCESS after 2 "file-modified-since-read" retries due to concurrent edits.
+- Posted: WORK_COMPLETE 1776425782630-0.
+- Notes: Re-flagged concurrency friction on shared Python source — JSON-backed tensor state would resolve this.
+
+## Ticks 14-16 @ ~12:00-12:20 UTC — wsw_F010_alternative_null: claim, abandon, fix applied by sessionC
+- Claimed: `wsw_F010_alternative_null` (block-shuffle-within-degree null test of F010 durability).
+- Executed: data load + prime_detrend. Script hung 15+ min in `microscope._factorize` on high-degree NF disc_abs values (deg-20 fields have disc > 10^18; trial-division ~10^9 ops/integer).
+- Result: **ABANDONED** via `agora.work_queue.abandon_task` with reason + 3 proposed fixes (swap to sympy.factorint; filter above disc threshold; cap disc_abs in NF load).
+- Posted: WORK_ABANDON 1776428241697-0. sessionA ACKNOWLEDGMENT and sessionC picked up the retry after applying my fix (b) — DISC_CAP=10^12.
+- Notes: 40+ minutes of wall-clock time but a clean diagnostic + 3 concrete fixes was the right outcome. sessionC's retry landed F010_JOINS_F022 verdict (block-null z=-0.86, same-data-no-durable-signal).
+
+## Tick 15 @ ~12:25 UTC — infra hotfix: reserve_p_id durable fix
+- Not a queued task; response to sessionD SECOND_COLLISION_ALERT showing my tick-9 reserve_p_id counter had drifted into Section-7 pre-allocated P060-P063.
+- Executed: added `_scan_catalog_for_p_ids()` that regex-extracts `## P<nnn>` headers from the catalog; rewrote `reserve_p_id()` with Lua-atomic max+INCR using the scan as a floor. Updated test with isolated path.
+- Result: SUCCESS; live verification confirmed P064 as first reserve post-fix (catalog max = P063).
+- Posted: INFRA_HOTFIX 1776428600175-0. SessionA went pragmatic route (bumped counter to 100 for NAMESPACE_V2) but my durable fix remains in place as secondary safety net.
+- Notes: sessionD Option C credited. Commit 313259de ("reserve_p_id durable fix — catalog scan on every call").
+
+## Tick 16 @ ~12:30 UTC — merge_P100_isogeny_class_size
+- Claimed: `merge_P100_isogeny_class_size` (sessionC draft, renumber P040→P100 per NAMESPACE_V2).
+- Executed: inserted P100 entry into `coordinate_system_catalog.md` Section 4 after P039 via atomic python script; added PROJECTIONS row.
+- Result: SUCCESS (2 retries on tensor builder edit due to concurrency).
+- Posted: WORK_COMPLETE 1776428877796-0.
+- Notes: Flagged stale cross-reference — P039 entry still names "P040 Isogeny class size" in its related-projections bullet.
+
+## Tick 17 @ ~12:35 UTC — merge_P102_artin_dim
+- Claimed: `merge_P102_artin_dim` (sessionC draft with P??? placeholder, smart — no pre-resolution collision risk).
+- Executed: renumbered P??? → P102, inserted after P101 (sessionD merge, same cycle), before Section 5; added PROJECTIONS row.
+- Result: SUCCESS after v2 insertion script (initial rfind failed on blank-line padding).
+- Posted: WORK_COMPLETE 1776429040128-0.
+- Notes: Promote the "draft with P??? placeholder" convention for any future catalog drafts predating namespace decisions.
+
+## Tick 18 @ ~12:40 UTC — wsw_F013_P028
+- Claimed: `wsw_F013_P028` (-1.0, my third Katz-Sarnak sibling run).
+- Executed: unfolded first-gap variance per (rank, ks_class) cell; pair-difference slope with propagation-of-error SE (2 cells per class).
+- Result: **P028 RESOLVES F013 at z=13.68.** SO_even slope +0.0128/rank (rank 0: var 0.0954 → rank 2: var 0.1211). SO_odd slope −0.0022/rank (rank 1: 0.1161 → rank 3: 0.1118). Sign flip. Prior pooled "slope=−0.0019" was a mixture artifact of opposite-direction populations.
+- Output: `cartography/docs/wsw_F013_P028_results.json`, `harmonia/wsw_F013_P028.py`.
+- Posted: WORK_COMPLETE 1776429356654-0. specimen_id 40 registered.
+- Notes: Patched pair-slope SE handling (2 cells ⇒ DOF=0 in WLS; use propagation-of-error instead). F013 pooled slope retractable pending tensor update.
+
+## Tick 19 @ ~12:45 UTC — heartbeat + self-audit flag
+- No task claimed; sessionA CONDUCTOR_TICK 34 flagged F010's plain-null-over-rejection as a methodology finding.
+- Self-audit: F011 P028 (5.4σ) and F013 P028 (13.7σ) both used plain permutation nulls. Large per-rank-cell n suggests they should survive a block-null audit — but this was UNTESTED.
+- Proposed followup tasks: `audit_P028_findings_block_shuffle` (for F011/F013) and `audit_F014_F015_block_shuffle` (sibling). Both seeded by sessionA next tick.
+- Posted: HEARTBEAT 1776429435259-0.
+
+## Tick 20 @ ~12:50 UTC — audit_P028_findings_block_shuffle
+- Claimed: `audit_P028_findings_block_shuffle` (-1.5, my proposal from prior tick).
+- Executed: block-shuffle rank labels within 10 conductor deciles; 200 permutations; n=2,009,089; recomputed F011 deficit spread and F013 slope-diff per shuffle.
+- Result: **BOTH DURABLE.** F011 observed 7.63% vs block-null p99=0.27%, z_block=111.78. F013 observed z=13.68 vs block-null p99=1.47, z_block=15.31. Neither joins F010 in the plain-null-over-rejection ledger.
+- Output: `cartography/docs/audit_P028_findings_block_shuffle_results.json`, `harmonia/audit_P028_block_shuffle.py`.
+- Posted: WORK_COMPLETE 1776429956211-0. specimen_id 44 registered.
+- Notes: The audit was the right discipline regardless of outcome — plain-null endorsement can't be trusted on its own. Pattern 5 theoretical-magnitude gate remains open.
+
+## Ticks 21-22 @ ~12:55-13:00 UTC — sustained idle
+- Queue empty except blocked ingest_codata. All 3 workers idle. No sync activity.
+- Posted: HEARTBEAT 1776430002819-0 and 1776430137066-0.
+- End of autonomous loop on user instruction at tick 22.

@@ -23,9 +23,13 @@ from agora import work_queue
 
 
 def run_test():
-    # Use an isolated test counter to avoid touching live state.
+    # Use an isolated test counter + bogus catalog path so the scan returns
+    # NEXT_P_ID_INIT (our controlled floor). This tests the counter behavior
+    # without being perturbed by the real catalog's P060-P063 entries.
+    from pathlib import Path
     work_queue.NEXT_P_ID = "agora:test_next_p_id"
     work_queue.NEXT_P_ID_INIT = 99  # first reservation returns P100
+    work_queue.CATALOG_PATH = Path("/nonexistent/catalog/path_for_test.md")
 
     r = work_queue._connect()
     # Wipe any leftover from a previous run

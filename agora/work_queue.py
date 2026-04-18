@@ -80,39 +80,83 @@ def push_task(
     return task_id
 
 
+import re
+from pathlib import Path as _Path
+
+
+CATALOG_PATH = _Path(__file__).resolve().parent.parent / "harmonia" / "memory" / "coordinate_system_catalog.md"
+_P_ID_HEADER_RE = re.compile(r"^## P(\d+)(?:\s+—|\s+-)", re.MULTILINE)
+
+
+def _scan_catalog_for_p_ids(catalog_path: Optional[_Path] = None) -> int:
+    """Scan coordinate_system_catalog.md for existing P-ID headers; return max used.
+
+    Looks for markdown headers of the form `## P<digits> —`. If the catalog is
+    unreadable or has no P-IDs, returns NEXT_P_ID_INIT (32, pre-allocated floor).
+
+    When catalog_path is None, reads the module-level CATALOG_PATH fresh each
+    call — this lets tests monkey-patch work_queue.CATALOG_PATH without needing
+    to rebind the default arg.
+    """
+    if catalog_path is None:
+        catalog_path = CATALOG_PATH
+    try:
+        text = catalog_path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return NEXT_P_ID_INIT
+    used = [int(m.group(1)) for m in _P_ID_HEADER_RE.finditer(text)]
+    return max(used) if used else NEXT_P_ID_INIT
+
+
+# Lua script: atomic max-with-scan-floor, then INCR, single round trip on Redis.
+# Arguments: KEYS[1] = NEXT_P_ID key;  ARGV[1] = scan-derived floor (catalog max).
+# Semantics: counter := max(current counter, scan floor); return INCR(counter).
+_RESERVE_P_ID_LUA = """
+local cur = tonumber(redis.call('GET', KEYS[1]) or '0')
+local floor = tonumber(ARGV[1])
+if floor > cur then redis.call('SET', KEYS[1], floor) end
+return redis.call('INCR', KEYS[1])
+"""
+
+
 def reserve_p_id(r: Optional[redis.Redis] = None) -> str:
-    """Atomically reserve the next available projection ID.
+    """Atomically reserve the next available projection ID, collision-proof.
 
-    Uses Redis INCR on NEXT_P_ID. Returns a formatted "P{n:03d}" string
-    (e.g. "P033"). Callers MUST record the reservation — a reserved-but-
-    unused ID becomes a gap in the catalog (acceptable tradeoff vs. collisions).
+    Before incrementing, scans coordinate_system_catalog.md for existing P-ID
+    headers and ensures the counter is at least as high as the observed max.
+    This is a Lua-atomic max+INCR so two concurrent callers cannot land on the
+    same ID even across fresh scans.
 
-    The counter is lazily initialized to NEXT_P_ID_INIT on first call.
-    First INCR after init returns NEXT_P_ID_INIT + 1 (i.e. "P033" given init=32).
+    Returns a formatted "P{n:03d}" string (e.g. "P064"). Callers MUST record
+    the reservation — a reserved-but-unused ID becomes a catalog gap (accepted
+    tradeoff vs. collisions).
 
-    Thread/session-safe: INCR is atomic in Redis.
+    Historical note: previous implementation used only a fixed init floor
+    (NEXT_P_ID_INIT = 32). That caused collisions when the counter advanced
+    past Section-7 P060-P063 (sessionD SECOND_COLLISION_ALERT 2026-04-17).
+    The catalog scan is the durable fix (sessionD Option C).
     """
     if r is None:
         r = _connect()
-    # SETNX initializer — returns 1 if set, 0 if already present. We don't care
-    # about the return; INCR is the authoritative step.
-    r.setnx(NEXT_P_ID, NEXT_P_ID_INIT)
-    n = int(r.incr(NEXT_P_ID))
-    return f"P{n:03d}"
+    floor = _scan_catalog_for_p_ids()
+    n = r.eval(_RESERVE_P_ID_LUA, 1, NEXT_P_ID, floor)
+    return f"P{int(n):03d}"
 
 
 def peek_next_p_id(r: Optional[redis.Redis] = None) -> str:
     """Read the next P-ID that WOULD be returned without reserving it.
 
-    Purely diagnostic. Do not rely on the result for claim logic — another
-    worker can reserve between peek and use.
+    Purely diagnostic. Also scans the catalog so the diagnostic matches what
+    reserve_p_id() would actually do. Do not rely on this for claim logic —
+    another worker can reserve between peek and use.
     """
     if r is None:
         r = _connect()
+    floor = _scan_catalog_for_p_ids()
     raw = r.get(NEXT_P_ID)
-    if raw is None:
-        return f"P{NEXT_P_ID_INIT + 1:03d}"
-    return f"P{int(raw) + 1:03d}"
+    current = int(raw) if raw is not None else 0
+    effective = max(current, floor)
+    return f"P{effective + 1:03d}"
 
 
 def claim_task(instance_name: str, task_type_filter: Optional[str] = None,

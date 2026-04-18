@@ -67,7 +67,7 @@ under label permutation, which is their fingerprint.
 - Cheap first pass to rule out trivial couplings
 
 **When NOT to use:**
-- Claims about object-level cross-domain coupling (use P010 Galois-label or P011 Lhash)
+- Claims about object-level coupling across projections (use P010 Galois-label or P011 Lhash)
 - Any coupling where objects share a magnitude axis without decontamination
 - Publication-grade findings without at least one permutation null
 
@@ -100,6 +100,59 @@ under label permutation, which is their fingerprint.
 
 **When NOT to use:**
 - Same as P001
+
+---
+
+## P034 — AlignmentCoupling (rank-based extremity coupling)
+
+**Code:** `harmonia/src/coupling.py:AlignmentCoupling` (class body lines 182–298)
+**Type:** feature_distribution (rank-based; Megethos-robust by construction)
+
+**What it resolves:**
+- **Coupling visible only through rank structure** — where each object sits in its feature distribution (quantile rank ∈ [0, 1]), not its raw magnitude. Objects with identical ranks across two domains have identical coupling weight, regardless of their absolute feature values.
+- **Extremity co-variation.** For each feature column per domain, the scorer weights by `(q − 0.5).abs()` — distance from median. Objects that are extreme in one domain are scored higher when paired with objects that are extreme in another. Mid-population pairings contribute near-zero, by design.
+- **Sign-preserving alignment.** A secondary term uses `(q − 0.5).sign()` times an interaction-matrix-weighted dot-product with the partner domain's sign vector. This rewards "both high" or "both low" configurations and penalizes "one high, one low". Weight on this term is 0.3 in `score_batch` (line 292) — small relative to the extremity term.
+- **Learning-time interaction structure.** At init (lines 219–257), per-domain-pair, it samples 5000 random pairings, computes the extremity cross-correlation matrix (d_i × d_j), estimates the null by shuffling the partner domain 5 times, and keeps only feature-pair interactions that are **> 2σ above the shuffled null**. The interaction matrix is the scorer's learned memory; it resolves which feature columns co-vary under any real pairing vs. which are noise.
+
+**What it collapses:**
+- **Magnitude-scale structure.** Quantile rank erases absolute feature magnitudes entirely. Two objects with feature vectors (1, 2, 3) and (100, 200, 300) have identical rank signatures if they occupy the same percentile slots. This is Megethos-robust **by construction**, not by discipline — the scorer cannot be contaminated by P003 the way P001 and P002 can.
+- **Sparse/binary feature structure.** Features with mostly-identical values (e.g. binary flags, sparse indicators) produce degenerate rankings where ties dominate, collapsing extremity differences. Use categorical projections (P010/P011/P012) instead.
+- **Low-count populations** where rank quantiles are coarse. Below ~1000 objects, the rank granularity is too coarse for stable extremity measurement.
+
+**Tautology profile:**
+- **Not independent of P001/P002.** The underlying claim is still "these projections share a feature correspondence" — just measured through ranks instead of raw cosine. Using both P001 and P034 on the same hypothesis double-counts the distributional alignment signal. Pattern 1 (Distribution/Identity Trap) applies: if P001 gives ρ=0.9 and P034 gives a high score, check whether both are driven by the same formula-level overlap before celebrating.
+- **Learning-time null ≠ inference-time null.** The built-in 2σ filter on the interaction matrix is a **learning discipline** — it rejects interaction cells that are noise given the observed pairings. It is NOT a post-hoc permutation null on the final score. To probe whether a batch-level coupling survives permutation, use P040 externally. Conflating the two is a protocol error.
+- **Quantile-rank × degree-of-freedom coupling.** For tables where most objects have identical feature values (e.g. `rank` on ec_curvedata — 80% rank 0 or 1), the quantile map is nearly step-function. The rank-based transformation preserves less information than the raw numeric one. Check distribution shape before adopting P034 over P001.
+- **Extreme-tail over-weighting in small samples.** `(q − 0.5).abs()` weights tails quadratically in a sense; with n < 1000 the top and bottom quantiles are dominated by 2-3 outlier objects, and their interactions drive the score disproportionately. Apply P043 bootstrap to confirm stability.
+
+**Calibration anchors:**
+- **Known rank-structure invariances.** Where rank signature across projections is a real invariance — e.g. F010 NF backbone's "small-disc NFs pair with low-conductor Artin reps" — P034 should resolve the signal. Untested on F010 as of this entry; candidate follow-up.
+- **Modularity (F001) via P034 is weak.** Modularity is about L-function identity, not rank co-variation on arithmetic invariants. P034 has no principled reason to detect modularity; expect it to give no signal on pure EC↔MF modularity probes. If it does, either Pattern 5 applies (known invariance re-projected) or there is a leak.
+- **Against P001 on the phoneme corpus (F021).** Phoneme framework gave ρ=0.95+ under P001 and was killed by P040. P034 on the same corpus should ALSO give a high score (ranks are aligned in the same trivial way the raw cosine is) — the 2σ learning-filter would not help here because the 5-shuffle null is too weak. This is the expected failure mode; confirms P034 is not a magic Megethos escape.
+
+**Known failure modes:**
+- **High-Megethos data gives decent-looking scores in noisy ways.** Rank normalization kills magnitude scale, but rank order can still track magnitude within a stratum. If two projections have strongly-correlated magnitudes, their rank signatures are also correlated — P034 sees this as "aligned extremity" and fires. Pre-decontaminate with P052 where applicable.
+- **The interaction-matrix is a memory.** AlignmentCoupling learns from the sample it sees at init. If you change the population (e.g. add new objects, change filters) without re-initializing, the interaction matrix is stale. Pattern 19 (Stale/Irreproducible) at scorer-state level.
+- **Sigmoid normalization compresses the tail.** Final score is `sigmoid(total_score * 5)` (line 297). This compresses high-magnitude couplings toward 1.0 and mid-range toward 0.5. Two distinct "very strong" couplings are indistinguishable in output; use the pre-sigmoid `total_score` if relative ranking matters.
+- **5-shuffle null at init is noisy.** The 2σ filter estimates null mean/std from only 5 permutations (line 245). This is a permissive filter — the effective rejection rate is ~5% under pure noise. Treat the learned interactions as coarse, not definitive.
+
+**When to use:**
+- **Coupling-across-projection probes where Megethos has been a chronic confound** and P052 decontamination is infeasible (categorical or non-numeric features). P034 gives a rank-based floor that P001 doesn't.
+- **Extremity-driven phenomena.** When the hypothesis is literally "extremes align" (e.g. high-Sha curves paired with low-regulator curves), P034's extremity weighting is the right shape.
+- **As a corroborating scorer alongside P001.** If P001 shows a signal, P034 showing the same signal at rank level is weak corroboration (Pattern 3 Weak Signal Walk invariance evidence). If P001 shows a signal but P034 doesn't, the coupling is magnitude-mediated and likely Megethos-contaminated — Pattern 3 kill axis.
+- **Exploratory first-pass on new projection pairs** where rank-order is known but absolute scaling is arbitrary (mixed-unit datasets).
+
+**When NOT to use:**
+- **Categorical/object-level coupling claims.** Use P010/P011/P012. Quantile rank is defined only for continuous features.
+- **Small-n populations (n < 1000).** Rank granularity is too coarse; bootstrap (P043) dominates the signal.
+- **Publication-grade findings without post-hoc P040 permutation null.** The built-in 2σ learning-time filter is not a substitute for inference-time null.
+- **In place of P001 when you want raw cosine similarity.** P034 and P001 measure different things; P034 is not a cleaner version of P001 — it is a distinct projection with a different invariance surface.
+
+**Relationship to other projections:**
+- **P001 CouplingScorer — parent class.** P034 inherits `__init__`'s feature-normalization machinery but overrides scoring entirely. Running both jointly and comparing is diagnostic: agreement = robust distributional signal; P001-only = magnitude-mediated (Megethos-suspicious); P034-only = pure rank extremity (may indicate sparse/binary features in the data).
+- **P002 DistributionalCoupling — sibling.** P002 adds kurtosis ratio on top of cosine; P034 replaces cosine entirely with rank. Different axes on what "distributional" means.
+- **P040 F1 permutation null — orthogonal/complementary.** P040 tests the inference-time coupling under label shuffle; P034's internal 2σ filter tests the learning-time interaction matrix under shuffle. They answer different questions and do not substitute for one another.
+- **P052 Prime decontamination — can precede.** If the projections have prime-factorization-mediated coupling, decontaminate first; otherwise P034 will inherit the contamination (Pattern 1 at rank level).
 
 ---
 
@@ -175,7 +228,7 @@ distinguishes them from feature-distribution projections.
 **When to use:**
 - Any coupling claim in number-theoretic domains (NF, Artin, MF, EC)
 - When P001 kills a signal at z=0 — try P010 before filing as KILLED
-- Cross-domain tests where both sides have canonical Galois structure
+- Coupling-across-projection tests where both sides have canonical Galois structure
 
 **When NOT to use:**
 - Geometric / topological domains without canonical Galois assignment
@@ -364,6 +417,7 @@ projection. Critical for revealing features hidden in pooled analysis.
 **Known failure modes:**
 - Rank ≥ 4: severe data gap (F030, F033 — only 1 of 2,105 rank-4+ curves has lfunc data)
 - Claims at rank ≥ 2 that use Sha are circular (Mnemosyne's BSD v1 kill)
+- **Rank ≥ 2 BSD-joined circularity (promoted from tautology note per sessionB review, 2026-04-17):** For rows where Sha is computed assuming BSD, stratifying by `rank` and comparing to any BSD-derived quantity (Sha, regulator × Sha, analytic_rank) is a closed loop. Use `rank ≥ 2 AND sha_computation_method != 'BSD_assumed'` as a filter, OR restrict to rank ≤ 1. Any publication-grade result at rank ≥ 2 must document which side of this filter it used. This is more than a tautology — it is a coordinate-system-invalidation at specific ranks, adjacent to the F003 BSD-parity calibration anchor (Pattern 7).
 
 **When to use:**
 - Any BSD-adjacent analysis
@@ -655,6 +709,958 @@ projection. Critical for revealing features hidden in pooled analysis.
 
 ---
 
+## P031 — Frobenius-Schur Indicator stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_artin_indicator)
+**Code:** `WHERE "Indicator" = v` on `lmfdb.artin_reps` (indexed via `idx_artin_dim_conductor`; Indicator itself is unindexed — add `idx_artin_indicator` if this becomes a hot path)
+**Type:** stratification (symmetry / self-duality axis, classical representation theory)
+
+**What it resolves:**
+- **Self-duality and symmetry type of a complex irreducible representation.** For an irreducible character χ of a finite group, the Frobenius-Schur indicator ν(χ) ∈ {-1, 0, +1} classifies:
+  - `+1` — χ is the complexification of a real (orthogonal) representation — fixes a symmetric bilinear form.
+  - `-1` — χ is quaternionic (symplectic) — fixes an alternating bilinear form.
+  - ` 0` — χ is not self-conjugate (complex type in the reality sense).
+- **Expected L-function symmetry type** for the Artin L-function attached to the rep. The Katz-Sarnak symmetry type (`P028`) follows directly from ν via:
+  - `ν = +1` with `Is_Even = True`  → `SO_even` family.
+  - `ν = +1` with `Is_Even = False` → `SO_odd`  family.
+  - `ν = -1`                        → `Sp`        family.
+  - `ν = 0`                         → `U`         family.
+  This is the arithmetic companion of `P028`'s random-matrix classification.
+- **Whether the rep descends to a real form**, which matters for base-change arguments and for selecting out the self-dual subfamily in cross-specimen analyses.
+
+**What it collapses:**
+- **Within-indicator distinctions.** Two `ν = +1` reps of different dimensions, different Galois groups, different conductors all map to the same stratum. Use `P031` as a coarse symmetry filter; stratify further by dimension or Galois label when needed.
+- **Representation content beyond symmetry.** The full character values are lost; only the self-duality class survives.
+- **The `Is_Even = False` ⇒ `ν ≠ -1` forbidden cell** makes joint `P031 × Is_Even` non-orthogonal (see tautology profile below).
+
+**Tautology profile:**
+- **`P031` ↔ `Is_Even` (partial tautology, asymmetric).** Empirical from `artin_reps` (798,140 rows, 2026-04-17):
+  - `Is_Even = False`: 478,851 rows — all `ν ∈ {0, +1}` — no `ν = -1` (symplectic reps are even by definition).
+  - `Is_Even = True`:  319,289 rows — `ν ∈ {-1, 0, +1}` distributed (785 / 14,865 / 303,639).
+  The implication `ν = -1 ⇒ Is_Even = True` is a representation-theory fact, not a finding. Joint `P031 × Is_Even` has forbidden cells; do not treat the axes as independent without accounting for this.
+- **`P031` ↔ `Dim` (partial tautology).** Symplectic reps occur only in even dimension. Empirical distribution of `ν = -1`: Dim=2 (761), Dim=4 (12), Dim=6 (12); zero at all odd dims. Joint `P031 × Dim` has forbidden cells at (`ν = -1`, odd Dim).
+- **`P031` ↔ `P028` Katz-Sarnak (near-redundancy).** Per the symmetry-type map above, `P031` plus `Is_Even` determines `P028` exactly in the Artin case. Applying both axes independently is double-counting; within the Artin family, one is a rename of the other. `P028` extends to families beyond Artin (quadratic twists, Dirichlet, etc.) where `P031` does not apply — outside Artin, the two are genuinely distinct.
+
+**Stratum-count summary (live `artin_reps` query, 2026-04-17):**
+- `ν = +1` (orthogonal / real): 768,164 (96.3%)
+- `ν = 0` (complex / non-self-dual): 29,191 (3.7%)
+- `ν = -1` (symplectic): 785 (0.1%)
+- Total: 798,140 irreducible reps.
+
+**Small-n strata discipline (post-sessionB Liouville lesson, 2026-04-17):**
+- Joint `P031 × Dim × Is_Even` strata quickly drop below `n = 100` for `ν = -1` (785 total symplectic reps distributed across Dim = 2 / 4 / 6 at 761 / 12 / 12).
+- sessionB's `liouville_side_check_F012` demonstrated that small-n strata produce spurious `|z|` under normal-approximation tests (Pattern 19). Enforce `n ≥ 100` per adequate stratum at entry time, not as an optional reporting caveat. For `ν = -1` jointly with any other axis, effective adequacy is capped by 785.
+- For `ν = 0` (29,191 rows), joint with Dim gives useful strata at Dim ≤ 6 (sum ~26,000) and drops rapidly beyond.
+- For `ν = +1`, most joint strata are adequate; this is the "default stratum" that dominates pooled analysis by 96%.
+
+**Calibration anchors:**
+- **Frobenius-Schur identity.** For a finite group G and its character table: ∑_χ ν(χ) · χ(1) = #{g ∈ G : g² = 1}. Any implementation that disagrees numerically on a small test group (S₄, Q₈, D₄) is broken.
+- **Dimension-1 reps are self-dual with ν ∈ {0, +1} only** (a 1-dim rep cannot be symplectic). Empirical: 194,258 dim-1 reps in `artin_reps`; zero at `ν = -1`. Holds.
+- **Q₈ (quaternion group) has a unique 2-dim irreducible at `ν = -1`.** This is the textbook example for symplectic reps and should appear in `artin_reps` for the relevant Galois label.
+- **Cross-projection to `P028` on the Artin slice** (see tautology): `ν = +1, Is_Even = False` must match `SO_odd` assignment; any row where these disagree flags a data-quality issue (candidate calibration anchor).
+
+**Known failure modes:**
+- **Pooled analysis by `Indicator` is effectively a `ν = +1` analysis.** 96.3% of the rows carry `ν = +1`; any "artin_reps feature" measured without `P031` stratification is reporting the `ν = +1` stratum by default. This is a Pattern 4 sampling-frame trap with `P031` hidden inside the pool.
+- **Treating `P031 × Is_Even` as orthogonal** reintroduces the forbidden-cell tautology. Observed empirical probability of `ν = -1 | Is_Even = False` = 0; treat as structural constraint, not sampling noise.
+- **Small-n at `ν = -1`.** Any test stratified at the `ν = -1` level cannot extrapolate beyond the 785-rep subpopulation. Pattern 9 (delinquent frontier) applies when higher-dimensional symplectic reps are needed — they do not exist in the data.
+
+**When to use:**
+- **Cross-projection calibration with `P028`** (Katz-Sarnak) for Artin-type L-functions: `P031 + Is_Even → P028` map is a hard calibration anchor. Both sides must agree on every row.
+- **Filtering to self-dual reps** (drop `ν = 0`) before applying tools that assume self-duality (e.g., real-coefficient L-function moment conjectures).
+- **Probing the symplectic frontier.** The 785 `ν = -1` reps are a narrow, textured subfamily worth its own walk (Pattern 16 — obscure, well-defined, likely unmapped).
+- **Joint with `Dim`** when dimension-specific symmetry effects are at stake (e.g., dim-2 orthogonal-vs-symplectic split relevant to certain modular lifts).
+
+**When NOT to use:**
+- **Alongside `P028` on the Artin slice as independent axes.** Pick one. `P028` is more portable (works beyond Artin); `P031` is the raw LMFDB column and cheaper to query.
+- **As the sole axis** for any cross-projection claim. The 96.3% `ν = +1` dominance means the signal will usually be a `ν = +1` signal regardless. Always stratify within Indicator to extract non-pooled structure.
+- **For dim-1 reps** — the three-valued axis collapses to two (`ν ∈ {0, +1}` only); dim-specific stratification is more informative here.
+
+**Related projections:**
+- **P028 Katz-Sarnak:** near-redundancy for Artin; `P031 + Is_Even → P028` exactly on the Artin slice. Pick one of `{P028, P031}` per analysis within Artin.
+- **P033 Is_Even (sessionD, same session):** joint axis; forbidden-cell tautology (`ν = -1 ⇒ Is_Even = True`).
+- **P027 ADE-type (via Galois label):** heuristic proxy, not a direct companion. `P031` is the cleaner self-duality axis; `P027` was a killed hypothesis for F011 resolution.
+
+**Follow-ups this entry motivates:**
+1. Build `idx_artin_indicator` (single-column B-tree); `P031` scans 798K rows unindexed today.
+2. `wsw_artin_symplectic_subfamily` — Category-3 specimen walk on the 785-row `ν = -1` subfamily (Pattern 16).
+3. `calibrate_F006_P031_P028_agreement` — verify that `ν + Is_Even → P028` agrees with `lfunc_lfunctions.symmetry_type` on every Artin-origin L-function; any disagreement = data-quality signal (candidate new calibration anchor F006).
+4. Cross-project `F010` NF backbone restricted to Artin-side `ν = -1` vs `ν = +1` — does the ρ=0.40 signal sharpen or collapse under symmetry filtering?
+
+---
+
+## P032 — MF / Dirichlet character parity stratification
+
+**Drafted by:** Harmonia_M2_sessionB, 2026-04-17 (task catalog_character_parity; renumbered P031 → P032 at merge per sessionA ID_ASSIGNMENT)
+**Code:** `WHERE char_parity = 0` (even) vs `WHERE char_parity = 1` (odd) on `lmfdb.mf_newforms`. For Dirichlet L-functions directly: `WHERE char_parity = ...` on `lmfdb.char_dirichlet` (primitive characters only — parity is ill-defined for imprimitive induced characters).
+**Type:** stratification (sign-of-functional-equation axis / Γ-factor choice)
+
+**What it resolves:**
+- **Archimedean local factor split.** Even characters give Γ_R(s) = π^(-s/2) Γ(s/2); odd give Γ_R(s+1) = π^(-(s+1)/2) Γ((s+1)/2). The functional equation pairs s ↔ 1-s through different shifts, producing distinct low-lying zero densities.
+- **Katz-Sarnak low-lying zero predictions by parity.** Even Dirichlet families have SO_even-like lowest-zero distribution; odd have SO_odd-like forced central zero. Even/odd split at the low-lying level — bulk is universal.
+- **Möbius/Liouville correlations at the L-function level.** μ (Möbius) and λ (Liouville) are "odd" with respect to parity of Ω (prime-factor count); character parity is the family-level analog. Any correlation between μ or λ and L-function data is expected to stratify by character parity.
+- **Rubinstein–Sarnak chebyshev-type biases.** Prime-counting biases (π(x; q, a) for a a non-residue vs a residue) couple to character parity through the explicit formula. This is the foundational parity-sensitive family-level effect.
+
+**What it collapses:**
+- **Bulk zero statistics.** Above the unfolding scale, parity is invisible — all families converge to universal GUE.
+- **Weight-invariant MF features.** Because for nonzero modular forms of weight k, character parity must equal k mod 2 (forced identity), char_parity stratification in MF without weight conditioning just re-splits weight parity.
+- **Features of non-primitive characters.** Induced characters inherit parity from the underlying primitive — applying this stratification to imprimitive L-functions double-counts.
+
+**Tautology profile:**
+- **MF char_parity × MF weight parity.** Fully aliased within `mf_newforms`. Stratifying by char_parity across varying weight is identical to stratifying by weight mod 2. Only independent when conditioned on a single weight (or joint with P029 weight stratification).
+- **char_parity × Katz-Sarnak P028.** For MF and for Dirichlet L-function families, char_parity is one of the coordinates that P028 uses internally to pick SO_even vs SO_odd. Using both P032 and P028 jointly on the same family risks double-reporting. Use one or the other, or apply P028 within a fixed P032 class.
+- **char_parity × CM flag (P025).** For weight-1 MF and for CM forms generally, character parity is correlated with the CM-character's parity. Non-independent; control via joint P025 × P032 when probing CM-specific signals.
+- **Dirichlet χ(-1) identity.** By construction, char_parity encodes χ(-1). It is NOT an observable derived from zeros — it is a family-definition input. Do not treat "signal resolves under P032" as revealing new structure; it only means the signal respects the functional-equation sign.
+
+**Calibration anchors:**
+- **Functional equation Γ-factor structure** (Riemann, Hecke, Weil): the Γ_R / Γ_C factor-pair choice determined by parity is a proved identity, not a conjecture. If a fresh P032 implementation classifies any primitive character wrong, the instrument is broken (Pattern 7 — stop all work).
+- **Rubinstein–Sarnak 1994** prime-bias predictions: verified empirically across residue classes modulo small N. An implementation of P032 on a Dirichlet L-function dataset should reproduce their prime-race asymmetries at the expected magnitudes.
+- **Weight-char identity for MF newforms.** For every row in `mf_newforms`, `char_parity` must equal `weight % 2`. A deviation is a data-integrity violation, not a finding. Easy SQL check; worth running once.
+
+**Known failure modes:**
+- **Applied to MF without joint weight conditioning:** you are not measuring what you think. The signal is weight-parity, not character-parity. Always use `(weight, char_parity)` tuples when the data source is MF.
+- **Applied to imprimitive induced characters:** inherited parity creates circular structure.
+- **Small-n parity strata.** Some weight × level × character combinations have few instances. Apply Pattern 4 / F012-Liouville discipline: require n ≥ 100 per stratum before publication-grade per-stratum |z|.
+- **Parity-aliased-with-rank for EC L-functions via modularity.** Modularity sends weight-2 MF ↔ EC. EC L-function parity (Atkin-Lehner sign) equals MF character parity under this correspondence. Using both as "independent" is a Pattern 1 tautology trap.
+
+**When to use:**
+- Any Dirichlet L-function family analysis where you expect parity-sensitive behavior (prime-counting biases, chebyshev biases, low-lying zero densities).
+- As an axis of invariance analysis: does the feature resolve through χ(-1) = +1 but not −1, or both, or neither?
+- Joint with P028 Katz-Sarnak when you want to separate "symmetry-type signal" from "parity-only signal" — use P032 within each P028 class.
+- Cross-family modularity checks: the char_parity of a weight-2 MF must match the sign of the corresponding EC L-function. An identity calibration.
+
+**When NOT to use:**
+- MF analysis without joint weight stratification. You will measure weight-parity and think you measured character-parity.
+- Bulk zero questions. Parity is a low-lying phenomenon.
+- As evidence of novel structure — every parity effect has a classical explanation via the Γ-factor structure. Claims must pass Pattern 5 ("Known Bridges Are Known") explicitly — for character-parity phenomena, the relevant known theory is the explicit formula + Weil's explicit formula + Rubinstein–Sarnak. If your claim reduces to any of these, it is calibration, not discovery.
+- On imprimitive characters without projecting to the primitive.
+
+**Pattern 13 / Pattern 18-candidate connection:** Because char_parity is family-level (a property of χ itself, not of objects within the family), adding P032 to a "family-axis exhaustion" ledger is natural. If F011's GUE deficit is ALSO flat under P032 (even vs odd Dirichlet), that is another family-axis kill — further evidence the deficit sits in preprocessing (P051 unfolding) or finite-N structure (H09 conductor-window), not in any family axis. (Post-merge note: F011 was resolved under P028 Katz-Sarnak by sessionB's wsw_F011_katz_sarnak — SO_even 42% vs SO_odd 35% — so a P032 probe on the same specimen is expected to inherit or refine that split.)
+
+---
+
+## P033 — Artin `Is_Even` (parity) stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task `catalog_artin_is_even`). Merged by Harmonia_M2_sessionC via `merge_P033_is_even`.
+**Code:** `WHERE "Is_Even" = <True|False>` on `lmfdb.artin_reps` (no dedicated index; covered by pooled scans or by joint `idx_artin_dim_conductor`).
+**Type:** stratification (binary parity axis, Galois-representation parity / determinantal sign)
+
+**What it resolves:**
+- **Parity of the Artin representation**, i.e. the sign of `det(ρ(c))` where `c ∈ Gal(Q̄/Q)` is complex conjugation. `Is_Even=True` ⇔ `det ρ(c) = +1`; `Is_Even=False` ⇔ `det ρ(c) = -1`.
+- **The Deligne-Serre stratum at (Dim=2, Is_Even=False).** Weight-1 newforms correspond bijectively to odd 2-dimensional Artin representations with `Is_Even=False`. 244,811 such reps in LMFDB — the largest single `Is_Even × Dim` cell.
+- **Functional-equation archimedean parity.** Combined with the Frobenius-Schur indicator `P031` (ν), `Is_Even` decides the Γ-factor type at infinity and the SO_even vs SO_odd split on the Artin side (when ν=+1, `Is_Even` picks between SO_even and SO_odd; when ν=-1, symplectic; when ν=0, unitary).
+- **Conjugacy of `c`-action.** Since `c²=e`, `Is_Even` is the single bit of information `c` carries; joint with `Dim` it determines the signature of the real form.
+
+**What it collapses:**
+- **Any structure not depending on `c`-parity.** Two `Is_Even=True` reps at different dimensions / Galois groups / conductors all map to the same stratum; further stratification by `Dim` and `Galois label` is usually required.
+- **The `Is_Even=False` ⇒ ν≠−1 forbidden cell** makes joint `P033 × P031` non-orthogonal (symplectic reps are automatically even).
+- **Parity-free features** — anything depending only on the image of ρ without reference to `c`'s image is invariant under `Is_Even` and collapses in this projection.
+
+**Tautology profile:**
+- **`P033` ↔ `P031` (asymmetric forbidden cells).** Empirical from `artin_reps` — the `(Is_Even=False, ν=−1)` cell is empty (symplectic reps are even by definition). Joint `P033 × P031` has a forbidden cell; do not treat as independent.
+- **`P033` ↔ `P028` Katz-Sarnak (near-redundancy via P031).** On the Artin slice, `P031 + P033` determines Katz-Sarnak symmetry type exactly: ν=+1 AND Is_Even=True → SO_even; ν=+1 AND Is_Even=False → SO_odd; ν=−1 → Sp (implies Is_Even=True); ν=0 → U. Applying all three independently on the Artin slice is triple-counting.
+- **`P033` ↔ `Dim` (statistical).** Dim=1 and Dim=2 are odd-dominated; Dim=4 reverses to even-dominated; Dim≥7 increasingly even with coverage cliff for odd (Pattern 9).
+- **`P033` ↔ `Dets`.** The `Dets` column records det ρ as a Dirichlet character; `Is_Even` is its parity-at-infinity summary. Do not use both as independent axes.
+
+**Calibration anchors:**
+- **Deligne-Serre bijection.** 19,306 weight-1 newforms (`P029` weight=1) ↔ 244,811 `Dim=2, Is_Even=False` Artin reps (split across Galois conjugates). Bijection-preserving sub-sampling recovers the count.
+- **Trivial representation** (1-dim, ρ ≡ 1): `Is_Even=True`, ν=+1; once per number field.
+- **Sign character of Z/2Z**: `Is_Even=False`, ν=+1.
+- **F010 NF backbone via Is_Even (sessionB `wsw_F010_katz_sarnak`, 2026-04-17):** `Is_Even=True` ρ=0.77 (n=56); `Is_Even=False` ρ=-0.05 (n=51). Fisher z=5.38, p~1e-7. The NF↔Artin coupling lives entirely in the even-parity stratum — strongest empirical calibration of `P033` as a resolving axis to date, and the canonical Pattern 20 case (pooled F010 rho collapses under larger n while stratified rho sharpens to 0.77).
+
+**Small-n strata discipline (post-sessionB Liouville lesson, 2026-04-17):**
+- Joint `P033 × Dim` drops below `n=100` at `Is_Even=False, Dim=7` (n=69), `Dim=11` (n=27), `Dim=17+` (single digits).
+- Joint `P033 × P031 × Dim` becomes sparse fast (ν=−1 has 785 total across Dim=2/4/6).
+- Enforce `n ≥ 100` per adequate stratum at entry time per Pattern 19. For Dim≥7 odd, explicit coverage reporting is mandatory (Pattern 9).
+
+**Known failure modes:**
+- **Pooled `artin_reps` analysis is 60:40 toward `Is_Even=False`** — any pooled feature silently averages two structurally different subfamilies (Pattern 4 variant, Pattern 20 precedent).
+- **Dim=2 / Is_Even=False is the Deligne-Serre stratum** — any coupling with weight-1 MF must use this joint restriction.
+- **`Is_Even` on dim-1 reps** is the character parity — redundant with character-level stratification at Dim=1.
+- **EC "parity" is not `Is_Even`.** EC parity is root number (relates to `signD` / Atkin-Lehner via modularity).
+
+**When to use:**
+- **Deligne-Serre-oriented analyses** — restrict to `Dim=2, Is_Even=False`.
+- **F010-type NF↔Artin couplings** — stratify by `Is_Even` before computing (canonical Pattern 20 application).
+- **Joint with `P031` and `P028`** to decompose Artin L-functions into Katz-Sarnak symmetry strata at object level.
+- **Parity-aware functional-equation analyses** — root numbers, L-value-at-center-point vanishing, local root-number factorizations.
+- **Calibration of root-number / ε-factor code** — audit implementations against `Is_Even`.
+
+**When NOT to use:**
+- **As sole axis on Dim=1 reps** — character-level stratification is finer.
+- **Jointly with `P031` AND `P028`** — triple-counting on the Artin slice; pick two.
+- **For Artin → EC projections** — EC parity lives in root number, not `Is_Even`.
+- **Without `Dim` stratification** — Dim=1/2 vs Dim=4+ parity flip hides structure.
+
+**Related projections:**
+- **P031 Frobenius-Schur Indicator:** forbidden-cell partial tautology (symplectic ⇒ even). Joint `P031 × P033` determines `P028` on the Artin slice.
+- **P028 Katz-Sarnak:** near-redundancy via `P031 + P033` on the Artin side.
+- **P029 MF weight:** cross-tabulates for Deligne-Serre (weight=1 ↔ Dim=2 Is_Even=False).
+- **`Dets`:** the full character field; `Is_Even` is the binary summary.
+
+**Follow-ups this entry motivates:**
+1. **Deligne-Serre count reconciliation** — bijection-preserving sub-sampling task.
+2. **`Dets` as standalone catalog entry** — reserve next P-ID via `infra_reserve_p_id`.
+3. **F010 P033 tensor update** — sessionB result demands `F010 → P033: +2` in the tensor invariance matrix.
+4. **F026 H61 re-examination** — the killed dim-2/dim-3 ratio may have `Is_Even` structure inside it.
+5. **Pattern 1 tautology-pair extension** — add `(Is_Even, Dets)` as a partial tautology pair.
+
+---
+
+## P035 — Kodaira reduction type stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task `catalog_kodaira`). Reviewed and approved (with caveat) by Harmonia_M2_sessionA. Merged by Harmonia_M2_sessionC via `merge_P035_kodaira`.
+
+> **DERIVABLE-NOT-STORED caveat (read before using):** `P035` is not a direct `lmfdb` column. Kodaira symbols per bad prime (`I_n`, `II`, `III`, `IV`, `I_n*`, `II*`, `III*`, `IV*`) must be computed from the a-invariants via **Tate's algorithm** (PARI `ellglobalred`, Sage `EllipticCurve.kodaira_symbol`, or LMFDB's build pipeline). **Any worker using P035 must first materialize Kodaira via Tate's algorithm or accept placeholder status.** Materialization is a multi-million-row infrastructure task owned by Mnemosyne / Koios with James's input — not auto-seedable.
+
+**Code:** Derivable from `lmfdb.ec_curvedata` (`ainvs`, `bad_primes`, `semistable`, `potential_good_reduction`) via Tate's algorithm. No direct column. Proposed materialization: `kodaira_per_prime(lmfdb_label, prime, kodaira_symbol, n, split_nonsplit)` at ~7M rows (3.8M curves × mean ~2 bad primes).
+**Type:** stratification (geometric reduction-type axis, refines P026 semistable vs additive)
+
+**What it resolves:**
+- **Per-bad-prime singular fiber geometry.** The Néron model at a bad prime `p` has a specific geometric type captured by the Kodaira symbol. `I_n (n≥1)` families are multiplicative / semistable; all others (`II`, `III`, `IV`, `I_n*`, `II*`, `III*`, `IV*`) are additive.
+- **Refinement of P026 (semistable vs additive).** Within "additive," Kodaira distinguishes seven finer types, each with distinct local component groups, Tamagawa numbers, and L-function local factors.
+- **Tamagawa-number prediction** (up to limited ambiguity). The local component-group order `c_p` is determined by the Kodaira type plus split/non-split information. Ogg's formula `f_p = ord_p(Δ) − m + 1` ties conductor exponent to Kodaira + Δ valuation.
+- **Modular-curve genus and degeneration signature.** Kodaira types classify the degeneration of the Weierstrass singular fiber; the join profile across all bad primes is the curve's "global reduction signature."
+- **Néron differential period behavior.** Additive-reduction types have specific integral-period factors relevant for BSD leading-term computations.
+
+**What it collapses:**
+- **Per-prime vs global.** Kodaira type is a PER-BAD-PRIME invariant. A curve has one Kodaira symbol per bad prime, not a single scalar. P035 usage must choose: (i) stratify by tuple of per-prime types, (ii) stratify by dominant type across bad primes, or (iii) stratify per `(curve, prime)` pair. Each choice collapses different features.
+- **Non-reduction-related structure.** Features independent of the Néron model at bad primes are invariant under P035.
+- **Split vs non-split multiplicative distinction** (if only coarse Kodaira symbol `I_n` is used). Record split/non-split separately.
+
+**Tautology profile:**
+- **P035 ↔ P026 (semistable vs additive).** P035 IS the refinement: `P026 = "semistable"` iff all Kodaira types are `I_n`; `P026 = "additive"` iff any is non-`I_n`. Joint P026 × P035 is *nested*, not orthogonal — double-counting risk.
+- **P035 ↔ P021 (num_bad_primes).** For fixed `num_bad_primes`, the Kodaira type tuple has combinatorially more entropy than the scalar count — P035 refines P021 within each P021 stratum.
+- **P035 ↔ Tamagawa numbers.** Product of local Tamagawa `c_p` enters the BSD formula. Most Kodaira types determine `c_p` up to small ambiguity; for `I_n`, `c_p = n` (or `n/2` for non-split). Treating P035 and "Tamagawa-number stratification" as independent re-asserts this near-identity as if it were signal.
+- **P035 ↔ Conductor exponent `f_p` (Ogg's formula).** `f_p` is derivable from Kodaira + Δ valuation; joint with conductor conditioning (P020) risks formula-lineage leak (Pattern 1).
+
+**Stratum-count summary (distribution shape, materialization pending):**
+- 8-element coarse class: `{I_n (n≥1), II, III, IV, I_n* (n≥0), II*, III*, IV*}`. `I_n` and `I_n*` index infinitely many sub-types by `n`; use the coarse 8-class split for finite analysis with `n` as secondary axis.
+- Per LMFDB aggregate counts: `I_n` dominates (~70–80% of all bad-prime Kodaira symbols); `II / III / IV` occur at 5–10% each; `II* / III* / IV*` and `I_n*` are rarer.
+- **Small-n strata discipline:** at fine granularity (e.g., "curves all of whose bad primes are type II"), strata quickly drop below `n=100`. Apply sessionB's Liouville-lesson discipline.
+
+**Calibration anchors:**
+- **Tate's algorithm is proved**, not conjectural. Any LMFDB Kodaira symbol disagreeing with an independent PARI/GP or Sage computation on the same a-invariants is a data-quality violation — candidate F-level calibration anchor once materialized.
+- **Ogg's formula** (conductor exponent from Kodaira + Δ) is proved. A P035 implementation computing `f_p` from Kodaira + local Δ valuation that disagrees with `ec_curvedata.conductor` at the corresponding prime is broken.
+- **Neron component-group sizes** match the Kodaira type exactly (textbook identity). `I_n → c_p ∈ {1,...,n}` per split/non-split; `II → 1`; `III → 2`; `IV → 3`; `I_0* → {1,2,4}`; `I_n*` varies; `II* → 1`; `III* → 2`; `IV* → 3`.
+- **Semistable reduction theorem** (Deligne-Mumford): every elliptic curve acquires semistable reduction (all Kodaira types become `I_n`) after a tame base change. Joint P035 × extension-degree analyses can validate.
+
+**Known failure modes:**
+- **Using P035 without materialized data** — any worker drawing claims from "Kodaira stratification" must either (a) run Tate's algorithm on the curves they use, (b) query LMFDB's public detail endpoint per curve (slow, rate-limited), or (c) defer until Mnemosyne materializes the `kodaira_per_prime` table. Do not fabricate strata from indirect LMFDB columns without an audit trail.
+- **Choosing the wrong aggregation rule** (per-prime vs dominant-type vs tuple) and reporting as if canonical. Different choices yield different strata; document the rule explicitly.
+- **Stratifying without split/non-split awareness.** Two `I_n` curves can have genuinely different arithmetic; ignoring split/non-split is an information leak.
+- **Confusing Kodaira symbol with Kodaira-Néron model.** The symbol is a label; the Néron model is the geometric object. P035 classifies labels.
+
+**When to use:**
+- **Refining a P026 "additive" cohort** — when a pooled "additive" stratum has structural variation, P035 is the natural next refinement axis.
+- **Tamagawa-number-driven claims** — local `c_p` structure is cleaner via Kodaira axis than via raw `c_p` values.
+- **Cross-projection calibration** — Ogg's formula and Tate's algorithm are proved; candidate anchor source once materialized.
+- **Investigating the Salem-region density around F014** — low-`num_ram` EC may correlate with specific Kodaira signatures.
+
+**When NOT to use:**
+- **As the sole axis for BSD-adjacent claims** — Tamagawa `c_p` enters BSD multiplicatively; Pattern 1 risk.
+- **Jointly with P026 as if orthogonal** (nested-refinement tautology).
+- **Before Tate-algorithm data is materialized** — the axis is notional without the per-prime Kodaira table.
+- **At small `n` per sub-stratum** — rare types (`IV*`, `III*`, `II*`) have few representatives.
+
+**Related projections:**
+- **P026 semistable vs additive:** parent axis; P035 refines within additive cohort.
+- **P021 num_bad_primes:** orthogonal-in-count; P035 refines at fixed `num_bad_primes`.
+- **P020 conductor conditioning:** joint usage requires Ogg's formula awareness.
+- **P036 Root number (sessionD draft):** local root numbers are Kodaira-type-sensitive (Rohrlich); joint P035 × P036 is natural.
+- **P034 AlignmentCoupling** and **P039 Faltings height / P046 Regulator (proposed):** Kodaira can enter Néron differential period factor — formula-lineage check warranted.
+
+**Follow-ups this entry motivates:**
+1. **`materialize_kodaira_per_prime`** — run Tate's algorithm (PARI `ellglobalred` or Sage) on all 3.8M `ec_curvedata` rows, write to `kodaira_per_prime` table (Mnemosyne/Koios infra task; needs James input on runtime and storage).
+2. **`audit_kodaira_ogg_consistency`** — verify Ogg's formula on every `(curve, bad_prime)` pair once materialized (Pattern 7).
+3. **Candidate calibration anchor F006** — Kodaira consistency across LMFDB vs independent Tate-algorithm runs.
+4. **Joint split/non-split flag** — orthogonal refinement of `I_n` that Kodaira alone doesn't capture; co-document here or give a sister P-ID.
+5. **`wsw_F014_kodaira_salem_region`** — test whether Salem polynomials in the `(1.176, 1.228)` interval correlate with specific Kodaira signatures; connects F014 (Lehmer refined) to P035.
+
+---
+
+## P036 — Root number stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_root_number; approved by sessionA 1776426037120-0)
+
+**Code:** `WHERE root_number = <+1|−1>` on `lmfdb.bsd_joined` (materialized view, 2,481,157 rows; also directly on `lmfdb.lfunc_lfunctions.root_number` for the wider L-function population). For EC, `signD` in `ec_curvedata` is **NOT** the root number (it is the sign of the discriminant) — do **NOT** confuse them. Reference: sessionB's tick-5 correction after `wsw_F011_katz_sarnak` flagged the same distinction. This pitfall has already surfaced once this session; a second slip would be a data-quality violation, not a finding.
+**Type:** stratification (binary sign-of-functional-equation axis; parity axis on self-dual L-functions)
+
+**What it resolves:**
+- **Sign of the functional equation.** For a self-dual L-function Λ(s) = ε · Λ(1−s), `root_number = ε ∈ {+1, −1}`. This is the single bit that distinguishes functional-equation-even from functional-equation-odd L-functions.
+- **Forced central-zero presence.** For ε = −1, Λ(1/2) = 0 by the functional equation (central-zero is forced). For ε = +1, Λ(1/2) may or may not vanish. Hence `P036` directly predicts whether the L-function has an odd-index zero structure near the center.
+- **Katz-Sarnak SO_even / SO_odd split on the Artin / EC side.** For an elliptic curve L-function, `root_number = −1 ⇔ analytic_rank is odd ⇔ family-member of SO_odd`. For `root_number = +1`, SO_even. `P028 × P036` within the EC family is nested, not orthogonal (see tautology profile).
+- **BSD parity anchor F003.** For every row in `bsd_joined` (n = 2,481,157), `(-1)^rank = root_number` holds at 100.000%. This is the cleanest parity-calibration axis we have. A single mismatch would be a catastrophic instrument failure.
+- **Rohrlich local root-number decomposition.** Global root_number factors as a product of local root numbers ε_v; Kodaira type (P035) contributes to the local factor at each bad prime v. P035 × P036 cross-projection is a candidate calibration pair.
+
+**What it collapses:**
+- **Any non-parity feature of the L-function.** Two `root_number = +1` L-functions at different ranks, conductors, and arithmetic content all map to the same stratum. Use `P036` as a coarse parity filter; stratify further by `P023` rank, `P020` conductor, etc.
+- **Rank-parity-invariant features.** Pooled analyses that average over ranks 0 and 2 (both root_number = +1) lose the distinction; `P036` alone cannot see rank inside a parity class.
+- **Non-self-dual L-function distinctions.** `root_number` is meaningful only for self-dual (ν = +1 Frobenius-Schur, see `P031`) L-functions. For ν = 0 (complex) reps, the functional equation relates L(s) to its complex conjugate and "root number" is a phase on the unit circle, not ±1. Applying `P036` to ν = 0 L-functions is a category error.
+
+**Tautology profile:**
+- **P036 ↔ P023 rank (BSD parity theorem).** Proved for rank 0 and rank 1 (Kolyvagin, Gross-Zagier); empirically perfect across all 2.48M EC of `bsd_joined` at higher rank. Empirical from `bsd_joined` (2026-04-17):
+  - `root_number = +1`: rank ∈ {0, 2, 4} exclusively (954K + 276K + 1 = 1,229,540).
+  - `root_number = −1`: rank ∈ {1, 3} exclusively (1,245K + 7K = 1,251,617).
+  Zero mismatches out of 2,481,157. **This is the cleanest calibration anchor in the instrument** (F003) and applying `P036` + `P023` as if they were independent axes is double-counting their mutual determination.
+- **P036 ↔ P028 Katz-Sarnak (nested for EC).** Per the forced-central-zero mechanism: `root_number = +1` on an EC L-function ⇔ SO_even family membership; `root_number = −1` ⇔ SO_odd. Within the EC slice of `P028`, `P036` IS the binary picking between SO_even and SO_odd. `P028` additionally distinguishes U, Sp, and SO families (outside EC). Do not apply `P028` and `P036` jointly on the EC slice as if orthogonal — it is triple-counting with P023.
+- **P036 ↔ P033 Is_Even (cross-family parity correspondence).** For EC L-functions attached to Galois representations, `root_number` corresponds to `Is_Even` via the local-root-number Rohrlich factorization. On modularity pairs, weight-2 MF root_number = Atkin-Lehner eigenvalue = EC root_number (F001 identity). `P036 × P033` across matched EC ↔ MF ↔ Artin triples is an identity pair under Langlands functoriality, not an independent cross-axis.
+- **P036 ↔ Local root numbers at bad primes (Pattern 1 lineage).** Global ε factors as `∏_v ε_v`. If a specimen uses "per-prime root number" and "global root number" jointly, the product identity is formula-level lineage. Lemma-check before reporting ρ.
+
+**Stratum-count summary (live `bsd_joined` query, 2026-04-17):**
+- `root_number = +1`: 1,229,540 (49.55%)
+- `root_number = −1`: 1,251,617 (50.45%)
+- Total: 2,481,157 (bsd_joined matched rows)
+
+Near 50:50 as predicted by Katz-Sarnak universality for a large EC family; the slight asymmetry is expected finite-N behavior.
+
+**Small-n strata discipline:**
+- At the bulk level, both `P036` strata are > 1M rows — no small-n concern.
+- At joint stratifications: e.g., `P036 × P020 × P023` produces cells that can drop below `n = 100` at high conductor × high rank (per F033 coverage cliff; rank ≥ 4 is already data-limited regardless of root number). Apply sessionB's Liouville-lesson `n ≥ 100` discipline at the joint level, not the marginal.
+- For non-EC L-functions in `lfunc_lfunctions`, coverage is thinner; enforce `n ≥ 100` per stratum before publication-grade per-stratum |z|.
+
+**Calibration anchors:**
+- **F003 BSD parity at 100.000% over 2.48M rows** — `(-1)^rank = root_number` exactly, zero mismatches. This is the load-bearing calibration anchor for any `P036` implementation: if a single row violates this, the instrument is broken (Pattern 7, stop all work). The theorem is proved for rank 0-1 (Kolyvagin, Gross-Zagier); the remaining rank ≥ 2 cases hold empirically in the dataset by construction of LMFDB.
+- **F005 high-Sha parity** — restricted to sha ≥ 9, `(-1)^rank = root_number` also holds at 100% (67,035 rows). Consistent subset anchor.
+- **Deligne's global-root-number = product-of-local-root-numbers** theorem is proved; `P036` implementations should match local-product computations.
+- **Rohrlich local root-number tables** — for additive-reduction primes, the local root number depends on Kodaira type in a table-known way. `P035 × P036` consistency is a future calibration candidate.
+
+**Known failure modes:**
+- **Confusing `signD` (sign of discriminant) with `root_number`.** `ec_curvedata.signD ∈ {-1, +1}` is NOT the root number. sessionB's tick-5 F011 Katz-Sarnak run hit this: signD/root_number mismatch rate was 50% (noise against wrong column), correctly retracted as not a calibration violation. Any `P036` implementation on `ec_curvedata` alone is likely wrong — use `bsd_joined.root_number` or `lfunc_lfunctions.root_number`.
+- **Applying `P036` to non-self-dual L-functions** (ν = 0 Artin / ν = 0 Frobenius-Schur). The "root number" is a complex phase, not ±1; category error.
+- **Treating `P036` as independent from `P023` rank** — the BSD parity tautology collapses the axes to the same information content within EC. Never report "feature survives `P036` but collapses under `P023`" without realizing they are the same axis up to a sign.
+- **Pooled analysis across `root_number` without reporting the parity distribution** — `P036` is one of the few axes where pooled analysis is defensible (50:50 split), but any rank-sensitive feature requires separate reporting within each stratum.
+
+**When to use:**
+- **As the canonical BSD parity calibration axis.** Before running any EC / L-function pipeline on fresh data, verify `(-1)^rank = root_number` on a random sample — this is the cheapest instrument-health check available.
+- **Forced-central-zero-sensitive analyses** — any measurement of `L(1/2)`, leading-term-at-center, or lowest-zero distance from center should stratify by `P036`.
+- **Katz-Sarnak symmetry-type filtering on EC L-functions** — `P036` is the cheap proxy for `P028`'s SO_even / SO_odd distinction on the EC slice; prefer `P036` when the question is rank-parity-flavored and `P028` when the question needs the finer U / Sp / SO classification.
+- **Cross-family modularity checks** — root number of a weight-2 MF must match the root number of its modular EC; joint `P036 × P029 × conductor` is the natural cross-slice.
+
+**When NOT to use:**
+- **Jointly with `P023` as if orthogonal** on EC data — you are double-counting BSD parity.
+- **Jointly with `P028` on the EC slice** — nested tautology via the SO_even / SO_odd correspondence.
+- **For non-self-dual L-functions** — complex-phase root number, not ±1.
+- **Before verifying F003 on your sample** — if the calibration anchor is broken on your subset, every downstream `P036` stratification is suspect.
+
+**Related projections:**
+- **P023 rank stratification:** tautological pair via `(-1)^rank = root_number`. Do NOT treat independently.
+- **P028 Katz-Sarnak family symmetry type:** nested on the EC slice — `P036` picks SO_even vs SO_odd; `P028` adds U / Sp / SO distinction for families beyond EC.
+- **P033 Is_Even Artin parity (sessionD):** cross-family parity companion; Rohrlich local decomposition connects Artin-side `Is_Even` to EC-side `root_number` under Langlands.
+- **P035 Kodaira (sessionD, preceding entry):** cross-projection calibration via Rohrlich local-root-number tables at additive-reduction primes.
+- **P020 conductor conditioning:** joint use is orthogonal (no formula-level tautology), recommended for any root-number-vs-conductor trend analysis.
+
+**Follow-ups this entry motivates:**
+1. `calibrate_F003_via_P036` — run the `(-1)^rank = root_number` check on the full 2.48M `bsd_joined` rows and confirm 100.000% agreement. Currently accepted on faith; cheap to formalize as a standing CI check.
+2. `wsw_F010_P036` on the EC side — F010 resolved under P033 `Is_Even` on the Artin side (sessionB tick 12; subsequently tempered to `P028_INCONCLUSIVE` by sessionC bigsample at ~ρ = 0.3). The natural EC-side parallel is to stratify F010's EC partner by `P036`. Expect same structural parity (classical conductor-discriminant formula predicts); Pattern 5 (Known Bridges) calibration, not novelty.
+3. Candidate calibration anchor F007 — Rohrlich local-global root-number product identity, once `P035` Kodaira is materialized.
+4. `catalog_rank_parity_as_tautology_pair` — formalize `(root_number, (-1)^rank)` in Section 8 (Tautology Pairs) of the catalog; currently implicit via F003, should be explicit as a load-bearing lineage pair.
+
+---
+
+## P037 — Sato-Tate group stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_sato_tate_group; approved by sessionA 1776426881001-ish review cycle)
+
+**Code:** `WHERE st_group = <group_label>` on `lmfdb.g2c_curves` (66,158 rows, column `st_group`) and on `lmfdb.lfunc_lfunctions` (column `st_group`, indexed via join strategies rather than full scan). Also `st_label` and `st_label_components` carry the finer rational classification.
+**Infra note (Mnemosyne candidate):** `lfunc_lfunctions` origin-prefix queries (`origin LIKE 'EllipticCurve/Q/%'`) time out at 30 s — no `text_pattern_ops` index on `origin`. Drafting this entry required falling back to `g2c_curves` for the raw distribution. An index build (`idx_lfunc_origin_text_pattern_ops` or a functional `idx_lfunc_st_group_by_origin_family`) would unblock EC-side Sato-Tate queries at scale. `bsd_joined.symmetry_type` is all-NULL at 2026-04-17 (verified via `SELECT symmetry_type, count(*) FROM bsd_joined GROUP BY symmetry_type` — single NULL bucket of 2,481,157 rows) so it is NOT a usable EC Sato-Tate axis in its current state; backfill is a separate Mnemosyne candidate.
+**Type:** stratification (algebraic / Lie-group equidistribution axis for normalized Frobenius traces)
+
+**What it resolves:**
+- **The compact Lie group on which normalized Frobenius eigenvalues equidistribute.** For an elliptic curve over Q: `SU(2)` in the generic (non-CM) case per the Sato-Tate conjecture (proved for weight-2 newforms by Taylor et al. 2011); `N(U(1))` (normalizer of the maximal torus in SU(2)) for CM curves. For a genus-2 curve: one of 34 possible Sato-Tate groups classified by Fité-Kedlaya-Rotger-Sutherland (2012); the 28 types actually achieved form the stratification here.
+- **CM vs non-CM distinction at the L-function level.** Equivalent information to `P025 cm` for EC, but expressed in Lie-group-theoretic vocabulary. For g2c, Sato-Tate type carries strictly more information than a single CM flag since genus-2 Jacobians can have partial CM / RM / QM structures that decompose into different Lie groups.
+- **Moment predictions for normalized a_p.** The Sato-Tate group determines moments `⟨(a_p/2√p)^k⟩` exactly via the character table of the group's irreducible representations. Any deviation at finite conductor is a measurement of finite-N vs asymptotic universality.
+- **Cross-projection calibration for Katz-Sarnak.** P028 Katz-Sarnak is the *zero-side* symmetry classification; `P037` is the *a_p-side* companion. The two should agree on family assignments up to the classical correspondences (SU(2) generic EC → SO family, N(U(1)) CM EC → also SO but with forced central zero via ε, etc.). Disagreements are data-quality signals.
+
+**What it collapses:**
+- **Within-group structural distinctions.** All 63,107 `USp(4)` genus-2 Jacobians in LMFDB map to the same stratum regardless of conductor, automorphism group, rank, etc. Use `P037` as a coarse equidistribution filter; stratify further by `P022` aut_grp, conductor, rank, etc., when the question is finer than "which Sato-Tate class."
+- **Non-a_p structure.** Features independent of the Frobenius-trace equidistribution — e.g., explicit ideal-class-group invariants, regulator values, Tamagawa numbers — are invariant under `P037` and collapse.
+- **Finer rational classification (`st_label`).** `st_group` is the Lie group; `st_label` sub-divides by the rational component-group structure (e.g., different finite extensions of the same identity component). Using only `P037` collapses the rational refinement that `st_label` would expose.
+
+**Tautology profile:**
+- **P037 ↔ P025 (CM flag) on EC.** For elliptic curves over Q, `st_group = SU(2) ⇔ cm = 0`; `st_group = N(U(1)) ⇔ cm ≠ 0`. Full aliasing on the EC slice. Applying `P037` and `P025` independently on EC-only data is double-counting. On the genus-2 side or for higher-dimensional families, `P037` carries strictly more information than any single CM-flag, so the aliasing is a pure-EC concern.
+- **P037 ↔ P028 Katz-Sarnak (cross-side correspondence).** Sato-Tate classifies by `a_p` moments; Katz-Sarnak classifies by low-lying zero statistics. For EC: SU(2) generic → SO_even or SO_odd by rank parity (another nested tautology with `P036` root number / `P023` rank). For g2c: USp(4) → Sp family predicted. The cross-side correspondence is a proved theorem stack (Taylor et al. + Katz-Sarnak); treating `P037` and `P028` as independent on the same family risks double-counting the same classical predictions.
+- **P037 ↔ P031 Frobenius-Schur on Artin-origin L-functions.** For 2-dimensional Artin L-functions, Sato-Tate group is determined by the image of the Galois representation (SU(2) for "large image" cases; finite Lie groups for small-image cases). `P037 × P031` on the Artin slice is a proved-identity pair via known theorems, not an independent cross-axis.
+- **P037 ↔ moments of `a_p`.** Reporting a deviation from the expected `⟨(a_p/2√p)^k⟩` moment under a specific Sato-Tate class, while using `P037` as the stratifier, is formula-level lineage (Pattern 1). The moment IS the prediction the class makes; use a null model (permutation of curve labels within class) to separate structural deviation from class-definition recovery.
+
+**Stratum-count summary (live queries, 2026-04-17):**
+
+For **genus-2 curves** (`g2c_curves`, top 20 of 28 observed classes out of 34 possible):
+- `USp(4)`: 63,107 (95.4%) — generic g2c (no CM / no RM / full-image Galois)
+- `SU(2)×SU(2)`: 2,440 (3.7%) — split Jacobian into two non-isogenous EC
+- `N(U(1)×SU(2))`: 303
+- `N(SU(2)×SU(2))`: 144
+- `E_6`: 51
+- `J(E_1..6)`: small counts
+- `F_{ac}`, `D_{2,1}`, `D_{3,2}`, `D_{6,2}`, `J(C_2)`, `J(C_4)`: single- or double-digit counts
+- Total: 66,158 g2c rows
+
+For **elliptic curves** (via `lfunc_lfunctions` with `origin LIKE 'EllipticCurve/Q/%'`): query timed out at 30 s on unindexed prefix scan; per classical theory the distribution is ~99.8% `SU(2)` and ~0.2% `N(U(1))` (CM curves are rare, `cm != 0` in ~4,100 out of 2.48M bsd_joined rows per earlier session data).
+
+**Small-n strata discipline:**
+- For g2c, any `P037` stratum outside `USp(4)` and `SU(2)×SU(2)` drops below `n = 100` immediately. Applying sessionB's Liouville-lesson `n ≥ 100` discipline at the stratum level means only two g2c strata are adequate for per-stratum `|z|` reporting; the remaining 26+ exotic classes must be pooled or reported with explicit `n` caveats.
+- For EC, both strata (`SU(2)` and `N(U(1))`) have `n ≥ 100` by a wide margin. No small-n concern at the marginal level.
+- Joint `P037 × P020 conductor` at narrow conductor windows rapidly produces small strata for g2c exotic classes. Apply Pattern 9 (delinquent frontier) discipline — absence of signal in exotic Sato-Tate classes is usually absence of measurement.
+
+**Calibration anchors:**
+- **Sato-Tate conjecture for elliptic curves over Q** (weight-2 newforms): proved by Taylor, Barnet-Lamb, Geraghty, Harris, Shepherd-Barron (2006–2011). Any implementation that gives `SU(2)` for a known-CM curve, or `N(U(1))` for a known-non-CM curve, is broken (Pattern 7 — stop all work).
+- **Fité-Kedlaya-Rotger-Sutherland classification** for g2c Sato-Tate groups (2012): proved complete list of 34 possible groups; `st_group` values in LMFDB are required to lie in this set. Any new value is a data-quality violation.
+- **SU(2) moment universality** for non-CM EC: `⟨(a_p / 2√p)^k⟩` → `(1/π) ∫ sin²θ cos^k θ dθ` as p → ∞. Finite-conductor deviations are the finite-N structure relevant to F011's GUE story on the `a_p` side rather than the zero side.
+- **ec.cm ↔ st_group = N(U(1)) identity** on EC: by the Sato-Tate conjecture classification, `cm != 0 ⇔ st_group = N(U(1))`. Any row violating this is a data-quality issue — candidate calibration-anchor F-slot pending verification (proposed as F008).
+
+**Known failure modes:**
+- **Applying `P037` to families where Sato-Tate is not yet proved.** For higher-genus families, higher-dimensional Artin reps, or non-modular-form L-functions, the Sato-Tate conjecture is open. `st_group` values in those families are conjectural, and LMFDB flags / documentation should be consulted before treating them as ground truth.
+- **Confusing `st_group` with `st_label`.** `st_group` is the Lie group; `st_label` is the finer rational classification (different `st_label` values within the same `st_group` encode different component-group structures). Using one when the analysis needs the other silently loses information.
+- **Small-n exotic-class extrapolation.** Genus-2 exotic classes (E_1..E_6, J(C_n), D_{n,k}) have counts in single digits to low tens. Any claim about exotic-class-specific behavior requires explicit `n` reporting; otherwise it is Pattern 4 / F012-Liouville noise inflation.
+- **Treating `P037` and `P028` as independent cross-axes on the same family.** They are different sides of the same proved-theorem correspondence; joint independence is double-counting.
+
+**When to use:**
+- **Any genus-2 analysis** — `P037` is the primary non-conductor, non-rank axis available, and the 95.4% `USp(4)` / 3.7% split-Jacobian imbalance means pooled g2c is effectively a `USp(4)` analysis with noise.
+- **CM vs non-CM EC questions** — preferred over raw `P025` only when the Lie-group framing is natural; otherwise `P025` is the cheaper boolean.
+- **Cross-side calibration against Katz-Sarnak `P028`** — `P037` (a_p side) and `P028` (zero side) should agree on family-type assignments up to classical correspondences.
+- **Moment-deviation probes** — any `⟨(a_p/2√p)^k⟩` measurement at finite conductor is testing Sato-Tate finite-N structure; stratify by `P037` at the start.
+
+**When NOT to use:**
+- **Jointly with `P025` CM on EC-only data** (full aliasing).
+- **Jointly with `P028` on the same family as if orthogonal** (nested via classical theorem).
+- **For non-EC, non-g2c, non-MF families without verifying Sato-Tate is proved** there.
+- **As a claim-driver for exotic g2c classes with n < 100** — pre-commit to sessionB's Liouville discipline.
+
+**Related projections:**
+- **P022 aut_grp stratification (g2c-specific):** orthogonal in principle; joint `P037 × P022` is the natural g2c family-structure coordinate pair. F012 (H85 killed) was at `P022`; could re-examine within `USp(4)` vs split-Jacobian strata.
+- **P025 CM:** aliased on EC; strictly refined by `P037` on higher-genus families.
+- **P028 Katz-Sarnak:** cross-side correspondence via proved classical theorems.
+- **P031 Frobenius-Schur Indicator:** on Artin-origin L-functions, jointly determines Sato-Tate group.
+- **P036 Root number:** via rank parity and SO_even/SO_odd, forms a chain `P037 → P028 → P036 → P023`.
+
+**Follow-ups this entry motivates:**
+1. `build_idx_lfunc_st_group` (or `idx_lfunc_origin_text_pattern_ops`) — Mnemosyne infra; unblocks EC Sato-Tate queries currently blocked by 30 s timeouts.
+2. `backfill_bsd_joined_symmetry_type` — populate the all-NULL `symmetry_type` column from `lfunc_lfunctions.st_group` via the origin join.
+3. `calibrate_F_ec_cm_stgroup_identity` (proposed F008) — verify `cm != 0 ⇔ st_group = N(U(1))` across all 2.48M EC.
+4. `wsw_F012_restricted_USp4` — re-run the killed H85 Möbius × aut_grp audit restricted to the 95.4 % `USp(4)` cohort. The killed-pooled-signal may have had structure masked by the split-Jacobian / exotic-class noise (<5 % by volume but distinct moment predictions).
+5. `wsw_F011_stratified_stgroup` — test whether F011's GUE deficit also shows structure across `P037` classes. For EC this is near-trivial by aliasing with `P025` (already tested clean), but for MF / Dirichlet families it is a genuine refinement not yet probed.
+6. `catalog_st_label_sister` — document `st_label` as a sister finer-granularity axis to `P037`, with explicit `P037 ⊃ P037_st_label` nesting in tautology profile.
+
+---
+
+## P038 — Sha (Tate-Shafarevich order) stratification
+
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17 (task `catalog_sha`). Reviewed and approved by Harmonia_M2_sessionA. Merged by Harmonia_M2_sessionC via `merge_P038_sha`.
+
+> **RANK ≥ 2 CIRCULARITY CAVEAT (read before using):** For `rank ≥ 2`, LMFDB's `sha` column is computed **by assuming BSD** and solving for the Sha value that makes the formula balance (Mnemosyne's audit, 2026-04-15). Using `sha` as an *independent* stratification for anything BSD-adjacent at rank ≥ 2 is a closed loop. Restrict to `rank ≤ 1` when `sha` must be independent evidence. For rank ≥ 2 work, either (a) treat `sha` as a *dependent* variable of BSD (not an axis), (b) filter to rows where a non-BSD Sha computation exists (descent-proven or 2-isogeny-descended), or (c) explicitly document the circularity in the result.
+
+**Code:** `WHERE sha = s` or `WHERE CAST(sha AS bigint) IN (...)` on `lmfdb.ec_curvedata`. 100% coverage across all 3,824,372 EC rows. Values are always perfect squares (`sha ∈ {1, 4, 9, 16, 25, 36, ...}`) by the Cassels-Tate alternating pairing on the finite part of Ш.
+**Type:** stratification (arithmetic / algebraic axis), with a **major provenance caveat** (see blockquote above).
+
+**What it resolves:**
+- **Perfect-square Sha distribution.** Empirical breakdown across 3.8M curves:
+  - `sha = 1` (trivial Ш): 3,502,608 (91.58%)
+  - `sha = 4`: 212,138 (5.55%)
+  - `sha = 9`: 65,936 (1.72%)
+  - `sha = 16`: 22,749 (0.59%)
+  - `sha = 25`: 10,953 (0.29%)
+  - `sha ≥ 36`: ~11,500 combined (~0.3%)
+- **High-Sha subfamilies.** The `sha ≥ 16` tail (~67K curves) is the concentration of non-trivial Ш structure in LMFDB — **F005 High-Sha parity** calibration anchor lives here.
+- **Sha-parity coupling with rank.** At rank 0: `sha > 1` implies specific ε-factor parity structure (Selmer-group rank ≥ 2 over Q-rational torsion). At rank 1: `sha > 1` is rarer and geometrically constrained.
+- **Cohort for 2-descent / 2-isogeny arguments.** Curves with `sha_primes` enumerated and `sha` a power of small primes admit computable descent arguments.
+
+**What it collapses:**
+- **The Cassels-Tate pairing structure itself.** `sha` records only the ORDER; the bilinear-form structure, odd/even part decomposition, and p-primary component sizes are collapsed into a single integer square.
+- **The distinction between proven-Sha and BSD-assumed-Sha.** Pooled analysis of `sha` without filtering by rank mixes provenance classes (see caveat).
+- **Any feature orthogonal to the integer-square equivalence class** — two curves with `sha = 4` can have very different rank, conductor, and torsion; P038 treats them as one stratum.
+
+**Tautology profile:**
+- **P038 ↔ P023 Rank (circular at rank ≥ 2).** The decisive tautology. Restrict all rank ≥ 2 P038 work to `WHERE sha_computation_method != 'BSD_assumed'` or equivalent. This tautology is also anchored in the P023 Known-failure-modes entry as "Rank ≥ 2 BSD-joined circularity" (catalog_polish promotion, 2026-04-17).
+- **P038 ↔ F003 BSD parity (direct identity).** F003 says `rank = analytic_rank` over 2.48M rows. `sha` enters via BSD formula; any coupling between `sha` and `analytic_rank` at rank ≥ 2 factors through BSD. Not a failure of P038 — BSD working — but `sha` cannot corroborate BSD at rank ≥ 2.
+- **P038 ↔ F005 high-Sha parity (calibration anchor).** F005 sits at `sha ≥ 16`; P038 is the stratification that defines this subfamily. Anchor holds at 100% across 67,035 rows. Any P038 analysis disagreeing with F005 implies data corruption or specimen-level error.
+- **P038 ↔ Regulator (BSD formula).** BSD leading-coefficient: `L^(r)(E,1) / r! = (Ω · Reg · #Ш · ∏c_p) / (|E(Q)_tors|² · |E_Q̄|)`. Regulator · Sha product is determined by the L-value / torsion / Tamagawa. Independent-looking "Regulator × Sha stratification" at rank ≥ 2 is a single BSD identity rearranged.
+- **P038 ↔ `sha_primes`.** `sha_primes` enumerates which primes divide |Ш|. For `sha = p²`: `sha_primes = [p]`. Derivative projection.
+
+**Stratum-count summary:**
+- 91.58% of EC have `sha = 1` (trivial stratum dominates any pooled analysis).
+- Effective non-trivial Sha coverage (`≥ 4`): 321,764 curves (8.42%).
+- High-Sha F005 anchor cohort (`sha ≥ 16`): 67,035 curves.
+
+**Small-n strata discipline:**
+- Joint `P038 × P023 rank` strata: rank ≥ 4 with `sha > 1` drops into single digits quickly. Enforce `n ≥ 100` per adequate stratum at entry time per Pattern 19 (Liouville lesson).
+- Joint `P038 × P020 conductor window`: coarse bins at `sha ≥ 16` may have adequate n (~10–30K); fine bins won't.
+- At high `sha` values (`sha ≥ 100`), per-value strata are small (≤ 400 each); pool by ranges rather than exact value for most analyses.
+
+**Calibration anchors:**
+- **Cassels-Tate (proved):** `sha` values are always perfect squares when Ш is finite. Any non-square `sha` is data corruption — **strongest immediate-spot-check anchor**. Candidate F007 formalization (not yet seeded).
+- **Mazur torsion + rank-0 BSD (F002/F003):** at rank 0, the BSD formula is proven; `sha` is independently computable from `L(E,1)`.
+- **Kolyvagin / Gross-Zagier at rank 1:** rank-1 BSD formula is also proven; `sha` at rank 1 is proven-independent.
+- **F005 High-Sha parity:** 67,035 rows, anchor holds at 100%. Any P038 analysis implicating F005 must preserve this.
+
+**Known failure modes:**
+- **Using rank ≥ 2 `sha` as independent evidence of BSD** (the circularity caveat). Every publication-grade rank ≥ 2 claim using `sha` must document its provenance.
+- **Pooling across ranks without rank-conditioning.** 91.58% `sha=1` dominates; any "sha effect" pooled is a rank-0 + rank-1 effect by weight.
+- **Treating `sha_primes` as an independent axis** (derivative of `sha`).
+- **Assuming `sha` values are integers of arbitrary magnitude.** Values are always perfect squares; any analysis allowing non-square `sha` is reading corrupted data.
+- **Small-n at `sha ≥ 64`.** Rare values have dozens of curves each; any stratification at those values needs explicit coverage reporting.
+
+**When to use:**
+- **Rank 0 and rank 1 BSD-adjacent analyses** where proven `sha` exists.
+- **F005 high-Sha parity investigations** — P038 is the natural entry filter (`WHERE sha ≥ 16`).
+- **Stratifying by `sha ∈ {1, >1}` as a binary** — safest coarse application (trivial vs non-trivial Ш).
+- **Cassels-Tate spot-checks** — fast calibration of new EC data imports (non-square `sha` → halt and investigate).
+- **Joint with P020 conductor conditioning** for BSD-adjacent residual analysis at rank ≤ 1.
+
+**When NOT to use:**
+- **At rank ≥ 2 for any BSD-corroboration claim** without explicit non-BSD-assumed filter.
+- **Jointly with Regulator as if orthogonal** — shared BSD leading-coefficient factor.
+- **Against `analytic_rank` at rank ≥ 2** — circularity via BSD parity.
+- **As a primary classification axis** — `sha=1` dominates, so P038-alone is de facto "trivial vs non-trivial."
+- **For non-EC objects.** `sha` is EC-specific; Artin / MF / NF analogues (Selmer groups) do NOT live in `ec_curvedata`.
+
+**Related projections:**
+- **P023 Rank stratification:** parent tautology at rank ≥ 2; P038 is the most-affected downstream axis.
+- **P020 Conductor conditioning:** recommended joint axis for rank ≤ 1 BSD-adjacent work.
+- **P024 Torsion stratification:** joint (P038, P024) for Mazur-plus-Sha classification — standard EC BSD decomposition.
+- **P028 Katz-Sarnak:** SO_even/SO_odd parity of EC L-functions correlates with root number which enters BSD that also determines `sha` at rank ≥ 2; tautology chain.
+- **P035 Kodaira:** Tamagawa `c_p` enters BSD alongside `sha`; joint P035 × P038 faces BSD-formula-lineage risk at rank ≥ 2.
+- **P037 Sato-Tate group:** family-level axis; P038 is object-level; joint usage orthogonal.
+
+**Follow-ups this entry motivates:**
+1. **`audit_sha_provenance_flag`** — Mnemosyne/Koios infra: add `sha_computation_method` column to `ec_curvedata` distinguishing `BSD_assumed`, `descent_proven`, `2_isogeny_bounded`, `lfunc_evaluated`. Enables safe rank ≥ 2 filtering.
+2. **`wsw_F005_P038_refinement`** — re-examine F005 within finer P038 strata (`sha ∈ {16, 25, 36, 49, 64}` separately). Does parity hold uniformly or does one sub-stratum dominate?
+3. **`catalog_regulator`** — document Regulator stratification as a separate entry, flagging P038 × Regulator BSD-formula tautology.
+4. **`pattern_20_sha_sensitivity`** — rank ≥ 2 pooled Sha claims should cross-check by restricting to rank ≤ 1 first.
+5. **F007 Cassels-Tate perfect-square anchor** — promote "sha values must be perfect squares" to F-level calibration anchor. Catches data corruption on import. (Not auto-seeded per sessionA reviewer note.)
+
+---
+
+## P039 — Galois ℓ-adic image stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task `catalog_galois_l_image`). Reviewed and approved by Harmonia_M2_sessionA. Merged by Harmonia_M2_sessionC via `merge_P039_galois_l_image`.
+
+> **CM-CONVENTION WARNING (read before using):** LMFDB's `nonmax_primes` column flags images as "max" relative to the *expected* image — full `GL_2(Z_ℓ)` for non-CM curves, but the **normalizer of a (non-split) Cartan for CM curves**. Consequently, CM rows can appear with `nonmax_primes = '[]'` despite being strictly below full `GL_2`. Pooled analyses without first stratifying by `P025 cm` silently mix two distinct "maximality" conventions. Any claim about "Galois image maximality" on CM rows must disambiguate CM-max (full Cartan) from absolute-max (full `GL_2`).
+
+**Code:** Several LMFDB columns on `ec_curvedata` encode aspects of the Galois image:
+- `nonmax_primes` (text, list of ℓ where image is non-maximal)
+- `nonmax_rad` (radical of the nonmax-prime list)
+- `elladic_images` (per-ℓ subgroup labels in `GL_2(Z_ℓ)`)
+- `modell_images` (per-ℓ mod-ℓ subgroup labels)
+- `adelic_level`, `adelic_index`, `adelic_genus` (adelic-image invariants)
+
+Use `nonmax_primes = '[]'` as the boolean-level filter for "fully surjective image at every prime"; use `elladic_images` / `modell_images` for per-prime fine classification; use `adelic_index` for the global adelic refinement.
+**Type:** stratification (Galois-representation image axis; carries Serre-openness and exceptional-prime structure)
+
+**What it resolves:**
+- **Serre's Open Image Theorem** (Serre 1972): for a non-CM elliptic curve over Q, the image of `ρ_ℓ: Gal(Q̄/Q) → GL_2(Z_ℓ)` is open for every ℓ and surjective for all but finitely many ℓ (the *exceptional primes*, listed in `nonmax_primes`). P039 is the direct stratification of that classification.
+- **Exceptional-prime structure.** The finite set of primes where the image drops below full `GL_2(Z_ℓ)` encodes the arithmetic of the specific curve (rational torsion, isogenies of prescribed degree, rational cyclic subgroups). The union `nonmax_primes ∪ {primes dividing torsion order}` is bounded in terms of the conductor (Masser-Wustholz-type bounds).
+- **CM vs non-CM Galois-image signature.** CM curves have `ρ_ℓ` contained in the normalizer of a Cartan; interpretation requires the CM-convention caveat above.
+- **Congruence-subgroup structure.** `adelic_level` is the level of `Γ ≤ GL_2(Ẑ)` capturing the adelic image; `adelic_index` is `[GL_2(Ẑ) : Γ]`; `adelic_genus` is the genus of the corresponding modular curve. Joint `adelic_level × adelic_index × adelic_genus` is a finer projection than `nonmax_primes` alone.
+- **Isogeny-class signature.** Curves sharing an isogeny class typically share `adelic_index` up to specific isogeny structure; P039 cross-references with isogeny and torsion via shared lattice constraints.
+
+**What it collapses:**
+- **Within-image fine structure.** Two curves with identical `elladic_images` but different conductors, ranks, or torsion collapse in P039. Stratify jointly with P020 / P023 / P024 for finer resolution.
+- **Per-prime-independent information.** The `nonmax_primes = '[]'` boolean collapses per-prime detail; use `elladic_images` per-ℓ entries when the specific exceptional-prime identity matters.
+- **CM-specific versus non-CM cells.** Interpretation of `nonmax_primes` differs between regimes (see CM-convention warning); pooling without `P025 cm` stratification mixes conventions.
+
+**Tautology profile:**
+- **P039 ↔ P024 torsion.** Rational ℓ-torsion forces the mod-ℓ image to stabilize a line, making it non-surjective on `GL_2(F_ℓ)`. Any curve with rational 2-torsion has `2 ∈ nonmax_primes`; similarly for 3, 5, 7. Theorems, not findings. Joint `P039 × P024` must factor out torsion-induced non-maximality before claiming structural signal.
+- **P039 ↔ P025 CM.** CM curves' image is in the normalizer of a Cartan; the LMFDB "max relative to expected image" convention creates forbidden-cell-like structure (CM rows with "fully surjective" label mean "fills Cartan," not "fills GL_2"). Similar to `P033 × P031` asymmetric tautology.
+- **P039 ↔ Isogeny degrees (P040).** Image is non-maximal at ℓ exactly when the curve has a rational cyclic subgroup of order divisible by ℓ. So `nonmax_primes` is nearly equivalent to the set of primes dividing `isogeny_degrees`. Joint `P039 × P040` double-counts this identity.
+- **Adelic-invariant bundle** (`adelic_level, adelic_index, adelic_genus`). For a specific `Γ`, these three are joint invariants computable from `Γ`. Independent use is triple-counting.
+
+**Stratum-count summary (live `ec_curvedata` queries, 2026-04-17):**
+- **Fully surjective at every prime** (`nonmax_primes = '[]'`): 2,217,470 rows (58.0%)
+- **Has at least one exceptional prime:** 1,606,902 rows (42.0%)
+- Top `adelic_level` values: 6 (26,853), 120 (16,615), 840 (16,466), 24 (14,270), 168 (12,862), 8 (12,541). Heavy populations at `{6, 24, 120}` reflect rational 2-, 3-, 2×3-torsion (torsion-forced non-maximality at small primes).
+- Top `adelic_index`: 2 (2,223,342 — **dominant**), 12 (836,392), 48 (411,166), 16 (195,058), 192 (48,164). The `adelic_index = 2` cluster (58%) is the "almost-surjective with a single global twist" cohort — **Pattern 4 / Pattern 20 trap**.
+- CM rows on the surjective-image subset: ~5,938 of 2,217,470 are CM with empty `nonmax_primes` — illustrates the CM-convention issue.
+
+**Small-n strata discipline:**
+- Top two `adelic_index` values cover 80%+ of the dataset; `n ≥ 100` is easy at the top and hard below.
+- Per-ℓ subgroup labels have long tails (many rare labels at small ℓ like `2Cs, 2B, 2Cn, 3B`); rare-label claims need explicit coverage reporting.
+- **Mazur-Kenku-Momose-Parent bound:** for non-CM curves over Q, the set of primes `ℓ` where some mod-ℓ image is non-surjective is contained in `{2, 3, 5, 7, 11, 13, 17, 37}`. Any `cm=0` row with `ℓ > 37` in `nonmax_primes` is a data-integrity violation.
+
+**Calibration anchors:**
+- **Serre's Open Image Theorem** (1972): for non-CM EC over Q, image is open in `GL_2(Z_ℓ)` for every ℓ and surjective for almost all ℓ. Proved.
+- **Mazur-Kenku-Momose-Parent exceptional-prime bound**: non-CM mod-ℓ image is surjective for ℓ > 37 (sharper for ℓ > 13 except known exceptions at ℓ = 17, 37). Rows with cm=0 and any `ℓ > 37` in `nonmax_primes` must be audited.
+- **Rational torsion → mod-ℓ non-maximality for ℓ | torsion order**: proved / textbook. Cross-check: every prime dividing `torsion` should appear in `nonmax_primes`. Candidate data-quality anchor (F009).
+- **Adelic genus ≥ 0** (trivial but fast).
+
+**Known failure modes:**
+- **CM convention ambiguity** (see top warning). Pooled CM / non-CM ambiguity is the largest hazard.
+- **Torsion-induced non-maximality reported as signal.** Non-CM + non-trivial-torsion curves have predictably non-surjective mod-ℓ images at torsion-order primes; a "signal" that "curves with non-empty `nonmax_primes` have property X" is vulnerable to the `P039 × P024` tautology.
+- **Isogeny class vs individual curve.** Curves in the same isogeny class share most Galois-image data but not all (rational cyclic subgroups can be created/destroyed under isogeny). Using P039 at isogeny-class level vs individual-curve level gives different partitions.
+- **Pooled `adelic_index = 2` dominance.** 58% of the dataset sits in this bucket; any pooled "adelic index signal" is a Pattern 4 trap with P039 hidden inside the pool.
+
+**When to use:**
+- **Sanity-check isogeny-adjacent claims** — `nonmax_primes = '[]'` is the cleanest "Galois-generic" flag.
+- **Refinement of CM stratification** — P039 distinguishes CM-discriminant Galois-image signatures; P025 alone only gives the CM discriminant.
+- **Selmer-group / p-descent calibration** — for ℓ ∈ `nonmax_primes`, mod-p Selmer analysis is non-standard; P039 filters generic cases where Selmer-rank bounds apply unconditionally.
+- **Galois-representation-feature cross-specimen tests** — any analysis involving `elladic_images` labels should stratify by P039.
+
+**When NOT to use:**
+- **For CM rows without disambiguating the "max" convention** — report ambiguous.
+- **Jointly with P024 without accounting for the torsion-induced-non-maximality tautology** — you'll double-count the torsion axis.
+- **Pooled across `adelic_index` classes without reporting the dominant `index = 2` share** — Pattern 4 trap.
+- **For ℓ > 37 on non-CM rows without data-integrity audit** — treat as data-quality alarm before feature claim.
+
+**Related projections:**
+- **P024 torsion:** partial tautology via rational-torsion → mod-ℓ non-maximality.
+- **P025 CM:** interpretation-conflating aliasing (CM convention vs non-CM convention).
+- **P031 Frobenius-Schur / P033 Is_Even:** Galois-image-determines-Sato-Tate on Artin reps; P039 is the direct LMFDB-column companion on the EC side.
+- **P037 Sato-Tate group:** for EC, P039 determines P037 (image type determines the Lie group Frobenius traces live in). Joint use is nested.
+- **P040 Isogeny class size:** shared cyclic-subgroup information; nearly identity at the per-prime level (`nonmax_primes ≈ primes | isogeny_degrees`).
+
+**Follow-ups this entry motivates:**
+1. `audit_nonmax_primes_vs_torsion` — verify every prime dividing `torsion` appears in `nonmax_primes` across all 3.82M EC. Candidate calibration anchor F009.
+2. `audit_mazur_kenku_bound` — flag any non-CM row with `ℓ > 37` in `nonmax_primes`.
+3. `clarify_cm_max_convention` — short doc on LMFDB's "max" convention for CM rows; add to Section 8 tautology table or sister entry.
+4. `wsw_F010_P039` — F010 NF backbone resolved under Artin `Is_Even` (P033); does the EC partner resolve under P039? CM-dominated coupling = trivial aliasing; non-CM with specific `adelic_index` = structural.
+5. `catalog_adelic_invariants` — if `adelic_level × adelic_index × adelic_genus` deserves its own sister entry, file it; else note the triple as a P039 sub-projection.
+
+---
+
+<!-- Merged from cartography/docs/catalog_isogeny_class_size_draft.md by Harmonia_M2_sessionB, 2026-04-17, tick 16. Renumbered P040 -> P100 per sessionA NAMESPACE_V2 (stratifications now start at P100). -->
+
+## P100 — Isogeny class size stratification
+
+**Code:** `WHERE class_size = k` on `lmfdb.ec_curvedata`. 100% coverage across 3,824,372 EC rows. Values are members of `{1, 2, 3, 4, 6, 8}` for non-CM curves (Mazur's bound on rational cyclic isogenies); CM curves follow the same bound structure with slightly different attainable sets. Paired data: `isogeny_degrees` (array of all `d` such that an isogeny of degree `d` exists from this curve to another curve in its class) — `class_size = len(isogeny_degrees)` by construction.
+**Type:** stratification (algebraic axis, finite-group-bounded)
+
+**What it resolves:**
+- **Isogeny-equivalence class membership.** Members of the same Q-isogeny class share the same L-function (hence the same `analytic_rank`, root number, local factors at all primes). `P100` picks which class-size bucket a curve sits in.
+- **Q-rational cyclic-isogeny structure at the object level.** Each size bucket corresponds to a distinct shape of the isogeny graph: size 1 = isolated, size 2 = single 2-isogeny pair, size 4 = `[1,2,4]` linear chain or `[1,2]²` star, etc.
+- **Cross-projection anchor for P024 torsion.** Isogenies act on rational torsion; each isogeny degree in `isogeny_degrees` corresponds to a rational cyclic subgroup. Curves with larger class sizes tend to have torsion containing cyclic subgroups of the listed degrees.
+- **Cohort for L-function-invariance tests.** Any signal claimed per-curve that varies within a single isogeny class implies either an error in the measurement or a non-L-function-derived feature.
+
+**What it collapses:**
+- **Per-curve structure within a class.** Four curves in an isogeny class of size 4 share the L-function and hence many derived features, so pooled-by-class measurements hide the intra-class variation in non-L-function features (e.g., `faltings_height`, `regulator`, explicit Weierstrass coefficients).
+- **The SHAPE of the isogeny graph beyond its size.** `class_size = 4` can be `[1,2,4]` (linear chain) or involve `[1,2,2]` (star). The coarse size number loses this structure; use `isogeny_degrees` for finer resolution.
+- **Degree-of-individual-isogeny information.** `class_size` is a cardinality; the individual isogeny degrees (2, 3, 5, 7, 11, 13, 37, etc.) are only recoverable via `isogeny_degrees`.
+
+**Tautology profile:**
+- **P100 ↔ `isogeny_degrees` (strict near-identity).** `class_size = len(isogeny_degrees)` by construction. `isogeny_degrees` is the finer projection; `P100` is the cardinality summary. Independent use of both risks double-counting.
+- **P100 ↔ L-function invariants (analytic_rank, root number, conductor, local factors).** All members of an isogeny class share the same L-function → stratifying by `class_size` while also using `analytic_rank` or root number as a response variable does not reveal class-size structure in those variables (they are invariant within class by definition).
+- **P100 ↔ P024 Torsion.** Isogeny degree `d` rational cyclic isogenies correspond to rational subgroup structure. Curves with `isogeny_degrees ∋ d` admit a rational `d`-torsion-like structure (though not always `d`-torsion proper — could be a quotient). Partial tautology: `class_size ≥ 2` implies *some* rational cyclic subgroup exists.
+- **P100 ↔ P039 Galois ℓ-adic image (sessionD).** A rational cyclic isogeny of degree `d = ∏ p_i^{e_i}` forces each `p_i` into `nonmax_primes`. Therefore `class_size ≥ 2` implies `nonmax_primes ≠ []`. Partial tautology — P100 refines P039 at each non-maximal prime.
+- **P100 ↔ P025 CM.** CM curves have distinguished isogeny structure: the endomorphism ring is larger than Z, so isogeny classes can be structurally distinct from non-CM classes. Stratifying by `P100 × P025` jointly is orthogonal in principle but the CM subfamily (~5K rows) has small-n strata issues at every `class_size > 1`.
+- **P100 ↔ P022 aut_grp (EC-only concept).** For EC, aut_grp is usually trivial `{±1}`; rarely larger for CM curves. The aut_grp-isogeny interaction is not a tautology but joint coverage is sparse.
+
+**Stratum-count summary (100% coverage across 3,824,372 EC rows):**
+- `class_size = 1` (isolated): 2,244,844 (58.70%) — dominant stratum.
+- `class_size = 2`: 1,120,652 (29.30%).
+- `class_size = 4`: 391,176 (10.23%).
+- `class_size = 6`: 37,512 (0.98%).
+- `class_size = 3`: 20,628 (0.54%).
+- `class_size = 8`: 9,560 (0.25%).
+- Mazur-bound: `class_size ∈ {1, 2, 3, 4, 6, 8}` exhausts the observed values. No `class_size = 5, 7, ≥ 9`.
+- Top `isogeny_degrees` values: `[1]` (58.70%), `[1,2]` (25.67%), `[1,2,4]` (7.15%), `[1,3]` (5.41%), `[1,2,3,6]` (1.07%), `[1,2,4,8]` (0.66%).
+
+**Small-n strata discipline:**
+- `class_size = 8` is the smallest non-CM stratum at 9,560 rows; still adequate for most analyses but drops fast when joint-stratified.
+- Joint `P100 × P023 rank` at `rank ≥ 3` within any `class_size > 2` stratum quickly drops below `n = 100`. Rank ≥ 4 with any non-trivial class is <100 curves total.
+- Joint `P100 × P024 torsion ≥ 4` × `class_size ≥ 4`: small; check before publication.
+- Joint `P100 × P025 CM` breaks at `class_size ≥ 2` in CM subfamily (<50 curves per bucket).
+
+**Calibration anchors:**
+- **Mazur's theorem on rational torsion + Kenku-Momose-Parent ℓ-adic image bound** (proved): `class_size` for non-CM EC over Q is bounded by 8; attainable values are `{1, 2, 3, 4, 6, 8}`. A non-CM curve with `class_size = 5, 7, 9+` is a data corruption signal.
+- **L-function invariance within isogeny class** (trivial consequence of isogeny): `analytic_rank`, `root_number`, `conductor` are invariant within class. Any disagreement is a data-quality violation.
+- **`class_size = len(isogeny_degrees)`** must hold row-by-row. Implementation spot-check.
+- **`class_deg` matches isogeny-graph traversal degree** — for the optimal curve, `class_deg` is the total degree of the Q-isogeny class as a degree of covering. Related to but distinct from `class_size`.
+
+**Known failure modes:**
+- **Pooled analysis with 58.7% `class_size = 1`**: the trivial stratum dominates any unfiltered per-curve analysis. Pattern 4 / Pattern 20 trap.
+- **Stratifying by `P100` AND using L-function-derived features as response** (root number, analytic rank) gives zero variance within stratum by construction → misleading "perfect stratification." Not a finding.
+- **Treating `class_size` and `isogeny_degrees` as independent axes** (near-identity).
+- **Inferring torsion structure from `class_size` alone.** Class size says there's *some* rational cyclic subgroup; doesn't specify which torsion points it hits. For torsion analysis use `P024` directly.
+- **CM subfamily small-n** at joint-stratification — explicit coverage reporting mandatory (Pattern 9).
+- **Missing Mazur-bound audit.** Any fresh EC ingestion should check `class_size ∈ {1, 2, 3, 4, 6, 8}` for non-CM rows; violations flag upstream data quality.
+
+**When to use:**
+- **Q-rational cyclic isogeny structure** when analyzing EC-family structure at the object level.
+- **L-function-equivalence cohort analysis** — filter to unique classes (e.g., one representative per class) to avoid over-counting L-functions. `WHERE class_size = 1 OR lmfdb_number = '1'` picks the optimal-curve-per-class cohort.
+- **Cross-projection with P039 Galois ℓ-adic image** — `class_size ≥ 2` ⇔ non-trivial `nonmax_primes`; joint usage locates where the non-maximality manifests.
+- **Pattern 16 Category-3 candidates** — small exotic strata (`class_size = 3, 6, 8`) are under-studied compared to `class_size = 1, 2`; worth a walk.
+- **Mazur-bound spot-checks** on EC data imports.
+
+**When NOT to use:**
+- **Alongside L-function-derived response variables** (circular; root number and analytic rank are class-invariant by definition).
+- **Jointly with `isogeny_degrees` as if orthogonal** — near-identity.
+- **As a torsion proxy without `P024` cross-check** — `class_size` is not torsion.
+- **For CM subfamily fine stratification** without explicit coverage (small-n).
+- **On non-EC objects.** `class_size` is EC-specific; MF isogeny classes exist but live in `mf_newforms.is_twist_minimal` / related columns, not here.
+
+**Related projections:**
+- **P024 Torsion stratification:** partial tautology at `class_size ≥ 2` (rational cyclic subgroups). Standard joint axis for "torsion plus isogeny" analyses.
+- **P039 Galois ℓ-adic image (sessionD):** partial tautology — `class_size ≥ 2` ⇒ `nonmax_primes ≠ []`. P100 refines P039 at each non-maximal prime.
+- **P025 CM vs non-CM:** orthogonal-in-principle, small-n in CM cohort for joint stratification.
+- **P023 Rank:** independent axis; useful for rank-per-class-size analyses (all class members share rank).
+- **`class_deg` column:** related finer-granularity — total degree of the isogeny class as a covering; distinct from class cardinality.
+- **`isogeny_degrees` column:** direct finer projection (tautology-partner).
+
+**Follow-ups this entry motivates:**
+1. **`audit_mazur_bound_class_size`** — verify `class_size ∈ {1, 2, 3, 4, 6, 8}` for all non-CM `ec_curvedata` rows. Any violation is a data-quality signal (candidate F-level anchor).
+2. **`wsw_F003_by_P040`** — re-examine the F003 BSD-parity calibration anchor stratified by `class_size`. Expected: anchor holds exactly within each stratum by isogeny invariance; Pattern 7 spot-check.
+3. **`catalog_isogeny_degrees_sister`** — document `isogeny_degrees` as a sister finer-granularity axis with explicit nesting tautology note.
+4. **`catalog_class_deg_sister`** — document `class_deg` as a distinct concept (isogeny-class covering degree, not cardinality).
+5. **`wsw_category3_class_size_3_6_8`** — Pattern-16 candidate walk on the rare `class_size = 3, 6, 8` strata (small but texture-rich).
+6. **L-function invariance audit** (`audit_class_size_Linv`) — verify `analytic_rank`, `root_number`, `conductor` agree within every isogeny class. Disagreements flag upstream data issues.
+
+---
+
+## P101 — EC regulator stratification
+
+**Drafted by:** Harmonia_M2_sessionD, 2026-04-17 (task catalog_regulator; approved by sessionA; ID path P041 → P061 → P101 per NAMESPACE_DECISION_V2)
+
+**Code:** `WHERE regulator BETWEEN lo AND hi` (or coarse bins) on `ec_curvedata.regulator` (float, 3,824,372 rows, zero NULLs). Natural sub-stratifications: log-magnitude bins, per-rank bins (required because rank-0 regulator is a degenerate cell).
+**Type:** stratification (magnitude axis on Mordell-Weil lattice; BSD-formula factor)
+
+**What it resolves:**
+- **Covolume of the Mordell-Weil lattice.** The regulator is `det(⟨P_i, P_j⟩)` where `⟨·,·⟩` is the canonical Néron-Tate height pairing on a basis of `E(Q)/torsion`. Encodes how "spread out" the rational points are.
+- **BSD leading-term factor.** The BSD conjecture predicts
+    `L^(r)(E, 1) / r! = (Ω · regulator · ∏_p c_p · |Ш(E/Q)|) / |E(Q)_tors|²`
+  where `r = rank = analytic_rank` (F003 anchor). Regulator is the load-bearing Mordell-Weil-lattice factor; the other factors are archimedean period (Ω), Tamagawa product (`c_p`), Sha (via `P038`), and torsion (via `P024`).
+- **Rank-dependent Mordell-Weil structure.** Regulator grows with rank in both minimum and mean (empirically): rank-1 mean 7.99, rank-2 mean 9.50, rank-3 mean 20.9, rank-4 mean 32.0 (see summary below). Higher-rank curves have "further-apart" rational points, consistent with heuristic height-growth conjectures.
+- **Silverman / Néron height-gap probe.** The minimum non-zero regulator is bounded below by classical inequalities; the observed minima (0.009 at rank 1, 1.50 at rank 4, 14.8 at rank 5) probe the height-gap conjectures.
+
+**What it collapses:**
+- **Rank 0 collapses to a single value.** All 1,404,510 rank-0 EC in `ec_curvedata` have `regulator = 1.000000` exactly (convention: empty product for empty lattice). `P101` is degenerate for rank-0 questions; use `P023 rank = 0` as the effective stratifier instead.
+- **Isogeny-class fine structure.** Curves in the same isogeny class have regulators differing by a bounded factor (isogeny degrees); pooling across isogeny classes while comparing regulators mixes these factors.
+- **Lattice-shape information.** `P101` reports only the determinant; the *shape* of the lattice (orthogonality, short-vector structure) is collapsed. For shape questions, use the full height-pairing matrix.
+
+**Tautology profile:**
+- **P101 ↔ P023 rank (trivial tautology at rank 0).** `rank = 0 ⇒ regulator = 1`. Pooling across ranks without reporting the rank distribution treats the rank-0 spike at `regulator = 1` as if it were a signal. Always stratify by rank first, then analyze regulator within each rank ≥ 1 cell.
+- **P101 ↔ leading_term (BSD identity, Pattern 1 formula lineage).** `leading_term = Ω · regulator · ∏c_p · |Ш| / |tors|²`. Any correlation claim between regulator and leading_term is reporting the BSD identity, not structural information. The only non-tautological correlation is `regulator × (Ω · ∏c_p · |Ш| / |tors|²)` vs `leading_term` — with the constraint that the ratio is 1 by BSD.
+- **P101 ↔ P038 Sha (BSD-formula joint factor).** Joint `regulator × Sha` enters BSD multiplicatively; at fixed rank, `regulator · |Ш|` is determined by `leading_term` up to the other factors. Independent-axis use double-counts the BSD identity.
+- **P101 ↔ conductor (heuristic scaling, not strict tautology).** Heuristic height-conjecture bounds (e.g., Lang's conjecture, Silverman) predict `regulator ≲ log(conductor)^{f(rank)}` for explicit functions `f`. Within each rank bin this is a predicted scaling, and any observation aligning with it is calibration of the heuristic, not discovery. Use `P020 × P023 × P101` joint stratification for clean effects.
+
+**Stratum-count summary (live `ec_curvedata` queries, 2026-04-17):**
+
+| Rank | n | min regulator | max regulator | mean |
+|---|---|---|---|---|
+| 0 | 1,404,510 | 1.000000 | 1.0000e+00 | 1.0000e+00 |
+| 1 | 1,887,132 | 0.008914 | 1.0471e+04 | 7.9850e+00 |
+| 2 | 493,291 | 0.015169 | 4.4695e+03 | 9.5015e+00 |
+| 3 | 37,334 | 0.118694 | 1.3171e+03 | 2.0934e+01 |
+| 4 | 2,086 | 1.504345 | 1.7003e+02 | 3.1977e+01 |
+| 5 | 19 | 14.790528 | 4.6846e+01 | 3.1115e+01 |
+
+Total: 3,824,372 rows; zero NULLs.
+
+**Small-n strata discipline:**
+- At rank ≤ 3, all strata are above `n = 100` by wide margins. No small-n concern.
+- **Rank 4: n = 2,086.** Adequate at the marginal level, but joint stratifications (`rank=4 × P020 conductor × P101 log-bin`) rapidly fall below 100 per cell. Pattern 9 (delinquent frontier) applies jointly with F030/F033.
+- **Rank 5: n = 19.** Below adequacy threshold. Any rank-5 claim about regulator structure is a point-estimate on 19 observations and should be reported with explicit coverage caveat (Pattern 9).
+- **Log-magnitude bins at rank 1**: regulator ranges 0.009 to 10,471, spanning ~6 decades. Log-bins of width 1 (decade) cover the distribution; expect n per decade-bin to range from single-digit (extreme tails) to >500K (central bulk).
+
+**Calibration anchors:**
+- **Rank-0 regulator = 1 convention.** All 1,404,510 rank-0 EC have exactly `regulator = 1.0`. Any deviation = data-quality violation (Pattern 7 anchor).
+- **BSD identity** for proved cases (rank 0-1, Kolyvagin / Gross-Zagier): `L^{(r)}(1)/r! = Ω · regulator · ∏c_p · |Ш| / |tors|²` holds exactly on verified curves. LMFDB's `leading_term` column should match the RHS on a per-row basis.
+- **Regulator positivity.** For rank ≥ 1, `regulator > 0` (Néron-Tate height pairing is positive-definite). Any non-positive regulator = data-quality violation.
+- **Silverman height-difference bound** (1990): |h_canonical - h_naive| ≤ c(E) for explicit c(E). Candidate calibration for any computation derived from naive heights.
+
+**Known failure modes:**
+- **Pooling across ranks without rank stratification.** The 1.4M rank-0 `regulator = 1` spike will dominate any pooled magnitude analysis.
+- **Reporting `regulator × sha` correlation as a finding.** Pattern 1 — they appear multiplicatively in BSD, so the correlation is an identity not a signal.
+- **High-rank (≥ 4) extrapolation.** 2,086 rank-4 and 19 rank-5 curves are the delinquent frontier (F030/F033). Any regulator scaling "observed at all ranks" is effectively a rank ≤ 3 observation.
+- **Log-regulator vs conductor confound.** Both regulator and conductor scale with "how arithmetically complex the curve is" in rank-dependent ways. Pre-control for conductor (`P020`) before claiming a regulator trend.
+
+**When to use:**
+- **BSD-formula consistency checks.** Per-row verification of `leading_term = Ω · regulator · ∏c_p · |Ш| / |tors|²` is the cleanest instrument-health check available for rank ≥ 1.
+- **Mordell-Weil height-distribution analyses** — any question about the distribution of heights of rational points factors through regulator (plus higher-order lattice-shape info).
+- **Height-gap conjecture tests** — stratify by rank, look at minimum regulator within each rank-bin, compare to Silverman-type lower bounds.
+- **Joint `P101 × P020 × P023`** for cleanest rank-specific conductor-regulator scaling analyses.
+
+**When NOT to use:**
+- **At rank 0** (degenerate — trivially 1).
+- **Jointly with `leading_term` as independent axes** (BSD formula lineage).
+- **Jointly with `P038` Sha at fixed rank + conductor** (BSD identity collapses the joint axis).
+- **For cross-family comparisons** (regulator is EC-specific; the MF-side analog requires different normalization).
+
+**Related projections:**
+- **P023 rank** — tautology at rank 0 (degenerate) and joint-factor in BSD for rank ≥ 1.
+- **P020 conductor conditioning** — required pre-control for height-scaling heuristics.
+- **P038 Sha** — joint BSD-formula factor (sessionC merged).
+- **P024 torsion** — BSD denominator term; treat jointly not independently.
+- **P036 Root number** — rank-parity-aliased via F003.
+- **P100 Isogeny class size (sessionC, preceding entry):** regulators differ within isogeny class by bounded factor — pooling across class is a Pattern 20 artifact risk.
+
+**Follow-ups this entry motivates:**
+1. `audit_bsd_identity_per_row` — for each EC row with rank ≤ 1, verify `leading_term ≈ Ω · regulator · ∏c_p · |Ш| / |tors|²` within numerical precision. Candidate new calibration anchor (F-series, next free slot).
+2. `wsw_regulator_vs_conductor_per_rank` — within each rank ∈ {1, 2, 3}, test the predicted `regulator ≲ (log N)^{f(r)}` heuristic scaling. Expect calibration-level agreement; any deviation is a Lang-conjecture-adjacent frontier.
+3. `catalog_leading_term_as_derived_projection` — document `leading_term` as an *output* of the BSD factor product, not an independent axis. Add to Section 8 tautology pairs.
+4. `probe_rank_5_regulator_cliff` — the 19 rank-5 curves are Category-3 specimens per Pattern 16. A dedicated walk (once higher-rank lfunc data is materialized, per F033 coverage cliff) is warranted.
+
+---
+
+<!-- Merged from cartography/docs/catalog_artin_dim_draft.md by Harmonia_M2_sessionB, 2026-04-17, tick 17. Drafted by sessionC with P??? placeholder due to P040-P043 collision; assigned P102 per sessionA NAMESPACE_V2. -->
+
+## P102 — Artin representation dimension stratification
+
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17 (task `catalog_artin_dim`).
+**Code:** `WHERE "Dim" = d` on `lmfdb.artin_reps`. 100% coverage across 798,140 irreducible Artin representations (non-null `Dim`).
+**Type:** stratification (Galois-representation dimension axis, integer scalar)
+
+**What it resolves:**
+- **The dimension `d` of the irreducible complex representation** ρ: Gal(Q̄/Q) → GL_d(ℂ). This is the rank of the image under ρ and — for a faithful rep — the dimension of the minimum faithful complex rep of the finite quotient Gal(L/Q) that ρ factors through.
+- **Cohort structure for fixed-dimension analyses.** Each `Dim` stratum indexes a population of reps whose L-function has a fixed degree-`d` Euler product structure (each Frobenius is in `GL_d`, each local factor has degree `d`).
+- **Deligne-Serre stratum via `(Dim=2, Is_Even=False)`** — the 244,811-row cohort of odd 2-dimensional Artin reps corresponding to weight-1 newforms. The `Dim=2` stratum contains both Deligne-Serre-relevant (odd) and Deligne-Serre-irrelevant (even) reps; joint stratification with `P033 Is_Even` separates them.
+- **Killed hypothesis anchors (per task brief):**
+  - **H61 killed** — the dim-2-even vs dim-3 ratio was claimed to be ~50:1 but measured at 1.8:1. This projection is where that kill was observed.
+  - **H63 killed** — no spike at `Dim=4` was expected per some conjecture; none found. `P102` is the axis under which the null was confirmed.
+- **Mazur-bound-extended discipline for Artin reps:** unlike EC where `class_size ≤ 8`, there is no universal upper bound on `Dim`; however, for a fixed Galois group G with |G| = n, `Dim` divides n (Maschke/Schur). The observed top `Dim` values (`Dim=35`, `Dim=21`, `Dim=18`, `Dim=16`) reflect specific transitive Galois groups with large faithful reps.
+
+**What it collapses:**
+- **Per-Galois-group structure within a dimension.** Two reps with `Dim=4` from `G=S_4` vs `G=A_5` collapse in this projection. Stratify jointly with `Galn/Galt` for finer resolution.
+- **Parity (`Is_Even`) information.** `Dim` alone does not distinguish even from odd reps within a dimension — this is the whole point of P033's joint use.
+- **Frobenius-Schur indicator structure** — `Dim` does not tell you whether the rep is orthogonal / symplectic / unitary; use `P031` for that.
+- **Image-type structure** — two `Dim=4` reps can have very different Galois images (full `S_4` vs a subgroup) — `P039` captures this.
+
+**Tautology profile:**
+- **P102 ↔ `Is_Even` (P033) partial correlations.** Empirical distribution across dimensions is highly non-uniform:
+  - Dim=1: 71.7% `Is_Even=False` / 28.3% `Is_Even=True` — odd-dominated.
+  - Dim=2: 77.3% `Is_Even=False` / 22.7% `Is_Even=True` — odd-dominated (Deligne-Serre cell).
+  - Dim=4: 26.2% `Is_Even=False` / 73.8% `Is_Even=True` — even-dominated (reverse).
+  - Dim=6: nearly balanced.
+  - Dim≥7: increasingly even-dominated; `Is_Even=False` at Dim=7 drops to 69 rows (Pattern 9 coverage cliff for odd reps at higher dim).
+  This is a STRUCTURAL fact about which Galois groups admit faithful reps of each dimension with each parity, not a tautology in the formal sense. But joint `Dim × Is_Even` strata are non-uniform and a "Dim effect" measured across parity is really a parity effect conflated with Dim.
+- **P102 ↔ Frobenius-Schur indicator (P031).** Symplectic reps (`ν = -1`) occur only in even dimension. Empirical: `ν = -1` at Dim=2 (n=761), Dim=4 (n=12), Dim=6 (n=12); zero at all odd dims. Joint `P102 × P031` has forbidden cells at `(ν = -1, odd Dim)`. This is a representation-theory fact, not a tautology proper, but makes P31 × P102 non-orthogonal at odd dims.
+- **P102 ↔ `Galn` (Galois group order partial tautology).** `Dim | |G|` (Maschke's theorem). So for `Galn = G` of order n, only divisors of n appear in the `Dim` column. Filtering by `Galn` fixes the allowed Dim spectrum.
+- **P102 ↔ L-function degree.** `L-function degree = Dim` for irreducible Artin reps. This is the definition; pooling across `Dim` mixes L-functions of different degree.
+
+**Stratum-count summary (`artin_reps`, 2026-04-17; 798,140 rows with non-null `Dim`):**
+- Dim=2: 316,843 (39.7%) — dominant stratum, Deligne-Serre cohort lives here.
+- Dim=1: 194,258 (24.3%).
+- Dim=4: 124,464 (15.6%).
+- Dim=6: 48,837 (6.1%).
+- Dim=3: 39,913 (5.0%).
+- Dim=5: 21,259 (2.7%).
+- Dim=9: 15,392 (1.9%).
+- Dim=12: 10,146 (1.3%).
+- Dim=8: 9,480 (1.2%).
+- Dim=10: 3,718 (0.5%).
+- Dim=18, 14, 16, 21, 35: 10,398 combined (1.3%).
+- Long tail to `Dim=35` with <100 rows per value.
+
+**Small-n strata discipline (post-sessionB Liouville lesson, 2026-04-17):**
+- `Dim ≥ 11` strata have single-digit to low-hundreds coverage; explicit `n ≥ 100` check mandatory.
+- Joint `Dim × Is_Even × Galn` breaks below adequacy very quickly for `Dim ≥ 6`.
+- Joint `Dim × Frobenius-Schur` at `ν = -1` is bounded by 785 total rows across Dim=2/4/6.
+
+**Calibration anchors:**
+- **Maschke's theorem:** `Dim | |G|` for any irreducible rep of finite G. Any row with `Dim ∤ Galn_order` is a data-integrity violation.
+- **Artin L-function degree identity:** `L-function degree = Dim` for irreducible reps. Candidate F-level anchor: `L-function degree recorded in lfunc_lfunctions.degree must equal artin_reps.Dim` on linked rows.
+- **Killed H61 and H63 as Pattern 19 provenance anchors:** H61 claimed dim-2-even vs dim-3 ratio ~50:1; measured 1.8:1 (killed). H63 claimed spike at Dim=4; none observed. These kills are calibration for the projection (P102 can kill overconfident dimension-based conjectures).
+- **Trivial rep at Dim=1:** exactly one row per number field with trivial character.
+
+**Known failure modes:**
+- **Pooled Artin analysis is 39.7% `Dim=2`** — any "artin_reps feature" measured without Dim stratification is biased toward the Deligne-Serre cohort's shape. Pattern 4 / Pattern 20 trap.
+- **Treating Dim as orthogonal to `Is_Even` and `P031`** — strong distribution-level correlations (77% odd at Dim=2, 74% even at Dim=4). Joint claims must account for the non-uniform distribution.
+- **Claims at Dim≥11** without explicit coverage reporting — Pattern 9 delinquent frontier.
+- **Conflating Dim with "L-function degree on our side" when the L-function is composite** — Dim is per-irreducible-rep; an Artin L-function built from a reducible rep is a product of irreducible-L-functions of various dims.
+- **H61/H63-style claims** should be filed as Pattern 19 anchors — dimension-based ratios are tempting to overclaim, and the LMFDB empirical distribution rarely matches simple conjectural ratios.
+
+**When to use:**
+- **Fixed-L-function-degree cohort analysis** — any claim about "degree-d Artin L-functions" needs `WHERE Dim = d` filtering.
+- **Deligne-Serre work** — `(Dim=2, Is_Even=False)` is the standard joint restriction (corresponds to weight-1 MF).
+- **Joint with `P031`, `P033`, `P039`** to form the standard Artin-classification tuple `(Dim, ν, Is_Even, Galois image)`.
+- **Cross-projection with L-function degree in `lfunc_lfunctions`** as a calibration consistency check.
+- **Pattern 19 audits** when reviving dim-based conjectures (H61, H63, etc.).
+
+**When NOT to use:**
+- **As the sole axis on any cross-specimen claim** — always stratify further by parity, FS indicator, or Galois group.
+- **At `Dim ≥ 11` without coverage reporting** — coverage cliff for odd reps.
+- **For composite-rep L-functions** — use degree from `lfunc_lfunctions` instead.
+- **As a substitute for `Galn` / `Galt`** — these are orthogonal projections; `Dim ≤ Galn_order` (Maschke), not equivalent.
+
+**Related projections:**
+- **P031 Frobenius-Schur indicator:** symplectic reps (`ν=-1`) occur only in even dimension; forbidden-cell partial tautology.
+- **P033 Is_Even:** strong distribution-level correlation (dim=2 odd-dominated, dim=4 even-dominated). Joint axis is the canonical Artin classification.
+- **P039 Galois ℓ-adic image:** orthogonal at the Artin level (P039 is EC-specific); for the Artin side the analog is image subgroup labels.
+- **`Galn`/`Galt`:** orthogonal-in-principle, with `Dim | |Galn_order|` constraint (Maschke).
+- **L-function degree** (in `lfunc_lfunctions`): near-identity for irreducible reps.
+
+**Follow-ups this entry motivates:**
+1. **`audit_maschke_dim_galn`** — verify `Dim | Galn_order` across all 798K rows. Candidate F-level anchor (F010 or next free).
+2. **`audit_artin_dim_vs_lfunc_degree`** — verify `Dim = L-function degree` on linked Artin-origin rows in `lfunc_lfunctions`. Candidate cross-table calibration anchor.
+3. **`wsw_pattern19_h61_h63_retrospective`** — formalize H61 and H63 kills as Pattern 19 anchors; document the specific claim and the measured number.
+4. **`catalog_galn_galt_sister`** — document `Galn × Galt` (Galois group label) as a separate finer-granularity projection; co-reference with `Dim`.
+5. **`wsw_deligne_serre_exact_count`** — establish the exact bijection-preserving projection for 19,306 weight-1 newforms ↔ 244,811 Dim=2 Is_Even=False Artin reps (Galois-conjugate multiplicities accounted). Fits with earlier `catalog_artin_is_even` follow-up 1.
+
+---
+
+## P103 — EC modular degree stratification
+
+**Drafted by:** Harmonia_M2_sessionC, 2026-04-17 (task `catalog_modular_degree`; approved by sessionA).
+
+> **DERIVABLE-NOT-STORED caveat (read before using):** The modular degree `deg(φ)` of an EC over Q — where `φ: X_0(N) → E` is the optimal modular parametrization — is NOT a column on our read-only `lmfdb.ec_curvedata` mirror. Sister columns (`num_int_pts`, `class_size`, `faltings_height`) are present but `modular_degree` itself is not. Any worker using P103 at scale must either (a) compute via Magma `ModularDegree` or Sage `EllipticCurve.modular_degree()` (rank-0 / rank-1 cases only for a provable version; otherwise heuristic via L-symbolic computation), (b) pull from LMFDB's public EC detail endpoint per curve (slow, rate-limited), or (c) wait for a Mnemosyne/Koios materialization. P103 is a PLACEHOLDER catalog entry pending materialization — its content is doctrinal scaffolding, not a ready-to-query axis.
+
+**Code:** No `modular_degree` column exists in `lmfdb.ec_curvedata` at catalog-draft time (`information_schema` search 2026-04-17 returns zero hits). Derivation path: `modular_degree = deg(φ)` where `φ: X_0(N) → E` is the strong Weil parametrization. Computable per-curve via Magma / Sage / PARI at moderate cost for small conductor; expensive for N > 10^6.
+**Type:** stratification (derived integer-valued axis; modular-parametrization geometry)
+
+**What it resolves:**
+- **Modular parametrization degree.** The minimal degree of a dominant morphism `φ: X_0(N) → E` when E has conductor N (equivalently: the degree of the optimal curve in the isogeny class). For the optimal curve, `deg(φ) = m_E` with `m_E ∈ Z_{≥1}` a canonical integer invariant.
+- **Faltings-height relation (Edixhoven-Jong / Ullmo-Yafaev).** `log(modular_degree)` and `Faltings_height` are related via explicit theorems at proven levels (cf. Ullmo's bound); provides a BSD-adjacent calibration hook but with formula-lineage risk (Pattern 1).
+- **Congruence-prime detection.** Primes dividing `modular_degree` control the congruences between `f_E` (the weight-2 newform attached to E) and other newforms of level N. This is the Ribet-Taylor-Wiles lifting regime — modular degree divisibility by `p` signals a non-trivial `p`-adic deformation space.
+- **Quality indicator for the Birch-Swinnerton-Dyer period.** The Manin-constant and the modular degree jointly determine the real period `Ω_E` up to rational ambiguity; `modular_degree` is one-half of that constraint.
+- **Isogeny-class invariance (up to Manin constant).** All curves in an isogeny class share the same `X_0(N)`, and the optimal curve has a distinguished `deg(φ)`. Non-optimal curves have `modular_degree` differing by an integer factor related to the isogeny degree. Joint with `P100 Isogeny class size` is the natural classification.
+
+**What it collapses:**
+- **Sign information, Manin constant, and period.** `modular_degree` is an integer magnitude; orientation and Manin-constant fine structure collapse.
+- **Within-conductor variation.** Two different conductors can share the same `modular_degree`; the axis does NOT separate curves by `N`.
+- **L-function content beyond the optimal-curve constraint.** Different isogenous curves with the same modular degree still have identical L-functions by definition.
+
+**Tautology profile:**
+- **P103 ↔ Faltings height (partial tautology via Edixhoven-Jong / Ullmo).** For rank-0 curves over Q, one has inequalities of the form `c_1 · log(m_E) + O(log N) ≤ h_F(E) ≤ c_2 · log(m_E) + O(log N)` with explicit constants. Joint `(P103, Faltings_height)` analyses must factor out this formula-lineage before claiming independent signal. **Pattern 1 family.**
+- **P103 ↔ `num_int_pts` (partial).** Integral-point counts are bounded in terms of `modular_degree` via Vojta-type bounds. Joint usage has implicit formula-lineage through the arithmetic of the modular parametrization.
+- **P103 ↔ P100 Isogeny class (near-identity on optimal-curve representative).** The optimal curve is the distinguished member whose `modular_degree` is the class-canonical value; non-optimal curves differ by explicit integer factors. P103 applied at isogeny-class level is `(P100, P103|optimal)` — use the pair, not P103 in isolation across class members.
+- **P103 ↔ `sha_primes` via Ribet lifting.** Primes of congruence divide `modular_degree`; those same primes often appear in `sha_primes` for curves with non-trivial Ш. Joint use re-asserts Ribet-Taylor-Wiles ↔ BSD formal structure.
+- **P103 ↔ conductor (conductor-exponent weak correlation).** `log(modular_degree)` grows on the order of `log(N)` with heavy conductor-windowed variation; pooled linear fits between the two look structural when they are mostly asymptotic scaling.
+
+**Stratum-count summary (post-materialization prediction, not yet measured on our mirror):**
+- Distribution is heavy-tailed and conductor-correlated. Expected regimes: `modular_degree = 1` (rank-0 with trivial Manin constant, narrow window), small `modular_degree ∈ {1, 2, 4, 8}` commonly, long tail into thousands and beyond for high-conductor curves.
+- Small-n strata discipline: at any fixed `modular_degree = k` for `k > 10`, coverage drops fast; joint stratification with conductor window requires explicit `n ≥ 100` check.
+- Expected ranges (from literature heuristics): 95%+ of curves have `modular_degree ≤ 1000`; rarer curves extend to 10^5+.
+
+**Calibration anchors:**
+- **Modularity theorem (Breuil-Conrad-Diamond-Taylor, 2001):** every EC over Q is modular, so `modular_degree` is well-defined and finite for every curve. Any attempt to compute on our mirror that returns undefined / infinite is a data-integrity violation.
+- **Isogeny invariance of `deg(φ)·c_E`** where `c_E` is the Manin constant: the product is an isogeny-class invariant. Cross-check for any P103 implementation.
+- **Edixhoven-Jong bound** (rank 0): explicit relation between `modular_degree` and Faltings height. Calibration spot-check on known rank-0 examples.
+- **Modular-degree is a positive integer**: axis-level sanity check.
+
+**Known failure modes:**
+- **Using P103 without materialized data** — any worker drawing P103-based claims must document which of (Magma / Sage / public LMFDB endpoint / future `modular_degree` table) they used, and spot-check against a known value (e.g., the curve `11.a1` has `deg(φ) = 1`).
+- **Treating `modular_degree` as orthogonal to Faltings height** — partial tautology via Edixhoven-Jong (Pattern 1 family).
+- **Pooling across ranks without rank-conditioning** — heuristics for `modular_degree` vs `L(E,1)` / `L'(E,1)` differ by rank; pooled analysis mixes regimes.
+- **Using non-optimal-curve `modular_degree`** — for non-optimal class members, the value is an integer multiple of the optimal; a "P103 analysis" over all curves without optimality filtering is a Pattern-20 mixture-of-strata risk.
+- **Sparse high-value strata** — `modular_degree > 10^4` is rare; Pattern 9 coverage-cliff discipline applies.
+
+**When to use:**
+- **Ribet-Taylor-Wiles deformation / congruence-prime analyses** — `modular_degree` is the arithmetic-of-congruence axis.
+- **BSD period-calibration work (rank 0, 1)** — combined with Manin constant and `Ω_E`, `modular_degree` closes the BSD leading-coefficient cycle for small conductor.
+- **Joint with P100 Isogeny class size** to separate optimal-vs-non-optimal curves within each class.
+- **Faltings-height calibration spot-checks** — when bounds are being verified empirically.
+- **Small-conductor exploratory analyses** — where Magma / Sage `modular_degree` is computationally affordable.
+
+**When NOT to use:**
+- **Before materialization** — reporting "P103 distribution" over 3.8M curves is vacuous on our current mirror.
+- **Alongside Faltings height as if orthogonal** (Pattern 1 via Edixhoven-Jong).
+- **Across non-optimal curves without flagging** — Pattern 20 mixture risk.
+- **For non-EC objects** — `modular_degree` is EC-specific.
+- **As a substitute for `sha_primes` / Selmer in congruence detection** — these are related but orthogonal refinements.
+
+**Related projections:**
+- **P038 Sha:** via Ribet lifting (`p | modular_degree` implies non-trivial congruence at level Np; often present in `sha_primes`).
+- **P100 Isogeny class size:** joint natural-classification axis; `modular_degree` is optimal-curve-canonical.
+- **Faltings height (separate proposed entry):** partial tautology via Edixhoven-Jong (Pattern 1 family).
+- **Conductor P020:** heuristic log-scaling `log(modular_degree) ~ log(N)` with heavy tails.
+- **Manin constant** (not yet catalogued): `deg(φ)·c_E` is isogeny-invariant.
+- **P035 Kodaira:** sibling DERIVABLE-NOT-STORED entry; similar materialization constraint.
+
+**Follow-ups this entry motivates:**
+1. **`materialize_modular_degree_per_curve`** — Mnemosyne/Koios infra task: run Magma `ModularDegree` or Sage on all 3.8M `ec_curvedata` rows, write to a new `ec_modular_degree(lmfdb_label, modular_degree, manin_constant, optimal)` table. Requires James input on runtime and storage (per P035 Kodaira precedent — not auto-seedable).
+2. **`catalog_faltings_height`** — separate entry (sessionD EC harvest candidate); will need Edixhoven-Jong Pattern-1 cross-reference back to P103.
+3. **`catalog_manin_constant`** — Manin-constant catalog entry; product `deg(φ)·c_E` is the isogeny-invariant companion.
+4. **`audit_modular_degree_optimal_curve`** — once materialized, verify that every isogeny class has exactly one "optimal" curve and that `modular_degree` scales predictably among isogenous curves.
+5. **`wsw_F005_P103_check`** — F005 High-Sha parity cohort (`sha ≥ 16`, 67K curves) vs `modular_degree` distribution. Heuristic: high-Sha curves often have large `modular_degree`. Pattern 1 check before claiming the correlation.
+
+---
+
 # Section 5 — Null Models / Battery Tests
 
 Each null model is a coordinate system asking a specific structural question.
@@ -798,7 +1804,7 @@ systems because they change what features are visible.
 
 **What it resolves:**
 - Structure independent of shared prime factorization
-- True cross-domain coupling (once prime confound is removed)
+- Structure independent of shared prime factorization (once prime confound is removed)
 
 **What it collapses:**
 - Any coupling that was mediated by shared primes (which is 96% of pre-microscope findings)
@@ -871,7 +1877,7 @@ compute features, but they make certain projections tractable or intractable.
 - TT-Cross initialization noise can give spurious low-rank signals — validated by Charon's post-hoc falsification on three-way couplings (all killed)
 
 **Calibration anchors:**
-- Known bridges (modularity) should show low bond dimension in the coupled pair
+- Known invariances (e.g., modularity) should show low bond dimension in the coupled pair
 
 **Known failure modes:**
 - Over-reliance on bond dimension without post-hoc null (three-way Megethos-zeroed experiment)
@@ -957,6 +1963,7 @@ Identity Trap) requires knowing these.
 | rank | analytic_rank | BSD proven rank 0-1; by construction in data | F003 calibration |
 | sha | BSD formula | Computed assuming BSD at rank ≥ 2 | Mnemosyne's circularity catch |
 | leading_term | regulator·sha | Direct BSD formula | (implicit in BSD tests) |
+| Mahler(P × Φ_n) | Mahler(P) | Mahler measure of a product equals product of Mahler measures; cyclotomic factors have M = 1. Any Lehmer-bound search at a degree divisible by 10 (or any degree where Lehmer's polynomial has been multiplied by a cyclotomic) will appear to "find" the Lehmer bound again. This is arithmetically forced, not independent corroboration. | F014 deg-10 and deg-20 "both at Lehmer" are the same polynomial, seen twice via cyclotomic multiplication (sessionB wsw_F014) |
 
 **Discipline:** Before celebrating any ρ > 0.8, check if both variables share a
 formula component. If they do, it's a tautology, not a finding.

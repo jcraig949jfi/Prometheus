@@ -60,11 +60,14 @@ FEATURES = [
     {"id": "F005", "label": "High-Sha parity (H43)",
      "tier": "calibration", "n_objects": 67035,
      "description": "Among sha≥9: (-1)^rank = root_number perfect."},
+    {"id": "F009", "label": "Torsion primes ⊆ nonmax primes (Serre open-image lineage)",
+     "tier": "calibration", "n_objects": 1385133,
+     "description": "For every non-CM EC over Q: primes(rational torsion) ⊆ nonmax_primes (mod-ℓ image is non-maximal at every torsion prime). 100.000% across 1,385,133 non-CM EC rows with torsion>1; zero violations (sessionD audit_nonmax_vs_torsion, 2026-04-17). All 15 Mazur torsion cells pass at 100%. Theorem lineage: Serre open-image + Mazur torsion classification. Load-bearing calibration anchor; joins F001-F005."},
 
     # ----- LIVE SPECIMENS (weak-but-survives) -----
-    {"id": "F010", "label": "NF backbone via Galois-label",
-     "tier": "live_specimen", "n_objects": 75,
-     "description": "Pattern-20 anchor. Raw pooled ρ=0.40 at n=62-71 (sessionC 2026-04-17) collapsed to ρ=0.109 at per_degree=5000 (n=75) — the 0.40 was sample-frame artifact (Pattern 19). Durable signal is decontaminated ρ=0.27 (z=2.38, retention_ratio=2.47) via P052 prime-detrend. Borderline at current n; needs alternative null (block-shuffle within degree-class) to firm up. Still live: signal is in the 4% of couplings NOT prime-mediated."},
+    {"id": "F010", "label": "NF backbone via Galois-label — KILLED, joins F022 under block-shuffle null",
+     "tier": "killed", "n_objects": 75,
+     "description": "KILLED under block-shuffle-within-degree null (sessionC wsw_F010_alternative_null 2026-04-17). The 0.27 decontaminated ρ was degree-mediated between-strata leakage — block null z=-0.86 (observed ρ=0.173 BELOW null mean 0.205 at n=51). Progression: pooled ρ=0.40 (n=71) → bigsample pooled 0.109 (n=75) → decon ρ=0.27 via P052 (z=2.38 weak-null) → block-null z=-0.86 (dead). The plain label-permute null over-rejected because it didn't preserve per-degree structure; block-shuffle preserves per-degree marginal AND destroys within-degree structure, revealing no within-degree coupling. F010 joins F022 as same-data-no-durable-signal. Triple-layer artifact: Pattern 20 (pooled) + Pattern 19 (stale original) + F022 twin (NF-Artin coupling is degree-marginal only)."},
     {"id": "F011", "label": "GUE first-gap deficit (~38% unfolded, n=2M)",
      "tier": "live_specimen", "n_objects": 2009089,
      "description": "Unfolded first-gap variance ~0.110 vs GUE 0.178 = ~38% deficit at n=2,009,089 "
@@ -73,13 +76,16 @@ FEATURES = [
                     "all verdict +1). 14% was a smaller-sample pre-unfolding artifact; Mnemosyne's first-gap "
                     "reduction from 40% pooled held directionally but the clean n=2M number is ~38%. "
                     "Faltings (H08) killed; ADE (H10) killed. Pattern 13: conductor-family axes do not resolve. "
-                    "Next probes: P028 Katz-Sarnak, H09 conductor-window finite-N, representation-theoretic axes."},
+                    "**P028 Katz-Sarnak RESOLVES** at z=7.63 spread (SO_even vs SO_odd, sessionB tick 9). "
+                    "**BLOCK-SHUFFLE VERIFIED** (sessionB audit_P028_findings_block_shuffle 2026-04-17): "
+                    "z_block=111.78 (observed spread 7.63% vs null p99 0.27%). Durable under strictest null. "
+                    "F011 is the session's strongest durably-resolved specimen."},
     {"id": "F012", "label": "Möbius bias at g2c aut groups (H85) — KILLED",
      "tier": "killed", "n_objects": 66158,
      "description": "KILLED across Möbius AND Liouville definitions (sessionB wsw_F012 + liouville_side_check_F012, 2026-04-17). Clean measurement on full n=66158 g2c: max|z| over adequate strata = 0.39 (μ) / 0.52 (λ), permutation p = 0.68 (μ) / 0.60 (λ). The prior |z|=6.15 DID NOT REPRODUCE under either Möbius or Liouville. Definitional drift hypothesis excluded. Canonical Pattern 19 case: stale or never-reproducible tensor entry. Likely causes: different subset, different scorer, or original measurement was noise. 63% non-squarefree g2c discriminants reduce effective S/N but don't account for the 16x discrepancy."},
-    {"id": "F013", "label": "Zero spacing rigidity vs rank (H06)",
-     "tier": "live_specimen", "n_objects": 50000,
-     "description": "Spacing variance decreases linearly with rank. slope=-0.0019, R²=0.399. Weak."},
+    {"id": "F013", "label": "Zero spacing rigidity vs rank (H06) — P028 Katz-Sarnak resolves, BLOCK-SHUFFLE VERIFIED",
+     "tier": "live_specimen", "n_objects": 2009088,
+     "description": "Original pooled slope=-0.0019 (R²=0.399, n=50K) was a Pattern-20 MIXTURE ARTIFACT. sessionB wsw_F013_P028 (2026-04-17, n=2M) stratified by Katz-Sarnak symmetry type: SO_even slope=+0.01284 (variance INCREASES with rank, rank 0→2: 0.095→0.121); SO_odd slope=-0.00216 (slight decrease). Slope difference z=13.68, p=1.3e-42. **BLOCK-SHUFFLE VERIFIED** (sessionB audit_P028_findings_block_shuffle, 2026-04-17): z_block=15.31 (slope_diff_z 13.68 vs null p99 1.47) — DURABLE UNDER BLOCK NULL. F013 joins F011 and F015 as block-shuffle-verified live specimens. P028 is now confirmed a cross-specimen resolver, not a null-model artifact."},
     {"id": "F014", "label": "Lehmer spectrum (refined) — Salem density in (1.176, 1.228)",
      "tier": "live_specimen", "n_objects": 22178569,
      "description": "Lehmer bound TOUCHED at degrees 10 and 20 (Lehmer polynomial and splitting field). "
@@ -93,9 +99,9 @@ FEATURES = [
                     "Source: cartography/docs/wsw_F014_results.json. Anti-pattern note: Mahler-measure gap "
                     "claims without degree-AND-num_ram stratification are suspect — Salem polynomials cluster "
                     "in the sub-1.228 region at specific degree × low-num_ram combinations."},
-    {"id": "F015", "label": "Szpiro vs conductor — sign-uniform, magnitude non-monotone in k",
+    {"id": "F015", "label": "Szpiro vs conductor — sign-uniform, magnitude non-monotone in k — BLOCK-SHUFFLE VERIFIED",
      "tier": "live_specimen", "n_objects": 30000,
-     "description": "Szpiro-vs-conductor slope is sign-uniformly-negative within every bad-prime stratum (P042 z=-6.9..-22.7) but magnitude is NOT monotone in k — k=4 breaks the smooth trend. 88% of pooled -0.597 slope is k-mediated confound; 12% residual survives decontamination (P052 kill). Within-conductor bins show opposite-sign trend (szpiro increases with k). Pattern 19 variant: Ergon monotone claim partially reproduces (sign, yes; magnitude, no). Parallels F011/F013 stratification-reveals-pooled-artifact shape (Pattern 20 anchor case)."},
+     "description": "Szpiro-vs-conductor slope is sign-uniformly-negative within every bad-prime stratum (P042 z=-6.9..-22.7). **Block-shuffle-within-k null (sessionC audit_F014_F015_block_shuffle, 2026-04-17) VERIFIED the sign-uniform-negative claim at ALL k:** k=1 z=-24.03, k=2 z=-19.70, k=3 z=-12.69, k=4 z=-7.48, k=5 z=-4.06, k=6 z=-3.48. Every stratum z<=-3 under the rigorous null. Magnitude is NOT monotone in k (k=4 breaks the smooth trend; this remains a Pattern-20 anchor on the magnitude side). 88% of pooled -0.597 slope is k-mediated confound; 12% residual survives decontamination (P052 kill). Within-conductor bins show opposite-sign trend (szpiro increases with k). Pattern 19 variant: Ergon monotone claim partially reproduces (sign, yes; magnitude, no). F015 is the first specimen verified under the F010-methodology block-shuffle protocol — **sign claim is durable**."},
 
     # ----- KILLED but structurally informative -----
     {"id": "F020", "label": "Megethos axis (sorted log-normals)",
@@ -246,6 +252,25 @@ PROJECTIONS = [
                     "matrix per domain pair at init via 5-shuffle 2σ filter. Sigmoid-normalized output. Complements "
                     "P001 (raw cosine) and P002 (kurtosis-extended cosine); does NOT replace either. Code: "
                     "harmonia/src/coupling.py:AlignmentCoupling (lines 182-298)."},
+
+    # ----- Stratifications added tick 16 (sessionB merge of sessionC draft; P100 per NAMESPACE_V2) -----
+    {"id": "P100", "label": "Isogeny class size stratification",
+     "type": "stratification",
+     "description": "WHERE class_size = k on ec_curvedata. 100% coverage across 3,824,372 EC. Mazur-bounded "
+                    "values {1,2,3,4,6,8}. Resolves Q-rational cyclic-isogeny structure; collapses "
+                    "per-curve variation within class and L-function-derived features (invariant within class). "
+                    "Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 "
+                    "Galois ℓ-adic image (class_size≥2 ⇔ nonmax_primes≠[]). Code: "
+                    "cartography/docs/catalog_isogeny_class_size_draft.md (sessionC)."},
+    {"id": "P102", "label": "Artin representation dimension stratification",
+     "type": "stratification",
+     "description": "WHERE \"Dim\" = d on artin_reps. 100% coverage across 798,140 irreducible reps. "
+                    "Resolves fixed-degree L-function cohort structure and the Deligne-Serre stratum at "
+                    "(Dim=2, Is_Even=False). Collapses per-Galois-group, parity, and Frobenius-Schur "
+                    "structure within a dimension. Partial tautologies: Dim | |G| (Maschke), Dim × "
+                    "Is_Even (non-uniform — dim-2 odd-dominated, dim-4 even-dominated), symplectic reps "
+                    "only at even Dim. H61 and H63 killed at this axis (Pattern 19 anchors). Code: "
+                    "cartography/docs/catalog_artin_dim_draft.md (sessionC)."},
 ]
 
 
@@ -262,14 +287,15 @@ INVARIANCE = {
     "F003": {"P020": +2, "P023": +2, "P041": +2},             # BSD parity
     "F004": {"P043": +2},                                      # Hasse
     "F005": {"P023": +2, "P024": +1},                          # high-Sha parity
+    "F009": {"P024": +2, "P039": +2},                          # torsion primes subset of nonmax primes (Serre+Mazur lineage)
 
     # Live specimens — sparse +1s, many -1s in wrong projections
-    "F010": {"P001": -1, "P010": +2, "P040": -2, "P042": +1, "P052": +1, "P020": +1, "P021": +1},  # NF backbone: pooled ρ=0.40 was Pattern-20 artifact (collapses at n=75 to 0.109). Durable signal is decontaminated ρ=0.27 via P052. Survives P020/P021 (sessionC wsw_F010), P042 feature-perm. P040 demoted -1→-2 (pooled is not durable at this coupling).
-    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2},  # GUE deficit: uniform +1 across 7 projections (sessionC n=2M); P027 ADE killed per H10. Resolving axis still unknown.
+    "F010": {"P001": -1, "P010": -1, "P040": -2, "P042": +1, "P052": -2, "P020": +1, "P021": +1, "P028": +1},  # NF backbone KILLED: decon ρ=0.27 via P052 killed by block-shuffle-within-degree null (z=-0.86). P052 demoted +1→-2 (the decon signal is degree-marginal leakage, not real). P010 demoted +2→-1 (the object-keyed coupling doesn't survive stricter nulls). P028 stays +1 (Is_Even=True still has some z=2.75 residual but on a dead feature). F010 joins F022 — same data, no durable signal under the correct null model.
+    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2},  # GUE deficit: uniform +1 across 7 projections; P028 RESOLVES at z=7.63 spread, BLOCK-SHUFFLE VERIFIED at z_block=111.78 (sessionB audit 2026-04-17). Session's strongest durably-resolved specimen.
     "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
-    "F013": {"P023": +1, "P041": +1},                           # spacing rigidity
+    "F013": {"P023": +1, "P041": +1, "P028": +2, "P051": +1},   # spacing rigidity; P028 resolves at z=13.68 (SO_even vs SO_odd opposite sign, sessionB 2026-04-17). P051 unfolding also matters (sessionD prior).
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
-    "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7
+    "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7; BLOCK-SHUFFLE VERIFIED at every k (sessionC 2026-04-17 z from -3.48 to -24.03). First specimen to pass block-shuffle protocol — durable sign.
 
     # Killed — structurally informative
     "F020": {"P001": -2, "P003": -2, "P040": -2},              # Megethos: not landscape
