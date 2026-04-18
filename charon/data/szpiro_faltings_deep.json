@@ -1,0 +1,377 @@
+{
+  "hypothesis": "H40: Szpiro-Faltings coupling",
+  "verdict": "ALIVE: Genuine residual exists beyond shared discriminant",
+  "verdict_detail": "log|\u0394_min| alone gives R\u00b2=0.972252. Szpiro adds info beyond \u0394_min: True. Slope deviation from 1/12: ratio=0.9343.",
+  "phase1_residual": {
+    "raw_correlation": {
+      "r": 0.9265325223840072,
+      "p": 0.0
+    },
+    "partial_correlation": {
+      "r": 0.9660090641374373,
+      "p": 0.0
+    },
+    "linear_fit": {
+      "r_squared": 0.9544306393812542,
+      "coefficients": {
+        "intercept": -4.466508849665579,
+        "szpiro": 0.9107693843204516,
+        "log_cond": 0.18057041898346538,
+        "num_bad_primes": 0.13026994421819033
+      },
+      "residual_std": 0.22436469307554807,
+      "residual_mean": 9.87715885428962e-15
+    },
+    "residual_predictors": {
+      "rank": {
+        "r": -0.0029315828678001957,
+        "r_squared": 8.594178110610251e-06,
+        "p": 9.866126524741546e-09
+      },
+      "torsion": {
+        "r": -0.08574873132347666,
+        "r_squared": 0.007352844923478985,
+        "p": 0.0
+      },
+      "cm": {
+        "r": -0.010369249914283948,
+        "r_squared": 0.00010752134378422262,
+        "p": 1.9852377215629304e-91
+      },
+      "sha": {
+        "r": 0.00957226655564923,
+        "r_squared": 9.162828701292369e-05,
+        "p": 3.4047855934379408e-78
+      },
+      "class_size": {
+        "r": -0.09579828314527275,
+        "r_squared": 0.00917731105359365,
+        "p": 0.0
+      },
+      "semistable": {
+        "r": -0.15356715274378088,
+        "r_squared": 0.02358287040135376,
+        "p": 0.0
+      },
+      "signD": {
+        "r": -0.21278767455735004,
+        "r_squared": 0.045278594443699305,
+        "p": 0.0
+      },
+      "regulator": {
+        "r": 0.014906979536097147,
+        "r_squared": 0.00022221803889033165,
+        "p": 7.498486712525158e-187
+      },
+      "abc_quality": {
+        "r": 0.05398902797683506,
+        "r_squared": 0.002914815141884186,
+        "p": 0.0
+      }
+    },
+    "residual_distribution": {
+      "skew": -1.164710511775948,
+      "kurtosis": 10.941662498442101,
+      "shapiro_p": 2.584968796937687e-51,
+      "is_normal": 0
+    }
+  },
+  "phase2_functional": {
+    "degree_1": {
+      "r_squared": 0.9346628232079324,
+      "coefficients": [
+        1.79749838742011e-15,
+        0.9601396216781782
+      ]
+    },
+    "degree_2": {
+      "r_squared": 0.9346891667926677,
+      "coefficients": [
+        -0.0031910654447579343,
+        0.9577039067614094,
+        0.0032038320020439126
+      ]
+    },
+    "degree_3": {
+      "r_squared": 0.9349345486719478,
+      "coefficients": [
+        -0.009226789570227498,
+        0.9711184705913272,
+        0.013147901673749216,
+        -0.0051091031858979995
+      ]
+    },
+    "curvature_test": {
+      "f_stat_2v1": 1542.586181540915,
+      "p_2v1": 1.1102230246251565e-16,
+      "curvature_significant": 1,
+      "r2_improvement_2v1": 2.6343584735299963e-05,
+      "r2_improvement_3v2": 0.00024538187928013766
+    },
+    "augmented_models": {
+      "rank": {
+        "r_squared": 0.9418968793404846,
+        "delta_r2": 6.15577457785399e-07
+      },
+      "torsion": {
+        "r_squared": 0.9418970008100939,
+        "delta_r2": 7.370470670453599e-07
+      },
+      "cm": {
+        "r_squared": 0.9418983152849616,
+        "delta_r2": 2.0515219347760905e-06
+      },
+      "sha": {
+        "r_squared": 0.9419010663757477,
+        "delta_r2": 4.802612720844479e-06
+      }
+    },
+    "base_r2": 0.9418962637630268
+  },
+  "phase3_outliers": {
+    "outlier_vs_rest": {
+      "rank": {
+        "outlier_mean": 0.213,
+        "rest_mean": 0.7830632227259079,
+        "outlier_std": 0.4094276492861712,
+        "mw_p": 3.563423130944079e-161,
+        "significantly_different": true
+      },
+      "torsion": {
+        "outlier_mean": 2.416,
+        "rest_mean": 1.4577404448220053,
+        "outlier_std": 1.5959147846924662,
+        "mw_p": 8.391746143908396e-197,
+        "significantly_different": true
+      },
+      "cm": {
+        "outlier_mean": -0.18,
+        "rest_mean": -0.010167464740548396,
+        "outlier_std": 2.058057336421899,
+        "mw_p": 7.73562672308225e-07,
+        "significantly_different": true
+      },
+      "conductor": {
+        "outlier_mean": 1192.226,
+        "rest_mean": 25385109.92331769,
+        "outlier_std": 1537.1642764922685,
+        "mw_p": 0.0,
+        "significantly_different": true
+      },
+      "num_bad_primes": {
+        "outlier_mean": 3.18,
+        "rest_mean": 3.445925219936747,
+        "outlier_std": 0.8576712656956628,
+        "mw_p": 1.2526623187607797e-30,
+        "significantly_different": true
+      },
+      "class_size": {
+        "outlier_mean": 4.259,
+        "rest_mean": 1.6765381448627024,
+        "outlier_std": 2.0813262598641282,
+        "mw_p": 0.0,
+        "significantly_different": true
+      },
+      "sha": {
+        "outlier_mean": 2.737,
+        "rest_mean": 1.6471944137269405,
+        "outlier_std": 6.756169846888102,
+        "mw_p": 4.905131941307042e-20,
+        "significantly_different": true
+      },
+      "semistable": {
+        "outlier_mean": 0.48,
+        "rest_mean": 0.3957684473286931,
+        "outlier_std": 0.4995998398718719,
+        "mw_p": 5.1464808557383284e-08,
+        "significantly_different": true
+      }
+    },
+    "cm_analysis": {
+      "n_cm": 7698,
+      "n_non_cm": 3816674,
+      "cm_resid_abs_mean": 0.26398036350444753,
+      "non_cm_resid_abs_mean": 0.1646271477937329,
+      "cm_resid_std": 0.24407931513837977,
+      "non_cm_resid_std": 0.2241205928383377,
+      "cm_worse": true
+    },
+    "cm_enrichment_in_outliers": {
+      "cm_frac_outliers": 0.009,
+      "cm_frac_overall": 0.002012879500215983,
+      "enrichment_ratio": 4.471206547155105
+    },
+    "rank_distribution": {
+      "rank_0": {
+        "outlier_frac": 0.787,
+        "rest_frac": 0.36714266882741203
+      },
+      "rank_1": {
+        "outlier_frac": 0.213,
+        "rest_frac": 0.4935222102374553
+      },
+      "rank_2": {
+        "outlier_frac": 0.0,
+        "rest_frac": 0.129019880880019
+      },
+      "rank_3": {
+        "outlier_frac": 0.0,
+        "rest_frac": 0.009764678927397073
+      },
+      "rank_4": {
+        "outlier_frac": 0.0,
+        "rest_frac": 0.0005455916923595193
+      }
+    },
+    "outlier_sign_bias": 0.0
+  },
+  "phase4_conductor_strata": {
+    "strata": {
+      "1-100": {
+        "n": 302,
+        "slope": 0.2019670557409071,
+        "intercept": -1.3908813559187587,
+        "r_squared": 0.6494578750952167,
+        "correlation": 0.8058894931038726,
+        "residual_std": 0.31504352949922615,
+        "residual_mean": -1.3528545465631047e-16
+      },
+      "100-1K": {
+        "n": 4811,
+        "slope": 0.4271644168888499,
+        "intercept": -1.6634718663203796,
+        "r_squared": 0.8342385982624152,
+        "correlation": 0.9133666286121996,
+        "residual_std": 0.27372838257114257,
+        "residual_mean": -2.0676778841491172e-16
+      },
+      "1K-10K": {
+        "n": 59574,
+        "slope": 0.6243210848999965,
+        "intercept": -1.7463911754477106,
+        "r_squared": 0.9006780781985989,
+        "correlation": 0.9490406093516747,
+        "residual_std": 0.2622337629927461,
+        "residual_mean": 1.82722575483344e-16
+      },
+      "10K-100K": {
+        "n": 592709,
+        "slope": 0.8143821628981034,
+        "intercept": -1.777485638193963,
+        "r_squared": 0.9283608859204128,
+        "correlation": 0.9635148602488774,
+        "residual_std": 0.2571901831061146,
+        "residual_mean": -1.7462278632812937e-15
+      },
+      "100K-1M": {
+        "n": 2419742,
+        "slope": 0.9662540002090287,
+        "intercept": -1.8141027281978066,
+        "r_squared": 0.9550725701729218,
+        "correlation": 0.9772781437098421,
+        "residual_std": 0.22082939988199635,
+        "residual_mean": 2.824808360219578e-15
+      },
+      "1M+": {
+        "n": 747234,
+        "slope": 0.9828160130664603,
+        "intercept": -1.2109075190069116,
+        "r_squared": 0.8892415385473609,
+        "correlation": 0.9429960437601844,
+        "residual_std": 0.15852209477321827,
+        "residual_mean": 1.9353421006509562e-15
+      }
+    },
+    "slope_stability": {
+      "slope_range": 0.7808489573255532,
+      "slope_cv": 0.4253624785032579,
+      "scale_dependent": 1
+    },
+    "heteroscedasticity": {
+      "r_residstd_vs_logcond": -0.9487325137483202,
+      "p": 0.0038751581391787034,
+      "variance_changes": 1
+    }
+  },
+  "phase5_operator": {
+    "exact_formula": {
+      "formula": "h = szpiro * log(N) / 12 - log(2pi) / 2",
+      "r_squared": -0.2639643264043994,
+      "correlation": 0.986028457118488,
+      "residual_mean": -1.1663208603837287,
+      "residual_std": 0.18965888499542896
+    },
+    "fitted_formula": {
+      "slope": 0.0778549488781328,
+      "intercept": -1.8610384728708516,
+      "theoretical_slope": 0.08333333333333333,
+      "slope_ratio_to_theory": 0.9342593865375936,
+      "r_squared": 0.972252118247464,
+      "residual_std": 0.1750785598881405
+    },
+    "discriminant_test": {
+      "r2_separate": 0.9418962637630268,
+      "r2_product": 0.972252118247464,
+      "delta_r2": -0.030355854484437228,
+      "trivially_explained": 0
+    },
+    "theory_residual_predictors": {
+      "rank": {
+        "r": -0.020248729628396574,
+        "p": 0.0
+      },
+      "torsion": {
+        "r": 0.060771768536369064,
+        "p": 0.0
+      },
+      "cm": {
+        "r": -0.0010556701841897738,
+        "p": 0.03897329999555178
+      },
+      "sha": {
+        "r": -0.044282892539775194,
+        "p": 0.0
+      },
+      "class_size": {
+        "r": 0.06486783508199344,
+        "p": 0.0
+      },
+      "semistable": {
+        "r": -0.15685455699544526,
+        "p": 0.0
+      },
+      "signD": {
+        "r": -0.2718943452787762,
+        "p": 0.0
+      },
+      "regulator": {
+        "r": -0.07479087733895101,
+        "p": 0.0
+      },
+      "num_bad_primes": {
+        "r": 0.2085877067892647,
+        "p": 0.0
+      },
+      "abc_quality": {
+        "r": 0.08244506678192019,
+        "p": 0.0
+      }
+    },
+    "szpiro_beyond_discriminant": {
+      "r2_with_both": 0.9727213575985795,
+      "delta_r2": 0.0004692393511154247,
+      "szpiro_coeff": 0.04991044754069281,
+      "f_stat": 65785.69422840835,
+      "p": 1.1102230246251565e-16,
+      "szpiro_adds_info": 1
+    },
+    "stable_vs_unstable": {
+      "mean_diff": 0.6636351113160568,
+      "std_diff": 0.7620944791588641,
+      "max_abs_diff": 5.344750897735585,
+      "correlation": 0.7169939573095445,
+      "identical": 0
+    }
+  },
+  "n_curves": 3824372
+}
