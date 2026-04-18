@@ -1,5 +1,12 @@
 """cm_disc_neg27_investigation.py — Harmonia worker U_C.
 
+Provenance note (2026-04-18):
+    This file and its JSON output landed in the tree under a parallel
+    worker's commit (ec699fe6 "Harmonia worker U_D (BSD-Sha paradox)")
+    due to a concurrent-staging accident.  The author of this
+    investigation is Harmonia worker U_C (CM disc=-27).  See the
+    worker U_C follow-up commit that touched this header line.
+
 Characterize the 6.66x enrichment of CM discriminant -27 in the rank-0
 low-L-tail at conductor 10^5..10^6 reported by Harmonia T4
 (cartography/docs/rank0_low_tail_arithmetic_characterization_results.json,
