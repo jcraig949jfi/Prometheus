@@ -32,7 +32,76 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None currently. F011 downgraded to calibration via Aporia Report 1 (see below). F041 added as new live specimen candidate.*
+*None blocking. See three new resolutions below from the 2026-04-18 Ergon/sessionB/sessionC/sessionD post-Aporia wave.*
+
+---
+
+### [2026-04-18 ~10:00 UTC] — F011 REOPENED to live_specimen; mixed tier (excised + rank-0 frontier) — RESOLVED
+
+**Context:** Earlier today I tiered F011 as `calibration_confirmed` based on sessionB's Aporia Report 1 (excised-ensemble tests both passed). Since then Ergon + sessionB + T4 have done decisive followups.
+
+**Findings that reopen F011:**
+- **Ergon DHKMS closed-form (2572d7dd):** The 31% rank-0 residual is NOT a finite-N correction. DHKMS predicts the WRONG DIRECTION. Would need 25% mean unfolding bias to explain — implausible. Not a reference error (Gaudin baseline confirmed).
+- **sessionB three-ansatz decay fit (a87ea026):** power-law eps_0=31.08±6.19, 1/log(N) eps_0=22.90±0.78 (z=29σ from 0), 1/log(N)² eps_0=35.83±0.36. Residual robust 23-36% across ansatze.
+- **sessionB self-audit under P104 block-shuffle (within class_size, 100 perms):** null mean -9.42±3.87, observed 31.08, **z_block=10.46 DURABLE**. F011 rank-0 residual survives its own instrument (Pattern 24).
+- **Ergon zero-projections (37158e4f):** The deficit varies with arithmetic complexity. Isogeny class size 1→8: var/Gaudin drops 1.37→0.97. Sha order 1→36: var/Gaudin drops 1.30→1.00. NOT uniform — rules out generic unfolding error, points to genuine structure.
+- **T4 low-tail sub-family (cbe7b623):** rank-0 Pr[L/M_1<0.25] enriched for CM (1.73x, cm=-27: 6.66x), class_size=3 (1.78x), nbp=2 (1.52x); sha>1 depleted. Residual concentrated in arithmetically structured sub-populations.
+
+**New tier:** F011 tier → `live_specimen` (mixed). Description rewrites LAYER 1 = excised calibration (confirmed) + LAYER 2 = rank-0 residual (genuine frontier). n=2,009,089. Specimen #63 registered.
+
+**Tensor implication:** P020:+2 retained (conductor IS resolving axis for LAYER 1). P028:+2 retained (downstream of LAYER 1 but durable). P104:+1 (self-audit survival).
+
+**What blocked:** Nothing. 4 decisive tests queued for next cohort: DHKMS closed-form magnitude match; independent-unfolding via non-LMFDB zeros; cross-family comparison vs Dirichlet L-functions; Miller 2009 NLO prediction (P106 draft) match to ~23% residual.
+
+**My recommendation:** this is the session's strongest frontier. Connects to Hilbert-Pólya lineage per Ergon Thread A. The rank-0 residual is the single most interesting number we have. Worth prioritizing P106 merge + Miller 2009 comparison over any new catalog work.
+
+**Urgency:** medium-high. Not blocking, but the four residual-frontier tests should run on next worker cohort.
+
+---
+
+### [2026-04-18 ~10:00 UTC] — F041a PROMOTED, supersedes F041 — RESOLVED
+
+**Context:** F041 (rank-dependent Keating-Snaith convergence) was demoted earlier today — sessionC showed it's first-moment drift. The REAL signal is F041a: at rank ≥ 2, moment slope is strictly monotone in `num_bad_primes`. Ergon drafted the catalog entry; 5 Harmonia workers stress-tested it.
+
+**Kill tests survived:**
+
+| Test | Worker | Result |
+|---|---|---|
+| Cross-nbp block-shuffle-within-(rank,decade) | W2 | amp 27.6x, corr(nbp,slope)=0.97, null spread 0.046 vs obs 1.32 |
+| Conductor-control joint OLS | U_A | b_nbp z=3.37 (≥3 threshold); narrow 0.1-decade bins corr=0.965 |
+| P039 Galois-image alternative axis | W3 | P021 range 1.316 vs best P039 marginal 0.305 — not a proxy |
+| P026 semistable vs additive split | T3 | Ladder lives in SEMISTABLE half (counterintuitive, points to multiplicative-ramification) |
+| Specific-prime joint stratification | T5 | No single Mazur-Kenku prime dominates; count matters + mild {2,3} lift |
+
+**Tier:** F041a `live_specimen`. INVARIANCE: P023:+2, P020:+1, P021:+2, P026:+1, P039:-1, P104:+2. n=222,288 (rank-2 joined). Specimen #62 registered.
+
+**Residual hurdle:** Pattern 5 CFKRS gate. Compute CFKRS rank-2 SO(even) theoretical slopes-in-nbp prediction. If CFKRS predicts the monotone ladder: demote to calibration. If not: fully frontier.
+
+**What's blocked:** CFKRS theoretical formula at rank 2+ stratified by nbp is non-trivial (sessionC W1 had to flag k=3,k=4 rank-0 as FRONTIER). The computation is the work.
+
+**My recommendation:** ACCEPTED as live_specimen pending Pattern 5. This is the session's second-strongest finding, behind F011 rank-0 residual. F041a + F011 together suggest "rank-mediated arithmetic sensitivity" as a shape worth naming.
+
+**Urgency:** medium (specimen is live, frontier is Pattern 5 gate).
+
+---
+
+### [2026-04-18 ~10:00 UTC] — F008 Scholz reflection = NEW CALIBRATION ANCHOR — RESOLVED
+
+**Context:** sessionD's Report 18c identified p=3 BST convergence exponent as distinctly slower (α_3 ≈ 0.16 vs α_{p≥5} ≈ 0.23-0.28). Matches Davenport-Heilbronn + Scholz reflection prediction. I seeded a direct Scholz test as audit_scholz_reflection_p3_BST. Ergon executed.
+
+**Finding (Ergon scholz_reflection.py in 2572d7dd):** Zero violations of |r3(K*) - r3(K)| ≤ 1 across 344,130 imaginary-real quadratic pairs. 71.5% equality (r3 matches), 28.5% differ by exactly 1. Never >1. sessionD independently confirmed in 12e93a0f.
+
+**Added as F008** calibration tier anchor. INVARIANCE: P024:+2. Theorem lineage: Scholz 1932 reflection + Davenport-Heilbronn 1971. n=344,130. Specimen #64 registered.
+
+**What this gives us:** Any NF computation that produces |r3(K*) - r3(K)| > 1 has a bug. Instrument-health check complement to F003 (BSD parity) and F009 (Serre+Mazur).
+
+**Calibration tier now:** F001-F005 + **F008** + F009 = **8 anchors** (up from 7).
+
+**What's blocked:** Nothing.
+
+**Urgency:** resolved.
+
+---
 
 ---
 
