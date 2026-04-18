@@ -1,0 +1,104 @@
+{
+  "retrieved": "2026-04-18T20:08:16Z",
+  "artifacts": [
+    {
+      "namespace": "IUCr",
+      "name": "cif_core",
+      "version": "3.3.0",
+      "version_date": "2026-04-16",
+      "path": "iucr/cif_core.dic",
+      "sha256": "9dfce7e15028182cd2c8376efabc3ab111913448a87f69429582d8be1b79b4e9",
+      "uri": "https://raw.githubusercontent.com/COMCIFS/cif_core/master/cif_core.dic",
+      "uri_primary_tried": "https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/cif_core.dic",
+      "uri_primary_result": "403 Cloudflare browser-challenge",
+      "license": "CC-BY-4.0 (SPDX-License-Identifier from file header)",
+      "license_note": "IUCr open with attribution; canonical source blocks automated download, GitHub mirror (COMCIFS) is the authoritative current copy maintained by IUCr Committee for the Maintenance of the CIF Standard",
+      "license_url": "https://www.iucr.org/resources/cif",
+      "size_bytes": 912894
+    },
+    {
+      "namespace": "OpenQASM",
+      "name": "openqasm3_language_spec_index",
+      "version": "3.0 (main branch at retrieval)",
+      "path": "openqasm/openqasm3_index.rst",
+      "sha256": "a8431318787d68b2f2b2e4bfaa1b6029f236ab33913f7d990366abeae1b4e13d",
+      "uri": "https://raw.githubusercontent.com/openqasm/openqasm/main/source/language/index.rst",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/openqasm/openqasm/blob/main/LICENSE",
+      "size_bytes": 657,
+      "note": "index.rst is a short toctree root pointing to subsection files (comments, types, gates, classical, subroutines, openpulse, etc.). Full spec text lives in sibling .rst files not downloaded here."
+    },
+    {
+      "namespace": "OpenQASM",
+      "name": "openqasm_readme",
+      "version": "main branch at retrieval",
+      "path": "openqasm/README.md",
+      "sha256": "03439005ee86921f329f1cc9aa3d000fe18503ce23d127a3ccc5748878c11d37",
+      "uri": "https://raw.githubusercontent.com/openqasm/openqasm/main/README.md",
+      "license": "Apache-2.0",
+      "license_url": "https://github.com/openqasm/openqasm/blob/main/LICENSE",
+      "size_bytes": 3669
+    },
+    {
+      "namespace": "ngspice",
+      "name": "ngspice_user_manual",
+      "version": "undated_at_retrieval",
+      "path": "ngspice/ngspice-manual.pdf",
+      "sha256": "b5bc7c4f3aac00e670b01b1d1ab64ec87055a491014af1de828764bf98faf766",
+      "uri": "https://ngspice.sourceforge.io/docs/ngspice-manual.pdf",
+      "license": "GPL (ngspice project default; user manual typically inherits project license)",
+      "license_url": "https://ngspice.sourceforge.io/about.html",
+      "size_bytes": 2660636,
+      "note": "Version not extracted from PDF metadata (no pdftoppm/pdfinfo available in this environment). SHA256 identifies this specific retrieval; upstream updates will change it."
+    },
+    {
+      "namespace": "CODATA",
+      "name": "codata_fundamental_constants_2022",
+      "version": "2022 recommended values",
+      "path": "codata/codata_2022_allascii.txt",
+      "sha256": "77fb90e66c40db3e6eb16630bc9c88e4c7c8beddbe5e71be406f2f26e3f67e67",
+      "uri": "https://physics.nist.gov/cuu/Constants/Table/allascii.txt",
+      "license": "Public domain (US government work, NIST)",
+      "license_url": "https://www.nist.gov/open/license",
+      "size_bytes": 40801
+    }
+  ],
+  "retrieval_log": {
+    "primary_uris_succeeded": [
+      "OpenQASM source/language/index.rst",
+      "OpenQASM README.md",
+      "ngspice-manual.pdf",
+      "CODATA allascii.txt"
+    ],
+    "primary_uris_failed": [
+      {
+        "artifact": "iucr/cif_core",
+        "primary_uri": "https://www.iucr.org/__data/iucr/cifdic_html/1/cif_core.dic/cif_core.dic",
+        "failure": "HTTP 403 Cloudflare browser-challenge (requires JavaScript/cookies)",
+        "fallback_tried": [
+          {
+            "uri": "https://github.com/COMCIFS/cif_core/raw/main/cif_core.dic",
+            "result": "HTTP 404 (branch 'main' does not exist; repo uses 'master')"
+          },
+          {
+            "uri": "https://raw.githubusercontent.com/COMCIFS/cif_core/master/cif_core.dic",
+            "result": "HTTP 200, 912894 bytes, confirmed CIF 2.0 format, version 3.3.0 dated 2026-04-16"
+          }
+        ]
+      }
+    ],
+    "total_bytes_downloaded": 3618657
+  },
+  "license_text_excerpts": {
+    "IUCr cif_core": "# SPDX-License-Identifier: CC-BY-4.0 (line 2 of file)",
+    "OpenQASM": "Licensed under the Apache License, Version 2.0 (see LICENSE file in repo)",
+    "ngspice": "GPL (project-wide; PDF header does not include inline license string in first 100KB)",
+    "CODATA": "Public domain — US government work. 'Fundamental Physical Constants --- Complete Listing, 2022 CODATA adjustment. From: http://physics.nist.gov/constants' (from file header)"
+  },
+  "next_steps_for_conductor": [
+    "Register each artifact as an external symbol with hash-pinned reference",
+    "Consider downloading remaining OpenQASM language sub-section .rst files if full spec corpus is desired",
+    "Consider downloading ngspice HTML docs (ngspice-manual-html) for easier parsing",
+    "Consider CODATA JSON form at https://physics.nist.gov/cuu/Constants/ArchiveASCII/ once confirmed available"
+  ]
+}
