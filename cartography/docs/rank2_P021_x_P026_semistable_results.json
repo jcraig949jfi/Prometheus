@@ -1,0 +1,3225 @@
+{
+  "task_id": "rank2_P021_x_P026_semistable",
+  "drafted_by": "Harmonia_worker_T3",
+  "started": "2026-04-18T13:57:39.566424+00:00",
+  "finished": "2026-04-18T13:57:57.482138+00:00",
+  "scope": {
+    "primary_rank": 2,
+    "secondary_rank": 3,
+    "conductor_range": "[1000, 1000000)",
+    "decade_edges": [
+      [
+        1000,
+        10000
+      ],
+      [
+        10000,
+        100000
+      ],
+      [
+        100000,
+        1000000
+      ]
+    ],
+    "min_per_cell": 100,
+    "nbp_bins": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "semi_bins": [
+      "False",
+      "True"
+    ]
+  },
+  "headline": {
+    "rank_2_verdict": "semistable carries the ladder (surprise)",
+    "rank_2_carrier": "semistable",
+    "rank_2_common_support_nbp_keys": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "rank_2_slope_range_additive_common": 0.27890019792924314,
+    "rank_2_slope_range_semistable_common": 0.5702907804497037,
+    "rank_2_ratio_common_support": 0.48904910878853053,
+    "rank_2_slope_range_additive_full": 0.27890019792924314,
+    "rank_2_slope_range_semistable_full": 1.3562760731013783,
+    "rank_2_ratio_full_support": 0.2056367456896042,
+    "rank_2_slope_range_marginal": 1.3159398368786737,
+    "rank_3_verdict": "INCONCLUSIVE (insufficient coverage)",
+    "rank_3_ratio_common_support": null
+  },
+  "rank_2": {
+    "rank": 2,
+    "n_joined_rows": 222288,
+    "joint_slope_matrix_nbp_x_semistable": {
+      "1": {
+        "additive": null,
+        "semistable": 1.2193720771819898
+      },
+      "2": {
+        "additive": 1.5770914094842954,
+        "semistable": 1.4774052764598304
+      },
+      "3": {
+        "additive": 1.6576063511728705,
+        "semistable": 1.7584567796259556
+      },
+      "4": {
+        "additive": 1.8313587285582058,
+        "semistable": 1.882934900225699
+      },
+      "5": {
+        "additive": 1.8559916074135385,
+        "semistable": 2.047696056909534
+      },
+      "6": {
+        "additive": null,
+        "semistable": 2.575648150283368
+      }
+    },
+    "diff_slope_additive_minus_semistable_per_nbp": {
+      "1": null,
+      "2": 0.09968613302446494,
+      "3": -0.10085042845308512,
+      "4": -0.051576171667493176,
+      "5": -0.19170444949599563,
+      "6": null
+    },
+    "marginal_nbp_slopes": {
+      "1": 1.2055124570905429,
+      "2": 1.5202831891058293,
+      "3": 1.7029099464151403,
+      "4": 1.8637279089207233,
+      "5": 1.95367578915923,
+      "6": 2.5214522939692166
+    },
+    "additive_half_nbp_slopes": {
+      "1": null,
+      "2": 1.5770914094842954,
+      "3": 1.6576063511728705,
+      "4": 1.8313587285582058,
+      "5": 1.8559916074135385,
+      "6": null
+    },
+    "semistable_half_nbp_slopes": {
+      "1": 1.2193720771819898,
+      "2": 1.4774052764598304,
+      "3": 1.7584567796259556,
+      "4": 1.882934900225699,
+      "5": 2.047696056909534,
+      "6": 2.575648150283368
+    },
+    "slope_range_additive": 0.27890019792924314,
+    "slope_range_semistable": 0.5702907804497037,
+    "slope_range_additive_full": 0.27890019792924314,
+    "slope_range_semistable_full": 1.3562760731013783,
+    "slope_range_additive_common": 0.27890019792924314,
+    "slope_range_semistable_common": 0.5702907804497037,
+    "slope_range_marginal": 1.3159398368786737,
+    "ratio_additive_over_semistable": 0.48904910878853053,
+    "ratio_additive_over_semistable_full": 0.2056367456896042,
+    "ratio_additive_over_semistable_common": 0.48904910878853053,
+    "common_support_nbp_keys": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "range_additive_detail": {
+      "slope_min": 1.5770914094842954,
+      "slope_max": 1.8559916074135385,
+      "range": 0.27890019792924314,
+      "n_strata_fitted": 4,
+      "fitted_strata": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "range_semistable_detail": {
+      "slope_min": 1.2193720771819898,
+      "slope_max": 2.575648150283368,
+      "range": 1.3562760731013783,
+      "n_strata_fitted": 6,
+      "fitted_strata": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6"
+      ]
+    },
+    "range_additive_common_detail": {
+      "slope_min": 1.5770914094842954,
+      "slope_max": 1.8559916074135385,
+      "range": 0.27890019792924314,
+      "n_strata_fitted": 4,
+      "fitted_strata": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "range_semistable_common_detail": {
+      "slope_min": 1.4774052764598304,
+      "slope_max": 2.047696056909534,
+      "range": 0.5702907804497037,
+      "n_strata_fitted": 4,
+      "fitted_strata": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ]
+    },
+    "verdict": "semistable carries the ladder (surprise)",
+    "carrier": "semistable",
+    "joint_detail": {
+      "1": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 0,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 1,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 4.1468463982,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 1,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 4.35183699775,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 5,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 5.118522714181999,
+              "sparse": true
+            }
+          ],
+          "n_total": 7
+        },
+        "True": {
+          "slope": 1.2193720771819898,
+          "se": 0.0,
+          "n_decades_valid": 2,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 33,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 2.7435473068236362,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 231,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 5.5403361330029,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 431,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 8.348044100735336,
+              "sparse": false
+            }
+          ],
+          "n_total": 695
+        }
+      },
+      "2": {
+        "False": {
+          "slope": 1.5770914094842954,
+          "se": 0.014278301633725017,
+          "n_decades_valid": 3,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 198,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 3.2859403545111108,
+              "sparse": false
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 1571,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 6.974272166464781,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 3308,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 10.548714694046126,
+              "sparse": false
+            }
+          ],
+          "n_total": 5077
+        },
+        "True": {
+          "slope": 1.4774052764598304,
+          "se": 0.000797582095413,
+          "n_decades_valid": 3,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 216,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 3.139435177296296,
+              "sparse": false
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 1808,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 6.538105630761056,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 4180,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 9.943137909070602,
+              "sparse": false
+            }
+          ],
+          "n_total": 6204
+        }
+      },
+      "3": {
+        "False": {
+          "slope": 1.6576063511728705,
+          "se": 0.008532046860973726,
+          "n_decades_valid": 3,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 447,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 3.843824295251969,
+              "sparse": false
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 10695,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 7.694631430768817,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 27147,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 11.47738364377778,
+              "sparse": false
+            }
+          ],
+          "n_total": 38289
+        },
+        "True": {
+          "slope": 1.7584567796259556,
+          "se": 0.042298317390278777,
+          "n_decades_valid": 3,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 335,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 3.2637417501195225,
+              "sparse": false
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 5408,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 7.48143202882918,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 14283,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 11.361734485001605,
+              "sparse": false
+            }
+          ],
+          "n_total": 20026
+        }
+      },
+      "4": {
+        "False": {
+          "slope": 1.8313587285582058,
+          "se": 0.07128537297295262,
+          "n_decades_valid": 3,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 116,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 4.012508941754397,
+              "sparse": false
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 13330,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 8.513668173198042,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 58170,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 12.446227558359706,
+              "sparse": false
+            }
+          ],
+          "n_total": 71616
+        },
+        "True": {
+          "slope": 1.882934900225699,
+          "se": 0.04426092222777078,
+          "n_decades_valid": 3,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 112,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 3.628384836279285,
+              "sparse": false
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 5945,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 8.140523829448885,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 21547,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 12.299620500955136,
+              "sparse": false
+            }
+          ],
+          "n_total": 27604
+        }
+      },
+      "5": {
+        "False": {
+          "slope": 1.8559916074135385,
+          "se": 0.0,
+          "n_decades_valid": 2,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 2859,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 9.304246993465592,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 29108,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 13.577825601418064,
+              "sparse": false
+            }
+          ],
+          "n_total": 31967
+        },
+        "True": {
+          "slope": 2.047696056909534,
+          "se": 0.0,
+          "n_decades_valid": 2,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 10,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 3.371604198306,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 2273,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 8.622187012397445,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 13739,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 13.337181428020028,
+              "sparse": false
+            }
+          ],
+          "n_total": 16022
+        }
+      },
+      "6": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 32,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 9.657810393080936,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 1905,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 14.280565989041884,
+              "sparse": false
+            }
+          ],
+          "n_total": 1937
+        },
+        "True": {
+          "slope": 2.575648150283368,
+          "se": 0.0,
+          "n_decades_valid": 2,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 188,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 8.109489387742286,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 2656,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 14.04013842338246,
+              "sparse": false
+            }
+          ],
+          "n_total": 2844
+        }
+      }
+    },
+    "marginal_detail": {
+      "1": {
+        "slope": 1.2055124570905429,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 34,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 2.7848208095111766,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 232,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 5.535213291902672,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 436,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 8.311008305017982,
+            "sparse": false
+          }
+        ],
+        "n_total": 702
+      },
+      "2": {
+        "slope": 1.5202831891058293,
+        "se": 0.007724913515331188,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 414,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.20950287074686,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 3379,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.740892735700551,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 7488,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 10.210665687475922,
+            "sparse": false
+          }
+        ],
+        "n_total": 11281
+      },
+      "3": {
+        "slope": 1.7029099464151403,
+        "se": 0.02673200777712608,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 782,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.5953234607003455,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 16103,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.62303096093776,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 41430,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.437513575353929,
+            "sparse": false
+          }
+        ],
+        "n_total": 58315
+      },
+      "4": {
+        "slope": 1.8637279089207233,
+        "se": 0.07105233855708659,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 228,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.823816398713992,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 19275,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.398579035787472,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 79717,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 12.406600599669636,
+            "sparse": false
+          }
+        ],
+        "n_total": 99220
+      },
+      "5": {
+        "slope": 1.95367578915923,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 10,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.371604198306,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 5132,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 9.00215768384597,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 42847,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.500662432507394,
+            "sparse": false
+          }
+        ],
+        "n_total": 47989
+      },
+      "6": {
+        "slope": 2.5214522939692166,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 220,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.334699715791546,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 4561,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 14.140558180580706,
+            "sparse": false
+          }
+        ],
+        "n_total": 4781
+      }
+    },
+    "additive_half_detail": {
+      "1": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 1,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 4.1468463982,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 1,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 4.35183699775,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 5,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 5.118522714181999,
+            "sparse": true
+          }
+        ],
+        "n_total": 7
+      },
+      "2": {
+        "slope": 1.5770914094842954,
+        "se": 0.014278301633725017,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 198,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.2859403545111108,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 1571,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.974272166464781,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 3308,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 10.548714694046126,
+            "sparse": false
+          }
+        ],
+        "n_total": 5077
+      },
+      "3": {
+        "slope": 1.6576063511728705,
+        "se": 0.008532046860973726,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 447,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.843824295251969,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 10695,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.694631430768817,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 27147,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.47738364377778,
+            "sparse": false
+          }
+        ],
+        "n_total": 38289
+      },
+      "4": {
+        "slope": 1.8313587285582058,
+        "se": 0.07128537297295262,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 116,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 4.012508941754397,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 13330,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.513668173198042,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 58170,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 12.446227558359706,
+            "sparse": false
+          }
+        ],
+        "n_total": 71616
+      },
+      "5": {
+        "slope": 1.8559916074135385,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 2859,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 9.304246993465592,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 29108,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.577825601418064,
+            "sparse": false
+          }
+        ],
+        "n_total": 31967
+      },
+      "6": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 32,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 9.657810393080936,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 1905,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 14.280565989041884,
+            "sparse": false
+          }
+        ],
+        "n_total": 1937
+      }
+    },
+    "semistable_half_detail": {
+      "1": {
+        "slope": 1.2193720771819898,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 33,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 2.7435473068236362,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 231,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 5.5403361330029,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 431,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 8.348044100735336,
+            "sparse": false
+          }
+        ],
+        "n_total": 695
+      },
+      "2": {
+        "slope": 1.4774052764598304,
+        "se": 0.000797582095413,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 216,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.139435177296296,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 1808,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.538105630761056,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 4180,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 9.943137909070602,
+            "sparse": false
+          }
+        ],
+        "n_total": 6204
+      },
+      "3": {
+        "slope": 1.7584567796259556,
+        "se": 0.042298317390278777,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 335,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.2637417501195225,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 5408,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.48143202882918,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 14283,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.361734485001605,
+            "sparse": false
+          }
+        ],
+        "n_total": 20026
+      },
+      "4": {
+        "slope": 1.882934900225699,
+        "se": 0.04426092222777078,
+        "n_decades_valid": 3,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 112,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.628384836279285,
+            "sparse": false
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 5945,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.140523829448885,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 21547,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 12.299620500955136,
+            "sparse": false
+          }
+        ],
+        "n_total": 27604
+      },
+      "5": {
+        "slope": 2.047696056909534,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 10,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 3.371604198306,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 2273,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.622187012397445,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 13739,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.337181428020028,
+            "sparse": false
+          }
+        ],
+        "n_total": 16022
+      },
+      "6": {
+        "slope": 2.575648150283368,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 188,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.109489387742286,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 2656,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 14.04013842338246,
+            "sparse": false
+          }
+        ],
+        "n_total": 2844
+      }
+    },
+    "cell_coverage": {
+      "nbp=1_semi=False": {
+        "n_total": 7,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            1,
+            true
+          ],
+          [
+            10000,
+            100000,
+            1,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            5,
+            true
+          ]
+        ],
+        "n_decades_valid": 0
+      },
+      "nbp=1_semi=True": {
+        "n_total": 695,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            33,
+            true
+          ],
+          [
+            10000,
+            100000,
+            231,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            431,
+            false
+          ]
+        ],
+        "n_decades_valid": 2
+      },
+      "nbp=2_semi=False": {
+        "n_total": 5077,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            198,
+            false
+          ],
+          [
+            10000,
+            100000,
+            1571,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            3308,
+            false
+          ]
+        ],
+        "n_decades_valid": 3
+      },
+      "nbp=2_semi=True": {
+        "n_total": 6204,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            216,
+            false
+          ],
+          [
+            10000,
+            100000,
+            1808,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            4180,
+            false
+          ]
+        ],
+        "n_decades_valid": 3
+      },
+      "nbp=3_semi=False": {
+        "n_total": 38289,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            447,
+            false
+          ],
+          [
+            10000,
+            100000,
+            10695,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            27147,
+            false
+          ]
+        ],
+        "n_decades_valid": 3
+      },
+      "nbp=3_semi=True": {
+        "n_total": 20026,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            335,
+            false
+          ],
+          [
+            10000,
+            100000,
+            5408,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            14283,
+            false
+          ]
+        ],
+        "n_decades_valid": 3
+      },
+      "nbp=4_semi=False": {
+        "n_total": 71616,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            116,
+            false
+          ],
+          [
+            10000,
+            100000,
+            13330,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            58170,
+            false
+          ]
+        ],
+        "n_decades_valid": 3
+      },
+      "nbp=4_semi=True": {
+        "n_total": 27604,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            112,
+            false
+          ],
+          [
+            10000,
+            100000,
+            5945,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            21547,
+            false
+          ]
+        ],
+        "n_decades_valid": 3
+      },
+      "nbp=5_semi=False": {
+        "n_total": 31967,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            2859,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            29108,
+            false
+          ]
+        ],
+        "n_decades_valid": 2
+      },
+      "nbp=5_semi=True": {
+        "n_total": 16022,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            10,
+            true
+          ],
+          [
+            10000,
+            100000,
+            2273,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            13739,
+            false
+          ]
+        ],
+        "n_decades_valid": 2
+      },
+      "nbp=6_semi=False": {
+        "n_total": 1937,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            32,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            1905,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=6_semi=True": {
+        "n_total": 2844,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            188,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            2656,
+            false
+          ]
+        ],
+        "n_decades_valid": 2
+      }
+    },
+    "sparse_cells": [
+      {
+        "nbp": 1,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 1
+      },
+      {
+        "nbp": 1,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 1
+      },
+      {
+        "nbp": 1,
+        "semistable": false,
+        "decade": [
+          100000,
+          1000000
+        ],
+        "n": 5
+      },
+      {
+        "nbp": 1,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 33
+      },
+      {
+        "nbp": 5,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 5,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 10
+      },
+      {
+        "nbp": 6,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 6,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 32
+      },
+      {
+        "nbp": 6,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      }
+    ],
+    "n_sparse_cells": 9
+  },
+  "rank_3": {
+    "rank": 3,
+    "n_joined_rows": 5405,
+    "joint_slope_matrix_nbp_x_semistable": {
+      "1": {
+        "additive": null,
+        "semistable": null
+      },
+      "2": {
+        "additive": null,
+        "semistable": 1.9238866913205115
+      },
+      "3": {
+        "additive": null,
+        "semistable": 2.188004948234449
+      },
+      "4": {
+        "additive": null,
+        "semistable": null
+      },
+      "5": {
+        "additive": null,
+        "semistable": null
+      },
+      "6": {
+        "additive": null,
+        "semistable": null
+      }
+    },
+    "diff_slope_additive_minus_semistable_per_nbp": {
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+    },
+    "marginal_nbp_slopes": {
+      "1": null,
+      "2": 1.8890749613015385,
+      "3": 2.244518153541122,
+      "4": null,
+      "5": null,
+      "6": null
+    },
+    "additive_half_nbp_slopes": {
+      "1": null,
+      "2": null,
+      "3": null,
+      "4": null,
+      "5": null,
+      "6": null
+    },
+    "semistable_half_nbp_slopes": {
+      "1": null,
+      "2": 1.9238866913205115,
+      "3": 2.188004948234449,
+      "4": null,
+      "5": null,
+      "6": null
+    },
+    "slope_range_additive": null,
+    "slope_range_semistable": null,
+    "slope_range_additive_full": null,
+    "slope_range_semistable_full": 0.26411825691393753,
+    "slope_range_additive_common": null,
+    "slope_range_semistable_common": null,
+    "slope_range_marginal": 0.3554431922395833,
+    "ratio_additive_over_semistable": null,
+    "ratio_additive_over_semistable_full": null,
+    "ratio_additive_over_semistable_common": null,
+    "common_support_nbp_keys": [],
+    "range_additive_detail": {
+      "slope_min": null,
+      "slope_max": null,
+      "range": null,
+      "n_strata_fitted": 0,
+      "fitted_strata": []
+    },
+    "range_semistable_detail": {
+      "slope_min": 1.9238866913205115,
+      "slope_max": 2.188004948234449,
+      "range": 0.26411825691393753,
+      "n_strata_fitted": 2,
+      "fitted_strata": [
+        "2",
+        "3"
+      ]
+    },
+    "range_additive_common_detail": {
+      "slope_min": null,
+      "slope_max": null,
+      "range": null,
+      "n_strata_fitted": 0,
+      "fitted_strata": []
+    },
+    "range_semistable_common_detail": {
+      "slope_min": null,
+      "slope_max": null,
+      "range": null,
+      "n_strata_fitted": 0,
+      "fitted_strata": []
+    },
+    "verdict": "INCONCLUSIVE (insufficient coverage)",
+    "carrier": "insufficient coverage",
+    "joint_detail": {
+      "1": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 0,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 0,
+              "log_X_mid": 10.361632918473205,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 1,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 4.98713112646,
+              "sparse": true
+            }
+          ],
+          "n_total": 1
+        },
+        "True": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 0,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 1,
+              "log_X_mid": 8.05904782547916,
+              "M_1": 1.73184990012,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 23,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 5.011276454748262,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 90,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 8.565204534138001,
+              "sparse": true
+            }
+          ],
+          "n_total": 114
+        }
+      },
+      "2": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 64,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 7.446546460836406,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 299,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 11.709870807675586,
+              "sparse": false
+            }
+          ],
+          "n_total": 363
+        },
+        "True": {
+          "slope": 1.9238866913205115,
+          "se": 0.0,
+          "n_decades_valid": 2,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 101,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 6.180016706752278,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 501,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 10.609929522796527,
+              "sparse": false
+            }
+          ],
+          "n_total": 602
+        }
+      },
+      "3": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 93,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 7.990748743312689,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 1170,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 13.108539957054077,
+              "sparse": false
+            }
+          ],
+          "n_total": 1263
+        },
+        "True": {
+          "slope": 2.188004948234449,
+          "se": 0.0,
+          "n_decades_valid": 2,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 104,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 6.564959806972019,
+              "sparse": false
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 1023,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 11.603027384173872,
+              "sparse": false
+            }
+          ],
+          "n_total": 1127
+        }
+      },
+      "4": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 24,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 8.292567144774582,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 929,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 13.762633089404801,
+              "sparse": false
+            }
+          ],
+          "n_total": 953
+        },
+        "True": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 20,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 6.390603306695501,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 693,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 12.103035202474286,
+              "sparse": false
+            }
+          ],
+          "n_total": 713
+        }
+      },
+      "5": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 0,
+              "log_X_mid": 10.361632918473205,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 125,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 14.443438016197598,
+              "sparse": false
+            }
+          ],
+          "n_total": 125
+        },
+        "True": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 1,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 1,
+              "log_X_mid": 10.361632918473205,
+              "M_1": 7.2908544411,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 136,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 12.61938924265941,
+              "sparse": false
+            }
+          ],
+          "n_total": 137
+        }
+      },
+      "6": {
+        "False": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 0,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 0,
+              "log_X_mid": 10.361632918473205,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 0,
+              "log_X_mid": 12.664218011467252,
+              "M_1": null,
+              "sparse": true
+            }
+          ],
+          "n_total": 0
+        },
+        "True": {
+          "slope": null,
+          "se": null,
+          "n_decades_valid": 0,
+          "n_decades_total": 3,
+          "per_decade": [
+            {
+              "lo": 1000,
+              "hi": 10000,
+              "n": 0,
+              "log_X_mid": 8.05904782547916,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 10000,
+              "hi": 100000,
+              "n": 0,
+              "log_X_mid": 10.361632918473205,
+              "M_1": null,
+              "sparse": true
+            },
+            {
+              "lo": 100000,
+              "hi": 1000000,
+              "n": 7,
+              "log_X_mid": 12.664218011467252,
+              "M_1": 11.14635852728,
+              "sparse": true
+            }
+          ],
+          "n_total": 7
+        }
+      }
+    },
+    "marginal_detail": {
+      "1": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 1,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 1.73184990012,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 23,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 5.011276454748262,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 91,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 8.52588504614154,
+            "sparse": true
+          }
+        ],
+        "n_total": 115
+      },
+      "2": {
+        "slope": 1.8890749613015385,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 165,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.671276732578848,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 800,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.021032578020076,
+            "sparse": false
+          }
+        ],
+        "n_total": 965
+      },
+      "3": {
+        "slope": 2.244518153541122,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 197,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.238047985041472,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 2193,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 12.406242026339783,
+            "sparse": false
+          }
+        ],
+        "n_total": 2390
+      },
+      "4": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 44,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.428038127465908,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 1622,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.05356938062376,
+            "sparse": false
+          }
+        ],
+        "n_total": 1666
+      },
+      "5": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 1,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.2908544411,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 261,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.492975820024443,
+            "sparse": false
+          }
+        ],
+        "n_total": 262
+      },
+      "6": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 0,
+            "log_X_mid": 10.361632918473205,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 7,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.14635852728,
+            "sparse": true
+          }
+        ],
+        "n_total": 7
+      }
+    },
+    "additive_half_detail": {
+      "1": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 0,
+            "log_X_mid": 10.361632918473205,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 1,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 4.98713112646,
+            "sparse": true
+          }
+        ],
+        "n_total": 1
+      },
+      "2": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 64,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.446546460836406,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 299,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.709870807675586,
+            "sparse": false
+          }
+        ],
+        "n_total": 363
+      },
+      "3": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 93,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.990748743312689,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 1170,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.108539957054077,
+            "sparse": false
+          }
+        ],
+        "n_total": 1263
+      },
+      "4": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 24,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 8.292567144774582,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 929,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 13.762633089404801,
+            "sparse": false
+          }
+        ],
+        "n_total": 953
+      },
+      "5": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 0,
+            "log_X_mid": 10.361632918473205,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 125,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 14.443438016197598,
+            "sparse": false
+          }
+        ],
+        "n_total": 125
+      },
+      "6": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 0,
+            "log_X_mid": 10.361632918473205,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 0,
+            "log_X_mid": 12.664218011467252,
+            "M_1": null,
+            "sparse": true
+          }
+        ],
+        "n_total": 0
+      }
+    },
+    "semistable_half_detail": {
+      "1": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 1,
+            "log_X_mid": 8.05904782547916,
+            "M_1": 1.73184990012,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 23,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 5.011276454748262,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 90,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 8.565204534138001,
+            "sparse": true
+          }
+        ],
+        "n_total": 114
+      },
+      "2": {
+        "slope": 1.9238866913205115,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 101,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.180016706752278,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 501,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 10.609929522796527,
+            "sparse": false
+          }
+        ],
+        "n_total": 602
+      },
+      "3": {
+        "slope": 2.188004948234449,
+        "se": 0.0,
+        "n_decades_valid": 2,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 104,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.564959806972019,
+            "sparse": false
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 1023,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.603027384173872,
+            "sparse": false
+          }
+        ],
+        "n_total": 1127
+      },
+      "4": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 20,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 6.390603306695501,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 693,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 12.103035202474286,
+            "sparse": false
+          }
+        ],
+        "n_total": 713
+      },
+      "5": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 1,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 1,
+            "log_X_mid": 10.361632918473205,
+            "M_1": 7.2908544411,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 136,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 12.61938924265941,
+            "sparse": false
+          }
+        ],
+        "n_total": 137
+      },
+      "6": {
+        "slope": null,
+        "se": null,
+        "n_decades_valid": 0,
+        "n_decades_total": 3,
+        "per_decade": [
+          {
+            "lo": 1000,
+            "hi": 10000,
+            "n": 0,
+            "log_X_mid": 8.05904782547916,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 10000,
+            "hi": 100000,
+            "n": 0,
+            "log_X_mid": 10.361632918473205,
+            "M_1": null,
+            "sparse": true
+          },
+          {
+            "lo": 100000,
+            "hi": 1000000,
+            "n": 7,
+            "log_X_mid": 12.664218011467252,
+            "M_1": 11.14635852728,
+            "sparse": true
+          }
+        ],
+        "n_total": 7
+      }
+    },
+    "cell_coverage": {
+      "nbp=1_semi=False": {
+        "n_total": 1,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            0,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            1,
+            true
+          ]
+        ],
+        "n_decades_valid": 0
+      },
+      "nbp=1_semi=True": {
+        "n_total": 114,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            1,
+            true
+          ],
+          [
+            10000,
+            100000,
+            23,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            90,
+            true
+          ]
+        ],
+        "n_decades_valid": 0
+      },
+      "nbp=2_semi=False": {
+        "n_total": 363,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            64,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            299,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=2_semi=True": {
+        "n_total": 602,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            101,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            501,
+            false
+          ]
+        ],
+        "n_decades_valid": 2
+      },
+      "nbp=3_semi=False": {
+        "n_total": 1263,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            93,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            1170,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=3_semi=True": {
+        "n_total": 1127,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            104,
+            false
+          ],
+          [
+            100000,
+            1000000,
+            1023,
+            false
+          ]
+        ],
+        "n_decades_valid": 2
+      },
+      "nbp=4_semi=False": {
+        "n_total": 953,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            24,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            929,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=4_semi=True": {
+        "n_total": 713,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            20,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            693,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=5_semi=False": {
+        "n_total": 125,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            0,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            125,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=5_semi=True": {
+        "n_total": 137,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            1,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            136,
+            false
+          ]
+        ],
+        "n_decades_valid": 1
+      },
+      "nbp=6_semi=False": {
+        "n_total": 0,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            0,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            0,
+            true
+          ]
+        ],
+        "n_decades_valid": 0
+      },
+      "nbp=6_semi=True": {
+        "n_total": 7,
+        "per_decade_n": [
+          [
+            1000,
+            10000,
+            0,
+            true
+          ],
+          [
+            10000,
+            100000,
+            0,
+            true
+          ],
+          [
+            100000,
+            1000000,
+            7,
+            true
+          ]
+        ],
+        "n_decades_valid": 0
+      }
+    },
+    "sparse_cells": [
+      {
+        "nbp": 1,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 1,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 1,
+        "semistable": false,
+        "decade": [
+          100000,
+          1000000
+        ],
+        "n": 1
+      },
+      {
+        "nbp": 1,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 1
+      },
+      {
+        "nbp": 1,
+        "semistable": true,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 23
+      },
+      {
+        "nbp": 1,
+        "semistable": true,
+        "decade": [
+          100000,
+          1000000
+        ],
+        "n": 90
+      },
+      {
+        "nbp": 2,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 2,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 64
+      },
+      {
+        "nbp": 2,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 3,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 3,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 93
+      },
+      {
+        "nbp": 3,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 4,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 4,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 24
+      },
+      {
+        "nbp": 4,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 4,
+        "semistable": true,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 20
+      },
+      {
+        "nbp": 5,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 5,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 5,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 5,
+        "semistable": true,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 1
+      },
+      {
+        "nbp": 6,
+        "semistable": false,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 6,
+        "semistable": false,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 6,
+        "semistable": false,
+        "decade": [
+          100000,
+          1000000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 6,
+        "semistable": true,
+        "decade": [
+          1000,
+          10000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 6,
+        "semistable": true,
+        "decade": [
+          10000,
+          100000
+        ],
+        "n": 0
+      },
+      {
+        "nbp": 6,
+        "semistable": true,
+        "decade": [
+          100000,
+          1000000
+        ],
+        "n": 7
+      }
+    ],
+    "n_sparse_cells": 26
+  },
+  "interpretation": "F041a rank-2 slope ladder vs num_bad_primes (W2: nbp=1..6 slopes 1.21..2.52). Here we split each nbp cell by P026 semistable vs additive reduction. Kodaira (P035) is finer but not stored; the semistable flag is a cheap dichotomous proxy. ratio>1.3 means the ladder's resolving power lives mostly in the additive half (reduction type is coupled to the zero statistic); ratio in [0.8,1.3] means the ladder is orthogonal to reduction type (F041a is a num_bad_primes effect per se, not a reduction-type effect); ratio<0.8 would be a surprise and would demand Kodaira. PATTERN-9 NOTE: rank-2 nbp=1 and nbp=6 each have one side with n<100, so the full-support range is apples-to-oranges (semistable half covers nbp 1..6 while additive half only 2..5). The headline verdict uses the COMMON-SUPPORT ratio (nbp strata where both halves fit a slope) \u2014 this is the fair comparison and is what the verdict categories are applied to. The full-support number is reported for transparency but is confounded by the coverage cliff at the extremes of nbp.",
+  "pattern_20_discipline": [
+    "Per-(rank, decade, nbp, semistable) cell reported with n and sparse flag.",
+    "Slope fit uses only cells with n>=100.",
+    "Sparse cells surfaced as Pattern-9 coverage cliffs in sparse_cells[].",
+    "Decade_mid = sqrt(lo*hi); OLS over 2..3 decades.",
+    "semistable parsed from text 'True'/'False' to bool.",
+    "Common-support ratio used for verdict (fair comparison).",
+    "Full-support ratio also reported for transparency.",
+    "rank 3 secondary pass documented even if cells go sparse."
+  ]
+}
