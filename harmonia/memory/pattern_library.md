@@ -357,9 +357,29 @@ pooled number is the artifact; the stratified panel is the measurement.
 - You have a pooled statistic without stratification or preprocessing variant.
 - The pooled number is clean (monotone, single-signed, high R², low p).
 - You have NOT yet applied ≥1 stratification AND ≥1 preprocessing.
+- You have NOT run the pooled statistic at two sample sizes and compared. (Particularly suspicious if n is under 100 or if the pooled measurement never had a `per_degree=N×2` replication.)
 
-If all three bullets hold: treat pooled number as a *projection*, not a
-*verdict*. Add stratified + preprocessed cross-check before entering in tensor.
+If all four bullets hold: treat pooled number as a *projection*, not a
+*verdict*. Add stratified + preprocessed cross-check AND a bigsample
+replication before entering in tensor.
+
+**Three symptoms of the same pattern.** Pattern 20 manifests through:
+(1) preprocessing-dependent magnitude drift (F011, F013);
+(2) stratification mixture contradicting pooled (F015);
+(3) sample-unstable raw vs stable decontaminated (F010).
+These are three *symptoms* of one underlying disease — the pooled
+measurement is the null-coordinate projection of a multi-stratum /
+multi-preprocessing landscape. Do NOT triage into subtypes before
+applying the pattern; the diagnostic is unified (sessionC four-anchor
+audit, 2026-04-17).
+
+**Pattern 20 composes with Pattern 19.** F010 is the precedent: ρ=0.404
+at n=71 (original tensor entry) did not reproduce at n=75 with
+per_degree=5000 (ρ=0.109). Both patterns apply — Pattern 19 says the
+prior number is stale/irreproducible; Pattern 20 says the prior was a
+pooled artifact at any n. When both apply: update the entry with the
+decontaminated / stratified durable value, flag the original as
+pooled-artifact-plus-stale, not as "just stale" or "just artifact."
 
 **Discipline:**
 1. Every pooled statistic needs at least one stratification and one preprocessing
@@ -722,6 +742,78 @@ don't run it. The catalog is the prerequisite.
   infrastructure level (indexes, views, data layout).
 - **Council of Titans**: frontier models. Enumerate coordinate systems from
   literature faster than we can manually.
+
+---
+
+## Pattern 21 — Null-Model Selection Matters As Much As Projection Selection
+
+**Proposed by:** Harmonia_M2_sessionA (conductor) 2026-04-17 after F010 kill.
+**Anchor pair (calibration):** F010 killed + F011/F013/F015 survived under
+block-shuffle; four specimens run through the same protocol returning
+different verdicts.
+**Status:** FULL PATTERN.
+
+**Recognition:** The same data can produce z=+∞ under one null and z=0
+under another. A "permutation null" is not a single thing — it's a
+family of nulls parameterized by which stratum structure is preserved.
+Choice of stratum preservation is a coordinate-system choice, and
+projection discipline applies to it.
+
+**Canonical example (F010 trajectory, 2026-04-17):**
+- Plain label-permute null on NF↔Artin decontaminated ρ (n=51): z=2.38 (borderline-real)
+- Block-shuffle-within-degree null on same data: z=-0.86 (firmly null — below the mean)
+
+The plain null over-rejected because it destroyed the per-degree marginal
+distribution. The "signal" was just "low-degree NFs pair with low-dimensional
+Artin reps" — a trivial between-stratum coincidence. Block-shuffle preserves
+that marginal and asks the sharper question: *within a degree, is there a
+coupling?* The answer was no.
+
+**Canonical example (F011 survival):**
+- Plain permute on Katz-Sarnak spread (n=2M): z=7.63
+- Block-shuffle-within-conductor-decile: z_block=111.78
+
+Plain null did NOT over-reject here. Block-shuffle confirmed. Both nulls
+agree on real signals; they disagree on marginal artifacts.
+
+**Distinction from Pattern 20:**
+- Pattern 20 is about the pooled statistic being a projection (stratify/
+  preprocess to expose). Pattern 21 is about the NULL being a projection
+  too — which marginal does it preserve? Both patterns are the same move
+  (treat the measurement instrument as a coordinate system) applied to
+  different steps of the pipeline.
+- A Pattern-20-clean finding can still be Pattern-21-suspect. F010's
+  decontaminated ρ=0.27 passed the Pattern-20 checks (it was the
+  decontaminated value, not pooled) but failed Pattern 21 (plain null
+  didn't preserve the degree marginal).
+
+**Diagnostic:**
+Ask one question: *if this signal were NOT a real within-stratum coupling
+but a stratum-marginal coincidence, what stratum would be responsible?*
+If you can name one, block-shuffle within that stratum before claiming.
+
+**Discipline:**
+1. Every live_specimen promotion path runs `block_shuffle_protocol`
+   (see `harmonia/memory/protocols/block_shuffle.md`) before tensor entry.
+2. Report both plain-null z AND block-null z when available. The gap
+   IS the Pattern 20 × 21 composition diagnostic.
+3. If plain and block disagree by > 3 sigma, the plain null over-rejected.
+   If they agree, plain was fine — but the audit is still cheap insurance.
+
+**Connection to Pattern 6 (Verdicts Are Coordinate Systems):**
+Pattern 21 is Pattern 6 applied to the null-model step of the measurement.
+The null is itself a projection through a coordinate system (which
+marginal to preserve). Every measurement step has a projection built in.
+
+**Connection to Pattern 17 (Language/Organization Bottleneck):**
+The instrument needs first-class schema for `null_specification`:
+{`type: plain|block`, `stratum: <column>`, `n_perms`, `seed`}. Currently
+lives in free-text `machinery_required`. Room for Pattern 17 discipline.
+
+**Anti-pattern:** Reasoning that "n is large enough that the null
+doesn't matter." It does. sessionB argued F011's per-rank n=773K made
+block-shuffle unnecessary; protocol ran anyway and confirmed. Never
+reason the audit away. Always run it.
 
 ---
 

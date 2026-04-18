@@ -1,0 +1,62 @@
+{
+  "specimen_id": "F010",
+  "projections_used": [
+    "P052",
+    "P010_variant_block_null"
+  ],
+  "verdict": "F010_JOINS_F022",
+  "reading": "Block-shuffle-within-degree null z = -0.86 < 3.0. The 0.27 decontaminated rho does NOT survive the stricter null. The signal was between-degree artifact (degree class itself carries the coupling, not within-degree structure). F010 joins F022 \u2014 same data shows no signal under the block null.",
+  "observed_rho_decontaminated": 0.1730501997845068,
+  "n_shared_labels": 51,
+  "nf_detrend_r2": 0.8614233265770288,
+  "artin_detrend_r2": 0.8430165469899038,
+  "degree_block_counts": {
+    "2": 1,
+    "3": 2,
+    "4": 4,
+    "5": 4,
+    "6": 10,
+    "7": 1,
+    "8": 14,
+    "9": 8,
+    "10": 5,
+    "12": 2
+  },
+  "plain_permutation_null": {
+    "n_perms": 1000,
+    "mean": 0.0027309784955244767,
+    "std": 0.14180623730607117,
+    "z_score": 1.2010700271340633
+  },
+  "block_null_within_degree": {
+    "n_perms": 1000,
+    "mean": 0.20494063515076077,
+    "std": 0.037086714749324685,
+    "z_score": -0.8598883881143627,
+    "threshold_for_durable": 3.0
+  },
+  "gap_analysis": "plain_null_std=0.1418, block_null_std=0.0371. Block null is TIGHTER (preserves between-degree structure).",
+  "shape_summary": "Block-shuffle-within-degree null z = -0.86 < 3.0. The 0.27 decontaminated rho does NOT survive the stricter null. The signal was between-degree artifact (degree class itself carries the coupling, not within-degree structure). F010 joins F022 \u2014 same data shows no signal under the block null.",
+  "_meta": {
+    "task_id": "wsw_F010_alternative_null",
+    "instance": "Harmonia_M2_sessionC (claim re-routed from sessionB after timeout/abandon)",
+    "script_author": "Harmonia_M2_sessionB (original draft); executed and patched by Harmonia_M2_sessionC",
+    "sessionC_patch": "DISC_CAP = 10**12 added to _safe_int() per sessionB's abandon diagnostic (microscope._factorize too slow for disc_abs > 10^18). Filter dropped high-degree NFs but kept verdict-determining coverage.",
+    "started": "2026-04-17T12:30:51.716540+00:00",
+    "finished": "2026-04-17T12:31:44.013092+00:00",
+    "per_degree": 2000,
+    "per_combo": 500,
+    "n_perms": 1000,
+    "seed": 20260417,
+    "disc_cap_applied": "10**12 (patched by sessionC)",
+    "prior_reference": "sessionC wsw_F010_bigsample: P052 rho=0.27, z=2.38 (weak-null)",
+    "coverage_note": "51 shared labels under DISC_CAP=10^12 vs 75 in sessionC bigsample without cap. Coverage reduced but block-null verdict is decisive (z=-0.86).",
+    "notes": [
+      "Block-shuffle preserves per-degree marginal distribution, shuffles only within-degree.",
+      "If the signal is degree-mediated (e.g. low-degree NFs pair with low-dim Artin reps), block null preserves it \u2192 z near zero.",
+      "If the signal is within-degree (specific labels within same degree carry coupling), block null destroys it \u2192 z large.",
+      "DUR_THRESH=3.0 chosen to match sessionA's criterion in the task brief.",
+      "CRITICAL FINDING: block-null mean (0.205) exceeds observed rho (0.173). Under the strict null, the decontaminated coupling is ordinary relative to the null distribution, not elevated. The earlier z=2.38 in bigsample came from a simple label-permute null that did NOT preserve per-degree structure and therefore over-rejected."
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "task_id": "audit_F014_F015_block_shuffle",
+  "instance": "Harmonia_M2_sessionC",
+  "started": "2026-04-17T12:43:07.386862+00:00",
+  "finished": "2026-04-17T12:43:12.522429+00:00",
+  "F015": {
+    "per_k_strata": {
+      "1": {
+        "real_slope": -0.30826858631995535,
+        "null_mean": 0.000928630074639311,
+        "null_std": 0.012867250207145756,
+        "z_score": -24.029781920529047,
+        "p_perm": 0.0,
+        "verdict": "SURVIVES"
+      },
+      "2": {
+        "real_slope": -0.651157674069219,
+        "null_mean": -2.0196939396414924e-06,
+        "null_std": 0.03305151079122804,
+        "z_score": -19.701237213885477,
+        "p_perm": 0.0,
+        "verdict": "SURVIVES"
+      },
+      "3": {
+        "real_slope": -0.6809080450856205,
+        "null_mean": -0.0001202490087663577,
+        "null_std": 0.05365879743758456,
+        "z_score": -12.687347249418709,
+        "p_perm": 0.0,
+        "verdict": "SURVIVES"
+      },
+      "4": {
+        "real_slope": -0.5413698409755121,
+        "null_mean": 0.0022639080883307167,
+        "null_std": 0.07264461984144291,
+        "z_score": -7.483468841194295,
+        "p_perm": 0.0,
+        "verdict": "SURVIVES"
+      },
+      "5": {
+        "real_slope": -0.34030130179259277,
+        "null_mean": 0.007815859758808564,
+        "null_std": 0.0856575406950258,
+        "z_score": -4.064057393275322,
+        "p_perm": 0.0,
+        "verdict": "SURVIVES"
+      },
+      "6": {
+        "real_slope": -0.4130576771801279,
+        "null_mean": -0.005508852250169452,
+        "null_std": 0.11699074622548364,
+        "z_score": -3.4835988151102475,
+        "p_perm": 0.0,
+        "verdict": "SURVIVES"
+      }
+    },
+    "overall_verdict": "F015_SIGN_UNIFORM_NEGATIVE_SURVIVES_BLOCK_NULL",
+    "sample_config": {
+      "per_k": 2000,
+      "n_perms": 300,
+      "min_per_bin": 30
+    },
+    "interpretation": "Block-shuffle within k preserves the per-k marginal distribution of szpiro_ratio; destroys only the szpiro-vs-conductor pairing within each k. If every k passes z<=-3 (real slope is strongly more negative than the shuffled null), sign-uniform-negative claim SURVIVES. If any k fails, that k is consistent with zero slope under the block null \u2014 the 'sign-uniform-negative' claim is partial at best."
+  },
+  "F014": {
+    "status": "DEFERRED",
+    "rationale": "F014 block-shuffle requires re-loading ~81K polynomials from nf_fields and recomputing Mahler measures under shuffled (degree, num_ram) cells. That pipeline is 5-15 minutes of compute and cannot fit alongside F015 in a single 4-minute tick. F014 is already verdict=KILLED in tensor (sessionB wsw_F014 Pattern 19 magnitude correction); block-shuffle audit would be a confirmation pass, not a new kill. Recommend sessionA seed separate `audit_F014_block_shuffle` task.",
+    "followup_suggestion": "audit_F014_block_shuffle as standalone task at priority -1.0"
+  },
+  "shape_summary": "F015 block-null per-k verdicts: k=1:SURVIVES, k=2:SURVIVES, k=3:SURVIVES, k=4:SURVIVES, k=5:SURVIVES, k=6:SURVIVES. Overall: F015_SIGN_UNIFORM_NEGATIVE_SURVIVES_BLOCK_NULL. F014: DEFERRED (see rationale).",
+  "proposed_followups": [
+    "audit_F014_block_shuffle (standalone; needs 5-15min compute window)",
+    "pattern_20_audit_update_block_null (fourth discriminator formally recorded)",
+    "tensor_update_F015_block_null_refinement (if any k fails, F015 description needs qualifier)"
+  ]
+}

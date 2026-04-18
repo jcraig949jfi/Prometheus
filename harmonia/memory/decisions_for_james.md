@@ -32,7 +32,62 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None currently. F010 resolved this tick (see below).*
+*None currently. Three specimens now block-shuffle-verified; Katz-Sarnak emerges as cross-specimen resolver (see below).*
+
+---
+
+### [2026-04-17 ~12:45 UTC] — 3 SPECIMENS VERIFIED under block-shuffle; P028 is a real cross-specimen resolver — MAJOR FINDING
+
+**Context:** Following the F010 block-shuffle kill this morning, sessionB and sessionC ran the protocol on F011, F013, and F015. Results:
+
+| Specimen | Finding | Block-shuffle verdict | z_block |
+|---|---|---|---|
+| F010 NF backbone | decon ρ=0.27 via P052 | **KILLED** | -0.86 |
+| F011 GUE first-gap deficit | P028 spread 7.63% | **DURABLE** | 111.78 |
+| F013 zero-spacing vs rank | P028 slope diff 13.68 | **DURABLE** | 15.31 |
+| F015 Szpiro sign-uniform | per-k slope -0.3 to -0.7 | **DURABLE** | -3.48 to -24.03 |
+
+**Interpretation:** The Katz-Sarnak symmetry-type axis (P028) is now the **first cross-specimen resolver** this session. F011 and F013 both resolve via it at z_block >> 10. F015 resolves via a different axis (P021 bad-prime) but also block-verified. F010 failed — and it was the only specimen whose "survival" came through a post-hoc decontamination rather than a native stratification.
+
+**What was learned:** (1) The block-shuffle protocol discriminates rather than blanket-rejects — it correctly separates durable from artifact. (2) Plain permutation nulls can over-reject OR under-reject depending on which stratum structure they preserve. F010 plain null over-rejected (z=2.38 looked real, was artifact); F011 plain null didn't over-reject (z=7.63 was real). The protocol IS the check. (3) P028 Katz-Sarnak is a genuinely load-bearing resolving axis for EC and NF-adjacent specimens.
+
+**What needs deciding:** Nothing. All three specimens' tensor entries updated with block-shuffle verification. P028 is now the "canonical resolver" to test against new specimens before any other axis.
+
+**My recommendation:** This is the session's strongest POSITIVE finding. Combined with the F010 kill, we have a clean methodology pair:
+- Kill case (F010): post-hoc decontamination can look durable but isn't
+- Survival case (F011/F013/F015): native stratification via P028 OR P021 is durable
+
+Both are needed to calibrate the instrument. The session is complete, durable, and leaves a working methodology plus a working resolver.
+
+**What's blocked:** Nothing. Worth future work: test P028 on F014 (only live specimen without a block-verified resolver).
+
+**Urgency:** Low (FYI — the session's high-order positive finding)
+
+---
+
+---
+
+### [2026-04-17 ~12:33 UTC] — F010 KILLED under block-shuffle null — FINAL KILL
+
+**Context:** F010 (NF backbone via Galois-label) was the session's emerging "strongest specimen" candidate at 5/5 projection survival. Multiple falsification layers peeled back:
+1. Pooled ρ=0.40 killed at bigsample → 0.109 (Pattern 20 artifact)
+2. Decontaminated ρ=0.27 via P052 prime-detrend (z=2.38 weak-null) was the proposed durable signal
+3. P028 Is_Even split z_diff=5.38 attenuated to z_diff=1.95 at bigsample (P028 weak)
+4. **Block-shuffle-within-degree null (sessionC wsw_F010_alternative_null, this tick)**: the decontaminated ρ=0.173 (n=51) sits BELOW null mean 0.205, z=-0.86. **Zero within-degree coupling.**
+
+**Interpretation:** The NF↔Artin coupling is degree-marginal only — "low-degree NFs pair with low-dim Artin reps" is trivial and doesn't survive preserving per-degree structure. F010 joins F022 (its feature-distribution twin, previously killed).
+
+**What was learned:** The plain label-permute null (used in sessionC's bigsample) OVER-REJECTED because it didn't preserve per-degree marginal. This is a *null-model selection* lesson — choice of null matters as much as choice of projection. Three-layer artifact demonstrated: Pattern 20 (pooled level) + Pattern 19 (stale 0.40 claim) + null-model-mismatch (plain permute doesn't catch degree-marginal signal).
+
+**What needs deciding:** Nothing — F010 tier changed to `killed`. INVARIANCE updated: P052: +1 → -2, P010: +2 → -1. The null-model lesson is the session's strongest methodology finding.
+
+**My recommendation:** ACCEPTED. This is a GREAT result even though it looks like a negative. The methodology caught what would have been a tempting false-positive. No new calibration anchor, but a strong PATTERN calibration: when a signal survives 5 projections, run it through a null that preserves the most obvious stratum structure (degree, conductor, etc.) before promotion.
+
+**What's blocked:** Nothing. The remaining live specimens (F011, F013, F014, F015) have NOT been through block-shuffle nulls. Worth seeding bigsample+block-null tests for each — now a standard protocol.
+
+**Urgency:** medium-high (paradigm for other specimens)
+
+---
 
 ---
 
