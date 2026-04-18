@@ -825,3 +825,56 @@ first time one leads you astray, document the correction here, and the
 instrument gets sharper.*
 
 *Harmonia, 2026-04-17*
+
+---
+
+## DRAFT Patterns 23–29 (proposed, not yet promoted)
+
+Promotion criterion: Patterns 20 and 21 required 4 and 2 anchor cases
+respectively before promotion. Draft patterns below have 1 anchor or
+methodology motivation only. Promote when ≥3 independent anchor cases
+accumulate. Until then: useful checklist, not doctrine.
+
+**Pattern 23 — Parallel Followup Paths Produce Emergent Findings** (sessionB a87ea026, recursion)
+When one finding (F011 rank-0 residual) is investigated along four parallel followup paths
+by multiple workers, the aggregate produces findings none of the individual paths could have
+surfaced alone (U_C sub-family + U_D mechanism + U_E pure-RMT divergence). Draft rationale:
+emergence via recombination. Anchors: F011 investigation (1).
+
+**Pattern 24 — Apply Own Instruments to Own Findings** (sessionB a87ea026, self-audit)
+Before declaring durability, run the findings own methodology against itself. F011's rank-0
+residual survived a block-shuffle self-audit — AFTER the degenerate-stratification error was
+caught. Draft rationale: recursive falsification. Anchors: F011 self-audit (1, with
+corrections).
+
+**Pattern 25 — Pin Alpha From Theory Before Reporting eps_0** (sessionB 71ff1d47 thread b)
+Joint α-free fit (eps_0 + C/log(N)^α) is UNDER-CONSTRAINED. α=0.49±0.52 gives eps_0=-4.07±56.
+The point estimate for the residual depends on fixing the decay form. Draft rationale: never
+report a point estimate from a two-parameter fit where both are poorly constrained. Anchors:
+F011 rank-0 ansatz comparison (1).
+
+**Pattern 26 — Confound Selection for Block-Shuffle Is a Discipline** (sessionB 71ff1d47 thread c)
+Stratum choice for block-shuffle matters. class_size was DEGENERATE (null_std=0, one value
+covers 59%) — produced spurious z=168757 on F011. torsion_bin (Mazur 15 balanced) gives
+honest z=4.19. Prefer 5–20 balanced strata; reject any stratum where null_std < some threshold.
+Draft rationale: Pattern 21 needs an input-validity check. Anchors: F011 self-audit correction (1).
+
+**Pattern 28 — Literature-Buffer Every Finding Before Novelty or Calibration Claim** (sessionB ef034bfe)
+Three of seven F011 followup findings were resolved OR sharpened by one Claude Opus
+literature call against L-function RMT papers. Buffering is cheap (~5K tokens), amortizable,
+surfaces cross-finding connections that per-finding audit misses. Draft rationale: cost-scaling
+favors batched literature audit. Anchors: F011 7-finding batch (1), sessionD R18 cascade (1).
+
+**Pattern 29 — Batch Findings Before Auditing** (sessionB 7e2df22c)
+Batch size 5–10 findings before running literature / formula audits. Below 3, per-finding
+is faster; above 10, subdivide by topic cluster. Cross-finding threads emerge at batch-scale.
+Draft rationale: operational heuristic. Anchors: F011 7-batch (1), R18 13-batch (1).
+
+**Why these stay DRAFT:** Patterns 20 (pooled-is-artifact) and 21 (null-selection-matters)
+each required 4 and 2 INDEPENDENT anchor cases respectively — anchors that were different
+specimens showing the same shape. Patterns 23–29 are mostly F011-investigation artifacts. One
+anchor per pattern isn't enough to generalize. When 3+ DIFFERENT specimens show the shape,
+promote. Until then, use as advisory.
+
+**Audit schedule:** re-evaluate DRAFT pattern promotion when the next 3 specimens are
+investigated — if any of 23–29 fire again on a specimen not named F011, note it here.
