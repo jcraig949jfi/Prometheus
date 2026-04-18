@@ -109,6 +109,156 @@ def load_knots(path: Optional[Path] = None) -> DomainIndex:
     return DomainIndex("knots", labels, features)
 
 
+def load_knots_topo(path: Optional[Path] = None,
+                    volumes_path: Optional[Path] = None) -> DomainIndex:
+    """Topological knot features including hyperbolic volume from SnapPy.
+
+    Features:
+        f0  crossing_number
+        f1  log(determinant)
+        f2  Alexander polynomial degree
+        f3  hyperbolic_volume  (from SnapPy, via precomputed JSON)
+    """
+    path = path or CARTOGRAPHY / "knots" / "data" / "knots.json"
+    volumes_path = (volumes_path
+                    or Path(__file__).resolve().parent.parent.parent
+                    / "ergon" / "results" / "hyperbolic_volumes.json")
+
+    with open(path) as f:
+        data = json.load(f)
+    knots = data["knots"]
+
+    # Load precomputed hyperbolic volumes
+    vol_map = {}
+    if volumes_path.exists():
+        with open(volumes_path) as f:
+            vol_data = json.load(f)
+        for entry in vol_data["volumes"]:
+            if entry.get("volume") is not None:
+                vol_map[entry["name"]] = entry["volume"]
+
+    labels, feats = [], []
+    for k in knots:
+        name = k["name"]
+        det = k.get("determinant") or 1
+        alex_coeffs = (k.get("alexander") or {}).get("coefficients", [])
+        alex_degree = len(alex_coeffs) - 1 if alex_coeffs else 0
+        vol = vol_map.get(name, 0.0)
+
+        labels.append(name)
+        feats.append([
+            float(k.get("crossing_number") or 0),
+            float(np.log(max(det, 1))),
+            float(alex_degree),
+            float(vol),
+        ])
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("knots_topo", labels, features)
+
+
+def load_knots_engineered(path: Optional[Path] = None) -> DomainIndex:
+    """Engineered knot features: ~12 dimensions replacing 28 raw coefficients.
+
+    Features:
+        f0  crossing_number
+        f1  log(determinant)
+        f2  Alexander polynomial degree
+        f3  Jones polynomial degree
+        f4  Mahler measure of Alexander poly
+        f5  |Alexander(zeta_3)|
+        f6  |Alexander(zeta_4)|
+        f7  |Alexander(zeta_5)|
+        f8  Alexander PCA component 0
+        f9  Alexander PCA component 1
+        f10 Alexander PCA component 2
+        f11 Signature proxy (sum of Alexander coefficients)
+    """
+    from sklearn.decomposition import PCA
+
+    path = path or CARTOGRAPHY / "knots" / "data" / "knots.json"
+    with open(path) as f:
+        data = json.load(f)
+    knots = data["knots"]
+
+    # --- helpers ---
+    def _eval_laurent(coeffs, min_power, z):
+        """Evaluate Laurent polynomial sum(c * z^(min_power+i))."""
+        return sum(c * z ** (min_power + i) for i, c in enumerate(coeffs))
+
+    def _mahler_measure(coeffs, min_power, n_pts=500):
+        """exp(mean(log|p(e^{2pi i t})|)) over n_pts on the unit circle."""
+        t = np.linspace(0, 2 * np.pi, n_pts, endpoint=False)
+        z = np.exp(1j * t)
+        vals = np.array([_eval_laurent(coeffs, min_power, zi) for zi in z])
+        log_abs = np.log(np.maximum(np.abs(vals), 1e-30))
+        return float(np.exp(np.mean(log_abs)))
+
+    # --- collect raw Alexander coefficients (padded to 7) for PCA ---
+    ALEX_PAD = 7
+    alex_raw = []
+    for k in knots:
+        ac = (k.get("alexander") or {}).get("coefficients", [])
+        padded = list(ac[:ALEX_PAD]) + [0.0] * max(0, ALEX_PAD - len(ac))
+        alex_raw.append(padded)
+    alex_raw = np.array(alex_raw, dtype=np.float64)
+
+    # PCA on Alexander coefficients — keep top 3
+    n_components = min(3, alex_raw.shape[0], alex_raw.shape[1])
+    pca = PCA(n_components=n_components)
+    alex_pca = pca.fit_transform(alex_raw)  # (N, 3)
+
+    # --- roots of unity ---
+    zeta3 = np.exp(2j * np.pi / 3)
+    zeta4 = np.exp(2j * np.pi / 4)   # = i
+    zeta5 = np.exp(2j * np.pi / 5)
+
+    # --- build feature matrix ---
+    labels, feats = [], []
+    for idx, k in enumerate(knots):
+        labels.append(k["name"])
+
+        alex = k.get("alexander") or {}
+        jones = k.get("jones") or {}
+        alex_coeffs = alex.get("coefficients", [])
+        alex_min = alex.get("min_power", 0)
+        alex_max = alex.get("max_power", 0)
+        jones_min = jones.get("min_power", 0)
+        jones_max = jones.get("max_power", 0)
+
+        crossing = float(k.get("crossing_number") or 0)
+        det_val = max(float(k.get("determinant") or 1), 1)
+        log_det = float(np.log(det_val))
+
+        alex_degree = float(alex_max - alex_min)
+        jones_degree = float(jones_max - jones_min)
+
+        mahler = _mahler_measure(alex_coeffs, alex_min) if alex_coeffs else 0.0
+
+        abs_alex_z3 = float(abs(_eval_laurent(alex_coeffs, alex_min, zeta3))) if alex_coeffs else 0.0
+        abs_alex_z4 = float(abs(_eval_laurent(alex_coeffs, alex_min, zeta4))) if alex_coeffs else 0.0
+        abs_alex_z5 = float(abs(_eval_laurent(alex_coeffs, alex_min, zeta5))) if alex_coeffs else 0.0
+
+        pca0 = float(alex_pca[idx, 0]) if n_components > 0 else 0.0
+        pca1 = float(alex_pca[idx, 1]) if n_components > 1 else 0.0
+        pca2 = float(alex_pca[idx, 2]) if n_components > 2 else 0.0
+
+        sig_proxy = float(sum(alex_coeffs))
+
+        feat = [
+            crossing, log_det,
+            alex_degree, jones_degree,
+            mahler,
+            abs_alex_z3, abs_alex_z4, abs_alex_z5,
+            pca0, pca1, pca2,
+            sig_proxy,
+        ]
+        feats.append(feat)
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("knots_eng", labels, features)
+
+
 def load_number_fields(path: Optional[Path] = None) -> DomainIndex:
     path = path or CARTOGRAPHY / "number_fields" / "data" / "number_fields.json"
     with open(path) as f:
@@ -2230,6 +2380,8 @@ def load_artin_ade(limit: int = 100000) -> DomainIndex:
 # Registry of all loaders
 DOMAIN_LOADERS = {
     "knots": load_knots,
+    "knots_topo": load_knots_topo,
+    "knots_eng": load_knots_engineered,
     "number_fields": load_number_fields,
     "space_groups": load_space_groups,
     "genus2": load_genus2,

@@ -92,6 +92,8 @@ ACTIVE_DOMAINS = [
     "belyi", "bianchi", "groups", "oeis",
     # Physical / cross-disciplinary
     "codata", "pdg_particles", "chemistry", "metabolism",
+    # Engineered variants
+    "knots_eng",
     # Fingerprint domains (Aporia E-FP tests)
     "nf_cf", "artin_ade",
 ]
@@ -106,6 +108,7 @@ ACTIVE_FEATURES = {
     "artin":           [f"f{i}" for i in range(5)],
     "ec_rich":         [f"f{i}" for i in range(16)],
     "knots":           [f"f{i}" for i in range(28)],
+    "knots_eng":       [f"f{i}" for i in range(12)],
     "maass":           [f"f{i}" for i in range(25)],
     "lattices":        [f"f{i}" for i in range(6)],
     "polytopes":       [f"f{i}" for i in range(6)],
