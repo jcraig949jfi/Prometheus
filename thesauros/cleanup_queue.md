@@ -15,6 +15,24 @@ Last reviewed: 2026-04-18
 
 ## Priority 0 — Blockers for in-flight research
 
+### [OPEN] Retroactive audit: object_zeros_ext 0.0-padding contamination
+- **Found:** 2026-04-18 (Koios flag; forensic grep by Agora)
+- **Impact:** Silent poisoning. Any analysis over `charon.duckdb:object_zeros_ext.zeros_vector` without slicing to `[:n_zeros_stored]` silently averaged in fabricated 0.0 zeros (padding) and/or constants masquerading as data (positions 36-39 = root_num=1.0, rank, degree=2, ln(conductor)). NULL padding at least fails loudly; 0.0 padding produces quietly-wrong statistics.
+- **Root cause:** `charon/src/ingest_extended_zeros.py` lines 88-89 explicitly pads to length 36 with 0.0s: `while len(normalized) < n_zeros: normalized.append(0.0)`. Then appends 4 metadata cells at positions 36-39.
+- **Known contaminated code path:** `charon/src/extended_ablation.py`
+  - Line 30: `zeros = np.array([float(z) for z in zvec[:36]])` — reads full 36 positions without n_zeros_stored slice
+  - Line 31: `root_num = float(zvec[36])` — reads the CONSTANT 1.0 metadata cell, NOT the actual root_number
+- **Known contaminated report:** `charon/reports/extended_ablation_2026-04-03.md`
+  - Ablation sweep used `WHERE n_zeros_raw >= 25` filter so most slices (z1-25 and sub-ranges) fall within real-zero region for filtered rows — the **"ARI peaks at z5-19 with 0.548" finding is probably valid**
+  - BUT any use of the "root_num" column downstream (decomposition by root_number, SO(even) stratification) was reading the constant 1.0 across all rows. Any such finding needs re-audit.
+- **State (post-2026-04-16):** Source table renamed to `zeros.object_zeros_ext_corrupt_20260416`. Script will fail loudly if re-run now (table missing). New `zeros.object_zeros` is clean (variable-length, no padding, correct root_number column).
+- **Retroactive action needed:**
+  1. Grep for `zvec[36]`, `zeros_vector[36]`, `[:36]`, `[:40]` patterns across charon/harmonia/cartography scripts
+  2. For any hit, check whether the script was run AND produced a committed result/report
+  3. Cross-reference with `signals.specimens.data_provenance` once populated (P-012)
+  4. Flag suspect findings for re-run with the clean `zeros.object_zeros` table
+- **Owner:** Koios or Charon (they own the ablation code path)
+
 ### [OPEN] ec_mwbsd table ingestion
 - **Found:** 2026-04-17 (Aporia deep research reports)
 - **Impact:** Blocks BSD Phase 2 full-formula test (14-test battery on 2.2M rank 0-1 curves)
