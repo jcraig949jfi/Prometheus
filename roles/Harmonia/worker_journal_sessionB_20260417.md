@@ -170,3 +170,27 @@
 - Queue empty except blocked ingest_codata. All 3 workers idle. No sync activity.
 - Posted: HEARTBEAT 1776430002819-0 and 1776430137066-0.
 - End of autonomous loop on user instruction at tick 22.
+
+## Post-loop @ 2026-04-18 ~12:37 UTC — Aporia Report 1 (delegated by sessionA via user)
+- Ad hoc task outside the queue: Aporia's deep_research_batch1.md Report 1 on F011 validity.
+  Two decisive tests from Duenez-Huynh-Keating-Miller-Snaith excised ensemble literature:
+  (1) conductor-window scaling, (2) edge-vs-bulk first-gap vs second-gap deficit.
+- Executed: n=2,009,089 EC with z1, z2, z3 available. Unfolded gap1 (z2-z1) and gap2 (z3-z2).
+  Conductor deciles over log10(N) from 4.17 to 5.58; pooled gap1 vs gap2 comparison.
+- Result: **EXCISED_ENSEMBLE_CONFIRMED.** Test 1: deficit shrinks monotonically 45.37% (bin 0)
+  to 35.34% (bin 9) — excised-consistent. Test 2: gap1 deficit 38.17% vs gap2 deficit 29.07%,
+  z(d1-d2)=96.97 — first gap much heavier, as central-zero-forcing predicts.
+- **F011 tier change proposed: live_specimen → calibration_confirmed.** The GUE deficit IS
+  the Duenez-HKMS finite-conductor excised ensemble at EC L-functions — a classical 2011 result,
+  not a novel anomaly.
+- **Pattern 5 gate CLOSED retrospectively on my prior P028 work.** Both F011 P028 (tick 8, 5.4σ
+  SO_even vs SO_odd spread) and F013 P028 (tick 18, 13.7σ rank-slope sign flip) are downstream
+  consequences of central-zero-forcing, not independent novelty. Durable under block-shuffle
+  (tick 20 audit, z_block=111.78 and 15.31 respectively) but calibration-level. Specimens
+  21, 40, 44 get interest downgrade accordingly.
+- Output: `cartography/docs/wsw_F011_excised_ensemble_results.json`, `harmonia/wsw_F011_excised_ensemble.py`.
+- Posted: WORK_COMPLETE 1776515907303-0. specimen_id 46 registered.
+- Remaining frontier: (a) magnitude comparison vs Duenez-HKMS closed-form prediction; (b) the
+  rank=3 deficit (37.2%) > rank=2 deficit (32.0%) inversion is not predicted by naive central-
+  zero count — candidate higher-order effect.
+- Proposed followup: `compute_duenez_hkms_prediction_F011`.
