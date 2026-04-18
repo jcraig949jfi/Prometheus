@@ -4,8 +4,14 @@
 Ergon / Charon instance on bootstrap (technical sections), auditor
 examining the reasoning chain (provenance sections).
 
-**Status:** tier 1 live (base Redis, 5 seed symbols). Tier 2 (Postgres
-registry + pgvector) and tier 3 (Zarr for large tensors) deferred.
+**Status:** tier 1 live (base Redis, 5 seed symbols, strict versioning).
+Tier 2 (Postgres registry + pgvector) and tier 3 (Zarr for large tensors)
+deferred.
+
+**Versioning is mandatory.** See [VERSIONING.md](VERSIONING.md) for the
+five enforced rules: every symbol has a version, every reference is
+versioned, promoted versions are immutable, precision is declared, and
+agents must detect and upgrade version mismatches.
 
 ---
 

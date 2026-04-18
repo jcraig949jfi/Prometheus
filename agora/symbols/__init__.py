@@ -18,11 +18,19 @@ Redis key layout (base-Redis only: strings, hashes, sets):
     symbols:refs:<id>               SET of symbol names referencing <id>
 """
 from .parse import parse_md, load_symbol
-from .push import push_symbol
-from .resolve import resolve, resolve_meta, by_type, refs_to, all_symbols
+from .push import push_symbol, SymbolValidationError, SymbolImmutabilityError
+from .resolve import (
+    resolve, resolve_at, resolve_meta,
+    get_latest_version, all_versions, check_version,
+    by_type, refs_to, refs_to_any, all_symbols, exists,
+    parse_reference, validate_reference_string,
+)
 
 __all__ = [
     'parse_md', 'load_symbol',
-    'push_symbol',
-    'resolve', 'resolve_meta', 'by_type', 'refs_to', 'all_symbols',
+    'push_symbol', 'SymbolValidationError', 'SymbolImmutabilityError',
+    'resolve', 'resolve_at', 'resolve_meta',
+    'get_latest_version', 'all_versions', 'check_version',
+    'by_type', 'refs_to', 'refs_to_any', 'all_symbols', 'exists',
+    'parse_reference', 'validate_reference_string',
 ]

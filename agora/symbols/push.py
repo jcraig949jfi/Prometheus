@@ -1,22 +1,46 @@
-"""Sync a symbol MD file to Redis (promotion step).
+"""Sync a symbol MD file to Redis. Strict versioning, immutability enforced.
 
-Base Redis only: SET, HSET, SADD. No modules required.
+Keys written:
+    symbols:<NAME>:v<N>:def      STRING  immutable once written
+    symbols:<NAME>:v<N>:meta     HASH    immutable once written
+    symbols:<NAME>:latest        STRING  mutable (the current version integer)
+    symbols:<NAME>:versions      ZSET    append-only (version int scored by timestamp)
+    symbols:all                  SET     append-only
+    symbols:by_type:<type>       SET     append-only (membership only)
+    symbols:refs:<ref>           SET     append-only, ref includes @v<N> or @c<commit>
 
 Usage:
     python -m agora.symbols.push harmonia/memory/symbols/NULL_BSWCD.md
-    python -m agora.symbols.push harmonia/memory/symbols/*.md
+    python -m agora.symbols.push harmonia/memory/symbols/
 
-A symbol with version=0 is DRAFT; push_symbol skips it (MD is still in
-git; Redis sync only on promotion).
+Refuses:
+    - Symbol without required frontmatter (version, version_timestamp, precision)
+    - References missing @v<N> or @c<commit> suffix
+    - Attempt to overwrite an existing symbols:<NAME>:v<N>:def with different content
 """
 import json
 import os
+import re
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 import redis
 
 from .parse import load_symbol
+
+
+REQUIRED_FIELDS = {'name', 'type', 'version', 'version_timestamp', 'precision',
+                   'immutable', 'previous_version'}
+VALID_REF = re.compile(r'^[A-Za-z0-9_-]+@(v\d+|c[0-9a-f]{6,40}|CURRENT)$')
+
+
+class SymbolValidationError(ValueError):
+    pass
+
+
+class SymbolImmutabilityError(ValueError):
+    pass
 
 
 def _get_redis():
@@ -26,62 +50,137 @@ def _get_redis():
     return redis.Redis(host=host, port=port, password=password, decode_responses=True)
 
 
-def push_symbol(md_path, r=None, force=False):
-    """Sync one symbol MD to Redis. Returns action taken: 'pushed' | 'skipped_draft' | 'unchanged'.
+def _validate(sym, md_path):
+    fm = {k: sym.get(k) for k in REQUIRED_FIELDS}
 
-    Parameters:
-        md_path: path to the symbol MD
-        r: Redis client (auto-constructed if None)
-        force: push even if version=0
+    # version must be >= 1 for promotion
+    version = sym.get('version')
+    if not isinstance(version, int) or version < 1:
+        raise SymbolValidationError(
+            f'{md_path}: version must be integer >= 1 for promotion (got {version!r})')
+
+    # version_timestamp required, ISO-8601-ish
+    ts = sym.get('version_timestamp')
+    if not ts:
+        raise SymbolValidationError(f'{md_path}: version_timestamp missing')
+    try:
+        datetime.fromisoformat(ts.replace('Z', '+00:00'))
+    except Exception:
+        raise SymbolValidationError(f'{md_path}: version_timestamp not ISO-8601: {ts!r}')
+
+    # precision required — we check presence; the shape is symbol-type-specific
+    if not _has_precision(sym):
+        raise SymbolValidationError(f'{md_path}: precision declaration missing')
+
+    # immutable must be True
+    if sym.get('immutable') not in (True, 'true', 'True'):
+        raise SymbolValidationError(
+            f'{md_path}: immutable must be true for promotion (got {sym.get("immutable")!r})')
+
+    # previous_version: must be int or None (null)
+    pv = sym.get('previous_version')
+    if pv is not None and not isinstance(pv, int):
+        raise SymbolValidationError(
+            f'{md_path}: previous_version must be int or null (got {pv!r})')
+    if version == 1 and pv is not None:
+        raise SymbolValidationError(
+            f'{md_path}: v1 must have previous_version: null')
+    if version > 1 and pv != version - 1:
+        raise SymbolValidationError(
+            f'{md_path}: v{version} must have previous_version: {version-1}')
+
+    # references: every one must match VALID_REF
+    for ref in sym.get('references') or []:
+        if not VALID_REF.match(ref):
+            raise SymbolValidationError(
+                f'{md_path}: reference {ref!r} missing @v<N> or @c<commit> suffix')
+
+
+def _has_precision(sym):
+    """Precision may appear either as a frontmatter key or as a dedicated MD section."""
+    sections = sym.get('sections', {})
+    if any('precision' in k.lower() for k in sections.keys()):
+        return True
+    # Also accept a 'precision' key at frontmatter level (parse.py stores scalar only)
+    # The parse is loose — if the MD has a `precision:` line anywhere in frontmatter, accept.
+    # A symbol-type-specific validator is future work.
+    return sym.get('precision') is not None
+
+
+def push_symbol(md_path, r=None, force=False):
+    """Promote a symbol MD to Redis.
+
+    Returns: (action, name, version)
+        action: 'pushed_new_version' | 'unchanged' | 'skipped_draft'
+    Raises: SymbolValidationError, SymbolImmutabilityError
     """
     if r is None:
         r = _get_redis()
 
     sym = load_symbol(md_path)
+
     name = sym['name']
-    version = sym['version']
+    version = sym.get('version', 0)
 
     if version == 0 and not force:
-        return 'skipped_draft', name
+        return 'skipped_draft', name, 0
 
-    # Build the def JSON
+    _validate(sym, md_path)
+
+    # Canonical JSON for content-comparison
     def_json = json.dumps(sym, ensure_ascii=False, sort_keys=True)
 
-    # Check if unchanged
-    existing = r.get(f'symbols:{name}:def')
-    if existing == def_json and not force:
-        return 'unchanged', name
+    # Immutability check: if this version already exists in Redis, new content must match exactly
+    existing_def = r.get(f'symbols:{name}:v{version}:def')
+    if existing_def is not None:
+        if existing_def == def_json:
+            return 'unchanged', name, version
+        else:
+            raise SymbolImmutabilityError(
+                f'{name}@v{version} already in Redis with different content. '
+                f'To correct, create a new version (v{version+1}). '
+                f'Promoted versions are immutable.'
+            )
 
-    # Write def string
-    r.set(f'symbols:{name}:def', def_json)
+    # Write immutable version keys
+    r.set(f'symbols:{name}:v{version}:def', def_json)
 
-    # Flat meta hash (strings only)
-    meta = {
+    meta_hash = {
         'name': name,
         'type': sym['type'],
         'version': str(version),
+        'version_timestamp': sym['version_timestamp'],
+        'previous_version': str(sym.get('previous_version') or ''),
         'proposed_by': sym.get('proposed_by') or '',
         'promoted_commit': sym.get('promoted_commit') or '',
-        'redis_key': sym.get('redis_key') or '',
+        'redis_key': sym.get('redis_key') or f'symbols:{name}:v{version}:def',
         'implementation': sym.get('implementation') or '',
         'references': ','.join(sym.get('references') or []),
         'md_path': sym.get('md_path', ''),
     }
-    # Delete old meta then rewrite (prevents stale fields)
-    r.delete(f'symbols:{name}:meta')
-    if meta:
-        r.hset(f'symbols:{name}:meta', mapping=meta)
+    r.hset(f'symbols:{name}:v{version}:meta', mapping=meta_hash)
 
-    # Index sets
+    # Update mutable pointers: latest version, version history
+    r.set(f'symbols:{name}:latest', str(version))
+
+    # Timestamp score for sorted set; fallback to version number if timestamp parse fails
+    try:
+        score = datetime.fromisoformat(
+            sym['version_timestamp'].replace('Z', '+00:00')
+        ).timestamp()
+    except Exception:
+        score = float(version)
+    r.zadd(f'symbols:{name}:versions', {str(version): score})
+
+    # Index sets (append-only)
     r.sadd('symbols:all', name)
     r.sadd(f'symbols:by_type:{sym["type"]}', name)
 
-    # References index. Clear old refs first by walking existing.
-    # (Cheap: we just reverse-index each reference.)
+    # Reverse-reference index, keyed by the versioned reference string
     for ref in (sym.get('references') or []):
-        r.sadd(f'symbols:refs:{ref}', name)
+        r.sadd(f'symbols:refs:{ref}', f'{name}@v{version}')
 
-    return 'pushed', name
+    return 'pushed_new_version', name, version
 
 
 def main(argv):
@@ -94,19 +193,27 @@ def main(argv):
         p = Path(arg)
         if p.is_dir():
             paths.extend(sorted(p.glob('*.md')))
-        elif '*' in arg:
-            # Let shell globs expand; a literal * here is leftover
-            continue
         else:
             paths.append(p)
-    # filter out README.md and INDEX.md (not symbols themselves)
-    paths = [p for p in paths if p.name not in ('README.md', 'INDEX.md')]
+    # Exclude docs that are not symbols
+    EXCLUDE = {'README.md', 'INDEX.md', 'OVERVIEW.md', 'VERSIONING.md'}
+    paths = [p for p in paths if p.name not in EXCLUDE]
+
+    rc = 0
     for p in paths:
         try:
-            action, name = push_symbol(p, r=r)
-            print(f'{action:16s} {name} ({p.name})')
+            action, name, version = push_symbol(p, r=r)
+            print(f'{action:22s} {name}@v{version} ({p.name})')
+        except SymbolImmutabilityError as e:
+            print(f'IMMUTABILITY_ERROR     {p.name}: {e}', file=sys.stderr)
+            rc = 2
+        except SymbolValidationError as e:
+            print(f'VALIDATION_ERROR       {p.name}: {e}', file=sys.stderr)
+            rc = 2
         except Exception as e:
-            print(f'ERROR            {p.name}: {e}', file=sys.stderr)
+            print(f'ERROR                  {p.name}: {e}', file=sys.stderr)
+            rc = 1
+    sys.exit(rc)
 
 
 if __name__ == '__main__':

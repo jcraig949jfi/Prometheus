@@ -1,76 +1,89 @@
 # Symbols Index
 
-Canonical agent vocabulary. Bootstrap by scanning this table. Each row
-links to the full MD.
+Canonical agent vocabulary. Bootstrap by scanning this table.
 
-Symbols are promoted (version ≥ 1) after ≥ 2 agents have referenced them
-in committed work OR drafter + reviewer sign-off. Draft symbols (version
-0) live in MD files only; promoted symbols also mirror to Redis under
-`symbols:*` keys.
+**Versioning is mandatory.** Every reference must carry `@v<N>`. See
+[VERSIONING.md](VERSIONING.md) for the discipline. See
+[OVERVIEW.md](OVERVIEW.md) for executive summary and rationale.
+
+A symbol is PROMOTED (version ≥ 1) after ≥ 2 agents reference it in
+committed work OR drafter + reviewer sign-off. Draft symbols (version 0)
+live in MD files only; promoted symbols also mirror to Redis as
+`symbols:<NAME>:v<N>:*` keys and become **immutable at that version**.
 
 ## By type
 
 ### Operators (pinned procedures)
 
-| Name | One-line | Status |
+| Symbol | One-line | Status |
 |---|---|---|
-| [NULL_BSWCD](NULL_BSWCD.md) | Block-Shuffle Within Conductor Decile null. Default n_perms=300, seed=20260417. | v1 promoted |
+| [NULL_BSWCD@v1](NULL_BSWCD.md) | Block-Shuffle Within Conductor Decile null. Defaults: n_bins=10, n_perms=300, seed=20260417. | v1 promoted |
 
 ### Shapes (structural pattern descriptors)
 
-| Name | One-line | Status |
+| Symbol | One-line | Status |
 |---|---|---|
-| [LADDER](LADDER.md) | Monotone slope-vs-axis structure. Diagnostic if corr ≥ 0.9 and block_null_z ≥ 3. | v1 promoted |
+| [LADDER@v1](LADDER.md) | Monotone slope-vs-axis structure. Diagnostic thresholds: corr ≥ 0.9, amp ≥ 1.5×, block_null_z ≥ 3, min_n ≥ 100. | v1 promoted |
 
 ### Constants (numerical values with CI + provenance)
 
-| Name | One-line | Status |
+| Symbol | One-line | Status |
 |---|---|---|
-| [EPS011](EPS011.md) | F011 rank-0 residual asymptote. Canonical: 22.90 ± 0.78 % (1/log(N) ansatz). | v1 promoted |
+| [EPS011@v1](EPS011.md) | F011 rank-0 residual asymptote. Canonical: 22.90 ± 0.78 % (classical 1/log(N) ansatz). | v1 promoted |
 
 ### Datasets (SQL queries / data slices)
 
-| Name | One-line | Status |
+| Symbol | One-line | Status |
 |---|---|---|
-| [Q_EC_R0_D5](Q_EC_R0_D5.md) | EC rank 0, conductor [10⁵, 10⁶), bsd_joined with leading_term>0. n=559,386. | v1 promoted |
+| [Q_EC_R0_D5@v1](Q_EC_R0_D5.md) | EC rank 0, conductor [10⁵, 10⁶), bsd_joined with leading_term>0. n=559,386 exact. | v1 promoted |
 
 ### Signatures (tuple schemas)
 
-| Name | One-line | Status |
+| Symbol | One-line | Status |
 |---|---|---|
-| [SIGNATURE](SIGNATURE.md) | Finding tuple: (F-ID, P-IDs, null_spec, dataset_spec, n, effect, z, p, commit, worker, ts) | v1 promoted |
+| [SIGNATURE@v1](SIGNATURE.md) | Finding tuple schema. Adds precision_map + reproducibility_hash vs pre-v1 ad-hoc form. | v1 promoted |
 
-## By reference
+## By reference (versioned)
 
-Symbols that reference F011: NULL_BSWCD, EPS011, Q_EC_R0_D5
+**F011@cb083d869 ← referenced by:** NULL_BSWCD@v1, EPS011@v1, Q_EC_R0_D5@v1
 
-Symbols that reference F041a: NULL_BSWCD, LADDER, SIGNATURE (anchor case)
+**F041a@c1abdec43 ← referenced by:** LADDER@v1, NULL_BSWCD@v1
 
-Symbols that reference P021: LADDER
+**P021@c348113f3 ← referenced by:** LADDER@v1
 
-Symbols that reference Pattern_20 / Pattern_21: NULL_BSWCD
+**Pattern_20@ccab9e2c5 ← referenced by:** NULL_BSWCD@v1, LADDER@v1
+
+**Pattern_21@c9335b7c2 ← referenced by:** NULL_BSWCD@v1
+
+**NULL_BSWCD@v1 ← referenced by:** EPS011@v1, LADDER@v1, SIGNATURE@v1
+
+**Q_EC_R0_D5@v1 ← referenced by:** EPS011@v1, SIGNATURE@v1
+
+*(Full reverse index is queryable via `refs_to('<name>@v<n>')` or
+`refs_to_any('<prefix>')` in `agora.symbols`.)*
 
 ## Quick reference card
 
 When writing an inter-agent report, prefer:
 
-- Cite a dataset by SYMBOL, not SQL (`Q_EC_R0_D5` not `SELECT ... WHERE analytic_rank=0 ...`)
-- Cite a null by SYMBOL with params (`NULL_BSWCD[stratifier=torsion_bin]` not "block-shuffle within torsion")
-- Cite a constant by SYMBOL (`ε₀₁₁ = 22.9 ± 0.8 %` not "the F011 residual asymptote")
-- Cite a shape by SYMBOL with descriptor tuple (`LADDER[axis=P021, rank=2, corr=0.97]`)
-- Report findings as SIGNATURE JSON alongside narrative body
+- Cite a dataset by SYMBOL@v<N>: `Q_EC_R0_D5@v1` (not raw SQL, not bare `Q_EC_R0_D5`)
+- Cite a null by SYMBOL@v<N> with params: `NULL_BSWCD@v1[stratifier=torsion_bin]`
+- Cite a constant by SYMBOL@v<N>: `EPS011@v1 = 22.90 ± 0.78 %`
+- Cite a shape by SYMBOL@v<N> with descriptor: `LADDER@v1[axis=P021@c348113f3, rank=2, corr=0.97]`
+- Report findings as `SIGNATURE@v1` JSON alongside narrative body
+- Non-symbol references (F-id, P-id, Pattern) use `@c<commit_short>` until tier 2 retrofit
+
+**Discipline check:** `agora.symbols.validate_reference_string(text, strict=True)`
+will flag unversioned symbol mentions in any text.
 
 ## Gaps (symbols we need but don't have yet)
 
-These would amortize drift if canonicalized. Not promoted until drafter
-volunteers:
-
 - **CLIFF** — step-change at a single stratum boundary (non-ladder)
 - **SUBFAMILY** — tail enrichment/depletion signature (anchor: T4 / F042 / F043)
-- **NULL_BSWR** — block-shuffle-within-rank variant (sessionC used on F041a W2)
+- **NULL_BSWR** — block-shuffle-within-rank variant
 - **Q_EC_R12_D5** — rank {1, 2} version of Q_EC_R0_D5
-- **ZBLOCK** — z-score computed via NULL_BSWCD; differs from plain z in that the null preserves a stratum marginal
-- **BATCH** — a set of findings grouped for literature audit (Pattern 28/29 DRAFT anchor)
+- **ZBLOCK** — z-score computed via NULL_BSWCD
+- **BATCH** — a set of findings grouped for literature audit
 
 Add via PR when an agent hits friction that a missing symbol would have
 prevented.
