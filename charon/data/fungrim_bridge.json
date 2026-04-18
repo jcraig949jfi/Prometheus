@@ -1,0 +1,153 @@
+{
+  "hypothesis": "P4.1: Fungrim formulas encode EC L-values or knot Mahler measures",
+  "date": "2026-04-15",
+  "fungrim_equations_total": 2637,
+  "fungrim_values_evaluated": 184,
+  "ec_lvalues_tested": 100000,
+  "mahler_measures_tested": 11908,
+  "tolerance": 1e-06,
+  "matches": {
+    "trivial_constants": 60,
+    "nontrivial_constants": 11,
+    "ec_lvalues_all": 0,
+    "ec_lvalues_nontrivial": 0,
+    "mahler_measures_all": 52,
+    "mahler_measures_nontrivial": 0
+  },
+  "match_details": {
+    "ec_all": [],
+    "ec_nontrivial": [],
+    "mahler_nontrivial": [],
+    "nontrivial_constants": [
+      {
+        "fungrim_id": "b4ed44",
+        "module": "hurwitz_zeta",
+        "formula_text": "\\zeta\\!\\left(3, 1\\right) = \\zeta\\!\\left(3\\right)",
+        "value": 1.2020569031595942,
+        "matched_constant": "apery_zeta3",
+        "constant_value": 1.2020569031595942,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "2744d4",
+        "module": "const_catalan",
+        "formula_text": "G = \\frac{1}{8} \\left(\\psi'\\!\\left(\\frac{1}{4}\\right) - {\\pi}^{2}\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "L_chi4_1",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "2744d4",
+        "module": "const_catalan",
+        "formula_text": "G = \\frac{1}{8} \\left(\\psi'\\!\\left(\\frac{1}{4}\\right) - {\\pi}^{2}\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "dirichlet_beta_2",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "e85723",
+        "module": "const_catalan",
+        "formula_text": "G = \\frac{1}{16} \\left(\\zeta\\!\\left(2, \\frac{1}{4}\\right) - \\zeta\\!\\left(2, \\frac{3}{4}\\right)\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "L_chi4_1",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "e85723",
+        "module": "const_catalan",
+        "formula_text": "G = \\frac{1}{16} \\left(\\zeta\\!\\left(2, \\frac{1}{4}\\right) - \\zeta\\!\\left(2, \\frac{3}{4}\\right)\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "dirichlet_beta_2",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "9e9922",
+        "module": "const_catalan",
+        "formula_text": "G = L\\!\\left(2, \\chi_{4 \\, . \\, 3}\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "L_chi4_1",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "9e9922",
+        "module": "const_catalan",
+        "formula_text": "G = L\\!\\left(2, \\chi_{4 \\, . \\, 3}\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "dirichlet_beta_2",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "4c166d",
+        "module": "const_catalan",
+        "formula_text": "G = \\frac{1}{4} \\Phi\\!\\left(-1, 2, \\frac{1}{2}\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "L_chi4_1",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "4c166d",
+        "module": "const_catalan",
+        "formula_text": "G = \\frac{1}{4} \\Phi\\!\\left(-1, 2, \\frac{1}{2}\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "dirichlet_beta_2",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "a766f2",
+        "module": "const_catalan",
+        "formula_text": "G = \\,{}_3F_2\\!\\left(\\frac{1}{2}, \\frac{1}{2}, 1, \\frac{3}{2}, \\frac{3}{2}, -1\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "L_chi4_1",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      },
+      {
+        "fungrim_id": "a766f2",
+        "module": "const_catalan",
+        "formula_text": "G = \\,{}_3F_2\\!\\left(\\frac{1}{2}, \\frac{1}{2}, 1, \\frac{3}{2}, \\frac{3}{2}, -1\\right)",
+        "value": 0.915965594177219,
+        "matched_constant": "dirichlet_beta_2",
+        "constant_value": 0.915965594177219,
+        "abs_diff": 0.0
+      }
+    ]
+  },
+  "null_tests": {
+    "ec": {
+      "observed": 0,
+      "nontrivial_fungrim_values": 38,
+      "null_mean": 0.286,
+      "null_std": 0.5236449178594211,
+      "z_score": -0.5461716331920559,
+      "p_upper": 1.0
+    },
+    "mahler": {
+      "observed": 0,
+      "nontrivial_fungrim_values": 38,
+      "null_mean": 0.012,
+      "null_std": 0.10888526071052962,
+      "z_score": -0.11020775375559673,
+      "p_upper": 1.0
+    }
+  },
+  "verdict": {
+    "ec_signal": false,
+    "mahler_signal": false,
+    "p4_1_supported": false,
+    "interpretation": "P4.1 negative: Fungrim isolation is genuine, not a feature-space artifact"
+  },
+  "caveats": [
+    "LaTeX parser handles only simple closed-form expressions",
+    "Many Fungrim formulas contain free variables and cannot be evaluated to constants",
+    "Tolerance 1e-6 is conservative; LMFDB leading_term has ~11 digit precision",
+    "Trivial constant matches (pi, e, sqrt(2), etc.) are expected and uninformative"
+  ]
+}

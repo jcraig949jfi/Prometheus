@@ -1,0 +1,125 @@
+{
+  "H36": {
+    "hypothesis": "Bad-Prime Additive Persistence (Pareto Tails)",
+    "verdict": "KILLED",
+    "alphas": {
+      "1": {
+        "alpha": 6.3905,
+        "se": 0.0236,
+        "n": 733274
+      },
+      "2": {
+        "alpha": 5.7434,
+        "se": 0.0553,
+        "n": 107720
+      },
+      "3": {
+        "alpha": 7.8992,
+        "se": 0.0145,
+        "n": 2983378
+      }
+    },
+    "diff_z": 0,
+    "kill_criterion": "CI overlap between groups",
+    "killed": true,
+    "note": "No curves with num_bad_primes=0 found. Comparison is between groups 1, 2, and 3+. All alphas > 5 (not Pareto heavy-tailed). CIs do NOT overlap between groups (different alphas) but all are far from hypothesized 1.5."
+  },
+  "H40": {
+    "hypothesis": "Szpiro-Faltings Coupling",
+    "verdict": "SURVIVES",
+    "rho_partial_full": 0.9686,
+    "decade_rhos": {
+      "100-1000": 0.9684,
+      "1000-10000": 0.9735,
+      "10000-100000": 0.9803,
+      "100000-1000000000000": 0.9824
+    },
+    "passes_threshold": "True",
+    "kill_criterion": "|rho_partial| < 0.05 in any decade OR full |rho| < 0.15",
+    "killed": false
+  },
+  "H41": {
+    "hypothesis": "Rank-Regulator Super-Linear Scaling",
+    "verdict": "KILLED",
+    "means_full": {
+      "0": 0.0,
+      "1": 1.2506,
+      "2": 1.1812,
+      "3": 2.3406,
+      "4": 3.3251
+    },
+    "delta2_full": {
+      "1": -1.3201,
+      "2": 1.2289,
+      "3": -0.1749
+    },
+    "decade_delta2": {
+      "1-100": {},
+      "100-1000": {
+        "1": -0.4695
+      },
+      "1000-10000": {
+        "1": -1.1749
+      },
+      "10000-100000": {
+        "1": -1.5511,
+        "2": 0.4976
+      },
+      "100000-1000000000000": {
+        "1": -1.3879,
+        "2": 1.0706,
+        "3": -0.097
+      }
+    },
+    "neg_decade_count": 5,
+    "kill_criterion": "D2 \u2264 0 in \u22652 decades",
+    "killed": true
+  },
+  "H43": {
+    "hypothesis": "Root Number Parity in High-Sha",
+    "verdict": "TRIVIALLY TRUE (NOT TESTABLE)",
+    "note": "rank == analytic_rank for all 3.8M curves in LMFDB. BSD parity is verified before inclusion. signD is discriminant sign, NOT root number. Hypothesis cannot be falsified against this dataset.",
+    "n_rank_ne_analytic": 0,
+    "n_sha_ge_9": 109626,
+    "kill_criterion": "Deviation > 3-sigma from perfect match",
+    "killed": false,
+    "trivially_true": true
+  },
+  "H75": {
+    "hypothesis": "Torsion-Rank Anticorrelation",
+    "verdict": "SURVIVES",
+    "rho_full": -0.1192,
+    "p_full": 0.0,
+    "decade_rhos": {
+      "1-100": {
+        "rho": -0.3122,
+        "p": 3e-08,
+        "n": 302
+      },
+      "100-1000": {
+        "rho": -0.1533,
+        "p": 1.1e-26,
+        "n": 4811
+      },
+      "1000-10000": {
+        "rho": -0.1296,
+        "p": 1.74e-221,
+        "n": 59574
+      },
+      "10000-100000": {
+        "rho": -0.0978,
+        "p": 0.0,
+        "n": 592709
+      },
+      "100000-1000000000000": {
+        "rho": -0.1147,
+        "p": 0.0,
+        "n": 3166976
+      }
+    },
+    "positive_decades": 0,
+    "magnitude_ok": "True",
+    "kill_criterion": "Positive rho in any decade OR |rho| < 0.05",
+    "killed": false
+  }
+}

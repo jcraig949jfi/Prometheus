@@ -1,0 +1,286 @@
+{
+  "T1_monotone_envelope": {
+    "test": "T1_monotone_envelope",
+    "max_drop": 0.730319763513743,
+    "worst_log10_conductor": 7.62635425126264,
+    "perm_pvalue": 1.0,
+    "note": "(drop due to LMFDB coverage thinning at high conductor, not selection bias)",
+    "kill": false,
+    "verdict": "PASS"
+  },
+  "T2_gpd_tail_DECISIVE": {
+    "test": "T2_gpd_tail_DECISIVE",
+    "threshold_95pctl": 5.437309576327629,
+    "n_exceedances": 191219,
+    "gpd_shape_xi": -0.06696574749267514,
+    "gpd_scale": 0.7278101870061813,
+    "ci_95": [
+      -0.10545408152630233,
+      -0.0639550725851867
+    ],
+    "tail_type": "BOUNDED (Weibull) - abc very safe",
+    "kill": false,
+    "verdict": "PASS"
+  },
+  "T3_additive_reduction": {
+    "test": "T3_additive_reduction",
+    "n_semistable": 1513650,
+    "n_nonsemistable": 2310722,
+    "semi_95pctl": 4.905312881729793,
+    "nonsemi_95pctl": 5.633785577349028,
+    "semi_max": 16.058687318281603,
+    "nonsemi_max": 11.029343659140801,
+    "inflation_factor": 1.1485068767646782,
+    "ks_stat": 0.4699213135468413,
+    "ks_pval": 0.0,
+    "gpd_shape_semistable": -0.06868486632765931,
+    "kill": false,
+    "verdict": "PASS"
+  },
+  "T4_bad_prime_stratification": {
+    "test": "T4_bad_prime_stratification",
+    "bins": {
+      "1": {
+        "count": 733274,
+        "p95": 2.2608852032590723,
+        "max": 16.058687318281603
+      },
+      "2": {
+        "count": 107720,
+        "p95": 4.521623583658645,
+        "max": 13.395065575232227
+      },
+      "3": {
+        "count": 677628,
+        "p95": 5.0852691689587814,
+        "max": 10.984044571686695
+      },
+      "4": {
+        "count": 1423710,
+        "p95": 5.518589228953954,
+        "max": 10.66922521285964
+      },
+      "5": {
+        "count": 882040,
+        "p95": 5.987446160964287,
+        "max": 10.520408073503958
+      }
+    },
+    "slope": 0.8450087560705738,
+    "r_value": 0.9190334101490157,
+    "p_value": 0.027317856262019997,
+    "kill": false,
+    "verdict": "PASS"
+  },
+  "T5_outlier_catalog": {
+    "test": "T5_outlier_catalog",
+    "top_20": [
+      {
+        "rank_in_list": 1,
+        "szpiro_ratio": 16.058687318281603,
+        "conductor": 11.0,
+        "rank": 0,
+        "num_bad_primes": 1,
+        "abc_quality": 1.0929566831983986
+      },
+      {
+        "rank_in_list": 2,
+        "szpiro_ratio": 13.395065575232227,
+        "conductor": 14.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0648884149541868
+      },
+      {
+        "rank_in_list": 3,
+        "szpiro_ratio": 12.794158120001653,
+        "conductor": 15.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0735374703334082
+      },
+      {
+        "rank_in_list": 4,
+        "szpiro_ratio": 11.029343659140801,
+        "conductor": 121.0,
+        "rank": 0,
+        "num_bad_primes": 1,
+        "abc_quality": 1.0929566831983986
+      },
+      {
+        "rank_in_list": 5,
+        "szpiro_ratio": 10.984044571686695,
+        "conductor": 30.0,
+        "rank": 0,
+        "num_bad_primes": 3,
+        "abc_quality": 1.0818126452233845
+      },
+      {
+        "rank_in_list": 6,
+        "szpiro_ratio": 10.833347141395983,
+        "conductor": 45.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0735374703334082
+      },
+      {
+        "rank_in_list": 7,
+        "szpiro_ratio": 10.715174019054395,
+        "conductor": 19.0,
+        "rank": 0,
+        "num_bad_primes": 1,
+        "abc_quality": 1.104947099482495
+      },
+      {
+        "rank_in_list": 8,
+        "szpiro_ratio": 10.66922521285964,
+        "conductor": 2130.0,
+        "rank": 0,
+        "num_bad_primes": 4,
+        "abc_quality": 1.0786778434013853
+      },
+      {
+        "rank_in_list": 9,
+        "szpiro_ratio": 10.520408073503958,
+        "conductor": 53130.0,
+        "rank": 0,
+        "num_bad_primes": 6,
+        "abc_quality": 1.0771373837012235
+      },
+      {
+        "rank_in_list": 10,
+        "szpiro_ratio": 10.450703258979452,
+        "conductor": 1218.0,
+        "rank": 0,
+        "num_bad_primes": 4,
+        "abc_quality": 1.0764023108315404
+      },
+      {
+        "rank_in_list": 11,
+        "szpiro_ratio": 10.423882089354873,
+        "conductor": 1015.0,
+        "rank": 1,
+        "num_bad_primes": 3,
+        "abc_quality": 1.0742251822637818
+      },
+      {
+        "rank_in_list": 12,
+        "szpiro_ratio": 10.381565732764942,
+        "conductor": 21.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0508747826837916
+      },
+      {
+        "rank_in_list": 13,
+        "szpiro_ratio": 10.353571632393516,
+        "conductor": 21758.0,
+        "rank": 0,
+        "num_bad_primes": 4,
+        "abc_quality": 1.0632163578064362
+      },
+      {
+        "rank_in_list": 14,
+        "szpiro_ratio": 10.324918564217526,
+        "conductor": 4390.0,
+        "rank": 1,
+        "num_bad_primes": 3,
+        "abc_quality": 1.060588175288864
+      },
+      {
+        "rank_in_list": 15,
+        "szpiro_ratio": 10.291414419738707,
+        "conductor": 5478.0,
+        "rank": 1,
+        "num_bad_primes": 4,
+        "abc_quality": 1.0746890550282022
+      },
+      {
+        "rank_in_list": 16,
+        "szpiro_ratio": 10.289368545679395,
+        "conductor": 210.0,
+        "rank": 0,
+        "num_bad_primes": 4,
+        "abc_quality": 1.074666741320478
+      },
+      {
+        "rank_in_list": 17,
+        "szpiro_ratio": 10.261487415681788,
+        "conductor": 75.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0735374703334082
+      },
+      {
+        "rank_in_list": 18,
+        "szpiro_ratio": 10.256519179272527,
+        "conductor": 98.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0648884149541868
+      },
+      {
+        "rank_in_list": 19,
+        "szpiro_ratio": 10.244544953238103,
+        "conductor": 14.0,
+        "rank": 0,
+        "num_bad_primes": 2,
+        "abc_quality": 1.0293250379726038
+      },
+      {
+        "rank_in_list": 20,
+        "szpiro_ratio": 10.237113567923506,
+        "conductor": 570.0,
+        "rank": 0,
+        "num_bad_primes": 4,
+        "abc_quality": 1.0740941067474734
+      }
+    ],
+    "conductor_11_max_szpiro": 16.058687318281603,
+    "kill": false,
+    "verdict": "PASS (catalog only)"
+  },
+  "T6_rank_interaction": {
+    "test": "T6_rank_interaction",
+    "by_rank": {
+      "0": {
+        "count": 1404510,
+        "mean": 3.431006603045393,
+        "max": 16.058687318281603,
+        "p95": 5.665988362303381
+      },
+      "1": {
+        "count": 1887132,
+        "mean": 3.255553955029111,
+        "max": 10.423882089354873,
+        "p95": 5.428491593023159
+      },
+      "2": {
+        "count": 493291,
+        "mean": 2.6939945268910592,
+        "max": 8.03921638383124,
+        "p95": 4.486473311112231
+      },
+      "3": {
+        "count": 39439,
+        "mean": 1.8038429917304375,
+        "max": 5.019045821240906,
+        "p95": 2.927734332661837
+      }
+    },
+    "spearman_r": -1.0,
+    "spearman_p": 0.0,
+    "kill": false,
+    "verdict": "PASS"
+  },
+  "T7_conductor_gap": {
+    "test": "T7_conductor_gap",
+    "n_conductors": 973225,
+    "mean_gap": 308.2506617181656,
+    "median_gap": 144.0,
+    "spearman_r": -0.6169279698193245,
+    "spearman_p": 0.0,
+    "kill": false,
+    "verdict": "PASS"
+  }
+}

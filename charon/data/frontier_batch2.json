@@ -1,0 +1,37 @@
+{
+  "H46": {
+    "hypothesis": "Autocatalytic EC Rank Collapse",
+    "verdict": "KILLED",
+    "key_statistic": "max_z=3.86, n=500000, P(rank>1)_mean=0.14603",
+    "kill_criterion_met": true,
+    "elapsed_s": 0.8
+  },
+  "H80": {
+    "hypothesis": "Lehmer Bound for L-function Leading Terms",
+    "verdict": "SURVIVES",
+    "key_statistic": "n=253492, violations=0, min_exp_lt=1.218319",
+    "kill_criterion_met": false,
+    "elapsed_s": 571.2
+  },
+  "H72": {
+    "hypothesis": "Weight-Dimension Concentration",
+    "verdict": "INCONCLUSIVE",
+    "key_statistic": "ratio=1.352, p_obs=0.03013, p_exp=0.02228, n=18484",
+    "kill_criterion_met": false,
+    "elapsed_s": 1.2
+  },
+  "H70": {
+    "hypothesis": "Trace Hash Collision Geometry",
+    "verdict": "KILLED",
+    "key_statistic": "n_collision_pairs=0 (no data to test; trace_hash is near-unique across levels)",
+    "kill_criterion_met": true,
+    "elapsed_s": 0.3
+  },
+  "H90": {
+    "hypothesis": "EC Rank vs Group Order Smoothness (Null Test)",
+    "verdict": "INCONCLUSIVE",
+    "key_statistic": "MI=0.0363 bits, MI_null=0.0205, MI_corrected=0.0158, n=1343",
+    "kill_criterion_met": "False",
+    "elapsed_s": 4.6
+  }
+}

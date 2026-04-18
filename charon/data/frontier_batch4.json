@@ -1,0 +1,86 @@
+{
+  "batch": "frontier_batch4",
+  "timestamp": "2026-04-17 02:22:36",
+  "runtime_seconds": 16.44244384765625,
+  "results": {
+    "H11": {
+      "verdict": "SURVIVES",
+      "dynkin_mean_log_ratio": 16.501903912080852,
+      "other_mean_log_ratio": 22.02166144242926,
+      "cohens_d": 0.5735219488200691,
+      "mann_whitney_p": 0.0,
+      "n_dynkin": 167021,
+      "n_other": 131983,
+      "kill_criterion": "d<0.1 or p>0.01",
+      "killed": "False"
+    },
+    "H47": {
+      "verdict": "KILLED",
+      "max_second_deriv": 0.0010000000000001674,
+      "median_second_deriv": 5.551115123125783e-17,
+      "spike_ratio": 6.000000000001665,
+      "transition_ratio_at_spike": 0.2925,
+      "near_target_1.3": "False",
+      "target_ratio": 1.3,
+      "ma_range": 0.34050000000000025,
+      "ma_mean": 0.3443047291133758,
+      "robust_scale_d2": 0.0001666666666666483,
+      "n_points": 500000,
+      "kill_criterion": "spike_ratio < 10 OR transition not near 1.3",
+      "killed": "True"
+    },
+    "H82": {
+      "verdict": "KILLED",
+      "epsilons": [
+        0.001,
+        0.01,
+        0.1,
+        1.0
+      ],
+      "counts": [
+        0,
+        0,
+        0,
+        62
+      ],
+      "beta": null,
+      "r_squared": null,
+      "n_measures": 200000,
+      "lehmer_constant": 1.17628081825991,
+      "kill_criterion": "beta outside [0.2, 1.2] or gap",
+      "killed": true,
+      "reason": "Only 1 epsilon bins with nonzero counts \u2014 gap near Lehmer"
+    },
+    "H83": {
+      "verdict": "SURVIVES",
+      "moments": {
+        "mean": 0.15766911201974632,
+        "var": 0.02946286620929718,
+        "skew": 8.10825704186599,
+        "kurtosis": 175.60989793179513
+      },
+      "second_moment": 0.054322415094392486,
+      "hill_alpha": 2.4002968114139533,
+      "hill_k": 50000,
+      "n_products": 500000,
+      "product_median": 0.10804371993310935,
+      "product_p95": 0.42628404810055076,
+      "kill_criterion": "Hill alpha outside [1.5, 3.0]",
+      "killed": false
+    },
+    "H15": {
+      "verdict": "SURVIVES",
+      "dynkin_median_cn": 1.0,
+      "other_median_cn": 2.0,
+      "dynkin_mean_cn": 135.7116806722689,
+      "other_mean_cn": 3835.754862231315,
+      "mann_whitney_U": 2205237109.5,
+      "p_value": 0.0,
+      "rank_biserial_r": 0.3056239344303642,
+      "n_dynkin": 83300,
+      "n_other": 76251,
+      "kill_criterion": "p > 0.01",
+      "killed": "False"
+    }
+  }
+}

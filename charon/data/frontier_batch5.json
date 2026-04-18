@@ -1,0 +1,148 @@
+{
+  "timestamp": "2026-04-17T02:23:02.996901",
+  "results": {
+    "H39": {
+      "name": "Aut Group Predicts Sha",
+      "verdict": "KILLED",
+      "gamma": -0.07881812761321866,
+      "r_squared": 0.1291396938570349,
+      "p_value": 0.5524966588621231,
+      "kill_criterion": "\u03b3 \u2264 0",
+      "n_groups": 5,
+      "group_sizes": {
+        "2": 63480,
+        "4": 2612,
+        "6": 58,
+        "12": 4,
+        "8": 4
+      }
+    },
+    "H45": {
+      "name": "Manin-Mumford in Genus-2",
+      "verdict": "KILLED",
+      "ratios": {
+        "2": {
+          "R": 1.0606989378091298,
+          "expected": 0.5,
+          "P_sq": 0.06666666666666667,
+          "P_nsq": 0.06285163894324854
+        },
+        "3": {
+          "R": 3.3542564102564105,
+          "expected": 0.6666666666666667,
+          "P_sq": 0.0026666666666666666,
+          "P_nsq": 0.0007950097847358121
+        },
+        "5": {
+          "R": 0.0,
+          "expected": 0.8,
+          "P_sq": 0.0,
+          "P_nsq": 1.5288649706457925e-05
+        },
+        "7": {
+          "R": 0.0,
+          "expected": 0.8571428571428572,
+          "P_sq": 0.0,
+          "P_nsq": 1.5288649706457925e-05
+        }
+      },
+      "n_square": 750,
+      "n_nonsquare": 65408,
+      "best_fisher_p": 0.12512925214284884,
+      "kill_criterion": "R_p \u2248 1.0 for all p (p > 0.05)"
+    },
+    "H85": {
+      "name": "Chowla Deviation at Genus-2 Discriminants",
+      "verdict": "SURVIVES",
+      "z_scores": {
+        "2": {
+          "N": 63480,
+          "mean_mu": -0.0036704473850031507,
+          "z": 1.1860737915452821
+        },
+        "4": {
+          "N": 2612,
+          "mean_mu": 0.0011485451761102604,
+          "z": 0.0752850799461214
+        },
+        "6": {
+          "N": 58,
+          "mean_mu": 0.0,
+          "z": 0.0
+        },
+        "8": {
+          "N": 4,
+          "mean_mu": 0.0,
+          "z": 0.0
+        },
+        "12": {
+          "N": 4,
+          "mean_mu": 0.0,
+          "z": 0.0
+        }
+      },
+      "max_z": 1.1860737915452821,
+      "any_z_over_3": false,
+      "kill_criterion": "z < 1.0 for ALL groups with N > 5000"
+    },
+    "H69": {
+      "name": "Sato-Tate at Additive p=2",
+      "verdict": "INCONCLUSIVE",
+      "note": "g2c_curves lacks Frobenius trace (a_p) or point count columns. Only bad_lfactors available at bad primes. Cannot compute a_2 kurtosis.",
+      "available_columns": [
+        "Lhash",
+        "abs_disc",
+        "analytic_rank",
+        "analytic_rank_proved",
+        "analytic_sha",
+        "aut_grp_id",
+        "aut_grp_label",
+        "aut_grp_tex",
+        "bad_lfactors",
+        "bad_primes",
+        "class",
+        "end_alg",
+        "geom_aut_grp_id",
+        "geom_aut_grp_label",
+        "geom_aut_grp_tex",
+        "geom_end_alg",
+        "globally_solvable",
+        "has_square_sha",
+        "hasse_weil_proved",
+        "igusa_clebsch_inv",
+        "igusa_inv",
+        "is_simple_base",
+        "label",
+        "leading_coeff",
+        "locally_solvable",
+        "modell_images",
+        "mw_rank",
+        "mw_rank_proved",
+        "non_maximal_primes",
+        "non_solvable_places",
+        "num_rat_pts",
+        "num_rat_wpts",
+        "real_geom_end_alg",
+        "real_period",
+        "regulator",
+        "st_label",
+        "st_label_components",
+        "tamagawa_product",
+        "two_selmer_rank"
+      ],
+      "kill_criterion": "Kurtosis \u2265 1.8 (not testable)"
+    },
+    "H16": {
+      "name": "Knot Determinant <-> NF Class Number Divisibility",
+      "verdict": "KILLED",
+      "total_pairs": 2270,
+      "hits": 0,
+      "hit_rate": 0.0,
+      "null_mean": 4.756,
+      "null_std": 2.0673809518325355,
+      "z_score": -2.30049522115615,
+      "p_value": 0.0001,
+      "kill_criterion": "Hit rate = random (p > 0.05)"
+    }
+  }
+}

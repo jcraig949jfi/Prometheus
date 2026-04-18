@@ -1,0 +1,466 @@
+{
+  "T0a": {
+    "test": "T0a_faltings_invariance",
+    "total_isogeny_classes": 2917287,
+    "multi_curve_classes": 672443,
+    "violations": 630376,
+    "violation_rate": 0.9374415377957686,
+    "worst_5": {
+      "11025.bg": {
+        "min": -1.2616520640991544,
+        "max": 0.5438068922229579,
+        "spread": 1.8054589563221124
+      },
+      "11025.bh": {
+        "min": -1.2616520640991544,
+        "max": 0.5438068922229579,
+        "spread": 1.8054589563221124
+      },
+      "11025.l": {
+        "min": -1.2616520640991544,
+        "max": 0.5438068922229579,
+        "spread": 1.8054589563221124
+      },
+      "11025.m": {
+        "min": -1.2616520640991544,
+        "max": 0.5438068922229579,
+        "spread": 1.8054589563221124
+      },
+      "1225.b": {
+        "min": -1.2616520640991544,
+        "max": 0.5438068922229579,
+        "spread": 1.8054589563221124
+      }
+    },
+    "verdict": "INVALID_TEST",
+    "note": "stable_faltings_height changes by (1/2)*log(deg(phi)) under isogeny phi. Not isogeny-invariant by definition. Test assumption was wrong."
+  },
+  "T0b": {
+    "test": "T0b_manin_constant",
+    "total_optimal_curves": 2100011,
+    "manin_ne_1": 0,
+    "examples": [],
+    "verdict": "PASS"
+  },
+  "T1": {
+    "test": "T1_sha_perfect_square",
+    "curves_with_sha_gt_1": 321764,
+    "non_square_count": 0,
+    "percentage_square": 100.0,
+    "sha_value_distribution": {
+      "4": 212138,
+      "9": 65936,
+      "16": 22749,
+      "25": 10953,
+      "36": 3239,
+      "49": 2795,
+      "64": 1512,
+      "81": 853,
+      "100": 391,
+      "121": 408,
+      "144": 174,
+      "169": 210,
+      "196": 70,
+      "225": 89,
+      "256": 49,
+      "289": 50,
+      "324": 15,
+      "361": 36,
+      "400": 17,
+      "441": 10,
+      "484": 3,
+      "529": 15,
+      "576": 4,
+      "625": 13,
+      "676": 3,
+      "729": 5,
+      "784": 7,
+      "841": 3,
+      "961": 4,
+      "1024": 5,
+      "1089": 1,
+      "1156": 1,
+      "1369": 1,
+      "1681": 1,
+      "1849": 1,
+      "2209": 1,
+      "2500": 1,
+      "5625": 1
+    },
+    "non_square_examples": [],
+    "verdict": "PASS"
+  },
+  "T2": {
+    "test": "T2_sha_vs_bad_primes",
+    "rank_ge2_with_sha_gt1": 713,
+    "total_sha_primes": 713,
+    "sha_primes_also_bad": 38,
+    "sha_primes_not_bad": 675,
+    "frac_sha_in_bad": 0.05329593267882188,
+    "frac_sha_not_bad": 0.9467040673211781,
+    "sha_prime_frequency": {
+      "2": 698,
+      "3": 15
+    },
+    "examples_not_in_bad": [
+      {
+        "label": "35522527.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          35522527
+        ],
+        "rank": 2
+      },
+      {
+        "label": "36190129.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          36190129
+        ],
+        "rank": 2
+      },
+      {
+        "label": "36235501.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          36235501
+        ],
+        "rank": 2
+      },
+      {
+        "label": "36303427.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          36303427
+        ],
+        "rank": 2
+      },
+      {
+        "label": "36426941.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          36426941
+        ],
+        "rank": 2
+      },
+      {
+        "label": "36923687.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          36923687
+        ],
+        "rank": 2
+      },
+      {
+        "label": "37431899.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          37431899
+        ],
+        "rank": 2
+      },
+      {
+        "label": "3913541.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          3913541
+        ],
+        "rank": 2
+      },
+      {
+        "label": "39879149.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          39879149
+        ],
+        "rank": 2
+      },
+      {
+        "label": "41135131.a1",
+        "sha_prime": 2,
+        "bad_primes": [
+          41135131
+        ],
+        "rank": 2
+      }
+    ],
+    "verdict": "PASS"
+  },
+  "T3": {
+    "test": "T3_isogeny_sha_consistency",
+    "total_isogeny_classes": 2917287,
+    "multi_curve_classes": 672443,
+    "constant_sha_classes": 583260,
+    "variable_sha_classes": 89183,
+    "consistent": 89020,
+    "inconsistent": 163,
+    "consistency_rate": 0.9997576002724394,
+    "inconsistent_examples": [
+      {
+        "iso": "106470.fd",
+        "sha_values": [
+          36,
+          9,
+          9,
+          4,
+          9,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "106470.fd1",
+          "106470.fd2",
+          "106470.fd3",
+          "106470.fd4",
+          "106470.fd5",
+          "106470.fd6",
+          "106470.fd7",
+          "106470.fd8"
+        ]
+      },
+      {
+        "iso": "109200.gk",
+        "sha_values": [
+          9,
+          36,
+          4,
+          9,
+          1,
+          1,
+          1,
+          9
+        ],
+        "labels": [
+          "109200.gk1",
+          "109200.gk2",
+          "109200.gk3",
+          "109200.gk4",
+          "109200.gk5",
+          "109200.gk6",
+          "109200.gk7",
+          "109200.gk8"
+        ]
+      },
+      {
+        "iso": "110466.bk",
+        "sha_values": [
+          36,
+          9,
+          4,
+          1
+        ],
+        "labels": [
+          "110466.bk1",
+          "110466.bk2",
+          "110466.bk3",
+          "110466.bk4"
+        ]
+      },
+      {
+        "iso": "111930.x",
+        "sha_values": [
+          36,
+          9,
+          9,
+          4,
+          9,
+          1,
+          1,
+          1
+        ],
+        "labels": [
+          "111930.x1",
+          "111930.x2",
+          "111930.x3",
+          "111930.x4",
+          "111930.x5",
+          "111930.x6",
+          "111930.x7",
+          "111930.x8"
+        ]
+      },
+      {
+        "iso": "115230.r",
+        "sha_values": [
+          9,
+          36,
+          1,
+          4
+        ],
+        "labels": [
+          "115230.r1",
+          "115230.r2",
+          "115230.r3",
+          "115230.r4"
+        ]
+      },
+      {
+        "iso": "119190.v",
+        "sha_values": [
+          36,
+          9,
+          4,
+          1
+        ],
+        "labels": [
+          "119190.v1",
+          "119190.v2",
+          "119190.v3",
+          "119190.v4"
+        ]
+      },
+      {
+        "iso": "120054.bb",
+        "sha_values": [
+          9,
+          36,
+          1,
+          4
+        ],
+        "labels": [
+          "120054.bb1",
+          "120054.bb2",
+          "120054.bb3",
+          "120054.bb4"
+        ]
+      },
+      {
+        "iso": "121040.w",
+        "sha_values": [
+          9,
+          36,
+          1,
+          4
+        ],
+        "labels": [
+          "121040.w1",
+          "121040.w2",
+          "121040.w3",
+          "121040.w4"
+        ]
+      },
+      {
+        "iso": "121680.fb",
+        "sha_values": [
+          36,
+          9,
+          4,
+          1
+        ],
+        "labels": [
+          "121680.fb1",
+          "121680.fb2",
+          "121680.fb3",
+          "121680.fb4"
+        ]
+      },
+      {
+        "iso": "123840.gh",
+        "sha_values": [
+          4,
+          36,
+          1,
+          9
+        ],
+        "labels": [
+          "123840.gh1",
+          "123840.gh2",
+          "123840.gh3",
+          "123840.gh4"
+        ]
+      }
+    ],
+    "verdict": "PASS_WITH_CAVEAT",
+    "note": "163 of 89183 classes (0.18%) fail pairwise divisibility test. Cassels formula only constrains sha ratios for directly connected isogenies, not all pairs. Test is overly strict. No BSD violation."
+  },
+  "T4": {
+    "test": "T4_leading_term_sign",
+    "total_joined": 500000,
+    "rank0": {
+      "total": 184021,
+      "negative_lt": 0
+    },
+    "rank1": {
+      "total": 250868,
+      "sign_mismatch": 0,
+      "examples": []
+    },
+    "rank2plus": {
+      "total": 65111,
+      "negative_lt": 0
+    },
+    "verdict": "PASS"
+  },
+  "T5": {
+    "test": "T5_regulator_bounds",
+    "total_rank_ge1": 2419862,
+    "by_rank": {
+      "1": {
+        "count": 1887132,
+        "negative_regulators": 0,
+        "zero_regulators": 0,
+        "min_reg": 0.008914324455686353,
+        "max_reg": 10470.710225362769,
+        "median_reg": 3.4804043053474443,
+        "spearman_rho": 0.2986357102865902,
+        "spearman_pval": 0.0
+      },
+      "2": {
+        "count": 493291,
+        "negative_regulators": 0,
+        "zero_regulators": 0,
+        "min_reg": 0.015168805918144106,
+        "max_reg": 4469.462223876136,
+        "median_reg": 3.3299688136446624,
+        "spearman_rho": 0.6150538603861324,
+        "spearman_pval": 0.0
+      },
+      "3": {
+        "count": 37334,
+        "negative_regulators": 0,
+        "zero_regulators": 0,
+        "min_reg": 0.11869357385732819,
+        "max_reg": 1317.0919966323147,
+        "median_reg": 15.508481742829831,
+        "spearman_rho": 0.7424858739515244,
+        "spearman_pval": 0.0
+      },
+      "4": {
+        "count": 2086,
+        "negative_regulators": 0,
+        "zero_regulators": 0,
+        "min_reg": 1.504344888275284,
+        "max_reg": 170.03277825462357,
+        "median_reg": 27.58093381590756,
+        "spearman_rho": 0.5816417634434883,
+        "spearman_pval": 3.9938876073834215e-189
+      },
+      "5": {
+        "count": 19,
+        "negative_regulators": 0,
+        "zero_regulators": 0,
+        "min_reg": 14.790527570131129,
+        "max_reg": 46.845865160795505,
+        "median_reg": 32.68086475484537,
+        "spearman_rho": 0.736842105263158,
+        "spearman_pval": 0.00031998843680607883
+      }
+    },
+    "any_negative_regulators": 0,
+    "verdict": "PASS"
+  },
+  "_meta": {
+    "timestamp": "2026-04-18 08:17:16",
+    "elapsed_seconds": 508.70885396003723,
+    "verdicts": {
+      "T0a": "INVALID_TEST",
+      "T0b": "PASS",
+      "T1": "PASS",
+      "T2": "PASS",
+      "T3": "PASS_WITH_CAVEAT",
+      "T4": "PASS",
+      "T5": "PASS"
+    }
+  }
+}

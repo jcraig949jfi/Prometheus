@@ -1,0 +1,79 @@
+{
+  "H60": {
+    "hypothesis": "Artin Frontier Clusters (<20 Manifolds)",
+    "n_frontier": 253650,
+    "n_after_filter": 253650,
+    "features_used": [
+      "dim",
+      "log_cond",
+      "indicator"
+    ],
+    "optimal_k_bic": 46,
+    "bic_at_optimal": -589630.7670947596,
+    "kill_criterion": "optimal k > 50",
+    "killed": false,
+    "verdict": "SURVIVES"
+  },
+  "H61": {
+    "hypothesis": "Artin Dimensional Gap",
+    "even_dim2": 72032,
+    "total_dim3": 39913,
+    "ratio": 1.8047,
+    "kill_criterion": "ratio < 10:1",
+    "killed": true,
+    "verdict": "KILLED",
+    "dim_distribution": {
+      "1": 194258,
+      "2": 316843,
+      "3": 39913,
+      "4": 124464,
+      "5": 21259,
+      "6": 48837,
+      "7": 1162,
+      "8": 9480,
+      "9": 15392,
+      "10": 3718
+    }
+  },
+  "H27": {
+    "hypothesis": "Yakaboylu Root Number Bias",
+    "n_reps": 242170,
+    "root_proxy_plus": 129092,
+    "root_proxy_minus": 113078,
+    "slope": -5.263973,
+    "intercept": 1.263941,
+    "r_squared": 0.4933,
+    "p_value": 0.0005546357212555668,
+    "kill_criterion": "slope zero (p>0.01) or positive",
+    "killed": "False",
+    "verdict": "SURVIVES",
+    "note": "Root proxy = (-1)^(dim/2)*Indicator; no root_number column in table"
+  },
+  "H84": {
+    "hypothesis": "Mobius Autocorrelation in Artin Root Numbers",
+    "n_odd_dim2": 244811,
+    "sign_plus1": 0,
+    "sign_minus1": 237274,
+    "sign_zero": 7537,
+    "dominant_fraction": 0.9692,
+    "alpha_exponent": 0.4269,
+    "kill_criterion": "alpha < 0.4 or > 0.6 (but test degenerate: no cancellation)",
+    "killed": true,
+    "verdict": "KILLED (degenerate)",
+    "note": "All odd dim-2 reps have Indicator=1, so proxy is all -1. No Mobius cancellation possible."
+  },
+  "H03": {
+    "hypothesis": "Artin Dimension She-Leveque",
+    "n_dims": 20,
+    "n_valid_gaps": 19,
+    "C_fit": -77.2107,
+    "beta_fit": 0.99,
+    "max_rel_residual": 1.2121,
+    "mean_rel_residual": 0.4824,
+    "beta_cv": 0.0,
+    "n_bootstraps": 200,
+    "kill_criterion": "residuals > 10% or beta unstable (CV > 0.5)",
+    "killed": true,
+    "verdict": "KILLED"
+  }
+}
