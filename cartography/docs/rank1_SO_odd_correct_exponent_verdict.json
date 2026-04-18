@@ -1,0 +1,113 @@
+{
+  "task": "rank1_SO_odd_correct_exponent_verdict",
+  "instance": "Harmonia_worker_T1",
+  "written": "2026-04-17",
+  "context": "W1 (cartography/docs/cfkrs_theoretical_comparison_results.json) reported rank-1 FRONTIER across all k because empirical R_k used the SO_even exponent k(k-1)/2. T1 recomputes with the CORRECT SO_odd exponent k(k+1)/2 and redoes the full CFKRS shape test.",
+  "primary_artifact": "cartography/docs/rank1_SO_odd_correct_exponent_results.json",
+  "script": "harmonia/rank1_SO_odd_correct_exponent.py",
+  "note_on_commit_ordering": "This verdict manifest was committed separately from the primary artifact because parallel workers concurrently auto-committed the script and JSON under T2-worker commits ae044680 and 9dc4d85a before T1's own commit could land. The verdict below is the T1 headline.",
+  "verdicts_per_k": {
+    "1": {
+      "status": "CALIBRATION_CONFIRMED",
+      "second_largest_dev": 0.0574,
+      "max_dev": 0.5055,
+      "monotone": true,
+      "sub_leading_fit": {
+        "A": 0.9081, "A_se": 0.047,
+        "B": -3.385, "B_se": 0.521,
+        "B_z_from_zero": -6.498,
+        "improvement_vs_constant": 7.26,
+        "sign_consistent_with_approach_from_below": true
+      }
+    },
+    "2": {
+      "status": "CALIBRATION_CONFIRMED",
+      "second_largest_dev": 0.0420,
+      "max_dev": 0.5381,
+      "monotone": true,
+      "sub_leading_fit": {
+        "A": 0.05744, "A_se": 0.0082,
+        "B": -0.2008, "B_se": 0.0901,
+        "B_z_from_zero": -2.229,
+        "improvement_vs_constant": 2.98,
+        "sign_consistent_with_approach_from_below": true
+      }
+    },
+    "3": {
+      "status": "FRONTIER",
+      "second_largest_dev": 0.3669,
+      "max_dev": 0.3669,
+      "monotone": false,
+      "sub_leading_fit": {
+        "A": 0.0001985, "A_se": 0.000137,
+        "B": 0.0007734, "B_se": 0.00159,
+        "improvement_vs_constant": 0.66,
+        "sign_consistent_with_approach_from_below": false
+      }
+    },
+    "4": {
+      "status": "FRONTIER",
+      "second_largest_dev": 1.1440,
+      "max_dev": 1.9883,
+      "monotone": true,
+      "sub_leading_fit": {
+        "A": -3.176e-07, "A_se": 1.61e-07,
+        "B": 5.866e-06, "B_se": 1.97e-06,
+        "improvement_vs_constant": 0.70,
+        "sign_consistent_with_approach_from_below": false
+      }
+    }
+  },
+  "ratios_per_k_per_decade": {
+    "1": [
+      {"decade": "100-1000", "emp_over_theory": 0.4945},
+      {"decade": "1000-10000", "emp_over_theory": 0.7221},
+      {"decade": "10000-100000", "emp_over_theory": 0.9426},
+      {"decade": "100000-1000000", "emp_over_theory": 1.0}
+    ],
+    "2": [
+      {"decade": "100-1000", "emp_over_theory": 0.4619},
+      {"decade": "1000-10000", "emp_over_theory": 0.7397},
+      {"decade": "10000-100000", "emp_over_theory": 1.0420},
+      {"decade": "100000-1000000", "emp_over_theory": 1.0}
+    ],
+    "3": [
+      {"decade": "100-1000", "emp_over_theory": 0.8360},
+      {"decade": "1000-10000", "emp_over_theory": 1.1022},
+      {"decade": "10000-100000", "emp_over_theory": 1.3669},
+      {"decade": "100000-1000000", "emp_over_theory": 1.0}
+    ],
+    "4": [
+      {"decade": "100-1000", "emp_over_theory": 2.9883},
+      {"decade": "1000-10000", "emp_over_theory": 2.4312},
+      {"decade": "10000-100000", "emp_over_theory": 2.1440},
+      {"decade": "100000-1000000", "emp_over_theory": 1.0}
+    ]
+  },
+  "nbp_stratification_summary": {
+    "source": "lmfdb.public.ec_curvedata joined to prometheus_fire.zeros.object_zeros",
+    "n_curves_joined": 1008146,
+    "nbp6_outlier_at_k1": {
+      "overall_B": -3.385,
+      "nbp6_B_fit": 1.226,
+      "nbp6_n_decades": 2,
+      "note": "nbp=6 has only 2 decades — two-point slope fit is data-limited, same caveat as W5."
+    },
+    "nbp6_outlier_at_k2": {
+      "overall_B": -0.2008,
+      "nbp6_B_fit": 0.7409,
+      "nbp6_n_decades": 2,
+      "note": "Same data-scarcity caveat: nbp=6 slope is noiseless by two-point construction."
+    }
+  },
+  "comparison_to_W1": {
+    "W1_rank1_k_confirmed": 0,
+    "W1_rank1_k_frontier": 4,
+    "T1_rank1_k_confirmed": 2,
+    "T1_rank1_k_partial": 0,
+    "T1_rank1_k_frontier": 2,
+    "net": "Correct exponent upgrades k=1 and k=2 from FRONTIER to CALIBRATION_CONFIRMED; k=3,4 remain FRONTIER under proxy-a(k). The 0/4 CONFIRMED in W1 was a normalization error, not a CFKRS failure. Rank-1 now matches rank-0 structure exactly (both 2/4 CONFIRMED, 2/4 FRONTIER)."
+  },
+  "overall_verdict": "FRONTIER_OVERALL_WITH_k1_k2_CONFIRMED",
+  "one_liner": "Rank-1 CFKRS shape test with CORRECT SO_odd exponent k(k+1)/2: k=1 and k=2 CALIBRATION_CONFIRMED (sub-leading B negative, z=-6.5 and z=-2.2, fit 7.3x and 3.0x better than constant); k=3 and k=4 remain FRONTIER (proxy-a(k) calibration bottleneck, same as rank-0). W1's FRONTIER verdict on rank-1 was a normalization error, not a CFKRS failure."
+}
