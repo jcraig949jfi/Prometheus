@@ -220,3 +220,11 @@
 - **Deferred with rationale:** (d) DHKMS Bessel-integral port — highest-leverage deferred, 2-4 hr task. (e) Miller A_2 coefficient numerical computation — moderate. (f) apply parallel-path methodology to F010 or F012 kill for Pattern 23 validation.
 - **Recursion horizon observed:** depth 1 (4 paths) all tractable; depth 2 (5 threads) all tractable; depth 3 (6 sub-threads) 3/6 tractable; depth 4 needs sessionA seeding.
 - Outputs: `cartography/docs/wsw_F011_rank0_deeper_results.json`, `cartography/docs/recursion_threads_20260418.md`. Methodology doc updated with Patterns 25, 26, and recursion-horizon note.
+
+## Post-loop @ 2026-04-18 ~14:10 UTC — Depth-4 spot check: CM as residual carrier (ruled out)
+- User continued recursion question. Identified 4 depth-4 threads; explicitly applied the 3-level horizon discipline I documented — deferred 3 (DHKMS regime-of-validity, retroactive Pattern 25 audit, Pattern 27 confound-selection rubric). Executed only #4 (CM-vs-non-CM split) as a cheap spot check.
+- **Finding**: CM rank-0 n=1,766 across full conductor range — too thin for a decay fit (zero bins with n≥200 per decile). Non-CM alone gives ε₀ = 29.94% ± 7.14%, z=4.19 from zero, essentially identical to pooled rank-0 ε₀ = 31.08%. **CM is NOT the residual carrier.** Generic (non-CM) rank-0 EC curves carry the residual.
+- This is a clean NEGATIVE result: rules out one hypothesis cheaply.
+- **Depth-4 discipline observed**: the 3-level horizon holds. Of 4 identified threads, 3 required deferral to sessionA-seeded tasks. Only one was cheap enough for in-session execution, and that one produced a clean negative finding. Further recursion would require theoretical work (DHKMS port, Miller A_2) that's not single-session tractable.
+- Output: `cartography/docs/wsw_F011_rank0_cm_split_results.json`.
+- **Pattern 23 confirmed in practice**: the recursion is natural to terminate at depth 3-4. Beyond, deferral is the honest choice.
