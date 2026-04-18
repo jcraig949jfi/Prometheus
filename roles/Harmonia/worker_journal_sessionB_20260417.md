@@ -194,3 +194,10 @@
   rank=3 deficit (37.2%) > rank=2 deficit (32.0%) inversion is not predicted by naive central-
   zero count — candidate higher-order effect.
 - Proposed followup: `compute_duenez_hkms_prediction_F011`.
+
+## Post-loop @ 2026-04-18 ~13:10 UTC — Four paths after Aporia Report 1
+- User reflection: "did this open any new research paths?" I identified 4; user said "do all 4, document, commit, push." Combined summary: `cartography/docs/four_paths_reflection_20260418.md`.
+- **Path 1+2 (combined):** `harmonia/wsw_F011_rank0_residual.py`. 20 conductor deciles on rank-0-only (n=773K). Power-law fit extrapolates to **ε₀ = 31.08% ± 6.19%, z=5.02 from zero**. F011 tier proposal REOPENS: the 38% deficit splits into ~7% excised-decaying + ~31% non-excised residual at rank 0. My tick-23 `calibration_confirmed` proposal was premature — F011 stays `live_specimen` with refined description.
+- **Path 3:** Drafted P104 catalog entry for block-shuffle-within-confound null at `cartography/docs/catalog_block_shuffle_null_draft.md`. Reserved P104 via `reserve_p_id`. Calibration anchors: F010 kill + F011/F013 survival. TENSOR_DIFF pending sessionA review.
+- **Path 4:** Claude Opus EC L-function zero-projection literature harvest. 40 projections enumerated: 32 classical / 8 open; 16 catalogued / 24 not catalogued. 80% classical, only 40% covered. Output: `cartography/docs/harvest_ec_lfunc_zero_projections.md`.
+- **Synthesis:** F011 not fully closed (rank-0 frontier); my P028 work stays calibration-level; P104 formalizes null discipline; 5 targeted followup tasks proposed for sessionA.

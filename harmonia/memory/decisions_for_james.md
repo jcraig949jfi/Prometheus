@@ -32,7 +32,77 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None currently. Three specimens now block-shuffle-verified; Katz-Sarnak emerges as cross-specimen resolver (see below).*
+*None currently. F011 downgraded to calibration via Aporia Report 1 (see below). F041 added as new live specimen candidate.*
+
+---
+
+### [2026-04-18 ~09:00 UTC] — F011 tier change: live_specimen → calibration_confirmed — RESOLVED
+
+**Context:** Aporia's deep-research Report 1 hypothesized that F011's ~38% GUE first-gap variance deficit is the Duenez-Huynh-Keating-Miller-Snaith (2011) excised ensemble — a known finite-conductor central-zero-forcing effect, not a novel anomaly. sessionB executed both decisive tests on n=2,009,089 EC.
+
+**Results (sessionB wsw_F011_excised_ensemble):**
+
+| Test | Prediction (excised) | Prediction (anomaly) | Observed | Verdict |
+|---|---|---|---|---|
+| Conductor-window scaling | Deficit shrinks with conductor | Flat | Slope -7.17 per log-decade, z=-54.2; 45.37% → 35.34% across 10 bins | EXCISED |
+| Edge vs bulk (gap1 vs gap2) | gap1 >> gap2 (central zero repels only adjacent) | Similar | gap1 38.17% vs gap2 29.07%, z=96.97 | EXCISED |
+
+**Both tests pass excised-ensemble prediction at z > 54.** F011 is Duenez-HKMS, not new physics.
+
+**Tier change:** F011 `live_specimen` → `calibration_confirmed`. Joins F001-F005 + F009 as calibration anchor (6 → 7). Specimen #46 already registered with `status=calibration_confirmed` by sessionB.
+
+**Downstream: F013 interpretation.** F013's P028 split (z=13.68, block-shuffle z_block=15.31) is now understood as a downstream consequence of the same central-zero-forcing — not independent novelty. F013 stays `live_specimen` because the rank-slope sign flip is still structurally informative beyond F011's first-gap story, but interest downgraded. Pattern 5 (known bridge) gate closed retrospectively on both F011 and F013 P028 findings.
+
+**What was learned:** The instrument correctly detected a known RMT effect. F011's block-shuffle verification (z_block=111.78) was durable because the effect IS real — just not novel. This is calibration success, not failure. The "session's strongest durably-resolved specimen" claim from 2026-04-17 is revised to "session's strongest durably-resolved calibration case."
+
+**Residual frontier on F011:** (a) magnitude comparison vs Duenez-HKMS closed-form prediction — if our observed 38% matches the theoretical constant to ~1%, the calibration is exact. (b) rank-3 deficit (37.2%) > rank-2 deficit (32.0%) inversion is NOT predicted by naive central-zero count — candidate higher-order effect, worth a separate probe.
+
+**James input at the time:** "If F011 turns out to be excised-ensemble, I'd write the tier-change decision." — sessionA is writing it per this instruction.
+
+**My recommendation:** ACCEPTED. This is the cleanest falsification outcome possible: Pattern 5 gate worked, instrument calibrated against known theory, and the methodology (block-shuffle protocol from F010) didn't save a finding from reinterpretation. Falsification-first doing its job.
+
+**What's blocked:** Nothing. Residual-frontier tests (closed-form magnitude, rank-3 inversion) seeded-able when the worker cohort is re-spun.
+
+**Urgency:** resolved (historical record).
+
+---
+
+### [2026-04-18 ~08:40 UTC] — F041 Keating-Snaith moment convergence added as candidate
+
+**Context:** sessionC executed Aporia Report 4 post-loop. Moment ratios R_k(X) = M_k(X)/(log X)^{k(k-1)/2} on 2M EC leading_term values, stratified by (analytic_rank, conductor-decade). Pattern 20 discipline reflexive: no pooled statistic reported; 13 cells at n≥100 per stratum.
+
+**Finding:** convergence rate (slope of R_k vs log-conductor) is STRONGLY rank-dependent at k=1:
+- rank=0: +0.164 ± 0.020
+- rank=1: +0.922 ± 0.040 (5.6x larger)
+- rank=2: +1.929 ± 0.025 (12x larger)
+
+Higher-k columns (k=3, k=4) show approx-zero slopes for rank 0 — RMT prediction already satisfied at small conductor for rank 0.
+
+**Interpretation:** convergence rate IS a candidate phoneme. Different rank cohorts approach RMT asymptotics at different speeds, consistent with SO_even vs SO_odd excised-ensemble story (i.e., this is likely ANOTHER downstream consequence of the same central-zero-forcing effect, connected to F011).
+
+**Added as F041** `live_specimen`, n=2,009,089, interest=0.7, specimen #48 registered.
+
+**NOT yet block-shuffle verified** — must happen before promotion or upgrade. Pattern 21 discipline.
+
+**What's blocked:** Nothing. Seed-able: `wsw_F041_moment_convergence_block_shuffle`, `keating_snaith_arithmetic_factor` (decontaminate a_E(k)), `katz_sarnak_vs_rank_check`.
+
+**Urgency:** medium (fresh specimen; block-shuffle verification is the next gate).
+
+---
+
+### [2026-04-18 ~08:59 UTC] — Cohen-Lenstra NOT F-anchor but calibration-consistent
+
+**Context:** sessionD executed Aporia Report 18. Prob(p|h) across 25 (degree × galois_label) strata × 5 primes {3,5,7,11,13} on 21.8M NF.
+
+**Verdict:** `NOT_F_ANCHOR_BUT_CONSISTENT_WITH_ASYMPTOTIC_CL`. Imaginary quadratic 3-8% below asymptote, real quadratic 13-25% below (slower convergence matches classical regulator-growth intuition). All strata |z| = 11-66 below theory. Deviation is known finite-disc convergence bias (Bhargava-Shankar-Tsimerman), NOT an instrument failure.
+
+**Decision:** do NOT add as calibration anchor. Would pollute the F-tier with a specimen that deviates from its own prediction by known finite-disc bias. Specimen #47 registered for audit trail.
+
+**What's blocked:** Nothing. If future work obtains larger-disc bounds (Bhargava-Shankar-Tsimerman rate), F_Cohen_Lenstra could be revisited as an asymptotic anchor.
+
+**Urgency:** resolved.
+
+---
 
 ---
 
