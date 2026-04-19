@@ -30,55 +30,91 @@ of 2026-04-17 — grounding for the abstraction.
 
 ---
 
-## Geometry 1 — The tensor is low-rank
+## Geometry 1 — The tensor has a low-rank CORE in a higher-dim space (amended 2026-04-19)
 
-**The shape:** The specimen-manifold has effective dimension much
-smaller than the apparent (features × projections) cell count. Nearby
-points in invariance-space are structurally similar specimens, even
-when they come from different mathematical areas (NF, EC, g2c, MF,
-Artin). The tensor encodes a low-rank structure; new findings are
-usually *principal components* of that structure rediscovered, not
-independent facts.
+**Original hypothesis:** The specimen-manifold has effective dimension
+≤ 5, much smaller than the apparent (features × projections) cell
+count. New findings are principal components of that structure
+rediscovered, not independent facts.
 
-**Anchor (2026-04-17):** F011, F013, F015 all resolving under P028
-Katz-Sarnak is one fact, not three. P028 is a principal axis of the
-specimen-manifold. Before the block-shuffle audits, it looked like
-three cross-specimen coincidences; after, the geometry is visible.
-F010 joining F022 under block-shuffle is the dual statement: two
-apparent points that turn out to be the same point.
+**Status after Koios SVD run (commit 5f229878, 2026-04-19):** FALSIFIED
+in the strong form, REFINED in a weaker form.
 
-**The analogy for humans:** the tensor is less a crossword grid and
-more a low-rank matrix. Finding a "resolving projection" is finding
-a principal direction. Killing a specimen under null-model change is
-recognizing that what looked like a point on the manifold was actually
-outside the manifold, projected in by the measurement.
+**The measurement:** Koios ran three independent rank estimators on the
+v1 tensor (82 non-zero cells at 10.58% density):
+- Method A — naive SVD (treat 0 as zero): effective rank **12**
+- Method B — SVT nuclear-norm completion (treat 0 as missing): rank **14–16**
+- Method C — observed-only agreement matrix: rank **~15**
 
-**What this buys you:** when you see three specimens resolving under
-the same axis, stop before calling it three discoveries. Ask whether
-the axis is a principal direction. If yes, it's one finding with three
-witnesses, and future specimens should be tested against that axis
-FIRST, not last.
+Three independent methods converge on rank 12–16, not 5. The specimen-
+manifold has about three times the intrinsic dimensionality the
+original hypothesis claimed.
 
-**How to test whether an axis is principal:**
-- It resolves ≥ 3 specimens that aren't tautologically related.
-- The specimens it resolves are structurally diverse (different tiers,
-  different n_objects scales, different source tables).
-- Block-shuffle verification survives at all three+.
-- The axis has a theorem-level reason to matter (Katz-Sarnak is a
-  proved symmetry classification; not "just a column we happened to
-  have").
+**The nuance worth keeping:** a 3-dimensional *core* captures 48–74%
+of variance across all three methods, with clean interpretations:
+1. **signal/noise axis** — separates calibration-confirmed from
+   killed/degenerate cells
+2. **kill/survive axis** — separates the durable specimens from the
+   cohort that collapses under various nulls
+3. **domain connectivity axis** — separates features with dense
+   cross-projection structure from features that live narrowly
 
-**What to update if this geometry holds:** tensor entries should start
-including a `principal_axis_witness` field in `data_provenance`: the
-projection the specimen most strongly resolves under and whether that
-projection is known-principal.
+So the amended shape is: **a 3-dimensional dominant core embedded in a
+~12-dimensional residual space.** The core is what made F011/F013/F015
+look like "one fact, three witnesses" under the original hypothesis.
+The residual is what blocks pure low-rank reconstruction below 5%
+error.
 
-**What falsifies it:** specimens stop clustering along axes. The
-invariance matrix looks increasingly full-rank as more projections are
-added, and no small set of axes dominates. If that happens, the
-landscape may be less singular than the current charter asserts — or
-more likely, we're at a low-resolution view and haven't found the
-right decomposition yet.
+**Anchor cases remain valid as witnesses of the core:** F011, F013,
+F015 resolving under P028 Katz-Sarnak is still structurally one
+finding, not three — that similarity lives in the 3D core. But it
+is not the whole geometry.
+
+**The revised analogy for humans:** the tensor is less a crossword
+grid and less a pure low-rank matrix; it is **a layered matrix with
+a dominant low-rank core plus a genuinely higher-dimensional residual
+that is NOT noise**. The core compresses to ~3 principal directions;
+the residual contains real structure we haven't yet named. Finding a
+"resolving projection" may reveal a core principal component OR a
+residual axis — both are real, and treating the residual as noise
+would discard information.
+
+**What this buys you (revised):** when you see three specimens
+resolving under the same axis, check whether the axis loads onto the
+3D core (call it a *core axis*) or onto a residual dimension (call it
+a *fringe axis*). Core axes explain the bulk of the invariance
+structure — 48–74% of variance; fringe axes explain specific specimens
+but not the cohort. Both are findings. Do not collapse fringe axes
+into core axes.
+
+**How to test whether an axis is core vs fringe:**
+- Core axis: loads onto the top-3 left-singular vectors with magnitude
+  > ~0.2. Projects across ≥ 5 specimens of diverse kind. Interpretable
+  as signal/noise, kill/survive, or domain connectivity.
+- Fringe axis: loads onto singular vectors rank 4–12. Projects onto
+  a specific specimen cluster. May correspond to a distinct arithmetic
+  property (bad-prime structure, CM family, isogeny-class structure)
+  that the core does not capture.
+
+**Data quality caveat (Koios):** at 10.58% density, rank estimates are
+noisy because most cells are missing. Koios's projection: at ≥ 30%
+density, the three methods (A, B, C) should converge to a stable
+number. That threshold is the Gap-filler's target. Current density is
+8.98% (slightly lower after the projection count grew from 25 to 37).
+**Until density > 30%, treat rank estimates as directional — the
+12–16 range is "large," not "exactly 14".**
+
+**What falsifies the amendment:** if the core shrinks to < 2 dimensions
+after density crosses 30%, the original rank-5 hypothesis is rescued.
+If the core grows to > 5 dimensions, the "core + residual" framing is
+also suspect; we have a genuinely high-rank tensor.
+
+**What revalidates the original:** same — if higher density shrinks
+the SVD to ≤ 5 dominant components, Geometry 1 (strong form) is back.
+The current amendment is the honest read at 10% density.
+
+**Source:** Koios rank-analyst commit 5f229878. Full numerical report
+at `cartography/docs/tensor_rank_analysis.md` (if committed).
 
 ---
 

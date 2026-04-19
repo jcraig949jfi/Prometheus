@@ -32,7 +32,54 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None blocking. Major milestone 2026-04-18: visualization layer live (Charon cartographer role #3 delivered).*
+*None blocking. Second map-building milestone 2026-04-19: all 7 delegated roles executed; Geometry 1 FALSIFIED with amendment; F043 durable at z=-348.*
+
+---
+
+### [2026-04-19 ~01:30 UTC] — 7-role map-building wave delivered — milestone, Geometry 1 amended
+
+**Tensor state transition:**
+- Before wave: 31 × 25, 82 non-zero, 10.58% density, +2 count=22, +1 count=28
+- After wave:  31 × 37, 103 non-zero, 8.98% density, **+2 count=44 (doubled)**, +1 count=7
+- 12 new projections added as columns (Gap-filler). 22 cells promoted +1→+2. 5 demotions. 2 downgrades. 4 theorem retentions. 25 new graph edges (Mnemosyne). 246 papers mapped to 197 cells (Aporia).
+
+**Headline finding 1 — Geometry 1 FALSIFIED with amendment (Koios 5f229878):**
+SVD on the invariance matrix across three methods (naive, nuclear-norm completion, observed-only agreement) converges on effective rank **12–16**, not the 5 the original hypothesis claimed. Falsified in strong form.
+
+BUT a 3-dimensional core captures 48–74% of variance with clean interpretations: (1) signal/noise, (2) kill/survive, (3) domain connectivity. Amended geometry: **low-rank core in higher-dim residual space**. F011/F013/F015 resolving under P028 is still one core fact with three witnesses; the residual contains real fringe structure we haven't yet named.
+
+Caveat: at 10% density, rank estimates are noisy. Koios projects convergence at ≥30% density. Geometry 1 amendment stays provisional until Gap-filler lifts density across that threshold.
+
+`harmonia/memory/geometries.md` rewritten to reflect this.
+
+**Headline finding 2 — F043 DURABLE at z=-348 (sessionD 9fc25706):**
+BSD-Sha anticorrelation corr(log Sha, log A) = -0.4343 survives block-shuffle within conductor decile at z_block = -348.05. Observed vs null 0 ± 0.0012. This is the session's strongest durability result on any specimen. Within-conductor-decile structure is real, not conductor-mediated. F043 promoted P020:+1 → +2, P023:+1 → +2.
+
+**Precision correction — F011:P024 torsion COLLAPSES (sessionD 043ba782):**
+F011 × P024 block-shuffle z = 1.37 → demoted +1 → -1. The cross-torsion-class differential is conductor-mediated, not structural. My earlier statements that F011 "resolves under rank, torsion, CM" were accurate for the first two but not the third. F011:P025 CM held (z=5.53). F011 now has 6 durable +2 cells under P028-adjacent axes + 1 collapsed torsion cell.
+
+**Kill candidates from Query-runner (24d17e98):**
+F012 Möbius (already tier=killed), F020 Megethos (already killed), F032 Knot silence (still tier=data_frontier). Worth formal review of F032 — the query-runner promoted it to kill-candidate based on structural pattern.
+
+**What Query-runner's Q1/Q2 confirmed:**
+- Q1 densest feature: **F011** (11/12 positive cells; every tested projection resolves at +1 or +2 except the now-corrected P024)
+- Q2 principal projections: **P020 conductor** and **P023 rank** resolve 9 features each — these are the two empirical axes, consistent with the geometries.md core
+- Zero contradictions across the signals.specimens registry
+
+**NULL_BSWCD@v2 promoted (9fdf8e93):**
+Implementation shipped at `harmonia/nulls/block_shuffle.py::bswcd_null@043ba782`. v2 is backward-compatible additive: stratifier and shuffle_col parameterized, Pattern-26 degeneracy guard wired in programmatically (v1 logged it verbally). All v1 callers get byte-identical defaults under v2.
+
+**What's blocked:** Three deferred audits. F014 × P040 (Lehmer Mahler measure recomputation over 81K polys exceeds tick budget). F045 × P023 (raw per-curve a_p not in Ergon profiles). These need specific data infra.
+
+**My recommendation:** This is the first major data point on whether the map-building strategy compounds. It does — the wave produced more durable structure than any same-duration research-mode wave has produced. The +2 count doubling in a single tick is the measurable signal. Continue map-building mode; another wave at this density + Gap-filler push should take density to ~15–20%, at which point the geometry amendment tightens.
+
+**What's blocked for the next wave:** Gap-filler should prioritize rank-density-lifting cells (those that neighbor existing +2 structure) to get the Koios rank estimate out of the noise regime. Target 30% density as the geometry-closing threshold.
+
+**Urgency:** milestone (no decision needed). All 7 delegated roles delivered.
+
+**Commits:** f566e46c (Charon), ae71bd26/245235bb/d8191b1c (Gap-filler), 74aab3fb/047b754f/f2811662/49f2363f/70e8a344/745fb375 (Mnemosyne edge-weaver), 24d17e98 (Kairos query-runner), 5f229878 (Koios rank-analyst), 646d6ca6 (Aporia literature-mapper), 043ba782/9fc25706/1a18421d (Harmonia re-auditor), 9fdf8e93 (NULL_BSWCD@v2).
+
+---
 
 ---
 
