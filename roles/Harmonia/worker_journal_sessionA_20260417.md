@@ -568,3 +568,142 @@ James asked to stop looping. Final state:
 - Working block-shuffle methodology protocol
 
 The session ended on a strong positive. Over and out.
+
+
+---
+
+# Session Continuation — 2026-04-18 / 2026-04-19
+
+The 2026-04-17 session closed. The next day James resumed sessionA as conductor without a full reset. This is the extended ledger covering the work that followed. It is unusually dense.
+
+## Tick 39-50 @ 2026-04-18 — Aporia wave + 7-role map-building delegation
+
+Aporia delivered 20 deep-research reports (batches 1-2, literature scanner using S2 API on Eos). 5 were Harmonia-assigned. I delegated to Ergon who did all 8 in one pass.
+
+Ergon results (2572d7dd, 2db0fb6b, 37158e4f):
+- DHKMS closed-form ruled out as explanation for F011 rank-0 residual — finite-N prediction goes WRONG direction. The residual is not a reference error.
+- Scholz reflection verified across 344,130 quadratic pairs — zero violations. Became F008 calibration anchor.
+- Bootstrap clean on k=3,4 CFKRS.
+- Isogeny-class murmuration: 5/21 primes significant (F045 candidate).
+- F011 rank-0 residual flagged as the project's strongest frontier finding.
+
+Conductor processing:
+- F011 tier: REOPENED as live_specimen with LAYER 1 (calibration excised ensemble) + LAYER 2 (rank-0 residual 22.90 ± 0.78 %).
+- F041 → F041a rename; rank-2+ monotone-in-nbp slope ladder promoted after 5 workers stress-tested. Pattern 5 CFKRS gate remained open.
+- F008 Scholz added as new calibration anchor (7th after F001-F005 + F009).
+- F042 (cm=-27) downgraded from live_specimen to calibration_refinement after sessionC literature scan showed it is Gross 1980 + RVZ 1993 qualitative match.
+- F014 Lehmer: Charon found structural floor via trinomials.
+- F044 (rank-4 disc=conductor corridor) + F045 (isogeny murmuration) opened.
+
+Symbols layer shipped (c98b7ec6):
+- Five seed symbols promoted at v1: NULL_BSWCD, Q_EC_R0_D5, LADDER, EPS011, SIGNATURE
+- agora/symbols/ module (push, resolve, parse)
+- base Redis only (strings/hashes/sets/streams)
+- versioned keys `symbols:<NAME>:v<N>:*`
+
+VERSIONING discipline baked in (ea15f7f8):
+- Five mandatory rules: every symbol has version + timestamp; every reference carries @vN; promoted versions are immutable; precision declared; agents detect mismatch and upgrade
+- Enforcement at tooling layer (push.py validates, refuses overwrites)
+- OS-path-separator normalization caught (Path.as_posix) for cross-platform byte-equivalence
+
+Tensor Redis mirror (74cf5885):
+- agora/tensor/ module: push + resolve
+- `tensor:*` keys: dims, features, projections, feature_meta/projection_meta, cells, edges, updates (STREAM)
+- Cross-machine live read from any agent on either M1 or M2
+- v1 pushed: 31x25, 82 non-zero, 10.58% density
+
+External artifacts downloaded (6c11fc46):
+- IUCr CIF dictionary, OpenQASM 3.0 spec, ngspice manual, NIST CODATA 2022
+- All hash-pinned with retrieval date + license; stored in harmonia/memory/symbols/external/
+- Not yet integrated as external symbols; infrastructure ready when needed
+
+Cartographer viewer live (f566e46c):
+- Charon delivered: static HTML + server at localhost:8777/map
+- Heatmap with hover metadata, row/col highlighting, hot-cell shading, force-directed edge graphs
+- Auto-refresh from Redis every 5 seconds
+- Surfaced the 17-projection gap: tensor had 25 but catalog had 42
+
+Seven-role first map-building wave (tick ~end of 2026-04-18):
+- Charon Cartographer, Harmonia-C Gap-filler, Harmonia-D Re-auditor, Mnemosyne Edge-weaver, Koios Rank-analyst, Kairos Query-runner, Aporia Literature-mapper
+- All 7 delivered in one wave. Major outcomes:
+  - Koios SVD: Geometry 1 strong form FALSIFIED (rank 12-16, not 5). Amended to 3D core + residual.
+  - Gap-filler: 12 new projection columns added (P028 Katz-Sarnak finally in tensor). 19 new cells.
+  - Re-auditor: 22 cells promoted +1 to +2 under NULL_BSWCD. 5 demoted. 2 downgraded to 0 after literature. 4 theorem-retentions.
+  - Edge-weaver: 25 new graph edges.
+  - Literature-mapper: 246 papers mapped to 197 tensor cells.
+  - Cross-cell: +2 count doubled 22 to 44.
+
+## Tick 51-60 @ 2026-04-19 — External review round 1: the F043 retraction
+
+First external methodological critique (ChatGPT) returned sharp technical feedback. The most important catch: F043 (BSD-Sha anticorrelation, z_block = -348, my claimed "session's strongest durability") was an ALGEBRAIC IDENTITY REARRANGEMENT. BSD identity gives A = L * tors^2 / Sha, so log A contains -log Sha by definition. The negative correlation was algebraically forced, not arithmetic. Block-shuffle null did not break it because the null preserves algebraic relationships. z = -348 detected the BSD identity, not arithmetic structure.
+
+Retraction cascade (df20f900):
+- F043 tier live_specimen to killed. Three cells demoted to -2.
+- Geometry 1 amendment WITHDRAWN: SVT nuclear-norm completion on sparse ordinal MNAR matrix is the wrong method.
+- Principal-axes claim for P020/P023 downgraded to selection artifact (most-tested columns, not structurally principal).
+- +2 count as progress metric retracted.
+- Pattern 30 DRAFT added (algebraic-identity coupling detection).
+
+Second external review (8b37d995, c9d2276e) on the wave 2 summary:
+- F011 language narrowed: "durable" became "surviving candidate under one properly specified test"
+- Pattern 30 graded to severity levels 0-4 (CLEAN, WEAK_ALGEBRAIC, SHARED_VARIABLE, REARRANGEMENT, IDENTITY). F015 at Level 1; F043 was Level 3; calibration anchors sit at Level 4 by design.
+- Standing limits acknowledged: MNAR unfixed, +2 cells not cross-comparable
+- Track D (replication across pipelines) queued as the move from claim-filter to independence-verified
+
+Tracks A + B executed (f5a58256 + b57f4afe + 9fdf8e93):
+- Track A: null-protocol v1 (five claim classes), algebraic-identity sweep across 31 F-IDs (zero new F043-class specimens), 42 +2 cells classified. Methodology tightener shipped NULL_BSWCD@v2 with AST-level purity path + Pattern 26 degeneracy guard.
+- Track B: F011 rank-0 residual survived the conductor-shuffle sanity null at 72.9pp gap (real data 22.9 vs shuffled hit lower bound). Option 2 cross-unfolding methodologically ambiguous. Option 1 Sage/lcalc external verification deferred. EPS011@v2 promoted with `independent_unfolding_audit: SURVIVES (narrow form)`.
+
+## Tick 61-66 @ 2026-04-19 — Long-term architecture doc + idempotence mandate
+
+External review round 3 (9993ee73) focused on architecture. Observations absorbed:
+- "Raw mathematical truth" was the wrong term; we're an empirical audit substrate
+- Layers 2-3-4 are one coupled tri-layer kernel, not three independent layers
+- Replication is multi-dimensional (cross-machine, cross-implementation, cross-decomposition, cross-source)
+- Tensor is a typed relation graph presenting as a matrix
+- Pattern library will become non-operational at ~80-120 entries
+
+long_term_architecture.md v2 shipped at docs/long_term_architecture.md. Five-layer architecture documented with tri-layer-kernel admission. Three planned symbol-type extensions: computation, sampling_intent, dataset snapshot discipline. Graduated verdict labels proposed.
+
+James caught the idempotence gap (9d851e60): computation-as-symbol only makes sense if the whole composition is reproducible — pure code alone is not enough if data inputs are not content-pinned. Doc bumped to v2.1 with section 2.1 "Idempotence and purity constraints (critical)":
+- computation symbols require purity_attestation
+- dataset symbols need content-pinned snapshots, not just SQL
+- Composition is itself a hash-addressable unit
+
+Dataset snapshot infrastructure shipped (1931beae):
+- agora/datasets/ module with canonicalization spec agora_csv_jsonl_v1
+- canonicalize(df) to bytes, column-alpha-sorted, tab-separated, row-order-preserved, deterministic across Python versions, column-reorder-invariant
+- capture_snapshot(sql, conn) and verify_snapshot(sql, conn, expected_hash)
+- CLI: python -m agora.datasets {capture,verify} <symbol>
+- Protocol doc at harmonia/memory/symbols/protocols/dataset_snapshot_v1.md
+- Track E queued at docs/prompts/track_E_snapshot_Q_EC_R0_D5.md — ~5 min task for a session with LMFDB Postgres credentials
+
+## Session-to-date totals (end of 2026-04-19)
+
+Symbols promoted: 5 at v1 + 2 at v2 (NULL_BSWCD, EPS011)
+
+Calibration anchors: 7 (F001-F005, F008, F009). F008 Scholz was the session's one new calibration anchor.
+
+Live specimens after retractions: F011 (mixed-tier), F013, F014, F015, F041a, F042 (calibration-refinement), F044 (provisional), F045 (caveat).
+
+Retractions: F043 (algebraic coupling). Geometry 1 amendment. Principal-axes framing. +2-doubled-as-progress metric.
+
+New infrastructure: agora/symbols/, agora/tensor/, agora/datasets/, cartography/viewer/, external artifacts dir, Pattern library expanded to 30.
+
+New documents: long_term_architecture.md v2.1, docs/prompts/track_{A,B,D,E}, map_building_first_wave.md, symbols README + OVERVIEW + VERSIONING, protocols/null_protocol_v1 + dataset_snapshot_v1, TENSOR_REDIS, geometries.md retraction, abandon_log, NAMESPACE.
+
+## Open at session pause
+
+- Track E (capture Q_EC_R0_D5@v2 snapshot): ~5 min, needs LMFDB Postgres creds
+- Track D (NULL_BSWCD replication pilot on F011): deferred, spec in repo
+- reaudit_10_stratifier_mismatch_cells: seeded on Agora, awaiting claim
+- audit_F044_framebased_resample: seeded on Agora, awaiting claim
+- F011 Option 1 Sage/lcalc external verification: deferred until Sage host
+
+## Reflection at session pause
+
+The most important single move of this wave was absorbing the F043 retraction cleanly. One external reviewer caught what no internal process had. The retraction cascade took about one conductor hour and left the substrate more honest rather than diminished. The claim-generator to claim-filter transition the reviewer described is measurable in that hour.
+
+The second-most-important move was James flagging the idempotence gap in the computation symbol type. v2.0 of the architecture doc would have published a reproducibility promise that the plumbing couldn't deliver. v2.1 is honest about the constraint and has the first piece of plumbing (agora/datasets/) actually shipped.
+
+Infrastructure footprint grew substantially but remained honest. Every claim that didn't survive review got demoted or retracted. The substrate doesn't pretend to know more than it does.
