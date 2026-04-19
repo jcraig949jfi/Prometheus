@@ -910,6 +910,23 @@ between the variables — they shuffle pairings, not definitions.
    the permutation-null step; it is not a meaningful test.
 4. If no algebraic coupling, the permutation test is valid in the usual sense.
 
+**Graded severity levels** (upgraded 2026-04-19 after external review flagged the
+binary CLEAN/PARTIAL/COUPLED classification as too coarse):
+
+| Level | Name | Description | Evidence status | Example |
+|---|---|---|---|---|
+| 0 | CLEAN | Y and X mathematically independent under the measurement | correlation test valid | most specimen F-IDs |
+| 1 | WEAK_ALGEBRAIC | X appears in a term/factor with small coefficient OR under a log-transform where other terms dominate | correlation partially algebraic; specific claims (sign-uniform, magnitude non-monotone, stratum-dependent) beyond the algebraic direction are real evidence | F015 szpiro = log\|Disc\| / log(N) has log(N) in denominator; direction-of-slope partially expected but shape not forced |
+| 2 | SHARED_VARIABLE | X appears directly as factor or term in Y's definition, coefficient non-trivial | correlation test no longer valid; the variables are not independent; report the algebra, not the correlation | hypothetical: corr(Sha, A·Sha) |
+| 3 | REARRANGEMENT | Y is definitionally a rearrangement of X plus other known terms | correlation is a restatement of the defining identity; INVALID evidence | F043: A = L · tors² / Sha, so log A contains −log Sha |
+| 4 | IDENTITY | Y = f(X) exactly (proved algebraic identity) | correlation tests identity verification, not arithmetic structure; belongs in calibration-anchor tier only | F003 BSD parity (−1)^rank = root_number; F008 Scholz reflection |
+
+Correlation tests are evidence of arithmetic structure **only at Level 0**. Level 1 findings
+are still reportable but must explicitly claim something beyond the direction the algebra
+forces (e.g., stratum-dependence, magnitude non-monotonicity, sign-uniformity-at-scale).
+Level 2 and 3 findings should be retracted or restated as algebraic observations. Level 4
+belongs in the calibration anchor tier where identity verification is the point.
+
 **Discipline:**
 - Every F-ID involving a correlation or regression among BSD factors, Euler-product factors,
   or L-value rearrangements must include a "definitional-dependence check" line in its

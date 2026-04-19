@@ -95,13 +95,15 @@ FEATURES = [
                     "concentrated in arithmetically structured sub-populations. "
                     "INDEPENDENT-UNFOLDING AUDIT 2026-04-19 (sessionB f5a58256): under 50 conductor-permutation "
                     "shuffles, all 50 fits hit the -50% fitting lower bound; real data returns 22.90%. The 72.9pp "
-                    "gap rules out fitting-procedure degeneracy — the residual is a genuine inference from "
-                    "conductor-gamma structure, not fit bias. Cross-unfolding comparison (Option 2) was "
-                    "methodologically ambiguous because alternative unfoldings don't map onto the UF_CAT-specific "
-                    "GUE=0.178 baseline; deferred. Sage/lcalc external verification (Option 1) deferred to a "
-                    "Sage-capable host. EPS011@v2 now carries independent_unfolding_audit: SURVIVES. "
-                    "Frontier probes queued: DHKMS closed-form magnitude match; Sage/lcalc source-independent check; "
-                    "cross-family vs Dirichlet L-functions; "
+                    "gap rules out fitting-procedure degeneracy — the fit discriminates real from randomized data. "
+                    "Cross-unfolding comparison (Option 2) was methodologically ambiguous. Sage/lcalc external "
+                    "verification (Option 1) deferred to a Sage-capable host. EPS011@v2 carries "
+                    "independent_unfolding_audit: SURVIVES in the NARROW form: the value is not a fit artifact. "
+                    "This is NOT yet 'durable' in the strong sense — no replication across independent implementations "
+                    "or independent zero sources has been done. Post-2026-04-19 external-review language: "
+                    "F011 rank-0 residual = 'surviving candidate under one properly specified test', not 'durable'. "
+                    "Frontier probes queued: Sage/lcalc source-independent check (Pattern 5 external closure); "
+                    "independent NULL_BSWCD implementation for cross-code-path replication; "
                     "Miller 2009 NLO prediction (P106 draft)."},
     {"id": "F012", "label": "Möbius bias at g2c aut groups (H85) — KILLED",
      "tier": "killed", "n_objects": 66158,

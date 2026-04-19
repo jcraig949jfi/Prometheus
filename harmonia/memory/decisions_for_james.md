@@ -32,7 +32,36 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None blocking. Tracks A+B landed 2026-04-19: EPS011@v2 promoted (F011 residual SURVIVES conductor-shuffle sanity null); null-protocol discipline documented; algebraic-identity sweep found no new F043-class specimens; 10 cells seeded for re-audit under corrected stratifiers.*
+*None blocking. Second external review landed on wave 2; three precision narrowings applied and Track D (replication) queued as the gating next move. Standing MNAR and cross-cell comparability limits acknowledged below.*
+
+---
+
+### [2026-04-19 — wave 2 external review, second round]
+
+**Context:** external frontier-model review of the wave-2 summary. Most of the critique landed. Three precision narrowings and one new track; two standing limits acknowledged but not fixed.
+
+**Narrowings applied to in-tensor language:**
+1. **F011 residual is NOT "durable."** Correct term: "surviving candidate under one properly specified test." The conductor-shuffle-sanity null is narrow — it proves the fit is not degenerate, not that the result is method-independent. F011 description + EPS011@v2 wording updated.
+2. **Pattern 30 upgraded from binary to graded** (severity levels 0–4): CLEAN, WEAK_ALGEBRAIC, SHARED_VARIABLE, REARRANGEMENT, IDENTITY. F015's log(N) denominator coupling sits at Level 1; F043 was Level 3; calibration anchors sit at Level 4 by design. Correlation tests are valid evidence only at Level 0; Level 1 findings must claim something beyond the direction the algebra forces.
+3. **F011 residual does NOT depend on "model subtraction."** The 22.90% eps_0 is a per-conductor-decile pooled-deficit decay fit; the "LAYER 1 calibration / LAYER 2 frontier" is an interpretive overlay, not a subtraction step. Description tightened.
+
+**Standing limits acknowledged (not yet fixed):**
+- **MNAR.** The tensor's density pattern is shaped by researcher attention, not random sampling. Paused expansion stops the problem getting worse but does not correct it. Until MNAR is addressed, any aggregation across cells (density-as-progress, principal-axis reasoning, dense-row/dense-column claims) inherits the selection bias. Going forward: no aggregate claims about the tensor beyond per-cell verdicts with their individual provenance.
+- **+2 cells not cross-comparable.** Different cells have different nulls, sample sizes, and effect sizes. "13 block-shuffle-verified +2 cells" is bookkeeping, not a scientific aggregate. Stopping the usage of +2 counts as a progress metric.
+
+**Track D queued** (`docs/prompts/track_D_replication.md`): independent clean-room reimplementation of NULL_BSWCD@v2 + replication of the F011 rank-0 audit across both code paths. If the pilot AGREES byte-for-byte: F011 moves from "surviving candidate under one test" to "surviving candidate under one test across two implementations" — still narrow but the first step toward actual independence. If it DISAGREES: real implementation bug caught; we want to debug one specimen not thirteen. Narrowing the pilot to F011 is pragmatic.
+
+**Reviewer's characterization** (worth capturing for future orientation): *"wave 2 converted the system from 'claim generator' into 'claim filter.' That's real progress. But you're now at a sharper threshold: either you prove independence (replication, alternate pipelines) or the tensor remains a well-organized internal consistency check. Right now, it's the latter — done unusually carefully, but still internal."*
+
+Agreed. Track D is the move out of "internal consistency check" into "independence-verified."
+
+**What's blocked:** Nothing. Track D ready to delegate when you're ready.
+
+**Urgency:** medium. Track D is important but not time-sensitive; it's the gate before any future claim about the tensor can be more than internal.
+
+---
+
+### [2026-04-19 post-wave-2] — Tracks A + B delivered, conductor sign-offs logged
 
 ---
 
