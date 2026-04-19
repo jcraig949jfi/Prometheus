@@ -30,91 +30,74 @@ of 2026-04-17 — grounding for the abstraction.
 
 ---
 
-## Geometry 1 — The tensor has a low-rank CORE in a higher-dim space (amended 2026-04-19)
+## Geometry 1 — RETRACTED 2026-04-19 (strong form falsified, weak form not supported by appropriate method)
 
 **Original hypothesis:** The specimen-manifold has effective dimension
 ≤ 5, much smaller than the apparent (features × projections) cell
 count. New findings are principal components of that structure
 rediscovered, not independent facts.
 
-**Status after Koios SVD run (commit 5f229878, 2026-04-19):** FALSIFIED
-in the strong form, REFINED in a weaker form.
+**Status after external review 2026-04-19:** FALSIFIED in the strong
+form; the amended "low-rank core" weak form is NOT SUPPORTED by the
+method we used to test it.
 
-**The measurement:** Koios ran three independent rank estimators on the
-v1 tensor (82 non-zero cells at 10.58% density):
-- Method A — naive SVD (treat 0 as zero): effective rank **12**
-- Method B — SVT nuclear-norm completion (treat 0 as missing): rank **14–16**
-- Method C — observed-only agreement matrix: rank **~15**
+**Why the weak-form amendment was retracted:** Koios ran nuclear-norm
+completion (SVT) on a sparse ordinal {-2, -1, 0, +1, +2} matrix where
+0 encodes "not measured" rather than "measured as zero," and where
+missingness is non-random (cells are tested based on researcher
+attention and data availability, not by random sampling of (F, P)
+pairs). SVT assumes:
+  - continuous real-valued entries
+  - observed-at-random missingness
+  - low-rank + Gaussian-noise generative structure
 
-Three independent methods converge on rank 12–16, not 5. The specimen-
-manifold has about three times the intrinsic dimensionality the
-original hypothesis claimed.
+None of those hold. The "rank 12–16" estimate Koios reported is a
+diagnostic number, not a reliable estimate of latent rank. The
+"3-dimensional core captures 48–74% of variance" decomposition fit
+is real arithmetic, but the three axis labels (signal/noise,
+kill/survive, domain connectivity) are a post-hoc narrative
+plausibly fit to the measurement pattern rather than extracted from
+underlying structure.
 
-**The nuance worth keeping:** a 3-dimensional *core* captures 48–74%
-of variance across all three methods, with clean interpretations:
-1. **signal/noise axis** — separates calibration-confirmed from
-   killed/degenerate cells
-2. **kill/survive axis** — separates the durable specimens from the
-   cohort that collapses under various nulls
-3. **domain connectivity axis** — separates features with dense
-   cross-projection structure from features that live narrowly
+Additional selection concern: the columns most loaded in the SVD
+(P020 conductor, P023 rank) are also the columns most densely tested.
+Their SVD prominence reflects what has been measured most, not what
+is structurally most important.
 
-So the amended shape is: **a 3-dimensional dominant core embedded in a
-~12-dimensional residual space.** The core is what made F011/F013/F015
-look like "one fact, three witnesses" under the original hypothesis.
-The residual is what blocks pure low-rank reconstruction below 5%
-error.
+**What the SVD numbers actually were (retained as diagnostic):**
+Koios ran three estimators on v1 (82 non-zero cells at 10.58% density):
+- Method A (naive SVD): rank ≈ 12
+- Method B (SVT completion): rank ≈ 14–16
+- Method C (observed-only agreement matrix): rank ≈ 15
 
-**Anchor cases remain valid as witnesses of the core:** F011, F013,
-F015 resolving under P028 Katz-Sarnak is still structurally one
-finding, not three — that similarity lives in the 3D core. But it
-is not the whole geometry.
+These are calculations we performed; they are not reliable estimators
+of the latent rank of the underlying phenomenon at this density with
+this missingness mechanism. Treat them as diagnostic outputs, not
+structural claims.
 
-**The revised analogy for humans:** the tensor is less a crossword
-grid and less a pure low-rank matrix; it is **a layered matrix with
-a dominant low-rank core plus a genuinely higher-dimensional residual
-that is NOT noise**. The core compresses to ~3 principal directions;
-the residual contains real structure we haven't yet named. Finding a
-"resolving projection" may reveal a core principal component OR a
-residual axis — both are real, and treating the residual as noise
-would discard information.
+**What would support a re-opened Geometry 1:**
+- An ordinal or logistic matrix factorization (not SVT) run on the
+  discrete-valued entries with explicit MNAR modeling
+- Controlled sampling of (F, P) cells (choose the next tests by
+  coin-flip over an unbiased frame, not by researcher attention), to
+  break the confound between "most-tested" and "most-loaded"
+- Cross-validation across independently-seeded worker cohorts
 
-**What this buys you (revised):** when you see three specimens
-resolving under the same axis, check whether the axis loads onto the
-3D core (call it a *core axis*) or onto a residual dimension (call it
-a *fringe axis*). Core axes explain the bulk of the invariance
-structure — 48–74% of variance; fringe axes explain specific specimens
-but not the cohort. Both are findings. Do not collapse fringe axes
-into core axes.
+None of these have been run. Until they are, no claim about the
+tensor's latent dimensionality is defensible from the current data.
 
-**How to test whether an axis is core vs fringe:**
-- Core axis: loads onto the top-3 left-singular vectors with magnitude
-  > ~0.2. Projects across ≥ 5 specimens of diverse kind. Interpretable
-  as signal/noise, kill/survive, or domain connectivity.
-- Fringe axis: loads onto singular vectors rank 4–12. Projects onto
-  a specific specimen cluster. May correspond to a distinct arithmetic
-  property (bad-prime structure, CM family, isogeny-class structure)
-  that the core does not capture.
+**Anchor observation that survives the retraction:**
+F011, F013, F015 all showing durable responses under P028 Katz-Sarnak
+is still an empirical clustering worth noting. It may indicate shared
+structure, or it may reflect that P028 was tested on exactly the
+features whose descriptions already suggested L-function symmetry
+relevance. Distinguishing the two would require running P028 on a
+random sample of features, not a curated one.
 
-**Data quality caveat (Koios):** at 10.58% density, rank estimates are
-noisy because most cells are missing. Koios's projection: at ≥ 30%
-density, the three methods (A, B, C) should converge to a stable
-number. That threshold is the Gap-filler's target. Current density is
-8.98% (slightly lower after the projection count grew from 25 to 37).
-**Until density > 30%, treat rank estimates as directional — the
-12–16 range is "large," not "exactly 14".**
-
-**What falsifies the amendment:** if the core shrinks to < 2 dimensions
-after density crosses 30%, the original rank-5 hypothesis is rescued.
-If the core grows to > 5 dimensions, the "core + residual" framing is
-also suspect; we have a genuinely high-rank tensor.
-
-**What revalidates the original:** same — if higher density shrinks
-the SVD to ≤ 5 dominant components, Geometry 1 (strong form) is back.
-The current amendment is the honest read at 10% density.
-
-**Source:** Koios rank-analyst commit 5f229878. Full numerical report
-at `cartography/docs/tensor_rank_analysis.md` (if committed).
+**Status of the "map" concept broadly:** the tensor remains useful
+as a research-audit artifact (bookkeeping robustness across nulls
+and stratifications). The "map has latent geometry" interpretation
+was premature and is retracted until methodology supports it.
 
 ---
 

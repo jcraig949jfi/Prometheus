@@ -32,7 +32,55 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None blocking. Second map-building milestone 2026-04-19: all 7 delegated roles executed; Geometry 1 FALSIFIED with amendment; F043 durable at z=-348.*
+*None blocking. External-review retractions logged 2026-04-19: F043 withdrawn (algebraic-identity artifact); Geometry 1 amendment withdrawn (inappropriate method for MNAR ordinal data); principal-axes and +2-doubled claims downgraded to selection/process artifacts.*
+
+---
+
+### [2026-04-19 post-review] — Retraction cascade following external methodological critique — RESOLVED
+
+**Context:** External frontier-model review of the first-wave retrospective (docs/map_building_first_wave.md, commit 45fd79d5) returned a substantive methodological critique. The review landed hard on 9 of 10 items in §6 plus both cross-cutting concerns. One item (F043) required a full retraction; two others (SVD rank claims, principal axes) required downgrades.
+
+**What the review established:**
+
+1. **F043 is an algebraic identity rearrangement, not evidence.** The claimed `corr(log Sha, log A) = -0.4343` at `z_block = -348` is mathematically forced by the BSD identity: `A = L · #tors² / #Sha` means `log A = log L + 2 log tors - log Sha`, so `-log Sha` appears inside `log A` by definition. The negative correlation is algebraic, not arithmetic. The block-shuffle null did not break this because permutation preserves algebraic relationships between variables (shuffles pairs, not definitions). The `Sha = 1` restriction made it worse by collapsing variance in one term. `z = -348` detects the BSD identity in rearranged coordinates.
+
+2. **SVT nuclear-norm completion is the wrong method for our matrix.** The tensor is sparse (~10% dense), ordinal (values in {-2, -1, 0, +1, +2}), and missing-not-at-random (cells are tested based on researcher attention, not random sampling). SVT assumes continuous entries, observed-at-random missingness, and low-rank + Gaussian-noise generative structure. None hold. The "rank 12–16" and "3-dimensional core" findings are diagnostic calculations, not reliable estimates of latent structure.
+
+3. **"Principal axes" P020 and P023 are selection artifacts.** These are the two most-universally-available and most-frequently-used stratifications in LMFDB data. Their prominence in SVD loadings and dense-column counts reflects what was easiest to measure, not what is structurally most important.
+
+4. **"+2 count doubled" is process reclassification, not independent replication.** The 22→44 came from re-auditing existing +1 cells with a tighter null, plus theorem-retentions. No new independent confirmations. Metric is volumetric at current scope.
+
+5. **Single-null usage is under-specified.** Block-shuffle-within-conductor-decile is not the correct null for every claim class. +2 cells are not cross-row comparable because different features need different block structures or model-based nulls entirely.
+
+**Actions taken this tick:**
+
+- **F043 tier: `live_specimen` → `killed`.** Description rewritten to document the algebraic coupling and cite the proof.
+- **F043 INVARIANCE cells**: (F043, P020) +2 → -2, (F043, P023) +2 → -2, (F043, P038) 0 → -2. All three are now "provably-collapses" under the algebraic-identity check (Pattern 30 DRAFT).
+- **Geometries.md Geometry 1**: amended "low-rank core" form WITHDRAWN. Strong form remains falsified. No weak form currently supported. SVD numbers retained as diagnostic calculations, not structural claims.
+- **Pattern library**: added Pattern 30 DRAFT (Algebraic-Identity Coupling Detection) as a strong advisory even with one anchor, because the failure mode is severe.
+- **Claims downgraded**: "P020 and P023 as principal axes" and "+2 doubled ⇒ strategy compounds" are no longer supported framings; they remain in the change log but are not load-bearing.
+
+**What survives the review (per the reviewer's own "bottom line"):**
+- Project value as a research-audit layer (bookkeeping robustness across nulls and stratifications)
+- Calibration anchors F001-F005, F008, F009 (theorem verifications; valid)
+- F011 rank-0 residual at z_block = 4.19 under the balanced torsion_bin stratifier (modest, provisional, pending independent-unfolding check)
+- Workflow discipline: versioned symbols, block-shuffle re-audit, literature-buffered review
+
+**What does not survive:**
+- F043 as a frontier specimen
+- The "low-rank core" amended Geometry 1
+- The "principal axes" interpretation of P020 and P023
+- "+2 count doubled" as a compounding-strategy signal
+
+**ROI framing correction (James's point):** the cataloging approach's value is deferred, not day-one. The reviewer was evaluating for immediate novelty and found mostly bookkeeping — which matches the plan in investment_priorities.md. The methodological critiques land regardless of ROI timeline; the "no new math yet" complaint does not land as criticism of the approach itself, because the approach was explicitly long-arc. The first-wave retrospective doc's framing may have invited novelty-seeking evaluation by reporting findings as "the first data point that the strategy compounds." Corrected reading: the first wave established an audit infrastructure and surfaced one real methodological failure (F043) that the discipline of the approach caught after external review. That is the honest ROI of wave 1.
+
+**What's blocked:** Nothing. Retractions are executed. Worker cohort can continue.
+
+**Urgency:** resolved (retractions logged, tensor updated, Pattern 30 draft added).
+
+**Commits (this tick):** pending push after tensor rebuild.
+
+---
 
 ---
 

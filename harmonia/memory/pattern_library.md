@@ -878,3 +878,56 @@ promote. Until then, use as advisory.
 
 **Audit schedule:** re-evaluate DRAFT pattern promotion when the next 3 specimens are
 investigated — if any of 23–29 fire again on a specimen not named F011, note it here.
+
+---
+
+## Pattern 30 — Algebraic-Identity Coupling Detection (DRAFT, promoted to strong advisory 2026-04-19)
+
+**Recognition:** Before running a correlation (or any statistical dependence test) on two
+quantities `X` and `Y`, check whether one is algebraically defined in terms of the other,
+either directly or via a rearrangement of a proved identity. If yes, the observed
+"correlation" is a rearrangement of the identity, not evidence of arithmetic structure.
+Permutation nulls do NOT break this coupling because they preserve the algebraic relationship
+between the variables — they shuffle pairings, not definitions.
+
+**Anchor case (F043, retracted 2026-04-19):**
+- Claimed finding: `corr(log Sha, log A) = -0.4343` at `z_block = -348` on rank-0 EC, where
+  `A := Omega_real * prod_p c_p`.
+- What the reviewer spotted: BSD identity rearranges to `log A = log L + 2 log tors - log Sha`,
+  so `-log Sha` is a term inside `log A` by definition. The negative correlation is algebraically
+  induced.
+- Block-shuffle null within conductor decile did not break it because the null preserves the
+  definitional dependence. `z_block = -348` detects the BSD identity expressed in rearranged
+  variables. Retracted as evidence.
+- Restricting to `Sha = 1` curves made it WORSE, not better — collapsing variance in one
+  term amplifies the remaining coupling through the algebra.
+
+**Diagnostic checklist (before any correlation test):**
+1. Write `Y` in terms of observable atomic quantities. Does `X` (or a log-transform of `X`)
+   appear as a term or factor in that expression?
+2. If yes: is the coefficient of that term non-zero?
+3. If yes: the correlation is an algebraic rearrangement, not structural evidence. Skip
+   the permutation-null step; it is not a meaningful test.
+4. If no algebraic coupling, the permutation test is valid in the usual sense.
+
+**Discipline:**
+- Every F-ID involving a correlation or regression among BSD factors, Euler-product factors,
+  or L-value rearrangements must include a "definitional-dependence check" line in its
+  description.
+- Permutation nulls address whether PAIRINGS are informative. They do not address whether
+  DEFINITIONS induce coupling. Those are orthogonal checks.
+
+**Distinction from Pattern 1 (Distribution/Identity Trap):** Pattern 1 warned about two
+quantities sharing a formula at high correlation. Pattern 30 is the generalization — the
+shared structure may be a log-transformed algebraic rearrangement that looks novel at
+first. Pattern 1 is about high correlation; Pattern 30 is about ANY correlation on
+algebraically-coupled variables being a rearrangement, regardless of magnitude.
+
+**Promotion criterion:** F043 is the first anchor case. This pattern stays DRAFT until a
+second, unrelated specimen is caught by the same check. Given how easy it is to construct
+algebraically-coupled statistics on BSD or Euler-product data, we expect more anchors soon.
+
+**Status elevation:** despite having only one anchor, the severity and obviousness of the
+F043 failure mode argues for treating Pattern 30 as a strong advisory rather than a
+tentative draft — i.e., it is already enforced discipline for new correlation-based work,
+even if not formally promoted.

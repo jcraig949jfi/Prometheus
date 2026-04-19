@@ -115,10 +115,10 @@
     },
     {
       "id": "F043",
-      "label": "BSD-Sha anticorrelation with period (new empirical law candidate)",
-      "tier": "live_specimen",
+      "label": "BSD-Sha 'anticorrelation' \u2014 RETRACTED as algebraic identity coupling",
+      "tier": "killed",
       "n_objects": 60003,
-      "description": "U_D 2026-04-18 (111d6288): corr(log Sha, log A) = -0.520 at rank 0 decade [1e5,1e6), where A := Omega_real * prod_p c_p. Large-Sha curves have systematically small period*Tamagawa product. Weighted regression: mean_logA = 1.393 - 0.691 * log(sha). NOT a conditioning tautology \u2014 independent-sha null over-depletes large sha 12.2x mean ratio. Secondary: corr(2 log tors, log A) = +0.612 (large-torsion -> larger A, neutralizing torsion denominator on L). Mechanistically EXPLAINS T4 (cbe7b623) low-L-tail sha depletion: the period drops faster than Sha rises, so large-Sha curves are BUFFERED out of the low-L tail relative to sha-independent baseline. Frontier: no known BSD formula predicts corr(Sha, A) = -0.52. Candidate new empirical law. Kill/confirm test: Iwasawa main conjecture or Cassels-Tate bounds; replication at rank 1 and rank 2."
+      "description": "RETRACTED 2026-04-19 after external methodological review. The claimed corr(log Sha, log A) = -0.4343 at z_block = -348 is a DETERMINISTIC ARTIFACT of the BSD identity rearrangement, not an empirical anticorrelation. Proof: we defined A := Omega_real * prod_p c_p. The BSD identity L = Omega * Reg * prod(c_p) * #Sha / #tors^2 rearranges as log A = log L + 2 log tors - log Sha. The term -log(Sha) appears INSIDE log(A) by definition. Therefore corr(log Sha, log A) contains a structural negative-correlation term from the algebra, not from arithmetic. The block-shuffle-within-conductor-decile null did NOT break this coupling because the null preserves the algebraic relationship between variables (shuffles pairs, not definitions). The sha=1 restriction made it WORSE by collapsing variance in one term and amplifying the remaining coupling. z_block = -348 is not informative evidence; it detects the BSD identity in rearranged coordinates. Tensor INVARIANCE cells (F043, P020) and (F043, P023) demoted from +2 to -2 (provably-collapses artifact). The original T4 observation (low-L-tail sha depletion) remains valid as an empirical pattern; the decomposition into a 'period anticorrelation mechanism' was an overinterpretation that the reviewer caught. Methodological lesson: before running correlation tests on two quantities, check whether one is algebraically defined in terms of the other. If yes, the correlation is a rearrangement of the identity, not evidence. See Pattern 30 DRAFT (algebraic-identity coupling detection)."
     },
     {
       "id": "F044",
@@ -570,9 +570,9 @@
       "P100": -1
     },
     "F043": {
-      "P020": 2,
-      "P023": 2,
-      "P038": 0,
+      "P020": -2,
+      "P023": -2,
+      "P038": -2,
       "P036": -1
     },
     "F008": {
@@ -646,7 +646,6 @@
     "F013",
     "F014",
     "F041a",
-    "F043",
     "F044",
     "F045",
     "F015"
