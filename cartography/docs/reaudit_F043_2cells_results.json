@@ -1,0 +1,42 @@
+{
+  "task": "reaudit_F043_2cells",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "operator": "NULL_BSWCD@v1",
+  "started": "2026-04-19T01:17:15.572378+00:00",
+  "finished": "2026-04-19T01:17:38.281901+00:00",
+  "commit": "043ba782",
+  "n_samples": 559386,
+  "observed_corr": -0.4343145760012182,
+  "bswcd_result": {
+    "null_mean": -0.0007125716854103269,
+    "null_std": 0.0012458046548051603,
+    "null_p99": 0.0020476400862150697,
+    "observed": -0.4343145760012182,
+    "z_score": -348.05,
+    "verdict": "DURABLE",
+    "n_strata_used": 10,
+    "stratifier": "conductor",
+    "n_bins": 10,
+    "n_perms": 300,
+    "seed": 20260417
+  },
+  "consistency": {
+    "low_half": -0.4343145760012182,
+    "high_half": 0
+  },
+  "tensor_diff": {
+    "F043:P020": {
+      "from": 1,
+      "to": 2,
+      "z_block": -348.05,
+      "verdict": "DURABLE"
+    },
+    "F043:P023": {
+      "from": 1,
+      "to": 2,
+      "z_block": -348.05,
+      "verdict": "DURABLE",
+      "note": "rank-stratification vacuous; inherits P020 verdict"
+    }
+  }
+}

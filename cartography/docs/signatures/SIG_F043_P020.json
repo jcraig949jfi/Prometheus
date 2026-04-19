@@ -1,23 +1,33 @@
 {
-  "feature_id": "F043@8d2f2196",
+  "feature_id": "F043@043ba782",
   "projection_ids": [
-    "P020@8d2f2196"
+    "P020@043ba782"
   ],
   "null_spec": "NULL_BSWCD@v1[stratifier=conductor,n_bins=10,n_perms=300,seed=20260417]",
-  "dataset_spec": "Q_EC@lmfdb.ec_curvedata",
-  "n_samples": 200000,
-  "effect_size": -0.52,
-  "z_score": 0.0,
+  "dataset_spec": "EC rank-0 conductor in [100000,1000000)",
+  "n_samples": 559386,
+  "effect_size": -0.4343145760012182,
+  "z_score": -348.05,
   "precision": {
     "effect_size": "4 sig figs",
     "z_score": "2 decimal places",
     "n_samples": "exact"
   },
-  "commit": "8d2f2196",
+  "commit": "043ba782",
   "worker": "Harmonia_M2_sessionD_reauditor",
-  "timestamp": "2026-04-19T01:05:50.025558+00:00",
-  "verdict": "DEFERRED",
-  "category": "DEFERRED",
-  "description": "F043 BSD-Sha anticorrelation with period: corr(log Sha, log A)=-0.520 at rank-0 decade [1e5,1e6). U_D 2026-04-18 (111d6288). Per-cell block-shuffle audit deferred.",
-  "reproducibility_hash": "be4b47f21f1dfa1db62dcf2bd20a787fa04ab135d6b9a46804369a4708e8e4b8"
+  "timestamp": "2026-04-19T01:17:38.281366+00:00",
+  "reproducibility_hash": "f8fe9bb07f79b677b813e3d1d1458133ab3a72ddb7fa5b6d4fa5153f94288181",
+  "bswcd_full_result": {
+    "null_mean": -0.0007125716854103269,
+    "null_std": 0.0012458046548051603,
+    "null_p99": 0.0020476400862150697,
+    "observed": -0.4343145760012182,
+    "z_score": -348.05,
+    "verdict": "DURABLE",
+    "n_strata_used": 10,
+    "stratifier": "conductor",
+    "n_bins": 10,
+    "n_perms": 300,
+    "seed": 20260417
+  }
 }

@@ -1,23 +1,26 @@
 {
-  "feature_id": "F043@8d2f2196",
+  "feature_id": "F043@043ba782",
   "projection_ids": [
-    "P023@8d2f2196"
+    "P023@043ba782"
   ],
   "null_spec": "NULL_BSWCD@v1[stratifier=conductor,n_bins=10,n_perms=300,seed=20260417]",
-  "dataset_spec": "Q_EC@lmfdb.ec_curvedata",
-  "n_samples": 200000,
-  "effect_size": -0.52,
-  "z_score": 0.0,
+  "dataset_spec": "EC rank-0 conductor in [100000,1000000)",
+  "n_samples": 559386,
+  "effect_size": -0.4343145760012182,
+  "z_score": -348.05,
   "precision": {
     "effect_size": "4 sig figs",
     "z_score": "2 decimal places",
     "n_samples": "exact"
   },
-  "commit": "8d2f2196",
+  "commit": "043ba782",
   "worker": "Harmonia_M2_sessionD_reauditor",
-  "timestamp": "2026-04-19T01:05:50.035264+00:00",
-  "verdict": "DEFERRED",
-  "category": "DEFERRED",
-  "description": "F043 under rank stratification: anchor is rank-0 decade. Cross-rank differentiation not yet audited. Deferred.",
-  "reproducibility_hash": "46351c153b5feb5985852d76cd21f1bc6066e66478c76587897adc6fea8e2819"
+  "timestamp": "2026-04-19T01:17:38.281717+00:00",
+  "verdict": "DURABLE",
+  "description": "F043 is rank-0-defined; P023 (rank stratification) is vacuous for this feature. Verdict inherits from F043 x P020 block-shuffle. Consistency across conductor halves: low=-0.4343, high=+0.0000.",
+  "consistency_checks": {
+    "corr_low_half": -0.4343145760012182,
+    "corr_high_half": 0
+  },
+  "reproducibility_hash": "c7fd4dc49a6e4ee5bbb904b61d51afa4d6efc207d5647336dcac5785c6d91b46"
 }
