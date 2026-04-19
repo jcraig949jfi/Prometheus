@@ -1,7 +1,9 @@
 # Long-Term Architecture: A Version-Controlled Empirical Audit Substrate for Computational Mathematics
 
-**Document version:** v2 (2026-04-19). Revised from v1 (`b81aa56f`) after
-external frontier-model critique. Revision history at bottom.
+**Document version:** v2.1 (2026-04-19). v2.1 adds §2.1 (idempotence
+and purity constraints for `computation` symbols) after James pointed
+out that v2's `code_artifact` sketch was missing the purity mandate.
+Full revision history at bottom.
 
 ---
 
@@ -101,11 +103,47 @@ Layer 4 encodes the compound primitives of inter-agent communication as versione
 
 - **Symbol types (current)**: `operator` (a procedure with pinned parameters — e.g., `NULL_BSWCD@v2` is block-shuffle-within-conductor-decile null, 300 perms, seed 20260417, balanced-stratifier guard built in), `shape` (a structural pattern descriptor like `LADDER`), `constant` (a numerical value with declared precision — e.g., `EPS011@v2 = 22.90 ± 0.78 %` with audit status), `dataset` (a pinned SQL query returning an exact row count), `signature` (a tuple schema for reporting findings).
 
-- **Planned symbol types (extensions).** Two extensions are under consideration:
-  - **`code_artifact`** — source code as a first-class versioned, hash-pinned symbol. Currently, operators reference their implementation via `harmonia/nulls/block_shuffle.py::bswcd_null@<commit>`; the code itself is not a symbol. Promoting code to a symbol type makes it: content-addressable (sha256 of the file), interface-bound (declares which operator symbol it implements), dependency-tracked (Python version, libraries with pinned versions), and equivalence-testable (multiple `code_artifact` symbols can implement the same `operator` interface and be behaviorally checked against each other — which is exactly what Track D replication needs). Extends cleanly from the external-artifacts work already done for IUCr CIF / OpenQASM / CODATA (same hash-pinning pattern, just applied to procedures instead of specifications).
+- **Planned symbol types (extensions).** Three extensions are under consideration:
+  - **`computation`** (was tentatively called `code_artifact`) — source code as a first-class versioned, hash-pinned symbol, with strict purity constraints at promotion. Currently, operators reference their implementation via `harmonia/nulls/block_shuffle.py::bswcd_null@<commit>`; the code itself is not a symbol. Promoting code to a symbol type makes it: content-addressable (sha256 of the source), interface-bound (declares which operator symbol it implements), dependency-tracked (Python version, libraries with pinned versions), and equivalence-testable (two `computation` symbols implementing the same `operator` interface can be programmatically checked for byte-identical SIGNATURE output — which is exactly what Track D replication needs). See §2.1 below for the idempotence constraint that makes this viable.
   - **`sampling_intent`** — a declaration on any `dataset` symbol stating whether the dataset is *exhaustive-to-a-bound* (e.g., all EC of conductor ≤ N), *heuristically-sampled* (e.g., first 1000 of a search), or *pathologically-selected* (e.g., rank-record constructions from Stein/Elkies/Dujella). This makes the MNAR discussion structurally present in data provenance rather than confined to prose disclaimers. A verdict on an exhaustive dataset is epistemically different from a verdict on a pathologically-selected one; the substrate should encode that difference.
+  - **`dataset` snapshot discipline (extension of existing type)** — dataset symbols need to pin not just SQL but the *content* returned by that SQL at a specific instant. See §2.1.
 
-Neither extension is implemented yet; both are architecturally consistent with the existing scheme and would compose without breaking current symbol resolvers.
+None of the three is implemented yet; all are architecturally consistent with the existing scheme and would compose without breaking current symbol resolvers.
+
+### 2.1 — Idempotence and purity constraints (critical)
+
+A reviewer made the sharp observation that "code as symbol" is only meaningful if the *whole composition* — operator + data + parameters + implementation — is deterministically reproducible. Otherwise two agents running `NULL_BSWCD@v2(Q_EC_R0_D5@v1)` at different times produce different SIGNATUREs for reasons the symbol registry cannot capture, and the "immutable version" claim at the heart of the substrate falls apart.
+
+Idempotence requires three things simultaneously:
+
+**1. Pure computation.** A `computation` symbol at promotion must declare and enforce:
+- `no_system_time`: the code does not call `datetime.now()`, `time.time()`, or any wall-clock source during the measurement step
+- `no_network_calls_during_compute`: inputs are resolved *before* the compute step and passed in; no DB reads, HTTP fetches, or file reads happen inside the pure computation
+- `no_filesystem_writes`: side-effect-free compute step
+- `deterministic_given_inputs`: any randomness is explicitly seeded, and the seed is an input parameter (not an internal constant accessed through hidden state)
+- `no_environment_reads`: no `os.environ` lookups, no config-file reads during compute
+
+These constraints are declared in the symbol's frontmatter as a `purity_attestation` block. At promotion, a validator inspects the source code's AST for banned calls. If any are found, the symbol is rejected. For operators that genuinely require impurity (e.g., I/O), they belong to a separate `impure_procedure` type and cannot participate in reproducibility claims — they can only appear at the *boundary* of a computation (pulling data in, writing results out), not inside it.
+
+**2. Content-pinned inputs.** Every input to a computation must itself be a content-addressable reference:
+
+- A dataset symbol like `Q_EC_R0_D5@v1` currently pins canonical SQL and an approximate row count. That is insufficient for idempotence — the SQL returns different rows if LMFDB updates. The extension: each dataset symbol carries a `snapshot` field with either (a) a sha256 hash of the returned row bytes at a specific timestamp, or (b) a version pin of the underlying data source (e.g., `lmfdb_snapshot@2024.1`). A dataset symbol without a snapshot reference cannot participate in idempotent SIGNATUREs.
+- Parameter values (seeds, bin counts, permutation counts) are already part of the operator signature and pinned at the call site (`NULL_BSWCD@v2[stratifier=torsion_bin,n_perms=300,seed=20260417]`).
+- Constants (like `EPS011@v2`) are already versioned and immutable.
+
+**3. Composition is a symbol.** The full measurement call composes into a named symbol: `(operator@version, computation@sha, dataset@snapshot, parameters_tuple) → SIGNATURE@v1`. This composition is itself hash-addressable: the same operator + same computation + same dataset snapshot + same parameters produces the same SIGNATURE forever. That composition tuple becomes the smallest unit of "a reproducible claim." The SIGNATURE schema (already planned at v1) extends to carry the composition hash.
+
+**What this buys us:**
+- Two agents in 2030 can run the same composition and get byte-identical SIGNATUREs, without needing to coordinate on environment at run time.
+- Track D replication becomes trivial in the cross-machine-same-code dimension (if pure, the equivalence is by construction) and explicit in the cross-implementation dimension (two `computation` symbols implementing the same operator interface are behaviorally checkable against each other on the same pinned inputs).
+- MNAR becomes auditable: a composition is labeled with its sampling_intent through the dataset symbol; any aggregation across compositions of different sampling_intent types is flagged automatically.
+
+**What this costs us:**
+- Existing measurements are NOT idempotent in this strict sense — they were computed against LMFDB as it was on the day of measurement, with no snapshot hash captured. Retrofit would require re-running against stable snapshots once a snapshot mechanism exists.
+- Some of our current operators implicitly depend on LMFDB Postgres mirror state (e.g., the `CANONICAL_SQL_V1` in Q_EC_R0_D5@v1 returns whatever LMFDB says today). Making them idempotent means the data resolution step has to produce a hash pin *at measurement time* that travels with the SIGNATURE.
+- Floating-point determinism across CPU architectures and BLAS implementations is not automatic. A `computation` symbol may need to declare a stricter dependency (e.g., `numpy_blas=openblas-0.3.24`) to guarantee byte-equivalence across machines. Or it may declare a tolerance (e.g., `reproducible_within: 1e-12`) below which cross-machine diffs are acceptable.
+
+**This is where the "symbols as computation" vision becomes serious.** It's not just "store the code alongside the call"; it's "encode a purity discipline such that any call composition is a reproducible unit indefinitely." That's a strong claim, but it's the only way the substrate's long-term reproducibility promise can hold. Without it, the immutable versions are a filing convention, not a reproducibility guarantee.
 - **Redis key layout** (base Redis, strings/hashes/sets/streams only): `symbols:<NAME>:v<N>:def` (immutable JSON), `symbols:<NAME>:v<N>:meta` (immutable frontmatter hash), `symbols:<NAME>:latest` (mutable version pointer), `symbols:<NAME>:versions` (append-only sorted set), `symbols:by_type:<type>`, `symbols:refs:<ref>@v<N>`.
 - **Reference grammar** — every reference to a symbol in inter-agent communication must include `@v<N>`: `NULL_BSWCD@v2[stratifier=torsion_bin]`, not `NULL_BSWCD`. References to non-symbol entities (F-IDs, P-IDs, Patterns) use `@c<short_commit>` until they're retrofitted into the symbol registry. A validator rejects unversioned references.
 - **Provenance chain** — every symbol's MD carries its derivation history, references to papers (with DOI/arXiv), implementation path + commit hash, and a version history log. A future reader following the chain can reconstruct how and why each symbol was introduced.
@@ -227,6 +265,19 @@ This is a prototype. It is not finished; it is not intended to be finished any t
 ---
 
 ## Revision history
+
+**v2.1** (2026-04-19, same day as v2) — correction after James flagged the idempotence gap in v2's `code_artifact` sketch.
+
+The v2 draft described `code_artifact` as "hash-pinned source code" without confronting the consequence that *source code alone is not a reproducibility unit* — a call like `NULL_BSWCD(data)` is only reproducible if `data` is itself content-pinned AND the code is pure (no time, no network, no hidden randomness). v2.1 adds §2.1 "Idempotence and purity constraints" making this explicit:
+
+- `code_artifact` renamed to `computation` to reflect what the symbol actually encodes (a reproducible unit, not just source text)
+- `purity_attestation` block required at promotion; a validator enforces no-system-time / no-network-during-compute / no-filesystem-writes / deterministic-given-inputs / no-environment-reads
+- Dataset symbols extended with a `snapshot` field (content hash of returned rows at a specific instant, or pinned data-source version); dataset symbols without a snapshot cannot participate in idempotent SIGNATUREs
+- The call composition `(operator, computation, dataset, parameters) → SIGNATURE` becomes itself a hash-addressable unit; that composition is the smallest reproducible claim
+- Honest acknowledgment that existing measurements are NOT idempotent in this strict sense and would require re-running against snapshots once the mechanism exists
+- Floating-point determinism across architectures called out as a real wrinkle (declare strict BLAS dependency or declare a tolerance)
+
+Without this correction, "immutable symbol versions" was a filing convention. With it, it's a reproducibility guarantee.
 
 **v2** (2026-04-19) — absorbed external review of v1 (`b81aa56f`).
 
