@@ -567,6 +567,18 @@ PROJECTION_EDGES = [
      "note": "F1 label shuffle catches less than F39 feature permutation for representation artifacts."},
     {"from": "P027", "to": "P010", "relation": "heuristic_proxy_for",
      "note": "ADE-type via Galois label is a coarse proxy for the actual object-keyed Galois scorer."},
+
+    # ===== edge-weaver batch 4 (Mnemosyne, 2026-04-18) =====
+    {"from": "P104", "to": "P040", "relation": "specializes",
+     "note": "P104 description quote: 'Stricter than P040 when test axis correlates with confound.' P104 block-shuffle is P040 restricted to within-stratum shuffles; strictly a specialization."},
+    {"from": "P035", "to": "P026", "relation": "refines",
+     "note": "P035 description quote: 'Finer than P026 semistable vs additive.' Kodaira symbols further split the semistable/additive binary into Tate’s full classification."},
+    {"from": "P035", "to": "P021", "relation": "tautology_adjacent",
+     "note": "P035 description quote: 'Tautology-adjacent to P021 (Kodaira type constrains bad-prime Tamagawa contribution).'"},
+    {"from": "P036", "to": "P028", "relation": "aliased_on_EC",
+     "note": "P036 description quote: 'Equivalent to (−1)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd. Independent projection only for non-EC L-function families.'"},
+    {"from": "P036", "to": "P023", "relation": "aliased_on_EC",
+     "note": "P036 description quote: 'Equivalent to (−1)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd.'"},
 ]
 
 
