@@ -113,6 +113,36 @@
       "to": "P102",
       "relation": "dim_constrained_by",
       "note": "P031 description quote: 'Forbidden-cell partial tautology: \u03bd=\u22121 only at even dimension.' Frobenius-Schur indicator values are constrained by the Artin rep dimension stratification P102; certain (Dim, \u03bd) cells are empty by representation theory."
+    },
+    {
+      "from": "P033",
+      "to": "P028",
+      "relation": "aliased_on_EC",
+      "note": "P033 description quote: 'Tautology with P028 on rank-parity for EC families.' Artin Is_Even parity collapses to Katz-Sarnak SO_even/SO_odd on EC families via BSD parity."
+    },
+    {
+      "from": "P033",
+      "to": "P102",
+      "relation": "joint_non_uniform_with",
+      "note": "P102 description quote: 'Dim \u00d7 Is_Even (non-uniform \u2014 dim-2 odd-dominated, dim-4 even-dominated).' P033 parity distributes non-uniformly across P102 Artin dimensions \u2014 not a tautology but a strong joint dependency."
+    },
+    {
+      "from": "P032",
+      "to": "P028",
+      "relation": "conditional_tautology",
+      "note": "P032 description quote: 'Tautology vs P028 when families align with parity.' MF / Dirichlet character parity collapses to Katz-Sarnak family classification under the aligned-parity condition."
+    },
+    {
+      "from": "P012",
+      "to": "P011",
+      "relation": "stricter_than",
+      "note": "P012 description quote: 'Alternative to Lhash \u2014 hashes Hecke eigenvalues. More strict. Useful when Lhash is too coarse.'"
+    },
+    {
+      "from": "P101",
+      "to": "P023",
+      "relation": "conditional_on",
+      "note": "P101 description quote: 'Useful only at rank \u2265 1 as a separating axis; rank-0 regulator is degenerate.' P101 regulator stratification is meaningful only within P023 rank \u2265 1 slices."
     }
   ]
 }

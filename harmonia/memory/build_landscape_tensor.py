@@ -591,6 +591,18 @@ PROJECTION_EDGES = [
      "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois ℓ-adic image.' Mazur-bounded class sizes overlap with Mazur torsion structure."},
     {"from": "P031", "to": "P102", "relation": "dim_constrained_by",
      "note": "P031 description quote: 'Forbidden-cell partial tautology: ν=−1 only at even dimension.' Frobenius-Schur indicator values are constrained by the Artin rep dimension stratification P102; certain (Dim, ν) cells are empty by representation theory."},
+
+    # ===== edge-weaver batch 6 (Mnemosyne, 2026-04-18) =====
+    {"from": "P033", "to": "P028", "relation": "aliased_on_EC",
+     "note": "P033 description quote: 'Tautology with P028 on rank-parity for EC families.' Artin Is_Even parity collapses to Katz-Sarnak SO_even/SO_odd on EC families via BSD parity."},
+    {"from": "P033", "to": "P102", "relation": "joint_non_uniform_with",
+     "note": "P102 description quote: 'Dim × Is_Even (non-uniform — dim-2 odd-dominated, dim-4 even-dominated).' P033 parity distributes non-uniformly across P102 Artin dimensions — not a tautology but a strong joint dependency."},
+    {"from": "P032", "to": "P028", "relation": "conditional_tautology",
+     "note": "P032 description quote: 'Tautology vs P028 when families align with parity.' MF / Dirichlet character parity collapses to Katz-Sarnak family classification under the aligned-parity condition."},
+    {"from": "P012", "to": "P011", "relation": "stricter_than",
+     "note": "P012 description quote: 'Alternative to Lhash — hashes Hecke eigenvalues. More strict. Useful when Lhash is too coarse.'"},
+    {"from": "P101", "to": "P023", "relation": "conditional_on",
+     "note": "P101 description quote: 'Useful only at rank ≥ 1 as a separating axis; rank-0 regulator is degenerate.' P101 regulator stratification is meaningful only within P023 rank ≥ 1 slices."},
 ]
 
 
