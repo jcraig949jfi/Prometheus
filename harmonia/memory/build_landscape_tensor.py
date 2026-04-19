@@ -497,6 +497,25 @@ FEATURE_EDGES = [
              "F015: pooled slope -0.597 → ~88% collapse under k-decontamination. "
              "Both: naive pooled magnitude reported a larger effect than the stratified/decontaminated residual. "
              "Pattern 20 anchor set: F011 + F013 + F015 (sessionC Pattern 20 merge 2026-04-17)."},
+
+    # ===== edge-weaver batch 1 (Mnemosyne, 2026-04-18) =====
+    {"from": "F013", "to": "F011", "relation": "downstream_of",
+     "note": "F013 description quote: 'Per Aporia Report 1 finding that F011 is the Duenez-HKMS excised ensemble, "
+             "F013’s P028 split is a DOWNSTREAM consequence of the same central-zero-forcing at finite conductor.' "
+             "The F013 rank-slope sign flip through P028 Katz-Sarnak is mechanistically driven by the F011 "
+             "excised-ensemble bulk deficit."},
+    {"from": "F009", "to": "F001", "relation": "calibration_peer",
+     "note": "F009 description quote: 'Load-bearing calibration anchor; joins F001-F005.' "
+             "Theorem lineage: Serre open-image + Mazur torsion classification."},
+    {"from": "F009", "to": "F002", "relation": "calibration_peer",
+     "note": "F009 description quote: 'Load-bearing calibration anchor; joins F001-F005.' "
+             "F002 Mazur torsion classification is explicitly cited in F009’s theorem lineage."},
+    {"from": "F009", "to": "F003", "relation": "calibration_peer",
+     "note": "F009 description quote: 'Load-bearing calibration anchor; joins F001-F005.' "
+             "F003 BSD parity is part of the calibration family F009 joins."},
+    {"from": "F009", "to": "F005", "relation": "calibration_peer",
+     "note": "F009 description quote: 'Load-bearing calibration anchor; joins F001-F005.' "
+             "F005 high-Sha parity is part of the calibration family F009 joins."},
 ]
 
 
