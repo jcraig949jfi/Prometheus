@@ -5,7 +5,7 @@
   "harmonia_charter": "roles/Harmonia/CHARTER.md",
   "tensor_shape": [
     31,
-    25
+    37
   ],
   "tensor_encoding": {
     "-2": "projection provably collapses the feature (known artifact)",
@@ -383,6 +383,78 @@
       "label": "Artin representation dimension stratification",
       "type": "stratification",
       "description": "WHERE \"Dim\" = d on artin_reps. 100% coverage across 798,140 irreducible reps. Resolves fixed-degree L-function cohort structure and the Deligne-Serre stratum at (Dim=2, Is_Even=False). Collapses per-Galois-group, parity, and Frobenius-Schur structure within a dimension. Partial tautologies: Dim | |G| (Maschke), Dim \u00d7 Is_Even (non-uniform \u2014 dim-2 odd-dominated, dim-4 even-dominated), symplectic reps only at even Dim. H61 and H63 killed at this axis (Pattern 19 anchors). Code: cartography/docs/catalog_artin_dim_draft.md (sessionC)."
+    },
+    {
+      "id": "P028",
+      "label": "Katz-Sarnak family symmetry type",
+      "type": "stratification",
+      "description": "Family classification {U, Sp, SO_even, SO_odd} from Katz-Sarnak (1999). For EC L-functions, SO_even iff rank even and SO_odd iff rank odd (by BSD parity). Resolves low-lying zero statistics via one-level density divergence between symmetry types. Calibration: function-field Katz-Sarnak theorem. Load-bearing: F011 resolves at z=5.38 spread (sessionB tick 8); F013 at z=13.68 slope flip (sessionB tick 18). Both survive NULL_BSWCD@v1 at z_block=111.78 and 15.31 respectively."
+    },
+    {
+      "id": "P031",
+      "label": "Frobenius-Schur Indicator stratification",
+      "type": "stratification",
+      "description": "WHERE \"Indicator\" = \u03bd on artin_reps. \u03bd \u2208 {\u22121, 0, +1} for symplectic / complex / orthogonal reps. Forbidden-cell partial tautology: \u03bd=\u22121 only at even dimension. Small-n cells below 100 at several (Dim, \u03bd) joints; adequacy check required."
+    },
+    {
+      "id": "P032",
+      "label": "MF / Dirichlet character parity stratification",
+      "type": "stratification",
+      "description": "Split by \u03c7(\u22121) parity. Resolves \u0393-factor archimedean split and Rubinstein-Sarnak chebyshev biases. On MF: aliased with weight mod 2. Tautology vs P028 when families align with parity."
+    },
+    {
+      "id": "P033",
+      "label": "Artin Is_Even parity stratification",
+      "type": "stratification",
+      "description": "Split Artin reps by Is_Even (image of complex conjugation = +1 iff even). Deligne-Serre stratum at (Dim=2, Is_Even=False). Strong non-uniform distribution across Dim (dim-2 77% odd; dim-4 74% even). Tautology with P028 on rank-parity for EC families."
+    },
+    {
+      "id": "P035",
+      "label": "Kodaira reduction type stratification",
+      "type": "stratification",
+      "description": "Split EC by Kodaira symbol at each bad prime (I_n, II, III, ..., I_n*, II*, etc.). Finer than P026 semistable vs additive. Tautology-adjacent to P021 (Kodaira type constrains bad-prime Tamagawa contribution)."
+    },
+    {
+      "id": "P036",
+      "label": "Root number stratification",
+      "type": "stratification",
+      "description": "Split EC by root_number = \u00b11 (sign of functional equation). Equivalent to (\u22121)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd. Independent projection only for non-EC L-function families."
+    },
+    {
+      "id": "P037",
+      "label": "Sato-Tate group stratification",
+      "type": "stratification",
+      "description": "Split by Sato-Tate group (SU(2), N(U(1)), U(1), ...). For EC: non-CM gives SU(2); CM gives N(U(1)). Tautology with P025 CM flag on EC. Richer on g2c / higher-genus where more ST groups appear."
+    },
+    {
+      "id": "P038",
+      "label": "Sha (Tate-Shafarevich order) stratification",
+      "type": "stratification",
+      "description": "Split EC by sha (conjectural Sha order from BSD or proven for small rank). Mazur-Rubin stratification. Tautology with F005 high-Sha parity anchor; independence requires sha treated as continuous axis rather than parity bin."
+    },
+    {
+      "id": "P039",
+      "label": "Galois \u2113-adic image stratification",
+      "type": "stratification",
+      "description": "Split EC by nonmax_primes list / adelic_index / adelic_level (mod-\u2113 Galois image). Serre open-image theorem: for non-CM EC, image is almost surely surjective; nonmax_primes is finite. Partial tautology with P100 isogeny class size (class_size \u2265 2 \u21d4 nonmax_primes \u2260 [])."
+    },
+    {
+      "id": "P101",
+      "label": "EC regulator stratification",
+      "type": "stratification",
+      "description": "Split EC by regulator (positive for rank \u2265 1; trivially 1 for rank 0). Useful only at rank \u2265 1 as a separating axis; rank-0 regulator is degenerate."
+    },
+    {
+      "id": "P103",
+      "label": "EC modular degree stratification",
+      "type": "stratification",
+      "description": "Split EC by modular_degree. Manin-Stevens constant-related. Edixhoven-Jong and congruence-number connections. NOT directly stored in current ec_curvedata mirror \u2014 derivable via lfunc_lfunctions or sessionC's Report 10 approach. Data gap noted."
+    },
+    {
+      "id": "P104",
+      "label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "type": "null_model",
+      "description": "Stratified permutation null: within each bin of the chosen primary confound, shuffle labels of the test-axis variable. Preserves per-bin marginal distribution; destroys within-bin test-axis pairing. Stricter than P040 when test axis correlates with confound. Canonical kill: F010 at z=-0.86. Canonical survivals: F011 at z_block=111.78, F013 at z_block=15.31, F015 at z_block \u2208 [-24.03, -3.48] every k-stratum. Pattern 26 (DRAFT): stratifier must have 5-20 balanced strata. See symbols/NULL_BSWCD.md."
     }
   ],
   "invariance_matrix_dict": {
@@ -420,7 +492,8 @@
       "P052": -2,
       "P020": 1,
       "P021": 1,
-      "P028": 1
+      "P028": 1,
+      "P104": -2
     },
     "F011": {
       "P050": 1,
@@ -432,18 +505,21 @@
       "P026": 1,
       "P027": -1,
       "P028": 2,
-      "P020": 2
+      "P020": 2,
+      "P104": 2
     },
     "F012": {
       "P022": -1,
       "P040": -2,
-      "P043": -1
+      "P043": -1,
+      "P104": -2
     },
     "F013": {
       "P023": 1,
       "P041": 1,
       "P028": 2,
-      "P051": 1
+      "P051": 1,
+      "P104": 2
     },
     "F014": {
       "P053": 2,
@@ -457,7 +533,8 @@
       "P042": 2,
       "P051": 0,
       "P052": -1,
-      "P001": -1
+      "P001": -1,
+      "P104": 2
     },
     "F041a": {
       "P023": 2,

@@ -326,6 +326,74 @@ PROJECTIONS = [
                     "Is_Even (non-uniform — dim-2 odd-dominated, dim-4 even-dominated), symplectic reps "
                     "only at even Dim. H61 and H63 killed at this axis (Pattern 19 anchors). Code: "
                     "cartography/docs/catalog_artin_dim_draft.md (sessionC)."},
+
+    # ----- Catalogued stratifications missing from the tensor (gap-filler 2026-04-18) -----
+    {"id": "P028", "label": "Katz-Sarnak family symmetry type",
+     "type": "stratification",
+     "description": "Family classification {U, Sp, SO_even, SO_odd} from Katz-Sarnak (1999). For EC L-"
+                    "functions, SO_even iff rank even and SO_odd iff rank odd (by BSD parity). Resolves "
+                    "low-lying zero statistics via one-level density divergence between symmetry types. "
+                    "Calibration: function-field Katz-Sarnak theorem. Load-bearing: F011 resolves at "
+                    "z=5.38 spread (sessionB tick 8); F013 at z=13.68 slope flip (sessionB tick 18). "
+                    "Both survive NULL_BSWCD@v1 at z_block=111.78 and 15.31 respectively."},
+    {"id": "P031", "label": "Frobenius-Schur Indicator stratification",
+     "type": "stratification",
+     "description": "WHERE \"Indicator\" = ν on artin_reps. ν ∈ {−1, 0, +1} for symplectic / complex / "
+                    "orthogonal reps. Forbidden-cell partial tautology: ν=−1 only at even dimension. "
+                    "Small-n cells below 100 at several (Dim, ν) joints; adequacy check required."},
+    {"id": "P032", "label": "MF / Dirichlet character parity stratification",
+     "type": "stratification",
+     "description": "Split by χ(−1) parity. Resolves Γ-factor archimedean split and Rubinstein-Sarnak "
+                    "chebyshev biases. On MF: aliased with weight mod 2. Tautology vs P028 when families "
+                    "align with parity."},
+    {"id": "P033", "label": "Artin Is_Even parity stratification",
+     "type": "stratification",
+     "description": "Split Artin reps by Is_Even (image of complex conjugation = +1 iff even). Deligne-"
+                    "Serre stratum at (Dim=2, Is_Even=False). Strong non-uniform distribution across Dim "
+                    "(dim-2 77% odd; dim-4 74% even). Tautology with P028 on rank-parity for EC families."},
+    {"id": "P035", "label": "Kodaira reduction type stratification",
+     "type": "stratification",
+     "description": "Split EC by Kodaira symbol at each bad prime (I_n, II, III, ..., I_n*, II*, etc.). "
+                    "Finer than P026 semistable vs additive. Tautology-adjacent to P021 (Kodaira type "
+                    "constrains bad-prime Tamagawa contribution)."},
+    {"id": "P036", "label": "Root number stratification",
+     "type": "stratification",
+     "description": "Split EC by root_number = ±1 (sign of functional equation). Equivalent to (−1)^rank "
+                    "under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak "
+                    "SO_even/SO_odd. Independent projection only for non-EC L-function families."},
+    {"id": "P037", "label": "Sato-Tate group stratification",
+     "type": "stratification",
+     "description": "Split by Sato-Tate group (SU(2), N(U(1)), U(1), ...). For EC: non-CM gives SU(2); "
+                    "CM gives N(U(1)). Tautology with P025 CM flag on EC. Richer on g2c / higher-genus "
+                    "where more ST groups appear."},
+    {"id": "P038", "label": "Sha (Tate-Shafarevich order) stratification",
+     "type": "stratification",
+     "description": "Split EC by sha (conjectural Sha order from BSD or proven for small rank). Mazur-Rubin "
+                    "stratification. Tautology with F005 high-Sha parity anchor; independence requires sha "
+                    "treated as continuous axis rather than parity bin."},
+    {"id": "P039", "label": "Galois ℓ-adic image stratification",
+     "type": "stratification",
+     "description": "Split EC by nonmax_primes list / adelic_index / adelic_level (mod-ℓ Galois image). "
+                    "Serre open-image theorem: for non-CM EC, image is almost surely surjective; "
+                    "nonmax_primes is finite. Partial tautology with P100 isogeny class size "
+                    "(class_size ≥ 2 ⇔ nonmax_primes ≠ [])."},
+    {"id": "P101", "label": "EC regulator stratification",
+     "type": "stratification",
+     "description": "Split EC by regulator (positive for rank ≥ 1; trivially 1 for rank 0). Useful only "
+                    "at rank ≥ 1 as a separating axis; rank-0 regulator is degenerate."},
+    {"id": "P103", "label": "EC modular degree stratification",
+     "type": "stratification",
+     "description": "Split EC by modular_degree. Manin-Stevens constant-related. Edixhoven-Jong and "
+                    "congruence-number connections. NOT directly stored in current ec_curvedata mirror — "
+                    "derivable via lfunc_lfunctions or sessionC's Report 10 approach. Data gap noted."},
+    {"id": "P104", "label": "NULL_BSWCD@v1 — Block-shuffle-within-primary-confound null",
+     "type": "null_model",
+     "description": "Stratified permutation null: within each bin of the chosen primary confound, shuffle "
+                    "labels of the test-axis variable. Preserves per-bin marginal distribution; destroys "
+                    "within-bin test-axis pairing. Stricter than P040 when test axis correlates with "
+                    "confound. Canonical kill: F010 at z=-0.86. Canonical survivals: F011 at z_block=111.78, "
+                    "F013 at z_block=15.31, F015 at z_block ∈ [-24.03, -3.48] every k-stratum. "
+                    "Pattern 26 (DRAFT): stratifier must have 5-20 balanced strata. See symbols/NULL_BSWCD.md."},
 ]
 
 
@@ -345,12 +413,12 @@ INVARIANCE = {
     "F009": {"P024": +2, "P039": +2},                          # torsion primes subset of nonmax primes (Serre+Mazur lineage)
 
     # Live specimens — sparse +1s, many -1s in wrong projections
-    "F010": {"P001": -1, "P010": -1, "P040": -2, "P042": +1, "P052": -2, "P020": +1, "P021": +1, "P028": +1},  # NF backbone KILLED: decon ρ=0.27 via P052 killed by block-shuffle-within-degree null (z=-0.86). P052 demoted +1→-2 (the decon signal is degree-marginal leakage, not real). P010 demoted +2→-1 (the object-keyed coupling doesn't survive stricter nulls). P028 stays +1 (Is_Even=True still has some z=2.75 residual but on a dead feature). F010 joins F022 — same data, no durable signal under the correct null model.
-    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2, "P020": +2},  # GUE deficit: tier downgraded to calibration_confirmed 2026-04-18 per Aporia Report 1. P028 resolves + block-shuffle verified, BUT deficit shrinks monotonically with conductor (P020 +2 — conductor IS the resolving axis, Duenez-HKMS excised ensemble). Not novel anomaly; instrument correctly detected known RMT effect.
-    "F012": {"P022": -1, "P040": -2, "P043": -1},               # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case.
-    "F013": {"P023": +1, "P041": +1, "P028": +2, "P051": +1},   # spacing rigidity; P028 resolves at z=13.68 (SO_even vs SO_odd opposite sign, sessionB 2026-04-17). P051 unfolding also matters (sessionD prior).
+    "F010": {"P001": -1, "P010": -1, "P040": -2, "P042": +1, "P052": -2, "P020": +1, "P021": +1, "P028": +1, "P104": -2},  # NF backbone KILLED: decon ρ=0.27 via P052 killed by block-shuffle-within-degree null (z=-0.86). P104 ANCHOR KILL CASE: NULL_BSWCD@v1 canonical kill (sessionC 711f8325). P052 demoted +1→-2 (the decon signal is degree-marginal leakage, not real). P010 demoted +2→-1 (the object-keyed coupling doesn't survive stricter nulls). F010 joins F022 — same data, no durable signal under the correct null model.
+    "F011": {"P050": +1, "P051": +1, "P021": +1, "P023": +1, "P024": +1, "P025": +1, "P026": +1, "P027": -1, "P028": +2, "P020": +2, "P104": +2},  # GUE deficit: tier downgraded to calibration_confirmed 2026-04-18 per Aporia Report 1. P028 resolves + block-shuffle verified, BUT deficit shrinks monotonically with conductor (P020 +2 — conductor IS the resolving axis, Duenez-HKMS excised ensemble). P104 DURABLE at z_block=111.78 (sessionB audit_P028_findings_block_shuffle, 24b41571). Not novel anomaly; instrument correctly detected known RMT effect.
+    "F012": {"P022": -1, "P040": -2, "P043": -1, "P104": -2},   # H85 KILLED (μ+λ, sessionB 2026-04-17). Pattern 19 canonical case. P104 −2 inferred: signal dead under plain null at n=66K; block-shuffle would also collapse.
+    "F013": {"P023": +1, "P041": +1, "P028": +2, "P051": +1, "P104": +2},   # spacing rigidity; P028 resolves at z=13.68 (SO_even vs SO_odd opposite sign, sessionB 2026-04-17). P051 unfolding also matters (sessionD prior). P104 DURABLE at z_block=15.31 (sessionB audit_P028_findings_block_shuffle).
     "F014": {"P053": +2, "P040": +1, "P023": +2, "P021": +2},   # Lehmer spectrum (refined, sessionB 2026-04-17): P053 Mahler + P023 degree (bound touched at deg 10, 20) + P021 num_ram monotone (touched only at num_ram=1,2; jumps at 3+)
-    "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1},                           # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7; BLOCK-SHUFFLE VERIFIED at every k (sessionC 2026-04-17 z from -3.48 to -24.03). First specimen to pass block-shuffle protocol — durable sign.
+    "F015": {"P021": +2, "P020": +1, "P042": +2, "P051": 0, "P052": -1, "P001": -1, "P104": +2},               # Szpiro sign-uniform / magnitude non-monotone in k; 88% k-mediated (sessionD wsw_F015 2026-04-17); P042 z=-6.9..-22.7; P104 DURABLE at every k-stratum, z∈[-24.03, -3.48] (sessionC 2026-04-17 audit_F014_F015_block_shuffle). First specimen to pass block-shuffle protocol — durable sign.
     "F041a": {"P023": +2, "P020": +1, "P021": +2, "P026": +1, "P039": -1, "P104": +2},                          # PROMOTED 2026-04-18. Rank-2+ monotone-in-nbp slope ladder survives: block-null W2 (amp 27.6x corr 0.97), conductor-control U_A (z=3.37), P026 semistable split T3, specific-prime joint T5. P039 Galois-image ruled out (W3). CFKRS Pattern 5 gate pending — harder than it looked given U_E SO(2N) MC k=3,4 divergence.
     "F042": {"P025": +1, "P020": +1},                                                                          # CM disc=-27 quantitative precision on known qualitative structure (Gross 1980, RVZ 1993). calibration_refinement, not frontier.
     "F044": {"P020": +2, "P023": +2, "P026": +2},                                                               # Rank-4 corridor disc=conductor in 2085/2086. Semistable forced. Open: theorem vs LMFDB artifact.
