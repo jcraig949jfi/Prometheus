@@ -32,7 +32,34 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None blocking. Adversarial pass 2026-04-18 corrected one overclaim (F011 z_block) and opened three weak signals as candidate specimens (F042, F043, U_E audit).*
+*None blocking. Major milestone 2026-04-18: visualization layer live (Charon cartographer role #3 delivered).*
+
+---
+
+### [2026-04-18 ~21:40 UTC] — Map visualization LIVE — milestone, no pending decision
+
+**Context:** First rendering of the invariance tensor as a live heatmap. Until today the tensor existed only as .npz + .json artifacts and stdout prints. Now at http://localhost:8777/map with auto-refresh from Redis every 5 seconds.
+
+**What's visible:**
+- 31 × 25 heatmap with hover metadata, row/col highlighting
+- Hot-cell shading on untested cells (neighbor-density predicts structure — subsumes Query-runner Q3 partially)
+- Force-directed graphs for feature and projection edges
+- Gap banner flagging P028 Katz-Sarnak + 16 other missing projections
+- Calibration anchors F001-F009 show green across their tested projections — instrument health visible at a glance
+- Killed-feature cluster F020-F028 shows red/orange topology — the shape of known artifacts is now visible as a pattern, not scattered cells
+
+**Three downstream effects:**
+1. **Query-runner scope tightens** — Q3 ("predictive gap cells ranked by neighbor density") is partially visible in the viewer already. Q3 becomes "name and enumerate" rather than re-invent.
+2. **New shape candidate**: F020-F028 red/orange cluster in the heatmap is structurally recognizable. Candidate shape symbol `KILLED_TOPOLOGY` — not yet drafted.
+3. **Gap-filler first task gets concrete**: add 17 missing projections to build_landscape_tensor.py PROJECTIONS list. The cartographer's gap banner is the checklist.
+
+**What's blocked:** Nothing.
+
+**Urgency:** milestone (no decision needed). Charon delivered.
+
+**Commit:** f566e46c Charon cartographer: landscape tensor viewer (31x25, 10.58% density).
+
+---
 
 ---
 
