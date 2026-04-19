@@ -579,6 +579,18 @@ PROJECTION_EDGES = [
      "note": "P036 description quote: 'Equivalent to (−1)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd. Independent projection only for non-EC L-function families.'"},
     {"from": "P036", "to": "P023", "relation": "aliased_on_EC",
      "note": "P036 description quote: 'Equivalent to (−1)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd.'"},
+
+    # ===== edge-weaver batch 5 (Mnemosyne, 2026-04-18) =====
+    {"from": "P037", "to": "P025", "relation": "aliased_on_EC",
+     "note": "P037 description quote: 'For EC: non-CM gives SU(2); CM gives N(U(1)). Tautology with P025 CM flag on EC.' Sato-Tate group on EC is determined exactly by CM status."},
+    {"from": "P039", "to": "P100", "relation": "partial_tautology",
+     "note": "P039 description quote: 'Partial tautology with P100 isogeny class size (class_size ≥ 2 ⇔ nonmax_primes ≠ []).'"},
+    {"from": "P100", "to": "P039", "relation": "partial_tautology",
+     "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois ℓ-adic image (class_size≥2 ⇔ nonmax_primes≠[]).' Reverse link for navigation."},
+    {"from": "P100", "to": "P024", "relation": "partial_tautology",
+     "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois ℓ-adic image.' Mazur-bounded class sizes overlap with Mazur torsion structure."},
+    {"from": "P031", "to": "P102", "relation": "dim_constrained_by",
+     "note": "P031 description quote: 'Forbidden-cell partial tautology: ν=−1 only at even dimension.' Frobenius-Schur indicator values are constrained by the Artin rep dimension stratification P102; certain (Dim, ν) cells are empty by representation theory."},
 ]
 
 
