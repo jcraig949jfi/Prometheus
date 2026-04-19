@@ -1,0 +1,113 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-04-19T03:00:00Z",
+  "generated_by": "Methodology Tightener (Mnemosyne M2)",
+  "protocol_reference": "harmonia/memory/symbols/protocols/null_protocol_v1.md",
+  "tensor_source": "live Redis (tensor:cells) at time of generation",
+  "total_plus2_cells": 42,
+
+  "flag_counts": {
+    "class_1_correct": 1,
+    "class_2_correct": 5,
+    "class_2_flag_reaudit": 5,
+    "class_3_correct": 4,
+    "class_3_flag_reaudit": 5,
+    "class_4_provisional": 3,
+    "class_5_algebraic_anchor": 15,
+    "scorer_bookkeeping": 1,
+    "preprocessing_coord_change": 3,
+    "total_flagged_for_reaudit": 10,
+    "total_provisional_pending_better_null": 3
+  },
+
+  "cells": [
+    {"feature": "F001", "projection": "P010", "claim_class": 5, "rationale": "modularity theorem verification (Wiles)", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a — theorem check, no null applies", "flag_for_reaudit": false, "note": "Calibration anchor; algebraic identity by proof."},
+    {"feature": "F001", "projection": "P011", "claim_class": 5, "rationale": "modularity theorem verification via Lhash", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F001", "projection": "P012", "claim_class": 5, "rationale": "modularity theorem verification via trace_hash", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F003", "projection": "P020", "claim_class": 5, "rationale": "BSD parity + full BSD identity at 10^-12; theorem + definitional identity", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor; algebraic identity by BSD statement."},
+    {"feature": "F003", "projection": "P023", "claim_class": 5, "rationale": "BSD parity across rank strata; theorem check", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F003", "projection": "P041", "claim_class": 5, "rationale": "BSD parity verification under variance decomposition; theorem check", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F004", "projection": "P043", "claim_class": 5, "rationale": "Hasse bound |a_p| <= 2 sqrt(p); theorem", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F005", "projection": "P023", "claim_class": 5, "rationale": "high-Sha parity (-1)^rank = root_number; definitional constraint on sha>=9 stratum", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F008", "projection": "P024", "claim_class": 5, "rationale": "Scholz reflection |r3(K*)-r3(K)|<=1; theorem (Scholz 1932)", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F009", "projection": "P024", "claim_class": 5, "rationale": "torsion primes subset of nonmax primes; Serre open-image theorem", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F009", "projection": "P039", "claim_class": 5, "rationale": "torsion primes subset of nonmax primes; theorem check via Galois image stratification", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Calibration anchor."},
+    {"feature": "F014", "projection": "P021", "claim_class": 5, "rationale": "Lehmer bound touched at specific num_ram strata (1,2); measurement-existence claim, not a null-testable correlation", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Claim is 'bound touched' — an existential observation about specific polynomials, not a statistical coupling. No null applies."},
+    {"feature": "F014", "projection": "P023", "claim_class": 5, "rationale": "Lehmer bound touched at degrees 10 and 20; measurement-existence claim", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Same rationale as F014:P021."},
+    {"feature": "F014", "projection": "P053", "claim_class": 5, "rationale": "Mahler measure projection verifies Lehmer floor structure; 2026-04-18 Charon trinomial asymptotic is a theorem-like result", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a", "flag_for_reaudit": false, "note": "Measurement/theorem, not null-tested."},
+
+    {"feature": "F011", "projection": "P020", "claim_class": 1, "rationale": "LAYER 1: bulk deficit shrinks monotonically with conductor (Duenez-HKMS excised ensemble)", "current_null_stratifier": "conductor_decile", "correct_null_stratifier": "conductor_decile", "flag_for_reaudit": false, "note": "CORRECT match. Claim is conductor-scaling; stratifier is conductor_decile. Default NULL_BSWCD@v2 appropriate."},
+    {"feature": "F011", "projection": "P050", "claim_class": 1, "rationale": "first-gap preprocessing (coordinate change, not stratification); deficit magnitude depends on coord choice", "current_null_stratifier": "n/a (coord change)", "correct_null_stratifier": "not applicable — preprocessing step", "flag_for_reaudit": false, "note": "P050 is a preprocessing projection. No block-shuffle null is meaningful; the +2 records that the deficit survives the preprocessing. If a null is desired, it must be on the downstream statistic, not on P050 itself."},
+    {"feature": "F011", "projection": "P051", "claim_class": 1, "rationale": "N(T) unfolding preprocessing; coordinate change", "current_null_stratifier": "n/a (coord change)", "correct_null_stratifier": "not applicable — preprocessing step", "flag_for_reaudit": false, "note": "Same as P050. Preprocessing cells are not null-tested in the Class-1 sense."},
+    {"feature": "F011", "projection": "P104", "claim_class": 1, "rationale": "self-audit under block-shuffle; meta-claim that F011's own instrument confirms F011", "current_null_stratifier": "torsion_bin (per sessionB 71ff1d47 correction; honest z=4.19)", "correct_null_stratifier": "torsion_bin is balanced for 5-20 strata per Pattern 26; acceptable", "flag_for_reaudit": false, "note": "Stratifier corrected from class_size (DEGENERATE) to torsion_bin on 2026-04-18. Durable residual z=4.19 stands under the corrected stratifier."},
+    {"feature": "F011", "projection": "P021", "claim_class": 3, "rationale": "deficit uniform across num_bad_primes strata (stratum-uniform claim)", "current_null_stratifier": "conductor_decile (default)", "correct_null_stratifier": "num_bad_primes", "flag_for_reaudit": true, "note": "MISMATCH. Claim is uniformity across nbp strata; null should stratify by nbp to test per-stratum durability. Current null tests conductor structure, orthogonal to the claim."},
+    {"feature": "F011", "projection": "P023", "claim_class": 3, "rationale": "deficit uniform across rank strata; stratum-uniform claim", "current_null_stratifier": "conductor_decile (default)", "correct_null_stratifier": "rank_bin", "flag_for_reaudit": true, "note": "MISMATCH. Claim is per-rank uniformity; needs rank-stratified null."},
+    {"feature": "F011", "projection": "P025", "claim_class": 3, "rationale": "deficit holds across CM/non-CM; stratum-uniform", "current_null_stratifier": "conductor_decile (default); also z=5.53 under P025 stratifier per reaudit_F011_7cells 043ba782", "correct_null_stratifier": "cm_flag", "flag_for_reaudit": false, "note": "Per reaudit_F011_7cells commit 043ba782, this cell was re-audited with appropriate stratifier and survived at z=5.53. CORRECT."},
+    {"feature": "F011", "projection": "P026", "claim_class": 3, "rationale": "deficit holds across semistable/additive; stratum-uniform", "current_null_stratifier": "conductor_decile (default)", "correct_null_stratifier": "semistable_flag", "flag_for_reaudit": true, "note": "MISMATCH. Needs re-audit under semistable_flag stratifier."},
+    {"feature": "F011", "projection": "P028", "claim_class": 3, "rationale": "Katz-Sarnak class discriminates (SO_even vs SO_odd); between-class difference after conductor control", "current_null_stratifier": "conductor_decile (default); z_block=111.78", "correct_null_stratifier": "conductor_decile is acceptable: claim is 'K-S class difference survives conductor control'", "flag_for_reaudit": false, "note": "CORRECT — the claim explicitly asserts the difference is NOT conductor-mediated, so preserving conductor marginal and testing the K-S split is the right null."},
+    {"feature": "F011", "projection": "P036", "claim_class": 3, "rationale": "root_number stratifier; on EC aliases rank parity", "current_null_stratifier": "conductor_decile (default)", "correct_null_stratifier": "root_number OR rank_bin (aliased on EC)", "flag_for_reaudit": true, "note": "MISMATCH per Class 3 discipline; however note that P036 is aliased with P023 rank parity on EC (per edge P036 aliased_on_EC P028, weaver batch 4). Re-audit under root_number == re-audit under rank parity."},
+
+    {"feature": "F013", "projection": "P023", "claim_class": 2, "rationale": "rank-slope interaction: SO_even slope +0.01284 vs SO_odd -0.00216; sign flip across rank-parity cohorts", "current_null_stratifier": "conductor (default, per NULL_BSWCD@v1 symbol doc: z_block=15.31)", "correct_null_stratifier": "rank_bin (or joint (rank_bin, conductor_decile))", "flag_for_reaudit": true, "note": "MISMATCH. F013 is the canonical Class 2 case. z_block=15.31 was under stratifier=conductor, which tests whether the effect survives conductor control — but the effect IS the rank interaction, so conductor stratification is the wrong null. Flag for re-audit under rank_bin."},
+    {"feature": "F013", "projection": "P028", "claim_class": 2, "rationale": "same as F013:P023 — K-S classes on EC alias rank parity, so this is also a rank-slope interaction claim", "current_null_stratifier": "conductor (default)", "correct_null_stratifier": "rank_bin", "flag_for_reaudit": true, "note": "MISMATCH. Same Class 2 issue as F013:P023."},
+    {"feature": "F013", "projection": "P041", "claim_class": 2, "rationale": "rank-slope under variance decomposition; same underlying claim", "current_null_stratifier": "conductor (default)", "correct_null_stratifier": "rank_bin", "flag_for_reaudit": true, "note": "MISMATCH."},
+    {"feature": "F013", "projection": "P051", "claim_class": 2, "rationale": "rank-slope after unfolding preprocessing; preprocessing does not change claim class", "current_null_stratifier": "conductor (default)", "correct_null_stratifier": "rank_bin", "flag_for_reaudit": true, "note": "MISMATCH."},
+    {"feature": "F013", "projection": "P104", "claim_class": 2, "rationale": "self-audit of the rank-slope claim", "current_null_stratifier": "conductor (per symbol doc z_block=15.31)", "correct_null_stratifier": "rank_bin", "flag_for_reaudit": true, "note": "MISMATCH. The self-audit inherited the v1 default and does not match the claim class."},
+
+    {"feature": "F015", "projection": "P020", "claim_class": 3, "rationale": "within-conductor structure beyond pooled slope; per-k sign-uniform claim intersects conductor", "current_null_stratifier": "num_bad_primes (k) per F015 description", "correct_null_stratifier": "num_bad_primes", "flag_for_reaudit": false, "note": "CORRECT. F015 description: 'Block-shuffle-within-k null VERIFIED the sign-uniform-negative claim at ALL k'. Stratifier matches claim class."},
+    {"feature": "F015", "projection": "P021", "claim_class": 3, "rationale": "per-k sign-uniform claim; bad-prime count stratification IS the stratum-uniform axis", "current_null_stratifier": "num_bad_primes", "correct_null_stratifier": "num_bad_primes", "flag_for_reaudit": false, "note": "CORRECT."},
+    {"feature": "F015", "projection": "P042", "claim_class": 3, "rationale": "F39 feature permutation as additional null on per-k sign claim", "current_null_stratifier": "num_bad_primes", "correct_null_stratifier": "num_bad_primes", "flag_for_reaudit": false, "note": "CORRECT."},
+    {"feature": "F015", "projection": "P104", "claim_class": 3, "rationale": "block-shuffle self-audit on per-k sign claim", "current_null_stratifier": "num_bad_primes", "correct_null_stratifier": "num_bad_primes", "flag_for_reaudit": false, "note": "CORRECT. F015 is the canonical example of a correctly-matched Class 3 audit."},
+
+    {"feature": "F041a", "projection": "P020", "claim_class": 2, "rationale": "rank-conditional slope of moment ratio vs log-conductor, interacting with num_bad_primes", "current_null_stratifier": "joint (rank_bin, conductor_decade) per F041a description W2 test", "correct_null_stratifier": "rank_bin (strict Class 2) or joint (rank_bin, conductor_decade) (stricter)", "flag_for_reaudit": false, "note": "CORRECT (stricter than minimum). W2 used joint (rank, decade) block-shuffle — exceeds Class 2 minimum."},
+    {"feature": "F041a", "projection": "P021", "claim_class": 2, "rationale": "bad-prime count ladder at rank 2; the nbp axis is the interaction axis", "current_null_stratifier": "joint (rank_bin, conductor_decade) per W2", "correct_null_stratifier": "joint (rank_bin, conductor_decade)", "flag_for_reaudit": false, "note": "CORRECT."},
+    {"feature": "F041a", "projection": "P023", "claim_class": 2, "rationale": "rank-dependence of the nbp ladder is the defining claim", "current_null_stratifier": "joint (rank_bin, conductor_decade)", "correct_null_stratifier": "rank_bin (or joint)", "flag_for_reaudit": false, "note": "CORRECT."},
+    {"feature": "F041a", "projection": "P026", "claim_class": 2, "rationale": "semistable-vs-additive split at rank 2 within nbp ladder; T3 test", "current_null_stratifier": "joint (rank_bin, conductor_decade)", "correct_null_stratifier": "joint OR semistable_flag (Class 3 sub-claim)", "flag_for_reaudit": false, "note": "CORRECT. T3 semistable-vs-additive finding 'ladder lives in semistable half' is a Class 3 sub-claim, adequately tested."},
+    {"feature": "F041a", "projection": "P104", "claim_class": 2, "rationale": "self-audit of the rank-nbp ladder claim", "current_null_stratifier": "joint (rank_bin, conductor_decade)", "correct_null_stratifier": "joint", "flag_for_reaudit": false, "note": "CORRECT."},
+
+    {"feature": "F044", "projection": "P020", "claim_class": 4, "rationale": "rank-4 EC in LMFDB have disc=conductor in 2085/2086; LMFDB rank-4 selection is a construction-biased sample (F044 description flags this explicitly as possibility (b))", "current_null_stratifier": "conductor_decile (would be applied under Class 1 default) — but NULL_BSWCD is INSUFFICIENT for Class 4", "correct_null_stratifier": "frame-based resample OR theorem check required; NULL_BSWCD does not suffice", "flag_for_reaudit": true, "note": "PROVISIONAL per Class 4. F044 +2 cells are empirical observations on a possibly-biased LMFDB sample. Kill/confirm tests from F044 description: (1) verify the 1 exception; (2) replicate at rank 5; (3) literature scan — Stein, Elkies, Dujella rank-record constructions may have selection bias."},
+    {"feature": "F044", "projection": "P023", "claim_class": 4, "rationale": "same as F044:P020; rank-stratified observation on same construction-biased sample", "current_null_stratifier": "n/a (NULL_BSWCD insufficient)", "correct_null_stratifier": "frame-based resample OR theorem check", "flag_for_reaudit": true, "note": "PROVISIONAL."},
+    {"feature": "F044", "projection": "P026", "claim_class": 4, "rationale": "semistable-only subset of same construction-biased sample", "current_null_stratifier": "n/a (NULL_BSWCD insufficient)", "correct_null_stratifier": "frame-based resample OR theorem check", "flag_for_reaudit": true, "note": "PROVISIONAL."},
+
+    {"feature": "F022", "projection": "P010", "claim_class": "scorer_bookkeeping", "rationale": "F022 killed via P001 (feature-dist); P010 (Galois-label) resolves same data. +2 records projection-choice, not null-tested claim", "current_null_stratifier": "n/a", "correct_null_stratifier": "n/a — tautological with F010 edge", "flag_for_reaudit": false, "note": "Scorer-choice bookkeeping cell (per null_protocol §7). Do not count alongside Class 1-3 +2 cells for density claims."}
+  ],
+
+  "summary_by_feature": {
+    "F001": {"all_cells_class_5": true, "note": "modularity calibration anchor"},
+    "F003": {"all_cells_class_5": true, "note": "BSD parity calibration anchor"},
+    "F004": {"all_cells_class_5": true, "note": "Hasse bound calibration anchor"},
+    "F005": {"all_cells_class_5": true, "note": "high-Sha parity calibration anchor"},
+    "F008": {"all_cells_class_5": true, "note": "Scholz reflection calibration anchor"},
+    "F009": {"all_cells_class_5": true, "note": "Serre+Mazur calibration anchor"},
+    "F011": {"mixed": true, "class_1": ["P020", "P050", "P051", "P104"], "class_3_correct": ["P025", "P028"], "class_3_flag_reaudit": ["P021", "P023", "P026", "P036"]},
+    "F013": {"all_class_2_flag_reaudit": true, "cells_to_reaudit": ["P023", "P028", "P041", "P051", "P104"], "note": "Canonical Class 2 case; all five cells ran under conductor stratifier, should be rank_bin."},
+    "F014": {"all_cells_class_5": true, "note": "measurement-existence claim on Lehmer polynomials"},
+    "F015": {"all_class_3_correct": true, "cells": ["P020", "P021", "P042", "P104"], "note": "Canonical Class 3 case; stratifier=num_bad_primes matches claim."},
+    "F022": {"scorer_bookkeeping": true, "cells": ["P010"]},
+    "F041a": {"all_class_2_correct": true, "cells": ["P020", "P021", "P023", "P026", "P104"], "note": "Used joint (rank_bin, conductor_decade) — stricter than minimum Class 2."},
+    "F044": {"all_class_4_provisional": true, "cells_provisional": ["P020", "P023", "P026"], "note": "Construction-biased sample per F044's own caveat list; NULL_BSWCD insufficient."}
+  },
+
+  "reaudit_queue": [
+    {"feature": "F011", "projection": "P021", "priority": "medium", "required_stratifier": "num_bad_primes", "reason": "Class 3 stratum-uniform claim across nbp"},
+    {"feature": "F011", "projection": "P023", "priority": "medium", "required_stratifier": "rank_bin", "reason": "Class 3 stratum-uniform claim across rank"},
+    {"feature": "F011", "projection": "P026", "priority": "medium", "required_stratifier": "semistable_flag", "reason": "Class 3 stratum-uniform claim across reduction type"},
+    {"feature": "F011", "projection": "P036", "priority": "low", "required_stratifier": "root_number (aliases rank_bin on EC)", "reason": "Class 3; alias of P023"},
+    {"feature": "F013", "projection": "P023", "priority": "HIGH", "required_stratifier": "rank_bin", "reason": "Class 2 rank-slope claim; default null used wrong stratifier"},
+    {"feature": "F013", "projection": "P028", "priority": "HIGH", "required_stratifier": "rank_bin", "reason": "Class 2 rank-slope claim (K-S aliases rank on EC)"},
+    {"feature": "F013", "projection": "P041", "priority": "medium", "required_stratifier": "rank_bin", "reason": "Class 2 rank-slope claim under variance decomp"},
+    {"feature": "F013", "projection": "P051", "priority": "medium", "required_stratifier": "rank_bin", "reason": "Class 2 rank-slope claim after unfolding"},
+    {"feature": "F013", "projection": "P104", "priority": "medium", "required_stratifier": "rank_bin", "reason": "Class 2 self-audit; inherited v1 default stratifier"},
+    {"feature": "F044", "projection": "P020", "priority": "HIGH (different kind)", "required_stratifier": "n/a — NULL_BSWCD insufficient; need frame-based resample or theorem check", "reason": "Class 4 construction-biased sample"},
+    {"feature": "F044", "projection": "P023", "priority": "HIGH (different kind)", "required_stratifier": "n/a — same as above", "reason": "Class 4"},
+    {"feature": "F044", "projection": "P026", "priority": "HIGH (different kind)", "required_stratifier": "n/a — same as above", "reason": "Class 4"}
+  ],
+
+  "notes_for_sessionA": [
+    "10 +2 cells have a stratifier that does not match the claim class — flagged for re-audit under NULL_BSWCD@v2 with the correct stratifier listed per cell.",
+    "3 additional +2 cells (all on F044) are flagged PROVISIONAL pending a Class-4-appropriate null (frame-based resample or theorem check). NULL_BSWCD is not the right tool for these.",
+    "15 +2 cells (F001-F009, F014) are Class 5 algebraic/theorem identities — +2 is correct but carries different semantics than null-tested cells. Downstream analyses that cluster +2 cells should distinguish.",
+    "1 scorer-bookkeeping cell (F022 × P010) should not be counted alongside null-tested +2 for density or robustness metrics.",
+    "5 cells on F013 form a coherent block of Class 2 mismatches — re-audit under stratifier=rank_bin would be one operation if batched.",
+    "Decision per protocol: this document does NOT demote or promote any cells. SessionA (conductor) owns the re-audit execution and any resulting tier changes."
+  ]
+}
