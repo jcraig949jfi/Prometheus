@@ -1,0 +1,755 @@
+{
+  "analysis": "Koios rank analysis of Harmonia invariance tensor",
+  "date": "2026-04-18",
+  "matrix_shape": [
+    31,
+    37
+  ],
+  "observed_cells": 108,
+  "total_cells": 1147,
+  "density_pct": 9.4,
+  "version_A": {
+    "description": "0 cells treated as zero",
+    "singular_values": [
+      7.5702,
+      6.1698,
+      5.1321,
+      4.7865,
+      4.262,
+      4.0083,
+      3.781,
+      3.3626,
+      3.0041,
+      2.7032,
+      2.4064,
+      2.2402,
+      1.9683,
+      1.8985,
+      1.7556,
+      1.7099,
+      1.5217,
+      1.4158,
+      1.261,
+      1.1583,
+      0.8907,
+      0.825,
+      0.7209,
+      0.5789,
+      0.4131,
+      0.3648,
+      0.1692,
+      0.0627,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "cumulative_variance_pct": [
+      22.47,
+      37.4,
+      47.73,
+      56.71,
+      63.84,
+      70.14,
+      75.75,
+      80.18,
+      83.72,
+      86.58,
+      88.85,
+      90.82,
+      92.34,
+      93.76,
+      94.96
+    ],
+    "effective_rank_95pct": 16,
+    "effective_rank_99pct": 21,
+    "top3_left_vectors": [
+      {
+        "index": 1,
+        "sigma": 7.5702,
+        "components": [
+          {
+            "id": "F011",
+            "weight": 0.485,
+            "label": "GUE first-gap deficit \u2014 EXCISED (calibration) + RANK-0 RESIDUAL (front"
+          },
+          {
+            "id": "F041a",
+            "weight": 0.4205,
+            "label": "Rank-2+ moment slope monotone in num_bad_primes (supersedes F041)"
+          },
+          {
+            "id": "F044",
+            "weight": 0.356,
+            "label": "Rank-4 corridor: disc=conductor EXACTLY \u2014 additive reduction forbidden"
+          },
+          {
+            "id": "F003",
+            "weight": 0.3348,
+            "label": "BSD parity (rank = analytic_rank) + FULL BSD identity at 10\u207b\u00b9\u00b2 (rank 2"
+          },
+          {
+            "id": "F013",
+            "weight": 0.2543,
+            "label": "Zero spacing rigidity vs rank (H06) \u2014 P028 resolves BUT downstream of "
+          },
+          {
+            "id": "F015",
+            "weight": 0.2289,
+            "label": "Szpiro vs conductor \u2014 sign-uniform, magnitude non-monotone in k \u2014 BLOC"
+          },
+          {
+            "id": "F014",
+            "weight": 0.2283,
+            "label": "Lehmer spectrum (refined) \u2014 Salem density in (1.176, 1.228)"
+          },
+          {
+            "id": "F028",
+            "weight": -0.2142,
+            "label": "Szpiro \u00d7 Faltings coupling (H40)"
+          },
+          {
+            "id": "F031",
+            "weight": -0.1578,
+            "label": "Object zeros_vector corruption"
+          },
+          {
+            "id": "F023",
+            "weight": -0.1559,
+            "label": "Spectral tail ARI=0.55 (2026-04-15 version)"
+          },
+          {
+            "id": "F043",
+            "weight": 0.1445,
+            "label": "BSD-Sha anticorrelation with period (new empirical law candidate)"
+          },
+          {
+            "id": "F005",
+            "weight": 0.142,
+            "label": "High-Sha parity (H43)"
+          },
+          {
+            "id": "F012",
+            "weight": -0.1071,
+            "label": "M\u00f6bius bias at g2c aut groups (H85) \u2014 KILLED"
+          },
+          {
+            "id": "F001",
+            "weight": 0.0999,
+            "label": "Modularity (a_p agreement)"
+          },
+          {
+            "id": "F042",
+            "weight": 0.0772,
+            "label": "CM disc=-27 L-value depression \u2014 novel quantitative precision on KNOWN"
+          },
+          {
+            "id": "F024",
+            "weight": -0.0721,
+            "label": "Faltings explains GUE (H08)"
+          },
+          {
+            "id": "F010",
+            "weight": 0.0713,
+            "label": "NF backbone via Galois-label \u2014 KILLED, joins F022 under block-shuffle "
+          },
+          {
+            "id": "F045",
+            "weight": 0.0652,
+            "label": "Isogeny-class murmuration (5/21 primes) \u2014 novel axis, weaker than rank"
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "sigma": 6.1698,
+        "components": [
+          {
+            "id": "F010",
+            "weight": 0.5554,
+            "label": "NF backbone via Galois-label \u2014 KILLED, joins F022 under block-shuffle "
+          },
+          {
+            "id": "F020",
+            "weight": 0.3945,
+            "label": "Megethos axis (sorted log-normals)"
+          },
+          {
+            "id": "F012",
+            "weight": 0.3678,
+            "label": "M\u00f6bius bias at g2c aut groups (H85) \u2014 KILLED"
+          },
+          {
+            "id": "F022",
+            "weight": 0.2644,
+            "label": "NF backbone via feature distribution"
+          },
+          {
+            "id": "F021",
+            "weight": 0.2546,
+            "label": "Phoneme framework (5-axis)"
+          },
+          {
+            "id": "F032",
+            "weight": 0.2287,
+            "label": "Knot silence (persistent)"
+          },
+          {
+            "id": "F023",
+            "weight": -0.2049,
+            "label": "Spectral tail ARI=0.55 (2026-04-15 version)"
+          },
+          {
+            "id": "F014",
+            "weight": -0.2038,
+            "label": "Lehmer spectrum (refined) \u2014 Salem density in (1.176, 1.228)"
+          },
+          {
+            "id": "F028",
+            "weight": -0.1731,
+            "label": "Szpiro \u00d7 Faltings coupling (H40)"
+          },
+          {
+            "id": "F027",
+            "weight": 0.1403,
+            "label": "Alexander Mahler \u00d7 EC L-value (Charon)"
+          },
+          {
+            "id": "F013",
+            "weight": -0.1219,
+            "label": "Zero spacing rigidity vs rank (H06) \u2014 P028 resolves BUT downstream of "
+          },
+          {
+            "id": "F041a",
+            "weight": -0.1196,
+            "label": "Rank-2+ moment slope monotone in num_bad_primes (supersedes F041)"
+          },
+          {
+            "id": "F026",
+            "weight": 0.1139,
+            "label": "Artin dim-2/dim-3 proof-frontier ratio (H61)"
+          },
+          {
+            "id": "F031",
+            "weight": -0.091,
+            "label": "Object zeros_vector corruption"
+          },
+          {
+            "id": "F015",
+            "weight": 0.0764,
+            "label": "Szpiro vs conductor \u2014 sign-uniform, magnitude non-monotone in k \u2014 BLOC"
+          },
+          {
+            "id": "F003",
+            "weight": 0.0739,
+            "label": "BSD parity (rank = analytic_rank) + FULL BSD identity at 10\u207b\u00b9\u00b2 (rank 2"
+          },
+          {
+            "id": "F002",
+            "weight": -0.0673,
+            "label": "Mazur torsion"
+          },
+          {
+            "id": "F042",
+            "weight": 0.0548,
+            "label": "CM disc=-27 L-value depression \u2014 novel quantitative precision on KNOWN"
+          },
+          {
+            "id": "F044",
+            "weight": 0.0528,
+            "label": "Rank-4 corridor: disc=conductor EXACTLY \u2014 additive reduction forbidden"
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "sigma": 5.1321,
+        "components": [
+          {
+            "id": "F032",
+            "weight": -0.5255,
+            "label": "Knot silence (persistent)"
+          },
+          {
+            "id": "F015",
+            "weight": -0.4074,
+            "label": "Szpiro vs conductor \u2014 sign-uniform, magnitude non-monotone in k \u2014 BLOC"
+          },
+          {
+            "id": "F001",
+            "weight": 0.4034,
+            "label": "Modularity (a_p agreement)"
+          },
+          {
+            "id": "F011",
+            "weight": -0.2817,
+            "label": "GUE first-gap deficit \u2014 EXCISED (calibration) + RANK-0 RESIDUAL (front"
+          },
+          {
+            "id": "F003",
+            "weight": 0.2567,
+            "label": "BSD parity (rank = analytic_rank) + FULL BSD identity at 10\u207b\u00b9\u00b2 (rank 2"
+          },
+          {
+            "id": "F012",
+            "weight": 0.2295,
+            "label": "M\u00f6bius bias at g2c aut groups (H85) \u2014 KILLED"
+          },
+          {
+            "id": "F044",
+            "weight": 0.2098,
+            "label": "Rank-4 corridor: disc=conductor EXACTLY \u2014 additive reduction forbidden"
+          },
+          {
+            "id": "F013",
+            "weight": -0.1844,
+            "label": "Zero spacing rigidity vs rank (H06) \u2014 P028 resolves BUT downstream of "
+          },
+          {
+            "id": "F005",
+            "weight": 0.1553,
+            "label": "High-Sha parity (H43)"
+          },
+          {
+            "id": "F022",
+            "weight": 0.1526,
+            "label": "NF backbone via feature distribution"
+          },
+          {
+            "id": "F043",
+            "weight": 0.1322,
+            "label": "BSD-Sha anticorrelation with period (new empirical law candidate)"
+          },
+          {
+            "id": "F014",
+            "weight": 0.123,
+            "label": "Lehmer spectrum (refined) \u2014 Salem density in (1.176, 1.228)"
+          },
+          {
+            "id": "F023",
+            "weight": -0.0892,
+            "label": "Spectral tail ARI=0.55 (2026-04-15 version)"
+          },
+          {
+            "id": "F020",
+            "weight": -0.086,
+            "label": "Megethos axis (sorted log-normals)"
+          },
+          {
+            "id": "F031",
+            "weight": -0.0675,
+            "label": "Object zeros_vector corruption"
+          },
+          {
+            "id": "F045",
+            "weight": 0.0613,
+            "label": "Isogeny-class murmuration (5/21 primes) \u2014 novel axis, weaker than rank"
+          },
+          {
+            "id": "F002",
+            "weight": 0.0545,
+            "label": "Mazur torsion"
+          },
+          {
+            "id": "F021",
+            "weight": 0.0512,
+            "label": "Phoneme framework (5-axis)"
+          }
+        ]
+      }
+    ],
+    "top3_right_vectors": [
+      {
+        "index": 1,
+        "sigma": 7.5702,
+        "components": [
+          {
+            "id": "P020",
+            "weight": 0.5973,
+            "label": "Conductor conditioning"
+          },
+          {
+            "id": "P023",
+            "weight": 0.4865,
+            "label": "Rank stratification"
+          },
+          {
+            "id": "P104",
+            "weight": 0.3763,
+            "label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null"
+          },
+          {
+            "id": "P021",
+            "weight": 0.3054,
+            "label": "Bad-prime count stratification"
+          },
+          {
+            "id": "P026",
+            "weight": 0.2165,
+            "label": "Semistable vs additive"
+          },
+          {
+            "id": "P028",
+            "weight": 0.2047,
+            "label": "Katz-Sarnak family symmetry type"
+          },
+          {
+            "id": "P041",
+            "weight": 0.1786,
+            "label": "F24 variance decomposition"
+          },
+          {
+            "id": "P051",
+            "weight": 0.0977,
+            "label": "N(T) unfolding (density normalization)"
+          },
+          {
+            "id": "P024",
+            "weight": 0.093,
+            "label": "Torsion stratification"
+          },
+          {
+            "id": "P042",
+            "weight": 0.0699,
+            "label": "F39 feature permutation (proposed)"
+          },
+          {
+            "id": "P001",
+            "weight": -0.0699,
+            "label": "CouplingScorer (cosine feature similarity)"
+          },
+          {
+            "id": "P053",
+            "weight": 0.0651,
+            "label": "Mahler measure projection"
+          },
+          {
+            "id": "P050",
+            "weight": 0.0641,
+            "label": "First-gap analysis (first zero spacing only)"
+          },
+          {
+            "id": "P027",
+            "weight": -0.0517,
+            "label": "ADE type stratification"
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "sigma": 6.1698,
+        "components": [
+          {
+            "id": "P040",
+            "weight": -0.7028,
+            "label": "F1 permutation null (label shuffle)"
+          },
+          {
+            "id": "P001",
+            "weight": -0.3862,
+            "label": "CouplingScorer (cosine feature similarity)"
+          },
+          {
+            "id": "P104",
+            "weight": -0.3687,
+            "label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null"
+          },
+          {
+            "id": "P020",
+            "weight": 0.2807,
+            "label": "Conductor conditioning"
+          },
+          {
+            "id": "P052",
+            "weight": -0.1924,
+            "label": "Prime decontamination (3-layer microscope)"
+          },
+          {
+            "id": "P053",
+            "weight": -0.1629,
+            "label": "Mahler measure projection"
+          },
+          {
+            "id": "P003",
+            "weight": -0.1279,
+            "label": "Megethos / log|magnitude| axis"
+          },
+          {
+            "id": "P023",
+            "weight": -0.1162,
+            "label": "Rank stratification"
+          },
+          {
+            "id": "P042",
+            "weight": 0.1148,
+            "label": "F39 feature permutation (proposed)"
+          },
+          {
+            "id": "P002",
+            "weight": -0.0825,
+            "label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)"
+          },
+          {
+            "id": "P010",
+            "weight": -0.0803,
+            "label": "Galois-label object-keyed scorer"
+          },
+          {
+            "id": "P011",
+            "weight": -0.076,
+            "label": "Lhash exact match"
+          },
+          {
+            "id": "P043",
+            "weight": -0.0666,
+            "label": "Bootstrap stability"
+          },
+          {
+            "id": "P041",
+            "weight": 0.0603,
+            "label": "F24 variance decomposition"
+          },
+          {
+            "id": "P022",
+            "weight": -0.0596,
+            "label": "aut_grp stratification (genus-2)"
+          }
+        ]
+      },
+      {
+        "index": 3,
+        "sigma": 5.1321,
+        "components": [
+          {
+            "id": "P010",
+            "weight": 0.4294,
+            "label": "Galois-label object-keyed scorer"
+          },
+          {
+            "id": "P104",
+            "weight": -0.4288,
+            "label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null"
+          },
+          {
+            "id": "P011",
+            "weight": 0.362,
+            "label": "Lhash exact match"
+          },
+          {
+            "id": "P023",
+            "weight": 0.3016,
+            "label": "Rank stratification"
+          },
+          {
+            "id": "P001",
+            "weight": 0.2987,
+            "label": "CouplingScorer (cosine feature similarity)"
+          },
+          {
+            "id": "P053",
+            "weight": 0.2583,
+            "label": "Mahler measure projection"
+          },
+          {
+            "id": "P036",
+            "weight": -0.2084,
+            "label": "Root number stratification"
+          },
+          {
+            "id": "P028",
+            "weight": -0.1896,
+            "label": "Katz-Sarnak family symmetry type"
+          },
+          {
+            "id": "P021",
+            "weight": -0.1886,
+            "label": "Bad-prime count stratification"
+          },
+          {
+            "id": "P020",
+            "weight": 0.1731,
+            "label": "Conductor conditioning"
+          },
+          {
+            "id": "P042",
+            "weight": -0.1668,
+            "label": "F39 feature permutation (proposed)"
+          },
+          {
+            "id": "P012",
+            "weight": 0.1572,
+            "label": "trace_hash"
+          },
+          {
+            "id": "P040",
+            "weight": -0.1115,
+            "label": "F1 permutation null (label shuffle)"
+          },
+          {
+            "id": "P052",
+            "weight": 0.0954,
+            "label": "Prime decontamination (3-layer microscope)"
+          },
+          {
+            "id": "P051",
+            "weight": -0.0908,
+            "label": "N(T) unfolding (density normalization)"
+          },
+          {
+            "id": "P041",
+            "weight": 0.0799,
+            "label": "F24 variance decomposition"
+          },
+          {
+            "id": "P027",
+            "weight": 0.0675,
+            "label": "ADE type stratification"
+          },
+          {
+            "id": "P050",
+            "weight": -0.0549,
+            "label": "First-gap analysis (first zero spacing only)"
+          },
+          {
+            "id": "P043",
+            "weight": -0.0527,
+            "label": "Bootstrap stability"
+          }
+        ]
+      }
+    ]
+  },
+  "version_B_svt": {
+    "description": "Nuclear-norm SVT completion (tau=3.0)",
+    "tau": 3.0,
+    "iterations": 34,
+    "rmse_observed": 1e-06,
+    "singular_values": [
+      8.3589,
+      6.8296,
+      5.5133,
+      5.0743,
+      4.5789,
+      4.0356,
+      3.716,
+      3.3291,
+      2.9629,
+      2.4437,
+      2.213,
+      2.0461,
+      1.6358,
+      1.4049,
+      1.3659
+    ],
+    "cumulative_variance_pct": [
+      25.99,
+      43.35,
+      54.65,
+      64.23,
+      72.03,
+      78.09,
+      83.23,
+      87.35,
+      90.62,
+      92.84,
+      94.66,
+      96.22,
+      97.21,
+      97.95,
+      98.64
+    ],
+    "effective_rank_95pct": 12,
+    "effective_rank_99pct": 16,
+    "tau_sweep": {
+      "1.0": {
+        "rank_95": 14,
+        "rank_99": 18,
+        "rmse": 1e-06,
+        "top5_sv": [
+          7.87,
+          6.406,
+          5.278,
+          4.9,
+          4.376
+        ]
+      },
+      "2.0": {
+        "rank_95": 12,
+        "rank_99": 17,
+        "rmse": 1e-06,
+        "top5_sv": [
+          8.132,
+          6.625,
+          5.404,
+          4.991,
+          4.484
+        ]
+      },
+      "3.0": {
+        "rank_95": 12,
+        "rank_99": 16,
+        "rmse": 1e-06,
+        "top5_sv": [
+          8.359,
+          6.83,
+          5.513,
+          5.074,
+          4.579
+        ]
+      },
+      "5.0": {
+        "rank_95": 11,
+        "rank_99": 15,
+        "rmse": 1e-06,
+        "top5_sv": [
+          8.746,
+          7.191,
+          5.696,
+          5.227,
+          4.737
+        ]
+      }
+    }
+  },
+  "version_C_agreement": {
+    "description": "Feature agreement matrix on shared observed projections",
+    "singular_values": [
+      4.147,
+      3.388,
+      2.565,
+      1.307,
+      1.221,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.653,
+      0.582
+    ],
+    "cumulative_variance_pct": [
+      36.26,
+      60.45,
+      74.32,
+      77.93,
+      81.07,
+      83.18,
+      85.29,
+      87.39,
+      89.5,
+      91.61,
+      93.72,
+      95.83,
+      97.94,
+      98.84,
+      99.55
+    ],
+    "effective_rank_95pct": 12,
+    "effective_rank_99pct": 15
+  },
+  "geometry_1_verdict": "FALSIFIED",
+  "headline": "A rank(95%)=16, B(SVT) rank(95%)=12, C(agreement) rank(95%)=12",
+  "sparsity_warning": "90.6% missing \u2014 completion unreliable at this density"
+}
