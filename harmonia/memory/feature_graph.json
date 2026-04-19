@@ -101,6 +101,36 @@
       "to": "F005",
       "relation": "calibration_peer",
       "note": "F009 description quote: 'Load-bearing calibration anchor; joins F001-F005.' F005 high-Sha parity is part of the calibration family F009 joins."
+    },
+    {
+      "from": "F009",
+      "to": "F004",
+      "relation": "calibration_peer",
+      "note": "F009 description quote: 'Load-bearing calibration anchor; joins F001-F005.' F004 Hasse bound is part of the calibration family F009 joins."
+    },
+    {
+      "from": "F042",
+      "to": "F011",
+      "relation": "sub_finding_of",
+      "note": "F011 description names the T4 sub-family finding: 'rank-0 low-tail Pr[L/M_1<0.25] enriched for CM (1.73x, cm=-27: 6.66x), class_size=3 (1.78x); sha>1 depleted.' F042 description quantifies the same enrichment: '6.66x enrichment factor, 2.5x leading_term depression between cm=-3 and cm=-27, 71.4% low-L tail participation.' The 6.66x number matches both descriptions; F042 is the standalone write-up of the CM sub-finding within F011\u2019s T4 probe."
+    },
+    {
+      "from": "F043",
+      "to": "F011",
+      "relation": "mechanistically_explains",
+      "note": "F043 description quote: 'Mechanistically EXPLAINS T4 (cbe7b623) low-L-tail sha depletion: the period drops faster than Sha rises, so large-Sha curves are BUFFERED out of the low-L tail relative to sha-independent baseline.' T4 is the sub-family probe inside F011; F043 provides a period-vs-Sha mechanism for the sha depletion F011 documents."
+    },
+    {
+      "from": "F044",
+      "to": "F003",
+      "relation": "constrains",
+      "note": "F044 description quote: 'Connects abc conjecture to BSD via measurable arithmetic narrowing at high rank.' 2085/2086 rank-4 EC have disc=conductor (no additive reduction); F003 BSD parity is the anchor whose high-rank slice is thereby constrained to a multiplicative-only corridor."
+    },
+    {
+      "from": "F044",
+      "to": "F033",
+      "relation": "overlaps_objects",
+      "note": "F033 description quote: '2,086 rank-4 + 19 rank-5 curves. Only 1 has lfunc data. Frontier for BSD verification.' F044 description quote: 'across 2086 rank-4 EC in LMFDB, 2085 have disc=conductor.' Same 2086 rank-4 population: F033 tracks the coverage cliff, F044 the disc=conductor corridor within it."
     }
   ]
 }
