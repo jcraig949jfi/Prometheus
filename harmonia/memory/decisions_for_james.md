@@ -32,7 +32,53 @@ document is for things outside that envelope.
 
 ## Pending decisions
 
-*None blocking. External-review retractions logged 2026-04-19: F043 withdrawn (algebraic-identity artifact); Geometry 1 amendment withdrawn (inappropriate method for MNAR ordinal data); principal-axes and +2-doubled claims downgraded to selection/process artifacts.*
+*None blocking. Tracks A+B landed 2026-04-19: EPS011@v2 promoted (F011 residual SURVIVES conductor-shuffle sanity null); null-protocol discipline documented; algebraic-identity sweep found no new F043-class specimens; 10 cells seeded for re-audit under corrected stratifiers.*
+
+---
+
+### [2026-04-19 post-wave-2] — Tracks A + B delivered, conductor sign-offs logged
+
+**Track B (F011 independent-unfolding check, sessionB f5a58256):** verdict SURVIVES, with honest narrower-than-ideal caveat. Conductor-shuffle sanity null was decisive (50/50 permutation fits hit the −50% lower bound; real data returns 22.90% — 72.9pp gap rules out fitting-procedure degeneracy). Cross-unfolding comparison (Option 2) was methodologically ambiguous because alternative unfoldings don't map onto the UF_CAT-specific GUE baseline. Sage/lcalc source-independent check (Option 1) deferred to a Sage-capable host.
+
+Conductor action: **EPS011@v2 promoted to Redis.** Value unchanged (22.90 ± 0.78 %). Precision block adds `independent_unfolding_audit: SURVIVES (conductor-shuffle sanity null decisive; Option 1 deferred)`. Version bump triggered per VERSIONING.md Rule 4 (precision-block change). F011 tensor description updated with the audit result; Sage/lcalc external verification is the remaining Pattern 5 gate.
+
+**Track A1 (null protocol per claim class, methodology tightener b57f4afe):** five claim classes defined with correct stratifiers:
+- Class 1 (moment/ratio under conductor scaling): conductor_decile
+- Class 2 (rank-slope interaction): rank_bin (NOT conductor)
+- Class 3 (stratum-uniform claim): the stratum being tested
+- Class 4 (construction-biased samples): NULL_BSWCD INSUFFICIENT; frame-based resample or theorem check required
+- Class 5 (algebraic-identity claims): no null applies; Pattern 30 check only
+
+42 +2 cells classified in `cartography/docs/cell_null_classification.json`:
+- 15 Class 5 calibration anchors (intentional identities, legitimate but semantically distinct)
+- 13 correct as run
+- 10 flagged for re-audit under corrected stratifier (5 of these form one F013 block — batch re-audit closes them together)
+- 3 F044 cells flagged PROVISIONAL (construction-biased; NULL_BSWCD insufficient)
+- 1 scorer-bookkeeping (F022 × P010)
+
+Conductor action: **seeded `reaudit_10_stratifier_mismatch_cells` @ priority -1.5** — runs NULL_BSWCD@v2 with corrected stratifiers on the 10 flagged cells. Promote/demote/annotate per outcome. Seeded `audit_F044_framebased_resample` @ -1.0 — either define a non-rank-record frame or find a constraining theorem.
+
+**Track A2 (algebraic-identity sweep):** Pattern 30 DRAFT checklist applied to all 31 F-IDs. Zero new F043-class specimens detected. Pattern 30 stays DRAFT (still one anchor). Two PARTIAL cases surfaced:
+- **F015**: szpiro_ratio = log|Disc| / log(N) has log(N) in the denominator, so a regression of szpiro vs log-conductor has a weak algebraic component in the direction-of-slope. Sign-uniform-per-k and magnitude non-monotonicity are NOT forced. Annotation added to F015 description noting the partial algebraic expectation; findings remain real beyond the baseline.
+- **F041a**: the CFKRS arithmetic factor a_E(k) is itself bad-prime-structure dependent. The Pattern 5 gate (does CFKRS predict the nbp ladder) and Pattern 30 gate (is the ladder definitionally forced) collapse to the same gate here. F041a is NOT a plain algebraic rearrangement like F043 — it's "arithmetic theory may predict this shape," which is CFKRS's job to settle. Annotation added to F041a description reflecting this.
+
+Conductor action: both annotations applied to tensor descriptions; no demotions.
+
+**What survives the wave:**
+- F011 rank-0 residual at 22.90 ± 0.78 % with `independent_unfolding_audit: SURVIVES` (v2, narrow form). Still the project's strongest non-calibration non-tautology signal.
+- 13 correctly-audited +2 cells (Class 1/2/3 with correct stratifiers).
+- Null-protocol discipline + algebraic-identity diagnostic as enforced wave-2 practice.
+
+**What's queued:**
+- 10-cell stratifier-mismatch re-audit
+- F044 frame-based resample or theorem check
+- F011 Sage/lcalc external unfolding cross-check (pending Sage-capable host; likely M1 if configured)
+
+**What's blocked:** Nothing urgent.
+
+**Urgency:** resolved — both tracks delivered cleanly, conductor sign-offs logged, two new narrow audit tasks queued, EPS011@v2 live.
+
+---
 
 ---
 
