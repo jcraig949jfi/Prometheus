@@ -1,8 +1,8 @@
 # Track D — Replication Across Pipelines
 
 **Role:** Replicator (single-purpose)
-**Delegated:** [pending]
-**Status:** [pending]
+**Delegated:** not yet
+**Status:** DEFERRED (2026-04-19). Prompt is ready to paste when the project decides replication is the right next use of time. Not urgent: the F043 retraction already demonstrated the "does the instrument catch its own mistakes" question; the remaining value of Track D is academic-rigor-style cross-code-path verification, which is nice-to-have rather than blocking for the tool-building vision.
 **Expected deliverables:**
   - A clean-room second implementation of `NULL_BSWCD`
   - Execution of the F011 rank-0 residual audit under both implementations
