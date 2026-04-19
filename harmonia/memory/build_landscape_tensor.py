@@ -529,6 +529,18 @@ FEATURE_EDGES = [
      "note": "F044 description quote: 'Connects abc conjecture to BSD via measurable arithmetic narrowing at high rank.' 2085/2086 rank-4 EC have disc=conductor (no additive reduction); F003 BSD parity is the anchor whose high-rank slice is thereby constrained to a multiplicative-only corridor."},
     {"from": "F044", "to": "F033", "relation": "overlaps_objects",
      "note": "F033 description quote: '2,086 rank-4 + 19 rank-5 curves. Only 1 has lfunc data. Frontier for BSD verification.' F044 description quote: 'across 2086 rank-4 EC in LMFDB, 2085 have disc=conductor.' Same 2086 rank-4 population: F033 tracks the coverage cliff, F044 the disc=conductor corridor within it."},
+
+    # ===== edge-weaver batch 3 (Mnemosyne, 2026-04-18) =====
+    {"from": "F045", "to": "F041a", "relation": "adjacent_to",
+     "note": "F045 description quote: 'Kill/confirm task: compute per-prime uncorrected p-values + correlation with F041a nbp ladder to test whether isogeny-class-size and num_bad_primes are independent axes. If correlated, F045 may collapse into F041a.' Both are rank-dependent murmuration-style axes at high rank; F045 may be a proxy for F041a’s bad-prime ladder."},
+    {"from": "F021", "to": "F020", "relation": "shared_trivial_predictor_pathology",
+     "note": "F020 description quote: 'ρ=1.0 for sorted log-normals. Not structure — artifact of cosine on magnitude-sorted vectors.' F021 description quote: 'Trivial 1D predictor gave ρ=1.0. Unvalidated; the framework was a coordinate choice, not landscape.' Both achieve ρ=1.0 via trivial/coordinate-choice artifacts — the same false-positive shape."},
+    {"from": "F028", "to": "F020", "relation": "shared_magnitude_tautology",
+     "note": "F028 description quote: 'ρ=0.97 after partial control — but both sides encode log|Disc|. Near-identity, not cross-domain.' F020 is the Megethos/log-magnitude axis artifact. F028 is a concrete instance: Szpiro and Faltings both encode log|Disc|, so their cosine coupling is a Megethos-family tautology."},
+    {"from": "F027", "to": "F014", "relation": "negative_companion_of",
+     "note": "F027 description quote: 'Wrong polynomial projection — Alexander has cyclotomic gap, no Lehmer probing.' F014 is the live Lehmer-spectrum specimen on number-field polynomials; F027 is the failed Lehmer probe via knot Alexander polynomials. Same test, different polynomial class, opposite outcome."},
+    {"from": "F031", "to": "F011", "relation": "upstream_data_risk_for",
+     "note": "F031 description quote: 'Positions 21-24 are metadata, not zeros. Mnemosyne’s audit: pos 21 = root_number (100% match). Use lfunc.positive_zeros (authoritative) or truncate to [0:20].' F011 spectral analysis that read raw zeros_vector (instead of lfunc.positive_zeros) would have been contaminated; the corruption is upstream of any F011 measurement that didn’t take the Mnemosyne truncation path."},
 ]
 
 
