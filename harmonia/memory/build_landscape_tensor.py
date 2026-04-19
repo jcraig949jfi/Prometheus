@@ -529,6 +529,18 @@ FEATURE_EDGES = [
      "note": "F044 description quote: 'Connects abc conjecture to BSD via measurable arithmetic narrowing at high rank.' 2085/2086 rank-4 EC have disc=conductor (no additive reduction); F003 BSD parity is the anchor whose high-rank slice is thereby constrained to a multiplicative-only corridor."},
     {"from": "F044", "to": "F033", "relation": "overlaps_objects",
      "note": "F033 description quote: '2,086 rank-4 + 19 rank-5 curves. Only 1 has lfunc data. Frontier for BSD verification.' F044 description quote: 'across 2086 rank-4 EC in LMFDB, 2085 have disc=conductor.' Same 2086 rank-4 population: F033 tracks the coverage cliff, F044 the disc=conductor corridor within it."},
+
+    # ===== edge-weaver batch 3 (Mnemosyne, 2026-04-18) =====
+    {"from": "F045", "to": "F041a", "relation": "adjacent_to",
+     "note": "F045 description quote: 'Kill/confirm task: compute per-prime uncorrected p-values + correlation with F041a nbp ladder to test whether isogeny-class-size and num_bad_primes are independent axes. If correlated, F045 may collapse into F041a.' Both are rank-dependent murmuration-style axes at high rank; F045 may be a proxy for F041a’s bad-prime ladder."},
+    {"from": "F021", "to": "F020", "relation": "shared_trivial_predictor_pathology",
+     "note": "F020 description quote: 'ρ=1.0 for sorted log-normals. Not structure — artifact of cosine on magnitude-sorted vectors.' F021 description quote: 'Trivial 1D predictor gave ρ=1.0. Unvalidated; the framework was a coordinate choice, not landscape.' Both achieve ρ=1.0 via trivial/coordinate-choice artifacts — the same false-positive shape."},
+    {"from": "F028", "to": "F020", "relation": "shared_magnitude_tautology",
+     "note": "F028 description quote: 'ρ=0.97 after partial control — but both sides encode log|Disc|. Near-identity, not cross-domain.' F020 is the Megethos/log-magnitude axis artifact. F028 is a concrete instance: Szpiro and Faltings both encode log|Disc|, so their cosine coupling is a Megethos-family tautology."},
+    {"from": "F027", "to": "F014", "relation": "negative_companion_of",
+     "note": "F027 description quote: 'Wrong polynomial projection — Alexander has cyclotomic gap, no Lehmer probing.' F014 is the live Lehmer-spectrum specimen on number-field polynomials; F027 is the failed Lehmer probe via knot Alexander polynomials. Same test, different polynomial class, opposite outcome."},
+    {"from": "F031", "to": "F011", "relation": "upstream_data_risk_for",
+     "note": "F031 description quote: 'Positions 21-24 are metadata, not zeros. Mnemosyne’s audit: pos 21 = root_number (100% match). Use lfunc.positive_zeros (authoritative) or truncate to [0:20].' F011 spectral analysis that read raw zeros_vector (instead of lfunc.positive_zeros) would have been contaminated; the corruption is upstream of any F011 measurement that didn’t take the Mnemosyne truncation path."},
 ]
 
 
@@ -555,6 +567,42 @@ PROJECTION_EDGES = [
      "note": "F1 label shuffle catches less than F39 feature permutation for representation artifacts."},
     {"from": "P027", "to": "P010", "relation": "heuristic_proxy_for",
      "note": "ADE-type via Galois label is a coarse proxy for the actual object-keyed Galois scorer."},
+
+    # ===== edge-weaver batch 4 (Mnemosyne, 2026-04-18) =====
+    {"from": "P104", "to": "P040", "relation": "specializes",
+     "note": "P104 description quote: 'Stricter than P040 when test axis correlates with confound.' P104 block-shuffle is P040 restricted to within-stratum shuffles; strictly a specialization."},
+    {"from": "P035", "to": "P026", "relation": "refines",
+     "note": "P035 description quote: 'Finer than P026 semistable vs additive.' Kodaira symbols further split the semistable/additive binary into Tate’s full classification."},
+    {"from": "P035", "to": "P021", "relation": "tautology_adjacent",
+     "note": "P035 description quote: 'Tautology-adjacent to P021 (Kodaira type constrains bad-prime Tamagawa contribution).'"},
+    {"from": "P036", "to": "P028", "relation": "aliased_on_EC",
+     "note": "P036 description quote: 'Equivalent to (−1)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd. Independent projection only for non-EC L-function families.'"},
+    {"from": "P036", "to": "P023", "relation": "aliased_on_EC",
+     "note": "P036 description quote: 'Equivalent to (−1)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd.'"},
+
+    # ===== edge-weaver batch 5 (Mnemosyne, 2026-04-18) =====
+    {"from": "P037", "to": "P025", "relation": "aliased_on_EC",
+     "note": "P037 description quote: 'For EC: non-CM gives SU(2); CM gives N(U(1)). Tautology with P025 CM flag on EC.' Sato-Tate group on EC is determined exactly by CM status."},
+    {"from": "P039", "to": "P100", "relation": "partial_tautology",
+     "note": "P039 description quote: 'Partial tautology with P100 isogeny class size (class_size ≥ 2 ⇔ nonmax_primes ≠ []).'"},
+    {"from": "P100", "to": "P039", "relation": "partial_tautology",
+     "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois ℓ-adic image (class_size≥2 ⇔ nonmax_primes≠[]).' Reverse link for navigation."},
+    {"from": "P100", "to": "P024", "relation": "partial_tautology",
+     "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois ℓ-adic image.' Mazur-bounded class sizes overlap with Mazur torsion structure."},
+    {"from": "P031", "to": "P102", "relation": "dim_constrained_by",
+     "note": "P031 description quote: 'Forbidden-cell partial tautology: ν=−1 only at even dimension.' Frobenius-Schur indicator values are constrained by the Artin rep dimension stratification P102; certain (Dim, ν) cells are empty by representation theory."},
+
+    # ===== edge-weaver batch 6 (Mnemosyne, 2026-04-18) =====
+    {"from": "P033", "to": "P028", "relation": "aliased_on_EC",
+     "note": "P033 description quote: 'Tautology with P028 on rank-parity for EC families.' Artin Is_Even parity collapses to Katz-Sarnak SO_even/SO_odd on EC families via BSD parity."},
+    {"from": "P033", "to": "P102", "relation": "joint_non_uniform_with",
+     "note": "P102 description quote: 'Dim × Is_Even (non-uniform — dim-2 odd-dominated, dim-4 even-dominated).' P033 parity distributes non-uniformly across P102 Artin dimensions — not a tautology but a strong joint dependency."},
+    {"from": "P032", "to": "P028", "relation": "conditional_tautology",
+     "note": "P032 description quote: 'Tautology vs P028 when families align with parity.' MF / Dirichlet character parity collapses to Katz-Sarnak family classification under the aligned-parity condition."},
+    {"from": "P012", "to": "P011", "relation": "stricter_than",
+     "note": "P012 description quote: 'Alternative to Lhash — hashes Hecke eigenvalues. More strict. Useful when Lhash is too coarse.'"},
+    {"from": "P101", "to": "P023", "relation": "conditional_on",
+     "note": "P101 description quote: 'Useful only at rank ≥ 1 as a separating axis; rank-0 regulator is degenerate.' P101 regulator stratification is meaningful only within P023 rank ≥ 1 slices."},
 ]
 
 

@@ -53,6 +53,96 @@
       "to": "P010",
       "relation": "heuristic_proxy_for",
       "note": "ADE-type via Galois label is a coarse proxy for the actual object-keyed Galois scorer."
+    },
+    {
+      "from": "P104",
+      "to": "P040",
+      "relation": "specializes",
+      "note": "P104 description quote: 'Stricter than P040 when test axis correlates with confound.' P104 block-shuffle is P040 restricted to within-stratum shuffles; strictly a specialization."
+    },
+    {
+      "from": "P035",
+      "to": "P026",
+      "relation": "refines",
+      "note": "P035 description quote: 'Finer than P026 semistable vs additive.' Kodaira symbols further split the semistable/additive binary into Tate\u2019s full classification."
+    },
+    {
+      "from": "P035",
+      "to": "P021",
+      "relation": "tautology_adjacent",
+      "note": "P035 description quote: 'Tautology-adjacent to P021 (Kodaira type constrains bad-prime Tamagawa contribution).'"
+    },
+    {
+      "from": "P036",
+      "to": "P028",
+      "relation": "aliased_on_EC",
+      "note": "P036 description quote: 'Equivalent to (\u22121)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd. Independent projection only for non-EC L-function families.'"
+    },
+    {
+      "from": "P036",
+      "to": "P023",
+      "relation": "aliased_on_EC",
+      "note": "P036 description quote: 'Equivalent to (\u22121)^rank under BSD parity; so on EC families this aliases P023 rank parity and P028 Katz-Sarnak SO_even/SO_odd.'"
+    },
+    {
+      "from": "P037",
+      "to": "P025",
+      "relation": "aliased_on_EC",
+      "note": "P037 description quote: 'For EC: non-CM gives SU(2); CM gives N(U(1)). Tautology with P025 CM flag on EC.' Sato-Tate group on EC is determined exactly by CM status."
+    },
+    {
+      "from": "P039",
+      "to": "P100",
+      "relation": "partial_tautology",
+      "note": "P039 description quote: 'Partial tautology with P100 isogeny class size (class_size \u2265 2 \u21d4 nonmax_primes \u2260 []).'"
+    },
+    {
+      "from": "P100",
+      "to": "P039",
+      "relation": "partial_tautology",
+      "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois \u2113-adic image (class_size\u22652 \u21d4 nonmax_primes\u2260[]).' Reverse link for navigation."
+    },
+    {
+      "from": "P100",
+      "to": "P024",
+      "relation": "partial_tautology",
+      "note": "P100 description quote: 'Partial tautologies vs isogeny_degrees (class_size = len of), P024 torsion, and P039 Galois \u2113-adic image.' Mazur-bounded class sizes overlap with Mazur torsion structure."
+    },
+    {
+      "from": "P031",
+      "to": "P102",
+      "relation": "dim_constrained_by",
+      "note": "P031 description quote: 'Forbidden-cell partial tautology: \u03bd=\u22121 only at even dimension.' Frobenius-Schur indicator values are constrained by the Artin rep dimension stratification P102; certain (Dim, \u03bd) cells are empty by representation theory."
+    },
+    {
+      "from": "P033",
+      "to": "P028",
+      "relation": "aliased_on_EC",
+      "note": "P033 description quote: 'Tautology with P028 on rank-parity for EC families.' Artin Is_Even parity collapses to Katz-Sarnak SO_even/SO_odd on EC families via BSD parity."
+    },
+    {
+      "from": "P033",
+      "to": "P102",
+      "relation": "joint_non_uniform_with",
+      "note": "P102 description quote: 'Dim \u00d7 Is_Even (non-uniform \u2014 dim-2 odd-dominated, dim-4 even-dominated).' P033 parity distributes non-uniformly across P102 Artin dimensions \u2014 not a tautology but a strong joint dependency."
+    },
+    {
+      "from": "P032",
+      "to": "P028",
+      "relation": "conditional_tautology",
+      "note": "P032 description quote: 'Tautology vs P028 when families align with parity.' MF / Dirichlet character parity collapses to Katz-Sarnak family classification under the aligned-parity condition."
+    },
+    {
+      "from": "P012",
+      "to": "P011",
+      "relation": "stricter_than",
+      "note": "P012 description quote: 'Alternative to Lhash \u2014 hashes Hecke eigenvalues. More strict. Useful when Lhash is too coarse.'"
+    },
+    {
+      "from": "P101",
+      "to": "P023",
+      "relation": "conditional_on",
+      "note": "P101 description quote: 'Useful only at rank \u2265 1 as a separating axis; rank-0 regulator is degenerate.' P101 regulator stratification is meaningful only within P023 rank \u2265 1 slices."
     }
   ]
 }
