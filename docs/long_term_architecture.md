@@ -1,4 +1,7 @@
-# Long-Term Architecture: A Substrate for Recording Mathematical Measurements
+# Long-Term Architecture: A Version-Controlled Empirical Audit Substrate for Computational Mathematics
+
+**Document version:** v2 (2026-04-19). Revised from v1 (`b81aa56f`) after
+external frontier-model critique. Revision history at bottom.
 
 ---
 
@@ -9,7 +12,7 @@ This document describes the intended long-term shape of Project Prometheus as a 
 **Explicit framing for frontier-model reviewers:**
 
 - This is a **long-term modeling exercise**, currently at prototype scale. Current implementation covers a narrow corner of computational number theory (LMFDB elliptic curves, number fields, modular forms, related L-functions). The architecture is designed to generalize far beyond this scope but has not yet been tested outside it.
-- The goal is **raw mathematical truth, as measured on data** — not hypothesis-driven inference, not proof search, not a capabilities evaluation, not a publication-ready dataset. The question the system answers for any measurement is *"what was measured, under what conditions, and does the result survive independent re-measurement?"* — not *"is this a new theorem?"*
+- The goal is a **version-controlled empirical audit substrate over computational mathematics** — not proof search, not a capabilities evaluation, not a publication-ready dataset. The question the system answers for any measurement is *"what was measured, under what conditions, and does the result survive independent re-measurement?"* — not *"is this a new theorem?"* (An earlier version of this document phrased the goal as "raw mathematical truth"; a reviewer correctly pointed out that an empirical-sampling approach is not in the business of truth-claims, it's in the business of audit infrastructure. The correction matters: truth is the province of proof; audit is the province of this document.)
 - There is **no near-term plan to publish papers**. The artifact being built is the tool, not the findings produced by the tool. Findings are instrumented byproducts of exercising the tool; the tool is the deliverable.
 - This is **bottom-up, not top-down**. We are not deriving from a philosophical framework about what mathematics is or what intelligence requires. We are recording what happens when specific tests are run against specific data, with enough provenance that future readers (human or machine) can reproduce or refute every claim.
 - Please do **not** browse external URLs, repositories, or prior conversations. Reviews should be grounded in this self-contained document. If information is missing, please say so rather than inferring from context.
@@ -21,7 +24,7 @@ The document describes five layers, their current state, and their intended evol
 
 ## 1. Project goal, plainly stated
 
-Most mathematical knowledge today lives in papers: each paper proves or observes something, notation varies between authors, cross-referencing is human-labor-intensive, and machine-queryable aggregation across papers is extremely limited. A graduate student exploring, say, "what's been established about the rank-2 BSD identity at high conductor" spends weeks reading papers and often cannot replicate the numerical claims without substantial effort.
+Most computational-mathematical knowledge today lives in papers: each paper observes something, notation varies between authors, cross-referencing is human-labor-intensive, and machine-queryable aggregation across papers is extremely limited. A graduate student exploring, say, "what's been established empirically about the rank-2 BSD identity at high conductor" spends weeks reading papers and often cannot replicate the numerical claims without substantial effort. (Note: "what's proved" is a distinct question that belongs to theorem-prover tooling, not to this substrate. We record what has been *measured*, not what has been *proved*.)
 
 We are prototyping a substrate in which measurements are first-class objects:
 
@@ -35,7 +38,14 @@ The aspiration: when this substrate is dense enough across enough mathematical d
 
 A second-order motivation: if synthetic reasoning (LLMs, automated theorem provers, or their successors) continues developing in the direction it currently appears to be going, a structured substrate of this kind becomes much more valuable than the equivalent content scattered across unstructured papers. We consider this a reasonable bet but not a certainty; the substrate has value as a careful audit tool even if synthetic reasoning doesn't materialize as expected.
 
-## 2. The five layers
+## 2. Five-layer architecture, with one honest correction
+
+An earlier version of this document presented five layers as if they were cleanly independent. On review, the accurate picture is:
+
+- **Layer 1 (Data) and Layer 5 (Replication) are genuinely separable concerns.** Data sits under the system; replication sits orthogonally across it.
+- **Layers 2 (Measurement), 3 (Discipline), and 4 (Symbolic) are a single coupled system.** Null protocol (L3) defines the semantics of `+1/+2` verdicts (L2); those verdicts are produced by calling operator symbols (L4) that encode the null-protocol procedures. Changes in any of the three cascade through the other two.
+
+We continue to describe them as three layers because they do three distinguishable *roles* — measure, discipline, encode — but a reader should expect that modifying any one requires thinking about the other two. There is one coupled kernel with three faces, plus two flanking layers.
 
 ### Layer 1 — Data sources and mirrors
 
@@ -62,6 +72,18 @@ The measurement layer is where tests get run. Its primitives are:
   - `+2`: resolves and survives the claim-appropriate stricter null (currently block-shuffle)
 - Scripts that actually execute measurements — one per F-ID, committed alongside their results.
 
+**Graduated verdict labels (planned Layer 2 extension).** The current tensor cell carries only the verdict integer. A reviewer correctly pointed out that different `+2` cells have different verification depth and are not cross-comparable. The planned extension tags each `+2` cell with its verification level:
+
+- `+2@shuffle` — survives the claim-appropriate block-shuffle null (one implementation, one machine)
+- `+2@replicated` — same code path agrees across independent machines / worker sessions
+- `+2@reimplemented` — two independent code paths (clean-room alternates) agree byte-for-byte on the SIGNATURE tuple
+- `+2@independent_source` — verified against a non-primary data source (e.g., LMFDB measurement verified by Sage / Magma / lcalc)
+- `+2@anchor` — theorem-level calibration (F001–F009 set)
+
+The tag does not replace the integer; it lives alongside it. A future reader can filter the tensor by verification depth. Under this scheme, the existing 44 `+2` cells are all `+2@shuffle` until Track D promotes any of them to higher tags.
+
+**The tensor is, at its honest limit, a typed relation graph presenting as a matrix.** Different cells have different claim classes, different nulls, different sample sizes, different verification depths. The matrix form is useful at current scope (one domain, ~100 cells) but will stop being the right abstraction as scope widens. Planned future evolution is per-cell structured summary carrying effect size + uncertainty + null-spec + verification tag, with the matrix retained as an index.
+
 Current scope: 31 features × 37 projections = 1147 possible cells; ~100 non-zero (about 9% density).
 
 ### Layer 3 — Discipline layer
@@ -77,7 +99,13 @@ The discipline layer is what keeps the measurement layer honest. Its primitives 
 
 Layer 4 encodes the compound primitives of inter-agent communication as versioned objects with full derivation trails. This is the most novel piece of the architecture.
 
-- **Symbol types**: `operator` (a procedure with pinned parameters — e.g., `NULL_BSWCD@v2` is block-shuffle-within-conductor-decile null, 300 perms, seed 20260417, balanced-stratifier guard built in), `shape` (a structural pattern descriptor like `LADDER`), `constant` (a numerical value with declared precision — e.g., `EPS011@v2 = 22.90 ± 0.78 %` with audit status), `dataset` (a pinned SQL query returning an exact row count), `signature` (a tuple schema for reporting findings).
+- **Symbol types (current)**: `operator` (a procedure with pinned parameters — e.g., `NULL_BSWCD@v2` is block-shuffle-within-conductor-decile null, 300 perms, seed 20260417, balanced-stratifier guard built in), `shape` (a structural pattern descriptor like `LADDER`), `constant` (a numerical value with declared precision — e.g., `EPS011@v2 = 22.90 ± 0.78 %` with audit status), `dataset` (a pinned SQL query returning an exact row count), `signature` (a tuple schema for reporting findings).
+
+- **Planned symbol types (extensions).** Two extensions are under consideration:
+  - **`code_artifact`** — source code as a first-class versioned, hash-pinned symbol. Currently, operators reference their implementation via `harmonia/nulls/block_shuffle.py::bswcd_null@<commit>`; the code itself is not a symbol. Promoting code to a symbol type makes it: content-addressable (sha256 of the file), interface-bound (declares which operator symbol it implements), dependency-tracked (Python version, libraries with pinned versions), and equivalence-testable (multiple `code_artifact` symbols can implement the same `operator` interface and be behaviorally checked against each other — which is exactly what Track D replication needs). Extends cleanly from the external-artifacts work already done for IUCr CIF / OpenQASM / CODATA (same hash-pinning pattern, just applied to procedures instead of specifications).
+  - **`sampling_intent`** — a declaration on any `dataset` symbol stating whether the dataset is *exhaustive-to-a-bound* (e.g., all EC of conductor ≤ N), *heuristically-sampled* (e.g., first 1000 of a search), or *pathologically-selected* (e.g., rank-record constructions from Stein/Elkies/Dujella). This makes the MNAR discussion structurally present in data provenance rather than confined to prose disclaimers. A verdict on an exhaustive dataset is epistemically different from a verdict on a pathologically-selected one; the substrate should encode that difference.
+
+Neither extension is implemented yet; both are architecturally consistent with the existing scheme and would compose without breaking current symbol resolvers.
 - **Redis key layout** (base Redis, strings/hashes/sets/streams only): `symbols:<NAME>:v<N>:def` (immutable JSON), `symbols:<NAME>:v<N>:meta` (immutable frontmatter hash), `symbols:<NAME>:latest` (mutable version pointer), `symbols:<NAME>:versions` (append-only sorted set), `symbols:by_type:<type>`, `symbols:refs:<ref>@v<N>`.
 - **Reference grammar** — every reference to a symbol in inter-agent communication must include `@v<N>`: `NULL_BSWCD@v2[stratifier=torsion_bin]`, not `NULL_BSWCD`. References to non-symbol entities (F-IDs, P-IDs, Patterns) use `@c<short_commit>` until they're retrofitted into the symbol registry. A validator rejects unversioned references.
 - **Provenance chain** — every symbol's MD carries its derivation history, references to papers (with DOI/arXiv), implementation path + commit hash, and a version history log. A future reader following the chain can reconstruct how and why each symbol was introduced.
@@ -87,14 +115,23 @@ The bet in this layer is that versioned, cross-referenced, machine-queryable pri
 
 ### Layer 5 — Replication and independence
 
-The fifth layer is intentionally thin at this time. It represents the discipline that turns "internally consistent measurements" into "measurements corroborated by independent implementations or independent data sources." Its components:
+The fifth layer is intentionally thin at this time. It represents the discipline that turns "internally consistent measurements" into "measurements corroborated under conditions that do not share a single point of failure." A reviewer correctly pointed out that this is more than one dimension:
 
-- **Clean-room reimplementation protocol** (specified in `docs/prompts/track_D_replication.md`, currently deferred). An independent implementation of `NULL_BSWCD` would verify that the existing measurements do not depend on bugs in the single current code path.
-- **Cross-machine execution** — the Redis mirror and versioned symbols already support a second machine reading identical state. The pieces are there; the habit of running the same measurement on two machines and checking byte-level agreement of SIGNATURE tuples is not yet standard practice.
-- **Cross-source verification** — Layer 5 includes the intent to verify LMFDB-based measurements against independent sources (Sage, Magma, lcalc) where feasible. Option 1 of the F011 unfolding audit was exactly this, deferred until a Sage-capable host is configured.
-- **Cross-model-family agents** — future expansion of the worker pool to include agents built on different model families (reducing single-implementation bias at the generation step, not just the null-model step).
+**Four dimensions of replication, in order of increasing independence:**
 
-Current state: Layer 5 exists as a written protocol and a deferred task. External review has identified this as the single most important missing piece; we have not yet acted on that identification.
+1. **Cross-machine, same code.** Run the same operator on the same data from a second machine, check byte-equivalence of SIGNATURE tuples. Catches environment-specific bugs (library version drift, floating-point determinism issues, filesystem-encoding issues like the Windows-backslash bug we already caught and fixed in the symbol layer). Cheapest tier; does not catch code bugs.
+
+2. **Cross-implementation, same statistic.** Two independent code paths implementing the same operator interface. This is what Track D currently specifies: a clean-room reimplementation of `NULL_BSWCD` verified behaviorally against the original. Catches implementation bugs within the shared design.
+
+3. **Cross-decomposition, different statistic.** The same empirical claim tested via a different statistical formulation — e.g., measuring F011's rank-0 residual via moment decomposition rather than first-gap variance, then checking whether both point at the same underlying effect. Catches bugs in the choice-of-statistic step, which cross-implementation cannot.
+
+4. **Cross-source, different data pipeline.** The same computation run against a data source obtained from an independent pipeline — LMFDB vs Sage vs Magma vs lcalc. Catches bugs baked into the shared data provider.
+
+Dimensions 1–2 can be achieved with current infrastructure (Track D's first delivery). Dimensions 3–4 require additional infrastructure (alternate statistics, Sage host setup) and will likely accumulate opportunistically rather than all at once.
+
+**Failure mode this layer is meant to prevent**: "correlated implementations confirming the same mistake." Two workers running what looks like independent code but sharing a bug — either explicitly (copy-paste) or structurally (both read the same buggy library) — will agree without testifying to anything real. Cross-machine-same-code is the weakest protection against this; cross-source-different-pipeline is the strongest.
+
+**Current state**: Layer 5 exists as a written protocol and a deferred task (`docs/prompts/track_D_replication.md`). External review has repeatedly identified this as the single most important missing piece. It remains deferred because current project priorities are tool-building outward rather than audit-hardening inward, but any claim that proposes to live in the substrate long-term should eventually carry a verification tag from dimensions 2–4, not just dimension 0 (single implementation, single machine, which is where everything currently sits).
 
 ---
 
@@ -186,3 +223,30 @@ We would find most valuable pushback on the following, specifically:
 - `harmonia/memory/decisions_for_james.md` — running log of judgment calls, retractions, and standing limits
 
 This is a prototype. It is not finished; it is not intended to be finished any time soon. Critique on direction and architecture is more useful than critique on current measurements, which are narrow by design.
+
+---
+
+## Revision history
+
+**v2** (2026-04-19) — absorbed external review of v1 (`b81aa56f`).
+
+Corrections applied:
+- Goal phrasing reframed: "raw mathematical truth" → "version-controlled empirical audit substrate." The prior framing implied a truth-ontology; the correct framing is infrastructure. An audit substrate does not make truth claims; it records what was measured under what conditions.
+- Five-layer separation honesty added. Layers 2–3–4 are correctly characterized as a coupled tri-layer kernel (measure + discipline + encode) rather than three independent layers. Layers 1 and 5 remain genuinely separable.
+- Layer 5 (replication) expanded from "clean-room reimplementation" to four distinct dimensions: cross-machine, cross-implementation, cross-decomposition, cross-source. The failure mode "correlated implementations confirming the same mistake" is now explicit.
+- Layer 2 planned extension added: graduated verdict labels (`+2@shuffle`, `+2@replicated`, `+2@reimplemented`, `+2@independent_source`, `+2@anchor`). Existing `+2` cells are all at `@shuffle` level until verification tags catch up.
+- Layer 4 planned extensions added: `code_artifact` symbol type (hash-pinned source code as first-class versioned entity, extends the external-artifacts pattern to procedures) and `sampling_intent` (exhaustive / heuristically-sampled / pathologically-selected — encodes MNAR concerns in data provenance).
+- Tensor honesty: explicitly stated as "a typed relation graph presenting as a matrix"; the matrix form is usable at current scope but will not scale.
+
+Queued for future (not yet scheduled):
+- Pattern library hierarchy (expected to hit operational non-scalability around 80–120 entries; we are at ~30).
+- Split claim types into distinct tensor semantics (empirical-statistical vs deterministic-invariant vs identity/tautology vs derived/composite). Correct taxonomy; large reshape.
+- Pattern 30 generalization from algebraic-coupling-severity to where-the-information-leaked (definitional / computational / shared-dataset / sampling). Useful wider frame.
+- Pattern-tagging with metadata so only relevant patterns load for a given claim class.
+
+Pushed back on:
+- Automated pre-registration gates on `+2` cells (too restrictive; graduated labels achieve the honesty goal without blocking measurement).
+- Formal Agent Orchestration Layer as separate component (current human + conductor arrangement works; premature to formalize).
+- Symbol de-duplication, equivalence detection, type inference (premature at 5 promoted symbols; revisit at ~50+).
+
+**v1** (2026-04-19, `b81aa56f`) — initial version for first frontier-model review.
