@@ -1,0 +1,91 @@
+{
+  "task": "reaudit_batch_remaining",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T01:05:50.045125+00:00",
+  "operator": "NULL_BSWCD@v1",
+  "diffs": {
+    "F001:P020": {
+      "from": 1,
+      "to": 1,
+      "category": "THEOREM",
+      "verdict": "DEGENERATE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F001_P020.json"
+    },
+    "F002:P001": {
+      "from": 1,
+      "to": 1,
+      "category": "THEOREM",
+      "verdict": "DEGENERATE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F002_P001.json"
+    },
+    "F002:P024": {
+      "from": 1,
+      "to": 1,
+      "category": "THEOREM",
+      "verdict": "DEGENERATE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F002_P024.json"
+    },
+    "F005:P024": {
+      "from": 1,
+      "to": 1,
+      "category": "THEOREM",
+      "verdict": "DEGENERATE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F005_P024.json"
+    },
+    "F028:P001": {
+      "from": 1,
+      "to": -1,
+      "category": "NEAR_IDENTITY",
+      "verdict": "TAUTOLOGICAL",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F028_P001.json"
+    },
+    "F042:P020": {
+      "from": 1,
+      "to": 0,
+      "category": "DOWNGRADED",
+      "verdict": "LITERATURE_DOWNGRADED",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F042_P020.json"
+    },
+    "F042:P025": {
+      "from": 1,
+      "to": 0,
+      "category": "DOWNGRADED",
+      "verdict": "LITERATURE_DOWNGRADED",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F042_P025.json"
+    },
+    "F014:P040": {
+      "from": 1,
+      "to": 1,
+      "category": "DEFERRED",
+      "verdict": "DEFERRED",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F014_P040.json"
+    },
+    "F043:P020": {
+      "from": 1,
+      "to": 1,
+      "category": "DEFERRED",
+      "verdict": "DEFERRED",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F043_P020.json"
+    },
+    "F043:P023": {
+      "from": 1,
+      "to": 1,
+      "category": "DEFERRED",
+      "verdict": "DEFERRED",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F043_P023.json"
+    },
+    "F045:P023": {
+      "from": 1,
+      "to": 1,
+      "category": "DEFERRED",
+      "verdict": "DEFERRED",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F045_P023.json"
+    }
+  },
+  "categories": {
+    "THEOREM": "Known theorem; NULL_BSWCD degenerate; retain at +1 with annotation.",
+    "NEAR_IDENTITY": "Fails non-tautological admission gate; demote.",
+    "DOWNGRADED": "Literature correspondence demotes to 0 (retain as documented).",
+    "DEFERRED": "Needs proper per-cell audit; retain at +1 with DEFERRED flag."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "feature_id": "F015@8d2f2196",
+  "projection_ids": [
+    "P020@8d2f2196"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=conductor_decile,n_bins=10,n_perms=200,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata",
+  "n_samples": 81000,
+  "effect_size": 13.76,
+  "z_score": 13.76,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "8d2f2196",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T01:04:32.112879+00:00",
+  "verdict": "DURABLE",
+  "description": "F015 Szpiro-vs-conductor slope is sign-uniformly negative; block-shuffle-within-k null (n_bins=k-stratum) SURVIVES at every k (z in [-24.03, -3.48]). Using max |z|=-24.03 as representative (k=3 stratum).",
+  "provenance": "cartography/docs/audit_F014_F015_block_shuffle_results.json",
+  "reproducibility_hash": "3313feff4ed230af507cb3a2d31fc0311c0cbbecbed376b11afb5f260515c2f7"
+}

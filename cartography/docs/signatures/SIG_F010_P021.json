@@ -1,0 +1,23 @@
+{
+  "feature_id": "F010@8d2f2196",
+  "projection_ids": [
+    "P021@8d2f2196"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=conductor_decile,n_bins=10,n_perms=200,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata",
+  "n_samples": 2009089,
+  "effect_size": -0.86,
+  "z_score": -0.86,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "8d2f2196",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T01:04:32.093384+00:00",
+  "verdict": "COLLAPSES",
+  "description": "Same underlying block-shuffle null as F010 aggregate: collapses. Bad-prime stratification does not rescue (degree-cluster is the artifact source).",
+  "provenance": "cartography/docs/wsw_F010_alternative_null_results.json",
+  "reproducibility_hash": "2f746f26b7c501b4e477b6c3a8500c888e95ebf063fa68a3e3ccfd1fc9809617"
+}

@@ -1,0 +1,82 @@
+{
+  "task": "reaudit_F013_3cells",
+  "operator": "NULL_BSWCD@v1",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "started": "2026-04-19T00:59:57.511545+00:00",
+  "finished": "2026-04-19T01:03:46.325692+00:00",
+  "commit": "8d2f2196",
+  "n_samples": 2009089,
+  "cells": {
+    "P023": {
+      "bswcd": {
+        "null_mean": -0.0006462122458185305,
+        "null_std": 0.001294062167543761,
+        "null_p99": 0.002183010832748416,
+        "observed": 0.02832434397443863,
+        "z_score": 22.39,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "description": "slope_mean_vs_rank on gap1_unfolded",
+      "recommended_verdict": "+2",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P023.json"
+    },
+    "P041": {
+      "bswcd": {
+        "null_mean": 1.971876933781458e-06,
+        "null_std": 1.4962944595272288e-06,
+        "null_p99": 7.495481998352776e-06,
+        "observed": 0.012289476308908334,
+        "z_score": 8211.96,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "description": "eta2_variance_decomp on gap1_unfolded",
+      "recommended_verdict": "+2",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P041.json"
+    },
+    "P051": {
+      "bswcd": {
+        "null_mean": 0.0008630733433017812,
+        "null_std": 0.0005654582209840212,
+        "null_p99": 0.0020963000828727067,
+        "observed": 0.005413982287146191,
+        "z_score": 8.05,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "description": "slope_var_vs_rank on gap1_unfolded (N(T) unfolding)",
+      "recommended_verdict": "+2",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F013_P051.json"
+    }
+  },
+  "tensor_diff": {
+    "F013:P023": {
+      "from": 1,
+      "to": 2,
+      "z_block": 22.39
+    },
+    "F013:P041": {
+      "from": 1,
+      "to": 2,
+      "z_block": 8211.96
+    },
+    "F013:P051": {
+      "from": 1,
+      "to": 2,
+      "z_block": 8.05
+    }
+  }
+}

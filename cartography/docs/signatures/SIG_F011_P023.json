@@ -1,0 +1,33 @@
+{
+  "feature_id": "F011@74aab3fb",
+  "projection_ids": [
+    "P023@74aab3fb"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=conductor,n_bins=10,n_perms=300,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata join prometheus_fire.zeros.object_zeros (n_zeros>=2)",
+  "n_samples": 2009089,
+  "effect_size": 0.08906442966008354,
+  "z_score": 31.26,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "74aab3fb",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T00:53:25.919257+00:00",
+  "reproducibility_hash": "1ffdbc618cbb6dbeb070d1fa54498b6b0b048d249c7d52af586741f20c5f9c98",
+  "bswcd_full_result": {
+    "null_mean": 0.004186172011286169,
+    "null_std": 0.002715465751508883,
+    "null_p99": 0.012547862045200763,
+    "observed": 0.08906442966008354,
+    "z_score": 31.26,
+    "verdict": "DURABLE",
+    "n_strata_used": 10,
+    "stratifier": "conductor",
+    "n_bins": 10,
+    "n_perms": 300,
+    "seed": 20260417
+  }
+}

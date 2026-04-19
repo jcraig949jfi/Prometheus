@@ -1,0 +1,58 @@
+{
+  "task": "reaudit_batch_verified",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T01:04:32.143388+00:00",
+  "operator": "NULL_BSWCD@v1",
+  "diffs": {
+    "F010:P020": {
+      "from": 1,
+      "to": -1,
+      "z_block": -0.86,
+      "verdict": "COLLAPSES",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F010_P020.json"
+    },
+    "F010:P021": {
+      "from": 1,
+      "to": -1,
+      "z_block": -0.86,
+      "verdict": "COLLAPSES",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F010_P021.json"
+    },
+    "F010:P042": {
+      "from": 1,
+      "to": -1,
+      "z_block": -0.86,
+      "verdict": "COLLAPSES",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F010_P042.json"
+    },
+    "F015:P020": {
+      "from": 1,
+      "to": 2,
+      "z_block": 13.76,
+      "verdict": "DURABLE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F015_P020.json"
+    },
+    "F041a:P020": {
+      "from": 1,
+      "to": 2,
+      "z_block": 8.5,
+      "verdict": "DURABLE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F041a_P020.json"
+    },
+    "F041a:P026": {
+      "from": 1,
+      "to": 2,
+      "z_block": 8.5,
+      "verdict": "DURABLE",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F041a_P026.json"
+    },
+    "F023:P040": {
+      "from": 1,
+      "to": -1,
+      "z_block": 1.5,
+      "verdict": "COLLAPSES",
+      "signature_path": "cartography\\docs\\signatures\\SIG_F023_P040.json"
+    }
+  },
+  "note": "Signatures consolidate prior block-shuffle audits (F010 kill-test, F015 per-k SURVIVES, F041a SURVIVES, F023 conductor-kills)."
+}

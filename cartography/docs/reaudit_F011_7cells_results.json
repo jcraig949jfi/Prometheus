@@ -1,0 +1,174 @@
+{
+  "task": "reaudit_F011_7cells",
+  "operator": "NULL_BSWCD@v1",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "started": "2026-04-19T00:51:02.712318+00:00",
+  "finished": "2026-04-19T00:58:26.377460+00:00",
+  "commit": "74aab3fb",
+  "n_samples_base": 2009089,
+  "cells": {
+    "P021": {
+      "bswcd": {
+        "null_mean": 0.007074283327145177,
+        "null_std": 0.00324268183535745,
+        "null_p99": 0.016169505651100344,
+        "observed": 0.13218614054495048,
+        "z_score": 38.58,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P021.json",
+      "description": "F011 deficit spread across num_bad_primes buckets, conductor block-shuffle",
+      "recommended_verdict": "+2"
+    },
+    "P023": {
+      "bswcd": {
+        "null_mean": 0.004186172011286169,
+        "null_std": 0.002715465751508883,
+        "null_p99": 0.012547862045200763,
+        "observed": 0.08906442966008354,
+        "z_score": 31.26,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P023.json",
+      "description": "F011 deficit spread across rank, conductor block-shuffle",
+      "recommended_verdict": "+2"
+    },
+    "P024": {
+      "bswcd": {
+        "null_mean": 0.014627256593979962,
+        "null_std": 0.006699721204593781,
+        "null_p99": 0.0331592883338522,
+        "observed": 0.023817685473465966,
+        "z_score": 1.37,
+        "verdict": "COLLAPSES",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P024.json",
+      "description": "F011 deficit spread across torsion orders, conductor block-shuffle",
+      "recommended_verdict": "-1"
+    },
+    "P025": {
+      "bswcd": {
+        "null_mean": 0.004168669440283222,
+        "null_std": 0.002927482157885186,
+        "null_p99": 0.013280786781862326,
+        "observed": 0.021823281668984507,
+        "z_score": 6.03,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P025.json",
+      "description": "F011 deficit spread CM vs non-CM, conductor block-shuffle",
+      "recommended_verdict": "+2"
+    },
+    "P026": {
+      "bswcd": {
+        "null_mean": 0.00047989921453796286,
+        "null_std": 0.00034486207939925316,
+        "null_p99": 0.0015151850248135664,
+        "observed": 0.0023867420370266013,
+        "z_score": 5.53,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P026.json",
+      "description": "F011 deficit spread semistable vs additive, conductor block-shuffle",
+      "recommended_verdict": "+2"
+    },
+    "P050": {
+      "bswcd": {
+        "null_mean": 0.05553206447291518,
+        "null_std": 0.00028821768959016146,
+        "null_p99": 0.05617925113461852,
+        "observed": 0.10170365584710239,
+        "z_score": 160.2,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P050.json",
+      "description": "F011 rank-0 deficit under first-gap unfolding, conductor block-shuffle",
+      "recommended_verdict": "+2"
+    },
+    "P051": {
+      "bswcd": {
+        "null_mean": 0.05553206447291518,
+        "null_std": 0.00028821768959016146,
+        "null_p99": 0.05617925113461852,
+        "observed": 0.10170365584710239,
+        "z_score": 160.2,
+        "verdict": "DURABLE",
+        "n_strata_used": 10,
+        "stratifier": "conductor",
+        "n_bins": 10,
+        "n_perms": 300,
+        "seed": 20260417
+      },
+      "signature_path": "cartography\\docs\\signatures\\SIG_F011_P051.json",
+      "description": "F011 rank-0 deficit under N(T) unfolding, conductor block-shuffle",
+      "recommended_verdict": "+2"
+    }
+  },
+  "tensor_diff": {
+    "F011:P021": {
+      "from": 1,
+      "to": 2,
+      "z_block": 38.58
+    },
+    "F011:P023": {
+      "from": 1,
+      "to": 2,
+      "z_block": 31.26
+    },
+    "F011:P024": {
+      "from": 1,
+      "to": -1,
+      "z_block": 1.37
+    },
+    "F011:P025": {
+      "from": 1,
+      "to": 2,
+      "z_block": 6.03
+    },
+    "F011:P026": {
+      "from": 1,
+      "to": 2,
+      "z_block": 5.53
+    },
+    "F011:P050": {
+      "from": 1,
+      "to": 2,
+      "z_block": 160.2
+    },
+    "F011:P051": {
+      "from": 1,
+      "to": 2,
+      "z_block": 160.2
+    }
+  }
+}

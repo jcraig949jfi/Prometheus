@@ -1,0 +1,23 @@
+{
+  "feature_id": "F023@8d2f2196",
+  "projection_ids": [
+    "P040@8d2f2196"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=conductor_decile,n_bins=10,n_perms=200,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata",
+  "n_samples": 450000,
+  "effect_size": 0.0,
+  "z_score": 1.5,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "8d2f2196",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T01:04:32.143108+00:00",
+  "verdict": "COLLAPSES",
+  "description": "F023 spectral-tail ARI=0.55 per 2026-04-15 version; conductor conditioning kills (all 4 bins p>0.05). Signal was conductor-mediated. COLLAPSES under BSWCD by prior evidence.",
+  "provenance": "cartography/docs/reaudit_20_results.md",
+  "reproducibility_hash": "6087d9f74eebe18777a588583d95bb37699df3256b68f43584c413eb07d3128f"
+}

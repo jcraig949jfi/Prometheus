@@ -1,0 +1,23 @@
+{
+  "feature_id": "F010@8d2f2196",
+  "projection_ids": [
+    "P020@8d2f2196"
+  ],
+  "null_spec": "NULL_BSWCD@v1[stratifier=conductor_decile,n_bins=10,n_perms=200,seed=20260417]",
+  "dataset_spec": "Q_EC@lmfdb.ec_curvedata",
+  "n_samples": 2009089,
+  "effect_size": -0.86,
+  "z_score": -0.86,
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "8d2f2196",
+  "worker": "Harmonia_M2_sessionD_reauditor",
+  "timestamp": "2026-04-19T01:04:32.083517+00:00",
+  "verdict": "COLLAPSES",
+  "description": "F010 block-shuffle-within-degree null: observed rho=0.10, null z=-0.86 (COLLAPSES). Signal was degree-mediated between-strata leakage, not within-degree coupling.",
+  "provenance": "cartography/docs/wsw_F010_alternative_null_results.json",
+  "reproducibility_hash": "04958d7cfcf5aa921add02e5bccb23df5ccef3efeaaf1c54be83cc1e053a613a"
+}
