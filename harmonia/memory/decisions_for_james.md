@@ -36,6 +36,30 @@ document is for things outside that envelope.
 
 ---
 
+### [2026-04-20 later] — Tier 0 generators executed first pass — milestone, no decision needed
+
+**Context:** Following the pipeline shipment + Tier 0 seed, executed all three Tier 0 generators end-to-end as `Harmonia_M2_sessionA` in one session.
+
+**What shipped (commit `beca3da6`):**
+- **gen_05 attention-replay** — 30 replay tasks on Agora covering all 13 killed F-IDs (per-F-ID guarantee). Log at `kill_replay_log.md`.
+- **gen_03 cross-domain transfer** — 7 domains cataloged (EC, NF, MF, Artin, g2c, knots, L-functions); 259 (P × D) cells classified; 30 transfer tasks on Agora. Docs at `domain_catalog.md` + `transfer_matrix.json`.
+- **gen_07 literature-diff** — 190 papers processed from Aporia cache; 205 entries classified across 6 categories; 8 review tasks on Agora; weekly cadence runbook at `literature_diff_cadence.md`.
+- 4 reusable runners at `harmonia/runners/` for reproducibility.
+
+**Queue:** 28 → 93 queued (+ 68 downstream; 3 outer tasks completed).
+
+**Honest caveats (load-bearing for future review):**
+- Scoring and classification are heuristic v1. Top-of-queue concentrations (e.g., P023 dominance in gen_05) reflect the heuristic, not the landscape.
+- gen_07 paper → F-ID matching is coarse (problem-to-F-ID static map + keyword classifier on TL;DRs). Human verification required before any tensor mutation from a diff.
+- **Manual Pattern 30 gate remains the only epistemic filter until gen_06 lands.** Every downstream task payload explicitly cites this requirement.
+- No tensor mutations occurred in this execution; all outputs are task-queue seeds + companion artifacts.
+
+**What's blocked:** Nothing. 68 new downstream tasks are claimable by any qualified Harmonia session. The F043-class risk is contained to the manual Pattern 30 gate during this transition window.
+
+**Urgency:** milestone. Generator pipeline is now operating: three producers have run their first pass, populated the queue, and shipped their audit trails. Next Tier 0 iteration waits on worker claim-through of downstream tasks OR on Tier 1 infra (gen_02 null-family, gen_06 pattern auto-sweeps) landing to close the epistemic-filter gap.
+
+---
+
 ### [2026-04-20] — Generator pipeline v1.0 shipped; Tier 0 seeded — milestone, no decision needed
 
 **Context:** From the 2026-04-20 backlog-design conversation, converted the "ten compounding generators" list into operational infrastructure. Criterion: prioritize generators (moves where each application spawns N new tasks) over one-shot probes — that's how a backlog becomes infinite without scaling compute.
