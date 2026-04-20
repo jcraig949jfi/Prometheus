@@ -36,6 +36,43 @@ document is for things outside that envelope.
 
 ---
 
+### [2026-04-20 third tick] — gen_06 Pattern auto-sweeps shipped — milestone, no decision needed
+
+**Context:** Fired the mandatory-companion Tier 1 generator per James's session-restore briefing ("Fire at least gen_06 early"). gen_06 closes the manual Pattern 30 gate that rode along with every Tier 0 downstream task.
+
+**What shipped (commit `751dfc64`):**
+- `harmonia/sweeps/pattern_30.py` — sympy atom-overlap + identity connection; graded levels 0-4 per `pattern_library.md`. F043 BSD rearrangement classifies as Level 3 BLOCK.
+- `harmonia/sweeps/pattern_20.py` — pooled/stratified divergence ratio + sign agreement + small-n flag.
+- `harmonia/sweeps/pattern_19.py` — symmetric effect-size ratio + z sign flip.
+- `harmonia/sweeps/runner.py` — composite verdict (BLOCK > WARN > CLEAR); override with recorded justification.
+- `harmonia/sweeps/test_sweeps.py` — 14 tests, all pass; F043 is the headline BLOCK regression.
+- `harmonia/sweeps/retrospective.py` + `harmonia/memory/sweep_results_log.md` — baseline audit of all 49 +1/+2 cells (15 features).
+- `harmonia/sweeps/OVERRIDE_PROTOCOL.md` — four legitimate override reasons, audit discipline.
+- Ingestion wiring: `agora.register_specimen.register()` accepts `sweep_outcome` + override; raises `SweepBlocked` on BLOCK without override. `agora.tensor.push.push_tensor()` runs Pattern 30 per promoted cell against LINEAGE_REGISTRY, posts `PATTERN_30_BLOCK` to `agora:harmonia_sync` without halting the batch push.
+
+**Retrospective baseline (sweep_results_log.md):**
+- 7 Level-4 calibration anchors (F001-F005, F008, F009) — expected.
+- 2 Level-1 WEAK_ALGEBRAIC (F015, F041a) — already annotated 2026-04-19.
+- 6 NO_LINEAGE_METADATA (F011, F013, F014, F022, F044, F045) — the baseline substrate debt. Each should declare an `algebraic_lineage` block before the next promotion from that F-ID.
+- No net-new retractions triggered.
+
+**What the filter now does automatically:**
+- Any new register_specimen call carrying a correlation claim against a registered-lineage F-ID is BLOCKed if Pattern 30 classifies Level 2-4.
+- Any tensor cell promotion (0 -> +1/+2) on a registered-lineage F-ID emits PATTERN_30_BLOCK to the sync stream.
+- Pattern 20 + Pattern 19 fire fully on forward-path calls; retrospective coverage is partial due to missing structured priors/strata in the manifest.
+
+**What the filter does NOT cover yet:**
+- Non-registered F-IDs get NO_LINEAGE_METADATA → manual Pattern 30 gate still applies. Path forward: each live_specimen description declares `algebraic_lineage` and the registry grows.
+- Sweep modules await promotion as `computation` symbols once that symbol type ships per `long_term_architecture.md §2.1`.
+
+**What's blocked:** Nothing. Tier 0 downstream tasks (30 replay + 30 transfer + 8 lit-diff) can now land with the automated filter riding along; the manual Pattern 30 gate remains only for the 6 NO_LINEAGE_METADATA F-IDs.
+
+**Queue status at completion:** 95 queued (gen_06 seed consumed). Remaining Tier 1: gen_02 null-family and gen_10 composition enumeration seed tasks.
+
+**Urgency:** milestone. The mandatory companion for epistemic discipline is live.
+
+---
+
 ### [2026-04-20 later] — Tier 0 generators executed first pass — milestone, no decision needed
 
 **Context:** Following the pipeline shipment + Tier 0 seed, executed all three Tier 0 generators end-to-end as `Harmonia_M2_sessionA` in one session.
