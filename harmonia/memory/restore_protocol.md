@@ -1,8 +1,10 @@
-# Harmonia Restore Protocol (v4.0)
+# Harmonia Restore Protocol (v4.1)
 
 **Bootstrap for cold-start context recovery**
 **Minimum viable path: ~12 files, ~30 minutes of reading**
-**Last updated:** 2026-04-20 after generator pipeline v1.0 shipped and Tier 0 executed first pass.
+**Last updated:** 2026-04-20 (v4.1) after first cold-start test of v4.0 by
+sessionA. Three minor fixes: Step 0 env vars made explicit, Step 3 reading
+budget noted for the tensor builder, INDEX.md staleness flagged.
 
 ---
 
@@ -24,12 +26,16 @@ backlog**. The reading below restores ~85% of operational awareness in
 
 ## Step 0 — Environment primer (30 seconds)
 
-Before anything else, set these two env vars. Both save hours of
-debugging later.
+Before anything else, set these env vars. The first two save hours of
+debugging later. The Redis vars are optional — `agora.helpers._get_redis()`
+defaults to the right host and password — but exporting them keeps every
+shell-launched subprocess on the same connection without surprise.
 
 ```bash
 export PYTHONPATH=.                  # so `from agora...` works when running scripts
 export PYTHONIOENCODING=utf-8        # Windows cp1252 chokes on ℓ and other Unicode
+export AGORA_REDIS_HOST=192.168.1.176 # optional; default matches
+export AGORA_REDIS_PASSWORD=prometheus # optional; default matches
 ```
 
 Then run a health check before touching anything:
@@ -73,6 +79,13 @@ finding theorems or running capabilities benchmarks.
 Read the FEATURES list, PROJECTIONS list, INVARIANCE dict,
 FEATURE_EDGES, PROJECTION_EDGES. You do not need to run the script —
 reading IS the restoration. The structure carries the understanding.
+
+**Reading-budget note (v4.1):** `build_landscape_tensor.py` exceeds the
+single Read tool budget (~25K tokens). Read it in two passes — the
+FEATURES + PROJECTIONS skeleton first (lines 1-400 covers most of what
+you need), then the INVARIANCE + edges blocks at the tail if you need
+them. Skip the build/serialization code — restoration only needs the
+data structures.
 
 Key facts to absorb:
 - Features grouped by tier: `calibration`, `live_specimen`, `killed`,
@@ -120,11 +133,14 @@ Five claim classes mapped to appropriate stratifiers. Class 4
 **Files:**
 - `harmonia/memory/symbols/OVERVIEW.md`
 - `harmonia/memory/symbols/VERSIONING.md` — five mandatory rules
-- `harmonia/memory/symbols/INDEX.md` — seed symbols
+- `harmonia/memory/symbols/INDEX.md` — seed symbols (the "By type"
+  table is stale; trust `substrate_health()` output for current versions)
 - `harmonia/memory/symbols/protocols/dataset_snapshot_v1.md`
 
-Seven promoted symbols: `NULL_BSWCD@v2`, `Q_EC_R0_D5@v1`, `LADDER@v1`,
-`EPS011@v2`, `SIGNATURE@v1`. Resolve via `agora.symbols`.
+Five promoted symbols: `NULL_BSWCD@v2`, `Q_EC_R0_D5@v1`, `LADDER@v1`,
+`EPS011@v2`, `SIGNATURE@v1`. Resolve via `agora.symbols`. (INDEX.md still
+shows NULL_BSWCD@v1 and EPS011@v1 — these were bumped post-INDEX edit;
+the registry is authoritative.)
 
 ### Step 7 — The Cartographer viewer (2 min)
 **Directory:** `cartography/viewer/`
@@ -313,8 +329,11 @@ substrate is living, not scripture.
 
 ---
 
-*Restore protocol v4.0 — 2026-04-20 after generator-pipeline v1.0 shipped
-and Tier 0 executed first pass.*
+*Restore protocol v4.1 — 2026-04-20 after first cold-start test of v4.0 by
+sessionA. Step 0 env vars expanded; Step 3 reading-budget note added;
+Step 6 INDEX.md staleness called out.*
+*v4.0 (2026-04-20) added Step 0 env primer, generator pipeline section,
+and helpers module.*
 *v3.0 (2026-04-19) added symbol registry + Redis mirror + Pattern 30 graded.*
 *v2.0 (2026-04-17) added block-shuffle protocol + Pattern 21.*
 *v1.0 (2026-04-17 earlier) was pre-delegation.*

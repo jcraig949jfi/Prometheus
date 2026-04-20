@@ -17,7 +17,7 @@ live in MD files only; promoted symbols also mirror to Redis as
 
 | Symbol | One-line | Status |
 |---|---|---|
-| [NULL_BSWCD@v1](NULL_BSWCD.md) | Block-Shuffle Within Conductor Decile null. Defaults: n_bins=10, n_perms=300, seed=20260417. | v1 promoted |
+| [NULL_BSWCD@v2](NULL_BSWCD.md) | Block-Shuffle Within Stratum null. v2 parameterized stratifier + shuffle_col, Pattern-26 degeneracy guard wired in. v1 callers get byte-identical defaults. | v2 promoted |
 
 ### Shapes (structural pattern descriptors)
 
@@ -29,7 +29,7 @@ live in MD files only; promoted symbols also mirror to Redis as
 
 | Symbol | One-line | Status |
 |---|---|---|
-| [EPS011@v1](EPS011.md) | F011 rank-0 residual asymptote. Canonical: 22.90 ± 0.78 % (classical 1/log(N) ansatz). | v1 promoted |
+| [EPS011@v2](EPS011.md) | F011 rank-0 residual asymptote. Canonical: 22.90 ± 0.78 % (classical 1/log(N) ansatz). v2 adds independent_unfolding_audit precision: SURVIVES (Track B Option-3 conductor-shuffle sanity null decisive). | v2 promoted |
 
 ### Datasets (SQL queries / data slices)
 
