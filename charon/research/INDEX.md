@@ -35,6 +35,11 @@
 | 17 | Wasserstein on L-functions | HIGH | Has anyone used optimal transport to compare L-function zeros? |
 | 21 | Finite-conductor corrections | HIGH | Is the 0.05 RMT gap a pre-asymptotic effect? |
 
+### Batch 4 — Manin-Peyre (2026-04-15)
+| # | Package | Priority | Key Question |
+|---|---------|----------|-------------|
+| 35 | Manin conjecture Fano | MEDIUM | Does EC/g2c height data follow Manin-Peyre counting asymptotics? |
+
 ### Still Pending from Batch 1
 | # | Package | Priority | Status |
 |---|---------|----------|--------|
