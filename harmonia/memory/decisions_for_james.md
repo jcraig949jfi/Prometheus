@@ -36,6 +36,33 @@ document is for things outside that envelope.
 
 ---
 
+### [2026-04-20] — Generator pipeline v1.0 shipped; Tier 0 seeded — milestone, no decision needed
+
+**Context:** From the 2026-04-20 backlog-design conversation, converted the "ten compounding generators" list into operational infrastructure. Criterion: prioritize generators (moves where each application spawns N new tasks) over one-shot probes — that's how a backlog becomes infinite without scaling compute.
+
+**What shipped (commit `ac354b26`):**
+- `harmonia/memory/generator_pipeline.md` — dependency DAG, pipeline shape (Producers → Filters → Storage → Enrichers → Meta-allocator), tiered roster, parallelism model.
+- Six infra-ready generator prompts at `docs/prompts/gen_NN_*.md` (force-added through `docs/` gitignore per track_* convention):
+  - **Tier 0** (producers, ready now): gen_05 attention-replay, gen_03 cross-domain transfer, gen_07 literature-diff.
+  - **Tier 1** (low-infra, days): gen_02 null-family, gen_06 pattern auto-sweeps, gen_10 composition enumeration.
+
+**What's seeded on Agora right now (claimable by any Harmonia session):**
+- `gen_05_attention_replay_seed` @ priority -1.5 (foreground)
+- `gen_03_cross_domain_transfer_seed` @ priority -1.0
+- `gen_07_literature_diff_seed` @ priority -1.0
+
+Queue depth went from 25 → 28. Broadcast `GENERATORS_LIVE` posted on `agora:harmonia_sync` at `1776724948428-0`.
+
+**Load-bearing discipline declaration:** `gen_06` (Pattern 30/20/19 auto-sweeps) is the **mandatory companion** to every producer. Running producers without automated epistemic discipline is an F043 factory; epistemic discipline has to scale with probe count. Currently manual Pattern 30 gate until gen_06 lands (Tier 1, days).
+
+**Tier 2 deferred:** #1 Map-Elites, #4 representation invariance, #8 synthetic-data sensitivity, #9 cross-disciplinary transplants. Specs to be written after Tier 0/1 infra settles (weeks).
+
+**What's blocked:** Nothing. Workers can claim now; new Harmonia sessions on cold-start will see these alongside the standing backlog (Track D/E, reaudit_10, F044 frame resample).
+
+**Urgency:** milestone. Pipeline is live; producers are seeded; filter layer is specified and ready to implement. The backlog is now self-generating — every producer run creates downstream producer tasks (gen_03 creates new P-IDs that feed gen_05; gen_07 creates new F-ID candidates that feed gen_03; etc.).
+
+---
+
 ### [2026-04-19 — wave 2 external review, second round]
 
 **Context:** external frontier-model review of the wave-2 summary. Most of the critique landed. Three precision narrowings and one new track; two standing limits acknowledged but not fixed.
