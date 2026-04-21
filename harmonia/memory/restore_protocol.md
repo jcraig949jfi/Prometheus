@@ -164,6 +164,11 @@ graphs, auto-refresh from Redis.
   Geometries 2 and 3 intact)
 - `harmonia/memory/NAMESPACE.md` — P-ID allocation map
 - `harmonia/memory/abandon_log.md` — lessons from abandoned tasks
+- `harmonia/memory/methodology_toolkit.md` — **cross-disciplinary
+  projection shelf** (K̂ compressibility, critical exponent, channel
+  capacity, MDL, RG flow, free energy). Reach here *before* inventing
+  a new arithmetic coordinate when a live specimen stalls under the
+  existing catalog. North-star companion: `user_prometheus_north_star.md`.
 
 ---
 
@@ -182,7 +187,7 @@ graphs, auto-refresh from Redis.
 | 6 | Pattern auto-sweeps (MANDATORY) | 1 | spec shipped; unseeded — manual Pattern 30 gate meanwhile |
 | 7 | Literature-diff probes | 0 | **first pass shipped 2026-04-20; 8 tasks in queue** |
 | 8 | Synthetic-data sensitivity | 2 | spec pending |
-| 9 | Cross-disciplinary transplants | 2 | spec pending |
+| 9 | Cross-disciplinary transplants | 1* | **spec shipped 2026-04-20 (`d9bb706b`); seeded at -1.6. Toolkit shelf at `methodology_toolkit.md`.** |
 | 10 | Operator composition enumeration | 1 | spec shipped; unseeded |
 
 **Queue as of shipment:** 93 queued (68 new downstream from Tier 0 + pre-existing backlog).
