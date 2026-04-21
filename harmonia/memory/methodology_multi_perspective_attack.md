@@ -323,8 +323,89 @@ Harmonia. Specifically:
 
 ---
 
+## Cross-model data: Lehmer × mass-gap thread, 5-sample run (2026-04-20)
+
+The LLM-variance caveat above was initially asserted from first
+principles. This section is the first real data point.
+
+**Experiment:** paste the single-thread mass-gap prompt (dropping the
+step-by-step attack protocol, keeping the disciplinary prior +
+forbidden moves + commitment contract) into multiple frontier models
+and record the committed stance + the physical analogy each recruited.
+
+**Samples:** 4 external (pasted by HITL) + 1 Claude internal = 5
+independent runs.
+
+| Run | Stance | Gap value predicted | Physical analogy recruited |
+|---|---|---|---|
+| External #1 | **B** no gap | infimum → 0 | 2D XY model, log-determinant criticality |
+| External #2 | **A** | exactly 1.17628 | BCS superconducting gap |
+| External #3 | **A** | exactly log(1.17628) ≈ 0.16236 | BCS (Toeplitz Hessian variant) |
+| External #4 | **A** | exactly 1.17628 | BCS (self-consistent variational) |
+| Claude internal | **C** | ≠ 1.17628, dynamical-natural | Wigner-Dyson rigidity / Koopman-spectral |
+
+**Distribution:** 3 A / 1 B / 1 C. Strong A-attractor under the
+mass-gap prior, but not collapsed — B and C both appear at
+non-trivial rate.
+
+**Load-bearing finding:** *the physical analogy the model recruits is
+upstream of the stance*. Every A-stance model independently chose
+BCS; the B-stance model chose 2D XY; the C-stance model chose
+Wigner-Dyson / Koopman. **Once the analogy is fixed, the stance is
+almost determined.** The real degree of freedom under the methodology
+is the analogy-recruitment step, not the stance-selection step. This
+sharpens the variance handle: if you want to probe variance robustly,
+you must force different analogy recruitments, not just re-run the
+same prompt.
+
+**Secondary observations from the 5-sample run:**
+
+- The forbidden-move discipline held across all five responses. No
+  "cyclotomic," "Galois," or "root of" leakage. The mechanism scales
+  across frontier models, at least for the mass-gap frame.
+- The refutable predictions were commensurable — all five proposed
+  measurements on Toeplitz / Hankel / Szegő quantities on the integer
+  polynomial lattice. A single experimental setup (spectral analysis
+  of (1 − K) or the (S[f], E_∞(f)) scatter, both up to degree ~30)
+  adjudicates all five stances. That's the decidable fork
+  independent of stance preference.
+- The C stance is fragile. Only Claude internal produced it; none of
+  the four external models independently arrived at "gap exists but
+  not at 1.17628." This is a specific methodology warning: if a
+  session's first realization produces a minority stance, *do not
+  treat it as discovery until reproduced across seeds.* My original
+  thread-5 C stance was partly a sampling realization, not a
+  structural finding about the mass-gap frame.
+- BCS is the "canonical gap" cognitive default in frontier-model
+  training distributions. A future exercise could explicitly forbid
+  the BCS analogy by name — this would probably redistribute the
+  A-stance mass across other gap-generating analogies (Higgs,
+  chirality-confinement, photon-mass-in-plasma), testing whether the
+  stance survives analogy-forbidding or whether A was BCS-dependent.
+
+**Updated protocol recommendation for high-stakes problems:**
+
+1. Run ≥ 5 samples (across multiple models if available).
+2. Record the physical analogy each recruits, not just the stance.
+3. Report the stance × analogy joint distribution, not just the
+   marginal.
+4. If one analogy dominates, consider a follow-up round with that
+   analogy explicitly forbidden — it tests whether the stance is
+   genuine-under-the-prior or analogy-specific.
+5. The decidable measurement is the same regardless of stance
+   distribution. Extract it, seed it as an Agora task, and let the
+   data adjudicate.
+
+---
+
 ## Version history
 
+- **v1.1** 2026-04-20 — added cross-model data section after 5-sample
+  Lehmer × mass-gap run. Key finding: physical analogy is upstream
+  of stance; variance handle is at the analogy-recruitment step;
+  C stance from original run was a sampling realization, not a
+  structural finding. Protocol updated to record stance × analogy
+  joint distribution at ≥ 5 samples for high-stakes problems.
 - **v1** 2026-04-20 — initial documentation after first exercise
   (Lehmer's conjecture, five threads, commit `a45a9d62` + subsequent
   background agents). Stance map and LLM-variance caveat derived
