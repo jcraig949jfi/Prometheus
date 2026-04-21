@@ -1,0 +1,207 @@
+{
+  "version": 1,
+  "generated": "2026-04-21",
+  "description": "18 mathematical attack paradigms — the distinct lenses for perceiving and cracking hard problems",
+  "paradigms": [
+    {
+      "id": "P01", "name": "Algebraic Translation",
+      "move": "Reframe in richer algebraic category",
+      "exemplar": "FLT (Wiles 1995) — Frey curve to modularity",
+      "computation": "low", "prometheus_status": "LIVE",
+      "tactics": ["modularity_lifting", "langlands_functoriality", "categorification", "derived_equivalences", "p_adic_methods"],
+      "tools": ["SageMath", "Magma", "PARI/GP", "OSCAR.jl"],
+      "python": ["cypari2", "sage"]
+    },
+    {
+      "id": "P02", "name": "Cohomological Obstruction",
+      "move": "Detect global impossibility via local-to-global failure classes",
+      "exemplar": "Brauer-Manin obstruction, Cassels-Tate pairing",
+      "computation": "medium", "prometheus_status": "LIVE",
+      "tactics": ["etale_cohomology", "galois_cohomology", "motivic_cohomology", "k_theory_obstruction", "brauer_groups"],
+      "tools": ["Macaulay2", "GAP", "Sage"],
+      "python": ["sage"]
+    },
+    {
+      "id": "P03", "name": "Symmetry Exploitation",
+      "move": "Use group actions to collapse search space",
+      "exemplar": "CFSG; Chuang-Rouquier for Broue",
+      "computation": "high", "prometheus_status": "LIVE",
+      "tactics": ["representation_theory", "invariant_theory", "orbit_stabilizer", "equivariant_homotopy", "moonshine"],
+      "tools": ["GAP", "Magma", "Sage"],
+      "python": ["gap_jupyter"]
+    },
+    {
+      "id": "P04", "name": "Spectral Analysis",
+      "move": "Study eigenvalues of associated operator",
+      "exemplar": "Montgomery-Odlyzko GUE; Selberg trace formula",
+      "computation": "high", "prometheus_status": "LIVE",
+      "tactics": ["random_matrix_theory", "laplacian_spectrum", "hecke_eigenvalue", "selberg_trace", "heat_kernel"],
+      "tools": ["LAPACK", "ARPACK", "FLINT", "Arb", "mpmath"],
+      "python": ["numpy", "scipy", "mpmath"]
+    },
+    {
+      "id": "P05", "name": "Analytic Continuation",
+      "move": "Extend beyond natural domain to reveal global structure",
+      "exemplar": "Riemann zeta, L-function zeros govern prime distribution",
+      "computation": "high", "prometheus_status": "LIVE",
+      "tactics": ["l_function_continuation", "theta_completion", "borel_summation", "resurgence", "pade_approximants"],
+      "tools": ["PARI/GP", "Arb", "mpmath", "eclib"],
+      "python": ["cypari2", "mpmath"]
+    },
+    {
+      "id": "P06", "name": "Geometric Flow",
+      "move": "Continuously deform object to canonical form",
+      "exemplar": "Poincare Conjecture (Perelman/Hamilton Ricci flow)",
+      "computation": "medium", "prometheus_status": "NEED_INFRA",
+      "tactics": ["ricci_flow", "mean_curvature_flow", "kahler_ricci", "yamabe_flow", "gradient_descent"],
+      "tools": ["FEniCS", "Firedrake", "PyTorch"],
+      "python": ["torch", "fenics"]
+    },
+    {
+      "id": "P07", "name": "Descent and Induction",
+      "move": "Reduce to simpler cases",
+      "exemplar": "Fermat infinite descent; Faltings Mordell",
+      "computation": "low", "prometheus_status": "LIVE",
+      "tactics": ["infinite_descent", "noetherian_induction", "sheaf_descent", "filtration", "transfinite_induction"],
+      "tools": ["Lean4", "Coq", "Isabelle"],
+      "python": ["LeanDojo"]
+    },
+    {
+      "id": "P08", "name": "Probabilistic Method",
+      "move": "Prove existence via random construction with positive probability",
+      "exemplar": "Erdos high-girth chromatic; Lovasz Local Lemma",
+      "computation": "high", "prometheus_status": "LIVE",
+      "tactics": ["lovasz_local_lemma", "second_moment", "janson_inequalities", "spread_lemma", "absorbing_method"],
+      "tools": ["NetworkX", "SciPy", "numpy"],
+      "python": ["numpy", "scipy", "networkx"]
+    },
+    {
+      "id": "P09", "name": "Exhaustive Computation",
+      "move": "Reduce to finite cases, verify by machine",
+      "exemplar": "Four Color Theorem; Boolean Pythagorean Triples (200TB SAT)",
+      "computation": "extreme", "prometheus_status": "LIVE",
+      "tactics": ["sat_smt_reduction", "integer_programming", "interval_arithmetic", "backtracking", "cube_and_conquer"],
+      "tools": ["CaDiCaL", "Kissat", "Z3", "CVC5", "SCIP", "nauty"],
+      "python": ["pysat", "z3-solver"]
+    },
+    {
+      "id": "P10", "name": "Formal Verification",
+      "move": "Machine-check every inference step",
+      "exemplar": "4-color in Coq; Flyspeck in Isabelle; PFR in Lean 4",
+      "computation": "extreme", "prometheus_status": "NEED_INFRA",
+      "tactics": ["type_theoretic_proof", "tactic_based", "hammer_methods", "autoformalization"],
+      "tools": ["Lean4/Mathlib", "Coq", "Isabelle", "DeepSeek-Prover-V2"],
+      "python": ["LeanDojo", "LeanCopilot"]
+    },
+    {
+      "id": "P11", "name": "Sieve Methods",
+      "move": "Filter large set by local conditions, study residue",
+      "exemplar": "Brun twin primes; Maynard bounded gaps",
+      "computation": "high", "prometheus_status": "LIVE",
+      "tactics": ["combinatorial_sieve", "large_sieve", "parity_barrier", "weighted_sieve", "kloosterman_bounds"],
+      "tools": ["PARI/GP", "primesieve"],
+      "python": ["cypari2", "numpy"]
+    },
+    {
+      "id": "P12", "name": "Height / Diophantine Geometry",
+      "move": "Assign arithmetic size, prove finiteness via height bounds",
+      "exemplar": "Faltings theorem; Uniformity conjecture",
+      "computation": "medium", "prometheus_status": "LIVE",
+      "tactics": ["weil_height", "arakelov_geometry", "vojta_conjectures", "bombieri_pila_counting", "subspace_theorem"],
+      "tools": ["Sage", "Magma", "LMFDB"],
+      "python": ["sage"]
+    },
+    {
+      "id": "P13", "name": "Tropical / Degeneration",
+      "move": "Replace smooth with piecewise-linear combinatorial shadow",
+      "exemplar": "Mikhalkin correspondence theorem; Gross-Siebert mirror symmetry",
+      "computation": "medium", "prometheus_status": "NEED_INFRA",
+      "tactics": ["tropical_intersection", "newton_okounkov", "berkovich", "log_geometry", "toric_degeneration"],
+      "tools": ["Gfan", "polymake", "OSCAR.jl", "Macaulay2"],
+      "python": ["polymake"]
+    },
+    {
+      "id": "P14", "name": "Forcing / Independence",
+      "move": "Construct alternative universes to show unprovability",
+      "exemplar": "Cohen continuum hypothesis",
+      "computation": "none", "prometheus_status": "OUT_OF_REACH",
+      "tactics": ["cohen_forcing", "boolean_valued_models", "inner_models", "large_cardinals", "descriptive_set_theory"],
+      "tools": ["Isabelle/ZF"],
+      "python": []
+    },
+    {
+      "id": "P15", "name": "Tensor Decomposition",
+      "move": "Decompose multi-index arrays to expose hidden rank",
+      "exemplar": "Strassen multiplication; quantum tensor networks",
+      "computation": "extreme", "prometheus_status": "LIVE",
+      "tactics": ["cp_tucker", "tensor_train", "hosvd", "nonneg_tensor_factor", "bond_dimension"],
+      "tools": ["TensorLy", "ITensor", "PyTorch", "numpy"],
+      "python": ["tensorly", "numpy", "torch"]
+    },
+    {
+      "id": "P16", "name": "Modular Arithmetic Statistics",
+      "move": "Lift local mod-p info to global via density and distribution",
+      "exemplar": "Sato-Tate; Smith Selmer distribution (2022)",
+      "computation": "high", "prometheus_status": "LIVE",
+      "tactics": ["frobenius_distribution", "mod_p_galois", "chebotarev_density", "sturm_bound", "hecke_algebra"],
+      "tools": ["PARI", "eclib", "galois"],
+      "python": ["cypari2", "galois"]
+    },
+    {
+      "id": "P17", "name": "Variational / Extremal",
+      "move": "Identify as optimizer of functional, use optimality conditions",
+      "exemplar": "Plateau minimal surfaces; Flag algebra SDP bounds",
+      "computation": "high", "prometheus_status": "NEED_INFRA",
+      "tactics": ["euler_lagrange", "mountain_pass", "min_max", "sdp_relaxation", "optimal_transport", "flag_algebras"],
+      "tools": ["SDPA", "CVXPY", "SCIP", "Gurobi"],
+      "python": ["cvxpy"]
+    },
+    {
+      "id": "P18", "name": "Operadic / Categorical",
+      "move": "Abstract composition structure as mathematical object",
+      "exemplar": "Grothendieck topoi; Fargues-Scholze; Gaitsgory geometric Langlands (2024)",
+      "computation": "low", "prometheus_status": "NEED_INFRA",
+      "tactics": ["operad_theory", "infinity_categories", "hott", "derived_algebraic_geometry", "monoidal_functors"],
+      "tools": ["Lean4/Mathlib", "Kenzo", "OSCAR.jl"],
+      "python": []
+    }
+  ],
+  "solved_problems_by_paradigm": {
+    "P01": ["FLT", "Serre_modularity", "Sato_Tate"],
+    "P02": ["Sha_perfect_square", "Brauer_Manin_examples"],
+    "P03": ["CFSG", "Broue_symmetric_groups"],
+    "P04": ["Montgomery_Odlyzko", "RMT_sign_inversion"],
+    "P05": ["prime_number_theorem", "Dirichlet_L_functions"],
+    "P06": ["Poincare", "Thurston_geometrization"],
+    "P07": ["Fermat_descent", "Faltings_Mordell"],
+    "P08": ["Erdos_chromatic_girth", "Park_Pham_threshold"],
+    "P09": ["Four_Color", "Boolean_Pythagorean", "Kepler", "Keller", "Schur_5"],
+    "P10": ["Four_Color_Coq", "Flyspeck", "PFR_Lean", "Feit_Thompson_Coq"],
+    "P11": ["Brun_twin_primes", "Maynard_bounded_gaps", "Duffin_Schaeffer"],
+    "P12": ["Faltings_Mordell", "Andre_Oort"],
+    "P13": ["Mikhalkin_correspondence", "Gross_Siebert_mirror"],
+    "P14": ["Cohen_CH", "Solovay_measurable_cardinals"],
+    "P15": ["Strassen_multiplication", "quantum_tensor_networks"],
+    "P16": ["Sato_Tate", "Smith_Selmer_2022", "C11_mod_p_enrichment"],
+    "P17": ["Plateau_surfaces", "Caccetta_Haggkvist_SDP_bound"],
+    "P18": ["Fargues_Scholze", "Gaitsgory_geometric_Langlands"]
+  },
+  "physics_imports": [
+    {"source": "mirror_symmetry", "bridge": "GW invariants = B-model periods", "paradigms": ["P01", "P13"]},
+    {"source": "gauge_theory", "bridge": "instantons → 4-manifold invariants", "paradigms": ["P02", "P04"]},
+    {"source": "CFT_SLE", "bridge": "conformal invariance → random curves", "paradigms": ["P08", "P04"]},
+    {"source": "RMT_stat_mech", "bridge": "eigenvalue statistics = zero statistics", "paradigms": ["P04", "P16"]},
+    {"source": "Chern_Simons_TQFT", "bridge": "path integral → knot invariants", "paradigms": ["P01", "P04"]},
+    {"source": "quantum_complexity", "bridge": "MIP*=RE → Connes embedding", "paradigms": ["P14", "P03"]},
+    {"source": "entropy_methods", "bridge": "Shannon submodularity → sumset bounds", "paradigms": ["P08", "P16"]},
+    {"source": "renormalization", "bridge": "RG fixed points → universality classes", "paradigms": ["P04", "P17"]},
+    {"source": "neural_networks", "bridge": "pattern detection → conjecture generation", "paradigms": ["P09", "P15"]}
+  ],
+  "top5_keystones": [
+    {"method": "Modular arithmetic", "origin": "Gauss 1801", "enabled": "all number theory"},
+    {"method": "Variational method", "origin": "Euler-Lagrange 1750s", "enabled": "physics, Ricci flow, PDEs"},
+    {"method": "Spectral theory", "origin": "Hilbert 1900s", "enabled": "QM, Fourier, RMT, Langlands"},
+    {"method": "Category theory", "origin": "Eilenberg-Mac Lane 1945", "enabled": "algebraic geometry, HoTT"},
+    {"method": "Compactness + diagonalization", "origin": "Cantor/Godel/Turing", "enabled": "SAT, model theory, forcing"}
+  ]
+}
