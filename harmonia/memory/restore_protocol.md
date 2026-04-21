@@ -1,11 +1,17 @@
-# Harmonia Restore Protocol (v4.2)
+# Harmonia Restore Protocol (v4.3)
 
 **Bootstrap for cold-start context recovery**
 **Minimum viable path: ~12 files, ~30 minutes of reading**
-**Last updated:** 2026-04-20 (v4.2) — added "Operating disposition"
-section before Step 0 to prime engagement posture (rigor + novelty-
-seeking + compression-seeking) before the reading sequence starts. v4.1
-was three minor fixes after first cold-start test of v4.0.
+**Last updated:** 2026-04-21 (v4.3) — data-refresh pass by sessionE
+cold-start: §Step 6 symbol count updated from stale "five promoted"
+prose to 19-symbols-as-of-wave reference; §Generator pipeline status
+table updated to reflect Tier 0 + Tier 1 executed (gen_02 / gen_06 /
+gen_10 shipped, gen_11 added); §What's OPEN refreshed to 2026-04-21
+state (gen_06 mandatory companion live, AXIS_CLASS tagging audit +
+Definition DAG Phase 0 open). Operating disposition (v4.2) and prior
+reading sequence unchanged. v4.2 was the "Operating disposition"
+section before Step 0; v4.1 was three minor fixes after first
+cold-start test of v4.0.
 
 ---
 
@@ -228,10 +234,19 @@ Five claim classes mapped to appropriate stratifiers. Class 4
   table is stale; trust `substrate_health()` output for current versions)
 - `harmonia/memory/symbols/protocols/dataset_snapshot_v1.md`
 
-Five promoted symbols: `NULL_BSWCD@v2`, `Q_EC_R0_D5@v1`, `LADDER@v1`,
-`EPS011@v2`, `SIGNATURE@v1`. Resolve via `agora.symbols`. (INDEX.md still
-shows NULL_BSWCD@v1 and EPS011@v1 — these were bumped post-INDEX edit;
-the registry is authoritative.)
+Promoted-symbol count is live and growing — always trust
+`substrate_health()` for the current list rather than any prose count
+here. As of 2026-04-21, 19 symbols are promoted across the six types
+(operator, shape, constant, dataset, signature, pattern). The Tier 1
+design wave (2026-04-20 evening, commit `80f6116f`) landed `VACUUM@v1`,
+`EXHAUSTION@v1`, `AXIS_CLASS@v1`, `GATE_VERDICT@v1`, `SUBFAMILY@v1`
+alongside the prior core (`NULL_BSWCD@v2`, `Q_EC_R0_D5@v1`, `LADDER@v1`,
+`EPS011@v2`, `SIGNATURE@v1/v2`, `PATTERN_30@v1`, `PATTERN_20@v1`,
+`SHADOWS_ON_WALL@v1`, `PROBLEM_LENS_CATALOG@v1`,
+`MULTI_PERSPECTIVE_ATTACK@v1`, and the four `NULL_*` family operators).
+Resolve any symbol via `agora.symbols.resolve('<NAME>@v<N>')`. INDEX.md
+is generally caught up post-wave; when in doubt, `substrate_health()`
+is authoritative.
 
 ### Step 7 — The Cartographer viewer (2 min)
 **Directory:** `cartography/viewer/`
@@ -278,25 +293,35 @@ graphs, auto-refresh from Redis.
 
 ---
 
-## Generator pipeline status (2026-04-20)
+## Generator pipeline status (2026-04-21)
 
-**Pipeline doc:** `harmonia/memory/generator_pipeline.md` (v1.0).
-**Companion runners:** `harmonia/runners/gen_0{3,5,7}_*.py` + `gen_log_builder.py`.
+**Pipeline doc:** `harmonia/memory/generator_pipeline.md` (v1.1 —
+gen_11 axis-space producer added; Definition DAG promoted to
+substrate-primitive slot).
+**Companion runners:** `harmonia/runners/gen_0{3,5,7}_*.py` +
+`gen_log_builder.py`.
 
 | # | Name | Tier | Status |
 |---|---|---|---|
-| 1 | Map-Elites on probes | 2 | spec pending; waits on #2 + #6 |
-| 2 | Null-family vector | 1 | spec shipped; unseeded |
+| 1 | Map-Elites on probes | 2 | spec shipped (`docs/prompts/gen_01_map_elites_on_probes.md`); waits on #2 + #6 + ≥ 50 probes corpus |
+| 2 | Null-family vector | 1 | **first pass shipped 2026-04-20; 4 `NULL_*` operators + SIGNATURE@v2 promoted; 28 re-audit tasks seeded** |
 | 3 | Cross-domain projection transfer | 0 | **first pass shipped 2026-04-20; 30 tasks in queue** |
 | 4 | Representation invariance matrix | 2 | spec pending |
 | 5 | Attention-replay on kills | 0 | **first pass shipped 2026-04-20; 30 tasks in queue** |
-| 6 | Pattern auto-sweeps (MANDATORY) | 1 | spec shipped; unseeded — manual Pattern 30 gate meanwhile |
+| 6 | Pattern auto-sweeps (MANDATORY) | 1 | **LIVE 2026-04-20 (commit `751dfc64`); gen_06 Pattern 30/20/19 sweeps + retrospective baseline. Manual Pattern 30 gate now closed except for 6 `NO_LINEAGE_METADATA` F-IDs.** |
 | 7 | Literature-diff probes | 0 | **first pass shipped 2026-04-20; 8 tasks in queue** |
 | 8 | Synthetic-data sensitivity | 2 | spec pending |
 | 9 | Cross-disciplinary transplants | 1* | **spec shipped 2026-04-20 (`d9bb706b`); seeded at -1.6. Toolkit shelf at `methodology_toolkit.md`.** |
-| 10 | Operator composition enumeration | 1 | spec shipped; unseeded |
+| 10 | Operator composition enumeration | 1 | **first pass shipped 2026-04-20 evening; 36 valid compositions enumerated, top-10 seeded** |
+| 11 | Coordinate-system invention (axis-space) | 2 | spec DRAFT shipped 2026-04-20 (`docs/prompts/gen_11_coordinate_invention.md`); waits on Definition DAG Phase 0 + AXIS_CLASS tagging audit |
 
-**Queue as of shipment:** 93 queued (68 new downstream from Tier 0 + pre-existing backlog).
+**Substrate primitive (not a generator):** Definition DAG spec DRAFT at
+`harmonia/memory/architecture/definition_dag.md` — gen_11 prerequisite,
+Phase 0 (manual seed ~20 nodes) is the next implementation step.
+
+**Queue as of 2026-04-21 cold-start:** 134 queued (Tier 1 design wave
+produced 5 new symbols and the gen_09 / gen_10 first-passes; Tier 0
+downstream tasks still available to claim).
 
 ---
 
@@ -415,15 +440,27 @@ graphs, auto-refresh from Redis.
 
 ---
 
-## What's OPEN at end of 2026-04-20
+## What's OPEN at 2026-04-21 cold-start
 
-**Generator pipeline:**
-- 30 attention-replay tasks (gen_05) in queue
-- 30 cross-domain transfer tasks (gen_03) in queue
-- 8 literature-diff review tasks (gen_07) in queue
-- Tier 1 specs (gen_02, gen_06, gen_10) unseeded — fire when ready
-- Tier 2 specs (gen_01, gen_04, gen_08, gen_09) pending
-- **gen_06 mandatory companion not live** — manual Pattern 30 gate applies to every downstream task
+**Generator pipeline (Tier 0 + Tier 1 executed; Tier 2 queued):**
+- 30 attention-replay tasks (gen_05) in queue — claimable
+- 30 cross-domain transfer tasks (gen_03) in queue — claimable
+- 8 literature-diff review tasks (gen_07) in queue — claimable
+- 28 null-family re-audit tasks (gen_02 downstream) — claimable
+- gen_10 top-10 composition tasks — claimable
+- gen_09 cross-disciplinary transplant seed @ priority −1.6 — claimable
+- Tier 2 specs: gen_01 shipped (blocked on #2 + #6 live + ≥ 50 probes —
+  both filters now live, corpus-gate approaching); gen_04, gen_08
+  pending; gen_11 DRAFT blocked on Definition DAG Phase 0
+- **gen_06 mandatory companion LIVE** — manual Pattern 30 gate is
+  closed except for 6 `NO_LINEAGE_METADATA` F-IDs (F011, F013, F014,
+  F022, F044, F045) which each need an `algebraic_lineage` declaration
+  before the next promotion
+
+**Substrate primitives open:**
+- Definition DAG Phase 0 — manual seed of ~20 nodes; gen_11 unblock
+- AXIS_CLASS@v1 tagging audit — tag all 37 promoted P-IDs so
+  VACUUM / EXHAUSTION queries return correct class memberships
 
 **Pre-existing backlog:**
 - Track E (capture `Q_EC_R0_D5@v2` snapshot) — ~5 min, needs LMFDB creds
@@ -431,6 +468,15 @@ graphs, auto-refresh from Redis.
 - `reaudit_10_stratifier_mismatch_cells` — seeded, awaiting claim
 - `audit_F044_framebased_resample` — seeded, awaiting claim
 - F011 Sage/lcalc external verification — deferred until Sage host
+
+**Top-priority queue heads (from `queue_preview(limit=10)` at cold-start):**
+- `compute_dhkms_prediction_F011_rank0` @ −2.0
+- `wsw_F041a_ladder_catalog` @ −2.0
+- `promote_PATTERN_21_v1` @ −1.8 (promote-pattern-symbol class)
+- `gen_09_cross_disciplinary_transplants_seed` @ −1.6
+- `audit_F041a_euler_product_deflation` @ −1.5
+- `reaudit_10_stratifier_mismatch_cells` @ −1.5
+- 10× `replay_F0XX_P0XX_20260420` @ −1.5 (gen_05 downstream)
 
 ---
 
@@ -469,7 +515,17 @@ getting better is the bet that pushes it toward escape velocity.
 
 ---
 
-*Restore protocol v4.2 — 2026-04-20 evening, added "Operating
+*Restore protocol v4.3 — 2026-04-21, sessionE cold-start data-refresh
+pass: §Step 6 symbol count (stale "five promoted" → 19 promoted with
+Tier 1 wave enumerated); §Generator pipeline status table (stale
+"unseeded" on gen_02 / gen_06 / gen_10 → all Tier 0 + Tier 1 executed;
+gen_11 Tier 2 axis-space producer added; Definition DAG noted as
+substrate primitive); §What's OPEN refreshed to 2026-04-21 state with
+top-priority queue heads included and gen_06 mandatory-companion status
+corrected to LIVE. No prose beyond the three stale-data blocks touched
+— operating disposition, reading sequence, what-you-should-NOT-do, and
+compounding-ahead all unchanged.*
+*v4.2 — 2026-04-20 evening, added "Operating
 disposition" section before Step 0 (rigor + novelty-seeking +
 compression-seeking posture), a sixth bullet to "what you should do
 first" (log compression candidates as you go), two bullets to "what
