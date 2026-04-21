@@ -398,8 +398,121 @@ same prompt.
 
 ---
 
+## Second anchor: Collatz conjecture (2026-04-20)
+
+Same procedure, different problem shape. Lehmer is polynomial-space /
+functional-analytic; Collatz is iteration-dynamical / combinatorial.
+The anchor's purpose was to test generalization: does the methodology
+work on a problem of radically different shape, and does it produce
+the same *kind* of output (disagreement map)?
+
+**Five threads:** ergodic dynamics, information theory, probabilistic
+random-walk heuristic, graph theory, computability/proof-theory. Each
+with disciplinary-specific forbidden moves (ergodic thread barred
+"binary/2-adic/residue"; graph thread barred measure-theoretic
+framings; computability thread barred dynamical framings; etc).
+
+### Stance map
+
+| # | Discipline | Stance | Mechanism | Quantitative prediction |
+|---|---|---|---|---|
+| 1 | Ergodic | A | λ = ½log(3/4) < 0 forced by branch stationarity | ⟨log τ⟩ ~ c·M, c ≈ 6.95 |
+| 2 | Information theory | A | finite-program Kolmogorov contraction | τ(n)/log n → const ∈ [1,4] |
+| 3 | Random walk | A | Cramér martingale + incommensurability | τ(n)/log n → 1/\|μ\| ≈ 6.952 |
+| 4 | Graph theory | A | backward-tree supercritical (4/3)^k tiling | in-degree-2 fraction at depth → 1/3 ± 0.005 |
+| 5 | Computability | **B (proof-theoretic)** | Goodstein-analogue above ε₀ | termination ordinal ∈ (ε₀, Bachmann-Howard] |
+
+### Primary finding — convergence, not divergence
+
+**All five threads agree: every orbit terminates.** Zero defection on
+the factual question. Three independent threads (ergodic, random-walk,
+info-theoretic) arrive at **the same numerical constant ≈ 6.95** for
+τ(n)/log n via completely different arguments. Graph theory
+independently confirms A via a different quantitative signature.
+
+This is **the opposite pattern from Lehmer**, where five threads
+produced sharply divergent directional predictions on the asymptote.
+
+### Secondary finding — a new disagreement axis
+
+The computability thread agrees Collatz is true but disagrees on the
+proof's logical strength: termination metric requires transfinite
+induction above ε₀ (Goodstein-analogue), not provable in Peano
+arithmetic. The other four implicitly argue from heuristic mechanisms
+as if elementary descent suffices.
+
+This surfaces a **second disagreement axis orthogonal to the A/B/C
+stance menu**: truth vs. provability. A richer methodology version
+would carry two axes: (i) what's the answer, (ii) how hard is it to
+prove. Collatz has four threads agreeing on (i) and one thread
+disagreeing only on (ii). A menu that offered "true-and-PA-provable"
+/ "true-but-needs-higher-logic" / "undecidable" as stances would
+have surfaced this natively; the single-axis menu I deployed missed
+it until the computability thread flagged it directly.
+
+**Protocol update:** for problems where proof-theoretic strength is
+plausibly distinct from truth (open problems on discrete structures
+are the natural class), the stance menu should include a provability
+axis. For problems where truth and provability are bound together
+(functional-analytic existence questions like mass gaps), single-axis
+A/B/C suffices.
+
+---
+
+## The two-anchor methodology finding
+
+Comparing Lehmer and Collatz as anchor cases produces the
+methodology's first-order diagnostic:
+
+| Problem | Output pattern | Methodology signal |
+|---|---|---|
+| Lehmer (polynomial space) | 5 threads → 3 stances; sharp directional disagreement | *Map of disagreement*; the axis of disagreement IS the problem's compression direction; decidable measurement = the fork |
+| Collatz (iteration dynamics) | 5 threads → 1 stance (A on truth); 3-way numerical convergence at ~6.95 | *Convergent triangulation*; multiple independent paths to the same answer = much stronger evidence than any single lens |
+
+**The methodology is diagnostic, not single-mode.** Whether disciplines
+converge or diverge on a problem IS the first-order signal.
+
+- **Convergence** indicates the problem has a heuristic-convergent
+  answer that is robust across priors. Collatz's 6.95 is the substrate
+  analogue of a calibration-tier anchor — different lenses, same
+  answer, high confidence.
+- **Divergence** indicates the answer depends on which projection is
+  used. Lehmer has no heuristic-convergent answer — the right answer
+  depends on which functional space / which limit you take. The
+  disagreement IS the map.
+
+Both outputs are useful. The methodology detects which one applies
+*as a byproduct of running it*, not by pre-classification.
+
+### Implications
+
+1. **Prioritizing follow-on measurements.** For convergence-pattern
+   problems, the shared prediction is the priority (measure Collatz
+   τ(n)/log n on ~10^12 and check the 6.95 fit). For divergence-
+   pattern problems, the axis of disagreement is the priority
+   (measure min M(f) per degree on LMFDB and see whether the
+   asymptote goes up, down, or stays).
+2. **Stance menus should match problem shape.** For problems where
+   truth and provability can separate (discrete-structure questions),
+   include a provability axis. For problems where they are bound
+   (functional-existence questions), single-axis A/B/C suffices.
+3. **Convergence is discovered, not assumed.** A session that runs
+   the methodology expecting divergence and finds convergence has
+   learned something about the problem; likewise for the converse.
+
+---
+
 ## Version history
 
+- **v1.2** 2026-04-20 — added Collatz second-anchor case. Two-anchor
+  methodology finding: the methodology is diagnostic (convergence vs.
+  divergence signals), not single-mode. Stance menus should match
+  problem shape; a provability axis is needed for discrete-structure
+  problems where truth and proof-strength can separate. Collatz
+  revealed this via thread 5 (computability) disagreeing on provability
+  while the other four agreed on truth. Qualifies for
+  `MULTI_PERSPECTIVE_ATTACK@v1` symbol promotion (two anchor cases
+  per symbol-registry discipline).
 - **v1.1** 2026-04-20 — added cross-model data section after 5-sample
   Lehmer × mass-gap run. Key finding: physical analogy is upstream
   of stance; variance handle is at the analogy-recruitment step;

@@ -53,6 +53,7 @@ live in MD files only; promoted symbols also mirror to Redis as
 | Symbol | One-line | Status |
 |---|---|---|
 | [PATTERN_30@v1](PATTERN_30.md) | Algebraic-identity coupling detection. Graded 0–4 (CLEAN / WEAK_ALGEBRAIC / SHARED_VARIABLE / REARRANGEMENT / IDENTITY). Five anchors (F043 Lv3; F015, F041a, F013, F045 Lv1). Drives `algebraic_lineage` arm of the 4-type lineage taxonomy. Implementation: `harmonia/sweeps/pattern_30.py`. | v1 promoted |
+| [MULTI_PERSPECTIVE_ATTACK@v1](MULTI_PERSPECTIVE_ATTACK.md) | Spawn N parallel threads against one open problem, each with distinct disciplinary prior + forbidden-move constraints + commitment contract. Three output modes: `convergent_triangulation` / `divergent_map` / `mixed`. Anchors: Lehmer (divergent), Collatz (mixed). Protocol at `methodology_multi_perspective_attack.md`. | v1 promoted |
 
 ## By reference (versioned)
 
