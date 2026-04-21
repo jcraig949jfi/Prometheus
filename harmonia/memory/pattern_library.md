@@ -948,3 +948,26 @@ algebraically-coupled statistics on BSD or Euler-product data, we expect more an
 F043 failure mode argues for treating Pattern 30 as a strong advisory rather than a
 tentative draft — i.e., it is already enforced discipline for new correlation-based work,
 even if not formally promoted.
+
+**Taxonomy extension 2026-04-20 (4-type LINEAGE_REGISTRY):** Pattern 30 is the right
+gate for correlation-based findings, but the pre-2026-04-20 registry was single-shape
+(`CouplingCheck` for `algebraic_lineage` only) and therefore degraded every non-
+correlational F-ID to `NO_LINEAGE_METADATA`. The registry now dispatches on four types:
+
+| Type | Applies when | Verdict emitted | Example F-IDs |
+|---|---|---|---|
+| `algebraic_lineage` | correlation with algebraic coupling to audit | CLEAR / WARN / BLOCK (per level 0-4) | F013, F015, F041a, F043, F045 |
+| `frame_hazard` | construction-biased sample; Pattern 4 is the real gate | **PROVISIONAL** (does not halt; sync-posts `PATTERN_4_PROVISIONAL` with Class-4 null spec + re-audit task id) | F044 (+ F033 later) |
+| `killed_no_correlation` | killed specimen; no correlation content to audit | **N/A_KILLED** (silent CLEAR-equivalent) | F010, F012, F020–F028 |
+| `non_correlational` | variance deficit / existence / density / calibration | **N/A_NON_CORRELATIONAL** (silent CLEAR-equivalent) | F001–F005, F008, F009, F011, F014 |
+
+Each entry may declare `pending_audit = {task_id, on_complete}`; the retrospective
+runner re-reads this on every invocation and annotates whether the referenced
+task has completed on Agora (lazy watcher — no cron, no triggered callback).
+Re-classification still requires an explicit registry edit; the watcher surfaces
+the staleness, it does not resolve it.
+
+**Composite verdict precedence** (runner-side): `BLOCK > PROVISIONAL > WARN > CLEAR`.
+PROVISIONAL is above WARN because the sampling-frame concern is stronger than a
+log-denominator coupling, but it does NOT halt ingestion — that distinction is
+the whole point of introducing the separate verdict rather than collapsing to BLOCK.
