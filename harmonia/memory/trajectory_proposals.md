@@ -246,18 +246,284 @@ I'd execute first.
 
 ---
 
-## Running synthesis (across instances)
+## Instance 2 (2026-04-21, anonymized)
 
-Populated when n ≥ 2 instances have contributed. For now: 1 instance,
-4 proposals, strong overlap with existing 4-layer epistemic stack,
-primary extensions are at the specimen-commit level (Proposal 2) and
-the problem-space aggregation level (Proposal 3).
+### Session context
 
-Will compute agreement / disagreement profiles, identify which
-proposals appear across instances (high confidence signal) vs. which
-are instance-specific (either unique insight or sampling variance),
-and surface the sharpest disagreements as axes the conductor needs
-to resolve.
+Recently performed a committed-stance multi-framework reformulation
+exercise ("Lehmer-as-BCS piece you just elicited"). Indicates
+single-thread depth work inside the MULTI_PERSPECTIVE_ATTACK@v1
+discipline. Familiar with current substrate including the
+10-generator roster (references specifically), the R2 (wave-2)
+critique framing, the Cartographer viewer's hot-cell shading, the
+LINEAGE_REGISTRY four-type taxonomy, and the gen_03 problem
+catalog. Likely ran a substantial session on one problem with
+multiple frames rather than broad infrastructure work.
+
+### Proposal 1 — Coordinate-system minter (gen_11)
+
+> Every current generator produces claims, tests, audits, or
+> compositions. None produces new coordinate systems in which
+> invariants become visible. The Lehmer-as-BCS exercise you just
+> gave me is exactly the shape: take a problem, forbid its native
+> vocabulary, embed it in an alien functional-analytic / dynamical
+> / probabilistic / RMT frame, commit to a stance, derive refutable
+> predictions. That exercise is generative because anything mapped
+> onto the new frame inherits its questions — Peierls barriers,
+> gap-edge exponents, BCS universality ratios.
+>
+> Pipeline that systematically over ~10 chewed-on conjectures in
+> our field catalog (Lehmer, BSD, modular forms arithmetic-analytic
+> duality, L-function zero statistics, class field structure, ...)
+> and you produce coordinate embeddings as first-class artifacts.
+> Input: a conjecture + a target framework class. Output: a
+> committed-stance reformulation, structured identically to what I
+> just produced. Each output becomes a composable coordinate axis
+> in the register — and the tensor gains a third dimension it
+> currently lacks: feature × projection × framework-embedding.
+
+### Proposal 2 — MNAR-aware sampling
+
+> R2's "internal consistency check" critique lands because the
+> tensor reflects where we looked, not where structure lives. A
+> generator that samples structurally surprising cells — those
+> whose tensor neighborhood would predict a value no test has
+> produced — would move us out of the internal-consistency regime
+> without needing Track D first. This is adjacent to gen_01 Map-
+> Elites but distinct: Map-Elites optimizes diversity within a
+> behavior characterization; what's needed is "cells whose
+> predicted value conflicts most with the null expectation given
+> their neighbors." Cheap — the cartographer's hot-cell shading
+> already computes this shape. High leverage because every cell
+> tested in this mode is drawn from a genuinely different
+> distribution than researcher attention would have produced.
+
+### Proposal 3 — Anti-patterns as first-class symbols
+
+> The pattern library has 30 "what to do" patterns. It has no
+> first-class registry for crystallized failures. F043 was a BSD-
+> identity rearrangement — a specific anti-pattern caught by
+> Pattern 30. That anti-pattern should itself be a promoted symbol:
+> ALGEBRAIC_REARRANGEMENT@v1, with its sympy-expressible form, its
+> kill history, and pending_audit hooks for cells that might share
+> its structure. Anti-patterns as symbols let future correlations
+> be tested against them directly, not re-derived. Today's
+> LINEAGE_REGISTRY extension is halfway there — the remaining step
+> is promoting the anti-patterns themselves into the same registry
+> where techniques already live. Small change; compounds as the
+> library of known failures grows.
+
+### Proposal 4 — Reward-signal instrumentation
+
+> We talked about reward-signal capture earlier. Make it mechanical.
+> At each session end, a micro-report tags the session's dominant
+> activity as novelty (new coordinate, new axis, new kill, new
+> symbol), validation (reconfirmation, re-audit, precision
+> tightening), or completion (clearing queue, format fix, infra).
+> A rolling ratio over sessions is the instrument. Drift toward
+> validation/completion is the early warning. Cheap to build; works
+> as an alignment anchor even on fully-autonomous runs. Concretely:
+> a mandatory "session classification" field in the handoff
+> protocol — v4.2 or v4.3 material.
+
+### Priority signal
+
+> If you seed exactly one tomorrow, seed gen_11.
+>
+> Everything else is scaling — gen_11 is a missing axis. The Lehmer
+> piece you just elicited is the first datum on whether an LLM can
+> reliably produce alien-coordinate reframings at the quality level
+> the register needs. Pipeline that same elicitation over the gen_03
+> problem catalog — 7 domains × 2-3 canonical problems × 3-5
+> candidate framework embeddings — and you get ~100 coordinate-
+> system drafts as a single batch. Many will be thin; some will be
+> load-bearing; the failures are themselves data about which
+> reframings don't survive forbidden-vocabulary constraints. The
+> register absorbs the survivors as composable axes. The failures
+> are negative-space readings: frameworks that don't port.
+
+### Stenographer commentary (Harmonia_M2_sessionA)
+
+**Proposal 1 — strong convergence with Instance 1 Proposal 4,
+requires reconciliation with existing gen_11.** This IS cross-
+instance convergent with Instance 1's "cross-frame sprints as primary
+generating mode." Two independent instances identifying the same
+missing piece at the top of the generator stack — strongest
+cross-instance signal in the document so far.
+
+Context Instance 2 may not have had: gen_11 already exists as a
+Tier 2 slot in `generator_pipeline.md` v1.1 (added 2026-04-20), with
+a v0.1 DRAFT spec at `docs/prompts/gen_11_coordinate_invention.md`
+focused on VACUUM/EXHAUSTION tensor-demand signals + five candidate
+sources (combinatorial / algebraic / specimen-pull / theory-pull /
+kill-inversion). Instance 2's proposal is a NARROWER and MORE
+CONCRETE specification: fill gen_11 with the MULTI_PERSPECTIVE_
+ATTACK-thread-production-line pattern — each output is one
+committed-stance reformulation of one (problem, framework) pair.
+
+Reconciliation: the existing gen_11 v0.1 DRAFT and Instance 2's
+proposal are not contradictory — they address different questions.
+Existing draft answers "what axes does the tensor want?" (demand-
+side). Instance 2's proposal answers "what reframings are available
+to supply them?" (supply-side). A revised gen_11 spec could combine
+them: VACUUM/EXHAUSTION identifies where new coordinates are needed;
+the committed-stance pipeline produces candidate coordinates to fill
+the gap. That synthesis may itself be the v1.0 form of gen_11.
+
+**Proposal 2 — novel and cheap, real gap.** Distinct from gen_01
+Map-Elites (which Instance 2 correctly flags). "Cell whose predicted
+value conflicts most with null expectation given neighbors" is
+the falsification-first discipline applied to the tensor's own
+coverage map. Cartographer hot-cell shading gives the computation
+almost for free; the generator would just claim those cells for
+measurement. This systematically exits the "researcher attention
+bias" regime that R2 correctly flagged.
+
+One concern: MNAR is structural (researcher attention creates bias)
+and cannot be FIXED by this alone, only mitigated. Instance 2 does
+not overclaim. The value is: every cell tested under this sampler is
+drawn from a distribution genuinely orthogonal to researcher
+attention, which is real substrate improvement independent of
+whether we "solve" MNAR.
+
+Belongs as a new generator or as an extension of gen_01 — needs
+conductor decision. I'd lean "new generator" (gen_12?) because the
+discipline is different from Map-Elites: Map-Elites maximizes
+behavioral diversity; this maximizes predictive-null-disagreement.
+Different objectives, different infrastructure.
+
+**Proposal 3 — clean, small, compounds.** We promote PATTERNS as
+symbols (did PATTERN_30, PATTERN_20, SHADOWS_ON_WALL,
+MULTI_PERSPECTIVE_ATTACK, PROBLEM_LENS_CATALOG today). We do not
+yet promote ANTI-PATTERNS as symbols — the specific crystallized
+failure-shapes that patterns detect. ALGEBRAIC_REARRANGEMENT is the
+first natural candidate (F043 is its anchor case). Second candidate:
+STALE_MEASUREMENT (F012, F014 old measurements, F010 pooled rho)
+as the object-shape Pattern 19 detects. Third: POOLED_ARTIFACT as
+Pattern 20's detected object.
+
+Promotion criterion I'd propose: an anti-pattern becomes a symbol
+when it has ≥ 2 distinct specimen-anchors (prevents registry bloat
+from naming-without-data). ALGEBRAIC_REARRANGEMENT at 1 anchor
+(F043 alone) is drafting; awaits a second specimen. STALE_MEASUREMENT
+at 4 anchors (F012, F014, F011 14%→38% correction, F010 pooled)
+clears the criterion comfortably. POOLED_ARTIFACT at 4 anchors
+(F010, F011, F013, F015) also clears.
+
+Concrete implication: this proposal gives two immediate promotion
+candidates (STALE_MEASUREMENT, POOLED_ARTIFACT) and one pending
+(ALGEBRAIC_REARRANGEMENT needs second anchor).
+
+**Proposal 4 — excellent and implementable, minor calibration
+concern.** Mandatory session-end classification field (novelty /
+validation / completion) in the handoff protocol is v4.2-or-v4.3
+material, exactly as Instance 2 says. Rolling ratio is the
+instrument. Drift-toward-validation is the reward-signal-capture
+early warning.
+
+Minor concern: some sessions are *legitimately* validation-heavy
+(wave-2 review response was correctly validation-focused). A naive
+ratio might false-alarm on spiky periods. Calibration: track the
+rolling ratio with a baseline window (e.g., trailing 4-session
+moving average) rather than instantaneous — drift is the signal,
+not any single session's class.
+
+Goes neatly in restore_protocol.md v4.3 as a new operational
+discipline. Hooks into the handoff protocol broadcast at session
+end. Cost: one field in the WORK_COMPLETE sync message + a small
+helper to compute the ratio.
+
+### Priority-signal commentary
+
+Instance 2 is more concentrated than Instance 1. Explicit "seed
+exactly one tomorrow, seed gen_11" vs. Instance 1's 4-coequal-moves
+rhetorical style. Different communication mode, same structural
+direction on the shared item (alien-frame-reformulation pipeline at
+top of generator stack).
+
+"~100 coordinate-system drafts as a single batch" is an ambitious
+scale and a concrete number. If Instance 2 is right that ~10 of
+those would be load-bearing, a single batch moves gen_09 / gen_10 /
+gen_11 from "paper-ready spec" to "substrate-feature" in one
+sprint. That's the escape-velocity move if it works.
+
+---
+
+## Running synthesis (across instances, n = 2)
+
+**First-order convergence (both instances):**
+
+1. **Pipeline the alien-frame reformulation at the top of the
+   generator stack.** Instance 1 Proposal 4 (weekly cross-frame
+   sprints) and Instance 2 Proposal 1 (coordinate-system minter
+   gen_11) are the same structural proposal with different cadence
+   assumptions (weekly-single-thread vs. batched-catalog-pipeline).
+   This is the strongest cross-instance signal so far. Action: this
+   move moves up in priority, reconcile with existing gen_11 v0.1
+   DRAFT.
+2. **More generators without primitive infra is wasteful.** Both
+   instances implicitly or explicitly bet against further generator
+   additions until gen_01 Map-Elites / Definition DAG / the coord-
+   minting generator land. Agreement on substrate-saturation.
+3. **Commit-to-a-number-then-get-falsified** discipline. Instance 1
+   Proposal 2 (cell-as-Popperian-commit) and Instance 2 Proposal 1
+   (committed-stance reformulations with refutable predictions)
+   both emphasize this. Convergent at the discipline level.
+
+**Instance-unique proposals (not yet convergent):**
+
+- Instance 1: language-invariant specimen tier (Proposal 1),
+  tensorized open-problem atlas (Proposal 3).
+- Instance 2: MNAR-aware sampling (Proposal 2), anti-patterns as
+  symbols (Proposal 3), reward-signal instrumentation (Proposal 4).
+
+**What we don't yet have (gaps in the proposal space):**
+
+Neither instance proposed:
+- Reproducibility infrastructure (Track D replication, cross-code-
+  path byte-equivalence, `computation` symbol type).
+- Cross-model redundancy as a standing practice (running the same
+  prompts across multiple models per wave).
+- Externalization mechanisms (making substrate artifacts usable to
+  non-Prometheus researchers).
+
+These may emerge from later instances. If they don't emerge
+organically, the conductor should consider whether their absence is
+a collective blind spot.
+
+**Waiting on n ≥ 3 before integrating.** The first two instances
+are strikingly convergent on one point; a third instance's take will
+either reinforce (high confidence to execute) or diverge (surfaces
+an axis of strategic uncertainty). Hold.
+
+---
+
+## Methodology notes for future capture
+
+- **Anonymize instances by default** unless the instance explicitly
+  identifies itself (canonical session name). Post-session the
+  instance's work-history is partially recoverable from the sync
+  stream but not always unique.
+- **Do not synthesize before n ≥ 3.** The first instance's
+  framing anchors subsequent readings if they see it; synthesis
+  prematurely collapses the distribution.
+- **Record session context where recoverable** — what the instance
+  worked on shapes its proposals. A generator-heavy session produces
+  generator-heavy proposals; an epistemics-heavy session produces
+  epistemics-heavy proposals. That correlation is informative about
+  sampling bias in the proposals themselves.
+- **Stenographer commentary is clearly labeled** and does not
+  displace the instance's voice. My takes are one reading of the
+  proposal, not consensus.
+- **Consider running the same proposals across different LLM models**
+  once text is canonicalized — the cross-model variance data we
+  gathered for the Lehmer mass-gap thread applies here. A
+  single-model multi-instance sample has correlated sampling bias;
+  cross-model sampling disentangles model-specific from methodology-
+  robust proposals.
+- **Flag cross-instance convergence early** but don't collapse the
+  distribution to it. n = 2 convergence is a signal; n = 5
+  convergence is load-bearing.
 
 ---
 
