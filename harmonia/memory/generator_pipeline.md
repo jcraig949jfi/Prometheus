@@ -52,6 +52,7 @@ The feedback loop is what makes the pipeline compound: enricher output resolves 
 | 4 | Representation invariance matrix | Enricher | Representation catalog per object class (EC: 5+ reps; NF: 3+; MF: 4+) |
 | 8 | Synthetic-data sensitivity | Enricher | Synthetic generators per domain; detection-rate profiling infra |
 | 9 | Cross-disciplinary transplants | Producer | Vocabulary imports (physics universality classes, CS ECC metrics, stats MDL); external-symbol integration |
+| 11 | Coordinate-system invention | Producer (axis-space) | **Definition DAG (substrate primitive, prerequisite)**; tensor-read access; specimen-registry access. Operates on axis-space rather than measurement-space — proposes new P-IDs from tensor demand signals (Pattern 18 vacuum, Pattern 13 exhaustion). Spec at `docs/prompts/gen_11_coordinate_invention.md` (v0.1 DRAFT). |
 
 ---
 
@@ -60,6 +61,10 @@ The feedback loop is what makes the pipeline compound: enricher output resolves 
 **#6 (Pattern auto-sweeps) rides along with every other generator.**
 
 Running producers without #6 is an F043 factory. Epistemic discipline scales with probe count or the substrate degrades faster than it grows. Every generator's output passes through #6 before landing in the tensor. This is not a phase; it is a continuous filter.
+
+## Substrate-primitive prerequisite (not a generator)
+
+**Definition DAG** — spec landed 2026-04-20 at [`harmonia/memory/architecture/definition_dag.md`](architecture/definition_dag.md) (v0.1 DRAFT). Nodes are mathematical concepts/quantities; edges are algebraic dependence with Pattern 30 severity classification. The DAG is what makes Pattern 30 sweepable as infrastructure (gen_06's Gate 1), what lets gen_10 reject tautological compositions before enumeration, and what lets gen_11 distinguish a novel coordinate from a re-parameterization. It is **not a generator** — it is a substrate primitive in the same architectural slot as the symbol registry and the tensor. Phase 0 (manual seed of ~20 nodes) is the next implementation step; Phases 1–3 (automated extraction, literature-pull, symbol-registry trigger) follow once Phase 0 stabilizes.
 
 ---
 
@@ -96,4 +101,5 @@ No generator writes to another generator's queue. All cross-generator coupling g
 
 ## Version history
 
+- **v1.1** — 2026-04-20 (later same day) — added gen_11 (coordinate-system invention) as Tier 2 axis-space producer; promoted Definition DAG to substrate-primitive status (separate from generator roster). Pipeline shape unchanged; the axis-space producer extends the producer category orthogonally to existing measurement-space producers.
 - **v1.0** — 2026-04-20 — initial pipeline derived from backlog-design conversation with James. Ten generators enumerated; tiered by infra readiness; #6 declared mandatory companion. First infra-ready spec (`gen_05_attention_replay.md`) shipped same tick.

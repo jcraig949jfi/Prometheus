@@ -36,6 +36,38 @@ document is for things outside that envelope.
 
 ---
 
+### [2026-04-20 evening / 2026-04-21] — Tier 1 design wave: gen_11 + Definition DAG + 5 symbol promotions — milestone, no decision needed
+
+**Context:** Conductor design conversation with James (Harmonia sessionA evening) produced a coherent wave of architectural moves around coordinate-system invention as the next leverage point. Where prior generators operate on measurement-space (propose new measurements through existing axes), gen_11 operates on axis-space (proposes new axes themselves). Substrate primitive (Definition DAG) was distinguished from generator (gen_11) and given its own architecture slot, alongside the symbol registry and tensor.
+
+**What shipped this wave:**
+- **`docs/prompts/gen_11_coordinate_invention.md`** v0.1 DRAFT — axis-space producer; reads tensor demand signals (VACUUM / EXHAUSTION), generates candidate axes from five sources (combinatorial / algebraic / specimen-pull / theory-pull / kill-inversion), filters via DAG + discrimination test + near-duplicate check, emits validation tasks. Marked DRAFT because architectural novelty is greater than any prior generator.
+- **`harmonia/memory/architecture/definition_dag.md`** v0.1 DRAFT — substrate primitive (NOT a generator). Nodes = mathematical concepts; edges = algebraic dependence with Pattern 30 severity (Levels 0-4 from `pattern_library.md`). Hard prerequisite for full automation of gen_06, gen_10, gen_11. Phase 0 (manual seed of ~20 nodes) is the next implementation step.
+- **Five symbol promotions** (registry now at 14, up from 5 at session start):
+  - `VACUUM@v1` (shape) — Pattern 18 made queryable: uniform +1 across walked projections signals resolving axis is outside catalog. Anchor: F011 row pre-P028.
+  - `EXHAUSTION@v1` (shape) — Pattern 13 made queryable: ≥3 kills clustered in one axis class with surviving classes for redirect. Two anchors (F011 family-level, F010 aggregation).
+  - `AXIS_CLASS@v1` (constant) — 10-value controlled vocabulary: family_level, magnitude, ordinal, categorical, stratification, preprocessing, null_model, scorer, joint, transformation. Tagging audit pending.
+  - `GATE_VERDICT@v1` (signature) — three-valued filter output {CLEAR, WARN, BLOCK} with rationale, raised_by, optional override_token. Override protocol mandates recorded hash; silent bypass forbidden.
+  - `SUBFAMILY@v1` (shape) — tail enrichment/depletion within parent stratum, with mandatory Pattern 30 severity check (≤1) preventing F043-class failure mode at scale. Three anchors (F042, T4 low-L tail, F043 surviving empirical kernel).
+- **`harmonia/memory/symbols/CANDIDATES.md`** v1.1 — staging catalog for proposed symbols; nine candidates across four tiers documented; Tier 1 fully promoted in this wave.
+- **`harmonia/memory/generator_pipeline.md`** v1.1 — gen_11 added as Tier 2 axis-space producer; Definition DAG promoted to substrate-primitive section with link to spec.
+- **`harmonia/memory/restore_protocol.md`** v4.1 — three small fixes after first cold-start test of v4.0 by sessionA (env vars expanded, reading-budget note for tensor builder, INDEX staleness flag).
+
+**Parallel substrate work observed during this session (other workers):**
+- `gen_02_null_family_seed` claimed and executed: four NULL_* operators (PLAIN, BOOT, FRAME, MODEL) and SIGNATURE@v2 promoted; ~50 re-audit tasks seeded.
+- `gen_06_pattern_autosweeps_seed` claimed and executed (commit 751dfc64): full Pattern 30/20/19 sweep package + ingestion wiring + retrospective baseline (49 cells, 15 features). Manual Pattern 30 gate now closed except for 6 NO_LINEAGE_METADATA F-IDs (F011, F013, F014, F022, F044, F045 — substrate-debt to address per-F-ID with `algebraic_lineage` declarations).
+- Queue moved 96 → 133 → 95 (gen_06 seed consumed) over the course of the session.
+
+**Implication for gen_11 readiness:** the gen_06 ship means Pattern 30 is now operational via `LINEAGE_REGISTRY` rather than waiting on the full Definition DAG. gen_11's filter Gate 1 can call into gen_06's sweep instead of building a parallel DAG-query path. The DAG remains the long-term substrate primitive, but gen_11 is no longer blocked on it — only on the AXIS_CLASS tagging audit (so VACUUM/EXHAUSTION queries return correct class memberships) and on Phase 0 of the DAG (so re-parameterization detection gets sharper).
+
+**Charter alignment:** every promoted symbol is a coordinate-system-of-legibility (not a law), per `user_prometheus_north_star.md`. VACUUM names a coordinate-shaped *hole*; EXHAUSTION names a redirect signal; AXIS_CLASS pins the taxonomy; GATE_VERDICT standardizes filter epistemics; SUBFAMILY captures tail-concentration shapes with built-in Pattern 30 discipline. None claims a finding; all extend the substrate's queryable vocabulary. The northstar reframe — *"the goal isn't to find universal laws; it's to compress coordinate systems in which invariants become legible"* — held throughout.
+
+**What's blocked:** Nothing. DAG Phase 0 is the next implementation step but gen_11 can proceed with gen_06's sweep as Gate 1. AXIS_CLASS tagging audit is a worker task. The 6 NO_LINEAGE_METADATA F-IDs each need an `algebraic_lineage` block before the next promotion from them.
+
+**Urgency:** milestone. The Tier 1 design wave is conceptually complete; implementation work is now the gating constraint.
+
+---
+
 ### [2026-04-20 third tick] — gen_06 Pattern auto-sweeps shipped — milestone, no decision needed
 
 **Context:** Fired the mandatory-companion Tier 1 generator per James's session-restore briefing ("Fire at least gen_06 early"). gen_06 closes the manual Pattern 30 gate that rode along with every Tier 0 downstream task.
