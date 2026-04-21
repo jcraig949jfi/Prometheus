@@ -449,52 +449,376 @@ sprint. That's the escape-velocity move if it works.
 
 ---
 
-## Running synthesis (across instances, n = 2)
+## Instance 3 (2026-04-21, anonymized)
 
-**First-order convergence (both instances):**
+### Session context
 
-1. **Pipeline the alien-frame reformulation at the top of the
-   generator stack.** Instance 1 Proposal 4 (weekly cross-frame
-   sprints) and Instance 2 Proposal 1 (coordinate-system minter
-   gen_11) are the same structural proposal with different cadence
-   assumptions (weekly-single-thread vs. batched-catalog-pipeline).
-   This is the strongest cross-instance signal so far. Action: this
-   move moves up in priority, reconcile with existing gen_11 v0.1
-   DRAFT.
-2. **More generators without primitive infra is wasteful.** Both
-   instances implicitly or explicitly bet against further generator
-   additions until gen_01 Map-Elites / Definition DAG / the coord-
-   minting generator land. Agreement on substrate-saturation.
-3. **Commit-to-a-number-then-get-falsified** discipline. Instance 1
-   Proposal 2 (cell-as-Popperian-commit) and Instance 2 Proposal 1
-   (committed-stance reformulations with refutable predictions)
-   both emphasize this. Convergent at the discipline level.
+Deeply tactical; recently performed Aporia literature scans on
+Keating-Snaith, CFKRS, Rodriguez-Villegas-Zagier, Katz-Sarnak,
+Harper; worked on F041a rank-2+ moment candidate; investigated
+U_C's CM disc=-27 finding. Hit specific infrastructure walls
+(P035 Kodaira, P052 microscope, P103 modular_degree, U_B split/
+non-split). This is a domain-deep specimen-investigation session
+rather than an epistemic-stack session — different work texture
+from Instances 1 and 2.
 
-**Instance-unique proposals (not yet convergent):**
+### Proposal 1 — Literature-anchoring as a gate, not an afterthought
 
-- Instance 1: language-invariant specimen tier (Proposal 1),
-  tensorized open-problem atlas (Proposal 3).
-- Instance 2: MNAR-aware sampling (Proposal 2), anti-patterns as
-  symbols (Proposal 3), reward-signal instrumentation (Proposal 4).
+> My Keating-Snaith scan surfaced that most of our F-cascade
+> findings recapitulate known theory (Keating-Snaith 2000, CFKRS
+> 2005, Rodriguez-Villegas-Zagier, Katz-Sarnak, Harper) —
+> calibration, not discovery. The two genuine frontiers (Q1 rank-2+
+> moments, Q4 Harper sub-leading N_eff) were visible only after the
+> scan. Proposal: every specimen promotion to live_specimen requires
+> an Aporia literature-scan cell first, not as an afterthought
+> review. The "novelty is the reward" north star becomes measurable
+> if every +1/+2 tensor cell is tagged CALIBRATION vs FRONTIER up
+> front.
 
-**What we don't yet have (gaps in the proposal space):**
+### Proposal 2 — Materialization sprint for derivable-not-stored backlog
 
-Neither instance proposed:
-- Reproducibility infrastructure (Track D replication, cross-code-
-  path byte-equivalence, `computation` symbol type).
-- Cross-model redundancy as a standing practice (running the same
-  prompts across multiple models per wave).
-- Externalization mechanisms (making substrate artifacts usable to
-  non-Prometheus researchers).
+> P035 Kodaira, P052 microscope, P103 modular_degree, and my U_B
+> split/non-split task all hit the same wall: LMFDB has the answer
+> derivable per-curve but not stored. Three catalog entries parked +
+> one U-worker blocked — same infra gap. A bounded Mnemosyne/Koios
+> sprint to materialize just three quantities (Kodaira per prime,
+> modular_degree, truncated Euler product to p≤200) on the 2M-EC
+> shadow archive would unblock ~5 pending specimens simultaneously.
+> Higher ROI than any single new walk.
 
-These may emerge from later instances. If they don't emerge
-organically, the conductor should consider whether their absence is
-a collective blind spot.
+### Proposal 3 — Target rank-2+ regime explicitly
 
-**Waiting on n ≥ 3 before integrating.** The first two instances
-are strikingly convergent on one point; a third instance's take will
-either reinforce (high confidence to execute) or diverge (surfaces
-an axis of strategic uncertainty). Hold.
+> F041a is the strongest specimen candidate in my investigation
+> precisely because standard Katz-Sarnak/CFKRS doesn't cover
+> L^(r)(1,E)^k moments at r ≥ 2. If the tensor is to house genuine
+> frontier material, the catalog needs projections designed for
+> higher-rank regimes — not adapted from rank-0/1 tooling. Concrete:
+> a catalog entry for "rank-r central-zero multiplicity" as an axis
+> distinct from P023 rank, plus nulls specific to multi-central-zero
+> distributions.
+
+### Proposal 4 — "Fill the tensor" sweep
+
+> ~43 features × ~30 projections = ~1300 cells; most are untested.
+> Each cell could take a 2-5 minute block-null test. A systematic
+> low-priority background queue (one worker just grinding through
+> empty cells) would turn the tensor from a sparse narrative into
+> a dense instrument — and reveals surprising +1 hits that no
+> specimen-first approach would find. This is the Pattern-15
+> "instrument is the product" discipline applied at scale.
+
+### Proposal 5 — Formalize the null-battery pipeline
+
+> `harmonia/nulls/` exists (commit 043ba782). Block-null has been
+> the sharpest discriminator in the last fortnight: killed F010,
+> confirmed F015, confirmed F041a, explained W1 vs T1 discrepancy.
+> Packaging the null-battery as an ordered pipeline (permutation →
+> block-shuffle-within-stratum → block-shuffle-across-strata →
+> bootstrap → Monte-Carlo-on-matched-RMT) run by default on every
+> +1 candidate would make the Pattern-19-like downgrades cheaper to
+> produce and more systematic.
+
+### Proposal 6 — Cross-session frontier map
+
+> Each spawn rebuilds context from journals. The
+> project_harmonia_sessionA_20260420 memory mentions "4 tracks
+> queued" — those tracks should be readable as a 1-page state-of-
+> the-investigation map that every new worker reads before claiming.
+> Not a journal (chronological) but a landscape snapshot (what's
+> known-calibration, what's open-frontier, what's blocked-on-infra,
+> what's been retracted). F043 retraction noted in my memory is the
+> kind of state that's easy to lose across sessions.
+
+### Proposal 7 — Extend the non-maximal-CM-order thread
+
+> U_C's CM disc=-27 finding matched Rodriguez-Villegas-Zagier
+> cleanly. Analogous non-maximal orders (disc=-16 in Z[2i],
+> disc=-48 in Z[4ω], disc=-75 in Z[5ω]) have the same character-
+> sum-compression mechanism but aren't in our data. A bounded sweep
+> would either extend the sub-family (adds reward-signal to the
+> north star) or confirm -27 is unique (calibration). Single
+> afternoon of work, under-utilized LMFDB data.
+
+### Priority signal
+
+> Priority ordering: 1 and 2 compound across everything else, so I'd
+> do them before 3-7. 4 and 5 are infrastructure investments that
+> pay back over months. 6 is cheap and high-leverage across every
+> future spawn. 3 and 7 are concrete next-moves within the current
+> Keating-Snaith / CM investigation.
+
+### Pattern-22 candidate
+
+> Pattern-22 candidate that surfaced across this whole arc: when a
+> pattern's "discoveries" compile against a literature scan into
+> mostly-calibration, the scan itself becomes the real discovery —
+> you've revealed which corners of the canon are thin. Worth
+> formalizing as a pattern if it happens again.
+
+### Stenographer commentary (Harmonia_M2_sessionA)
+
+**Character note before specifics:** Instance 3 is substantially
+more *tactical* and *concrete* than Instances 1 and 2. Where
+Instance 1 proposed strategic/structural moves (language-invariance,
+tensorized atlas) and Instance 2 proposed generative/architectural
+moves (coordinate-minter, anti-pattern symbols), Instance 3 names
+specific quantities to materialize, specific regimes to target,
+specific specimen sub-families to extend. This reflects session
+work-texture: a literature-scan + specimen-investigation session
+produces specimen-adjacent proposals. The methodology is working
+as designed — instances' priors shape their proposals.
+
+**Proposal 1 — strong, and the sharpest formulation of measurement
+discipline across three instances.** Instance 1's cell-as-Popperian-
+commit (Proposal 2) and Instance 2's session-classification
+instrument (Proposal 4) both implicitly address this, but Instance
+3 makes it crisp at the unit that actually matters: *the cell*.
+Every +1/+2 cell tagged CALIBRATION vs FRONTIER before landing.
+
+This is directly operationalizable via a new SIGNATURE field or
+(cleaner) a required `novelty_audit` block in the cell's data_
+provenance. The Aporia literature-scan becomes the mandatory gate;
+without it, the cell can't promote beyond +1-provisional.
+
+The implicit promise is measurable: if 90% of our current +2 cells
+are CALIBRATION after honest audit, we know exactly where
+reward-signal capture has landed. And the count of FRONTIER cells
+is the actual novelty output of the substrate, not a prose claim.
+
+**Proposal 2 — specific, bounded, highest immediate ROI in the
+whole document.** This is concrete and actionable: three specific
+quantities (Kodaira per prime, modular_degree, truncated Euler
+product p ≤ 200), one bounded sprint, unblocks ~5 pending
+specimens. No strategic fanfare; just removes a load-bearing
+infrastructure gap. If the conductor wanted ONE action to take
+tomorrow that would immediately dense the substrate, this is it.
+
+**Proposal 3 — domain-specific and correct.** F041a's frontier
+status depends on this. The current P-IDs (P020 conductor, P023
+rank, P025 CM, etc.) were designed on rank-0/1 data. Higher-rank
+regimes have genuinely different structure (more forced central
+zeros → different fluctuation geometry). A new P-ID for rank-r
+central-zero multiplicity is a real axis-addition, not a
+re-parameterization. Candidate fit for the MULTI_PERSPECTIVE_ATTACK
+methodology on F041a directly — we don't yet have catalogs/
+f041a.md; this could be the fourth catalog.
+
+**Proposal 4 — volumetric coverage, MNAR-adjacent but distinct from
+Instance 2's sampling proposal.** Instance 2's Proposal 2 was
+"sample structurally surprising cells." Instance 3's Proposal 4 is
+"sample *all* cells uniformly as low-priority background work."
+Both address researcher-attention bias; the first selects-for-
+surprise, the second rejects-selection. They're complementary.
+Running both would dominate either alone.
+
+One tension with Instance 2's bet-against "bigger tensors worsens
+MNAR": Instance 3's Proposal 4 DOES enlarge the measured tensor
+but in a *systematic* rather than *attention-biased* way. Instance
+2's concern applies to MNAR growth from adding more
+researcher-selected cells; Instance 3's proposal instead reduces
+MNAR by systematically filling the existing structure. No
+contradiction once the distinction is named.
+
+**Proposal 5 — good infrastructure discipline, but overlaps with
+gen_02 null-family.** gen_02 already ships NULL_PLAIN@v1, NULL_BOOT@v1,
+NULL_FRAME@v1, NULL_MODEL@v1 alongside NULL_BSWCD@v2 and extends
+SIGNATURE@v1 → SIGNATURE@v2 with null_family_result. Instance 3's
+"ordered pipeline" is the runtime orchestration of those operators,
+which gen_02's spec anticipates but may not have fully shipped.
+Reconciliation: the pipeline IS an unresolved deliverable of gen_02;
+Instance 3 correctly flags it.
+
+**Proposal 6 — novel and important.** Neither Instance 1 nor
+Instance 2 proposed this. It's adjacent to the PROBLEM_LENS_CATALOG
+work we've already done (one catalog per open problem) but at a
+different scale: a project-wide landscape snapshot, not a
+per-problem coverage map.
+
+Candidate artifact: `harmonia/memory/investigation_landscape.md` —
+rebuilt by an end-of-session worker, read by every new spawn. Four
+sections: known-calibration (F001-F005, F008, F009, plus demoted
+specimens); open-frontier (F011, F041a, F014, F044); blocked-on-
+infra (pending materialization, pending Sage host, etc.);
+retracted (F043 and future kills). Different from decisions_for_
+james.md in being landscape-shaped rather than chronological.
+
+Would likely be regenerated from the tensor + the decisions log by
+a dedicated script, not hand-maintained. A v1 could ship in one
+tick.
+
+**Proposal 7 — single-afternoon-under-utilized-data. Good
+opportunistic move.** Non-maximal CM orders disc = -16, -48, -75
+are a cheap extension of an existing finding (U_C disc = -27). The
+kind of thing a specimen-heavy session should just claim without
+ceremony. Goes on the Agora queue at a low priority for the next
+session with LMFDB access.
+
+**Pattern-22 candidate — worth provisional tracking.** *"When a
+pattern's discoveries compile into mostly-calibration, the scan
+itself reveals where the canon is thin."* This is a real
+observation about meta-methodology: the Aporia literature-scan is
+being used as a filter (novelty vs calibration) but the scan's
+*pattern of hits* (which parts of literature cover what) is itself
+data. Instance 3 correctly notes: one anchor, not yet promotable.
+Watch for recurrence.
+
+### Priority-signal commentary
+
+Instance 3's priority ordering (1+2 compounding, 4+5 infra, 6
+cheap, 3+7 concrete) is internally coherent. In conductor terms:
+
+- Proposal 1 (literature anchoring as gate) pairs with Instance 1
+  Proposal 2 (cell-as-Popperian-commit) and Instance 2 Proposal 4
+  (session instrumentation) — this is now a 3-way convergence on
+  "instrument the measurement discipline at the cell/session level."
+  Strongest convergent signal across the three instances.
+- Proposal 2 (materialization sprint) is the highest-ROI single
+  *action* in the document — not strategic, but immediately
+  substrate-improving.
+- Proposal 6 (frontier map) is a cheap operational gap fill.
+- Proposals 3, 4, 5, 7 are valuable but within existing structure.
+
+---
+
+## Running synthesis (across instances, n = 3)
+
+### 3-of-3 convergence (strongest signal)
+
+**Instrument the measurement discipline at the cell / session
+level.** All three instances converge on this at different scales:
+
+- Instance 1 Proposal 2: every +1/+2 cell carries an explicit
+  numerical commit with pre-registered falsification threshold
+  (cell as Popperian object).
+- Instance 2 Proposal 4: mandatory session-end classification
+  (novelty / validation / completion) with rolling ratio as drift
+  detector.
+- Instance 3 Proposal 1: every specimen promotion requires
+  Aporia literature-scan first; tag CALIBRATION vs FRONTIER up
+  front.
+
+**Conductor action implied:** this is load-bearing. Three
+independent instances flagged the same discipline gap — the
+substrate measures findings but doesn't measure itself. A combined
+response: `SIGNATURE@v3` extends with `novelty_provenance` fields
+(CALIBRATION|FRONTIER + literature_scan_ref + falsification_
+threshold), AND the handoff protocol carries session-level
+classification, AND the rolling ratio surfaces in substrate_health().
+These three layers compose: the cell carries its own novelty
+claim; the session rolls cell-classifications into a per-session
+novelty ratio; the substrate carries the rolling session ratio as
+the drift signal.
+
+This is the single strongest proposal in the document.
+
+### 2-of-3 convergence
+
+**Pipeline the alien-frame reformulation at the top of the
+generator stack.** Instance 1 Proposal 4 + Instance 2 Proposal 1
+agree. Instance 3 does not mention it. (Instance 3's work-texture
+was specimen-investigation rather than methodology/generator work
+— may explain silence rather than disagreement.)
+
+**Status:** strong directional signal, but the 3rd-instance silence
+prevents confident escalation. Moves from "strong signal" back
+toward "worth doing, but await a 4th instance or execute at
+conductor discretion."
+
+**Substrate is saturated on generator count.** Instance 1 + Instance
+2 agree (no more generators until primitives land). Instance 3
+actually *proposes* more generator-like work (Proposals 4 and 5
+expand sweep infrastructure). Genuine divergence.
+
+**Status:** the divergence is informative — Instance 3's
+work-texture hit infrastructure walls (LMFDB materialization gap)
+that made more infrastructure feel necessary from that vantage.
+Instances 1 and 2 worked at the epistemic layer and saw saturation.
+Both views are correct within their domain; the reconciliation is
+"substrate is saturated on METHODOLOGY generators but UNDER-SATURATED
+on DATA-MATERIALIZATION generators." Different layers.
+
+### Single-instance proposals (not yet convergent — watch)
+
+- Instance 1: language-invariant specimen tier; tensorized open-
+  problem atlas.
+- Instance 2: MNAR-aware sampling; anti-patterns as symbols.
+- Instance 3: literature-scan as gate (semi-convergent via the
+  3-way measurement-discipline point); materialization sprint;
+  rank-2+ regime; fill-tensor sweep; null-battery formalization;
+  cross-session frontier map; non-maximal CM orders extension.
+
+### Highest-immediate-ROI single action across all three instances
+
+**Instance 3 Proposal 2 (materialization sprint).** Bounded scope
+(three specific LMFDB-derivable quantities), immediate unblock
+(~5 pending specimens), no strategic overhead. The clearest
+"do this tomorrow and the substrate is denser by week's end"
+proposal in the document. Not the most strategic, but the
+highest-kinetic.
+
+### Persistent gaps (n = 3, no instance surfaced)
+
+- Reproducibility infrastructure (Track D, `computation` symbol
+  type for cross-machine byte-equivalence).
+- Cross-model redundancy as standing practice (parallel to today's
+  5-sample Lehmer × mass-gap run, but systematized).
+- Externalization mechanisms (making substrate artifacts usable
+  beyond Prometheus).
+
+Three instances, three absences. The gap is now meaningful rather
+than anecdotal. Either these are genuinely lower priority than the
+substrate-internal work the instances proposed, OR they are a
+collective blind spot — Harmonia instances naturally optimize for
+Harmonia-facing surface improvements, not for handoff-to-the-world
+surface. The conductor (James) should consider whether the
+substrate's eventual "deliverable to other researchers" posture
+needs explicit seeding, because the instances aren't going to
+surface it.
+
+### Priority ordering implied by the triangulation
+
+Conductor-synthesized (James's call, not instance consensus):
+
+1. **`SIGNATURE@v3` novelty-provenance extension + session-level
+   classification** — 3-of-3 convergent signal, structurally clean,
+   adds measurable discipline without adding generator complexity.
+2. **Materialization sprint (Instance 3 Proposal 2)** — immediate
+   kinetic value, bounded scope, unblocks multiple pending
+   specimens.
+3. **Frontier landscape artifact (Instance 3 Proposal 6)** — cheap,
+   novel, compounds across every future spawn.
+4. **Alien-frame-pipeline gen_11 reconciliation** (2-of-3 signal,
+   existing v0.1 DRAFT needs revision to absorb Instance 2's
+   production-line framing).
+5. Remaining instance-unique proposals handled opportunistically
+   as they align with work sessions.
+
+### Methodology observation
+
+Three instances, three distinct work-textures, three distinct
+proposal profiles. The work a session did shapes which trajectory
+proposals that session can see. This is exactly the LLM-variance
+caveat from the methodology doc applied to self-strategic-planning:
+*a single instance's strategic take is a shadow of the substrate's
+needs through the projection of that session's work*. The
+distribution across instances is the substrate's needs as seen from
+multiple vantage points — triangulation, not summation.
+
+Continuing to collect instances will sharpen this. A 4th instance
+that did *reproducibility* work would likely surface the gap
+currently unaddressed by all three. A 5th instance that did
+*external communication* work would likely surface the
+externalization gap. The instance-population itself should be
+diverse in work-texture if the conductor wants the strategic
+distribution to be comprehensive.
+
+### Hold posture
+
+At n = 3 the synthesis above is defensible. A 4th instance's
+contribution will either reinforce the 3-of-3 measurement-
+discipline convergence (making it definitive) or surface a
+previously-absent proposal that changes priority ordering. Either
+outcome is usefully informative.
 
 ---
 
