@@ -1,0 +1,44 @@
+# Binary / large data
+*.npz
+*.npy
+*.pkl
+*.pickle
+*.db
+*.sqlite
+*.parquet
+*.feather
+*.csv
+*.tsv
+*.dic
+
+# Generated outputs
+graphify-out/
+__pycache__/
+*.pyc
+.git/
+
+# Backups and large archives
+Prometheus_data_backup/
+cartography/mathlib/mathlib4_source/
+cartography/fungrim/
+
+# Large JSON data files (keep small config jsons)
+cartography/convergence/data/*.json
+cartography/shared/scripts/v2/*_results.json
+apollo/gene_library.json
+thesauros/audit_report_*.json
+
+# Media / images
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.gif
+*.pdf
+*.mp4
+
+# Batch scripts
+*.bat
+
+# External repos
+agents/Eos/
