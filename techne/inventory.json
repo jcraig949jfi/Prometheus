@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "updated": "2026-04-21",
   "description": "Master catalog of all forged tools",
   "tools": [
@@ -54,14 +54,54 @@
       "fulfilled_request": "REQ-020",
       "forged_date": "2026-04-21",
       "known_issues": ["Simple poles (B~0) may classify as LOG; partition function needs >50 terms for ESSENTIAL detection"]
+    },
+    {
+      "name": "TOOL_HYPERBOLIC_VOLUME",
+      "file": "techne/lib/hyperbolic_volume.py",
+      "tier": 1,
+      "interface": "hyperbolic_volume(knot) -> float",
+      "also": ["hyperbolic_volume_hp(knot, digits=60) -> str", "is_hyperbolic(knot, tol=1e-6) -> bool", "volume_conjecture_ratio(knot, N=100) -> float"],
+      "dependencies": ["snappy"],
+      "tested": true,
+      "test_source": "knotinfo tables: 4_1 (2.02988...), 5_2 (2.82812...), 6_1 (3.16396...), K11n34 (11.21912...); 3_1 correctly returns 0 (non-hyperbolic)",
+      "fulfilled_request": "REQ-003",
+      "forged_date": "2026-04-21",
+      "known_issues": ["Volume is 0 for non-hyperbolic knots (torus/satellite) — always pair with is_hyperbolic()", "volume_conjecture_ratio slow and often unavailable for high-crossing knots"]
+    },
+    {
+      "name": "TOOL_ROOT_NUMBER",
+      "file": "techne/lib/root_number.py",
+      "tier": 1,
+      "interface": "root_number(ainvs) -> int",
+      "also": ["local_root_number(ainvs, p) -> int", "parity_consistent(ainvs, analytic_rank) -> bool"],
+      "dependencies": ["cypari"],
+      "tested": true,
+      "test_source": "LMFDB: 11a1 (+1, r=0), 37a1 (-1, r=1), 389a1 (+1, r=2), 5077a1 (-1, r=3), 15a1 (+1, r=0). All parity-consistent.",
+      "fulfilled_request": "REQ-017",
+      "forged_date": "2026-04-21",
+      "known_issues": ["Input is a-invariants; Cremona label lookup requires elldata package (not installed in this env)"]
+    },
+    {
+      "name": "TOOL_CONDUCTOR",
+      "file": "techne/lib/conductor.py",
+      "tier": 1,
+      "interface": "conductor(ainvs) -> int",
+      "also": ["global_reduction(ainvs) -> dict (conductor, tamagawa_product, bad_primes, per-prime Kodaira/c_p)", "bad_primes(ainvs) -> list[int]"],
+      "dependencies": ["cypari"],
+      "tested": true,
+      "test_source": "LMFDB conductors (11a1->11, 37a1->37, 389a1->389, 15a1->15, 5077a1->5077). Tamagawa products cross-checked: 14a1 tam=6=2*3, 27a1 tam=3 at IV*, 11a1 tam=5 at I_5 split.",
+      "fulfilled_request": "REQ-019",
+      "forged_date": "2026-04-21",
+      "known_issues": ["PARI local-data slot convention: c_p at index 3 (not 2 as often documented); this is the source of first-pass bugs"]
     }
   ],
   "stats": {
-    "total": 4,
-    "tier1_python": 4,
+    "total": 7,
+    "tier1_python": 7,
     "tier2_optimized": 0,
     "tier3_cpp": 0,
-    "requests_open": 16,
-    "requests_fulfilled": 4
+    "requests_open": 12,
+    "requests_fulfilled": 8,
+    "notes": "REQ-016 (Sturm bound) folded into TOOL_CF_EXPANSION — no separate tool"
   }
 }
