@@ -1,7 +1,9 @@
 {
-  "version": 1,
+  "version": 2,
   "generated": "2026-04-21",
-  "description": "18 mathematical attack paradigms — the distinct lenses for perceiving and cracking hard problems",
+  "updated": "2026-04-21T18:00:00Z",
+  "description": "24 mathematical attack paradigms — reviewed and expanded by 3 frontier models",
+  "review_sources": ["Gemini", "ChatGPT", "Claude-frontier"],
   "paradigms": [
     {
       "id": "P01", "name": "Algebraic Translation",
@@ -164,6 +166,66 @@
       "tactics": ["operad_theory", "infinity_categories", "hott", "derived_algebraic_geometry", "monoidal_functors"],
       "tools": ["Lean4/Mathlib", "Kenzo", "OSCAR.jl"],
       "python": []
+    },
+    {
+      "id": "P19", "name": "Model-Theoretic / O-Minimality",
+      "move": "Bound rational points on transcendental sets via tame definability",
+      "exemplar": "Andre-Oort (Pila-Shankar-Tsimerman 2021) via Pila-Wilkie counting",
+      "computation": "low", "prometheus_status": "OUT_OF_REACH",
+      "added_by": "frontier_review_2026-04-21",
+      "tactics": ["pila_wilkie_counting", "definable_cell_decomposition", "o_minimal_structures", "stability_theory", "transfer_principles"],
+      "tools": ["Lean4", "Isabelle"],
+      "python": []
+    },
+    {
+      "id": "P20", "name": "Ergodic / Dynamical Systems",
+      "move": "Recast arithmetic/combinatorial statement as measure-preserving system, apply mixing/recurrence",
+      "exemplar": "Furstenberg proof of Szemeredi; Ratner unipotent flows; Lindenstrauss measure rigidity",
+      "computation": "medium", "prometheus_status": "NEED_INFRA",
+      "added_by": "frontier_review_2026-04-21",
+      "tactics": ["furstenberg_correspondence", "ratner_theorems", "homogeneous_dynamics", "mixing_recurrence", "invariant_measures"],
+      "tools": ["SageMath", "custom"],
+      "python": ["numpy", "scipy"]
+    },
+    {
+      "id": "P21", "name": "Higher-Order Fourier / Arithmetic Regularity",
+      "move": "Generalize Fourier to multilinear settings via Gowers norms and inverse theorems",
+      "exemplar": "Green-Tao primes in AP; PFR (Gowers-Green-Manners-Tao 2023)",
+      "computation": "medium", "prometheus_status": "NEED_INFRA",
+      "added_by": "frontier_review_2026-04-21",
+      "tactics": ["gowers_norms", "inverse_theorems", "regularity_counting_removal", "nilsequences", "arithmetic_regularity"],
+      "tools": ["Lean4/Mathlib", "custom"],
+      "python": ["numpy"]
+    },
+    {
+      "id": "P22", "name": "Information-Theoretic / Entropy",
+      "move": "Bound combinatorial quantities via information-theoretic inequalities (Shearer, submodularity, compression)",
+      "exemplar": "Entropy proof of Loomis-Whitney; Tao entropy moves on PFR; Moser-Tardos entropy compression",
+      "computation": "medium", "prometheus_status": "LIVE",
+      "added_by": "frontier_review_2026-04-21",
+      "tactics": ["shannon_entropy", "kolmogorov_complexity", "shearer_inequality", "entropy_compression", "minimum_description_length"],
+      "tools": ["scipy", "custom"],
+      "python": ["numpy", "scipy"]
+    },
+    {
+      "id": "P23", "name": "Proof Mining / Reverse Mathematics",
+      "move": "Extract computational content (rates, bounds) from ineffective proofs",
+      "exemplar": "Kohlenbach extraction of quantitative bounds; proof-theoretic analysis of Ramsey",
+      "computation": "low", "prometheus_status": "NEED_INFRA",
+      "added_by": "frontier_review_2026-04-21",
+      "tactics": ["proof_unwinding", "bound_extraction", "functional_interpretation", "proof_theoretic_ordinals"],
+      "tools": ["Lean4", "Coq"],
+      "python": ["LeanDojo"]
+    },
+    {
+      "id": "P24", "name": "Renormalization / Scale Separation",
+      "move": "Understand behavior by coarse-graining across scales, identifying fixed points and universality classes",
+      "exemplar": "Wilson RG; Salmhofer rigorous Ising exponents; Atkin-Lehner as scale transformation",
+      "computation": "medium", "prometheus_status": "NEED_INFRA",
+      "added_by": "frontier_review_2026-04-21",
+      "tactics": ["renormalization_group_flow", "fixed_point_analysis", "universality_classes", "multiscale_analysis", "coarse_graining"],
+      "tools": ["custom", "PyTorch"],
+      "python": ["torch", "numpy"]
     }
   ],
   "solved_problems_by_paradigm": {
@@ -184,7 +246,13 @@
     "P15": ["Strassen_multiplication", "quantum_tensor_networks"],
     "P16": ["Sato_Tate", "Smith_Selmer_2022", "C11_mod_p_enrichment"],
     "P17": ["Plateau_surfaces", "Caccetta_Haggkvist_SDP_bound"],
-    "P18": ["Fargues_Scholze", "Gaitsgory_geometric_Langlands"]
+    "P18": ["Fargues_Scholze", "Gaitsgory_geometric_Langlands"],
+    "P19": ["Andre_Oort", "Manin_Mumford_via_Pila_Zannier"],
+    "P20": ["Szemeredi_via_Furstenberg", "Oppenheim_via_Margulis", "Ratner_unipotent"],
+    "P21": ["Green_Tao_primes_in_AP", "PFR_2023"],
+    "P22": ["Loomis_Whitney_entropy", "PFR_entropy_proof", "Moser_Tardos"],
+    "P23": ["Kohlenbach_quantitative_bounds"],
+    "P24": ["Ising_rigorous_exponents", "Luttinger_liquid_universality"]
   },
   "physics_imports": [
     {"source": "mirror_symmetry", "bridge": "GW invariants = B-model periods", "paradigms": ["P01", "P13"]},
