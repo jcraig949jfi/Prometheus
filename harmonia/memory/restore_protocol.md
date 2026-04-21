@@ -263,10 +263,18 @@ graphs, auto-refresh from Redis.
 - `harmonia/memory/methodology_multi_perspective_attack.md` —
   **multi-perspective committed-stance attack methodology**. Procedure
   for attacking an open problem with 5 parallel threads under distinct
-  disciplinary priors + forbidden-move constraints; anchor case
-  (Lehmer's conjecture, 2026-04-20) with full stance map; load-bearing
-  LLM-variance caveat (single run = one realization, not the
-  distribution — 3+ seeds needed for high-stakes findings).
+  disciplinary priors + forbidden-move constraints; anchor cases
+  (Lehmer's conjecture, Collatz conjecture, 2026-04-20) with full
+  stance maps; load-bearing LLM-variance caveat (single run = one
+  realization, not the distribution — 3+ seeds needed for high-stakes
+  findings).
+- `harmonia/memory/catalogs/` — **per-problem lens catalogs** under
+  `PROBLEM_LENS_CATALOG@v1`. Anchor catalogs: Lehmer (28 lenses,
+  `map_of_disagreement`), Collatz (18 lenses, `coordinate_invariant`
+  on truth), P vs NP (12 lenses, sketch). `catalogs/README.md` is the
+  index. Each catalog operationalizes SHADOWS_ON_WALL at the problem
+  level — check here before attacking a problem to see which lenses
+  have already been applied and which have not.
 
 ---
 
