@@ -220,6 +220,22 @@ is for paste-ready; ideas are for half-formed.
 
 ---
 
+## Related: multi-perspective attack methodology
+
+`harmonia/memory/methodology_multi_perspective_attack.md` is the
+procedural companion to this toolkit. Where this file catalogs
+*individual* cross-disciplinary lenses, that file describes how to
+deploy ≥ 4 of them *simultaneously* against a single open problem
+under committed-stance discipline. Anchor case: Lehmer's conjecture,
+2026-04-20 — five threads (dynamical systems, information theory, RG,
+adversarial search, mass-gap physics), each with forbidden moves,
+produced genuinely differentiated predictions about the same
+measurement. The toolkit shelf supplies the disciplinary priors; the
+multi-perspective methodology supplies the protocol for using them in
+parallel.
+
+---
+
 ## Discoverability
 
 The restore protocol (`harmonia/memory/restore_protocol.md`) references

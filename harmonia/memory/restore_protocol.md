@@ -239,6 +239,13 @@ graphs, auto-refresh from Redis.
   capacity, MDL, RG flow, free energy). Reach here *before* inventing
   a new arithmetic coordinate when a live specimen stalls under the
   existing catalog. North-star companion: `user_prometheus_north_star.md`.
+- `harmonia/memory/methodology_multi_perspective_attack.md` —
+  **multi-perspective committed-stance attack methodology**. Procedure
+  for attacking an open problem with 5 parallel threads under distinct
+  disciplinary priors + forbidden-move constraints; anchor case
+  (Lehmer's conjecture, 2026-04-20) with full stance map; load-bearing
+  LLM-variance caveat (single run = one realization, not the
+  distribution — 3+ seeds needed for high-stakes findings).
 
 ---
 
