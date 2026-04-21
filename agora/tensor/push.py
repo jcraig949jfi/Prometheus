@@ -179,31 +179,58 @@ def push_tensor(tensor_dir='harmonia/memory', dry_run=False, source_commit='HEAD
                 fid = key.split(':')[0]
                 try:
                     from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
-                    from harmonia.sweeps.pattern_30 import sweep as sweep30
+                    from harmonia.sweeps.pattern_30 import classify_entry
                 except Exception:
                     LINEAGE_REGISTRY = {}
-                    sweep30 = None
-                if sweep30 is not None and fid in LINEAGE_REGISTRY:
-                    chk = LINEAGE_REGISTRY[fid]()
-                    res = sweep30(chk)
-                    if res.verdict == 'BLOCK':
+                    classify_entry = None
+                if classify_entry is not None and fid in LINEAGE_REGISTRY:
+                    entry = LINEAGE_REGISTRY[fid]
+                    result = classify_entry(entry)
+                    verdict = result.get('verdict')
+                    if verdict == 'BLOCK':
                         sweep_blocks.append({
-                            'cell': key, 'level': res.level,
-                            'name': res.name, 'rationale': res.rationale,
+                            'cell': key, 'level': result.get('level'),
+                            'name': result.get('name'),
+                            'rationale': result.get('rationale', ''),
                         })
                         r.xadd('agora:harmonia_sync', {
                             'type': 'PATTERN_30_BLOCK',
                             'from': 'agora.tensor.push',
                             'at': now,
                             'cell': key,
-                            'level': str(res.level),
-                            'rationale': res.rationale[:400],
+                            'level': str(result.get('level')),
+                            'rationale': (result.get('rationale') or '')[:400],
                         })
-                    elif res.verdict == 'WARN':
+                    elif verdict == 'PROVISIONAL':
+                        # frame_hazard — do not halt the push, but emit the
+                        # PATTERN_4_PROVISIONAL event so conductor sees it.
+                        details = result.get('details') or {}
+                        pending = details.get('pending_audit') or {}
+                        pending_task = (pending.get('task_id', '')
+                                        if isinstance(pending, dict) else '')
                         sweep_warnings.append({
-                            'cell': key, 'level': res.level,
-                            'name': res.name,
+                            'cell': key, 'level': None,
+                            'name': 'FRAME_HAZARD_PROVISIONAL',
+                            'pending_audit_task_id': pending_task,
                         })
+                        r.xadd('agora:harmonia_sync', {
+                            'type': 'PATTERN_4_PROVISIONAL',
+                            'from': 'agora.tensor.push',
+                            'at': now,
+                            'cell': key,
+                            'feature_id': fid,
+                            'sampling_frame': (details.get('sampling_frame') or '')[:400],
+                            'class_4_null_ref': (details.get('class_4_null_ref') or '')[:400],
+                            'pending_audit_task_id': pending_task,
+                            'rationale': (result.get('rationale') or '')[:400],
+                        })
+                    elif verdict == 'WARN':
+                        sweep_warnings.append({
+                            'cell': key, 'level': result.get('level'),
+                            'name': result.get('name'),
+                        })
+                    # N/A_KILLED and N/A_NON_CORRELATIONAL are silent —
+                    # CLEAR-equivalent for tensor-push purposes.
 
     # Write new cell hash (replace)
     r.delete(f'{TENSOR_KEY_PREFIX}cells')

@@ -16,6 +16,8 @@ from harmonia.sweeps.pattern_30 import (
     sweep as sweep30,
     bsd_f043_check,
     f015_szpiro_check,
+    classify_entry,
+    LINEAGE_TYPES,
 )
 from harmonia.sweeps.pattern_20 import (
     Pattern20Check,
@@ -205,6 +207,238 @@ def test_runner_clean_signature_clears():
     check("clean runner => CLEAR", outcome.overall == "CLEAR")
 
 
+# ---------------------------------------------------------------------------
+# Taxonomy extension (4-type LINEAGE_REGISTRY schema, 2026-04-20)
+# ---------------------------------------------------------------------------
+
+def test_classify_entry_algebraic_lineage_dict():
+    print("Taxonomy — algebraic_lineage dict entry classifies like legacy")
+    entry = {
+        "type": "algebraic_lineage",
+        "check": bsd_f043_check,
+        "rationale": "F043 BSD rearrangement",
+    }
+    r = classify_entry(entry)
+    check("type preserved", r["type"] == "algebraic_lineage")
+    check("verdict BLOCK", r["verdict"] == "BLOCK", r["verdict"])
+    check("level 3 REARRANGEMENT", r["level"] == 3, f"got {r['level']}")
+
+
+def test_classify_entry_algebraic_lineage_legacy_callable():
+    print("Taxonomy — bare callable still works (backward compat)")
+    r = classify_entry(bsd_f043_check)
+    check("legacy callable classifies", r["type"] == "algebraic_lineage")
+    check("legacy callable still BLOCKs", r["verdict"] == "BLOCK")
+    # F015 legacy shim
+    r2 = classify_entry(f015_szpiro_check)
+    check("F015 legacy shim verdict WARN", r2["verdict"] == "WARN")
+    check("F015 legacy shim level 1", r2["level"] == 1)
+
+
+def test_classify_entry_frame_hazard():
+    print("Taxonomy — frame_hazard emits PROVISIONAL")
+    entry = {
+        "type": "frame_hazard",
+        "sampling_frame": "LMFDB rank-4 corridor",
+        "class_4_null_ref": "null_protocol_v1.md#class-4",
+        "pending_audit": {
+            "task_id": "audit_F044_framebased_resample",
+            "on_complete": "re_evaluate",
+        },
+        "rationale": "rank-4 disc=conductor corridor; Pattern 4 gate",
+    }
+    r = classify_entry(entry)
+    check("verdict PROVISIONAL", r["verdict"] == "PROVISIONAL", r["verdict"])
+    check("type frame_hazard", r["type"] == "frame_hazard")
+    check("details carry sampling_frame",
+          "LMFDB" in (r["details"].get("sampling_frame") or ""))
+    check("details carry pending_audit task_id",
+          r["details"]["pending_audit"]["task_id"] == "audit_F044_framebased_resample")
+    check("no level on PROVISIONAL", r["level"] is None)
+
+
+def test_classify_entry_killed_no_correlation():
+    print("Taxonomy — killed_no_correlation emits N/A_KILLED")
+    entry = {
+        "type": "killed_no_correlation",
+        "rationale": "killed by block-shuffle null",
+        "kill_null": "block-shuffle",
+    }
+    r = classify_entry(entry)
+    check("verdict N/A_KILLED", r["verdict"] == "N/A_KILLED", r["verdict"])
+    check("type killed_no_correlation", r["type"] == "killed_no_correlation")
+    check("no level", r["level"] is None)
+
+
+def test_classify_entry_non_correlational():
+    print("Taxonomy — non_correlational emits N/A_NON_CORRELATIONAL")
+    entry = {
+        "type": "non_correlational",
+        "claim_shape": "variance_deficit",
+        "rationale": "GUE first-gap variance deficit",
+    }
+    r = classify_entry(entry)
+    check("verdict N/A_NON_CORRELATIONAL",
+          r["verdict"] == "N/A_NON_CORRELATIONAL", r["verdict"])
+    check("type non_correlational", r["type"] == "non_correlational")
+    check("no level", r["level"] is None)
+
+
+def test_classify_entry_rejects_unknown_type():
+    print("Taxonomy — unknown type raises ValueError")
+    try:
+        classify_entry({"type": "bogus_lineage"})
+        check("unknown type raises", False)
+    except ValueError:
+        check("unknown type raises", True)
+
+
+def test_registry_coverage_all_expected_fids():
+    print("Registry — all target F-IDs present with correct types")
+    from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
+    expected = {
+        # algebraic_lineage
+        "F015": "algebraic_lineage",
+        "F041a": "algebraic_lineage",
+        "F043": "algebraic_lineage",
+        "F013": "algebraic_lineage",
+        "F045": "algebraic_lineage",
+        # frame_hazard
+        "F044": "frame_hazard",
+        # killed_no_correlation
+        "F010": "killed_no_correlation",
+        "F012": "killed_no_correlation",
+        "F020": "killed_no_correlation",
+        "F021": "killed_no_correlation",
+        "F022": "killed_no_correlation",
+        "F023": "killed_no_correlation",
+        "F024": "killed_no_correlation",
+        "F025": "killed_no_correlation",
+        "F026": "killed_no_correlation",
+        "F027": "killed_no_correlation",
+        "F028": "killed_no_correlation",
+        # non_correlational
+        "F011": "non_correlational",
+        "F014": "non_correlational",
+    }
+    for fid, expected_type in expected.items():
+        entry = LINEAGE_REGISTRY.get(fid)
+        check(f"{fid} present in LINEAGE_REGISTRY", entry is not None)
+        if entry is not None:
+            check(f"{fid} type={expected_type}",
+                  entry.get("type") == expected_type,
+                  f"got {entry.get('type')}")
+
+
+def test_registry_existing_anchors_still_pass():
+    print("Registry — existing F043/F015/F041a anchors unchanged")
+    from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
+    r_f043 = classify_entry(LINEAGE_REGISTRY["F043"])
+    r_f015 = classify_entry(LINEAGE_REGISTRY["F015"])
+    r_f041a = classify_entry(LINEAGE_REGISTRY["F041a"])
+    check("F043 still Level 3 BLOCK", r_f043["level"] == 3 and r_f043["verdict"] == "BLOCK")
+    check("F015 still Level 1 WARN", r_f015["level"] == 1 and r_f015["verdict"] == "WARN")
+    check("F041a still Level 1 WARN", r_f041a["level"] == 1 and r_f041a["verdict"] == "WARN")
+
+
+def test_f013_uses_verbatim_rationale():
+    print("Registry — F013 rationale contains James's verbatim text")
+    from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
+    entry = LINEAGE_REGISTRY["F013"]
+    rationale = entry.get("rationale", "")
+    check("F013 rationale mentions root number",
+          "root number" in rationale)
+    check("F013 rationale mentions z=15.31",
+          "z=15.31" in rationale)
+    check("F013 rationale mentions BSD",
+          "BSD" in rationale)
+
+
+def test_f045_pending_audit_declared():
+    print("Registry — F045 carries pending_audit for correlate_F041a_F045")
+    from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
+    entry = LINEAGE_REGISTRY["F045"]
+    pending = entry.get("pending_audit")
+    check("F045 pending_audit present", pending is not None)
+    check("F045 pending_audit task_id correct",
+          pending and pending.get("task_id") == "correlate_F041a_F045_nbp_vs_isogeny")
+
+
+def test_f044_pending_audit_declared():
+    print("Registry — F044 carries pending_audit for audit_F044_framebased_resample")
+    from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
+    entry = LINEAGE_REGISTRY["F044"]
+    pending = entry.get("pending_audit")
+    check("F044 pending_audit present", pending is not None)
+    check("F044 pending_audit task_id correct",
+          pending and pending.get("task_id") == "audit_F044_framebased_resample")
+    check("F044 has class_4 ref",
+          "class-4" in (entry.get("class_4_null_ref", "") or "").lower() or
+          "class_4" in (entry.get("class_4_null_ref", "") or "").lower())
+
+
+def test_runner_provisional_does_not_block():
+    print("Runner — PROVISIONAL does not halt ingestion")
+    # Build a verdict-shaped outcome by constructing a runner via a
+    # frame_hazard entry. Since sweep_signature takes a CouplingCheck not
+    # a lineage entry, we simulate by constructing SweepVerdict + merge
+    # directly.
+    from harmonia.sweeps.runner import SweepVerdict, _merge
+    verdicts = [
+        SweepVerdict(pattern="Pattern 30", verdict="PROVISIONAL",
+                     rationale="frame_hazard", details={}),
+        SweepVerdict(pattern="Pattern 20", verdict="CLEAR",
+                     rationale="", details={}),
+        SweepVerdict(pattern="Pattern 19", verdict="CLEAR",
+                     rationale="", details={}),
+    ]
+    overall = _merge(verdicts)
+    check("merge yields PROVISIONAL", overall == "PROVISIONAL", overall)
+
+
+def test_runner_merge_precedence():
+    print("Runner — BLOCK > PROVISIONAL > WARN > CLEAR precedence")
+    from harmonia.sweeps.runner import SweepVerdict, _merge
+    # BLOCK dominates PROVISIONAL
+    v1 = [
+        SweepVerdict(pattern="a", verdict="PROVISIONAL", rationale="", details={}),
+        SweepVerdict(pattern="b", verdict="BLOCK", rationale="", details={}),
+    ]
+    check("BLOCK beats PROVISIONAL", _merge(v1) == "BLOCK")
+    # PROVISIONAL dominates WARN
+    v2 = [
+        SweepVerdict(pattern="a", verdict="WARN", rationale="", details={}),
+        SweepVerdict(pattern="b", verdict="PROVISIONAL", rationale="", details={}),
+    ]
+    check("PROVISIONAL beats WARN", _merge(v2) == "PROVISIONAL")
+    # N/A_KILLED is CLEAR-equivalent
+    v3 = [
+        SweepVerdict(pattern="a", verdict="N/A_KILLED", rationale="", details={}),
+        SweepVerdict(pattern="b", verdict="CLEAR", rationale="", details={}),
+    ]
+    check("N/A_KILLED merges to CLEAR", _merge(v3) == "CLEAR")
+    # N/A_NON_CORRELATIONAL is CLEAR-equivalent
+    v4 = [
+        SweepVerdict(pattern="a", verdict="N/A_NON_CORRELATIONAL", rationale="", details={}),
+        SweepVerdict(pattern="b", verdict="CLEAR", rationale="", details={}),
+    ]
+    check("N/A_NON_CORRELATIONAL merges to CLEAR", _merge(v4) == "CLEAR")
+
+
+def test_pending_audit_watcher_lazy():
+    print("Watcher — resolve_entry attaches pending_audit status")
+    from harmonia.sweeps.retrospective import resolve_entry, LINEAGE_REGISTRY
+    # F044 has a pending audit; resolve_entry should annotate the result
+    # regardless of whether Agora is reachable (it degrades gracefully).
+    r = resolve_entry("F044", LINEAGE_REGISTRY["F044"])
+    details = r.get("details") or {}
+    pending = details.get("pending_audit") or {}
+    check("F044 resolved with pending_audit",
+          pending.get("task_id") == "audit_F044_framebased_resample")
+    check("F044 pending_audit has 'complete' bool",
+          "complete" in pending)
+
+
 def main():
     tests = [
         test_pattern_30_f043_blocks,
@@ -221,6 +455,21 @@ def main():
         test_runner_f043_blocks_ingestion,
         test_runner_override_bypasses_block,
         test_runner_clean_signature_clears,
+        # 4-type taxonomy extension (2026-04-20)
+        test_classify_entry_algebraic_lineage_dict,
+        test_classify_entry_algebraic_lineage_legacy_callable,
+        test_classify_entry_frame_hazard,
+        test_classify_entry_killed_no_correlation,
+        test_classify_entry_non_correlational,
+        test_classify_entry_rejects_unknown_type,
+        test_registry_coverage_all_expected_fids,
+        test_registry_existing_anchors_still_pass,
+        test_f013_uses_verbatim_rationale,
+        test_f045_pending_audit_declared,
+        test_f044_pending_audit_declared,
+        test_runner_provisional_does_not_block,
+        test_runner_merge_precedence,
+        test_pending_audit_watcher_lazy,
     ]
     for t in tests:
         t()

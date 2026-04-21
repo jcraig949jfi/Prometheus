@@ -57,6 +57,153 @@ PATTERN_30_LEVELS = {
 }
 
 
+# ---------------------------------------------------------------------------
+# Taxonomy — lineage entry types
+# ---------------------------------------------------------------------------
+#
+# A lineage-registry entry has one of four types. Only `algebraic_lineage`
+# runs the Pattern-30 coupling machinery below; the other three types short-
+# circuit with a typed verdict so the sweep runner can behave correctly on
+# specimens where the standard Pattern-30 question (is the correlation a
+# rearrangement of a known identity?) is not the active concern.
+#
+#   algebraic_lineage      — correlation with algebraic coupling to audit
+#                            (existing anchors: F015 L1, F041a L1, F043 L3).
+#                            Runs sweep() / returns a standard Pattern30Result.
+#
+#   frame_hazard           — construction-biased sample where Pattern 4 is
+#                            the real gate, not Pattern 30. Emits PROVISIONAL
+#                            pending a Class-4-appropriate null (see
+#                            harmonia/memory/symbols/protocols/null_protocol_v1.md).
+#                            PROVISIONAL does NOT halt ingestion; it posts a
+#                            PATTERN_4_PROVISIONAL event to agora:harmonia_sync
+#                            with the sampling-frame spec and re-audit task id.
+#
+#   killed_no_correlation  — killed specimen, no correlation exists to audit.
+#                            Silent CLEAR-equivalent; N/A_KILLED.
+#
+#   non_correlational      — variance deficit / existence / density /
+#                            calibration claim, no X-vs-Y correlation.
+#                            Silent CLEAR-equivalent; N/A_NON_CORRELATIONAL.
+#
+# Verdict vocabulary: CLEAR / WARN / BLOCK / PROVISIONAL / N/A_KILLED /
+# N/A_NON_CORRELATIONAL. The first three are standard; the last three are
+# emitted only by the retrospective / runner path for the three new types.
+
+LINEAGE_TYPES = (
+    "algebraic_lineage",
+    "frame_hazard",
+    "killed_no_correlation",
+    "non_correlational",
+)
+
+
+def classify_entry(entry):
+    """Dispatch a LINEAGE_REGISTRY entry to its verdict.
+
+    Accepts either:
+      - a dict with a `type` key (new 4-type schema), or
+      - a zero-arg callable returning a CouplingCheck (legacy shim).
+
+    Returns a dict:
+        {"type": <lineage_type>,
+         "verdict": <CLEAR|WARN|BLOCK|PROVISIONAL|N/A_KILLED|N/A_NON_CORRELATIONAL>,
+         "level": <int | None>,
+         "name":  <str>,
+         "rationale": <str>,
+         "details": <dict, type-specific>}
+    """
+    # Legacy shim: bare callable -> treat as algebraic_lineage
+    if callable(entry):
+        chk = entry()
+        r = sweep(chk)
+        return {
+            "type": "algebraic_lineage",
+            "verdict": r.verdict,
+            "level": r.level,
+            "name": r.name,
+            "rationale": r.rationale,
+            "details": {"connecting_identity": r.connecting_identity},
+        }
+
+    if not isinstance(entry, dict) or "type" not in entry:
+        raise ValueError(
+            "LINEAGE_REGISTRY entry must be a dict with 'type' or a "
+            "zero-arg callable returning a CouplingCheck")
+
+    t = entry["type"]
+    if t == "algebraic_lineage":
+        factory = entry.get("check")
+        if factory is None:
+            raise ValueError("algebraic_lineage entry requires 'check' factory")
+        chk = factory() if callable(factory) else factory
+        r = sweep(chk)
+        return {
+            "type": "algebraic_lineage",
+            "verdict": r.verdict,
+            "level": r.level,
+            "name": r.name,
+            "rationale": entry.get("rationale", "") or r.rationale,
+            "details": {
+                "connecting_identity": r.connecting_identity,
+                "cross_references": entry.get("cross_references", []),
+            },
+        }
+
+    if t == "frame_hazard":
+        return {
+            "type": "frame_hazard",
+            "verdict": "PROVISIONAL",
+            "level": None,
+            "name": "FRAME_HAZARD",
+            "rationale": entry.get(
+                "rationale",
+                "construction-biased sample; Pattern 4 active concern, "
+                "not Pattern 30. Awaiting Class-4-appropriate null."),
+            "details": {
+                "sampling_frame": entry.get("sampling_frame", ""),
+                "class_4_null_ref": entry.get("class_4_null_ref", ""),
+                "pending_audit": entry.get("pending_audit"),
+                "cross_references": entry.get("cross_references", []),
+            },
+        }
+
+    if t == "killed_no_correlation":
+        return {
+            "type": "killed_no_correlation",
+            "verdict": "N/A_KILLED",
+            "level": None,
+            "name": "KILLED_NO_CORRELATION",
+            "rationale": entry.get(
+                "rationale",
+                "killed specimen; no correlation exists to audit against "
+                "an algebraic identity"),
+            "details": {
+                "kill_null": entry.get("kill_null", ""),
+                "cross_references": entry.get("cross_references", []),
+            },
+        }
+
+    if t == "non_correlational":
+        return {
+            "type": "non_correlational",
+            "verdict": "N/A_NON_CORRELATIONAL",
+            "level": None,
+            "name": "NON_CORRELATIONAL",
+            "rationale": entry.get(
+                "rationale",
+                "finding is variance deficit / existence / density / "
+                "calibration; no X-vs-Y correlation exists to audit"),
+            "details": {
+                "claim_shape": entry.get("claim_shape", ""),
+                "cross_references": entry.get("cross_references", []),
+            },
+        }
+
+    raise ValueError(
+        "unknown lineage type {!r}; must be one of {}".format(t, LINEAGE_TYPES))
+
+
 @dataclass
 class CouplingCheck:
     """Declared algebraic lineage of a correlation test.

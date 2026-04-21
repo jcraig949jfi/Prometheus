@@ -43,6 +43,57 @@ DEFAULT_DSN = dict(
 )
 
 
+def _post_pattern_4_provisional(
+    sweep_outcome,
+    task_id: str,
+    feature_id: str,
+    source_worker: str,
+) -> None:
+    """Publish a PATTERN_4_PROVISIONAL event to agora:harmonia_sync.
+
+    Called when register_specimen's sweep_outcome.overall == 'PROVISIONAL'
+    (frame_hazard type). The event carries the pattern-4 details pulled
+    from the SweepOutcome's verdict metadata. Best-effort — caller swallows
+    any exception so registration does not fail on a sync outage.
+    """
+    import datetime as _dt
+    try:
+        import redis
+    except ImportError:
+        return
+
+    host = os.environ.get('AGORA_REDIS_HOST', '192.168.1.176')
+    port = int(os.environ.get('AGORA_REDIS_PORT', '6379'))
+    password = os.environ.get('AGORA_REDIS_PASSWORD', 'prometheus')
+    r = redis.Redis(host=host, port=port, password=password,
+                    decode_responses=True, socket_timeout=2)
+
+    # Extract pattern-30 provisional details from the outcome verdicts
+    frame_details = {}
+    for v in sweep_outcome.verdicts:
+        if getattr(v, 'verdict', None) == 'PROVISIONAL':
+            frame_details = getattr(v, 'details', {}) or {}
+            break
+
+    pending = frame_details.get('pending_audit') or {}
+    if isinstance(pending, dict):
+        pending_task = pending.get('task_id', '')
+    else:
+        pending_task = ''
+
+    r.xadd('agora:harmonia_sync', {
+        'type': 'PATTERN_4_PROVISIONAL',
+        'from': 'agora.register_specimen',
+        'at': _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        'feature_id': feature_id,
+        'task_id': task_id,
+        'source_worker': source_worker or '',
+        'sampling_frame': (frame_details.get('sampling_frame') or '')[:400],
+        'class_4_null_ref': (frame_details.get('class_4_null_ref') or '')[:400],
+        'pending_audit_task_id': pending_task,
+    }, maxlen=5000, approximate=True)
+
+
 def register(
     task_id: str,
     feature_id: str,
@@ -105,6 +156,21 @@ def register(
                     'sweep_override_reason string')
             sweep_outcome.override = True
             sweep_outcome.override_reason = sweep_override_reason
+        # PROVISIONAL (frame_hazard) does NOT halt registration — it posts a
+        # PATTERN_4_PROVISIONAL event to agora:harmonia_sync with the
+        # Class-4 null spec + re-audit task id. The outcome verdict is still
+        # recorded in data_provenance.sweeps for audit trail.
+        if sweep_outcome.overall == 'PROVISIONAL':
+            try:
+                _post_pattern_4_provisional(
+                    sweep_outcome=sweep_outcome,
+                    task_id=task_id,
+                    feature_id=feature_id,
+                    source_worker=source_worker,
+                )
+            except Exception:
+                # Sync-post is best-effort — do not fail registration
+                pass
         log_outcome(sweep_outcome, context={
             'context_id': f'{task_id}:{feature_id}',
             'task_id': task_id,

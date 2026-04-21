@@ -69,12 +69,32 @@ class SweepOutcome:
 
 
 def _merge(verdicts: list) -> str:
+    """Merge individual Pattern verdicts into a composite.
+
+    Precedence (highest-severity wins):
+        BLOCK > PROVISIONAL > WARN > CLEAR
+
+    N/A_KILLED and N/A_NON_CORRELATIONAL are treated as CLEAR-equivalent
+    for merge purposes (they indicate the Pattern-30 machinery was not
+    applicable, not that it found an issue).
+
+    PROVISIONAL is a frame_hazard verdict: it surfaces above WARN because
+    the sampling-frame concern is stronger than a log-denominator coupling,
+    but it does NOT halt ingestion (`blocked=False` in SweepOutcome).
+    """
+    def _equiv_clear(v: str) -> bool:
+        return v in ("CLEAR", "N/A_KILLED", "N/A_NON_CORRELATIONAL")
+
     has_block = any(v.verdict == "BLOCK" for v in verdicts)
+    has_provisional = any(v.verdict == "PROVISIONAL" for v in verdicts)
     has_warn = any(v.verdict == "WARN" for v in verdicts)
     if has_block:
         return "BLOCK"
+    if has_provisional:
+        return "PROVISIONAL"
     if has_warn:
         return "WARN"
+    # everything else — CLEAR-equivalent
     return "CLEAR"
 
 
@@ -152,7 +172,8 @@ def sweep_signature(
 
     overall = _merge(verdicts)
     blocked = (overall == "BLOCK") and not override
-    warnings = [v for v in verdicts if v.verdict == "WARN"]
+    # PROVISIONAL does NOT halt ingestion — sync-post is a caller-side concern.
+    warnings = [v for v in verdicts if v.verdict in ("WARN", "PROVISIONAL")]
 
     return SweepOutcome(
         overall=overall,
