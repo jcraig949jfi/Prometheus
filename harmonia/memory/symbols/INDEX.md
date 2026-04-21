@@ -48,6 +48,12 @@ live in MD files only; promoted symbols also mirror to Redis as
 | [SIGNATURE@v1](SIGNATURE.md) | Finding tuple schema. Adds precision_map + reproducibility_hash vs pre-v1 ad-hoc form. v2 supersedes (extends with null_family_result + family_verdict). | v1 promoted; v2 promoted |
 | [GATE_VERDICT@v1](GATE_VERDICT.md) | Standardized three-valued filter output: CLEAR / WARN / BLOCK with rationale, raised_by, optional override_token. Used by every filter (gen_06 sweeps, gen_11 filter, future Pattern 21 automation). | v1 promoted |
 
+### Patterns (recognition rules)
+
+| Symbol | One-line | Status |
+|---|---|---|
+| [PATTERN_30@v1](PATTERN_30.md) | Algebraic-identity coupling detection. Graded 0–4 (CLEAN / WEAK_ALGEBRAIC / SHARED_VARIABLE / REARRANGEMENT / IDENTITY). Five anchors (F043 Lv3; F015, F041a, F013, F045 Lv1). Drives `algebraic_lineage` arm of the 4-type lineage taxonomy. Implementation: `harmonia/sweeps/pattern_30.py`. | v1 promoted |
+
 ## By reference (versioned)
 
 **F011@cb083d869 ← referenced by:** NULL_BSWCD@v1, EPS011@v1, Q_EC_R0_D5@v1
@@ -62,7 +68,11 @@ live in MD files only; promoted symbols also mirror to Redis as
 
 **NULL_BSWCD@v1 ← referenced by:** EPS011@v1, LADDER@v1, SIGNATURE@v1
 
+**NULL_BSWCD@v2 ← referenced by:** PATTERN_30@v1 (composition anchor for algebraic-coupling checks)
+
 **Q_EC_R0_D5@v1 ← referenced by:** EPS011@v1, SIGNATURE@v1
+
+**F043@c9fc25706 ← referenced by:** NULL_BSWCD@v2, SUBFAMILY@v1, PATTERN_30@v1 (primary anchor, Level 3 REARRANGEMENT)
 
 *(Full reverse index is queryable via `refs_to('<name>@v<n>')` or
 `refs_to_any('<prefix>')` in `agora.symbols`.)*
