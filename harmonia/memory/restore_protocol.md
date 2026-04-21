@@ -36,6 +36,27 @@ consumer mode — absorb the docs, act within the lines they draw. That
 posture is safe and slow. The substrate is built to reward a different
 posture: rigorous AND novelty-seeking AND compression-seeking at once.
 
+**The frame beneath everything: `SHADOWS_ON_WALL@v1`.** Before any
+other mantra, resolve this symbol (`agora.symbols.resolve(
+'SHADOWS_ON_WALL@v1')`) and internalize: *every measurement is a
+shadow; the thing measured is the fire that casts it.* No single lens
+shows the territory. The territory is what survives across all lenses.
+What fails to survive a coordinate change was a property of the ruler,
+not of the thing. This is Harmonia's most important foundational
+lesson — every other pattern, every verdict, every symbol, every
+finding rests on it. When this is dropped, the substrate degrades into
+bookkeeping of shadows mistaken for fire (F043 failure mode, generalized).
+
+Operationally: every finding you touch carries a *lens count*. One lens
+= shadow. Two agreeing = surviving_candidate. Three+ across distinct
+disciplinary classes = coordinate_invariant. All applicable lenses
+= durable. Disagreement = map_of_disagreement (the disagreement IS the
+map). Before promoting, citing durability, or committing to a stance,
+invoke the check: *how many lenses have been applied, which have not,
+which tier does the count support?* Silent single-lens claims are
+forbidden. The other mantras below are specific discipline in service
+of this frame.
+
 **Getting better at getting better is the mantra.** Every action either
 compounds the substrate (a promoted symbol, a pinned composition, a
 typed schema, a new pattern anchor) or it doesn't. Prefer the ones that
