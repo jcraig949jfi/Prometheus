@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "updated": "2026-04-21",
+  "description": "Master catalog of all forged tools",
+  "tools": [
+    {
+      "name": "TOOL_MAHLER_MEASURE",
+      "file": "techne/lib/mahler_measure.py",
+      "tier": 1,
+      "interface": "mahler_measure(coefficients) -> float",
+      "also": ["log_mahler_measure(coefficients) -> float", "is_cyclotomic(coefficients) -> bool"],
+      "dependencies": ["numpy"],
+      "tested": true,
+      "test_source": "Lehmer polynomial (1.17628...), Phi_5 (1.0), golden ratio (1.61803...)",
+      "fulfilled_request": "REQ-001",
+      "forged_date": "2026-04-21",
+      "known_issues": ["Numerical precision degrades above degree ~100 due to root-finding"]
+    },
+    {
+      "name": "TOOL_GPD_TAIL_FIT",
+      "file": "techne/lib/gpd_tail_fit.py",
+      "tier": 1,
+      "interface": "gpd_tail_fit(data, threshold) -> dict",
+      "also": ["diagnose_tail(data, thresholds) -> list[dict]"],
+      "dependencies": ["numpy", "scipy"],
+      "tested": true,
+      "test_source": "Synthetic GPD data with known xi = -0.3, 0.0, +0.5 all recovered within 0.03",
+      "fulfilled_request": "REQ-009",
+      "forged_date": "2026-04-21",
+      "known_issues": ["Needs >= 10 exceedances; unstable below 30"]
+    },
+    {
+      "name": "TOOL_CF_EXPANSION",
+      "file": "techne/lib/cf_expansion.py",
+      "tier": 1,
+      "interface": "cf_expand(p, q) -> list[int]",
+      "also": ["cf_max_digit(p, q) -> int", "zaremba_test(q, bound=5) -> dict", "sturm_bound(weight, level) -> int"],
+      "dependencies": [],
+      "tested": true,
+      "test_source": "355/113 = [3,7,16], CF(pi) = [3,7,15,1,292,...], Zaremba witnesses verified for q=5,7,10,13,50",
+      "fulfilled_request": "REQ-014",
+      "forged_date": "2026-04-21",
+      "known_issues": ["zaremba_test is O(q) — slow for q > 10^6, needs sieve optimization for Tier 2"]
+    },
+    {
+      "name": "TOOL_SINGULARITY_CLASSIFIER",
+      "file": "techne/lib/singularity_classifier.py",
+      "tier": 1,
+      "interface": "classify_singularity(coefficients) -> dict",
+      "also": ["estimate_radius(coefficients) -> float"],
+      "dependencies": ["numpy"],
+      "tested": true,
+      "test_source": "Fibonacci (radius 0.6180 correct), Catalan (ALGEBRAIC, alpha~0.5 correct), Constant (ENTIRE correct)",
+      "fulfilled_request": "REQ-020",
+      "forged_date": "2026-04-21",
+      "known_issues": ["Simple poles (B~0) may classify as LOG; partition function needs >50 terms for ESSENTIAL detection"]
+    }
+  ],
+  "stats": {
+    "total": 4,
+    "tier1_python": 4,
+    "tier2_optimized": 0,
+    "tier3_cpp": 0,
+    "requests_open": 16,
+    "requests_fulfilled": 4
+  }
+}
