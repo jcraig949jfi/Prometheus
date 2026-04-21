@@ -1,0 +1,215 @@
+{
+  "total_curves": 3824372,
+  "root_plus1_count": 1899887,
+  "root_minus1_count": 1924485,
+  "probability_tables": {
+    "root_plus1": {
+      "count": 1899887,
+      "prob_2_divides_sha": 0.11000548980018285,
+      "prob_2_divides_torsion": 0.35174091932836005,
+      "prob_2_divides_sha_times_torsion": 0.40562570300233647,
+      "prob_sha_nontrivial": 0.1512574168884781,
+      "prob_sha_trivial": 0.8487425831115218,
+      "prob_3_divides_sha": 0.03549684797043193,
+      "prob_3_divides_torsion": 0.015446181799233323,
+      "prob_3_divides_sha_times_torsion": 0.05037720664439517,
+      "prob_5_divides_sha": 0.005969828731919319,
+      "prob_5_divides_torsion": 0.0004131824682204784,
+      "prob_5_divides_sha_times_torsion": 0.006382484853046523,
+      "prob_7_divides_sha": 0.0015100898106045254,
+      "prob_7_divides_torsion": 2.1580230824254286e-05,
+      "prob_7_divides_sha_times_torsion": 0.0015316700414287796
+    },
+    "root_minus1": {
+      "count": 1924485,
+      "prob_2_divides_sha": 0.01630566099501945,
+      "prob_2_divides_torsion": 0.3463045957749736,
+      "prob_2_divides_sha_times_torsion": 0.35404692684016764,
+      "prob_sha_nontrivial": 0.017870755033164716,
+      "prob_sha_trivial": 0.9821292449668353,
+      "prob_3_divides_sha": 0.0015001415963231722,
+      "prob_3_divides_torsion": 0.01505181905808567,
+      "prob_3_divides_sha_times_torsion": 0.016537411307440693,
+      "prob_5_divides_sha": 6.39132027529443e-05,
+      "prob_5_divides_torsion": 0.000394910846278355,
+      "prob_5_divides_sha_times_torsion": 0.0004588240490312993,
+      "prob_7_divides_sha": 6.755053949498178e-06,
+      "prob_7_divides_torsion": 2.0265161848494533e-05,
+      "prob_7_divides_sha_times_torsion": 2.702021579799271e-05
+    }
+  },
+  "effect_2_divides_sha": {
+    "root_plus1": 0.11000548980018285,
+    "root_minus1": 0.01630566099501945,
+    "ratio": 6.746460007587791,
+    "difference": 0.0936998288051634
+  },
+  "rank_stratified": {
+    "root_plus1": {
+      "0": {
+        "count": 1404510,
+        "prob_sha_trivial": 0.7958989256039473,
+        "mean_sha": 2.6712,
+        "prob_2_divides_sha": 0.14831008679183488,
+        "sha_distribution_top10": {
+          "1": 1117848,
+          "4": 180532,
+          "9": 63046,
+          "16": 22295,
+          "25": 10830,
+          "36": 3228,
+          "49": 2782,
+          "64": 1508,
+          "81": 852,
+          "121": 408
+        }
+      },
+      "2": {
+        "count": 493291,
+        "prob_sha_trivial": 0.9985606873022213,
+        "mean_sha": 1.0045,
+        "prob_2_divides_sha": 0.0014089046830369904,
+        "sha_distribution_top10": {
+          "1": 492581,
+          "4": 695,
+          "9": 15
+        }
+      },
+      "4": {
+        "count": 2086,
+        "prob_sha_trivial": 1.0,
+        "mean_sha": 1.0,
+        "prob_2_divides_sha": 0.0,
+        "sha_distribution_top10": {
+          "1": 2086
+        }
+      }
+    },
+    "root_minus1": {
+      "1": {
+        "count": 1887132,
+        "prob_sha_trivial": 0.981777109391394,
+        "mean_sha": 1.0672,
+        "prob_2_divides_sha": 0.0166268178378619,
+        "sha_distribution_top10": {
+          "1": 1852743,
+          "4": 30908,
+          "9": 2875,
+          "16": 454,
+          "25": 123,
+          "49": 13,
+          "36": 11,
+          "64": 4,
+          "81": 1
+        }
+      },
+      "3": {
+        "count": 37334,
+        "prob_sha_trivial": 0.9999196442920663,
+        "mean_sha": 1.0002,
+        "prob_2_divides_sha": 8.03557079337869e-05,
+        "sha_distribution_top10": {
+          "1": 37331,
+          "4": 3
+        }
+      },
+      "5": {
+        "count": 19,
+        "prob_sha_trivial": 1.0,
+        "mean_sha": 1.0,
+        "prob_2_divides_sha": 0.0,
+        "sha_distribution_top10": {
+          "1": 19
+        }
+      }
+    }
+  },
+  "poonen_rains_test": {
+    "2": {
+      "PR_prob_trivial_sha_p": 0.419422,
+      "empirical_prob_sha_p_trivial_rank0_rootP1": 0.85169,
+      "ratio_empirical_over_PR": 2.030628
+    },
+    "3": {
+      "PR_prob_trivial_sha_p": 0.639005,
+      "empirical_prob_sha_p_trivial_rank0_rootP1": 0.951994,
+      "ratio_empirical_over_PR": 1.489807
+    },
+    "5": {
+      "PR_prob_trivial_sha_p": 0.793335,
+      "empirical_prob_sha_p_trivial_rank0_rootP1": 0.991925,
+      "ratio_empirical_over_PR": 1.250322
+    },
+    "7": {
+      "PR_prob_trivial_sha_p": 0.854592,
+      "empirical_prob_sha_p_trivial_rank0_rootP1": 0.997957,
+      "ratio_empirical_over_PR": 1.167759
+    }
+  },
+  "effect_sizes_p_divides_sha": {
+    "2": {
+      "root_plus1": 0.110005,
+      "root_minus1": 0.016306,
+      "difference": 0.0937,
+      "ratio": 6.7465
+    },
+    "3": {
+      "root_plus1": 0.035497,
+      "root_minus1": 0.0015,
+      "difference": 0.033997,
+      "ratio": 23.6623
+    },
+    "5": {
+      "root_plus1": 0.00597,
+      "root_minus1": 6.4e-05,
+      "difference": 0.005906,
+      "ratio": 93.4053
+    },
+    "7": {
+      "root_plus1": 0.00151,
+      "root_minus1": 7e-06,
+      "difference": 0.001503,
+      "ratio": 223.5496
+    }
+  },
+  "sha_parity_analysis": {
+    "root_plus1": {
+      "count": 1899887,
+      "sha_equals_1": 1612515,
+      "prob_sha_1": 0.848743,
+      "2_adic_valuation_of_sha": {
+        "0": 1690889,
+        "2": 184939,
+        "4": 22493,
+        "6": 1512,
+        "8": 49,
+        "10": 5
+      }
+    },
+    "root_minus1": {
+      "count": 1924485,
+      "sha_equals_1": 1890093,
+      "prob_sha_1": 0.982129,
+      "2_adic_valuation_of_sha": {
+        "0": 1893105,
+        "2": 30922,
+        "4": 454,
+        "6": 4
+      }
+    }
+  },
+  "rank_parity_by_root_number": {
+    "root_plus1": {
+      "even_rank_count": 1899887,
+      "odd_rank_count": 0,
+      "prob_even_rank": 1.0,
+      "prob_odd_rank": 0.0
+    },
+    "root_minus1": {
+      "even_rank_count": 0,
+      "odd_rank_count": 1924485,
+      "prob_even_rank": 0.0,
+      "prob_odd_rank": 1.0
+    }
+  }
+}
