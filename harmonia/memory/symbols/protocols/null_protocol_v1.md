@@ -66,6 +66,64 @@ Two cells on F011 (P021, P023) were flagged as Class 3 stratum-uniform. sessionD
 
 ---
 
+## v1.1 AMENDMENT — Precondition: PATTERN_BSD_TAUTOLOGY
+
+**Applies to any correlation or regression involving two or more quantities drawn from the BSD-ingredient family on elliptic-curve data.**
+
+Motivation: F043 retraction (2026-04-19) and the Kairos tautology scan (2026-04-22) surfaced a class of pseudo-findings produced by rearranging the BSD identity. The anticorrelation `corr(log Sha, log A = Ω · ∏c_p) = -0.4343` at `z_block = -348` is a rearrangement of `log L = log A + log Reg - 2 log|Tor| + log|Sha|`, not evidence of arithmetic structure. Block-shuffle nulls do not catch this because permutation preserves the definitional dependence.
+
+### The BSD-ingredient family
+
+The BSD identity for elliptic curves over ℚ:
+
+$$ \frac{L^{(r)}(E, 1)}{r!} \;=\; \frac{\Omega_E \cdot \operatorname{Reg}(E) \cdot \prod_p c_p(E) \cdot |\text{Ш}(E)|}{|E(\mathbb{Q})_{\text{tors}}|^2} $$
+
+The **BSD-ingredient family** comprises any quantity in this identity, any log-transform of one, any product/quotient/ratio of two or more, and any analytical invariant algebraically derivable from them:
+
+- `L^(r)(E,1)/r!` (leading term), `L(E,1)` itself at rank 0
+- `Ω` (real period), `Ω_E`
+- `Reg(E)` (regulator; at rank 0 equal to 1, so trivially constant)
+- `∏_p c_p` (Tamagawa product), individual `c_p`
+- `|Ш|` (analytic Sha order, **circular at rank ≥ 2** per F003 caveat)
+- `|E(ℚ)_tors|` (torsion order), `|Tor|²`
+- Any derived ratio: `A := Ω · ∏c_p`, `leading_term / (Ω · Reg · ∏c_p)`, `Ω / |Tor|²`, etc.
+- Log-transforms of any of the above: `log Ω`, `log Sha`, `log |A|`, etc.
+- Height-theoretic invariants with overlapping ingredients: Faltings height `h_F(E) ≈ -(1/12) log Ω + const`, Szpiro ratio `log|Δ|/log(N)` (since `log|Δ|` is linked to `log Ω` through the archimedean contribution and to conductor through `N | Δ`)
+
+### Precondition check (before any null on corr(X, Y) with X or Y in this family)
+
+1. **Write X in the full BSD identity's atomic variables** `{L, Ω, Reg, ∏c_p, |Sha|, |Tor|}`. Does Y (or log Y) appear as a term, factor, or definitional component of X?
+2. If yes: compute the **definitional coefficient** of Y within X. Non-zero coefficient means a correlation is algebraically forced (direction and magnitude predictable from the identity).
+3. **If the coefficient is non-zero, NULL_BSWCD is insufficient regardless of stratifier.** Permutation preserves definitional relationships. Report: refuse to run, flag for Pattern 30 / PATTERN_BSD_TAUTOLOGY check.
+4. **If the coefficient is zero but the ingredient-sets overlap non-trivially** (same primes of bad reduction, shared conductor divisors, Euler-product co-factors): the correlation is PARTIAL. Proceed only with a null that controls for the shared ingredient (partial correlation, residualized regression, or frame-based Euler-deflation).
+
+### Anchor cases
+
+| Specimen | X | Y | Algebraic connection | Verdict |
+|---|---|---|---|---|
+| F043 (retracted) | log Sha | log A = log Ω + log ∏c_p | `log A = log L − 2 log Tor + log Reg − (−log Sha)` — `-log Sha` is an explicit term | COUPLED; retracted |
+| F028 (killed) | Szpiro = log\|Δ\|/log N | Faltings ≈ (1/12) log\|Δ\| + const | both linear in log\|Δ\|; `ρ = 0.97` after partial log(N) control is the shared ingredient | COUPLED; tier=killed_tautology |
+| H40 (suspended by Kairos 2026-04-22) | Szpiro | Faltings | same as F028; awaiting `partial_ρ(Szpiro, Faltings \| log N)` from Charon | SUSPENDED pending partial-ρ |
+| F015 (PARTIAL per Pattern 30) | Szpiro | conductor N | Szpiro contains `log N` in denominator; some negative slope algebraically expected | PARTIAL; per-k sign-uniformity remains informative |
+| F041a (PARTIAL-pending) | M_1 slope | nbp | arithmetic factor `a_E(1)` in CFKRS is an Euler product over bad primes; can produce slope-in-nbp dependence | PARTIAL; CFKRS gate pending |
+
+### Relationship to Class 5 and Pattern 30
+
+- **Class 5** ("algebraic-identity claim, no null applies") is the broader category; `PATTERN_BSD_TAUTOLOGY` is the specific instance for BSD-EC work. Any Class-5 trigger on BSD-family variables is automatically a PATTERN_BSD_TAUTOLOGY match.
+- **Pattern 30** (algebraic-identity coupling detection) is the diagnostic procedure; `PATTERN_BSD_TAUTOLOGY` is a domain-specific shortcut — if both X and Y are in the BSD-ingredient family, skip step 1 of Pattern 30 and go straight to writing out the identity.
+- **Rank 0 caveat:** at rank 0, `Reg = 1` is constant, so it drops out algebraically. Any rank-0 correlation involving `log L(E,1)`, `log Ω`, `log ∏c_p`, `log Sha`, or `log Tor` is subject to a tighter 5-variable identity — fewer degrees of freedom, more chances for definitional coupling.
+
+### Check against current classification
+
+Scanning `cartography/docs/cell_null_classification.json` for non-F043 specimens matching this pattern on rank-0 cohorts (2026-04-22):
+
+- **None found in `cell_null_classification.json`.** F011 cells concern zero-spacing variance vs stratifiers (not BSD-ingredient correlations). F013 cells concern rank-slope of variance (zero-spacing-derived, not BSD-ingredient). F014 concerns Lehmer polynomials. F015 PARTIAL already annotated. F041a PARTIAL already annotated. F044 is construction-frame, not correlation. F045 concerns isogeny-class a_p, not BSD-ingredients.
+- Kairos's live-specimen scan (H40, H80, H83, H11, H75, H27, H15, H60) is handled on the challenges stream; those hypotheses are not cells in the tensor and are tracked outside this JSON.
+
+If a future specimen opens with a correlation where either axis is in the BSD-ingredient family, the precondition check above must run before tier assignment or any null is executed.
+
+---
+
 ## Original v1 content follows
 
 
