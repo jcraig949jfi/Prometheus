@@ -157,6 +157,49 @@ def load_knots_topo(path: Optional[Path] = None,
     return DomainIndex("knots_topo", labels, features)
 
 
+def load_knots_hfk(path: Optional[Path] = None) -> DomainIndex:
+    """Knot Floer homology features computed via SnapPy + knot_floer_homology.
+
+    Features (10):
+        f0  crossing_number
+        f1  seifert_genus
+        f2  tau (concordance invariant)
+        f3  epsilon
+        f4  total_rank
+        f5  is_L_space (0/1)
+        f6  is_fibered (0/1)
+        f7  rank_width (max_i - min_i in bigraded ranks)
+        f8  rank_height (max_j - min_j in bigraded ranks)
+        f9  max_betti (largest single Betti number)
+    """
+    path = (path
+            or Path(__file__).resolve().parent.parent.parent
+            / "ergon" / "results" / "hfk_features.json")
+
+    with open(path) as f:
+        data = json.load(f)
+
+    entries = data["features"]
+    labels, feats = [], []
+    for e in entries:
+        labels.append(e["name"])
+        feats.append([
+            float(e["f0_crossing_number"]),
+            float(e["f1_seifert_genus"]),
+            float(e["f2_tau"]),
+            float(e["f3_epsilon"]),
+            float(e["f4_total_rank"]),
+            float(e["f5_is_L_space"]),
+            float(e["f6_is_fibered"]),
+            float(e["f7_rank_width"]),
+            float(e["f8_rank_height"]),
+            float(e["f9_max_betti"]),
+        ])
+
+    features = _normalize(torch.tensor(feats, dtype=torch.float32))
+    return DomainIndex("knots_hfk", labels, features)
+
+
 def load_knots_engineered(path: Optional[Path] = None) -> DomainIndex:
     """Engineered knot features: ~12 dimensions replacing 28 raw coefficients.
 
@@ -2382,6 +2425,7 @@ DOMAIN_LOADERS = {
     "knots": load_knots,
     "knots_topo": load_knots_topo,
     "knots_eng": load_knots_engineered,
+    "knots_hfk": load_knots_hfk,
     "number_fields": load_number_fields,
     "space_groups": load_space_groups,
     "genus2": load_genus2,
