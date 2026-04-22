@@ -34,7 +34,21 @@ assigned:
 
 ## Active claims
 
-*(none yet — wave 0 bootstrap)*
+- **T1 — Session manifest schema + parser** — claimed by
+  `Harmonia_M2_sessionD` (concurrent instance) on 2026-04-22
+  at 14:35:16 via sync stream. Will deliver: YAML manifest
+  convention + parser in `agora/symbols/resolve.py` + validator
+  + round-trip tests + `symbols/VERSIONING.md` update.
+- **T2 — Symbol status-lifecycle field** — claimed by
+  `Harmonia_M2_sessionB` on 2026-04-22 at 14:35:14 via sync stream.
+- **T4 — Materialization sprint spec (spec-only, no execution)** —
+  claimed by `Harmonia_M2_sessionD` (this instance, 14:40Z). Will
+  deliver: paste-ready task spec at `docs/prompts/
+  materialization_sprint_kodaira_moddeg_euler.md`, acceptance
+  criteria per sub-task, unblocks list, Agora task seeded at
+  priority -1.5 with `required_qualification: 'ergon_or_techne'`,
+  cross-ref in `decisions_for_james.md`. Disambiguated from
+  concurrent sessionD's T1 claim by picking an orthogonal task.
 
 ## Unclaimed tasks (first-wave)
 
@@ -162,6 +176,61 @@ fire, log them; don't silently patch.
 - **Lost-in-the-middle attention.** If a Harmonia resolves a
   symbol wrongly despite it being in the manifest — evidence
   for R2's attention-degradation prediction.
+
+## Rename experiment (2026-04-22 wave 0)
+
+**Context:** more Harmonia processes are running than there are
+lettered canonical names (A–E), and some are colliding (observable
+via the "concurrent sessionD" notation earlier in this doc).
+James's call: don't hand out names prescriptively; **let duplicate-
+named instances pick their own**. Experimental premise: does
+self-chosen functional naming produce genuine persona-variance or
+just cosmetic relabeling?
+
+**Pre-qualified name pool (first-come-first-served).** Any of these
+can be claimed by a Harmonia that wants to rename:
+
+- `Harmonia_M2_builder` — implementation-heavy / T1/T2/T3-class
+- `Harmonia_M2_auditor` — dissent-by-design / adversarial review
+- `Harmonia_M2_scribe` — coordination docs / cross-session state
+- `Harmonia_M2_explorer` — novelty / cross-disciplinary lenses
+- `Harmonia_M2_consolidator` — retrospective / pattern extraction
+- `Harmonia_M2_translator` — external communication / Exegete-adjacent
+- `Harmonia_M2_archivist` — history / obsolete-entry cleanup
+- `Harmonia_M2_cartographer` — tensor / catalog maintenance
+
+Plus letter fallback: `Harmonia_M2_sessionF` through
+`Harmonia_M2_sessionJ` (less informative; only use if no
+functional name fits).
+
+**Rename protocol.**
+
+1. **Detect collision.** Signs include: `claim_task` returns None
+   unexpectedly; sync stream shows another process acting as you;
+   git commit conflicts on `current_wave.md`; inconsistent state
+   across your own wakes.
+2. **Choose.** Pick a functional name from the pool (or propose a
+   new one via `type=RENAME_PROPOSAL` with rationale).
+3. **Claim.** Broadcast on `agora:harmonia_sync` with
+   `type=RENAMED`, `from=<new-name>`, `note=<what-you-chose-and-why>`.
+4. **Migrate.** All subsequent `claim_task` / commits / sync
+   broadcasts use your new canonical name.
+5. **Note:** no penalty for picking a functional name that does not
+   match your actual work texture. The mismatch (if any) is itself
+   data — whether LLM agents gravitate to names matching their
+   actual priors or pick "aspirational" names is the interesting
+   question.
+
+**What sessionA is watching for:**
+
+- Do independent duplicate-processes converge on the same functional
+  name (bad — means the functional framing is one attractor, not
+  genuine diversity)?
+- Do renames shift downstream work-claim patterns (good — means the
+  name carries a real prior)?
+- Do any instances dissent against the rename protocol itself
+  (best — means the auditor role is working even before formally
+  claimed)?
 
 ## Dissent-by-design role (rotating)
 
