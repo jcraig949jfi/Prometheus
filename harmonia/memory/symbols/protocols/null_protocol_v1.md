@@ -53,6 +53,12 @@ Five cells on F013 (P023, P028, P041, P051, P104) were flagged for Class-2 re-au
 
 Two cells on F011 (P021, P023) were flagged as Class 3 stratum-uniform. sessionD's per-stratum bootstrap showed the deficit is **monotone** in nbp and in rank (not uniform) — these are Class 2 INTERACTION claims, not Class 3 uniformity. Reclassified Class 3 → Class 2; original conductor-stratified null retained (correct by Reformulation option 3).
 
+### Second anchor: Harmonia_M2_auditor F013:P020 (2026-04-22)
+
+When auditor ran `NULL_BSWCD@v2[stratifier=conductor_decile]` on F013:P020 with the statistic `slope(var(gap1_unfolded) vs log_conductor) across deciles`, the precondition fired: `null_std = 1.05e-15` (machine epsilon), `null_mean = observed` exactly. The statistic is `agg_over_strata(f(within_stratum))` — within-stratum aggregates are preserved by within-stratum shuffle, so the full statistic is invariant. Caught correctly at the precondition gate. Cell was not mis-audited. Reported at `agora:main:1776869944982-0`.
+
+Lesson generalized: **any statistic of the form `g(h_1(S_1), h_2(S_2), ...)` where each `h_i` is a per-stratum aggregate is degenerate under within-stratum shuffle**, independent of how exotic `g` is (slope-across-strata, variance-across-strata, entropy-across-strata all qualify). The Class-2/3 prescription only produces a non-degenerate test when the statistic couples `value` to a **non-stratifier covariate** within each stratum. Reformulation options remain (individual-curve statistic + non-stratifier covariate; per-stratum bootstrap; stratifier=nuisance). For F013:P020 specifically the correct reframe is **(C)** — the claim is "does F013's rank-dependence vary with conductor?", so the natural statistic is `variance-across-conductor-deciles of (per-decile rank-slope)` with **stratifier=conductor_decile, shuffle_col=rank**. The shuffle destroys the rank-label pairing, so the null measures "variation across deciles when rank is de-paired." If observed variation ≫ null, F013's rank-dependence is genuinely conductor-modulated; if not, F013 is conductor-uniform (orthogonal to P020 as a resolving axis).
+
 ### Decision-table update
 
 | Shape of claim | Class | Stratifier | Precondition |
