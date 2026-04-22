@@ -134,6 +134,12 @@ techne/
    breaks or returns garbage. Document them explicitly: "Returns NaN for
    cyclotomic polynomials," "Overflows for conductor > 10^15."
 
+7. **Virus scan before first execution.** Any external code — pip packages,
+   GitHub repos, academic supplements — must be scanned by Windows Defender
+   before first import or execution. Compiled extensions (.pyd, .dll, .so)
+   are highest priority. Pure Python is lower risk but still scan.
+   `powershell Start-MpScan -ScanPath <path> -ScanType QuickScan`
+
 ---
 
 ## The Symbol Schema for Tools
