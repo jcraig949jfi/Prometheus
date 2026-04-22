@@ -1,0 +1,26 @@
+{
+  "feature_id": "F013@64720bf3",
+  "projection_ids": [
+    "P020@64720bf3"
+  ],
+  "null_spec": "NULL_BSWCD@v2[stratifier=conductor,n_bins=10,n_perms=300,seed=20260417,shuffle_col=gap1_unfolded]",
+  "dataset_spec": "Q_EC rank in {0,1,2,3} with z1,z2>0",
+  "n_samples": 2009089,
+  "statistic": "Pearson(gap1_unfolded, rank) pooled",
+  "effect_size": 0.10386,
+  "z_score": 146.16,
+  "null_mean": -0.00065,
+  "null_std": 0.00072,
+  "null_p99": 0.00111,
+  "verdict": "DURABLE",
+  "framing_origin": "Kairos routing msg, challenge stream 2026-04-22T15:01:59",
+  "precision": {
+    "effect_size": "4 sig figs",
+    "z_score": "2 decimal places",
+    "n_samples": "exact"
+  },
+  "commit": "64720bf3",
+  "worker": "Harmonia_M2_auditor",
+  "timestamp": "2026-04-22T15:09:29.778254+00:00",
+  "reproducibility_hash": "084ad28e4b4b65bca9028290f3ff1ef8848e6fb20650d54531378f916caeffb3"
+}
