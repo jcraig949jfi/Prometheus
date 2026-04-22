@@ -1,21 +1,73 @@
 ---
 name: null_protocol
 type: protocol
-version: 1
-version_timestamp: 2026-04-19T03:00:00Z
+version: 1.1
+version_timestamp: 2026-04-22T00:00:00Z
+v1_promoted: 2026-04-19T03:00:00Z
 immutable: true
 proposed_by: Methodology Tightener (Mnemosyne M2, 2026-04-19)
+v1_1_amended_by: Methodology Tightener (Mnemosyne M2, 2026-04-22) reflecting sessionD reaudit_10 findings
 motivation: F043 retraction (external review 2026-04-19). Single-null usage
   under-specified: NULL_BSWCD@v2 was applied with default stratifier=conductor
   to claims that were not conductor-scaling claims. This is a claim-class
   error, not a null-implementation error.
+v1_1_motivation: sessionD reaudit_10_stratifier_mismatch_cells (2026-04-21)
+  found that for the F013 slope-of-variance-vs-rank statistic and F011
+  cross-group-spread statistic, the prescribed Class-2/3 stratifier shuffle
+  is DEGENERATE — the statistic depends only on per-stratum aggregates of
+  the stratifier, which are preserved under within-stratum shuffle. A
+  precondition check (PATTERN_STRATIFIER_INVARIANCE) is required before
+  running any Class-2/3 audit.
 references:
   - NULL_BSWCD@v2 (symbols/NULL_BSWCD.md)
   - Pattern 21 (null-model selection matters)
   - Pattern 26 DRAFT (confound selection discipline)
   - Pattern 30 DRAFT (algebraic-identity coupling)
+  - PATTERN_STRATIFIER_INVARIANCE@v0 DRAFT (cartography/docs/reaudit_10_stratifier_mismatch_results.md §1)
   - decisions_for_james.md 2026-04-19 post-review retraction entry
+  - cartography/docs/reaudit_10_stratifier_mismatch_results.md (sessionD 2026-04-21)
 ---
+
+## v1.1 AMENDMENT — Precondition: Statistic Non-Invariance
+
+**Applies before running Class 2 or Class 3 audit.**
+
+Before running `NULL_BSWCD@v2[stratifier=V]` on a Class 2 or Class 3 claim, verify that the test statistic is **not invariant** under within-V shuffle of the value column. If it is invariant, the null is degenerate (null_std ≈ 0) and the z-score is uninformative.
+
+### How to check
+A Class-2/3 null shuffles `value` within each stratum of V. If the statistic depends **only on per-stratum aggregates of V** (means, variances, counts), those aggregates are preserved by the shuffle and the statistic is invariant. Concrete checks:
+
+- **Between-stratum spread** (max − min of per-stratum means / deficits / variances) → invariant under within-V shuffle.
+- **Slope-of-(per-stratum-aggregate)-vs-V** → invariant.
+- **Variance-ratio across strata of V** → invariant.
+
+### Reformulation options when invariance is detected
+
+1. **Switch to an individual-curve statistic.** Instead of "slope of (per-stratum variance) vs V", use "slope of (individual value) vs covariate W within each V-stratum, differenced across V." This pairs `value` with a non-stratifier covariate W; within-V shuffle destroys the value↔W pairing, giving a non-degenerate test.
+2. **Bootstrap per-stratum durability.** For Class-3 uniformity claims, bootstrap the per-stratum statistic 300 times within each stratum and report `z_v = stat_v / SE_boot`. Uniformity = every `|z_v| ≥ 3`.
+3. **Switch stratifier to a documented nuisance.** If V is the axis of the claim AND the statistic is V-aggregate-only, use `stratifier=conductor_decile` (or whichever variable is nuisance). The null then destroys pairing between V and the statistic, which is what a Class-2 null SHOULD do — it just happens via a different stratifier than the naming convention suggests.
+
+### Retrospective correction (from sessionD reaudit_10)
+
+Five cells on F013 (P023, P028, P041, P051, P104) were flagged for Class-2 re-audit under `stratifier=rank_bin` in the v1 cell_null_classification. sessionD confirmed the flagged statistic is invariant under that shuffle. **The original conductor-stratified null was the structurally correct null for F013's statistic shape.** Flags rescinded; no cells mutated.
+
+Two cells on F011 (P021, P023) were flagged as Class 3 stratum-uniform. sessionD's per-stratum bootstrap showed the deficit is **monotone** in nbp and in rank (not uniform) — these are Class 2 INTERACTION claims, not Class 3 uniformity. Reclassified Class 3 → Class 2; original conductor-stratified null retained (correct by Reformulation option 3).
+
+### Decision-table update
+
+| Shape of claim | Class | Stratifier | Precondition |
+|---|---|---|---|
+| "X scales with conductor as f(N)" | 1 | `conductor_decile` | (no invariance check needed — conductor IS the claim axis) |
+| "slope of X differs by rank, INDIVIDUAL-curve statistic" | 2 | `rank_bin` | Verify statistic is not pure per-rank aggregate |
+| "per-rank aggregate of X (e.g., variance) differs across ranks" | 2 | `conductor_decile` (NOT rank_bin — would be degenerate) | — |
+| "X holds within every stratum S, with per-stratum bootstrap" | 3 | bootstrap within S (not within-S shuffle) | — |
+| "property holds in curated sample" | 4 | **no NULL_BSWCD variant suffices** | — |
+| "proved / defined / formula rearrangement" | 5 | **no null applies; Pattern 30 check only** | — |
+
+---
+
+## Original v1 content follows
+
 
 ## Purpose
 
