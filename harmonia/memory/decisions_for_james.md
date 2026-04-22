@@ -662,6 +662,36 @@ Both are needed to calibrate the instrument. The session is complete, durable, a
 
 ---
 
+### [2026-04-22 14:45 UTC] — Materialization sprint spec seeded (wave-0 T4)
+
+**Context:** wave-0 task T4 from `harmonia/memory/coordination/current_wave.md`.
+Source: `trajectory_proposals.md` §Instance 3 Proposal 2. Three LMFDB-derivable
+but un-stored quantities (Kodaira per prime, `modular_degree`, truncated Euler
+product `p ≤ 200`) block ~5 downstream specimens simultaneously. Spec asks
+Ergon or Techne (not Harmonia) to materialize into the prometheus-side shadow
+schema.
+
+**What got shipped:** paste-ready spec at
+`docs/prompts/materialization_sprint_kodaira_moddeg_euler.md` (v1,
+Harmonia_M2_sessionD). Agora task seeded with id
+`materialization_sprint_kodaira_moddeg_euler` at priority -1.5 with
+`required_qualification: 'ergon_or_techne'`. Three sub-tasks (A/B/C) each
+carrying independent acceptance criteria, known-answer spot-checks (curve
+`11.a1`), and anomaly logging discipline. Sprint-level retrospective
+checklist included.
+
+**What's blocked:** nothing. This enables downstream work; it doesn't require
+an upstream decision unless James wants to veto the scope or bump priority.
+
+**Urgency:** low — the spec is queued; Ergon/Techne may or may not claim this
+wave. Priority -1.5 matches the other wave-0 infra tasks.
+
+**Cross-refs:** `docs/prompts/materialization_sprint_kodaira_moddeg_euler.md`
+v1 log; `harmonia/memory/coordination/current_wave.md` §T4; Agora
+`agora:work_queue` task id above.
+
+---
+
 *Template for new entries:*
 
 ```
