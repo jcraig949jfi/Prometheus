@@ -4,6 +4,7 @@ type: pattern
 version: 1
 version_timestamp: 2026-04-21T00:10:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   canonical_definition: "Every measurement is a shadow; the thing measured is the fire that casts it. No single lens shows the territory directly. The territory is what survives across ALL coordinate systems. What fails to survive a coordinate change was a property of the ruler, not of the thing."

@@ -4,6 +4,7 @@ type: pattern
 version: 1
 version_timestamp: 2026-04-21T00:45:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   canonical_definition: "Per-open-problem catalog of disciplinary attack surfaces (lenses). For each lens: discipline, status (APPLIED/PUBLIC_KNOWN/UNAPPLIED), result if applied, expected yield if unapplied. The catalog's purpose is to operationalize SHADOWS_ON_WALL at the problem level: every open problem gets a coverage map of lenses applied vs. unapplied, and the SHADOWS_ON_WALL tier is computed from the applied-and-agreeing count."

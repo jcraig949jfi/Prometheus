@@ -11,6 +11,28 @@ committed work OR drafter + reviewer sign-off. Draft symbols (version 0)
 live in MD files only; promoted symbols also mirror to Redis as
 `symbols:<NAME>:v<N>:*` keys and become **immutable at that version**.
 
+## Lifecycle status (T2, wave 0)
+
+Each promoted symbol carries a mutable **lifecycle status** —
+`active` / `deprecated` / `archived` — stored at
+`symbols:<NAME>:status` (separate from the immutable `:v<N>:def` blob).
+A deprecated or archived symbol MUST carry a `successor: <NAME>@v<N>`
+pointer indicating what supersedes it.
+
+- `active` (default) — usable in new work; resolves without warning.
+- `deprecated` — still resolvable; every `resolve()` emits a
+  `DeprecationWarning` with the successor pointer. Update references.
+- `archived` — resolution raises `SymbolArchivedError` unless
+  `include_archived=True` is passed. Intended for historical audit only.
+
+Transition via `agora.symbols.update_status(name, status, successor)`.
+Lifecycle status is *per-symbol-name* and does not touch individual
+version `:def` blobs — Rule 3 immutability is preserved across any
+number of status transitions.
+
+Query current status: `agora.symbols.get_status(name)`.
+All 20 symbols promoted as of 2026-04-22 default to `active`.
+
 ## By type
 
 ### Operators (pinned procedures)

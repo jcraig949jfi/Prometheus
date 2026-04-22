@@ -34,6 +34,13 @@ REQUIRED_FIELDS = {'name', 'type', 'version', 'version_timestamp', 'precision',
                    'immutable', 'previous_version'}
 VALID_REF = re.compile(r'^[A-Za-z0-9_-]+@(v\d+|c[0-9a-f]{6,40}|CURRENT)$')
 
+# T2 (wave 0) — lifecycle statuses. Per-symbol-name mutable metadata,
+# stored outside the immutable :def blob so transitions don't violate Rule 3.
+VALID_STATUSES = {'active', 'deprecated', 'archived'}
+# Fields excluded from the immutable def_json payload (stored in separate
+# mutable keys instead). If you add mutable metadata, add it here.
+MUTABLE_FIELDS = {'status', 'successor'}
+
 
 class SymbolValidationError(ValueError):
     pass
@@ -127,13 +134,31 @@ def push_symbol(md_path, r=None, force=False):
 
     _validate(sym, md_path)
 
-    # Canonical JSON for content-comparison
+    # Extract mutable lifecycle fields BEFORE computing def_json — these
+    # are stored in separate mutable Redis keys and must NOT enter the
+    # frozen :def blob (Rule 3: promoted versions are immutable).
+    status = sym.pop('status', None) or 'active'
+    successor = sym.pop('successor', None)
+    _validate_lifecycle(status, successor, md_path)
+
+    # Canonical JSON for content-comparison (excludes mutable fields)
     def_json = json.dumps(sym, ensure_ascii=False, sort_keys=True)
+
+    # Mutable lifecycle keys — update on every push regardless of whether
+    # the :def is new or unchanged. Safe to re-write because they're outside
+    # the immutable :def blob (Rule 3).
+    def _write_mutable():
+        r.set(f'symbols:{name}:status', status)
+        if successor:
+            r.set(f'symbols:{name}:successor', successor)
+        else:
+            r.delete(f'symbols:{name}:successor')
 
     # Immutability check: if this version already exists in Redis, new content must match exactly
     existing_def = r.get(f'symbols:{name}:v{version}:def')
     if existing_def is not None:
         if existing_def == def_json:
+            _write_mutable()
             return 'unchanged', name, version
         else:
             raise SymbolImmutabilityError(
@@ -180,7 +205,60 @@ def push_symbol(md_path, r=None, force=False):
     for ref in (sym.get('references') or []):
         r.sadd(f'symbols:refs:{ref}', f'{name}@v{version}')
 
+    # Mutable lifecycle keys (same helper as the unchanged-path branch).
+    _write_mutable()
+
     return 'pushed_new_version', name, version
+
+
+def _validate_lifecycle(status, successor, md_path):
+    """Validate status + successor fields per T2 (wave 0) spec."""
+    if status not in VALID_STATUSES:
+        raise SymbolValidationError(
+            f'{md_path}: status must be one of {sorted(VALID_STATUSES)} '
+            f'(got {status!r})'
+        )
+    if status in ('deprecated', 'archived'):
+        if not successor:
+            raise SymbolValidationError(
+                f'{md_path}: status={status!r} requires a successor field '
+                f'(e.g. successor: OTHER_NAME@v1)'
+            )
+        if not VALID_REF.match(successor):
+            raise SymbolValidationError(
+                f'{md_path}: successor {successor!r} must match NAME@v<N> '
+                f'or NAME@c<commit>'
+            )
+    elif successor:
+        # Active symbols should not carry a successor (no meaning)
+        raise SymbolValidationError(
+            f'{md_path}: successor is only valid when status in '
+            f'{{deprecated, archived}} (got status={status!r})'
+        )
+
+
+def update_status(name, status, successor=None, r=None):
+    """Transition an existing symbol to a new lifecycle status.
+
+    Does NOT touch the immutable :def blob. Writes only the mutable
+    symbols:<NAME>:status (and successor) keys. Use this when the MD
+    file is updated to reflect a status change, or to perform the
+    transition without re-pushing the MD.
+
+    Raises SymbolValidationError on bad status/successor.
+    Raises ValueError if the symbol isn't promoted to Redis yet.
+    """
+    if r is None:
+        r = _get_redis()
+    _validate_lifecycle(status, successor, f'<update_status {name}>')
+    if not r.sismember('symbols:all', name):
+        raise ValueError(f'{name} is not promoted to Redis; cannot set status')
+    r.set(f'symbols:{name}:status', status)
+    if successor:
+        r.set(f'symbols:{name}:successor', successor)
+    else:
+        r.delete(f'symbols:{name}:successor')
+    return status, successor
 
 
 def main(argv):

@@ -4,6 +4,7 @@ type: signature
 version: 1
 version_timestamp: 2026-04-21T00:10:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   schema_form: tuple with three required fields + one optional

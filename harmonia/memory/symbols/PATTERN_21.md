@@ -4,6 +4,7 @@ type: pattern
 version: 1
 version_timestamp: 2026-04-21T00:00:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   canonical_definition: "A permutation null is not a single thing — it is a family parameterized by which stratum structure is preserved. Plain label-permutation destroys every stratum marginal; block-shuffle-within-stratum preserves one. The same data can return z ~ +infty under plain and z ~ 0 under block-shuffle. Choice of which marginal to preserve is a coordinate-system choice; projection discipline applies to it. A claim whose z survives only under the plain null is a stratum-marginal coincidence, not a within-stratum coupling."

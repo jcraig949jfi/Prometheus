@@ -4,6 +4,7 @@ type: dataset
 version: 1
 version_timestamp: 2026-04-18T14:30:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   row_count: 559386 exact as of 2026-04-18

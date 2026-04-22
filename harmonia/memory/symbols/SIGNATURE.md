@@ -4,6 +4,7 @@ type: signature
 version: 1
 version_timestamp: 2026-04-18T14:30:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   schema: fixed tuple, JSON-serializable

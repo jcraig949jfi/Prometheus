@@ -4,6 +4,7 @@ type: pattern
 version: 1
 version_timestamp: 2026-04-20T23:55:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   canonical_definition: "A pooled single-axis measurement can look clean (monotone, single-signed, high R2, low p) while masking stratum-level structure that contradicts it. The stratified or preprocessed view shows the real shape: different magnitudes per stratum, different signs per stratum, or the effect collapsing under proper preprocessing. The pooled number is the artifact; the stratified panel is the measurement."

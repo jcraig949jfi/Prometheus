@@ -4,6 +4,7 @@ type: pattern
 version: 1
 version_timestamp: 2026-04-20T23:45:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   canonical_definition: "Before running a correlation or dependence test on two quantities X and Y, check whether one is algebraically defined in terms of the other (directly or via rearrangement of a proved identity). If yes, the observed correlation is a rearrangement of the identity, not evidence of arithmetic structure. Permutation nulls do NOT break this coupling because they preserve algebraic relationships between variables."

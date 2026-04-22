@@ -4,6 +4,7 @@ type: pattern
 version: 1
 version_timestamp: 2026-04-20T23:59:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   canonical_definition: "Spawn N parallel threads against one open problem, each with a distinct disciplinary prior, forbidden-move constraints that prevent retreat into consensus language, and a commitment contract requiring a refutable prediction. Do not synthesize prematurely. The shape of agreement/disagreement across threads IS the primary output."

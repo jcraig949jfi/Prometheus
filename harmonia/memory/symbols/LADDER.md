@@ -4,6 +4,7 @@ type: shape
 version: 1
 version_timestamp: 2026-04-18T14:30:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   corr_threshold: 0.9

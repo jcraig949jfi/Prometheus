@@ -4,6 +4,7 @@ type: constant
 version: 1
 version_timestamp: 2026-04-21T00:05:00Z
 immutable: true
+status: active
 previous_version: null
 precision:
   taxonomy_form: enumerated controlled vocabulary

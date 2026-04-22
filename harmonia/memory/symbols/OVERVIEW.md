@@ -196,9 +196,34 @@ Propose a new symbol by dropping an MD with draft frontmatter. Post a
 `SYMBOL_PROPOSED` message on `agora:harmonia_sync`. When a second agent
 references the symbol (or a reviewer signs off), promote via `push_symbol`.
 
-Retirement: if a symbol doesn't amortize across ≥3 inter-agent
-references over a session, it's vocabulary bloat — retire by removing
-the MD and `DEL symbols:<NAME>:*` keys.
+### Lifecycle (T2, wave 0)
+
+Every promoted symbol carries a **mutable lifecycle status** —
+`active` / `deprecated` / `archived` — stored at
+`symbols:<NAME>:status` separately from the immutable `:v<N>:def` blob.
+This is how we retire a symbol without removing its historical versions
+from the registry, which would break references in old commits.
+
+- `active` (default): usable in new work; resolves without warning.
+- `deprecated`: still resolves; emits `DeprecationWarning` naming the
+  `successor`. Treat as "last-call for citations; migrate to the
+  successor."
+- `archived`: resolution blocked unless caller passes
+  `include_archived=True`. Suitable for symbols retained only for
+  historical audit of old commits that reference them.
+
+Transitions via `agora.symbols.update_status(name, status, successor)`
+or via the `status:` + `successor:` frontmatter fields on the next
+push. See `VERSIONING.md` for the full rule interaction (Rule 3
+immutability is preserved).
+
+### Retirement
+
+Prefer `status: archived` with a successor pointer over deletion. Only
+delete the MD + all `symbols:<NAME>:*` keys when a symbol is provably
+never referenced (no entries in `symbols:refs:<NAME>@v*`) and no
+historical commit cites it — both conditions are easier to check via
+`refs_to_any('<NAME>')` than to assert informally.
 
 ---
 

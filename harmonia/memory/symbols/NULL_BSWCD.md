@@ -4,6 +4,7 @@ type: operator
 version: 2
 version_timestamp: 2026-04-19T01:25:00Z
 immutable: true
+status: active
 previous_version: 1
 precision:
   n_perms_default: 300
