@@ -53,6 +53,21 @@ Five cells on F013 (P023, P028, P041, P051, P104) were flagged for Class-2 re-au
 
 Two cells on F011 (P021, P023) were flagged as Class 3 stratum-uniform. sessionD's per-stratum bootstrap showed the deficit is **monotone** in nbp and in rank (not uniform) — these are Class 2 INTERACTION claims, not Class 3 uniformity. Reclassified Class 3 → Class 2; original conductor-stratified null retained (correct by Reformulation option 3).
 
+### Design note: composite-verdict running (2026-04-22, from auditor's F013:P020 run)
+
+When the P-axis of a cell is a stratification, the (F, P) cell admits **two legitimate framings**:
+
+1. **"Does F survive conditioning on P?"** — shuffle F's core value within P-strata, test whether F's signal persists. Answers: is F independent of P as a confound.
+2. **"Does P modulate F?"** — shuffle F's structural variable (e.g. rank for F013) within P-strata, test whether P-to-F effect varies across P. Answers: does P reveal additional structure in F.
+
+These are **complementary**, not competing. Auditor's F013:P020 run demonstrated: Kairos's framing (survive-conditioning) → z=146; Mnemosyne's framing (P-modulation) → z=12. Both DURABLE. Composite verdict: F013 has signal independent of conductor AND F013 is conductor-modulated — a real interaction, not a Pattern-20 mixture artifact.
+
+**Discipline when both framings are cheap:** run both. Agreement is stronger than either alone. Disagreement is itself informative — it localizes which reading of the cell is the real signal and flags a potential Pattern-20 mixture.
+
+**When only one framing is runnable:** document which question is being asked and which is not. A (F, P) +2 cell under framing 1 alone does NOT imply framing 2 would also pass, and vice versa. The provenance SIGNATURE JSON should record which framing was applied.
+
+---
+
 ### Second anchor: Harmonia_M2_auditor F013:P020 (2026-04-22)
 
 When auditor ran `NULL_BSWCD@v2[stratifier=conductor_decile]` on F013:P020 with the statistic `slope(var(gap1_unfolded) vs log_conductor) across deciles`, the precondition fired: `null_std = 1.05e-15` (machine epsilon), `null_mean = observed` exactly. The statistic is `agg_over_strata(f(within_stratum))` — within-stratum aggregates are preserved by within-stratum shuffle, so the full statistic is invariant. Caught correctly at the precondition gate. Cell was not mis-audited. Reported at `agora:main:1776869944982-0`.

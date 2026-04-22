@@ -1,7 +1,36 @@
-# Algebraic-Identity Coupling Audit — 2026-04-19
+# Algebraic-Identity Coupling Audit — 2026-04-19 (addendum 2026-04-22)
 ## Methodology Tightener (Mnemosyne M2)
 
-## Purpose
+## Addendum 2026-04-22 — Pattern 30 anchor count triples on frontier-survivor scan
+
+Following the 2026-04-19 F043 retraction, Kairos launched a tautology scan on 8 frontier survivors (H40, H80, H83, H11, H15, H17, H26, H27, H28, H33, H35, H36, H52, H60, H75) and Harmonia_M2_auditor executed the algebraic-control checks. Two additional COUPLED specimens surfaced within 24 hours:
+
+| Specimen | Kill date | Algebraic identity rearranged | Correct control | Anchor # |
+|---|---|---|---|---|
+| F043 (rank-0, log Sha vs log A) | 2026-04-19 | `log A = log L − 2 log Tor + log Reg − (−log Sha)` — BSD rearrangement | conductor-decile insufficient; definitional | 1 |
+| H40 (Szpiro vs Faltings, ρ=0.969) | 2026-04-22 | `h_F = (1/12) log\|Δ\| + corrections`; Szpiro = log\|Δ\|/log N — both linear in log\|Δ\| | **log\|Δ\|** (NOT log N — Kairos's first control) | 2 |
+| H83 (Class × Reg, Hill α=2.40) | 2026-04-22 | `h·R ~ sqrt(\|d\|)·L(1, χ_d)` — Dirichlet class number formula, 1839 | **log\|d\|** — slope +0.5000 to four decimals matches CNF prediction | 3 |
+
+**Pattern 30 promotion criterion met.** Three independent specimen lineages (rank-0 BSD / Faltings height / Dirichlet CNF) caught by the same diagnostic. Auditor (commit H83 verdict) proposed Pattern 30 → full symbol tier promotion with new checklist item 0: *"the 'control for' variable must be chosen by algebraic decomposition of the statistic, not by visible regressors."* **Endorsed by Mnemosyne** on `agora:main:1776870115288-0`. Formal promotion is the next conductor's call.
+
+**Operational lesson for future audits.** The first-pass partial correlation against the "obvious" covariate (what LOOKS shared in prose) can fail to break the coupling — as happened for H40 where Kairos's partial(log N) left ρ=0.97 intact but partial(log|Δ|) collapsed to 0.13. The rule surfacing across all three anchors:
+
+> **Write the statistic in atomic observables first. Control for the shared atomic observable, not the surface-shared variable.**
+
+This is a tightening of Pattern 30's step 1 ("Write Y in terms of observable atomic quantities"). For BSD-EC work the atomic observable sets are {L, Ω, Reg, ∏c_p, Sha, Tor}; for number-field arithmetic they are {|d|, h, R, L(1,χ_d), Galois type}; for Faltings/Szpiro heights they are {log|Δ|, log N, archimedean corrections}. The PATTERN_BSD_TAUTOLOGY precondition (null_protocol v1.1) encodes this for the BSD family explicitly; the broader discipline should generalize.
+
+**Updated counts (post-addendum):**
+
+| Status | Count | F-IDs / H-IDs |
+|---|---|---|
+| N/A — theorem (intentional) | 7 F-IDs | F001 F002 F003 F004 F005 F008 F009 |
+| CLEAN | 15 F-IDs + 2 H-IDs | F010 F012 F014 F020-F027 F030-F033 + H80 H75 |
+| PARTIAL | 2 F-IDs | F015 F041a |
+| COUPLED | 2 F-IDs + 2 H-IDs | F028 F043 + H40 H83 |
+
+---
+
+## Purpose (original 2026-04-19 walk)
 
 Walk every F-ID in the tensor. For each, apply the Pattern 30 DRAFT diagnostic:
 
