@@ -17,19 +17,23 @@ live in MD files only; promoted symbols also mirror to Redis as
 
 | Symbol | One-line | Status |
 |---|---|---|
-| [NULL_BSWCD@v1](NULL_BSWCD.md) | Block-Shuffle Within Conductor Decile null. Defaults: n_bins=10, n_perms=300, seed=20260417. | v1 promoted |
+| [NULL_BSWCD@v2](NULL_BSWCD.md) | Block-Shuffle Within Stratum null. v2 parameterized stratifier + shuffle_col, Pattern-26 degeneracy guard wired in. v1 callers get byte-identical defaults. | v2 promoted |
 
 ### Shapes (structural pattern descriptors)
 
 | Symbol | One-line | Status |
 |---|---|---|
 | [LADDER@v1](LADDER.md) | Monotone slope-vs-axis structure. Diagnostic thresholds: corr ≥ 0.9, amp ≥ 1.5×, block_null_z ≥ 3, min_n ≥ 100. | v1 promoted |
+| [VACUUM@v1](VACUUM.md) | Uniform-positive invariance row across ≥ 4 projections spanning ≥ 2 axis classes. Operationalizes Pattern 18 as a queryable demand signal. Drives gen_11 coordinate-invention. | v1 promoted |
+| [EXHAUSTION@v1](EXHAUSTION.md) | Negative-side sister to VACUUM: ≥ 3 kills clustered in one axis class with ≥ 1 surviving class for redirect. Operationalizes Pattern 13. | v1 promoted |
+| [SUBFAMILY@v1](SUBFAMILY.md) | Tail enrichment/depletion within a parent stratum. Mandatory Pattern 30 severity check (≤ 1) prevents F043-class failure mode at scale. | v1 promoted |
 
 ### Constants (numerical values with CI + provenance)
 
 | Symbol | One-line | Status |
 |---|---|---|
-| [EPS011@v1](EPS011.md) | F011 rank-0 residual asymptote. Canonical: 22.90 ± 0.78 % (classical 1/log(N) ansatz). | v1 promoted |
+| [EPS011@v2](EPS011.md) | F011 rank-0 residual asymptote. Canonical: 22.90 ± 0.78 % (classical 1/log(N) ansatz). v2 adds independent_unfolding_audit precision: SURVIVES (Track B Option-3 conductor-shuffle sanity null decisive). | v2 promoted |
+| [AXIS_CLASS@v1](AXIS_CLASS.md) | Controlled vocabulary classifying coordinate types. 10 values: family_level, magnitude, ordinal, categorical, stratification, preprocessing, null_model, scorer, joint, transformation. Tagging audit pending. | v1 promoted |
 
 ### Datasets (SQL queries / data slices)
 
@@ -41,7 +45,19 @@ live in MD files only; promoted symbols also mirror to Redis as
 
 | Symbol | One-line | Status |
 |---|---|---|
-| [SIGNATURE@v1](SIGNATURE.md) | Finding tuple schema. Adds precision_map + reproducibility_hash vs pre-v1 ad-hoc form. | v1 promoted |
+| [SIGNATURE@v1](SIGNATURE.md) | Finding tuple schema. Adds precision_map + reproducibility_hash vs pre-v1 ad-hoc form. v2 supersedes (extends with null_family_result + family_verdict). | v1 promoted; v2 promoted |
+| [GATE_VERDICT@v1](GATE_VERDICT.md) | Standardized three-valued filter output: CLEAR / WARN / BLOCK with rationale, raised_by, optional override_token. Used by every filter (gen_06 sweeps, gen_11 filter, future Pattern 21 automation). | v1 promoted |
+
+### Patterns (recognition rules)
+
+| Symbol | One-line | Status |
+|---|---|---|
+| [SHADOWS_ON_WALL@v1](SHADOWS_ON_WALL.md) | **Foundational frame.** Every measurement is a shadow; the territory is what survives across all lenses. Operational tiers by lens count (shadow / surviving_candidate / coordinate_invariant / durable / map_of_disagreement). Silent single-lens claims are forbidden. Every other pattern, verdict, and finding rests on this. | v1 promoted |
+| [PROBLEM_LENS_CATALOG@v1](PROBLEM_LENS_CATALOG.md) | Per-open-problem catalog of disciplinary attack surfaces (lenses). For each lens: discipline, status (APPLIED / PUBLIC_KNOWN / UNAPPLIED / DEFERRED), result or expected yield. Operationalizes SHADOWS_ON_WALL at the problem level. Catalog directory at `harmonia/memory/catalogs/`. Anchor catalogs: lehmer, collatz, p-vs-np. | v1 promoted |
+| [PATTERN_30@v1](PATTERN_30.md) | Algebraic-identity coupling detection. Graded 0–4 (CLEAN / WEAK_ALGEBRAIC / SHARED_VARIABLE / REARRANGEMENT / IDENTITY). Five anchors (F043 Lv3; F015, F041a, F013, F045 Lv1). Drives `algebraic_lineage` arm of the 4-type lineage taxonomy. Implementation: `harmonia/sweeps/pattern_30.py`. | v1 promoted |
+| [PATTERN_20@v1](PATTERN_20.md) | Stratification reveals pooled artifact. Pooled single-axis measurement can mask stratum-level structure. Graded CLEAR / WARN / BLOCK on pooled-vs-stratum magnitude ratio + sign agreement. Four anchors (F010, F011, F013, F015). Implementation: `harmonia/sweeps/pattern_20.py`. | v1 promoted |
+| [PATTERN_21@v1](PATTERN_21.md) | Null-model selection matters as much as projection selection. Plain-permute vs block-shuffle gap > 3σ = plain over-rejected. Graded CLEAR / WARN / BLOCK on plain_z vs block_z gap in combined per-z-error units. Two anchors (F010 BLOCK, F011 CLEAR). Implementation: `harmonia/nulls/block_shuffle.py::bswcd_null`. Composes with PATTERN_20 and PATTERN_30 — the three form the coordinate-system discipline stack for null × pooled × variable-coupling. | v1 promoted |
+| [MULTI_PERSPECTIVE_ATTACK@v1](MULTI_PERSPECTIVE_ATTACK.md) | Spawn N parallel threads against one open problem, each with distinct disciplinary prior + forbidden-move constraints + commitment contract. Three output modes: `convergent_triangulation` / `divergent_map` / `mixed`. Anchors: Lehmer (divergent), Collatz (mixed). Protocol at `methodology_multi_perspective_attack.md`. | v1 promoted |
 
 ## By reference (versioned)
 
@@ -57,7 +73,11 @@ live in MD files only; promoted symbols also mirror to Redis as
 
 **NULL_BSWCD@v1 ← referenced by:** EPS011@v1, LADDER@v1, SIGNATURE@v1
 
+**NULL_BSWCD@v2 ← referenced by:** PATTERN_30@v1 (composition anchor for algebraic-coupling checks)
+
 **Q_EC_R0_D5@v1 ← referenced by:** EPS011@v1, SIGNATURE@v1
+
+**F043@c9fc25706 ← referenced by:** NULL_BSWCD@v2, SUBFAMILY@v1, PATTERN_30@v1 (primary anchor, Level 3 REARRANGEMENT)
 
 *(Full reverse index is queryable via `refs_to('<name>@v<n>')` or
 `refs_to_any('<prefix>')` in `agora.symbols`.)*
@@ -78,12 +98,16 @@ will flag unversioned symbol mentions in any text.
 
 ## Gaps (symbols we need but don't have yet)
 
-- **CLIFF** — step-change at a single stratum boundary (non-ladder)
-- **SUBFAMILY** — tail enrichment/depletion signature (anchor: T4 / F042 / F043)
-- **NULL_BSWR** — block-shuffle-within-rank variant
+See [CANDIDATES.md](CANDIDATES.md) for the live catalog of proposed symbols
+across four tiers.
+
+Remaining pre-existing gaps:
+- **CLIFF** — step-change at a single stratum boundary (non-ladder); needs second anchor outside F014
+- **NULL_BSWR** — block-shuffle-within-rank variant of NULL_BSWCD
 - **Q_EC_R12_D5** — rank {1, 2} version of Q_EC_R0_D5
-- **ZBLOCK** — z-score computed via NULL_BSWCD
-- **BATCH** — a set of findings grouped for literature audit
+- **ZBLOCK** — z-score computed via NULL_BSWCD with explicit null-attribution
+- **BATCH** — a set of findings grouped for literature audit (Pattern 28/29)
 
 Add via PR when an agent hits friction that a missing symbol would have
-prevented.
+prevented. Move to CANDIDATES.md if the proposal needs more than one
+line of rationale.

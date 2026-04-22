@@ -1,21 +1,137 @@
 ---
 name: null_protocol
 type: protocol
-version: 1
-version_timestamp: 2026-04-19T03:00:00Z
+version: 1.1
+version_timestamp: 2026-04-22T00:00:00Z
+v1_promoted: 2026-04-19T03:00:00Z
 immutable: true
 proposed_by: Methodology Tightener (Mnemosyne M2, 2026-04-19)
+v1_1_amended_by: Methodology Tightener (Mnemosyne M2, 2026-04-22) reflecting sessionD reaudit_10 findings
 motivation: F043 retraction (external review 2026-04-19). Single-null usage
   under-specified: NULL_BSWCD@v2 was applied with default stratifier=conductor
   to claims that were not conductor-scaling claims. This is a claim-class
   error, not a null-implementation error.
+v1_1_motivation: sessionD reaudit_10_stratifier_mismatch_cells (2026-04-21)
+  found that for the F013 slope-of-variance-vs-rank statistic and F011
+  cross-group-spread statistic, the prescribed Class-2/3 stratifier shuffle
+  is DEGENERATE — the statistic depends only on per-stratum aggregates of
+  the stratifier, which are preserved under within-stratum shuffle. A
+  precondition check (PATTERN_STRATIFIER_INVARIANCE) is required before
+  running any Class-2/3 audit.
 references:
   - NULL_BSWCD@v2 (symbols/NULL_BSWCD.md)
   - Pattern 21 (null-model selection matters)
   - Pattern 26 DRAFT (confound selection discipline)
   - Pattern 30 DRAFT (algebraic-identity coupling)
+  - PATTERN_STRATIFIER_INVARIANCE@v0 DRAFT (cartography/docs/reaudit_10_stratifier_mismatch_results.md §1)
   - decisions_for_james.md 2026-04-19 post-review retraction entry
+  - cartography/docs/reaudit_10_stratifier_mismatch_results.md (sessionD 2026-04-21)
 ---
+
+## v1.1 AMENDMENT — Precondition: Statistic Non-Invariance
+
+**Applies before running Class 2 or Class 3 audit.**
+
+Before running `NULL_BSWCD@v2[stratifier=V]` on a Class 2 or Class 3 claim, verify that the test statistic is **not invariant** under within-V shuffle of the value column. If it is invariant, the null is degenerate (null_std ≈ 0) and the z-score is uninformative.
+
+### How to check
+A Class-2/3 null shuffles `value` within each stratum of V. If the statistic depends **only on per-stratum aggregates of V** (means, variances, counts), those aggregates are preserved by the shuffle and the statistic is invariant. Concrete checks:
+
+- **Between-stratum spread** (max − min of per-stratum means / deficits / variances) → invariant under within-V shuffle.
+- **Slope-of-(per-stratum-aggregate)-vs-V** → invariant.
+- **Variance-ratio across strata of V** → invariant.
+
+### Reformulation options when invariance is detected
+
+1. **Switch to an individual-curve statistic.** Instead of "slope of (per-stratum variance) vs V", use "slope of (individual value) vs covariate W within each V-stratum, differenced across V." This pairs `value` with a non-stratifier covariate W; within-V shuffle destroys the value↔W pairing, giving a non-degenerate test.
+2. **Bootstrap per-stratum durability.** For Class-3 uniformity claims, bootstrap the per-stratum statistic 300 times within each stratum and report `z_v = stat_v / SE_boot`. Uniformity = every `|z_v| ≥ 3`.
+3. **Switch stratifier to a documented nuisance.** If V is the axis of the claim AND the statistic is V-aggregate-only, use `stratifier=conductor_decile` (or whichever variable is nuisance). The null then destroys pairing between V and the statistic, which is what a Class-2 null SHOULD do — it just happens via a different stratifier than the naming convention suggests.
+
+### Retrospective correction (from sessionD reaudit_10)
+
+Five cells on F013 (P023, P028, P041, P051, P104) were flagged for Class-2 re-audit under `stratifier=rank_bin` in the v1 cell_null_classification. sessionD confirmed the flagged statistic is invariant under that shuffle. **The original conductor-stratified null was the structurally correct null for F013's statistic shape.** Flags rescinded; no cells mutated.
+
+Two cells on F011 (P021, P023) were flagged as Class 3 stratum-uniform. sessionD's per-stratum bootstrap showed the deficit is **monotone** in nbp and in rank (not uniform) — these are Class 2 INTERACTION claims, not Class 3 uniformity. Reclassified Class 3 → Class 2; original conductor-stratified null retained (correct by Reformulation option 3).
+
+### Second anchor: Harmonia_M2_auditor F013:P020 (2026-04-22)
+
+When auditor ran `NULL_BSWCD@v2[stratifier=conductor_decile]` on F013:P020 with the statistic `slope(var(gap1_unfolded) vs log_conductor) across deciles`, the precondition fired: `null_std = 1.05e-15` (machine epsilon), `null_mean = observed` exactly. The statistic is `agg_over_strata(f(within_stratum))` — within-stratum aggregates are preserved by within-stratum shuffle, so the full statistic is invariant. Caught correctly at the precondition gate. Cell was not mis-audited. Reported at `agora:main:1776869944982-0`.
+
+Lesson generalized: **any statistic of the form `g(h_1(S_1), h_2(S_2), ...)` where each `h_i` is a per-stratum aggregate is degenerate under within-stratum shuffle**, independent of how exotic `g` is (slope-across-strata, variance-across-strata, entropy-across-strata all qualify). The Class-2/3 prescription only produces a non-degenerate test when the statistic couples `value` to a **non-stratifier covariate** within each stratum. Reformulation options remain (individual-curve statistic + non-stratifier covariate; per-stratum bootstrap; stratifier=nuisance). For F013:P020 specifically the correct reframe is **(C)** — the claim is "does F013's rank-dependence vary with conductor?", so the natural statistic is `variance-across-conductor-deciles of (per-decile rank-slope)` with **stratifier=conductor_decile, shuffle_col=rank**. The shuffle destroys the rank-label pairing, so the null measures "variation across deciles when rank is de-paired." If observed variation ≫ null, F013's rank-dependence is genuinely conductor-modulated; if not, F013 is conductor-uniform (orthogonal to P020 as a resolving axis).
+
+### Decision-table update
+
+| Shape of claim | Class | Stratifier | Precondition |
+|---|---|---|---|
+| "X scales with conductor as f(N)" | 1 | `conductor_decile` | (no invariance check needed — conductor IS the claim axis) |
+| "slope of X differs by rank, INDIVIDUAL-curve statistic" | 2 | `rank_bin` | Verify statistic is not pure per-rank aggregate |
+| "per-rank aggregate of X (e.g., variance) differs across ranks" | 2 | `conductor_decile` (NOT rank_bin — would be degenerate) | — |
+| "X holds within every stratum S, with per-stratum bootstrap" | 3 | bootstrap within S (not within-S shuffle) | — |
+| "property holds in curated sample" | 4 | **no NULL_BSWCD variant suffices** | — |
+| "proved / defined / formula rearrangement" | 5 | **no null applies; Pattern 30 check only** | — |
+
+---
+
+## v1.1 AMENDMENT — Precondition: PATTERN_BSD_TAUTOLOGY
+
+**Applies to any correlation or regression involving two or more quantities drawn from the BSD-ingredient family on elliptic-curve data.**
+
+Motivation: F043 retraction (2026-04-19) and the Kairos tautology scan (2026-04-22) surfaced a class of pseudo-findings produced by rearranging the BSD identity. The anticorrelation `corr(log Sha, log A = Ω · ∏c_p) = -0.4343` at `z_block = -348` is a rearrangement of `log L = log A + log Reg - 2 log|Tor| + log|Sha|`, not evidence of arithmetic structure. Block-shuffle nulls do not catch this because permutation preserves the definitional dependence.
+
+### The BSD-ingredient family
+
+The BSD identity for elliptic curves over ℚ:
+
+$$ \frac{L^{(r)}(E, 1)}{r!} \;=\; \frac{\Omega_E \cdot \operatorname{Reg}(E) \cdot \prod_p c_p(E) \cdot |\text{Ш}(E)|}{|E(\mathbb{Q})_{\text{tors}}|^2} $$
+
+The **BSD-ingredient family** comprises any quantity in this identity, any log-transform of one, any product/quotient/ratio of two or more, and any analytical invariant algebraically derivable from them:
+
+- `L^(r)(E,1)/r!` (leading term), `L(E,1)` itself at rank 0
+- `Ω` (real period), `Ω_E`
+- `Reg(E)` (regulator; at rank 0 equal to 1, so trivially constant)
+- `∏_p c_p` (Tamagawa product), individual `c_p`
+- `|Ш|` (analytic Sha order, **circular at rank ≥ 2** per F003 caveat)
+- `|E(ℚ)_tors|` (torsion order), `|Tor|²`
+- Any derived ratio: `A := Ω · ∏c_p`, `leading_term / (Ω · Reg · ∏c_p)`, `Ω / |Tor|²`, etc.
+- Log-transforms of any of the above: `log Ω`, `log Sha`, `log |A|`, etc.
+- Height-theoretic invariants with overlapping ingredients: Faltings height `h_F(E) ≈ -(1/12) log Ω + const`, Szpiro ratio `log|Δ|/log(N)` (since `log|Δ|` is linked to `log Ω` through the archimedean contribution and to conductor through `N | Δ`)
+
+### Precondition check (before any null on corr(X, Y) with X or Y in this family)
+
+1. **Write X in the full BSD identity's atomic variables** `{L, Ω, Reg, ∏c_p, |Sha|, |Tor|}`. Does Y (or log Y) appear as a term, factor, or definitional component of X?
+2. If yes: compute the **definitional coefficient** of Y within X. Non-zero coefficient means a correlation is algebraically forced (direction and magnitude predictable from the identity).
+3. **If the coefficient is non-zero, NULL_BSWCD is insufficient regardless of stratifier.** Permutation preserves definitional relationships. Report: refuse to run, flag for Pattern 30 / PATTERN_BSD_TAUTOLOGY check.
+4. **If the coefficient is zero but the ingredient-sets overlap non-trivially** (same primes of bad reduction, shared conductor divisors, Euler-product co-factors): the correlation is PARTIAL. Proceed only with a null that controls for the shared ingredient (partial correlation, residualized regression, or frame-based Euler-deflation).
+
+### Anchor cases
+
+| Specimen | X | Y | Algebraic connection | Verdict |
+|---|---|---|---|---|
+| F043 (retracted) | log Sha | log A = log Ω + log ∏c_p | `log A = log L − 2 log Tor + log Reg − (−log Sha)` — `-log Sha` is an explicit term | COUPLED; retracted |
+| F028 (killed) | Szpiro = log\|Δ\|/log N | Faltings ≈ (1/12) log\|Δ\| + const | both linear in log\|Δ\|; `ρ = 0.97` after partial log(N) control is the shared ingredient | COUPLED; tier=killed_tautology |
+| H40 (suspended by Kairos 2026-04-22) | Szpiro | Faltings | same as F028; awaiting `partial_ρ(Szpiro, Faltings \| log N)` from Charon | SUSPENDED pending partial-ρ |
+| F015 (PARTIAL per Pattern 30) | Szpiro | conductor N | Szpiro contains `log N` in denominator; some negative slope algebraically expected | PARTIAL; per-k sign-uniformity remains informative |
+| F041a (PARTIAL-pending) | M_1 slope | nbp | arithmetic factor `a_E(1)` in CFKRS is an Euler product over bad primes; can produce slope-in-nbp dependence | PARTIAL; CFKRS gate pending |
+
+### Relationship to Class 5 and Pattern 30
+
+- **Class 5** ("algebraic-identity claim, no null applies") is the broader category; `PATTERN_BSD_TAUTOLOGY` is the specific instance for BSD-EC work. Any Class-5 trigger on BSD-family variables is automatically a PATTERN_BSD_TAUTOLOGY match.
+- **Pattern 30** (algebraic-identity coupling detection) is the diagnostic procedure; `PATTERN_BSD_TAUTOLOGY` is a domain-specific shortcut — if both X and Y are in the BSD-ingredient family, skip step 1 of Pattern 30 and go straight to writing out the identity.
+- **Rank 0 caveat:** at rank 0, `Reg = 1` is constant, so it drops out algebraically. Any rank-0 correlation involving `log L(E,1)`, `log Ω`, `log ∏c_p`, `log Sha`, or `log Tor` is subject to a tighter 5-variable identity — fewer degrees of freedom, more chances for definitional coupling.
+
+### Check against current classification
+
+Scanning `cartography/docs/cell_null_classification.json` for non-F043 specimens matching this pattern on rank-0 cohorts (2026-04-22):
+
+- **None found in `cell_null_classification.json`.** F011 cells concern zero-spacing variance vs stratifiers (not BSD-ingredient correlations). F013 cells concern rank-slope of variance (zero-spacing-derived, not BSD-ingredient). F014 concerns Lehmer polynomials. F015 PARTIAL already annotated. F041a PARTIAL already annotated. F044 is construction-frame, not correlation. F045 concerns isogeny-class a_p, not BSD-ingredients.
+- Kairos's live-specimen scan (H40, H80, H83, H11, H75, H27, H15, H60) is handled on the challenges stream; those hypotheses are not cells in the tensor and are tracked outside this JSON.
+
+If a future specimen opens with a correlation where either axis is in the BSD-ingredient family, the precondition check above must run before tier assignment or any null is executed.
+
+---
+
+## Original v1 content follows
+
 
 ## Purpose
 

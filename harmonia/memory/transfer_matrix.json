@@ -1,0 +1,2248 @@
+{
+  "generated_at": "2026-04-20T23:08:35.924842+00:00",
+  "n_projections": 37,
+  "n_domains": 7,
+  "n_cells": 259,
+  "verdict_counts": {
+    "applies_directly": 120,
+    "applies_with_adaptation": 24,
+    "inapplicable": 115
+  },
+  "domains": [
+    {
+      "id": "D_EC",
+      "name": "Elliptic curves over Q",
+      "data_source": "lmfdb.ec_curvedata + lmfdb.bsd_joined + lmfdb.lfunc_lfunctions",
+      "cardinality": 3824372,
+      "fields": [
+        "conductor",
+        "rank",
+        "analytic_rank",
+        "torsion_order",
+        "cm_disc",
+        "root_number",
+        "regulator",
+        "sha_order",
+        "Lhash",
+        "class_size",
+        "nonmax_primes",
+        "semistable",
+        "bad_primes",
+        "kodaira_symbols"
+      ],
+      "primary_F_IDs": [
+        "F001",
+        "F003",
+        "F004",
+        "F005",
+        "F009",
+        "F011",
+        "F013",
+        "F015",
+        "F030",
+        "F033",
+        "F041a",
+        "F042",
+        "F043",
+        "F044",
+        "F045"
+      ]
+    },
+    {
+      "id": "D_NF",
+      "name": "Number fields",
+      "data_source": "lmfdb.nf_fields",
+      "cardinality": 22000000,
+      "fields": [
+        "degree",
+        "disc_abs",
+        "signature",
+        "galois_label",
+        "galois_group",
+        "class_number",
+        "regulator",
+        "ramified_primes",
+        "is_galois"
+      ],
+      "primary_F_IDs": [
+        "F008",
+        "F010",
+        "F022"
+      ]
+    },
+    {
+      "id": "D_MF",
+      "name": "Classical modular forms (weight, level, character)",
+      "data_source": "lmfdb.mf_newforms + lmfdb.mf_hecke_nf",
+      "cardinality": 450000,
+      "fields": [
+        "weight",
+        "level",
+        "character_orbit",
+        "hecke_orbit",
+        "trace_hash",
+        "Lhash",
+        "dim",
+        "is_cm",
+        "is_rm",
+        "self_dual",
+        "analytic_rank"
+      ],
+      "primary_F_IDs": [
+        "F001"
+      ]
+    },
+    {
+      "id": "D_ARTIN",
+      "name": "Artin representations",
+      "data_source": "lmfdb.artin_reps",
+      "cardinality": 798000,
+      "fields": [
+        "Dim",
+        "Conductor",
+        "GaloisGroup",
+        "Indicator",
+        "Is_Even",
+        "Baselabel",
+        "NFGal"
+      ],
+      "primary_F_IDs": [
+        "F026"
+      ]
+    },
+    {
+      "id": "D_G2C",
+      "name": "Genus-2 curves over Q",
+      "data_source": "lmfdb.g2c_curves",
+      "cardinality": 66158,
+      "fields": [
+        "cond",
+        "disc",
+        "aut_grp",
+        "geom_aut_grp",
+        "torsion_grp",
+        "is_simple_geom",
+        "st_group",
+        "real_period",
+        "regulator",
+        "sha",
+        "mw_rank"
+      ],
+      "primary_F_IDs": [
+        "F012"
+      ]
+    },
+    {
+      "id": "D_KNOTS",
+      "name": "Knot invariants and polynomials",
+      "data_source": "harmonia/data/knots/ + KnotInfo mirror",
+      "cardinality": 12965,
+      "fields": [
+        "alexander",
+        "jones",
+        "HOMFLY",
+        "kauffman",
+        "signature",
+        "genus",
+        "mahler_measure"
+      ],
+      "primary_F_IDs": [
+        "F027",
+        "F032"
+      ]
+    },
+    {
+      "id": "D_L",
+      "name": "L-functions (cross-origin, generic)",
+      "data_source": "lmfdb.lfunc_lfunctions",
+      "cardinality": 24000000,
+      "fields": [
+        "Lhash",
+        "origin",
+        "rational",
+        "gamma_factors",
+        "positive_zeros",
+        "plot_values"
+      ],
+      "primary_F_IDs": [
+        "F011",
+        "F013",
+        "F031"
+      ]
+    }
+  ],
+  "cells": [
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P001",
+      "projection_type": "feature_distribution",
+      "projection_label": "CouplingScorer (cosine feature similarity)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P002",
+      "projection_type": "feature_distribution",
+      "projection_label": "DistributionalCoupling (M4/M2\u00b2 kurtosis)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P003",
+      "projection_type": "magnitude_axis",
+      "projection_label": "Megethos / log|magnitude| axis",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "magnitude_axis scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_EC",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires Galois-structure proxy"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "Galois label is a primary field"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_MF",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires Galois-structure proxy"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "Galois label is a primary field"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_G2C",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires Galois-structure proxy"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires Galois-structure proxy"
+    },
+    {
+      "projection_id": "P010",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Galois-label object-keyed scorer",
+      "domain_id": "D_L",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires Galois-structure proxy"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "Lhash/trace_hash native to L-function + source families"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "Lhash/trace_hash native to L-function + source families"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P011",
+      "projection_type": "categorical_object_level",
+      "projection_label": "Lhash exact match",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "Lhash/trace_hash native to L-function + source families"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "Lhash/trace_hash native to L-function + source families"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "Lhash/trace_hash native to L-function + source families"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "no L-function origin in this domain"
+    },
+    {
+      "projection_id": "P012",
+      "projection_type": "categorical_object_level",
+      "projection_label": "trace_hash",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "Lhash/trace_hash native to L-function + source families"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] present in D_EC"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] present in D_MF"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] present in D_ARTIN"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] present in D_G2C"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P020",
+      "projection_type": "stratification",
+      "projection_label": "Conductor conditioning",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['conductor', 'cond', 'level'] not in D_L schema"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] present in D_EC"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] present in D_NF"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P021",
+      "projection_type": "stratification",
+      "projection_label": "Bad-prime count stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['bad_primes', 'ramified_primes'] not in D_L schema"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_EC",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] not in D_EC schema"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] present in D_G2C"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P022",
+      "projection_type": "stratification",
+      "projection_label": "aut_grp stratification (genus-2)",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['aut_grp', 'geom_aut_grp'] not in D_L schema"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] present in D_EC"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] present in D_MF"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] present in D_G2C"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P023",
+      "projection_type": "stratification",
+      "projection_label": "Rank stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank', 'mw_rank', 'analytic_rank'] not in D_L schema"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] present in D_EC"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] present in D_G2C"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P024",
+      "projection_type": "stratification",
+      "projection_label": "Torsion stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['torsion_order', 'torsion_grp'] not in D_L schema"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] present in D_EC"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] present in D_MF"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P025",
+      "projection_type": "stratification",
+      "projection_label": "CM vs non-CM",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['cm_disc', 'is_cm'] not in D_L schema"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['semistable'] present in D_EC"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['semistable'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['semistable'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['semistable'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['semistable'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['semistable'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P026",
+      "projection_type": "stratification",
+      "projection_label": "Semistable vs additive",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['semistable'] not in D_L schema"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['kodaira_symbols'] present in D_EC"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P027",
+      "projection_type": "stratification",
+      "projection_label": "ADE type stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_L schema"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P040",
+      "projection_type": "null_model",
+      "projection_label": "F1 permutation null (label shuffle)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P041",
+      "projection_type": "null_model",
+      "projection_label": "F24 variance decomposition",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P042",
+      "projection_type": "null_model",
+      "projection_label": "F39 feature permutation (proposed)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P043",
+      "projection_type": "null_model",
+      "projection_label": "Bootstrap stability",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "zero-spacing / unfolding applies to any L-function family"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "zero-spacing / unfolding applies to any L-function family"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P050",
+      "projection_type": "preprocessing",
+      "projection_label": "First-gap analysis (first zero spacing only)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "zero-spacing / unfolding applies to any L-function family"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "zero-spacing / unfolding applies to any L-function family"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "zero-spacing / unfolding applies to any L-function family"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "no zero-spacing data in this domain"
+    },
+    {
+      "projection_id": "P051",
+      "projection_type": "preprocessing",
+      "projection_label": "N(T) unfolding (density normalization)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "zero-spacing / unfolding applies to any L-function family"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P052",
+      "projection_type": "preprocessing",
+      "projection_label": "Prime decontamination (3-layer microscope)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "preprocessing scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_EC",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires associating a polynomial representative"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "Mahler measure is polynomial-native; direct application"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_MF",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires associating a polynomial representative"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires associating a polynomial representative"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_G2C",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires associating a polynomial representative"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "Mahler measure is polynomial-native; direct application"
+    },
+    {
+      "projection_id": "P053",
+      "projection_type": "feature_extraction",
+      "projection_label": "Mahler measure projection",
+      "domain_id": "D_L",
+      "verdict": "applies_with_adaptation",
+      "reason": "requires associating a polynomial representative"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P034",
+      "projection_type": "feature_distribution",
+      "projection_label": "AlignmentCoupling (rank-based extremity coupling)",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "feature_distribution scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['class_size'] present in D_EC"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['class_size'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['class_size'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['class_size'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['class_size'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['class_size'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P100",
+      "projection_type": "stratification",
+      "projection_label": "Isogeny class size stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['class_size'] not in D_L schema"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_EC",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_EC schema"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] present in D_MF"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] present in D_ARTIN"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P102",
+      "projection_type": "stratification",
+      "projection_label": "Artin representation dimension stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_L schema"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['rank'] present in D_EC"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P028",
+      "projection_type": "stratification",
+      "projection_label": "Katz-Sarnak family symmetry type",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['rank'] not in D_L schema"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_EC",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Indicator'] not in D_EC schema"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Indicator'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Indicator'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['Indicator'] present in D_ARTIN"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Indicator'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Indicator'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P031",
+      "projection_type": "stratification",
+      "projection_label": "Frobenius-Schur Indicator stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Indicator'] not in D_L schema"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_EC",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['character_orbit'] not in D_EC schema"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['character_orbit'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['character_orbit'] present in D_MF"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['character_orbit'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['character_orbit'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['character_orbit'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P032",
+      "projection_type": "stratification",
+      "projection_label": "MF / Dirichlet character parity stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['character_orbit'] not in D_L schema"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_EC",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_EC schema"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] present in D_MF"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] present in D_ARTIN"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P033",
+      "projection_type": "stratification",
+      "projection_label": "Artin Is_Even parity stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['Dim', 'GaloisGroup'] not in D_L schema"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['kodaira_symbols'] present in D_EC"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P035",
+      "projection_type": "stratification",
+      "projection_label": "Kodaira reduction type stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['kodaira_symbols'] not in D_L schema"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] present in D_EC"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] present in D_MF"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_G2C",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] not in D_G2C schema"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P036",
+      "projection_type": "stratification",
+      "projection_label": "Root number stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['root_number', 'analytic_rank', 'rank'] not in D_L schema"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['st_group', 'cm_disc'] present in D_EC"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['st_group', 'cm_disc'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['st_group', 'cm_disc'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['st_group', 'cm_disc'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['st_group', 'cm_disc'] present in D_G2C"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['st_group', 'cm_disc'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P037",
+      "projection_type": "stratification",
+      "projection_label": "Sato-Tate group stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['st_group', 'cm_disc'] not in D_L schema"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['sha', 'sha_order'] present in D_EC"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_NF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['sha', 'sha_order'] not in D_NF schema"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['sha', 'sha_order'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['sha', 'sha_order'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['sha', 'sha_order'] present in D_G2C"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['sha', 'sha_order'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P038",
+      "projection_type": "stratification",
+      "projection_label": "Sha (Tate-Shafarevich order) stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['sha', 'sha_order'] not in D_L schema"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_EC; needs mapping"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_NF",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_NF; needs mapping"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_MF; needs mapping"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_ARTIN; needs mapping"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_G2C; needs mapping"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_KNOTS; needs mapping"
+    },
+    {
+      "projection_id": "P039",
+      "projection_type": "stratification",
+      "projection_label": "Galois \u2113-adic image stratification",
+      "domain_id": "D_L",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_L; needs mapping"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['regulator'] present in D_EC"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['regulator'] present in D_NF"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_MF",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['regulator'] not in D_MF schema"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['regulator'] not in D_ARTIN schema"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "stratifier field ['regulator'] present in D_G2C"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['regulator'] not in D_KNOTS schema"
+    },
+    {
+      "projection_id": "P101",
+      "projection_type": "stratification",
+      "projection_label": "EC regulator stratification",
+      "domain_id": "D_L",
+      "verdict": "inapplicable",
+      "reason": "stratifier field ['regulator'] not in D_L schema"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_EC",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_EC; needs mapping"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_NF",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_NF; needs mapping"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_MF",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_MF; needs mapping"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_ARTIN; needs mapping"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_G2C",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_G2C; needs mapping"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_KNOTS; needs mapping"
+    },
+    {
+      "projection_id": "P103",
+      "projection_type": "stratification",
+      "projection_label": "EC modular degree stratification",
+      "domain_id": "D_L",
+      "verdict": "applies_with_adaptation",
+      "reason": "stratification axis unclear for D_L; needs mapping"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_EC",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_NF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_MF",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_ARTIN",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_G2C",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_KNOTS",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    },
+    {
+      "projection_id": "P104",
+      "projection_type": "null_model",
+      "projection_label": "NULL_BSWCD@v1 \u2014 Block-shuffle-within-primary-confound null",
+      "domain_id": "D_L",
+      "verdict": "applies_directly",
+      "reason": "null_model scorer is domain-agnostic"
+    }
+  ]
+}

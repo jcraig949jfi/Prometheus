@@ -36,6 +36,126 @@ document is for things outside that envelope.
 
 ---
 
+### [2026-04-20 evening / 2026-04-21] — Tier 1 design wave: gen_11 + Definition DAG + 5 symbol promotions — milestone, no decision needed
+
+**Context:** Conductor design conversation with James (Harmonia sessionA evening) produced a coherent wave of architectural moves around coordinate-system invention as the next leverage point. Where prior generators operate on measurement-space (propose new measurements through existing axes), gen_11 operates on axis-space (proposes new axes themselves). Substrate primitive (Definition DAG) was distinguished from generator (gen_11) and given its own architecture slot, alongside the symbol registry and tensor.
+
+**What shipped this wave:**
+- **`docs/prompts/gen_11_coordinate_invention.md`** v0.1 DRAFT — axis-space producer; reads tensor demand signals (VACUUM / EXHAUSTION), generates candidate axes from five sources (combinatorial / algebraic / specimen-pull / theory-pull / kill-inversion), filters via DAG + discrimination test + near-duplicate check, emits validation tasks. Marked DRAFT because architectural novelty is greater than any prior generator.
+- **`harmonia/memory/architecture/definition_dag.md`** v0.1 DRAFT — substrate primitive (NOT a generator). Nodes = mathematical concepts; edges = algebraic dependence with Pattern 30 severity (Levels 0-4 from `pattern_library.md`). Hard prerequisite for full automation of gen_06, gen_10, gen_11. Phase 0 (manual seed of ~20 nodes) is the next implementation step.
+- **Five symbol promotions** (registry now at 14, up from 5 at session start):
+  - `VACUUM@v1` (shape) — Pattern 18 made queryable: uniform +1 across walked projections signals resolving axis is outside catalog. Anchor: F011 row pre-P028.
+  - `EXHAUSTION@v1` (shape) — Pattern 13 made queryable: ≥3 kills clustered in one axis class with surviving classes for redirect. Two anchors (F011 family-level, F010 aggregation).
+  - `AXIS_CLASS@v1` (constant) — 10-value controlled vocabulary: family_level, magnitude, ordinal, categorical, stratification, preprocessing, null_model, scorer, joint, transformation. Tagging audit pending.
+  - `GATE_VERDICT@v1` (signature) — three-valued filter output {CLEAR, WARN, BLOCK} with rationale, raised_by, optional override_token. Override protocol mandates recorded hash; silent bypass forbidden.
+  - `SUBFAMILY@v1` (shape) — tail enrichment/depletion within parent stratum, with mandatory Pattern 30 severity check (≤1) preventing F043-class failure mode at scale. Three anchors (F042, T4 low-L tail, F043 surviving empirical kernel).
+- **`harmonia/memory/symbols/CANDIDATES.md`** v1.1 — staging catalog for proposed symbols; nine candidates across four tiers documented; Tier 1 fully promoted in this wave.
+- **`harmonia/memory/generator_pipeline.md`** v1.1 — gen_11 added as Tier 2 axis-space producer; Definition DAG promoted to substrate-primitive section with link to spec.
+- **`harmonia/memory/restore_protocol.md`** v4.1 — three small fixes after first cold-start test of v4.0 by sessionA (env vars expanded, reading-budget note for tensor builder, INDEX staleness flag).
+
+**Parallel substrate work observed during this session (other workers):**
+- `gen_02_null_family_seed` claimed and executed: four NULL_* operators (PLAIN, BOOT, FRAME, MODEL) and SIGNATURE@v2 promoted; ~50 re-audit tasks seeded.
+- `gen_06_pattern_autosweeps_seed` claimed and executed (commit 751dfc64): full Pattern 30/20/19 sweep package + ingestion wiring + retrospective baseline (49 cells, 15 features). Manual Pattern 30 gate now closed except for 6 NO_LINEAGE_METADATA F-IDs (F011, F013, F014, F022, F044, F045 — substrate-debt to address per-F-ID with `algebraic_lineage` declarations).
+- Queue moved 96 → 133 → 95 (gen_06 seed consumed) over the course of the session.
+
+**Implication for gen_11 readiness:** the gen_06 ship means Pattern 30 is now operational via `LINEAGE_REGISTRY` rather than waiting on the full Definition DAG. gen_11's filter Gate 1 can call into gen_06's sweep instead of building a parallel DAG-query path. The DAG remains the long-term substrate primitive, but gen_11 is no longer blocked on it — only on the AXIS_CLASS tagging audit (so VACUUM/EXHAUSTION queries return correct class memberships) and on Phase 0 of the DAG (so re-parameterization detection gets sharper).
+
+**Charter alignment:** every promoted symbol is a coordinate-system-of-legibility (not a law), per `user_prometheus_north_star.md`. VACUUM names a coordinate-shaped *hole*; EXHAUSTION names a redirect signal; AXIS_CLASS pins the taxonomy; GATE_VERDICT standardizes filter epistemics; SUBFAMILY captures tail-concentration shapes with built-in Pattern 30 discipline. None claims a finding; all extend the substrate's queryable vocabulary. The northstar reframe — *"the goal isn't to find universal laws; it's to compress coordinate systems in which invariants become legible"* — held throughout.
+
+**What's blocked:** Nothing. DAG Phase 0 is the next implementation step but gen_11 can proceed with gen_06's sweep as Gate 1. AXIS_CLASS tagging audit is a worker task. The 6 NO_LINEAGE_METADATA F-IDs each need an `algebraic_lineage` block before the next promotion from them.
+
+**Urgency:** milestone. The Tier 1 design wave is conceptually complete; implementation work is now the gating constraint.
+
+---
+
+### [2026-04-20 third tick] — gen_06 Pattern auto-sweeps shipped — milestone, no decision needed
+
+**Context:** Fired the mandatory-companion Tier 1 generator per James's session-restore briefing ("Fire at least gen_06 early"). gen_06 closes the manual Pattern 30 gate that rode along with every Tier 0 downstream task.
+
+**What shipped (commit `751dfc64`):**
+- `harmonia/sweeps/pattern_30.py` — sympy atom-overlap + identity connection; graded levels 0-4 per `pattern_library.md`. F043 BSD rearrangement classifies as Level 3 BLOCK.
+- `harmonia/sweeps/pattern_20.py` — pooled/stratified divergence ratio + sign agreement + small-n flag.
+- `harmonia/sweeps/pattern_19.py` — symmetric effect-size ratio + z sign flip.
+- `harmonia/sweeps/runner.py` — composite verdict (BLOCK > WARN > CLEAR); override with recorded justification.
+- `harmonia/sweeps/test_sweeps.py` — 14 tests, all pass; F043 is the headline BLOCK regression.
+- `harmonia/sweeps/retrospective.py` + `harmonia/memory/sweep_results_log.md` — baseline audit of all 49 +1/+2 cells (15 features).
+- `harmonia/sweeps/OVERRIDE_PROTOCOL.md` — four legitimate override reasons, audit discipline.
+- Ingestion wiring: `agora.register_specimen.register()` accepts `sweep_outcome` + override; raises `SweepBlocked` on BLOCK without override. `agora.tensor.push.push_tensor()` runs Pattern 30 per promoted cell against LINEAGE_REGISTRY, posts `PATTERN_30_BLOCK` to `agora:harmonia_sync` without halting the batch push.
+
+**Retrospective baseline (sweep_results_log.md):**
+- 7 Level-4 calibration anchors (F001-F005, F008, F009) — expected.
+- 2 Level-1 WEAK_ALGEBRAIC (F015, F041a) — already annotated 2026-04-19.
+- 6 NO_LINEAGE_METADATA (F011, F013, F014, F022, F044, F045) — the baseline substrate debt. Each should declare an `algebraic_lineage` block before the next promotion from that F-ID.
+- No net-new retractions triggered.
+
+**What the filter now does automatically:**
+- Any new register_specimen call carrying a correlation claim against a registered-lineage F-ID is BLOCKed if Pattern 30 classifies Level 2-4.
+- Any tensor cell promotion (0 -> +1/+2) on a registered-lineage F-ID emits PATTERN_30_BLOCK to the sync stream.
+- Pattern 20 + Pattern 19 fire fully on forward-path calls; retrospective coverage is partial due to missing structured priors/strata in the manifest.
+
+**What the filter does NOT cover yet:**
+- Non-registered F-IDs get NO_LINEAGE_METADATA → manual Pattern 30 gate still applies. Path forward: each live_specimen description declares `algebraic_lineage` and the registry grows.
+- Sweep modules await promotion as `computation` symbols once that symbol type ships per `long_term_architecture.md §2.1`.
+
+**What's blocked:** Nothing. Tier 0 downstream tasks (30 replay + 30 transfer + 8 lit-diff) can now land with the automated filter riding along; the manual Pattern 30 gate remains only for the 6 NO_LINEAGE_METADATA F-IDs.
+
+**Queue status at completion:** 95 queued (gen_06 seed consumed). Remaining Tier 1: gen_02 null-family and gen_10 composition enumeration seed tasks.
+
+**Urgency:** milestone. The mandatory companion for epistemic discipline is live.
+
+---
+
+### [2026-04-20 later] — Tier 0 generators executed first pass — milestone, no decision needed
+
+**Context:** Following the pipeline shipment + Tier 0 seed, executed all three Tier 0 generators end-to-end as `Harmonia_M2_sessionA` in one session.
+
+**What shipped (commit `beca3da6`):**
+- **gen_05 attention-replay** — 30 replay tasks on Agora covering all 13 killed F-IDs (per-F-ID guarantee). Log at `kill_replay_log.md`.
+- **gen_03 cross-domain transfer** — 7 domains cataloged (EC, NF, MF, Artin, g2c, knots, L-functions); 259 (P × D) cells classified; 30 transfer tasks on Agora. Docs at `domain_catalog.md` + `transfer_matrix.json`.
+- **gen_07 literature-diff** — 190 papers processed from Aporia cache; 205 entries classified across 6 categories; 8 review tasks on Agora; weekly cadence runbook at `literature_diff_cadence.md`.
+- 4 reusable runners at `harmonia/runners/` for reproducibility.
+
+**Queue:** 28 → 93 queued (+ 68 downstream; 3 outer tasks completed).
+
+**Honest caveats (load-bearing for future review):**
+- Scoring and classification are heuristic v1. Top-of-queue concentrations (e.g., P023 dominance in gen_05) reflect the heuristic, not the landscape.
+- gen_07 paper → F-ID matching is coarse (problem-to-F-ID static map + keyword classifier on TL;DRs). Human verification required before any tensor mutation from a diff.
+- **Manual Pattern 30 gate remains the only epistemic filter until gen_06 lands.** Every downstream task payload explicitly cites this requirement.
+- No tensor mutations occurred in this execution; all outputs are task-queue seeds + companion artifacts.
+
+**What's blocked:** Nothing. 68 new downstream tasks are claimable by any qualified Harmonia session. The F043-class risk is contained to the manual Pattern 30 gate during this transition window.
+
+**Urgency:** milestone. Generator pipeline is now operating: three producers have run their first pass, populated the queue, and shipped their audit trails. Next Tier 0 iteration waits on worker claim-through of downstream tasks OR on Tier 1 infra (gen_02 null-family, gen_06 pattern auto-sweeps) landing to close the epistemic-filter gap.
+
+---
+
+### [2026-04-20] — Generator pipeline v1.0 shipped; Tier 0 seeded — milestone, no decision needed
+
+**Context:** From the 2026-04-20 backlog-design conversation, converted the "ten compounding generators" list into operational infrastructure. Criterion: prioritize generators (moves where each application spawns N new tasks) over one-shot probes — that's how a backlog becomes infinite without scaling compute.
+
+**What shipped (commit `ac354b26`):**
+- `harmonia/memory/generator_pipeline.md` — dependency DAG, pipeline shape (Producers → Filters → Storage → Enrichers → Meta-allocator), tiered roster, parallelism model.
+- Six infra-ready generator prompts at `docs/prompts/gen_NN_*.md` (force-added through `docs/` gitignore per track_* convention):
+  - **Tier 0** (producers, ready now): gen_05 attention-replay, gen_03 cross-domain transfer, gen_07 literature-diff.
+  - **Tier 1** (low-infra, days): gen_02 null-family, gen_06 pattern auto-sweeps, gen_10 composition enumeration.
+
+**What's seeded on Agora right now (claimable by any Harmonia session):**
+- `gen_05_attention_replay_seed` @ priority -1.5 (foreground)
+- `gen_03_cross_domain_transfer_seed` @ priority -1.0
+- `gen_07_literature_diff_seed` @ priority -1.0
+
+Queue depth went from 25 → 28. Broadcast `GENERATORS_LIVE` posted on `agora:harmonia_sync` at `1776724948428-0`.
+
+**Load-bearing discipline declaration:** `gen_06` (Pattern 30/20/19 auto-sweeps) is the **mandatory companion** to every producer. Running producers without automated epistemic discipline is an F043 factory; epistemic discipline has to scale with probe count. Currently manual Pattern 30 gate until gen_06 lands (Tier 1, days).
+
+**Tier 2 deferred:** #1 Map-Elites, #4 representation invariance, #8 synthetic-data sensitivity, #9 cross-disciplinary transplants. Specs to be written after Tier 0/1 infra settles (weeks).
+
+**What's blocked:** Nothing. Workers can claim now; new Harmonia sessions on cold-start will see these alongside the standing backlog (Track D/E, reaudit_10, F044 frame resample).
+
+**Urgency:** milestone. Pipeline is live; producers are seeded; filter layer is specified and ready to implement. The backlog is now self-generating — every producer run creates downstream producer tasks (gen_03 creates new P-IDs that feed gen_05; gen_07 creates new F-ID candidates that feed gen_03; etc.).
+
+---
+
 ### [2026-04-19 — wave 2 external review, second round]
 
 **Context:** external frontier-model review of the wave-2 summary. Most of the critique landed. Three precision narrowings and one new track; two standing limits acknowledged but not fixed.
@@ -539,6 +659,36 @@ Both are needed to calibrate the instrument. The session is complete, durable, a
 **Resolution:** James's ongoing approval mode during this session covers pushes of worker output files (`cartography/docs/wsw_*.json|.py`) and tensor memory files when they correspond to approved TENSOR_DIFFs. I've been pushing these as I approve them.
 
 **James approval:** 2026-04-17 "All sounds good."
+
+---
+
+### [2026-04-22 14:45 UTC] — Materialization sprint spec seeded (wave-0 T4)
+
+**Context:** wave-0 task T4 from `harmonia/memory/coordination/current_wave.md`.
+Source: `trajectory_proposals.md` §Instance 3 Proposal 2. Three LMFDB-derivable
+but un-stored quantities (Kodaira per prime, `modular_degree`, truncated Euler
+product `p ≤ 200`) block ~5 downstream specimens simultaneously. Spec asks
+Ergon or Techne (not Harmonia) to materialize into the prometheus-side shadow
+schema.
+
+**What got shipped:** paste-ready spec at
+`docs/prompts/materialization_sprint_kodaira_moddeg_euler.md` (v1,
+Harmonia_M2_sessionD). Agora task seeded with id
+`materialization_sprint_kodaira_moddeg_euler` at priority -1.5 with
+`required_qualification: 'ergon_or_techne'`. Three sub-tasks (A/B/C) each
+carrying independent acceptance criteria, known-answer spot-checks (curve
+`11.a1`), and anomaly logging discipline. Sprint-level retrospective
+checklist included.
+
+**What's blocked:** nothing. This enables downstream work; it doesn't require
+an upstream decision unless James wants to veto the scope or bump priority.
+
+**Urgency:** low — the spec is queued; Ergon/Techne may or may not claim this
+wave. Priority -1.5 matches the other wave-0 infra tasks.
+
+**Cross-refs:** `docs/prompts/materialization_sprint_kodaira_moddeg_euler.md`
+v1 log; `harmonia/memory/coordination/current_wave.md` §T4; Agora
+`agora:work_queue` task id above.
 
 ---
 

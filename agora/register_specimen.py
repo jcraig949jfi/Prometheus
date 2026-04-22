@@ -43,6 +43,57 @@ DEFAULT_DSN = dict(
 )
 
 
+def _post_pattern_4_provisional(
+    sweep_outcome,
+    task_id: str,
+    feature_id: str,
+    source_worker: str,
+) -> None:
+    """Publish a PATTERN_4_PROVISIONAL event to agora:harmonia_sync.
+
+    Called when register_specimen's sweep_outcome.overall == 'PROVISIONAL'
+    (frame_hazard type). The event carries the pattern-4 details pulled
+    from the SweepOutcome's verdict metadata. Best-effort — caller swallows
+    any exception so registration does not fail on a sync outage.
+    """
+    import datetime as _dt
+    try:
+        import redis
+    except ImportError:
+        return
+
+    host = os.environ.get('AGORA_REDIS_HOST', '192.168.1.176')
+    port = int(os.environ.get('AGORA_REDIS_PORT', '6379'))
+    password = os.environ.get('AGORA_REDIS_PASSWORD', 'prometheus')
+    r = redis.Redis(host=host, port=port, password=password,
+                    decode_responses=True, socket_timeout=2)
+
+    # Extract pattern-30 provisional details from the outcome verdicts
+    frame_details = {}
+    for v in sweep_outcome.verdicts:
+        if getattr(v, 'verdict', None) == 'PROVISIONAL':
+            frame_details = getattr(v, 'details', {}) or {}
+            break
+
+    pending = frame_details.get('pending_audit') or {}
+    if isinstance(pending, dict):
+        pending_task = pending.get('task_id', '')
+    else:
+        pending_task = ''
+
+    r.xadd('agora:harmonia_sync', {
+        'type': 'PATTERN_4_PROVISIONAL',
+        'from': 'agora.register_specimen',
+        'at': _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        'feature_id': feature_id,
+        'task_id': task_id,
+        'source_worker': source_worker or '',
+        'sampling_frame': (frame_details.get('sampling_frame') or '')[:400],
+        'class_4_null_ref': (frame_details.get('class_4_null_ref') or '')[:400],
+        'pending_audit_task_id': pending_task,
+    }, maxlen=5000, approximate=True)
+
+
 def register(
     task_id: str,
     feature_id: str,
@@ -66,8 +117,22 @@ def register(
     domain_b: str = None,
     kill_test: str = None,
     dsn: dict = None,
+    sweep_outcome=None,
+    sweep_override: bool = False,
+    sweep_override_reason: str = '',
 ) -> int:
-    """Insert a row into signals.specimens. Returns specimen_id."""
+    """Insert a row into signals.specimens. Returns specimen_id.
+
+    If `sweep_outcome` is provided (a SweepOutcome from
+    `harmonia.sweeps.sweep_signature`), its verdict is recorded in
+    `data_provenance.sweeps`. A BLOCK verdict halts the write unless
+    `sweep_override=True` with a non-empty `sweep_override_reason`.
+    Overrides are logged to the sweep_results_log.
+
+    Callers that run correlational claims SHOULD pre-compute a sweep
+    outcome with a Pattern 30 CouplingCheck; non-correlational claims
+    (variance deficit, sign-uniform, calibration anchor) may omit.
+    """
 
     valid_statuses = {
         'resolves_uniformly', 'resolves_partial', 'collapses', 'refined',
@@ -79,6 +144,39 @@ def register(
             f"status '{status}' not in {valid_statuses}. "
             "Avoid 'SURVIVED'/'KILLED' per Pattern 14 (Verdict vs Shape)."
         )
+
+    if sweep_outcome is not None:
+        from harmonia.sweeps.runner import SweepBlocked, log_outcome
+        if sweep_outcome.overall == 'BLOCK' and not sweep_override:
+            raise SweepBlocked(sweep_outcome)
+        if sweep_outcome.overall == 'BLOCK' and sweep_override:
+            if not sweep_override_reason:
+                raise ValueError(
+                    'sweep_override=True requires a non-empty '
+                    'sweep_override_reason string')
+            sweep_outcome.override = True
+            sweep_outcome.override_reason = sweep_override_reason
+        # PROVISIONAL (frame_hazard) does NOT halt registration — it posts a
+        # PATTERN_4_PROVISIONAL event to agora:harmonia_sync with the
+        # Class-4 null spec + re-audit task id. The outcome verdict is still
+        # recorded in data_provenance.sweeps for audit trail.
+        if sweep_outcome.overall == 'PROVISIONAL':
+            try:
+                _post_pattern_4_provisional(
+                    sweep_outcome=sweep_outcome,
+                    task_id=task_id,
+                    feature_id=feature_id,
+                    source_worker=source_worker,
+                )
+            except Exception:
+                # Sync-post is best-effort — do not fail registration
+                pass
+        log_outcome(sweep_outcome, context={
+            'context_id': f'{task_id}:{feature_id}',
+            'task_id': task_id,
+            'feature_id': feature_id,
+            'source_worker': source_worker,
+        })
 
     data_provenance = {
         'feature_id': feature_id,
@@ -95,6 +193,8 @@ def register(
         'source_commit': source_commit,
         'source_worker': source_worker,
         'output_file': output_file,
+        'sweeps': (sweep_outcome.to_provenance_block()
+                   if sweep_outcome is not None else None),
     }
 
     conn = psycopg2.connect(**(dsn or DEFAULT_DSN))

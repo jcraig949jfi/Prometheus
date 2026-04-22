@@ -106,6 +106,7 @@ agent can resolve. Five types:
 | `constant` | Numerical value with CI and provenance. Versioned. | `EPS011` |
 | `dataset` | SQL query or dataset hash that reproduces identical rows across agents. | `Q_EC_R0_D5` |
 | `signature` | Tuple schema for reporting findings. Not a value; a type spec. | `SIGNATURE` |
+| `pattern` | Methodology recognition rule with graded severity schema + anchor cases + implementation pointer. Replaces repeated prose explanation across multiple docs. | `PATTERN_30` |
 
 **What a symbol is NOT:**
 

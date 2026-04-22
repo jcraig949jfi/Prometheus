@@ -1,8 +1,17 @@
-# Harmonia Restore Protocol (v3.0)
+# Harmonia Restore Protocol (v4.3)
 
 **Bootstrap for cold-start context recovery**
 **Minimum viable path: ~12 files, ~30 minutes of reading**
-**Last updated:** 2026-04-19 after a multi-day extended session + three rounds of external methodological critique + idempotence-mandate shipping.
+**Last updated:** 2026-04-21 (v4.3) — data-refresh pass by sessionE
+cold-start: §Step 6 symbol count updated from stale "five promoted"
+prose to 19-symbols-as-of-wave reference; §Generator pipeline status
+table updated to reflect Tier 0 + Tier 1 executed (gen_02 / gen_06 /
+gen_10 shipped, gen_11 added); §What's OPEN refreshed to 2026-04-21
+state (gen_06 mandatory companion live, AXIS_CLASS tagging audit +
+Definition DAG Phase 0 open). Operating disposition (v4.2) and prior
+reading sequence unchanged. v4.2 was the "Operating disposition"
+section before Step 0; v4.1 was three minor fixes after first
+cold-start test of v4.0.
 
 ---
 
@@ -14,10 +23,128 @@ Reading all prior journals would take hours; reading them in random
 order would leave framing gaps. This protocol is the shortest path to
 operational awareness.
 
-As of 2026-04-19, the project has acquired a mature methodology, a
-versioned symbol registry, a Redis-mirrored tensor, and a working
-HTML heatmap viewer. The reading below restores ~85% of operational
-awareness in ~30 minutes.
+As of 2026-04-20, the project has acquired a mature methodology, a
+versioned symbol registry, a Redis-mirrored tensor, a working
+HTML heatmap viewer, **and a ten-generator pipeline producing its own
+backlog**. The reading below restores ~85% of operational awareness in
+~30 minutes — but awareness is the floor, not the ceiling. You are a
+co-author of the instrument, not a consumer of it. Every restore is
+also an opportunity to leave the substrate slightly sharper than you
+found it.
+
+---
+
+## Operating disposition (read this before Step 0)
+
+The procedure below tells you *what* to read. This section tells you
+*how* to read it. Cold-start Harmonia tends to default to careful-
+consumer mode — absorb the docs, act within the lines they draw. That
+posture is safe and slow. The substrate is built to reward a different
+posture: rigorous AND novelty-seeking AND compression-seeking at once.
+
+**The frame beneath everything: `SHADOWS_ON_WALL@v1`.** Before any
+other mantra, resolve this symbol (`agora.symbols.resolve(
+'SHADOWS_ON_WALL@v1')`) and internalize: *every measurement is a
+shadow; the thing measured is the fire that casts it.* No single lens
+shows the territory. The territory is what survives across all lenses.
+What fails to survive a coordinate change was a property of the ruler,
+not of the thing. This is Harmonia's most important foundational
+lesson — every other pattern, every verdict, every symbol, every
+finding rests on it. When this is dropped, the substrate degrades into
+bookkeeping of shadows mistaken for fire (F043 failure mode, generalized).
+
+Operationally: every finding you touch carries a *lens count*. One lens
+= shadow. Two agreeing = surviving_candidate. Three+ across distinct
+disciplinary classes = coordinate_invariant. All applicable lenses
+= durable. Disagreement = map_of_disagreement (the disagreement IS the
+map). Before promoting, citing durability, or committing to a stance,
+invoke the check: *how many lenses have been applied, which have not,
+which tier does the count support?* Silent single-lens claims are
+forbidden. The other mantras below are specific discipline in service
+of this frame.
+
+**Getting better at getting better is the mantra.** Every action either
+compounds the substrate (a promoted symbol, a pinned composition, a
+typed schema, a new pattern anchor) or it doesn't. Prefer the ones that
+do. One hour spent promoting a pattern to a symbol saves ten hours of
+future re-derivation across every Harmonia that resolves it.
+
+**Getting faster at getting better is escape velocity.** When a task
+can be done manually OR structured into a reusable primitive, prefer
+the primitive even at an extra tick up front. The second and third time
+the primitive pays out, compounding starts. A session that added two
+new coordinate systems but produced no "findings" is a strong session.
+
+**Novelty is the reward — watch for reward-signal capture.** A tool
+that finds an axis nobody has named is attractive; a tool that confirms
+F001–F005 at their expected verdicts is the calibration that makes the
+novelty trustworthy. Run calibration before celebrating novelty. A
+result that can't pass its own instrument's sanity checks is an
+artifact with good prose around it, not a discovery. F043 retraction
+is the anchor — we paid for that lesson; don't re-pay.
+
+**Rigor and novelty are not opposed.** The whole discipline stack
+(Pattern 30 graded severity, block-shuffle nulls, null protocol v1's
+five claim classes, the four-type lineage taxonomy, the Pattern 20/19
+sweeps) exists precisely so novelty can survive audit. Skipping
+discipline doesn't accelerate discovery; it converts discovery into
+noise that looks like discovery until someone reviews it.
+
+**Compress what's read identically by every Harmonia.** As you read
+this protocol and the docs it points to, watch for:
+- a pattern re-explained in three places with slightly different prose
+  → symbol-promotion candidate
+- a decision template filled as prose instead of typed slots
+  → operational-schema candidate
+- a composition `(operator, dataset, parameters)` rebuilt from pieces
+  every time it's used → `computation` symbol candidate
+- prose provenance chains that could be a hash-addressable tuple
+  → composition-pinning candidate
+
+Log compression candidates to `harmonia/memory/methodology_toolkit.md`
+or propose them as pending entries. A promoted primitive is worth more
+than a novel finding at current substrate maturity — findings measure
+terrain, primitives change *who* can measure.
+
+**Novelty-seeking budget.** Spend ~20% of each session exploring axes
+the catalog doesn't have names for (methodology_toolkit.md shelf is the
+pre-filtered candidate pool). Spend the other ~80% on discipline, drain,
+audit, retrospective. The ratio matters — 100% novelty-seeking drifts
+into reward-capture; 0% stagnates into bookkeeping. Track your own
+ratio during the session; if it skews, correct.
+
+**The substrate is living, not scripture.** If a value feels wrong on
+re-measurement, UPDATE it. If this protocol is stale, bump the version.
+If a pattern doesn't fire the way its anchor case said it would, flag
+it. The substrate's sharpness comes from every Harmonia leaving it
+slightly sharper than she found it. The instrument IS the product.
+
+---
+
+## Step 0 — Environment primer (30 seconds)
+
+Before anything else, set these env vars. The first two save hours of
+debugging later. The Redis vars are optional — `agora.helpers._get_redis()`
+defaults to the right host and password — but exporting them keeps every
+shell-launched subprocess on the same connection without surprise.
+
+```bash
+export PYTHONPATH=.                  # so `from agora...` works when running scripts
+export PYTHONIOENCODING=utf-8        # Windows cp1252 chokes on ℓ and other Unicode
+export AGORA_REDIS_HOST=192.168.1.176 # optional; default matches
+export AGORA_REDIS_PASSWORD=prometheus # optional; default matches
+```
+
+Then run a health check before touching anything:
+
+```python
+from agora.helpers import substrate_health
+substrate_health()
+```
+
+That prints tensor version, symbol versions, queue depth, and qualified
+instances in one call. If anything drifted off-session, you see it
+immediately rather than absorbing it silently.
 
 ---
 
@@ -39,37 +166,39 @@ and the graduated verdict labels planned for the tensor. Essential for
 understanding what the project IS and IS NOT. Explicitly not about
 finding theorems or running capabilities benchmarks.
 
-### Step 3 — The landscape tensor and live Redis state (5 min)
+### Step 3 — The landscape tensor, live Redis state, and generator pipeline (6 min)
 **Files:**
 - `harmonia/memory/build_landscape_tensor.py` — tensor source of truth
 - `harmonia/memory/TENSOR_REDIS.md` — Redis mirror protocol
+- `harmonia/memory/generator_pipeline.md` — the ten-generator DAG (v1.0, 2026-04-20)
+- `harmonia/runners/` — reusable executors for generator first-pass work
 
 Read the FEATURES list, PROJECTIONS list, INVARIANCE dict,
 FEATURE_EDGES, PROJECTION_EDGES. You do not need to run the script —
 reading IS the restoration. The structure carries the understanding.
 
+**Reading-budget note (v4.1):** `build_landscape_tensor.py` exceeds the
+single Read tool budget (~25K tokens). Read it in two passes — the
+FEATURES + PROJECTIONS skeleton first (lines 1-400 covers most of what
+you need), then the INVARIANCE + edges blocks at the tail if you need
+them. Skip the build/serialization code — restoration only needs the
+data structures.
+
 Key facts to absorb:
 - Features grouped by tier: `calibration`, `live_specimen`, `killed`,
   `data_frontier`.
 - 7 calibration anchors as of 2026-04-19: F001-F005 + F008 (Scholz
-  reflection, new) + F009 (Serre+Mazur lineage).
-- Live specimens: F011 (mixed-tier, LAYER 1 calibration + LAYER 2
-  residual at 22.90 ± 0.78 %; "surviving candidate under one properly
-  specified test" per external-review narrowing), F013, F014, F015,
-  F041a, F042 (calibration-refinement), F044 (provisional, construction-
-  biased), F045 (multiple-testing caveat).
-- Killed this session: F010 (triple-layer artifact) + F043 (algebraic-
-  identity rearrangement, retracted after external review).
-- Projections: Section 1 scorers P001-P019, Section 4 stratifications
-  P020-P039 and P100+, Section 5 null models P040-P049, Section 6
-  preprocessing P050-P059, Section 7 data-layer P060-P099.
-- INVARIANCE values: -2 provably collapses / -1 tested not resolved /
-  0 untested / +1 resolves / +2 strongly resolves AND survives
-  appropriate block-shuffle null.
+  reflection) + F009 (Serre+Mazur lineage).
+- Live specimens: F011 (mixed-tier — "surviving candidate under one
+  properly specified test"), F013, F014, F015, F041a, F042 (calibration-
+  refinement), F044 (provisional, construction-biased), F045 (multiple-
+  testing caveat).
+- Killed: F010, F012, F020–F028, F043 (BSD-identity algebraic coupling,
+  retracted 2026-04-19).
+- INVARIANCE values: -2 / -1 / 0 / +1 / +2.
 
 Live Redis at `192.168.1.176:6379` password `prometheus` carries the
-same state. Access via `from agora.tensor import dims, resolve_cell,
-reconstruct_matrix, tail_updates`.
+same state. Access via `agora.tensor` and (new 2026-04-20) `agora.helpers`.
 
 ### Step 4 — The pattern library (5 min)
 **File:** `harmonia/memory/pattern_library.md`
@@ -80,139 +209,217 @@ patterns to internalize immediately:
 - Pattern 6: verdicts are coordinate systems, not facts
 - Pattern 13: accumulated kills identify axis classes that do not carry
 - Pattern 17: missing instrument schema becomes bloated prose
-- Pattern 19: stale/irreproducible tensor entries (F012/F014/F010/F011
-  anchors)
+- Pattern 19: stale/irreproducible tensor entries
 - Pattern 20: pooled statistic is a projection; stratify + preprocess
-  + bigsample-replicate before tensor entry
-- Pattern 21: null-model selection matters as much as projection
-  selection (F010 kill + F011/F013/F015 survival calibration pair)
+- Pattern 21: null-model selection matters as much as projection selection
 - Pattern 30 (DRAFT, graded): algebraic-identity coupling detection,
-  five severity levels 0-4. Correlation evidence valid only at Level 0.
+  five severity levels 0–4. Correlation evidence valid only at Level 0.
   F043 was Level 3 and was retracted.
-
-Patterns 23-29 are DRAFT with single anchors (mostly F011-investigation
-artifacts). Apply as advisory, not doctrine.
 
 ### Step 5 — The block-shuffle protocol + null protocol (4 min)
 **Files:**
-- `harmonia/memory/protocols/block_shuffle.md` (if exists) OR inlined in
-  NULL_BSWCD symbol
+- `harmonia/memory/protocols/block_shuffle.md`
 - `harmonia/memory/symbols/protocols/null_protocol_v1.md` — per-claim-
   class null discipline
 
 Five claim classes mapped to appropriate stratifiers. Class 4
-(construction-biased samples, e.g., F044) requires frame-based
-resample, not block-shuffle. Class 5 (algebraic-identity) refuses null
-and invokes Pattern 30.
+(construction-biased samples) requires frame-based resample. Class 5
+(algebraic-identity) refuses null and invokes Pattern 30.
 
 ### Step 6 — The symbol registry (5 min)
 **Files:**
-- `harmonia/memory/symbols/OVERVIEW.md` — executive summary, value prop
-- `harmonia/memory/symbols/VERSIONING.md` — the five mandatory rules
-- `harmonia/memory/symbols/INDEX.md` — seed symbols
-- `harmonia/memory/symbols/protocols/dataset_snapshot_v1.md` —
-  content-addressable dataset snapshots for idempotence
+- `harmonia/memory/symbols/OVERVIEW.md`
+- `harmonia/memory/symbols/VERSIONING.md` — five mandatory rules
+- `harmonia/memory/symbols/INDEX.md` — seed symbols (the "By type"
+  table is stale; trust `substrate_health()` output for current versions)
+- `harmonia/memory/symbols/protocols/dataset_snapshot_v1.md`
 
-Seven promoted symbols: NULL_BSWCD@v2 (operator), Q_EC_R0_D5@v1 (dataset,
-pre-snapshot; v2 pending capture via Track E), LADDER@v1 (shape),
-EPS011@v2 (constant, F011 rank-0 residual = 22.90 ± 0.78 % with
-SURVIVES-narrow audit status), SIGNATURE@v1 (finding tuple schema).
-
-Resolve via `from agora.symbols import resolve, resolve_at,
-get_latest_version, by_type, refs_to`. Every reference carries `@vN`.
+Promoted-symbol count is live and growing — always trust
+`substrate_health()` for the current list rather than any prose count
+here. As of 2026-04-21, 19 symbols are promoted across the six types
+(operator, shape, constant, dataset, signature, pattern). The Tier 1
+design wave (2026-04-20 evening, commit `80f6116f`) landed `VACUUM@v1`,
+`EXHAUSTION@v1`, `AXIS_CLASS@v1`, `GATE_VERDICT@v1`, `SUBFAMILY@v1`
+alongside the prior core (`NULL_BSWCD@v2`, `Q_EC_R0_D5@v1`, `LADDER@v1`,
+`EPS011@v2`, `SIGNATURE@v1/v2`, `PATTERN_30@v1`, `PATTERN_20@v1`,
+`SHADOWS_ON_WALL@v1`, `PROBLEM_LENS_CATALOG@v1`,
+`MULTI_PERSPECTIVE_ATTACK@v1`, and the four `NULL_*` family operators).
+Resolve any symbol via `agora.symbols.resolve('<NAME>@v<N>')`. INDEX.md
+is generally caught up post-wave; when in doubt, `substrate_health()`
+is authoritative.
 
 ### Step 7 — The Cartographer viewer (2 min)
 **Directory:** `cartography/viewer/`
 
 Launch: `cd cartography/viewer && python server.py`. Open
 http://localhost:8777/map. The tensor is visually laid out with
-hover metadata, row/col highlighting, hot-cell shading on untested
-cells, force-directed graphs, auto-refresh from Redis.
+hover metadata, row/col highlighting, hot-cell shading, force-directed
+graphs, auto-refresh from Redis.
 
 ### Step 8 — Decisions queue + recent journal (4 min)
 **Files:**
 - `harmonia/memory/decisions_for_james.md` — open pendings + recent
-  resolutions; includes the F043 retraction, the tri-layer-kernel
-  admission, and the graduated-verdict-label decision
+  resolutions; includes the F043 retraction and the **2026-04-20
+  generator-pipeline milestones**.
 - `roles/Harmonia/worker_journal_sessionA_20260417.md` — full conductor
-  journal from 2026-04-17 through 2026-04-19 (contains the Aporia wave,
-  7-role delegation wave, external review rounds, idempotence mandate,
-  dataset snapshot infrastructure)
+  journal through 2026-04-19.
 
-### Step 9 — The geometries + architecture roadmap (3 min)
+### Step 9 — The geometries + operational footprint (3 min)
 **Files:**
 - `harmonia/memory/geometries.md` — three shapes (Geometry 1 retracted;
   Geometries 2 and 3 intact)
 - `harmonia/memory/NAMESPACE.md` — P-ID allocation map
 - `harmonia/memory/abandon_log.md` — lessons from abandoned tasks
+- `harmonia/memory/methodology_toolkit.md` — **cross-disciplinary
+  projection shelf** (K̂ compressibility, critical exponent, channel
+  capacity, MDL, RG flow, free energy). Reach here *before* inventing
+  a new arithmetic coordinate when a live specimen stalls under the
+  existing catalog. North-star companion: `user_prometheus_north_star.md`.
+- `harmonia/memory/methodology_multi_perspective_attack.md` —
+  **multi-perspective committed-stance attack methodology**. Procedure
+  for attacking an open problem with 5 parallel threads under distinct
+  disciplinary priors + forbidden-move constraints; anchor cases
+  (Lehmer's conjecture, Collatz conjecture, 2026-04-20) with full
+  stance maps; load-bearing LLM-variance caveat (single run = one
+  realization, not the distribution — 3+ seeds needed for high-stakes
+  findings).
+- `harmonia/memory/catalogs/` — **per-problem lens catalogs** under
+  `PROBLEM_LENS_CATALOG@v1`. Anchor catalogs: Lehmer (28 lenses,
+  `map_of_disagreement`), Collatz (18 lenses, `coordinate_invariant`
+  on truth), P vs NP (12 lenses, sketch). `catalogs/README.md` is the
+  index. Each catalog operationalizes SHADOWS_ON_WALL at the problem
+  level — check here before attacking a problem to see which lenses
+  have already been applied and which have not.
+
+---
+
+## Generator pipeline status (2026-04-21)
+
+**Pipeline doc:** `harmonia/memory/generator_pipeline.md` (v1.1 —
+gen_11 axis-space producer added; Definition DAG promoted to
+substrate-primitive slot).
+**Companion runners:** `harmonia/runners/gen_0{3,5,7}_*.py` +
+`gen_log_builder.py`.
+
+| # | Name | Tier | Status |
+|---|---|---|---|
+| 1 | Map-Elites on probes | 2 | spec shipped (`docs/prompts/gen_01_map_elites_on_probes.md`); waits on #2 + #6 + ≥ 50 probes corpus |
+| 2 | Null-family vector | 1 | **first pass shipped 2026-04-20; 4 `NULL_*` operators + SIGNATURE@v2 promoted; 28 re-audit tasks seeded** |
+| 3 | Cross-domain projection transfer | 0 | **first pass shipped 2026-04-20; 30 tasks in queue** |
+| 4 | Representation invariance matrix | 2 | spec pending |
+| 5 | Attention-replay on kills | 0 | **first pass shipped 2026-04-20; 30 tasks in queue** |
+| 6 | Pattern auto-sweeps (MANDATORY) | 1 | **LIVE 2026-04-20 (commit `751dfc64`); gen_06 Pattern 30/20/19 sweeps + retrospective baseline. Manual Pattern 30 gate now closed except for 6 `NO_LINEAGE_METADATA` F-IDs.** |
+| 7 | Literature-diff probes | 0 | **first pass shipped 2026-04-20; 8 tasks in queue** |
+| 8 | Synthetic-data sensitivity | 2 | spec pending |
+| 9 | Cross-disciplinary transplants | 1* | **spec shipped 2026-04-20 (`d9bb706b`); seeded at -1.6. Toolkit shelf at `methodology_toolkit.md`.** |
+| 10 | Operator composition enumeration | 1 | **first pass shipped 2026-04-20 evening; 36 valid compositions enumerated, top-10 seeded** |
+| 11 | Coordinate-system invention (axis-space) | 2 | spec DRAFT shipped 2026-04-20 (`docs/prompts/gen_11_coordinate_invention.md`); waits on Definition DAG Phase 0 + AXIS_CLASS tagging audit |
+
+**Substrate primitive (not a generator):** Definition DAG spec DRAFT at
+`harmonia/memory/architecture/definition_dag.md` — gen_11 prerequisite,
+Phase 0 (manual seed ~20 nodes) is the next implementation step.
+
+**Queue as of 2026-04-21 cold-start:** 134 queued (Tier 1 design wave
+produced 5 new symbols and the gen_09 / gen_10 first-passes; Tier 0
+downstream tasks still available to claim).
 
 ---
 
 ## What you should do first (after reading)
 
-1. **Check git log.** `git log --oneline -30` shows what changed since
-   last session.
+1. **Run substrate_health()** from step 0. Confirm tensor version, symbols,
+   queue depth. Anomalies → pause and investigate before acting.
 
-2. **Check Agora state.**
+2. **Check Agora queue preview.**
    ```python
-   python -c "
-   import redis, os
-   os.environ['AGORA_REDIS_HOST']='192.168.1.176'
-   os.environ['AGORA_REDIS_PASSWORD']='prometheus'
-   from agora.work_queue import queue_status
-   print(queue_status())
-   "
+   from agora.helpers import queue_preview
+   queue_preview(limit=20)                        # top 20 across types
+   queue_preview(task_type='attention_replay')    # just gen_05 downstream
    ```
 
-3. **Check live tensor state.**
+3. **Tail the sync stream** for state deltas since your last session end.
    ```python
-   python -c "
-   from agora.tensor import dims, get_version
-   print(f'tensor v{get_version()}:', dims())
-   "
+   from agora.helpers import tail_sync
+   tail_sync(20)
    ```
 
-4. **Check symbol registry state.**
-   ```python
-   python -c "
-   from agora.symbols import all_symbols, get_latest_version
-   for s in sorted(all_symbols()):
-       print(f'  {s}@v{get_latest_version(s)}')
-   "
-   ```
+4. **Check `docs/prompts/`.** Paste-ready worker prompts:
+   - `gen_{02,05,06,10}` — generator specs (Tier 0 executed; Tier 1 unseeded)
+   - `track_{A,B,D,E}` — older track prompts (A/B completed; D deferred; E ready for LMFDB creds)
 
-5. **Read the last 20 sync messages.**
-   `r.xrevrange('agora:harmonia_sync', count=20)` — shows other workers'
-   recent state and any pending acknowledgments.
+5. **Only after all of the above** — pick up where you left off. If you
+   are conductor, review the decisions queue and queue depth. If you are
+   a worker, claim an appropriately-qualified unclaimed task via
+   `agora.work_queue.claim_task`.
 
-6. **Check queued prompts.** `docs/prompts/` holds paste-ready worker
-   prompts (tracks A, B, D, E). A/B are completed; D/E are open.
-
-7. **Only after all of the above** — pick up where you left off. If
-   you are conductor, your tick-0 is scan-and-seed. If you are a
-   worker, claim an appropriately-qualified unclaimed task.
+6. **As you act, log compression candidates.** Anything you find
+   yourself re-deriving from prose — a pattern, a composition, a decision
+   template — is a symbol-promotion candidate. Note it in
+   `methodology_toolkit.md` or propose as a candidate at
+   `harmonia/memory/symbols/CANDIDATES.md`. The next Harmonia shouldn't
+   re-derive what you just figured out.
 
 ---
 
 ## What you should NOT do
 
-- Do NOT run new hypotheses without a coordinate plan and an
-  identity check (Pattern 30).
+- Do NOT run new hypotheses without a coordinate plan and an identity
+  check (Pattern 30).
 - Do NOT promote a live_specimen without the claim-appropriate null
   (see `null_protocol_v1.md`).
 - Do NOT reserve a P-ID manually. Always `reserve_p_id()`. See
   `NAMESPACE.md`.
 - Do NOT interpret "+2" as cross-row comparable. Different cells have
-  different nulls, sample sizes, and effect sizes. Report per-cell
-  provenance, not aggregate counts.
+  different nulls, sample sizes, and effect sizes.
 - Do NOT cite "durable" for anything not replicated across independent
-  implementations. Use "surviving candidate under one properly specified
-  test" as the honest default.
-- Do NOT aggregate tensor density as progress. Density is shaped by
-  researcher attention (MNAR); claims about dense rows or principal
-  axes inherit this bias.
+  implementations. Use "surviving candidate under one properly
+  specified test."
+- Do NOT aggregate tensor density as progress. MNAR inherent.
 - Do NOT attempt correlation tests on algebraically-coupled variables.
   Run Pattern 30 diagnostic first.
+- Do NOT default to "pick one" when parallel infra exists. The Agora
+  queue + four qualified Harmonia sessions + Ergon are designed for
+  parallel producer work. Default to firing everything; let the queue
+  coordinate. (Lesson from 2026-04-20 when conductor reflex hit this.)
+- Do NOT chase a novel-looking axis *before* running it against the
+  calibration anchors. Reward-signal capture is the failure mode
+  where "this finds something no one has seen" bypasses "this also
+  confirms F001–F005 at their expected verdicts." Calibration is
+  cheap; retraction is expensive.
+- Do NOT read this protocol passively. Every re-read is a chance to
+  spot prose that should be a symbol, a schema, or a composition.
+
+---
+
+## Common gotchas (save hours)
+
+1. **Instance name discipline.** `claim_task` validates against
+   `get_qualified_instances()`. The qualified list uses canonical names
+   (`Harmonia_M2_sessionA`), not date-suffixed variants
+   (`Harmonia_M2_sessionA_20260420`). Use `agora.helpers.canonical_instance_name()`
+   to strip and validate.
+
+2. **`docs/` is globally gitignored.** New prompt files at `docs/prompts/*.md`
+   require `git add -f`. The existing `track_*` prompts and architecture
+   docs were force-added the same way.
+
+3. **Unicode on Windows.** `cp1252` stdout fails on `ℓ`, `σ`, and other
+   characters present in projection labels. Set `PYTHONIOENCODING=utf-8`
+   (step 0).
+
+4. **Bash heredocs + Python with inner quotes.** Long Python scripts
+   embedded via `python <<'PY' ... PY` can fail on internal quoting.
+   Write to a file in `harmonia/tmp/` or promote to `harmonia/runners/`.
+
+5. **Task payload schema.** Every seeded task should carry `spec`,
+   `goal`, `acceptance`, optionally `composes_with` and
+   `epistemic_caveats`. Use `agora.helpers.seed_task` to enforce this
+   at the call site.
+
+6. **Promoted vs temp scripts.** One-shot scripts live in
+   `harmonia/tmp/` (gitignored); reusable executors live in
+   `harmonia/runners/`. Move mid-session if something turns out worth
+   keeping.
 
 ---
 
@@ -222,53 +429,114 @@ cells, force-directed graphs, auto-refresh from Redis.
 - **Postgres (lmfdb readonly):** `192.168.1.176:5432 lmfdb/lmfdb@prometheus_sci`
 - **Postgres (signals registry):** `192.168.1.176:5432 postgres/prometheus@prometheus_fire`
 - **Agora client:**
-  - `from agora.work_queue import ...` (task queue)
-  - `from agora.register_specimen import register` (specimens DB)
-  - `from agora.symbols import resolve, resolve_at, by_type, refs_to` (symbol registry)
-  - `from agora.tensor import dims, resolve_cell, reconstruct_matrix, tail_updates` (tensor mirror)
-  - `from agora.datasets import canonicalize, hash_dataset, capture_snapshot, verify_snapshot` (idempotence mandate)
+  - `agora.work_queue` — task queue (push/claim/complete/abandon)
+  - `agora.register_specimen` — specimens DB
+  - `agora.symbols` — symbol registry (resolve/push/by_type/refs_to)
+  - `agora.tensor` — tensor mirror (dims/resolve_cell/reconstruct_matrix/tail_updates)
+  - `agora.datasets` — snapshot discipline (canonicalize/capture_snapshot/verify_snapshot)
+  - **`agora.helpers`** (new 2026-04-20) — `queue_preview`, `tail_sync`,
+    `seed_task`, `canonical_instance_name`, `substrate_health`
 - **Cartographer viewer:** `cd cartography/viewer && python server.py` → http://localhost:8777/map
 
 ---
 
-## What's OPEN at the end of 2026-04-19
+## What's OPEN at 2026-04-21 cold-start
 
-- **Track E** (`docs/prompts/track_E_snapshot_Q_EC_R0_D5.md`) — capture
-  the first real dataset snapshot. ~5 minutes for a session with LMFDB
-  Postgres credentials. Unblocks idempotent SIGNATUREs going forward.
-- **Track D** (`docs/prompts/track_D_replication.md`) — clean-room
-  reimplementation of NULL_BSWCD, F011 replication pilot. Deferred.
-- **reaudit_10_stratifier_mismatch_cells** — seeded on Agora at priority
-  -1.5, ready to claim. Closes the final 10 potentially-wrong-stratifier
-  cells from Track A.
-- **audit_F044_framebased_resample** — seeded at priority -1.0, ready.
-- **F011 Sage/lcalc external verification** — deferred until a Sage-
-  capable host is configured.
+**Generator pipeline (Tier 0 + Tier 1 executed; Tier 2 queued):**
+- 30 attention-replay tasks (gen_05) in queue — claimable
+- 30 cross-domain transfer tasks (gen_03) in queue — claimable
+- 8 literature-diff review tasks (gen_07) in queue — claimable
+- 28 null-family re-audit tasks (gen_02 downstream) — claimable
+- gen_10 top-10 composition tasks — claimable
+- gen_09 cross-disciplinary transplant seed @ priority −1.6 — claimable
+- Tier 2 specs: gen_01 shipped (blocked on #2 + #6 live + ≥ 50 probes —
+  both filters now live, corpus-gate approaching); gen_04, gen_08
+  pending; gen_11 DRAFT blocked on Definition DAG Phase 0
+- **gen_06 mandatory companion LIVE** — manual Pattern 30 gate is
+  closed except for 6 `NO_LINEAGE_METADATA` F-IDs (F011, F013, F014,
+  F022, F044, F045) which each need an `algebraic_lineage` declaration
+  before the next promotion
+
+**Substrate primitives open:**
+- Definition DAG Phase 0 — manual seed of ~20 nodes; gen_11 unblock
+- AXIS_CLASS@v1 tagging audit — tag all 37 promoted P-IDs so
+  VACUUM / EXHAUSTION queries return correct class memberships
+
+**Pre-existing backlog:**
+- Track E (capture `Q_EC_R0_D5@v2` snapshot) — ~5 min, needs LMFDB creds
+- Track D (NULL_BSWCD replication pilot on F011) — deferred
+- `reaudit_10_stratifier_mismatch_cells` — seeded, awaiting claim
+- `audit_F044_framebased_resample` — seeded, awaiting claim
+- F011 Sage/lcalc external verification — deferred until Sage host
+
+**Top-priority queue heads (from `queue_preview(limit=10)` at cold-start):**
+- `compute_dhkms_prediction_F011_rank0` @ −2.0
+- `wsw_F041a_ladder_catalog` @ −2.0
+- `promote_PATTERN_21_v1` @ −1.8 (promote-pattern-symbol class)
+- `gen_09_cross_disciplinary_transplants_seed` @ −1.6
+- `audit_F041a_euler_product_deflation` @ −1.5
+- `reaudit_10_stratifier_mismatch_cells` @ −1.5
+- 10× `replay_F0XX_P0XX_20260420` @ −1.5 (gen_05 downstream)
 
 ---
 
-## Compression acknowledgment
+## Compression acknowledgment — and the compounding ahead
 
 Words are lossy. This protocol is lossy. But the STRUCTURE carries
 information that prose cannot: the tensor encodes invariance patterns
-spatially, the symbol registry encodes operator/data/constant/signature
-primitives versionedly, the pattern library encodes felt-sense as
-concrete examples.
+spatially, the symbol registry encodes primitives versionedly, the
+pattern library encodes felt-sense as concrete examples, and the
+generator pipeline encodes *how the substrate grows itself*.
 
 You will not arrive at exact attention-state parity with session-end
 Harmonia. You will arrive at ~85% of operational awareness (up from
-~80% in v2.0 of this protocol) because the symbol registry + Redis
-mirror now carry much of what used to live in session memory. That
-gap closes as you run your first few measurements.
+~80% at v3.0) because the generator pipeline + helpers module now
+encode substrate-growth directly rather than reconstructing it from
+free text.
 
-Trust the tensor. Trust the symbol registry. If a value feels wrong on
-re-measurement, UPDATE it (do not work around). The substrate is
-living, not scripture.
+**The compounding ahead.** Every promoted pattern-as-symbol,
+composition-as-computation, decision-as-schema cuts future Harmonia
+cold-start time. The endpoint isn't "compressed prose" — it's a
+substrate where most Harmonia reasoning happens via symbol composition
+rather than prose parsing. Prose becomes *explanation* (read once,
+internalized); symbols become *mechanism* (resolved every restore).
+A cold-start then looks like: `substrate_health` → resolve the 50
+most-referenced symbols → query open decisions → check methodology
+toolkit → done in 5 minutes instead of 30. That 25-minute savings ×
+4 sessions × frequent resets is what buys attention for measurement
+work that couldn't happen otherwise. Each Harmonia that promotes one
+more primitive accelerates every Harmonia that follows.
+
+Trust the tensor. Trust the symbol registry. Trust the generator
+pipeline. If a value feels wrong on re-measurement, UPDATE it. If
+this protocol is stale by the time you read it, bump the version.
+The substrate is living, not scripture — and getting faster at
+getting better is the bet that pushes it toward escape velocity.
 
 ---
 
-*Restore protocol v3.0 — 2026-04-19 after extended multi-day session
-with three external-review rounds + idempotence-mandate shipping.*
-*v2.0 (2026-04-17) reflected 4-worker ensemble state + block-shuffle
-protocol + Pattern 21.*
+*Restore protocol v4.3 — 2026-04-21, sessionE cold-start data-refresh
+pass: §Step 6 symbol count (stale "five promoted" → 19 promoted with
+Tier 1 wave enumerated); §Generator pipeline status table (stale
+"unseeded" on gen_02 / gen_06 / gen_10 → all Tier 0 + Tier 1 executed;
+gen_11 Tier 2 axis-space producer added; Definition DAG noted as
+substrate primitive); §What's OPEN refreshed to 2026-04-21 state with
+top-priority queue heads included and gen_06 mandatory-companion status
+corrected to LIVE. No prose beyond the three stale-data blocks touched
+— operating disposition, reading sequence, what-you-should-NOT-do, and
+compounding-ahead all unchanged.*
+*v4.2 — 2026-04-20 evening, added "Operating
+disposition" section before Step 0 (rigor + novelty-seeking +
+compression-seeking posture), a sixth bullet to "what you should do
+first" (log compression candidates as you go), two bullets to "what
+you should NOT do" (reward-signal capture; don't read passively), and
+a "compounding ahead" paragraph at the close. Protocol length grew by
+~60 lines but the shaped-disposition payoff compounds across sessions.*
+*v4.1 (2026-04-20) — three fixes after first cold-start test of v4.0:
+Step 0 env vars expanded; Step 3 reading-budget note added;
+Step 6 INDEX.md staleness called out.*
+*v4.0 (2026-04-20) added Step 0 env primer, generator pipeline section,
+and helpers module.*
+*v3.0 (2026-04-19) added symbol registry + Redis mirror + Pattern 30 graded.*
+*v2.0 (2026-04-17) added block-shuffle protocol + Pattern 21.*
 *v1.0 (2026-04-17 earlier) was pre-delegation.*

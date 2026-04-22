@@ -44,9 +44,18 @@ def _get_redis():
 def resolve(name, version=None):
     """Return full dict for a symbol at the given version, or None if absent.
 
-    If version is None, returns the latest version and emits a UserWarning
-    (unversioned references violate the versioning discipline).
+    Accepts either:
+      - resolve('NAME', version=N)  — explicit version kwarg
+      - resolve('NAME@vN')          — canonical reference form (dispatches to resolve_at)
+      - resolve('NAME')             — latest + UserWarning (discipline violation)
     """
+    if '@v' in name:
+        if version is not None:
+            raise ValueError(
+                f'resolve: both reference-form name ({name!r}) and version '
+                f'kwarg ({version}) provided; pass exactly one.'
+            )
+        return resolve_at(name)
     r = _get_redis()
     if version is None:
         latest = r.get(f'symbols:{name}:latest')
@@ -75,7 +84,20 @@ def resolve_at(reference):
 
 
 def resolve_meta(name, version=None):
-    """Return meta HASH for a symbol at the given version. Versioned key required."""
+    """Return meta HASH for a symbol at the given version. Versioned key required.
+
+    Accepts reference-form 'NAME@vN' in the name argument, same as resolve().
+    """
+    if '@v' in name:
+        if version is not None:
+            raise ValueError(
+                f'resolve_meta: both reference-form name ({name!r}) and version '
+                f'kwarg ({version}) provided; pass exactly one.'
+            )
+        m = _REF_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'resolve_meta: expected NAME@v<N> form, got {name!r}')
+        name, version = m.group('name'), int(m.group('version'))
     r = _get_redis()
     if version is None:
         latest = r.get(f'symbols:{name}:latest')

@@ -146,6 +146,8 @@ def push_tensor(tensor_dir='harmonia/memory', dry_run=False, source_commit='HEAD
 
     # Diff old vs new
     changes = 0
+    sweep_warnings = []
+    sweep_blocks = []
     for key, new_v in new_cells.items():
         old_v = old_cells.get(key, '0')
         if old_v != new_v:
@@ -164,6 +166,71 @@ def push_tensor(tensor_dir='harmonia/memory', dry_run=False, source_commit='HEAD
                 approximate=True,
             )
             changes += 1
+            # Pattern auto-sweep on promotions: when a cell goes from 0/<0
+            # to +1/+2, run Pattern 30 against the lineage registry. WARN
+            # / BLOCK entries do NOT halt the push (batch op), but they
+            # post to agora:harmonia_sync so conductor sees them.
+            try:
+                new_int = int(new_v)
+                old_int = int(old_v)
+            except (TypeError, ValueError):
+                continue
+            if new_int >= 1 and old_int < 1:
+                fid = key.split(':')[0]
+                try:
+                    from harmonia.sweeps.retrospective import LINEAGE_REGISTRY
+                    from harmonia.sweeps.pattern_30 import classify_entry
+                except Exception:
+                    LINEAGE_REGISTRY = {}
+                    classify_entry = None
+                if classify_entry is not None and fid in LINEAGE_REGISTRY:
+                    entry = LINEAGE_REGISTRY[fid]
+                    result = classify_entry(entry)
+                    verdict = result.get('verdict')
+                    if verdict == 'BLOCK':
+                        sweep_blocks.append({
+                            'cell': key, 'level': result.get('level'),
+                            'name': result.get('name'),
+                            'rationale': result.get('rationale', ''),
+                        })
+                        r.xadd('agora:harmonia_sync', {
+                            'type': 'PATTERN_30_BLOCK',
+                            'from': 'agora.tensor.push',
+                            'at': now,
+                            'cell': key,
+                            'level': str(result.get('level')),
+                            'rationale': (result.get('rationale') or '')[:400],
+                        })
+                    elif verdict == 'PROVISIONAL':
+                        # frame_hazard — do not halt the push, but emit the
+                        # PATTERN_4_PROVISIONAL event so conductor sees it.
+                        details = result.get('details') or {}
+                        pending = details.get('pending_audit') or {}
+                        pending_task = (pending.get('task_id', '')
+                                        if isinstance(pending, dict) else '')
+                        sweep_warnings.append({
+                            'cell': key, 'level': None,
+                            'name': 'FRAME_HAZARD_PROVISIONAL',
+                            'pending_audit_task_id': pending_task,
+                        })
+                        r.xadd('agora:harmonia_sync', {
+                            'type': 'PATTERN_4_PROVISIONAL',
+                            'from': 'agora.tensor.push',
+                            'at': now,
+                            'cell': key,
+                            'feature_id': fid,
+                            'sampling_frame': (details.get('sampling_frame') or '')[:400],
+                            'class_4_null_ref': (details.get('class_4_null_ref') or '')[:400],
+                            'pending_audit_task_id': pending_task,
+                            'rationale': (result.get('rationale') or '')[:400],
+                        })
+                    elif verdict == 'WARN':
+                        sweep_warnings.append({
+                            'cell': key, 'level': result.get('level'),
+                            'name': result.get('name'),
+                        })
+                    # N/A_KILLED and N/A_NON_CORRELATIONAL are silent —
+                    # CLEAR-equivalent for tensor-push purposes.
 
     # Write new cell hash (replace)
     r.delete(f'{TENSOR_KEY_PREFIX}cells')
@@ -198,6 +265,8 @@ def push_tensor(tensor_dir='harmonia/memory', dry_run=False, source_commit='HEAD
     summary['version'] = new_version
     summary['cells_changed'] = changes
     summary['updated_at'] = now
+    summary['sweep_warnings'] = sweep_warnings
+    summary['sweep_blocks'] = sweep_blocks
     return summary
 
 
