@@ -10,6 +10,62 @@ and the recognition is encoded — don't re-derive it, trust it until it fails.
 
 ---
 
+<!-- TIER_INDEX_BEGIN (auto-generated; do not edit between markers) -->
+
+## Pattern tier index
+
+Auto-generated navigation table. **Pattern_library.md is the source of truth — this table classifies tier per `**Status:**` marker.** Cold-start Harmonia: read this table first, then drill into specific patterns. See `harmonia/runners/regen_pattern_library_tier_index.py` for the regenerator.
+
+**Tier vocabulary:**
+- **FULL** — promoted with explicit `**Status:** FULL PATTERN` marker; treated as doctrine.
+- **ADVISORY** — DRAFT-status promoted to strong advisory (e.g., Pattern 30); enforced discipline pending formal promotion.
+- **DRAFT** — proposed but not promoted; useful checklist, not doctrine. Apply with explicit caveat.
+- **MATURE** — foundational session-1/2 patterns without explicit FULL marker but treated as discipline by convention. Promotion to FULL pending formal anchor count.
+- **META** — patterns about the project structure / agents / language, not falsification methodology.
+
+| # | Pattern | Tier | Status marker | Line |
+|---|---|---|---|---|
+| 1 | Pattern 1 — The Distribution/Identity Trap | **MATURE** | no explicit status; foundational, used as discipline | [68](#pattern-1) |
+| 2 | Pattern 2 — The Permutation-Break Distinction | **MATURE** | no explicit status; foundational, used as discipline | [87](#pattern-2) |
+| 3 | Pattern 3 — The Weak Signal Walk | **MATURE** | no explicit status; foundational, used as discipline | [112](#pattern-3) |
+| 4 | Pattern 4 — The Sampling Frame Trap | **MATURE** | no explicit status; foundational, used as discipline | [133](#pattern-4) |
+| 5 | Pattern 5 — Known Bridges Are Known | **MATURE** | no explicit status; foundational, used as discipline | [153](#pattern-5) |
+| 6 | Pattern 6 — The Battery Tests Are Coordinate Systems | **MATURE** | no explicit status; foundational, used as discipline | [174](#pattern-6) |
+| 7 | Pattern 7 — Calibration Anchors Are Surveyor's Pins | **MATURE** | no explicit status; foundational, used as discipline | [191](#pattern-7) |
+| 8 | Pattern 8 — The GUE Story (Current Mystery) | **MATURE** | no explicit status; foundational, used as discipline | [206](#pattern-8) |
+| 9 | Pattern 9 — The Delinquent Frontier | **MATURE** | no explicit status; foundational, used as discipline | [271](#pattern-9) |
+| 10 | Pattern 10 — The Instrument Grows Faster Than the Findings | **META** | session/agent meta — not a falsification pattern | [284](#pattern-10) |
+| 11 | Pattern 11 — Language Discipline | **META** | session/agent meta — not a falsification pattern | [298](#pattern-11) |
+| 12 | Pattern 12 — Who the Other Agents Are | **META** | session/agent meta — not a falsification pattern | [782](#pattern-12) |
+| 13 | Pattern 13 — Direction of Accumulated Kills | **MATURE** | no explicit status; foundational, used as discipline | [598](#pattern-13) |
+| 14 | Pattern 14 — Verdict vs Shape | **MATURE** | no explicit status; foundational, used as discipline | [314](#pattern-14) |
+| 15 | Pattern 15 — The Machinery is the Product | **MATURE** | no explicit status; foundational, used as discipline | [632](#pattern-15) |
+| 16 | Pattern 16 — Problems-Nobody-Asks are the Frontier | **MATURE** | no explicit status; foundational, used as discipline | [672](#pattern-16) |
+| 17 | Pattern 17 — Language and Organization is the Real Bottleneck | **MATURE** | no explicit status; foundational, used as discipline | [724](#pattern-17) |
+| 18 | Pattern 18 — Uniform Visibility is Axis-Class Orphan | **MATURE** | no explicit status; foundational, used as discipline | [536](#pattern-18) |
+| 19 | Pattern 19 — Stale / Irreproducible Tensor Entry | **FULL** | FULL PATTERN (as of Liouville confirmation, promoted from draft). | [472](#pattern-19) |
+| 20 | Pattern 20 — Stratification Reveals Pooled Artifact | **FULL** | FULL (three anchor cases established; sessionA approved via merge). | [355](#pattern-20) |
+| 21 | Pattern 21 — Null-Model Selection Matters As Much As Projection Selection | **FULL** | FULL PATTERN. | [803](#pattern-21) |
+| 23 | Pattern 23 | **DRAFT** | batch DRAFT header | [886](#pattern-23) |
+| 24 | Pattern 24 | **DRAFT** | batch DRAFT header | [886](#pattern-24) |
+| 25 | Pattern 25 | **DRAFT** | batch DRAFT header | [886](#pattern-25) |
+| 26 | Pattern 26 | **DRAFT** | batch DRAFT header | [886](#pattern-26) |
+| 27 | Pattern 27 | **DRAFT** | batch DRAFT header | [886](#pattern-27) |
+| 28 | Pattern 28 | **DRAFT** | batch DRAFT header | [886](#pattern-28) |
+| 29 | Pattern 29 | **DRAFT** | batch DRAFT header | [886](#pattern-29) |
+| 30 | Pattern 30 — Algebraic-Identity Coupling Detection (DRAFT, promoted to strong ad | **ADVISORY** | title says DRAFT promoted to strong advisory | [939](#pattern-30) |
+
+**Tier counts at last regeneration:**
+- FULL: 3
+- ADVISORY: 1
+- MATURE: 15
+- DRAFT: 7
+- META: 3
+
+<!-- TIER_INDEX_END -->
+
+---
+
 ## Pattern 1 — The Distribution/Identity Trap
 
 **Recognition:** When a coupling looks suspiciously strong (ρ > 0.9 after control),

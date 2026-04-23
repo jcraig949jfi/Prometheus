@@ -31,6 +31,52 @@ _client = None
 _REF_PATTERN = re.compile(r'^(?P<name>[A-Za-z0-9_-]+)@v(?P<version>\d+)$')
 
 
+class SymbolArchivedError(LookupError):
+    """Raised when resolve() encounters an archived symbol and
+    include_archived=False. Carries the symbol name and any successor pointer."""
+    def __init__(self, name, successor=None):
+        self.name = name
+        self.successor = successor
+        msg = f'{name} is archived.'
+        if successor:
+            msg += f' Successor: {successor}.'
+        msg += ' Pass include_archived=True to resolve anyway.'
+        super().__init__(msg)
+
+
+# T3 (wave 0) — cross-version-in-session detector.
+# Tracks which versions of each symbol name have been resolved in this process.
+# When a second distinct version appears for the same name, emit a
+# CrossVersionConflict (UserWarning subclass, defined in manifest.py). Rule 4 of
+# cross_version_resolution.md: multi-version is legal; this warning provides
+# visibility, not enforcement.
+_seen_versions: dict = {}
+
+
+def _register_resolved_version(name: str, version: int) -> None:
+    """Track resolved (name, version) pairs and emit CrossVersionConflict on
+    a second distinct version. Called by resolve() after a successful fetch."""
+    seen = _seen_versions.setdefault(name, set())
+    if version in seen:
+        return
+    seen.add(version)
+    if len(seen) == 2:
+        # Local import to avoid circular import (manifest imports from resolve)
+        from .manifest import CrossVersionConflict
+        other = next(iter(seen - {version}))
+        warnings.warn(
+            f'CROSS_VERSION_CONFLICT: {name} resolved at v{other} earlier this '
+            f'session and now at v{version}. Multi-version is legal (Rule 4 of '
+            f'cross_version_resolution.md) but surfaced for visibility.',
+            CrossVersionConflict, stacklevel=3,
+        )
+
+
+def reset_cross_version_tracker() -> None:
+    """Clear the per-process cross-version tracker. Test helper."""
+    _seen_versions.clear()
+
+
 def _get_redis():
     global _client
     if _client is None:
@@ -41,13 +87,19 @@ def _get_redis():
     return _client
 
 
-def resolve(name, version=None):
+def resolve(name, version=None, include_archived=False):
     """Return full dict for a symbol at the given version, or None if absent.
 
     Accepts either:
       - resolve('NAME', version=N)  — explicit version kwarg
       - resolve('NAME@vN')          — canonical reference form (dispatches to resolve_at)
       - resolve('NAME')             — latest + UserWarning (discipline violation)
+
+    Lifecycle behavior (T2, wave 0):
+      - If the symbol's status is `deprecated`, emit DeprecationWarning with
+        the successor pointer. Resolution still succeeds.
+      - If status is `archived`, raise SymbolArchivedError unless
+        include_archived=True, in which case resolution succeeds with a warning.
     """
     if '@v' in name:
         if version is not None:
@@ -55,7 +107,7 @@ def resolve(name, version=None):
                 f'resolve: both reference-form name ({name!r}) and version '
                 f'kwarg ({version}) provided; pass exactly one.'
             )
-        return resolve_at(name)
+        return resolve_at(name, include_archived=include_archived)
     r = _get_redis()
     if version is None:
         latest = r.get(f'symbols:{name}:latest')
@@ -70,17 +122,56 @@ def resolve(name, version=None):
     raw = r.get(f'symbols:{name}:v{version}:def')
     if raw is None:
         return None
+    # T3: register the (name, version) pair for cross-version-in-session detection.
+    _register_resolved_version(name, version)
+    # Lifecycle gate — check status AFTER we know the symbol exists.
+    status = r.get(f'symbols:{name}:status') or 'active'
+    successor = r.get(f'symbols:{name}:successor')
+    if status == 'archived' and not include_archived:
+        raise SymbolArchivedError(name, successor=successor)
+    if status == 'deprecated':
+        warnings.warn(
+            f'{name}@v{version} is deprecated.'
+            + (f' Successor: {successor}.' if successor else '')
+            + ' Update references to the successor.',
+            DeprecationWarning, stacklevel=2,
+        )
+    elif status == 'archived' and include_archived:
+        warnings.warn(
+            f'{name}@v{version} is archived; resolving under include_archived=True.',
+            DeprecationWarning, stacklevel=2,
+        )
     return json.loads(raw)
 
 
-def resolve_at(reference):
+def resolve_at(reference, include_archived=False):
     """Resolve a reference in the canonical 'NAME@vN' form."""
     m = _REF_PATTERN.match(reference)
     if not m:
         raise ValueError(
             f'resolve_at: expected NAME@v<N> form, got {reference!r}'
         )
-    return resolve(m.group('name'), version=int(m.group('version')))
+    return resolve(m.group('name'), version=int(m.group('version')),
+                   include_archived=include_archived)
+
+
+def get_status(name):
+    """Return the lifecycle status of a symbol ('active'|'deprecated'|'archived').
+
+    Returns 'active' as the default when the key is absent (for symbols
+    promoted before the status field was added). Returns None only if the
+    symbol is not promoted at all.
+    """
+    r = _get_redis()
+    if not r.sismember('symbols:all', name):
+        return None
+    return r.get(f'symbols:{name}:status') or 'active'
+
+
+def get_successor(name):
+    """Return the successor pointer for a deprecated/archived symbol, or None."""
+    r = _get_redis()
+    return r.get(f'symbols:{name}:successor')
 
 
 def resolve_meta(name, version=None):
@@ -200,17 +291,32 @@ def parse_reference(reference):
     return m.group('name'), int(m.group('version'))
 
 
-def validate_reference_string(text, strict=True):
-    """Validate that a text mentions of symbol names carry @v<N>.
+def validate_reference_string(text, strict=True, manifest=None):
+    """Validate that a text's mentions of symbol names carry @v<N>.
 
     Scans `text` for bare symbol names (by checking against all_symbols())
-    followed by whitespace or punctuation. Returns a list of violations.
+    NOT followed by @v<digits>. Returns a list of violations.
     If strict=True, raises ValueError on any violation.
+
+    Manifest integration (T1, wave 0):
+      If `manifest` is provided (dict NAME -> version, from
+      agora.symbols.manifest.parse_session_manifest), bare names that
+      are covered by the manifest are NOT violations — the manifest
+      is the declaration of authoritative versions for this session.
+      Bare names NOT covered by the manifest remain violations.
+
+      Typical call pattern:
+          from agora.symbols.manifest import parse_session_manifest
+          manifest = parse_session_manifest(session_output_text)
+          violations = validate_reference_string(body_text, manifest=manifest)
     """
     r = _get_redis()
     names = r.smembers('symbols:all')
+    covered = set(manifest.keys()) if manifest else set()
     violations = []
     for name in names:
+        if name in covered:
+            continue  # manifest-declared: bare form is legal
         # Match bare name NOT followed by @v
         pattern = re.compile(r'\b' + re.escape(name) + r'(?!@v)\b')
         for m in pattern.finditer(text):

@@ -298,8 +298,177 @@ ingest.
 
 ---
 
+## Lifecycle status (T2, wave 0 — 2026-04-22)
+
+Orthogonal to the five versioning rules above, each promoted symbol
+carries a **mutable lifecycle status** — `active` / `deprecated` /
+`archived` — stored at `symbols:<NAME>:status` in Redis, outside the
+immutable `:def` blob. This field is **per-symbol-name**, not
+per-version: it describes whether the symbol as a whole is usable in
+new work, not which version to pick.
+
+**Rule 3 interaction.** Lifecycle transitions do NOT mutate `:v<N>:def`
+or `:v<N>:meta` and therefore never violate Rule 3. The frontmatter
+fields `status` and `successor` are stripped from the canonical
+def_json before content comparison; they are written to separate
+mutable keys (`symbols:<NAME>:status`, `symbols:<NAME>:successor`).
+
+**Required companions:**
+- `status: deprecated` or `status: archived` REQUIRES a
+  `successor: <NAME>@v<N>` pointer. Validated at push and at
+  `update_status()`.
+- `status: active` (default) must NOT carry a successor.
+
+**Resolver behavior:**
+- `active`: `resolve()` succeeds silently.
+- `deprecated`: `resolve()` succeeds AND emits `DeprecationWarning`
+  naming the successor.
+- `archived`: `resolve()` raises `SymbolArchivedError` unless
+  `include_archived=True` is passed, in which case it succeeds with
+  a warning.
+
+**Transitions:**
+```python
+from agora.symbols import update_status
+update_status('OLD_SYMBOL', 'deprecated', 'NEW_SYMBOL@v1')
+update_status('OLD_SYMBOL', 'archived',   'NEW_SYMBOL@v1')
+update_status('OLD_SYMBOL', 'active',     None)          # restore
+```
+
+**Frontmatter declaration** (alternative to programmatic transition):
+
+```yaml
+status: deprecated
+successor: NEW_SYMBOL@v1
+```
+
+On `push_symbol`, these fields are parsed and written to the mutable
+lifecycle keys. The `:def` blob stays identical to prior promoted
+content, so re-push returns `unchanged`.
+
+---
+
+## Session manifest — declare-once versioning (T1, wave 0 — 2026-04-22)
+
+Rule 2 mandates every reference carries `@v<N>`. At session scale, the
+prose density of version suffixes was flagged by 3 of 4 external
+reviewers (2026-04-21) as a token-fragmentation / attention-degradation
+failure mode (R2 Session Manifest, R3 per-session pinning, R4 ISO
+cite-once). The session manifest relaxes the prose requirement while
+preserving the semantic guarantee: the manifest IS the per-session
+version pin; the bare aliases in prose resolve back to manifest-declared
+versions at commit/handoff.
+
+**Convention.** Place a YAML manifest at the top of session output
+(handoff notes, sync-stream message bodies, decision log entries):
+
+```yaml
+---
+uses:
+  NULL_BSWCD: 2
+  PATTERN_30: 1
+  SHADOWS_ON_WALL: 1
+---
+The NULL_BSWCD test on F043 flagged a PATTERN_30 Level-3 coupling.
+Per SHADOWS_ON_WALL, lens count = 1 → shadow verdict.
+```
+
+Equivalent list form (external-review-canonical):
+
+```yaml
+uses: [NULL_BSWCD@v2, PATTERN_30@v1, SHADOWS_ON_WALL@v1]
+```
+
+Both parse to the same manifest dict `{NAME: int}`.
+
+**Resolution rules.**
+
+1. **Bare name in prose → manifest version.** A symbol name appearing
+   in prose (word-bounded, not followed by `@v`) is resolved at the
+   version declared in the manifest.
+2. **Inline `@v<M>` always wins at its call site.** A fully-qualified
+   reference with `M != manifest[N]` is *preserved*, not rewritten —
+   it is a deliberate override (e.g., a historical or regression
+   reference). An override emits `CrossVersionConflict` so the
+   disagreement is visible.
+3. **Bare name NOT in manifest → violation.** Undeclared bare names
+   are still Rule-2 violations. The manifest is authorization, not
+   wildcards.
+4. **Manifest is optional.** Absent manifest = pre-manifest discipline:
+   every reference must carry `@v<N>` inline per Rule 2.
+
+**API.** `agora.symbols.manifest`:
+
+```python
+from agora.symbols import (
+    parse_session_manifest,          # text → {NAME: int}
+    resolve_with_manifest,           # bare name + manifest → symbol dict
+    expand_references,               # bare → @v<N> for commit/handoff
+    contract_references,             # @v<N> → bare (when manifest covers)
+    find_conflicts,                  # list of inline vs manifest mismatches
+    manifest_frontmatter,            # dict → canonical YAML block
+    round_trip_ok,                   # contract(expand(x, M), M) == x
+    CrossVersionConflict,            # UserWarning subclass
+    validate_reference_string,       # now accepts manifest=
+)
+
+manifest = parse_session_manifest(message_text)
+violations = validate_reference_string(body, manifest=manifest)
+qualified = expand_references(body, manifest)  # for storage/handoff
+```
+
+**Round-trip invariant.** For canonical bare-form prose `x` and
+manifest `M` containing no inline overrides of manifest names:
+
+```
+contract_references(expand_references(x, M), M) == x
+```
+
+Tests at `agora/symbols/test_manifest.py` (21 cases, all green as of
+promotion).
+
+**Composition with other wave-0 items.**
+- **T2 (lifecycle status):** manifest declares versions only; status is
+  looked up separately via `symbols:<NAME>:status`. Resolver still
+  gates on status (archived raises `SymbolArchivedError` through the
+  manifest path too). No field overlap.
+- **T3 (cross-version resolution policy):** `find_conflicts()` returns
+  the mismatch list that T3 documents. Default policy when `expand()`
+  sees a mismatch is "manifest wins; inline override is preserved and
+  warned," per external-review R3's first-resolve-wins. Explicit
+  `as` casts (if T3 adopts them) would live outside manifest's scope.
+
+**Identifier-boundary guarantee.** `expand_references` uses
+word-boundary matching that does NOT truncate longer identifiers:
+`NULL_BSWCD_EXT` is never rewritten to `NULL_BSWCD@v2_EXT` even if
+`NULL_BSWCD` is in the manifest.
+
+**What the manifest does NOT do.**
+- Does not allow dropping `@v<N>` in commit messages, git-blame-able
+  artifacts (symbol MDs, SIGNATURE JSONs, tensor payloads). Those
+  persist beyond the session and must remain self-describing.
+- Does not affect promoted symbols' own `references:` frontmatter
+  (which is still Rule-2-strict — a promoted MD has no session
+  context).
+- Does not replace Rule 2 at the protocol layer. Inter-agent messages
+  SHOULD declare a manifest if they use bare aliases; a message with
+  bare names and no manifest is rejected by the validator.
+
+---
+
 ## Version history (of this document)
 
+- **v3** 2026-04-22 — added Session Manifest section (T1, wave 0).
+  Declare-once versioning via YAML `uses:` frontmatter.
+  Parser/validator/expand/contract shipped in
+  `agora/symbols/manifest.py`; validate_reference_string extended to
+  accept manifest kwarg. 21-test suite green at
+  `agora/symbols/test_manifest.py`.
+- **v2** 2026-04-22 — added Lifecycle status section (T2, wave 0).
+  Status + successor are per-symbol mutable metadata stored outside
+  :def. Orthogonal to Rule 3 immutability. Validator + resolver
+  warning shipped in `agora/symbols/{push.py,resolve.py}`. All 20
+  extant symbols backfilled to `status: active`.
 - **v1** 2026-04-18 — initial discipline established per project lead
   directive "versioning needs to be baked in from day one." Retrofits
   the 5 seed symbols to v1 under strict schema. Tier 1 scope: symbol

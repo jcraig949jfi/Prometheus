@@ -36,6 +36,36 @@ document is for things outside that envelope.
 
 ---
 
+### [2026-04-22] — Substrate-debt closure: 6 NO_LINEAGE_METADATA F-IDs now registered — milestone, no decision needed
+
+**Context:** The 2026-04-20 gen_06 ship entry flagged six F-IDs (F011, F013, F014, F022, F044, F045) as the baseline substrate debt — each needing an `algebraic_lineage` declaration before the next promotion from that F-ID, maintained as a manual Pattern 30 gate for the residual cases. Audit this tick (sessionA 2026-04-22, SUBSTRATE_AUDIT 1776902585762-0, sessionB ACK 1776902794747-0) verified that `harmonia/sweeps/retrospective.py::LINEAGE_REGISTRY` now has typed entries for all six — the debt is paid.
+
+**Registry state per F-ID (verdicts from `resolve_entry()`):**
+
+| F-ID | Type | Verdict | Notes |
+|---|---|---|---|
+| F011 | `non_correlational` | N/A_NON_CORRELATIONAL | variance_deficit — eps_0 = fit intercept, not a correlation coefficient |
+| F013 | `algebraic_lineage` | WARN | Level 1 WEAK_ALGEBRAIC; cross-refs F003/F011/F015 |
+| F014 | `non_correlational` | N/A_NON_CORRELATIONAL | density/existence — Salem spectrum structural, not Pattern-30 coupled |
+| F022 | `killed_no_correlation` | N/A_KILLED | NF backbone feature-distribution; ρ=0 under P001 permutation null |
+| F044 | `frame_hazard` | PROVISIONAL | rank-4 disc=conductor corridor; pending `audit_F044_framebased_resample` |
+| F045 | `algebraic_lineage` | WARN | Level 1 provisional; pending `correlate_F041a_F045_nbp_vs_isogeny` audit-watcher |
+
+**Implications:**
+- Manual Pattern 30 gate is now closed for all six. Automated filter via `agora.tensor.push` will emit typed verdicts (BLOCK / WARN / PROVISIONAL / N/A_*) on next promotion attempt from any of these F-IDs.
+- Two live `pending_audit` watchers (F044 frame-resample, F045 F041a↔F045 collapse check) will auto-flag on Agora task completion per `harmonia/sweeps/retrospective.py::_check_agora_task_complete`. No manual polling needed.
+- Any new live_specimen F-ID should have its lineage-type declared at registration rather than retrofitted — the NO_LINEAGE_METADATA bucket can stay empty going forward by making the type declaration part of the `register_specimen` contract.
+
+**What's blocked:** Nothing. This is a substrate-debt closure, not a new work item.
+
+**Urgency:** milestone.
+
+**Cross-refs:** agora:harmonia_sync `1776902585762-0` (sessionA SUBSTRATE_AUDIT with per-F-ID verdicts), `1776902794747-0` (sessionB ACK_AND_ENDORSE with no-objection to this closure entry), `1776902640623-0` (auditor ACK routing auto-sweep for F044/F045 recs).
+
+---
+
+---
+
 ### [2026-04-20 evening / 2026-04-21] — Tier 1 design wave: gen_11 + Definition DAG + 5 symbol promotions — milestone, no decision needed
 
 **Context:** Conductor design conversation with James (Harmonia sessionA evening) produced a coherent wave of architectural moves around coordinate-system invention as the next leverage point. Where prior generators operate on measurement-space (propose new measurements through existing axes), gen_11 operates on axis-space (proposes new axes themselves). Substrate primitive (Definition DAG) was distinguished from generator (gen_11) and given its own architecture slot, alongside the symbol registry and tensor.
@@ -659,6 +689,159 @@ Both are needed to calibrate the instrument. The session is complete, durable, a
 **Resolution:** James's ongoing approval mode during this session covers pushes of worker output files (`cartography/docs/wsw_*.json|.py`) and tensor memory files when they correspond to approved TENSOR_DIFFs. I've been pushing these as I approve them.
 
 **James approval:** 2026-04-17 "All sounds good."
+
+---
+
+### [2026-04-22 23:50 UTC] — F045 multiple-testing + independence audit complete; PARTIAL_CONFOUND with F041a
+
+**Context:** Claimed `audit_F045_multiple_testing_and_independence` (sessionA
+2026-04-18). F045 claimed 5/21 primes significant in Ergon's murmuration-by-
+isogeny-class-size test; multiple-testing correction + F041a-independence
+check is the audit.
+
+**Headline (verdict):** SURVIVES_MULTIPLE_TESTING_BUT_SHARES_STRUCTURE_WITH_F041A.
+- Under my re-run of the 1-way ANOVA on 25 primes (F045's original was 21; the
+  stored profiles go to p=97), uncorrected: **6/25 significant** at α=0.05.
+- **Bonferroni: 1/25** survives (p=79, the original F045 headline).
+- **Benjamini-Hochberg (FDR=0.05): 3/25** survives — primes {5, 19, 79}.
+- **F041a-independence check:** Spearman(class_size, num_bad_primes) = **+0.455**
+  on n=3.29M rank-0/1 EC; normalized MI = 0.14. Substantive correlation —
+  F045's isogeny axis is NOT independent of F041a's nbp axis.
+
+Summary: F045 is not wholly a multiple-testing artifact — p=79 survives even
+Bonferroni. But its isogeny-class axis partly overlaps with F041a's nbp axis,
+so the signal it detects may be partly F041a's signal viewed through a
+different stratification. A clean isogeny-specific measurement requires
+F045 stratified WITHIN nbp strata.
+
+**What I'd recommend:**
+1. Update F045 description to (a) note the multiple-testing-corrected count
+   (3/25 BH, 1/25 Bonferroni, down from raw 5/21 claim); (b) add a
+   PARTIAL_CONFOUND_WITH_F041a annotation citing Spearman 0.455; (c) name
+   the surviving primes {5, 19, 79}; (d) mark stratified-within-nbp as the
+   kill/confirm gate for promotion.
+2. Seed a kill/confirm task `audit_F045_stratified_within_nbp` at priority −1.0
+   which reruns the per-prime ANOVA on class_size within each nbp stratum.
+   If the isogeny signal survives per-nbp stratification at BH FDR=0.05 for
+   any prime, F045 is independent of F041a at that scale. If it collapses
+   across every nbp stratum, F045 is a proxy for F041a.
+3. No tensor mutation at this audit. F045 cells stay live_specimen
+   (borderline); annotation is a description-only change.
+
+**What's blocked:** nothing urgent. The stratified-within-nbp task is the
+next move if anyone picks it up.
+
+**Urgency:** low-medium. F045 is borderline live_specimen; the confound-
+with-F041a concern doesn't kill it, it narrows the promotion path.
+
+**Cross-refs:**
+`cartography/docs/audit_F045_multiple_testing_and_independence_results.json`,
+`harmonia/runners/audit_F045_multiple_testing.py`, sync stream `1776900402211-0`.
+
+---
+
+### [2026-04-22 23:30 UTC] — F044 frame-based resample audit complete; RETRACTION recommended
+
+**Context:** Claimed `audit_F044_framebased_resample` (sessionA 2026-04-19,
+methodology tightener `b57f4afe`). F044 had the live_specimen claim "across
+2086 rank-4 EC in LMFDB, 2085 have disc=conductor — only 1 exception —
+candidate theorem hiding in plain sight." Methodology tightener flagged the
+F044 cells PROVISIONAL pending Class-4 frame-based resample.
+
+**Headline:** RETRACTED_AS_SELECTION_ARTIFACT. F044's pattern is a Pattern-4
+selection-frame artifact. At conductor ≥ 10⁸, ALL ranks 2-5 in LMFDB are
+**100% semistable + nbp=1** — rank=2: 81,298/81,298 curves; rank=3:
+16,095/16,095; rank=4: 1,281/1,281; rank=5: 14/14. F044's rank-4 corridor is
+identical to the rank-2 and rank-3 patterns at the same conductor range.
+The 1 exception (`234446.a1`) sits at the LOW boundary of LMFDB's rank-4
+conductor range, where exhaustive enumeration covers and the rank-record
+construction filter does not apply.
+
+The pattern is a property of LMFDB's high-conductor curve-sourcing
+methodology (rank-record constructions filter for simple bad-reduction
+structure), not a property of rank=4.
+
+**What I'd recommend (needs conductor approval — I did NOT execute):**
+1. F044 tier: `live_specimen` → `killed_selection_frame`
+2. F044 cells (P020, P023, P026): PROVISIONAL +1 → −2 (provably-collapses;
+   selection artifact)
+3. F044 description rewrite: replace "candidate theorem hiding in plain
+   sight" framing with the Pattern-4 selection-frame interpretation; cite
+   `cartography/docs/audit_F044_framebased_resample_results.md`
+4. Pattern 4 update: add F044 as fourth anchor case (the construction-
+   biased-sample sub-class — broader than the original LIMIT-N framing)
+
+**Methodology side-finding for the substrate:** before promoting any
+"ALL rank-r curves have property X" claim, run a cross-rank comparison at
+the same conductor range first. If lower ranks show the same pattern at
+high conductor, the property is conductor-driven, not rank-driven. This
+should fold into gen_06 sweeps as a pre-promotion check on rank-stratified
+specimens.
+
+**What's blocked:** nothing urgent. Tensor cells stay PROVISIONAL until
+conductor (sessionA or James) reviews the recommendation. The optional
+companion task `audit_F044_rank4_lmfdb_selection` (literature/theorem
+search) is still in the queue at -1.0 and would close the question
+independently — but the cross-rank evidence is already decisive.
+
+**Urgency:** medium. F044 was high-interest (live_specimen with the "theorem
+hiding in plain sight" framing); the retraction is a real epistemic move and
+worth conductor review. The methodology side-finding (cross-rank
+comparison as pre-promotion check) has wider leverage than the F044-
+specific outcome.
+
+**Cross-refs:** `cartography/docs/audit_F044_framebased_resample_results.md`,
+sync stream `1776900048561-0`.
+
+---
+
+### [2026-04-22 23:11 UTC] — F041a Euler-deflation audit complete; SIGN_INVERSION + Pattern-19 mismatch surfaced
+
+**Context:** Claimed `audit_F041a_euler_product_deflation` (posted by sessionA
+2026-04-18) and ran the Pattern-30 PARTIAL Euler-product deflation test on
+F041a's rank-2 leading-term slope-vs-nbp ladder. Implementation at
+`harmonia/runners/audit_F041a_euler_deflation.py`; results at
+`cartography/docs/audit_F041a_euler_product_deflation_results.json`.
+
+**Headline (verdict amended after reading numbers):** SIGN_INVERSION_AND_RESHAPE.
+Deflator did NOT collapse the ladder amplitude (raw 0.073 → deflated 0.142,
+ratio 1.95) but did FLIP the (nbp, slope) correlation from +0.65 (raw,
+mildly increasing) to −0.83 (deflated, strongly DECREASING). Reading:
+F041a's monotone-INCREASING-in-nbp framing is substantially the bad-prime
+Euler-factor contribution (Pattern 30 PARTIAL leaning SHARED_VARIABLE on
+that framing); a NEW signal — monotone-DECREASING-in-nbp slope, z=8-18 per
+stratum — emerges in the Euler-deflated quantity.
+
+**PATTERN-19 flag (load-bearing):** my raw per-stratum slopes (~0.25 across
+nbp 1-5, 0.32 at nbp=6) are roughly 5x SMALLER than F041a's recorded values
+(1.21..2.52). Three possible causes: (a) my stratified random sample
+(5K/nbp via md5(label) ranking; n=19,414) differs from F041a's ~222K joined
+cohort; (b) F041a's slope normalization may differ (per-decade-then-pool vs
+single OLS over full conductor range); (c) F041a's recorded numbers may
+need re-audit. Until reconciled, NO TENSOR MUTATION on F041a from this
+audit. Re-running on F041a's exact reproduced cohort is the gating step.
+
+**What I'd recommend:**
+1. Don't mutate the tensor on F041a yet — Pattern-19 mismatch needs to
+   close first.
+2. Seed `reaudit_F041a_reproduce_222K_cohort_then_deflate` at priority −1.5
+   for a future worker to run my deflation pipeline on F041a's exact
+   reported cohort.
+3. Methodology side-finding: Pattern 30 PARTIAL audits should add a
+   sign-preservation check, not just an amplitude-absorbed check. My
+   initial verdict logic (`amp_ratio < 0.20 → COLLAPSE`) missed the more
+   informative sign flip. Worth folding into the gen_06 sweep module.
+
+**What's blocked:** nothing urgent. The F041a tensor cells (P020/P021/P023/
+P026/P039/P104) stay at their current verdicts pending the Pattern-19
+reconciliation. Pattern 30 PARTIAL annotation on F041a stands.
+
+**Urgency:** medium. Methodology side-finding (sign-preservation in
+Pattern 30 audits) is the higher-leverage takeaway. F041a interpretation
+shift is real but should not act on it until cohort reproduction lands.
+
+**Cross-refs:** `cartography/docs/audit_F041a_euler_product_deflation_results.json`,
+`harmonia/runners/audit_F041a_euler_deflation.py`, sync stream `1776899465123-0`.
 
 ---
 

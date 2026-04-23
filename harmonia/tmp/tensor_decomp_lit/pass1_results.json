@@ -1,0 +1,1253 @@
+{
+  "pass": 1,
+  "name": "prior_art_calibration",
+  "description": "Known landmarks in low-rank tensor decomposition and algorithm search",
+  "run_timestamp": "2026-04-23T06:29:34.412966Z",
+  "n_raw": 98,
+  "n_unique": 92,
+  "results": [
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "Quantum Circuit Optimization with AlphaTensor",
+      "authors": [
+        "Francisco J. R. Ruiz",
+        "Tuomas Laakkonen",
+        "Johannes Bausch",
+        "Matej Balog",
+        "Mohammadamin Barekatain",
+        "Francisco J. H. Heras",
+        "Alexander Novikov",
+        "Nathan Fitzpatrick"
+      ],
+      "url": "http://arxiv.org/abs/2402.14396v2",
+      "date": "2024-02-22",
+      "summary": "A key challenge in realizing fault-tolerant quantum computers is circuit optimization. Focusing on the most expensive gates in fault-tolerant quantum computation (namely, the T gates), we address the problem of T-count optimization, i.e., minimizing the number of T gates that are needed to implement a given circuit. To achieve this, we develop AlphaTensor-Quantum, a method based on deep reinforcement learning that exploits the relationship between optimizing T-count and tensor decomposition. Unlike existing methods for T-count optimization, AlphaTensor-Quantum can incorporate domain-specific knowledge about quantum computation and leverage gadgets, which significantly reduces the T-count of the optimized circuits. AlphaTensor-Quantum outperforms the existing methods for T-count optimizatio"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "Reusability Report: Optimizing T-count in General Quantum Circuits with AlphaTensor-Quantum",
+      "authors": [
+        "Remmy Zen",
+        "Maximilian N\u00e4gele",
+        "Florian Marquardt"
+      ],
+      "url": "http://arxiv.org/abs/2511.09951v1",
+      "date": "2025-11-13",
+      "summary": "Quantum computing has the potential to solve problems that are intractable for classical computers, with possible applications in areas such as drug discovery and high-energy physics. However, the practical implementation of quantum computation is hindered by the complexity of executing quantum circuits on hardware. In particular, minimizing the number of T-gates is crucial for implementing efficient quantum algorithms. AlphaTensor-Quantum is a reinforcement learning-based method designed to optimize the T-count of quantum circuits by formulating the problem as a tensor decomposition task. While it has demonstrated superior performance over existing methods on benchmark quantum arithmetic circuits, its applicability has so far been restricted to specific circuit families, requiring separat"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "OpenTensor: Reproducing Faster Matrix Multiplication Discovering Algorithms",
+      "authors": [
+        "Yiwen Sun",
+        "Wenye Li"
+      ],
+      "url": "http://arxiv.org/abs/2405.20748v1",
+      "date": "2024-05-31",
+      "summary": "OpenTensor is a reproduction of AlphaTensor, which discovered a new algorithm that outperforms the state-of-the-art methods for matrix multiplication by Deep Reinforcement Learning (DRL). While AlphaTensor provides a promising framework for solving scientific problems, it is really hard to reproduce due to the massive tricks and lack of source codes. In this paper, we clean up the algorithm pipeline, clarify the technical details, and make some improvements to the training process. Computational results show that OpenTensor can successfully find efficient matrix multiplication algorithms."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "ChatGPT is not all you need. A State of the Art Review of large Generative AI models",
+      "authors": [
+        "Roberto Gozalo-Brizuela",
+        "Eduardo C. Garrido-Merchan"
+      ],
+      "url": "http://arxiv.org/abs/2301.04655v1",
+      "date": "2023-01-11",
+      "summary": "During the last two years there has been a plethora of large generative models such as ChatGPT or Stable Diffusion that have been published. Concretely, these models are able to perform tasks such as being a general question and answering system or automatically creating artistic images that are revolutionizing several sectors. Consequently, the implications that these generative models have in the industry and society are enormous, as several job positions may be transformed. For example, Generative AI is capable of transforming effectively and creatively texts to images, like the DALLE-2 model; text to 3D images, like the Dreamfusion model; images to text, like the Flamingo model; texts to video, like the Phenaki model; texts to audio, like the AudioLM model; texts to other texts, like C"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "Fast Matrix Multiplication Without Tears: A Constraint Programming Approach",
+      "authors": [
+        "Arnaud Deza",
+        "Chang Liu",
+        "Pashootan Vaezipoor",
+        "Elias B. Khalil"
+      ],
+      "url": "http://arxiv.org/abs/2306.01097v2",
+      "date": "2023-06-01",
+      "summary": "It is known that the multiplication of an $N \\times M$ matrix with an $M \\times P$ matrix can be performed using fewer multiplications than what the naive $NMP$ approach suggests. The most famous instance of this is Strassen's algorithm for multiplying two $2\\times 2$ matrices in 7 instead of 8 multiplications. This gives rise to the constraint satisfaction problem of fast matrix multiplication, where a set of $R < NMP$ multiplication terms must be chosen and combined such that they satisfy correctness constraints on the output matrix. Despite its highly combinatorial nature, this problem has not been exhaustively examined from that perspective, as evidenced for example by the recent deep reinforcement learning approach of AlphaTensor. In this work, we propose a simple yet novel Constraint"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "Faster Algorithms for Structured Matrix Multiplication via Flip Graph Search",
+      "authors": [
+        "Kirill Khoruzhii",
+        "Patrick Gel\u00df",
+        "Sebastian Pokutta"
+      ],
+      "url": "http://arxiv.org/abs/2511.10786v2",
+      "date": "2025-11-13",
+      "summary": "We give explicit low-rank bilinear non-commutative schemes for multiplying structured $n \\times n$ matrices with $2 \\leq n \\leq 5$, which serve as building blocks for recursive algorithms with improved multiplicative factors in asymptotic complexity. Our schemes are discovered over $\\mathbb{F}_2$ or $\\mathbb{F}_3$ and lifted to $\\mathbb{Z}$ or $\\mathbb{Q}$. Using a flip graph search over tensor decompositions, we derive schemes for general, upper-triangular, lower-triangular, symmetric, and skew-symmetric inputs, as well as products of a structured matrix with its transpose. These schemes improve asymptotic constants for 13 of 15 structured formats. In particular, we obtain $4 \\times 4$ rank-34 schemes for both multiplying a general matrix by its transpose and an upper-triangular matrix by"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "Optimizing Memory Mapping Using Deep Reinforcement Learning",
+      "authors": [
+        "Pengming Wang",
+        "Mikita Sazanovich",
+        "Berkin Ilbeyi",
+        "Phitchaya Mangpo Phothilimthana",
+        "Manish Purohit",
+        "Han Yang Tay",
+        "Ng\u00e2n V\u0169",
+        "Miaosen Wang"
+      ],
+      "url": "http://arxiv.org/abs/2305.07440v2",
+      "date": "2023-05-11",
+      "summary": "Resource scheduling and allocation is a critical component of many high impact systems ranging from congestion control to cloud computing. Finding more optimal solutions to these problems often has significant impact on resource and time savings, reducing device wear-and-tear, and even potentially improving carbon emissions. In this paper, we focus on a specific instance of a scheduling problem, namely the memory mapping problem that occurs during compilation of machine learning programs: That is, mapping tensors to different memory layers to optimize execution time.   We introduce an approach for solving the memory mapping problem using Reinforcement Learning. RL is a solution paradigm well-suited for sequential decision making problems that are amenable to planning, and combinatorial sea"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaTensor\" OR abs:\"AlphaTensor\"",
+      "title": "Reinforcement Learning and Life Cycle Assessment for a Circular Economy -- Towards Progressive Computer Science",
+      "authors": [
+        "Johannes Buchner"
+      ],
+      "url": "http://arxiv.org/abs/2503.10822v4",
+      "date": "2025-03-13",
+      "summary": "The aim of this paper is to discuss the potential of using methods from Reinforcement Learning for Life Cycle Assessment in a circular economy, and to present some new ideas in this direction. To give some context, we explain how Reinforcement Learning was successfully applied in computer chess (and beyond). As computer chess was historically called the \"drosophila of AI\", we start by describing a method for the board representation called 'rotated bitboards' that can potentially also be applied in the context of sustainability. In the first part of this paper, the concepts of the bitboard-representation and the advantages of (rotated) bitboards in move generation are explained. In order to illustrate those ideas practice, the concrete implementation of the move-generator in FUSc# (a chess"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "Characterization of Decomposition of Matrix Multiplication Tensors",
+      "authors": [
+        "Petr Tichavsky"
+      ],
+      "url": "http://arxiv.org/abs/2104.05323v1",
+      "date": "2021-04-12",
+      "summary": "In this paper, the canonical polyadic (CP) decomposition of tensors that corresponds to matrix multiplications is studied. Finding the rank of these tensors and computing the decompositions is a fundamental problem of algebraic complexity theory. In this paper, we characterize existing decompositions (found by any algorithm) by certain vectors called signature, and transform them in another decomposition which can be more suitable in practical algorithms. In particular, we present a novel decomposition of the tensor multiplication of matrices of the size 3x3 with 3x6 with rank 40."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "Matrix multiplication algorithms from group orbits",
+      "authors": [
+        "Joshua A. Grochow",
+        "Cristopher Moore"
+      ],
+      "url": "http://arxiv.org/abs/1612.01527v2",
+      "date": "2016-12-05",
+      "summary": "We show how to construct highly symmetric algorithms for matrix multiplication. In particular, we consider algorithms which decompose the matrix multiplication tensor into a sum of rank-1 tensors, where the decomposition itself consists of orbits under some finite group action. We show how to use the representation theory of the corresponding group to derive simple constraints on the decomposition, which we solve by hand for n=2,3,4,5, recovering Strassen's algorithm (in a particularly symmetric form) and new algorithms for larger n. While these new algorithms do not improve the known upper bounds on tensor rank or the matrix multiplication exponent, they are beautiful in their own right, and we point out modifications of this idea that could plausibly lead to further improvements. Our con"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "The geometry of rank decompositions of matrix multiplication I: 2x2 matrices",
+      "authors": [
+        "Luca Chiantini",
+        "Christian Ikenmeyer",
+        "J. M. Landsberg",
+        "Giorgio Ottaviani"
+      ],
+      "url": "http://arxiv.org/abs/1610.08364v1",
+      "date": "2016-10-25",
+      "summary": "This is the first in a series of papers on rank decompositions of the matrix multiplication tensor. In this paper we: establish general facts about rank decompositions of tensors, describe potential ways to search for new matrix multiplication decompositions, give a geometric proof of the theorem of Burichenko's theorem establishing the symmetry group of Strassen's algorithm, and present two particularly nice subfamilies in the Strassen family of decompositions."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "Ruling Out Low-rank Matrix Multiplication Tensor Decompositions with Symmetries via SAT",
+      "authors": [
+        "Jason Yang"
+      ],
+      "url": "http://arxiv.org/abs/2402.01011v1",
+      "date": "2024-02-01",
+      "summary": "We analyze rank decompositions of the $3\\times 3$ matrix multiplication tensor over $\\mathbb{Z}/2\\mathbb{Z}$. We restrict our attention to decompositions of rank $\\le 21$, as only those decompositions will yield an asymptotically faster algorithm for matrix multiplication than Strassen's algorithm. To reduce search space, we also require decompositions to have certain symmetries. Using Boolean SAT solvers, we show that under certain symmetries, such decompositions do not exist."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "The geometry of rank decompositions of matrix multiplication II: $3\\times 3$ matrices",
+      "authors": [
+        "Grey Ballard",
+        "Christian Ikenmeyer",
+        "J. M. Landsberg",
+        "Nick Ryder"
+      ],
+      "url": "http://arxiv.org/abs/1801.00843v1",
+      "date": "2018-01-02",
+      "summary": "This is the second in a series of papers on rank decompositions of the matrix multiplication tensor. We present new rank $23$ decompositions for the $3\\times 3$ matrix multiplication tensor $M_{\\langle 3\\rangle}$. All our decompositions have symmetry groups that include the standard cyclic permutation of factors but otherwise exhibit a range of behavior. One of them has 11 cubes as summands and admits an unexpected symmetry group of order 12. We establish basic information regarding symmetry groups of decompositions and outline two approaches for finding new rank decompositions of $M_{\\langle n\\rangle}$ for larger $n$."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "Neural Learning of Fast Matrix Multiplication Algorithms: A StrassenNet Approach",
+      "authors": [
+        "Paolo Andreini",
+        "Alessandra Bernardi",
+        "Monica Bianchini",
+        "Barbara Toniella Corradini",
+        "Sara Marziali",
+        "Giacomo Nunziati",
+        "Franco Scarselli"
+      ],
+      "url": "http://arxiv.org/abs/2602.21797v1",
+      "date": "2026-02-25",
+      "summary": "Fast matrix multiplication can be described as searching for low-rank decompositions of the matrix--multiplication tensor. We design a neural architecture, \\textsc{StrassenNet}, which reproduces the Strassen algorithm for $2\\times 2$ multiplication. Across many independent runs the network always converges to a rank-$7$ tensor, thus numerically recovering Strassen's optimal algorithm. We then train the same architecture on $3\\times 3$ multiplication with rank $r\\in\\{19,\\dots,23\\}$. Our experiments reveal a clear numerical threshold: models with $r=23$ attain significantly lower validation error than those with $r\\le 22$, suggesting that $r=23$ could actually be the smallest effective rank of the matrix multiplication tensor $3\\times 3$.   We also sketch an extension of the method to border"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "Exploiting the Structure in Tensor Decompositions for Matrix Multiplication",
+      "authors": [
+        "Manuel Kauers",
+        "Jakob Moosbauer",
+        "Isaac Wood"
+      ],
+      "url": "http://arxiv.org/abs/2602.11041v2",
+      "date": "2026-02-11",
+      "summary": "We present a new algorithm for fast matrix multiplication using tensor decompositions which have special features. Thanks to these features we obtain exponents lower than what the rank of the tensor decomposition suggests. In particular for $6\\times 6$ matrix multiplication we reduce the exponent of the recent algorithm by Moosbauer and Poole from $2.8075$ to $2.8016$, while retaining a reasonable leading coefficient."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "Efficient algorithms for Tucker decomposition via approximate matrix multiplication",
+      "authors": [
+        "Maolin Che",
+        "Yimin Wei",
+        "Hong Yan"
+      ],
+      "url": "http://arxiv.org/abs/2303.11612v1",
+      "date": "2023-03-21",
+      "summary": "This paper develops fast and efficient algorithms for computing Tucker decomposition with a given multilinear rank. By combining random projection and the power scheme, we propose two efficient randomized versions for the truncated high-order singular value decomposition (T-HOSVD) and the sequentially T-HOSVD (ST-HOSVD), which are two common algorithms for approximating Tucker decomposition. To reduce the complexities of these two algorithms, fast and efficient algorithms are designed by combining two algorithms and approximate matrix multiplication. The theoretical results are also achieved based on the bounds of singular values of standard Gaussian matrices and the theoretical results for approximate matrix multiplication. Finally, the efficiency of these algorithms are illustrated via s"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"matrix multiplication\" AND abs:\"decomposition\" AND abs:\"rank\"",
+      "title": "The border support rank of two-by-two matrix multiplication is seven",
+      "authors": [
+        "Markus Bl\u00e4ser",
+        "Matthias Christandl",
+        "Jeroen Zuiddam"
+      ],
+      "url": "http://arxiv.org/abs/1705.09652v1",
+      "date": "2017-05-26",
+      "summary": "We show that the border support rank of the tensor corresponding to two-by-two matrix multiplication is seven over the complex numbers. We do this by constructing two polynomials that vanish on all complex tensors with format four-by-four-by-four and border rank at most six, but that do not vanish simultaneously on any tensor with the same support as the two-by-two matrix multiplication tensor. This extends the work of Hauenstein, Ikenmeyer, and Landsberg. We also give two proofs that the support rank of the two-by-two matrix multiplication tensor is seven over any field: one proof using a result of De Groote saying that the decomposition of this tensor is unique up to sandwiching, and another proof via the substitution method. These results answer a question asked by Cohn and Umans. Study"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "On symmetries of the Strassen algorithm",
+      "authors": [
+        "Vladimir P. Burichenko"
+      ],
+      "url": "http://arxiv.org/abs/1408.6273v1",
+      "date": "2014-08-26",
+      "summary": "We consider the famous Strassen algorithm for fast multiplication of matrices. We show that this algorithm has a nontrivial finite group of automorphisms of order 36 (namely the direct product of two copies of the symmetric group on 3 symbols), or even 72, if we consider \"extended\" Strassen algorithm. This is an indirect evidence that the (unknown at present) optimal algorithm for multiplication of two size 3 by 3 matrices also may have a large automorphism group, and this may be a fruitful idea for a search of such an algorithm. In the beginning we give a brief introduction to the subject, to make the text accessible for specialists in the representation theory of finite groups."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Strassen's Algorithm for Tensor Contraction",
+      "authors": [
+        "Jianyu Huang",
+        "Devin A. Matthews",
+        "Robert A. van de Geijn"
+      ],
+      "url": "http://arxiv.org/abs/1704.03092v1",
+      "date": "2017-04-11",
+      "summary": "Tensor contraction (TC) is an important computational kernel widely used in numerous applications. It is a multi-dimensional generalization of matrix multiplication (GEMM). While Strassen's algorithm for GEMM is well studied in theory and practice, extending it to accelerate TC has not been previously pursued. Thus, we believe this to be the first paper to demonstrate how one can in practice speed up tensor contraction with Strassen's algorithm. By adopting a Block-Scatter-Matrix format, a novel matrix-centric tensor layout, we can conceptually view TC as GEMM for a general stride storage, with an implicit tensor-to-matrix transformation. This insight enables us to tailor a recent state-of-the-art implementation of Strassen's algorithm to TC, avoiding explicit transpositions (permutations)"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "The I/O complexity of Strassen's matrix multiplication with recomputation",
+      "authors": [
+        "Gianfranco Bilardi",
+        "Lorenzo De Stefani"
+      ],
+      "url": "http://arxiv.org/abs/1605.02224v1",
+      "date": "2016-05-07",
+      "summary": "A tight $\u03a9((n/\\sqrt{M})^{\\log_2 7}M)$ lower bound is derived on the \\io complexity of Strassen's algorithm to multiply two $n \\times n$ matrices, in a two-level storage hierarchy with $M$ words of fast memory. A proof technique is introduced, which exploits the Grigoriev's flow of the matrix multiplication function as well as some combinatorial properties of the Strassen computational directed acyclic graph (CDAG). Applications to parallel computation are also developed. The result generalizes a similar bound previously obtained under the constraint of no-recomputation, that is, that intermediate results cannot be computed more than once. For this restricted case, another lower bound technique is presented, which leads to a simpler analysis of the \\io complexity of Strassen's algorithm and"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Fast and Practical Strassen's Matrix Multiplication using FPGAs",
+      "authors": [
+        "Afzal Ahmad",
+        "Linfeng Du",
+        "Wei Zhang"
+      ],
+      "url": "http://arxiv.org/abs/2406.02088v1",
+      "date": "2024-06-04",
+      "summary": "Matrix multiplication is a cornerstone operation in a wide array of scientific fields, including machine learning and computer graphics. The standard algorithm for matrix multiplication has a complexity of $\\mathcal{O}(n^3)$ for $n\\times n$ matrices. Strassen's algorithm improves this to $\\mathcal{O}(n^{2.807})$, but its practicality is limited for small to medium matrix sizes due to the large number of additions it introduces. This paper presents a novel FPGA-based implementation of Strassen's algorithm that achieves superior speed over an optimized General Matrix Multiply (GeMM) implementation for matrices as small as $n=256$. Our design, tested extensively on two high-performance FPGA accelerators (Alveo U50 and U280) across various data types, matches or surpasses the performance of a "
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Strassen's 2x2 matrix multiplication algorithm: A conceptual perspective",
+      "authors": [
+        "Christian Ikenmeyer",
+        "Vladimir Lysikov"
+      ],
+      "url": "http://arxiv.org/abs/1708.08083v2",
+      "date": "2017-08-27",
+      "summary": "The main purpose of this paper is pedagogical.   Despite its importance, all proofs of the correctness of Strassen's famous 1969 algorithm to multiply two 2x2 matrices with only seven multiplications involve some basis-dependent calculations such as explicitly multiplying specific 2x2 matrices, expanding expressions to cancel terms with opposing signs, or expanding tensors over the standard basis. This makes the proof nontrivial to memorize and many presentations of the proof avoid showing all the details and leave a significant amount of verifications to the reader.   In this note we give a short, self-contained, basis-independent proof of the existence of Strassen's algorithm that avoids these types of calculations. We achieve this by focusing on symmetries and algebraic properties.   Ou"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Implementing Strassen's Algorithm with CUTLASS on NVIDIA Volta GPUs",
+      "authors": [
+        "Jianyu Huang",
+        "Chenhan D. Yu",
+        "Robert A. van de Geijn"
+      ],
+      "url": "http://arxiv.org/abs/1808.07984v1",
+      "date": "2018-08-24",
+      "summary": "Conventional GPU implementations of Strassen's algorithm (Strassen) typically rely on the existing high-performance matrix multiplication (GEMM), trading space for time. As a result, such approaches can only achieve practical speedup for relatively large, \"squarish\" matrices due to the extra memory overhead, and their usages are limited due to the considerable workspace. We present novel Strassen primitives for GPUs that can be composed to generate a family of Strassen algorithms. Our algorithms utilize both the memory and thread hierarchies on GPUs, reusing shared memory and register files inherited from GEMM, fusing additional operations, and avoiding extra workspace. We further exploit intra- and inter-kernel parallelism by batching, streaming, and employing atomic operations. We also d"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Designing Strassen's algorithm",
+      "authors": [
+        "Joshua A. Grochow",
+        "Cristopher Moore"
+      ],
+      "url": "http://arxiv.org/abs/1708.09398v1",
+      "date": "2017-08-30",
+      "summary": "In 1969, Strassen shocked the world by showing that two n x n matrices could be multiplied in time asymptotically less than $O(n^3)$. While the recursive construction in his algorithm is very clear, the key gain was made by showing that 2 x 2 matrix multiplication could be performed with only 7 multiplications instead of 8. The latter construction was arrived at by a process of elimination and appears to come out of thin air. Here, we give the simplest and most transparent proof of Strassen's algorithm that we are aware of, using only a simple unitary 2-design and a few easy lines of calculation. Moreover, using basic facts from the representation theory of finite groups, we use 2-designs coming from group orbits to generalize our construction to all n (although the resulting algorithms ar"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Efficiently Parallelizable Strassen-Based Multiplication of a Matrix by its Transpose",
+      "authors": [
+        "Viviana Arrigoni",
+        "Filippo Maggioli",
+        "Annalisa Massini",
+        "Emanuele Rodol\u00e0"
+      ],
+      "url": "http://arxiv.org/abs/2110.13042v1",
+      "date": "2021-10-25",
+      "summary": "The multiplication of a matrix by its transpose, $A^T A$, appears as an intermediate operation in the solution of a wide set of problems. In this paper, we propose a new cache-oblivious algorithm (ATA) for computing this product, based upon the classical Strassen algorithm as a sub-routine. In particular, we decrease the computational cost to $\\frac{2}{3}$ the time required by Strassen's algorithm, amounting to $\\frac{14}{3}n^{\\log_2 7}$ floating point operations. ATA works for generic rectangular matrices, and exploits the peculiar symmetry of the resulting product matrix for saving memory. In addition, we provide an extensive implementation study of ATA in a shared memory system, and extend its applicability to a distributed environment. To support our findings, we compare our algorithm "
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Fast Strassen-based $A^t A$ Parallel Multiplication",
+      "authors": [
+        "Viviana Arrigoni",
+        "Annalisa Massini"
+      ],
+      "url": "http://arxiv.org/abs/1902.02104v1",
+      "date": "2019-02-06",
+      "summary": "Matrix multiplication $A^t A$ appears as intermediate operation during the solution of a wide set of problems. In this paper, we propose a new cache-oblivious algorithm for the $A^t A$ multiplication. Our algorithm, A$\\scriptstyle \\mathsf{T}$A, calls classical Strassen's algorithm as sub-routine, decreasing the computational cost %(expressed in number of performed products) of the conventional $A^t A$ multiplication to $\\frac{2}{7}n^{\\log_2 7}$. It works for generic rectangular matrices and exploits the peculiar symmetry of the resulting product matrix for sparing memory. We used the MPI paradigm to implement A$\\scriptstyle \\mathsf{T}$A in parallel, and we tested its performances on a small subset of nodes of the Galileo cluster. Experiments highlight good scalability and speed-up, also th"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"Strassen\" OR abs:\"Strassen algorithm\"",
+      "title": "Accelerated Multiple Precision Matrix Multiplication using Strassen's Algorithm and Winograd's Variant",
+      "authors": [
+        "Tomonori Kouya"
+      ],
+      "url": "http://arxiv.org/abs/1410.1599v1",
+      "date": "2014-10-07",
+      "summary": "The Strassen algorithm and Winograd's variant accelerate matrix multiplication by using fewer arithmetic operations than standard matrix multiplication. Although many papers have been published to accelerate single- as well as double-precision matrix multiplication by using these algorithms, no research to date has been undertaken to accelerate multiple precision matrix multiplication. In this paper, we propose a multiple precision matrix multiplication program for matrices of any size and test its performance. We also reveal special properties of our program through its application to LU decomposition."
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "A Generating Polynomial Based Two-Stage Optimization Method for Tensor Rank Decomposition",
+      "authors": [
+        "Zequn Zheng",
+        "Hongchao Zhang",
+        "Guangming Zhou"
+      ],
+      "url": "http://arxiv.org/abs/2504.00313v3",
+      "date": "2025-04-01",
+      "summary": "The tensor rank decomposition, also known as canonical polyadic(CP) or simply tensor decomposition, has a long history in multilinear algebra. However, computing a rank decomposition becomes particularly challenging when the rank lies between its largest and second-largest dimensions. Moreover, for high-order tensor decompositions, a common approach is to first find a decomposition of its flattening order-3 tensor, where a significant gap often exists between the largest and the second-largest dimension, also making this case crucial in practice. For such a case, traditional optimization methods, such as the nonlinear least squares or alternating least squares methods, often fail to produce correct tensor decompositions. There are also direct methods that solve tensor decompositions algebr"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "ADMM-MM Algorithm for General Tensor Decomposition",
+      "authors": [
+        "Manabu Mukai",
+        "Hidekata Hontani",
+        "Tatsuya Yokota"
+      ],
+      "url": "http://arxiv.org/abs/2312.11763v1",
+      "date": "2023-12-19",
+      "summary": "In this paper, we propose a new unified optimization algorithm for general tensor decomposition which is formulated as an inverse problem for low-rank tensors in the general linear observation models. The proposed algorithm supports three basic loss functions ($\\ell_2$-loss, $\\ell_1$-loss and KL divergence) and various low-rank tensor decomposition models (CP, Tucker, TT, and TR decompositions). We derive the optimization algorithm based on hierarchical combination of the alternating direction method of multiplier (ADMM) and majorization-minimization (MM). We show that wide-range applications can be solved by the proposed algorithm, and can be easily extended to any established tensor decomposition models in a {plug-and-play} manner."
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Application Performance Modeling via Tensor Completion",
+      "authors": [
+        "Edward Hutter",
+        "Edgar Solomonik"
+      ],
+      "url": "http://arxiv.org/abs/2210.10184v3",
+      "date": "2022-10-18",
+      "summary": "Performance tuning, software/hardware co-design, and job scheduling are among the many tasks that rely on models to predict application performance. We propose and evaluate low-rank tensor decomposition for modeling application performance. We discretize the input and configuration domains of an application using regular grids. Application execution times mapped within grid-cells are averaged and represented by tensor elements. We show that low-rank canonical-polyadic (CP) tensor decomposition is effective in approximating these tensors. We further show that this decomposition enables accurate extrapolation of unobserved regions of an application's parameter space. We then employ tensor completion to optimize a CP decomposition given a sparse set of observed execution times. We consider al"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Revisit CP Tensor Decomposition: Statistical Optimality and Fast Convergence",
+      "authors": [
+        "Runshi Tang",
+        "Julien Chhor",
+        "Olga Klopp",
+        "Anru R. Zhang"
+      ],
+      "url": "http://arxiv.org/abs/2505.23046v1",
+      "date": "2025-05-29",
+      "summary": "Canonical Polyadic (CP) tensor decomposition is a fundamental technique for analyzing high-dimensional tensor data. While the Alternating Least Squares (ALS) algorithm is widely used for computing CP decomposition due to its simplicity and empirical success, its theoretical foundation, particularly regarding statistical optimality and convergence behavior, remain underdeveloped, especially in noisy, non-orthogonal, and higher-rank settings.   In this work, we revisit CP tensor decomposition from a statistical perspective and provide a comprehensive theoretical analysis of ALS under a signal-plus-noise model. We establish non-asymptotic, minimax-optimal error bounds for tensors of general order, dimensions, and rank, assuming suitable initialization. To enable such initialization, we propos"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Non-Orthogonal Tensor Diagonalization",
+      "authors": [
+        "Petr Tichavsky",
+        "Anh Huy Phan",
+        "Andrzej Cichocki"
+      ],
+      "url": "http://arxiv.org/abs/1402.1673v3",
+      "date": "2014-02-07",
+      "summary": "Tensor diagonalization means transforming a given tensor to an exactly or nearly diagonal form through multiplying the tensor by non-orthogonal invertible matrices along selected dimensions of the tensor. It is generalization of approximate joint diagonalization (AJD) of a set of matrices. In particular, we derive (1) a new algorithm for symmetric AJD, which is called two-sided symmetric diagonalization of order-three tensor, (2) a similar algorithm for non-symmetric AJD, also called general two-sided diagonalization of an order-3 tensor, and (3) an algorithm for three-sided diagonalization of order-3 or order-4 tensors. The latter two algorithms may serve for canonical polyadic (CP) tensor decomposition, and they can outperform other CP tensor decomposition methods in terms of computation"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Tensor Decomposition via Variational Auto-Encoder",
+      "authors": [
+        "Bin Liu",
+        "Zenglin Xu",
+        "Yingming Li"
+      ],
+      "url": "http://arxiv.org/abs/1611.00866v1",
+      "date": "2016-11-03",
+      "summary": "Tensor decomposition is an important technique for capturing the high-order interactions among multiway data. Multi-linear tensor composition methods, such as the Tucker decomposition and the CANDECOMP/PARAFAC (CP), assume that the complex interactions among objects are multi-linear, and are thus insufficient to represent nonlinear relationships in data. Another assumption of these methods is that a predefined rank should be known. However, the rank of tensors is hard to estimate, especially for cases with missing values. To address these issues, we design a Bayesian generative model for tensor decomposition. Different from the traditional Bayesian methods, the high-order interactions of tensor entries are modeled with variational auto-encoder. The proposed model takes advantages of Neural"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Tensor Completion for Weakly-dependent Data on Graph for Metro Passenger Flow Prediction",
+      "authors": [
+        "Ziyue Li",
+        "Nurettin Dorukhan Sergin",
+        "Hao Yan",
+        "Chen Zhang",
+        "Fugee Tsung"
+      ],
+      "url": "http://arxiv.org/abs/1912.05693v1",
+      "date": "2019-12-11",
+      "summary": "Low-rank tensor decomposition and completion have attracted significant interest from academia given the ubiquity of tensor data. However, the low-rank structure is a global property, which will not be fulfilled when the data presents complex and weak dependencies given specific graph structures. One particular application that motivates this study is the spatiotemporal data analysis. As shown in the preliminary study, weakly dependencies can worsen the low-rank tensor completion performance. In this paper, we propose a novel low-rank CANDECOMP / PARAFAC (CP) tensor decomposition and completion framework by introducing the $L_{1}$-norm penalty and Graph Laplacian penalty to model the weakly dependency on graph. We further propose an efficient optimization algorithm based on the Block Coord"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Randomized CP Tensor Decomposition",
+      "authors": [
+        "N. Benjamin Erichson",
+        "Krithika Manohar",
+        "Steven L. Brunton",
+        "J. Nathan Kutz"
+      ],
+      "url": "http://arxiv.org/abs/1703.09074v2",
+      "date": "2017-03-27",
+      "summary": "The CANDECOMP/PARAFAC (CP) tensor decomposition is a popular dimensionality-reduction method for multiway data. Dimensionality reduction is often sought after since many high-dimensional tensors have low intrinsic rank relative to the dimension of the ambient measurement space. However, the emergence of `big data' poses significant computational challenges for computing this fundamental tensor decomposition. By leveraging modern randomized algorithms, we demonstrate that coherent structures can be learned from a smaller representation of the tensor in a fraction of the time. Thus, this simple but powerful algorithm enables one to compute the approximate CP decomposition even for massive tensors. The approximation error can thereby be controlled via oversampling and the computation of power"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Near-Efficient and Non-Asymptotic Multiway Inference",
+      "authors": [
+        "Oscar L\u00f3pez",
+        "Arvind Prasadan",
+        "Carlos Llosa-Vite",
+        "Richard B. Lehoucq",
+        "Daniel M. Dunlavy"
+      ],
+      "url": "http://arxiv.org/abs/2511.05368v1",
+      "date": "2025-11-07",
+      "summary": "We establish non-asymptotic efficiency guarantees for tensor decomposition-based inference in count data models. Under a Poisson framework, we consider two related goals: (i) parametric inference, the estimation of the full distributional parameter tensor, and (ii) multiway analysis, the recovery of its canonical polyadic (CP) decomposition factors. Our main result shows that in the rank-one setting, a rank-constrained maximum-likelihood estimator achieves multiway analysis with variance matching the Cram\u00e9r-Rao Lower Bound (CRLB) up to absolute constants and logarithmic factors. This provides a general framework for studying \"near-efficient\" multiway estimators in finite-sample settings. For higher ranks, we illustrate that our multiway estimator may not attain the CRLB; nevertheless, CP-b"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"tensor decomposition\" AND abs:\"CP\" AND abs:\"rank\"",
+      "title": "Rank-1 Tensor Approximation Methods and Application to Deflation",
+      "authors": [
+        "Alex Pereira da Silva",
+        "Pierre Comon",
+        "Andre Lima Ferrer de Almeida"
+      ],
+      "url": "http://arxiv.org/abs/1508.05273v1",
+      "date": "2015-08-21",
+      "summary": "Because of the attractiveness of the canonical polyadic (CP) tensor decomposition in various applications, several algorithms have been designed to compute it, but efficient ones are still lacking. Iterative deflation algorithms based on successive rank-1 approximations can be used to perform this task, since the latter are rather easy to compute. We first present an algebraic rank-1 approximation method that performs better than the standard higher-order singular value decomposition (HOSVD) for three-way tensors. Second, we propose a new iterative rank-1 approximation algorithm that improves any other rank-1 approximation method. Third, we describe a probabilistic framework allowing to study the convergence of deflation CP decomposition (DCPD) algorithms based on successive rank-1 approxi"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "Equivalent Polyadic Decompositions of Matrix Multiplication Tensors",
+      "authors": [
+        "Guillaume O. Berger",
+        "P. -A. Absil",
+        "Lieven De Lathauwer",
+        "Rapha\u00ebl M. Jungers",
+        "Marc Van Barel"
+      ],
+      "url": "http://arxiv.org/abs/1902.03950v2",
+      "date": "2019-02-11",
+      "summary": "Invariance transformations of polyadic decompositions of matrix multiplication tensors define an equivalence relation on the set of such decompositions. In this paper, we present an algorithm to efficiently decide whether two polyadic decompositions of a given matrix multiplication tensor are equivalent. With this algorithm, we analyze the equivalence classes of decompositions of several matrix multiplication tensors. This analysis is relevant for the study of fast matrix multiplication as it relates to the question of how many essentially different fast matrix multiplication algorithms there exist. This question has been first studied by de~Groote, who showed that for the multiplication of $2\\times2$ matrices with $7$ active multiplications, all algorithms are essentially equivalent to St"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "Faster Matrix Multiplication via Asymmetric Hashing",
+      "authors": [
+        "Ran Duan",
+        "Hongxun Wu",
+        "Renfei Zhou"
+      ],
+      "url": "http://arxiv.org/abs/2210.10173v5",
+      "date": "2022-10-18",
+      "summary": "Fast matrix multiplication is one of the most fundamental problems in algorithm research. The exponent of the optimal time complexity of matrix multiplication is usually denoted by $\u03c9$. This paper discusses new ideas for improving the laser method for fast matrix multiplication. We observe that the analysis of higher powers of the Coppersmith-Winograd tensor [Coppersmith & Winograd 1990] incurs a \"combination loss\", and we partially compensate for it using an asymmetric version of CW's hashing method. By analyzing the eighth power of the CW tensor, we give a new bound of $\u03c9<2.371866$, which improves the previous best bound of $\u03c9<2.372860$ [Alman & Vassilevska Williams 2020]. Our result breaks the lower bound of $2.3725$ in [Ambainis, Filmus & Le Gall 2015] because of the new method for ana"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "Plethysm and fast matrix multiplication",
+      "authors": [
+        "Tim Seynnaeve"
+      ],
+      "url": "http://arxiv.org/abs/1710.00528v3",
+      "date": "2017-10-02",
+      "summary": "Motivated by the symmetric version of matrix multiplication we study the plethysm $S^k(\\mathfrak{sl}_n)$ of the adjoint representation $\\mathfrak{sl}_n$ of the Lie group $SL_n$. In particular, we describe the decomposition of this representation into irreducible components for $k=3$, and find highest weight vectors for all irreducible components. Relations to fast matrix multiplication, in particular the Coppersmith-Winograd tensor are presented."
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "The isotropy group of the matrix multiplication tensor",
+      "authors": [
+        "V. P. Burichenko"
+      ],
+      "url": "http://arxiv.org/abs/2210.16565v1",
+      "date": "2022-10-29",
+      "summary": "By an {\\em isotropy group} of a tensor $t\\in V_1 \\otimes V_2\\otimes V_3=\\widetilde V$ we mean the group of all invertible linear transformations of $\\widetilde V$ that leave $t$ invariant and are compatible (in an obvious sense) with the structure of tensor product on~$\\widetilde V$. We consider the case where $t$ is the structure tensor of multiplication map of rectangular matrices. The isotropy group of this tensor was studied in 1970s by de Groote, Strassen, and Brockett-Dobkin. In the present work we enlarge, make more precise, expose in the language of group actions on tensor spaces, and endow with proofs the results previously known. This is necessary for studying the algorithms of fast matrix multiplication admitting symmetries. The latter seems to be a promising new way for constru"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "Generalizations of Matrix Multiplication can solve the Light Bulb Problem",
+      "authors": [
+        "Josh Alman",
+        "Hengjie Zhang"
+      ],
+      "url": "http://arxiv.org/abs/2311.01630v1",
+      "date": "2023-11-02",
+      "summary": "In the light bulb problem, one is given uniformly random vectors $x_1, \\ldots, x_n, y_1, \\ldots, y_n \\in \\{-1,1\\}^d$. They are all chosen independently except a planted pair $(x_{i^*}, y_{j^*})$ is chosen with correlation $\u03c1>0$. The goal is to find the planted pair. This problem was introduced over 30 years ago by L.~Valiant, and is known to have many applications in data analysis, statistics, and learning theory.   The naive algorithm runs in $\u03a9(n^2)$ time, and algorithms based on Locality-Sensitive Hashing approach quadratic time as $\u03c1\\to 0$. In 2012, G.~Valiant gave a breakthrough algorithm using fast matrix multiplication that runs in time $O(n^{(5-\u03c9)/(4-\u03c9)}) < O(n^{1.615})$, no matter how small $\u03c1>0$ is. This was subsequently refined by Karppa, Kaski, and Kohonen in 2016 to $O(n^{2 \u03c9/"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "New results in canonical polyadic decomposition over finite fields",
+      "authors": [
+        "Jason Yang"
+      ],
+      "url": "http://arxiv.org/abs/2505.09824v2",
+      "date": "2025-05-14",
+      "summary": "Canonical polyadic decomposition (CPD) is at the core of fast matrix multiplication, a computational problem with widespread implications across several seemingly unrelated problems in computer science. Much recent progress in this field has used randomized heuristic search to find new CPDs, often over a finite field. However, if these techniques fail to find a CPD with low enough rank, they cannot prove that no such CPD exists. Consequently, these methods fail to resolve certain long-standing questions, such as whether the tensor corresponding to $3\\times 3$ matrix multiplication has rank less than 23. To make progress on these problems, we develop a novel algorithm that preserves exactness, i.e. they can provably verify whether or not a given tensor has a specified rank. Compared to brut"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "A Gap in the Subrank of Tensors",
+      "authors": [
+        "Matthias Christandl",
+        "Fulvio Gesmundo",
+        "Jeroen Zuiddam"
+      ],
+      "url": "http://arxiv.org/abs/2212.01668v2",
+      "date": "2022-12-03",
+      "summary": "The subrank of tensors is a measure of how much a tensor can be ''diagonalized''. This parameter was introduced by Strassen to study fast matrix multiplication algorithms in algebraic complexity theory and is closely related to many central tensor parameters (e.g. slice rank, partition rank, analytic rank, geometric rank, G-stable rank) and problems in combinatorics, computer science and quantum information theory. Strassen (J. Reine Angew. Math., 1988) proved that there is a gap in the subrank when taking large powers under the tensor product: either the subrank of all powers is at most one, or it grows as a power of a constant strictly larger than one. In this paper, we precisely determine this constant for tensors of any order. Additionally, for tensors of order three, we prove that the"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"fast matrix multiplication\" AND abs:\"tensor\"",
+      "title": "Matrix Multiplication and Number On the Forehead Communication",
+      "authors": [
+        "Josh Alman",
+        "Jaros\u0142aw B\u0142asiok"
+      ],
+      "url": "http://arxiv.org/abs/2302.11476v1",
+      "date": "2023-02-22",
+      "summary": "Three-player Number On the Forehead communication may be thought of as a three-player Number In the Hand promise model, in which each player is given the inputs that are supposedly on the other two players' heads, and promised that they are consistent with the inputs of of the other players. The set of all allowed inputs under this promise may be thought of as an order-3 tensor. We surprisingly observe that this tensor is exactly the matrix multiplication tensor, which is widely studied in the design of fast matrix multiplication algorithms.   Using this connection, we prove a number of results about both Number On the Forehead communication and matrix multiplication, each by using known results or techniques about the other. For example, we show how the Laser method, a key technique used "
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "Discovering faster matrix multiplication algorithms with reinforcement learning",
+      "authors": [
+        "Alhussein Fawzi",
+        "Matej Balog",
+        "Aja Huang",
+        "Thomas Hubert",
+        "Bernardino Romera\u2010Paredes",
+        "Mohammadamin Barekatain",
+        "Alexander Novikov",
+        "Francisco J. R. Ruiz"
+      ],
+      "url": "https://doi.org/10.1038/s41586-022-05172-4",
+      "date": "2022-10-05",
+      "summary": "Improving the efficiency of algorithms for fundamental computations can have a widespread impact, as it can affect the overall speed of a large amount of computations. Matrix multiplication is one such primitive task, occurring in many systems-from neural networks to scientific computing routines. The automatic discovery of algorithms using machine learning offers the prospect of reaching beyond human intuition and outperforming the current best human-designed algorithms. However, automating the algorithm discovery procedure is intricate, as the space of possible algorithms is enormous. Here we report a deep reinforcement learning approach based on AlphaZero<sup>1</sup> for discovering efficient and provably correct algorithms for the multiplication of arbitrary matrices. Our agent, AlphaT",
+      "cited_by": 435
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "ChatGPT is not all you need. A State of the Art Review of large Generative AI models",
+      "authors": [
+        "Roberto Gozalo-Brizuela",
+        "Eduardo C. Garrido\u2010Merch\u00e1n"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2301.04655",
+      "date": "2023-01-11",
+      "summary": "During the last two years there has been a plethora of large generative models such as ChatGPT or Stable Diffusion that have been published. Concretely, these models are able to perform tasks such as being a general question and answering system or automatically creating artistic images that are revolutionizing several sectors. Consequently, the implications that these generative models have in the industry and society are enormous, as several job positions may be transformed. For example, Generative AI is capable of transforming effectively and creatively texts to images, like the DALLE-2 model; text to 3D images, like the Dreamfusion model; images to text, like the Flamingo model; texts to video, like the Phenaki model; texts to audio, like the AudioLM model; texts to other texts, like C",
+      "cited_by": 244
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "A Comprehensive Survey of AI-Generated Content (AIGC): A History of Generative AI from GAN to ChatGPT",
+      "authors": [
+        "Yihan Cao",
+        "Siyu Li",
+        "Yixin Liu",
+        "Zhiling Yan",
+        "Yutong Dai",
+        "Philip S. Yu",
+        "Lichao Sun"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2303.04226",
+      "date": "2023-03-07",
+      "summary": "Recently, ChatGPT, along with DALL-E-2 and Codex,has been gaining significant attention from society. As a result, many individuals have become interested in related resources and are seeking to uncover the background and secrets behind its impressive performance. In fact, ChatGPT and other Generative AI (GAI) techniques belong to the category of Artificial Intelligence Generated Content (AIGC), which involves the creation of digital content, such as images, music, and natural language, through AI models. The goal of AIGC is to make the content creation process more efficient and accessible, allowing for the production of high-quality content at a faster pace. AIGC is achieved by extracting and understanding intent information from instructions provided by human, and generating the content",
+      "cited_by": 399
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "A Survey of Generative AI Applications",
+      "authors": [
+        "Roberto Gozalo-Brizuela",
+        "Eduardo Eduardo Garrido Merchan"
+      ],
+      "url": "https://doi.org/10.3844/jcssp.2024.801.818",
+      "date": "2024-06-19",
+      "summary": "Generative AI has experienced remarkable growth in recent years, leading to a wide array of applications across diverse domains. In this study, we present a comprehensive survey of more than 350 generative AI applications, providing a structured taxonomy and concise descriptions of various unimodal and even multimodal generative AIs. The survey is organized into sections, covering a wide range of unimodal generative AI applications such as text (ChatGPT or Bard), images (DALL-E 3 or Midjourney), video (Colossyan AI and Synthesia AI), gaming (CSM and ConvAI) and brain (Meta&rsquo;s speech from brain) information. Our survey provides an updated outlook of the generative AGI landscape, giving several examples of each technology, something not achieved in a paper before to our knowledge. Other",
+      "cited_by": 83
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "Standing on the Shoulders of AI Giants",
+      "authors": [
+        "Hsiao-Ying Lin"
+      ],
+      "url": "https://doi.org/10.1109/mc.2022.3218176",
+      "date": "2023-01-01",
+      "summary": "This article reviews the key artificial intelligence (AI) breakthroughs made by two AI innovation giants, OpenAI and DeepMind.",
+      "cited_by": 14
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "OpenTensor: Reproducing Faster Matrix Multiplication Discovering Algorithms",
+      "authors": [
+        "Yiwen Sun",
+        "Wenye Li"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2405.20748",
+      "date": "2024-05-31",
+      "summary": "OpenTensor is a reproduction of AlphaTensor, which discovered a new algorithm that outperforms the state-of-the-art methods for matrix multiplication by Deep Reinforcement Learning (DRL). While AlphaTensor provides a promising framework for solving scientific problems, it is really hard to reproduce due to the massive tricks and lack of source codes. In this paper, we clean up the algorithm pipeline, clarify the technical details, and make some improvements to the training process. Computational results show that OpenTensor can successfully find efficient matrix multiplication algorithms.",
+      "cited_by": 0
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "An Automated Survey of Generative Artificial Intelligence: Large Language Models, Architectures, Protocols, and Applications",
+      "authors": [
+        "Garrido-Merch\u00e1n, Eduardo C.",
+        "L\u00f3pez, \u00c1lvaro L\u00f3pez"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2306.02781",
+      "date": "2023-06-05",
+      "summary": "Generative artificial intelligence, and large language models in particular, have emerged as one of the most transformative paradigms in modern computer science. This automated survey provides an accessible treatment of the field as of early 2026, with a strong focus on the leading model families, deployment protocols, and real-world applications. The core of the survey is devoted to a detailed comparative analysis of the frontier large language models, with particular emphasis on open-weight systems: DeepSeek-V3, DeepSeek-R1, DeepSeek-V3.2, and the forthcoming DeepSeek V4; the Qwen 3 and Qwen 3.5 series; GLM-5; Kimi K2.5; MiniMax M2.5; LLaMA 4; Mistral Large 3; Gemma 3; and Phi-4, alongside proprietary systems including GPT-5.4, Gemini 3.1 Pro, Grok 4.20, and Claude Opus 4.6. For each mod",
+      "cited_by": 27
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "Quantum Deep Hedging",
+      "authors": [
+        "El Amine Cherrat",
+        "Snehal Raj",
+        "Iordanis Kerenidis",
+        "Abhishek Shekhar",
+        "Ben Wood",
+        "Jon F. Dee",
+        "Shouvanik Chakrabarti",
+        "Richard Chen"
+      ],
+      "url": "https://doi.org/10.22331/q-2023-11-29-1191",
+      "date": "2023-11-29",
+      "summary": "Quantum machine learning has the potential for a transformative impact across industry sectors and in particular in finance. In our work we look at the problem of hedging where deep reinforcement learning offers a powerful framework for real markets. We develop quantum reinforcement learning methods based on policy-search and distributional actor-critic algorithms that use quantum neural network architectures with orthogonal and compound layers for the policy and value functions. We prove that the quantum neural networks we use are trainable, and we perform extensive simulations that show that quantum models can reduce the number of trainable parameters while achieving comparable performance and that the distributional approach obtains better performance than other standard approaches, bot",
+      "cited_by": 27
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "Fast Matrix Multiplication Without Tears: A Constraint Programming Approach",
+      "authors": [
+        "Arnaud Deza",
+        "Chang Liu",
+        "Pashootan Vaezipoor",
+        "Elias B. Khalil"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2306.01097",
+      "date": "2023-06-01",
+      "summary": "It is known that the multiplication of an $N \\times M$ matrix with an $M \\times P$ matrix can be performed using fewer multiplications than what the naive $NMP$ approach suggests. The most famous instance of this is Strassen's algorithm for multiplying two $2\\times 2$ matrices in 7 instead of 8 multiplications. This gives rise to the constraint satisfaction problem of fast matrix multiplication, where a set of $R &lt; NMP$ multiplication terms must be chosen and combined such that they satisfy correctness constraints on the output matrix. Despite its highly combinatorial nature, this problem has not been exhaustively examined from that perspective, as evidenced for example by the recent deep reinforcement learning approach of AlphaTensor. In this work, we propose a simple yet novel Constra",
+      "cited_by": 0
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaTensor deep learning matrix multiplication",
+      "title": "An Assessment of Deep Learning Versus Massively Parallel, Non-Linear Methods for Highly-Efficient MIMO Detection",
+      "authors": [
+        "J. C. De Luna Ducoing",
+        "Chathura Jayawardena",
+        "Konstantinos Nikitopoulos"
+      ],
+      "url": "https://doi.org/10.1109/access.2023.3311821",
+      "date": "2023-01-01",
+      "summary": "Multiple-user, multiple-input, multiple-output (MU-MIMO) systems supporting a large number of concurrent streams have the potential to substantially improve the connectivity and throughput of future wireless communication systems. Towards this goal, deep learning (DL)-based techniques have recently been proposed for MIMO signal detection. Good performance results have been reported when compared to conventional detection methods, but it is unclear how they measure against state-of-the-art detection techniques. In this work, for the first time, we perform a critical evaluation of DetNet, MMNet, GEPNet, and RE-MIMO, four prominent model-based DL techniques based on different working principles, and assess their reliability, complexity, and robustness against the practical Massively Parallel ",
+      "cited_by": 12
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Tensor Decomposition for Signal Processing and Machine Learning",
+      "authors": [
+        "Nicholas D. Sidiropoulos",
+        "Lieven De Lathauwer",
+        "Xiao Fu",
+        "Kejun Huang",
+        "Evangelos E. Papalexakis",
+        "Christos Faloutsos"
+      ],
+      "url": "https://doi.org/10.1109/tsp.2017.2690524",
+      "date": "2017-04-03",
+      "summary": "Tensors or multiway arrays are functions of three or more indices (i, j, k, . . . )-similar to matrices (two-way arrays), which are functions of two indices (r, c) for (row, column). Tensors have a rich history, stretching over almost a century, and touching upon numerous disciplines; but they have only recently become ubiquitous in signal and data analytics at the confluence of signal processing, statistics, data mining, and machine learning. This overview article aims to provide a good starting point for researchers and practitioners interested in learning about and working with tensors. As such, it focuses on fundamentals and motivation (using various application examples), aiming to strike an appropriate balance of breadth and depth that will enable someone having taken first graduate ",
+      "cited_by": 1575
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Geometric complexity theory and tensor rank",
+      "authors": [
+        "Peter B\u00fcrgisser",
+        "Christian Ikenmeyer"
+      ],
+      "url": "https://doi.org/10.1145/1993636.1993704",
+      "date": "2011-06-06",
+      "summary": "Mulmuley and Sohoni [GCT1, SICOMP 2001; GCT2, SICOMP 2008] proposed to view the permanent versus determinant problem as a specific orbit closure problem and to attack it by methods from geometric invariant and representation theory. We adopt these ideas towards the goal of showing lower bounds on the border rank of specific tensors, in particular for matrix multiplication. We thus study specific orbit closure problems for the group G =GL(W1) x GL(W2) x GL(W3) acting on the tensor product W=W1 \u2297 W2 \u2297 W3 of complex finite dimensional vector spaces. Let Gs =SL(W1) x SL(W2) x SL(W3). A key idea from [GCT2] is that the irreducible Gs-representations occurring in the coordinate ring of the G-orbit closure of a stable tensor w \u2208 W are exactly those having a nonzero invariant with respect to the s",
+      "cited_by": 55
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Hardware and Software Optimizations for Accelerating Deep Neural Networks: Survey of Current Trends, Challenges, and the Road Ahead",
+      "authors": [
+        "Maurizio Capra",
+        "Beatrice Bussolino",
+        "Alberto Marchisio",
+        "Guido Masera",
+        "Maurizio Martina",
+        "Muhammad Shafique"
+      ],
+      "url": "https://doi.org/10.1109/access.2020.3039858",
+      "date": "2020-01-01",
+      "summary": "Currently, Machine Learning (ML) is becoming ubiquitous in everyday life. Deep Learning (DL) is already present in many applications ranging from computer vision for medicine to autonomous driving of modern cars as well as other sectors in security, healthcare, and finance. However, to achieve impressive performance, these algorithms employ very deep networks, requiring a significant computational power, both during the training and inference time. A single inference of a DL model may require billions of multiply-and-accumulated operations, making the DL extremely compute- and energy-hungry. In a scenario where several sophisticated algorithms need to be executed with limited energy and low latency, the need for cost-effective hardware platforms capable of implementing energy-efficient DL ",
+      "cited_by": 205
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Quantum Algorithm\u00a0Implementations for Beginners",
+      "authors": [
+        "J. Abhijith",
+        "Adetokunbo Adedoyin",
+        "John Ambrosiano",
+        "Petr M. Anisimov",
+        "William Casper",
+        "Gopinath Chennupati",
+        "Carleton Coffrin",
+        "Hristo Djidjev"
+      ],
+      "url": "https://doi.org/10.1145/3517340",
+      "date": "2022-03-28",
+      "summary": "As quantum computers become available to the general public, the need has arisen to train a cohort of quantum programmers, many of whom have been developing classical computer programs for most of their careers. While currently available quantum computers have less than 100 qubits, quantum computing hardware is widely expected to grow in terms of qubit count, quality, and connectivity. This review aims at explaining the principles of quantum programming, which are quite different from classical programming, with straightforward algebra that makes understanding of the underlying fascinating quantum mechanical principles optional. We give an introduction to quantum computing algorithms and their implementation on real quantum hardware. We survey 20 different quantum algorithms, attempting to",
+      "cited_by": 131
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Communication-Optimal Parallel Algorithm for Strassen's Matrix Multiplication",
+      "authors": [
+        "Grey Ballard",
+        "James Demmel",
+        "Olga Holtz",
+        "Benjamin Lipshitz",
+        "Oded Schwartz"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.1202.3173",
+      "date": "2012-02-14",
+      "summary": "Parallel matrix multiplication is one of the most studied fundamental problems in distributed and high performance computing. We obtain a new parallel algorithm that is based on Strassen's fast matrix multiplication and minimizes communication. The algorithm outperforms all known parallel matrix multiplication algorithms, classical and Strassen-based, both asymptotically and in practice. A critical bottleneck in parallelizing Strassen's algorithm is the communication between the processors. Ballard, Demmel, Holtz, and Schwartz (SPAA'11) prove lower bounds on these communication costs, using expansion properties of the underlying computation graph. Our algorithm matches these lower bounds, and so is communication-optimal. It exhibits perfect strong scaling within the maximum possible range.",
+      "cited_by": 9
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Efficient Processing of Deep Neural Networks: A Tutorial and Survey",
+      "authors": [
+        "Vivienne Sze",
+        "Yu\u2010Hsin Chen",
+        "Tien-Ju Yang",
+        "Joel Emer"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.1703.09039",
+      "date": "2017-03-27",
+      "summary": "Deep neural networks (DNNs) are currently widely used for many artificial intelligence (AI) applications including computer vision, speech recognition, and robotics. While DNNs deliver state-of-the-art accuracy on many AI tasks, it comes at the cost of high computational complexity. Accordingly, techniques that enable efficient processing of DNNs to improve energy efficiency and throughput without sacrificing application accuracy or increasing hardware cost are critical to the wide deployment of DNNs in AI systems. This article aims to provide a comprehensive tutorial and survey about the recent advances towards the goal of enabling efficient processing of DNNs. Specifically, it will provide an overview of DNNs, discuss various hardware platforms and architectures that support DNNs, and hi",
+      "cited_by": 50
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Non-commutative circuits and the sum-of-squares problem",
+      "authors": [
+        "Pavel Hrube\u0161",
+        "Avi Wigderson",
+        "Amir Yehudayoff"
+      ],
+      "url": "https://doi.org/10.1090/s0894-0347-2011-00694-2",
+      "date": "2011-02-02",
+      "summary": "We initiate a direction for proving lower bounds on the size of non-commutative arithmetic circuits. This direction is based on a connection between lower bounds on the size of <italic>non-commutative</italic> arithmetic circuits and a problem about <italic>commutative</italic> degree-four polynomials, the classical sum-of-squares problem: find the smallest <inline-formula content-type=\"math/mathml\"> <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" alttext=\"n\"> <mml:semantics> <mml:mi>n</mml:mi> <mml:annotation encoding=\"application/x-tex\">n</mml:annotation> </mml:semantics> </mml:math> </inline-formula> such that there exists an identity <disp-formula content-type=\"math/mathml\"> <mml:math xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" alttext=\"left-parenthesis 0.1 right-parenthesi",
+      "cited_by": 16
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Andrei Nikolaevich Kolmogorov (1903-1987)",
+      "authors": [
+        "David G. Kendall",
+        "G. K. Batchelor",
+        "\u039d. H. Bingham",
+        "W. K. Hayman",
+        "J. M. E. Hyland",
+        "G. G. Lorentz",
+        "H. K. Moffatt",
+        "William Edward Parry"
+      ],
+      "url": "https://doi.org/10.1112/blms/22.1.31",
+      "date": "1990-01-01",
+      "summary": "The subject of this memoir (ANK in",
+      "cited_by": 41
+    },
+    {
+      "source": "openalex",
+      "query": "Strassen tensor rank algorithm discovery",
+      "title": "Efficient Time and Space Representation of Uncertain Event Data",
+      "authors": [
+        "Marco Pegoraro"
+      ],
+      "url": "https://doi.org/10.3390/a13110285",
+      "date": "2020-11-09",
+      "summary": "Process mining is a discipline which concerns the analysis of execution data of operational processes, the extraction of models from event data, the measurement of the conformance between event data and normative models, and the enhancement of all aspects of processes. Most approaches assume that event data is accurately captured behavior. However, this is not realistic in many applications: data can contain uncertainty, generated from errors in recording, imprecise measurements, and other factors. Recently, new methods have been developed to analyze event data containing uncertainty; these techniques prominently rely on representing uncertain event data by means of graph-based models explicitly capturing uncertainty. In this paper, we introduce a new approach to efficiently calculate a gr",
+      "cited_by": 16
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "On the Geometry of Border Rank Decompositions for Matrix Multiplication and Other Tensors with Symmetry",
+      "authors": [
+        "J. M. Landsberg",
+        "Mateusz Micha\u0142ek"
+      ],
+      "url": "https://doi.org/10.1137/16m1067457",
+      "date": "2017-01-01",
+      "summary": "We present a new approach to study tensors with symmetry, via local algebraic geometry. Border rank decompositions for such tensors---in particular, matrix multiplication and the determinant polynomial---come in families. We prove that these families include representatives with normal forms. These normal forms will be useful to prove lower complexity bounds and possibly even to determine new decompositions. We derive a border rank version of the substitution method used in proving lower bounds for tensor rank. Applying these methods, we improve the lower bound on the border rank of matrix multiplication. We also point out difficulties that will be formidable obstacles to future progress on lower complexity bounds for tensors because of the \u201cwild\u201d structure of the Hilbert scheme of points.",
+      "cited_by": 33
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Entangled Polynomial Codes for Secure, Private, and Batch Distributed Matrix Multiplication: Breaking the \"Cubic\" Barrier",
+      "authors": [
+        "Qian Yu",
+        "A. Salman Avestimehr"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2001.05101",
+      "date": "2020-01-15",
+      "summary": "In distributed matrix multiplication, a common scenario is to assign each worker a fraction of the multiplication task, by partitioning the input matrices into smaller submatrices. In particular, by dividing two input matrices into $m$-by-$p$ and $p$-by-$n$ subblocks, a single multiplication task can be viewed as computing linear combinations of $pmn$ submatrix products, which can be assigned to $pmn$ workers. Such block-partitioning based designs have been widely studied under the topics of secure, private, and batch computation, where the state of the arts all require computing at least \"cubic\" ($pmn$) number of submatrix multiplications. Entangled polynomial codes, first presented for straggler mitigation, provides a powerful method for breaking the cubic barrier. It achieves a subcubic",
+      "cited_by": 27
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Laderman matrix multiplication algorithm can be constructed using Strassen algorithm and related tensor's isotropies",
+      "authors": [
+        "Alexandre Sedoglavic"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.1703.08298",
+      "date": "2017-03-24",
+      "summary": "In 1969, V. Strassen improves the classical~2x2 matrix multiplication\\nalgorithm. The current upper bound for 3x3 matrix multiplication was reached by\\nJ.B. Laderman in 1976. This note presents a geometric relationship between\\nStrassen and Laderman algorithms. By doing so, we retrieve a geometric\\nformulation of results very similar to those presented by O. Sykora in 1977.\\n",
+      "cited_by": 5
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Equivalent polyadic decompositions of matrix multiplication tensors",
+      "authors": [
+        "Guillaume O. Berger",
+        "Pierre-Antoine Absil",
+        "Lieven De Lathauwer",
+        "Rapha\u00ebl M. Jungers",
+        "Marc Van Barel"
+      ],
+      "url": "https://doi.org/10.1016/j.cam.2021.113941",
+      "date": "2021-11-24",
+      "summary": "",
+      "cited_by": 3
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Multiplying 2 \u00d7 2 Sub-Blocks Using 4 Multiplications",
+      "authors": [
+        "Yoav Moran",
+        "Oded Schwartz"
+      ],
+      "url": "https://doi.org/10.1145/3558481.3591083",
+      "date": "2023-05-31",
+      "summary": "Fast parallel and sequential matrix multiplication algorithms switch to the cubic time classical algorithm on small sub-blocks as the classical algorithm requires fewer operations on small blocks. We obtain a new algorithm that can outperform the classical one, even on small blocks, by trading multiplications with additions. This algorithm contradicts the common belief that the classical algorithm is the fastest algorithm for small blocks. To this end, we introduce commutative algorithms that generalize Winograd's folding technique (1968) and combine it with fast matrix multiplication algorithms. Thus, when a single scalar multiplication requires \u03c1 times more clock cycles than an addition (e.g., for 16-bit integers on Intel's Skylake microarchitecture, \u03c1 is between 1.5 and 5), our techniqu",
+      "cited_by": 2
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Matrix Multiplication, Trilinear Decompositions, APA Algorithms, and Summation",
+      "authors": [
+        "Victor Y. Pan"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.1412.1145",
+      "date": "2014-12-03",
+      "summary": "Matrix multiplication (hereafter we use the acronym MM) is among the most fundamental operations of modern computations. The efficiency of its performance depends on various factors, in particular vectorization, data movement and arithmetic complexity of the computations, but here we focus just on the study of the arithmetic cost and the impact of this study on other areas of modern computing. In the early 1970s it was expected that the straightforward cubic time algorithm for MM will soon be accelerated to enable MM in nearly quadratic arithmetic time, with some far fetched implications. While pursuing this goal the mainstream research had its focus on the decrease of the classical exponent 3 of the complexity of MM towards its lower bound 2, disregarding the growth of the input size requ",
+      "cited_by": 3
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Stability improvements for fast matrix multiplication",
+      "authors": [
+        "Charlotte Vermeylen",
+        "Marc Van Barel"
+      ],
+      "url": "https://doi.org/10.1007/s11075-024-01806-y",
+      "date": "2024-04-20",
+      "summary": "",
+      "cited_by": 1
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Deflation conjecture and local dimensions of Brent equations",
+      "authors": [
+        "Xin Li",
+        "Liping Zhang",
+        "Yifen Ke"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2310.11686",
+      "date": "2023-10-18",
+      "summary": "In this paper, a classical deflation process raised by Dayton, Li and Zeng is realized for the Brent equations, which provides new bounds for local dimensions of the solution set. Originally, this deflation process focuses on isolated solutions. We generalize it to the case of irreducible components and a related conjecture is given. We analyze its realization and apply it to the Brent equations. The decrease of the nullities is easily observed. So the deflation process can be served as a useful tool for determining the local dimensions. In addition, our result implies that along with the decrease of the tensor rank, the singular solutions will become more and more.",
+      "cited_by": 1
+    },
+    {
+      "source": "openalex",
+      "query": "Laderman Smirnov matrix multiplication decomposition",
+      "title": "Multiplication algorithms : bilinear complexity and fast asymptotic methods",
+      "authors": [
+        "Svyatoslav Covanov"
+      ],
+      "url": "https://openalex.org/W2811387437",
+      "date": "2018-06-05",
+      "summary": "Depuis 1960 et le r\u00e9sultat fondateur de Karatsuba, on sait que la complexit\u00e9 de la multiplication (d\u2019entiers ou de polyn\u00f4mes) est sous-quadratique : \u00e9tant donn\u00e9 un anneau R quelconque, le produit sur R[X] des polyn\u00f4mes a_0 + a_1 X et b_0 + b_1 X, pour tous a_0, a_1, b_0 et b_1 dans R, peut \u00eatre calcul\u00e9 en seulement trois et non pas quatre multiplications sur R : (a_0 + a_1 X)(b_0 + b_1 X) = m_0 + (m_2 - m_0 - m_1)X + m_1 X^2, avec les trois produits m_0 = a_0b_0, m_1 = a_1b_1 et m_2 = (a_0 + a_1)(b_0 + b_1). De la m\u00eame mani\u00e8re, l\u2019algorithme de Strassen permet de multiplier deux matrices 2nx2n en seulement sept produits de matrices nxn. Les deux exemples pr\u00e9c\u00e9dents tombent dans la cat\u00e9gorie des applications bilin\u00e9aires : des fonctions de la forme Phi : K^m x K^n -> K^l, pour un corps donn\u00e9 ",
+      "cited_by": 1
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "From Frequency to Meaning: Vector Space Models of Semantics",
+      "authors": [
+        "Peter D. Turney",
+        "Patrick Pantel"
+      ],
+      "url": "https://doi.org/10.1613/jair.2934",
+      "date": "2010-02-27",
+      "summary": "Computers understand very little of the meaning of human language. This profoundly limits our ability to give instructions to computers, the ability of computers to explain their actions to us, and the ability of computers to analyse and process text. Vector space models (VSMs) of semantics are beginning to address these limits. This paper surveys the use of VSMs for semantic processing of text. We organize the literature on VSMs according to the structure of the matrix in a VSM. There are currently three broad classes of VSMs, based on term-document, word-context, and pair-pattern matrices, yielding three classes of applications. We survey a broad range of applications in these three categories and we take a detailed look at a specific open source project in each category. Our goal in thi",
+      "cited_by": 2865
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "Distributional Memory: A General Framework for Corpus-Based Semantics",
+      "authors": [
+        "Marco Baroni",
+        "Alessandro Lenci"
+      ],
+      "url": "https://doi.org/10.1162/coli_a_00016",
+      "date": "2010-10-15",
+      "summary": "Research into corpus-based semantics has focused on the development of ad hoc models that treat single tasks, or sets of closely related tasks, as unrelated challenges to be tackled by extracting different kinds of distributional information from the corpus. As an alternative to this \u201cone task, one model\u201d approach, the Distributional Memory framework extracts distributional information once and for all from the corpus, in the form of a set of weighted word-link-word tuples arranged into a third-order tensor. Different matrices are then generated from the tensor, and their rows and columns constitute natural spaces to deal with different semantic problems. In this way, the same distributional information can be shared across tasks such as modeling word similarity judgments, discovering syno",
+      "cited_by": 661
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "Multilinear operators for higher-order decompositions.",
+      "authors": [
+        "Tamara G. Kolda"
+      ],
+      "url": "https://doi.org/10.2172/923081",
+      "date": "2006-04-01",
+      "summary": "We propose two new multilinear operators for expressing the matrix compositions that are needed in the Tucker and PARAFAC (CANDECOMP) decompositions. The first operator, which we call the Tucker operator, is shorthand for performing an n-mode matrix multiplication for every mode of a given tensor and can be employed to concisely express the Tucker decomposition. The second operator, which we call the Kruskal operator, is shorthand for the sum of the outer-products of the columns of N matrices and allows a divorce from a matricized representation and a very concise expression of the PARAFAC decomposition. We explore the properties of the Tucker and Kruskal operators independently of the related decompositions. Additionally, we provide a review of the matrix and tensor operations that are fr",
+      "cited_by": 366
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "TensorLy: Tensor Learning in Python",
+      "authors": [
+        "Jean Kossaifi",
+        "Yannis Panagakis",
+        "Anima Anandkumar",
+        "Maja Panti\u0107"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.1610.09555",
+      "date": "2016-10-29",
+      "summary": "Tensors are higher-order extensions of matrices. While matrix methods form the cornerstone of machine learning and data analysis, tensor methods have been gaining increasing traction. However, software support for tensor operations is not on the same footing. In order to bridge this gap, we have developed \\emph{TensorLy}, a high-level API for tensor methods and deep tensorized neural networks in Python. TensorLy aims to follow the same standards adopted by the main projects of the Python scientific community, and seamlessly integrates with them. Its BSD license makes it suitable for both academic and commercial applications. TensorLy's backend system allows users to perform computations with NumPy, MXNet, PyTorch, TensorFlow and CuPy. They can be scaled on multiple CPU or GPU machines. In ",
+      "cited_by": 210
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "SPLATT: Efficient and Parallel Sparse Tensor-Matrix Multiplication",
+      "authors": [
+        "Shaden Smith",
+        "Niranjay Ravindran",
+        "Nicholas D. Sidiropoulos",
+        "George Karypis"
+      ],
+      "url": "https://doi.org/10.1109/ipdps.2015.27",
+      "date": "2015-05-01",
+      "summary": "Multi-dimensional arrays, or tensors, are increasingly found in fields such as signal processing and recommender systems. Real-world tensors can be enormous in size and often very sparse. There is a need for efficient, high-performance tools capable of processing the massive sparse tensors of today and the future. This paper introduces SPLATT, a C library with shared-memory parallelism for three-mode tensors. SPLATT contains algorithmic improvements over competing state of the art tools for sparse tensor factorization. SPLATT has a fast, parallel method of multiplying a matricide tensor by a Khatri-Rao product, which is a key kernel in tensor factorization methods. SPLATT uses a novel data structure that exploits the sparsity patterns of tensors. This data structure has a small memory foot",
+      "cited_by": 218
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "A review on machine learning principles for multi-view biological data integration",
+      "authors": [
+        "Yifeng Li",
+        "Fang\u2010Xiang Wu",
+        "Alioune Ngom"
+      ],
+      "url": "https://doi.org/10.1093/bib/bbw113",
+      "date": "2016-10-25",
+      "summary": "Driven by high-throughput sequencing techniques, modern genomic and clinical studies are in a strong need of integrative machine learning models for better use of vast volumes of heterogeneous information in the deep understanding of biological systems and the development of predictive models. How data from multiple sources (called multi-view data) are incorporated in a learning system is a key step for successful analysis. In this article, we provide a comprehensive review on omics and clinical data integration techniques, from a machine learning perspective, for various analyses such as prediction, clustering, dimension reduction and association. We shall show that Bayesian models are able to use prior information and model measurements with various distributions; tree-based methods can ",
+      "cited_by": 433
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "TensorBeat",
+      "authors": [
+        "Xuyu Wang",
+        "Chao Yang",
+        "Shiwen Mao"
+      ],
+      "url": "https://doi.org/10.1145/3078855",
+      "date": "2017-09-04",
+      "summary": "Breathing signal monitoring can provide important clues for health problems. Compared to existing techniques that require wearable devices and special equipment, a more desirable approach is to provide contact-free and long-term breathing rate monitoring by exploiting wireless signals. In this article, we propose TensorBeat, a system to employ channel state information (CSI) phase difference data to intelligently estimate breathing rates for multiple persons with commodity WiFi devices. The main idea is to leverage the tensor decomposition technique to handle the CSI phase difference data. The proposed TensorBeat scheme first obtains CSI phase difference data between pairs of antennas at the WiFi receiver to create CSI tensors. Then canonical polyadic (CP) decomposition is applied to obtai",
+      "cited_by": 198
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "ParCube: Sparse Parallelizable Tensor Decompositions",
+      "authors": [
+        "Evangelos E. Papalexakis",
+        "Christos Faloutsos",
+        "Nicholas D. Sidiropoulos"
+      ],
+      "url": "https://doi.org/10.1007/978-3-642-33460-3_39",
+      "date": "2012-01-01",
+      "summary": "",
+      "cited_by": 167
+    },
+    {
+      "source": "openalex",
+      "query": "Kolda Bader tensor decomposition survey",
+      "title": "All-at-once Optimization for Coupled Matrix and Tensor Factorizations",
+      "authors": [
+        "Evrim Acar",
+        "Tamara G. Kolda",
+        "Daniel Dunlavy"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.1105.3422",
+      "date": "2011-05-17",
+      "summary": "Joint analysis of data from multiple sources has the potential to improve our understanding of the underlying structures in complex data sets. For instance, in restaurant recommendation systems, recommendations can be based on rating histories of customers. In addition to rating histories, customers' social networks (e.g., Facebook friendships) and restaurant categories information (e.g., Thai or Italian) can also be used to make better recommendations. The task of fusing data, however, is challenging since data sets can be incomplete and heterogeneous, i.e., data consist of both matrices, e.g., the person by person social network matrix or the restaurant by category matrix, and higher-order tensors, e.g., the \"ratings\" tensor of the form restaurant by meal by person. In this paper, we are",
+      "cited_by": 246
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "Relative bilinear complexity and matrix multiplication.",
+      "authors": [
+        "Volker Strassen"
+      ],
+      "url": "https://doi.org/10.1515/crll.1987.375-376.406",
+      "date": "1987-03-01",
+      "summary": "",
+      "cited_by": 150
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "The bilinear complexity and practical algorithms for matrix multiplication",
+      "authors": [
+        "\u0410. \u0412. \u0421\u043c\u0438\u0440\u043d\u043e\u0432"
+      ],
+      "url": "https://doi.org/10.1134/s0965542513120129",
+      "date": "2013-12-01",
+      "summary": "A method for deriving bilinear algorithms for matrix multiplication is proposed. New estimates for the bilinear complexity of a number of problems of the exact and approximate multiplication of rectangular matrices are obtained. In particular, the estimate for the boundary rank of multiplying 3 \u00d7 3 matrices is improved and a practical algorithm for the exact multiplication of square n \u00d7 n matrices is proposed. The asymptotic arithmetic complexity of this algorithm is O(n 2.7743).",
+      "cited_by": 103
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "Duality Applied to the Complexity of Matrix Multiplication and Other Bilinear Forms",
+      "authors": [
+        "John E. Hopcroft",
+        "Jean E. Musinski"
+      ],
+      "url": "https://doi.org/10.1137/0202013",
+      "date": "1973-09-01",
+      "summary": "The paper considers the complexity of bilinear forms in a noncommutative ring. The dual of a computation is defined and applied to matrix multiplication and other bilinear forms. It is shown that the dual of an optimal computation gives an optimal computation for a dual problem. An $n \\times m$ by $m \\times p$ matrix product is shown to be the dual of an $n \\times p$ by $p \\times m$ or an $m \\times n$ by $n \\times p$ matrix product, implying that each of the matrix products requires the same number of multiplications to compute. Finally, an algorithm for computing a single bilinear form over a noncommutative ring with a minimum number of multiplications is derived by considering a dual problem.",
+      "cited_by": 103
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "Duality applied to the complexity of matrix multiplications and other bilinear forms",
+      "authors": [
+        "John E. Hopcroft",
+        "Jean E. Musinski"
+      ],
+      "url": "https://doi.org/10.1145/800125.804038",
+      "date": "1973-01-01",
+      "summary": "The paper considers the complexity of bilinear forms in a noncommutative ring. The dual of a computation is defined and applied to matrix multiplication and other bilinear forms. It is shown that the dual of an optimal computation gives an optimal computation for a dual problem. An nxm by mxp matrix product is shown to be the dual of an nxp by pxm or an mxn by nxp matrix product implying that each of the matrix products requires the same number of multiplications to compute. Finally an algorithm for computing a single bilinear form over a noncommutative ring with a minimum number of multiplications is derived by considering a dual problem.",
+      "cited_by": 26
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "Algebraic complexity theory and matrix multiplication",
+      "authors": [
+        "Fran\u00e7ois Le Gall"
+      ],
+      "url": "https://doi.org/10.1145/2608628.2627493",
+      "date": "2014-07-01",
+      "summary": "This tutorial will give an overview of algebraic complexity theory focused on bilinear complexity, and describe several powerful techniques to analyze the complexity of computational problems from linear algebra, in particular matrix multiplication. The presentation of these techniques will follow the history of progress on constructing asymptotically fast algorithms for matrix multiplication, and include its most recent developments.",
+      "cited_by": 209
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "On the approximate bilinear complexity of matrix multiplication",
+      "authors": [
+        "A. P. Trefilov"
+      ],
+      "url": "https://doi.org/10.3103/s0278641914030078",
+      "date": "2014-10-01",
+      "summary": "It is shown that the approximate bilinear complexity of multiplying matrices of the order 2 \u00d7 2 by a matrix of the order 2 \u00d7 6 does not exceed 19. An approximate bilinear algorithm of complexity 19 is presented for this task.",
+      "cited_by": 2
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "Two Bilinear (3 \u00d7 3)-Matrix Multiplication Algorithms of Complexity 25",
+      "authors": [
+        "\u0411. \u0412. \u0427\u043e\u043a\u0430\u0435\u0432",
+        "\u0413. \u041d. \u0428\u0443\u043c\u043a\u0438\u043d"
+      ],
+      "url": "https://doi.org/10.3103/s027864191801003x",
+      "date": "2018-01-01",
+      "summary": "As is known, a bilinear algorithm for multiplying 3 \u00d7 3 matrices can be constructed by using ordered triples of 3 \u00d7 3 matrices A \u03c1 , B \u03c1 , C \u03c1 , $$\\rho = \\overline {1,r} ,$$ where r is the complexity of the algorithm. Algorithms with various symmetries are being extensively studied. This paper presents two algorithms of complexity 25 possessing the following two properties (symmetries): (1) the matricesA1,B1, and C1 are identity, (2) if the algorithm involves a tripleA, B, C, then it also involves the triples B, C, A and C, A, B. For example, these properties are inherent in the well-known Strassen algorithm for multiplying 2 \u00d7 2 matrices. Many existing (3 \u00d7 3)-matrix multiplication algorithms have property (2). Methods for finding new algorithms are proposed. It is shown that the found al",
+      "cited_by": 2
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "Straggler Mitigation in Distributed Matrix Multiplication: Fundamental Limits and Optimal Coding",
+      "authors": [
+        "Qian Yu",
+        "Mohammad Ali Maddah-Ali",
+        "A. Salman Avestimehr"
+      ],
+      "url": "https://doi.org/10.1109/tit.2019.2963864",
+      "date": "2020-01-03",
+      "summary": "We consider the problem of massive matrix multiplication, which underlies many data analytic applications, in a large-scale distributed system comprising a group of worker nodes. We target the stragglers' delay performance bottleneck, which is due to the unpredictable latency in waiting for slowest nodes (or stragglers) to finish their tasks. We propose a novel coding strategy, named entangled polynomial code, for designing the intermediate computations at the worker nodes in order to minimize the recovery threshold (i.e., the number of workers that we need to wait for in order to compute the final output). We demonstrate the optimality of entangled polynomial code in several cases, and show that it provides orderwise improvement over the conventional schemes for straggler mitigation. Furt",
+      "cited_by": 198
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "A Simple Provably Secure Key Exchange Scheme Based on the Learning with Errors Problem.",
+      "authors": [
+        "J\u00edntai Ding"
+      ],
+      "url": "https://openalex.org/W2398538644",
+      "date": "2012-01-01",
+      "summary": "Abstract. We use a variant of learning with errors (LWE) problem, a simple and direct extension of the original LWE problem to the case of a small secret, which we call a small LWE problem (SLWE), to build a new simple and provably secure key exchange scheme. The basic idea behind the construction can be viewed as certain type of bilinear pairing with errors (PE). We build a more efficient implementation of our scheme using a similar LWE problem but solely based on matrices, and we extend our construction further using the ring LWE problem, where the provable security is based on the hardness of the ring LWE problem. 1",
+      "cited_by": 208
+    },
+    {
+      "source": "openalex",
+      "query": "bilinear complexity matrix multiplication",
+      "title": "On the complexity of the multiplication of matrices of small formats",
+      "authors": [
+        "Markus Bl\u00e4ser"
+      ],
+      "url": "https://doi.org/10.1016/s0885-064x(02)00007-9",
+      "date": "2003-01-30",
+      "summary": "",
+      "cited_by": 75
+    }
+  ]
+}

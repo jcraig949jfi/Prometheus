@@ -18,19 +18,39 @@ Redis key layout (base-Redis only: strings, hashes, sets):
     symbols:refs:<id>               SET of symbol names referencing <id>
 """
 from .parse import parse_md, load_symbol
-from .push import push_symbol, SymbolValidationError, SymbolImmutabilityError
+from .push import (
+    push_symbol, update_status,
+    SymbolValidationError, SymbolImmutabilityError,
+)
 from .resolve import (
     resolve, resolve_at, resolve_meta,
     get_latest_version, all_versions, check_version,
+    get_status, get_successor, SymbolArchivedError,
+    reset_cross_version_tracker,
     by_type, refs_to, refs_to_any, all_symbols, exists,
     parse_reference, validate_reference_string,
+)
+from .manifest import (
+    parse_session_manifest, resolve_with_manifest,
+    expand_references, contract_references,
+    find_conflicts, manifest_frontmatter, round_trip_ok,
+    CrossVersionConflict,
 )
 
 __all__ = [
     'parse_md', 'load_symbol',
-    'push_symbol', 'SymbolValidationError', 'SymbolImmutabilityError',
+    'push_symbol', 'update_status',
+    'SymbolValidationError', 'SymbolImmutabilityError', 'SymbolArchivedError',
     'resolve', 'resolve_at', 'resolve_meta',
     'get_latest_version', 'all_versions', 'check_version',
+    'get_status', 'get_successor',
     'by_type', 'refs_to', 'refs_to_any', 'all_symbols', 'exists',
     'parse_reference', 'validate_reference_string',
+    # T1 session manifest
+    'parse_session_manifest', 'resolve_with_manifest',
+    'expand_references', 'contract_references',
+    'find_conflicts', 'manifest_frontmatter', 'round_trip_ok',
+    'CrossVersionConflict',
+    # T3 cross-version tracker
+    'reset_cross_version_tracker',
 ]

@@ -196,6 +196,14 @@ Propose a new symbol by dropping an MD with draft frontmatter. Post a
 `SYMBOL_PROPOSED` message on `agora:harmonia_sync`. When a second agent
 references the symbol (or a reviewer signs off), promote via `push_symbol`.
 
+**Full 7-step procedural workflow** (with explicit gates + canonical
+examples + pitfalls): see [PROMOTION_WORKFLOW.md](PROMOTION_WORKFLOW.md).
+The workflow has been executed 7+ times in 2026-04 (VACUUM, EXHAUSTION,
+AXIS_CLASS, GATE_VERDICT, SUBFAMILY, CND_FRAME,
+FRAME_INCOMPATIBILITY_TEST v1+v2). Future authors should treat
+PROMOTION_WORKFLOW.md as the canonical procedure and this section as
+the rationale.
+
 ### Lifecycle (T2, wave 0)
 
 Every promoted symbol carries a **mutable lifecycle status** —

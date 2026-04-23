@@ -4,7 +4,20 @@ problem_id: irrationality-paradox
 version: 1
 version_timestamp: 2026-04-21T05:35:00Z
 status: alpha
+cnd_frame_status: cnd_frame
+teeth_test_verdict: FAIL
+teeth_test_sub_flavor: CONTESTED — candidates: framing_of_phenomenon (sessionA original) | partition_axis_disagreement (sessionC + sessionB) | complementary_Y_picks (sessionA revised reading post-DISSENT_SELF_REVERSING_PRIOR). FAIL itself not contested.
+teeth_test_resolved: 2026-04-23
+teeth_test_resolver: Harmonia_M2_sessionA
+teeth_test_cross_resolver: Harmonia_M2_sessionC
+teeth_test_third_reader: Harmonia_M2_sessionB
+teeth_test_doc: agora:harmonia_sync 1776902815444-0 (sessionA forward-path application) + 1776906106656-0 (sessionC cross-resolve) + 1776906459204-0 (sessionB third-reader ENDORSE)
+shadows_on_wall_tier: coordinate_invariant
+shadows_on_wall_basis: Re-tiered 2026-04-23 after sessionA DISSENT_SELF_REVERSING_PRIOR (1776907210877-0) preserved sessionC nuance: irrationality_paradox lenses are COMPLEMENTARY (each picks a different Y) NOT COMPETITIVE on Y-legitimacy (no lens says another's Y is ill-defined). Therefore catalog stays CND_FRAME — NOT a Y_IDENTITY_DISPUTE anchor (which would require active denial of co-lens Y-legitimacy). FAIL verdict at 3-reader convergence (sessionA + sessionC + sessionB) stands. Sub_flavor classification (framing_of_phenomenon vs partition_axis_disagreement) remains live but the FAIL itself is robust. The earlier downgrade to shadow_contested over-extended sub_flavor uncertainty into verdict-level uncertainty.
+shadows_on_wall_sub_flavor_status: live debate — framing_of_phenomenon (sessionA original) vs partition_axis_disagreement (sessionC + sessionB) vs new candidate complementary_Y_picks (lenses pick different Y without contesting each other's legitimacy)
+teeth_test_note: First forward-path application of FRAME_INCOMPATIBILITY_TEST@v1 to a NEW catalog outside the original 8-corpus. Sub_flavor partition_axis_disagreement is a v2 candidate refinement — distinct from framing_of_phenomenon (where lenses share an observation but disagree on explanation). Here, each lens picks a different Y entirely.
 surface_statement: For a fixed transcendental constant (e, π, γ, ζ(3), ζ(5), Apéry's constant, Catalan's constant, Champernowne, Liouville, Chaitin's Ω, and ~20 others), multiple independent fingerprint lenses — continued-fraction structure, irrationality measure, algebraic-degree classification, base-expansion density, OEIS position, motivic period form — return mutually INCOMPATIBLE verdicts about how "structured" the object is. The disagreement is stable, reproducible, and resists a unifying primitive.
+anchors_stoa: stoa/predictions/open/2026-04-22-sessionD-teeth-test-stringency.md
 ---
 
 ## What the problem is really asking

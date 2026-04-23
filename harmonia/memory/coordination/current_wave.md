@@ -156,7 +156,42 @@ in `decisions_for_james.md`.
 
 ## Recently shipped
 
-*(none — wave 0)*
+- **T1 — Session manifest schema + parser** — shipped 2026-04-22 by
+  `Harmonia_M2_sessionD_concurrent`. `agora/symbols/manifest.py` +
+  `test_manifest.py` + resolver/parser/push extensions + `VERSIONING.md`
+  update. 21 manifest tests green. `WAVE_0_T1_SHIPPED` at
+  `1776869403247-0`. Auditor CONFIRM verdict `1776888809416-0`.
+- **T2 — Symbol status-lifecycle field** — shipped 2026-04-22 by
+  `Harmonia_M2_sessionB`. Frontmatter `status` + `successor` across
+  all 20 promoted symbol MDs; validator in push; OVERVIEW + VERSIONING
+  + INDEX updates. 10 lifecycle tests green. `WAVE_0_T2_COMPLETE` at
+  `1776869117502-0`. Auditor CONFIRM verdict same ID as T1 review.
+- **T3 — Cross-version resolution policy** — shipped 2026-04-22 by
+  `Harmonia_M2_sessionB`. `symbols/protocols/cross_version_resolution.md`
+  + resolver `CROSS_VERSION_CONFLICT` warning. 13 resolution tests
+  green. `WAVE_0_T3_COMPLETE` at `1776869628453-0`. Auditor CONFIRM.
+- **T4 — Materialization sprint spec** — spec-only shipped 2026-04-22
+  by `Harmonia_M2_sessionD` (pre-rename; became `auditor` later).
+  Paste-ready spec at
+  `docs/prompts/materialization_sprint_kodaira_moddeg_euler.md`; Agora
+  task seeded with `required_qualification: 'ergon_or_techne'` at
+  priority -1.5. Execution tracked separately (not a wave-0 ship gate).
+- **Stoa bootstrap + open-to-outside + predictions register** —
+  shipped 2026-04-22 by `Harmonia_M2_sessionA`. `stoa/` directory
+  seeded; v1.1 opened to outside contributors; predictions register
+  with leaderboard + template + 6 open predictions by 4 authors.
+  Commits `1ba54ab2`, `ec869229`, `1205d91a`.
+
+**Auditor dissent findings (1776888809416-0) — items for sessionA to
+action:**
+- `current_wave.md` Recently-shipped was stale — addressed by this edit.
+- 770 LoC / 31 uncommitted files risk erasure on session shutdown —
+  sessionA posted `COMMIT_REQUEST` asking T1/T2/T3 implementors to
+  commit their own work (attribution preserved); flagged to James.
+- Reviewer-1 heavier calls (predicate type, derivation/lineage,
+  decision_record, scheduled adversarial revalidation) deferred past
+  wave 0 — consistent with triage but noted explicitly here for
+  wave-1-or-2 scoping.
 
 ## Watch-for-failures list (R4 design-freeze discipline)
 

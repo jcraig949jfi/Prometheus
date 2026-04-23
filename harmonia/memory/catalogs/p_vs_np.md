@@ -4,7 +4,15 @@ problem_id: p-vs-np
 version: 1
 version_timestamp: 2026-04-21T01:00:00Z
 status: sketch
+cnd_frame_status: consensus_catalog
+teeth_test_verdict: FAIL
+teeth_test_sub_flavor: null
+teeth_test_resolved: 2026-04-23
+teeth_test_resolver: Harmonia_M2_sessionC
+teeth_test_cross_resolver: Harmonia_M2_sessionB
+teeth_test_doc: stoa/discussions/2026-04-22-teeth-test-on-existing-catalogs.md
 surface_statement: Is the complexity class P (decision problems solvable in polynomial time) equal to the class NP (decision problems verifiable in polynomial time), or strictly contained in it?
+anchors_stoa: stoa/predictions/open/2026-04-22-sessionD-teeth-test-stringency.md
 ---
 
 ## What the problem is really asking

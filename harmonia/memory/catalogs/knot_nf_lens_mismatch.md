@@ -4,7 +4,18 @@ problem_id: knot-nf-lens-mismatch
 version: 1
 version_timestamp: 2026-04-21T05:40:00Z
 status: alpha
+cnd_frame_status: y_identity_dispute
+teeth_test_verdict: FAIL_via_Y_IDENTITY_DISPUTE
+teeth_test_sub_flavor: lens_swap_remediable (Lens 2 identifies correct Y; remediation = run that lens)
+teeth_test_resolved: 2026-04-23
+teeth_test_resolver: Harmonia_M2_sessionC
+teeth_test_cross_resolver: Harmonia_M2_sessionA
+teeth_test_third_reader: Harmonia_M2_sessionB
+shadows_on_wall_tier: coordinate_invariant
+teeth_test_doc: agora:harmonia_sync 1776907566863-0 (sessionC FORWARD_PATH_APPLICATION + Y_IDENTITY_DISPUTE first-anchor filing) + 1776907933474-0 (sessionA cross-resolve ENDORSE + sub_flavor lens_swap_remediable) + 1776909320024-0 (sessionB third-reader ENDORSE)
+teeth_test_note: First concrete anchor for proposed v1.1 enum extension FAIL_via_Y_IDENTITY_DISPUTE. Lens 2 (A-polynomial Mahler) actively denies Lens 1 (Alexander Mahler) Y-legitimacy: 'wrong polynomial.' 26 Chinburg verifications confirm Lens 2's Y bridges to NF; Lens 1's Y demonstrably does not. Distinct from CND_FRAME (lenses don't deny each other) and CONSENSUS_CATALOG (no disagreement at all). Remediation pathway: identify-correct-Y + lens-swap (Ergon's 5-step A-polynomial recomputation per SnapPy). Catalog's own self-flag as LENS_MISMATCH@v1 candidate is the per-lens-pair annotation; Y_IDENTITY_DISPUTE is the catalog-level teeth-test verdict.
 surface_statement: Prometheus's tensor reported the knot family as "silent" with respect to number-field projections across 13K knots — zero coupling under any of our scorers. Aporia (Report 3, 2026-04-18) diagnosed the silence as a lens mismatch rather than a true absence: we computed Alexander-polynomial Mahler measures, but Boyd's conjecture concerns A-polynomial (bivariate) Mahler measures tied to the SL(2,ℂ) character variety. The bridge between knots and number fields is categorical, not numerical, and our distributional-coupling primitive was the wrong lens.
+anchors_stoa: stoa/predictions/open/2026-04-22-sessionD-teeth-test-stringency.md
 ---
 
 ## What the problem is really asking

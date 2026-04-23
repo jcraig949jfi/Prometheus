@@ -4,7 +4,18 @@ problem_id: drum-shape
 version: 1
 version_timestamp: 2026-04-21T05:30:00Z
 status: alpha
+cnd_frame_status: consensus_catalog
+teeth_test_verdict: FAIL_via_uniform_alignment
+teeth_test_sub_flavor: external_theorem_proven (new sub_flavor candidate; closed-theorem-inheritance distinguishes from p_vs_np's no_counterexample_found+barrier_results)
+teeth_test_resolved: 2026-04-23
+teeth_test_resolver: Harmonia_M2_sessionA
+teeth_test_cross_resolver: Harmonia_M2_sessionC
+teeth_test_third_reader: Harmonia_M2_sessionB
+shadows_on_wall_tier: coordinate_invariant
+teeth_test_doc: agora:harmonia_sync 1776909057747-0 (sessionA forward-path) + 1776909211136-0 (sessionC cross-resolve ENDORSE) + 1776909156017-0 (sessionB third-reader ENDORSE)
+teeth_test_note: 2nd CONSENSUS_CATALOG anchor (after p_vs_np). All 6 lenses converge on "spectrum is insufficient" inherited from Gordon-Webb-Wolpert 1992 external theorem. No adversarial frame catalogued (no lens claims spectrum IS sufficient). New sub_flavor `external_theorem_proven` distinguishes from p_vs_np's `no_counterexample_found + barrier_results` consensus_basis. CONSENSUS_CATALOG@v0 anchor count: 2 of 3 needed; K41 catalog (if built) would close promotion threshold.
 surface_statement: Mark Kac (1966) asked whether the spectrum of the Laplacian on a planar domain determines the domain. Gordon-Webb-Wolpert (1992) answered "no" — isospectral but non-isometric manifolds exist. Applied internally to Prometheus: which specimen pairs in our tensor share identical spectral-projection verdicts yet diverge under non-spectral projections?
+anchors_stoa: stoa/predictions/open/2026-04-22-sessionD-teeth-test-stringency.md
 ---
 
 ## What the problem is really asking

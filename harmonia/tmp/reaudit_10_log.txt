@@ -1,0 +1,56 @@
+D:\Prometheus\harmonia\reaudit_10_stratifier_mismatch.py:92: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  dfz = pd.read_sql(
+D:\Prometheus\harmonia\reaudit_10_stratifier_mismatch.py:105: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  dfe = pd.read_sql(
+[reaudit_10] start 2026-04-21T08:08:26.385595+00:00
+[data] n=2,009,089 EC with >=2 zeros and rank, rank dist {0: np.int64(773232), 1: np.int64(1008146), 2: np.int64(222305), 3: np.int64(5405), 4: np.int64(1)}
+
+[F011:P021] Class 3 → prescribed stratifier=num_bad_primes
+  (A) LITERAL NULL_BSWCD@v2[stratifier=num_bad_primes]: obs=0.13219 null_mean=0.08146 null_std=2.97e-03 → DURABLE
+  (B) PER-STRATUM DEFICIT DURABILITY (n_strata=6): min|z|=1.92 max|z|=190.06 → MIXED
+      stratum   1: n=    3915  deficit=-0.02721  z=-3.88
+      stratum   2: n=   74596  deficit=+0.00268  z=+1.92
+      stratum   3: n=  464308  deficit=+0.03030  z=+58.64
+      stratum   4: n=  922339  deficit=+0.05596  z=+155.39
+      stratum   5: n=  492493  deficit=+0.08270  z=+190.06
+      stratum   6: n=   51438  deficit=+0.10498  z=+84.43
+
+[F011:P023] Class 3 → prescribed stratifier=rank
+  (A) LITERAL NULL_BSWCD@v2[stratifier=rank]: obs=0.08906 null_mean=0.04875 null_std=1.46e-04 → DURABLE
+  (B) PER-STRATUM DEFICIT DURABILITY (n_strata=4): min|z|=2.81 max|z|=298.20 → MIXED
+      stratum   0: n=  773232  deficit=+0.10170  z=+298.20
+      stratum   1: n= 1008146  deficit=+0.03013  z=+91.98
+      stratum   2: n=  222305  deficit=+0.01264  z=+16.44
+      stratum   3: n=    5405  deficit=+0.01312  z=+2.81
+
+[F011:P026] Class 3 → prescribed stratifier=semistable
+  (A) LITERAL NULL_BSWCD@v2[stratifier=semistable]: obs=0.00239 null_mean=0.00042 null_std=3.05e-04 → DURABLE
+  (B) PER-STRATUM DEFICIT DURABILITY (n_strata=2): min|z|=112.15 max|z|=204.36 → DURABLE
+      stratum   0: n= 1489960  deficit=+0.05631  z=+204.36
+      stratum   1: n=  519129  deficit=+0.05393  z=+112.15
+
+[F011:P036] Class 3 → prescribed stratifier=root_number
+  (A) LITERAL NULL_BSWCD@v2[stratifier=root_number]: obs=0.05177 null_mean=0.00035 null_std=2.70e-04 → DURABLE
+  (B) PER-STRATUM DEFICIT DURABILITY (n_strata=2): min|z|=92.44 max|z|=256.43 → DURABLE
+      stratum   0: n=  995538  deficit=+0.08182  z=+256.43
+      stratum   1: n= 1013551  deficit=+0.03004  z=+92.44
+
+[F013 reformulated] per-rank slope(var vs log_cond) interaction under joint (rank, cond_decile) null...
+  observed std(slope_r)=0.012463  null_mean=0.012463  null_std=0.000000  z=-0.58  → COLLAPSES
+
+[F013:P023] Class 2 → prescribed stratifier=rank
+  (A) LITERAL NULL_BSWCD@v2[stratifier=rank]: obs=0.01500 null_std=1.12e-04 → DURABLE
+
+[F013:P028] Class 2 → prescribed stratifier=rank
+  (A) LITERAL NULL_BSWCD@v2[stratifier=rank]: obs=0.01500 null_std=1.12e-04 → DURABLE
+
+[F013:P041] Class 2 → prescribed stratifier=rank
+  (A) LITERAL NULL_BSWCD@v2[stratifier=rank]: obs=0.01500 null_std=1.12e-04 → DURABLE
+
+[F013:P051] Class 2 → prescribed stratifier=rank
+  (A) LITERAL NULL_BSWCD@v2[stratifier=rank]: obs=0.01500 null_std=1.12e-04 → DURABLE
+
+[F013:P104] Class 2 → prescribed stratifier=rank
+  (A) LITERAL NULL_BSWCD@v2[stratifier=rank]: obs=0.01500 null_std=1.12e-04 → DURABLE
+
+[reaudit_10] wrote cartography\docs\reaudit_10_stratifier_mismatch_results.json

@@ -68,6 +68,10 @@ def load_symbol(md_path):
         'implementation': fm.get('implementation'),
         'sections': p['sections'],
         'md_path': md_path_norm,
+        # Lifecycle fields (T2, wave 0) — stored separately from versioned :def,
+        # not part of immutable content. Default active when absent.
+        'status': fm.get('status') or 'active',
+        'successor': fm.get('successor'),
     }
 
 

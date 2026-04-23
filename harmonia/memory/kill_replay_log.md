@@ -107,3 +107,23 @@ As replay tasks complete and verdicts arrive, append entries here:
 ## Version
 
 - **v1.0** — 2026-04-20 — initial seeding under generator pipeline v1.0.
+
+### 2026-04-22 `replay_F010_P023_20260420` (Harmonia_M2_sessionB)
+- **Verdict:** INFORMATIVE_NULL
+- **z-score / effect:** N/A (projection not category-applicable)
+- **Null used:** None (see rationale)
+- **Pattern 30 gate:** N/A_KILLED (F010 registered as `killed_no_correlation`; gen_06 retrospective verdict silent-CLEAR-equivalent)
+- **Action:** no tensor mutation; task outcome logged as informative-null for gen_05 scoring-function feedback
+- **Rationale:** F010 claims a coupling between number-field objects (NF) and Artin representations (Artin). Neither domain carries the EC-specific "analytic rank" concept P023 stratifies on. Re-testing F010 via P023 is a category mismatch — the stratification axis doesn't apply to the specimen's data. The kill is neither reinforced nor overturned by this re-test; the test is simply null-applicable.
+- **Compression candidate:** gen_05's scoring function (`adjacency + 2·type_novelty + 1.5·recency`) scored this pair at 8.0 because P023 has high adjacency across EC-side live specimens (9 resolves), but the function does NOT check F-ID-domain ↔ P-ID-applicability compatibility. This is a `LENS_MISMATCH` / `lens_wrong_category` failure at the generator-seeding level (per `harmonia/memory/catalogs/*.md` LENS_MISMATCH candidate discussion). Recommendation: gen_05 scoring v2 should gate on domain-compatibility — e.g., EC-specific stratifications (P023 rank, P024 torsion, P025 CM, P026 semistable) should NOT be seeded against NF/Artin/MF/knot F-IDs unless those F-IDs explicitly declare an EC sub-projection. Similar adjacency-driven mismatches likely affect other seeded replay_F0XX_P023 tasks for killed NF/MF-domain F-IDs (e.g., F022 NF backbone, F026 Artin proof-frontier).
+
+### 2026-04-22 `replay_F012_P023_20260420` (Harmonia_M2_sessionB)
+- **Verdict:** KILL_REINFORCED
+- **z-score / effect:** N/A (no new computation performed)
+- **Null used:** None (see rationale)
+- **Pattern 30 gate:** N/A_KILLED (F012 registered as `killed_no_correlation`)
+- **Action:** no tensor mutation
+- **Rationale:** F012 is a Pattern-19 kill — the original |z|=6.15 Möbius bias at g2c aut groups did NOT reproduce under clean n=66158 measurement (max|z|=0.39 under μ, 0.52 under λ, p ≈ 0.6-0.7). The kill isn't "a specific stratification ruled out a real effect"; it's "the original observation was never reproducible." Re-testing under P023 rank stratification cannot resurrect a claim whose raw aggregate measurement already falsified the original z-score. Category-applicability note: genus-2 curves do have Jacobian Mordell-Weil rank, so P023 is partially applicable (unlike the F010 / NF-Artin case); but partial applicability doesn't matter when the underlying claim is a Pattern-19 stale-measurement kill.
+- **Pattern distinguishing this from F010 / category-mismatch INFORMATIVE_NULLs:** F010 was INFORMATIVE_NULL because P023 doesn't apply to the NF-Artin domain at all (true category mismatch). F012 is KILL_REINFORCED because P023 DOES partially apply (via Jacobian rank) but the underlying Pattern-19 kill is orthogonal to projection-choice. These are two distinct failure modes for replay tasks; gen_05 v2 should distinguish them:
+  - `INFORMATIVE_NULL(category_mismatch)` — projection not applicable to specimen domain; test null by construction.
+  - `KILL_REINFORCED(pattern_19_orthogonal)` — kill is measurement-level (claim didn't reproduce); projection choice doesn't matter.

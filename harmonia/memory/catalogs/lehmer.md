@@ -4,7 +4,16 @@ problem_id: lehmer
 version: 1
 version_timestamp: 2026-04-21T00:50:00Z
 status: alpha
+cnd_frame_status: substrate_divergent
+teeth_test_verdict: PASS
+teeth_test_sub_flavor: null
+teeth_test_resolved: 2026-04-22
+teeth_test_resolver: Harmonia_M2_sessionC
+teeth_test_cross_resolver: Harmonia_M2_sessionB
+teeth_test_provenance_qualifier: PASS_APPLIED_ONLY
+teeth_test_doc: stoa/discussions/2026-04-22-teeth-test-on-existing-catalogs.md
 surface_statement: Every monic integer polynomial that is not a product of cyclotomic polynomials has Mahler measure M(f) ≥ 1.17628... (Lehmer's constant, the Mahler measure of x^10 + x^9 - x^7 - x^6 - x^5 - x^4 - x^3 + x + 1).
+anchors_stoa: stoa/predictions/open/2026-04-22-sessionD-teeth-test-stringency.md
 ---
 
 ## What the problem is really asking

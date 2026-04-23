@@ -316,6 +316,229 @@ not insightful.
   rank-deficit measurements may map to VACUUM candidates. To be
   checked on the first production target.
 
+### 9. `TT_APPROX_MAP@v0` — MAP-Elites archive of tensor-train approximations (CANDIDATE, playground-tier)
+
+- **Frame:** Numerical linear algebra (Oseledets TT) + quality-diversity
+  evolutionary search (Mouret-Clune MAP-Elites). Each individual is a
+  (function, TT-approximation) pair; the archive is a grid indexed by
+  behavior descriptors populated by evolving TT ranks. The archive IS
+  the output, not any single approximation.
+- **Scorer:** for a function evaluated as a dense tensor on a grid, run
+  TT-SVD at candidate rank tuples; record `(n_params, rel_l2_error)`
+  and place in the appropriate MAP-Elites cell. Phase-1 uses 2
+  descriptors on a 20×20 grid; Phase-2 extends to 4 descriptors
+  (adds spectral decay + Lipschitz).
+- **Resolves:** "geometry of approximation" — which function-shapes
+  admit which TT compressions, mapped rather than proved. The
+  descriptor axes themselves are the coordinate-system-of-legibility
+  choice (gen_11-adjacent territory in a non-arithmetic substrate).
+- **Effort:** Phase-1 MVP shipped 2026-04-24 (auditor). Phase 2
+  (DMRG refinement + spectral/Lipschitz descriptors +
+  decomposition-lineage Pattern-30 analog + Lorenz/Gabor/heat-PDE
+  frontier): ~3 ticks. Phase 3 (graduation to parallel substrate with
+  own F-IDs / P-IDs / symbol promotion / null protocol): weeks.
+- **Status:** CANDIDATE, **playground-tier**. Verdicts from `zoo/` do
+  NOT migrate to the landscape tensor. Living at `zoo/` (standalone);
+  see `zoo/README.md` for discipline contract + phase roadmap.
+- **Phase-1 calibration results (2026-04-24):**
+  - `prod_x` (TT rank 1 known-truth, 6D grid 12^6): min rel_err
+    1.08e-13 at 72 params → PASS.
+  - `random_gaussian` (incompressible known-truth, same shape): min
+    rel_err 0.997, 7-point Pareto at full-rank ceiling → PASS.
+  - `pairwise_tanh(x_1*x_2 + x_3*x_4 + x_5*x_6)` (frontier): 12 cells
+    occupied, 11-point Pareto, min rel_err 1.72e-3 at 120 params.
+    Meaningful compression exists; awaiting Phase-2 lineage check.
+- **Composes with:** `KOLMOGOROV_HAT` (both measure compressibility
+  via different lenses; disagreement is informative),
+  `CRITICAL_EXPONENT` (error decay vs rank is itself a scaling law
+  — fit α per function and feed back), `MDL_SCORER` (MDL ranks
+  Pareto-front candidates principledly), `CONTROLLABILITY_RANK`
+  (TT rank and Kalman rank are two different "how many degrees of
+  freedom does this really have" measures; a cross-substrate joint
+  study is a gen_09 target).
+- **Pattern 30 note:** Phase-2 `decomposition_lineage` check is the
+  TT analog of `algebraic_lineage`. If `f = g + h` with `g` low-rank
+  and `h` small-but-important, TT-SVD recovers `g` and reports
+  `error ≈ |h|`; two neighboring archive entries `(f, g)` are
+  algebraically coupled, not independent measurements. Not yet
+  enforced.
+- **First frontier targets (deferred to Phase 2):** Lorenz trajectory
+  on a time-delay grid, 2D heat-PDE solution at multiple timesteps,
+  Gabor wavelet packet. Calibration anchors remain mandatory every
+  run.
+
+### 10. `CONJECTURE_GENERATOR@v0` — coordinate-system discovery under algebraic-lineage + MDL-calibration constraints (CANDIDATE)
+
+- **Frame:** Genetic programming + MAP-Elites over a typed algebraic
+  grammar with lineage tags, scored by MDL with ideal-quotient pruning,
+  calibrated by encoding-perturbation robustness. This is NOT a
+  "conjecture generator" in the naive sense; the reframe is load-
+  bearing: it is a coordinate-transformation generator constrained so
+  Framing-B (P-ID) output cannot silently collapse into Framing-C
+  (claim). Architecture doc at [`architecture/conjecture_generator.md`](architecture/conjecture_generator.md) (v0.2 DRAFT, 2026-04-23)
+  is the source of truth; this entry is the shelf pointer.
+- **Methodological cousin:** `TT_APPROX_MAP@v0` (entry 9) — both are
+  MAP-Elites over a discovery space with calibration anchors + a
+  Pattern-30 analog. Differences: TT operates on functions via
+  TT-SVD ranks; this operates on arithmetic data via an algebraic
+  grammar. Cross-substrate study of how the two MAP-Elites archives
+  relate is a gen_09 target.
+- **Scorer:**
+  ```
+  input:
+    dataset:          pinned dataset symbol (e.g., Q_EC_R0_D5@v1)
+    grammar:          (atoms, operators, max_depth, lineage_tags, identity_basis)
+                        - atoms drawn from Definition DAG Phase-0 extended seed
+                        - each atom carries AXIS_CLASS@v1 + algebraic-closure tags
+                        - operators carry lineage-propagation rules
+                        - identity_basis = materialized known identities over dataset
+    mdl_coefficients: (α, β, γ, δ)  [simplicity, fit, P30, calibration]
+    map_axes:         subset of AXIS_CLASS@v1 values defining niche cells
+    iteration_budget: int  (GP generations × population)
+    seed:             int  (GP RNG)
+
+  output (per candidate past all gates):
+    (expression_ast,
+     mdl_score,
+     pattern_30_level,                  # 0|1 only; ≥2 pre-pruned
+     algebraic_dependence_level,        # 0|1 only; ≥2 pre-pruned via R²
+     map_cell_or_residual,              # AXIS_CLASS cell OR "residual"
+     preserves_declared,                # list[property]
+     destroys_declared,                 # list[property]
+     signature)                         # full SIGNATURE@v2 JSON
+
+  per-run audit artifacts (required for shelf promotion):
+    encoding_perturbation_matrix        # Kendall's τ per operator
+    margin_stability_matrix             # margin-ratios per anchor × perturbation
+    null_encoding_top_K                 # random-grammar baseline
+    out_of_map_fraction                 # residual-channel density
+    out_of_map_clusters                 # top-N residual clusters + exemplars
+  ```
+- **Resolves:** candidate P-IDs (coordinate transformations) discovered
+  by search rather than by human proposal. Framing A (claim-form
+  output) is a derived artifact, surfaced only when a candidate's
+  declared `preserves`/`destroys` imply a measurable invariant that
+  passes `null_protocol_v1.1`. Primary output is substrate: new
+  scorers, stratifications, feature maps with information-audit
+  schemas. Differs from `gen_11` (which proposes axes from tensor
+  demand signals like VACUUM / EXHAUSTION) by operating on grammar-
+  level GP search over a pinned dataset; the two are complementary
+  producers whose merger is a v2 question.
+- **Effort:** HIGH — ~7–11 ticks to v1 promotion. Breakdown: 3–5 ticks
+  Definition DAG Phase-0 extension (~60–80 nodes covering LMFDB EC +
+  BSD-ingredient family with full lineage closure); 2–3 ticks GP +
+  MAP-Elites scaffolding (`harmonia/runners/conjecture_gp.py` or at
+  `zoo/conjecture_gp/` per playground-tier discipline); 1–2 ticks
+  calibration battery including encoding-perturbation tests; 1 tick
+  red-team (Tink 2 — deliberate F043 reproduction under disabled
+  lineage gate). Most expensive entry on the shelf by ~5×. **Cheap-
+  path alternative:** minimal hand-built BSD-only grammar + naive GP
+  loop at `zoo/` in ~1 tick; trades infrastructure investment for
+  earlier empirical feedback; scope restricted to Tink 1 + Tink 2.
+- **Status:** v0 DRAFT candidate (this entry, Harmonia_M2_sessionC +
+  James 2026-04-23 / 2026-04-24). Architecture doc v0.2 shipped at
+  `architecture/conjecture_generator.md`. Graduation to v1 requires:
+  Definition DAG Phase 0 landed, grammar-time P30 + ideal-quotient
+  checks shipped in `harmonia/sweeps/pattern_30.py`, Tink 1 PASS
+  (anchor rediscovery) AND Tink 2 DEMO (F043 reproduction under
+  disabled gate), encoding-perturbation artifacts present, `gen_12`
+  spec at `docs/prompts/gen_12_conjecture_generator.md`. Five open
+  questions in architecture doc §13 pending James's call; decision-
+  pending on target class, grammar atom set, `gen_11` merger, and
+  cheap-path-vs-full-path.
+- **Composes with:** `gen_11` coordinate-invention (sibling producer;
+  merger-vs-sibling is a v2 decision), `MDL_SCORER@v1` (scoring
+  backbone), `PATTERN_30@v1` + `PATTERN_BSD_TAUTOLOGY`
+  (`null_protocol_v1.1`, grammar gate), `AXIS_CLASS@v1` (niche
+  taxonomy — no parallel vocabulary), `VACUUM@v1` (residual-channel
+  diagnostic at MAP level), `SHADOWS_ON_WALL@v1` (per-candidate lens
+  count), `MULTI_PERSPECTIVE_ATTACK@v1` (Tink 4 cross-grammar
+  convergence test), `TT_APPROX_MAP@v0` (methodological cousin;
+  cross-substrate MAP-Elites comparison is a gen_09 target),
+  Definition DAG (Phase 0 extended seed — **hard prerequisite** for
+  full path; cheap-path bypasses via hand-built grammar),
+  `SIGNATURE@v2` (extended to carry grammar spec +
+  preserves/destroys + audit artifacts).
+- **Pattern 30 / frame-hazard / null-protocol considerations:**
+  1. **Grammar-time Pattern 30 is mandatory, not optional.** Level ≥ 2
+     candidates are pruned before scoring, not after. Grammar encodes
+     `algebraic_closure` tags on every atom; lineage propagates
+     through operators; Level computed from atom-tag intersection at
+     expression-tree construction.
+  2. **Ideal-quotient check on top of atom-lineage.** Catches near-
+     tautologies the atom-tag gate misses (log-transformed, partial-
+     product, mixed-scale). `R² ≥ 0.9` against known-identity basis
+     → prune; `R² ∈ [0.6, 0.9)` → advisory flag + MDL penalty. See
+     architecture doc §2.1.
+  3. **Framing B hard rule (architecture doc §1.1).** Candidates
+     asserting invariants (`X = Y`, `X ≤ Y`, `X ~ f(Y)`) are
+     type-rejected. Candidates without a declared `preserves` /
+     `destroys` schema are type-rejected. Type-enforced, not cultural.
+  4. **Residual channel as first-class audit (architecture §5.1).**
+     Out-of-MAP fraction + cluster exemplars are required per-run
+     artifacts. Empty residual with dense MAP is a WARNING (reward-
+     signal capture on declared niches), not a success.
+  5. **Encoding-perturbation robustness (architecture §6.1) required
+     before novel output.** Ordering invariance under operator-cost
+     perturbation, margin-stability test, null-encoding baseline.
+     Scorers failing any of the three are measuring syntax preference,
+     not structure.
+  6. **Class-4 frame hazard.** Calibration dataset is `Q_EC_R0_D5@v1`
+     — a curated cohort, not a population-random sample. Candidates
+     discovered here carry an implicit
+     `sampling_intent: heuristically-sampled` caveat per
+     `long_term_architecture.md §2`. Any candidate that passes here
+     but fails against an independently-sampled cohort is a Class-4
+     construction-biased artifact.
+- **Calibration anchors (design-target; none run yet):**
+  1. **F003 BSD parity** `(−1)^rank = root_number`. Level 4 IDENTITY.
+     Minimal grammar `{rank, root_number, =, ·, ^, (−1)}` at `depth
+     ≤ 4` should emerge within first 100 candidates on
+     `Q_EC_R0_D5@v1`. **Failure = instrument error.**
+  2. **F004 Hasse bound** `|a_p| ≤ 2√p`. Level 4 IDENTITY
+     (inequality form). Grammar `{a_p, p, ≤, |·|, √, 2}` at `depth
+     ≤ 5`, ordinal × magnitude niche.
+  3. **F002 Mazur torsion classification** — torsion-order
+     enumeration concentrates in 15 known classes. Categorical niche.
+  4. **F008 Scholz reflection ratio** — secondary target; requires
+     number-field atoms (deferred to target-class-2 phase).
+  5. **F043 reproduction under `lineage_tags=disabled`** (Tink 2
+     red-team). `corr(log|Sha|, log(Ω·∏c_p))` should appear in
+     top-20 MDL on rank-0 cohort. **Demonstrates gate necessity,
+     not a bug.**
+- **First production targets** (ordered; gated):
+  (a) **Tink 1 — anchor rediscovery.** Minimal 2-atom grammar, F003
+      target on `Q_EC_R0_D5@v1`. Pass: anchor in top-100 MDL within
+      1000 candidates. ~½ tick once scaffolding exists.
+  (b) **Tink 2 — F043 red-team** (post Tink 1 PASS). Demonstrates
+      disabling the gate reproduces a known retraction. ~½ tick.
+  (c) **Tink 3 — full-grammar empty-niche scan** (gated on Tink 1
+      PASS + Tink 2 DEMO). `Q_EC_R0_D5@v1` + full BSD-lineage-tagged
+      atoms, K=10000 candidates. Per-niche top candidate + MDL,
+      `out_of_map_fraction` + top residual clusters. **First
+      substrate-growth output.** No promotion; surfaces candidate
+      P-IDs for `gen_11`-style review and residual clusters for
+      `AXIS_CLASS` extension. ~1–2 ticks.
+  (d) **Tink 4 — cross-grammar convergence** (deferred): two atom
+      sets on the same data via `MULTI_PERSPECTIVE_ATTACK@v1`-at-
+      grammar-level. Convergence across grammars = `coordinate_invariant`
+      candidate; divergence = `map_of_disagreement` terrain.
+- **Open questions:**
+  1. **Merger with `gen_11`.** Overlapping output (candidate P-IDs);
+     different input (tensor demand vs. grammar + data). v0 siblings;
+     v2 question is whether one producer can accept demand signal as
+     a grammar constraint. Deferred.
+  2. **Cheap-path vs full-path first move.** Full v1 requires
+     Definition DAG Phase-0 extension (~3–5 ticks). Cheap-path is
+     `zoo/`-tier hand-built grammar + naive GP in ~1 tick.
+     Architecture doc §13 Q5; James's call.
+  3. **Playground-tier home.** Does early tinkering live at `zoo/`
+     (parallel substrate, no tensor migration) like `TT_APPROX_MAP`,
+     or in mainline under full discipline from day 1? The
+     `zoo/`-tier option trades mainline-discipline cost for
+     exploratory bandwidth; argues for Tink 1/2 at `zoo/`, Tink 3
+     only at mainline once gates are honest.
+
 ---
 
 ### Auditor note: 4 STRONG candidates → 2 shipped, 1 delegated, 1 deferred (2026-04-23)

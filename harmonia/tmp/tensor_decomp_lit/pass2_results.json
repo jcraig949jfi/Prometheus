@@ -1,0 +1,1147 @@
+{
+  "pass": 2,
+  "name": "qd_times_tensor",
+  "description": "MAP-Elites / Quality-Diversity \u00d7 tensor decomposition / algorithm discovery",
+  "run_timestamp": "2026-04-23T06:32:24.715980Z",
+  "n_raw": 76,
+  "n_unique": 75,
+  "results": [
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Self-Referential Quality Diversity Through Differential Map-Elites",
+      "authors": [
+        "Tae Jong Choi",
+        "Julian Togelius"
+      ],
+      "url": "http://arxiv.org/abs/2107.04964v1",
+      "date": "2021-07-11",
+      "summary": "Differential MAP-Elites is a novel algorithm that combines the illumination capacity of CVT-MAP-Elites with the continuous-space optimization capacity of Differential Evolution. The algorithm is motivated by observations that illumination algorithms, and quality-diversity algorithms in general, offer qualitatively new capabilities and applications for evolutionary computation yet are in their original versions relatively unsophisticated optimizers. The basic Differential MAP-Elites algorithm, introduced for the first time here, is relatively simple in that it simply combines the operators from Differential Evolution with the map structure of CVT-MAP-Elites. Experiments based on 25 numerical optimization problems suggest that Differential MAP-Elites clearly outperforms CVT-MAP-Elites, findi"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Multi-Emitter MAP-Elites: Improving quality, diversity and convergence speed with heterogeneous sets of emitters",
+      "authors": [
+        "Antoine Cully"
+      ],
+      "url": "http://arxiv.org/abs/2007.05352v2",
+      "date": "2020-07-10",
+      "summary": "Quality-Diversity (QD) optimisation is a new family of learning algorithms that aims at generating collections of diverse and high-performing solutions. Among those algorithms, the recently introduced Covariance Matrix Adaptation MAP-Elites (CMA-ME) algorithm proposes the concept of emitters, which uses a predefined heuristic to drive the algorithm's exploration. This algorithm was shown to outperform MAP-Elites, a popular QD algorithm that has demonstrated promising results in numerous applications. In this paper, we introduce Multi-Emitter MAP-Elites (ME-MAP-Elites), an algorithm that directly extends CMA-ME and improves its quality, diversity and data efficiency. It leverages the diversity of a heterogeneous set of emitters, in which each emitter type improves the optimisation process i"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Synergizing Quality-Diversity with Descriptor-Conditioned Reinforcement Learning",
+      "authors": [
+        "Maxence Faldor",
+        "F\u00e9lix Chalumeau",
+        "Manon Flageat",
+        "Antoine Cully"
+      ],
+      "url": "http://arxiv.org/abs/2401.08632v2",
+      "date": "2023-12-10",
+      "summary": "A hallmark of intelligence is the ability to exhibit a wide range of effective behaviors. Inspired by this principle, Quality-Diversity algorithms, such as MAP-Elites, are evolutionary methods designed to generate a set of diverse and high-fitness solutions. However, as a genetic algorithm, MAP-Elites relies on random mutations, which can become inefficient in high-dimensional search spaces, thus limiting its scalability to more complex domains, such as learning to control agents directly from high-dimensional inputs. To address this limitation, advanced methods like PGA-MAP-Elites and DCG-MAP-Elites have been developed, which combine actor-critic techniques from Reinforcement Learning with MAP-Elites, significantly enhancing the performance and efficiency of Quality-Diversity algorithms i"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Empirical analysis of PGA-MAP-Elites for Neuroevolution in Uncertain Domains",
+      "authors": [
+        "Manon Flageat",
+        "Felix Chalumeau",
+        "Antoine Cully"
+      ],
+      "url": "http://arxiv.org/abs/2210.13156v1",
+      "date": "2022-10-24",
+      "summary": "Quality-Diversity algorithms, among which MAP-Elites, have emerged as powerful alternatives to performance-only optimisation approaches as they enable generating collections of diverse and high-performing solutions to an optimisation problem. However, they are often limited to low-dimensional search spaces and deterministic environments. The recently introduced Policy Gradient Assisted MAP-Elites (PGA-MAP-Elites) algorithm overcomes this limitation by pairing the traditional Genetic operator of MAP-Elites with a gradient-based operator inspired by Deep Reinforcement Learning. This new operator guides mutations toward high-performing solutions using policy-gradients. In this work, we propose an in-depth study of PGA-MAP-Elites. We demonstrate the benefits of policy-gradients on the performa"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "MAP-Elites with Descriptor-Conditioned Gradients and Archive Distillation into a Single Policy",
+      "authors": [
+        "Maxence Faldor",
+        "F\u00e9lix Chalumeau",
+        "Manon Flageat",
+        "Antoine Cully"
+      ],
+      "url": "http://arxiv.org/abs/2303.03832v1",
+      "date": "2023-03-07",
+      "summary": "Quality-Diversity algorithms, such as MAP-Elites, are a branch of Evolutionary Computation generating collections of diverse and high-performing solutions, that have been successfully applied to a variety of domains and particularly in evolutionary robotics. However, MAP-Elites performs a divergent search based on random mutations originating from Genetic Algorithms, and thus, is limited to evolving populations of low-dimensional solutions. PGA-MAP-Elites overcomes this limitation by integrating a gradient-based variation operator inspired by Deep Reinforcement Learning which enables the evolution of large neural networks. Although high-performing in many environments, PGA-MAP-Elites fails on several tasks where the convergent search of the gradient-based operator does not direct mutations"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Deep Surrogate Assisted MAP-Elites for Automated Hearthstone Deckbuilding",
+      "authors": [
+        "Yulun Zhang",
+        "Matthew C. Fontaine",
+        "Amy K. Hoover",
+        "Stefanos Nikolaidis"
+      ],
+      "url": "http://arxiv.org/abs/2112.03534v4",
+      "date": "2021-12-07",
+      "summary": "We study the problem of efficiently generating high-quality and diverse content in games. Previous work on automated deckbuilding in Hearthstone shows that the quality diversity algorithm MAP-Elites can generate a collection of high-performing decks with diverse strategic gameplay. However, MAP-Elites requires a large number of expensive evaluations to discover a diverse collection of decks. We propose assisting MAP-Elites with a deep surrogate model trained online to predict game outcomes with respect to candidate decks. MAP-Elites discovers a diverse dataset to improve the surrogate model accuracy, while the surrogate model helps guide MAP-Elites towards promising new content. In a Hearthstone deckbuilding case study, we show that our approach improves the sample efficiency of MAP-Elites"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Scaling MAP-Elites to Deep Neuroevolution",
+      "authors": [
+        "C\u00e9dric Colas",
+        "Joost Huizinga",
+        "Vashisht Madhavan",
+        "Jeff Clune"
+      ],
+      "url": "http://arxiv.org/abs/2003.01825v3",
+      "date": "2020-03-03",
+      "summary": "Quality-Diversity (QD) algorithms, and MAP-Elites (ME) in particular, have proven very useful for a broad range of applications including enabling real robots to recover quickly from joint damage, solving strongly deceptive maze tasks or evolving robot morphologies to discover new gaits. However, present implementations of MAP-Elites and other QD algorithms seem to be limited to low-dimensional controllers with far fewer parameters than modern deep neural network models. In this paper, we propose to leverage the efficiency of Evolution Strategies (ES) to scale MAP-Elites to high-dimensional controllers parameterized by large neural networks. We design and evaluate a new hybrid algorithm called MAP-Elites with Evolution Strategies (ME-ES) for post-damage recovery in a difficult high-dimensi"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Covariance Matrix Adaptation for the Rapid Illumination of Behavior Space",
+      "authors": [
+        "Matthew C. Fontaine",
+        "Julian Togelius",
+        "Stefanos Nikolaidis",
+        "Amy K. Hoover"
+      ],
+      "url": "http://arxiv.org/abs/1912.02400v2",
+      "date": "2019-12-05",
+      "summary": "We focus on the challenge of finding a diverse collection of quality solutions on complex continuous domains. While quality diver-sity (QD) algorithms like Novelty Search with Local Competition (NSLC) and MAP-Elites are designed to generate a diverse range of solutions, these algorithms require a large number of evaluations for exploration of continuous spaces. Meanwhile, variants of the Covariance Matrix Adaptation Evolution Strategy (CMA-ES) are among the best-performing derivative-free optimizers in single-objective continuous domains. This paper proposes a new QD algorithm called Covariance Matrix Adaptation MAP-Elites (CMA-ME). Our new algorithm combines the self-adaptation techniques of CMA-ES with archiving and mapping techniques for maintaining diversity in QD. Results from experim"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Seeking Quality Diversity in Evolutionary Co-design of Morphology and Control of Soft Tensegrity Modular Robots",
+      "authors": [
+        "Enrico Zardini",
+        "Davide Zappetti",
+        "Davide Zambrano",
+        "Giovanni Iacca",
+        "Dario Floreano"
+      ],
+      "url": "http://arxiv.org/abs/2104.12175v1",
+      "date": "2021-04-25",
+      "summary": "Designing optimal soft modular robots is difficult, due to non-trivial interactions between morphology and controller. Evolutionary algorithms (EAs), combined with physical simulators, represent a valid tool to overcome this issue. In this work, we investigate algorithmic solutions to improve the Quality Diversity of co-evolved designs of Tensegrity Soft Modular Robots (TSMRs) for two robotic tasks, namely goal reaching and squeezing trough a narrow passage. To this aim, we use three different EAs, i.e., MAP-Elites and two custom algorithms: one based on Viability Evolution (ViE) and NEAT (ViE-NEAT), the other named Double Map MAP-Elites (DM-ME) and devised to seek diversity while co-evolving robot morphologies and neural network (NN)-based controllers. In detail, DM-ME extends MAP-Elites "
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"MAP-Elites\" AND abs:\"algorithm\"",
+      "title": "Using Centroidal Voronoi Tessellations to Scale Up the Multi-dimensional Archive of Phenotypic Elites Algorithm",
+      "authors": [
+        "Vassilis Vassiliades",
+        "Konstantinos Chatzilygeroudis",
+        "Jean-Baptiste Mouret"
+      ],
+      "url": "http://arxiv.org/abs/1610.05729v2",
+      "date": "2016-10-18",
+      "summary": "The recently introduced Multi-dimensional Archive of Phenotypic Elites (MAP-Elites) is an evolutionary algorithm capable of producing a large archive of diverse, high-performing solutions in a single run. It works by discretizing a continuous feature space into unique regions according to the desired discretization per dimension. While simple, this algorithm has a main drawback: it cannot scale to high-dimensional feature spaces since the number of regions increase exponentially with the number of dimensions. In this paper, we address this limitation by introducing a simple extension of MAP-Elites that has a constant, pre-defined number of regions irrespective of the dimensionality of the feature space. Our main insight is that methods from computational geometry could partition a high-dim"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"quality diversity\" AND abs:\"matrix multiplication\"",
+      "title": "Improving HPC Code Generation Capability of LLMs via Online Reinforcement Learning with Real-Machine Benchmark Rewards",
+      "authors": [
+        "Ryo Mikasa",
+        "Shun-ichiro Hayashi",
+        "Daichi Mukunoki",
+        "Tetsuya Hoshino",
+        "Takahiro Katagiri"
+      ],
+      "url": "http://arxiv.org/abs/2602.12049v1",
+      "date": "2026-02-12",
+      "summary": "Large language models (LLMs) have demonstrated strong code generation capabilities, yet the runtime performance of generated code is not guaranteed, and there have been few attempts to train LLMs using runtime performance as a reward in the HPC domain. We propose an online reinforcement learning approach that executes LLM-generated code on a supercomputer and directly feeds back the measured runtime performance (GFLOPS) as a reward. We further introduce a Staged Quality-Diversity (SQD) algorithm that progressively varies the permitted optimization techniques on a per-problem basis, enabling the model to learn code optimization from diverse perspectives. We build a distributed system connecting a GPU training cluster with a CPU benchmarking cluster, and train Qwen2.5 Coder 14B on a double-p"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"evolutionary\" AND abs:\"tensor decomposition\"",
+      "title": "Tensor Shape Search for Optimum Data Compression",
+      "authors": [
+        "Ryan Solgi",
+        "Zichang He",
+        "William Jiahua Liang",
+        "Zheng Zhang"
+      ],
+      "url": "http://arxiv.org/abs/2205.10651v1",
+      "date": "2022-05-21",
+      "summary": "Various tensor decomposition methods have been proposed for data compression. In real world applications of the tensor decomposition, selecting the tensor shape for the given data poses a challenge and the shape of the tensor may affect the error and the compression ratio. In this work, we study the effect of the tensor shape on the tensor decomposition and propose an optimization model to find an optimum shape for the tensor train (TT) decomposition. The proposed optimization model maximizes the compression ratio of the TT decomposition given an error bound. We implement a genetic algorithm (GA) linked with the TT-SVD algorithm to solve the optimization model. We apply the proposed method for the compression of RGB images. The results demonstrate the effectiveness of the proposed evolutio"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"evolutionary\" AND abs:\"tensor decomposition\"",
+      "title": "Adaptive Learning of Tensor Network Structures",
+      "authors": [
+        "Meraj Hashemizadeh",
+        "Michelle Liu",
+        "Jacob Miller",
+        "Guillaume Rabusseau"
+      ],
+      "url": "http://arxiv.org/abs/2008.05437v2",
+      "date": "2020-08-12",
+      "summary": "Tensor Networks (TN) offer a powerful framework to efficiently represent very high-dimensional objects. TN have recently shown their potential for machine learning applications and offer a unifying view of common tensor decomposition models such as Tucker, tensor train (TT) and tensor ring (TR). However, identifying the best tensor network structure from data for a given task is challenging. In this work, we leverage the TN formalism to develop a generic and efficient adaptive algorithm to jointly learn the structure and the parameters of a TN from data. Our method is based on a simple greedy approach starting from a rank one tensor and successively identifying the most promising tensor network edges for small rank increments. Our algorithm can adaptively identify TN structures with small "
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"evolutionary\" AND abs:\"tensor decomposition\"",
+      "title": "Long-Term Electricity Demand Prediction Using Non-negative Tensor Factorization and Genetic Algorithm-Driven Temporal Modeling",
+      "authors": [
+        "Toma Masaki",
+        "Kanta Tachibana"
+      ],
+      "url": "http://arxiv.org/abs/2503.22132v1",
+      "date": "2025-03-28",
+      "summary": "This study proposes a novel framework for long-term electricity demand prediction based solely on historical consumption data, without relying on external variables such as temperature or economic indicators. The method combines Non-negative Tensor Factorization (NTF) to extract low-dimensional temporal features from multi-way electricity usage data, with a Genetic Algorithm that optimizes the hyperparameters of time series models applied to the latent annual factors. We model the dataset as a third-order tensor spanning electric utilities, industrial sectors, and years, and apply canonical polyadic decomposition under non-negativity constraints. The annual component is forecasted using autoregressive models, with hyperparameter tuning guided by the prediction error or reconstruction accur"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"evolutionary\" AND abs:\"tensor decomposition\"",
+      "title": "A tensor decomposition algorithm for large ODEs with conservation laws",
+      "authors": [
+        "Sergey V. Dolgov"
+      ],
+      "url": "http://arxiv.org/abs/1403.8085v3",
+      "date": "2014-03-31",
+      "summary": "We propose an algorithm for solution of high-dimensional evolutionary equations (ODEs and discretized time-dependent PDEs) in the Tensor Train (TT) decomposition, assuming that the solution and the right-hand side of the ODE admit such a decomposition with a low storage. A linear ODE, discretized via one-step or Chebyshev differentiation schemes, turns into a large linear system. The tensor decomposition allows to solve this system for several time points simultaneously using an extension of the Alternating Least Squares algorithm. This method computes the TT approximation of the solution directly, without ever solving the original large problem, and encapsulates the Galerkin model reduction of the ODE. This allows an efficient estimation of the time discretization error, and hence provide"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"evolutionary\" AND abs:\"tensor decomposition\"",
+      "title": "A more accurate rational non-commutative algorithm for multiplying 4x4 matrices using 48 multiplications",
+      "authors": [
+        "Jean-Guillaume Dumas",
+        "Cl\u00e9ment Pernet",
+        "Alexandre Sedoglavic"
+      ],
+      "url": "http://arxiv.org/abs/2603.18699v1",
+      "date": "2026-03-19",
+      "summary": "We propose a more accurate variant of an algorithm for multiplying 4x4 matrices using 48 multiplications over any ring containing an inverse of 2. This algorithm has an error bound exponent of only log 4 $\u03b3$$\\infty$,2 $\\approx$ 2.386. It also reaches a better accuracy w.r.t. max-norm in practice, when compared to previously known such fast algorithms. Furthermore, we propose a straight line program of this algorithm, giving a leading constant in its complexity bound of 387 32 n 2+log 4 3 + o n 2+log 4 3 operations over any ring containing an inverse of 2. Introduction: An algorithm to multiply two 4x4 complex-valued matrices requiring only 48 non-commutative multiplications was introduced in [16] 1 using a pipeline of large language models orchestrated by an evolutionary coding agent. A ma"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"genetic algorithm\" AND abs:\"matrix multiplication\"",
+      "title": "Appraisal of the Magnetotelluric Galvanic Electric Distortion by Optimisation of the Relation between Amplitude and Phase Tensors",
+      "authors": [
+        "Maik Neukirch",
+        "Xavier Garcia",
+        "Savitri Galiana"
+      ],
+      "url": "http://arxiv.org/abs/1704.09020v1",
+      "date": "2017-04-28",
+      "summary": "The introduction of the Phase Tensor marked a major breakthrough in the understanding, analysis and treatment of galvanic distortion of the electric field in the Magnetotelluric (MT) method. We build upon a recently formulated impedance tensor decomposition into the known Phase Tensor and an Amplitude Tensor that is shown to be complementary and algebraically independent of the Phase Tensor. This recent decomposition demonstrates that the Amplitude Tensor contains inductive and galvanic information of the subsurface and that the inductive information is physically coupled to the one contained in the Phase Tensor. In this work we present an algorithm that employs this last finding to show that the MT galvanic electric distortion tensor can be separated from the inductive Amplitude Tensor an"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+      "authors": [
+        "Alexander Novikov",
+        "Ng\u00e2n V\u0169",
+        "Marvin Eisenberger",
+        "Emilien Dupont",
+        "Po-Sen Huang",
+        "Adam Zsolt Wagner",
+        "Sergey Shirobokov",
+        "Borislav Kozlovskii"
+      ],
+      "url": "http://arxiv.org/abs/2506.13131v1",
+      "date": "2025-06-16",
+      "summary": "In this white paper, we present AlphaEvolve, an evolutionary coding agent that substantially enhances capabilities of state-of-the-art LLMs on highly challenging tasks such as tackling open scientific problems or optimizing critical pieces of computational infrastructure. AlphaEvolve orchestrates an autonomous pipeline of LLMs, whose task is to improve an algorithm by making direct changes to the code. Using an evolutionary approach, continuously receiving feedback from one or more evaluators, AlphaEvolve iteratively improves the algorithm, potentially leading to new scientific and practical discoveries. We demonstrate the broad applicability of this approach by applying it to a number of important computational problems. When applied to optimizing critical components of large-scale comput"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "Sums and differences of sets (improvement over AlphaEvolve)",
+      "authors": [
+        "Robert Gerbicz"
+      ],
+      "url": "http://arxiv.org/abs/2505.16105v1",
+      "date": "2025-05-22",
+      "summary": "On May 14, 2025, DeepMind announced that AlphaEvolve, a large language model applied to a set of mathematical problems, had matched or exceeded the best known bounds on several problems. In the case of the sum and difference of sets problem, AlphaEvolve, using a set of $54265$ integers, improved the known lower bound of $\u03b8=1.14465$ to $\u03b8=1.1584$. In this paper, we present an improved bound $\u03b8=1.173050$ using an explicit construction of a U set that contains more than $10^{43546}$ elements. For fast integer and floating-point arithmetic, we used the (free) GMP library."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "ImprovEvolve: Ask AlphaEvolve to Improve the Input Solution and Then Improvise",
+      "authors": [
+        "Alexey Kravatskiy",
+        "Valentin Khrulkov",
+        "Ivan Oseledets"
+      ],
+      "url": "http://arxiv.org/abs/2602.10233v1",
+      "date": "2026-02-10",
+      "summary": "Recent advances in LLM-guided evolutionary computation, particularly AlphaEvolve, have demonstrated remarkable success in discovering novel mathematical constructions and solving challenging optimization problems. In this article, we present ImprovEvolve, a simple yet effective technique for enhancing LLM-based evolutionary approaches such as AlphaEvolve. Given an optimization problem, the standard approach is to evolve program code that, when executed, produces a solution close to the optimum. We propose an alternative program parameterization that maintains the ability to construct optimal solutions while reducing the cognitive load on the LLM. Specifically, we evolve a program (implementing, e.g., a Python class with a prescribed interface) that provides the following functionality: (1)"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "Sums and differences of sets: a further improvement over AlphaEvolve",
+      "authors": [
+        "Fan Zheng"
+      ],
+      "url": "http://arxiv.org/abs/2506.01896v1",
+      "date": "2025-06-02",
+      "summary": "We present a new advancement in the sum and difference of sets problem, which improves upon recent results by both DeepMind's AlphaEvolve ($\u03b8= 1.1584$) and subsequent explicit constructions ($\u03b8= 1.173050$). In this work, we construct a sequence of $U$ sets which in the limit establishes a new lower bound of $\u03b8= 1.173077$."
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "AlphaEvolve: A Learning Framework to Discover Novel Alphas in Quantitative Investment",
+      "authors": [
+        "Can Cui",
+        "Wei Wang",
+        "Meihui Zhang",
+        "Gang Chen",
+        "Zhaojing Luo",
+        "Beng Chin Ooi"
+      ],
+      "url": "http://arxiv.org/abs/2103.16196v2",
+      "date": "2021-03-30",
+      "summary": "Alphas are stock prediction models capturing trading signals in a stock market. A set of effective alphas can generate weakly correlated high returns to diversify the risk. Existing alphas can be categorized into two classes: Formulaic alphas are simple algebraic expressions of scalar features, and thus can generalize well and be mined into a weakly correlated set. Machine learning alphas are data-driven models over vector and matrix features. They are more predictive than formulaic alphas, but are too complex to mine into a weakly correlated set. In this paper, we introduce a new class of alphas to model scalar, vector, and matrix features which possess the strengths of these two existing classes. The new alphas predict returns with high accuracy and can be mined into a weakly correlated "
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "Scientific Algorithm Discovery by Augmenting AlphaEvolve with Deep Research",
+      "authors": [
+        "Gang Liu",
+        "Yihan Zhu",
+        "Jie Chen",
+        "Meng Jiang"
+      ],
+      "url": "http://arxiv.org/abs/2510.06056v1",
+      "date": "2025-10-07",
+      "summary": "Large language models hold promise as scientific assistants, yet existing agents either rely solely on algorithm evolution or on deep research in isolation, both of which face critical limitations. Pure algorithm evolution, as in AlphaEvolve, depends only on the internal knowledge of LLMs and quickly plateaus in complex domains, while pure deep research proposes ideas without validation, resulting in unrealistic or unimplementable solutions. We present DeepEvolve, an agent that integrates deep research with algorithm evolution, uniting external knowledge retrieval, cross-file code editing, and systematic debugging under a feedback-driven iterative loop. Each iteration not only proposes new hypotheses but also refines, implements, and tests them, avoiding both shallow improvements and unpro"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "Fault2Flow: An AlphaEvolve-Optimized Human-in-the-Loop Multi-Agent System for Fault-to-Workflow Automation",
+      "authors": [
+        "Yafang Wang",
+        "Yangjie Tian",
+        "Xiaoyu Shen",
+        "Gaoyang Zhang",
+        "Jiaze Sun",
+        "He Zhang",
+        "Ruohua Xu",
+        "Feng Zhao"
+      ],
+      "url": "http://arxiv.org/abs/2511.12916v1",
+      "date": "2025-11-17",
+      "summary": "Power grid fault diagnosis is a critical process hindered by its reliance on manual, error-prone methods. Technicians must manually extract reasoning logic from dense regulations and attempt to combine it with tacit expert knowledge, which is inefficient, error-prone, and lacks maintainability as ragulations are updated and experience evolves. While Large Language Models (LLMs) have shown promise in parsing unstructured text, no existing framework integrates these two disparate knowledge sources into a single, verified, and executable workflow. To bridge this gap, we propose Fault2Flow, an LLM-based multi-agent system. Fault2Flow systematically: (1) extracts and structures regulatory logic into PASTA-formatted fault trees; (2) integrates expert knowledge via a human-in-the-loop interface f"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "Reinforced Generation of Combinatorial Structures: Hardness of Approximation",
+      "authors": [
+        "Ansh Nagda",
+        "Prabhakar Raghavan",
+        "Abhradeep Thakurta"
+      ],
+      "url": "http://arxiv.org/abs/2509.18057v7",
+      "date": "2025-09-22",
+      "summary": "Can AI based methods help us make advances in complexity theory? We provide evidence towards answering this in the affirmative, using AlphaEvolve (an LLM code mutation agent) to obtain new results in three settings:   a) We improve a recent result of Kunisky and Yu to obtain near-optimal upper and (conditional) lower bounds on certification algorithms for MAX-CUT and MAX-Independent Set on random 3- and 4-regular graphs. Our improved lower bounds are obtained by constructing nearly extremal Ramanujan graphs on as many as $163$ vertices, and our upper bounds are obtained via analytical arguments.   b) We obtain new inapproximability results for MAX-4-CUT and MAX-3-CUT, proving that it is NP-hard to approximate them within factors of $0.987$ and $0.9649$ respectively, using AlphaEvolve to di"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "Mathematical exploration and discovery at scale",
+      "authors": [
+        "Bogdan Georgiev",
+        "Javier G\u00f3mez-Serrano",
+        "Terence Tao",
+        "Adam Zsolt Wagner"
+      ],
+      "url": "http://arxiv.org/abs/2511.02864v3",
+      "date": "2025-11-03",
+      "summary": "AlphaEvolve (Novikov et al., 2025) is a generic evolutionary coding agent that combines the generative capabilities of LLMs with automated evaluation in an iterative evolutionary framework that proposes, tests, and refines algorithmic solutions to challenging scientific and practical problems. In this paper we showcase AlphaEvolve as a tool for autonomously discovering novel mathematical constructions and advancing our understanding of long-standing open problems.   To demonstrate its breadth, we considered a list of 67 problems spanning mathematical analysis, combinatorics, geometry, and number theory. The system rediscovered the best known solutions in most of the cases and discovered improved solutions in several. In some instances, AlphaEvolve is also able to generalize results for a f"
+    },
+    {
+      "source": "arxiv",
+      "query": "ti:\"AlphaEvolve\" OR abs:\"AlphaEvolve\"",
+      "title": "GigaEvo: An Open Source Optimization Framework Powered By LLMs And Evolution Algorithms",
+      "authors": [
+        "Valentin Khrulkov",
+        "Andrey Galichin",
+        "Denis Bashkirov",
+        "Dmitry Vinichenko",
+        "Oleg Travkin",
+        "Roman Alferov",
+        "Andrey Kuznetsov",
+        "Ivan Oseledets"
+      ],
+      "url": "http://arxiv.org/abs/2511.17592v1",
+      "date": "2025-11-17",
+      "summary": "Recent advances in LLM-guided evolutionary computation, particularly AlphaEvolve (Novikov et al., 2025; Georgiev et al., 2025), have demonstrated remarkable success in discovering novel mathematical constructions and solving challenging optimization problems. However, the high-level descriptions in published work leave many implementation details unspecified, hindering reproducibility and further research. In this report we present GigaEvo, an extensible open-source framework that enables researchers to study and experiment with hybrid LLM-evolution approaches inspired by AlphaEvolve. Our system provides modular implementations of key components: MAP-Elites quality-diversity algorithms, asynchronous DAG-based evaluation pipelines, LLM-driven mutation operators with insight generation and b"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "Automated Algorithmic Discovery for Scientific Computing through LLM-Guided Evolutionary Search: A Case Study in Gravitational-Wave Detection",
+      "authors": [
+        "He Wang",
+        "Liang Zeng"
+      ],
+      "url": "http://arxiv.org/abs/2508.03661v3",
+      "date": "2025-08-05",
+      "summary": "Automated algorithm discovery in scientific computing faces fundamental challenges: vast design spaces with expensive evaluations, domain-specific physical constraints requiring expert knowledge, and the necessity for interpretable solutions that scientists can validate and understand. We present the Evo-MCTS (Evolutionary Monte Carlo Tree Search) framework, integrating large language models (LLMs) with tree-structured evolutionary search for interpretable algorithm discovery. Evo-MCTS combines reflective code synthesis leveraging LLM domain knowledge, multi-scale evolutionary operations on structured code representations, and interpretable algorithmic pathways emerging from tree-guided exploration. When applied to gravitational wave detection-a challenging domain with continuous parameter"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "Data-Driven Discovery of Interpretable Kalman Filter Variants through Large Language Models and Genetic Programming",
+      "authors": [
+        "Vasileios Saketos",
+        "Sebastian Kaltenbach",
+        "Sergey Litvinov",
+        "Petros Koumoutsakos"
+      ],
+      "url": "http://arxiv.org/abs/2508.11703v2",
+      "date": "2025-08-13",
+      "summary": "Algorithmic discovery has traditionally relied on human ingenuity and extensive experimentation. Here we investigate whether a prominent scientific computing algorithm, the Kalman Filter, can be discovered through an automated, data-driven, evolutionary process that relies on Cartesian Genetic Programming (CGP) and Large Language Models (LLM). We evaluate the contributions of both modalities (CGP and LLM) in discovering the Kalman filter under varying conditions. Our results demonstrate that our framework of CGP and LLM-assisted evolution converges to near-optimal solutions when Kalman optimality assumptions hold. When these assumptions are violated, our framework evolves interpretable alternatives that outperform the Kalman filter. These results demonstrate that combining evolutionary alg"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "Behaviour Space Analysis of LLM-driven Meta-heuristic Discovery",
+      "authors": [
+        "Niki van Stein",
+        "Haoran Yin",
+        "Anna V. Kononova",
+        "Thomas B\u00e4ck",
+        "Gabriela Ochoa"
+      ],
+      "url": "http://arxiv.org/abs/2507.03605v1",
+      "date": "2025-07-04",
+      "summary": "We investigate the behaviour space of meta-heuristic optimisation algorithms automatically generated by Large Language Model driven algorithm discovery methods. Using the Large Language Evolutionary Algorithm (LLaMEA) framework with a GPT o4-mini LLM, we iteratively evolve black-box optimisation heuristics, evaluated on 10 functions from the BBOB benchmark suite. Six LLaMEA variants, featuring different mutation prompt strategies, are compared and analysed. We log dynamic behavioural metrics including exploration, exploitation, convergence and stagnation measures, for each run, and analyse these via visual projections and network-based representations. Our analysis combines behaviour-based   projections, Code Evolution Graphs built from static code features, performance convergence curves,"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "Landscape-aware Automated Algorithm Design: An Efficient Framework for Real-world Optimization",
+      "authors": [
+        "Haoran Yin",
+        "Shuaiqun Pan",
+        "Zhao Wei",
+        "Jian Cheng Wong",
+        "Yew-Soon Ong",
+        "Anna V. Kononova",
+        "Thomas B\u00e4ck",
+        "Niki van Stein"
+      ],
+      "url": "http://arxiv.org/abs/2602.04529v1",
+      "date": "2026-02-04",
+      "summary": "The advent of Large Language Models (LLMs) has opened new frontiers in automated algorithm design, giving rise to numerous powerful methods. However, these approaches retain critical limitations: they require extensive evaluation of the target problem to guide the search process, making them impractical for real-world optimization tasks, where each evaluation consumes substantial computational resources. This research proposes an innovative and efficient framework that decouples algorithm discovery from high-cost evaluation. Our core innovation lies in combining a Genetic Programming (GP) function generator with an LLM-driven evolutionary algorithm designer. The evolutionary direction of the GP-based function generator is guided by the similarity between the landscape characteristics of ge"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "LoongFlow: Directed Evolutionary Search via a Cognitive Plan-Execute-Summarize Paradigm",
+      "authors": [
+        "Chunhui Wan",
+        "Xunan Dai",
+        "Zhuo Wang",
+        "Minglei Li",
+        "Yanpeng Wang",
+        "Yinan Mao",
+        "Yu Lan",
+        "Zhiwen Xiao"
+      ],
+      "url": "http://arxiv.org/abs/2512.24077v1",
+      "date": "2025-12-30",
+      "summary": "The transition from static Large Language Models (LLMs) to self-improving agents is hindered by the lack of structured reasoning in traditional evolutionary approaches. Existing methods often struggle with premature convergence and inefficient exploration in high-dimensional code spaces. To address these challenges, we introduce LoongFlow, a self-evolving agent framework that achieves state-of-the-art solution quality with significantly reduced computational costs. Unlike \"blind\" mutation operators, LoongFlow integrates LLMs into a cognitive \"Plan-Execute-Summarize\" (PES) paradigm, effectively mapping the evolutionary search to a reasoning-heavy process. To sustain long-term architectural coherence, we incorporate a hybrid evolutionary memory system. By synergizing Multi-Island models with"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "CodeEvolve: an open source evolutionary coding agent for algorithmic discovery and optimization",
+      "authors": [
+        "Henrique Assump\u00e7\u00e3o",
+        "Diego Ferreira",
+        "Leandro Campos",
+        "Fabricio Murai"
+      ],
+      "url": "http://arxiv.org/abs/2510.14150v4",
+      "date": "2025-10-15",
+      "summary": "We introduce CodeEvolve, an open-source framework that combines large language models (LLMs) with evolutionary search to synthesize high-performing algorithmic solutions. CodeEvolve couples an islands-based genetic algorithm with modular LLM orchestration, using execution feedback and task-specific metrics to guide selection and variation. Exploration and exploitation are balanced through context-aware recombination, adaptive meta-prompting, and targeted refinement of promising solutions. We evaluate CodeEvolve on benchmarks used to assess Google DeepMind's AlphaEvolve, and include direct comparisons with popular open-source frameworks for algorithmic discovery and heuristic design. Our results show that CodeEvolve achieves state-of-the-art (SOTA) performance on several tasks, with open-we"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "STRCMP: Integrating Graph Structural Priors with Language Models for Combinatorial Optimization",
+      "authors": [
+        "Xijun Li",
+        "Jiexiang Yang",
+        "Jinghao Wang",
+        "Bo Peng",
+        "Jianguo Yao",
+        "Haibing Guan"
+      ],
+      "url": "http://arxiv.org/abs/2506.11057v1",
+      "date": "2025-05-22",
+      "summary": "Combinatorial optimization (CO) problems, central to operation research and theoretical computer science, present significant computational challenges due to their NP-hard nature. While large language models (LLMs) have emerged as promising tools for CO--either by directly generating solutions or synthesizing solver-specific codes--existing approaches often neglect critical structural priors inherent to CO problems, leading to suboptimality and iterative inefficiency. Inspired by human experts' success in leveraging CO structures for algorithm design, we propose STRCMP, a novel structure-aware LLM-based algorithm discovery framework that systematically integrates structure priors to enhance solution quality and solving efficiency. Our framework combines a graph neural network (GNN) for ext"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "GeoEvolve: Automating Geospatial Model Discovery via Multi-Agent Large Language Models",
+      "authors": [
+        "Peng Luo",
+        "Xiayin Lou",
+        "Yu Zheng",
+        "Zhuo Zheng",
+        "Stefano Ermon"
+      ],
+      "url": "http://arxiv.org/abs/2509.21593v1",
+      "date": "2025-09-25",
+      "summary": "Geospatial modeling provides critical solutions for pressing global challenges such as sustainability and climate change. Existing large language model (LLM)-based algorithm discovery frameworks, such as AlphaEvolve, excel at evolving generic code but lack the domain knowledge and multi-step reasoning required for complex geospatial problems. We introduce GeoEvolve, a multi-agent LLM framework that couples evolutionary search with geospatial domain knowledge to automatically design and refine geospatial algorithms. GeoEvolve operates in two nested loops: an inner loop leverages a code evolver to generate and mutate candidate solutions, while an outer agentic controller evaluates global elites and queries a GeoKnowRAG module -- a structured geospatial knowledge base that injects theoretical"
+    },
+    {
+      "source": "arxiv",
+      "query": "abs:\"LLM\" AND abs:\"evolutionary\" AND abs:\"algorithm discovery\"",
+      "title": "CliffSearch: Structured Agentic Co-Evolution over Theory and Code for Scientific Algorithm Discovery",
+      "authors": [
+        "Youssef Mroueh",
+        "Carlos Fonseca",
+        "Brian Belgodere",
+        "David Cox"
+      ],
+      "url": "http://arxiv.org/abs/2604.01210v1",
+      "date": "2026-04-01",
+      "summary": "Scientific algorithm discovery is iterative: hypotheses are proposed, implemented, stress-tested, and revised. Current LLM-guided search systems accelerate proposal generation, but often under-represent scientific structure by optimizing code-only artifacts with weak correctness/originality gating. We present CliffSearch, an agentic evolutionary framework in which the core evolution operators (pair selection, crossover, mutation, and review) are implemented as LLM agents, and the loop is designed around three principles: (1) each node is a structured scientific artifact, instantiated in either theory+code or code_only mode, (2) reviewer judgments of correctness and originality are first-class selection gates alongside optimization of the benchmark metric of interest, and (3) mutation is sp"
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "A Robust, Simple Genotyping-by-Sequencing (GBS) Approach for High Diversity Species",
+      "authors": [
+        "Robert J. Elshire",
+        "Jeffrey C. Glaubitz",
+        "Qi Sun",
+        "Jesse Poland",
+        "Ken Kawamoto",
+        "Edward S. Buckler",
+        "Sharon E. Mitchell"
+      ],
+      "url": "https://doi.org/10.1371/journal.pone.0019379",
+      "date": "2011-05-04",
+      "summary": "Advances in next generation technologies have driven the costs of DNA sequencing down to the point that genotyping-by-sequencing (GBS) is now feasible for high diversity, large genome species. Here, we report a procedure for constructing GBS libraries based on reducing genome complexity with restriction enzymes (REs). This approach is simple, quick, extremely specific, highly reproducible, and may reach important regions of the genome that are inaccessible to sequence capture approaches. By using methylation-sensitive REs, repetitive regions of genomes can be avoided and lower copy regions targeted with two to three fold higher efficiency. This tremendously simplifies computationally challenging alignment problems in species with high levels of genetic diversity. The GBS procedure is demon",
+      "cited_by": 6708
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "POET",
+      "authors": [
+        "Rui Wang",
+        "Joel Lehman",
+        "Jeff Clune",
+        "Kenneth O. Stanley"
+      ],
+      "url": "https://doi.org/10.1145/3321707.3321799",
+      "date": "2019-07-03",
+      "summary": "How can progress in machine learning and reinforcement learning be automated to generate its own never-ending curriculum of challenges without human intervention? The recent emergence of quality diversity (QD) algorithms offers a glimpse of the potential for such continual open-ended invention. For example, novelty search showcases the benefits of explicit novelty pressure, MAP-Elites and Innovation Engines highlight the advantage of explicit elitism within niches in an otherwise divergent process, and minimal criterion coevolution (MCC) reveals that problems and solutions can coevolve divergently. The Paired Open-Ended Trailblazer (POET) algorithm introduced in this paper combines these principles to produce a practical approach to generating an endless progression of diverse and increasi",
+      "cited_by": 60
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "A chromosome conformation capture ordered sequence of the barley genome",
+      "authors": [
+        "Martin Mascher",
+        "Heidrun Gundlach",
+        "Axel Himmelbach",
+        "Sebastian Beier",
+        "Sven Twardziok",
+        "Thomas Wicker",
+        "Volodymyr Radchuk",
+        "Christoph Dockter"
+      ],
+      "url": "https://doi.org/10.1038/nature22043",
+      "date": "2017-04-01",
+      "summary": "Cereal grasses of the Triticeae tribe have been the major food source in temperate regions since the dawn of agriculture. Their large genomes are characterized by a high content of repetitive elements and large pericentromeric regions that are virtually devoid of meiotic recombination. Here we present a high-quality reference genome assembly for barley (Hordeum vulgare L.). We use chromosome conformation capture mapping to derive the linear order of sequences across the pericentromeric space and to investigate the spatial organization of chromatin in the nucleus at megabase resolution. The composition of genes and repetitive elements differs between distal and proximal regions. Gene family analyses reveal lineage-specific duplications of genes involved in the transport of nutrients to deve",
+      "cited_by": 1545
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "Monte Carlo elites",
+      "authors": [
+        "Konstantinos Sfikas",
+        "Antonios Liapis",
+        "Georgios N. Yannakakis"
+      ],
+      "url": "https://doi.org/10.1145/3449639.3459321",
+      "date": "2021-06-21",
+      "summary": "A core challenge of evolutionary search is the need to balance between exploration of the search space and exploitation of highly fit regions. Quality-diversity search has explicitly walked this tightrope between a population's diversity and its quality. This paper extends a popular quality-diversity search algorithm, MAP-Elites, by treating the selection of parents as a multi-armed bandit problem. Using variations of the upper-confidence bound to select parents from under-explored but potentially rewarding areas of the search space can accelerate the discovery of new regions as well as improve its archive's total quality. The paper tests an indirect measure of quality for parent selection: the survival rate of a parent's offspring. Results show that maintaining a balance between explorati",
+      "cited_by": 11
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "Draft genome sequence of chickpea (Cicer arietinum) provides a resource for trait improvement",
+      "authors": [
+        "Rajeev K. Varshney",
+        "Chi Song",
+        "Rachit K. Saxena",
+        "Sarwar Azam",
+        "Yu Sheng",
+        "Andrew Sharpe",
+        "Steven B. Cannon",
+        "Jong\u2010Min Baek"
+      ],
+      "url": "https://doi.org/10.1038/nbt.2491",
+      "date": "2013-01-27",
+      "summary": "",
+      "cited_by": 1262
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "Improvement of the Oryza sativa Nipponbare reference genome using next generation sequence and optical map data",
+      "authors": [
+        "Yoshihiro Kawahara",
+        "M. de la Bastide",
+        "John P. Hamilton",
+        "Hiroyuki Kanamori",
+        "W. Richard McCombie",
+        "Shu Ouyang",
+        "David C. Schwartz",
+        "Tsuyoshi Tanaka"
+      ],
+      "url": "https://doi.org/10.1186/1939-8433-6-4",
+      "date": "2013-02-06",
+      "summary": "A revised, error-corrected, and validated assembly of the Nipponbare cultivar of rice was generated using optical map data, re-sequencing data, and manual curation that will facilitate on-going and future research in rice. Detection of polymorphisms between three different Nipponbare individuals highlights that allelic differences between individuals should be considered in diversity studies.",
+      "cited_by": 2455
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "Status and Prospects of Association Mapping in Plants",
+      "authors": [
+        "Chengsong Zhu",
+        "Michael A. Gore",
+        "Edward S. Buckler",
+        "Jianming Yu"
+      ],
+      "url": "https://doi.org/10.3835/plantgenome2008.02.0089",
+      "date": "2008-07-01",
+      "summary": "There is tremendous interest in using association mapping to identify genes responsible for quantitative variation of complex traits with agricultural and evolutionary importance. Recent advances in genomic technology, impetus to exploit natural diversity, and development of robust statistical analysis methods make association mapping appealing and affordable to plant research programs. Association mapping identifies quantitative trait loci (QTLs) by examining the marker\u2010trait associations that can be attributed to the strength of linkage disequilibrium between markers and functional polymorphisms across a set of diverse germplasm. General understanding of association mapping has increased significantly since its debut in plants. We have seen a more concerted effort in assembling various a",
+      "cited_by": 1347
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "Network Dynamics and Field Evolution: The Growth of Interorganizational Collaboration in the Life Sciences",
+      "authors": [
+        "Walter W. Powell",
+        "Doug\u013eas R. White",
+        "Kenneth W. Koput",
+        "Jason Owen\u2010Smith"
+      ],
+      "url": "https://doi.org/10.1086/421508",
+      "date": "2005-01-01",
+      "summary": "A recursive analysis of network and institutional evolution is offered to account for the decentralized structure of the commercial field of the life sciences. Four alternative logics of attachment - accumulative advantage, homophily, follow-the-trend, and multiconnectivity-are tested to explain the structure and dynamics of interorganizational collaboration in biotechnology. Using multiple novel methods, the authors demonstrate how different rules for affiliation shape network evolution. Commercialization strategies pursued by early corporate entrants are supplanted by universities, research institutes, venture capital, and small firms. As organizations increase their collaborative activities and diversify their ties to others, cohesive subnetworks form, characterized by multiple, indepen",
+      "cited_by": 2002
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "Confronting the Challenges of Participatory Culture: Media Education for the 21st Century",
+      "authors": [
+        "Henry Jenkins"
+      ],
+      "url": "https://openalex.org/W2112957339",
+      "date": "2006-01-01",
+      "summary": "Henry Jenkins, Director of the Comparative Media Studies Program at the Massachusetts Institute of Technology authored this white paper, exploring new frameworks and models for media literacy.",
+      "cited_by": 3191
+    },
+    {
+      "source": "openalex",
+      "query": "MAP-Elites quality diversity algorithm discovery",
+      "title": "A physical, genetic and functional sequence assembly of the barley genome",
+      "authors": [
+        "Heidrun Gundlach",
+        "Matthias Pfeifer",
+        "Thomas Nussbaumer",
+        "Klaus Mayer",
+        "M. Spannagl",
+        "Mihaela Martis",
+        "Robbie Waugh",
+        "Joanne Russell"
+      ],
+      "url": "https://doi.org/10.1038/nature11543",
+      "date": "2012-10-16",
+      "summary": "Barley (Hordeum vulgare L.) is among the world's earliest domesticated and most important crop plants. It is diploid with a large haploid genome of 5.1 gigabases (Gb). Here we present an integrated and ordered physical, genetic and functional sequence resource that describes the barley gene-space in a structured whole-genome context. We developed a physical map of 4.98 Gb, with more than 3.90 Gb anchored to a high-resolution genetic map. Projecting a deep whole-genome shotgun assembly, complementary DNA and deep RNA sequence data onto this framework supports 79,379 transcript clusters, including 26,159 'high-confidence' genes with homology support from other plant genomes. Abundant alternative splicing, premature termination codons and novel transcriptionally active regions suggest that po",
+      "cited_by": 1502
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Evolutionary Topology Search for Tensor Network Decomposition",
+      "authors": [
+        "Chao Li",
+        "Zhun Sun"
+      ],
+      "url": "https://openalex.org/W3035317656",
+      "date": "2020-07-12",
+      "summary": "",
+      "cited_by": 13
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Machine Learning for Fluid Mechanics",
+      "authors": [
+        "Steven L. Brunton",
+        "Bernd R. Noack",
+        "Petros Koumoutsakos"
+      ],
+      "url": "https://doi.org/10.1146/annurev-fluid-010719-060214",
+      "date": "2019-09-12",
+      "summary": "The field of fluid mechanics is rapidly advancing, driven by unprecedented volumes of data from experiments, field measurements, and large-scale simulations at multiple spatiotemporal scales. Machine learning (ML) offers a wealth of techniques to extract information from data that can be translated into knowledge about the underlying fluid mechanics. Moreover, ML algorithms can augment domain knowledge and automate tasks related to flow control and optimization. This article presents an overview of past history, current developments, and emerging opportunities of ML for fluid mechanics. We outline fundamental ML methodologies and discuss their uses for understanding, modeling, optimizing, and controlling fluid flows. The strengths and limitations of these methods are addressed from the per",
+      "cited_by": 2494
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Variational quantum algorithms",
+      "authors": [
+        "M. Cerezo",
+        "Andrew Arrasmith",
+        "Ryan Babbush",
+        "Simon C. Benjamin",
+        "Suguru Endo",
+        "Keisuke Fujii",
+        "Jarrod R. McClean",
+        "Kosuke Mitarai"
+      ],
+      "url": "https://doi.org/10.1038/s42254-021-00348-9",
+      "date": "2021-08-12",
+      "summary": "",
+      "cited_by": 2772
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "The repertoire of mutational signatures in human cancer",
+      "authors": [
+        "Ludmil B. Alexandrov",
+        "Jaegil Kim",
+        "Nicholas J. Haradhvala",
+        "Mi Ni Huang",
+        "Alvin Wei Tian Ng",
+        "Yang Wu",
+        "Arnoud Boot",
+        "Kyle R. Covington"
+      ],
+      "url": "https://doi.org/10.1038/s41586-020-1943-3",
+      "date": "2020-02-05",
+      "summary": "Somatic mutations in cancer genomes are caused by multiple mutational processes, each of which generates a characteristic mutational signature<sup>1</sup>. Here, as part of the Pan-Cancer Analysis of Whole Genomes (PCAWG) Consortium<sup>2</sup> of the International Cancer Genome Consortium (ICGC) and The Cancer Genome Atlas (TCGA), we characterized mutational signatures using 84,729,690 somatic mutations from 4,645 whole-genome and 19,184 exome sequences that encompass most types of cancer. We identified 49 single-base-substitution, 11 doublet-base-substitution, 4 clustered-base-substitution and 17 small insertion-and-deletion signatures. The substantial size of our dataset, compared with previous analyses<sup>3-15</sup>, enabled the discovery of new signatures, the separation of overlappi",
+      "cited_by": 3657
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Objective-hierarchy based large-scale evolutionary algorithm for improving joint sparsity-compression of neural network",
+      "authors": [
+        "Qingzhu Wang",
+        "Qiushi Zhang",
+        "Fanqi Meng",
+        "Bin Li"
+      ],
+      "url": "https://doi.org/10.1016/j.ins.2023.119095",
+      "date": "2023-05-06",
+      "summary": "",
+      "cited_by": 23
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Quantum machine learning",
+      "authors": [
+        "Jacob Biamonte",
+        "P\u00e9ter Wittek",
+        "Nicola Pancotti",
+        "Patrick Rebentrost",
+        "Nathan Wiebe",
+        "Seth Lloyd"
+      ],
+      "url": "https://doi.org/10.1038/nature23474",
+      "date": "2017-09-01",
+      "summary": "",
+      "cited_by": 4268
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "A theory of lexical access in speech production [target paper]",
+      "authors": [
+        "Willem J. M. Levelt",
+        "Ardi Roelofs",
+        "Antje S. Meyer"
+      ],
+      "url": "https://doi.org/10.1017/s0140525x99001776",
+      "date": "1999-01-01",
+      "summary": "Contains fulltext : 121229.pdf (Publisher\u2019s version ) (Open Access)",
+      "cited_by": 5080
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Pymoo: Multi-Objective Optimization in Python",
+      "authors": [
+        "Julian Blank",
+        "Kalyanmoy Deb"
+      ],
+      "url": "https://doi.org/10.1109/access.2020.2990567",
+      "date": "2020-01-01",
+      "summary": "Python has become the programming language of choice for research and industry projects related to data science, machine learning, and deep learning. Since optimization is an inherent part of these research fields, more optimization related frameworks have arisen in the past few years. Only a few of them support optimization of multiple conflicting objectives at a time, but do not provide comprehensive tools for a complete multi-objective optimization task. To address this issue, we have developed pymoo, a multi-objective optimization framework in Python. We provide a guide to getting started with our framework by demonstrating the implementation of an exemplary constrained multi-objective optimization scenario. Moreover, we give a high-level overview of the architecture of pymoo to show i",
+      "cited_by": 2022
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Advances and Open Problems in Federated Learning",
+      "authors": [
+        "Peter Kairouz",
+        "H. Brendan McMahan"
+      ],
+      "url": "https://doi.org/10.1561/2200000083",
+      "date": "2020-12-02",
+      "summary": "Federated learning (FL) is a machine learning setting where many clients (e.g., mobile devices or whole organizations) collaboratively train a model under the orchestration of a central server (e.g., service provider), while keeping the training data decentralized. FL embodies the principles of focused data collection and minimization, and can mitigate many of the systemic privacy risks and costs resulting from traditional, centralized machine learning and data science approaches. Motivated by the explosive growth in FL research, this monograph discusses recent advances and presents an extensive collection of open problems and challenges.",
+      "cited_by": 4447
+    },
+    {
+      "source": "openalex",
+      "query": "evolutionary tensor decomposition search",
+      "title": "Deformable Medical Image Registration: A Survey",
+      "authors": [
+        "Aristeidis Sotiras",
+        "Christos Davatzikos",
+        "Nikos Paragios"
+      ],
+      "url": "https://doi.org/10.1109/tmi.2013.2265603",
+      "date": "2013-05-31",
+      "summary": "Deformable image registration is a fundamental task in medical image processing. Among its most important applications, one may cite: 1) multi-modality fusion, where information acquired by different imaging devices or protocols is fused to facilitate diagnosis and treatment planning; 2) longitudinal studies, where temporal structural or anatomical changes are investigated; and 3) population modeling and statistical atlases used to study normal anatomical variability. In this paper, we attempt to give an overview of deformable registration methods, putting emphasis on the most recent advances in the domain. Additional emphasis has been given to techniques applied to medical images. In order to study image registration methods in depth, their main components are identified and studied indep",
+      "cited_by": 1524
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "AlphaEvolve: A coding agent for scientific and algorithmic discovery",
+      "authors": [
+        "Alexander Novikov",
+        "Nhat Vu",
+        "Eisenberger, Marvin",
+        "Emilien Dupont",
+        "Po-Sen Huang",
+        "Ascher Wagner",
+        "S. Shirobokov",
+        "Borislav Kozlovskii"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2506.13131",
+      "date": "2025-06-16",
+      "summary": "In this white paper, we present AlphaEvolve, an evolutionary coding agent that substantially enhances capabilities of state-of-the-art LLMs on highly challenging tasks such as tackling open scientific problems or optimizing critical pieces of computational infrastructure. AlphaEvolve orchestrates an autonomous pipeline of LLMs, whose task is to improve an algorithm by making direct changes to the code. Using an evolutionary approach, continuously receiving feedback from one or more evaluators, AlphaEvolve iteratively improves the algorithm, potentially leading to new scientific and practical discoveries. We demonstrate the broad applicability of this approach by applying it to a number of important computational problems. When applied to optimizing critical components of large-scale comput",
+      "cited_by": 6
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Alpha-GPT: Human-AI Interactive Alpha Mining for Quantitative Investment",
+      "authors": [
+        "Saizhuo Wang",
+        "Hang Yuan",
+        "Leon Zhou",
+        "Lionel M. Ni",
+        "Heung\u2010Yeung Shum",
+        "Jian Guo"
+      ],
+      "url": "https://doi.org/10.48550/arxiv.2308.00016",
+      "date": "2023-07-31",
+      "summary": "One of the most important tasks in quantitative investment research is mining new alphas (effective trading signals or factors). Traditional alpha mining methods, either hand-crafted factor synthesizing or algorithmic factor mining (e.g., search with genetic programming), have inherent limitations, especially in implementing the ideas of quants. In this work, we propose a new alpha mining paradigm by introducing human-AI interaction, and a novel prompt engineering algorithmic framework to implement this paradigm by leveraging the power of large language models. Moreover, we develop Alpha-GPT, a new interactive alpha mining system framework that provides a heuristic way to ``understand'' the ideas of quant researchers and outputs creative, insightful, and effective alphas. We demonstrate th",
+      "cited_by": 10
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Artificial Intelligence in Generative Design: A Structured Review of Trends and Opportunities in Techniques and Applications",
+      "authors": [
+        "Owen Peckham",
+        "J. Raines",
+        "Erik Bulsink",
+        "Mark Goudswaard",
+        "James Gopsill",
+        "David A. W. Barton",
+        "Aydin Nassehi",
+        "Ben Hicks"
+      ],
+      "url": "https://doi.org/10.3390/designs9040079",
+      "date": "2025-06-23",
+      "summary": "This review explores the intersection of Artificial Intelligence (AI) and Generative Design (GD) in engineering within the mechanical, industrial, civil, and architectural domains. Driven by advances in AI and computational resources, this intersection has grown rapidly, yielding over 14,000 publications since 2016. To map the research landscape, this review employed semantic search and Natural Language Processing, parsing 14,355 publications to ultimately select the 88 most relevant studies through clustering and topic modelling. These studies were categorised according to AI and GD techniques, application domains, benefits, and limitations, providing insights into research trends and practical implications. The results reveal a significant growth in the integration of advanced generative",
+      "cited_by": 14
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Darwin G\u00f6del Machine: Open-Ended Evolution of Self-Improving Agents",
+      "authors": [
+        "Jenny Zhang",
+        "Shengran Hu",
+        "Cong Lu",
+        "R. D. Lange",
+        "Jeff Clune"
+      ],
+      "url": "https://doi.org/10.70777/si.v2i3.15063",
+      "date": "2025-07-20",
+      "summary": "Most of today\u2019s AI systems are constrained by human-designed, fixed architectures and cannot autonomously and continuously improve themselves. The scientific method, on the other hand, provides a cumulative and open-ended system, where each innovation builds upon previous artifacts, enabling future discoveries. There is growing hope that the current manual process of advancing AI could itself be automated. If done safely, such automation would accelerate AI development and allow us to reap its benefits much sooner. This prospect raises the question of how AI systems can endlessly improve themselves while getting better at solving relevant problems. Previous approaches, such as meta-learning, provide a toolset for automating the discovery of novel algorithms but are limited by the human des",
+      "cited_by": 7
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Intelligent Robot Path Planning Performance Optimization and Control Strategy Integrating Reinforcement Learning and AlphaEvolve",
+      "authors": [
+        "Song Gu"
+      ],
+      "url": "https://doi.org/10.1109/icecst66106.2025.11307633",
+      "date": "2025-10-23",
+      "summary": "In the context of intelligent robotics, this study proposes a novel framework that integrates reinforcement learning and the AlphaEvolve algorithm. This framework is specifically designed for optimizing and controlling intelligent robot path planning performance. This strategy addresses the shortcomings of traditional algorithms in terms of convergence speed and optimality in complex dynamic environments. The proposed framework consists of three core modules: Module 1: a monocular bird's-eye view (BEV) environment modeling and feature extraction module; Module 2: a dual-strategy reinforcement learning control module combining PPO and LLM-DQN; and Module 3: the AlphaEvolve global optimization module. This framework enhances environmental representation through a semantic cross-attention mec",
+      "cited_by": 0
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Can Large Language Models Mine Interpretable Financial Factors More Effectively? A Neural-Symbolic Factor Mining Agent Model",
+      "authors": [
+        "Zhiwei Li",
+        "Ran Song",
+        "Caihong Sun",
+        "Wei Xu",
+        "Zhengtao Yu",
+        "Ji-Rong Wen"
+      ],
+      "url": "https://doi.org/10.18653/v1/2024.findings-acl.233",
+      "date": "2024-01-01",
+      "summary": "Finding interpretable factors for stock returns is the most vital issue in the empirical asset pricing domain.As data-driven methods, existing factor mining models can be categorized into symbol-based and neural-based models.Symbol-based models are interpretable but inefficient, while neural-based approaches are efficient but lack interpretability.Hence, mining interpretable factors effectively presents a significant challenge.Inspired by the success of Large Language Models (LLMs) in various tasks, we propose a FActor Mining Agent (FAMA) model that enables LLMs to integrate the strengths of both neural and symbolic models for factor mining.In this paper, FAMA consists of two main components: Cross-Sample Selection (CSS) and Chain-of-Experience (CoE).CSS addresses the homogeneity challenge",
+      "cited_by": 4
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "AI, agentic models and lab automation for scientific discovery \u2014 the beginning of scAInce",
+      "authors": [
+        "Thomas Hartung"
+      ],
+      "url": "https://doi.org/10.3389/frai.2025.1649155",
+      "date": "2025-08-29",
+      "summary": "Until recently, the conversation about generative artificial intelligence in science revolved around the textual prowess of large language models such as GPT-3.5 and the promise that they might one day draft a decent literature review. Since then, progress has been nothing short of breathtaking. We now find ourselves in the era of multimodal, <i>agentic</i> systems that listen, see, speak and act, orchestrating cloud software and physical laboratory hardware with a fluency that would have sounded speculative in early 2023. In this review, I merge the substance of our 2024 white paper for the World Economic Forum Top-10-Technologies Report with the latest advances through mid-2025, charting a course from automated literature synthesis and hypothesis generation to self-driving laboratories, ",
+      "cited_by": 9
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Integrating Large Language Models into Fluid Antenna Systems: A Survey",
+      "authors": [
+        "Tingsong Deng",
+        "Yan Gao",
+        "Tong Zhang",
+        "Mingjie Shao",
+        "Wanli Ni",
+        "Hao Xu"
+      ],
+      "url": "https://doi.org/10.3390/s25165177",
+      "date": "2025-08-20",
+      "summary": "Fluid antenna system (FAS) has emerged as a promising technology for next-generation wireless networks, offering dynamic reconfiguration capabilities to adapt to varying channel conditions. However, FAS faces critical issues from channel estimation to performance optimization. This paper provides a survey of a how large language model (LLM) can be leveraged to address these issues. We review potential approaches and recent advancements in LLM-based FAS channel estimation, LLM-assisted fluid antenna position optimization, and LLM-enabled FAS network simulation. Furthermore, we discuss the role of LLM agents in FAS management. As an experimental study, we evaluated the performance of our designed LLM-enhanced genetic algorithm. The results demonstrated a 75.9% performance improvement over th",
+      "cited_by": 2
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "Privacy-, linguistic-, and information-preserving synthesis of clinical documentation through generative agents",
+      "authors": [
+        "Mark van Velzen",
+        "Robert F. van der Willigen",
+        "Vincent J. de Beer",
+        "Helen I. de Graaf-Waar",
+        "Esther Janssen",
+        "Sjemaine van Leeuwen",
+        "Micha F. van der Willigen",
+        "Martijn J. van der Willigen"
+      ],
+      "url": "https://doi.org/10.3389/frai.2025.1644084",
+      "date": "2025-09-16",
+      "summary": "The widespread adoption of generative agents (GAs) is reshaping the healthcare landscape. Nonetheless, broad utilization is impeded by restricted access to high-quality, interoperable clinical documentation from electronic health records (EHRs) due to persistent legal, ethical, and technical barriers. Synthetic health data generation (SHDG), leveraging pre-trained large language models (LLMs) instantiated as GAs, could offer a practical solution by creating synthetic patient information that mimics genuine EHRs. The use of LLMs, however, is not without issues; significant concerns remain regarding privacy, potential bias propagation, the risk of generating inaccurate or misleading content, and the lack of transparency in how these models make decisions. We therefore propose a privacy-, lin",
+      "cited_by": 2
+    },
+    {
+      "source": "openalex",
+      "query": "AlphaEvolve LLM evolutionary algorithm design",
+      "title": "AlphaAgent: LLM-Driven Alpha Mining with Regularized Exploration to Counteract Alpha Decay",
+      "authors": [
+        "Ziyi Tang",
+        "Zechuan Chen",
+        "Jiarui Yang",
+        "Jiayao Mai",
+        "Yongsen Zheng",
+        "Keze Wang",
+        "J H Chen",
+        "Liang Lin"
+      ],
+      "url": "https://doi.org/10.1145/3711896.3736838",
+      "date": "2025-08-03",
+      "summary": "Alpha mining, a critical component in quantitative investment, focuses on discovering predictive signals for future asset returns in increasingly complex financial markets. However, the pervasive issue of alpha decay-where factors lose their predictive power over time-poses a significant challenge for alpha mining. Traditional methods such as genetic programming are prone to rapid alpha decay, primarily due to their susceptibility to overfitting. At the same time, approaches driven by Large Language Models (LLMs), despite their promise, often fail to impose regularization against factor homogenization-resulting in crowded signals and accelerated decay. To address this challenge, we propose AlphaAgent, an autonomous framework that effectively integrates LLM-driven agents with ad hoc regular",
+      "cited_by": 2
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "SciPy 1.0: fundamental algorithms for scientific computing in Python",
+      "authors": [
+        "Pauli Virtanen",
+        "Ralf Gommers",
+        "Travis E. Oliphant",
+        "Matt Haberland",
+        "Tyler Reddy",
+        "David Cournapeau",
+        "Evgeni Burovski",
+        "Pearu Peterson"
+      ],
+      "url": "https://doi.org/10.1038/s41592-019-0686-2",
+      "date": "2020-02-03",
+      "summary": "SciPy is an open-source scientific computing library for the Python programming language. Since its initial release in 2001, SciPy has become a de facto standard for leveraging scientific algorithms in Python, with over 600 unique code contributors, thousands of dependent packages, over 100,000 dependent repositories and millions of downloads per year. In this work, we provide an overview of the capabilities and development practices of SciPy 1.0 and highlight some recent technical developments.",
+      "cited_by": 36522
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Massively parallel digital transcriptional profiling of single cells",
+      "authors": [
+        "Grace Zheng",
+        "Jessica M. Terry",
+        "Phillip Belgrader",
+        "Paul Ryvkin",
+        "Zachary Bent",
+        "Ryan J. Wilson",
+        "Solongo B. Ziraldo",
+        "Tobias D. Wheeler"
+      ],
+      "url": "https://doi.org/10.1038/ncomms14049",
+      "date": "2017-01-16",
+      "summary": "Characterizing the transcriptome of individual cells is fundamental to understanding complex biological systems. We describe a droplet-based system that enables 3' mRNA counting of tens of thousands of single cells per sample. Cell encapsulation, of up to 8 samples at a time, takes place in \u223c6 min, with \u223c50% cell capture efficiency. To demonstrate the system's technical performance, we collected transcriptome data from \u223c250k single cells across 29 samples. We validated the sensitivity of the system and its ability to detect rare populations using cell lines and synthetic RNAs. We profiled 68k peripheral blood mononuclear cells to demonstrate the system's ability to characterize large immune populations. Finally, we used sequence variation in the transcriptome data to determine host and don",
+      "cited_by": 7622
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Dimension Reduction and Analysis of a 10-Year Physicochemical and Biological Water Database Applied to Water Resources Intended for Human Consumption in the Provence-Alpes-C\u00f4te d\u2019Azur Region, France",
+      "authors": [
+        "Abdessamad Tiouiouine",
+        "Suzanne Yameogo",
+        "Vincent Vall\u00e8s",
+        "Laurent Barbi\u00e9ro",
+        "Fabrice Dassonville",
+        "Marc Moulin",
+        "Tarik Bouramtane",
+        "Tarik Bahaj"
+      ],
+      "url": "https://doi.org/10.3390/w12020525",
+      "date": "2020-02-13",
+      "summary": "The SISE-Eaux database of water intended for human consumption, archived by the French Regional Health Agency (ARS) since 1990, is a rich source of information. However, more or less regular monitoring over almost 30 years and the multiplication of parameters lead to a sparse matrix (observations \u00d7 parameters) and a large dimension of the hyperspace of data. These characteristics make it difficult to exploit this database for a synthetic mapping of water quality, and to identify of the processes responsible for its diversity in a complex geological context and anthropized environment. A 10-year period (2006\u20132016) was selected from the Provence-Alpes- C\u00f4te d\u2019Azur region database (PACA, southeastern France). We extracted 5,295 water samples, each with 15 parameters. A treatment by principal ",
+      "cited_by": 22
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Normalization and microbial differential abundance strategies depend upon data characteristics",
+      "authors": [
+        "Sophie Weiss",
+        "Zhenjiang Zech Xu",
+        "Shyamal D. Peddada",
+        "Amnon Amir",
+        "Kyle Bittinger",
+        "Antonio Gonz\u00e1lez",
+        "Catherine Lozupone",
+        "Jesse Zaneveld"
+      ],
+      "url": "https://doi.org/10.1186/s40168-017-0237-y",
+      "date": "2017-03-03",
+      "summary": "These findings guide which normalization and differential abundance techniques to use based on the data characteristics of a given study.",
+      "cited_by": 2112
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Conv-TasNet: Surpassing Ideal Time\u2013Frequency Magnitude Masking for Speech Separation",
+      "authors": [
+        "Yi Luo",
+        "Nima Mesgarani"
+      ],
+      "url": "https://doi.org/10.1109/taslp.2019.2915167",
+      "date": "2019-05-07",
+      "summary": "Single-channel, speaker-independent speech separation methods have recently seen great progress. However, the accuracy, latency, and computational cost of such methods remain insufficient. The majority of the previous methods have formulated the separation problem through the time-frequency representation of the mixed signal, which has several drawbacks, including the decoupling of the phase and magnitude of the signal, the suboptimality of time-frequency representation for speech separation, and the long latency of the entire system. To address these shortcomings, we propose a fully-convolutional time-domain audio separation network (Conv-TasNet), a deep learning framework for end-to-end time-domain speech separation. Conv-TasNet uses a linear encoder to generate a representation of the s",
+      "cited_by": 1984
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Roofline",
+      "authors": [
+        "Samuel Williams",
+        "Andrew Waterman",
+        "David A. Patterson"
+      ],
+      "url": "https://doi.org/10.1145/1498765.1498785",
+      "date": "2009-04-01",
+      "summary": "The Roofline model offers insight on how to improve the performance of software and hardware.",
+      "cited_by": 2306
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Adaptive Environmental Assessment and Management",
+      "authors": [
+        "C. S. Holling"
+      ],
+      "url": "https://doi.org/10.1093/forestscience/26.3.435",
+      "date": "1980-09-01",
+      "summary": "",
+      "cited_by": 3243
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Circular Law",
+      "authors": [
+        "Vyacheslav L. Girko"
+      ],
+      "url": "https://doi.org/10.1137/1129095",
+      "date": "1985-01-01",
+      "summary": "Previous article Next article Circular LawV. L. GirkoV. L. Girkohttps://doi.org/10.1137/1129095PDFBibTexSections ToolsAdd to favoritesExport CitationTrack CitationsEmail SectionsAbout[1] V. L. Girko, Random Matrices, Vishcha Shkola, Kiev, 1975, (In Russian.) 0344.60001 Google Scholar[2] V. L. Girko, Theory of Random Determinants, Vishcha Shkola, Kiev, 1980, (In Russian.) Google Scholar[3] L. A. Pastur, Spectra of random selfadjoint operators, Uspehi Mat. Nauk, 28 (1973), 3\u201364, (In Russian.) 53:10042 Google Scholar[4] V. L. Girko, V-transformation, Dokl. Akad. Nauk Ukrain. SSR Ser. A, (1982), 5\u20136, 86, (In Russian.) 83e:60032 0509.60032 Google Scholar[5] M. L. Mehta, Random matrices and the statistical theory of energy levels, Academic Press, New York, 1967x+259, London 36:3554 Google Schola",
+      "cited_by": 285
+    },
+    {
+      "source": "openalex",
+      "query": "quality diversity matrix multiplication",
+      "title": "Genome sequence, comparative analysis and haplotype structure of the domestic dog",
+      "authors": [
+        "Broad Sequencing Platform members",
+        "Kerstin Lindblad\u2010Toh",
+        "Claire M. Wade",
+        "Tarjei S. Mikkelsen",
+        "Elinor K. Karlsson",
+        "David B. Jaffe",
+        "Michael Kamal",
+        "Mich\u00e8le Clamp"
+      ],
+      "url": "https://doi.org/10.1038/nature04338",
+      "date": "2005-12-01",
+      "summary": "",
+      "cited_by": 2620
+    }
+  ]
+}
