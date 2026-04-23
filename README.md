@@ -70,6 +70,44 @@ Prometheus/
 └── archive/            # Superseded work (read-only reference)
 ```
 
+## Repo Map
+
+Full list of top-level directories. **(active)** = commits in the last 3 weeks; **(complete)** = stable / dormant / reference.
+
+| Directory | Status | Purpose |
+|-----------|--------|---------|
+| `agents/` | (active) | Multi-agent pipeline: nous, coeus, hephaestus, nemesis, eos, aletheia, skopos, metis, clymene, hermes, pronoia |
+| `agora/` | (active) | Client library over the Redis-backed Prometheus substrate |
+| `apollo/` | (active) | Earlier model-training work |
+| `apollo-v2/` | (active) | Model training + local LLM server |
+| `aporia/` | (active) | Catalog of 1,047 open questions + illumination instrument |
+| `audit/` | (active) | Re-audit infrastructure for promoted findings |
+| `cartography/` | (active) | Cross-domain mathematical discovery pipeline (OEIS, LMFDB, etc.) |
+| `charon/` | (active) | Geometric embedding for arithmetic correspondences |
+| `docs/` | (active) | Cross-project documentation, Titan Council, NORTH_STAR |
+| `ergon/` | (active) | Tensor-native evolutionary hypothesis screening |
+| `falsification/` | (active) | Falsification tooling |
+| `forge/` | (active) | Tiered evolutionary ratchet (concepts → tools) |
+| `harmonia/` | (active) | Tensor-train exploration for cross-domain structure |
+| `ignis/` | (active) | Latent-vector evolution + ejection-mechanism microscope |
+| `journal/` | (active) | Daily research journal |
+| `koios/` | (active) | Titan-of-inquiry tooling |
+| `mnemosyne/` | (active) | DBA & data-steward workspace |
+| `prometheus_data/` | (active) | Shared database configuration |
+| `roles/` | (active) | Agent role definitions |
+| `scripts/` | (active) | Operational scripts |
+| `stoa/` | (active) | Multi-agent meeting place |
+| `techne/` | (active) | Craft / tooling |
+| `tensor_decomp_qd/` | (active) | Quality-diversity archive for low-rank tensor decompositions (sibling project) |
+| `tests/` | (active) | Tests |
+| `thesauros/` | (active) | Prometheus data treasury |
+| `zoo/` | (active) | High-dim function approximation playground |
+| `aethon/` | (complete) | Autonomous reasoning archaeology (backburnered) |
+| `arcanum/` | (complete) | Museum of misfit ideas discovered in LLMs |
+| `grammata/` | (complete) | Taxonomy & cartography (planned) |
+| `reproductions/` | (complete) | Reproduced external work |
+| `rhea/` | (complete) | Forge for growing models without ejection (WSL2) |
+
 ## The Journey
 
 ### Phase 1: Can we steer models toward reasoning? (Rounds 1-4)

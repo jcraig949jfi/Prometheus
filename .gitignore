@@ -129,6 +129,22 @@ agents/nemesis/grid/grid.json
 # Backup files
 *.bak
 
+# Root-level .bat launchers (local, machine-specific)
+/*.bat
+
+# Root-level TODO (personal, local only)
+/TODO.md
+
+# Full local backup copy of the repo (local only)
+/Prometheus_data_backup/
+
+# Internal / scratch files (local only)
+/NVIDIA
+/RPH_Review_Items_for_Claude_Code.md
+/prompt_aletheia_boundary_exploration.md
+/pronoia.py
+/sync_research.sh
+
 # Council/Titan conversations (internal, not public)
 docs/council/
 
