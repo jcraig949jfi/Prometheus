@@ -8,6 +8,7 @@ Capability step test — novel task type every 500 generations.
 """
 
 import importlib.util
+import random
 from pathlib import Path
 
 from logger import log_info, log_debug
@@ -60,11 +61,54 @@ class TaskManager:
         # Capability step test tasks (harder)
         self._cap_step_seed = 9999
 
+        # Easy tasks for curriculum and annealing
+        self.generate_easy_tasks()
+
         log_info(
             f"TaskManager ready: ref={len(self.reference_tasks)}, "
-            f"evo={len(self.get_evolution_tasks())}, held_out={len(self.held_out_tasks)}",
+            f"evo={len(self.get_evolution_tasks())}, held_out={len(self.held_out_tasks)}, "
+            f"easy={len(self._easy_tasks)}",
             stage="bootstrap",
         )
+
+    def generate_easy_tasks(self, n=30, seed=7777):
+        """Generate easy (tier A) tasks for curriculum and annealing."""
+        all_tasks = self.trap_gen.generate_trap_battery(n_per_category=3, seed=seed)
+        self._easy_tasks = [t for t in all_tasks if t.get('tier') == 'A']
+        # If filtering yields too few, take the first n from the full set as fallback
+        if len(self._easy_tasks) < 5:
+            self._easy_tasks = all_tasks[:n]
+        log_debug(
+            f"Generated {len(self._easy_tasks)} easy (tier A) tasks for curriculum",
+            stage="bootstrap",
+        )
+
+    def get_curriculum_tasks(self, generation, pop_best_accuracy=0.0):
+        """Return task mix based on population capability."""
+        easy = self._easy_tasks
+        hard = self.get_evolution_tasks()
+
+        if pop_best_accuracy < 0.1:
+            # Population can't solve anything — mostly easy tasks
+            mix_ratio = 0.7  # 70% easy, 30% hard
+        elif pop_best_accuracy < 0.3:
+            mix_ratio = 0.5
+        elif pop_best_accuracy < 0.5:
+            mix_ratio = 0.3
+        else:
+            mix_ratio = 0.1  # Mostly hard
+
+        n_easy = int(len(hard) * mix_ratio)
+        n_hard = len(hard) - n_easy
+
+        easy_sample = random.sample(easy, min(n_easy, len(easy)))
+        hard_sample = random.sample(hard, min(n_hard, len(hard)))
+
+        return easy_sample + hard_sample
+
+    def get_annealing_tasks(self, n=20):
+        """Return a small set of easy tasks for post-mutation annealing."""
+        return self._easy_tasks[:n]
 
     def _generate_rotating(self, seed: int) -> list:
         traps = self.trap_gen.generate_trap_battery(n_per_category=2, seed=seed)

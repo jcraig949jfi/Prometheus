@@ -18,18 +18,14 @@ class NoveltyArchive:
             all_sigs.extend(population_sigs)
         if not all_sigs:
             return 1.0
-        # Sanitize: replace NaN/Inf with 0
-        signature = np.nan_to_num(signature, nan=0.0, posinf=0.0, neginf=0.0)
         # Vectorized distance computation
-        sig_array = np.nan_to_num(np.array(all_sigs), nan=0.0, posinf=0.0, neginf=0.0)
+        sig_array = np.array(all_sigs)
         diffs = sig_array - signature
         distances = np.sqrt(np.sum(diffs * diffs, axis=1))
         k = min(self.k, len(distances))
         return float(np.mean(np.sort(distances)[:k]))
 
     def maybe_add(self, signature: np.ndarray) -> bool:
-        # Don't archive poisoned signatures
-        signature = np.nan_to_num(signature, nan=0.0, posinf=0.0, neginf=0.0)
         if self.novelty_score(signature) > self.threshold:
             if len(self.archive) >= self.max_size:
                 self._replace_most_redundant(signature)

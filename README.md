@@ -14,7 +14,7 @@ The ejection mechanism doesn't just suppress correct answers — it suppresses *
 
 A 135M model with 0.36% of its weights perturbed scores **75% on metacognition** — 6x higher than a 1.5B model with the mechanism intact. Not because it's smarter. Because it's unblocked.
 
-**[Full results and data tables](RESULTS.md)** | **[Forge pipeline documentation](docs/forge_pipeline.md)**
+**[Full results and data tables](RESULTS.md)** | **[Forge pipeline documentation](docs/forge_pipeline.md)** | **[Whitepapers](whitepapers/)**
 
 ## The Architecture
 
@@ -78,8 +78,7 @@ Full list of top-level directories. **(active)** = commits in the last 3 weeks; 
 |-----------|--------|---------|
 | `agents/` | (active) | Multi-agent pipeline: nous, coeus, hephaestus, nemesis, eos, aletheia, skopos, metis, clymene, hermes, pronoia |
 | `agora/` | (active) | Client library over the Redis-backed Prometheus substrate |
-| `apollo/` | (active) | Earlier model-training work |
-| `apollo-v2/` | (active) | Model training + local LLM server |
+| `apollo/` | (active) | Model training — current code is v2d; earlier generations under `apollo/archive/` |
 | `aporia/` | (active) | Catalog of 1,047 open questions + illumination instrument |
 | `audit/` | (active) | Re-audit infrastructure for promoted findings |
 | `cartography/` | (active) | Cross-domain mathematical discovery pipeline (OEIS, LMFDB, etc.) |

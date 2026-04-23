@@ -202,6 +202,35 @@ def log_graveyard(organism, cause: str, generation: int,
     )
 
 
+def log_autopsy(organism, cause: str, generation: int, details: dict = None,
+                graveyard_path: str | Path = None):
+    """Enhanced graveyard entry with full autopsy details."""
+    record = {
+        "genome_id": organism.genome_id,
+        "generation": generation,
+        "cause": cause,
+        "primitive_names": organism.primitive_names,
+        "primitive_count": organism.primitive_count,
+        "parent_ids": organism.lineage.parent_ids,
+        "mutations_applied": organism.lineage.mutations_applied,
+        "router_logic_len": len(organism.router_logic) if organism.router_logic else 0,
+        "parameter_count": len(organism.parameters),
+        "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
+    }
+    if details:
+        record["details"] = details
+    if graveyard_path:
+        _append_jsonl(graveyard_path, record)
+    log_debug(
+        f"AUTOPSY [{cause}] {organism.genome_id[:12]} | "
+        f"prims={organism.primitive_count} | "
+        f"parents={[p[:8] for p in organism.lineage.parent_ids]} | "
+        f"mutations={organism.lineage.mutations_applied}",
+        stage="graveyard", generation=generation,
+        data=record,
+    )
+
+
 def log_dashboard(generation: int, population: list, fitness_vectors: list,
                   archive_size: int, compilation_survival: float,
                   ncd_weight: float = 1.0,

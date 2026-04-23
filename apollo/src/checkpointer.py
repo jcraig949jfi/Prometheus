@@ -39,10 +39,7 @@ def save_checkpoint(population, archive, generation: int,
     try:
         with os.fdopen(fd, "wb") as f:
             pickle.dump(data, f)
-        # On Windows, target must not exist for rename
-        if target.exists():
-            target.unlink()
-        os.rename(tmp_path, str(target))
+        os.replace(tmp_path, str(target))
     except Exception as e:
         # Clean up temp file on failure
         try:

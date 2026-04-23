@@ -35,7 +35,7 @@ class FitnessVector:
 
     def as_array(self) -> np.ndarray:
         """Return the 6 Pareto objectives as numpy array."""
-        arr = np.array([
+        return np.array([
             self.accuracy_margin,
             self.calibration,
             self.ablation_delta,
@@ -43,7 +43,6 @@ class FitnessVector:
             self.diversity,
             self.parsimony,
         ])
-        return np.nan_to_num(arr, nan=-1.0, posinf=0.0, neginf=-1.0)
 
 
 class NCDBaseline:
@@ -117,18 +116,15 @@ def compute_fitness(task_results: list, ncd_baseline: dict,
     n_correct = sum(1 for r in task_results if r.get('correct', False))
     raw_accuracy = n_correct / n
 
-    # Brier score (clamp confidence to [0,1] to prevent overflow from Inf/NaN)
+    # Brier score
     brier_sum = 0.0
     for r in task_results:
         correct = r.get('correct', False)
         conf = r.get('confidence_correct', 0.0)
-        if not isinstance(conf, (int, float)) or np.isnan(conf) or np.isinf(conf):
-            conf = 0.5
-        conf = max(0.0, min(1.0, conf))
         if correct:
             brier_sum += (conf - 1.0) ** 2
         else:
-            brier_sum += conf ** 2
+            brier_sum += (conf - 0.0) ** 2
     raw_brier = brier_sum / n
 
     # Margins over NCD (weighted by decay)

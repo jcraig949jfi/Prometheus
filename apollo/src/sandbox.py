@@ -3,6 +3,7 @@ sandbox.py — Safe execution of evolved organisms.
 
 Layer 1: AST-based import validation (compile-time)
 Layer 2: Direct exec() with threading timeout (runtime)
+Layer 3: ProcessPoolExecutor for parallel task evaluation
 
 Windows-compatible: no multiprocessing.Process needed.
 """
@@ -12,6 +13,8 @@ import sys
 import threading
 import time
 from pathlib import Path
+from concurrent.futures import ProcessPoolExecutor
+import multiprocessing
 
 # Ensure forge_primitives is importable
 _primitives_dir = str(Path(__file__).parent.parent.parent / "agents" / "hephaestus" / "src")
@@ -31,6 +34,101 @@ BLOCKED_IMPORTS = {
     'shutil', 'signal', 'ctypes', 'multiprocessing', 'threading',
     'http', 'urllib', 'requests', 'pickle', 'shelve', 'sqlite3',
 }
+
+# ---------------------------------------------------------------------------
+# Worker pool for parallel task evaluation
+# ---------------------------------------------------------------------------
+
+_pool = None
+_pool_size = min(16, max(1, multiprocessing.cpu_count() - 4))  # Leave 4 cores free
+
+
+def _get_pool():
+    """Lazily initialize the process pool."""
+    global _pool
+    if _pool is None:
+        _pool = ProcessPoolExecutor(max_workers=_pool_size)
+    return _pool
+
+
+def _eval_single_task(args):
+    """Worker function: evaluate source code on one task.
+
+    Must be top-level for pickling. Receives (source_code, task, timeout).
+    The source code is exec()'d inside the worker process.
+    """
+    source_code, task, timeout = args
+    import warnings
+    import threading as _th
+    try:
+        namespace = {}
+        with warnings.catch_warnings():
+            warnings.filterwarnings("ignore", category=SyntaxWarning)
+            warnings.filterwarnings("ignore", category=RuntimeWarning)
+            exec(source_code, namespace)
+        tool_class = namespace.get('ReasoningTool')
+        if tool_class is None:
+            return {"correct": False, "confidence_correct": 0.0,
+                    "confidence_wrong": 0.0, "score": 0.0,
+                    "error": "no_tool", "gene_trace": ""}
+        tool = tool_class()
+
+        # Shuffle candidates to prevent position/order exploitation
+        import random as _rng
+        shuffled_cands = list(task['candidates'])
+        _rng.shuffle(shuffled_cands)
+
+        result = [None]
+
+        def run():
+            try:
+                r = tool.evaluate(task['prompt'], shuffled_cands)
+                if r:
+                    top = r[0]['candidate']
+                    correct = (top == task['correct'])
+                    conf = r[0].get('score', 0.0)
+                    result[0] = {
+                        "correct": correct,
+                        "confidence_correct": conf if correct else 0.0,
+                        "confidence_wrong": conf if not correct else 0.0,
+                        "score": r[0].get('score', 0.0),
+                        "error": None,
+                        "gene_trace": r[0].get('reasoning', ''),
+                    }
+                else:
+                    result[0] = {"correct": False, "confidence_correct": 0.0,
+                                 "confidence_wrong": 0.0, "score": 0.0,
+                                 "error": "empty results", "gene_trace": ""}
+            except Exception as e:
+                result[0] = {"correct": False, "confidence_correct": 0.0,
+                             "confidence_wrong": 0.0, "score": 0.0,
+                             "error": str(e)[:100], "gene_trace": ""}
+
+        t = _th.Thread(target=run, daemon=True)
+        t.start()
+        t.join(timeout=timeout)
+        if result[0] is None:
+            return {"correct": False, "confidence_correct": 0.0,
+                    "confidence_wrong": 0.0, "score": 0.0,
+                    "error": "timeout", "gene_trace": ""}
+        return result[0]
+    except Exception as e:
+        return {"correct": False, "confidence_correct": 0.0,
+                "confidence_wrong": 0.0, "score": 0.0,
+                "error": str(e)[:100], "gene_trace": ""}
+
+
+def evaluate_organism_on_tasks_parallel(source_code, tasks, timeout=0.5):
+    """Evaluate one organism on multiple tasks in parallel across worker processes."""
+    pool = _get_pool()
+    args = [(source_code, task, timeout) for task in tasks]
+    try:
+        results = list(pool.map(_eval_single_task, args,
+                                timeout=timeout * len(tasks) + 30))
+        return results
+    except Exception:
+        # Fallback to sequential on pool errors
+        return _evaluate_organism_on_tasks_sequential(source_code, tasks, timeout)
 
 
 def check_imports(source_code: str) -> tuple:
@@ -84,8 +182,14 @@ def _exec_with_timeout(func, args, timeout):
 
 def _load_tool(source_code: str):
     """Compile and instantiate a ReasoningTool from source."""
+    import warnings
+    import numpy as _np
     namespace = {}
-    exec(source_code, namespace)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", category=SyntaxWarning)
+        warnings.filterwarnings("ignore", category=RuntimeWarning)
+        _np.seterr(all='ignore')
+        exec(source_code, namespace)
     tool_class = namespace.get('ReasoningTool')
     if tool_class is None:
         raise ValueError("No ReasoningTool class")
@@ -107,15 +211,24 @@ def _get_tool(source_code: str):
 
 def safe_evaluate(source_code: str, prompt: str, candidates: list,
                   timeout: float = 0.5) -> dict:
-    """Execute organism evaluation with timeout."""
+    """Execute organism evaluation with timeout.
+
+    Candidates are shuffled before presentation to prevent the organism
+    from exploiting positional or ordering biases in the task battery.
+    """
+    import random as _rng
     try:
         tool = _get_tool(source_code)
     except Exception as e:
         return {'error': str(e)[:100], 'results': None, 'confidence': 0.0}
 
+    # Shuffle candidates to prevent position/order exploitation
+    shuffled = list(candidates)
+    _rng.shuffle(shuffled)
+
     def run_eval():
-        results = tool.evaluate(prompt, candidates)
-        conf = tool.confidence(prompt, candidates[0]) if candidates else 0.0
+        results = tool.evaluate(prompt, shuffled)
+        conf = tool.confidence(prompt, shuffled[0]) if shuffled else 0.0
         return {'results': results, 'confidence': conf, 'error': None}
 
     result, error = _exec_with_timeout(run_eval, (), timeout)
@@ -127,8 +240,19 @@ def safe_evaluate(source_code: str, prompt: str, candidates: list,
 
 
 def evaluate_organism_on_tasks(source_code: str, tasks: list,
-                                timeout: float = 0.5) -> list:
-    """Evaluate one organism on multiple tasks."""
+                                timeout: float = 0.5, parallel: bool = True) -> list:
+    """Evaluate one organism on multiple tasks.
+
+    Uses ProcessPoolExecutor for parallel evaluation when tasks >= 10.
+    """
+    if parallel and len(tasks) >= 10:
+        return evaluate_organism_on_tasks_parallel(source_code, tasks, timeout)
+    return _evaluate_organism_on_tasks_sequential(source_code, tasks, timeout)
+
+
+def _evaluate_organism_on_tasks_sequential(source_code: str, tasks: list,
+                                            timeout: float = 0.5) -> list:
+    """Sequential evaluation fallback."""
     results = []
     for task in tasks:
         r = safe_evaluate(source_code, task['prompt'], task['candidates'], timeout)
