@@ -138,6 +138,12 @@ W1 gates everything structurally. W4 and W5 are independent of the tensor work a
 
 ---
 
+## Status log
+
+- **2026-04-23 (Phase 2 MVP first pass):** W1 + W4 + W5 shipped; W2 + W3 falsified with honest documentation.
+- **2026-04-23 (Phase 2 second pass):** W2 **SHIPPED** after third-strategy success. The minimal `(inv1, inv2)` pair of GL(2)³-invariants passes all three calibration anchors (same-class 4/4 + GL invariance 10/10 + rank-7 vs rank-8 separation). Implementation at `agora/canonicalizer/tensor_decomp_identity_v2.py`. W3 remains at PARTIAL (GL(2)³ local search improves integer_fraction from 0-0.131 → 0.19-0.29 but does not reach Strassen's 1.0); stronger search primitives (integer enumeration, L-BFGS with integer penalty) deferred.
+- **Out of scope this session (unchanged):** W6 whitepaper v2 revision, W7 3×3 Laderman scaling test.
+
 ## Version history
 
 - **v0.1** — 2026-04-23 — initial plan drafted after the whitepaper reviewer pass. Shape: Type A/B split as primary architectural move; three first-instance implementations (tensor identity, tensor integer rep, polynomial); one discipline pattern (Orbit Discipline / Pattern 31). W6 (whitepaper v2) and W7 (3×3 scaling) explicitly deferred.

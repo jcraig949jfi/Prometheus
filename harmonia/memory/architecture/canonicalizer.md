@@ -128,17 +128,32 @@ The canonicalizer primitive is a registry of named instances. At v0.1, one insta
   - Different-class: rank-7 Strassen hash ≠ rank-8 naive decomposition hash (trivially holds).
 - **Empirical anchor:** 2026-04-23, `harmonia/tmp/canonicalize_test.py`. 4 ALS-converged rank-7 decompositions of 2×2 matmul, understood to lie in the same equivalence class under the natural symmetry action (see `orbit_vs_representative.md` §"On theorem claims"), hashed to 4 distinct v1 canonical forms; none matched Strassen's v1 hash.
 
-### Pending: `CANONICALIZER:tensor_decomp_identity@v2` (Type A)
+### Active: `CANONICALIZER:tensor_decomp_identity@v2` (Type A) — SHIPPED 2026-04-23
 
 - **Type:** A.
-- **Equivalence group:** v1 group plus the subgroup of `T_stabilizer_GL_n^3` that is computationally realized by the instance. Whatever subgroup is *not* realized must appear in `declared_limitations`, not in `G`.
-- **Procedure:** OPEN. Phase 2 W2 attempted **Strategy 1 — multi-invariant numerical canonical form** (singular-value spectra, Gramian eigenvalues, Frobenius norms, mode-unfolding singular values). **FALSIFIED** 2026-04-23 on the pilot anchor: 4 ALS seeds + Strassen all hash differently. Root cause: singular-value and Frobenius invariants are invariant under *orthogonal* group actions but not under general `GL` actions. The T-stabilizer for matmul is `GL`, not `O`, so orthogonal-invariants don't collapse it. Tensor-mode-unfolding SVs *do* collapse across the orbit (all four inputs produce `(1.4142, 1.4142, 1.4142, 1.4142)`) but this is a property of `T` itself, not of the decomposition — it's the same for every rank-r decomposition of T, so it does not discriminate between orbits either. Evidence: `harmonia/tmp/tensor_decomp_identity_v2_results.json`.
-- **Remaining v2 candidate strategies (untested):**
-  - Strategy 2: SVD / Schur canonical basis via T-preserving basis change. Implement the specific matmul-covariant GL action, apply a canonical basis choice (first factor's right-singular basis), propagate through all three factors using T-preserving machinery. Tensor-specific; requires Aut(T) algebraic analysis.
-  - Strategy 3: Chevalley-Weyl polynomial invariants of the GL representation on the factor spaces. Domain-specific polynomials invariant under the full GL action.
-  - Strategy 4: Full enumeration. Only feasible for small groups; does not scale.
-- **Calibration target (unchanged):** same-class anchor passes on the four 2×2 ALS-converged seeds plus Strassen's integer representative (five inputs → same hash).
-- **Status:** OPEN. No v2 strategy currently passes the calibration anchor. Strategy 1 falsification is a data point documented in the registry; next session may attempt Strategy 2.
+- **Equivalence group:** `scale_gauge × sign_gauge × permutation(S_r) × GL(2)³ matmul-covariant action × discrete Aut(T)` (transpose + factor-role permutation).
+- **Procedure:** multi-invariant numerical canonical form using two provably `Aut(T)`-invariant per-term scalars:
+  - `inv1_r = det(U_r) · det(V_r) · det(W_r)`
+  - `inv2_r = tr(U_r V_r W_r^T)`
+  where `U_r, V_r, W_r` are the 2×2 reshapes of the r-th rank-1 term's factor columns. Both scalars verified invariant under the matmul-covariant action `(A → PAQ⁻¹, B → QBR⁻¹, C → P⁻ᵀCRᵀ)`. Both also invariant under the discrete `Aut(T)` symmetries (det preserved by transpose; trace-UVW is cyclic-invariant). The sorted tuples `(sorted(inv1_1..r), sorted(inv2_1..r))` form the canonical fingerprint; SHA-256 hash of their JSON serialization (with `-0.0 → 0.0` normalization) is the canonical hash. Implementation: `agora/canonicalizer/tensor_decomp_identity_v2.py`.
+- **Hash:** SHA-256 of `{inv1_det_prod: [...], inv2_trace_uvw: [...]}` (deterministic JSON, ordered keys, `-0.0` normalized to `0.0`).
+- **Declared limitations:**
+  - `orbit_completeness_not_proven` (partial) — invariants pass the 2×2 calibration but are not proven orbit-complete in general; separation is probabilistic. Workaround: consumers needing separation on other tensors add per-target calibration anchors.
+  - `fixed_to_2x2_matmul_shape` (total) — factors must reshape into 2×2 matrices; `n × n` matmul requires a separate instance.
+  - `probabilistic_separation` (partial) — distinct orbits sharing `(inv1, inv2)` tuples collide; not exhaustively tested. 2-dim invariant is a low-dim fingerprint.
+- **Calibration anchors:**
+  - Same-class: **PASS**. 4 ALS-converged rank-7 decompositions + Strassen's integer rep all hash identically. 6/6 pair-agreements.
+  - GL invariance: **PASS**. 10/10 random `GL(2)³` actions on Strassen preserve the hash.
+  - Different-class: **PASS**. Rank-8 naive decomposition hashes distinctly from rank-7 Strassen.
+  - Evidence: `harmonia/tmp/tensor_gl2_invariants_minimal_results.json`.
+- **Path to v2:** three prior strategies were falsified before this one succeeded. The falsifications are retained as data.
+  - *Falsified — Strategy 1 (multi-invariant SV / Gramian / Frobenius).* Root cause: these are *orthogonal*-invariants, not GL-invariants. The T-stabilizer for matmul acts as GL, not O, so orthogonal invariants don't collapse it. Mode-unfolding SVs are tensor-of-T invariants (same across all rank-r decomps of T), so they don't discriminate orbits either.
+  - *Falsified — Strategy 2 (QR reduction of first rank-1 term).* Canonicalizing only the first term leaves the remaining GL freedom uncollapsed. 0/6 pair-agreements.
+  - *Not tried — Strategy 4 (full group enumeration).* Superseded by the v2 analytic invariants; retained for a future tensor target where invariant derivation may be harder.
+
+### Replaced: `CANONICALIZER:tensor_decomp_identity@v1` (superseded 2026-04-23)
+
+v1 is superseded by v2 in the same calibration. Retained in the registry as the historical record of the scale+sign+permutation-only quotient; any consumer referencing v1 hashes should migrate to v2 (different namespace; cross-version comparison is forbidden per the hash contract).
 
 ### Pending: `CANONICALIZER:tensor_decomp_integer_rep@v1` (Type B)
 
@@ -252,6 +267,7 @@ The risk being guarded against is primitive-bloat through ambitious generalizati
 
 ## Version history
 
+- **v0.2.1** — 2026-04-23 (Phase 2 continuation) — `CANONICALIZER:tensor_decomp_identity@v2` SHIPPED after third-strategy success. Two GL(2)³-invariant per-term scalars (det product + tr UVW^T) plus `-0.0 → 0.0` normalization produce a hash that passes all three calibration anchors (same-class 4/4 + 6/6 pairs; GL invariance 10/10; different-class rank-7 vs rank-8 separation). Two prior strategies (SV/Frobenius multi-invariant; first-term QR) were falsified before this one succeeded; falsifications retained in the registry as data. Implementation landed at `agora/canonicalizer/tensor_decomp_identity_v2.py`. v1 is now superseded but retained as historical record.
 - **v0.2** — 2026-04-23 (Phase 2) — major: Type A / Type B split added as the primary architectural move in response to James's 2026-04-23 whitepaper review. Every instance now declares `type` in its tuple. Type A = deterministic quotient + hash (identity). Type B = optimization inside an already-identified orbit (display). Composition rule: Type B always consumes Type A output. Supporting changes: (a) tensor_decomp@v1 renamed tensor_decomp_identity@v1 with narrowed justification for retention despite anchor-failure (admissible *only* because failure is declared + reproducible + regression-targeted, not because failing anchors is generally OK); (b) tensor_decomp_identity@v2 and tensor_decomp_integer_rep@v1 registered as pending, split correctly between Type A and Type B; (c) failure-stability clause added to procedure contract — failure must be stable under tolerance; (d) hash primitive (SHA-256) moved to Implementation notes; contract requires determinism + namespacing + tolerance pinning, not a specific cryptographic choice; (e) Pattern 30 integration clarified — pattern_30_rearrangement@v1 is a *separate instance of the same contract*, not a second name for tensor canonicalizer; (f) "orbit discipline" formalized as a named doctrine with cross-reference to pattern_library.md Pattern 31.
 - **v0.1.1** — 2026-04-23 (later same day) — three surgical edits to the
   contract per James crispness pass on v0.1 first ~90 lines: (1)
