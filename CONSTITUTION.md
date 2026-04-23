@@ -2,6 +2,17 @@
 
 *Every agent, every experiment, every line of code serves one mission: build the substrate that lets a reasoning machine explore the frontier of knowledge where no human mind can go.*
 
+**Last updated:** 2026-04-23
+
+---
+
+## What's Changed Since the Original
+
+The Three Pillars (Substrate / Reasoning / Verification) and the Seven Laws still hold. Two things have evolved:
+
+1. **From "breaking the ejection mechanism" to "compressing coordinate systems of legibility."** The original thesis — that internet-trained transformers suppress their own correct reasoning, and that breaking that suppression recovers epistemic honesty — remains part of the Reasoning pillar (Ignis, Rhea). But the current centre of gravity is elsewhere: building **coordinate systems** under which cross-domain mathematical structure becomes detectable. The MPA is **constructed**, not discovered. Like IPA for speech.
+2. **A new generation of projects now carries the weight:** Harmonia, Cartography, Charon, Ergon, Aporia, Koios. These are the substrate-and-reasoning work for the new frame. The original agent pipeline (Nous, Aletheia, Eos, Hephaestus, Nemesis, Coeus, Metis, Clymene, Hermes, Skopos, Pronoia, auditor) still exists and still feeds the substrate.
+
 ---
 
 ## The North Star
@@ -9,6 +20,8 @@
 We are not building a better chatbot. We are not writing papers. We are not optimizing benchmarks.
 
 We are building the **knowledge substrate** — a living, structured, multi-dimensional map of ideas, relationships, failures, and frontiers — and the **reasoning machinery** to navigate it. The substrate is not a database. It is the organized memory of everything humanity has discovered, linked to everything an AI can compute about those discoveries, structured so that a future intelligence under evolutionary pressure can traverse it and find what no one has found before.
+
+The current working form of this goal: **compressing coordinate systems of legibility, not laws.** Novelty is the reward; watch for reward-signal capture.
 
 Every project in Prometheus either **builds the substrate**, **builds the reasoning to navigate it**, or **builds the tools to verify what the reasoning finds**. If it doesn't connect to one of these three, it's not Prometheus work.
 
@@ -21,10 +34,15 @@ Every project in Prometheus either **builds the substrate**, **builds the reason
 The organized, multi-dimensional knowledge that reasoning operates ON. Not just facts — relationships, gaps, frontiers, failures, contradictions, and the geometry of how ideas connect.
 
 **Projects that build the substrate:**
+- **Cartography** — The cross-domain mathematical discovery pipeline. 38+ domains ingested (OEIS, LMFDB, knots, polytopes, Fungrim, Mathlib, Metamath, …), Megethos+Arithmos axes, cross-category transfer under validation.
+- **Harmonia** — Tensor-train exploration engine for cross-domain structure. Substrate of promoted symbols, null-calibrated tensor, sync stream. Where MPA coordinates get built.
+- **Thesauros** — The data treasury. LMFDB / prometheus_sci / prometheus_fire Postgres tables, joined views, BSD indexes, audit trails. Now also hosts shared DB config (`prometheus_data/`).
+- **Charon** — Geometric embedding for arithmetic correspondences. Spectral survey, rank discrimination, L-function zero geometry.
+- **Aporia** — Catalog of 1,047 open questions across mathematics and science, plus the instrument to illuminate them.
+- **Mnemosyne** — DBA and data steward. Keeps the Postgres layer healthy and ingested.
 - **Aletheia** — Harvests structured entities from published research into a persistent knowledge graph. Techniques, claims, tools, terms, papers, linked by relationship type.
 - **Eos/Dawn** — Scans the horizon. arXiv, OpenAlex, Semantic Scholar, GitHub. Finds what's new before anyone else does.
-- **Arcanum** — The Museum of Misfit Ideas. Probes the waste stream of LLM inference for structured patterns that have no human name. The Xenolexicon. The things we don't have words for yet.
-- **Grammata** — The Library of Alexandria. Links human-realm entities (techniques from papers) to AI-realm entities (SAE features, steering vectors, subspace geometry). The bridge between what humans know and what models compute.
+- **Arcanum** — The Museum of Misfit Ideas. Probes the waste stream of LLM inference for structured patterns that have no human name. The Xenolexicon.
 - **Clymene** — The hoarder. Clones and indexes open-source models, tools, and repos before they disappear behind paywalls.
 
 **Constitutional requirement:** Every experiment that produces data must deposit structured results into the substrate. Not logs — structured entities with provenance, relationships, and evidence grades. Aletheia is the skeleton; everything else adds flesh.
@@ -34,12 +52,14 @@ The organized, multi-dimensional knowledge that reasoning operates ON. Not just 
 The machinery that traverses the substrate — models that reason, tools that evaluate reasoning, evolutionary processes that improve both.
 
 **Projects that build the reasoning:**
-- **Ignis** — The microscope. Cracks open models, maps the ejection mechanism, characterizes how reasoning circuits work and fail.
-- **Rhea** — The forge. Evolves language models with reasoning gravity — suppressing the ejection mechanism so correct answers survive to output.
-- **Apollo** — Open-ended evolution of reasoning tools. Recombination, mutation, selection over thousands of generations.
+- **Ergon** — Tensor-native hypothesis search engine. The cheap/fast evolutionary screening layer. 3-stage pipeline, shadow archive, constrained operators.
+- **Koios** — The axis. Gate-keeping: a feature enters the tensor only if it passes all 5 gates (null-calibrated, representation-stable, not reducible to marginals, non-tautological, domain-agnostic).
+- **Forge** — Tiered evolutionary ratchet. Each tier's output becomes the next tier's primitives.
+- **Ignis** — The microscope. Cracks open models, maps the ejection mechanism, characterizes how reasoning circuits work and fail. (See `ignis/RESULTS.md`.)
+- **Rhea** — The forge for weights. Evolves language models with reasoning gravity — suppressing the ejection mechanism so correct answers survive to output. (WSL2.)
+- **Apollo** — Open-ended evolution of reasoning tools. Current generation is **v2d** (training + LLM server). Earlier generations under `apollo/archive/`.
 - **Nous** — The primordial soup. Mines the combinatorial space of all ideas for productive cross-domain intersections. Feeds novelty into the system.
 - **Hephaestus** — The automated forge. Takes Nous combinations, forges them into computable reasoning tools, validates against Sphinx.
-- **CAITL** — The master chef. Refines forged tools from mediocre to genuine using category-only feedback.
 
 **Constitutional requirement:** Reasoning projects must consume the substrate, not ignore it. Nous should mine Aletheia's knowledge graph for concept combinations, not just a static dictionary. Rhea's fitness function should evolve as the substrate grows. The reasoning and the substrate co-evolve.
 
@@ -48,9 +68,12 @@ The machinery that traverses the substrate — models that reason, tools that ev
 The mechanisms that prevent Goodhart, catch cheaters, pressure-test claims, and ensure that what the reasoning finds is real.
 
 **Projects that build the verification:**
-- **Sphinx** — The reasoning ontology. 105 categories of reasoning failure across 14 domains. The shared definition of what "correct reasoning" looks like.
+- **Auditor** (agent) — Re-audit infrastructure. Promotes, demotes, retains findings under null-calibrated tests. Keeps the tensor honest.
+- **Falsification** — Targeted falsification tests (`test_NN_compute.py` / `_result.json`). Battery of concrete attack cases. "Assumed false until every kill path is exhausted."
 - **Nemesis** — Adversarial co-evolution. Attacks tools with metamorphic mutations. Maps the behavioral boundary. The Goodhart defense.
 - **Coeus** — Causal intelligence. Learns which concepts, fields, and combinations actually drive forge success vs which are correlated noise. Interventional estimates, confounder detection.
+- **Koios gates** (see Reasoning) — The 5-gate admission test that every feature must pass before it is allowed into the tensor.
+- **Sphinx** — The reasoning ontology. Categories of reasoning failure. The shared definition of what "correct reasoning" looks like.
 - **Lean 4** — The incorruptible filter. Formal mathematical verification. A proof either compiles or it doesn't.
 
 **Constitutional requirement:** No claim survives without adversarial pressure. Every tool faces Nemesis. Every causal claim faces Coeus. Every formal claim faces Lean 4. Confidence without verification is the ejection mechanism wearing a lab coat.
@@ -205,6 +228,53 @@ knowledge — mathematical, theoretical, scientific — where the human mind can
 **Pillar:** All three (constitutional guardian)
 **Constitutional duty:** Keep all pillars breathing. Cross-pollinate. Absorb archived concepts. Generate Council briefs. Audit for novelty. Ensure the substrate grows even when the GPU is busy with experiments.
 **Cross-pollination:** Pronoia IS the cross-pollination layer. It reads from all agents and writes prompts that connect them.
+
+---
+
+## Current-Generation Projects (added 2026-04-23)
+
+### Harmonia
+**Pillar:** Substrate + Reasoning (coordinate construction)
+**Constitutional duty:** Build the tensor of promoted symbols and the MPA coordinates. Feature admission is gated by Koios (5 gates). Every value carries validation metadata. IDN (3 normalizations) before any cross-domain comparison. One invariant family at a time — compute, normalize, battery, kill or keep.
+**Cross-pollination:** Harmonia tensor state feeds Cartography (domain-level discovery), Ergon (hypothesis screening), Charon (arithmetic embeddings). Harmonia's sync stream is the shared bus for sessions.
+
+### Cartography
+**Pillar:** Substrate (cross-domain discovery)
+**Constitutional duty:** Ingest, structure, and keep cross-domain data ready for tensor exploration. Maintain the corpora (OEIS, LMFDB, knots, polytopes, Fungrim, Mathlib, Metamath, physics, number fields, …). Expose structural invariants so Harmonia can build coordinates over them.
+**Cross-pollination:** Cartography corpora feed Harmonia (coordinate construction) and Charon (geometric embeddings). Cartography gaps feed Aporia (open questions).
+
+### Charon
+**Pillar:** Substrate + Reasoning (arithmetic geometry)
+**Constitutional duty:** Geometric embedding for arithmetic correspondences. Maintain the spectral survey, rank-discrimination diagnostics, L-function zero geometry. Keep Postgres/Redis data flowing for the Fire subproject.
+**Cross-pollination:** Charon outputs feed Harmonia (as candidate invariants) and Aporia (as anchor questions). Charon's DuckDB→Postgres migration makes the data reusable across agents.
+
+### Ergon
+**Pillar:** Reasoning (tensor-native search)
+**Constitutional duty:** Cheap/fast evolutionary screening over the tensor substrate. Three-stage pipeline. Shadow archive of failed candidates. Constrained operators so evolution stays inside legal coordinate moves.
+**Cross-pollination:** Ergon consumes Harmonia tensor state, produces candidate structures for falsification and for human review. Failed candidates feed the shadow archive (substrate fodder).
+
+### Aporia
+**Pillar:** Substrate (open questions)
+**Constitutional duty:** Maintain the catalog of open questions across mathematics and science (currently 1,047). Each entry is an illumination target for the rest of the substrate.
+**Cross-pollination:** Aporia entries are destination anchors for Nous combinations, Harmonia coordinate validation, Charon arithmetic probes.
+
+### Koios
+**Pillar:** Verification (admission gates)
+**Constitutional duty:** Enforce the 5 gates. No feature enters the tensor without null-calibration, representation-stability, non-reducibility to marginals, non-tautology, and domain-agnosticism. IDN before comparison. No target leakage.
+**Cross-pollination:** Koios gates every Harmonia admission. Gate results become metadata on the tensor entry. Gate failures are themselves substrate (why didn't this feature survive?).
+
+### Auditor
+**Pillar:** Verification (re-audit)
+**Constitutional duty:** Periodic re-audit of promoted findings against updated nulls and newer data. Demote what no longer holds; retain what still does; promote what newly qualifies. Nothing is immutable except completed promotions.
+**Cross-pollination:** Auditor outcomes update Harmonia tensor state and Cartography findings. Demotion events are substrate entries.
+
+### Mnemosyne
+**Pillar:** Substrate (data steward)
+**Constitutional duty:** Database steward for prometheus_sci, prometheus_fire, and related Postgres layers. Ingest, schema evolution, performance. Keep the data flow alive so Thesauros / Cartography / Charon have fresh joined views.
+
+### Thesauros
+**Pillar:** Substrate (treasury)
+**Constitutional duty:** Curated data views over LMFDB and Prometheus tables. BSD joined view, audit trails, index builds. Host shared DB config (`prometheus_data/`).
 
 ---
 
