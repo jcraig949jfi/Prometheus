@@ -15,35 +15,33 @@ other cells are the unclaimed territory.
 
 ## Status (2026-04-23)
 
-| Pilot | Outcome | Summary |
+| Pilot | Outcome | Key finding |
 |---|---|---|
-| `pilot_F2_2x2/` | B1 | Strassen isolated; rank-7 effectively unique over F_2 |
-| `pilot_F2_3x3/` | B | Laderman verified + seeded; flip-graph moves implemented but don't fire over F_2 |
-| `pilot_F3_2x2/` | (next) | Richer gauge (O_2(F_3) has 8 elements vs 2 over F_2); expected to show outcome A |
+| `pilot_F2_2x2/` | B1 | Strassen isolated at Hamming ≥ 6; rank-7 effectively unique over F_2 |
+| `pilot_F2_3x3/` | B | Laderman verified + seeded; flip-graph 3-to-2 and 2-to-2 moves don't fire (all 1771 triples have tensor rank 3; 0/253 pair-swaps give new orbit) |
+| `pilot_F3_2x2/` | B1 | 100× better fitness rate than F_2, local connectivity within Strassen orbit, but still single rank-7 orbit → **rejects "char-2 is primary cause"** hypothesis |
 
-See each pilot's `PILOT_REPORT.md` for the full picture.
+See each pilot's `PILOT_REPORT.md` for the full diagnostic picture.
 
 ---
 
-## Why F_3 next (not bigger)
+## What the calibration ladder has now established
 
-The 2x2 + 3x3 pilots over F_2 converge on a single structural cause:
-**char-2 orthogonality is too restrictive**. Over F_2:
-- `O_2(F_2) = 2` (I and swap)
-- `O_3(F_2) = 6` (permutation matrices only)
-- Matmul isotropy subgroup shrinks from ~|GL_n|^3 to a small fraction
+Three hypotheses distinguished across the three pilots:
 
-Over larger fields this collapse doesn't happen. F_3 is the smallest
-field where this is no longer an issue:
-- `O_2(F_3) = 8` elements (dihedral D_4)
-- Matmul isotropy subgroup for 2x2 over F_3: 8 × 48 × 8 = 3072 elements
-- Column scaling gauge is non-trivial (F_3* has 2 elements), adding
-  real canonicalization work
+1. ~~**Char-2 orthogonality degeneracy**~~ — tested directly via 2x2 F_3
+   pilot. Rejected as primary cause: F_3 has 128× richer gauge and
+   100× higher fitness rate, yet same outcome.
+2. **2x2 matmul tensor is too small** (supported): rank-7 of 2x2 matmul
+   has essentially a single equivalence class under column-perm +
+   scaling + basis-change over both F_2 and F_3.
+3. **Factor-matrix Hamming geometry** (universal across all pilots):
+   valid decompositions are isolated or sparsely connected in
+   factor-matrix space. Mutation must bridge larger moves.
 
-If the 2x2 F_3 pilot shows outcome A (multiple rank-7 orbits, non-trivial
-Pareto fronts, reseed stability), the QD thesis works and we can push to
-3x3 F_3 or ℚ. If B again, the QD approach needs substantial
-reformulation (probably toward LLM-assisted whole-decomposition edits).
+The ladder has **ruled out** a cheap fix (larger field) and **narrowed** the
+real issue (tensor smallness + mutation geometry). The next substrate must
+address both.
 
 ---
 
@@ -115,23 +113,32 @@ calls. Requires numpy only.
 
 ---
 
-## Pilot decision tree
+## Pilot decision tree (updated after F_3 pilot)
 
 Current state:
 
 ```
-F_2 pilots → outcome B (char-2 orthogonality too restrictive)
+F_2 pilots → outcome B  (char-2 hypothesis: not ruled out yet)
     |
     v
-F_3 2x2 pilot (richer gauge)
+F_3 2x2 pilot → outcome B1 (char-2 hypothesis ruled out; tensor smallness is the cause)
     |
-    ├── A: method works over F_3 → push to 3x3 F_3 or Q
+    v
+NEXT: pick one of three directions
     |
-    └── B: method still fails → escalate to:
-              - 4-to-3 flip-graph moves (harder rank-3 decomp primitive)
-              - Full matmul isotropy (transposition symmetry)
-              - LLM-assisted whole-decomposition mutation
-              - Different target tensors (convolution, polynomial mult)
+    ├── (A) 3x3 F_2 with 4-to-3 flip-graph moves
+    |      Requires rank-3 tensor decomposition primitive over F_2.
+    |      Extends existing 3x3 F_2 infrastructure.
+    |      Tests whether higher-arity moves break Laderman isolation.
+    |
+    ├── (B) less-saturated bilinear tensors (polynomial mult, convolution, group algebra)
+    |      Fresh architecture but simpler tensors.
+    |      Literature coverage is thinner — genuinely unclaimed.
+    |
+    └── (C) 3x3 F_3 with invariant-based canonicalization
+           Blocked: |matmul isotropy| ≈ 10^10; brute-force infeasible.
+           Would need gauge-invariant fingerprinting approach.
+           Highest potential but biggest design cost.
 ```
 
 ---
