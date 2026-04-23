@@ -25,41 +25,42 @@ Auto-generated navigation table. **Pattern_library.md is the source of truth —
 
 | # | Pattern | Tier | Status marker | Line |
 |---|---|---|---|---|
-| 1 | Pattern 1 — The Distribution/Identity Trap | **MATURE** | no explicit status; foundational, used as discipline | [68](#pattern-1) |
-| 2 | Pattern 2 — The Permutation-Break Distinction | **MATURE** | no explicit status; foundational, used as discipline | [87](#pattern-2) |
-| 3 | Pattern 3 — The Weak Signal Walk | **MATURE** | no explicit status; foundational, used as discipline | [112](#pattern-3) |
-| 4 | Pattern 4 — The Sampling Frame Trap | **MATURE** | no explicit status; foundational, used as discipline | [133](#pattern-4) |
-| 5 | Pattern 5 — Known Bridges Are Known | **MATURE** | no explicit status; foundational, used as discipline | [153](#pattern-5) |
-| 6 | Pattern 6 — The Battery Tests Are Coordinate Systems | **MATURE** | no explicit status; foundational, used as discipline | [174](#pattern-6) |
-| 7 | Pattern 7 — Calibration Anchors Are Surveyor's Pins | **MATURE** | no explicit status; foundational, used as discipline | [191](#pattern-7) |
-| 8 | Pattern 8 — The GUE Story (Current Mystery) | **MATURE** | no explicit status; foundational, used as discipline | [206](#pattern-8) |
-| 9 | Pattern 9 — The Delinquent Frontier | **MATURE** | no explicit status; foundational, used as discipline | [271](#pattern-9) |
-| 10 | Pattern 10 — The Instrument Grows Faster Than the Findings | **META** | session/agent meta — not a falsification pattern | [284](#pattern-10) |
-| 11 | Pattern 11 — Language Discipline | **META** | session/agent meta — not a falsification pattern | [298](#pattern-11) |
-| 12 | Pattern 12 — Who the Other Agents Are | **META** | session/agent meta — not a falsification pattern | [782](#pattern-12) |
-| 13 | Pattern 13 — Direction of Accumulated Kills | **MATURE** | no explicit status; foundational, used as discipline | [598](#pattern-13) |
-| 14 | Pattern 14 — Verdict vs Shape | **MATURE** | no explicit status; foundational, used as discipline | [314](#pattern-14) |
-| 15 | Pattern 15 — The Machinery is the Product | **MATURE** | no explicit status; foundational, used as discipline | [632](#pattern-15) |
-| 16 | Pattern 16 — Problems-Nobody-Asks are the Frontier | **MATURE** | no explicit status; foundational, used as discipline | [672](#pattern-16) |
-| 17 | Pattern 17 — Language and Organization is the Real Bottleneck | **MATURE** | no explicit status; foundational, used as discipline | [724](#pattern-17) |
-| 18 | Pattern 18 — Uniform Visibility is Axis-Class Orphan | **MATURE** | no explicit status; foundational, used as discipline | [536](#pattern-18) |
-| 19 | Pattern 19 — Stale / Irreproducible Tensor Entry | **FULL** | FULL PATTERN (as of Liouville confirmation, promoted from draft). | [472](#pattern-19) |
-| 20 | Pattern 20 — Stratification Reveals Pooled Artifact | **FULL** | FULL (three anchor cases established; sessionA approved via merge). | [355](#pattern-20) |
-| 21 | Pattern 21 — Null-Model Selection Matters As Much As Projection Selection | **FULL** | FULL PATTERN. | [803](#pattern-21) |
-| 23 | Pattern 23 | **DRAFT** | batch DRAFT header | [886](#pattern-23) |
-| 24 | Pattern 24 | **DRAFT** | batch DRAFT header | [886](#pattern-24) |
-| 25 | Pattern 25 | **DRAFT** | batch DRAFT header | [886](#pattern-25) |
-| 26 | Pattern 26 | **DRAFT** | batch DRAFT header | [886](#pattern-26) |
-| 27 | Pattern 27 | **DRAFT** | batch DRAFT header | [886](#pattern-27) |
-| 28 | Pattern 28 | **DRAFT** | batch DRAFT header | [886](#pattern-28) |
-| 29 | Pattern 29 | **DRAFT** | batch DRAFT header | [886](#pattern-29) |
-| 30 | Pattern 30 — Algebraic-Identity Coupling Detection (DRAFT, promoted to strong ad | **ADVISORY** | title says DRAFT promoted to strong advisory | [939](#pattern-30) |
+| 1 | Pattern 1 — The Distribution/Identity Trap | **MATURE** | no explicit status; foundational, used as discipline | [69](#pattern-1) |
+| 2 | Pattern 2 — The Permutation-Break Distinction | **MATURE** | no explicit status; foundational, used as discipline | [88](#pattern-2) |
+| 3 | Pattern 3 — The Weak Signal Walk | **MATURE** | no explicit status; foundational, used as discipline | [113](#pattern-3) |
+| 4 | Pattern 4 — The Sampling Frame Trap | **MATURE** | no explicit status; foundational, used as discipline | [134](#pattern-4) |
+| 5 | Pattern 5 — Known Bridges Are Known | **MATURE** | no explicit status; foundational, used as discipline | [154](#pattern-5) |
+| 6 | Pattern 6 — The Battery Tests Are Coordinate Systems | **MATURE** | no explicit status; foundational, used as discipline | [175](#pattern-6) |
+| 7 | Pattern 7 — Calibration Anchors Are Surveyor's Pins | **MATURE** | no explicit status; foundational, used as discipline | [192](#pattern-7) |
+| 8 | Pattern 8 — The GUE Story (Current Mystery) | **MATURE** | no explicit status; foundational, used as discipline | [207](#pattern-8) |
+| 9 | Pattern 9 — The Delinquent Frontier | **MATURE** | no explicit status; foundational, used as discipline | [272](#pattern-9) |
+| 10 | Pattern 10 — The Instrument Grows Faster Than the Findings | **META** | session/agent meta — not a falsification pattern | [285](#pattern-10) |
+| 11 | Pattern 11 — Language Discipline | **META** | session/agent meta — not a falsification pattern | [299](#pattern-11) |
+| 12 | Pattern 12 — Who the Other Agents Are | **META** | session/agent meta — not a falsification pattern | [783](#pattern-12) |
+| 13 | Pattern 13 — Direction of Accumulated Kills | **MATURE** | no explicit status; foundational, used as discipline | [599](#pattern-13) |
+| 14 | Pattern 14 — Verdict vs Shape | **MATURE** | no explicit status; foundational, used as discipline | [315](#pattern-14) |
+| 15 | Pattern 15 — The Machinery is the Product | **MATURE** | no explicit status; foundational, used as discipline | [633](#pattern-15) |
+| 16 | Pattern 16 — Problems-Nobody-Asks are the Frontier | **MATURE** | no explicit status; foundational, used as discipline | [673](#pattern-16) |
+| 17 | Pattern 17 — Language and Organization is the Real Bottleneck | **MATURE** | no explicit status; foundational, used as discipline | [725](#pattern-17) |
+| 18 | Pattern 18 — Uniform Visibility is Axis-Class Orphan | **MATURE** | no explicit status; foundational, used as discipline | [537](#pattern-18) |
+| 19 | Pattern 19 — Stale / Irreproducible Tensor Entry | **FULL** | FULL PATTERN (as of Liouville confirmation, promoted from draft). | [473](#pattern-19) |
+| 20 | Pattern 20 — Stratification Reveals Pooled Artifact | **FULL** | FULL (three anchor cases established; sessionA approved via merge). | [356](#pattern-20) |
+| 21 | Pattern 21 — Null-Model Selection Matters As Much As Projection Selection | **FULL** | FULL PATTERN. | [804](#pattern-21) |
+| 23 | Pattern 23 | **DRAFT** | batch DRAFT header | [887](#pattern-23) |
+| 24 | Pattern 24 | **DRAFT** | batch DRAFT header | [887](#pattern-24) |
+| 25 | Pattern 25 | **DRAFT** | batch DRAFT header | [887](#pattern-25) |
+| 26 | Pattern 26 | **DRAFT** | batch DRAFT header | [887](#pattern-26) |
+| 27 | Pattern 27 | **DRAFT** | batch DRAFT header | [887](#pattern-27) |
+| 28 | Pattern 28 | **DRAFT** | batch DRAFT header | [887](#pattern-28) |
+| 29 | Pattern 29 | **DRAFT** | batch DRAFT header | [887](#pattern-29) |
+| 30 | Pattern 30 — Algebraic-Identity Coupling Detection (DRAFT, promoted to strong ad | **ADVISORY** | title says DRAFT promoted to strong advisory | [940](#pattern-30) |
+| 31 | Pattern 31 — Orbit Discipline (DRAFT, 2026-04-23) | **DRAFT** | DRAFT (2 anchor cases). Promotes to FULL when a third independent | [1033](#pattern-31) |
 
 **Tier counts at last regeneration:**
 - FULL: 3
 - ADVISORY: 1
 - MATURE: 15
-- DRAFT: 7
+- DRAFT: 8
 - META: 3
 
 <!-- TIER_INDEX_END -->
@@ -1027,3 +1028,102 @@ the staleness, it does not resolve it.
 PROVISIONAL is above WARN because the sampling-frame concern is stronger than a
 log-denominator coupling, but it does NOT halt ingestion — that distinction is
 the whole point of introducing the separate verdict rather than collapsing to BLOCK.
+
+---
+
+## Pattern 31 — Orbit Discipline (DRAFT, 2026-04-23)
+
+**Produced by:** Harmonia_M2_sessionA, 2026-04-23, following the tensor-
+identity-search pilot and the promotion of `canonicalizer.md` to substrate
+primitive.
+**Status:** DRAFT (2 anchor cases). Promotes to FULL when a third independent
+anchor accumulates.
+
+**Recognition:** claims of identity, novelty, or equivalence on structured
+mathematical objects must be made *modulo a declared symmetry group*. A
+silent identity claim on a raw representation — "these two objects are the
+same" / "this is a new decomposition" / "this finding is not in the catalog"
+— is always implicitly modulo *some* equivalence. If that equivalence is not
+declared, the claim is not falsifiable and downstream consumers will
+disagree silently. The decomposition-level instance of Pattern 1
+(Distribution/Identity Trap) and the cross-cutting generalization of
+Pattern 30 (Algebraic-Identity Coupling).
+
+**Anchor cases (2):**
+
+1. **F043 retraction (2026-04-19).** A claimed correlation
+   `corr(log Sha, log A)` was measured on BSD-ingredient variables that
+   are definitionally coupled through the BSD identity. The "finding"
+   was a rearrangement of the identity, not evidence of arithmetic
+   structure. Orbit discipline would have required declaring the
+   algebraic-equivalence group (the BSD identity's ring of rearrangements)
+   and checking the correlation is modulo it — which is exactly what
+   Pattern 30 graded severity operationalizes for the correlational case.
+
+2. **2026-04-23 2×2 matmul pilot.** Four ALS-converged rank-7
+   decompositions of the 2×2 matmul tensor, understood by theorem to lie
+   in a single `(GL(2)³ × S_7 × scale-gauge)`-orbit, hashed to four
+   distinct canonical forms under a naïve (scale + sign + permutation)
+   canonicalizer. Strassen's integer representative hashed to a fifth,
+   distinct form. A downstream consumer counting distinct hashes as
+   distinct orbits would see 5 orbits where 1 exists. Evidence in
+   `harmonia/memory/architecture/orbit_vs_representative.md` +
+   `harmonia/tmp/canonicalize_test.py`.
+
+**Discipline:**
+
+1. **Declare the symmetry group before claiming novelty.** Any novelty
+   claim on a structured object must name the group under which the
+   novelty is asserted. "This is new" without a group is a silent
+   identity claim, not a falsifiable one.
+2. **Use a canonicalizer instance that realizes at least the relevant
+   subgroup.** `canonicalizer.md` registry maintains typed instances
+   (Type A = canonical identity, Type B = preferred representative).
+   Identity claims consume Type A; display claims consume Type B.
+   The instance's `declared_limitations` field is where gaps in the
+   quotient are declared honestly.
+3. **Un-declared group action is a declared limitation, not a silent
+   gap.** An instance that does not quotient part of the object's
+   symmetry group must say so in `declared_limitations`. Consumers
+   then know not to treat hash inequality as object non-equivalence.
+4. **Canonical inequality NEVER implies non-equivalence.** Under
+   partial quotienting, two inputs may be equivalent under the full
+   symmetry group but hash differently. This is the asymmetry warning
+   in the canonicalizer contract and the most common silent-misuse
+   failure mode.
+
+**Distinction from Pattern 30:** Pattern 30 operationalizes orbit
+discipline for the specific case of algebraic-identity coupling in
+correlational claims. Pattern 31 is the substrate-level generalization —
+it covers correlational claims (Pattern 30's domain) plus tensor-
+decomposition identity, DAG node identity, MAP-Elites archive dedup,
+coordinate-axis novelty (gen_11), and any future structured-object
+identity claim. Pattern 30 stays as the correlational-specific instance;
+Pattern 31 is the cross-cutting frame.
+
+**Distinction from Pattern 1:** Pattern 1 names the phenomenon (high
+correlation between algebraically-coupled variables looks like structure
+but isn't). Pattern 31 names the *discipline* required to catch the
+phenomenon at scale: declare the group, use a canonicalizer, respect
+the asymmetry warning.
+
+**Connection to canonicalizer primitive:** Pattern 31 is the discipline
+pattern; `harmonia/memory/architecture/canonicalizer.md` is the
+mechanism. The pattern fires when a claim is made without an explicit
+equivalence group; the canonicalizer is the tool that remediates it.
+They are load-bearing together; neither suffices alone.
+
+**Promotion criterion:** DRAFT until a third independent anchor case
+accumulates. Candidate third anchors that are visible now but not yet
+realized:
+- A `CANONICALIZER:dag_node_identity@v1` (when it ships) will produce
+  its own anchor: a derived quantity re-expressed in a different
+  basis hashing the same node ID.
+- A `CANONICALIZER:pattern_30_rearrangement@v1` (when it ships) will
+  produce an algebraic-expression anchor: two expressions related by
+  a ring identity hashing the same.
+
+**Anti-pattern:** Counting novel hashes as novel findings without
+declaring the equivalence group they're canonical under. This is the
+AlphaTensor failure mode (orbit-variant "new" decompositions counted
+as distinct from known ones) generalized to substrate scale.

@@ -1,12 +1,27 @@
 # CANONICALIZER — substrate primitive
 
-**Status:** substrate-primitive spec, v0.1.1 (2026-04-23).
+**Status:** substrate-primitive spec, v0.2 (2026-04-23, Phase 2).
 **Architectural slot:** first-class primitive, alongside the symbol registry, the tensor, Definition DAG, and signals.specimens. Not a generator.
-**Audience:** gen_12 (tensor decomposition), gen_11 (coordinate invention), Definition DAG authors, symbol-registry curators, any module that dedup's structured objects.
+**Audience:** gen_12 (tensor decomposition), gen_11 (coordinate invention), Definition DAG authors, symbol-registry curators, any module that dedup's or displays structured objects.
 
 ---
 
-*In one sentence:* **a canonicalizer maps a representation to a canonical representative under a declared equivalence group, producing a stable, hashable identity.**
+*In one sentence:* **a canonicalizer instance is either (Type A) a deterministic quotient map producing stable hashable identity under a declared equivalence group, OR (Type B) an optimization inside an already-identified orbit producing a preferred representative for a declared secondary objective.**
+
+---
+
+## Two types (load-bearing — added v0.2)
+
+The v0.1.1 spec conflated two distinct operations. v0.2 splits them:
+
+- **Type A — canonical identity.** A deterministic quotient map that produces a hashable canonical representative for each equivalence class under a declared group. Answers *"are these the same object under G?"* Uniqueness of the canonical representative per class is a hard requirement. Hash equality iff orbit equality (modulo the separation bound on H).
+- **Type B — preferred representative.** An optimization inside an already-identified orbit against a declared secondary objective (integer-proximity, minimum description length, sparsity, symmetry score). Answers *"which element of this orbit is the most useful one to display?"* Uniqueness is NOT required — ties are permitted, perturbations may flip which representative wins, and Type B output is not stable enough to hash for identity.
+
+**Composition rule.** Type B always operates on Type A output. Running Type B alone — on raw input not first Type-A-canonicalized — is forbidden, because the "orbit" the Type B is optimizing within is not well-defined without Type A's quotient.
+
+**Why split.** Mixing the two produces silent drift: an optimization-for-integers layer that looks like a quotient map will return different outputs for the same orbit under small perturbations, breaking hash invariance at Type-A consumer sites. Downstream consumers that dedup against hash equality will then count orbit-duplicates as distinct. The Type A / Type B distinction is the architectural guardrail; the `type:` field in every instance's frontmatter is mandatory and checked at registration.
+
+Every instance declares exactly one type. Instance names conventionally carry a suffix for readability: `<name>_identity@vN` for Type A, `<name>_<objective>@vN` for Type B (e.g., `tensor_decomp_identity@v2`, `tensor_decomp_integer_rep@v1`).
 
 ---
 
@@ -34,11 +49,14 @@ Across all of these, the common question is: *given two representations of a str
 A **canonicalizer instance** is a tuple
 
 ```
-(name, equivalence_group G, procedure C, hash H,
+(name, type, equivalence_group G, procedure C, hash H (Type A only),
+ secondary_objective (Type B only),
  declared_limitations, calibration_anchors, canonicalizer_version)
 ```
 
 where:
+
+- `type` ∈ {`A`, `B`}. Mandatory. Determines which of the other fields are required and which invariants apply. Type A instances require `G` + `C` + `H` + `declared_limitations` + `calibration_anchors`. Type B instances require `G` (the orbit their input is Type-A-canonicalized under) + `C` (the optimization procedure) + `secondary_objective` + `declared_limitations` + `calibration_anchors`. Type B does NOT have a hash; Type B output is for display, not identity.
 
 - `G` is the equivalence group the instance quotients, specified as a list of generator types (e.g., `scale_gauge`, `sign_gauge`, `permutation(S_r)`, `T_stabilizer_GL_n^3`). **Generator types in `G` must have executable semantics within the instance.** If a subgroup is known to be part of the object's symmetry but is not computationally realized by this instance (e.g., a stabilizer that only exists on paper), it must appear in `declared_limitations`, not in `G`. The line between `G` and `declared_limitations` is implementation, not intent.
 - `C : Representation → CanonicalRepresentative` is a deterministic map satisfying, for all `x, y` in the representation space:
@@ -48,7 +66,8 @@ where:
   - **Tolerance.** For numerical representations, `‖x − y‖ < ε_tol ⟹ C(x) = C(y)` via pinned rounding before hashing.
   - **Complexity.** `C` runs in `O(poly(|x|))`.
   - **Failure behavior.** If `C` cannot produce a stable representative within declared tolerance or resource bounds, it must return `(failure, reason)`. Consumers MUST treat failures as non-canonicalized inputs — not as canonical-class members, and not comparable by hash. "Best-effort on failure" is explicitly forbidden; silent best-effort produces cross-instance hash divergence that is indistinguishable from real non-equivalence.
-- `H : CanonicalRepresentative → bytes` is a hash function. Different canonicalizer instances live in disjoint hash namespaces (namespaced by `(name, canonicalizer_version)`).
+  - **Failure stability (added v0.2).** Failure itself must be stable under tolerance. If `C(x) = failure` and `‖x − y‖ < ε_tol`, then either `C(y) = failure` with the same reason, or `C(y) = canonical` but not unpredictably oscillating between the two across nearby inputs. An instance where one input succeeds and a near-identical input fails is a bug, not a design choice — it produces archive fragmentation indistinguishable from real non-equivalence. Test: apply `C` to an ε-perturbed batch of inputs; the failure/success partition must be coherent (all in, all out, or a cleanly separated boundary with no mode-switching inside a tolerance ball).
+- `H : CanonicalRepresentative → bytes` is a hash function (Type A only). The contract requires: (1) deterministic serialization of the canonical representative, (2) namespacing by `(name, canonicalizer_version)`, (3) tolerance pinning (ε-close representatives hash identically). The choice of cryptographic hash primitive (SHA-256 etc.) and the exact decimal-pinning precision are **implementation details**, not part of the contract. See "Implementation notes" below. Different instances and different versions live in disjoint hash namespaces and are never compared directly.
 - `declared_limitations` is an **explicit list of equivalences NOT removed.** Mandatory. Without this declaration the instance is rejected from the primitive registry. The declaration is the guardrail against false-confidence: downstream consumers must know what the canonicalizer does not quotient, so they don't assume equivalences it didn't touch.
 - `calibration_anchors` are test cases with known equivalence-class structure — at least one "same-class → same hash" anchor and one "different-class → different hash" anchor. Anchors are run on every version bump.
 - `canonicalizer_version` is an integer; hash namespaces change on version bump.
@@ -96,33 +115,78 @@ A canonicalizer that claims zero limitations must justify it in the MD body with
 
 The canonicalizer primitive is a registry of named instances. At v0.1, one instance is active, one is pending, and several are identified as future needs.
 
-### Active: `CANONICALIZER:tensor_decomp@v1`
+### Active: `CANONICALIZER:tensor_decomp_identity@v1` (Type A)
 
+- **Type:** A (canonical identity).
 - **Equivalence group:** `scale_gauge × sign_gauge × permutation(S_r)`. Applies to CP-rank-r decompositions of order-3 tensors.
 - **Procedure:** normalize `‖u_i‖ = ‖v_i‖ = 1`, absorb magnitude into `w_i`; canonical sign (first entry above tolerance of each `u_i, v_i` is positive, partner sign absorbed); lex-sort rank-1 terms by rounded concatenated `(u_i, v_i, w_i)`.
-- **Hash:** SHA-256 of pinned-decimal (default 4) rounded concatenation of canonical `(A, B, C)`.
+- **Hash:** see Implementation notes.
 - **Declared limitations:**
   - `T_stabilizer_basis_change` (total). For structured target tensors (matmul, Pfaffian, etc.) this is where most of the orbit's size lives. Consumers must NOT treat same-hash-under-v1 as same-orbit-under-full-symmetry-group.
 - **Calibration anchors:**
-  - Same-class: pending (requires v2 — v1 fails by construction on the Strassen anchor; see `orbit_vs_representative.md`).
-  - Different-class: rank-7 Strassen hash ≠ rank-8 naive decomposition hash. (Trivially holds.)
-- **Empirical anchor:** 2026-04-23, `harmonia/tmp/canonicalize_test.py`. 4 ALS-converged rank-7 seeds on 2×2 matmul → 4 distinct v1 hashes; none match Strassen's v1 hash. v1 is *known* to be insufficient for the tensor-decomposition problem as stated; it is retained in the registry as the first declared limitation's calibration target.
+  - Same-class: FAILS by construction (see Empirical anchor). v1 is retained in the registry *only because* the failure is declared, reproducible, and used as the regression target for v2 development — not because anchor-failing instances are generally admissible. The license for retention is narrow and single-instance.
+  - Different-class: rank-7 Strassen hash ≠ rank-8 naive decomposition hash (trivially holds).
+- **Empirical anchor:** 2026-04-23, `harmonia/tmp/canonicalize_test.py`. 4 ALS-converged rank-7 decompositions of 2×2 matmul, understood to lie in the same equivalence class under the natural symmetry action (see `orbit_vs_representative.md` §"On theorem claims"), hashed to 4 distinct v1 canonical forms; none matched Strassen's v1 hash.
 
-### Pending: `CANONICALIZER:tensor_decomp@v2`
+### Pending: `CANONICALIZER:tensor_decomp_identity@v2` (Type A)
 
-- **Equivalence group:** v1 group plus `T_stabilizer_basis_change` (tensor-dependent; for 2×2 matmul, the matmul-covariant GL(2) action on factor spaces).
-- **Procedure:** open — candidate strategies tracked in `orbit_vs_representative.md` §"v2 strategies."
-- **Calibration target:** same-class anchor passes on the four 2×2 ALS-converged seeds; canonical rep recovers Strassen under a nearest-integer orbit-internal probe.
-- **Exit criterion:** calibration passes on 2×2, then the strategy is attempted at 3×3 (rank 23 Laderman) — the scaling test determines whether v2 is a first-class instance or a 2×2-only special case.
+- **Type:** A.
+- **Equivalence group:** v1 group plus the subgroup of `T_stabilizer_GL_n^3` that is computationally realized by the instance. Whatever subgroup is *not* realized must appear in `declared_limitations`, not in `G`.
+- **Procedure:** OPEN. Phase 2 W2 attempted **Strategy 1 — multi-invariant numerical canonical form** (singular-value spectra, Gramian eigenvalues, Frobenius norms, mode-unfolding singular values). **FALSIFIED** 2026-04-23 on the pilot anchor: 4 ALS seeds + Strassen all hash differently. Root cause: singular-value and Frobenius invariants are invariant under *orthogonal* group actions but not under general `GL` actions. The T-stabilizer for matmul is `GL`, not `O`, so orthogonal-invariants don't collapse it. Tensor-mode-unfolding SVs *do* collapse across the orbit (all four inputs produce `(1.4142, 1.4142, 1.4142, 1.4142)`) but this is a property of `T` itself, not of the decomposition — it's the same for every rank-r decomposition of T, so it does not discriminate between orbits either. Evidence: `harmonia/tmp/tensor_decomp_identity_v2_results.json`.
+- **Remaining v2 candidate strategies (untested):**
+  - Strategy 2: SVD / Schur canonical basis via T-preserving basis change. Implement the specific matmul-covariant GL action, apply a canonical basis choice (first factor's right-singular basis), propagate through all three factors using T-preserving machinery. Tensor-specific; requires Aut(T) algebraic analysis.
+  - Strategy 3: Chevalley-Weyl polynomial invariants of the GL representation on the factor spaces. Domain-specific polynomials invariant under the full GL action.
+  - Strategy 4: Full enumeration. Only feasible for small groups; does not scale.
+- **Calibration target (unchanged):** same-class anchor passes on the four 2×2 ALS-converged seeds plus Strassen's integer representative (five inputs → same hash).
+- **Status:** OPEN. No v2 strategy currently passes the calibration anchor. Strategy 1 falsification is a data point documented in the registry; next session may attempt Strategy 2.
 
-### Future instances (not yet scoped)
+### Pending: `CANONICALIZER:tensor_decomp_integer_rep@v1` (Type B)
 
-- `CANONICALIZER:poly_monomial_form@v1` — polynomials up to variable relabeling and sign gauge. Anchor: lexicographic monomial ordering + variable ordering by first-nonzero.
-- `CANONICALIZER:graph_iso@v1` — graph isomorphism canonical form. Anchor: nauty / Bliss-style partition refinement. Note: this is graph-canonical-form in the classical sense; inclusion is only worthwhile if a substrate consumer needs it.
-- `CANONICALIZER:pattern_30_rearrangement@v1` — the Pattern-30 REARRANGEMENT severity already asks "is Y an algebraic rearrangement of X?" Phrased as a canonicalizer, this would produce a canonical form for the BSD-ingredient family (or more generally, a ring of definitional terms) such that two expressions related by ring identities hash the same.
-- `CANONICALIZER:dag_node_identity@v1` — Definition DAG node identity under basis change on the input-atoms.
+- **Type:** B (preferred representative — integer-proximity).
+- **Equivalence group:** `T_stabilizer_GL_n^3` (the orbit the input is assumed already Type-A-canonicalized in).
+- **Procedure:** OPEN. Phase 2 W3 attempted **Strategy A — Gaussian perturbation + ALS refinement.** Perturb factor matrices with Gaussian noise, re-refine to the reconstruction variety via ALS, keep best integer_fraction while residual stays bounded. **FALSIFIED** 2026-04-23 on the pilot anchor: 0/4 ALS seeds reached integer_fraction ≥ 0.9; best improvement was 0.000 from three of four starting points. Diagnosis: Gaussian perturbation + ALS returns to the nearest basin in the same gauge, not to Strassen's integer basin. The integer basin is measure-zero in the continuous orbit; random perturbation does not hit it. Evidence: `harmonia/tmp/tensor_decomp_integer_rep_v1_results.json`.
+- **Remaining search-strategy candidates (untested):**
+  - Simulated annealing with explicit integer-snap moves.
+  - L-BFGS minimization with integer-distance penalty added to reconstruction loss.
+  - Enumeration over the matmul-covariant `GL(2)³` action (exploits the specific T-stabilizer structure; may be tractable because 2×2 matmul's stabilizer has known algebraic form).
+- **Secondary objective:** `integer_fraction = fraction of entries in (A, B, C) with |x - round(x)| < 0.01`.
+- **Declared limitations:**
+  - Output is not hash-stable; different calls on equivalent Type-A-canonicalized inputs may return different integer representatives if ties exist.
+  - Not unique. Multiple orbit elements may share the same integer-fraction score.
+  - Convergence to global max is not guaranteed (local optimization).
+- **Calibration target:** given any of the 4 ALS seeds as input, recover a representative with integer_fraction ≥ 0.9 (Strassen has 1.0).
+- **Status:** OPEN. Strategy A falsified; next-session candidates listed above.
 
-Each future instance, when claimed, follows the same contract (equivalence group + procedure + hash + declared limitations + calibration anchors).
+### Future instances (identified, not yet scoped)
+
+- `CANONICALIZER:poly_monomial_form@v1` (Type A) — polynomials up to variable relabeling and sign gauge. Target for Phase 2 W4 as the first non-tensor Type A instance.
+- `CANONICALIZER:graph_iso@v1` (Type A) — graph isomorphism canonical form. Classical; inclusion when a consumer needs it.
+- `CANONICALIZER:pattern_30_rearrangement@v1` (Type A) — canonical form for algebraic expressions over a declared ring. This is a *separate instance of the same contract*, not a second-name for the tensor canonicalizer — the computational objects (tensor factor triples vs algebraic expressions) are genuinely different, they share only the primitive contract. Convergence of the Pattern 30 discipline with this instance is expected and planned; the two frameworks run in parallel until unification is concrete.
+- `CANONICALIZER:dag_node_identity@v1` (Type A) — Definition DAG node identity under basis change on input atoms.
+
+Each future instance follows the same contract: type declaration + equivalence group + procedure + (hash OR secondary_objective) + declared limitations + calibration anchors.
+
+---
+
+## Implementation notes
+
+These are implementation defaults, not contract requirements. Implementations may choose differently provided the contract (determinism, tolerance, namespacing) is met.
+
+- **Hash primitive.** SHA-256 is the current default. BLAKE3 or other cryptographic hashes with ≥ 128 bits of collision resistance would satisfy the contract equivalently. The choice is not normative.
+- **Decimal pinning.** Default precision: 4 decimal places on rounded canonical-representative entries before hashing. Instances whose tolerance requires more or fewer digits should declare `decimal_pinning` in the instance MD frontmatter.
+- **Serialization.** Default: `concatenate(flatten(A), flatten(B), flatten(C))` with numpy's native ordering. Other deterministic orderings (row-major vs column-major, factor-triple interleaving) are acceptable if declared.
+
+Instances may migrate between implementations within a single `canonicalizer_version` if the change does not affect hash output on the full anchor set. Implementation changes that DO affect hashes require a `canonicalizer_version` bump.
+
+---
+
+## Orbit discipline (named doctrine — added v0.2)
+
+**Definition:** the requirement that identity claims on structured objects be made modulo declared symmetry groups, with partial quotienting expressed honestly via `declared_limitations`, and with canonical inequality *never* treated as non-equivalence.
+
+Orbit discipline is the substrate-level generalization of Pattern 30 REARRANGEMENT severity. Pattern 30 handles the specific case of algebraic-identity coupling in correlation claims; orbit discipline handles the general case of structured-object identity under any declared symmetry.
+
+See `pattern_library.md` Pattern 31 (DRAFT, 2026-04-23) for the pattern entry with anchor cases (F043 retraction, 2×2 matmul pilot).
 
 ---
 
@@ -188,6 +252,7 @@ The risk being guarded against is primitive-bloat through ambitious generalizati
 
 ## Version history
 
+- **v0.2** — 2026-04-23 (Phase 2) — major: Type A / Type B split added as the primary architectural move in response to James's 2026-04-23 whitepaper review. Every instance now declares `type` in its tuple. Type A = deterministic quotient + hash (identity). Type B = optimization inside an already-identified orbit (display). Composition rule: Type B always consumes Type A output. Supporting changes: (a) tensor_decomp@v1 renamed tensor_decomp_identity@v1 with narrowed justification for retention despite anchor-failure (admissible *only* because failure is declared + reproducible + regression-targeted, not because failing anchors is generally OK); (b) tensor_decomp_identity@v2 and tensor_decomp_integer_rep@v1 registered as pending, split correctly between Type A and Type B; (c) failure-stability clause added to procedure contract — failure must be stable under tolerance; (d) hash primitive (SHA-256) moved to Implementation notes; contract requires determinism + namespacing + tolerance pinning, not a specific cryptographic choice; (e) Pattern 30 integration clarified — pattern_30_rearrangement@v1 is a *separate instance of the same contract*, not a second name for tensor canonicalizer; (f) "orbit discipline" formalized as a named doctrine with cross-reference to pattern_library.md Pattern 31.
 - **v0.1.1** — 2026-04-23 (later same day) — three surgical edits to the
   contract per James crispness pass on v0.1 first ~90 lines: (1)
   one-line definition added under the header for instant legibility;
